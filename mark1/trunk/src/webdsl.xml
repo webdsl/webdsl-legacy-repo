@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE web-app
+  PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+  "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+
+  <context-param>
+    <param-name>applicationPrefix</param-name>
+    <param-value>/user/</param-value>
+  </context-param>  
+  
+  <context-param>
+      <param-name>webdsl.emailfrom</param-name>
+      <param-value>Eelco Visser &lt;visser@acm.org&gt;</param-value>
+  </context-param>
+
+  <context-param>
+      <param-name>webdsl.emailsmtp</param-name>
+      <param-value>smtp.xs4all.nl</param-value>
+  </context-param>
+
+  <servlet>
+    <servlet-name>ShowUsers</servlet-name>
+    <servlet-class>webdsl/user/ShowUsers</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+	<servlet-name>ShowUsers</servlet-name>
+	<url-pattern>/showusers/</url-pattern>
+  </servlet-mapping>
+
+<!--
+  <servlet>
+    <servlet-name>Login</servlet-name>
+    <servlet-class>webdsl/user/Login</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>ResetPassword</servlet-name>
+    <url-pattern>/resetpassword/</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>Login</servlet-name>
+    <url-pattern>/login/</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+     <servlet-name>CreateUser</servlet-name>
+     <url-pattern>/newuser/</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+	<servlet-name>SetPassword</servlet-name>
+	<url-pattern>/setpwd/</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+	<servlet-name>Logout</servlet-name>
+	<url-pattern>/logout/</url-pattern>
+  </servlet-mapping>
+-->
+
+</web-app>

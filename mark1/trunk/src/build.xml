@@ -1,0 +1,91 @@
+<project name="gw" default="compile" basedir=".">
+  <description>
+     WebDSL
+  </description>
+
+  <property name="srcdir" location="."/>
+
+  <!-- Compile sources into this jar file -->
+  <property name="jarname" value="webdsl.jar"/>
+  
+  <!-- Source directory containing the unit tests -->
+  <!--property name="tests.src" value="tests"/-->
+
+  <!-- Compile unit tests into this jar file -->
+  <!--property name="tests.jar" value="test.jar"/-->
+
+  <!-- Package name of the unit tests. Used for javadoc -->
+
+<!--
+  <property name="tests.package" value="webdsl"/>
+  <property name="src.compiler.version" value="1.5"/>
+  <property name="aspectj.version" value="5"/>
+
+  <property name="testresults.database.dir" value="${builddir}/database" />
+  <property name="testresults.database.path" value="${testresults.database.dir}/testviz" />
+-->
+
+  <path id="project.cp">
+    <pathelement path="${servletsjar}"/>
+    <fileset dir="${libdir}">
+      <include name="**/*.jar"/>
+    </fileset>
+    <fileset dir="${testlibdir}">
+      <include name="**/*.jar"/>
+    </fileset>
+  </path>
+
+  <path id="projecttest.cp">
+    <pathelement path="${servletsjar}"/>
+    <pathelement location="${builddir}/classes"/>
+    <pathelement location="${builddir}/testclasses"/>
+    <fileset dir="${libdir}">
+      <include name="**/*.jar"/>
+    </fileset>
+    <fileset dir="${testlibdir}">
+      <include name="**/*.jar"/>
+    </fileset>
+  </path>
+
+  <target name="compile" description="Compile the Java source of the web application">
+    <mkdir dir="${builddir}/classes"/>
+    <javac srcdir="${srcdir}/java" destdir="${builddir}/classes" debug="on" deprecation="on">
+      <classpath refid="project.cp"/>
+    </javac>
+  </target>
+
+  <target name="war" depends="compile" description="Create a deployable web archive">
+    <war destfile="${builddir}/webdsl.war" webxml="${srcdir}/webdsl.xml">
+      <fileset dir="${srcdir}/web"/>
+      <lib dir="${libdir}">
+          <include name="*.jar"/>
+      </lib>
+      <classes dir="${builddir}/classes"/>
+    </war>
+  </target>
+
+  <target name="install" depends="war" description="Install the web archive">
+    <mkdir dir="${distdir}"/>
+    <!--fail message="One or more test failed" if="test.failed" /-->
+    <copy file="${builddir}/webdsl.war" todir="${distdir}"/>
+  </target>
+
+  <target name="dist" depends="war" description="Create an (unpacked) distribution">
+    <mkdir dir="${distdir}"/>
+    <fail message="One or more test failed" if="test.failed" />
+    <copy file="${builddir}/webdsl.war" todir="${distdir}"/>
+  </target>
+
+  <target name="clean-build" description="Clean the build directory">
+    <delete>
+      <fileset dir="${build}" includes="**"/>
+    </delete>
+  </target>
+
+  <target name="clean">
+    <delete file="${jarname}" />
+    <delete dir="${builddir}" />
+  </target>
+  
+</project>
+
