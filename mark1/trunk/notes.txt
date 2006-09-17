@@ -127,3 +127,25 @@ Installing Tomcat
         <servlet-name>invoker</servlet-name>
         <url-pattern>/servlet/*</url-pattern>
     </servlet-mapping>
+
+- test with coreservlets examples
+
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+
+Deploying webapplications with ant
+
+- manual is: http://ant.apache.org/manual/
+
+- copied basic example from manual
+
+- configured build and src properties
+
+- added to javac action:
+
+      <classpath>
+        <pathelement path="${classpath}"/>
+        <pathelement location="../jakarta-tomcat-4.1.31/common/lib/servlet.jar"/>
+      </classpath>
+
+- now at least the Java classes are copied to the webapp directory
