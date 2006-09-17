@@ -149,3 +149,9 @@ Deploying webapplications with ant
       </classpath>
 
 - now at least the Java classes are copied to the webapp directory
+
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+
+setting up the user webapp
+
