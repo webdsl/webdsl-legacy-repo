@@ -160,4 +160,6 @@ setting up the user webapp
 
 - startup.sh and shutdown.sh for mark1
 
-- 
+- user0 is directory for first version of user webapp
+
+- using war task to creat the war file for user0
