@@ -155,3 +155,9 @@ Deploying webapplications with ant
 
 setting up the user webapp
 
+- install tomcat in ../tomcat1
+  all webapps for mark1 will be installed here
+
+- startup.sh and shutdown.sh for mark1
+
+- 
