@@ -170,5 +170,13 @@ setting up the user webapp
   http://127.0.0.2:8080/user0/Hello.jsp
   http://127.0.0.2:8080/user0/servlet1
 
+- created a install-war.sh script that calls ant dist, stops the
+  server, installs the war, and starts the server again.
+
 --------------------------------------------------------------------
 --------------------------------------------------------------------
+
+connecting to the mysql server
+
+
+

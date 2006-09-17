@@ -1,5 +1,14 @@
 #! /bin/sh
 
-#rm -rf ../../tomcat1/webapps/user1 ../../tomcat1/webapps/user1.war
+webappdir=../../tomcat1/webapps
 
-cp -f dist/lib/user1.war ../../tomcat1/webapps/
+./shutdown.sh
+
+ant dist
+
+rm -rf ${webappdir}/user1*
+
+cp -f dist/lib/user1.war ${webappdir}
+
+./startup.sh
+

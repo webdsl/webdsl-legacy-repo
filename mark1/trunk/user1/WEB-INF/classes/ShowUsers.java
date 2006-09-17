@@ -10,7 +10,7 @@ import javax.servlet.http.*;
  *  &copy; 2003 Marty Hall; may be freely used or adapted.
  */
 
-public class HelloServlet extends HttpServlet 
+public class ShowUsers extends HttpServlet 
 {
 
   public void doGet(HttpServletRequest request,
@@ -31,7 +31,7 @@ public class HelloServlet extends HttpServlet
                 "<HTML>\n" +
                 "<HEAD><TITLE>Hello</TITLE></HEAD>\n" +
                 "<BODY BGCOLOR=\"#FDF5E6\">\n" +
-                "<H1>Hello</H1>\n" +
+                "<H1>ShowUsers</H1>\n" +
                 "</BODY></HTML>");
   }
 
