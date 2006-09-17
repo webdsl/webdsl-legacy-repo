@@ -1,7 +1,7 @@
-<project name="user0" default="dist" basedir=".">
+<project name="user1" default="dist" basedir=".">
 
     <description>
-        build file for user0
+        build file for user1
     </description>
 
   <!-- set global properties for this build -->
@@ -35,9 +35,7 @@
     <!-- Create the distribution directory -->
     <mkdir dir="${dist}/lib"/>
 
-    <!--jar jarfile="${dist}/lib/user0.jar" basedir="${build}"/-->
-
-    <war warfile="${dist}/lib/user0.war" webxml="${src}/WEB-INF/web.xml">
+    <war warfile="${dist}/lib/user1.war" webxml="${src}/WEB-INF/web.xml">
        <fileset dir="${src}">
           <include name="**/*.html"/>
           <include name="**/*.jsp"/>

@@ -163,3 +163,12 @@ setting up the user webapp
 - user0 is directory for first version of user webapp
 
 - using war task to create the war file for user0
+
+- test
+  http://127.0.0.2:8080/user0/index.html
+  http://127.0.0.2:8080/user0/Hello.html
+  http://127.0.0.2:8080/user0/Hello.jsp
+  http://127.0.0.2:8080/user0/servlet1
+
+--------------------------------------------------------------------
+--------------------------------------------------------------------
