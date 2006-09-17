@@ -162,4 +162,4 @@ setting up the user webapp
 
 - user0 is directory for first version of user webapp
 
-- using war task to creat the war file for user0
+- using war task to create the war file for user0
