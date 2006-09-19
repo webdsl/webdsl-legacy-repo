@@ -14,6 +14,11 @@
     <servlet-class>ShowUsers</servlet-class>
   </servlet>
   
+  <servlet>
+    <servlet-name>AddUser1</servlet-name>
+    <servlet-class>AddUser</servlet-class>
+  </servlet>
+  
   <servlet-mapping>
     <servlet-name>Servlet1</servlet-name>
     <url-pattern>/servlet1</url-pattern>
@@ -24,6 +29,10 @@
     <url-pattern>/show-users</url-pattern>
   </servlet-mapping>
 
+  <servlet-mapping>
+    <servlet-name>AddUser1</servlet-name>
+    <url-pattern>/add-user</url-pattern>
+  </servlet-mapping>
 
 </web-app>
 

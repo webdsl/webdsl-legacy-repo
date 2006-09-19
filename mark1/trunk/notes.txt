@@ -24,10 +24,9 @@ where to install the database
 Starting the server
 --------------------------------------------------------------------
 
-Before anything else can be done the server has to be started
-apparently.
+Before anything else can be done the server has to be started.
 
-   mysqld --ldata=/suse9.1/webdsl/db1/
+   mysqld --datadir=/suse9.1/webdsl/db1/
 
 --------------------------------------------------------------------
 Setting root password
@@ -42,7 +41,7 @@ Starting mysql shell
 
    mysql -u root -p
 
-mysql> grant all privileges on *.* to visser@localhost identified by 'pwd';
+mysql> grant all privileges on *.* to visser@localhost identified by 'dsl';
 mysql> quit
 
 $ mysql -u visser -p
@@ -55,6 +54,10 @@ mysql> use bank;
 mysql> source LearningSQLExample.sql;  
 
 --------------------------------------------------------------------
+
+mysql> create database users;
+
+mysql> use users;
 
 mysql> create table person
      (person_id smallint unsigned,
@@ -70,7 +73,7 @@ mysql> create table person
       constraint pk_person primary key (person_id)
      );
 
-mysql> desc pers;
+mysql> desc person;
 
 mysql> create table favorite_food
  (person_id smallint unsigned,
@@ -178,5 +181,4 @@ setting up the user webapp
 
 connecting to the mysql server
 
-
-
+- ../../tomcat1/common/lib/jdbc2_0-stdext.jar

@@ -25,6 +25,8 @@
       <classpath>
         <pathelement path="${classpath}"/>
         <pathelement location="../../tomcat1/common/lib/servlet.jar"/>
+        <pathelement location="../../tomcat1/common/lib/jdbc2_0-stdext.jar"/>
+        <pathelement location="${src}/WEB-INF/lib/mysql-connector-java-5.0.3-bin.jar"/>
       </classpath>
     </javac>
 
@@ -40,6 +42,7 @@
           <include name="**/*.html"/>
           <include name="**/*.jsp"/>
        </fileset>
+       <lib dir="${src}/WEB-INF/lib/"/>
        <classes dir="${build}/WEB-INF/classes/"/>
     </war>
 

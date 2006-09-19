@@ -12,3 +12,4 @@ cp -f dist/lib/user1.war ${webappdir}
 
 ./startup.sh
 
+mysqld --datadir=/suse9.1/webdsl/db1/ &
