@@ -11,12 +11,12 @@
 
   <servlet>
     <servlet-name>ShowUsers1</servlet-name>
-    <servlet-class>ShowUsers</servlet-class>
+    <servlet-class>webdsl.users.ShowUsers</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>AddUser1</servlet-name>
-    <servlet-class>AddUser</servlet-class>
+    <servlet-class>webdsl.users.AddUser</servlet-class>
   </servlet>
   
   <servlet-mapping>

@@ -13,14 +13,14 @@ import java.sql.*;
  *  &copy; 2003 Marty Hall; may be freely used or adapted.
  */
 
-public class ShowUsers extends HttpServlet 
+public class AddUser extends HttpServlet 
 {
 
-  public void doGet(HttpServletRequest request,
-                    HttpServletResponse response)
-      throws ServletException, IOException 
+    public void doGet(HttpServletRequest request,
+		      HttpServletResponse response)
+	throws ServletException, IOException 
     {
-      
+	
 	response.setContentType("text/html");
 	
 	PrintWriter out = response.getWriter();
@@ -29,20 +29,20 @@ public class ShowUsers extends HttpServlet
 	    "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 " +
 	    "Transitional//EN\">\n";
 
-	String users = getUsersFromDB();
+	String users = addUserToDB("PietjePuk", "Pietje Puk", "pp", "pp@puk.org");
 
 	out.println(docType +
 		    "<HTML>\n" +
-		    "<HEAD><TITLE>ShowUsers</TITLE></HEAD>\n" +
+		    "<HEAD><TITLE>AddUser</TITLE></HEAD>\n" +
 		    "<BODY BGCOLOR=\"#FDF5E6\">\n" +
-		    "<H1>ShowUsers</H1>\n" +
+		    "<H1>AddUser</H1>\n" +
                     users +
 		    "</BODY></HTML>");
     }
 
-  String getUsersFromDB() 
+    private String addUserToDB(String user_name, String name, 
+			       String password, String email)
     {
-	String users = "no users yet";
         try {
             // The newInstance() call is a work around for some
             // broken Java implementations
@@ -69,35 +69,30 @@ public class ShowUsers extends HttpServlet
         }
 
 	Statement stmt = null;
-	ResultSet rs = null;
+	int rows_affected;
 	
 	try {
 	    stmt = connection.createStatement();
-	    rs = stmt.executeQuery("SELECT name FROM user");
-	    users = "";
-	    while(rs.next())
-		{
-		    users = users + rs.getString(1) + "<br>\n";
-		}
+
+	    String query = 
+		"INSERT INTO user (user_name, password, name, email) VALUES"
+		+ "('"   + user_name
+		+ "', '" + password 
+		+ "', '" + name
+		+ "', '" + email 
+		+ "');";
+
+	    rows_affected = stmt.executeUpdate(query);
 	} catch(Exception ex) {
 	    return ex.toString();
 	} finally {
-	    // it is a good idea to release
-	    // resources in a finally{} block
-	    // in reverse-order of their creation
-	    // if they are no-longer needed
-	    
-	    if (rs != null) {
-		try { rs.close(); } catch (SQLException sqlEx) { ; }
-		rs = null;
-	    }		
 	    if (stmt != null) {
 		try { stmt.close(); } catch (SQLException sqlEx) { ; }
 		stmt = null;
 	    }
 	}
 
-	return users;
+	return "" + rows_affected;
     }
 
 }
