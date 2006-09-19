@@ -73,11 +73,16 @@ public class ShowUsers extends HttpServlet
 	
 	try {
 	    stmt = connection.createStatement();
-	    rs = stmt.executeQuery("SELECT name FROM user");
+	    rs = stmt.executeQuery("SELECT user_name, name FROM user");
 	    users = "";
 	    while(rs.next())
 		{
-		    users = users + rs.getString(1) + "<br>\n";
+		    users = users 
+			+ "<li>"
+			+ "<a href=/user1/show-user/" + rs.getString(1) + ">"
+			+ rs.getString(2)
+			+ "</a>"
+			+ "</li>";
 		}
 	} catch(Exception ex) {
 	    return ex.toString();
