@@ -15,6 +15,11 @@
   </servlet>
   
   <servlet>
+    <servlet-name>ShowUser1</servlet-name>
+    <servlet-class>webdsl.users.ShowUser</servlet-class>
+  </servlet>
+  
+  <servlet>
     <servlet-name>AddUser1</servlet-name>
     <servlet-class>webdsl.users.AddUser</servlet-class>
   </servlet>
@@ -27,6 +32,11 @@
   <servlet-mapping>
     <servlet-name>ShowUsers1</servlet-name>
     <url-pattern>/show-users</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>ShowUser1</servlet-name>
+    <url-pattern>/show-user/*</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>

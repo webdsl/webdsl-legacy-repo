@@ -101,6 +101,9 @@ public class ShowUsers extends HttpServlet
 		stmt = null;
 	    }
 	}
+	try {
+	    connection.close();
+	} catch(Exception ex) {}
 
 	return users;
     }
