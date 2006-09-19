@@ -29,7 +29,7 @@ public class AddUser extends HttpServlet
 	    "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 " +
 	    "Transitional//EN\">\n";
 
-	String users = addUserToDB("PietjePuk", "Pietje Puk", "pp", "pp@puk.org");
+	String users = addUserToDB(request);
 
 	out.println(docType +
 		    "<HTML>\n" +
@@ -40,9 +40,14 @@ public class AddUser extends HttpServlet
 		    "</BODY></HTML>");
     }
 
-    private String addUserToDB(String user_name, String name, 
-			       String password, String email)
+    private String addUserToDB(HttpServletRequest request)
     {
+	String user_name = request.getParameter("user_name");
+	String name = request.getParameter("name");
+	String password = request.getParameter("password"); 
+	String password_check = request.getParameter("password_check"); 
+	String email = request.getParameter("email");
+
         try {
             // The newInstance() call is a work around for some
             // broken Java implementations
