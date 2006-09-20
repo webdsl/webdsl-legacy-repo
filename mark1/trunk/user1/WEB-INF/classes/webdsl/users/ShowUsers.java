@@ -61,7 +61,7 @@ class MakeUserListFromResultSet implements ProcessResultSet
 		{
 		    users = users 
 			+ "<li>"
-			+ "<a href=/user1/show-user/" + rs.getString(1) + ">"
+			+ "<a href=/user1/user/" + rs.getString(1) + ">"
 			+ rs.getString(2)
 			+ "</a>"
 			+ "</li>";
