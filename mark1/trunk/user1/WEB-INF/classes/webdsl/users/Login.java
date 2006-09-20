@@ -4,6 +4,11 @@ import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.sql.*;
+import coreservlets.beans.*;
+
+import webdsl.users.*;
+
+import org.apache.commons.beanutils.BeanUtils;
 
 /** Simple servlet used to test server.
  *  <P>
@@ -16,7 +21,7 @@ import java.sql.*;
 public class Login extends HttpServlet 
 {
 
-    public void doGet(HttpServletRequest request,
+    public void doPost(HttpServletRequest request,
 		      HttpServletResponse response)
 	throws ServletException, IOException 
     {
@@ -44,13 +49,17 @@ public class Login extends HttpServlet
 
     private String loginUser(HttpServletRequest request)
     {
+	UserInfo userinfo = new UserInfo();
+
+	BeanUtilities.populateBean((Object)userinfo, request);
+
 	String login_succesful = "";
 	int count = 0;
-	String user_name = request.getParameter("user_name");
-	String password = request.getParameter("password"); 
+	String username = userinfo.getUsername();
+	String password = userinfo.getPassword(); 
 
 	login_succesful = 
-	    "user_name = " + user_name + "\n"
+	    "username = " + username + "\n"
 	    + "password = " + password + "\n";
 
         try {
@@ -86,7 +95,7 @@ public class Login extends HttpServlet
 
 	    String query = 
 		"SELECT user_name, password FROM user "
-		+ "WHERE user_name = '" + user_name + "'"
+		+ "WHERE user_name = '" + username + "'"
 		+ " && password = '" + password + "'";
 
 	    login_succesful = login_succesful 

@@ -1,12 +1,15 @@
-class UserInfo
+package webdsl.users;
+
+public class UserInfo
 {
     private String username;
     private String fullname;
     private String password;
-    private String passwordcheck;
+    //private String passwordcheck;
     private String email;
     private String url;
 
+    public UserInfo() {}
 
     public String getUsername() {
 	return username;
@@ -20,9 +23,9 @@ class UserInfo
 	return password;
     }
 
-    public String getPasswordcheck() {
-	return passwordcheck;
-    }
+    //public String getPasswordcheck() {
+    //	return passwordcheck;
+    //}
 
     public String getEmail() {
 	return email;
@@ -45,19 +48,19 @@ class UserInfo
 	this.password = password;
     }
 
-    public void setPasswordcheck (String passwordcheck) {
-	this.passwordcheck = passwordcheck;
-    }
+    //public void setPasswordcheck (String passwordcheck) {
+    //	this.passwordcheck = passwordcheck;
+    //}
 
     public void setEmail (String email) {
 	this.email = email;
     }
 
     public void setUrl (String url) {
-	this.Url = url;
+	this.url = url;
     }
 
-    public boolean passwordIsConsistent() {
-	return this.getPassword().equals(this.getPasswordcheck());
-    }
+    //public boolean passwordIsConsistent() {
+    //	return this.getPassword().equals(this.getPasswordcheck());
+    //}
 }

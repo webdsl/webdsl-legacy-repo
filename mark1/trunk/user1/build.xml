@@ -27,6 +27,15 @@
         <pathelement location="../../tomcat1/common/lib/servlet.jar"/>
         <pathelement location="../../tomcat1/common/lib/jdbc2_0-stdext.jar"/>
         <pathelement location="${src}/WEB-INF/lib/mysql-connector-java-5.0.3-bin.jar"/>
+        <pathelement location="${src}/WEB-INF/lib/commons-beanutils-bean-collections.jar"/>
+        <pathelement location="${src}/WEB-INF/lib/commons-beanutils-core.jar"/>
+        <pathelement location="${src}/WEB-INF/lib/commons-beanutils.jar"/>
+        <pathelement location="${src}/WEB-INF/lib/commons-collections-3.2.jar"/>
+        <pathelement location="${src}/WEB-INF/lib/commons-logging-1.1.jar"/>
+        <pathelement location="${src}/WEB-INF/lib/commons-logging-adapters-1.1.jar"/>
+        <pathelement location="${src}/WEB-INF/lib/commons-logging-api-1.1.jar"/>
+        <pathelement location="${src}/WEB-INF/lib/mysql-connector-java-5.0.3-bin.jar"/>
+
       </classpath>
     </javac>
 
