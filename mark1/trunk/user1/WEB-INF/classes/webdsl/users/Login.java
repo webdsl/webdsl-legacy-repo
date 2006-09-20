@@ -1,6 +1,7 @@
 package webdsl.users;
 
 import java.io.*;
+import java.lang.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.sql.*;
@@ -33,9 +34,7 @@ public class Login extends HttpServlet
 	    "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 " +
 	    "Transitional//EN\">\n";
 
-	String answer;
-
-        answer = loginUser(request);
+	Integer answer = loginUser(request);
 
 	out.println(docType +
 		    "<HTML>\n" +
@@ -46,92 +45,33 @@ public class Login extends HttpServlet
 		    "</BODY></HTML>");
     }
 
-    private String loginUser(HttpServletRequest request)
+    private Integer loginUser(HttpServletRequest request)
     {
 	UserInfo userinfo = new UserInfo();
-
 	BeanUtilities.populateBean((Object)userinfo, request);
 
-	String login_succesful = "";
-	int count = 0;
-	String username = userinfo.getUsername();
-	String password = userinfo.getPassword(); 
+	String query = 
+	    "SELECT user_name, password FROM user "
+	    + "WHERE user_name = '" + userinfo.getUsername() + "'"
+	    + " && password = '" + userinfo.getPassword() + "'";
 
-	login_succesful = 
-	    "username = " + username + "\n"
-	    + "password = " + password + "\n";
+	Integer count = (Integer)DataBaseUtilities.queryDataBase(query, new CountResultSet());
 
-        try {
-            // The newInstance() call is a work around for some
-            // broken Java implementations
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-        } catch (Exception ex) {
-            // handle the error
-	    System.out.println("could not load jdbc driver class");
-        }
-
-	Connection connection;
-
-	try {
-            connection = 
-		DriverManager
-		.getConnection("jdbc:mysql://localhost/users?user=visser&password=dsl");
-	    
-            // Do something with the Connection
-	    
-	} catch (SQLException ex) {
-            return "no connection to database <br>\n" 
-		+ "SQLException: " + ex.getMessage() + "<br>\n"
-		+ "SQLState: " + ex.getSQLState() + "<br>\n"
-			       + "VendorError: " + ex.getErrorCode();
-        }
-
-	Statement stmt = null;
-	ResultSet rs;
-	
-	try {
-	    stmt = connection.createStatement();
-
-	    String query = 
-		"SELECT user_name, password FROM user "
-		+ "WHERE user_name = '" + username + "'"
-		+ " && password = '" + password + "'";
-
-	    login_succesful = login_succesful 
-		+ "query = "
-		+ query;
-
-	    rs = stmt.executeQuery(query);
-
-	    while(rs.next())
-		{
-		    login_succesful = login_succesful 
-			+ "result: "
-			+ rs.getString(1)
-			+ "/" 
-			+ rs.getString(2);
-		    count = count + 1;
-		}
-
-		
-
-	} catch(Exception ex) {
-	} finally {
-	    if (stmt != null) {
-		try { stmt.close(); } catch (SQLException sqlEx) { ; }
-		stmt = null;
-	    }
-	}
-	
-	try {
-	    connection.close();
-	} catch(Exception ex) {}
-
-	
-	if(count == 1) 
-	    login_succesful = "ok";
-
-	return login_succesful;
+	return count;
     }
 
+}
+
+class CountResultSet implements ProcessResultSet
+{
+    public Object process(ResultSet rs) 
+    {
+	int count = 0;
+	try{
+	    while(rs.next()) { count = count + 1; }
+	} catch(Exception e) {
+	    count = -1;
+	}
+	return (Object) new Integer(count);
+    }
 }
