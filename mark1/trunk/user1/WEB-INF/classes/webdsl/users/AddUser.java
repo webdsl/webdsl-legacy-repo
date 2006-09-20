@@ -8,14 +8,6 @@ import java.sql.*;
 import coreservlets.beans.*;
 import webdsl.users.*;
 
-/** Simple servlet used to test server.
- *  <P>
- *  Taken from Core Servlets and JavaServer Pages 2nd Edition
- *  from Prentice Hall and Sun Microsystems Press,
- *  http://www.coreservlets.com/.
- *  &copy; 2003 Marty Hall; may be freely used or adapted.
- */
-
 public class AddUser extends HttpServlet 
 {
 
@@ -34,81 +26,30 @@ public class AddUser extends HttpServlet
 
 	String users = addUserToDB(request);
 
-	out.println(docType +
-		    "<HTML>\n" +
-		    "<HEAD><TITLE>AddUser</TITLE></HEAD>\n" +
-		    "<BODY BGCOLOR=\"#FDF5E6\">\n" +
-		    "<H1>AddUser</H1>\n" +
-                    users +
-		    "</BODY></HTML>");
+	out.println(docType 
+		    + "<HTML>\n" 
+		    + "<HEAD><TITLE>AddUser</TITLE></HEAD>\n" 
+		    + "<BODY BGCOLOR=\"#FDF5E6\">\n" 
+		    + "<H1>AddUser</H1>\n" 
+		    + users 
+		    + "</BODY></HTML>");
     }
 
     private String addUserToDB(HttpServletRequest request)
     {
-	//String user_name = request.getParameter("user_name");
-	//String name = request.getParameter("name");
-	//String password = request.getParameter("password"); 
-	//String password_check = request.getParameter("password_check"); 
-	//String email = request.getParameter("email");
-
 	UserInfo userinfo = new UserInfo();
 	BeanUtilities.populateBean((Object)userinfo, request);
 
-        try {
-            // The newInstance() call is a work around for some
-            // broken Java implementations
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-        } catch (Exception ex) {
-            // handle the error
-	    return "could not load jdbc driver class";
-        }
-
-	Connection connection;
-
-	try {
-            connection = 
-		DriverManager
-		.getConnection("jdbc:mysql://localhost/users?user=visser&password=dsl");
-	    
-            // Do something with the Connection
-	    
-	} catch (SQLException ex) {
-            return "no connection to database <br>\n" 
-		+ "SQLException: " + ex.getMessage() + "<br>\n"
-		+ "SQLState: " + ex.getSQLState() + "<br>\n"
-		+ "VendorError: " + ex.getErrorCode();
-        }
-
-	Statement stmt = null;
-	int rows_affected;
+	String query = 
+	    "INSERT INTO user (user_name, password, name, email, url) VALUES"
+	    + "('"   + userinfo.getUsername()
+	    + "', '" + userinfo.getPassword()
+	    + "', '" + userinfo.getFullname()
+	    + "', '" + userinfo.getEmail()
+	    + "', '" + userinfo.getUrl()
+	    + "');";
 	
-	try {
-	    stmt = connection.createStatement();
-
-	    String query = 
-		"INSERT INTO user (user_name, password, name, email, url) VALUES"
-		+ "('"   + userinfo.getUsername()
-		+ "', '" + userinfo.getPassword()
-		+ "', '" + userinfo.getFullname()
-		+ "', '" + userinfo.getEmail()
-		+ "', '" + userinfo.getUrl()
-		+ "');";
-
-	    rows_affected = stmt.executeUpdate(query);
-	} catch(Exception ex) {
-	    return ex.toString();
-	} finally {
-	    if (stmt != null) {
-		try { stmt.close(); } catch (SQLException sqlEx) { ; }
-		stmt = null;
-	    }
-	}
-	
-	try {
-	    connection.close();
-	} catch(Exception ex) {}
-
-	return "" + rows_affected;
+	return DataBaseUtilities.updateDataBase(query);
     }
 
 }
