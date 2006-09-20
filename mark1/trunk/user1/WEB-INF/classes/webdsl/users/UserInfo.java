@@ -23,9 +23,9 @@ public class UserInfo
 	return password;
     }
 
-    //public String getPasswordcheck() {
-    //	return passwordcheck;
-    //}
+    public String getPasswordcheck() {
+    	return passwordcheck;
+    }
 
     public String getEmail() {
 	return email;
@@ -48,9 +48,9 @@ public class UserInfo
 	this.password = password;
     }
 
-    //public void setPasswordcheck (String passwordcheck) {
-    //	this.passwordcheck = passwordcheck;
-    //}
+    public void setPasswordcheck (String passwordcheck) {
+    	this.passwordcheck = passwordcheck;
+    }
 
     public void setEmail (String email) {
 	this.email = email;
@@ -60,7 +60,7 @@ public class UserInfo
 	this.url = url;
     }
 
-    //public boolean passwordIsConsistent() {
-    //	return this.getPassword().equals(this.getPasswordcheck());
-    //}
+    public boolean passwordIsConsistent() {
+    	return this.getPassword().equals(this.getPasswordcheck());
+    }
 }
