@@ -42,19 +42,21 @@ public class ShowUser extends HttpServlet
 
   String getUserFromDB(HttpServletRequest request)
     {
-	String user_name = request.getPathInfo();
-	if(user_name.startsWith("/"))
-	    user_name = user_name.substring(1);
+	String username = request.getPathInfo();
+	if(username.startsWith("/"))
+	    username = username.substring(1);
 
 	String query = 
-	    "SELECT user_name, name, email, url FROM user " 
-	    + "WHERE user_name = '" + user_name + "'";
+	    "SELECT username, name, email, url FROM user " 
+	    + "WHERE username = '" + username + "'";
     
-	return (String)DataBaseUtilities
-	    .queryDataBase(query, new MakeUserInfoFromResultSet());
+	//return (String)DataBaseUtilities
+	//    .queryDataBase(query, new MakeUserInfoFromResultSet());
+
+	return null;
     }
 }
-
+/*
 class MakeUserInfoFromResultSet implements ProcessResultSet
 {
     public Object process(ResultSet rs) 
@@ -65,7 +67,7 @@ class MakeUserInfoFromResultSet implements ProcessResultSet
 		{
 		    user = ""
 			+ "<ul>"
-			+ "<li> user_name: " + rs.getString(1) + "</li>"
+			+ "<li> username: " + rs.getString(1) + "</li>"
 			+ "<li> name: "      + rs.getString(2) + "</li>"
 			+ "<li> email: "     + rs.getString(3) + "</li>"
 			+ "<li> url: "     + rs.getString(4) + "</li>"
@@ -77,3 +79,4 @@ class MakeUserInfoFromResultSet implements ProcessResultSet
 	return (Object) user;
     }
 }
+*/

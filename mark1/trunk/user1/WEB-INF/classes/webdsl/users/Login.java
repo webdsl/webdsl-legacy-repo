@@ -51,8 +51,8 @@ public class Login extends HttpServlet
 	BeanUtilities.populateBean((Object)userinfo, request);
 
 	String query = 
-	    "SELECT user_name, password FROM user "
-	    + "WHERE user_name = '" + userinfo.getUsername() + "'"
+	    "SELECT username, password FROM user "
+	    + "WHERE username = '" + userinfo.getUsername() + "'"
 	    + " && password = '" + userinfo.getPassword() + "'";
 
 	Integer count = 

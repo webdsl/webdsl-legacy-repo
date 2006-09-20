@@ -46,7 +46,7 @@
 
   <servlet-mapping>
     <servlet-name>AddUser1</servlet-name>
-    <url-pattern>/add-user</url-pattern>
+    <url-pattern>/add-user/*</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>

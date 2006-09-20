@@ -42,7 +42,7 @@ public class ShowUsers extends HttpServlet
 
   String getUsersFromDB() 
     {
-	String query = "SELECT user_name, name FROM user";
+	String query = "SELECT username, name FROM user";
 
 	return (String)DataBaseUtilities
 	    .queryDataBase(query, new MakeUserListFromResultSet());
