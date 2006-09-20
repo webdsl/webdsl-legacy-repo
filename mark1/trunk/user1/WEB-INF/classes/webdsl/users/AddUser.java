@@ -44,12 +44,16 @@ public class AddUser extends HttpServlet
 	db_userinfo.setUsername(userinfo.getUsername());
 	getUserFromDB(db_userinfo);
 	db_userinfo.setChanged(false);
+	boolean user_existed = (db_userinfo.getUsername() != null);
 	db_userinfo.partiallyUpdateFrom(userinfo);
        
-	if (db_userinfo.isComplete())
+	if (db_userinfo.isComplete() && !userinfo.getChange())
 	    {
 		if (db_userinfo.isChanged()) 
-		    addUserToDB(db_userinfo);
+		    if (user_existed)
+			changeUserInDB(db_userinfo);
+		    else 
+			addUserToDB(db_userinfo);
 		showUserInfo(request, response, db_userinfo);
 	    }
 	else
@@ -86,6 +90,12 @@ public class AddUser extends HttpServlet
 		    + "<li> email: "     + userinfo.getEmail() + "</li>"
 		    + "<li> url: "       + userinfo.getUrl() + "</li>"
 		    + "</ul>");
+
+	    
+	out.println("<form method=\"POST\">"
+		    + "<input type=\"checkbox\" name=\"change\" checked />"
+		    + "<input type=\"submit\" value=\"change user info\" />"
+		    + "</form>");
 
 	out.println("</BODY></HTML>");
 
@@ -160,6 +170,19 @@ public class AddUser extends HttpServlet
 	    + "', '" + userinfo.getEmail()
 	    + "', '" + userinfo.getUrl()
 	    + "');";
+	
+	return DataBaseUtilities.updateDataBase(query);
+    }
+
+    private String changeUserInDB(UserInfo userinfo)
+    {
+	String query = 
+	    "update user set "
+	    + "username = '" + userinfo.getUsername() + "', "
+	    + "password = '" + userinfo.getPassword() + "', "
+	    + "name     = '" + userinfo.getFullname() + "', "
+	    + "email    = '" + userinfo.getEmail()    + "', "
+	    + "url      = '" + userinfo.getUrl()      + "'; ";
 	
 	return DataBaseUtilities.updateDataBase(query);
     }

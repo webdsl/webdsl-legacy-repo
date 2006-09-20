@@ -10,6 +10,7 @@ public class UserInfo
     private String url;
 
     private boolean changed;
+    private boolean change;
 
     public UserInfo() {}
 
@@ -51,6 +52,10 @@ public class UserInfo
 	return changed;
     }
 
+    public boolean getChange() {
+	return change;
+    }
+
 
     public void setUsername (String username) {
 	if(!sameValues(getUsername(), username))
@@ -90,6 +95,10 @@ public class UserInfo
 
     public void setChanged(boolean changed) {
 	this.changed = changed;
+    }
+
+    public void setChange(boolean change) {
+	this.change = change;
     }
 
     public void makeEmpty()
@@ -156,5 +165,8 @@ public class UserInfo
 
 	if (hasValue(userinfo.getUrl()))
 	    setUrl(userinfo.getUrl());
+
+	if (userinfo.isChanged())
+	    setChanged(true);
     }
 }
