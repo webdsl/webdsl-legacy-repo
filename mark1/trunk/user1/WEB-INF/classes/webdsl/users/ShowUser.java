@@ -46,71 +46,34 @@ public class ShowUser extends HttpServlet
 	if(user_name.startsWith("/"))
 	    user_name = user_name.substring(1);
 
-	String user = "no information available about this user";
+	String query = 
+	    "SELECT user_name, name, email, url FROM user " 
+	    + "WHERE user_name = '" + user_name + "'";
+    
+	return (String)DataBaseUtilities
+	    .queryDataBase(query, new MakeUserInfoFromResultSet());
+    }
+}
 
-        try {
-            // The newInstance() call is a work around for some
-            // broken Java implementations
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-        } catch (Exception ex) {
-            // handle the error
-	    return "could not load jdbc driver class";
-        }
-
-	Connection connection;
-
-	try {
-            connection = 
-		DriverManager
-		.getConnection("jdbc:mysql://localhost/users?user=visser&password=dsl");
-	    
-            // Do something with the Connection
-	    
-	} catch (SQLException ex) {
-            return "no connection to database <br>\n" 
-		+ "SQLException: " + ex.getMessage() + "<br>\n"
-		+ "SQLState: " + ex.getSQLState() + "<br>\n"
-		+ "VendorError: " + ex.getErrorCode();
-        }
-
-	Statement stmt = null;
-	ResultSet rs = null;
-	
-	try {
-	    stmt = connection.createStatement();
-	    rs = stmt.executeQuery("SELECT user_name, name, email FROM user WHERE user_name = '" + user_name + "'");
+class MakeUserInfoFromResultSet implements ProcessResultSet
+{
+    public Object process(ResultSet rs) 
+    {
+	String user = "";
+	try{
 	    if(rs.next())
 		{
-		    user = "information for user: " + user_name 
+		    user = ""
 			+ "<ul>"
 			+ "<li> user_name: " + rs.getString(1) + "</li>"
 			+ "<li> name: "      + rs.getString(2) + "</li>"
 			+ "<li> email: "     + rs.getString(3) + "</li>"
+			+ "<li> url: "     + rs.getString(4) + "</li>"
 			+ "</ul>";
 		}
-	} catch(Exception ex) {
-	    return ex.toString();
-	} finally {
-	    // it is a good idea to release
-	    // resources in a finally{} block
-	    // in reverse-order of their creation
-	    // if they are no-longer needed
-	    
-	    if (rs != null) {
-		try { rs.close(); } catch (SQLException sqlEx) { ; }
-		rs = null;
-	    }		
-	    if (stmt != null) {
-		try { stmt.close(); } catch (SQLException sqlEx) { ; }
-		stmt = null;
-	    }
+	} catch(Exception e) {
+	    user = e.toString();
 	}
-
-	try {
-	    connection.close();
-	} catch(Exception ex) {}
-
-	return user;
+	return (Object) user;
     }
-
 }

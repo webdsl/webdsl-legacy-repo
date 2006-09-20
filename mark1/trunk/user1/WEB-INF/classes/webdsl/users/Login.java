@@ -55,7 +55,8 @@ public class Login extends HttpServlet
 	    + "WHERE user_name = '" + userinfo.getUsername() + "'"
 	    + " && password = '" + userinfo.getPassword() + "'";
 
-	Integer count = (Integer)DataBaseUtilities.queryDataBase(query, new CountResultSet());
+	Integer count = 
+	    (Integer)DataBaseUtilities.queryDataBase(query, new CountResultSet());
 
 	return count;
     }

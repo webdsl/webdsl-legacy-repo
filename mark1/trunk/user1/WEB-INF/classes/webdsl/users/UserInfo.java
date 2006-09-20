@@ -5,7 +5,7 @@ public class UserInfo
     private String username;
     private String fullname;
     private String password;
-    //private String passwordcheck;
+    private String passwordcheck;
     private String email;
     private String url;
 

@@ -42,39 +42,21 @@ public class ShowUsers extends HttpServlet
 
   String getUsersFromDB() 
     {
-	String users = "no users yet";
-        try {
-            // The newInstance() call is a work around for some
-            // broken Java implementations
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-        } catch (Exception ex) {
-            // handle the error
-	    return "could not load jdbc driver class";
-        }
+	String query = "SELECT user_name, name FROM user";
 
-	Connection connection;
+	return (String)DataBaseUtilities
+	    .queryDataBase(query, new MakeUserListFromResultSet());
+    }
 
-	try {
-            connection = 
-		DriverManager
-		.getConnection("jdbc:mysql://localhost/users?user=visser&password=dsl");
-	    
-            // Do something with the Connection
-	    
-	} catch (SQLException ex) {
-            return "no connection to database <br>\n" 
-		+ "SQLException: " + ex.getMessage() + "<br>\n"
-		+ "SQLState: " + ex.getSQLState() + "<br>\n"
-		+ "VendorError: " + ex.getErrorCode();
-        }
+}
 
-	Statement stmt = null;
-	ResultSet rs = null;
-	
-	try {
-	    stmt = connection.createStatement();
-	    rs = stmt.executeQuery("SELECT user_name, name FROM user");
-	    users = "";
+
+class MakeUserListFromResultSet implements ProcessResultSet
+{
+    public Object process(ResultSet rs) 
+    {
+	String users = "";
+	try{
 	    while(rs.next())
 		{
 		    users = users 
@@ -84,28 +66,9 @@ public class ShowUsers extends HttpServlet
 			+ "</a>"
 			+ "</li>";
 		}
-	} catch(Exception ex) {
-	    return ex.toString();
-	} finally {
-	    // it is a good idea to release
-	    // resources in a finally{} block
-	    // in reverse-order of their creation
-	    // if they are no-longer needed
-	    
-	    if (rs != null) {
-		try { rs.close(); } catch (SQLException sqlEx) { ; }
-		rs = null;
-	    }		
-	    if (stmt != null) {
-		try { stmt.close(); } catch (SQLException sqlEx) { ; }
-		stmt = null;
-	    }
+	} catch(Exception e) {
+	    users = e.toString();
 	}
-	try {
-	    connection.close();
-	} catch(Exception ex) {}
-
-	return users;
+	return (Object) users;
     }
-
 }
