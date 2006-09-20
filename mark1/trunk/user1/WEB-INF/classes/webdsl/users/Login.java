@@ -5,7 +5,6 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import java.sql.*;
 import coreservlets.beans.*;
-
 import webdsl.users.*;
 
 import org.apache.commons.beanutils.BeanUtils;

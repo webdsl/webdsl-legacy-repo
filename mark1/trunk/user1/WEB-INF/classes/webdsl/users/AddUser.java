@@ -5,6 +5,9 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import java.sql.*;
 
+import coreservlets.beans.*;
+import webdsl.users.*;
+
 /** Simple servlet used to test server.
  *  <P>
  *  Taken from Core Servlets and JavaServer Pages 2nd Edition
@@ -42,11 +45,14 @@ public class AddUser extends HttpServlet
 
     private String addUserToDB(HttpServletRequest request)
     {
-	String user_name = request.getParameter("user_name");
-	String name = request.getParameter("name");
-	String password = request.getParameter("password"); 
-	String password_check = request.getParameter("password_check"); 
-	String email = request.getParameter("email");
+	//String user_name = request.getParameter("user_name");
+	//String name = request.getParameter("name");
+	//String password = request.getParameter("password"); 
+	//String password_check = request.getParameter("password_check"); 
+	//String email = request.getParameter("email");
+
+	UserInfo userinfo = new UserInfo();
+	BeanUtilities.populateBean((Object)userinfo, request);
 
         try {
             // The newInstance() call is a work around for some
@@ -80,11 +86,12 @@ public class AddUser extends HttpServlet
 	    stmt = connection.createStatement();
 
 	    String query = 
-		"INSERT INTO user (user_name, password, name, email) VALUES"
-		+ "('"   + user_name
-		+ "', '" + password 
-		+ "', '" + name
-		+ "', '" + email 
+		"INSERT INTO user (user_name, password, name, email, url) VALUES"
+		+ "('"   + userinfo.getUsername();
+		+ "', '" + userinfo.getPassword 
+		+ "', '" + userinfo.getName
+		+ "', '" + userinfo.getEmail 
+		+ "', '" + userinfo.getUrl
 		+ "');";
 
 	    rows_affected = stmt.executeUpdate(query);
