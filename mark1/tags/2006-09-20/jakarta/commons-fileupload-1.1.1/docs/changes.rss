@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<rss version="0.91">
+  <channel>
+    <title>Changes report</title>
+    <link>http://jakarta.apache.org/commons/fileupload/</link>
+    <description>Changes report</description>
+    <language>en-us</language>
+    <copyright>Copyright 2004 The Apache Software Foundation</copyright>
+    <item>
+      <title>2 change(s) for version 1.1.1</title>
+      <link>http://jakarta.apache.org/commons/fileupload//changes-report.html</link>
+      <description>
+        <table border="1">
+          <tr>
+            <th style="width:50px">Type</th>
+            <th>Changes</th>
+            <th style="width:70px">By</th>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>Cache disk file item size when it is moved to a new location. Fixes
+              <a href="http://issues.apache.org/jira/browse/FILEUPLOAD-20">FILEUPLOAD-20</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/commons/fileupload//team-list.html#martinc">martinc</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>File names were being inadvertently converted to lower case. Fixes
+              <a href="http://issues.apache.org/jira/browse/FILEUPLOAD-30">FILEUPLOAD-30</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/commons/fileupload//team-list.html#martinc">martinc</a>
+            </td>
+          </tr>
+        </table>
+      </description>
+    </item>
+  </channel>
+</rss>
