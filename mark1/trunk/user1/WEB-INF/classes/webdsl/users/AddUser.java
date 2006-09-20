@@ -87,11 +87,11 @@ public class AddUser extends HttpServlet
 
 	    String query = 
 		"INSERT INTO user (user_name, password, name, email, url) VALUES"
-		+ "('"   + userinfo.getUsername();
-		+ "', '" + userinfo.getPassword 
-		+ "', '" + userinfo.getName
-		+ "', '" + userinfo.getEmail 
-		+ "', '" + userinfo.getUrl
+		+ "('"   + userinfo.getUsername()
+		+ "', '" + userinfo.getPassword()
+		+ "', '" + userinfo.getFullname()
+		+ "', '" + userinfo.getEmail()
+		+ "', '" + userinfo.getUrl()
 		+ "');";
 
 	    rows_affected = stmt.executeUpdate(query);
