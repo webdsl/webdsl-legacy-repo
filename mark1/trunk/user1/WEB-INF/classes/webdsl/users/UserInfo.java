@@ -112,7 +112,9 @@ public class UserInfo
     }
 
     public boolean passwordIsConsistent() {
-    	return this.getPassword().equals(this.getPasswordcheck());
+    	return this.getPassword() != null
+	    && this.getPasswordcheck() != null
+	    && this.getPassword().equals(this.getPasswordcheck());
     }
 
     public boolean isComplete() {

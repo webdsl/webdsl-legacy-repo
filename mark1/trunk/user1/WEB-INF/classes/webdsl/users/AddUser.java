@@ -25,86 +25,25 @@ public class AddUser extends HttpServlet
 	UserInfo userinfo = new UserInfo();
 	BeanUtilities.populateBean((Object)userinfo, request);
 
-	String username = request.getPathInfo();
-	if(username != null && username.startsWith("/"))
+	if (userinfo.isComplete())
 	    {
-		username = username.substring(1);
+		addUserToDB(userinfo);
+		// forward to ShowUser servlet
+		response.sendRedirect("/user1/user/" + userinfo.getUsername());
+		
 	    }
-	else
-	    username = "";
-
-	if (!username.equals("") && !userinfo.hasUsername(username))
+	else 
 	    {
-		userinfo.makeEmpty();
-		userinfo.setUsername(username);
-		// check that username is an alphanumeric string
-	    }
-
-	UserInfo db_userinfo = new UserInfo();
-	db_userinfo.setUsername(userinfo.getUsername());
-	getUserFromDB(db_userinfo);
-	db_userinfo.setChanged(false);
-	boolean user_existed = (db_userinfo.getUsername() != null);
-	db_userinfo.partiallyUpdateFrom(userinfo);
-       
-	if (db_userinfo.isComplete() && !userinfo.getChange())
-	    {
-		if (db_userinfo.isChanged()) 
-		    if (user_existed)
-			changeUserInDB(db_userinfo);
-		    else 
-			addUserToDB(db_userinfo);
-		showUserInfo(request, response, db_userinfo);
-	    }
-	else
-	    {
-		db_userinfo.setPassword("");
-		db_userinfo.setPasswordcheck("");
-		showEntryForm(request, response, db_userinfo);
+		if (!userinfo.passwordIsConsistent()) 
+		    {
+			userinfo.setPassword("");
+			userinfo.setPasswordcheck("");
+		    }
+		showEntryForm(request, response, userinfo);
 	    }
     }
 
-    private void showUserInfo(HttpServletRequest request,
-			       HttpServletResponse response, 
-			       UserInfo userinfo)
-	throws ServletException, IOException 
-    {
-	PrintWriter out = response.getWriter();
-
-	response.setContentType("text/html");
-
-	String docType =
-	    "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 " +
-	    "Transitional//EN\">\n";
-
-	out.println(docType 
-		    + "<HTML>\n" 
-		    + "<HEAD><TITLE>AddUser</TITLE></HEAD>\n" 
-		    + "<BODY BGCOLOR=\"#FDF5E6\">\n" 
-		    + "<H1>AddUser</H1>\n");
-
-	    
-	out.println("<ul>"
-		    + "<li> username: " + userinfo.getUsername() + "</li>"
-		    + "<li> name: "      + userinfo.getFullname() + "</li>"
-		    + "<li> email: "     + userinfo.getEmail() + "</li>"
-		    + "<li> url: "       + userinfo.getUrl() + "</li>"
-		    + "</ul>");
-
-	    
-	out.println("<form method=\"POST\">"
-		    + "<input type=\"text\" name=\"username\" value=\"" 
-		    + userinfo.getUsername() 
-		    + "\" />"
-		    + "<input type=\"checkbox\" name=\"change\" checked />"
-		    + "<input type=\"submit\" value=\"change user info\" />"
-		    + "</form>");
-
-	out.println("</BODY></HTML>");
-
-    }
-
-    private void showEntryForm(HttpServletRequest request,
+    public static void showEntryForm(HttpServletRequest request,
 			       HttpServletResponse response, 
 			       UserInfo userinfo)
 	throws ServletException, IOException 
@@ -137,7 +76,7 @@ public class AddUser extends HttpServlet
 	     );
     }
 
-    private String inputElement(String prompt,
+    private static String inputElement(String prompt,
 				String type,
 				String name,
 				String value,
@@ -177,52 +116,4 @@ public class AddUser extends HttpServlet
 	return DataBaseUtilities.updateDataBase(query);
     }
 
-    private String changeUserInDB(UserInfo userinfo)
-    {
-	String query = 
-	    "update user set "
-	    + "username = '" + userinfo.getUsername() + "', "
-	    + "password = '" + userinfo.getPassword() + "', "
-	    + "name     = '" + userinfo.getFullname() + "', "
-	    + "email    = '" + userinfo.getEmail()    + "', "
-	    + "url      = '" + userinfo.getUrl()      + "'; ";
-	
-	return DataBaseUtilities.updateDataBase(query);
-    }
-
-    UserInfo getUserFromDB(UserInfo userinfo)
-    {
-	String query = 
-	    "SELECT username, name, email, url, password FROM user " 
-	    + "WHERE username = '" + userinfo.getUsername() + "'";
-	
-	return (UserInfo)DataBaseUtilities
-	    .queryDataBase(query, new MakeUserInfoFromResultSet(userinfo));
-    }
-}
-
-class MakeUserInfoFromResultSet implements ProcessResultSet
-{
-    UserInfo userinfo;
-
-    public MakeUserInfoFromResultSet(UserInfo userinfo)
-    {
-	this.userinfo = userinfo;
-    }
-
-    public Object process(ResultSet rs)
-    {
-	try{
-	    if(rs.next())
-		{
-		    userinfo.setUsername(rs.getString(1));
-		    userinfo.setFullname(rs.getString(2));
-		    userinfo.setEmail(rs.getString(3));
-		    userinfo.setUrl(rs.getString(4));
-		    userinfo.setPassword(rs.getString(5));
-		    userinfo.setPasswordcheck(rs.getString(5));
-		}
-	} catch(Exception e) {}
-	return (Object) userinfo;
-    }
 }

@@ -26,6 +26,10 @@ public class Login extends HttpServlet
 	throws ServletException, IOException 
     {
 	
+	HttpSession session = request.getSession();
+
+	Integer answer = loginUser(request, session);
+
 	response.setContentType("text/html");
 	
 	PrintWriter out = response.getWriter();
@@ -34,18 +38,17 @@ public class Login extends HttpServlet
 	    "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 " +
 	    "Transitional//EN\">\n";
 
-	Integer answer = loginUser(request);
-
 	out.println(docType +
 		    "<HTML>\n" +
 		    "<HEAD><TITLE>Login</TITLE></HEAD>\n" +
 		    "<BODY BGCOLOR=\"#FDF5E6\">\n" +
 		    "<H1>Login</H1>\n" +
-                    answer +
+		    "Logged in as " + 
+		    session.getAttribute("username") +
 		    "</BODY></HTML>");
     }
 
-    private Integer loginUser(HttpServletRequest request)
+    private Integer loginUser(HttpServletRequest request, HttpSession session)
     {
 	UserInfo userinfo = new UserInfo();
 	BeanUtilities.populateBean((Object)userinfo, request);
@@ -57,6 +60,11 @@ public class Login extends HttpServlet
 
 	Integer count = 
 	    (Integer)DataBaseUtilities.queryDataBase(query, new CountResultSet());
+
+	if (count.intValue() == 1) 
+	    session.setAttribute("username", userinfo.getUsername() + count);
+	else
+	    session.setAttribute("username", "guest" + count);
 
 	return count;
     }
