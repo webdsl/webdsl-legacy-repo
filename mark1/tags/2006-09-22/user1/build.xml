@@ -1,0 +1,66 @@
+<project name="user1" default="dist" basedir=".">
+
+    <description>
+        build file for user1
+    </description>
+
+  <!-- set global properties for this build -->
+  <property name="src" location="."/>
+  <property name="build" location="build"/>
+  <property name="dist"  location="dist"/>
+
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build}"/>
+    <mkdir dir="${build}/WEB-INF/classes/"/>
+  </target>
+
+  <target name="compile" depends="init"
+        description="compile the source " >
+
+    <!-- Compile the java code from ${src} into ${build} -->
+    <javac srcdir="${src}/WEB-INF/classes/" destdir="${build}/WEB-INF/classes/">
+      <classpath>
+        <pathelement path="${classpath}"/>
+        <pathelement location="../../tomcat1/common/lib/servlet.jar"/>
+        <pathelement location="../../tomcat1/common/lib/jdbc2_0-stdext.jar"/>
+        <pathelement location="${src}/WEB-INF/lib/mysql-connector-java-5.0.3-bin.jar"/>
+        <pathelement location="${src}/WEB-INF/lib/commons-beanutils-bean-collections.jar"/>
+        <pathelement location="${src}/WEB-INF/lib/commons-beanutils-core.jar"/>
+        <pathelement location="${src}/WEB-INF/lib/commons-beanutils.jar"/>
+        <pathelement location="${src}/WEB-INF/lib/commons-collections-3.2.jar"/>
+        <pathelement location="${src}/WEB-INF/lib/commons-logging-1.1.jar"/>
+        <pathelement location="${src}/WEB-INF/lib/commons-logging-adapters-1.1.jar"/>
+        <pathelement location="${src}/WEB-INF/lib/commons-logging-api-1.1.jar"/>
+        <pathelement location="${src}/WEB-INF/lib/mysql-connector-java-5.0.3-bin.jar"/>
+
+      </classpath>
+    </javac>
+
+  </target>
+
+  <target name="dist" depends="compile"
+        description="generate the distribution" >
+    <!-- Create the distribution directory -->
+    <mkdir dir="${dist}/lib"/>
+
+    <war warfile="${dist}/lib/user1.war" webxml="${src}/WEB-INF/web.xml">
+       <fileset dir="${src}">
+          <include name="**/*.html"/>
+          <include name="**/*.jsp"/>
+       </fileset>
+       <lib dir="${src}/WEB-INF/lib/"/>
+       <classes dir="${build}/WEB-INF/classes/"/>
+    </war>
+
+  </target>
+
+  <target name="clean"
+        description="clean up" >
+    <!-- Delete the ${build} and ${dist} directory trees -->
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+  </target>
+</project>
