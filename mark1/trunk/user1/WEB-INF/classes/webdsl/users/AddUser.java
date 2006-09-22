@@ -93,6 +93,9 @@ public class AddUser extends HttpServlet
 
 	    
 	out.println("<form method=\"POST\">"
+		    + "<input type=\"text\" name=\"username\" value=\"" 
+		    + userinfo.getUsername() 
+		    + "\" />"
 		    + "<input type=\"checkbox\" name=\"change\" checked />"
 		    + "<input type=\"submit\" value=\"change user info\" />"
 		    + "</form>");
