@@ -7,6 +7,7 @@ import java.sql.*;
 
 import coreservlets.beans.*;
 import webdsl.users.*;
+import webdsl.html.*;
 
 public class AddUser extends HttpServlet 
 {
@@ -54,52 +55,21 @@ public class AddUser extends HttpServlet
 
 	PrintWriter out = response.getWriter();
 
-	String docType =
-	    "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 " +
-	    "Transitional//EN\">\n";
+	HtmlUtilities.printHeader(out, "Register New User");
 
-	out.println
-	    (docType 
-	     + "<HTML>\n" 
-	     + "<HEAD><TITLE>AddUser</TITLE></HEAD>\n" 
-	     + "<BODY BGCOLOR=\"#FDF5E6\">\n" 
-	     + "<H1>AddUser</H1>\n"
-	     + "<form method=\"POST\">"
-	     + inputElement("Name",      "text",     "username",      userinfo.getUsername(),      true)
-	     + inputElement("Full name", "text",     "fullname",      userinfo.getFullname(),      true)
-	     + inputElement("Email",     "text",     "email",         userinfo.getEmail(),         true)
-	     + inputElement("URL",       "text",     "url",           userinfo.getUrl(),           false)
-	     + inputElement("Password",  "password", "password",      userinfo.getPassword(),      true)
-	     + inputElement("Password",  "password", "passwordcheck", userinfo.getPasswordcheck(), true)
-	     + "<input type=\"submit\" />"
-	     + "</BODY></HTML>"
+	out.println(
+	     "<form method=\"POST\">"
+	     + HtmlUtilities.inputElement("Name",      "text",     "username",      userinfo.getUsername(),      true)
+	     + HtmlUtilities.inputElement("Full name", "text",     "fullname",      userinfo.getFullname(),      true)
+	     + HtmlUtilities.inputElement("Email",     "text",     "email",         userinfo.getEmail(),         true)
+	     + HtmlUtilities.inputElement("URL",       "text",     "url",           userinfo.getUrl(),           false)
+	     + HtmlUtilities.inputElement("Password",  "password", "password",      userinfo.getPassword(),      true)
+	     + HtmlUtilities.inputElement("Password",  "password", "passwordcheck", userinfo.getPasswordcheck(), true)
+	     + "<input type=\"submit\" /> <p />"
 	     );
-    }
 
-    private static String inputElement(String prompt,
-				String type,
-				String name,
-				String value,
-				boolean shouldPrompt)
-    {
-	String message = "";
-	if (shouldPrompt)
-	    if ((value == null) || value.trim().equals(""))
-		message = "<b>" + prompt + "*</b>";
-	    else 
-		message = prompt + "*";
-	else
-	    message = prompt;
-	
-	if (value == null)
-	    value = "";
-
-	return
-	    (message
-	     + ": "
-	     + "<input type=\"" + type + "\" name=\"" + name + "\"" 
-	     + " value=\"" + value + "\" /><br />\n"
-	     );
+	HtmlUtilities.printActions(out);
+	HtmlUtilities.printFooter(out);
     }
 
     private String addUserToDB(UserInfo userinfo)

@@ -7,6 +7,7 @@ import java.sql.*;
 
 import coreservlets.beans.*;
 import webdsl.users.*;
+import webdsl.html.*;
 
 public class ChangeUser extends HttpServlet 
 {

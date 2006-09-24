@@ -7,6 +7,7 @@ import java.sql.*;
 
 import coreservlets.beans.*;
 import webdsl.users.*;
+import webdsl.html.*;
 
 public class ShowUser extends HttpServlet 
 {
@@ -52,18 +53,9 @@ public class ShowUser extends HttpServlet
 	PrintWriter out = response.getWriter();
 
 	response.setContentType("text/html");
+	
+	HtmlUtilities.printHeader(out, userinfo.getUsername());
 
-	String docType =
-	    "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 " +
-	    "Transitional//EN\">\n";
-
-	out.println(docType 
-		    + "<HTML>\n" 
-		    + "<HEAD><TITLE>ShowUser</TITLE></HEAD>\n" 
-		    + "<BODY BGCOLOR=\"#FDF5E6\">\n" 
-		    + "<H1>ShowUser</H1>\n");
-
-	    
 	out.println("<ul>"
 		    + "<li> username: " + userinfo.getUsername() + "</li>"
 		    + "<li> name: "      + userinfo.getFullname() + "</li>"
@@ -71,14 +63,19 @@ public class ShowUser extends HttpServlet
 		    + "<li> url: "       + userinfo.getUrl() + "</li>"
 		    + "</ul>");
 
-	    
 	out.println("<a href=\"/user1/update-user/"
 		    + userinfo.getUsername()
 		    + "\">"
-		    + "change user info</a>");
+		    + "Change user info</a>");
 
-	out.println("</BODY></HTML>");
+	out.println(" | <a href=\"/user1/remove-user/"
+		    + userinfo.getUsername()
+		    + "\">"
+		    + "Remove user</a> | ");
 
+	HtmlUtilities.printActions(out);
+
+	HtmlUtilities.printFooter(out);
     }
 
     UserInfo getUserFromDB(String username, UserInfo userinfo)

@@ -39,6 +39,11 @@
     <servlet-class>webdsl.users.Login</servlet-class>
   </servlet>
   
+  <servlet>
+    <servlet-name>Logout1</servlet-name>
+    <servlet-class>webdsl.users.Logout</servlet-class>
+  </servlet>
+  
   <servlet-mapping>
     <servlet-name>Servlet1</servlet-name>
     <url-pattern>/servlet1</url-pattern>
@@ -46,12 +51,12 @@
 
   <servlet-mapping>
     <servlet-name>ShowUsers1</servlet-name>
-    <url-pattern>/show-users</url-pattern>
+    <url-pattern>/users</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>
     <servlet-name>AddUser1</servlet-name>
-    <url-pattern>/add-user</url-pattern>
+    <url-pattern>/register-user</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>
@@ -66,12 +71,17 @@
 
   <servlet-mapping>
     <servlet-name>RemoveUser1</servlet-name>
-    <url-pattern>/remove-user</url-pattern>
+    <url-pattern>/remove-user/*</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>
     <servlet-name>Login1</servlet-name>
     <url-pattern>/login</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>Logout1</servlet-name>
+    <url-pattern>/logout</url-pattern>
   </servlet-mapping>
 
 </web-app>

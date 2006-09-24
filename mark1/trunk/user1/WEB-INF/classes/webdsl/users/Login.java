@@ -7,45 +7,54 @@ import javax.servlet.http.*;
 import java.sql.*;
 import coreservlets.beans.*;
 import webdsl.users.*;
-
-import org.apache.commons.beanutils.BeanUtils;
-
-/** Simple servlet used to test server.
- *  <P>
- *  Taken from Core Servlets and JavaServer Pages 2nd Edition
- *  from Prentice Hall and Sun Microsystems Press,
- *  http://www.coreservlets.com/.
- *  &copy; 2003 Marty Hall; may be freely used or adapted.
- */
+import webdsl.html.*;
 
 public class Login extends HttpServlet 
 {
+
+    public void doGet(HttpServletRequest request,
+		      HttpServletResponse response)
+	throws ServletException, IOException 
+    {
+	HttpSession session = request.getSession();
+
+	PrintWriter out = response.getWriter();
+	response.setContentType("text/html");
+	
+	HtmlUtilities.printHeader(out, "Login");
+
+	out.println(
+           "<form method=\"POST\">"
+	   + HtmlUtilities.inputElement("Username", "text", "username", "", true)
+	   + "<br />"
+	   + HtmlUtilities.inputElement("Password", "password", "password", "", true)
+	   + "<br />"
+	   );
+
+	out.println("<input type=\"submit\" name=\"login\" />");
+
+	out.println("</form>");
+
+	HtmlUtilities.printActions(out /*, session.getAttribute("username") */);
+
+	HtmlUtilities.printFooter(out);
+    }
 
     public void doPost(HttpServletRequest request,
 		      HttpServletResponse response)
 	throws ServletException, IOException 
     {
-	
 	HttpSession session = request.getSession();
 
 	Integer answer = loginUser(request, session);
-
-	response.setContentType("text/html");
 	
-	PrintWriter out = response.getWriter();
+	String username = (String)session.getAttribute("username");
 	
-	String docType =
-	    "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 " +
-	    "Transitional//EN\">\n";
-
-	out.println(docType +
-		    "<HTML>\n" +
-		    "<HEAD><TITLE>Login</TITLE></HEAD>\n" +
-		    "<BODY BGCOLOR=\"#FDF5E6\">\n" +
-		    "<H1>Login</H1>\n" +
-		    "Logged in as " + 
-		    session.getAttribute("username") +
-		    "</BODY></HTML>");
+	if (answer.intValue() == 1)
+	    response.sendRedirect("/user1/user/" + username);
+	else
+	    response.sendError(response.SC_UNAUTHORIZED, 
+			       "wrong username password combination");
     }
 
     private Integer loginUser(HttpServletRequest request, HttpSession session)
@@ -62,13 +71,12 @@ public class Login extends HttpServlet
 	    (Integer)DataBaseUtilities.queryDataBase(query, new CountResultSet());
 
 	if (count.intValue() == 1) 
-	    session.setAttribute("username", userinfo.getUsername() + count);
+	    session.setAttribute("username", userinfo.getUsername());
 	else
-	    session.setAttribute("username", "guest" + count);
-
+	    ; // throw exception to indicate login failure
+	
 	return count;
     }
-
 }
 
 class CountResultSet implements ProcessResultSet
