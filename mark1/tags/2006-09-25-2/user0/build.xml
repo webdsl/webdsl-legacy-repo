@@ -1,0 +1,56 @@
+<project name="user0" default="dist" basedir=".">
+
+    <description>
+        build file for user0
+    </description>
+
+  <!-- set global properties for this build -->
+  <property name="src" location="."/>
+  <property name="build" location="build"/>
+  <property name="dist"  location="dist"/>
+
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build}"/>
+    <mkdir dir="${build}/WEB-INF/classes/"/>
+  </target>
+
+  <target name="compile" depends="init"
+        description="compile the source " >
+
+    <!-- Compile the java code from ${src} into ${build} -->
+    <javac srcdir="${src}/WEB-INF/classes/" destdir="${build}/WEB-INF/classes/">
+      <classpath>
+        <pathelement path="${classpath}"/>
+        <pathelement location="../../tomcat1/common/lib/servlet.jar"/>
+      </classpath>
+    </javac>
+
+  </target>
+
+  <target name="dist" depends="compile"
+        description="generate the distribution" >
+    <!-- Create the distribution directory -->
+    <mkdir dir="${dist}/lib"/>
+
+    <!--jar jarfile="${dist}/lib/user0.jar" basedir="${build}"/-->
+
+    <war warfile="${dist}/lib/user0.war" webxml="${src}/WEB-INF/web.xml">
+       <fileset dir="${src}">
+          <include name="**/*.html"/>
+          <include name="**/*.jsp"/>
+       </fileset>
+       <classes dir="${build}/WEB-INF/classes/"/>
+    </war>
+
+  </target>
+
+  <target name="clean"
+        description="clean up" >
+    <!-- Delete the ${build} and ${dist} directory trees -->
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+  </target>
+</project>
