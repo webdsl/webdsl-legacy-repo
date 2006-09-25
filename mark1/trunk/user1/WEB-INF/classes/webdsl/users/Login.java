@@ -17,27 +17,15 @@ public class Login extends HttpServlet
 	throws ServletException, IOException 
     {
 	HttpSession session = request.getSession();
-
-	PrintWriter out = response.getWriter();
-	response.setContentType("text/html");
 	
-	HtmlUtilities.printHeader(out, "Login");
+	UserInfo userinfo = (UserInfo)session.getAttribute("user");
 
-	out.println(
-           "<form method=\"POST\">"
-	   + HtmlUtilities.inputElement("Username", "text", "username", "", true)
-	   + "<br />"
-	   + HtmlUtilities.inputElement("Password", "password", "password", "", true)
-	   + "<br />"
-	   );
+	if (userinfo == null)
+	    session.setAttribute("user", new UserInfo());
 
-	out.println("<input type=\"submit\" name=\"login\" />");
-
-	out.println("</form>");
-
-	HtmlUtilities.printActions(out /*, session.getAttribute("username") */);
-
-	HtmlUtilities.printFooter(out);
+	RequestDispatcher dispatcher =
+	    request.getRequestDispatcher("/WEB-INF/classes/webdsl/users/LoginForm.jsp");
+	dispatcher.forward(request, response);
     }
 
     public void doPost(HttpServletRequest request,

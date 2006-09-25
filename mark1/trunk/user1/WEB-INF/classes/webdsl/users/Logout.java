@@ -11,7 +11,6 @@ import webdsl.html.*;
 
 public class Logout extends HttpServlet 
 {
-
     public void doGet(HttpServletRequest request,
 		      HttpServletResponse response)
 	throws ServletException, IOException 
@@ -27,5 +26,4 @@ public class Logout extends HttpServlet
     {
 	doGet(request, response);
     }
-
 }

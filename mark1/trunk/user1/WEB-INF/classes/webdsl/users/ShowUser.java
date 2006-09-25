@@ -33,49 +33,20 @@ public class ShowUser extends HttpServlet
 
 	UserInfo userinfo = new UserInfo();
 	getUserFromDB(username, userinfo);
-       
+       		
+	request.setAttribute("userinfo", userinfo);
+	RequestDispatcher dispatcher =
+	    request.getRequestDispatcher("/WEB-INF/classes/webdsl/users/UserView.jsp");
+
 	if (userinfo.isComplete())
 	    {
-		showUserInfo(request, response, userinfo);
+		dispatcher.forward(request, response);
 	    }
 	else 
 	    {
-		showUserInfo(request, response, userinfo);
+		dispatcher.forward(request, response);
 		// note: something is wrong here; no user in database?
 	    }
-    }
-
-    private void showUserInfo(HttpServletRequest request,
-			       HttpServletResponse response, 
-			       UserInfo userinfo)
-	throws ServletException, IOException 
-    {
-	PrintWriter out = response.getWriter();
-
-	response.setContentType("text/html");
-	
-	HtmlUtilities.printHeader(out, userinfo.getUsername());
-
-	out.println("<ul>"
-		    + "<li> username: " + userinfo.getUsername() + "</li>"
-		    + "<li> name: "      + userinfo.getFullname() + "</li>"
-		    + "<li> email: "     + userinfo.getEmail() + "</li>"
-		    + "<li> url: "       + userinfo.getUrl() + "</li>"
-		    + "</ul>");
-
-	out.println("<a href=\"/user1/update-user/"
-		    + userinfo.getUsername()
-		    + "\">"
-		    + "Change user info</a>");
-
-	out.println(" | <a href=\"/user1/remove-user/"
-		    + userinfo.getUsername()
-		    + "\">"
-		    + "Remove user</a> | ");
-
-	HtmlUtilities.printActions(out);
-
-	HtmlUtilities.printFooter(out);
     }
 
     UserInfo getUserFromDB(String username, UserInfo userinfo)

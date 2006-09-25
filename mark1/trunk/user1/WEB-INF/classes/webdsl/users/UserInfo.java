@@ -9,9 +9,6 @@ public class UserInfo
     private String email;
     private String url;
 
-    private boolean changed;
-    private boolean change;
-
     public UserInfo() 
     {
 	username = "";
@@ -22,15 +19,7 @@ public class UserInfo
 	url = "";
     }
 
-    public boolean hasUsername()
-    {
-	return hasValue(getUsername());
-    }
-
-    public boolean hasUsername(String x)
-    {
-	return username != null && username.equals(x);
-    }
+    // getProperty
 
     public String getUsername() {
 	return username;
@@ -56,14 +45,17 @@ public class UserInfo
 	return url;
     }
 
-    public boolean isChanged() {
-	return changed;
+    // hasProperty
+
+    public boolean hasUsername(String x)
+    {
+	return username != null && username.equals(x);
     }
 
-    public boolean getChange() {
-	return change;
+    public boolean hasUsername()
+    {
+	return hasValue(getUsername());
     }
-
 
     public boolean hasFullname() {
 	return hasValue(fullname);
@@ -85,52 +77,34 @@ public class UserInfo
 	return hasValue(url);
     }
     
+    // setProperty
 
     public void setUsername (String username) {
-	if(!sameValues(getUsername(), username))
-	    setChanged(true);
 	this.username = username;
     }
 
     public void setFullname(String fullname) {
-	if(!sameValues(getFullname(), fullname))
-	    setChanged(true);
 	this.fullname = fullname;
     }
 
     public void setPassword (String password) {
-	if(!sameValues(getPassword(), password))
-	    setChanged(true);
 	this.password = password;
     }
 
     public void setPasswordcheck (String passwordcheck) {
-	if(!sameValues(getPasswordcheck(), passwordcheck))
-	    setChanged(true);
     	this.passwordcheck = passwordcheck;
     }
 
     public void setEmail (String email) {
-	if(!sameValues(getEmail(), email))
-	    setChanged(true);
 	this.email = email;
     }
 
     public void setUrl (String url) {
-	if(!sameValues(getUrl(), url))
-	    setChanged(true);
 	this.url = url;
     }
 
-    public void setChanged(boolean changed) {
-	this.changed = changed;
-    }
 
-    public void setChange(boolean change) {
-	this.change = change;
-    }
-
-    public void makeEmpty()
+    public void reset()
     {
 	setUsername(null);
 	setFullname(null);
@@ -139,6 +113,7 @@ public class UserInfo
 	setEmail(null);
 	setUrl(null);
     }
+
 
     public boolean passwordIsConsistent() {
     	return this.getPassword() != null
@@ -177,27 +152,4 @@ public class UserInfo
 		&& (!x.equals(y)));
     }
 
-    public void partiallyUpdateFrom(UserInfo userinfo)
-    {
-	if (hasValue(userinfo.getUsername()))
-	    setUsername(userinfo.getUsername());
-	
-	if (hasValue(userinfo.getFullname()))
-	    setFullname(userinfo.getFullname());
-
-	if (hasValue(userinfo.getPassword()))
-	    setPassword(userinfo.getPassword());
-
-	if (hasValue(userinfo.getPasswordcheck()))
-	    setPasswordcheck(userinfo.getPasswordcheck());
-
-	if (hasValue(userinfo.getEmail()))
-	    setEmail(userinfo.getEmail());
-
-	if (hasValue(userinfo.getUrl()))
-	    setUrl(userinfo.getUrl());
-
-	if (userinfo.isChanged())
-	    setChanged(true);
-    }
 }

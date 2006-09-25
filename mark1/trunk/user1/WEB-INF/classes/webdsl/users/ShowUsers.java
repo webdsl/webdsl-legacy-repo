@@ -19,7 +19,9 @@ public class ShowUsers extends HttpServlet
 	response.setContentType("text/html");
 	PrintWriter out = response.getWriter();
 	HtmlUtilities.printHeader(out, "Registered Users");
+	out.println("<ul>");
 	out.println(users);
+	out.println("</ul>");
 	HtmlUtilities.printActions(out);
 	HtmlUtilities.printFooter(out);
 	

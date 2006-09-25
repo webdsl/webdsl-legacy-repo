@@ -33,11 +33,16 @@ public class ChangeUser extends HttpServlet
        
 	if (userinfo.isComplete())
 	    {
-		AddUser.showEntryForm(request, response, userinfo);
+		//AddUser.showEntryForm(request, response, userinfo);
+		
+		request.setAttribute("userinfo", userinfo);
+		RequestDispatcher dispatcher =
+		    request.getRequestDispatcher("/WEB-INF/classes/webdsl/users/UserEntryForm.jsp");
+		dispatcher.forward(request, response);
 	    }
 	else 
 	    {
-		AddUser.showEntryForm(request, response, userinfo);
+		response.sendRedirect("/user1/user/users");
 		//response.sendRedirect("/user1");
 		// no such user registered
 	    }
@@ -56,9 +61,13 @@ public class ChangeUser extends HttpServlet
 		response.sendRedirect("/user1/user/" + userinfo.getUsername());
 	    }
 	else 
-	    doGet(request, response);
+	    {
+		request.setAttribute("userinfo", userinfo);
+		RequestDispatcher dispatcher =
+		    request.getRequestDispatcher("/WEB-INF/classes/webdsl/users/UserEntryForm.jsp");
+		dispatcher.forward(request, response);
+	    }
     }
-
 
     private String changeUserInDB(UserInfo userinfo)
     {

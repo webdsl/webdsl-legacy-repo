@@ -29,51 +29,20 @@ public class AddUser extends HttpServlet
 	if (userinfo.isComplete())
 	    {
 		addUserToDB(userinfo);
-		// forward to ShowUser servlet
 		response.sendRedirect("/user1/user/" + userinfo.getUsername());
-		
 	    }
 	else 
 	    {
-		if (!userinfo.passwordIsConsistent()) 
+		if (!userinfo.passwordIsConsistent())
 		    {
 			userinfo.setPassword("");
 			userinfo.setPasswordcheck("");
 		    }
-		//showEntryForm(request, response, userinfo);
 		request.setAttribute("userinfo", userinfo);
 		RequestDispatcher dispatcher =
 		    request.getRequestDispatcher("/WEB-INF/classes/webdsl/users/UserEntryForm.jsp");
 		dispatcher.forward(request, response);
 	    }
-    }
-
-    public static void showEntryForm(HttpServletRequest request,
-			       HttpServletResponse response, 
-			       UserInfo userinfo)
-	throws ServletException, IOException 
-    {
-	boolean isPartlyComplete = userinfo.isPartlyComplete();
-
-	response.setContentType("text/html");
-
-	PrintWriter out = response.getWriter();
-
-	HtmlUtilities.printHeader(out, "Register New User");
-
-	out.println(
-	     "<form method=\"POST\">"
-	     + HtmlUtilities.inputElement("Name",      "text",     "username",      userinfo.getUsername(),      true)
-	     + HtmlUtilities.inputElement("Full name", "text",     "fullname",      userinfo.getFullname(),      true)
-	     + HtmlUtilities.inputElement("Email",     "text",     "email",         userinfo.getEmail(),         true)
-	     + HtmlUtilities.inputElement("URL",       "text",     "url",           userinfo.getUrl(),           false)
-	     + HtmlUtilities.inputElement("Password",  "password", "password",      userinfo.getPassword(),      true)
-	     + HtmlUtilities.inputElement("Password",  "password", "passwordcheck", userinfo.getPasswordcheck(), true)
-	     + "<input type=\"submit\" /> <p />"
-	     );
-
-	HtmlUtilities.printActions(out);
-	HtmlUtilities.printFooter(out);
     }
 
     private String addUserToDB(UserInfo userinfo)
@@ -89,5 +58,4 @@ public class AddUser extends HttpServlet
 	
 	return DataBaseUtilities.updateDataBase(query);
     }
-
 }
