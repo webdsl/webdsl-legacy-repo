@@ -40,7 +40,11 @@ public class AddUser extends HttpServlet
 			userinfo.setPassword("");
 			userinfo.setPasswordcheck("");
 		    }
-		showEntryForm(request, response, userinfo);
+		//showEntryForm(request, response, userinfo);
+		request.setAttribute("userinfo", userinfo);
+		RequestDispatcher dispatcher =
+		    request.getRequestDispatcher("/WEB-INF/classes/webdsl/users/UserEntryForm.jsp");
+		dispatcher.forward(request, response);
 	    }
     }
 

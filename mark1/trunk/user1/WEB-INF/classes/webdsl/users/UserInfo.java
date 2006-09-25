@@ -12,7 +12,15 @@ public class UserInfo
     private boolean changed;
     private boolean change;
 
-    public UserInfo() {}
+    public UserInfo() 
+    {
+	username = "";
+	fullname = "";
+	password = "";
+	passwordcheck = "";
+	email = "";
+	url = "";
+    }
 
     public boolean hasUsername()
     {
@@ -56,6 +64,27 @@ public class UserInfo
 	return change;
     }
 
+
+    public boolean hasFullname() {
+	return hasValue(fullname);
+    }
+    
+    public boolean hasPassword() {
+	return hasValue(password);
+    }
+    
+    public boolean hasPasswordcheck() {
+	return hasValue(passwordcheck);
+    }
+    
+    public boolean hasEmail() {
+	return hasValue(email);
+    }
+    
+    public boolean hasUrl() {
+	return hasValue(url);
+    }
+    
 
     public void setUsername (String username) {
 	if(!sameValues(getUsername(), username))
