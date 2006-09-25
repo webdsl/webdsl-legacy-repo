@@ -30,6 +30,16 @@
   </servlet>
   
   <servlet>
+    <servlet-name>EditUser1</servlet-name>
+    <servlet-class>webdsl.users.EditUser</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>SaveUser1</servlet-name>
+    <servlet-class>webdsl.users.SaveUser</servlet-class>
+  </servlet>
+  
+  <servlet>
     <servlet-name>RemoveUser1</servlet-name>
     <servlet-class>webdsl.users.RemoveUser</servlet-class>
   </servlet>
@@ -67,6 +77,16 @@
   <servlet-mapping>
     <servlet-name>ChangeUser1</servlet-name>
     <url-pattern>/update-user/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>EditUser1</servlet-name>
+    <url-pattern>/edit-user/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>SaveUser1</servlet-name>
+    <url-pattern>/save-user</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>

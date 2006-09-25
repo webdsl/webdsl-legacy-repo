@@ -5,12 +5,24 @@
     type="webdsl.users.UserInfo"
     scope="request" />
     
-    <head><title>Register New User</title></head>
+  <jsp:useBean id="next"
+    type="java.lang.String"
+    scope="request" />
+
+  <jsp:useBean id="title"
+    type="java.lang.String"
+    scope="request" />
+
+  <jsp:useBean id="button"
+    type="java.lang.String"
+    scope="request" />
+
+    <head><title><%= title %></title></head>
   
     <body bgcolor="white">
-      <h1>Register New User</h1>
+      <h1><%= title %></h1>
       
-    <form method="POST">
+    <form action="<%= next %>" method="POST">
 
     <table>
       <tr>
@@ -72,7 +84,7 @@
 
     <br />
 
-    <input type="submit" value="Register"/>
+    <input type="submit" value="<%= button %>"/>
 
   </form>
     

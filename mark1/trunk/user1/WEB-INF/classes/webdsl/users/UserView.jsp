@@ -34,7 +34,7 @@
 
     </table>
 
-   <a href="/user1/update-user/<%= username %>">Change user info</a>
+   <a href="/user1/edit-user/<%= username %>">Change user info</a>
    | <a href="/user1/remove-user/<%= username %>">Remove user</a> 
    | <a href="/user1/">Main</a> 
    | <a href="/user1/login">Login</a> 

@@ -9,7 +9,7 @@ import coreservlets.beans.*;
 import webdsl.users.*;
 import webdsl.html.*;
 
-public class AddUser extends HttpServlet 
+public class SaveUser extends HttpServlet 
 {
 
     public void doGet(HttpServletRequest request,
@@ -28,38 +28,30 @@ public class AddUser extends HttpServlet
 
 	if (userinfo.isComplete())
 	    {
-		addUserToDB(userinfo);
+		String result = changeUserInDB(userinfo);
 		response.sendRedirect("/user1/user/" + userinfo.getUsername());
 	    }
 	else 
 	    {
-		if (!userinfo.passwordIsConsistent())
-		    {
-			userinfo.setPassword("");
-			userinfo.setPasswordcheck("");
-		    }
 		request.setAttribute("userinfo", userinfo);
-
-		request.setAttribute("next",  "/user1/register-user");
-		request.setAttribute("title", "Register New User");
-		request.setAttribute("button", "Register");
-
+		request.setAttribute("next", "/user1/save-user");
+		request.setAttribute("title", "Change Profile of " + userinfo.getUsername());
+		request.setAttribute("button", "Save");
 		RequestDispatcher dispatcher =
 		    request.getRequestDispatcher("/WEB-INF/classes/webdsl/users/UserEntryForm.jsp");
 		dispatcher.forward(request, response);
 	    }
     }
 
-    private String addUserToDB(UserInfo userinfo)
+    private String changeUserInDB(UserInfo userinfo)
     {
 	String query = 
-	    "INSERT INTO user (username, password, name, email, url) VALUES"
-	    + "('"   + userinfo.getUsername()
-	    + "', '" + userinfo.getPassword()
-	    + "', '" + userinfo.getFullname()
-	    + "', '" + userinfo.getEmail()
-	    + "', '" + userinfo.getUrl()
-	    + "');";
+	    "update user set "
+	    + "password = '" + userinfo.getPassword() + "', "
+	    + "name     = '" + userinfo.getFullname() + "', "
+	    + "email    = '" + userinfo.getEmail()    + "', "
+	    + "url      = '" + userinfo.getUrl()      + "'"
+	    + "where username = '" + userinfo.getUsername() + "';";
 	
 	return DataBaseUtilities.updateDataBase(query);
     }
