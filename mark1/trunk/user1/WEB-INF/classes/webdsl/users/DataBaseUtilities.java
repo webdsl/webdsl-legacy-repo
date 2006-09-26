@@ -5,7 +5,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import java.sql.*;
 
-class DataBaseUtilities
+public class DataBaseUtilities
 {
 
     public static String updateDataBase(String query)

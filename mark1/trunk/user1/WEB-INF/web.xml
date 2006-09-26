@@ -54,6 +54,41 @@
     <servlet-class>webdsl.users.Logout</servlet-class>
   </servlet>
   
+
+  <servlet>
+    <servlet-name>CreateTopic1</servlet-name>
+    <servlet-class>webdsl.topics.CreateTopic</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>ViewTopic1</servlet-name>
+    <servlet-class>webdsl.topics.ViewTopic</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>EditTopic1</servlet-name>
+    <servlet-class>webdsl.topics.EditTopic</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>PreviewTopic1</servlet-name>
+    <servlet-class>webdsl.topics.PreviewTopic</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>SaveTopic1</servlet-name>
+    <servlet-class>webdsl.topics.SaveTopic</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>ViewTopics1</servlet-name>
+    <servlet-class>webdsl.topics.ViewTopics</servlet-class>
+  </servlet>
+  
+
+
+
+
   <servlet-mapping>
     <servlet-name>Servlet1</servlet-name>
     <url-pattern>/servlet1</url-pattern>
@@ -103,6 +138,39 @@
     <servlet-name>Logout1</servlet-name>
     <url-pattern>/logout</url-pattern>
   </servlet-mapping>
+
+
+  <servlet-mapping>
+    <servlet-name>CreateTopic1</servlet-name>
+    <url-pattern>/create/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>ViewTopic1</servlet-name>
+    <url-pattern>/view/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>EditTopic1</servlet-name>
+    <url-pattern>/edit/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>PreviewTopic1</servlet-name>
+    <url-pattern>/preview/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>SaveTopic1</servlet-name>
+    <url-pattern>/save</url-pattern>
+  </servlet-mapping>
+
+
+  <servlet-mapping>
+    <servlet-name>ViewTopics1</servlet-name>
+    <url-pattern>/topics/*</url-pattern>
+  </servlet-mapping>
+
 
 </web-app>
 
