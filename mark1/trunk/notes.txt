@@ -89,28 +89,28 @@ mysql> create database login;
 mysql> use login;
 
 create table user
- (user_name varchar(30),
+ (username varchar(30),
   password  varchar(10),
   name      varchar(40),
   email     varchar(40),
   url       varchar(40),
-  constraint pk_user primary key (user_name)
+  constraint pk_user primary key (username)
  );
 
 mysql> desc user;
 
-insert into user (user_name, password, name, email)
+insert into user (username, password, name, email)
 values ('EelcoVisser', 'foo!', 'Eelco Visser', 'visser@acm.org');
 
-insert into user (user_name, password, name)
+insert into user (username, password, name)
 values ('DaveClarke', 'bar', 'Dave Clarke');
 
-# user_name is primary key; duplicate entries should be forbidden
+# username is primary key; duplicate entries should be forbidden
 
-insert into user (user_name, name)
+insert into user (username, name)
 values ('EelcoVisser', 'Pietje Puk');
 
-mysql> select * from user where user_name = 'EelcoVisser' && password = 'foo?';
+mysql> select * from user where username = 'EelcoVisser' && password = 'foo?';
 
 --------------------------------------------------------------------
 --------------------------------------------------------------------
@@ -182,3 +182,22 @@ setting up the user webapp
 connecting to the mysql server
 
 - ../../tomcat1/common/lib/jdbc2_0-stdext.jar
+
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+
+2006-09-25
+
+Created basic webapp for managing users; no access control implemented
+yet, mainly since there is so little to access.
+
+Next: adding a new database table with 'content' that can be viewed
+and edited via the website. (did someone say wiki?)
+
+create table topic
+ (topicname  varchar(255),
+  topictext  mediumtext,
+  modifiedby varchar(30),
+  modifiedon datetime,
+  constraint pk_topicname primary key (topicname)
+ );
