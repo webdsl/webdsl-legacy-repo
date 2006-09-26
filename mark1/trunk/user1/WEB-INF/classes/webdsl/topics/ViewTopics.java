@@ -36,17 +36,18 @@ public class ViewTopics extends HttpServlet
 	getTopicsFromDB(topicname, topics);
        		
 	request.setAttribute("topics", topics);
+	request.setAttribute("title", "Topics for /" + topicname);
 	RequestDispatcher dispatcher =
 	    request.getRequestDispatcher("/WEB-INF/classes/webdsl/topics/TopicsView.jsp");
 	dispatcher.forward(request, response);
     }
 
-    TopicInfo getTopicsFromDB(String topicname, ArrayList topics)
+    ArrayList getTopicsFromDB(String topicname, ArrayList topics)
     {
 	String query = 
-	    "SELECT topicname FROM topic";
+	    "SELECT topicname FROM topic WHERE topicname LIKE '" + topicname + "%'";
 	
-	return (TopicInfo)DataBaseUtilities
+	return (ArrayList)DataBaseUtilities
 	    .queryDataBase(query, new MakeTopicInfoArrayListFromResultSet(topics));
     }
 }
