@@ -1,0 +1,203 @@
+
+--------------------------------------------------------------------
+Installation of mysql
+--------------------------------------------------------------------
+
+Using nix this was easy. Just click on the mysql package
+in nixpkgs release page
+
+  http://nix.cs.uu.nl/dist/nix/nixpkgs-unstable-latest/
+
+--------------------------------------------------------------------
+Initialization of mysql
+--------------------------------------------------------------------
+
+Not clear where to look. My book only has instructions for
+Windows. Google produced the mysql_install_db script, which I then
+learned should be parameterized with the --ldata option to indicate
+where to install the database
+
+   mysql_install_db --ldata=/suse9.1/webdsl/db1
+
+
+--------------------------------------------------------------------
+Starting the server
+--------------------------------------------------------------------
+
+Before anything else can be done the server has to be started.
+
+   mysqld --datadir=/suse9.1/webdsl/db1/
+
+--------------------------------------------------------------------
+Setting root password
+--------------------------------------------------------------------
+
+   mysqladmin -u root password 'new-password'
+  
+
+--------------------------------------------------------------------
+Starting mysql shell
+--------------------------------------------------------------------
+
+   mysql -u root -p
+
+mysql> grant all privileges on *.* to visser@localhost identified by 'dsl';
+mysql> quit
+
+$ mysql -u visser -p
+
+mysql> create database bank;
+mysql> use bank;
+
+(download file from http://examples.oreilly.com/learningsql/)
+
+mysql> source LearningSQLExample.sql;  
+
+--------------------------------------------------------------------
+
+mysql> create database users;
+
+mysql> use users;
+
+mysql> create table person
+     (person_id smallint unsigned,
+      fname varchar(20),
+      lname varchar(20),
+      gender enum('M', 'F'),
+      birth_date date,
+      address varchar(30),
+      city varchar(20),
+      state varchar(20),
+      country varchar(20),
+      postal_code varchar(20),
+      constraint pk_person primary key (person_id)
+     );
+
+mysql> desc person;
+
+mysql> create table favorite_food
+ (person_id smallint unsigned,
+  food varchar(20),
+  constraint pk_favorite_food primary key (person_id, food),
+  constraint fk_person_id foreign key (person_id)
+    references person (person_id)
+ );
+
+--------------------------------------------------------------------
+
+mysql> create database login;
+mysql> use login;
+
+create table user
+ (username varchar(30),
+  password  varchar(10),
+  name      varchar(40),
+  email     varchar(40),
+  url       varchar(40),
+  constraint pk_user primary key (username)
+ );
+
+mysql> desc user;
+
+insert into user (username, password, name, email)
+values ('EelcoVisser', 'foo!', 'Eelco Visser', 'visser@acm.org');
+
+insert into user (username, password, name)
+values ('DaveClarke', 'bar', 'Dave Clarke');
+
+# username is primary key; duplicate entries should be forbidden
+
+insert into user (username, name)
+values ('EelcoVisser', 'Pietje Puk');
+
+mysql> select * from user where username = 'EelcoVisser' && password = 'foo?';
+
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+
+Installing Tomcat
+
+- downloaded jakarta-tomcat-4.1.31.tar.gz
+- unpacked locally
+
+- add to jakarta-tomcat-xxx/conf/server.xml:
+
+  <DefaultContext reloadable="true" />
+
+- uncomment in conf/web.xml:
+
+    <servlet-mapping>
+        <servlet-name>invoker</servlet-name>
+        <url-pattern>/servlet/*</url-pattern>
+    </servlet-mapping>
+
+- test with coreservlets examples
+
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+
+Deploying webapplications with ant
+
+- manual is: http://ant.apache.org/manual/
+
+- copied basic example from manual
+
+- configured build and src properties
+
+- added to javac action:
+
+      <classpath>
+        <pathelement path="${classpath}"/>
+        <pathelement location="../jakarta-tomcat-4.1.31/common/lib/servlet.jar"/>
+      </classpath>
+
+- now at least the Java classes are copied to the webapp directory
+
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+
+setting up the user webapp
+
+- install tomcat in ../tomcat1
+  all webapps for mark1 will be installed here
+
+- startup.sh and shutdown.sh for mark1
+
+- user0 is directory for first version of user webapp
+
+- using war task to create the war file for user0
+
+- test
+  http://127.0.0.2:8080/user0/index.html
+  http://127.0.0.2:8080/user0/Hello.html
+  http://127.0.0.2:8080/user0/Hello.jsp
+  http://127.0.0.2:8080/user0/servlet1
+
+- created a install-war.sh script that calls ant dist, stops the
+  server, installs the war, and starts the server again.
+
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+
+connecting to the mysql server
+
+- ../../tomcat1/common/lib/jdbc2_0-stdext.jar
+
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+
+2006-09-25
+
+Created basic webapp for managing users; no access control implemented
+yet, mainly since there is so little to access.
+
+Next: adding a new database table with 'content' that can be viewed
+and edited via the website. (did someone say wiki?)
+
+create table topic
+ (topicname  varchar(255),
+  topictext  mediumtext,
+  modifiedby varchar(30),
+  modifiedon datetime,
+  constraint pk_topicname primary key (topicname)
+ );
