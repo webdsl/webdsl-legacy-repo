@@ -5,7 +5,6 @@
 
   <%
     String topicname = topicinfo.getTopicname();
-    String topictext = topicinfo.getTopictext();
   %>
 
     <head>
@@ -16,7 +15,7 @@
       <h1><%= topicname %></h1>
       <hr>
 
-      <%= topictext %>
+      <% topicinfo.renderTopicText((java.io.Writer)out); %>
 
       <hr>
       <a href="/user1/edit/<%= topicname %>">Edit</a>

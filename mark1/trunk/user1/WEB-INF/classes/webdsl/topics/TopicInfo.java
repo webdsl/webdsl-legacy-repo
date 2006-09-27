@@ -1,5 +1,8 @@
 package webdsl.topics;
 
+import java.io.*;
+import webdsl.topics.*;
+
 public class TopicInfo 
 {
     private String topicname;
@@ -23,6 +26,12 @@ public class TopicInfo
     public void setTopictext(String topictext)
     {
 	this.topictext = topictext;
+    }
+
+    public void renderTopicText(Writer out) throws IOException
+    {
+	WikiParser p = new WikiParser(out, getTopictext());
+	p.parse();
     }
 }
 
