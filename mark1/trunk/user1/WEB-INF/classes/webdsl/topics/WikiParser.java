@@ -116,7 +116,7 @@ public class WikiParser
 	    default :
 		out.write(curchar);
 	    }
-	} while(nextChar());
+	} while(!eof && nextChar());
 	out.write("<p /> full text rendered by WikiParser <p />\n");
     }
 
@@ -174,7 +174,8 @@ public class WikiParser
     {
 	// [\ \t]* [\n]
 	int oldpos = pos;
-	nextChar();
+	if (!nextChar())
+	    return false;
 	skipWhiteSpace();
 	if (curchar == '\n' || curchar == '\r')
 	    {
