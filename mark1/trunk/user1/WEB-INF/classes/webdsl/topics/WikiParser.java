@@ -97,9 +97,16 @@ public class WikiParser
 	if(skipBlankLine())
 	    {
 		while (skipBlankLine()) {}
+		
+		for (int i = list_level; i > 0; i--)
+		    {
+			out.write("</ul>\n");
+		    }
+		list_level = 0;
+
 		out.write(at_end_of_par + "\n<p />\n");
 		at_end_of_par = "";
-		list_level = 0;
+
 		return startNewLine();
 	    }
 	else 
@@ -153,11 +160,16 @@ public class WikiParser
 	int level = spaces / 3;
 	if ((level * 3 == spaces) && (curchar == '*'))
 	    {
-		for (int i = level - list_level; i > 0; i--)
-		    {
-			out.write("<ul>\n");
-			at_end_of_par = at_end_of_par + "</ul>";
-		    }
+		if (level > list_level)
+		    for (int i = level - list_level; i > 0; i--)
+			{
+			    out.write("<ul>\n");
+			}
+		else
+		    for (int i = list_level - level; i > 0; i--)
+			{
+			    out.write("</ul>\n");
+			}
 		list_level = level;
 		out.write("<li>");
 		return true;
@@ -167,11 +179,6 @@ public class WikiParser
 		pos = oldpos;
 		return false;
 	    }
-    }
-
-    public boolean verbatim()
-    {
-	return false;
     }
 
     public boolean separator() throws IOException
@@ -184,12 +191,11 @@ public class WikiParser
 	if (count >= 3)
 	    {
 		pos--;
-		out.write(count + "<hr />");
+		out.write("<hr />");
 		return true;
 	    }
 	else
 	    {
-		out.write("no sep");
 		pos = oldpos;
 		return false;
 	    }
@@ -197,6 +203,11 @@ public class WikiParser
 
     public void parseLink()
     {
+    }
+
+    public boolean verbatim()
+    {
+	return false;
     }
 
 }
