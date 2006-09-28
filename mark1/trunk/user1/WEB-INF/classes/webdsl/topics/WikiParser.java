@@ -174,7 +174,7 @@ public class WikiParser
 	return false;
     }
 
-    public boolean separator()
+    public boolean separator() throws IOException
     {
 	// [-]3+ 
 	
