@@ -37,20 +37,11 @@ public class CreateTopic extends HttpServlet
 	topicinfo.setTopicname(topicname);
 	topicinfo.setTopictext("");
 
-	String answer = addTopicToDB(topicinfo);
-
-	response.sendRedirect("/user1/view/" + topicname);
+	if (topicinfo.addToDatabase() == 1)
+	    response.sendRedirect("/user1/view/" + topicname);
+	else
+	    response.sendRedirect("/user1/view/CreateError?topicname=" + topicname);
     }
 
-    private String addTopicToDB(TopicInfo topicinfo)
-    {
-	String query = 
-	    "INSERT INTO topic (topicname, topictext) VALUES"
-	    + "('"   + topicinfo.getTopicname()
-	    + "','"   + topicinfo.getTopictext()
-	    + "');";
-	
-	return DataBaseUtilities.updateDataBase(query);
-    }
 }
 

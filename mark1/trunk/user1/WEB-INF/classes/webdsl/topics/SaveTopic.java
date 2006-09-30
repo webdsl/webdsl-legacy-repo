@@ -27,29 +27,11 @@ public class SaveTopic extends HttpServlet
 	TopicInfo topicinfo = new TopicInfo();
 	BeanUtilities.populateBean((Object)topicinfo, request);
 
-	if (true) // topicinfo.isComplete())
-	    {
-		String result = changeTopicInDB(topicinfo);
-		response.sendRedirect("/user1/view/" + topicinfo.getTopicname());
-	    }
-	else 
-	    {
-		//request.setAttribute("topicinfo", topicinfo);
-		//request.setAttribute("next", "/user1/save-user");
-		//request.setAttribute("title", "Change Profile of " + topicinfo.getTopicname());
-		//request.setAttribute("button", "Save");
-		//RequestDispatcher dispatcher =
-		//    request.getRequestDispatcher("/WEB-INF/classes/webdsl/users/UserEntryForm.jsp");
-		//dispatcher.forward(request, response);
-	    }
+	if (topicinfo.changeInDatabase() == 1 || topicinfo.addToDatabase() == 1)
+	    response.sendRedirect("/user1/view/" + topicinfo.getTopicname());
+	else
+	    response.sendRedirect("/user1/view/SaveError?topicname=" 
+				  + topicinfo.getTopicname());
     }
 
-    private String changeTopicInDB(TopicInfo topicinfo)
-    {
-	String query = 
-	    "update topic set "
-	    + "topictext = '" + topicinfo.getTopictext() + "' "
-	    + "where topicname = '" + topicinfo.getTopicname() + "';";
-	return DataBaseUtilities.updateDataBase(query);
-    }
 }

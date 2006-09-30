@@ -5,7 +5,11 @@
 
   <%
     String topicname = topicinfo.getTopicname();
-    String topictext = webdsl.html.EscapeChars.escape(topicinfo.getTopictext());
+    String topictext = topicinfo.getTopictext();
+    if (topictext == null)
+      topictext = "";
+    else
+      topictext = webdsl.html.EscapeChars.escape(topictext);
   %>
 
     <head>

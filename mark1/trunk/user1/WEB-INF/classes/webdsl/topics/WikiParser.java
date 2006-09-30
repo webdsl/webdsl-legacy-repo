@@ -622,7 +622,8 @@ public class WikiParser
 	    }
 
 	TopicInfo topicinfo = new TopicInfo();
-	ViewTopic.getTopicFromDB(topicname, topicinfo);
+	topicinfo.setTopicname(topicname);
+	topicinfo.getFromDatabase();
 	if (topicinfo.getTopictext() != null)
 	    {
 		topicinfo.renderTopicText(request, response);

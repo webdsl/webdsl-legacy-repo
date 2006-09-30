@@ -8,7 +8,7 @@ import java.sql.*;
 public class DataBaseUtilities
 {
 
-    public static String updateDataBase(String query)
+    public static int updateDataBase(String query)
     {
 	// load the jdbc driver
 
@@ -18,7 +18,7 @@ public class DataBaseUtilities
             Class.forName("com.mysql.jdbc.Driver").newInstance();
         } catch (Exception ex) {
             // handle the error
-	    return "could not load jdbc driver class";
+	    return -10; // "could not load jdbc driver class"
         }
 
 	// make a connection with the database
@@ -33,10 +33,13 @@ public class DataBaseUtilities
             // Do something with the Connection
 	    
 	} catch (SQLException ex) {
-            return "no connection to database <br>\n" 
-		+ "SQLException: " + ex.getMessage() + "<br>\n"
-		+ "SQLState: " + ex.getSQLState() + "<br>\n"
-		+ "VendorError: " + ex.getErrorCode();
+	    throw new RuntimeException(ex);
+
+            //return -20 ;
+	    //   "no connection to database <br>\n" 
+	    //	+ "SQLException: " + ex.getMessage() + "<br>\n"
+	    //	+ "SQLState: " + ex.getSQLState() + "<br>\n"
+	    //	+ "VendorError: " + ex.getErrorCode();
         }
 
 	Statement stmt = null;
@@ -46,7 +49,7 @@ public class DataBaseUtilities
 	    stmt = connection.createStatement();
 	    rows_affected = stmt.executeUpdate(query);
 	} catch(Exception ex) {
-	    return ex.toString();
+	    throw new RuntimeException(ex);
 	} finally {
 	    if (stmt != null) {
 		try { stmt.close(); } catch (SQLException sqlEx) { ; }
@@ -58,7 +61,7 @@ public class DataBaseUtilities
 	    connection.close();
 	} catch(Exception ex) {}
 
-	return "" + rows_affected;
+	return rows_affected;
     }
 
 
@@ -119,6 +122,5 @@ public class DataBaseUtilities
 
 	return o;
     }
-
 
 }
