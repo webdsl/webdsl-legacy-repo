@@ -11,6 +11,8 @@ import webdsl.topics.*;
 
 public class WikiParser
 {
+    private HttpServletRequest request;
+    private HttpServletResponse response;
     private Writer out;
     private int state;
     private StringBuffer text; 
@@ -23,13 +25,17 @@ public class WikiParser
     private int list_level = 0;
     private boolean eof = false;
 
-    public WikiParser(Writer out, String doc)
+    public WikiParser(HttpServletRequest request,
+		      HttpServletResponse response, 
+		      String doc) throws IOException
     {
-	this.out   = out;
-	this.text  = new StringBuffer(doc);
-	this.pos   = 0;
-	this.len   = text.length();
-	this.line  = 0;
+	this.request  = request;
+	this.response = response;
+	this.out      = response.getWriter();
+	this.text     = new StringBuffer(doc);
+	this.pos      = 0;
+	this.len      = text.length();
+	this.line     = 0;
     }
 
     private boolean nextChar()
@@ -63,7 +69,7 @@ public class WikiParser
 
     public void parse() throws IOException
     {
-	out.write("this text rendered by WikiParser <p />\n");
+	//out.write("this text rendered by WikiParser <p />\n");
 	nextChar();
 	if (startNewLine()) 
 	    nextChar();
@@ -78,8 +84,18 @@ public class WikiParser
 		    out.write(curchar);
 		break;
 
+	    case '<' :
+		if (!htmlTag())
+		    out.write(curchar);
+		break;
+		
 	    case '/' :
 		if(!matchPathExp())
+		    out.write(curchar);
+		break;
+
+	    case '%' :
+		if(!(matchInclude() || matchTopicText()|| matchVariable()))
 		    out.write(curchar);
 		break;
 
@@ -117,7 +133,7 @@ public class WikiParser
 		out.write(curchar);
 	    }
 	} while(!eof && nextChar());
-	out.write("<p /> full text rendered by WikiParser <p />\n");
+	//out.write("<p /> full text rendered by WikiParser <p />\n");
     }
 
     private boolean startNewLine() throws IOException
@@ -516,4 +532,138 @@ public class WikiParser
 	return match;
     }
 
+    private boolean matchVariable() throws IOException
+    {
+	String varname = matchSimpleVariable();
+	if (varname != null)
+	    {
+		String value = (String) request.getAttribute(varname);
+		if (value != null)
+		    {
+			out.write(value);
+		    }
+		else
+		    {
+			out.write("*** no value for simple variable " + varname);
+		    }
+		return true;
+	    }
+	return false;
+    }
+
+    private String matchSimpleVariable() throws IOException
+    {
+	int oldpos = pos;
+	StringBuffer varname = new StringBuffer("");
+	while (nextChar() && (isUpper(curchar) || isLower(curchar)))
+	    {
+		varname.append(curchar);
+	    }
+	if (curchar == '{' && nextChar() && curchar == '}')
+	    {
+		return varname.toString();
+	    }
+
+	resetCurrentChar(oldpos);
+	return null;
+    }
+
+    private boolean matchTopicText() throws IOException
+    {
+	if(!matchWord("TOPICTEXT{}"))
+	    return false;	
+
+	String topicname = (String) request.getAttribute("TOPICNAME");
+
+	if (topicname == null)
+	    out.write("no topictext");
+
+	includeTopic(topicname);
+	return true;
+    }
+
+    private boolean matchInclude() throws IOException
+    {
+	if(!matchWord("INCLUDE{"))
+	    return false;	
+
+	int oldpos = pos;
+	StringBuffer topicname = new StringBuffer("");
+
+	while(nextChar() && curchar != '}' && curchar != '\n' && curchar != '\r')
+	    {
+		topicname.append(curchar);
+	    }
+	if(curchar == '}')
+	    {
+		out.write("*** start including '" + topicname + "' here");
+		if (!includeTopic(topicname.toString()))
+		    return false;
+		out.write("*** stop including '" + topicname + "' here");
+		// includer.include(topicname.toString(), out);
+		return true;
+	    }
+
+	resetCurrentChar(oldpos);
+	return false;	    
+    }
+
+    private boolean includeTopic(String topicname) throws IOException
+    {
+	if(topicname == null)
+	    return false;
+	if(topicname.startsWith("/"))
+	    {
+		topicname = topicname.substring(1);
+	    }
+	else
+	    {
+		// relative topicname; prefix with path to including topic
+	    }
+
+	TopicInfo topicinfo = new TopicInfo();
+	ViewTopic.getTopicFromDB(topicname, topicinfo);
+	if (topicinfo.getTopictext() != null)
+	    {
+		topicinfo.renderTopicText(request, response);
+		return true;       
+	    }
+
+	return false;		
+    }
+
+    private boolean htmlTag() throws IOException
+    {
+	int oldpos = pos;
+	StringBuffer tag = new StringBuffer("");
+	tag.append(curchar);
+	while (nextChar() && curchar != '>' 
+	       && curchar != '\n' && curchar != '\r')
+	    {
+		if (curchar == '%')
+		    {
+			String varname = matchSimpleVariable();
+			if (varname != null)
+			    {
+				nextChar();
+				String value = (String) request.getAttribute(varname);
+				if (value != null)
+				    {
+					tag.append(value);
+					continue;
+				    }
+			    }
+		    }
+		tag.append(curchar);
+	    }
+	if (curchar == '>')
+	    {
+		tag.append(curchar);
+		out.write(tag.toString());
+		return true;
+	    }
+	resetCurrentChar(oldpos);
+	return false;	
+    }
+    
 }

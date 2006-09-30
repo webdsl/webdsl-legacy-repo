@@ -2,6 +2,8 @@ package webdsl.topics;
 
 import java.io.*;
 import webdsl.topics.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
 
 public class TopicInfo 
 {
@@ -28,9 +30,10 @@ public class TopicInfo
 	this.topictext = topictext;
     }
 
-    public void renderTopicText(Writer out) throws IOException
+    public void renderTopicText(HttpServletRequest request,
+				HttpServletResponse response) throws IOException
     {
-	WikiParser p = new WikiParser(out, getTopictext());
+	WikiParser p = new WikiParser(request, response, this.topictext);
 	p.parse();
     }
 }

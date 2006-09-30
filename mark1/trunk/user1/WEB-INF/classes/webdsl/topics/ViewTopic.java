@@ -32,23 +32,34 @@ public class ViewTopic extends HttpServlet
 	    topicname = "";
 
 	TopicInfo topicinfo = new TopicInfo();
-	getTopicFromDB(topicname, topicinfo);
+	//getTopicFromDB(topicname, topicinfo);
+	getTopicFromDB("Templates/MasterTemplate", topicinfo);
        		
-	request.setAttribute("topicinfo", topicinfo);
-	RequestDispatcher dispatcher =
-	    request.getRequestDispatcher("/WEB-INF/classes/webdsl/topics/TopicView.jsp");
+	//request.setAttribute("topicinfo", topicinfo);
 
-	if (topicinfo.getTopictext() != null)
-	    {
-		dispatcher.forward(request, response);
-	    }
-	else 
-	    {
-		response.sendRedirect("/user1/create/" + topicname);
-	    }
+	request.setAttribute("TOPICWEB", topicname);
+	request.setAttribute("TOPICNAME", topicname);
+	request.setAttribute("TOPICTITLE", topicname);
+
+
+	response.setContentType("text/html");
+
+	topicinfo.renderTopicText(request, response);
+
+	//RequestDispatcher dispatcher =
+	//    request.getRequestDispatcher("/WEB-INF/classes/webdsl/topics/TopicView.jsp");
+
+	//if (topicinfo.getTopictext() != null)
+	//    {
+		//dispatcher.forward(request, response);
+	//    }
+	//else 
+	//    {
+	//	response.sendRedirect("/user1/create/" + topicname);
+	//    }
     }
 
-    TopicInfo getTopicFromDB(String topicname, TopicInfo topicinfo)
+    public static TopicInfo getTopicFromDB(String topicname, TopicInfo topicinfo)
     {
 	String query = 
 	    "SELECT topicname, topictext FROM topic "

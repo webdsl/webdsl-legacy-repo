@@ -15,7 +15,7 @@
       <h1><%= topicname %></h1>
       <hr>
 
-      <% topicinfo.renderTopicText((java.io.Writer)out); %>
+      <% topicinfo.renderTopicText(request, response); %>
 
       <hr>
       <a href="/user1/edit/<%= topicname %>">Edit</a>
