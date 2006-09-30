@@ -13,7 +13,9 @@ public class WikiParser
 {
     private HttpServletRequest request;
     private HttpServletResponse response;
+    private HttpSession session;
     private Writer out;
+    private Map include_map;
     private int state;
     private StringBuffer text; 
     private int pos;
@@ -32,6 +34,7 @@ public class WikiParser
 	this.request  = request;
 	this.response = response;
 	this.out      = response.getWriter();
+	this.session  = request.getSession();
 	this.text     = new StringBuffer(doc);
 	this.pos      = 0;
 	this.len      = text.length();
@@ -592,14 +595,28 @@ public class WikiParser
 
 	while(nextChar() && curchar != '}' && curchar != '\n' && curchar != '\r')
 	    {
+		if (curchar == '%')
+		    {
+			String varname = matchSimpleVariable();
+			if (varname != null)
+			    {
+				nextChar();
+				String value = (String) request.getAttribute(varname);
+				if (value != null)
+				    {
+					topicname.append(value);
+					continue;
+				    }
+			    }
+		    }
 		topicname.append(curchar);
 	    }
 	if(curchar == '}')
 	    {
-		out.write("*** start including '" + topicname + "' here");
+		//out.write("*** start including '" + topicname + "' here");
 		if (!includeTopic(topicname.toString()))
 		    return false;
-		out.write("*** stop including '" + topicname + "' here");
+		//out.write("*** stop including '" + topicname + "' here");
 		// includer.include(topicname.toString(), out);
 		return true;
 	    }
@@ -621,6 +638,20 @@ public class WikiParser
 		// relative topicname; prefix with path to including topic
 	    }
 
+
+	HashSet includemap = (HashSet)request.getAttribute("includemap");
+	if (includemap == null)
+	    {
+		includemap = new HashSet();
+		includemap.add(topicname);
+		request.setAttribute("includemap", includemap);
+	    }
+	else if (includemap.contains(topicname))
+	    {
+		out.write("recursive include of " + topicname);
+		return true;		
+	    }
+
 	TopicInfo topicinfo = new TopicInfo();
 	topicinfo.setTopicname(topicname);
 	topicinfo.getFromDatabase();
@@ -629,7 +660,6 @@ public class WikiParser
 		topicinfo.renderTopicText(request, response);
 		return true;       
 	    }
-
 	return false;		
     }
 

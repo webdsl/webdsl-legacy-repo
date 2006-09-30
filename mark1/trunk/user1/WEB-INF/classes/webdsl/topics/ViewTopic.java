@@ -12,13 +12,6 @@ import webdsl.html.*;
 public class ViewTopic extends HttpServlet 
 {
 
-    public void doGet(HttpServletRequest request,
-		      HttpServletResponse response)
-	throws ServletException, IOException 
-    {
-	doPost(request, response);
-    }
-
     public void doPost(HttpServletRequest request,
 		      HttpServletResponse response)
 	throws ServletException, IOException 
@@ -28,21 +21,47 @@ public class ViewTopic extends HttpServlet
 	    {
 		topicname = topicname.substring(1);
 	    }
-	else
-	    topicname = "";
+	else 
+	    {
+		topicname = "";
+	    }
+
+	if (topicname.endsWith("/"))
+	    {
+		topicname = topicname + "WebHome";
+	    }
+
+	String[] dirs = topicname.split("/");
+
+	StringBuffer topicweb = new StringBuffer();
+	
+	for (int i = 0; i < dirs.length - 1; i++)
+	    {
+		topicweb.append(dirs[i]);
+		topicweb.append("/");
+	    }
+
+	request.setAttribute("TOPICWEB", topicweb.toString());
+	request.setAttribute("TOPICNAME", topicname);
+	request.setAttribute("TOPICTITLE", topicname);
+
 
 	TopicInfo topicinfo = new TopicInfo();
 
-	topicinfo.setTopicname("Templates/MasterTemplate");
+	topicinfo.setTopicname("Skins/FlexibleSkin");
 	topicinfo.getFromDatabase();
-       		
-	request.setAttribute("TOPICWEB", topicname);
-	request.setAttribute("TOPICNAME", topicname);
-	request.setAttribute("TOPICTITLE", topicname);
+
 
 	response.setContentType("text/html");
 
 	topicinfo.renderTopicText(request, response);
+    }
+
+    public void doGet(HttpServletRequest request,
+		      HttpServletResponse response)
+	throws ServletException, IOException 
+    {
+	doPost(request, response);
     }
 
 }
