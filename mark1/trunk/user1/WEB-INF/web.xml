@@ -66,6 +66,11 @@
   </servlet>
   
   <servlet>
+    <servlet-name>RawTopic1</servlet-name>
+    <servlet-class>webdsl.topics.RawTopic</servlet-class>
+  </servlet>
+  
+  <servlet>
     <servlet-name>EditTopic1</servlet-name>
     <servlet-class>webdsl.topics.EditTopic</servlet-class>
   </servlet>
@@ -148,6 +153,11 @@
   <servlet-mapping>
     <servlet-name>ViewTopic1</servlet-name>
     <url-pattern>/view/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>RawTopic1</servlet-name>
+    <url-pattern>/raw/*</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>

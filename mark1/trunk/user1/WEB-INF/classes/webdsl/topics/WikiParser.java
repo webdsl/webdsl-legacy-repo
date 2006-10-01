@@ -27,6 +27,7 @@ public class WikiParser
     private String at_end_of_par = "";
     private int list_level = 0;
     private boolean eof = false;
+    private boolean autolink = true;
 
     public WikiParser(HttpServletRequest request,
 		      HttpServletResponse response, 
@@ -92,12 +93,12 @@ public class WikiParser
 		break;
 
 	    case '<' :
-		if (!htmlTag())
+		if (!(noautolink() || htmlTag()))
 		    out.write(curchar);
 		break;
 		
 	    case '/' :
-		if(!matchPathExp())
+		if(!(autolink && matchPathExp()))
 		    out.write(curchar);
 		break;
 
@@ -132,7 +133,7 @@ public class WikiParser
 	    case 'X' :
 	    case 'Y' :
 	    case 'Z' :
-		if(!matchWikiWord())
+		if(!(autolink && matchWikiWord()))
 		    out.write(curchar);
 		break;
 
@@ -728,6 +729,22 @@ public class WikiParser
 	    }
     }
 
+
+    private boolean noautolink() throws IOException
+    {
+	if (matchWord("noautolink>"))
+	    {
+		autolink = false;
+		return true;
+	    }
+	else if (matchWord("/noautolink>"))
+	    {
+		autolink = true;
+		return true;
+	    }
+	return false;
+    }
+
     private boolean htmlTag() throws IOException
     {
 	int oldpos = pos;
@@ -741,8 +758,7 @@ public class WikiParser
 			String varname = matchSimpleVariable();
 			if (varname != null)
 			    {
-				nextChar();
-				String value = (String) request.getAttribute(varname);
+				String value = evaluateSimpleVariable(varname);
 				if (value != null)
 				    {
 					tag.append(value);
