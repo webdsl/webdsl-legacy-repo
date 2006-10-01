@@ -14,6 +14,7 @@ public class WikiParser
     private HttpServletRequest request;
     private HttpServletResponse response;
     private HttpSession session;
+    //private ServletContext servletcontext;
     private Writer out;
     private Map include_map;
     private int state;
@@ -35,6 +36,8 @@ public class WikiParser
 	this.response = response;
 	this.out      = response.getWriter();
 	this.session  = request.getSession();
+	//this.servletcontext = request.getServletContext();
+
 	this.text     = new StringBuffer(doc);
 	this.pos      = 0;
 	this.len      = text.length();
@@ -540,18 +543,23 @@ public class WikiParser
 	String varname = matchSimpleVariable();
 	if (varname != null)
 	    {
-		String value = (String) request.getAttribute(varname);
-		if (value != null)
-		    {
-			out.write(value);
-		    }
-		else
-		    {
-			out.write("*** no value for simple variable " + varname);
-		    }
+		String value = evaluateSimpleVariable(varname);
+		out.write(value);
 		return true;
 	    }
 	return false;
+    }
+
+    private String evaluateSimpleVariable(String varname)
+    {
+	String value = (String)request.getAttribute(varname);
+	if (value == null)
+	    {
+		//value = servletcontext.getAttribute(varname);
+		//if (value == null)
+		value = "*** no value for variable " + varname + " ***";
+	    }
+	return value;
     }
 
     private String matchSimpleVariable() throws IOException
@@ -562,7 +570,7 @@ public class WikiParser
 	    {
 		varname.append(curchar);
 	    }
-	if (curchar == '{' && nextChar() && curchar == '}')
+	if (curchar == '%')
 	    {
 		return varname.toString();
 	    }
@@ -571,12 +579,48 @@ public class WikiParser
 	return null;
     }
 
+    private Variable matchVariableWithArguments() throws IOException
+    {
+	int oldpos = pos;
+	StringBuffer varname = new StringBuffer("");
+	while (nextChar() && (isUpper(curchar) || isLower(curchar)))
+	    {
+		varname.append(curchar);
+	    }
+	if (curchar == '{')
+	    {
+		StringBuffer arguments = new StringBuffer();
+		while (nextChar() && curchar != '}' && curchar != '\n' && curchar != '\r')
+		    {
+			arguments.append(curchar);
+		    }
+		if (curchar == '}' && nextChar() && curchar == '%')
+		    {
+			return new Variable(varname.toString(), arguments.toString());
+		    }
+	    }
+	resetCurrentChar(oldpos);
+	return null;
+    }
+
+    public class Variable 
+    {
+	String name;
+	String arguments;
+
+	public Variable (String name, String arguments)
+	{
+	    this.name = name;
+	    this.arguments = arguments;
+	}
+    }
+
     private boolean matchTopicText() throws IOException
     {
-	if(!matchWord("TOPICTEXT{}"))
+	if(!matchWord("TOPICTEXT%"))
 	    return false;	
 
-	String topicname = (String) request.getAttribute("TOPICNAME");
+	String topicname = (String) request.getAttribute("TOPIC");
 
 	if (topicname == null)
 	    out.write("no topictext");
@@ -611,14 +655,14 @@ public class WikiParser
 		    }
 		topicname.append(curchar);
 	    }
-	if(curchar == '}')
+
+	if(curchar == '}' && nextChar() && curchar == '%')
 	    {
 		//out.write("*** start including '" + topicname + "' here");
-		if (!includeTopic(topicname.toString()))
-		    return false;
+		if (includeTopic(topicname.toString()))
+		    return true;
 		//out.write("*** stop including '" + topicname + "' here");
 		// includer.include(topicname.toString(), out);
-		return true;
 	    }
 
 	resetCurrentChar(oldpos);
@@ -629,15 +673,6 @@ public class WikiParser
     {
 	if(topicname == null)
 	    return false;
-	if(topicname.startsWith("/"))
-	    {
-		topicname = topicname.substring(1);
-	    }
-	else
-	    {
-		// relative topicname; prefix with path to including topic
-	    }
-
 
 	HashSet includemap = (HashSet)request.getAttribute("includemap");
 	if (includemap == null)
@@ -657,7 +692,26 @@ public class WikiParser
 	topicinfo.getFromDatabase();
 	if (topicinfo.getTopictext() != null)
 	    {
+		String TOPIC          = (String)request.getAttribute("TOPIC");
+		String WEB            = (String)request.getAttribute("WEB");
+		String SPACEDTOPIC    = (String)request.getAttribute("SPACEDTOPIC");
+		String INCLUDINGTOPIC = (String)request.getAttribute("INCLUDINGTOPIC");
+		String INCLUDINGWEB   = (String)request.getAttribute("INCLUDINGWEB");
+
+		request.setAttribute("TOPIC", topicname);
+		request.setAttribute("WEB", TopicInfo.webName(topicname));
+		request.setAttribute("SPACEDTOPIC", topicname);
+		request.setAttribute("INCLUDINGTOPIC", TOPIC);
+		request.setAttribute("INCLUDINGWEB", WEB);
+
 		topicinfo.renderTopicText(request, response);
+
+		request.setAttribute("TOPIC", TOPIC);
+		request.setAttribute("WEB", WEB);
+		request.setAttribute("SPACEDTOPIC", SPACEDTOPIC);
+		request.setAttribute("INCLUDINGTOPIC", INCLUDINGTOPIC);
+		request.setAttribute("INCLUDINGWEB", INCLUDINGWEB);
+
 		return true;       
 	    }
 	return false;		

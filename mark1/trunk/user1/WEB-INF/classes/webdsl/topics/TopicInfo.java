@@ -44,8 +44,8 @@ public class TopicInfo
     {
 	String query = 
 	    "INSERT INTO topic (topicname, topictext) VALUES"
-	    + "('"   + this.getTopicname()
-	    + "','"   + this.getTopictext()
+	    + "('"   + sqlEscape(this.getTopicname())
+	    + "','"   + sqlEscape(this.getTopictext())
 	    + "');";
 	
 	return DataBaseUtilities.updateDataBase(query);
@@ -55,8 +55,8 @@ public class TopicInfo
     {
 	String query = 
 	    "update topic set "
-	    + "topictext = '" + this.getTopictext() + "' "
-	    + "where topicname = '" + this.getTopicname() + "';";
+	    + "topictext = '" + sqlEscape(this.getTopictext()) + "' "
+	    + "where topicname = '" + sqlEscape(this.getTopicname()) + "';";
 	return DataBaseUtilities.updateDataBase(query);
     }
 
@@ -64,10 +64,42 @@ public class TopicInfo
     {
 	String query = 
 	    "SELECT topicname, topictext FROM topic " 
-	    + "WHERE topicname = '" + this.getTopicname() + "'";
+	    + "WHERE topicname = '" + sqlEscape(this.getTopicname()) + "'";
 	
 	return (TopicInfo)DataBaseUtilities
 	    .queryDataBase(query, new MakeTopicInfoFromResultSet(this));
+    }
+
+    public static String webName(String topicname)
+    {
+	String[] dirs = topicname.split("/");
+
+	StringBuffer topicweb = new StringBuffer();
+
+	for (int i = 0; i < dirs.length - 1; i++)
+	    {
+		topicweb.append(dirs[i]);
+		topicweb.append("/");
+	    }
+	return topicweb.toString();
+    }
+
+    public static String sqlEscape(String s)
+    {
+	StringBuffer text = new StringBuffer("");
+	for (int i = 0; i < s.length(); i++)
+	    {
+		char c = s.charAt(i);
+		switch (c) {
+		case '\'' : 
+		    text.append("''");
+		    break;
+		default : 
+		    text.append(c);
+		    break;
+		}		
+	    }
+	return text.toString();
     }
 }
 
@@ -92,4 +124,5 @@ class MakeTopicInfoFromResultSet implements ProcessResultSet
 	} catch(Exception e) {}
 	return (Object) topicinfo;
     }
+
 }

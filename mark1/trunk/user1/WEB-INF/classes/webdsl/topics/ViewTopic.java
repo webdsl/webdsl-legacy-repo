@@ -8,6 +8,7 @@ import java.sql.*;
 import coreservlets.beans.*;
 import webdsl.users.*;
 import webdsl.html.*;
+import webdsl.topics.*;
 
 public class ViewTopic extends HttpServlet 
 {
@@ -17,43 +18,53 @@ public class ViewTopic extends HttpServlet
 	throws ServletException, IOException 
     {
 	String topicname = request.getPathInfo();
-	if(topicname != null && topicname.startsWith("/"))
-	    {
-		topicname = topicname.substring(1);
-	    }
-	else 
-	    {
-		topicname = "";
-	    }
+	String topicweb = TopicInfo.webName(topicname);
+	HttpSession session = request.getSession();
 
-	if (topicname.endsWith("/"))
-	    {
-		topicname = topicname + "WebHome";
-	    }
+	//ServletContext servletcontext = request.getServletContext();
+	//servletcontext.setAttribute("SCRIPTURLPATH",servletcontex.getServletContextName());
+	//servletcontext.setAttribute("SCRIPTURL",    servletcontex.getRealPath("/"));	
 
-	String[] dirs = topicname.split("/");
+	    /*
+  - %ATTACHURL% -- full URL for attachments in the current topic
+  - %ATTACHURLPATH% -- path of the attachment URL of the current topic
+  - SCRIPTURL -- script URL of TWiki#
+    # Expands to: http://abaris.zoo.cs.uu.nl:8080/wiki 
+  - SCRIPTURLPATH -- script URL path of TWiki#
+    # Expands to: /wiki 
+  - PUBURL -- the base URL of attachments#
+    Expands to: http://abaris.zoo.cs.uu.nl:8080/wiki/pub 
+  - PUBURLPATH -- the base URL path of attachments
+    * Expands to: /wiki/pub 
+  - HTTP_HOST -- environment variable
+	    */
 
-	StringBuffer topicweb = new StringBuffer();
+	request.setAttribute("SCRIPTURL",      request.getContextPath());
+
+	// top-level including page
+	request.setAttribute("BASETOPIC",      topicname);
+	request.setAttribute("BASEWEB",        topicweb);
+
+	// page where current page is included in
+	request.setAttribute("INCLUDINGTOPIC", topicname);
+	request.setAttribute("INCLUDINGWEB",   topicweb);
+
+	// referring to the page we're currently rendering
+	request.setAttribute("TOPIC",          topicname);
+	request.setAttribute("WEB",            topicweb);
+	request.setAttribute("SPACEDTOPIC",    topicname);
+
+	request.setAttribute("HOMETOPIC", topicweb + "WebHome");
+	request.setAttribute("MAINWEB", "/Main/");
+	request.setAttribute("USERNAME", session.getAttribute("USERNAME"));
+      
 	
-	for (int i = 0; i < dirs.length - 1; i++)
-	    {
-		topicweb.append(dirs[i]);
-		topicweb.append("/");
-	    }
-
-	request.setAttribute("TOPICWEB", topicweb.toString());
-	request.setAttribute("TOPICNAME", topicname);
-	request.setAttribute("TOPICTITLE", topicname);
-
+	// actual page is included from skin page
 
 	TopicInfo topicinfo = new TopicInfo();
-
 	topicinfo.setTopicname("Skins/FlexibleSkin");
 	topicinfo.getFromDatabase();
-
-
 	response.setContentType("text/html");
-
 	topicinfo.renderTopicText(request, response);
     }
 

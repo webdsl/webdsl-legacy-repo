@@ -18,14 +18,8 @@ public class EditTopic extends HttpServlet
 	throws ServletException, IOException 
     {
 	String topicname = request.getPathInfo();
-	if(topicname != null && topicname.startsWith("/"))
-	    {
-		topicname = topicname.substring(1);
-	    }
-	else
-	    {
-		topicname = "";
-	    }
+	if(topicname == null)
+	    topicname = "/";
 
 	TopicInfo topicinfo = new TopicInfo();
 	topicinfo.setTopicname(topicname);
