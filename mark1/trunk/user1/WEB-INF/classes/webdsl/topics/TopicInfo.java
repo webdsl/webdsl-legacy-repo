@@ -72,18 +72,23 @@ public class TopicInfo
 
     public static String webName(String topicname)
     {
-	String[] dirs = topicname.split("/");
-
-	StringBuffer topicweb = new StringBuffer();
-
-	for (int i = 0; i < dirs.length - 1; i++)
+	if (topicname.charAt(topicname.length() - 1) == '/')
 	    {
-		topicweb.append(dirs[i]);
-		topicweb.append("/");
+		return topicname;
 	    }
-	return topicweb.toString();
+	else
+	    {
+		String[] dirs = topicname.split("/");
+		StringBuffer topicweb = new StringBuffer();
+		for (int i = 0; i < dirs.length - 1; i++)
+		    {
+			topicweb.append(dirs[i]);
+			topicweb.append("/");
+		    }
+		return topicweb.toString();
+	    }
     }
-
+	
     public static String sqlEscape(String s)
     {
 	StringBuffer text = new StringBuffer("");

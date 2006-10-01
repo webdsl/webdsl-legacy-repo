@@ -1,6 +1,7 @@
 package webdsl.topics;
 
 import java.io.*;
+import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.sql.*;
@@ -62,9 +63,14 @@ public class ViewTopic extends HttpServlet
 	// actual page is included from skin page
 
 	TopicInfo topicinfo = new TopicInfo();
-	topicinfo.setTopicname("Skins/FlexibleSkin");
+	topicinfo.setTopicname("/Skins/FlexibleSkin");
 	topicinfo.getFromDatabase();
 	response.setContentType("text/html");
+
+	HashSet includemap = new HashSet();
+	includemap.add("/Skins/FlexibleSkin");
+	request.setAttribute("includemap", includemap);
+
 	topicinfo.renderTopicText(request, response);
     }
 

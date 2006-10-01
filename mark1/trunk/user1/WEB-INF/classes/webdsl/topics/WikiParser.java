@@ -38,7 +38,8 @@ public class WikiParser
 	this.session  = request.getSession();
 	//this.servletcontext = request.getServletContext();
 
-	this.text     = new StringBuffer(doc);
+	this.text     = new StringBuffer("\n");
+	this.text.append(doc);
 	this.pos      = 0;
 	this.len      = text.length();
 	this.line     = 0;
@@ -77,8 +78,8 @@ public class WikiParser
     {
 	//out.write("this text rendered by WikiParser <p />\n");
 	nextChar();
-	if (startNewLine()) 
-	    nextChar();
+	//if(startNewLine())
+	//    nextChar();
 	do {
 	    switch (curchar) {
 	    case '\n' :
@@ -139,6 +140,8 @@ public class WikiParser
 		out.write(curchar);
 	    }
 	} while(!eof && nextChar());
+	closeParagraph();
+	
 	//out.write("<p /> full text rendered by WikiParser <p />\n");
     }
 
@@ -176,20 +179,22 @@ public class WikiParser
 	if(skipBlankLine())
 	    {
 		while (skipBlankLine()) {}
-		
-		for (int i = list_level; i > 0; i--)
-		    {
-			out.write("</ul>\n");
-		    }
-		list_level = 0;
-
-		out.write(at_end_of_par + "\n<p />\n");
-		at_end_of_par = "";
-
+		closeParagraph();
 		return startNewLine();
 	    }
 	else 
 	    return false;
+    }
+
+    private void closeParagraph() throws IOException
+    {
+	for (int i = list_level; i > 0; i--)
+	    {
+		out.write("</ul>\n");
+	    }
+	list_level = 0;
+	out.write(at_end_of_par + "\n<p />\n");
+	at_end_of_par = "";
     }
 
     private boolean skipBlankLine() throws IOException
@@ -413,6 +418,7 @@ public class WikiParser
 		    out.write("<a href=\"/user1/view" + path + "\">" + path + "</a>");
 		else
 		    out.write("<a href=\"" + path + "\">" + path + "</a>");
+		resetCurrentChar(pos - 1);
 		return true;
 	    }
 	resetCurrentChar(oldpos);
@@ -544,7 +550,7 @@ public class WikiParser
 	if (varname != null)
 	    {
 		String value = evaluateSimpleVariable(varname);
-		out.write(value);
+		out.write(value == null ? "*** no such variable " + varname : value);
 		return true;
 	    }
 	return false;
@@ -552,14 +558,10 @@ public class WikiParser
 
     private String evaluateSimpleVariable(String varname)
     {
-	String value = (String)request.getAttribute(varname);
-	if (value == null)
-	    {
-		//value = servletcontext.getAttribute(varname);
-		//if (value == null)
-		value = "*** no value for variable " + varname + " ***";
-	    }
-	return value;
+	if (varname == null)
+	    return null;
+	else
+	    return (String)request.getAttribute(varname);
     }
 
     private String matchSimpleVariable() throws IOException
@@ -572,6 +574,7 @@ public class WikiParser
 	    }
 	if (curchar == '%')
 	    {
+		//out.write("simple variable: " + varname);
 		return varname.toString();
 	    }
 
@@ -622,6 +625,8 @@ public class WikiParser
 
 	String topicname = (String) request.getAttribute("TOPIC");
 
+	//out.write("including topictext of " + topicname + "<br>");
+
 	if (topicname == null)
 	    out.write("no topictext");
 
@@ -631,60 +636,71 @@ public class WikiParser
 
     private boolean matchInclude() throws IOException
     {
-	if(!matchWord("INCLUDE{"))
-	    return false;	
-
 	int oldpos = pos;
-	StringBuffer topicname = new StringBuffer("");
-
-	while(nextChar() && curchar != '}' && curchar != '\n' && curchar != '\r')
+	if(matchWord("INCLUDE{"))
 	    {
-		if (curchar == '%')
+		StringBuffer topicname = new StringBuffer("");
+
+		while(nextChar() && curchar != '}' && curchar != '\n' 
+		      && curchar != '\r')
 		    {
-			String varname = matchSimpleVariable();
-			if (varname != null)
+			if (curchar == '%')
 			    {
-				nextChar();
-				String value = (String) request.getAttribute(varname);
+				String varname = matchSimpleVariable();
+				String value = evaluateSimpleVariable(varname);
 				if (value != null)
 				    {
 					topicname.append(value);
 					continue;
 				    }
 			    }
+			topicname.append(curchar);
 		    }
-		topicname.append(curchar);
+		
+		if(curchar == '}' && nextChar() && curchar == '%')
+		    {
+			//out.write("*** start including '" + topicname + "' here");
+			includeTopic(topicname.toString());
+			//out.write("*** stop including '" + topicname + "' here");
+			return true;
+		    }
 	    }
-
-	if(curchar == '}' && nextChar() && curchar == '%')
-	    {
-		//out.write("*** start including '" + topicname + "' here");
-		if (includeTopic(topicname.toString()))
-		    return true;
-		//out.write("*** stop including '" + topicname + "' here");
-		// includer.include(topicname.toString(), out);
-	    }
-
 	resetCurrentChar(oldpos);
 	return false;	    
     }
 
-    private boolean includeTopic(String topicname) throws IOException
+    private void includeTopic(String topicname) throws IOException
     {
 	if(topicname == null)
-	    return false;
+	    throw new RuntimeException("no topicname for includeTopic");
+
+	String TOPIC          = (String)request.getAttribute("TOPIC");
+	String WEB            = (String)request.getAttribute("WEB");
+	String SPACEDTOPIC    = (String)request.getAttribute("SPACEDTOPIC");
+	String INCLUDINGTOPIC = (String)request.getAttribute("INCLUDINGTOPIC");
+	String INCLUDINGWEB   = (String)request.getAttribute("INCLUDINGWEB");
+
+	if (!topicname.startsWith("/"))
+	    {
+		topicname = WEB + topicname;
+	    }
 
 	HashSet includemap = (HashSet)request.getAttribute("includemap");
 	if (includemap == null)
 	    {
-		includemap = new HashSet();
-		includemap.add(topicname);
-		request.setAttribute("includemap", includemap);
+		throw new RuntimeException("no includemap");
 	    }
-	else if (includemap.contains(topicname))
+	if (includemap.contains(topicname))
 	    {
-		out.write("recursive include of " + topicname);
-		return true;		
+		out.write("<br>"
+			  + (String)request.getAttribute("BASETOPIC")
+			  + " has recursive include of " 
+			  + TOPIC);
+		return;
+	    }
+	else 
+	    {
+		includemap.add(topicname);
 	    }
 
 	TopicInfo topicinfo = new TopicInfo();
@@ -692,12 +708,6 @@ public class WikiParser
 	topicinfo.getFromDatabase();
 	if (topicinfo.getTopictext() != null)
 	    {
-		String TOPIC          = (String)request.getAttribute("TOPIC");
-		String WEB            = (String)request.getAttribute("WEB");
-		String SPACEDTOPIC    = (String)request.getAttribute("SPACEDTOPIC");
-		String INCLUDINGTOPIC = (String)request.getAttribute("INCLUDINGTOPIC");
-		String INCLUDINGWEB   = (String)request.getAttribute("INCLUDINGWEB");
-
 		request.setAttribute("TOPIC", topicname);
 		request.setAttribute("WEB", TopicInfo.webName(topicname));
 		request.setAttribute("SPACEDTOPIC", topicname);
@@ -711,10 +721,11 @@ public class WikiParser
 		request.setAttribute("SPACEDTOPIC", SPACEDTOPIC);
 		request.setAttribute("INCLUDINGTOPIC", INCLUDINGTOPIC);
 		request.setAttribute("INCLUDINGWEB", INCLUDINGWEB);
-
-		return true;       
 	    }
-	return false;		
+	else
+	    {
+		// out.write(topicname + " not found in database <br>");
+	    }
     }
 
     private boolean htmlTag() throws IOException
