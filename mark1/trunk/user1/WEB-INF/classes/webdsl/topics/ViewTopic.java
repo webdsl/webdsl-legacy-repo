@@ -18,33 +18,18 @@ public class ViewTopic extends HttpServlet
 		      HttpServletResponse response)
 	throws ServletException, IOException 
     {
+	TopicInfo topicinfo = new TopicInfo();
 	String topicname = request.getPathInfo();
-	String topicweb = TopicInfo.webName(topicname);
-	HttpSession session = request.getSession();
+	topicinfo.setTopicname(topicname);
+	String topicweb = topicinfo.getWebName();
 
-	//ServletContext servletcontext = request.getServletContext();
-	//servletcontext.setAttribute("SCRIPTURLPATH",servletcontex.getServletContextName());
-	//servletcontext.setAttribute("SCRIPTURL",    servletcontex.getRealPath("/"));	
-
-	    /*
-  - %ATTACHURL% -- full URL for attachments in the current topic
-  - %ATTACHURLPATH% -- path of the attachment URL of the current topic
-  - SCRIPTURL -- script URL of TWiki#
-    # Expands to: http://abaris.zoo.cs.uu.nl:8080/wiki 
-  - SCRIPTURLPATH -- script URL path of TWiki#
-    # Expands to: /wiki 
-  - PUBURL -- the base URL of attachments#
-    Expands to: http://abaris.zoo.cs.uu.nl:8080/wiki/pub 
-  - PUBURLPATH -- the base URL path of attachments
-    * Expands to: /wiki/pub 
-  - HTTP_HOST -- environment variable
-	    */
 
 	request.setAttribute("SCRIPTURL",      request.getContextPath());
 
 	// top-level including page
 	request.setAttribute("BASETOPIC",      topicname);
 	request.setAttribute("BASEWEB",        topicweb);
+	request.setAttribute("BASEPARENTWEB",  topicinfo.getParentWeb());
 
 	// page where current page is included in
 	request.setAttribute("INCLUDINGTOPIC", topicname);
@@ -56,22 +41,35 @@ public class ViewTopic extends HttpServlet
 	request.setAttribute("SPACEDTOPIC",    topicname);
 
 	request.setAttribute("HOMETOPIC", topicweb + "WebHome");
-	request.setAttribute("MAINWEB", "/Main/");
+	request.setAttribute("MAINWEB", "/");
+
+
+	HttpSession session = request.getSession();
 	request.setAttribute("USERNAME", session.getAttribute("USERNAME"));
       
 	
 	// actual page is included from skin page
 
-	TopicInfo topicinfo = new TopicInfo();
-	topicinfo.setTopicname("/Skins/FlexibleSkin");
-	topicinfo.getFromDatabase();
+	String skin = request.getParameter("skin");
+	if (skin == null)
+	    {
+		skin = (String)session.getAttribute("SKIN");
+		if (skin == null)
+		    {
+			skin = "/Skins/FlexibleSkin";
+		    }
+	    }
+
+	TopicInfo skintopic = new TopicInfo();
+	skintopic.setTopicname(skin);
+	skintopic.getFromDatabase();
 	response.setContentType("text/html");
 
 	HashSet includemap = new HashSet();
-	includemap.add("/Skins/FlexibleSkin");
+	includemap.add(skin);
 	request.setAttribute("includemap", includemap);
 
-	topicinfo.renderTopicText(request, response);
+	skintopic.renderTopicText(request, response);
     }
 
     public void doGet(HttpServletRequest request,

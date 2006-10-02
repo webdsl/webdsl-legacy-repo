@@ -103,7 +103,9 @@ public class WikiParser
 		break;
 
 	    case '%' :
-		if(!(matchInclude() || matchTopicText()|| matchVariable()))
+		if(!(/* matchInclude() */
+		     /* || matchTopicText() */ 
+		     matchVariable()))
 		    out.write(curchar);
 		break;
 
@@ -554,6 +556,25 @@ public class WikiParser
 		out.write(value == null ? "*** no such variable " + varname : value);
 		return true;
 	    }
+	Variable variable = matchVariableWithArguments();
+	if (variable != null)
+	    {
+		if (variable.name.equals("INCLUDE"))
+		    {
+			includeTopic(variable.arguments);
+		    }
+		else if (variable.name.equals("TOPICS"))
+		    {
+			listTopics(variable.arguments);
+		    }
+		else
+		    {
+			out.write("<strong>** no support for variable " 
+				  + variable.name 
+				  + "</strong>");
+		    }
+		return true;
+	    }
 	return false;
     }
 
@@ -593,12 +614,25 @@ public class WikiParser
 	    }
 	if (curchar == '{')
 	    {
-		StringBuffer arguments = new StringBuffer();
-		while (nextChar() && curchar != '}' && curchar != '\n' && curchar != '\r')
+		StringBuffer arguments = new StringBuffer("");
+		
+		while(nextChar() && curchar != '}' && curchar != '\n' 
+		      && curchar != '\r')
 		    {
+			if (curchar == '%')
+			    {
+				String value = 
+				    evaluateSimpleVariable(matchSimpleVariable());
+				if (value != null)
+				    {
+					arguments.append(value);
+					continue;
+				    }
+			    }
 			arguments.append(curchar);
 		    }
-		if (curchar == '}' && nextChar() && curchar == '%')
+		
+		if(curchar == '}' && nextChar() && curchar == '%')
 		    {
 			return new Variable(varname.toString(), arguments.toString());
 		    }
@@ -619,22 +653,7 @@ public class WikiParser
 	}
     }
 
-    private boolean matchTopicText() throws IOException
-    {
-	if(!matchWord("TOPICTEXT%"))
-	    return false;	
-
-	String topicname = (String) request.getAttribute("TOPIC");
-
-	//out.write("including topictext of " + topicname + "<br>");
-
-	if (topicname == null)
-	    out.write("no topictext");
-
-	includeTopic(topicname);
-	return true;
-    }
-
+    /*
     private boolean matchInclude() throws IOException
     {
 	int oldpos = pos;
@@ -669,6 +688,7 @@ public class WikiParser
 	resetCurrentChar(oldpos);
 	return false;	    
     }
+    */
 
     private void includeTopic(String topicname) throws IOException
     {
@@ -729,6 +749,36 @@ public class WikiParser
 	    }
     }
 
+    
+    private void listTopics(String topicname) throws IOException
+    {
+	if(topicname == null)
+	    throw new RuntimeException("no topicname for listTopic");
+
+	TopicInfo topicinfo = new TopicInfo();
+	topicinfo.setTopicname(topicname);
+
+	ArrayList topics = topicinfo.getSubtopics();
+
+	String prefix = (String)request.getAttribute("SCRIPTURL");
+
+	out.write("<ul>");
+
+	for (int i = 0; i < topics.size(); i++)
+	    {
+		String name = ((TopicInfo)topics.get(i)).getTopicname();
+
+		out.write("<li> <a href=\"" 
+			  + prefix
+			  + "/view"
+			  + name
+			  + "\">"
+			  + name
+			  + "</a></li>");
+	    }
+
+	out.write("</ul>");
+    }
 
     private boolean noautolink() throws IOException
     {

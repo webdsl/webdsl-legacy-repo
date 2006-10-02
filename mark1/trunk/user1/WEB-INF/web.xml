@@ -90,6 +90,10 @@
     <servlet-class>webdsl.topics.ViewTopics</servlet-class>
   </servlet>
   
+  <servlet>
+    <servlet-name>RawTopics1</servlet-name>
+    <servlet-class>webdsl.topics.RawTopics</servlet-class>
+  </servlet>
 
 
 
@@ -179,6 +183,11 @@
   <servlet-mapping>
     <servlet-name>ViewTopics1</servlet-name>
     <url-pattern>/topics/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>RawTopics1</servlet-name>
+    <url-pattern>/rawtopics/*</url-pattern>
   </servlet-mapping>
 
 

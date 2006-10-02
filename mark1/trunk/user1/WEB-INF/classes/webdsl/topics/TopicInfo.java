@@ -1,6 +1,7 @@
 package webdsl.topics;
 
 import java.io.*;
+import java.util.*;
 import webdsl.topics.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -70,6 +71,40 @@ public class TopicInfo
 	    .queryDataBase(query, new MakeTopicInfoFromResultSet(this));
     }
 
+
+    public ArrayList getSubtopics()
+    {
+	String query = 
+	    "SELECT topicname FROM topic "
+	    + "WHERE topicname LIKE '" 
+	    + sqlEscape(this.getTopicname()) + "%'";
+
+	return (ArrayList)DataBaseUtilities
+	    .queryDataBase(query, new MakeTopicInfoArrayListFromResultSet(new ArrayList()));
+    }
+
+    public String getWebName()
+    {
+	return webName(getTopicname());
+    }
+
+    public String getParentWeb()
+    {
+	int depth = 2;
+	if (topicname.charAt(topicname.length() - 1) == '/')
+	    {
+		depth = 1;
+	    }
+	String[] dirs = topicname.split("/");
+	StringBuffer topicweb = new StringBuffer("/");
+	for (int i = 1; i < dirs.length - depth; i++)
+	    {
+		topicweb.append(dirs[i]);
+		topicweb.append("/");
+	    }
+	return topicweb.toString();
+    }
+
     public static String webName(String topicname)
     {
 	if (topicname.charAt(topicname.length() - 1) == '/')
@@ -131,3 +166,30 @@ class MakeTopicInfoFromResultSet implements ProcessResultSet
     }
 
 }
+
+
+class MakeTopicInfoArrayListFromResultSet implements ProcessResultSet
+{
+    ArrayList topics;
+
+    public MakeTopicInfoArrayListFromResultSet(ArrayList topics)
+    {
+	this.topics = topics;
+    }
+
+    public Object process(ResultSet rs)
+    {
+	try {
+	    while(rs.next())
+		{
+		    TopicInfo topicinfo = new TopicInfo();
+		    topicinfo.setTopicname(rs.getString(1));
+		    topics.add(topicinfo);
+		}
+	} catch(Exception e) {
+	    throw new RuntimeException(e);
+	}
+	return (Object) topics;
+    }
+}
+
