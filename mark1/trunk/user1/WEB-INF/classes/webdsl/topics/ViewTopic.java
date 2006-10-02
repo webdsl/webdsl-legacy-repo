@@ -20,6 +20,12 @@ public class ViewTopic extends HttpServlet
     {
 	TopicInfo topicinfo = new TopicInfo();
 	String topicname = request.getPathInfo();
+	if (topicname == null || topicname.equals(""))
+	    {
+		response.sendRedirect("/user1/view/");
+		return;
+	    }
+
 	topicinfo.setTopicname(topicname);
 	String topicweb = topicinfo.getWebName();
 
