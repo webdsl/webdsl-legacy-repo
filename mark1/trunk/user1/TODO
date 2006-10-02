@@ -1,0 +1,112 @@
+- import topics from files into database
+  - import a single file
+  - import a directory hierarchy
+  - import a TWiki data directory
+
+  - may be this should be done using the single file
+    upload facility and a separate script that
+    talks to the web interface
+
+- export topics from database to file
+  - by means of a separate script that uses
+    the web interface to get a list of all topics
+    and the raw view facility
+
+- *bold*
+
+- links
+  - http:
+  - images
+  + character after path 
+  - escape /
+
+- user interface
+  - inclusion in header
+  - stylesheet
+  - action menus
+  - favicon / x-icon
+  - RSS
+
+- topic management
+  - remove topic
+  - rename topic
+  - copy topic
+
+- more metadata for topics
+  - title (optional; in addition to topicname)
+  - modified by
+  - modified on
+  - version number 
+    (how to implement versioning with a relational
+     database?)
+  - mime type
+    should guide rendering
+
+
+- variables to define
+  - variables have syntax %...%
+
+  - HOMETOPIC -- home topic in each web
+  + INCLUDINGTOPIC -- name of topic that includes current topic
+  + INCLUDINGWEB -- web that includes current topic
+  - MAINWEB -- name of Main web
+  + BASETOPIC -- base topic where an INCLUDE started
+  + BASEWEB -- base web where an INCLUDE started
+  - SPACEDTOPIC -- topic name, spaced and encoded
+  + TOPIC -- name of current topic
+  - USERNAME -- your login username
+  + WEB -- name of current web
+  - NOTIFYTOPIC -- name of the notify topic
+
+  - %WEBBGCOLOR%
+  - %WEBCOPYRIGHT%
+  - %WEBTOPICLIST%
+  - %WIKIWEBLIST%
+  - %WIKIWEBMASTER%
+  - VAR{"NAME" web="Web"} -- get a preference value from another web
+
+  - URLPARAM{"name"} -- get value of a URL parameter
+    - Returns the value of a URL parameter. Note that there is a risk
+    that this variable could be misused for cross-scripting
+
+  - %ATTACHURL% -- full URL for attachments in the current topic
+  - %ATTACHURLPATH% -- path of the attachment URL of the current topic
+  + SCRIPTURL -- script URL of TWiki#
+    # Expands to: http://abaris.zoo.cs.uu.nl:8080/wiki 
+  - SCRIPTURLPATH -- script URL path of TWiki#
+    # Expands to: /wiki 
+  - PUBURL -- the base URL of attachments#
+    Expands to: http://abaris.zoo.cs.uu.nl:8080/wiki/pub 
+  - PUBURLPATH -- the base URL path of attachments
+    * Expands to: /wiki/pub 
+  - HTTP_HOST -- environment variable
+
+
+  - DISPLAYTIME -- display time
+  - DISPLAYTIME{"format"} -- formatted display time
+  - SERVERTIME -- server time
+  - SERVERTIME{"format"} -- formatted server time
+  - GMTIME -- GM time
+  - GMTIME{"format"} -- formatted GM time 
+
+  - FORMFIELD{"format"} -- renders a field in the form attached to some topic
+
+
+  - ICON{"type"} -- small icon of common attachment types
+
+  - INCLUDE{"page"} -- include other topics or web pages
+    - http
+    - revision
+    - STARTINCLUDE -- start position of topic text if included
+    - STOPINCLUDE -- end position of topic text if included
+
+  - METASEARCH -- special search of meta data 
+
+  - REVINFO -- revision information of current topic#
+    # Expands to: r1.1 - 14 Aug 2004 - 07:54 - PeterThoeny 
+
+  - SEARCH{"text"} -- search content
+
+  - %TOC%
+  - STATISTICSTOPIC -- name of statistics topic
+  - TOPICLIST{"format"} -- topic index of a web
