@@ -24,6 +24,13 @@ public class EditTopic extends HttpServlet
 		return;
 	    }
 
+	HttpSession session = request.getSession();
+	if (session.getAttribute("username") == null)
+	    {
+	    	response.sendRedirect("/user1/login");
+	    	return;
+	    }
+	
 	TopicInfo topicinfo = new TopicInfo();
 	topicinfo.setTopicname(topicname);
 	topicinfo.getFromDatabase();

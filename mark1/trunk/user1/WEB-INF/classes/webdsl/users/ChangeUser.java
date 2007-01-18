@@ -79,7 +79,7 @@ public class ChangeUser extends HttpServlet
 	    + "email    = '" + userinfo.getEmail()    + "', "
 	    + "url      = '" + userinfo.getUrl()      + "'; ";
 	
-	return DataBaseUtilities.updateDataBase(query);
+	return DataBaseUtilities.updateDataBase(query) + "";
     }
 
     UserInfo getUserFromDB(UserInfo userinfo)

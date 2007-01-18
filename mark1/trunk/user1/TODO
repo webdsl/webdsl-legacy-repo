@@ -1,3 +1,13 @@
+- initialization
+  - database should be created automatically on first use
+  - default topics (especially skins) should be added to the db when
+    not present
+
+- access control
+  - who can view / edit which topics
+  - rules should apply to complete hierarchies
+  - groups
+
 - import topics from files into database
   - import a single file
   - import a directory hierarchy

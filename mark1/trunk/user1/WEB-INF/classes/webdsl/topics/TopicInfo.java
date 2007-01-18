@@ -13,6 +13,8 @@ public class TopicInfo
 {
     private String topicname;
     private String topictext;
+    private String[] aclEdit;
+    private String[] aclView;
 
     public String getTopicname()
     {
@@ -142,7 +144,6 @@ public class TopicInfo
 	return text.toString();
     }
 }
-
 
 class MakeTopicInfoFromResultSet implements ProcessResultSet
 {

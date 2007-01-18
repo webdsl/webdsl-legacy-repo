@@ -61,6 +61,6 @@ public class AddUser extends HttpServlet
 	    + "', '" + userinfo.getUrl()
 	    + "');";
 	
-	return DataBaseUtilities.updateDataBase(query);
+	return DataBaseUtilities.updateDataBase(query) + "";
     }
 }

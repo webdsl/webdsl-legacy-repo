@@ -48,15 +48,15 @@ public class ViewTopics extends HttpServlet
 	    "SELECT topicname FROM topic WHERE topicname LIKE '" + topicname + "%'";
 	
 	return (ArrayList)DataBaseUtilities
-	    .queryDataBase(query, new MakeTopicInfoArrayListFromResultSet(topics));
+	    .queryDataBase(query, new MakeTopicInfosArrayListFromResultSet(topics));
     }
 }
 
-class MakeTopicInfoArrayListFromResultSet implements ProcessResultSet
+class MakeTopicInfosArrayListFromResultSet implements ProcessResultSet
 {
     ArrayList topics;
 
-    public MakeTopicInfoArrayListFromResultSet(ArrayList topics)
+    public MakeTopicInfosArrayListFromResultSet(ArrayList topics)
     {
 	this.topics = topics;
     }

@@ -17,7 +17,7 @@ Windows. Google produced the mysql_install_db script, which I then
 learned should be parameterized with the --ldata option to indicate
 where to install the database
 
-   mysql_install_db --ldata=/suse9.1/webdsl/db1
+   mysql_install_db --ldata=/share/webdsl/db1
 
 
 --------------------------------------------------------------------
@@ -26,7 +26,7 @@ Starting the server
 
 Before anything else can be done the server has to be started.
 
-   mysqld --datadir=/suse9.1/webdsl/db1/
+   mysqld --datadir=/share/webdsl/db1/
 
 --------------------------------------------------------------------
 Setting root password
@@ -34,7 +34,6 @@ Setting root password
 
    mysqladmin -u root password 'new-password'
   
-
 --------------------------------------------------------------------
 Starting mysql shell
 --------------------------------------------------------------------

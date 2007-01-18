@@ -28,7 +28,7 @@ public class DataBaseUtilities
 	try {
             connection = 
 		DriverManager
-		.getConnection("jdbc:mysql://localhost/users?user=visser&password=dsl");
+		.getConnection("jdbc:mysql://127.0.0.1/users?user=visser&password=dsl");
 	    
             // Do something with the Connection
 	    
@@ -76,8 +76,9 @@ public class DataBaseUtilities
             Class.forName("com.mysql.jdbc.Driver").newInstance();
         } catch (Exception ex) {
             // handle the error
-	    System.out.println("could not load jdbc driver class");
-	    return null;
+	    throw new RuntimeException("could not load jdbc driver class");
+	    //System.out.println("could not load jdbc driver class");
+	    //return null;
         }
 
 	// make a connection with the database
@@ -87,16 +88,20 @@ public class DataBaseUtilities
 	try {
             connection = 
 		DriverManager
-		.getConnection("jdbc:mysql://localhost/users?user=visser&password=dsl");
+		.getConnection("jdbc:mysql://127.0.0.1/users?user=visser&password=dsl");
 	    
             // Do something with the Connection
 	    
 	} catch (SQLException ex) {
-            System.out.println("no connection to database <br>\n" 
+	    throw new RuntimeException("no connection to database <br>\n" 
 		+ "SQLException: " + ex.getMessage() + "<br>\n"
 		+ "SQLState: " + ex.getSQLState() + "<br>\n"
 			       + "VendorError: " + ex.getErrorCode());
-	    return null;
+            //System.out.println("no connection to database <br>\n" 
+	//	+ "SQLException: " + ex.getMessage() + "<br>\n"
+	//	+ "SQLState: " + ex.getSQLState() + "<br>\n"
+	//		       + "VendorError: " + ex.getErrorCode());
+	//    return null;
         }
 
 	Statement stmt = null;

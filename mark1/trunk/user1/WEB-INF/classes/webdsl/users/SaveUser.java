@@ -53,6 +53,6 @@ public class SaveUser extends HttpServlet
 	    + "url      = '" + userinfo.getUrl()      + "'"
 	    + "where username = '" + userinfo.getUsername() + "';";
 	
-	return DataBaseUtilities.updateDataBase(query);
+	return DataBaseUtilities.updateDataBase(query) + "";
     }
 }

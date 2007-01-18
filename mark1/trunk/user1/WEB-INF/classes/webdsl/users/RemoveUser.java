@@ -75,7 +75,7 @@ public class RemoveUser extends HttpServlet
 	    "delete from user "
 	    + "where username = '" + userinfo.getUsername() + "'; ";
 	
-	return DataBaseUtilities.updateDataBase(query);
+	return DataBaseUtilities.updateDataBase(query) + "";
     }
 
 }
