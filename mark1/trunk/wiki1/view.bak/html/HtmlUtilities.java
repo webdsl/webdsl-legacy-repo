@@ -1,9 +1,12 @@
-package view.html;
+package webdsl.html;
 
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.sql.*;
+
+import coreservlets.beans.*;
+import webdsl.users.*;
 
 public class HtmlUtilities 
 {
