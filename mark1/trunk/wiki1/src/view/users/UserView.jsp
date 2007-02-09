@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 
-  <jsp:useBean id="userinfo" type="webdsl.users.UserInfo" scope="request" />
+  <jsp:useBean id="userinfo" type="users.User" scope="request" />
 
   <%
      String username = userinfo.getUsername();
