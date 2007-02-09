@@ -14,20 +14,20 @@ public class TopicManager {
         TopicManager mgr = new TopicManager();
 
         if (args[0].equals("store")) {
-            mgr.createAndStoreTopic("Topic 1", "Topic 1 text", new Date());
-            mgr.createAndStoreTopic("Topic 2", "Topic 2 text", new Date());
-            mgr.createAndStoreTopic("Topic 3", "Topic 3 text", new Date());
+            mgr.createAndStoreTopic("Topic 1 text", new Date());
+            mgr.createAndStoreTopic("Topic 2 text", new Date());
+            mgr.createAndStoreTopic("Topic 3 text", new Date());
         }
 	else if (args[0].equals("list")) {
 	    List topics = mgr.listTopics();
 	    for (int i = 0; i < topics.size(); i++) {
 	        Topic theTopic = (Topic) topics.get(i);
-	        System.out.println("Topic:   " + theTopic.getName() +
+	        System.out.println("Topic:   " + theTopic.getId() +
 	                           "\nCreated: " + theTopic.getCreated());
 	    }
 	}
         else if (args[0].equals("addauthortotopic")) {
-          Long topicId = mgr.createAndStoreTopic("My Topic", "the event ...", new Date());
+          Long topicId = mgr.createAndStoreTopic("the event ...", new Date());
           Long userId = mgr.createAndStoreUser("Foo", "Bar", "foo@net", "www.foo.net");
           mgr.addAuthorToTopic(userId, topicId);
           System.out.println("Added author " + userId + " to topic " + topicId);
@@ -36,14 +36,13 @@ public class TopicManager {
         HibernateUtil.getSessionFactory().close();
     }
 
-    private Long createAndStoreTopic(String name, String text, Date created) 
+    private Long createAndStoreTopic(String text, Date created) 
     {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
         session.beginTransaction();
 
         Topic theTopic = new Topic();
-        theTopic.setName(name);
         theTopic.setText(text);
         theTopic.setCreated(created);
         theTopic.setModified(created);

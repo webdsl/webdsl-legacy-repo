@@ -3,14 +3,16 @@ package topics;
 import java.io.*;
 import java.util.*;
 import java.util.Date;
+import users.*;
 
 public class Topic 
 {
     private Long id;
-    private String name;
     private String text;
     private Date created;
     private Date modified;
+    private Set authors = new HashSet(); // users that have contributed to this topic
+    private Map subtopics = new HashMap(); 
 
     public Topic() {}
 
@@ -21,16 +23,6 @@ public class Topic
     private void setId(Long id) {
         this.id = id;
     }
-
-
-    public String getName() {
-	return name;
-    }
-
-    public void setName(String name) {
-	this.name = name;
-    }
-
 
     public String getText() {
 	return text;
@@ -56,16 +48,24 @@ public class Topic
         this.modified = modified;
     }
 
-    // users that have contributed to this topic
-
-    private Set authors = new HashSet();
-
     public Set getAuthors() {
       return authors;
     }
 
     public void setAuthors(Set authors) {
       this.authors = authors;
+    }
+
+    public Map getSubtopics() {
+      return subtopics;
+    }
+
+    public void setSubtopics(Map subtopics) {
+      this.subtopics = subtopics;
+    }
+
+    public Topic getSubtopic(String name) {
+      return (Topic) this.getSubtopics().get(name);
     }
 }
 

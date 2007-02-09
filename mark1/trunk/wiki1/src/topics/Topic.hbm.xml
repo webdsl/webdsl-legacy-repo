@@ -6,18 +6,28 @@
 <hibernate-mapping>
 
  <class name="topics.Topic" table="TOPIC">
+
     <id name="id" column="TOPIC_ID">
        <generator class="native"/>
     </id>
-    <property name="name"/>
+
     <property name="text"/>
+
     <property name="created"  type="timestamp" />
+
     <property name="modified" type="timestamp" />
 
     <set name="authors" table="AUTHORS">
         <key column="TOPIC_ID"/>
         <many-to-many column="USER_ID" class="users.User"/>
     </set>
+
+    <map name="subtopics" table="SUBTOPICS" order-by="name asc">
+        <key column="parent"/>
+        <map-key column="name" type="string" />
+        <many-to-many column="child" class="topics.Topic"/>
+    </map>
+
  </class>
 
 </hibernate-mapping>
