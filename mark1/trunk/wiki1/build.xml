@@ -3,9 +3,13 @@
     <property name="sourcedir" value="${basedir}/src"/>
     <property name="targetdir" value="${basedir}/bin"/>
     <property name="librarydir" value="${basedir}/lib"/>
+    <property name="tomcatlibdir" value="${basedir}/../../tomcat1/common/lib"/>
 
     <path id="libraries">
         <fileset dir="${librarydir}">
+            <include name="*.jar"/>
+        </fileset>
+        <fileset dir="${tomcatlibdir}">
             <include name="*.jar"/>
         </fileset>
     </path>

@@ -1,11 +1,13 @@
-package webdsl.users;
+package view.users;
 
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.sql.*;
 
-import webdsl.html.*;
+import view.html.*;
+import users.*;
+import util.HibernateUtil;
 
 public class ShowUsers extends HttpServlet 
 {
@@ -14,46 +16,34 @@ public class ShowUsers extends HttpServlet
                     HttpServletResponse response)
       throws ServletException, IOException 
     {
-	String users = getUsersFromDB();
-
 	response.setContentType("text/html");
 	PrintWriter out = response.getWriter();
 	HtmlUtilities.printHeader(out, "Registered Users");
 	out.println("<ul>");
-	out.println(users);
+	printUsers(request, out);
 	out.println("</ul>");
 	HtmlUtilities.printActions(out);
 	HtmlUtilities.printFooter(out);
 	
     }
 
-  String getUsersFromDB() 
+  private void printUsers(HttpServletRequest request, PrintWriter out) 
+      throws ServletException, IOException 
     {
-	String query = "SELECT username, name FROM user";
-	return (String)DataBaseUtilities
-	    .queryDataBase(query, new MakeUserListFromResultSet());
-    }
-
-}
-
-class MakeUserListFromResultSet implements ProcessResultSet
-{
-    public Object process(ResultSet rs) 
-    {
-	String users = "";
-	try{
-	    while(rs.next())
-		{
-		    users = users 
-			+ "<li>"
-			+ "<a href=/user1/user/" + rs.getString(1) + ">"
-			+ rs.getString(2)
+	Iterator users = HibernateUtil.getSessionFactory()
+				      .getCurrentSession()
+                                      .createQuery("from User")
+ 				      .list()
+				      .iterator();
+	while(users.hasNext())
+          {
+	    User u = (User)users.getNext();
+	    out.println("<li>"
+			+ "<a href=/user1/user/" + u.getName() + ">"
+			+ u.getFullname()
 			+ "</a>"
-			+ "</li>";
-		}
-	} catch(Exception e) {
-	    users = e.toString();
-	}
-	return (Object) users;
+			+ "</li>");
+          }
     }
+
 }
