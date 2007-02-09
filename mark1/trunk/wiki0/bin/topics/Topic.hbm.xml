@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+ <class name="topics.Topic" table="TOPIC">
+    <id name="id" column="TOPIC_ID">
+       <generator class="native"/>
+    </id>
+    <property name="name"/>
+    <property name="text"/>
+    <property name="created"  type="timestamp" />
+    <property name="modified" type="timestamp" />
+
+    <set name="authors" table="AUTHORS">
+        <key column="TOPIC_ID"/>
+        <many-to-many column="USER_ID" class="users.User"/>
+    </set>
+ </class>
+
+</hibernate-mapping>
