@@ -10,7 +10,7 @@ public class User
     private Long id;
     private String username;
     private String fullname;
-    private String password;
+    private String password = "";
     private String email;
     private String url;
 
@@ -105,6 +105,24 @@ public class User
          return (User)users.get(0);
       else
          return null;
+    }
+
+    public void save()
+    {
+      Session session = HibernateUtil.getSessionFactory().openSession();
+      Transaction tr = session.beginTransaction();
+      session.save(this);
+      tr.commit();
+      session.close();
+    }
+
+    public void delete()
+    {
+      Session session = HibernateUtil.getSessionFactory().openSession();
+      Transaction tr = session.beginTransaction();
+      session.delete(this);
+      tr.commit();
+      session.close();
     }
 
 }

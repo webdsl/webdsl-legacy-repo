@@ -1,13 +1,17 @@
-package webdsl.users;
+package view.users;
 
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
-import java.sql.*;
 
-import coreservlets.beans.*;
-import webdsl.users.*;
-import webdsl.html.*;
+import org.hibernate.*;
+
+import users.*;
+import view.users.*;
+import view.html.*;
+import util.HibernateUtil;
+import util.BeanUtilities;
+import util.ServletUtilities;
 
 public class SaveUser extends HttpServlet 
 {
@@ -23,36 +27,24 @@ public class SaveUser extends HttpServlet
 		      HttpServletResponse response)
 	throws ServletException, IOException 
     {
-	UserInfo userinfo = new UserInfo();
-	BeanUtilities.populateBean((Object)userinfo, request);
+	User user = new User();
+	BeanUtilities.populateBean((Object)user, request);
 
-	if (userinfo.isComplete())
+	if (user.isComplete())
 	    {
-		String result = changeUserInDB(userinfo);
-		response.sendRedirect("/user1/user/" + userinfo.getUsername());
+		user.save();
+		response.sendRedirect("/wiki1/user/" + user.getUsername());
 	    }
 	else 
 	    {
-		request.setAttribute("userinfo", userinfo);
-		request.setAttribute("next", "/user1/save-user");
-		request.setAttribute("title", "Change Profile of " + userinfo.getUsername());
+		request.setAttribute("user", user);
+		request.setAttribute("next", "/wiki1/save-user");
+		request.setAttribute("title", "Change Profile of " + user.getUsername());
 		request.setAttribute("button", "Save");
 		RequestDispatcher dispatcher =
-		    request.getRequestDispatcher("/WEB-INF/classes/webdsl/users/UserEntryForm.jsp");
+		    request.getRequestDispatcher("/WEB-INF/classes/view/users/UserEntryForm.jsp");
 		dispatcher.forward(request, response);
 	    }
     }
 
-    private String changeUserInDB(UserInfo userinfo)
-    {
-	String query = 
-	    "update user set "
-	    + "password = '" + userinfo.getPassword() + "', "
-	    + "name     = '" + userinfo.getFullname() + "', "
-	    + "email    = '" + userinfo.getEmail()    + "', "
-	    + "url      = '" + userinfo.getUrl()      + "'"
-	    + "where username = '" + userinfo.getUsername() + "';";
-	
-	return DataBaseUtilities.updateDataBase(query) + "";
-    }
 }

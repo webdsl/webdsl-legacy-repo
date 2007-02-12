@@ -29,31 +29,31 @@ public class AddUser extends HttpServlet
 	User user = new User();
 	BeanUtilities.populateBean((Object)user, request);
 
-	if (user.getFullname() != null)
-	    {
-	      Session session = HibernateUtil.getSessionFactory().openSession();
-	      Transaction tr = session.beginTransaction();
-              session.save(user);
-	      tr.commit();
-	      session.close();
-              response.sendRedirect("/wiki1/user/" + user.getUsername());
-	    }
-	else 
-	    {
-		//if (!user.passwordIsConsistent())
-		//    {
-		//	user.setPassword("");
-		//	user.setPasswordcheck("");
-		//    }
-		request.setAttribute("user", user);
-		request.setAttribute("next",  "/wiki1/register-user");
-		request.setAttribute("title", "Register New User");
-		request.setAttribute("button", "Register");
+	if (user.isComplete()) {
+	  try {
+	    user.save();
+            response.sendRedirect("/wiki1/user/" + user.getUsername());
+	    return;
+          } catch (Exception e) { 
+              /* duplicate entry */ 
+              user.setUsername(user.getUsername() + " already in use");
+          }
+	}
 
-		RequestDispatcher dispatcher =
-		    request.getRequestDispatcher("/WEB-INF/classes/view/users/UserEntryForm.jsp");
-		dispatcher.forward(request, response);
-	    }
+	//if (!user.passwordIsConsistent())
+	//    {
+	//	user.setPassword("");
+	//	user.setPasswordcheck("");
+	//    }
+
+	request.setAttribute("user", user);
+	request.setAttribute("next",  "/wiki1/register-user");
+	request.setAttribute("title", "Register New User");
+	request.setAttribute("button", "Register");
+
+	RequestDispatcher dispatcher =
+	  request.getRequestDispatcher("/WEB-INF/classes/view/users/UserEntryForm.jsp");
+	dispatcher.forward(request, response);
     }
 
 }

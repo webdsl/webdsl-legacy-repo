@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 
-  <jsp:useBean id="user"
+  <jsp:useBean id="userinfo"
     type="users.User"
     scope="request" />
     

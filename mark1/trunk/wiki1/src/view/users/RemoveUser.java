@@ -13,7 +13,7 @@ import util.HibernateUtil;
 import util.BeanUtilities;
 import util.ServletUtilities;
 
-public class EditUser extends HttpServlet 
+public class RemoveUser extends HttpServlet 
 {
 
     public void doGet(HttpServletRequest request,
@@ -23,33 +23,28 @@ public class EditUser extends HttpServlet
 	String username = ServletUtilities.getNameFromPathInfo(request.getPathInfo());
 
 	if(username == null) {
-           response.sendRedirect("/wiki1");
-	   // no username in pathinfo
+	    response.sendError(response.SC_BAD_REQUEST,
+			       "no username in pathinfo");
 	}
 
 	User user = User.getByName(username);
-       
-	if (user != null && user.isComplete())
-	    {		
-		request.setAttribute("userinfo", user);
-		request.setAttribute("next", "/wiki1/save-user");
-		request.setAttribute("title", "Change Profile of " + user.getUsername());
-		request.setAttribute("button", "Save");
-
-		RequestDispatcher dispatcher =
-		    request.getRequestDispatcher("/WEB-INF/classes/view/users/UserEntryForm.jsp");
-		dispatcher.forward(request, response);
-	    }
-	else 
-	    {
-		response.sendError(response.SC_NOT_FOUND, "no such user");
-	    }
+	if (user != null)
+          {
+            user.delete();
+            response.sendRedirect("/wiki1/users");
+          }
+        else
+          {
+	    response.sendError(response.SC_BAD_REQUEST,
+			       "user " + username + " does not exist");
+          }
     }
 
     public void doPost(HttpServletRequest request,
 		      HttpServletResponse response)
 	throws ServletException, IOException 
     {
-	doGet(request, response);
+      doGet(request, response);
     }
+
 }

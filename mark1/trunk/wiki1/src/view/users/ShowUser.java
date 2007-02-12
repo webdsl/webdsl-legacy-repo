@@ -11,6 +11,7 @@ import users.*;
 import view.users.*;
 import view.html.*;
 import util.HibernateUtil;
+import util.ServletUtilities;
 
 public class ShowUser extends HttpServlet 
 {
@@ -26,16 +27,11 @@ public class ShowUser extends HttpServlet
 		      HttpServletResponse response)
 	throws ServletException, IOException 
     {
-	String username = request.getPathInfo();
-	if(username != null && username.startsWith("/"))
-	    {
-		username = username.substring(1);
-	    }
-	else
-	    {
-		response.sendRedirect("/wiki1");
-		// no username in pathinfo
-	    }
+	String username = ServletUtilities.getNameFromPathInfo(request.getPathInfo());
+
+	if(username == null) {
+           response.sendRedirect("/wiki1");
+	}
 
 	User user = User.getByName(username);
 
