@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE web-app
+  PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+  "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+
+  <servlet>
+    <servlet-name>Servlet1</servlet-name>
+    <servlet-class>HelloServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>ShowUsers1</servlet-name>
+    <servlet-class>webdsl.users.ShowUsers</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>ShowUser1</servlet-name>
+    <servlet-class>webdsl.users.ShowUser</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>AddUser1</servlet-name>
+    <servlet-class>webdsl.users.AddUser</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>ChangeUser1</servlet-name>
+    <servlet-class>webdsl.users.ChangeUser</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>EditUser1</servlet-name>
+    <servlet-class>webdsl.users.EditUser</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>SaveUser1</servlet-name>
+    <servlet-class>webdsl.users.SaveUser</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>RemoveUser1</servlet-name>
+    <servlet-class>webdsl.users.RemoveUser</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>Login1</servlet-name>
+    <servlet-class>webdsl.users.Login</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>Logout1</servlet-name>
+    <servlet-class>webdsl.users.Logout</servlet-class>
+  </servlet>
+  
+
+  <servlet>
+    <servlet-name>CreateTopic1</servlet-name>
+    <servlet-class>webdsl.topics.CreateTopic</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>ViewTopic1</servlet-name>
+    <servlet-class>webdsl.topics.ViewTopic</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>RawTopic1</servlet-name>
+    <servlet-class>webdsl.topics.RawTopic</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>EditTopic1</servlet-name>
+    <servlet-class>webdsl.topics.EditTopic</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>PreviewTopic1</servlet-name>
+    <servlet-class>webdsl.topics.PreviewTopic</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>SaveTopic1</servlet-name>
+    <servlet-class>webdsl.topics.SaveTopic</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>ViewTopics1</servlet-name>
+    <servlet-class>webdsl.topics.ViewTopics</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>RawTopics1</servlet-name>
+    <servlet-class>webdsl.topics.RawTopics</servlet-class>
+  </servlet>
+
+
+
+
+  <servlet-mapping>
+    <servlet-name>Servlet1</servlet-name>
+    <url-pattern>/servlet1</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>ShowUsers1</servlet-name>
+    <url-pattern>/users</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>AddUser1</servlet-name>
+    <url-pattern>/register-user</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>ShowUser1</servlet-name>
+    <url-pattern>/user/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>ChangeUser1</servlet-name>
+    <url-pattern>/update-user/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>EditUser1</servlet-name>
+    <url-pattern>/edit-user/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>SaveUser1</servlet-name>
+    <url-pattern>/save-user</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>RemoveUser1</servlet-name>
+    <url-pattern>/remove-user/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>Login1</servlet-name>
+    <url-pattern>/login</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>Logout1</servlet-name>
+    <url-pattern>/logout</url-pattern>
+  </servlet-mapping>
+
+
+  <servlet-mapping>
+    <servlet-name>CreateTopic1</servlet-name>
+    <url-pattern>/create/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>ViewTopic1</servlet-name>
+    <url-pattern>/view/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>RawTopic1</servlet-name>
+    <url-pattern>/raw/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>EditTopic1</servlet-name>
+    <url-pattern>/edit/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>PreviewTopic1</servlet-name>
+    <url-pattern>/preview/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>SaveTopic1</servlet-name>
+    <url-pattern>/save</url-pattern>
+  </servlet-mapping>
+
+
+  <servlet-mapping>
+    <servlet-name>ViewTopics1</servlet-name>
+    <url-pattern>/topics/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>RawTopics1</servlet-name>
+    <url-pattern>/rawtopics/*</url-pattern>
+  </servlet-mapping>
+
+
+</web-app>
+
