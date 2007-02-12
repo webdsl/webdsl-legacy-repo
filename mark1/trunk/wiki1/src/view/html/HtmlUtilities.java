@@ -31,16 +31,16 @@ public class HtmlUtilities
 
     public static void printActions(PrintWriter out /*, String username */)
     {
-	out.println("<a href=\"/user1/\">Main</a>"
-		    + " | <a href=\"/user1/login\">Login</a>"
-		    + " | <a href=\"/user1/logout\">Logout</a>"
-		    + " | <a href=\"/user1/users\">Users</a>"
-		    + " | <a href=\"/user1/register-user\">Register</a>"
+	out.println("<a href=\"/wiki1/\">Main</a>"
+		    + " | <a href=\"/wiki1/login\">Login</a>"
+		    + " | <a href=\"/wiki1/logout\">Logout</a>"
+		    + " | <a href=\"/wiki1/users\">Users</a>"
+		    + " | <a href=\"/wiki1/register-user\">Register</a>"
 		    );
 
 	/*
 	if (username != null & !username.equals(""))
-	    out.println(" | Logged in as <a href=\"/user1/user/" 
+	    out.println(" | Logged in as <a href=\"/wiki1/user/" 
 			+ username 
 			+ "\">" 
 			+ username 

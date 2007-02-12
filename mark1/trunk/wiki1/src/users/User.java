@@ -2,6 +2,9 @@ package users;
 
 import java.util.*;
 
+import org.hibernate.*;
+import util.HibernateUtil;
+
 public class User
 {
     private Long id;
@@ -75,6 +78,33 @@ public class User
 
     public void setTopics(Set topics) {
       this.topics = topics;
+    }
+
+    public boolean isComplete() {
+      return username != null
+	   && fullname != null
+	   && password != null
+  	   && email != null
+	   && topics != null;
+	   // note: url is optional
+    }
+
+    public static User getByName(String username)
+    {
+      Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
+      session.beginTransaction();
+
+      List users = session.createQuery("from User where username = ?")
+			    .setString(0, username)
+			    .list();
+
+      session.getTransaction().commit();
+	
+      if(users.size() > 0)
+         return (User)users.get(0);
+      else
+         return null;
     }
 
 }

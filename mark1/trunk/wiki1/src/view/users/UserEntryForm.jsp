@@ -2,7 +2,7 @@
 <html>
 
   <jsp:useBean id="user"
-    type="webdsl.users.User"
+    type="users.User"
     scope="request" />
     
   <jsp:useBean id="next"
@@ -27,8 +27,8 @@
     <table>
       <tr>
 	<td> 
-	  <! user.hasUsername() ? "Name*" : "<b>Name*</b>" -->
-	  Name*
+	  <%-- user.hasUsername() ? "Userame*" : "<b>Username*</b>" --%>
+	  Username*
 	</td>
 	<td>
 	  <input type="text" name="username" value="<jsp:getProperty name="user" property="username" />" />
@@ -71,14 +71,6 @@
 	</td>
       </tr>
       
-      <%--tr>
-	<td> Password*
-	  <%= user.hasPasswordcheck() ? "Password*" : "<b>Password*</b>" %>
-	</td>
-	<td>
-	  <input type="password" name="passwordcheck" value="<jsp:getProperty name="user" property="passwordcheck" />" /><br />
-	</td>
-      </tr%-->
     </table>
     
     Fields marked * are required.

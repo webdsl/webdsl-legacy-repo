@@ -1,8 +1,10 @@
-package webdsl.users;
+package view.users;
 
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
+
+import org.hibernate.*;
 
 import users.*;
 import view.users.*;
@@ -27,38 +29,31 @@ public class AddUser extends HttpServlet
 	User user = new User();
 	BeanUtilities.populateBean((Object)user, request);
 
-	HibernateUtil.getSessionFactory()
-	             .getCurrentSession()
-                     .save(user);
-
-	response.sendRedirect("/user1/user/" + user.getUsername());
-
-	// @TODO: validate user data
-
-	/*
-	if (user.isComplete())
+	if (user.getFullname() != null)
 	    {
-		addUserToDB(user);
-		response.sendRedirect("/user1/user/" + user.getUsername());
+	      Session session = HibernateUtil.getSessionFactory().openSession();
+	      Transaction tr = session.beginTransaction();
+              session.save(user);
+	      tr.commit();
+	      session.close();
+              response.sendRedirect("/wiki1/user/" + user.getUsername());
 	    }
 	else 
 	    {
-		if (!user.passwordIsConsistent())
-		    {
-			user.setPassword("");
-			user.setPasswordcheck("");
-		    }
+		//if (!user.passwordIsConsistent())
+		//    {
+		//	user.setPassword("");
+		//	user.setPasswordcheck("");
+		//    }
 		request.setAttribute("user", user);
-
-		request.setAttribute("next",  "/user1/register-user");
+		request.setAttribute("next",  "/wiki1/register-user");
 		request.setAttribute("title", "Register New User");
 		request.setAttribute("button", "Register");
 
 		RequestDispatcher dispatcher =
-		    request.getRequestDispatcher("/WEB-INF/classes/webdsl/users/UserEntryForm.jsp");
+		    request.getRequestDispatcher("/WEB-INF/classes/view/users/UserEntryForm.jsp");
 		dispatcher.forward(request, response);
 	    }
-         */
     }
 
 }

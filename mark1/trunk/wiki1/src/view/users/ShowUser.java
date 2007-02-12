@@ -3,6 +3,9 @@ package view.users;
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
+import java.util.*;
+
+import org.hibernate.*;
 
 import users.*;
 import view.users.*;
@@ -29,19 +32,17 @@ public class ShowUser extends HttpServlet
 		username = username.substring(1);
 	    }
 	else
-	    username = "";
+	    {
+		response.sendRedirect("/wiki1");
+		// no username in pathinfo
+	    }
 
-	User user = (User)
-	    HibernateUtil.getSessionFactory()
-			 .getCurrentSession()
-                         .createQuery("from User where username = ?")
-			 .setString(0, username)
-			 .uniqueResult();
-       		
+	User user = User.getByName(username);
+
 	request.setAttribute("userinfo", user);
 	RequestDispatcher dispatcher =
 	    request.getRequestDispatcher(
-              "/WEB-INF/classes/webdsl/users/UserView.jsp"
+              "/WEB-INF/classes/view/users/UserView.jsp"
             );
 	dispatcher.forward(request, response);
     }

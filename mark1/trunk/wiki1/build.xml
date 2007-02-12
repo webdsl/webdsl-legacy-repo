@@ -51,7 +51,7 @@
       <!-- Create the distribution directory -->
       <mkdir dir="${dist}"/>
 
-      <war warfile="${dist}/user1.war" webxml="${src}/web.xml">
+      <war warfile="${dist}/wiki1.war" webxml="${src}/web.xml">
          <fileset dir="${src}">
             <include name="**/*.html"/>
             <include name="**/*.jsp"/>

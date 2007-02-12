@@ -11,88 +11,88 @@
 
   <servlet>
     <servlet-name>ShowUsers1</servlet-name>
-    <servlet-class>webdsl.users.ShowUsers</servlet-class>
+    <servlet-class>view.users.ShowUsers</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>ShowUser1</servlet-name>
-    <servlet-class>webdsl.users.ShowUser</servlet-class>
+    <servlet-class>view.users.ShowUser</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>AddUser1</servlet-name>
-    <servlet-class>webdsl.users.AddUser</servlet-class>
+    <servlet-class>view.users.AddUser</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>ChangeUser1</servlet-name>
-    <servlet-class>webdsl.users.ChangeUser</servlet-class>
+    <servlet-class>view.users.ChangeUser</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>EditUser1</servlet-name>
-    <servlet-class>webdsl.users.EditUser</servlet-class>
+    <servlet-class>view.users.EditUser</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>SaveUser1</servlet-name>
-    <servlet-class>webdsl.users.SaveUser</servlet-class>
+    <servlet-class>view.users.SaveUser</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>RemoveUser1</servlet-name>
-    <servlet-class>webdsl.users.RemoveUser</servlet-class>
+    <servlet-class>view.users.RemoveUser</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>Login1</servlet-name>
-    <servlet-class>webdsl.users.Login</servlet-class>
+    <servlet-class>view.users.Login</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>Logout1</servlet-name>
-    <servlet-class>webdsl.users.Logout</servlet-class>
+    <servlet-class>view.users.Logout</servlet-class>
   </servlet>
   
 
   <servlet>
     <servlet-name>CreateTopic1</servlet-name>
-    <servlet-class>webdsl.topics.CreateTopic</servlet-class>
+    <servlet-class>view.topics.CreateTopic</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>ViewTopic1</servlet-name>
-    <servlet-class>webdsl.topics.ViewTopic</servlet-class>
+    <servlet-class>view.topics.ViewTopic</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>RawTopic1</servlet-name>
-    <servlet-class>webdsl.topics.RawTopic</servlet-class>
+    <servlet-class>view.topics.RawTopic</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>EditTopic1</servlet-name>
-    <servlet-class>webdsl.topics.EditTopic</servlet-class>
+    <servlet-class>view.topics.EditTopic</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>PreviewTopic1</servlet-name>
-    <servlet-class>webdsl.topics.PreviewTopic</servlet-class>
+    <servlet-class>view.topics.PreviewTopic</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>SaveTopic1</servlet-name>
-    <servlet-class>webdsl.topics.SaveTopic</servlet-class>
+    <servlet-class>view.topics.SaveTopic</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>ViewTopics1</servlet-name>
-    <servlet-class>webdsl.topics.ViewTopics</servlet-class>
+    <servlet-class>view.topics.ViewTopics</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>RawTopics1</servlet-name>
-    <servlet-class>webdsl.topics.RawTopics</servlet-class>
+    <servlet-class>view.topics.RawTopics</servlet-class>
   </servlet>
 
 

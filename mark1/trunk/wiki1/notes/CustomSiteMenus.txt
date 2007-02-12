@@ -1,0 +1,79 @@
+%META:TOPICINFO{author="JeroenFokker" date="1157542169" format="1.0" version="1.10"}%
+<div class="flexMenu" onmouseover="return !showMenu(event, 50);" onmouseout="return !hideMenu(event, 50);">
+  <p>Courses</p>
+  <div id="flexMenuContent50" class="flexMenuContent" style="width: 22em">
+
+	* [[Stc.WebHome][Software Technology Colloquium]]
+
+Period 1
+	* [[Master.Software Engineering][Software Engineering]]
+	* [[Master.Software Specification][Software Specification]]
+	* [[Master.Distributed Object Systems][Distributed Object Systems]]
+	* [[Master.Preparation For Software Technology][Preparation For Software Technology]]
+	* [[Master.Efficient Implementation of Functional Languages][sem. Efficient Implementation of Functional Languages]]
+	* [[Master.Feedback Oriented Static Analysis][sem. Feedback Oriented Static Analysis]]
+
+Period 2
+	* [[Master.ImplementationOfProgrammingLanguages][Impl. of Programming Languages]]
+	* [[Master.SoftwareArchitecture][Software Architecture]]
+	* [[Master.Aspect Oriented Programming][sem. Aspect Oriented Programming]]
+	* [[Master.Networked Objects][sem. Networked Objects]]
+
+Period 3
+	* [[Master.Advanced Functional Programming][Advanced Functional Programming]]
+	* [[Master.Program Verification][Program Verification]]
+	* [[Master.DataBaseArchitectures][Database Architectures]]
+
+Period 4
+	* [[Master.Automatic Program Analysis][Automatic Program Analysis]]
+	* [[Master.Generic Programming][Generic Programming]]
+	* possibly new course: to be announced
+  </div>
+</div>
+<div class="flexMenu" onmouseover="return !showMenu(event, 51);" onmouseout="return !hideMenu(event, 51);">
+  <p>People</p>
+  <div id="flexMenuContent51" class="flexMenuContent" style="width: 14em">
+
+	* [[Center.People][Personnel Directory]]
+
+Faculty
+	* [[http://www.cs.uu.nl/people/lex/][Lex Bijlsma]]
+	* [[Atze.WebHome][Atze Dijkstra]]
+	* [[http://www.cs.uu.nl/people/jeroen/][Jeroen Fokker]]
+	* [[Hage.WebHome][Jurriaan Hage]]
+	* [[http://www.cs.uu.nl/people/bastiaan/][Bastiaan Heeren]]
+	* [[http://www.cs.uu.nl/people/johanj/][Johan Jeuring]]
+	* [[http://www.cs.uu.nl/people/piet/][Piet van Oostrum]]
+	* [[http://www.cs.uu.nl/people/wishnu/][Wishnu Prasetya]]
+	* [[Swierstra.WebHome][Doaitse Swierstra]]
+	* [[Visser.WebHome][Eelco Visser]]
+
+Post Doctoral
+	* [[http://www.cs.uu.nl/people/eelco/][Eelco Dolstra]]
+	* [[http://www.cs.uu.nl/people/martijn/][Martijn Schrage]]
+
+<nop>PhD Students
+	* [[http://www.cs.uu.nl/people/arthurb/][Arthur Baars]]
+	* [[Martin.WebHome][Martin Bravenboer]]
+	* [[http://www.cs.uu.nl/people/stefan/][Stefan Holdermans]]
+	* [[http://www.cs.uu.nl/people/arthurvl/][Arthur van Leeuwen]]
+	* [[http://www.cs.uu.nl/staff/alexey.html][Alexey Rodriguez]]
+
+  </div>
+</div>
+<div class="flexMenu" onmouseover="return !showMenu(event, 52);" onmouseout="return !hideMenu(event, 52);">
+  <p>Projects</p>
+  <div id="flexMenuContent52" class="flexMenuContent" style="width: 16em">
+
+	* [[Center.ResearchProjects][Overview]]
+
+	* [[Ehc.WebHome][Essential Haskell Compiler]]
+	* [[http://www.generic-haskell.org/][Generic Haskell]]
+	* [[http://www.cs.uu.nl/helium/][Helium]]
+	* [[http://www.stratego-language.org][StrategoXT]]
+	* [[Top.WebHome][TOP]]
+	* [[Trace.WebHome][TraCE]]
+
+  </div>
+</div>
+
