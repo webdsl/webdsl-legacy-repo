@@ -116,6 +116,19 @@ public class User
       session.close();
     }
 
+    public void update()
+    {
+      Session session = HibernateUtil.getSessionFactory().openSession();
+      Transaction tr = session.beginTransaction();
+      try {
+        session.update(this);
+        tr.commit();
+      } catch (HibernateException e) {
+        tr.rollback();
+      }
+      session.close();
+    }
+
     public void delete()
     {
       Session session = HibernateUtil.getSessionFactory().openSession();

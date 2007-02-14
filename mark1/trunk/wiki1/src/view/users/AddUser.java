@@ -46,7 +46,7 @@ public class AddUser extends HttpServlet
 	//	user.setPasswordcheck("");
 	//    }
 
-	request.setAttribute("user", user);
+	request.setAttribute("userinfo", user);
 	request.setAttribute("next",  "/wiki1/register-user");
 	request.setAttribute("title", "Register New User");
 	request.setAttribute("button", "Register");

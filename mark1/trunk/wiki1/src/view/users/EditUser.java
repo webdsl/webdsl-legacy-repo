@@ -24,13 +24,17 @@ public class EditUser extends HttpServlet
 
 	if(username == null) {
            response.sendRedirect("/wiki1");
+           return;
 	   // no username in pathinfo
 	}
 
 	User user = User.getByName(username);
        
 	if (user != null && user.isComplete())
-	    {		
+	    {	
+		HttpSession session = request.getSession();
+		session.setAttribute("userinfo", user);
+
 		request.setAttribute("userinfo", user);
 		request.setAttribute("next", "/wiki1/save-user");
 		request.setAttribute("title", "Change Profile of " + user.getUsername());

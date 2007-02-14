@@ -35,12 +35,16 @@ public class ShowUser extends HttpServlet
 
 	User user = User.getByName(username);
 
-	request.setAttribute("userinfo", user);
-	RequestDispatcher dispatcher =
-	    request.getRequestDispatcher(
-              "/WEB-INF/classes/view/users/UserView.jsp"
-            );
-	dispatcher.forward(request, response);
+	if (user == null) {
+           response.sendRedirect("/wiki1/register-user");
+	} else {
+	  request.setAttribute("userinfo", user);
+	  RequestDispatcher dispatcher =
+	      request.getRequestDispatcher(
+                "/WEB-INF/classes/view/users/UserView.jsp"
+              );
+	  dispatcher.forward(request, response);
+  	}
     }
 
 }

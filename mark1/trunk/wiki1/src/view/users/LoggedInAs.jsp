@@ -1,8 +1,8 @@
 <jsp:useBean id="user"
-  type="webdsl.users.UserInfo"
+  type="users.User"
   scope="session" />
     
-  <% if (user.hasUsername()) { %>
+  <% if (user != null && user.getUsername() != null) { %>
   <jsp:getProperty name="user" property="fullname" />
   <% } %>
 

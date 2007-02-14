@@ -31,7 +31,7 @@
 	  Username*
 	</td>
 	<td>
-	  <input type="text" name="username" value="<jsp:getProperty name="user" property="username" />" />
+	  <input type="text" name="username" value="<jsp:getProperty name="userinfo" property="username" />" />
 	</td>
       </tr>
       
@@ -40,7 +40,7 @@
 	  <%--= user.hasFullname() ? "Full name*" : "<b>Full name*</b>" --%>
 	</td>
 	<td>
-	  <input type="text" name="fullname" value="<jsp:getProperty name="user" property="fullname" />" /><br />
+	  <input type="text" name="fullname" value="<jsp:getProperty name="userinfo" property="fullname" />" /><br />
 	</td>
       </tr>
       
@@ -49,7 +49,7 @@
 	  <%--= user.hasEmail() ? "Email*" : "<b>Email*</b>" --%>
 	</td>
 	<td>
-      <input type="text" name="email" value="<jsp:getProperty name="user" property="email" />" /><br />
+      <input type="text" name="email" value="<jsp:getProperty name="userinfo" property="email" />" /><br />
 	</td>
       </tr>
       
@@ -58,7 +58,7 @@
 	  URL
 	</td>
 	<td>
-	  <input type="text" name="url" value="<jsp:getProperty name="user" property="url" />" /><br />
+	  <input type="text" name="url" value="<jsp:getProperty name="userinfo" property="url" />" /><br />
 	</td>
       </tr>
       
@@ -67,7 +67,7 @@
 	  <%--= user.hasPassword() ? "Password*" : "<b>Password*</b>" --%>
 	</td>
 	<td>
-	  <input type="password" name="password" value="<jsp:getProperty name="user" property="password" />" /><br />
+	  <input type="password" name="password" value="<jsp:getProperty name="userinfo" property="password" />" /><br />
 	</td>
       </tr>
       

@@ -2,7 +2,7 @@
 <html>
 
   <jsp:useBean id="user"
-    type="webdsl.users.UserInfo"
+    type="users.User"
     scope="session" />
     
     <head><title>Login</title></head>
@@ -15,21 +15,20 @@
     <table>
       <tr>
 	<td> 
-	  <%= user.hasUsername() ? "Name*" : "<b>Name*</b>" %>
+	  Username :
+	  <%--= user.hasUsername() ? "Name*" : "<b>Name*</b>" --%>
 	</td>
 	<td>
-	  <input type="text" name="username" 
-		  value="<jsp:getProperty name="user" property="username" />" />
+	  <input type="text" name="username" value="" />
 	</td>
       </tr>
       
       <tr>
 	<td> 
-	  <%= user.hasPassword() ? "Password*" : "<b>Password*</b>" %>
+	  Password:
 	</td>
 	<td>
-	  <input type="password" name="password" 
-		  value="<jsp:getProperty name="user" property="password" />" /><br />
+	  <input type="password" name="password" value="" /><br />
 	</td>
       </tr>
       
@@ -43,12 +42,12 @@
 
   </form>
     
-    <a href="/user1/">Main</a> 
-    | <a href="/user1/login">Login</a> 
-    | <a href="/user1/logout">Logout</a> 
-    | <a href="/user1/users">Users</a> 
-    | <a href="/user1/register-user">Register</a>
-    | <jsp:include page="/WEB-INF/classes/webdsl/users/LoggedInAs.jsp" />
+    <a href="/wiki1/">Main</a> 
+    | <a href="/wiki1/login">Login</a> 
+    | <a href="/wiki1/logout">Logout</a> 
+    | <a href="/wiki1/users">Users</a> 
+    | <a href="/wiki1/register-user">Register</a>
+    | <jsp:include page="/WEB-INF/classes/view/users/LoggedInAs.jsp" />
 
   </body>
 

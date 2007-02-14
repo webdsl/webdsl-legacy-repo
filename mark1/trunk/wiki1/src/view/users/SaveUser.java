@@ -27,12 +27,21 @@ public class SaveUser extends HttpServlet
 		      HttpServletResponse response)
 	throws ServletException, IOException 
     {
-	User user = new User();
+	HttpSession session = request.getSession();
+	
+	User user = (User)session.getAttribute("userinfo");
+
+	if (user == null)
+	  {
+	     response.sendRedirect("/wiki1/");
+	     return;
+	  } 
+
 	BeanUtilities.populateBean((Object)user, request);
 
 	if (user.isComplete())
 	    {
-		user.save();
+		user.update();
 		response.sendRedirect("/wiki1/user/" + user.getUsername());
 	    }
 	else 

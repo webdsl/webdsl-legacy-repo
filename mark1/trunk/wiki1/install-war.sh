@@ -14,6 +14,6 @@ cp -f dist/wiki1.war ${webappdir}
 
 #mysqld_safe --force --datadir=/share/webdsl/db1/ &
 
-mysqld_safe --datadir=/home/eelco/webdsl/db1/ &
+mysqld_safe --host=127.0.0.1 --datadir=/home/eelco/webdsl/db1/ &
 
 ./startup.sh
