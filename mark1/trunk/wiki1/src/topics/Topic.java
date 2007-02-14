@@ -8,6 +8,8 @@ import users.*;
 public class Topic 
 {
     private Long id;
+    private Boolean isroot;
+    private String title;
     private String text;
     private Date created;
     private Date modified;
@@ -22,6 +24,25 @@ public class Topic
 
     private void setId(Long id) {
         this.id = id;
+    }
+
+    public Boolean getIsroot() {
+	return isroot;
+    }
+
+    public void setIsroot(Boolean isroot) {
+	if(RootTopic.getRootTopic() == null)
+	  {
+	     this.isroot = isroot;
+	  }
+    }
+   
+    public String getTitle() {
+	return title;
+    }
+
+    public void setTitle(String title) {
+	this.title = title;
     }
 
     public String getText() {
@@ -56,6 +77,10 @@ public class Topic
       this.authors = authors;
     }
 
+    public void addAuthor(User author) {
+      getAuthors().add(author);
+    }
+
     public Map getSubtopics() {
       return subtopics;
     }
@@ -66,6 +91,10 @@ public class Topic
 
     public Topic getSubtopic(String name) {
       return (Topic) this.getSubtopics().get(name);
+    }
+
+    public void addSubtopic(String name, Topic topic) {
+      getSubtopics().put(name, topic);
     }
 }
 

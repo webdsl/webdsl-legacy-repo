@@ -11,6 +11,10 @@
        <generator class="native"/>
     </id>
 
+    <property name="isroot"/>
+
+    <property name="title"/>
+
     <property name="text"/>
 
     <property name="created"  type="timestamp" />
