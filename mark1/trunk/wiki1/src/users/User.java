@@ -89,6 +89,17 @@ public class User
 	   // note: url is optional
     }
 
+    public boolean equals(Object o) {
+      if (o instanceof User) 
+        return this.username.equals(((User)o).getUsername());
+      else 
+        return false;
+    }
+
+    public int hashCode() {
+      return username.hashCode();
+    }
+
     public static User getByName(String username)
     {
       Session session = HibernateUtil.getSessionFactory().getCurrentSession();

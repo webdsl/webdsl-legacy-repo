@@ -26,7 +26,7 @@ Starting the server
 
 Before anything else can be done the server has to be started.
 
-   mysqld --datadir=/share/webdsl/db1/
+   mysqld_safe --datadir=/share/webdsl/db1/
 
 --------------------------------------------------------------------
 Setting root password

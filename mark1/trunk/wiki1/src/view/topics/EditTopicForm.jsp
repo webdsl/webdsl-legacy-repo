@@ -1,35 +1,72 @@
+<%@ page import="java.util.*" %>
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 
-  <jsp:useBean id="topicinfo" type="webdsl.topics.TopicInfo" scope="request" />
+  <jsp:useBean id="topic"     type="topics.Topic"     scope="request" />
+  <jsp:useBean id="path"      type="java.lang.String" scope="request" />
+  <jsp:useBean id="subtopics" type="java.util.Set"    scope="request" />
+  <jsp:useBean id="authors"   type="java.util.Set"    scope="request" />
+  <jsp:useBean id="pathelements"   type="java.util.List"    scope="request" />
 
   <%
-    String topicname = topicinfo.getTopicname();
-    String topictext = topicinfo.getTopictext();
-    if (topictext == null)
-      topictext = "";
+    String title = topic.getTitle();
+    String text = topic.getText();
+    if (text == null)
+      text = "";
     else
-      topictext = webdsl.html.EscapeChars.escape(topictext);
+      text = view.html.EscapeChars.escape(text);
   %>
 
     <head>
-      <title><%= topicname %> (Edit)</title>
+      <title><%= title %> (Edit)</title>
     </head>
 
     <body>
-      <h1><%= topicname %> (Edit)</h1>
+      <h1><%= title %> (Edit) </h1>
+      <hr>
+        <a href="/wiki1/edit">Root</a>
+      <% String prefix = "";
+         for(Object elem : pathelements) 
+         { 
+              prefix = prefix + "/" + (String)elem; %>
+           | <a href="/wiki1/edit<%= prefix %>"><%= (String)elem %></a>
+      <% } %>
       <hr>
 
-      <form action="/user1/save" method="POST">
+      <form action="/wiki1/save<%= path %>" method="POST">
 	
-	<input type="hidden" name="topicname" value="<%= topicname %>" />
+	title: <input type="text" name="title" value="<%= title %>" />
 
-	<textarea name="topictext" name="text" wrap="virtual" rows="35" cols="100"><%= topictext %></textarea>
+	<br />
+
+	text: 
+	<textarea name="text" wrap="virtual" rows="15" cols="75"><%= text %></textarea>
 
       <hr>
 	<input type="submit" value="Save" />
 
       </form>
+     
+      <p />
+      Subtopics:
+      <ul>
+      <% for(Object name : subtopics)
+           { %>
+             <li>
+               <a href="/wiki1/edit/<%= path %>/<%= (String)name %>"><%= (String)name%></a>
+             </li>
+      <%   } %>
+      </ul>
+
+      <p />
+      Authors:
+      <ul>
+      <% for(Object name : authors)
+           { %>
+             <li> <a href="/wiki1/user/<%= (String)name %>"><%= (String)name%></a></li>
+      <%   } %>
+      </ul>
 
     </body>
 </html>

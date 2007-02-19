@@ -5,6 +5,9 @@ import java.util.*;
 import java.util.Date;
 import users.*;
 
+import org.hibernate.*;
+import util.HibernateUtil;
+
 public class Topic 
 {
     private Long id;
@@ -77,6 +80,14 @@ public class Topic
       this.authors = authors;
     }
 
+    public Set getAuthorNames() {
+      Set authors = new HashSet();
+      for(Object name : this.getAuthors()) { 
+        authors.add(((User)name).getUsername()); 
+      }
+      return authors;
+    }
+
     public void addAuthor(User author) {
       getAuthors().add(author);
     }
@@ -96,6 +107,16 @@ public class Topic
     public void addSubtopic(String name, Topic topic) {
       getSubtopics().put(name, topic);
     }
+
+    public void update()
+    {
+      Session hsession = HibernateUtil.getSessionFactory().openSession();
+      Transaction tr = hsession.beginTransaction();
+      hsession.update(this);
+      tr.commit();
+      hsession.close();
+    }
+
 }
 
 

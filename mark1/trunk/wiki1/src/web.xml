@@ -176,7 +176,7 @@
 
   <servlet-mapping>
     <servlet-name>SaveTopic1</servlet-name>
-    <url-pattern>/save</url-pattern>
+    <url-pattern>/save/*</url-pattern>
   </servlet-mapping>
 
 

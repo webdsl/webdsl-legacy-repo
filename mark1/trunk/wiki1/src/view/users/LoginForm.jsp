@@ -1,9 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 
-  <jsp:useBean id="user"
-    type="users.User"
-    scope="session" />
+  <jsp:useBean id="user" type="users.User" scope="session" />
+
+  <jsp:useBean id="continuation" type="String" scope="session" />
     
     <head><title>Login</title></head>
   
@@ -48,6 +48,7 @@
     | <a href="/wiki1/users">Users</a> 
     | <a href="/wiki1/register-user">Register</a>
     | <jsp:include page="/WEB-INF/classes/view/users/LoggedInAs.jsp" />
+    | next: <%= continuation %>
 
   </body>
 

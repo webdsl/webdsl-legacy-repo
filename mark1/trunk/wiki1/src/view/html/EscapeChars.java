@@ -1,4 +1,4 @@
-package webdsl.html;
+package view.html;
 
 import java.net.URLEncoder;
 import java.io.UnsupportedEncodingException;

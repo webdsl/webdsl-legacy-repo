@@ -47,7 +47,15 @@ public class Login extends HttpServlet
 	if (user != null && user.getPassword().equals(userbean.getPassword()))
 	  {
             session.setAttribute("user", user);
-	    response.sendRedirect("/wiki1/user/" + user.getUsername());
+            session.setAttribute("username", user.getUsername());
+	    String continuation = (String)session.getAttribute("continuation");
+	    if (continuation != null)
+	      { 
+		session.setAttribute("continuation", null);
+		response.sendRedirect(continuation);
+	      }
+	    else
+	      response.sendRedirect("/wiki1/user/" + user.getUsername());
           }
 	else
           {

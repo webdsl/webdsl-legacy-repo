@@ -4,6 +4,9 @@
   - what are the consequences for performance if no caching by
     means of prepared statements is done?
 
+- equality between persistent objects
+  - in particular when adding objects to a set
+
 - initialization
   - database should be created automatically on first use
   - default topics (especially skins) should be added to the db when

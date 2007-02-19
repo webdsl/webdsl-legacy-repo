@@ -50,7 +50,7 @@ public class CreateTopic extends HttpServlet
 	  hsession.close();	  
         }	
 
-	response.sendRedirect("/wiki1/view/" + path);
+	response.sendRedirect("/wiki1/edit/" + path);
     }
 
 }
