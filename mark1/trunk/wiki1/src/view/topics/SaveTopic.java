@@ -55,12 +55,12 @@ public class SaveTopic extends HttpServlet
 	  } 
           else
           {
-	    BeanUtilities.populateBean((Object)topic, request);
-	    topic.addAuthor(user);
-	    hsession.update(topic);
-            transaction.commit();
-	    hsession.close();
-	    response.sendRedirect("/wiki1/edit/" + path);
+	     BeanUtilities.populateBean((Object)topic, request);
+	     topic.addAuthor(user);
+	     hsession.update(topic);
+             transaction.commit();
+	     hsession.close();
+	     response.sendRedirect("/wiki1/edit/" + path);
           }
         }
     }
