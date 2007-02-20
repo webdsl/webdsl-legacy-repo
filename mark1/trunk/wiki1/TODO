@@ -1,27 +1,12 @@
-- prepared statements in JDBC turned off because of bug in mysql
-  - fixed by appending ?useServerPrepStmts=false to jdbc url
-  - is there a fix for the bug in more recent version of mysql?
-  - what are the consequences for performance if no caching by
-    means of prepared statements is done?
-
-- equality between persistent objects
-  - in particular when adding objects to a set
-
 - initialization
   - database should be created automatically on first use
   - default topics (especially skins) should be added to the db when
     not present
 
-- access control
-  - who can view / edit which topics
-  - rules should apply to complete hierarchies
-  - groups
-
 - import topics from files into database
   - import a single file
   - import a directory hierarchy
   - import a TWiki data directory
-
   - may be this should be done using the single file
     upload facility and a separate script that
     talks to the web interface
@@ -31,7 +16,26 @@
     the web interface to get a list of all topics
     and the raw view facility
 
-- *bold*
+- topic management
+  - remove topic
+  - rename topic
+  - copy topic
+
+- more metadata for topics
+  - title (optional; in addition to topicname)
+  - modified by
+  - modified on
+  - mime type
+    should guide rendering
+
+- topic view
+  - renderer for each mime type
+    - text/wiki
+    - text/plain
+    - text/css
+
+- twiki rendering
+  - *bold*
 
 - links
   - http:
@@ -45,22 +49,6 @@
   - action menus
   - favicon / x-icon
   - RSS
-
-- topic management
-  - remove topic
-  - rename topic
-  - copy topic
-
-- more metadata for topics
-  - title (optional; in addition to topicname)
-  - modified by
-  - modified on
-  - version number 
-    (how to implement versioning with a relational
-     database?)
-  - mime type
-    should guide rendering
-
 
 - variables to define
   - variables have syntax %...%
@@ -129,3 +117,31 @@
   - %TOC%
   - STATISTICSTOPIC -- name of statistics topic
   - TOPICLIST{"format"} -- topic index of a web
+
+- versioning
+  - patch chain
+  - version number 
+    (how to implement versioning with a relational
+     database?)
+
+- access control
+  - who can view / edit which topics
+  - rules should apply to complete hierarchies
+  - groups
+
+------------------------------------------------------------------------
+FUTURE
+------------------------------------------------------------------------
+
+- prepared statements in JDBC turned off because of bug in mysql
+  - fixed by appending ?useServerPrepStmts=false to jdbc url
+  - is there a fix for the bug in more recent version of mysql?
+  - what are the consequences for performance if no caching by
+    means of prepared statements is done?
+
+------------------------------------------------------------------------
+DONE
+------------------------------------------------------------------------
+
+- equality between persistent objects
+  - in particular when adding objects to a set
