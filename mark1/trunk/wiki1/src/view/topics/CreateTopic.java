@@ -39,10 +39,12 @@ public class CreateTopic extends HttpServlet
 
 	Session hsession = HibernateUtil.getSessionFactory().openSession();
 	Transaction transaction = hsession.beginTransaction();
-	hsession.update(RootTopic.getRootTopic());
+
+	hsession.load(user, user.getId());
+	Topic root = RootTopic.getRootTopic(hsession);
 
 	try {
-	  TopicPath topicpath = new TopicPath(path, user);
+	  TopicPath topicpath = new TopicPath(root, path, user);
           transaction.commit();
         } catch (Exception e) {
 	  transaction.rollback();

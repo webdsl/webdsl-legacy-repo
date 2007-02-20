@@ -24,7 +24,7 @@ public class EditTopic extends HttpServlet
 	User user = (User)session.getAttribute("user");
 	String path = request.getPathInfo() == null ? "" : request.getPathInfo();
 
-	if (user == null) 
+	if (user == null)
         {
 	  session.setAttribute("continuation", "/wiki1/edit" + path);
 	  response.sendRedirect("/wiki1/login");
@@ -33,9 +33,11 @@ public class EditTopic extends HttpServlet
         {
 	  Session hsession = HibernateUtil.getSessionFactory().openSession();
 	  Transaction transaction = hsession.beginTransaction();
-	  hsession.update(RootTopic.getRootTopic());
 
-	  TopicPath topicpath = new TopicPath(path, user);
+	  hsession.load(user, user.getId());
+
+	  Topic root = RootTopic.getRootTopic(hsession);
+	  TopicPath topicpath = new TopicPath(root, path, user);
 	  Topic topic = (Topic)topicpath.get(topicpath.size() - 1);
 
           request.setAttribute("path", path);

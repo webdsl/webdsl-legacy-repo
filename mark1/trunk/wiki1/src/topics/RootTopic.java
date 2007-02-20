@@ -9,7 +9,7 @@ import topics.*;
 
 public class RootTopic
 {
-    private static final Topic roottopic;
+    private static final Long roottopicid;
 
     static {
 	Session session = HibernateUtil.getSessionFactory().openSession();
@@ -21,11 +21,11 @@ public class RootTopic
          case 0 : 
            Topic topic = new Topic();
            topic.setIsroot(true);
-           roottopic = topic;
 	   session.save(topic);
+           roottopicid = topic.getId();
 	   break;
          case 1 : 
-           roottopic = (Topic)topics.get(0);
+           roottopicid = ((Topic)(topics.get(0))).getId();
 	   break;
          default :
 	   throw new RuntimeException("too many root objects; fix the database");
@@ -35,9 +35,28 @@ public class RootTopic
 	session.close();
     }
 
-    public static Topic getRootTopic()
+    public static Long getRootTopicId()
     {
-	return roottopic;
+	return roottopicid;
+    }
+
+    public static Topic getRootTopic(Session session)
+    {
+	if (roottopicid == null)
+	  throw new RuntimeException("root not initialized");
+
+	if (session == null)
+           throw new RuntimeException("session is null");
+
+	Topic topic = (Topic) session.load(Topic.class, roottopicid);
+
+	if (topic == null)
+           throw new RuntimeException("root topic is null");
+
+	if (!topic.getIsroot())
+	  throw new RuntimeException("root is not root : " + topic.getId() + " : " + topic);
+
+  	return topic;
     }
 
 }

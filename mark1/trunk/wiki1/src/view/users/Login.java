@@ -21,12 +21,9 @@ public class Login extends HttpServlet
 	throws ServletException, IOException 
     {
 	HttpSession session = request.getSession();
-	
-	User user = (User)session.getAttribute("user");
 
-	if (user == null) {
-	    session.setAttribute("user", new User());
-        }
+	if (session.getAttribute("continuation") == null)
+	  { session.setAttribute("continuation", "/wiki1/view"); }
 
 	RequestDispatcher dispatcher =
 	    request.getRequestDispatcher("/WEB-INF/classes/view/users/LoginForm.jsp");

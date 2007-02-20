@@ -1,9 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 
-  <jsp:useBean id="user" type="users.User" scope="session" />
-
-  <jsp:useBean id="continuation" type="String" scope="session" />
+  <jsp:useBean id="continuation" type="java.lang.String" scope="session" />
     
     <head><title>Login</title></head>
   
@@ -16,7 +14,6 @@
       <tr>
 	<td> 
 	  Username :
-	  <%--= user.hasUsername() ? "Name*" : "<b>Name*</b>" --%>
 	</td>
 	<td>
 	  <input type="text" name="username" value="" />
@@ -47,7 +44,6 @@
     | <a href="/wiki1/logout">Logout</a> 
     | <a href="/wiki1/users">Users</a> 
     | <a href="/wiki1/register-user">Register</a>
-    | <jsp:include page="/WEB-INF/classes/view/users/LoggedInAs.jsp" />
     | next: <%= continuation %>
 
   </body>

@@ -11,13 +11,15 @@ import util.HibernateUtil;
 public class Topic 
 {
     private Long id;
-    private Boolean isroot;
-    private String title;
-    private String text;
+    private boolean isroot = false;
+    private String title = "";
+    private String text = "";
+    private String mimetype = "text/plain";
+    private Set authors = new HashSet();
+    private Map subtopics = new HashMap(); 
+
     private Date created;
     private Date modified;
-    private Set authors = new HashSet(); // users that have contributed to this topic
-    private Map subtopics = new HashMap(); 
 
     public Topic() {}
 
@@ -29,15 +31,12 @@ public class Topic
         this.id = id;
     }
 
-    public Boolean getIsroot() {
+    public boolean getIsroot() {
 	return isroot;
     }
 
-    public void setIsroot(Boolean isroot) {
-	if(RootTopic.getRootTopic() == null)
-	  {
-	     this.isroot = isroot;
-	  }
+    public void setIsroot(boolean isroot) {
+	this.isroot = isroot;
     }
    
     public String getTitle() {
@@ -54,6 +53,14 @@ public class Topic
 
     public void setText(String text) {
 	this.text = text;
+    }
+
+    public String getMimetype() {
+        return this.mimetype;
+    }
+
+    public void setMimetype(String type) {
+        this.mimetype = type;
     }
 
     public Date getCreated() {

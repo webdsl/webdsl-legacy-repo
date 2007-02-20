@@ -8,12 +8,17 @@ public class TopicPath extends ArrayList
 {
    private List elements = new ArrayList();
 
-   public TopicPath(String path, User user)
+   public TopicPath(Topic root, String path)
    {
-      this(path, user, true);
+      this(root, path, null, false);
    }
 
-   public TopicPath(String path, User user, Boolean create)
+   public TopicPath(Topic root, String path, User user)
+   {
+      this(root, path, user, true);
+   }
+
+   public TopicPath(Topic root, String path, User user, Boolean create)
    {
      super();
 
@@ -22,8 +27,7 @@ public class TopicPath extends ArrayList
      else while (path.startsWith("/"))
        { path = path.substring(1); }
 
-
-     Topic topic = RootTopic.getRootTopic();
+     Topic topic = root;
      add(topic);
 
      if (!path.equals(""))

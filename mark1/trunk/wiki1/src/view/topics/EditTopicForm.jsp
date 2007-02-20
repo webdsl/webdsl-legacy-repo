@@ -16,6 +16,7 @@
       text = "";
     else
       text = view.html.EscapeChars.escape(text);
+    String mimetype = topic.getMimetype();
   %>
 
     <head>
@@ -25,12 +26,12 @@
     <body>
       <h1><%= title %> (Edit) </h1>
       <hr>
-        <a href="/wiki1/edit">Root</a>
+        <a href="/wiki1/view">Root</a>
       <% String prefix = "";
          for(Object elem : pathelements) 
          { 
               prefix = prefix + "/" + (String)elem; %>
-           | <a href="/wiki1/edit<%= prefix %>"><%= (String)elem %></a>
+           | <a href="/wiki1/view<%= prefix %>"><%= (String)elem %></a>
       <% } %>
       <hr>
 
@@ -40,8 +41,11 @@
 
 	<br />
 
-	text: 
 	<textarea name="text" wrap="virtual" rows="15" cols="75"><%= text %></textarea>
+
+	<br />
+
+	type: <input type="text" name="mimetype" value="<%= mimetype %>" />
 
       <hr>
 	<input type="submit" value="Save" />
@@ -54,7 +58,7 @@
       <% for(Object name : subtopics)
            { %>
              <li>
-               <a href="/wiki1/edit/<%= path %>/<%= (String)name %>"><%= (String)name%></a>
+               <a href="/wiki1/view<%= path %>/<%= (String)name %>"><%= (String)name%></a>
              </li>
       <%   } %>
       </ul>

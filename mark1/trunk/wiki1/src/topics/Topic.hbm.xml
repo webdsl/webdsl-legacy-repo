@@ -17,16 +17,18 @@
 
     <property name="text"/>
 
+    <property name="mimetype"/>
+
     <property name="created"  type="timestamp" />
 
     <property name="modified" type="timestamp" />
 
-    <set name="authors" table="AUTHORS" cascade="save-update">
+    <set name="authors" table="AUTHORS" cascade="save-update,merge">
         <key column="TOPIC_ID"/>
         <many-to-many column="USER_ID" class="users.User"/>
     </set>
 
-    <map name="subtopics" table="SUBTOPICS" order-by="name asc" cascade="save-update">
+    <map name="subtopics" table="SUBTOPICS" order-by="name asc" cascade="save-update,merge">
         <key column="parent"/>
         <map-key column="name" type="string" />
         <many-to-many column="child" class="topics.Topic"/>
