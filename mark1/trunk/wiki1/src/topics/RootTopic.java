@@ -6,6 +6,7 @@ import org.hibernate.*;
 
 import util.*;
 import topics.*;
+import xml.*;
 
 public class RootTopic
 {
@@ -19,7 +20,13 @@ public class RootTopic
                  .list();
         switch (topics.size()) {
          case 0 : 
-           Topic topic = new Topic();
+           Topic topic;
+	   try {
+	     FromXML h = FromXML.parse("/home/eelco/webdsl/mark1/wiki1/src/xml/topics.xml");
+	     topic = h.getTopic();
+           } catch (Exception e) {
+	     throw new RuntimeException(e);
+           }
            topic.setIsroot(true);
 	   session.save(topic);
            roottopicid = topic.getId();
@@ -31,6 +38,7 @@ public class RootTopic
 	   throw new RuntimeException("too many root objects; fix the database");
 	   // alternatively we might choose a root object at random
         }
+
 	transaction.commit();
 	session.close();
     }
