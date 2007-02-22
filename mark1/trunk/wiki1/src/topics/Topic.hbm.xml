@@ -13,11 +13,11 @@
 
     <property name="isroot"/>
 
-    <property name="title"/>
+    <property name="title" type="text"/>
 
-    <property name="text"/>
+    <property name="text" type="text"/>
 
-    <property name="mimetype"/>
+    <property name="mimetype" type="text"/>
 
     <property name="created"  type="timestamp" />
 

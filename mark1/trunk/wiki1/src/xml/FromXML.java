@@ -10,6 +10,9 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import java.util.*;
 
+import org.hibernate.*;
+import util.HibernateUtil;
+
 import topics.*;
 import users.*;
 
@@ -39,11 +42,11 @@ public class FromXML extends DefaultHandler
     private Topic topic; // the current topic
     private LinkedList topics; // the stack of topics
 
-    private String name; // name of the current topic
-    private LinkedList names;  // stack of names
+    private String topicname; // name of the current topic
+    private LinkedList topicnames;  // stack of names
 
     private User user;
-    private Set users;
+    private Map users;
 
     private StringBuffer chars;
 
@@ -60,13 +63,13 @@ public class FromXML extends DefaultHandler
 
     public void startDocument ()
     {
-	users  = new HashSet();
-        topics = new LinkedList();
-	names  = new LinkedList();
-	user   = null;
-	topic  = null;
-   	name   = null;
-	chars = new StringBuffer();
+	users       = new HashMap();
+        topics      = new LinkedList();
+	topicnames  = new LinkedList();
+	user        = null;
+	topic       = null;
+   	topicname   = null;
+	chars       = null;
     }
 
     public void endDocument ()
@@ -75,7 +78,7 @@ public class FromXML extends DefaultHandler
 
     public void characters (char ch[], int start, int length)
     {
-	chars.append(ch);
+	chars.append(ch, start, length);
     }
 
     public void startElement (String uri, String name,
@@ -84,12 +87,12 @@ public class FromXML extends DefaultHandler
 	if ("topic".equals (name))
 	  {
 	    topic = new Topic();
-	    name = atts.getValue("name");
+	    topicname = atts.getValue("name");
 	  }
 	else if ("subtopics".equals (name))
 	  {
 	    topics.addFirst(topic);
-	    names.addFirst(name);
+	    topicnames.addFirst(topicname);
 	  }
 	else if ("user".equals (name))
 	  {
@@ -109,17 +112,17 @@ public class FromXML extends DefaultHandler
 	    if (topics.size() > 0 && name != null)
    	      {
 		Topic parent = (Topic)topics.getFirst();
-		parent.addSubtopic(name, topic);
+		parent.addSubtopic(topicname, topic);
 	      }
 	  }
 	else if ("subtopics".equals (name))
 	  {
 	    topic = (Topic)topics.removeFirst();
-	    name = (String)names.removeFirst();
+	    topicname = (String)topicnames.removeFirst();
 	  }
 	else if ("user".equals (name))
 	  {
-	    users.add(user);
+	    users.put(user.getUsername(), user);
 	  }
 
 	else if ("username".equals (name))
@@ -157,7 +160,7 @@ public class FromXML extends DefaultHandler
 	  }
 	else if ("author".equals (name))
 	  {
-	    //topic.addAuthor(User.getByName(chars.toString()));
+	    topic.addAuthor((User)users.get(chars.toString()));
 	  }
     }
 
