@@ -1,20 +1,4 @@
-- initialization
-  - database should be created automatically on first use
-  - default topics (especially skins) should be added to the db when
-    not present
-
-- import topics from files into database
-  - import a single file
-  - import a directory hierarchy
-  - import a TWiki data directory
-  - may be this should be done using the single file
-    upload facility and a separate script that
-    talks to the web interface
-
-- export topics from database to file
-  - by means of a separate script that uses
-    the web interface to get a list of all topics
-    and the raw view facility
+- export topics (a subtree) from database to xml file
 
 - topic management
   - remove topic
@@ -33,6 +17,8 @@
     - text/wiki
     - text/plain
     - text/css
+
+- convert twiki data directory to xml
 
 - twiki rendering
   - *bold*
@@ -145,3 +131,16 @@ DONE
 
 - equality between persistent objects
   - in particular when adding objects to a set
+
+- initialization
+  - database should be created automatically on first use
+  - default topics (especially skins) should be added to the db when
+    not present
+
+- import topics from files into database
+  - import a single file
+  - import a directory hierarchy
+  - import a TWiki data directory
+  - may be this should be done using the single file
+    upload facility and a separate script that
+    talks to the web interface

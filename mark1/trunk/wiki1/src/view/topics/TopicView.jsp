@@ -36,7 +36,8 @@
       <hr>
       <pre><%= text %></pre>
       <hr>
-      <a href="/wiki1/edit/<%= path %>">Edit</a>
+      <a href="/wiki1/edit<%= path %>">Edit</a> | 
+      <a href="/wiki1/export<%= path %>">Export</a>
       <hr>
       Type: <%= mimetype %>
       <p />
