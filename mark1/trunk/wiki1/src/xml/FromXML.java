@@ -1,6 +1,7 @@
 package xml;
 
-import java.io.FileReader;
+import java.io.*;
+import java.util.*;
 
 import org.xml.sax.XMLReader;
 import org.xml.sax.Attributes;
@@ -8,7 +9,6 @@ import org.xml.sax.InputSource;
 import org.xml.sax.helpers.XMLReaderFactory;
 import org.xml.sax.helpers.DefaultHandler;
 
-import java.util.*;
 
 import org.hibernate.*;
 import util.HibernateUtil;
@@ -23,12 +23,37 @@ public class FromXML extends DefaultHandler
 		org.xml.sax.SAXException,
 		java.io.IOException
     {
+	FileReader r = new FileReader(file);
+	return parse(new InputSource(r));
+    }
+
+    public static FromXML parse(InputStream is)
+	 throws java.io.FileNotFoundException, 
+		org.xml.sax.SAXException,
+		java.io.IOException
+    {
+	return parse(new InputSource(is));
+    }
+
+
+    public static FromXML parse(Reader r)
+	 throws java.io.FileNotFoundException, 
+		org.xml.sax.SAXException,
+		java.io.IOException
+    {
+	return parse(new InputSource(r));
+    }
+
+    public static FromXML parse(InputSource source)
+	 throws java.io.FileNotFoundException, 
+		org.xml.sax.SAXException,
+		java.io.IOException
+    {
 	XMLReader xr = XMLReaderFactory.createXMLReader();
 	FromXML handler = new FromXML();
 	xr.setContentHandler(handler);
 	xr.setErrorHandler(handler);
-	FileReader r = new FileReader(file);
-	xr.parse(new InputSource(r));
+	xr.parse(source);
 	return handler;
     }
 

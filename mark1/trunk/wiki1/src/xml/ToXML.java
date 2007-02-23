@@ -21,13 +21,13 @@ public class ToXML
      out.close();
   }
 
-  public ToXML(OutputStreamWriter out)
+  public ToXML(Writer out)
   {
     this.out = out;
     indent = 0;
   }
 
-  OutputStreamWriter out;
+  Writer out;
 
   int indent;
 

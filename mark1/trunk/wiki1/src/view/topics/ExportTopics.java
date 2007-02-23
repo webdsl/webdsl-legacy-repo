@@ -60,10 +60,11 @@ public class ExportTopics extends HttpServlet
 	  } 
           else
           {
-	     ToXML.export("/home/eelco/webdsl/mark1/wiki1/data/export.xml", topic);
+	     response.setContentType("text/xml");
+	     ToXML toxml = new ToXML(response.getWriter());
+	     toxml.export(topic);
              transaction.commit();
 	     hsession.close();
-	     response.sendRedirect("/wiki1/view/" + path);
           }
         }
     }
