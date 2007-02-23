@@ -8,6 +8,8 @@ import java.util.*;
 import org.hibernate.*;
 
 import org.apache.commons.fileupload.*;
+import org.apache.commons.fileupload.servlet.*;
+import org.apache.commons.fileupload.disk.*;
 
 import users.*;
 import topics.*;
@@ -66,7 +68,7 @@ public class ImportTopic extends HttpServlet
 	  TopicPath topicpath = new TopicPath(root, path, user);
 	  Topic topic = (Topic)topicpath.get(topicpath.size() - 1);
 
-	  String topicname = (String)request.getAttribute("topicname");
+	  String topicname = null;
 
 	  if (topic == null)
 	  {
@@ -84,7 +86,12 @@ public class ImportTopic extends HttpServlet
             ServletFileUpload upload = new ServletFileUpload(factory);
 
             // Parse the request
-            List /* FileItem */ items = upload.parseRequest(request);
+	    List /* FileItem */ items;
+	    try {
+             items = upload.parseRequest(request);
+ 	    } catch (org.apache.commons.fileupload.FileUploadException e) {
+    	       throw new ServletException(e);
+	    }
 
             // Process the uploaded items
             Iterator iter = items.iterator();
@@ -92,16 +99,16 @@ public class ImportTopic extends HttpServlet
                 FileItem item = (FileItem) iter.next();
 
                 if (item.isFormField()) {
-                  String name = item.getFieldName();
-                  String value = item.getString();
-
+                  if ("topicname".equals(item.getFieldName())) {
+                    topicname = item.getString();
+ 		  }
                 } else if( "topicfile".equals(item.getFieldName()) ) {
                     String fileName = item.getName();
                     String contentType = item.getContentType();
                     boolean isInMemory = item.isInMemory();
                     long sizeInBytes = item.getSize();
 
-		    log("uploading topic file " + filename + " : " 
+		    log("uploading topic file " + fileName + " : " 
 						+ contentType + " : " 
 						+ isInMemory + " : " 
 						+ sizeInBytes );
