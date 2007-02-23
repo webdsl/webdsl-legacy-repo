@@ -1,8 +1,13 @@
 - export topics (a subtree) from database to xml file
+  - send the exported xml to the client
+    /export/Foo/Bar gives an xml file with the /Foo/Bar topic
+    and all its subtopics
+  - it should be possible to 'mount' such a file via the web
+    interface /import/Foo/Bar with in POST data the xml file
 
 - topic management
   - remove topic
-  - rename topic
+  - rename topic / move
   - copy topic
 
 - more metadata for topics
