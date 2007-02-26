@@ -5,8 +5,8 @@
 <web-app>
 
   <servlet>
-    <servlet-name>Servlet1</servlet-name>
-    <servlet-class>HelloServlet</servlet-class>
+    <servlet-name>Error1</servlet-name>
+    <servlet-class>view.errors.ShowError</servlet-class>
   </servlet>
 
   <servlet>
@@ -109,8 +109,8 @@
 
 
   <servlet-mapping>
-    <servlet-name>Servlet1</servlet-name>
-    <url-pattern>/servlet1</url-pattern>
+    <servlet-name>Error1</servlet-name>
+    <url-pattern>/error</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>

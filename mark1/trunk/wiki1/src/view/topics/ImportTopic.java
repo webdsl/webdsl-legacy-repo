@@ -72,8 +72,14 @@ public class ImportTopic extends HttpServlet
 
 	  if (topic == null)
 	  {
-	     response.sendRedirect("/wiki1/");
 	     hsession.close();
+	     request.setAttribute("script", "import");
+	     request.setAttribute("error", "topic " + path + " does not exist");
+	     RequestDispatcher dispatcher =
+	      request.getRequestDispatcher(
+                "/WEB-INF/classes/view/errors/Error.jsp"
+              );
+	     dispatcher.forward(request, response);
 	     return;
 	  } 
           else if (ServletFileUpload.isMultipartContent(request))
@@ -121,8 +127,19 @@ public class ImportTopic extends HttpServlet
 	              topic.addSubtopic(topicname, subtopic);
                       transaction.commit();
 	              response.sendRedirect("/wiki1/view" + path + "/" + topicname);
+ 	            } catch (java.io.UTFDataFormatException e) {
+	     		request.setAttribute("script", "import");
+	     		request.setAttribute("error", 
+				"XML is not valid UTF-8;" 
+				+ "convert file to UTF-8 before importing");
+	     		RequestDispatcher dispatcher =
+	      		  request.getRequestDispatcher(
+                		"/WEB-INF/classes/view/errors/Error.jsp"
+              		  );
+	     		dispatcher.forward(request, response);
+
  	            } catch (org.xml.sax.SAXException e) {
-	              throw new ServletException(e);
+	              	throw new ServletException(e);
   	            } finally {
 	              hsession.close();
                     }

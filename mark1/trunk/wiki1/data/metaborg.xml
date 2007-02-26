@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<wiki>
+
+<topic name="MetaBorg">
+  <title>Concrete Syntax for Objects</title>
+  
+<text><![CDATA[
+@InProceedings{BV04,
+  author =       {Martin Bravenboer and Eelco Visser},
+  title =        {Concrete Syntax for Objects. {D}omain-Specific
+                  Language Embedding and Assimilation without
+                  Restrictions},
+  booktitle =    {Proceedings of the 19th ACM SIGPLAN Conference on
+                  Object-Oriented Programing, Systems, Languages, and
+                  Applications (OOPSLA'04)},
+  pages =        {365--383},
+  year =         2004,
+  editor =       {Douglas C. Schmidt},
+  address =      {Vancouver, Canada},
+  month =        {October},
+  publisher =    {ACM Press},
+  urlacm =       {http://portal.acm.org/citation.cfm?id=1028976.1029007},
+  urlinfo =      {http://www.cs.uu.nl/groups/ST/Visser/ConcreteSyntaxForObjects},
+  urlpdf =       {http://www.cs.uu.nl/~visser/ftp/BV04.pdf},
+  pubcat =       {conference},
+  project =      {Stratego and XT and SDF and TraCE},
+  category =     {key and refereed},
+  acceptance =   {27/173 and 16%}
+}
+]]></text>
+
+  <mimetype>text/bibtex</mimetype>
+  <authors><author>EelcoVisser</author></authors>
+
+</topic>
+
+</wiki>
+

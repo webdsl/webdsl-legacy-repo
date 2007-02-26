@@ -1,9 +1,8 @@
-- export topics (a subtree) from database to xml file
-  - send the exported xml to the client
-    /export/Foo/Bar gives an xml file with the /Foo/Bar topic
-    and all its subtopics
-  - it should be possible to 'mount' such a file via the web
-    interface /import/Foo/Bar with in POST data the xml file
+- topic view
+  - renderer for each mime type
+    - text/wiki
+    - text/plain
+    - text/css
 
 - topic management
   - remove topic
@@ -17,13 +16,11 @@
   - mime type
     should guide rendering
 
-- topic view
-  - renderer for each mime type
-    - text/wiki
-    - text/plain
-    - text/css
+- accept username and password with other operations
+  - e.g., /wiki1/import/Foo/Bar?username=EelcoVisser+password=foo
+  - to make import and export scriptable
+  - and possibly other operations as well
 
-- convert twiki data directory to xml
 
 - twiki rendering
   - *bold*
@@ -130,6 +127,9 @@ FUTURE
   - what are the consequences for performance if no caching by
     means of prepared statements is done?
 
+- imported topics should have authors
+  - requires lookup of authors in the db
+
 ------------------------------------------------------------------------
 DONE
 ------------------------------------------------------------------------
@@ -149,3 +149,13 @@ DONE
   - may be this should be done using the single file
     upload facility and a separate script that
     talks to the web interface
+
+- export topics (a subtree) from database to xml file
+  - send the exported xml to the client
+    /export/Foo/Bar gives an xml file with the /Foo/Bar topic
+    and all its subtopics
+  - it should be possible to 'mount' such a file via the web
+    interface /import/Foo/Bar with in POST data the xml file
+
+- convert twiki data directory to xml
+

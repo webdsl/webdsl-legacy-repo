@@ -22,7 +22,14 @@ public class RootTopic
          case 0 : 
            Topic topic;
 	   try {
-	     FromXML h = FromXML.parse("/home/eelco/webdsl/mark1/wiki1/src/xml/topics.xml");
+
+	     // use getRealPath(path) from ServletContext to get file from WAR
+  	     // or maybe not
+   	     // initialization of the database should probably be done manually
+  	     // (or using a script) using the web interface
+ 	     // maybe should switch to this mode already during testing
+
+	     FromXML h = FromXML.parse("/home/eelco/webdsl/mark1/wiki1/data/dbinit.xml");
 	     topic = h.getTopic();
            } catch (Exception e) {
 	     throw new RuntimeException(e);
@@ -38,7 +45,6 @@ public class RootTopic
 	   throw new RuntimeException("too many root objects; fix the database");
 	   // alternatively we might choose a root object at random
         }
-
 	transaction.commit();
 	session.close();
     }

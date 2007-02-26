@@ -9,6 +9,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.helpers.XMLReaderFactory;
 import org.xml.sax.helpers.DefaultHandler;
 
+import com.ibm.icu.text.CharsetDetector;
 
 import org.hibernate.*;
 import util.HibernateUtil;
@@ -32,9 +33,10 @@ public class FromXML extends DefaultHandler
 		org.xml.sax.SAXException,
 		java.io.IOException
     {
+	//CharsetDetector detector = new CharsetDetector();
+	// Reader r = detector.getReader(is, "UTF-8");
 	return parse(new InputSource(is));
     }
-
 
     public static FromXML parse(Reader r)
 	 throws java.io.FileNotFoundException, 
@@ -185,7 +187,9 @@ public class FromXML extends DefaultHandler
 	  }
 	else if ("author".equals (name))
 	  {
-	    topic.addAuthor((User)users.get(chars.toString()));
+	    User user = (User)users.get(chars.toString());
+	    if (user != null)
+	      topic.addAuthor(user);
 	  }
     }
 

@@ -1,7 +1,22 @@
+<wiki>
+
+ <users>
+
+   <user>
+     <username>EelcoVisser</username>
+     <fullname>Eelco Visser</fullname>
+     <email>E.Visser@tudelft.nl</email>
+     <url>http://www.eelcovisser.net</url>
+     <password>foo</password>
+   </user>
+
+ </users>
+
 <topic>
   <title><![CDATA[Root]]></title>
   <mimetype><![CDATA[plain/html]]></mimetype>
   <text><![CDATA[this is the root topic]]></text>
+  <authors><author>EelcoVisser</author></authors>
   <subtopics>
     <topic name="EelcoVisser">
       <title><![CDATA[EelcoVisser]]></title>
@@ -6292,3 +6307,6 @@ Transform.CategoryPaper
     </topic>
   </subtopics>
 </topic>
+
+
+</wiki>
