@@ -1,0 +1,90 @@
+%META:TOPICINFO{author="EelcoVisser" date="1167734508" format="1.0" version="1.152"}%
+---------+ Eelco Visser
+------
+
+<a href="http://www.flickr.com/photos/eelcovisser/141569082/" title="Photo Sharing"><img src="http://static.flickr.com/56/141569082_372ea07ea9_m.jpg" width="180" height="240" alt="self" align="right"/></a>
+
+-------+++ News 
+
+Looking for postdocs and <nop>PhD students in the following projects
+
+	* [[http://swerl.tudelft.nl/bin/view/TFA/JobOpening][Transformations for Abstractions]] (NWO Open Competition 2005) - 1 postdoc
+	* [[http://swerl.tudelft.nl/bin/view/MoDSE/JobOpenings][Model-Driven Software Evolution]] (Jacquard 2006) - 2 postdocs + 2 <nop>PhD students
+
+-------+++ Coordinates
+
+	* Associate professor 
+	* [[http://www.se.ewi.tudelft.nl][Software Engineering Research Group]]
+	* [[http://www.st.ewi.tudelft.nl][Department of Software Technology]]
+	* [[http://www.ewi.tudelft.nl][Electrical Engineering, Mathematics and Computer Science (EWI)]]
+	* [[http://www.tudelft.nl/][Delft University of Technology]]
+	* Delft, The Netherlands ([[http://www.timeanddate.com/worldclock/custom.html?cities=16][CEST/CET]])
+
+	* Email: mailto:visser@acm.org
+	* http://www.st.ewi.tudelft.nl/~eelco
+	* http://www.eelcovisser.net
+	* [[http://blog.eelcovisser.net/][Blog]]
+
+ <!-- [[http://eelcovisser.blogspot.com][Blog]] -->
+
+-------++ Recent Papers
+
+	* [[DeclarativeFormalAndExtensibleSyntaxDefinitionForAspectJ][Declarative, Formal, and Extensible Syntax Definition for AspectJ]] (OOPSLA'06)
+	* [[StrategoXT016ComponentsForTransformationSystems][Stratego/XT 0.16. Components for Transformation Systems]] (PEPM'06)
+	* [[StrategoXtManual][Stratego/XT Manual]] (documentation)
+	* [[Transformations for Abstractions]] (Keynote SCAM'05)
+	* [[GeneralizedTypeBasedDisambiguationOfMetaProgramsWithConcreteObjectSyntax][Generalized Type-Based Disambiguation of Meta Programs with Concrete Object Syntax]] (GPCE'05)
+	* [[MetaBorg in Action]] (GTTSE'05)
+	* [[Service Configuration Management]] (SCM-12)
+	* [[TheStrategoXTBibTeXTools][The Stratego/XT BibTeX Tools]] (documentation)
+	* [[AdaptiveCodeReuseByAspectsCloningAndRenaming][Adaptive Code Reuse by Aspects, Cloning and Renaming]] (techrep)
+	* [[CombiningAspectOrientedAndStrategicProgramming][Combining Aspect-Oriented and Strategic Programming]] (RULE'05)
+	* [[ComposingSourceToSourceDataFlowTransformations][Composing Source-to-Source Data-Flow Transformations with Rewriting Strategies and Dependent Dynamic Rewrite Rules]] (CC'05)
+	* [[Program Transformation with Scoped Dynamic Rewrite Rules]] (FI)
+	* [[Nix a safe and policy-free system for software deployment]] (LISA'04)
+	* [[A survey of strategies in rule based program transformation systems]] (JSC)
+	* [[Concrete syntax for objects]] (OOPSLA'04) 
+	* [[Imposing a memory management discipline on software deployment]] (ICSE'04)
+	* [[Program Transformation with StrategoXT][Program transformation with Stratego/XT: Rules, strategies, tools, and systems in StrategoXT 0.9]] (DSPG)
+	* Older [[PublicationsOnWiki][recent papers]] and full [[Publications by Year][publication list]]
+
+-------++ Recent Software
+
+<a href="http://www.stratego-language.org"><img src="http://www.stratego-language.org/pub/Stratego/StrategoLogo/StrategoLogoText-100px.png"	border="0" align="right"/></a>
+
+	* [[http://www.stratego-language.org/Stratego/StrategoRelease016][Stratego/XT 0.16]]: program transformation language and toolset
+		* [[http://nix.cs.uu.nl/dist/stratego/strategoxt-unstable-latest/][Stratego/XT unstable]]: the latest and the greatest
+	* [[http://www.program-transformation.org/Stratego/AdditionalPackageDownload][Extensions and utilities]]
+		* [[http://www.stratego-language.org/Stratego/StrategoShell][Stratego Shell]]: an interactive interpreter
+		* [[http://nix.cs.uu.nl/dist/stratego/strategoxt-utils-0.14/][Stratego/XT Utilities 0.14]]: utilities for developers
+		* [[http://www.stratego-language.org/Stratego/ExtendibleDocumentationGenerator][xdoc]]: documentation generation for Stratego
+		* [[http://www.program-transformation.org/Stratego/AspectStratego][Aspect Stratego]]: an experimental extension with aspects
+	* Transformation tools for Java
+		* [[http://www.stratego-language.org/Stratego/JavaFront][JavaFront]]: front-end for the Java language
+		* [[http://www.stratego-language.org/Stratego/TheDryad][Dryad]]: static analysis and bytecode
+		* [[http://www.stratego-language.org/Stratego/JavaBorg][JavaBorg]]: domain-specific language embeddings
+		* [[http://www.stratego-language.org/Stratego/Java-Swul][JavaSwul]]: user-interface language embedding
+	* Other transformation applications
+		* [[http://www.octave-compiler.org][Octave Compiler]]: a compiler for the Matlab clone
+		* [[http://www.stratego-language.org/Stratego/BibtexTools][bibtex-tools]]: bibliography processing
+		* [[http://www.stratego-language.org/Tiger/][Tiger in Stratego]]: demonstration compiler
+		* [[http://www.stratego-language.org/Stratego/PrologTools][prolog-tools]]: language front-end and DSL embedding
+		* [[http://www.stratego-language.org/Stratego/XWeb][xweb]]: website generation
+	* [[http://nix.cs.uu.nl/dist/nix/nix-10.1][Nix 10.1]]: software deployment system
+		* [[http://nix.cs.uu.nl/dist/nix/][recent releases]]
+	* Other [[Software Distributions][software]]
+
+-------++ Ongoing Activities
+
+	* [[http://www.program-transformation.org][program-transformation.org]]
+	* [[http://www.stratego-language.org/Stratego/SeventhStrategoUserDays][Seventh Stratego User Days (SUD'06)]]
+	* [[http://www.program-transformation.org/PEPM07][Partial Evaluation and Program Manipulation (PEPM '07)]]
+	* Domain-Specific Aspect Languages (DSAL'07)
+	* [[http://www.sciences.univ-nantes.fr/MoDSE2007/][Model-Driven Software Evolution Workshop (<nop>MoDSE'07)]]
+	* [[http://www.lsv.ens-cachan.fr/rdp07/rule.html][Rule-Based Programming (RULE'07)]]
+	* [[http://wiki.di.uminho.pt/wiki/bin/view/GTTSE2007/WebHome][Summer School on Generative and Transformational Techniques in Software Engineering (GTTSE'07)]]
+	* [[http://www.oopsla.org/oopsla2007/][Object-Oriented Languages and Systems (OOPSLA'07)]]
+	* [[http://www.ase-conference.org/][Automated Software Engineering (ASE'07)]]
+	* Other [[Professional Activities][activities]]
+</td>
+

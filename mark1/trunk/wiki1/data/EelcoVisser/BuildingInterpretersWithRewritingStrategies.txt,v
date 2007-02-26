@@ -1,0 +1,131 @@
+head	1.4;
+access;
+symbols;
+locks
+	apache:1.4; strict;
+comment	@# @;
+
+
+1.4
+date	2002.11.10.14.08.58;	author EelcoVisser;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2002.05.23.12.04.47;	author EelcoVisser;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2002.02.19.10.47.34;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2001.12.30.22.21.11;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.4
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1036937338" format="1.0" version="1.4"}%
+%META:TOPICPARENT{name="StrategoPublications"}%
+Main.EelcoDolstra and Main.EelcoVisser. Building Interpreters With Rewriting Strategies
+In Transform.MarkVanDenBrand and Transform.RalfLaemmel (editors)
+_Workshop on Language Descriptions, Tools and Applications ([[Transform.LDTA][LDTA]]'02)._ volume 65.3 of _Electronic Notes in Theoretical Computer Science._ Elsevier Science Publishers, April 2002. (To appear)
+
+*Abstract*
+
+Programming language semantics based on pure rewrite rules suffers from
+the gap between rewriting strategy implemented in rewriting engines and
+the intended evaluation strategy. This paper shows how programmable
+rewriting strategies can be used to implement interpreters for programming languages based on rewrite rules. The advantage of this approach is
+that reduction rules are first class entities that can be reused in different
+strategies, even in other kinds of program transformations such as optimizers. The approach is illustrated with several interpreters for the lambda
+calculus based on implicit and explicit (parallel) substitution, different
+strategies including normalization, eager evaluation, lazy evaluation, and
+lazy evaluation with updates. An extension with pattern matching and
+choice shows that such interpreters can easily be extended.
+
+*Preprint*
+
+	* http://www.cs.uu.nl/people/visser/ftp/DV02.pdf
+
+*Related*
+
+	* RhoStratego
+
+------
+CategoryPaper
+@
+
+
+1.3
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1022155688" format="1.0" version="1.3"}%
+d29 1
+a29 1
+Transform.CategoryPaper
+@
+
+
+1.2
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1014117790" format="1.0" version="1.2"}%
+d9 1
+a9 1
+Programming language semantics based on pure rewrite rules suers from
+d12 4
+a15 6
+rewriting strategies can be used to implement interpreters for program-
+ming languages based on rewrite rules. The advantage of this approach is
+that reduction rules are rst class entities that can be reused in dierent
+strategies, even in other kinds of program transformations such as optimiz-
+ers. The approach is illustrated with several interpreters for the lambda
+calculus based on implicit and explicit (parallel) substitution, dierent
+d20 1
+a20 1
+*Online*
+d22 5
+a26 1
+	* Draft: http://www.cs.uu.nl/people/visser/ftp/DV02.pdf
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1009750871" format="1.0" version="1.1"}%
+d3 3
+a5 1
+Draft by Main.EelcoDolstra and Main.EelcoVisser
+d24 1
+a24 1
+	* http://www.cs.uu.nl/people/visser/ftp/DV02.pdf
+d27 1
+a27 1
+Transform.CategoryPaper
+@

@@ -1,0 +1,385 @@
+head	1.15;
+access;
+symbols;
+locks
+	apache:1.15; strict;
+comment	@# @;
+
+
+1.15
+date	2005.09.02.13.27.04;	author EelcoVisser;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2005.04.28.22.53.56;	author wiki;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.12.04.23.27.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.11.06.16.19.53;	author EelcoVisser;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.09.07.14.25.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.06.17.21.03.26;	author EelcoVisser;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.06.07.19.41.17;	author EelcoVisser;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.05.31.12.20.55;	author EelcoVisser;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.05.31.11.54.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.05.31.11.12.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.05.21.22.54.09;	author EelcoVisser;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2002.11.13.13.03.21;	author EelcoVisser;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2002.10.18.22.32.30;	author EelcoVisser;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2002.08.28.09.32.26;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.08.23.09.59.06;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.15
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1125667624" format="1.0" version="1.15"}%
+%META:TOPICPARENT{name="ProgramTransformation"}%
+<table align="right" width=100  style="margin-left : 10px ; border: solid 0em; background: white ">
+<tr><td>
+<a href="http://www.stratego-language.org"><img SRC="http://www.stratego-language.org/pub/Stratego/StrategoLogo/StrategoLogoText-100px.png"  align="right" border="0" alt ="Stratego"></a>
+</td></tr>
+</table>
+Stratego is a modular language for the specification of fully automatic program transformation systems based on the paradigm of rewriting strategies.
+Rewrite rules provide a good formalism for specification of basic transformation steps. Since sets of rewrite rules for a programming language are usually not confluent and terminating, standard rewriting techniques are not adequate for program transformation.
+Basic transformation steps are defined using labeled conditional rewrite rules. Rules are combined into complete transformations by means of programmable <a href="#VBT98">rewriting strategies</a>.  An important aspect of these strategies are combinators for generic traversal. <a href="#Vis01.rule">Scoped dynamic rewrite rules</a> overcome the limitations posed by the  context-free nature of rewrite rules.
+
+----++ http://www.stratego-language.org
+
+	* [[http://www.stratego-language.org/Stratego/StrategoDownload][Download]]
+	* [[http://www.stratego-language.org/Stratego/StrategoPublications][Publications]]
+	* [[http://www.stratego-language.org/Stratego/StrategoDocumentation][Documentation]]
+	* [[http://www.stratego-language.org/Stratego/MailingList][Maillinglists]]
+	* [[http://www.stratego-language.org/Stratego/StrategoApplication][Applications]]
+
+-----++ Publications
+
+%INCLUDE{http://www.cs.uu.nl/~visser/strategoxt/strategoxt-by-year-by-type.html}%
+
+%META:TOPICMOVED{by="EelcoVisser" date="1054383655" from="Visser.Stratego" to="Visser.StrategoXT"}%
+@
+
+
+1.14
+log
+@testenv
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1103879055" format="1.0" version="1.14"}%
+d5 1
+a5 1
+<a href="http://www.stratego-language.org"><img SRC="http://www.stratego-language.org/twiki/pub/Stratego/StrategoLogo/StrategoLogoText-100px.png"  align="right" border="0" alt ="Stratego"></a>
+d22 1
+a22 1
+%INCLUDE{http://www.cs.uu.nl/~visser/strategoxt-pubs/strategoxt-by-year-by-type.html}%
+@
+
+
+1.13
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1070580420" format="1.0" version="1.13"}%
+d3 21
+a23 20
+<table align="right" width=100  style="margin-left : 10px ; border: solid 0em; background: white ">
+<tr><td>
+<a href="http://www.stratego-language.org"><img SRC="http://www.stratego-language.org/twiki/pub/Stratego/StrategoLogo/StrategoLogoText-100px.png"  align="right" border="0" alt ="Stratego"></a>
+</td></tr>
+</table>
+Stratego is a modular language for the specification of fully automatic program transformation systems based on the paradigm of rewriting strategies.
+Rewrite rules provide a good formalism for specification of basic transformation steps. Since sets of rewrite rules for a programming language are usually not confluent and terminating, standard rewriting techniques are not adequate for program transformation.
+Basic transformation steps are defined using labeled conditional rewrite rules. Rules are combined into complete transformations by means of programmable <a href="#VBT98">rewriting strategies</a>.  An important aspect of these strategies are combinators for generic traversal. <a href="#Vis01.rule">Scoped dynamic rewrite rules</a> overcome the limitations posed by the  context-free nature of rewrite rules.
+
+----+++ http://www.stratego-language.org
+
+	* [[http://www.stratego-language.org/Stratego/StrategoDownload][Download]]
+	* [[http://www.stratego-language.org/Stratego/StrategoPublications][Publications]]
+	* [[http://www.stratego-language.org/Stratego/StrategoXTAnAnnotatedBibliography][An Annotated Bibliography]]
+	* [[http://www.stratego-language.org/Stratego/StrategoDocumentation][Documentation]]
+	* [[http://www.stratego-language.org/Stratego/MailingList][Maillinglists]]
+	* [[http://www.stratego-language.org/Stratego/StrategoApplication][Applications]]
+
+-----+++ Publications by Year
+%INCLUDE{http://www.stratego-language.org/publications-year/index.html}%
+@
+
+
+1.12
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1068135593" format="1.0" version="1.12"}%
+@
+
+
+1.11
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1062944700" format="1.0" version="1.11"}%
+d3 5
+a7 2
+<a href="http://www.stratego-language.org"><img SRC="http://www.stratego-language.org/logo-nt-small.gif"  align="right" border="0" alt ="Stratego"></a>
+
+@
+
+
+1.10
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1055883806" format="1.0" version="1.10"}%
+d9 1
+a9 7
+	* [[http://www.stratego-language.org ][stratego-language.org]]
+		* [[http://www.stratego-language.org/Stratego/StrategoDownload][Download]]
+		* [[http://www.stratego-language.org/Stratego/StrategoPublications][Publications]]
+		* [[http://www.stratego-language.org/Stratego/StrategoXTAnAnnotatedBibliography][An Annotated Bibliography]]
+		* [[http://www.stratego-language.org/Stratego/StrategoDocumentation][Documentation]]
+		* [[http://www.stratego-language.org/Stratego/MailingList][Maillinglists]]
+		* [[http://www.stratego-language.org/Stratego/StrategoApplication][Applications]]
+d11 6
+a16 13
+-----+++ Projects
+
+transformation techniques
+
+	* [[Stratego Language and Compiler]]
+	* [[Transformation Tools]]
+
+applications of program transformation
+
+	* CodeBoost
+	* [[Octave Compiler]]
+	* [[Helium Optimizer]]
+	* [[Tiger Compiler]]
+@
+
+
+1.9
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1055014877" format="1.0" version="1.9"}%
+d16 14
+@
+
+
+1.8
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1054383655" format="1.0" version="1.8"}%
+d7 1
+a7 1
+Basic transformation steps are defined using labeled conditional rewrite rules. Rules are combined into complete transformations by means of programmable <a href="PublicationsByYear#VBT98">rewriting strategies</a>.  An important aspect of these strategies are combinators for generic traversal. <a href="PublicationsByYear#Vis01.rule">Scoped dynamic rewrite rules</a> overcome the limitations posed by the  context-free nature of rewrite rules.
+d17 1
+a17 1
+-----++ Publications by Year
+@
+
+
+1.7
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1054382040" format="1.0" version="1.7"}%
+d19 1
+@
+
+
+1.6
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1054379520" format="1.0" version="1.6"}%
+d5 1
+a6 3
+
+Stratego is a modular language for the specification ofully automatic program transformation systems based on the paradigm of rewriting strategies.
+
+d9 7
+a15 22
+<ul>
+<li> <a href="http://www.stratego-language.org">stratego-language.org</a>: 
+	 download, publications, documentation, maillinglists, and more
+		 <li> <a href="http://www.stratego-language.org/Stratego/StrategoXTAnAnnoatedBibliography">Stratego/XT: An Annotated Bibliography</a>
+<li> <a href="http://www.program-transformation.org/Transform/TheEssenceOfStrategicProgramming">The Essence of Strategic Programming</a>
+</ul>
+Some <a href="http://www.stratego-language.org/Stratego/StrategoApplication">applications</a> of Stratego:
+	  <ul> <li><a href="http://www.stratego-language.org/tiger/">Tiger in Stratego</a>: 
+			testbed for experiments with program transformation
+		 </li>
+<li><a href="http://www.codeboost.org/">CodeBoost</a>: 
+			transformation of C++ programs in the Sophus style
+		 </li> <li><a href="http://www.stratego-language.org/hsx/">HSX</a>: 
+			implementation of the warm fusion deforestation algorithm for core Haskell
+		 </li> <li><a href="http://losser.st-lab.cs.uu.nl/~pretzel/">CobolX</a>: 
+			an exercise in program improvement by transformation
+		 </li> </ul>
+
+[[http://www.stratego-language.org][RhoStratego]] is a language experiment incorporating the
+	  facilities for <a  href="publications/index.html#DV01">first-class rules and
+	  generic traversal</a> of Stratego into a functional
+	  language.
+@
+
+
+1.5
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1053557649" format="1.0" version="1.5"}%
+d14 1
+a14 1
+		 <li> <a href="http://www.stratego-language.org/publications">Stratego: An Annotated Bibliography</a>
+d17 1
+a17 1
+Some <a href="http://www.stratego-language.org/Stratego/StrategoApplications">applications</a> of Stratego:
+d34 2
+@
+
+
+1.4
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1037192600" format="1.0" version="1.4"}%
+d9 1
+a9 1
+Basic transformation steps are defined using labeled conditional rewrite rules. Rules are combined into complete transformations by means of programmable <a href="Publications#VBT98">rewriting strategies</a>.  An important aspect of these strategies are combinators for generic traversal. <a href="Publications#Vis01.rule">Scoped dynamic rewrite rules</a> overcome the limitations posed by the  context-free nature of rewrite rules.
+@
+
+
+1.3
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1034980349" format="1.0" version="1.3"}%
+d9 1
+a9 1
+Basic transformation steps are defined using labeled conditional rewrite rules. Rules are combined into complete transformations by means of programmable <a href="publications/index.html#VBT98">rewriting strategies</a>.  An important aspect of these strategies are combinators for generic traversal. <a href="publications/index.html#Vis01.rule">Scoped dynamic rewrite rules</a> overcome the limitations posed by the  context-free nature of rewrite rules.
+@
+
+
+1.2
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1030527146" format="1.0" version="1.2"}%
+d29 1
+a29 1
+RhoStratego is a language experiment incorporating the
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1030099607" format="1.0" version="1.1"}%
+d3 1
+a3 1
+<a href="http://www.stratego-language.org"><img SRC="http://www.stratego-language.org/logo-nt-small.gif"  align =" right" valign="center" border="0" alt =" Stratego"></a>
+@

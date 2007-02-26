@@ -1,0 +1,222 @@
+head	1.8;
+access;
+symbols;
+locks
+	apache:1.8; strict;
+comment	@# @;
+
+
+1.8
+date	2007.01.13.18.46.21;	author EelcoVisser;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2007.01.13.15.33.06;	author EelcoVisser;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2006.04.24.14.01.18;	author EelcoVisser;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2006.04.20.11.16.48;	author EelcoVisser;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2006.04.14.20.47.40;	author EelcoVisser;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2006.04.13.17.30.19;	author EelcoVisser;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2006.04.13.14.47.44;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2006.04.13.12.13.26;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.8
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1168713981" format="1.0" version="1.8"}%
+%META:TOPICPARENT{name="PublicationsByYearAndType"}%
+%INCLUDE{PublicationPages}%
+
+----++ H-number
+
+The [[http://xxx.arxiv.org/PS_cache/physics/pdf/0508/0508025.pdf][h-number]] of E. Visser according to [[http://scholar.google.com][Google Scholar]]:
+
+	* April 20, 2006: 18 (max citations = 129)
+
+This number was obtained with a manual count of [[http://scholar.google.nl/scholar?num=100&hl=nl&lr=&q=E+Visser&btnG=Zoeken&as_subj=eng][this google query]].
+H-numbers can also be computed (approximated) automatically using the [[http://www.brics.dk/~mis/hnumber.html][H-number'O'matic]] web interface.
+This method is not accurate when the author name overlaps with that of other authors in the field.
+The following [[http://www.brics.dk/cgi-mis/hnumber?name=E+Visser&words=Utrecht+Portland+Amsterdam][query]], which
+corresponds with this [[http://scholar.google.nl/scholar?as_q=Eelco+Visser&num=100&btnG=Zoeken+in+Wetenschap&as_epq=&as_oq=Utrecht+Portland+Amsterdam&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=&as_yhi=&as_allsubj=some&as_subj=eng&hl=nl&lr=][Google query]] results in h-number 16. With the more lenient [[http://www.brics.dk/cgi-mis/hnumber?name=E.+Visser&words=][E. Visser query]] the H-number'O'matic scripts returns 20. 
+It turns out that two of the 20 are articles with other Visser co-authors. The restriction of the query above is too strict again.
+
+Here a table with the development of my h-index over time:
+
+| *date*			  | *h (omatic)* | *max citations* | *m (omatic)*  | *h (manual)* | *m (manual)*  | *h (omatic lenient)* |
+| April 20, 2006	| 16			  | 129				 |					| *18*			| *145%* (1995) | 20						 |
+| January 13, 2007 | 23			  | 138				 | 127% (1990)	| *21*			| *191%* (1995) | 39 (177)				 |
+
+Notes:
+	* the omatic result is obtained by the query name=E+Visser&words=Utrecht+Portland+Amsterdam (this should at some point start including Delft)
+	* the omatic script wrongly sets my first publication in 1990; my first publication in DBLP is from 1995
+	* the manual number is obtained by taking the top h entries from a google scholar query that actually refer to my publications
+
+Observations:
+	* the manual and omatic number (using the right constraint words) are close enough to give a rough indication; however, the lenient  query (just E. Visser and no additional constraints) gives a number that is much too high.
+
+-----++ Citeseer citations
+
+Rank on [[http://citeseer.ist.psu.edu][Citeseer's]] list of [[http://citeseer.ist.psu.edu/allcited.html][Most cited authors in Computer Science]]:
+
+	* August 2005: 7106 with 333 citations (E. Visser)
+	* August 2006: 6869 with 354 citations (E. Visser)
+
+-----++ Erdos Number
+
+[[My Erdos number]] is 5
+
+@
+
+
+1.7
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1168702386" format="1.0" version="1.7"}%
+d18 1
+d20 8
+a27 1
+	* January 13, 2007: 
+d29 2
+a30 2
+The h-number of E Visser is 23 (max citations = 138)
+The m-number of E Visser is 127% (first publication in 1990)
+@
+
+
+1.6
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1145887278" format="1.0" version="1.6"}%
+d18 6
+d29 1
+@
+
+
+1.5
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1145531808" format="1.0" version="1.5"}%
+d7 1
+a7 1
+The h-number of E. Visser according to [[http://scholar.google.com][Google Scholar]]:
+@
+
+
+1.4
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1145047660" format="1.0" version="1.4"}%
+d7 1
+a7 2
+On April 14, 2006, the h-number of E. Visser was 19 (max citations = 125)
+according to Google Scholar. 
+d9 8
+a16 1
+See http://www.brics.dk/cgi-mis/hnumber?name=E.+Visser&words= for an up-to-date count or http://www.brics.dk/~mis/hnumber.html for the webinterface that computes other h-numbers.
+d20 3
+a22 2
+Place 7106 on [[http://citeseer.ist.psu.edu][Citeseer's]] list of [[http://citeseer.ist.psu.edu/allcited.html][Most cited authors in Computer Science - August 2005]]
+with 333 citations (E. Visser)
+@
+
+
+1.3
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1144949419" format="1.0" version="1.3"}%
+d7 2
+a8 1
+%INCLUDE{http://www.brics.dk/cgi-mis/hnumber?name=E.+Visser&words=}%
+d10 1
+a10 1
+according to [[http://www.brics.dk/~mis/hnumber.html][Google Scholar]]
+@
+
+
+1.2
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1144939664" format="1.0" version="1.2"}%
+d5 1
+a5 1
+----+++ H-number
+d9 1
+a9 1
+Obtained from http://www.brics.dk/~mis/hnumber.html
+d11 1
+a11 1
+-----+++ Erdos Number
+d13 6
+a18 1
+%INCLUDE{MyErdosNumber}%
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1144930406" format="1.0" version="1.1"}%
+d3 1
+@

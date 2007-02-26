@@ -1,0 +1,61 @@
+%META:TOPICINFO{author="EelcoVisser" date="1161096607" format="1.0" version="1.9"}%
+%META:TOPICPARENT{name="ProgramTransformation"}%
+
+---------------+ Syntax Definition
+
+<img SRC="/~visser/thesis/tiny-circle.gif" align="right"  border=0 alt ="Thesis">
+
+Producing and maintaining parsers for large languages requires a declarative syntax definition formalism from which parsers can be generated. SDF2 is a modular syntax definition formalism that integrates lexical and context-free syntax and supports arbitrary context-free grammars. Since the formalism is declarative, syntax definitions can be used to generate other tools from, e.g., pretty-printers and data type definitions. I developed SDF2 as part of my PhD research at the University of Amsterdam. The language and core tools are maintained and further developed at CWI. SDF is an important component of the StrategoXT toolset. Various tools for generation, transformation, and analysis of SDF syntax definitions are developed as part of StrategoXT. Recently we have been employing SDF to provide _concrete syntax_ for data in host languages such as Stratego, Prolog, and Java.
+
+----++ Publications
+
+----+++ [[Syntax Definition for Language Prototyping]]
+
+PhD thesis on design and implementation of syntax definition formalisms.
+
+-----+++ SDF
+
+	* [[A family of syntax definition formalisms]]
+	* [[Character classes]]
+
+-----+++ SGLR
+
+	* [[Scannerless generalized LR parsing]]
+
+-----+++ Disambiguation
+
+	* [[Using filters for the disambiguation of context-free grammars]]
+	* [[A case study in optimizing parsing schemata by disambiguation filters]]
+	* [[From context-free grammars with priorities to character class grammars]]
+	* [[Disambiguation filters for scannerless generalized LR parsers]]
+	* [[Generalized Type Based Disambiguation of Meta Programs with Concrete Object Syntax][Generalized Type-Based Disambiguation of Meta Programs with Concrete Object Syntax]]
+
+-----+++ Pretty-printing
+
+	* [[Generation of formatters for context-free languages]]
+	* [[From Box to TeX]]
+
+-----+++ Concrete Syntax
+
+	* [[Concrete syntax for objects]]
+	* [[Retrofitting the AutoBayes program synthesis system with concrete syntax]]
+	* [[Meta programming with concrete object syntax]]
+
+-----+++ SDF in XT
+
+	* [[XT A Bundle of Program Transformation Tools]]
+	* [[Program Transformation with StrategoXT]]
+
+----++ Other Resources
+
+	* [[http://www.program-transformation.org/Sdf][SDF Wiki]] has many pointers to SDF related pages
+	* [[http://www.cwi.nl/htbin/sen1/twiki/bin/view/SEN1/SDF2][SDF2]]
+	* [[http://www.stratego-language.org/Stratego/SdfTools][sdf-tools]] in StrategoXT
+
+
+------++ Bibliography
+
+An (incomplete) bibliography of SDF.
+
+%INCLUDE{http://www.cs.uu.nl/~visser/sdf/sdf-by-year.html}%
+

@@ -1,0 +1,112 @@
+head	1.3;
+access;
+symbols;
+locks
+	apache:1.3; strict;
+comment	@# @;
+
+
+1.3
+date	2005.04.28.22.53.56;	author wiki;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2001.11.30.10.50.15;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2001.11.27.23.16.02;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.3
+log
+@testenv
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1053551183" format="1.0" version="1.3"}%
+%META:TOPICPARENT{name="WebHome"}%
+Similix is a partial evaluator for a Lisp-like language.
+
+----+++ Goals
+
+The goal of this project is to implement the partial evaluator for Similix in Stratego.
+
+ResearchInterests questions
+
+	* Does formulation of partial evaluation using separate rules and strategies make implementation of partial evaluation more reusable, maintainable, and readable?
+
+	* Does such an implementation scale up to application of partial evaluation of large programs?
+
+----+++ Project Description
+
+
+
+----+++ Planning
+
+	* Literature
+		* Transform:PartialEvaluation
+		* Stratego:StrategoPublications
+
+	* Similix
+		* What does it do?
+		* Architecture?
+
+	* Example programs
+
+	* Tools
+		* Stratego:StrategoDownload
+		* [[Tools.WebHome][XT]]
+
+	* Infrastructure
+		* Parser for Similix
+		* Type-checker?
+		* Pretty-printer
+		* Bound-variable renaming
+		* Steal from [[http://www.stratego-language.org/Hpc/TigerCompiler][TigerCompiler]]
+
+	* Partial evaluator
+		* find out how it works 
+		* what should be done
+		* expected problems
+	  
+@
+
+
+1.2
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1007118031" format="1.0" version="1.2"}%
+d9 1
+a9 1
+Research questions
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1006902962" format="1.0" version="1.1"}%
+d3 1
+a3 1
+Implement the partial evaluator for Similix in Stratego.
+d5 42
+a46 1
+-- Main.EelcoVisser - 28 Nov 2001 <br />
+@

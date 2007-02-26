@@ -1,0 +1,91 @@
+head	1.4;
+access;
+symbols;
+locks
+	apache:1.4; strict;
+comment	@# @;
+
+
+1.4
+date	2007.01.13.19.14.22;	author EelcoVisser;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2005.04.28.22.53.55;	author wiki;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2004.07.20.11.06.42;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.06.10.22.16.58;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.4
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1168715662" format="1.0" version="1.4"}%
+
+<noautolink>
+%INCLUDE{PublicationPages}%
+
+%INCLUDE{http://www.informatik.uni-trier.de/~ley/db/indices/a-tree/v/Visser:Eelco.html}%
+</noautolink>
+
+@
+
+
+1.3
+log
+@testenv
+@
+text
+@d1 3
+a3 1
+%META:TOPICINFO{author="EelcoVisser" date="1103564315" format="1.0" version="1.3"}%
+d7 1
+a7 4
+
+<!--
+	* Set SKIN = notitle
+-->
+@
+
+
+1.2
+log
+@none
+@
+text
+@d1 9
+a9 5
+%META:TOPICINFO{author="EelcoVisser" date="1090321602" format="1.0" version="1.2"}%
+%INCLUDE{PublicationPages}%
+
+%INCLUDE{http://www.informatik.uni-trier.de/~ley/db/indices/a-tree/v/Visser:Eelco.html}%
+
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 3
+a3 1
+%META:TOPICINFO{author="EelcoVisser" date="1055283418" format="1.0" version="1.1"}%
+@

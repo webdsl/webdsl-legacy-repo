@@ -1,0 +1,56 @@
+%META:TOPICINFO{author="EelcoVisser" date="1068646786" format="1.0" version="1.1"}%
+------------++ Master Projects in Program Transformation
+
+%STARTINCLUDE%
+
+The program transformation group headed by [[Visser.WebHome][Eelco Visser]] researches 
+high-level specification methods for program transformations and applications of these
+methods to a variety of program transformation problems. The main product of this
+research is the [[http://www.stratego-language.org][Stratego/XT]] language and toolset
+for program transformation. In the context of this project there are many opportunities for thesis projects. If you are interested in any of these projects contact [[Visser.WebHome][Eelco Visser]].
+
+--------+++ Optimization Strategies
+
+High-level abstractions improve programmer productivity but often at the expense of performance, since compilers do not cater well for such abstractions.
+In this line of research we investigate the specification of optimizations for supporting higher-level styles of programming.
+There are several ongoing compiler and optimization projects in the context of which projects
+are possible.
+
+	* The *[[http://www.stratego-language.org/twiki/bin/view/Stratego/HsOpt][Helium Optimizer]]* is	an optimizer for a functional language in the tradition of the 'compilation by transformation' paradigm, i.e., gradually deriving an efficient program by repeatedly applying transformation rules. The goal of this project is to create an optimizer that is truly based on a set of rules that can be combined in many different ways. A first prototype has already been built, such that  a continuation project can start with the interesting stuff immediately
+
+	* In collaboration with Philips research and University of Dresden we are building a *[[http://www.stratego-language.org/Stratego/TurningDynamicTypingIntoStaticTypingByProgramSpecialization][compiler for Octave]]* (an open source clone of<nop>MatLab). The compiler targets various machines, among which a vector machine under construction at the University of Dresden. The high-level Octave code is usually written for prototyping. In order to be usable on embedded systems it has to be disambiguated and drastically optimized.
+
+	* In collaboration with [[http://ase.arc.nasa.gov/people/fischer/][Bernd Fischer]] at the NASA/Ames research center we are working on an *optimzer for the <nop>AutoBayes program synthesis system*. The system derives high-level algorithms from declarative specifications in the domain of statistical data analysis. The intermediate code produced by the system has many opportunities for optimization. A first prototype optimizer has been written by Karina Olmos and  Jozef Kruger. 
+
+	* In collaboration with the University of Bergen (Norway) we are working on *[[http://www.codeboost.org][CodeBoost]]* a transformation system for C++ programs, especially aimed at the optimization of numeric programs written in the Sophus style. Many opportunities for adding optimizations, in particular if you are numerically inclined.
+
+	* In the paper '[[http://www.stratego-language.org/Stratego/RewritingStrategiesForInstructionSelection][Rewriting Strategies for Instruction Selection]]' an elegant encoding of *instruction selection* with dynamic programming is described. As a case study the approach should be further explored by working out a complete instruction selection component for the Tiger compiler based on this approach. Unlike existing tools for instruction selection, this approach is not restricted to low-level code generation, but can also be used for query translation or program synthesis. Furthermore, the highly generic selection algorithm should be optimized itself by specialization to a specific set of rules.
+
+	* The *[[http://www.stratego-language.org/twiki/bin/view/Stratego/StrategoOptimizer][Stratego optimizer]]* applies an increasing number of transformations to Stratego programs. Areas for further work include specialization of generic strategies to specific data types and effect analysis.
+
+--------+++ Documentation Generation
+
+Rob Vermaas has created [[http://www.stratego-language.org/Stratego/ExtendibleDocumentationGenerator][xDoc]], a documentation generator, which has been designed to be extensible to different
+source languages. Given a source code package, the system produces a web-site giving an overview at different levels. Currently these views include API and code browsing, aided by various indices, cross-references, and import graphs. The system has been instantiated for Stratego and SDF. There are many ways to extend the system
+
+	* Instantiate for other languages
+	* Visualize the connections between programs in different languages
+	* Visualize the composition of components
+
+Beyond documentation generation xDoc could be used to provide help in refactoring programs. For instance, by giving advice on remodularization.
+
+--------+++ Types for Strategies
+
+Although Stratego is a typeful language in the sense that it deals with typed and structured
+data, the genericity of its transformation strategies is beyond conventional type systems. By now there are proposals for type systems for strategic programming languges.
+
+	* In '[[http://homepages.cwi.nl/~ralf/jlap02/][Typed Generic Traversal With Term Rewriting Strategies]]' Ralf Laemmel develops a type system for a variant of System S, the core of Stratego. 
+	* [[http://www.stratego-language.org/Stratego/RhoStratego][RhoStratego]] is a higher-order functional language using rules (case alternatives) as first-class objects.
+
+The goal of this project is to implement a type system for the existing Stratego language using inspiration from the approaches mentioned above. A large set of actual programs exist against which this type system can be validated. Guiding principle should be that the type system helps programmers find errors in code, while not unnecessarily restricting expressivity.
+
+%STOPINCLUDE%
+
+<!--
+	* Set SKIN = notitle
+-->

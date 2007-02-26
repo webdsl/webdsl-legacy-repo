@@ -1,0 +1,130 @@
+head	1.4;
+access;
+symbols;
+locks
+	apache:1.4; strict;
+comment	@# @;
+
+
+1.4
+date	2004.05.18.21.15.40;	author EelcoVisser;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2004.05.17.10.37.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2004.05.15.21.21.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2004.05.13.12.16.00;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.4
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1084914940" format="1.0" version="1.4"}%
+<center>
+<h1>Bente Sofie</h1>
+<br>
+Geboren op 13 mei 2004 0:35
+<br>
+4000 gram 52 cm
+<br>
+<br>
+dochter van [[Eelco Visser]] en [[Janine Mets]]
+<br>
+zus van [[Jelle Visser][Jelle]]
+<br>
+<br>
+<br>
+	 <img src="%ATTACHURLPATH%/DSC00026.JPG" alt="DSC00026.JPG" height="300"  />
+<br>
+<br>
+	 <img src="%ATTACHURLPATH%/DSC00052.JPG" alt="DSC00052.JPG" height="300"  />
+<br>
+<br>
+	 <img src="%ATTACHURLPATH%/DSC00024.JPG" alt="DSC00024.JPG" height="300"  />
+<br>
+<br>
+	 <img src="%ATTACHURLPATH%/DSC00095.JPG" alt="DSC00095.JPG" height="300"  />
+</center>
+
+<!--
+	* Set SKIN = plain
+-->
+
+
+
+%META:FILEATTACHMENT{name="DSC00052.JPG" attr="h" comment="Bente en Jelle" date="1084449952" path="H:\Documents and Settings\eelco\My Documents\Image Transfer\'04_05_13_01\DCIM\101MSDCF\DSC00052.JPG" size="730563" user="EelcoVisser" version="1.1"}%
+%META:FILEATTACHMENT{name="DSC00024.JPG" attr="h" comment="Voet" date="1084450444" path="H:\Documents and Settings\eelco\My Documents\Image Transfer\'04_05_13_01\DCIM\101MSDCF\DSC00024.JPG" size="125894" user="EelcoVisser" version="1.1"}%
+%META:FILEATTACHMENT{name="DSC00026.JPG" attr="h" comment="Bente" date="1084450575" path="H:\Documents and Settings\eelco\My Documents\Image Transfer\'04_05_13_01\DCIM\101MSDCF\DSC00026.JPG" size="145498" user="EelcoVisser" version="1.1"}%
+%META:FILEATTACHMENT{name="DSC00095.JPG" attr="h" comment="in bed" date="1084790682" path="DSC00095.JPG" size="845309" user="EelcoVisser" version="1.1"}%
+@
+
+
+1.3
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1084790220" format="1.0" version="1.3"}%
+d7 1
+a7 1
+4000 gram
+@
+
+
+1.2
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1084656060" format="1.0" version="1.2"}%
+d10 1
+a10 1
+dochter van [[WebHome][Eelco Visser]] en Janine Mets
+d12 1
+a12 1
+zus van [[Jelle Visser]]
+d23 3
+a25 1
+
+d33 1
+d37 1
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1084450560" format="1.0" version="1.1"}%
+d3 1
+a3 1
+<h1>Bente Sofie Visser</h1>
+d27 1
+a27 1
+	* Set SKIN = notitle
+@

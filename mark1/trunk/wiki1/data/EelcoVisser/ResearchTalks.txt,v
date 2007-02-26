@@ -1,0 +1,481 @@
+head	1.22;
+access;
+symbols;
+locks
+	apache:1.22; strict;
+comment	@# @;
+
+
+1.22
+date	2006.03.05.07.50.37;	author EelcoVisser;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2006.02.27.21.54.34;	author EelcoVisser;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2006.02.03.08.33.29;	author EelcoVisser;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2006.01.31.12.16.21;	author EelcoVisser;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2006.01.09.06.35.16;	author EelcoVisser;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2006.01.06.05.57.46;	author EelcoVisser;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2005.11.22.23.23.20;	author EelcoVisser;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2005.11.16.10.40.18;	author EelcoVisser;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2005.11.15.15.51.23;	author EelcoVisser;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2005.10.26.22.58.42;	author EelcoVisser;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2005.05.23.15.21.10;	author EelcoVisser;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2005.05.23.13.51.13;	author EelcoVisser;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2004.03.04.21.27.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2004.02.10.20.10.02;	author EelcoVisser;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2004.02.01.23.42.04;	author EelcoVisser;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.11.28.13.41.45;	author EelcoVisser;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.10.10.09.47.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.08.28.09.09.30;	author EelcoVisser;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.06.16.14.22.36;	author EelcoVisser;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.06.16.06.37.18;	author EelcoVisser;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.06.06.14.11.50;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.05.01.10.03.03;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.22
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1141545037" format="1.0" version="1.22"}%
+%META:TOPICPARENT{name="WebHome"}%
+Slides for some recent talks 
+
+-----+++ 2006
+
+	* [[Pt.CourseSlides][Slides]] for the [[Pt.WebHome][program transformation]] course (February-April 2006)
+
+	* [[http://www.cs.uu.nl/~visser/ftp/JavaTransform-Dagstuhl06.pdf][A Framework for Transformation of Java Programs]]. [[http://smart-generators.org/M3Schedule][IFIP WG 2.11 meeting]] at Dagstuhl	25-28 January, 2006.
+
+	* [[http://www.cs.uu.nl/~visser/ftp/PEPM06-inv.pdf][Stratego/XT 0.16: Components for Transformation Systems]]. PEPM'06, January 9, 2006.
+
+	* [[http://www.cs.uu.nl/~visser/ftp/Stratego-IBM-2006-01-06.pdf][Stratego/XT 0.16: A Language and Toolset for Program Transformation]]. IBM Research, New York, January 6, 2006.
+
+------+++ 2005
+
+	* [[http://www.cs.uu.nl/~visser/ftp/Visser-Philips-2005.pdf][Advanced Program Transformation with Stratego/XT]]. Informatica Colloquium, Philips Research, Eindhoven, November 23, 2005. (variation on Dagstuhl talk)
+
+	* [[http://www.cs.uu.nl/~visser/ftp/TUE05-GP.pdf][Generative Software Development. Overview and Examples]]. Guest lecture TUE, Eindhoven. October 27, 2005. (Based on paper by Czarnecki)
+
+	* [[Transformations for Abstractions]]. Keynote talk for the Fifth IEEE International Workshop on Source Code Analysis and Manipulation (SCAM'05), Budapest, Hungary, October 2005
+
+	* [[http://www.cs.uu.nl/~visser/ftp/Visser-Dagstuhl-2005.pdf][Strategies for Rule-Based Program Transformation Software Engineering Techniques for Program Transformation]]. Invited tutorial, Dagstuhl Seminar 05161 on Transformation Techniques in Software Engineering. April 2005.
+
+	* [[http://www.cs.uu.nl/~visser/ftp/OV05-CC.pdf][Composing source-to-source data-flow transformations with rewriting strategies and dependent dynamic rewrite rules]]. International Conference on Compiler Construction (CC'05), Edinburgh, April 2005.
+
+	* [[http://www.cs.uu.nl/~visser/ftp/Visser-WG211-2005.pdf][Extensible Program Transformation Systems]]. IFIP WG 2.11 (Program Generation) meeting Rice University, Houston, March 6, 2005.
+
+	* [[http://www.cs.uu.nl/~visser/ftp/TraCE-Jacquard-2005.pdf][TraCE: Transparent Configuration Environments]]. Jacquard Conference 2005. Zeist, January 2005.
+
+	* [[http://www.cs.uu.nl/~visser/ftp/Visser-XTC-Jacquard-2005.pdf][XTC: A Lightweight Component Model for Transformation Tool Composition]]. Jacquard Conference 2005. Zeist, January 2005.
+
+------+++ 2004
+
+	* [[http://www.cs.uu.nl/~visser/ftp/SUD04-Intro.pdf][Fifth Stratego User Days (SUD'04)]] -- Introduction to the [[%HTTPSTRATEGO%FifthStrategoUserDays][meeting]] on March 1, 2004 with an overview of developments since the [[%HTTPSTRATEGO%FourthStrategoUsersDay][previous meeting]].
+
+	* [[http://www.cs.uu.nl/~visser/ftp/FRW04-slides.pdf][Implementation of Partial Evaluation in Stratego/XT]] -- slides for talk at [[http://www.cs.kent.ac.uk/projects/refactor-fp/workshop.html][Functional Refactoring Workshop]] in Canterbury on February 9, 2004. I also gave this talk at SUD'04 ([[http://www.cs.uu.nl/~visser/ftp/SUD04-PE.pdf][pdf]]) on March 3, 2004.
+
+	* [[http://www.cs.uu.nl/~visser/ftp/WG21-2004-01-28.pdf][Program Transformation with Scoped Dynamic Rewrite Rules in Stratego]] -- slides for talk at [[http://web.comlab.ox.ac.uk/oucl/work/jeremy.gibbons/wg21/][IFIP WG 2.1]] in Rome, January 2004
+
+------+++ 2003
+
+	* [[Pt03.CourseSlides][Slides]] for the [[Pt.WebHome][program transformation]] course (november 2003 - january 2004)
+
+	* [[http://www.cs.uu.nl/~visser/ftp/STC-2003-10-09.pdf][An Introduction to Program Transformation]] -- talk given at the [[Stc.WebHome][Software Technology Colloquium]] on October 9, 2003 (an introduction to the [[Pt.WebHome][course]] that I teach later this year).
+
+	* [[http://www.cs.uu.nl/~visser/ftp/FV03-slides.pdf][Adding Concrete Syntax to a Prolog-Based Program Synthesis System]] -- talk given at LOPSTR'03, August 2003
+
+	* [[ftp://ftp.stratego-language.org/pub/stratego/SUD03/sud03-xtc.pdf][Transformation Tool Composition with XTC]] -- talk given at Fourth Stratego Users Day
+
+	* [[ftp://ftp.stratego-language.org/pub/stratego/SUD03/sud03-autoxt.pdf][Building Stratego Programs with AutoXT]] -- talk given at Fourth Stratego Users Day
+
+	* [[http://www.cs.uu.nl/~visser/ftp/Vis03-Dagstuhl.pdf][Strategies for Program Transformation. From rules to tool composition with Stratego/XT]] -- talk given at [[http://www.dagstuhl.de/03131/][Dagstuhl Seminar 03131]] on Domain-Specific Program Generation, March 2003
+
+%META:TOPICMOVED{by="EelcoVisser" date="1055745438" from="Visser.Talks" to="Visser.ResearchTalks"}%
+@
+
+
+1.21
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1141077274" format="1.0" version="1.21"}%
+d5 2
+d15 2
+d33 2
+d41 2
+@
+
+
+1.20
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1138955609" format="1.0" version="1.20"}%
+d5 1
+d35 1
+a35 1
+	* [[Pt.CourseSlides][Slides]] for the [[Pt.WebHome][program transformation]] course (november 2003 - january 2004)
+@
+
+
+1.19
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1138709781" format="1.0" version="1.19"}%
+d32 1
+a32 1
+	* [[http://www.cs.uu.nl/~visser/ftp/WG21-2004-01-28.pdf][Program Transformation with Scoped Dynamic Rewrite Rules in Stratego]] -- slides for talk at [[http://web.comlab.ox.ac.uk/oucl/work/jeremy.gibbons/wg21/][IFIP WG 2.1]] in Rome
+d38 1
+a38 1
+	* [[http://www.cs.uu.nl/~visser/ftp/FV03-slides.pdf][Adding Concrete Syntax to a Prolog-Based Program Synthesis System]] -- talk given at LOPSTR'03
+d44 1
+a44 1
+	* [[http://www.cs.uu.nl/~visser/ftp/Vis03-Dagstuhl.pdf][Strategies for Program Transformation. From rules to tool composition with Stratego/XT]] -- talk given at [[http://www.dagstuhl.de/03131/][Dagstuhl Seminar 03131]] on Domain-Specific Program Generation
+@
+
+
+1.18
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1136788516" format="1.0" version="1.18"}%
+d5 3
+@
+
+
+1.17
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1136527066" format="1.0" version="1.17"}%
+d5 2
+@
+
+
+1.16
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1132701800" format="1.0" version="1.16"}%
+d5 2
+@
+
+
+1.15
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1132137618" format="1.0" version="1.15"}%
+d5 2
+@
+
+
+1.14
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1132069883" format="1.0" version="1.14"}%
+d35 1
+a35 1
+	* [[ftp://ftp.dagstuhl.de/pub/Proceedings/03/03131/03131.VisserEelco.Slides.pdf][Strategies for Program Transformation. From rules to tool composition with Stratego/XT]] -- talk given at [[http://www.dagstuhl.de/03131/][Dagstuhl Seminar 03131]] on Domain-Specific Program Generation
+@
+
+
+1.13
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1130367522" format="1.0" version="1.13"}%
+d7 2
+@
+
+
+1.12
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1116861670" format="1.0" version="1.12"}%
+d5 2
+@
+
+
+1.11
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1116856273" format="1.0" version="1.11"}%
+d11 4
+@
+
+
+1.10
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1078435620" format="1.0" version="1.10"}%
+d3 26
+a28 19
+Slides for some recent talks 
+
+	* [[http://www.cs.uu.nl/~visser/ftp/SUD04-Intro.pdf][Fifth Stratego User Days (SUD'04)]] -- Introduction to the [[%HTTPSTRATEGO%FifthStrategoUserDays][meeting]] on March 1, 2004 with an overview of developments since the [[%HTTPSTRATEGO%FourthStrategoUsersDay][previous meeting]].
+
+	* [[http://www.cs.uu.nl/~visser/ftp/FRW04-slides.pdf][Implementation of Partial Evaluation in Stratego/XT]] -- slides for talk at [[http://www.cs.kent.ac.uk/projects/refactor-fp/workshop.html][Functional Refactoring Workshop]] in Canterbury on February 9, 2004. I also gave this talk at SUD'04 ([[http://www.cs.uu.nl/~visser/ftp/SUD04-PE.pdf][pdf]]) on March 3, 2004.
+
+	* [[http://www.cs.uu.nl/~visser/ftp/WG21-2004-01-28.pdf][Program Transformation with Scoped Dynamic Rewrite Rules in Stratego]] -- slides for talk at [[http://web.comlab.ox.ac.uk/oucl/work/jeremy.gibbons/wg21/][IFIP WG 2.1]] in Rome
+
+	* [[Pt.CourseSlides][Slides]] for the [[Pt.WebHome][program transformation]] course (november 2003 - january 2004)
+
+	* [[http://www.cs.uu.nl/~visser/ftp/STC-2003-10-09.pdf][An Introduction to Program Transformation]] -- talk given at the [[Stc.WebHome][Software Technology Colloquium]] on October 9, 2003 (an introduction to the [[Pt.WebHome][course]] that I teach later this year).
+
+	* [[http://www.cs.uu.nl/~visser/ftp/FV03-slides.pdf][Adding Concrete Syntax to a Prolog-Based Program Synthesis System]] -- talk given at LOPSTR'03
+
+	* [[ftp://ftp.stratego-language.org/pub/stratego/SUD03/sud03-xtc.pdf][Transformation Tool Composition with XTC]] -- talk given at Fourth Stratego Users Day
+
+	* [[ftp://ftp.stratego-language.org/pub/stratego/SUD03/sud03-autoxt.pdf][Building Stratego Programs with AutoXT]] -- talk given at Fourth Stratego Users Day
+
+	* [[ftp://ftp.dagstuhl.de/pub/Proceedings/03/03131/03131.VisserEelco.Slides.pdf][Strategies for Program Transformation. From rules to tool composition with Stratego/XT]] -- talk given at [[http://www.dagstuhl.de/03131/][Dagstuhl Seminar 03131]] on Domain-Specific Program Generation
+@
+
+
+1.9
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1076443802" format="1.0" version="1.9"}%
+d5 3
+a7 1
+	* [[http://www.cs.uu.nl/~visser/ftp/FRW04-slides.pdf][Implementation of Partial Evaluation in Stratego/XT]] -- slides for talk at [[http://www.cs.kent.ac.uk/projects/refactor-fp/workshop.html][Functional Refactoring Workshop]] in Canterbury on February 9, 2004.
+a21 1
+
+@
+
+
+1.8
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1075678924" format="1.0" version="1.8"}%
+d4 2
+@
+
+
+1.7
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1070026905" format="1.0" version="1.7"}%
+d4 2
+@
+
+
+1.6
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1065779220" format="1.0" version="1.6"}%
+d3 3
+a5 1
+Selected talks
+@
+
+
+1.5
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1062061770" format="1.0" version="1.5"}%
+d5 3
+a7 1
+	* [[ftp://www.cs.uu.nl/~visser/ftp/FV03-slides.pdf][Adding Concrete Syntax to a Prolog-Based Program Synthesis System]] -- talk given at LOPSTR'03
+@
+
+
+1.4
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1055773355" format="1.0" version="1.4"}%
+d4 2
+@
+
+
+1.3
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1055745438" format="1.0" version="1.3"}%
+d10 1
+@
+
+
+1.2
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1054908710" format="1.0" version="1.2"}%
+d10 1
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1051783383" format="1.0" version="1.1"}%
+d4 4
+@

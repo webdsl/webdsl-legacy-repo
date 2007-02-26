@@ -1,0 +1,30 @@
+head	1.1;
+access;
+symbols;
+locks
+	apache:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2001.11.27.23.06.20;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.1
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1006902380" format="1.0" version="1.1"}%
+%META:TOPICPARENT{name="WebHome"}%
+Write a compiler from Stratego to Java bytecode.
+
+-- Main.EelcoVisser - 28 Nov 2001 <br />
+@

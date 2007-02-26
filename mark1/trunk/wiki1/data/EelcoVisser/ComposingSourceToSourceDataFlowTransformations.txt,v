@@ -1,0 +1,88 @@
+head	1.4;
+access;
+symbols;
+locks
+	apache:1.4; strict;
+comment	@# @;
+
+
+1.4
+date	2006.10.17.15.03.02;	author EelcoVisser;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2005.09.02.12.06.26;	author EelcoVisser;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2005.04.29.20.00.55;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2004.12.12.10.04.49;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.4
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1161097382" format="1.0" version="1.4"}%
+%META:TOPICPARENT{name="WebHome"}%
+%INCLUDE{http://www.stratego-language.org/Stratego/ComposingSourceToSourceDataFlowTransformations?skin=plain}%
+
+[[http://www.stratego-language.org/Stratego/ComposingSourceToSourceDataFlowTransformations][Source]]
+
+@
+
+
+1.3
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1125662786" format="1.0" version="1.3"}%
+a6 4
+<!--
+	* Set SKIN = notitle
+-->
+
+@
+
+
+1.2
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1114804855" format="1.0" version="1.2"}%
+d7 4
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1102845889" format="1.0" version="1.1"}%
+d3 3
+a5 1
+See http://www.stratego-language.org/Stratego/ComposingSourceToSourceDataFlowTransformations
+@

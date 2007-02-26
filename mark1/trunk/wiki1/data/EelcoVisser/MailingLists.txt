@@ -1,0 +1,37 @@
+%META:TOPICINFO{author="EelcoVisser" date="1161096117" format="1.0" version="1.12"}%
+
+--------++ UU mailinglists
+
+Master program
+
+	* https://mail.cs.uu.nl/mailman/listinfo/hpc
+	* https://mail.cs.uu.nl/mailman/listinfo/swe
+	* https://mail.cs.uu.nl/mailman/listinfo/sgc
+	* https://mail.cs.uu.nl/mailman/listinfo/pt
+
+Transformation meetings
+
+	* https://mail.cs.uu.nl/mailman/listinfo/trafo
+
+StrategoXT
+
+	* https://mail.cs.uu.nl/mailman/listinfo/stratego-announce
+	* https://mail.cs.uu.nl/mailman/listinfo/stratego
+	* https://mail.cs.uu.nl/mailman/listinfo/stratego-dev
+	* https://mail.cs.uu.nl/mailman/listinfo/stratego-bugs
+	* https://mail.cs.uu.nl/mailman/listinfo/stratego-cvs
+
+	* https://mail.cs.uu.nl/mailman/listinfo/sdf
+
+	* https://mail.cs.uu.nl/mailman/listinfo/codebayes
+	* https://mail.cs.uu.nl/mailman/listinfo/mouse
+
+TraCE
+
+	* https://mail.cs.uu.nl/mailman/listinfo/trace-announce
+	* https://mail.cs.uu.nl/mailman/listinfo/trace-dev
+
+	* https://mail.cs.uu.nl/mailman/listinfo/nix-dev
+
+	* https://mail.cs.uu.nl/mailman/listinfo/buildfarm
+

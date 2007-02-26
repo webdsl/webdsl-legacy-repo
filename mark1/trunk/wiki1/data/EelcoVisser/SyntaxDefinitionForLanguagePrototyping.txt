@@ -1,0 +1,121 @@
+%META:TOPICINFO{author="EelcoVisser" date="1161118042" format="1.0" version="1.3"}%
+<table>
+<td VALIGN=TOP>
+		 <img SRC="http://www.cs.uu.nl/~visser/thesis/back3.gif" ALT="[]">
+</td>
+<td>
+------------------------------
+<center>
+
+		 <h1>
+			Syntax Definition for<br>Language Prototyping
+		 </h1>
+</center>
+
+<center>
+		 <h2>[[WebHome][Eelco Visser]]</h2>
+</center>
+
+<center>
+
+		 ISBN 90-74795-75-7
+		 <br>
+		 University of Amsterdam
+		 <br>
+		 1997
+</center>
+
+------------------------------
+
+	  Language prototyping is the activity of designing and
+	  testing definitions of new or existing computer
+	  languages. An important aspect of a language definition is
+	  the definition of its syntax. The subject of this thesis are
+	  new formalisms and techniques that support the development
+	  and prototyping of syntax definitions. There are four main
+	  subjects: (1) Techniques for parsing and disambiguation of
+	  context-free languages. (2) Design and implementation of a
+	  new syntax definition formalism. (3) Design of a multi-level
+	  algebraic specification formalism. (4) Study of polymorphic
+	  syntax definition.
+
+------------------------------
+<b>Contents</b>
+
+<pre>
+1	Introduction
+2	Specification in ASF+SDF
+
+I	Context-Free Parsing Techniques
+
+3	Scannerless Generalized-LR Parsing
+4	Disambiguation Filters
+5	A Case Study in Optimizing Parsing Schemata
+	 by Disambiguation Filters
+
+II  Context-Free Syntax Definition
+
+6	A Family of Syntax Definition Formalisms
+7	Context-Free Grammars
+8	Disambiguation and Abbreviation
+9	Renaming and Modularization
+10  The Syntax Definition Formalism SDF2
+
+III Multi-Level Algebraic Specification
+
+11  Extensions of First-Order Specification
+12  Untyped and Simply Typed Specifications
+13  Examples of Multi-Level Specifications
+14  Definition of Multi-Level Specifications
+
+IV  Polymorphic Syntax Definition
+
+15  Polymorphic Syntax Definition
+
+V	Epilogue
+
+16  Concluding Remarks
+
+VI  Appendices
+
+A	Auxiliary Modules for the Specification of SDF2
+B	Auxiliary Modules for Multi-Level Specifications
+C	Samenvatting
+D	Bibliography
+</pre>
+
+------------------------------
+*Some quotes*
+
+	* [[SyntaxDefinitionForLanguagePrototypingCover][Cover]]
+	* [[SyntaxDefinitionForLanguagePrototypingContents][Full table of contents]]
+	* [[SyntaxDefinitionForLanguagePrototypingIntro][Introduction]]
+	* [[SyntaxDefinitionForLanguagePrototypingStellingen][Stellingen]]
+
+------------------------------
+*Grant*
+
+The research for my thesis was supported by [[http://www.nwo.nl/][NWO]]/SION
+grant 612-317-420: Incremental parser generation and context-sensitive
+disambiguation: a multi-disciplinary perspective.
+
+------------------------------
+*Promotor* [[http://www.cwi.nl/~paulk/][Paul Klint]]
+------------------------------
+*Promotiecommissie*
+
+	* [[http://www.cwi.nl/~apt/][prof.dr K. R. Apt]]
+	* [[http://adam.wins.uva.nl/~janb/][prof. dr J. A. Bergstra]]
+	* [[http://www.cwi.nl/~jve/][prof. dr D. J. N. van Eijck]]
+	* [[http://www.nada.kth.se/~karlm/index-en.html][dr K. Meinke]]
+	* [[http://wwwseti.cs.utwente.nl/~anijholt/][prof. dr A. Nijholt]]
+------------------------------
+*Paranimfen*
+
+	* [[http://www.cs.vu.nl/~luttik/][Bas Luttik]]
+	* [[http://users.fmg.uva.nl/ivisser/][Ingmar Visser]]
+------------------------------
+</td>
+</tr>
+</table>
+

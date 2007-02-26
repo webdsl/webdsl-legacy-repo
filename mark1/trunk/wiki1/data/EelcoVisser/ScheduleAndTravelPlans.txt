@@ -1,0 +1,195 @@
+%META:TOPICINFO{author="EelcoVisser" date="1170925023" format="1.0" version="1.53"}%
+%META:TOPICPARENT{name="WebHome"}%
+--------+ Schedule and Travel Plans
+
+<noautolink>
+
+<iframe src="http://www.google.com/calendar/embed?src=eelcovis%40gmail.com&amp;chrome=NAVIGATION&amp;epr=3&amp;wkst=2&amp;hl=en&amp;height=588" style=" border-width:0 " width="800" frameborder="0" height="588"></iframe>
+
+------++ Other Calendars
+
+	* [[Conference Calendar]]
+
+------++ Travel/Conference/Meeting Plans 2008
+
+	* August 10-15: Automatic Differentiation, Bonn, Germany (invited talk)
+
+------++ Travel/Conference/Meeting Plans 2007
+
+	* January 15-19: PEPM/POPL, Nice, France
+	* January 26 - February 4: vacation
+	* February 22: Graham Bolton in Delft
+	* February 23: Ordina
+	* March 6: Oratie Wan Fokkink, VU, Amsterdam
+	* March 16: Frank Tip in Delft
+	* March 20: MoDSE workshop, Amsterdam
+	* March 24-28: ETAPS, Braga, Portugal
+	* May 2-5: OOPSLA PC meeting, NY or Montreal
+	* July 2-7: GTTSE, Braga, Portugal
+	* August 20-22: IFIP WG2.11 meeting, Copenhagen, Denmark
+	* October 1-3: GPCE, Salzburg, Austria (tentative)
+	* October 20-26: OOPSLA, Montreal, Canada (tentative)
+	* November 5-9: ASE, Atlanta, Georgia, USA (tentative)
+
+------++ Travel/Conference/Meeting Plans 2006
+
+	* [[http://www.cs.uu.nl/education/jaar2005.html][Academic calendar]]
+
+	* I work at home on Mondays
+
+	* January 9-13 : [[http://www.cis.ksu.edu/santos/pepm06/][PEPM'06]]/[[http://www.cs.princeton.edu/~dpw/popl/06/][POPL'06]] in Charleston S.C.
+	* January 18: graduation of [[http://www.cs.uu.nl/~eelco/][Eelco Dolstra]]
+	* January 24-28: [[http://www.smart-generators/M3Schedule][WG2.11 meeting Dagstuhl]]
+	* July 6-23: vacation
+	* August 3-10: vacation
+	* August 11-15: WRS, RTA, HOR in Seattle, Washington
+	* October 4-8: <nop>Proles, Sitges/Barcelona
+	* October 22-26: Portland Oregon
+		* OOPSLA/[[http://www.program-transformation.org/GPCE06][GPCE]]'06
+		* [[http://www.program-transformation.org/Sts/STS06][STS'06]]
+		* Building Java Transformations with Stratego/XT (GPCE tutorial) 
+		* [[http://www.smart-generators][WG2.11 meeting]]
+	* November 17: [[MoDSE.KickoffMeeting][MoDSE kickoff meeting]]
+	* November 21: Stratego Tutorial at TUD
+	* November 22,23: LAC 2006
+	* November 24: Brussels
+	* November 29: graduation Bogdan Dumitriu (UU)
+	* November 30, December 1: SUD 2006 (TUD)
+	* December 8: <nop>LogicaCMG
+	* December 11-12: BENEVOL 2006 (TUD)
+
+------++ Travel/Conference/Meeting Plans 2005
+
+	* I usually work at home on Wednesday and Friday
+
+	* January 24: Stratego tutorial at Philips Research in Eindhoven
+	* January 27: Stratego tutorial at <nop>LaQuSo in Eindhoven
+	* February 3-4: [[http://www.jaqcuard.org][Jacquard conference]] in Zeist
+	* March 5-9: [[http://www.cs.rice.edu/~taha/wg2.11/m-2/schedule.txt][WG2.11 meeting at Rice University]] (Houston)
+	* March 16: Talk about [[ComposingSourceToSourceDataFlowTransformations][dependent dynamic rules]] at [[http://homepages.cwi.nl/~pam/][PAM]] (CWI)
+	* March 29: Talk about [[ComposingSourceToSourceDataFlowTransformations][dependent dynamic rules]] at TU Delft
+	* April 2-10: [[http://www.etaps05.inf.ed.ac.uk/][ETAPS'05]] in Edinburgh 
+		* presentation about [[ComposingSourceToSourceDataFlowTransformations][dependent dynamic rules]] at CC'05
+	* April 17-22: [[http://www.cs.vu.nl/TrafoDagstuhl/][Dagstuhl Seminar on Transformation Techniques in Software Engineering]] ([[http://www.dagstuhl.de/05161/][05161]])
+	* April 27: visit Philips Research
+	* May 2-4: [[http://www.stratego-language.org/Stratego/SixthStrategoUserDays][Sixth Stratego User Days (SUD'05)]]
+	* May 9-29: vacation
+	* June 3: visit [[http://www.ace.nl][ACE]]
+	* June 23-24: transformation workshop in Bonn
+	* August 13-16: vacation
+	* August 17: visit Philips Research
+	* August 28: Brussels
+	* September 24 - October 2: ICSM'05/SCAM'05 in Budapest, Hungary
+		* Keynote talk at the Workshop on [[http://www.dcs.kcl.ac.uk/staff/mark/scam2005/][Source Code Analysis and Manipulation (SCAM'05)]]
+	* October 27: guest lecture at TUE
+	* November 23: Talk at Informatica Colloquium of Philips Research in Eindhoven
+
+------++ Travel/Conference/Meeting Plans 2004
+
+	* January 23-26: [[http://web.comlab.ox.ac.uk/oucl/work/jeremy.gibbons/wg21/][IFIP WG 2.1]] in Rome
+	* February 9,10: [[http://www.cs.kent.ac.uk/projects/refactor-fp/workshop.html][Functional Refactoring Workshop]] in Kent
+	* March 1-3: [[%HTTPSTRATEGO%/FifthStrategoUsersDay][Fifth Stratego Users Day]] in Utrecht
+	* March 10: [[http://www.jacquard.nl/][Jacquard]] Meeting in Utrecht
+	* March 11: Rob van Ommeringen in Utrecht
+	* March 23: TraCE + Deliver meeting at CWI
+	* May 24-28: [[http://conferences.iee.org/icse2004/][ICSE'04]] in Edinburgh
+	* June 11: visit Philips Research in Eindhoven
+	* August 24: visit ATOS Origin in Veldhoven
+	* October 24-28: [[http://www.program-transformation.org/GPCE][GPCE'04]] and [[http://www.oopsla.org/2004/][OOPSLA'04]] in Vancouver
+
+------++ November 2004 - January 2005
+
+	* Teaching: [[Sgc.WebHome][Seminar on software generation and configuration]]
+
+------++ September 2004 - November 2004
+
+	* Teaching [[Swe.WebHome][Software Engineering]] on Monday, Tuesday afternoon, Thursday morning
+
+------++ June 2004 - August 2004
+
+	* I may take the day off on Mondays (21/6, 5/7)
+	* I work at home on Wednesdays
+
+	* Mon 28/6: at home
+	* Wed 30/6: in Utrecht
+	* Fri 2/7: at home
+
+------++ May 2004
+
+	* I work at home most of the time (GPCE PC meeting, BenteSofie)
+	* May 24-28: [[http://conferences.iee.org/icse2004/][ICSE'04]] in Edinburgh
+
+------++ February 2004 - April 2004
+
+	* I work at home on Wednesdays
+
+------++ November 2003 - January 2004
+
+	* I teach [[Pt.WebHome][Program Transformation]] in this period
+
+	* Mon:
+		* afternoon [[Pt.WebHome][Program Transformation]]
+	* Tue:
+		* at home
+	* Wed:
+		* afternoon [[Pt.WebHome][Program Transformation]]
+	* Thu: 
+		* morning: ST meeting and [[Stc.WebHome][Software Technology Colloquium]]
+
+	* December 19 - January 4 : at home
+
+------++ September 2003 - November 2003
+
+I have a pretty busy schedule this period. Meetings may be possible on Monday morning,
+Thursday after 15:00, and Friday morning.
+
+	* Mon: 
+		* afternoon: [[Swe.WebHome][Software Engineering]]
+	* Tue: at home
+	* Wed: at home
+	* Thu: 
+		* morning: ST meeting and [[Stc.WebHome][Software Technology Colloquium]]
+		* afternoon: [[Hpc.WebHome][High-performance Compilers]]
+	* Fri: 
+		* afternoon: [[Swe.WebHome][Software Engineering]]
+
+	* Oct 25 - Nov 2: vacation
+
+------++ Spring 2003
+	
+	* Feb 13: SVM'03 Workshop
+	* Feb 14: promotie Joost Visser
+	* Feb 21: promotie Kamiel Koelman
+	* Feb 24: SNS visit
+	* Feb 28: Exam Program Transformation
+	* Mar 6: promotie Merijn de Jonge
+	* Mar 7-16: vacation
+	* Mar 17-19: visit Bernd Fischer
+	* Mar 23-28: [[http://www.dagstuhl.de/03131][Dagstuhl seminar on Domain-specific Program Generation]]
+	* Mar 28-Apr 6: House renovation
+	* Apr 16-22: Moving
+	* Apr 28: ICS Research Day Woudschoten
+	* Jun 21-29: vacation
+	* Aug 24-27: PLI'03 - Uppsala
+
+------++ 2002
+
+	* Feb 7 - 15: Oxford
+	* Apr 6 - 14: Grenoble - ETAPS'02
+	* May 3: Stratego Users Day
+	* Jun 27 - July 14: Vacation
+	* Jul20 - 25: Copenhagen - FLOC'02
+	* Oct 3-8: Pittsburgh - PLI'02 / RULE'02
+	* Oct 8-10: San Francisco - NASA/AMES
+
+------++ 2001 
+
+	* January 11 - 17: Patty Johann in Utrecht
+	* January 22 - 27: Visit INRIA, Nancy
+	* February 2: Together Workshop, Antwerpen
+	* February 7 - 8: [[http://www.stratego-language.org/Stratego/SecondStrategoUsersDay][Stratego Tutorial and Users Day]], Utrecht
+	* April 2 - 6: [[http://www.disi.unige.it/etaps2001/][ETAPS2001]], Genova
+	* May 22-26: [[http://www.score.is.tsukuba.ac.jp/rta2001/main.html][RTA 2001]] + [[http://www.logic.at/wrs01/][WRS 2001]], Utrecht
+	* September 2 - 7: [[http://music.dsi.unifi.it/pli01/][PLI'2001]], Firenze
+
+%META:TOPICMOVED{by="EelcoVisser" date="1065626843" from="Visser.Schedule" to="Visser.ScheduleAndTravelPlans"}%

@@ -1,0 +1,32 @@
+head	1.1;
+access;
+symbols;
+locks
+	apache:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2005.09.09.07.57.57;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.1
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1126252677" format="1.0" version="1.1"}%
+<channel rdf:about="%SCRIPTURL%/view%SCRIPTSUFFIX%/%INCLUDINGWEB%">
+  <title>%WIKITOOLNAME%'s %INCLUDINGWEB% web</title>
+  <link>%SCRIPTURL%/view%SCRIPTSUFFIX%/%INCLUDINGWEB%</link>
+  <description>Eelco Visser</description>
+%INCLUDE{"%TWIKIWEB%.WebRssBase"}%
+
+@

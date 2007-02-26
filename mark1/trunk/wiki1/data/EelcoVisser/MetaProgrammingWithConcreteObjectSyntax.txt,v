@@ -1,0 +1,108 @@
+head	1.4;
+access;
+symbols;
+locks
+	apache:1.4; strict;
+comment	@# @;
+
+
+1.4
+date	2005.04.29.20.40.22;	author EelcoVisser;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.06.02.16.58.06;	author EelcoVisser;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2002.06.26.23.31.08;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.05.24.08.54.32;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.4
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1114807222" format="1.0" version="1.4"}%
+%META:TOPICPARENT{name="StrategoPublications"}%
+%INCLUDE{http://www.stratego-language.org/Stratego/MetaProgrammingWithConcreteObjectSyntax?skin=plain}%
+
+@
+
+
+1.3
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1054573086" format="1.0" version="1.3"}%
+d3 2
+a4 1
+%INCLUDE{http://www.stratego-language.org/twiki/bin/view/Stratego/MetaProgrammingWithConcreteObjectSyntax?skin=plain}%
+@
+
+
+1.2
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1025134268" format="1.0" version="1.2"}%
+d3 1
+a3 25
+E. Visser. *Meta-programming with concrete object syntax.*
+In D. Batory and C. Consel, editors, _Generative Programming and Component Engineering ([[Transform.GPCE][GPCE]]'02)_, Lecture Notes in Computer Science. Springer-Verlag, October 2002.
+To appear.
+
+*Abstract*
+
+Meta programs manipulate structured representations (abstract syntax)
+of programs. The distance between the concrete syntax meta-programmers
+use to reason about programs and the notation for abstract syntax
+manipulation provided by general purpose (meta-) programming languages
+is too great for many applications.  In this paper it is shown how the
+syntax definition formalism SDF can be employed to fit a
+meta-programming language with concrete syntax notation for composing
+and analyzing object programs.  As a case study, the addition of
+concrete syntax to the program transformation language Stratego is
+presented. The approach is then generalized to arbitrary
+meta-languages.
+
+*Preprint*
+
+	* http://www.cs.uu.nl/~visser/ftp/Vis02-gpce.pdf
+
+----
+Transform.CategoryPaper
+
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1022230943" format="1.0" version="1.1"}%
+d20 4
+@

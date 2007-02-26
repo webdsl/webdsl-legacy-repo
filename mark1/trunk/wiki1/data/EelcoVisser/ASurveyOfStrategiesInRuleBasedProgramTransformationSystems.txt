@@ -1,0 +1,6 @@
+%META:TOPICINFO{author="EelcoVisser" date="1161097495" format="1.0" version="1.5"}%
+%META:TOPICPARENT{name="WebHome"}%
+%INCLUDE{http://www.program-transformation.org/Transform/ASurveyOfStrategiesInRuleBasedProgramTransformationSystems?skin=plain}%
+
+[[http://www.program-transformation.org/Transform/ASurveyOfStrategiesInRuleBasedProgramTransformationSystems][Source]]
+

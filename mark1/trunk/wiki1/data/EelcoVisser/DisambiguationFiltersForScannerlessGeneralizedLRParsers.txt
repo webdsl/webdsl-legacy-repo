@@ -1,0 +1,10 @@
+%META:TOPICINFO{author="EelcoVisser" date="1114807189" format="1.0" version="1.2"}%
+%META:TOPICPARENT{name="SyntaxDefinition"}%
+M. G. J. van den Brand, J. Scheerder, J. Vinju, and E. Visser. *Disambiguation Filters for Scannerless Generalized LR Parsers.* In N. Horspool, editor, Compiler Construction (CC'02), volume 2304 of Lecture Notes in Computer Science, pages 143--158, Grenoble, France, April 2002. Springer-Verlag. ([[http://www.cs.uu.nl/people/visser/ftp/BSVV02.pdf][pdf]]).
+
+------+++ <nop>BibTeX
+
+<pre>
+%INCLUDE{http://www.cs.uu.nl/groups/ST/stbib/visser-by-year/BSVV02.bib}%
+</pre>
+

@@ -1,0 +1,28 @@
+%META:TOPICINFO{author="EelcoVisser" date="1036574815" format="1.0" version="1.1"}%
+__Here's a list of topics I've been involved in recently:__
+
+---++++ Visser
+
+%SEARCH{ "EelcoVisser" web="Visser" scope="text" nosearch="on" nosummary="on" noheader="on" nototal="on" regex="off" order="modified" reverse="on" limit="10" format="	* [[$web.$topic][$topic]]"}% 
+
+---++++ Swe
+
+%SEARCH{ "EelcoVisser" web="Swe" scope="text" nosearch="on" nosummary="on" noheader="on" nototal="on" regex="off" order="modified" reverse="on" limit="10" format="	* [[$web.$topic][$topic]]"}% 
+
+---++++ Hpc
+
+%SEARCH{ "EelcoVisser" web="Hpc" scope="text" nosearch="on" nosummary="on" noheader="on" nototal="on" regex="off" order="modified" reverse="on" limit="10" format="	* [[$web.$topic][$topic]]"}% 
+
+---++++ Pt
+
+%SEARCH{ "EelcoVisser" web="Hpc" scope="text" nosearch="on" nosummary="on" noheader="on" nototal="on" regex="off" order="modified" reverse="on" limit="10" format="	* [[$web.$topic][$topic]]"}% 
+
+----++++ Master Program
+
+%SEARCH{ "EelcoVisser" web="Master" scope="text" nosearch="on" nosummary="on" noheader="on" nototal="on" regex="off" order="modified" reverse="on" limit="10" format="	* [[$web.$topic][$topic]]"}% 
+
+----++++ Center
+
+%SEARCH{ "EelcoVisser" web="Center" scope="text" nosearch="on" nosummary="on" noheader="on" nototal="on" regex="off" order="modified" reverse="on" limit="10" format="	* [[$web.$topic][$topic]]"}% 
+
+-- Main.EelcoVisser - 06 Nov 2002

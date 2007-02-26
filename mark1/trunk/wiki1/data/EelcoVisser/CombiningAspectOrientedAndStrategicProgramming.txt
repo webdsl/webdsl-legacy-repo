@@ -1,0 +1,19 @@
+%META:TOPICINFO{author="EelcoVisser" date="1161097623" format="1.0" version="1.2"}%
+%META:TOPICPARENT{name="WebHome"}%
+K. T. Kalleberg and E. Visser. *Combining Aspect-Oriented and Strategic Programming.* In H. Cirstea and N. Marti-Oliet, editors, Workshop on Rule-Based Programming (RULE'05), Electronic Notes in Theoretical Computer Science, Nara, Japan, April 2005. Elsevier Science Publishers. ([[http://www.cs.uu.nl/research/techreps/UU-CS-2005-030.html][techrep]])
+
+-----+++ Abstract
+
+		  Properties such as logging, persistence, debugging, tracing, distribution,
+		  performance monitoring and exception handling occur in most programming
+		  paradigms and are normally very difficult or even impossible to modularize
+		  with traditional modularization mechanisms because they are cross-cutting.
+		  Recently, aspect-oriented programming has enjoyed recognition as a practical
+		  solution for separating these concerns. In this paper we describe an extension
+		  to the Stratego term rewriting language for capturing such properties. We show
+		  our aspect language offers a concise, practical and adaptable solution for
+		  dealing with unanticipated algorithm extension for forward data-flow propagation
+		  and dynamic type checking of terms. We briefly discuss some of the challenges
+		  faced when designing and implementing an aspect extension for and in a
+		  rule-based term rewriting system.
+

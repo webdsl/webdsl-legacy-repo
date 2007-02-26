@@ -1,0 +1,3 @@
+%META:TOPICINFO{author="EelcoVisser" date="1031602783" format="1.0" version="1.4"}%
+%SEARCH{"CategoryPaper" header="<br>" format="	* [[$web.$topic][$topic]]<br>" nototal="on" nosearch="on" web="Visser"}%
+

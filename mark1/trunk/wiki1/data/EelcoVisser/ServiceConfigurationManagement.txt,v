@@ -1,0 +1,89 @@
+head	1.3;
+access;
+symbols;
+locks
+	apache:1.3; strict;
+comment	@# @;
+
+
+1.3
+date	2006.10.17.15.06.35;	author EelcoVisser;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2005.09.05.19.40.50;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2005.09.02.12.54.17;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.3
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1161097595" format="1.0" version="1.3"}%
+%META:TOPICPARENT{name="WebHome"}%
+E. Dolstra, M. Bravenboer, and E. Visser. *Service Configuration Management.* In J. Whitehead, editor, 12th International Workshop on Software Configuration Management (SCM-12), Lisbon, Portugal, September 2005. ACM. ([[http://www.cs.uu.nl/~visser/ftp/UU-CS-2005-039.pdf][pdf]], [[http://archive.cs.uu.nl/pub/RUU/CS/techreps/CS-2005/2005-039.pdf][pdf]], [[http://www.cs.uu.nl/research/techreps/UU-CS-2005-039.html][tr]])
+
+-----+++ Abstract
+
+The deployment of services --- sets of running programs that provide
+some useful facility on a system or network --- is typically
+implemented through a manual, time-consuming and error-prone process.
+For instance, system administrators must deploy the necessary software
+components, edit configuration files, start or stop processes, and so
+on.  This is often done in an ad hoc style with no
+reproducibility, violating proper configuration management practices.
+In this paper we show that build management, software deployment and
+service deployment can be integrated into a single formalism.  We do
+this in the context of the Nix software deployment system, and show
+that its advantages --- co-existence of versions and variants, atomic
+upgrades and rollbacks, and component closure --- extend naturally to
+service deployment.  The approach also elegantly extends to
+distributed services.  In addition, we show that the Nix expression
+language can simplify the implementation of crosscutting variation
+points in services.
+
+@
+
+
+1.2
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1125949250" format="1.0" version="1.2"}%
+a23 5
+
+<!--
+	* Set SKIN = notitle
+-->
+
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1125665657" format="1.0" version="1.1"}%
+d3 1
+a3 1
+E. Dolstra, M. Bravenboer, and E. Visser. *Service Configuration Management.* In J. Whitehead, editor, 12th International Workshop on Software Configuration Management (SCM-12), Lisbon, Portugal, September 2005. ACM. 
+@

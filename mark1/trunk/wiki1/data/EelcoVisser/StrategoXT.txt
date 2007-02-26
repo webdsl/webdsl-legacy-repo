@@ -1,0 +1,24 @@
+%META:TOPICINFO{author="EelcoVisser" date="1125667624" format="1.0" version="1.15"}%
+%META:TOPICPARENT{name="ProgramTransformation"}%
+<table align="right" width=100  style="margin-left : 10px ; border: solid 0em; background: white ">
+<tr><td>
+<a href="http://www.stratego-language.org"><img SRC="http://www.stratego-language.org/pub/Stratego/StrategoLogo/StrategoLogoText-100px.png"  align="right" border="0" alt ="Stratego"></a>
+</td></tr>
+</table>
+Stratego is a modular language for the specification of fully automatic program transformation systems based on the paradigm of rewriting strategies.
+Rewrite rules provide a good formalism for specification of basic transformation steps. Since sets of rewrite rules for a programming language are usually not confluent and terminating, standard rewriting techniques are not adequate for program transformation.
+Basic transformation steps are defined using labeled conditional rewrite rules. Rules are combined into complete transformations by means of programmable <a href="#VBT98">rewriting strategies</a>.  An important aspect of these strategies are combinators for generic traversal. <a href="#Vis01.rule">Scoped dynamic rewrite rules</a> overcome the limitations posed by the  context-free nature of rewrite rules.
+
+----++ http://www.stratego-language.org
+
+	* [[http://www.stratego-language.org/Stratego/StrategoDownload][Download]]
+	* [[http://www.stratego-language.org/Stratego/StrategoPublications][Publications]]
+	* [[http://www.stratego-language.org/Stratego/StrategoDocumentation][Documentation]]
+	* [[http://www.stratego-language.org/Stratego/MailingList][Maillinglists]]
+	* [[http://www.stratego-language.org/Stratego/StrategoApplication][Applications]]
+
+-----++ Publications
+
+%INCLUDE{http://www.cs.uu.nl/~visser/strategoxt/strategoxt-by-year-by-type.html}%
+
+%META:TOPICMOVED{by="EelcoVisser" date="1054383655" from="Visser.Stratego" to="Visser.StrategoXT"}%

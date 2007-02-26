@@ -1,0 +1,101 @@
+%META:TOPICINFO{author="EelcoVisser" date="1164057833" format="1.0" version="1.36"}%
+%META:TOPICPARENT{name="WebHome"}%
+---------+ Students and Postdocs
+
+<a href="http://www.flickr.com/photos/38456545@N00/141298080/" title="Photo Sharing"><img src="http://static.flickr.com/45/141298080_f191dd73a0_m.jpg" width="240" height="79" alt="trace lab"  align="right"/></a>
+-------+++ Postdocs
+
+	1 [[http://www.cs.uu.nl/staff/eelco.html][Eelco Dolstra]] (TraCE; Utrecht University, 2005-2008)
+
+-------+++ Ph.D. students
+
+	1 [[http://www.cs.uu.nl/wiki/Martin][Martin Bravenboer]] (TraCE; Utrecht University, 2003-2007)
+	1 [[http://www.ii.uib.no/~anya/][Anya Helene Bagge]] (CodeBoost; Bergen University, 2003-2007)
+	1 [[http://www.boblycat.org/~karltk/][Karl Trygve Kalleberg]] (CodeBoost; Bergen University, 2003-2006)
+
+<a href="http://www.flickr.com/photos/38456545@N00/141298079/" title="Photo Sharing"><img src="http://static.flickr.com/46/141298079_2f9edda7be_m.jpg" width="240" height="115" alt="st lab" align="right"/></a>
+-------+++ Master's students (with co-advisor)
+	  
+2005-2006
+
+	1 Mart Kolthoff -- Loop vectorization for C programs
+	1 Bogdan Dumitriu -- Active libraries
+	1 Raymon van Wanrooij -- Software composition
+
+2006-2007
+
+	1 Danny Groenewegen -- web application security
+	1 Jonathan Joubert -- <nop>JAG
+	1 Lennart Kats -- mixing source and byte code
+	1 Jeroen Dobbe -- game DSLs
+	1 Sander Mak -- DSL interaction
+
+-------------------------++ Former 
+
+(see also [[supervised theses]])
+
+-------+++ Postdoc
+
+	1 [[http://www.cs.uu.nl/wiki/Merijn][Merijn de Jonge]] (TraCE, 2004)
+
+-------+++ PhD Students
+
+	1 [[http://www.cs.uu.nl/staff/eelco.html][Eelco Dolstra]] -- The purely functional software deployment model (TraCE, 2001-2005)
+	1 [[http://www.cs.uu.nl/staff/karina.html][Karina Olmos]] ([[Dsp Transformation]], 2000-2005)
+
+-------+++ Programmer
+
+	1 [[http://www.cs.uu.nl/staff/robv.html][Rob Vermaas]] ([[Dsp Transformation]], 2004-2005)
+
+-------+++ Master's students 
+	
+see also [[supervised theses]]
+
+2006
+
+	1 Roy van den Broek -- Continuous integration and release management
+	1 Armijn Hemel -- <nop>NixOS (Eelco Dolstra)
+	1 Jory van Zessen -- Optimization of functional programs
+
+2005 
+
+	1 Koen Muilwijk -- Automated analysis of unit tests to improve understanding of software systems
+	1 Remko van Beusekom -- A Vectorizer for Octave (Karina Olmos) (Feb. 2005)
+	1 Rene de Groot -- Design and implementation of embedded domain-specific languages (Martin Bravenboer) (Sep 2005)
+	1 Niels Janssen -- [[%HTTPSTRATEGO%/TransformationToolComposition][Transformation Tool Composition]]
+	1 Eric Eijkelenboom -- Trends in software evolution (Software Improvement Group)
+	1 Robert Verrips -- Methods for software migration
+
+2004
+
+	1 [[http://www.cs.uu.nl/groups/ST/Students/ArthurVanDam][Arthur van Dam]] : Extending dynamic rules (Feb. 2004)
+	1 [[http://www.cs.uu.nl/staff/robv.html][Rob Vermaas]] : [[http://www.stratego-language.org/Stratego/ExtendibleDocumentationGenerator][Extendible Documentation Generator]] ([[http://www.cs.uu.nl/groups/ST/Students/RobVermaas][thesis]]) (Feb. 2004)
+
+2003
+
+	1 Jozef Kruger : [[http://www.cs.uu.nl/groups/ST/Students/JozefKruger][Specification of Loop Optimizations in Stratego. Improving the <nop>AutoBayes System]]
+	1 [[http://www.cs.uu.nl/staff/martin.html][Martin Bravenboer]] : [[http://www.cs.uu.nl/groups/ST/Students/MartinBravenboer][Connecting XML Processing and Term Rewriting with Tree Grammars]]
+	1 Jonne van Wijngaarden : [[Code Generation from a Domain Specific Language]]
+	1 Alan van Dam : [[Simplifying the Simplifier]]
+	1 Robert Anisko : <noop>MetaTiger and partial evaluation (visiting from Epita)
+	1 [[http://www.ii.uib.no/~otto/][Otto Skrove Bagge]] : [[http://www.codeboost.org/][CodeBoost]] (Bergen University)
+
+2002
+
+	1 Lennart Swart : Partial Evaluation with Rewrite Rules
+	1 Hedzer Westra : [[SupervisedTheses#Wes02][CobolX]]
+
+2001
+
+	1 [[http://www.cs.uu.nl/staff/eelco.html][Eelco Dolstra]] : [[SupervisedTheses#Dol01][RhoStratego]]
+	1 [[http://www.students.cs.uu.nl/people/arbruijn/][Arne de Bruijn]] : [[SupervisedTheses#Bru01][Inlining strategies]]
+
+2000
+
+	1 [[http://www.cs.uu.nl/staff/karina.html][Karina Olmos]] : [[SupervisedTheses#Olm00][DSP Transformation]]
+
+1997
+
+	1 [[http://www.cwi.nl/~mdejonge/][Merijn de Jonge]] : [[SupervisedTheses#Jon97][Reusing ASF+SDF]]
+
+%META:TOPICMOVED{by="EelcoVisser" date="1077615073" from="Visser.Students" to="Visser.StudentsAndPostdocs"}%

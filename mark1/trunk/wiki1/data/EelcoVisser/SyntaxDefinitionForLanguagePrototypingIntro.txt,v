@@ -1,0 +1,614 @@
+head	1.1;
+access;
+symbols;
+locks
+	apache:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2003.09.02.13.18.15;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.1
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1062508695" format="1.0" version="1.1"}%
+%META:TOPICPARENT{name="SyntaxDefinitionForLanguagePrototyping"}%
+<h1 align = center>Introduction</h1>
+
+<hr>
+	Language prototyping is the activity of designing and testing
+	definitions of new or existing computer languages. An
+	important aspect of a language definition is the definition of
+	its syntax. The subject of this thesis are new formalisms and
+	techniques that support the development and prototyping of
+	syntax definitions. There are four main subjects: (1)
+	Techniques for parsing and disambiguation of context-free
+	languages.  (2) Design and implementation of a new syntax
+	definition formalism. (3) Design of a multi-level algebraic
+	specification formalism. (4) Study of polymorphic syntax
+	definition. This chapter sketches the background and
+	motivation of this work and gives an overview of the thesis.
+<hr>
+
+<h2>General</h2>
+
+<h3>Language Prototyping</h3>
+
+	Computer languages are used to instruct computers or to encode
+	data processed by computers. According to their application
+	area languages are classified as programming language, domain
+	specific language, specification language or data format.
+ <p>
+		  Language design is a recurrent activity in computer science
+		  and software engineering. \cite{langlist} lists about 2350
+		  languages that have been designed since computers were first
+		  developed in the 1940s. Bearing in mind that this list
+		  contains only a fraction of all languages it is probably an
+		  underestimation to say that a new language appears every week.
+		  New general purpose languages are designed as new technology
+		  becomes available that poses new requirements or provides new
+		  opportunities.  A recent example is the Java programming
+		  language that addresses problems posed by exchanging programs
+		  over networks.  New domain specific languages are developed to
+		  encapsulate domain knowledge previously expressed in a general
+		  purpose language.
+ <p>
+	The design of a new computer language requires a considerable
+	investment.  By developing a prototype of the new language
+	that contains its essential features at an early stage, its
+	design can be tested and adjusted if necessary. Design tools
+	can considerably speed up the design process by generating
+	components of a prototype.
+
+<h3>Language Definitions</h3>
+
+	The core of the design of a language is a language definition
+	consisting of the description of its syntax and semantics.
+	The syntax describes the form and structure of its
+	sentences. The semantics describes the meaning of the
+	syntactic constructs, which can vary from the interpretation
+	of expressions as computer programs to the translation of
+	expressions to another language.  A \emph{formal} language
+	definition is a definition of syntax and semantics in a formal
+	language specification formalism, consisting of a syntax
+	definition formalism and a logical or computational formalism
+	for the expressing its semantics.
+ <p>
+
+	Language prototyping involves testing a language definition by
+	executing it as a computer program.  Execution of a language
+	definition comprises the syntactic analysis of expressions in
+	the language according to the syntax definition of the
+	language and the computation of the semantics of syntactically
+	correct expressions.  A specification formalism is called
+	executable if language definitions can be tested directly on a
+	computer or if tools exist that construct executable computer
+	programs from language definitions.  A set of tools that
+	supports the development of programs or specifications in some
+	language could be called a programming environment.  A
+	programming environment for developing languages and their
+	programming environments is called a meta-environment.  Other
+	requirements for language definition formalisms besides
+	executability are that they support the description of
+	existing languages, that language definitions are extensible
+	and can be combined with other language definitions, and that
+	the formalism is not overly restrictive.
+
+<h3>Syntax Definition Formalisms</h3>
+
+	A syntax definition formalism is a formal language for the
+	specification of the syntactic rules of a language.  The
+	syntax describes the sentences of the languages and assigns a
+	structure to these sentences.  An example of a syntax
+	definition formalism is the context-free grammar formalism
+	introduced by \cite{Cho56}.  A context-free production
+	$A_1\ldots{}A_n\to{}A_0$ determines that a sentence of type
+	$A_0$ can be composed by concatenating sentences of type $A_1$ to
+	$A_n$ in that order. It can also be considered as a
+	composition rule for trees: a tree of type $A_0$ can be
+	composed by creating a new tree node labeled $A_0$ with trees
+	of type $A_1$ to $A_n$ as direct descendants.
+ <p>
+	In general, a syntax definition formalism can be characterized
+	as follows. A syntax definition (also called grammar) is a set
+	of rules that describe how to generate a set of trees.  The
+	concatenation of all leafs nodes of a tree (the \emph{yield})
+	gives a sentence. The language defined by a grammar is the set
+	of yields of the trees it generates.  A parser is a function
+	that assigns to a sentence a tree that represents its
+	structure.  If more than one tree has a sentence as its yield,
+	the sentence is ambiguous. To solve ambiguities the syntax
+	definition formalism may provide a disambiguation method that
+	allows the formulation of disambiguation rules for selecting
+	the intended tree for a sentence.
+ <p>
+	This abstract approach to syntax is also applicable to the
+	type systems of programming languages. A signature describes
+	the valid typed expressions (the trees), untyped expressions
+	(the sentences) can be derived from the typed expressions, a
+	type checker analyses untyped expresssions and assigns them a
+	type. In particular, it is applicable to algebraic signatures.
+
+<h3>Algebraic Specification of Languages</h3>
+
+	An algebra is a set of data with operations on those data. In
+	case of many-sorted algebras the data can be divided over a
+	collection of sets. An algebraic specification is the
+	description of an algebra. It consists of a signature
+	declaring the types of the algebraic operations and a logical
+	formula describing properties of these operations. Several
+	algebraic specification formalisms have been developed that
+	use conditional equational logic as defining logic.  Equations
+	can be executed by interpreting them as rewrite rules.
+ <p>
+
+	\cite{Rus72} and later also \cite{GTWW77} showed that
+	context-free grammars correspond to algebraic signatures (see
+	also \cite{HR76}).  The composition of a tree, i.e., the
+	construction of a new tree from subtrees, corresponds to the
+	application of a function.  In this view, languages correspond
+	to algebras.  A number of algebraic specification formalisms
+	(for instance, OBJ, Pluss, ASF+SDF, Elan) exploit this
+	property by using signatures with mixfix operators or even
+	arbitrary context-free grammars instead of a prefix signature.
+	A definition can be viewed as a context-free grammar or as an
+	algebraic signature. The grammar view is used to generate
+	parsers from a definition. The signature view describes the
+	abstract syntax trees that are used by semantic tools. A
+	mapping from parse trees to abstract syntax trees is used as
+	interface between parser and semantic tool. In \cite{HHKR89}
+	these views are made explicit by translating an \Sdf{}
+	definition to a contex-free grammar (\BNF) and to a
+	first-order algebraic signature and by providing a translation
+	from parse trees to abstract syntax trees.
+
+<h3>ASF+SDF</h3>
+
+	ASF+SDF is an algebraic specification formalism designed for
+	the specification and prototyping of programming language
+	tools.  It uses the syntax definition formalism SDF for the
+	definition of the syntax of a language. This enables an
+	expressive notation in specifications, since functions can be
+	prefix, postfix, infix and mix-fix. Furthermore, the syntax of
+	the programming language under consideration is also expressed
+	in these signatures.  The semantics of a language can be
+	defined by means of operations on the language specified by
+	means of conditional equations.
+ <p>
+	Language prototyping is supported by the ASF+SDF
+	Meta-Environment \cite[]{Kli93.meta,DHK96}.  It is an
+	interactive development environment for modular ASF+SDF
+	specifications. Given a specification of a language, a
+	programming environment for that language is generated
+	automatically. The use of incremental generation techniques
+	makes that changes to the specification are immediately
+	applied to the generated environment. This makes it possible
+	to experiment with alternative designs.
+ <p>
+	Although the formalism in combination with the
+	Meta-Environment provides a powerful system for language
+	prototyping, there are several shortcomings.  For instance, it
+	is not possible to generate stand-alone environments and the
+	evaluation of equations by means of term rewriting is
+	interpreted instead of compiled.  Currently much research is
+	invested in overcoming these shortcomings.
+
+<h3>Syntax Definition for Language Prototyping</h3>
+
+	This thesis is concerned with the design and implementation of
+	methods to enhance the expressive power and usability of the
+	syntactic aspects of language definition formalisms.  The main
+	theme is the development of techniques for providing an
+	\emph{expressive} syntax definition formalism. The point of
+	departure is the syntax definition formalism SDF of
+	\cite{HHKR89} that is used in combination with the algebraic
+	specification formalism ASF of \cite{BHK89.asf}. This setting
+	provides the direct background and motivation for this work,
+	but the techniques developed are applicable in other syntax
+	definition settings as well.  There are four main results:
+
+<ul>
+<li>	Scannerless generalized-LR parsing is a new
+	approach to parsing without scanners that solves a number of
+	problems of conventional parsing techniques, by combining the
+	following techniques: parsing without scanner, generalized-LR
+	parsing, static disambiguation with priority and associativity
+	declarations, lexical disambiguation with follow restrictions
+	and reject productions.
+<li>	SDF2 is an expressive syntax definition formalism
+	for context-free syntax defintion. It is a redesign of SDF as
+	a family of orthogonally defined features for syntax
+	definition.
+<li>	The multi-level algebraic specification formalism
+	MLS extends first-order many-sorted algebraic specification by
+	making the sorts used in a signature a user-definable
+	algebraic data type. This provides a simple and uniform
+	framework for the specification of advanced type constructs
+	including polymorphism and higher-order functions.
+<li>	Polymorphic syntax definition is the combination of
+	the flexible notation facilities of SDF with the flexible
+	typing facilities of MLS.
+</ul>
+	Each of these subjects brings its own technical problems that
+	are addressed in this thesis.  In the rest of this chapter we
+	give an overview of this development and indicate the
+	connections.
+
+<h2>Part I: Context-free Parsing Techniques</h2>
+
+	Part~I describes techniques for parsing and disambiguation of
+	context-free languages.
+
+
+<h3>Scannerless Generalized-LR Parsing</h3>
+
+	Current deterministic parsing techniques have a number of
+	problems. These include the limitations of parser generators
+	for deterministic languages and the complex interface between
+	scanner and parser. Scannerless parsing is a parsing technique
+	in which lexical and context-free syntax are integrated into
+	one grammar and are all handled by a single context-free
+	analysis phase. This approach has a number of advantages
+	including discarding of the scanner and lexical disambiguation
+	by means of the context in which a lexical token
+	occurs. Scannerless parsing generates a number of interesting
+	problems as well. Integrated grammars do not fit the
+	requirements of the conventional deterministic parsing
+	techniques.  A plain context-free grammar formalism leads to
+	unwieldy grammars, if all lexical information is
+	included. Lexical disambiguation needs to be reformulated for
+	use in context-free parsing.
+ <p>
+	The scannerless generalized-LR parsing approach presented in
+	\ChapRef{Vis97.sglr} solves these problems.  Grammar
+	normalization is used to support an expressive grammar
+	formalism without complicating the underlying machinery.
+	Follow restrictions are used to express longest match lexical
+	disambiguation. Reject productions are used to express the
+	prefer keywords rule for lexical disambiguation.  An
+	adaptation of the SLR(1) parser generation algorithm is used
+	to implement disambiguation by general priority and
+	associativity declarations and interprets follow restrictions.
+	Generalized-LR parsing is used to provide dynamic lookahead
+	and to support parsing of arbitrary context-free grammars
+	including ambiguous ones. An adaptation of the GLR algorithm
+	supports the interpretation of grammars with reject
+	productions.
+
+<h3>Disambiguation Filters</h3>
+
+	An ambiguous context-free grammar defines a language in which
+	some sentences have multiple interpretations. For conciseness,
+	ambiguous context-free grammars are frequently used to define
+	even completely unambiguous languages and numerous
+	disambiguation methods exist for specifying which
+	interpretation is the intended one for each sentence. The
+	existing methods can be divided in `parser specific' methods
+	that describe how some parsing technique deals with ambiguous
+	sentences and `logical' methods that describe the intended
+	interpretation without reference to a specific parsing
+	technique.
+ <p>
+	\ChapRef{KV94} proposes a framework of {\em filters\/} to
+	describe and compare a wide range of disambiguation problems
+	in a parser-independent way.  A filter is a function that
+	selects from a set of parse trees (the canonical
+	representation of the interpretations of a sentence) the
+	intended trees.  A number of general properties of
+	disambiguation filters is defined and several case studies are
+	discussed including disambiguation by means of priorities.
+
+<h3>Optimizing Parsing Schemata by Disambiguation Filters</h3>
+
+	
+	Although disambiguation filters give an abstract account of
+	disambiguation, implementation of disambiguation by means of a
+	filter applied to the parse forest after parsing can be too
+	inefficient for a number of disambiguation methods. Therefore,
+	it would be attractive if a declaratively defined
+	disambiguation filter could be efficiently implemented by
+	applying it during parsing or even during parser generation.
+ <p>
+	In \ChapRef{Vis95.acc} a study into the optimization of the
+	composition of parsing algorithms and disambiguation filters
+	is started, by considering two filters based on
+	priorities. The first filters a set of parse trees and selects
+	trees without priority conflict. The second selects the trees
+	which are lowest in the multi-set ordering on parse trees
+	induced by the priority relation on productions.
+ <p>
+	The theory of parsing schemata of \cite{Sik93} gives an
+	abstract account of parsing algorithms. In \ChapRef{Vis95.acc}
+	the parsing schema for Earley's parsing algorithm is optimized
+	by applying the two priority filters. For the priority
+	conflict filter this results in an optimized LR(0) parser
+	generator that yields parsers that do not produce parse trees
+	with a priority conflict.  This provides the formal derivation
+	of the imlementation rules presented in \ChapRef{Vis97.sglr}.
+	For a restricted case of the multi-set filter an optimization
+	of Earley's algorithm is derived.
+
+<h2>Part II: A Family of Syntax Definition Formalisms</h2>
+	
+	The formalism SDF is a syntax definition formalism for
+	specification of lexical and context-free syntax of
+	programming languages. The design of the formalism is rather
+	monolithic, which makes it difficult to extend with new
+	features or experiment with the implementation.  In
+	\PartRef{Vis97.sdf} SDF is redesigned and specified as a
+	modular and extensible family of syntax definition
+	formalisms. Each feature is specified as an extension of a
+	kernel formalism, orthogonal with respect to other
+	features. The meaning of most features is expressed in terms
+	of the primitives of the kernel formalism by means of
+	normalization functions.  One of the members of this family is
+	SDF2, the successor of SDF.
+ <p>
+	The syntax definition formalism SDF2 is a formalism for the
+	concise definition of context-free syntax. The semantic core
+	of the formalism is formed by context-free grammars extended
+	with character clases, priorities, follow restrictions and
+	reject productions. Grammars in this basic format describe a
+	set of parse trees to which strings are associated that form
+	the language of the grammar. In connection with semantics
+	specification formalisms such as ASF, a grammar is interpreted
+	as a signature and the parse trees it generates as terms in
+	the term algebra generated by the signature.  The
+	implementation of SDF2 consists of a grammar normalizer, a
+	parser generator and a generic parser. It supports arbitrary
+	context-free grammars using the GLR parsing algorithm.
+ <p>
+
+	One of the main contributions of SDF2 is the complete
+	integration of lexical and context-free syntax. The formalism
+	supports the definition of lexical and context-free syntax
+	providing a separate name space for symbols such that
+	interference is prevented. The grammar normalizer integrates
+	lexical and context-free syntax into a single context-free
+	grammar. The scannerless parser generated for such a grammar
+	reads input characters directly and combines lexical analysis
+	with context-free analysis in a single parsing phase.
+ <p>
+	Ambiguous grammars can be disambiguated by means of three
+	disambiguation facilities. Priority and associativity
+	declarations can be used to disambiguate mixfix expression
+	grammars in a very general way. Disambiguation by means of
+	priorities is implemented in the parser generator.  For the
+	disambiguation of lexical ambiguities two features are
+	introduced. With follow restrictions the follow-set of grammar
+	symbols can be restricted, which enables the expression of the
+	`prefer longest match' disambiguation rule. With reject
+	productions one can express the `prefer keywords' rule. Follow
+	restrictions are interpreted during parser generation, reject
+	productions are interpreted during parsing. 
+ <p>
+	Other disambiguation methods can be defined as filters on
+	parse forests (compact representations of sets of parse
+	trees). Due to the open design of the SDF2 implementation such
+	filters can be easily attached to the parser. A number of case
+	studies of disambiguation filters are discussed in
+	\ChapRef{KV94}.
+ <p>
+	Other features of SDF2 are literals, an expressive set of
+	regular expressions, and symbol aliases that serve to
+	abbreviate complicated regular expressions. Furthermore, the
+	formalism supports modular syntax definitions and flexible
+	reuse of modules by means of symbol and production renamings.
+ <p>
+	Many of the features are defined in terms of the core features
+	by means of a normalization function on syntax definitions.
+	The formalism can be coupled to any semantics specification
+	language based on first-order many-sorted signatures providing
+	user-definable syntax.  The modular design of the formalism
+	supports experiments with new features.
+ <p>
+	\Chapter{Family} gives an introduction to SDF2 and discusses
+	the approach of designing it as a family of syntax definition
+	formalisms.  \Chapter{CFG} defines the kernel of the family
+	consisting of context-free grammars with sorts, character
+	classes and literals. The semantics of the formalism is
+	defined by means of a well-formedness predicate on parse trees
+	characterizing the trees generated by a grammar.
+	\Chapter{DisAbr} defines disambiguation by means of
+	priorities, follow restrictions and reject productions.
+	Regular expressions are defined to abbreviate several common
+	patterns in syntax definitions such as lists, optional
+	constructs and tuples. The integration of lexical and
+	context-free syntax is defined. \Chapter{RenMod} introduces a
+	renaming operator on grammars that can be used to rename sorts
+	and productions. Renamings are then used to define symbol
+	aliases.  A module mechanism is defined that supports the
+	modularization of syntax definitions. Modules can be
+	parameterized with a list of symbols and renamings can be
+	applied to imports.  \Chapter{SDF2} discusses the assembly of
+	SDF2 from the features defined in the previous chapters and
+	discusses possible improvements.
+
+
+
+<h2>Part III: Multi-Level Algebraic Specification</h2>
+
+	Polymorphic, higher-order functions in functional programming
+	languages provide a powerful abstraction method to construct
+	reusable software.  The first-order signatures provided by
+	conventional many-sorted first-order algebraic specification
+	formalisms (such as ASF+SDF) do not support polymorphic or
+	higher-order functions. In Part~II a multi-level algebraic
+	specification formalism is designed and specified in order to
+	study the extension of first-order formalisms with
+	polymorphism and higher-order functions.
+ <p>
+	The multi-level specification formalism MLS extends
+	first-order many-sorted algebraic specification by making the
+	algebra of types a user-definable data type. The structure of
+	the types used in the signature of a specification is
+	specified by means of an algebraic specification itself. This
+	process is formalized in a multi-level setting. The terms over
+	a signature at level $i+1$ can be used as type expressions at
+	level $i$.  Variables in type expressions are interpreted as
+	universally quantified type parameters.  Function declarations
+	with such a universally quantified type are interpreted as
+	declaration schemata for functions with closed type
+	expressions and thus represent polymorphic functions and
+	constants. Functions can also be overloaded, i.e., have more
+	than one type. The term structure is applicative, enabling
+	higher-order functions.  The formalism supports modular
+	specifications.
+ <p>
+	The formalism MLS is defined by means of a specification in
+	ASF+SDF.  This specification also forms the basis for a
+	prototype environment for MLS. The environment consists of a
+	typechecker that is defined in terms of a well-formedness
+	checker and a type assignment procedure.  Type assignment is
+	an extension of the Hindley/Milner algorithm to many-sorted
+	types, multi-levels and overloading of functions. Furthermore,
+	the environment contains a term rewrite interpreter for
+	equations in specifications.
+ <p>
+	Applications of multi-level specifications include all
+	functional programs expressible in a Hindley/Milner system.
+	Due to the many-sortedness of the signatures of types and
+	kinds (as opposed to the single-sorted types of functional
+	languages) more distinction can be made in type assignment.
+	This enables the definition of data types such as stratified
+	stacks and tuples. By means of equations over types still more
+	advanced typing constructs can be modeled. An example is
+	the type of the {\tt zip} function that maps a list of tuples
+	to a tuple of lists. Other applications of type equations are
+	type abbreviations, recursive types, record types, the
+	polytypic functions of \cite{JJ97}, the type classes of
+	Haskell and the constructor classes of \cite{Jon93}.  The
+	specification of type assignment presented here only deals
+	with syntactic equality and not with equality modulo type
+	equations.
+ <p>
+	\ChapRef{IntroMLS} gives an introduction to the formalism and
+	discusses related work.  \ChapRef{DefOLS} handles the case of
+	specifications consisting of a single level. This corresponds
+	to first-order algebraic specification. First an untyped
+	equational specification formalism with equational logic and
+	term rewriting is defined. This is extended with a first-order
+	monomorphic applicative type system.  In \ChapRef{XmplMLS} the
+	possibilities of multi-level specifications are explained by
+	means of a number of example specifications. The formalism is
+	defined in \Chapter{DefMLS}, building on the language of
+	\ChapRef{DefOLS}.  Appendix~\absref{Chap:AppMLS} defines
+	several auxiliary tools such as substitution, matching and
+	unification.
+
+
+
+<h2>Part IV: Polymorphic Syntax Definition</h2>
+
+	The signatures of multi-level specifications only support
+	prefix and infix functions. \ChapRef{Vis97.psd} develops
+	theory to combine the type flexibility of multi-level
+	specifications with the notational flexibility of context-free
+	grammars. 
+ <p>
+	The combination of the idea of grammars as signatures with
+	multi-level algebraic specification leads to a multi-level
+	grammar formalism. In a multi-level grammar the set of
+	non-terminals becomes a user-definable data type in the same
+	way as the types in multi-level specifications. Moreover,
+	types and object level data are specified by means of a
+	context-free grammar instead of with a signature, leading to
+	flexible notation.
+ <p>
+	The combination provides a formalism for polymorphic syntax
+	definition, in which common language constructs can be
+	described generically and reused in many specifications. It
+	turns out that while both formalisms have a decidable
+	type-assignment/parsing problem, the combination in its full
+	generality has an undecidable parsing problem.  However, a
+	subset of such multi-level grammars can be characterized that
+	have a decidable parsing problem, while not being too
+	restrictive for use in abstract data type specification. For
+	this class of grammars that satisfy the finite-chain property,
+	a parsing algorithm is presented.
+ <p>
+	When restricted to two levels we have a formalism that is
+	similar to Van Wijngaarden grammars.  The difference is that
+	VWGs use derived strings with variables (sentential forms) as
+	types at level~0, while our two-level grammars use parse trees
+	with variables.  This restriction ensures that syntactic
+	unification is decidable, which it is not in VWGs.  The
+	further restriction of two-level grammars to grammars that
+	satisfy the finite-chain property results in grammars with a
+	decidable parsing problem.  Van Wijngaarden grammars were not
+	succesful in executable definition of programming
+	languages. The discovery that $\epsilon$-productions could be
+	used to encode the static and even dynamic semantics of a
+	language led to a formalism with a very difficult parsing
+	problem. This sparked developments in the usage of VWGs as a
+	programming language instead of a grammar formalism. In
+	\ChapRef{Vis97.psd} it is shown that this development has
+	hidden the very useful application of two-level grammars to
+	polymorphic syntax definition, opening the flexibility of
+	polymorphism to grammar development.
+
+
+<h2>Origins of the Chapters</h2>
+
+	Most of the chapters in this thesis were published before as
+	separate papers.  We list their origin.
+<ul>
+
+<li>	Chapter 3 on the <em>scannerless
+	generalized-LR parsing</em> approach is a new paper that gives an
+	overview of the design and implementation of the SDF2
+	normalizer, parser generator and parser. It appeared as a
+	technical report P9707.
+
+<li>	Chapter 4 on <em>disambiguation filters</em> is
+	joint work with Paul Klint. It was presented under the title
+	<em>using filters for the disambiguation of context-free
+	grammars</em> at the <em>ASMICS Workshop on Parsing Theory</em> in
+	Milan and appeared in the proceedings.
+
+
+<li>	 Chapter 5 was presented at the
+	Accolade{95 conference on logic in Amsterdam and
+	appeared in the proceedings. It has been
+	accepted for presentation at the <em>International Workshop
+	on Parsing Technology (IWPT'97)</em> in Boston and for publication
+	in the proceedings.
+
+<li>	Part II on the specification of
+	SDF2 as a <em>family of syntax definition formalisms</em> is
+	an update and extension of a paper that was presented at the
+	<em>ASF+SDF'95</em> workshop on <em>Generating Tools from
+	Algebraic Specifications</em> and appeared in the proceedings. 
+	In its current form it appeared as
+	technical report P9706
+
+<li>	Part III appeared as a single chapter in
+	the book <em>Language Prototyping. An Algebraic
+	Specification Approach</em>. The version in
+	this thesis has been split up in five chapters and several
+	example specifications have been added. Furthermore, the
+	specification has been improved in a few places.
+
+
+<li>	An extended abstract of Chapter 15 was
+	presented at the AMAST workshop on Algebraic Methods in
+	Language Processing (AMiLP'95) in Enschede and was published
+	in the proceedings. The current version is
+	accepted for publication in a special issue of
+	<em>Theoretical Computer Science</em> dedicated to the workshop.
+</ul>
+
+
+<hr>
+@

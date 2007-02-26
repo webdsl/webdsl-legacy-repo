@@ -1,0 +1,65 @@
+%META:TOPICINFO{author="EelcoVisser" date="1055019762" format="1.0" version="1.4"}%
+%META:TOPICPARENT{name="WebHome"}%
+Program transformation has applications in many areas of software engineering including compilation, optimization, refactoring, program synthesis, software renovation, and reverse engineering. The aim of program transformation is to increase programmer productivity by automating programming tasks, thus enabling programming at a higher-level of abstraction, and increasing maintainability and re-usability.
+
+Many systems for program transformation exist that are often specialized for a specific object language and/or kind of transformation. All these systems share many ideas about program transformation and use similar techniques, but are often ad-hoc in many respects.
+
+The research of the program transformation project of the Software Technology Group aims to achieve a specification language or family of specification languages for the high-level, declarative specification of program transformation systems in which generic, language independent schemas of transformation can be captured, and which admits efficient implementation of those transformations that can scale up to large programs.
+
+In the context of this project there are many opportunities for Master's projects. This page gives pointers to background information about the project, and information about past, present, and possible future topics for Master's projects.
+
+-----++ Background
+
+A survey of many aspects and applications of program transformation
+
+	* Transform:ProgramTransformation
+
+Languages and tools developed in the program transformation project
+
+	* <a href="http://www.stratego-language.org" target="_top">Stratego</a> (<a href="http://www.stratego-language.org/publications" target="_top">Bibliography</a>)
+	* <a href="http://www.program-transformation.org/Tools" target="_top">XT</a>
+
+Ongoing PhD projects
+
+	* [[DspTransformation][A Transformation Factory for Digital Signal Processing Software]]
+	* [[VariabilityManagement][Models and Techniques for Variability Management]]
+
+Courses
+
+	* [[Pt.WebHome][Program Transformation]]
+	* [[Hpc.WebHome][High-Performance Compilers]]
+
+Project members
+
+	* Eelco Visser
+	* Karina Olmos
+	* Eelco Dolstra
+
+-----+++ Past Projects
+
+To find out what your predecessors did, have a look at their
+
+	* [[SupervisedTheses][Master's Theses]]
+
+-----+++ Ongoing Projects
+
+To learn more about ongoing projects have a look at their webpages:
+
+	* CodeBoost (Domain-specific Program Optimization) Otto Skrove Bagge (University of Bergen)
+	* CobolX (Software Renovation) - Hedzer Westra
+	* High-Level Specification of Refactorings - Martin Bravenboer
+
+New Projects
+There are many possibilities for new projects in areas such as
+
+	* Language design and tool support for program transformation
+	* Program optimization
+	* Compilation
+	* Aspect weaving
+	* Software renovation
+	* Documentation generation
+
+All projects involve a serious amount of practical programming work building a transformation system. Hopefully this results in a useful piece of software that will be reusable either as a stand-alone application or as part of an existing tool package. (As a general policy software produced in the transformation project is published under the GNU Library General Public License.)
+
+Just building a working system is not enough, however. The aim is not to get a working system, but to learn about the best way to build similar systems. Therefore, a project requires reflection on the methods and techniques used, relating it to existing work, exploring alternative solutions, and evaluating performance.
+%META:TOPICMOVED{by="EelcoVisser" date="1055019762" from="Visser.MasterProjects" to="Visser.MasterProjectsInProgramTransformation"}%

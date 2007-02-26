@@ -1,0 +1,53 @@
+head	1.2;
+access;
+symbols;
+locks
+	apache:1.2; strict;
+comment	@# @;
+
+
+1.2
+date	2003.12.21.14.13.55;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.06.02.17.04.41;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.2
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1072016035" format="1.0" version="1.2"}%
+%META:TOPICPARENT{name="WebHome"}%
+%INCLUDE{http://www.program-transformation.org/twiki/bin/view/Transform/ASurveyOfRewritingStrategiesInProgramTransformationSystems?skin=plain}%
+
+Included from [[http://www.program-transformation.org/twiki/bin/view/Transform/ASurveyOfRewritingStrategiesInProgramTransformationSystems][Transform.ASurveyOfRewritingStrategiesInProgramTransformationSystems]]
+
+
+<!--
+
+	* Set SKIN = notitle
+-->
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1054573481" format="1.0" version="1.1"}%
+d4 8
+@

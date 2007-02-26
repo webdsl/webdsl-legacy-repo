@@ -1,0 +1,36 @@
+head	1.1;
+access;
+symbols;
+locks
+	apache:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2003.05.21.21.07.00;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.1
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1053551220" format="1.0" version="1.1"}%
+%META:TOPICPARENT{name="ResearchInterests"}%
+----+++ Projects
+
+	* [[Trace.WebHome][TraCE: Transparent Configuration Environments]]
+	* [[Buildfarm.WebHome][Buildfarm]]
+	* [[%HTTPSTRATEGO%/TransformationToolComposition][XTC: Transformation Tool Composition]]
+
+-----+++ Case Studies
+
+	* The [[XT]] bundle of transformation tools is used as one of the case studies in this line of research; its component-based architecture and composition from a large number of separately distributed software packages make it a rich source of deployment problems.
+@

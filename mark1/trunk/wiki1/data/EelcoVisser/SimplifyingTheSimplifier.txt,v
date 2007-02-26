@@ -1,0 +1,249 @@
+head	1.3;
+access;
+symbols;
+locks
+	apache:1.3; strict;
+comment	@# @;
+
+
+1.3
+date	2005.04.28.22.53.56;	author wiki;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2001.11.27.10.28.31;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2001.11.27.09.14.03;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.3
+log
+@testenv
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1058956013" format="1.0" version="1.3"}%
+%META:TOPICPARENT{name="WebHome"}%
+%INCLUDE{http://www.program-transformation.org/twiki/bin/view/Stratego/SimplifyingTheSimplifier?skin=plain}%
+
+------------------------------------------------------------------------------------
+---+++ Project Description
+
+The simplifier of the GHC performs optimizations by applying a number of small transformation rules iteratively to the abstract syntax tree of a program.
+The simplifier is implemented as one big Haskell module. 
+The implementation is not modular and is difficult to change. 
+Small changes lead to a big difference in optimization behaviour.
+It is not possible to make different versions of the simplifier re-using the same basic code.
+In addition, GHC has introduced user-definable optimization rules that can be specified by the
+user as pragmas in the program. 
+The design of the simplifier, however, suggests a modular set-up that is based on a number of separate transformation rules that are combined into one transformation. (source: [[http://research.microsoft.com/users/simonpj][Simon Peyton Jones]])
+
+This suggests that the Stratego approach of defining transformations
+as a set of transformation rules combined with a strategy that applies these rules would be advantageous to the implementation of the simplifier.
+The goal of this project is to develop a modular implementation of the GHC simplifier in Stratego.
+The goal is not to just replicate the GHC simplifier, but to explore the possibilities of Stratego
+in implementing it, possibly leading to a family of simplifiers. 
+The result should be evaluated against the following questions:
+ 
+	* Correctness
+		* Is it possible to replicate the behaviour of the simplier?
+ 
+	* Is the result a readable specification of simplification?
+ 
+	* Modularity: Is it possible to
+		* Create different configurations or strategies based on the same set of rules
+		* Vary the rules used?
+		* Vary the command-line options (e.g., inlining heuristics) to simplifier?
+		* Add user-defined optimization rules
+ 
+	* Performance
+		* What is complexity of the simplifier?
+		* Does it scale up?
+ 
+----+++ Literature
+ 
+Implementation of optimization in the Glasgow Haskell Compiler
+
+	* [[http://research.microsoft.com/users/simonpj/Papers/comp-by-trans-scp.ps.gz][A transformation-based optimiser for Haskell]], SL Peyton Jones and A Santos, Science of Computer Programming 32(1-3), pp3-47, September 1998
+	* [[http://research.microsoft.com/users/simonpj/Papers/inlining/index.htm][Secrets of the Glasgow Haskell Compiler inliner]], Simon Peyton Jones and Simon Marlow. IDL'99; revised version to appear in Journal of Functional Programming. 
+	* [[http://research.microsoft.com/users/simonpj/Papers/santos-thesis.ps.gz][Compilation by transformation in non-strict functional languages]], A Santos, <nop>PhD thesis, University of Glasgow, Sept 1995. 
+	* Playing by the Rules. Haskell Workshop 2001
+	* [[http://research.microsoft.com/users/simonpj/Papers/papers.html#compiler][Other papers on GHC]]
+ 
+	* Implementation of the simplifier: see the GHC source distribution
+
+Helium compiler
+
+	* Ask Arjan van IJzendoorn
+
+Stratego
+
+	* General Stratego knowledge. See Stratego:StrategoPublications
+
+Implementation of optimizers in Stratego
+
+	* [[http://www.cs.uu.nl/~visser/ftp/2000-43.ps.gz][Warm fusion in Stratego: A case study in the generation of program transformation systems.]] P. Johann and E. Visser.
+	* [[http://www.cs.uu.nl/~visser/ftp/Bru01.pdf][Implementation of inlining in Stratego]] A. de Bruijn. 
+	* [[http://www.cs.uu.nl/~visser/ftp/Vis01-rule.pdf][Scoped dynamic rewrite rules]] E. Visser. 
+	* [[http://www.cs.uu.nl/~visser/ftp/JV01.pdf][Fusing logic and control with local transformations: An example optimization.]] Patricia Johann and Eelco Visser.
+
+ATerm Exchange Format
+
+	* [[http://www.cwi.nl/~paulk/publications/SPE00.pdf][Efficient Annotated Terms]].
+	  M.G.J. van den Brand, H.A. de Jong, P. Klint, and P.A. Olivier. 
+	  Software - Practice & Experience, 30:259-291, 2000. 
+ 
+----+++ Planning
+
+----++++ Set up Infrastructure
+ 
+	* Use the front-end of Arjan van IJzendoorn's Helium compiler
+	* Use Daan Leijen's back-end (compiler to byte-code)
+	* Make a translation from Core language to ATerm Format
+		* Write after front-end
+		* Read before back-end
+ 
+----++++ Set up Benchmarks
+ 
+	* Collect set of programs to optimize
+	* Automate the running and measuring of performance figures
+	* Also measure compile time
+ 
+----++++ Implement Simplifier
+
+	* Study the implementation of the simplifier in Haskell
+	* Implement the rules as separate rewrite rules
+	* Define strategies to apply the rules
+	* Experiment with different configurations of the simplifier
+		* Measure performance of compiled programs and compiler
+	* Add additional optimizations
+ 
+----++++ Thesis
+
+	* Discuss related work
+	* Describe the design and implementation of the simplifier
+	* Evaluate advantages and disadvantages of using Stratego
+					  
+-- Main.EelcoVisser - 27 Nov 2001 <br />
+@
+
+
+1.2
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1006859416" format="1.0" version="1.2"}%
+d3 4
+a6 1
+---+++ Description
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1006852443" format="1.0" version="1.1"}%
+d5 8
+a12 3
+		  The simplifier of the GHC performs optimizations by applying
+		  a number of small transformation rules iteratively to the
+		  abstract syntax tree of a program.
+d14 21
+a34 9
+		  The simplifier is implemented as one big Haskell module (***
+		  lookup ***). The implementation is not modular and is difficult
+		  to change. (** fragile **)
+
+		  It is not possible to make different versions of the
+		  simplifier re-using the same basic code.
+
+		  The design of the simplifier \cite{PS97}, however, suggests
+		  a modular set-up as it is based on a number of small rules.
+d36 1
+a36 2
+		  The goal of this project is to implement the GHC simplifier in
+		  Stratego. We are interested to learn the following
+d38 7
+a44 1
+		  - can it be done?
+d46 22
+a67 13
+		  - can it be done modularly?
+ 
+		  - readable?
+ 
+		  - is it posssible to create several configurations /
+		  strategies based on the same set of rules / vary the rules
+		  used / vary the options (e.g., inlining heuristics)
+ 
+		  - efficient?
+ 
+					 - does it scale up?
+ 
+					 - what is complexity?
+d70 2
+d73 5
+a77 1
+		  Reading
+d79 1
+a79 1
+		  - GHC \cite{PS97}
+d81 3
+a83 1
+		  - implementation of the simplifier
+d85 8
+a92 1
+		  - Stratego \cite{VBT98,Vis01.rule}
+d94 5
+a98 33
+		  - Warm fusion in Stratego \cite{JV00}
+ 
+		  - Inlining strategies \cite{Bru01}
+ 
+		  - ATerm Format \cite{BJKO00}
+ 
+		  Set up infrastructure
+ 
+		  - use the front-end of Arjan's compiler
+ 
+		  - use Daan's back-end
+ 
+		  - make translation to ATerm Format
+ 
+		  - write after front-end
+ 
+		  - read before back-end
+ 
+		  Set up benchmarks
+ 
+		  - collect set of programs to optimize
+ 
+		  - automate the running and measuring performance figures
+ 
+		  - also measure compile time
+ 
+		  Implement simplifier
+ 
+		  - implement rules separately
+ 
+		  - define strategies to apply the rules
+ 
+		  Thesis
+@

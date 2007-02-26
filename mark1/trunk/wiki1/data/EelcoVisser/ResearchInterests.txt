@@ -1,0 +1,102 @@
+%META:TOPICINFO{author="EelcoVisser" date="1117971154" format="1.0" version="1.10"}%
+%META:TOPICPARENT{name="WebHome"}%
+I have a broad interest in all areas of software engineering. 
+My research is motivated by productivity tools for software engineers.
+My research activities are concerned with different areas of software engineering:
+
+%TOC%
+
+----------------------------------------------------------------
+------+++ Software Configuration and Deployment
+
+Managing the variability in software systems is rapidly becoming an important factor in software development. Instead of developing and deploying a fixed one-of-a-kind system, it is now common to develop a family of systems whose members differ with respect to functionality or technical facilities offered. 
+
+In the TraCE project we study the modeling and realization of variability in modern software systems with an emphasis on a more general and generic treatment of timing-issues for variant addition/removal and binding of variation points, the related effects and the opportunities for optimization. The vehicle for the research is the development of a framework for _transparent configuration environments_ which present a uniform interface to a variety of underlying configuration mechanisms, thus closing the current gap between variability at the conceptual and implementation levels. 
+
+http://www.cs.uu.nl/wiki/Trace
+
+----------------------------------------------------------------
+------+++ Program Transformation
+
+Program transformation aims at increasing programmer productivity by automating programming tasks, thus enabling programming at a higher-level of abstraction, and increasing maintainability and re-usability.
+Many systems for program transformation exist that are often specialized for a specific object language and/or kind of transformation. All these systems share many ideas about 
+program transformation and use similar techniques, but are often ad-hoc in many respects. The goal of my research in this area is to achieve a specification language or family of specification languages for the high-level specification of program transformation systems in which generic, language independent schemas of transformation can be captured, and which admits efficient implementation of those transformations that can scale up to large programs.
+
+In the StrategoXT project we are developing Stratego, a transformation language based on
+the paradigm of term rewriting with programmable rewriting strategies, and the XT toolset,
+supporting the syntactical infrastructure of transformation systems. The toolset includes
+an optimizing compiler for Stratego programs.
+
+http://www.stratego-language.org
+
+----------------------------------------------------------------
+------+++ Strategic Programming
+
+Program transformation with rewrite rules under the control of programmable rewriting strategies has lead to the programming paradigm of _strategic programming_.
+Programming in this paradigm turns out to be useful for other tasks than program transformation.
+Many other operations in which manipulation and exchange of structured data plays
+a role can benefit.
+Due to the highly generic nature of strategies, programs can be very concise.
+
+Within the StrategoXT project the strategic programming is explored in various
+applications including component composition, package management, and web services.
+
+http://www.stratego-language.org
+
+----------------------------------------------------------------
+------+++ Program Optimization
+
+The strategic program transformation techniques are being
+applied in various application areas. One area of particular
+interest sets out to validate the claim that
+_transformation strategies support concise implementation of compiler optimizations_.
+This research has produced strategic idioms for many optimizations, including:
+ 
+	* simplification (of functional programs)
+	* inlining
+	* data-flow optimization (constant-propagation, dead code elimination, etc.)
+	* vectorization
+	* instruction selection
+
+These ideas are being applied and further explored in the context of several compilers or compiler components:
+
+	* Stratego Optimizer
+	* Tiger Compiler
+	* Helium Optimizer
+	* Warm fusion for Haskell Core
+	* Octave Compiler
+	* Optimizer for <nop>AutoBayes Intermediate Representation
+
+Resources
+
+	* Project: [[Dsp Transformation]]
+	* http://www.stratego-language.org/Stratego/Publications
+	* http://www.stratego-language.org/Tiger
+	* http://www.octave-compiler.org
+
+----------------------------------------------------------------
+------+++ Syntax Definition
+
+Producing and maintaining parsers for large languages
+requires a declarative syntax definition formalism from
+which parsers can be generated.  SDF2 is a modular syntax
+definition formalism that integrates lexical and
+context-free syntax and supports arbitrary context-free
+grammars. Since the formalism is declarative, syntax
+definitions can be used to generate other tools from, e.g.,
+pretty-printers and data type definitions. I developed
+SDF2 as part of my PhD research at the University of Amsterdam.
+The language and tools are maintained and further developed at
+CWI. Some publications in this area:
+
+	* [[A Family of Syntax Definition Formalisms]]
+	* [[Scannerless Generalized LR Parsing]]
+	* [[Syntax Definition for Language Prototyping]]: PhD thesis on design and implementation of syntax definition formalisms
+	* Disambiguation filters for scannerless generalized LR parsers 
+	* [[Concrete syntax for objects]]
+
+More publications at the [[Syntax Definition]] page.
+
+
+
+%META:TOPICMOVED{by="EelcoVisser" date="1053551181" from="Visser.Research" to="Visser.ResearchInterests"}%

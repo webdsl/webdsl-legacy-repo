@@ -1,0 +1,5 @@
+%META:TOPICINFO{author="EelcoVisser" date="1017523152" format="1.0" version="1.1"}%
+%META:TOPICPARENT{name="WebHome"}%
+Set up a transformation infrastructure for C# and develop several transformations.
+
+-- Main.EelcoVisser - 30 Mar 2002 <br />

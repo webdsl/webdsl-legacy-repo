@@ -1,0 +1,7 @@
+%META:TOPICINFO{author="EelcoVisser" date="1161096372" format="1.0" version="1.4"}%
+%META:TOPICPARENT{name="CurriculumVitae"}%
+
+-----++ UU technical reports
+
+%INCLUDE{http://www.cs.uu.nl/research/techreps/techreps.php?submit=show+reports&YEAR=&AUTH=visser&GRP=&NO_LOGO=1}%
+

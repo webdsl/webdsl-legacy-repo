@@ -1,0 +1,7 @@
+%META:TOPICINFO{author="EelcoVisser" date="1161097481" format="1.0" version="1.5"}%
+%META:TOPICPARENT{name="WebHome"}%
+%INCLUDE{http://www.stratego-language.org/Stratego/ConcreteSyntaxForObjects?skin=plain}%
+
+
+[[http://www.stratego-language.org/Stratego/ConcreteSyntaxForObjects][Edit]]
+

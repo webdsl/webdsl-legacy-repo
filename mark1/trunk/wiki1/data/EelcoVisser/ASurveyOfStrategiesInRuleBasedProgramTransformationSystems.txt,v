@@ -1,0 +1,112 @@
+head	1.5;
+access;
+symbols;
+locks
+	apache:1.5; strict;
+comment	@# @;
+
+
+1.5
+date	2006.10.17.15.04.55;	author EelcoVisser;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2005.09.02.12.09.59;	author EelcoVisser;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2005.04.29.20.04.53;	author EelcoVisser;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2004.06.06.14.58.05;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2004.03.12.10.39.38;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.5
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1161097495" format="1.0" version="1.5"}%
+%META:TOPICPARENT{name="WebHome"}%
+%INCLUDE{http://www.program-transformation.org/Transform/ASurveyOfStrategiesInRuleBasedProgramTransformationSystems?skin=plain}%
+
+[[http://www.program-transformation.org/Transform/ASurveyOfStrategiesInRuleBasedProgramTransformationSystems][Source]]
+
+@
+
+
+1.4
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1125662999" format="1.0" version="1.4"}%
+a6 4
+<!--
+	* Set SKIN = notitle
+-->
+
+@
+
+
+1.3
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1114805093" format="1.0" version="1.3"}%
+d7 4
+@
+
+
+1.2
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1086533885" format="1.0" version="1.2"}%
+d3 4
+a6 8
+%INCLUDE{http://www.program-transformation.org/Transform/ASurveyOfStrategiesInRuleBasedProgramTransformationSystems?skin=plain}%
+
+[[http://www.program-transformation.org/Transform/ASurveyOfStrategiesInRuleBasedProgramTransformationSystems][Source]]
+
+<!--
+	* Set SKIN = notitle
+-->
+
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1079087978" format="1.0" version="1.1"}%
+d4 2
+@

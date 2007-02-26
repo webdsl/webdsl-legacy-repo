@@ -1,0 +1,32 @@
+head	1.1;
+access;
+symbols;
+locks
+	apache:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2004.07.20.10.49.00;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.1
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1090320540" format="1.0" version="1.1"}%
+%META:TOPICPARENT{name="PublicationsByYear"}%
+%INCLUDE{PublicationPages}%
+
+%INCLUDE{http://www.cs.uu.nl/~visser/visser/visser-by-year-by-type.html}%
+
+
+@

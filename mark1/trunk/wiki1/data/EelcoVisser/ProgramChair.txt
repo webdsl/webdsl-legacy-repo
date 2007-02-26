@@ -1,0 +1,27 @@
+%META:TOPICINFO{author="EelcoVisser" date="1073225215" format="1.0" version="1.3"}%
+%META:TOPICPARENT{name="HotSpots"}%
+Some notes about being a program chair of [[http://www.program-transformation.org/GPCE][GPCE'04]], so that I remember it the next time. 
+
+Website
+
+	* a wiki is great for maintaining a conference website since everyone can edit
+
+Schedule; include time for
+
+	* paper selection, reviewing, PC meeting, paper revision, preparing proceedings, printing
+
+Picking a program committee
+
+	* coverage, experts, rotation
+
+Reviewing process
+
+	* "[[http://www.iam.unibe.ch/~oscar/Champion/champion.html][Identify the Champion]]'' An Organisational Pattern Language for Programme Committees by [[http://www.iam.unibe.ch/~oscar/][Oscar Nierstrasz]]
+	* [[http://www.acm.org/sigplan/oopsla/oopsla96/how93.html][How to Get a Paper Accepted at OOPSLA]]
+
+Submission and reviewing software
+
+	* [[http://www.cyberchair.org][CyberChair]]
+	* [[http://www.logic.at/staff/salzer/confpack/][Conference Management Software]]
+	* [[http://www.acm.org/sigs/sgb/summary.html][a survey of conference management software by the ACM]]
+

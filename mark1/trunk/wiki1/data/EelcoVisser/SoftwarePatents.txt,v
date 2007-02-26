@@ -1,0 +1,33 @@
+head	1.1;
+access;
+symbols;
+locks
+	apache:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2004.06.10.04.47.58;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.1
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1086842878" format="1.0" version="1.1"}%
+
+	* http://www.researchoninnovation.org/
+	* http://www.researchineurope.org/
+
+	* http://trends.newsforge.com/trends/04/06/09/1447245.shtml?tid=136&tid=137&tid=20&tid=85
+	* http://news.zdnet.co.uk/business/legal/0,39020651,39115945,00.htm
+
+@

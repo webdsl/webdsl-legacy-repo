@@ -1,0 +1,27 @@
+%META:TOPICINFO{author="EelcoVisser" date="1012302761" format="1.0" version="1.1"}%
+%META:TOPICPARENT{name="StrategoPublications"}%
+Main.MerijnDeJonge, Main.EelcoVisser and Main.JoostVisser. 
+*XT: a bundle of program transformation tools.*
+In Tools.MarkVanDenBrand and Transform.DidierPerigot, editors, 
+_Workshop on Language Descriptions, Tools and Applications (LDTA'01)_, 
+volume 44 of 
+_Electronic Notes in Theoretical Computer Science_. 
+Elsevier Science Publishers, April 2001.
+
+*Abstract*
+
+XT bundles existing and newly developed program transformation
+libraries and tools into an open framework that supports
+component-based development of program transformations. We discuss the
+roles of XT's constituents in the development process of program
+transformation tools, as well as some experiences with building
+program transformation systems with XT.													 
+
+*Links*
+
+	* Paper: http://www.cs.uu.nl/~visser/ftp/JVV01.ps.gz
+
+	* Download: Tools.XtDownload
+
+------
+Transform.CategoryPaper

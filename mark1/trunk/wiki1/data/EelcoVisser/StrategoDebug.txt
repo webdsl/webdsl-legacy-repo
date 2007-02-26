@@ -1,0 +1,9 @@
+%META:TOPICINFO{author="EelcoVisser" date="1010049094" format="1.0" version="1.2"}%
+%META:TOPICPARENT{name="WebHome"}%
+Develop a debugger for Stratego programs. 
+
+Possible approach: instrument generated code to output information for a debuggin framework such as Transform:PieterOlivier Tide framework.
+
+See Stratego:StrategoDebug
+
+-- Main.EelcoVisser - 02 Jan 2002 <br />

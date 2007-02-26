@@ -1,0 +1,85 @@
+head	1.4;
+access;
+symbols;
+locks
+	apache:1.4; strict;
+comment	@# @;
+
+
+1.4
+date	2006.11.08.12.33.28;	author EelcoVisser;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2006.04.13.12.10.41;	author EelcoVisser;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2004.10.12.08.46.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2004.07.20.11.03.00;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.4
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1162989208" format="1.0" version="1.4"}%
+Publications by [[Publications by year][year]] | [[Publications by type][type]] | [[Publications by topic][topic]] | [[Publications by year and type][year and type]] | [[Publications by type and year][type and year]] | [[Publications alphabetically by author][alphabetically]] | [[Publications on Wiki][wiki]] | [[DBLP][dblp]] | 
+[[PublicationsCiteseer][citeseer]] | [[PublicationsGoogle][google]] | [[PublicationMetrics][metrics]]
+
+(Note that the url of techreps has changed; UU techreps are available from the [[technical reports]] page.)
+
+@
+
+
+1.3
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1144930241" format="1.0" version="1.3"}%
+d5 2
+@
+
+
+1.2
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1097570760" format="1.0" version="1.2"}%
+d3 1
+a3 1
+[[PublicationsCiteseer][citeseer]] | [[PublicationsGoogle][google]]
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 4
+a4 3
+%META:TOPICINFO{author="EelcoVisser" date="1090321380" format="1.0" version="1.1"}%
+Publications by [[Publications by year][year]] | [[Publications by type][type]] | [[Publications by topic][topic]] | [[Publications by year and type][year and type]] | [[Publications by type and year][type and year]] | [[Publications alphabetically by author][alphabetically]] | [[DBLP][dblp]] | [[http://citeseer.nj.nec.com/cs?cs=1&q=Eelco+w%2F2+Visser+or+E+w%2F2+Visser&submit=Documents&co=Expected+Citations&cm=50&cf=Any&ao=Expected+Citations&am=20&af=Header][citeseer]]
+
+@

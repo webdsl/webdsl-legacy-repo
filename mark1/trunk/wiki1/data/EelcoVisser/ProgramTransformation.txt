@@ -1,0 +1,37 @@
+%META:TOPICINFO{author="EelcoVisser" date="1053551182" format="1.0" version="1.7"}%
+%META:TOPICPARENT{name="ResearchInterests"}%
+<a href="http://www.program-transformation.org"> <img src="http://www.program-transformation.org/twiki/pub/transformation.gif" align=right border=0 alt ="Program-Transformation.Org"> </a> 
+Program transformation has applications in many areas of software engineering including compilation, optimization, refactoring, program synthesis, software renovation, and reverse engineering.  The aim of program transformation is to increase programmer productivity by automating programming tasks, thus enabling programming at a higher-level of abstraction, and increasing maintainability and re-usability. 
+
+Many systems for program transformation exist that are often
+	  specialized for a specific object language and/or kind of
+	  transformation.  All these systems share many ideas about
+	  program transformation and use similar techniques, but are
+	  often ad-hoc in many respects.  The goal of my research is
+	  to achieve a specification language or family of
+	  specification languages for the high-level, declarative
+	  specification of program transformation systems in which
+	  generic, language independent schemas of transformation can
+	  be captured, and which admits efficient implementation of
+	  those transformations that can scale up to large programs.
+
+----++++ Tools
+
+This research is guided by the design and implementation of tools for aspects of the transformation process
+
+	* [[Stratego]]: term rewriting and rewriting strategies
+	* [[Syntax definition]]: declarative specification of syntax of languages
+	* [[XT]]: bundling of transformation tools
+
+-----++++ Applications
+
+Validation of these tools is done by constructing transformation systems for all kinds of application domains
+
+	* [[Dsp Transformation]]
+
+-----++++ Surveys
+
+The [[http://www.program-transformation.org][program transformation wiki]] is a collaborative web site created for surveying the wide area of program transformation. _[[http://www.program-transformation.org/Transform/ReengineeringWikiPaper][The Reengineering Wiki]]_ is a paper about the reengineering part of the transformation wiki that explains the ideas behind the wiki.
+
+
+

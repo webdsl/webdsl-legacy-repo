@@ -1,0 +1,72 @@
+head	1.2;
+access;
+symbols;
+locks
+	apache:1.2; strict;
+comment	@# @;
+
+
+1.2
+date	2002.11.10.14.08.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2001.12.06.17.36.25;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.2
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1036937280" format="1.0" version="1.2"}%
+%META:TOPICPARENT{name="StrategoPublications"}%
+E. Visser and Z.-e.-A. Benaissa. A core language for rewriting. In C. Kirchner and H. Kirchner, editors, _Second International Workshop on Rewriting Logic and its Applications (WRLA'98)_, volume 15 of Electronic Notes in Theoretical Computer Science, Pont-à-Mousson, France, September 1998. Elsevier Science Publishers. 
+
+*Abstract*
+
+		  System S is a calculus providing the basic abstractions of
+		  term rewriting: matching and building terms, term traversal,
+		  combining computations and handling failure.  The calculus
+		  forms a core language for implementation of a wide variety of
+		  rewriting languages, or more generally, languages for
+		  specifying tree transformations.  In this paper we show how a
+		  conventional rewriting language based on conditional term
+		  rewriting can be implemented straightforwardly in System S.
+		  Subsequently we show how this implementation can be extended
+		  with features such as matching conditions, negative
+		  conditions, default rules, non-strictness annotations and
+		  alternative evaluation strategies.												  
+
+*Download*
+
+	* http://www.cs.uu.nl/~visser/ftp/VB98.ps.gz
+	* http://www.cs.uu.nl/~visser/ftp/VB98.ps.zip
+-----
+CategoryPaper
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1007660198" format="1.0" version="1.1"}%
+d3 1
+a3 1
+[[EelcoVisser][E. Visser]] and Z.-e.-A. Benaissa. A core language for rewriting. In C. Kirchner and H. Kirchner, editors, _Second International Workshop on Rewriting Logic and its Applications (WRLA'98)_, volume 15 of Electronic Notes in Theoretical Computer Science, Pont-à-Mousson, France, September 1998. Elsevier Science Publishers. 
+d25 1
+a25 1
+Transform.CategoryPaper
+@

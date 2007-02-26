@@ -1,0 +1,14 @@
+%META:TOPICINFO{author="EelcoVisser" date="1086778591" format="1.0" version="1.1"}%
+%META:TOPICPARENT{name="SyntaxDefinition"}%
+P. Klint and E. Visser. *Using Filters for the Disambiguation of Context-free Grammars.* In G. Pighizzini and P. San Pietro, editors, Proc. ASMICS Workshop on Parsing Theory, pages 1--20, Milano, Italy, October 1994. Tech. Rep. 126--1994, Dipartimento di Scienze dell'Informazione, Università di Milano. ([[http://www.cs.uu.nl/people/visser/ftp/P9426.ps.gz][psgz]]).
+
+------+++ <nop>BibTeX
+
+<pre>
+%INCLUDE{http://www.cs.uu.nl/groups/ST/stbib/visser-by-year/KV94.bib}%
+</pre>
+
+<!--
+	* Set SKIN = notitle
+-->
+

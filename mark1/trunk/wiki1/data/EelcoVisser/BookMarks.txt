@@ -1,0 +1,26 @@
+%META:TOPICINFO{author="EelcoVisser" date="1104499565" format="1.0" version="1.4"}%
+Suse 9.1
+
+	* ftp://ftp.suse.com/pub/suse/i386/9.1/suse/i586
+
+Meta-Programming
+
+	* [[http://citeseer.nj.nec.com/127288.html][MetaBETA Model and Implementation]] by René W. Schmidt
+	* [[http://citeseer.nj.nec.com/chiba95metaobject.html][A Metaobject Protocol for C++]] by Shigeru Chiba
+	* [[http://citeseer.nj.nec.com/lamping92architecture.html][An Architecture for An Open Compiler]] by John Lamping, Gregor Kiczales, Luis H. Rodriguez Jr., Erik Ruf
+
+Software Deployment
+
+	* [[http://www.cryon.com/gbuild/][gbuild]] automates the process of building directly from CVS 
+
+The Ruby scripting language
+
+	* http://www.ruby-lang.org
+	* http://www.rubycentral.com
+	* http://www.germane-software.com/software/rexml
+
+
+Alice
+
+	* [[http://lambda-the-ultimate.org/node/view/440][Alice Through the Looking Glass]]
+

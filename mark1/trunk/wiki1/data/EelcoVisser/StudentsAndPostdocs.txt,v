@@ -1,0 +1,1034 @@
+head	1.36;
+access;
+symbols;
+locks
+	apache:1.36; strict;
+comment	@# @;
+
+
+1.36
+date	2006.11.20.21.23.53;	author EelcoVisser;	state Exp;
+branches;
+next	1.35;
+
+1.35
+date	2006.10.17.14.57.28;	author EelcoVisser;	state Exp;
+branches;
+next	1.34;
+
+1.34
+date	2006.05.06.22.05.40;	author EelcoVisser;	state Exp;
+branches;
+next	1.33;
+
+1.33
+date	2006.01.19.23.09.03;	author EelcoVisser;	state Exp;
+branches;
+next	1.32;
+
+1.32
+date	2006.01.16.07.49.50;	author EelcoVisser;	state Exp;
+branches;
+next	1.31;
+
+1.31
+date	2005.10.10.15.43.16;	author EelcoVisser;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	2005.09.12.09.50.44;	author MartinBravenboer;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	2005.09.06.08.42.43;	author EelcoVisser;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	2005.06.27.12.21.13;	author EelcoVisser;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	2005.05.23.22.59.19;	author EelcoVisser;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	2005.04.28.22.53.56;	author wiki;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	2004.11.27.21.34.57;	author EelcoVisser;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	2004.11.23.21.45.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	2004.10.01.07.58.37;	author EelcoVisser;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	2004.09.20.20.38.53;	author EelcoVisser;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2004.09.08.09.18.28;	author EelcoVisser;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2004.09.07.20.38.28;	author EelcoVisser;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2004.08.03.14.01.55;	author EelcoVisser;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2004.07.06.07.59.20;	author EelcoVisser;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2004.05.08.22.05.41;	author EelcoVisser;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2004.04.25.22.08.43;	author EelcoVisser;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2004.03.26.09.07.59;	author EelcoVisser;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2004.02.24.09.39.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2004.01.19.21.56.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.11.30.11.50.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.09.03.10.47.47;	author EelcoVisser;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.07.23.10.22.38;	author EelcoVisser;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.05.17.06.42.05;	author EelcoVisser;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.04.25.17.05.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.02.26.15.56.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.01.10.22.33.32;	author EelcoVisser;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2002.09.13.08.05.48;	author EelcoVisser;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2002.08.30.23.19.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2002.08.30.12.54.33;	author EelcoVisser;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2002.08.29.13.01.33;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.08.28.09.05.00;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.36
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1164057833" format="1.0" version="1.36"}%
+%META:TOPICPARENT{name="WebHome"}%
+---------+ Students and Postdocs
+
+<a href="http://www.flickr.com/photos/38456545@@N00/141298080/" title="Photo Sharing"><img src="http://static.flickr.com/45/141298080_f191dd73a0_m.jpg" width="240" height="79" alt="trace lab"  align="right"/></a>
+-------+++ Postdocs
+
+	1 [[http://www.cs.uu.nl/staff/eelco.html][Eelco Dolstra]] (TraCE; Utrecht University, 2005-2008)
+
+-------+++ Ph.D. students
+
+	1 [[http://www.cs.uu.nl/wiki/Martin][Martin Bravenboer]] (TraCE; Utrecht University, 2003-2007)
+	1 [[http://www.ii.uib.no/~anya/][Anya Helene Bagge]] (CodeBoost; Bergen University, 2003-2007)
+	1 [[http://www.boblycat.org/~karltk/][Karl Trygve Kalleberg]] (CodeBoost; Bergen University, 2003-2006)
+
+<a href="http://www.flickr.com/photos/38456545@@N00/141298079/" title="Photo Sharing"><img src="http://static.flickr.com/46/141298079_2f9edda7be_m.jpg" width="240" height="115" alt="st lab" align="right"/></a>
+-------+++ Master's students (with co-advisor)
+	  
+2005-2006
+
+	1 Mart Kolthoff -- Loop vectorization for C programs
+	1 Bogdan Dumitriu -- Active libraries
+	1 Raymon van Wanrooij -- Software composition
+
+2006-2007
+
+	1 Danny Groenewegen -- web application security
+	1 Jonathan Joubert -- <nop>JAG
+	1 Lennart Kats -- mixing source and byte code
+	1 Jeroen Dobbe -- game DSLs
+	1 Sander Mak -- DSL interaction
+
+-------------------------++ Former 
+
+(see also [[supervised theses]])
+
+-------+++ Postdoc
+
+	1 [[http://www.cs.uu.nl/wiki/Merijn][Merijn de Jonge]] (TraCE, 2004)
+
+-------+++ PhD Students
+
+	1 [[http://www.cs.uu.nl/staff/eelco.html][Eelco Dolstra]] -- The purely functional software deployment model (TraCE, 2001-2005)
+	1 [[http://www.cs.uu.nl/staff/karina.html][Karina Olmos]] ([[Dsp Transformation]], 2000-2005)
+
+-------+++ Programmer
+
+	1 [[http://www.cs.uu.nl/staff/robv.html][Rob Vermaas]] ([[Dsp Transformation]], 2004-2005)
+
+-------+++ Master's students 
+	
+see also [[supervised theses]]
+
+2006
+
+	1 Roy van den Broek -- Continuous integration and release management
+	1 Armijn Hemel -- <nop>NixOS (Eelco Dolstra)
+	1 Jory van Zessen -- Optimization of functional programs
+
+2005 
+
+	1 Koen Muilwijk -- Automated analysis of unit tests to improve understanding of software systems
+	1 Remko van Beusekom -- A Vectorizer for Octave (Karina Olmos) (Feb. 2005)
+	1 Rene de Groot -- Design and implementation of embedded domain-specific languages (Martin Bravenboer) (Sep 2005)
+	1 Niels Janssen -- [[%HTTPSTRATEGO%/TransformationToolComposition][Transformation Tool Composition]]
+	1 Eric Eijkelenboom -- Trends in software evolution (Software Improvement Group)
+	1 Robert Verrips -- Methods for software migration
+
+2004
+
+	1 [[http://www.cs.uu.nl/groups/ST/Students/ArthurVanDam][Arthur van Dam]] : Extending dynamic rules (Feb. 2004)
+	1 [[http://www.cs.uu.nl/staff/robv.html][Rob Vermaas]] : [[http://www.stratego-language.org/Stratego/ExtendibleDocumentationGenerator][Extendible Documentation Generator]] ([[http://www.cs.uu.nl/groups/ST/Students/RobVermaas][thesis]]) (Feb. 2004)
+
+2003
+
+	1 Jozef Kruger : [[http://www.cs.uu.nl/groups/ST/Students/JozefKruger][Specification of Loop Optimizations in Stratego. Improving the <nop>AutoBayes System]]
+	1 [[http://www.cs.uu.nl/staff/martin.html][Martin Bravenboer]] : [[http://www.cs.uu.nl/groups/ST/Students/MartinBravenboer][Connecting XML Processing and Term Rewriting with Tree Grammars]]
+	1 Jonne van Wijngaarden : [[Code Generation from a Domain Specific Language]]
+	1 Alan van Dam : [[Simplifying the Simplifier]]
+	1 Robert Anisko : <noop>MetaTiger and partial evaluation (visiting from Epita)
+	1 [[http://www.ii.uib.no/~otto/][Otto Skrove Bagge]] : [[http://www.codeboost.org/][CodeBoost]] (Bergen University)
+
+2002
+
+	1 Lennart Swart : Partial Evaluation with Rewrite Rules
+	1 Hedzer Westra : [[SupervisedTheses#Wes02][CobolX]]
+
+2001
+
+	1 [[http://www.cs.uu.nl/staff/eelco.html][Eelco Dolstra]] : [[SupervisedTheses#Dol01][RhoStratego]]
+	1 [[http://www.students.cs.uu.nl/people/arbruijn/][Arne de Bruijn]] : [[SupervisedTheses#Bru01][Inlining strategies]]
+
+2000
+
+	1 [[http://www.cs.uu.nl/staff/karina.html][Karina Olmos]] : [[SupervisedTheses#Olm00][DSP Transformation]]
+
+1997
+
+	1 [[http://www.cwi.nl/~mdejonge/][Merijn de Jonge]] : [[SupervisedTheses#Jon97][Reusing ASF+SDF]]
+
+%META:TOPICMOVED{by="EelcoVisser" date="1077615073" from="Visser.Students" to="Visser.StudentsAndPostdocs"}%
+@
+
+
+1.35
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1161097048" format="1.0" version="1.35"}%
+d8 1
+a8 1
+	1 [[http://www.cs.uu.nl/staff/eelco.html][Eelco Dolstra]] (TraCE, 2005-2008)
+d12 1
+a12 2
+	1 [[http://www.cs.uu.nl/staff/karina.html][Karina Olmos]] ([[Dsp Transformation]], 2000-2005)
+	1 [[http://www.cs.uu.nl/wiki/Martin][Martin Bravenboer]] (TraCE, 2003-2007)
+d30 2
+d44 1
+@
+
+
+1.34
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1146953140" format="1.0" version="1.34"}%
+d3 2
+d8 1
+a8 1
+	1 [[http://www.cs.uu.nl/staff/eelco.html][Eelco Dolstra]] ([[Trace.WebHome][TraCE]], 2005-2008)
+d13 1
+a13 1
+	1 [[Martin.WebHome][Martin Bravenboer]] ([[Trace.WebHome][TraCE]], 2003-2007)
+a18 2
+
+2003-2004
+a19 3
+	1 Armijn Hemel -- <nop>NixOS (Eelco Dolstra)
+	1 Jory van Zessen -- Optimization of functional programs
+
+a22 1
+	1 Roy van den Broek -- Continuous integration and release management
+d26 6
+d38 1
+a38 1
+	1 [[Merijn.WebHome][Merijn de Jonge]] ([[Trace.WebHome][TraCE]], 2004)
+d42 1
+a42 1
+	1 [[http://www.cs.uu.nl/staff/eelco.html][Eelco Dolstra]] -- The purely functional software deployment model ([[Trace.WebHome][TraCE]], 2001-2005)
+d52 6
+d70 1
+a70 1
+	1 [[http://www.cs.uu.nl/staff/robv.html][Rob Vermaas]] : [[%HTTPSTRATEGO%/ExtendibleDocumentationGenerator][Extendible Documentation Generator]] ([[http://www.cs.uu.nl/groups/ST/Students/RobVermaas][thesis]]) (Feb. 2004)
+@
+
+
+1.33
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1137712143" format="1.0" version="1.33"}%
+d3 1
+d15 1
+@
+
+
+1.32
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1137397790" format="1.0" version="1.32"}%
+a20 4
+2004-2005
+
+	1 Koen Muilwijk -- Unit test documentation 
+
+d38 1
+a38 1
+	1 [[http://www.cs.uu.nl/staff/eelco.html][Eelco Dolstra]] ([[Trace.WebHome][TraCE]], 2001-2005)
+d50 1
+@
+
+
+1.31
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1128958996" format="1.0" version="1.31"}%
+a23 1
+	1 Robert Verrips -- Methods for software migration
+d28 3
+a30 2
+	1 Roy van den Broek -- Software deployment
+	1 Bogdan Dumitriu -- Optimization of Object-Oriented Programs
+d58 1
+@
+
+
+1.30
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="MartinBravenboer" date="1126518644" format="1.0" version="1.30"}%
+d23 1
+a23 1
+	1 Koen van Muilwijk -- Unit test documentation 
+a24 1
+	1 Rene de Groot -- Domain-specific language embeddings (Martin Bravenboer)
+d32 1
+d34 1
+a34 1
+-------------------------++ Former 
+d55 1
+d57 1
+a57 1
+	1 Eric Eijkelenboom -- Software metrics (Software Improvement Group)
+@
+
+
+1.29
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1125996163" format="1.0" version="1.29"}%
+d31 1
+a31 1
+	1 Bogdan Dimitriu -- Optimization of Object-Oriented Programs
+@
+
+
+1.28
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1119874873" format="1.0" version="1.28"}%
+d3 4
+a9 1
+	1 [[http://www.cs.uu.nl/staff/eelco.html][Eelco Dolstra]] ([[Trace.WebHome][TraCE]], 2001-2005)
+d11 2
+a12 6
+	1 [[http://www.ii.uib.no/~anya/][Anya Helene Bagge]] (CodeBoost; Bergen University, 2003-2006)
+	1 [[http://www.boblycat.org/~karltk/][Karl Trygve Kalleberg]] (CodeBoost; Bergen University, 2003-2007)
+
+-------+++ Programmer
+
+	1 [[http://www.cs.uu.nl/staff/robv.html][Rob Vermaas]] ([[Dsp Transformation]], 2004-2005)
+d29 1
+a29 1
+	1 Mart Kolthoff -- Transformation of C rograms
+d31 1
+a31 1
+	1 Bogdan Dimitriu -- Transformation of Object-Oriented Programs
+d40 8
+@
+
+
+1.27
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1116889159" format="1.0" version="1.27"}%
+d5 5
+a9 5
+	1 [[http://www.cs.uu.nl/staff/karina.html][Karina Olmos]] ([[Dsp Transformation]])
+	1 [[http://www.cs.uu.nl/staff/eelco.html][Eelco Dolstra]] ([[Trace.WebHome][TraCE]])
+	1 [[Martin.WebHome][Martin Bravenboer]] ([[Trace.WebHome][TraCE]])
+	1 [[http://www.ii.uib.no/~anya/][Anya Helene Bagge]] (CodeBoost; Bergen University)
+	1 [[http://www.boblycat.org/~karltk/][Karl Trygve Kalleberg]] (CodeBoost; Bergen University)
+d13 1
+a13 1
+	1 [[http://www.cs.uu.nl/staff/robv.html][Rob Vermaas]] ([[Dsp Transformation]])
+d28 1
+a28 1
+2005
+d32 2
+@
+
+
+1.26
+log
+@testenv
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1107897990" format="1.0" version="1.26"}%
+d19 1
+a19 1
+	1 Armijn Hemel -- [[Buildfarm.WebHome][Buildfarm]] (Eelco Dolstra)
+a20 1
+	1 Niels Janssen -- [[%HTTPSTRATEGO%/TransformationToolComposition][Transformation Tool Composition]]
+d24 1
+a24 2
+	1 Eric Eijkelenboom -- Software metrics (Software Improvement Group)
+	1 Koen van Muilwijk -- Unit test generation (Martin Bravenboer)
+d30 1
+a30 1
+	1 Mart Kolthoff -- Transformation of C programs
+d46 2
+@
+
+
+1.25
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1101591297" format="1.0" version="1.25"}%
+d3 78
+a80 55
+-------+++ Postdoc
+
+	1 [[Merijn.WebHome][Merijn de Jonge]] ([[Trace.WebHome][TraCE]])
+
+-------+++ Ph.D. students
+
+	1 [[http://www.cs.uu.nl/staff/karina.html][Karina Olmos]] ([[Dsp Transformation]])
+	1 [[http://www.cs.uu.nl/staff/eelco.html][Eelco Dolstra]] ([[Trace.WebHome][TraCE]])
+	1 [[Martin.WebHome][Martin Bravenboer]] ([[Trace.WebHome][TraCE]])
+	1 [[http://www.ii.uib.no/~anya/][Anya Helene Bagge]] (CodeBoost; Bergen University)
+	1 [[http://www.boblycat.org/~karltk/][Karl Trygve Kalleberg]] (CodeBoost; Bergen University)
+
+-------+++ Programmer
+
+	1 [[http://www.cs.uu.nl/staff/robv.html][Rob Vermaas]] ([[Dsp Transformation]])
+
+-------+++ Master's students (with co-advisor)
+
+2003-2004
+	  
+	1 Armijn Hemel -- [[Buildfarm.WebHome][Buildfarm]] (Eelco Dolstra)
+	1 Jory van Zessen -- Optimization of functional programs
+	1 Niels Janssen -- [[%HTTPSTRATEGO%/TransformationToolComposition][Transformation Tool Composition]]
+	1 Remko van Beusekom -- Octave Compiler (Karina Olmos)
+
+2004-2005
+
+	1 Eric Eijkelenboom -- Software metrics (Software Improvement Group)
+	1 Koen van Muilwijk -- Unit test generation (Martin Bravenboer)
+	1 Robert Verrips -- Methods for software migration
+	1 Rene de Groot -- Domain-specific language embeddings (Martin Bravenboer)
+
+2005
+
+	1 Mart Kolthoff -- Deployment of web services (Eelco Dolstra)
+	1 Roy van den Broek -- Software deployment
+
+-------+++ Former Master's students 
+	
+	1 [[http://www.cs.uu.nl/groups/ST/Students/ArthurVanDam][Arthur van Dam]] : Extending dynamic rules
+	1 [[http://www.cs.uu.nl/staff/robv.html][Rob Vermaas]] : [[%HTTPSTRATEGO%/ExtendibleDocumentationGenerator][Extendible Documentation Generator]] ([[http://www.cs.uu.nl/groups/ST/Students/RobVermaas][thesis]])
+	1 Jozef Kruger : [[http://www.cs.uu.nl/groups/ST/Students/JozefKruger][Specification of Loop Optimizations in Stratego. Improving the <nop>AutoBayes System]]
+	1 [[http://www.cs.uu.nl/staff/martin.html][Martin Bravenboer]] : [[http://www.cs.uu.nl/groups/ST/Students/MartinBravenboer][Connecting XML Processing and Term Rewriting with Tree Grammars]]
+	1 Jonne van Wijngaarden : [[Code Generation from a Domain Specific Language]]
+	1 Alan van Dam : [[Simplifying the Simplifier]]
+	1 Robert Anisko : <noop>MetaTiger and partial evaluation (visiting from Epita)
+	1 [[http://www.ii.uib.no/~otto/][Otto Skrove Bagge]] : [[http://www.codeboost.org/][CodeBoost]] (Bergen University)
+	1 Lennart Swart : Partial Evaluation with Rewrite Rules
+	1 Hedzer Westra : [[SupervisedTheses#Wes02][CobolX]]
+	1 [[http://www.cs.uu.nl/staff/eelco.html][Eelco Dolstra]] : [[SupervisedTheses#Dol01][RhoStratego]]
+	1 [[http://www.students.cs.uu.nl/people/arbruijn/][Arne de Bruijn]] : [[SupervisedTheses#Bru01][Inlining strategies]]
+	1 [[http://www.cs.uu.nl/staff/karina.html][Karina Olmos]] : [[SupervisedTheses#Olm00][DSP Transformation]]
+	1 [[http://www.cwi.nl/~mdejonge/][Merijn de Jonge]] : [[SupervisedTheses#Jon97][Reusing ASF+SDF]]
+
+see also [[supervised theses]]
+@
+
+
+1.24
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1101246300" format="1.0" version="1.24"}%
+a37 1
+	1 Klaas van Schelven -- Eclipse plugins for SDF-based language tools (Software Improvement Group)
+@
+
+
+1.23
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1096617516" format="1.0" version="1.23"}%
+d3 1
+a3 1
+Postdoc
+d7 1
+a7 1
+Ph.D. students
+d15 1
+a15 1
+Programmer
+d19 3
+a21 1
+Master's students (with co-advisor)
+d27 3
+a32 1
+	1 Mart Kolthoff -- Software deployment in industry (Eelco Dolstra)
+d35 7
+a41 1
+Former Master's students 
+@
+
+
+1.22
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1095712733" format="1.0" version="1.22"}%
+d12 2
+a13 2
+	1 [[http://www.ii.uib.no/~otto/][Otto Skrove Bagge]] (CodeBoost; Bergen University)
+	1 Karl Trygve Kalleberg (CodeBoost; Bergen University)
+@
+
+
+1.21
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1094635108" format="1.0" version="1.21"}%
+d19 1
+a19 1
+Master's students
+d21 2
+a22 2
+	1 Armijn Hemel -- [[Buildfarm.WebHome][Buildfarm]]
+	1 Jory van Zessen -- Code Generation
+d24 1
+a24 1
+	1 Remko van Beusekom -- Octave Compiler
+d26 4
+a29 1
+	1 Koen van Muilwijk -- Unit test generation
+@
+
+
+1.20
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1094589508" format="1.0" version="1.20"}%
+a22 1
+	1 [[http://www.eye-home.net][Arthur van Dam]] -- Dynamic Rules
+@
+
+
+1.19
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1091541715" format="1.0" version="1.19"}%
+d31 1
+@
+
+
+1.18
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1089100760" format="1.0" version="1.18"}%
+d26 2
+@
+
+
+1.17
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1084053940" format="1.0" version="1.17"}%
+d11 1
+a11 1
+	1 [[http://www.cs.uu.nl/staff/martin.html][Martin Bravenboer]] ([[Trace.WebHome][TraCE]])
+@
+
+
+1.16
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1082930923" format="1.0" version="1.16"}%
+d12 2
+a13 2
+	1 [[http://www.ii.uib.no/~otto/][Otto Skrove Bagge]] (CodeBoost)
+	1 Karl Trygve Kalleberg (CodeBoost)
+@
+
+
+1.15
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1080292079" format="1.0" version="1.15"}%
+d22 1
+a22 1
+	1 Jory van Zessen -- Deforestation
+@
+
+
+1.14
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1077615540" format="1.0" version="1.14"}%
+d17 1
+a17 1
+	1 Rob Vermaas ([[Dsp Transformation]])
+d29 1
+a29 1
+	1 Rob Vermaas : [[%HTTPSTRATEGO%/ExtendibleDocumentationGenerator][Extendible Documentation Generator]]
+d31 1
+a31 1
+	1 [[http://www.mbravenboer.org/][Martin Bravenboer]] : [[http://www.cs.uu.nl/groups/ST/Students/MartinBravenboer][Connecting XML Processing and Term Rewriting with Tree Grammars]]
+@
+
+
+1.13
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1074549360" format="1.0" version="1.13"}%
+d3 1
+a3 1
+Current Postdoc
+d7 1
+a7 1
+Current Ph.D. students
+d12 2
+d15 5
+a19 1
+Current Master's students
+a20 2
+	1 Rob Vermaas -- [[%HTTPSTRATEGO%/ExtendibleDocumentationGenerator][Extendible Documentation Generator]]
+	1 Jozef Kruger -- Loop optimization for [[%HTTPSTRATEGO%/AutoBayes][AutoBayes]]
+d25 1
+d29 13
+a41 11
+	1 [[http://www.mbravenboer.org/][Martin Bravenboer]] -- [[Connecting XML Processing and Term Rewriting with Tree Grammars]]
+	1 Jonne van Wijngaarden -- [[Code Generation from a Domain Specific Language]]
+	1 Alan van Dam -- [[Simplifying the Simplifier]]
+	1 Robert Anisko -- <noop>MetaTiger and partial evaluation (visiting from Epita)
+	1 [[http://www.ii.uib.no/~otto/][Otto Skrove Bagge]] ([[http://www.codeboost.org/][CodeBoost]]) -- Bergen University
+	1 Lennart Swart (Partial Evaluation with Rewrite Rules)
+	1 Hedzer Westra ([[SupervisedTheses#Wes02][CobolX]])
+	1 [[http://www.cs.uu.nl/staff/eelco.html][Eelco Dolstra]] ([[SupervisedTheses#Dol01][RhoStratego]])
+	1 [[http://www.students.cs.uu.nl/people/arbruijn/][Arne de Bruijn]] ([[SupervisedTheses#Bru01][Inlining strategies]])
+	1 [[http://www.cs.uu.nl/staff/karina.html][Karina Olmos]] ([[SupervisedTheses#Olm00][DSP Transformation]])
+	1 [[http://www.cwi.nl/~mdejonge/][Merijn de Jonge]] ([[SupervisedTheses#Jon97][Reusing ASF+SDF]])
+d44 1
+@
+
+
+1.12
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1070193000" format="1.0" version="1.12"}%
+d3 4
+d19 1
+a19 1
+	1 [[http://www.eye-home.net][Arthur van Dam]] -- Dynamic Rules ([[https://losser.st-lab.cs.uu.nl:12443/dist/avandam/][thesis preview]])
+@
+
+
+1.11
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1062586067" format="1.0" version="1.11"}%
+d5 3
+a7 2
+	* [[http://www.cs.uu.nl/staff/eelco.html][Eelco Dolstra]] ([[VariabilityManagement]])
+	* [[http://www.cs.uu.nl/staff/karina.html][Karina Olmos]] ([[Dsp Transformation]])
+d11 2
+a12 3
+	1 [[http://www.mbravenboer.org/][Martin Bravenboer]] -- Java/XML generation and transformation
+	1 Rob Vermaas -- Documentation generation
+	1 Jozef Kruger -- Loop optimization
+d15 2
+a16 2
+	1 [[http://www.eye-home.net][Arthur van Dam]] -- ([[http://www.codeboost.org/][CodeBoost]]) ([[https://losser.st-lab.cs.uu.nl:12443/dist/avandam/][thesis preview]])
+	1 Niels Janssen -- StrategoWeb
+d20 1
+@
+
+
+1.10
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1058955758" format="1.0" version="1.10"}%
+d15 1
+a15 1
+	1 [[http://www.eye-home.net][Arthur van Dam]] -- ([[http://www.codeboost.org/][CodeBoost]])
+@
+
+
+1.9
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1053153725" format="1.0" version="1.9"}%
+d10 7
+a16 10
+	* Jonne van Wijngaarden -- Application generation and classification of transformations
+	* Alan van Dam -- Helium/LVM Simplifier
+	* Rob Vermaas -- Documentation generation
+	* [[http://www.mbravenboer.org/][Martin Bravenboer]] -- Java/XML generation and transformation
+	* Jozef Kruger -- Loop optimization
+	* Armijn Hemel -- [[Buildfarm.WebHome][Buildfarm]]
+	* Jory van Zessen -- Deforestation
+	* [[http://www.eye-home.net][Arthur van Dam]] -- ([[http://www.codeboost.org/][CodeBoost]])
+
+	* Robert Anisko -- <noop>MetaTiger and partial evaluation (visiting from Epita)
+d20 10
+a29 7
+	* [[http://www.ii.uib.no/~otto/][Otto Skrove Bagge]] ([[http://www.codeboost.org/][CodeBoost]]) -- Bergen University
+	* Lennart Swart (Partial Evaluation with Rewrite Rules)
+	* Hedzer Westra ([[SupervisedTheses#Wes02][CobolX]])
+	* [[http://www.cs.uu.nl/staff/eelco.html][Eelco Dolstra]] ([[SupervisedTheses#Dol01][RhoStratego]])
+	* [[http://www.students.cs.uu.nl/people/arbruijn/][Arne de Bruijn]] ([[SupervisedTheses#Bru01][Inlining strategies]])
+	* [[http://www.cs.uu.nl/staff/karina.html][Karina Olmos]] ([[SupervisedTheses#Olm00][DSP Transformation]])
+	* [[http://www.cwi.nl/~mdejonge/][Merijn de Jonge]] ([[SupervisedTheses#Jon97][Reusing ASF+SDF]])
+@
+
+
+1.8
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1051290300" format="1.0" version="1.8"}%
+d17 1
+@
+
+
+1.7
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1046274960" format="1.0" version="1.7"}%
+d10 1
+a10 1
+	* [[http://www.mbravenboer.org/][Martin Bravenboer]] -- Java/XML generation and transformation
+a11 1
+	* Armijn Hemel -- [[Buildfarm.WebHome][Buildfarm]]
+d13 1
+a13 1
+	* Jonne van Wijngaarden -- Application generation and classification of transformations
+d15 1
+d18 1
+a18 2
+	* [[http://www.ii.uib.no/~otto/][Otto Skrove Bagge]] ([[http://www.codeboost.org/][CodeBoost]]) -- Bergen University
+	* Robert Anisko -- visiting from Epita
+d22 1
+@
+
+
+1.6
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1042238012" format="1.0" version="1.6"}%
+d10 10
+a19 6
+	* [[http://www.ii.uib.no/~otto/][Otto Skrove Bagge]] ([[http://www.codeboost.org/][CodeBoost]])
+	* [[http://www.mbravenboer.org/][Martin Bravenboer]] (Java Generation and Transformation)
+	* Alan van Dam (Helium Simplifier)
+	* Armijn Hemel ([[Buildfarm.WebHome][Buildfarm]])
+	* Rob Vermaas (Documentation Generation)
+	* Jonne van Wijngaarden (Interface Generation)
+d30 1
+a30 1
+see also [[supervised theses]]
+@
+
+
+1.5
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1031904348" format="1.0" version="1.5"}%
+d17 1
+a17 1
+Former Master's students
+d26 1
+@
+
+
+1.4
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1030749540" format="1.0" version="1.4"}%
+d5 1
+a5 1
+	* [[http://www.cs.uu.nl/staff/eelco.html][Eelco Dolstra]] ([[TraCE]])
+@
+
+
+1.3
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1030712072" format="1.0" version="1.3"}%
+d3 1
+a3 1
+Current PhD students
+d10 2
+a11 2
+	* [[http://www.ii.uib.no/~otto/][Otto Skrove Bagge]] ([[http://www.codeboost.org/codeboost/][CodeBoost]])
+	* [[http://www.students.cs.uu.nl/people/mbravenb/][Martin Bravenboer]] (Java Generation and Transformation)
+@
+
+
+1.2
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1030626092" format="1.0" version="1.2"}%
+a11 1
+	* Lennart Swart (Similix)
+d19 1
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1030525500" format="1.0" version="1.1"}%
+d6 1
+a6 1
+	* [[http://www.cs.uu.nl/staff/karina.html][Karina Olmos]] ([[DSP Transformation]])
+@

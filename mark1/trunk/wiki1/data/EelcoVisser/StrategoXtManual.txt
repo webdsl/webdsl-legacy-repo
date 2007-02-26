@@ -1,0 +1,19 @@
+%META:TOPICINFO{author="EelcoVisser" date="1149273455" format="1.0" version="1.2"}%
+%META:TOPICPARENT{name="WebHome"}%
+The [[http://nix.cs.uu.nl/dist/stratego/strategoxt-manual-unstable-latest/manual/index.html][Stratego/XT Manual]] provides (online) documentation for the Stratego/XT language and toolset for program transformation. It consists of the following `books':
+
+	 <ul>
+		<li style="padding-bottom: 10pt">
+		  [[http://nix.cs.uu.nl/dist/stratego/strategoxt-manual-unstable-latest/manual/chunk-chapter/tutorial.html][Stratego/XT Tutorial]] <br />
+		  Practical introduction to the Stratego language and XT tools.
+		</li>
+		<li style="padding-bottom: 10pt">
+		  [[http://nix.cs.uu.nl/dist/stratego/strategoxt-manual-unstable-latest/manual/chunk-chapter/examples.html][Stratego/XT Examples]] <br />
+		  Introduction to Stratego/XT by example.
+		</li>
+		<li style="padding-bottom: 10pt">
+		  [[http://nix.cs.uu.nl/dist/stratego/strategoxt-manual-unstable-latest/manual/chunk-chapter/reference-manual.html][Stratego/XT Reference Manual]] <br />
+		  Detailed description of the Stratego language and XT tools. 
+		</li>
+	 </ul>
+

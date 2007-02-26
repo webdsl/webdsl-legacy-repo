@@ -1,0 +1,451 @@
+head	1.15;
+access;
+symbols;
+locks
+	apache:1.15; strict;
+comment	@# @;
+
+
+1.15
+date	2006.11.19.19.36.20;	author EelcoVisser;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2006.10.18.11.20.26;	author EelcoVisser;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2006.10.18.08.56.57;	author LeonMoonen;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2005.08.24.16.12.40;	author EelcoVisser;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2004.12.23.13.06.45;	author EelcoVisser;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.07.01.11.09.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.05.21.22.54.09;	author EelcoVisser;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.05.21.21.06.23;	author EelcoVisser;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.05.21.08.20.50;	author EelcoVisser;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2002.08.29.20.32.16;	author EelcoVisser;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2002.08.27.21.17.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2002.08.23.12.57.55;	author EelcoVisser;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2002.08.23.10.19.58;	author EelcoVisser;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2002.08.22.09.07.18;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2001.09.18.06.45.52;	author PeterThoeny;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.15
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1163964980" format="1.0" version="1.15"}%
+%META:TOPICPARENT{name="WebHome"}%
+The following settings are __web preferences__ of the %WIKITOOLNAME%.%WEB% web. These preferences overwrite the __site-level preferences__ in %TWIKIWEB%.%WIKIPREFSTOPIC%, and can be overwritten by __user preferences__ (your personal topic, i.e. %MAINWEB%.TWikiGuest in the %WIKITOOLNAME%.%MAINWEB% web)
+
+__Preferences:__
+
+		* WEBTOPBAR = EelcoVisser.WebTopBar
+
+		* Set PAGEHEADERCONTENTS = <font size=+3><em><b>Eelco Visser</b></em></font>
+
+		* Set WEBTITLE = Eelco Visser
+		* Set SHORTWEBTITLE = Eelco Visser
+
+		* Set WEBLOGO = /~visser/StrategoLogoTextlessWhite-100px.png
+		* Set WEBICON = /~visser/stratego-logo-16only.ico
+
+	* List of topics of the %WIKITOOLNAME%.%WEB% web:
+		* Set WEBTOPICLIST = 
+
+	* Web specific background color: (Pick a lighter one of the %TWIKIWEB%.StandardColors)
+		* Set WEBBGCOLOR = #D0D0D0
+
+	* List this web in the %TWIKIWEB%.SiteMap:
+		* If yes, Set SITEMAPLIST = =on=, and add the "what" and "use to..." description for the site map. Make sure to list only links that include the name of the web, e.g. %WEB%.Topic links.
+		* Set SITEMAPLIST = on
+		* Set SITEMAPWHAT = Home page of Eelco Visser 
+		* Set SITEMAPUSETO = ...get up-to-date with his [[ResearchInterests][research]], [[PublicationsByYear][publications]], [[Visser.TeachingPortfolio][teaching]], etc.
+
+	* Exclude web from a =web="all"= search: (Set to =on= for hidden webs)
+		* Set NOSEARCHALL = 
+
+	* Default template for new topics and form(s) for this web:
+		* WebTopicEditTemplate: Default template for new topics in this web. (Site-level is used if topic does not exist)
+		* [[%TWIKIWEB%.WebTopicEditTemplate]]: Site-level default template
+		* %TWIKIWEB%.TWikiForms: How to enable form(s)
+		* Set WEBFORMS = 
+
+	* Users or groups who __are not__ / __are__ allowed to __view__ / __change__ / __rename__ topics in the %WEB% web: (See %TWIKIWEB%.TWikiAccessControl)
+		* Set DENYWEBVIEW = 
+		* Set ALLOWWEBVIEW = 
+		* Set DENYWEBCHANGE = 
+		* Set ALLOWWEBCHANGE = %MAINWEB%.EelcoVisser
+		* Set DENYWEBRENAME = 
+		* Set ALLOWWEBRENAME = %MAINWEB%.EelcoVisser
+
+	* Users or groups allowed to change or rename this <nop>%TOPIC% topic: (I.e. %MAINWEB%.TWikiAdminGroup)
+		* Set ALLOWTOPICCHANGE = %MAINWEB%.EelcoVisser
+		* Set ALLOWTOPICRENAME = %MAINWEB%.EelcoVisser
+
+	* Web preferences that are *not* allowed to be overridden by user preferences:
+		* Set FINALPREFERENCES = WEBTOPICLIST, DENYWEBVIEW, ALLOWWEBVIEW, DENYWEBCHANGE, ALLOWWEBCHANGE, DENYWEBRENAME, ALLOWWEBRENAME
+
+__Notes:__
+	* A preference is defined as: <br /> =6 spaces * Set NAME = value= <br /> Example:
+		* S<nop>et WEBBGCOLOR = #FFFFC0
+	* Preferences are used as %TWIKIWEB%.TWikiVariables by enclosing the name in percent signs. Example:
+		* When you write variable =%WEB<nop>BGCOLOR%= , it gets expanded to =%WEBBGCOLOR%= .
+	* The sequential order of the preference settings is significant. Define preferences that use other preferences first, i.e. set =<nop>WEBCOPYRIGHT= before =<nop>WIKIWEBMASTER= since =%<nop>WEBCOPYRIGHT%= uses the =%<nop>WIKIWEBMASTER%= variable.
+	* You can introduce new preferences variables and use them in your topics and templates. There is no need to change the %WIKITOOLNAME% engine (Perl scripts).
+
+__Related Topics:__
+	* %TWIKIWEB%.%WIKIPREFSTOPIC% has site-level preferences.
+	* %MAINWEB%.%WIKIUSERSTOPIC% has a list of user topics. User topics can have optional user preferences.
+	* %TWIKIWEB%.TWikiVariables has a list of common =%<nop>VARIABLES%=.
+	* %TWIKIWEB%.TWikiAccessControl explains how to restrict access by users or groups.
+
+@
+
+
+1.14
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1161170426" format="1.0" version="1.14"}%
+d21 1
+a21 1
+		* Set WEBBGCOLOR = #FFFFC0
+@
+
+
+1.13
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="LeonMoonen" date="1161161817" format="1.0" version="1.13"}%
+d7 1
+a7 1
+		* Set WEBTOPBAR = EelcoVisser.WebTopBar
+@
+
+
+1.12
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1124899960" format="1.0" version="1.12"}%
+d7 2
+d42 1
+a42 1
+		* Set ALLOWWEBCHANGE = %MAINWEB%.StGroup 
+d44 1
+a44 1
+		* Set ALLOWWEBRENAME = %MAINWEB%.StGroup 
+d47 2
+a48 2
+		* Set ALLOWTOPICCHANGE = %MAINWEB%.TWikiAdminGroup
+		* Set ALLOWTOPICRENAME = %MAINWEB%.TWikiAdminGroup
+@
+
+
+1.11
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1103807205" format="1.0" version="1.11"}%
+d10 4
+a13 1
+		* Set WEBICON = http://catamaran.labs.cs.uu.nl/twiki/pt/pub/Stratego/StrategoLogo/stratego-logo-16only.ico 
+@
+
+
+1.10
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1057057740" format="1.0" version="1.10"}%
+d3 59
+a61 57
+The following settings are __web preferences__ of the %WIKITOOLNAME%.%WEB% web. These preferences overwrite the __site-level preferences__ in %TWIKIWEB%.%WIKIPREFSTOPIC%, and can be overwritten by __user preferences__ (your personal topic, i.e. %MAINWEB%.TWikiGuest in the %WIKITOOLNAME%.%MAINWEB% web)
+
+__Preferences:__
+
+		* Set PAGEHEADERCONTENTS = <font size=+3><em><b>Eelco Visser</b></em></font>
+
+		* Set WEBTITLE = *Eelco Visser*
+
+	* List of topics of the %WIKITOOLNAME%.%WEB% web:
+		* Set WEBTOPICLIST = 
+
+	* Web specific background color: (Pick a lighter one of the %TWIKIWEB%.StandardColors)
+		* Set WEBBGCOLOR = #FFFFC0
+
+	* List this web in the %TWIKIWEB%.SiteMap:
+		* If yes, Set SITEMAPLIST = =on=, and add the "what" and "use to..." description for the site map. Make sure to list only links that include the name of the web, e.g. %WEB%.Topic links.
+		* Set SITEMAPLIST = on
+		* Set SITEMAPWHAT = Home page of Eelco Visser 
+		* Set SITEMAPUSETO = ...get up-to-date with his [[ResearchInterests][research]], [[PublicationsByYear][publications]], [[Visser.TeachingPortfolio][teaching]], etc.
+
+	* Exclude web from a =web="all"= search: (Set to =on= for hidden webs)
+		* Set NOSEARCHALL = 
+
+	* Default template for new topics and form(s) for this web:
+		* WebTopicEditTemplate: Default template for new topics in this web. (Site-level is used if topic does not exist)
+		* [[%TWIKIWEB%.WebTopicEditTemplate]]: Site-level default template
+		* %TWIKIWEB%.TWikiForms: How to enable form(s)
+		* Set WEBFORMS = 
+
+	* Users or groups who __are not__ / __are__ allowed to __view__ / __change__ / __rename__ topics in the %WEB% web: (See %TWIKIWEB%.TWikiAccessControl)
+		* Set DENYWEBVIEW = 
+		* Set ALLOWWEBVIEW = 
+		* Set DENYWEBCHANGE = 
+		* Set ALLOWWEBCHANGE = %MAINWEB%.StGroup 
+		* Set DENYWEBRENAME = 
+		* Set ALLOWWEBRENAME = %MAINWEB%.StGroup 
+
+	* Users or groups allowed to change or rename this <nop>%TOPIC% topic: (I.e. %MAINWEB%.TWikiAdminGroup)
+		* Set ALLOWTOPICCHANGE = %MAINWEB%.TWikiAdminGroup
+		* Set ALLOWTOPICRENAME = %MAINWEB%.TWikiAdminGroup
+
+	* Web preferences that are *not* allowed to be overridden by user preferences:
+		* Set FINALPREFERENCES = WEBTOPICLIST, DENYWEBVIEW, ALLOWWEBVIEW, DENYWEBCHANGE, ALLOWWEBCHANGE, DENYWEBRENAME, ALLOWWEBRENAME
+
+__Notes:__
+	* A preference is defined as: <br /> =6 spaces * Set NAME = value= <br /> Example:
+		* S<nop>et WEBBGCOLOR = #FFFFC0
+	* Preferences are used as %TWIKIWEB%.TWikiVariables by enclosing the name in percent signs. Example:
+		* When you write variable =%WEB<nop>BGCOLOR%= , it gets expanded to =%WEBBGCOLOR%= .
+	* The sequential order of the preference settings is significant. Define preferences that use other preferences first, i.e. set =<nop>WEBCOPYRIGHT= before =<nop>WIKIWEBMASTER= since =%<nop>WEBCOPYRIGHT%= uses the =%<nop>WIKIWEBMASTER%= variable.
+	* You can introduce new preferences variables and use them in your topics and templates. There is no need to change the %WIKITOOLNAME% engine (Perl scripts).
+
+__Related Topics:__
+	* %TWIKIWEB%.%WIKIPREFSTOPIC% has site-level preferences.
+	* %MAINWEB%.%WIKIUSERSTOPIC% has a list of user topics. User topics can have optional user preferences.
+	* %TWIKIWEB%.TWikiVariables has a list of common =%<nop>VARIABLES%=.
+	* %TWIKIWEB%.TWikiAccessControl explains how to restrict access by users or groups.
+@
+
+
+1.9
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1053557649" format="1.0" version="1.9"}%
+d8 2
+@
+
+
+1.8
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1053551183" format="1.0" version="1.8"}%
+d19 1
+a19 1
+		* Set SITEMAPUSETO = ...get up-to-date with his [[ResearchInterests][research]], [[Visser.Publications][publications]], [[Visser.TeachingPortfolio][teaching]], etc.
+@
+
+
+1.7
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1053505250" format="1.0" version="1.7"}%
+d19 1
+a19 1
+		* Set SITEMAPUSETO = ...get up-to-date with his [[Visser.Research][research]], [[Visser.Publications][publications]], [[Visser.TeachingPortfolio][teaching]], etc.
+@
+
+
+1.6
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1030653135" format="1.0" version="1.6"}%
+d7 1
+a7 1
+		* Set PAGEHEADER = <nop>
+@
+
+
+1.5
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1030483020" format="1.0" version="1.5"}%
+d19 1
+a19 1
+		* Set SITEMAPUSETO = ...get up-to-date with his [[Visser.Research][research]], [[Visser.Publications][publications]], [[Visser.Teaching][teaching]], etc.
+@
+
+
+1.4
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1030107475" format="1.0" version="1.4"}%
+a2 2
+---++ %WIKITOOLNAME%.%WEB% Web Preferences
+
+d5 1
+d7 1
+a7 1
+__Preferences:__
+d10 1
+a10 1
+		* Set WEBTOPICLIST = [[%HOMETOPIC%][Home]] %SEP% [[WebChanges][Changes]] %SEP% [[WebIndex][Index]] %SEP% [[WebSearch][Search]] %SEP% Go <input type="text" name="topic" size="16" />
+d13 7
+a19 1
+		* Set WEBBGCOLOR =  #FFFFC0
+d34 1
+a34 1
+		* Set ALLOWWEBCHANGE = Main.EelcoVisser
+d36 1
+a36 1
+		* Set ALLOWWEBRENAME = Main.EelcoVisser
+d39 2
+a40 2
+		* Set ALLOWTOPICCHANGE = Main.EelcoVisser
+		* Set ALLOWTOPICRENAME = Main.EelcoVisser
+a43 3
+
+	* page header
+		* Set PAGEHEADER = 
+@
+
+
+1.3
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1030097998" format="1.0" version="1.3"}%
+d29 1
+a29 1
+		* Set ALLOWWEBCHANGE = 
+d31 1
+a31 1
+		* Set ALLOWWEBRENAME = 
+d34 2
+a35 2
+		* Set ALLOWTOPICCHANGE = 
+		* Set ALLOWTOPICRENAME = 
+d41 1
+a41 1
+		* Set PAGEHEADER = <nop>
+@
+
+
+1.2
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1030007238" format="1.0" version="1.2"}%
+d39 3
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="PeterThoeny" date="1000795552" format="1.0" version="1.1"}%
+d14 1
+a14 1
+		* Set WEBBGCOLOR = #D0D0D0
+@

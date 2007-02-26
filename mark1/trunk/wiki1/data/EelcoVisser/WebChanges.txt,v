@@ -1,0 +1,48 @@
+head	1.2;
+access;
+symbols;
+locks
+	apache:1.2; strict;
+comment	@# @;
+
+
+1.2
+date	2005.04.28.22.53.57;	author wiki;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2001.08.08.05.20.34;	author PeterThoeny;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.2
+log
+@testenv
+@
+text
+@%META:TOPICINFO{author="MartinBravenboer" date="1102195920" format="1.0" version="1.2"}%
+%META:TOPICPARENT{name="WebHome"}%
+%SEARCH{".*" regex="on" nosearch="on" nototal="on" order="modified" reverse="on" limit="50" nosummary="on" format="| [[$topic][$topic(30,...)]] | $date | $wikiusername |"}%
+
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="PeterThoeny" date="997991913" format="1.0beta2" version="1.1"}%
+d3 2
+a4 1
+%INCLUDE{"%TWIKIWEB%.WebChanges"}%
+@

@@ -1,0 +1,60 @@
+head	1.2;
+access;
+symbols;
+locks
+	apache:1.2; strict;
+comment	@# @;
+
+
+1.2
+date	2006.10.17.15.06.25;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2005.09.06.09.58.44;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.2
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1161097585" format="1.0" version="1.2"}%
+%META:TOPICPARENT{name="WebHome"}%
+E. Visser. *The Stratego/XT <nop>BibTeX Tools. Tool documentation.* Draft ([[http://nix.cs.uu.nl/dist/stratego/bibtex-tools-unstable-latest/bibtex-tools.pdf][pdf]],[[http://www.stratego-language.org/Stratego/BibtexTools][download]])
+
+------+++ Abstract
+
+This paper provides documentation for the Stratego/XT <nop>BibTeX Tools,
+a collection of tools for processing <nop>BibTeX bibliography files. The
+main tools in the collection are <code>bib-to-html</code> for generating a
+sectioned publication list from a <nop>BibTeX file according to
+selection criteria and a layout template, and
+<code>aux-to-bib</code> for extracting a <nop>BibTeX file based on the
+citations in a <nop>LaTeX document.
+
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1126000724" format="1.0" version="1.1"}%
+a14 4
+<!--
+	* Set SKIN = notitle
+-->
+
+@

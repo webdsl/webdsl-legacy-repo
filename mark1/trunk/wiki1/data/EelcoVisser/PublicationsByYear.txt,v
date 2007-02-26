@@ -1,0 +1,336 @@
+head	1.16;
+access;
+symbols;
+locks
+	apache:1.16; strict;
+comment	@# @;
+
+
+1.16
+date	2005.04.28.22.53.56;	author wiki;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2004.07.20.10.50.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2004.07.16.20.19.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2004.04.04.22.44.19;	author EelcoVisser;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.11.05.14.12.18;	author EelcoVisser;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.10.24.00.04.56;	author EelcoVisser;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.10.22.18.54.59;	author EelcoVisser;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.09.13.23.48.28;	author EelcoVisser;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.05.21.22.56.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.02.19.10.49.27;	author EelcoVisser;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.01.20.23.05.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2002.11.14.22.21.22;	author EelcoVisser;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2002.11.14.20.35.35;	author EelcoVisser;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2002.08.28.09.16.58;	author EelcoVisser;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2002.08.26.07.57.52;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.08.23.09.48.53;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.16
+log
+@testenv
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1109775732" format="1.0" version="1.16"}%
+%META:TOPICPARENT{name="WebHome"}%
+%INCLUDE{PublicationPages}%
+
+%INCLUDE{http://www.cs.uu.nl/~visser/visser/visser-by-year.html}%
+
+%META:TOPICMOVED{by="EelcoVisser" date="1053557649" from="Visser.Publications" to="Visser.PublicationsByYear"}%
+@
+
+
+1.15
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1090320600" format="1.0" version="1.15"}%
+d3 4
+a6 3
+%INCLUDE{PublicationPages}%
+
+%INCLUDE{http://www.cs.uu.nl/~visser/visser/visser-by-year.html}%
+@
+
+
+1.14
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1090009140" format="1.0" version="1.14"}%
+d3 1
+a3 4
+	* [[Publications alphabetically by author]]
+	* [[Publications by topic]]
+	* [[http://www.informatik.uni-trier.de/~ley/db/indices/a-tree/v/Visser:Eelco.html][DBLP]] ([[http://hpsearch.uni-trier.de/hp/cgi/hps.cgi?coauthor=DBLP-Coauthors&query=Eelco+Visser][Coauthors]])
+	* [[http://citeseer.nj.nec.com/cs?cs=1&q=Eelco+w%2F2+Visser+or+E+w%2F2+Visser&submit=Documents&co=Expected+Citations&cm=50&cf=Any&ao=Expected+Citations&am=20&af=Header][ResearchIndex]]
+d5 1
+a5 1
+%INCLUDE{http://www.cs.uu.nl/~visser/visser-bib/visser-bib-by-year.html}%
+@
+
+
+1.13
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1081118659" format="1.0" version="1.13"}%
+d3 3
+a5 2
+	* [[Publications by Topic]]
+	* [[http://www.informatik.uni-trier.de/~ley/db/indices/a-tree/v/Visser:Eelco.html][DBLP]]
+a6 1
+	* [[http://hpsearch.uni-trier.de/hp/cgi/hps.cgi?coauthor=DBLP-Coauthors&query=Eelco+Visser][Coauthors]]
+d8 1
+a8 1
+%INCLUDE{http://www.cs.uu.nl/groups/ST/stbib/visser-by-year/index.html}%
+@
+
+
+1.12
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1068041538" format="1.0" version="1.12"}%
+d6 1
+a6 1
+
+@
+
+
+1.11
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1066953896" format="1.0" version="1.11"}%
+a5 5
+	* [[http://www.cs.uu.nl/~visser/cv/eelco-visser.bib][BibTeX]]
+
+%INCLUDE{http://www.cs.uu.nl/~visser/visser-by-year/index.html}%
+
+<!-- http://www.cs.uu.nl/~visser/publications/publications.html -->
+d8 1
+@
+
+
+1.10
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1066848898" format="1.0" version="1.10"}%
+d8 1
+a8 1
+%INCLUDE{http://www.cs.uu.nl/~visser/eelco-visser-by-year/index.html}%
+@
+
+
+1.9
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1063496908" format="1.0" version="1.9"}%
+d8 3
+a10 1
+%INCLUDE{http://www.cs.uu.nl/~visser/publications/publications.html}%
+@
+
+
+1.8
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1053557760" format="1.0" version="1.8"}%
+a2 1
+
+d6 1
+@
+
+
+1.7
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1045651767" format="1.0" version="1.7"}%
+d3 2
+d11 1
+@
+
+
+1.6
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1043103900" format="1.0" version="1.6"}%
+d3 3
+a7 1
+----
+a8 1
+See also [[http://www.informatik.uni-trier.de/~ley/db/indices/a-tree/v/Visser:Eelco.html][DBLP]] or  [[http://citeseer.nj.nec.com/cs?cs=1&q=Eelco+w%2F2+Visser+or+E+w%2F2+Visser&submit=Documents&co=Expected+Citations&cm=50&cf=Any&ao=Expected+Citations&am=20&af=Header][ResearchIndex]]
+@
+
+
+1.5
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1037312482" format="1.0" version="1.5"}%
+d7 1
+a7 1
+See also [[http://www.informatik.uni-trier.de/~ley/db/indices/a-tree/v/Visser:Eelco.html][DBLP]] or  [[http://citeseer.nj.nec.com/cs?q=Eelco%20w%2F2%20Visser%20or%20E%20w%2F2%20Visser&cs=1&submit=Search+Citations&cf=Author&co=Citations&cm=50][CiteSeer]]
+@
+
+
+1.4
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1037306134" format="1.0" version="1.4"}%
+d7 1
+a7 1
+See also [[http://www.informatik.uni-trier.de/~ley/db/indices/a-tree/v/Visser:Eelco.html][DBLP]] or  [[http://citeseer.nj.nec.com/cs?cs=1&q=Eelco+w%2F2+Visser+or+E+w%2F2+Visser&submit=Citations&co=Citations&cm=&cf=Any&ao=Citations&am=&af=Any][CiteSeer]]
+@
+
+
+1.3
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1030526218" format="1.0" version="1.3"}%
+d5 3
+@
+
+
+1.2
+log
+@none
+@
+text
+@d1 2
+a2 2
+%META:TOPICINFO{author="EelcoVisser" date="1030348671" format="1.0" version="1.2"}%
+%META:TOPICPARENT{name="SupervisedTheses"}%
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1030096133" format="1.0" version="1.1"}%
+d3 1
+a3 5
+%INCLUDE{http://www.cs.uu.nl/~visser/publications/index.html}%
+
+<!--
+	* Set SKIN = notitle
+-->
+@

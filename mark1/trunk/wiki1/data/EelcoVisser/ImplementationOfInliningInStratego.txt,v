@@ -1,0 +1,52 @@
+head	1.1;
+access;
+symbols;
+locks
+	apache:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2002.01.24.00.07.38;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.1
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1011830858" format="1.0" version="1.1"}%
+%META:TOPICPARENT{name="StrategoPublications"}%
+by Transform.ArneDeBruijn
+
+August 10, 2001
+INF/SCR-01-11
+Master thesis, Institute of Information and Computing Sciences, Universiteit Utrecht
+
+*Abstract*
+
+All modern compilers provide inlining, an optimization which replaces a func-
+tion call by the function body. Implementations of inlining are usually focused
+on speci¯c source languages or on speci¯c algorithms to decide which functions
+should be inlined. We describe the implementation of a general inlining im-
+plementation in the program transformation language Stratego. This inliner
+should be usable for di®erent source languages and decision algorithms. The
+implementation separates the analysis and transformation of the program, the
+traversal of the program and the decision when to do inlining. In addition, the
+implementation of several other optimizations that are enabled by inlining is
+discussed in the context of the highly optimizable Pan language.
+
+*Available*
+
+	* http://www.cs.uu.nl/people/visser/ftp/Bru01.pdf
+
+-----
+Transform.CategoryPaper
+@

@@ -1,0 +1,147 @@
+head	1.4;
+access;
+symbols;
+locks
+	apache:1.4; strict;
+comment	@# @;
+
+
+1.4
+date	2006.11.19.19.35.43;	author EelcoVisser;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2006.10.17.14.47.59;	author EelcoVisser;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2006.04.04.14.52.19;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2006.03.01.21.01.15;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.4
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1163964943" format="1.0" version="1.4"}%
+%META:TOPICPARENT{name="WebHome"}%
+--------------+ Transformations for Abstractions (TFA)
+
+Research project granted in the NWO/EW Open Competition 2005. 
+
+[[TFA.WebHome][project page]]
+
+----+++ Summary
+
+This proposal is about techniques at the intersection of two areas of
+software engineering.  (1) In order to automate software engineering
+we would like to automate the process of producing programs by means
+of automatic <em>transformations</em>, thereby computing with programs
+as we do with other data.  (2) In order to improve the expressivity of
+programming languages to the concepts and notations of specific
+application domains, we would would like to extend general-purpose
+languages with domain-specific abstractions.  Combining these
+desiderata leads to the need to extend transformations for new
+domain-specific abstractions.
+
+The goal of this project is to develop a systematic approach to the
+extension of general purpose languages with domain-specific
+abstractions, integrating those abstractions in the syntax and
+transformations of the programming environment. This requires research
+into the following issues:
+
+	* strategies for the definition of domain abstractions
+
+	* mechanisms for open extensibility of transformations
+
+	* methods and patterns for design of open transformations
+
+	* constraints for independent extensibility of transformations
+
+	* derivation of transformation extensions from definitions of abstractions
+
+We approach this goal by analyzing a variety of existing
+domain-specific languages and transformations, developing generic
+extensibility mechanisms, and validating these first in an `in vitro'
+setting and then in a programming environment for the Java
+language. The project builds on a solid body of work from the
+Stratego/XT project that will allow us to concentrate on the core of
+the problem, rather than being distracted by infrastructural issues.
+
+----+++ Job Opening
+
+There is an opening in the _Transformations for Abstractions_ project for a postdoc (1 year; with an option for 2 more years) or a PhD student (4 years).
+Contact [[WebHome][Eelco Visser]] for more information about the project (the full proposal) and the job.
+
+------+++ Resources
+
+	* [[Transformations for Abstractions]] - SCAM'05 keynote paper
+	* [[http://www.stratego-language.org][www.stratego-language.org]] - the Stratego/XT project
+
+@
+
+
+1.3
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1161096479" format="1.0" version="1.3"}%
+d7 2
+@
+
+
+1.2
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1144162339" format="1.0" version="1.2"}%
+d3 2
+a53 7
+<!--
+	* Set SKIN = customtitle
+	* Set CUSTOMHEADTITLE = Transformations for Abstractions
+	* Set CUSTOMTOPICTITLE = <em>Transformations for Abstractions</em>
+	* Set WEBTITLE = Eelco Visser
+-->
+
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1141246875" format="1.0" version="1.1"}%
+d3 1
+a3 1
+Project granted in the NWO/EW open competition 2005. 
+d42 1
+a42 1
+------+++ Papers
+d44 7
+a50 1
+	* [[Transformations for Abstractions]]
+@

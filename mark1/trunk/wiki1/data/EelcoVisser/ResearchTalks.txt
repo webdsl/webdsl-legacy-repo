@@ -1,0 +1,55 @@
+%META:TOPICINFO{author="EelcoVisser" date="1141545037" format="1.0" version="1.22"}%
+%META:TOPICPARENT{name="WebHome"}%
+Slides for some recent talks 
+
+-----+++ 2006
+
+	* [[Pt.CourseSlides][Slides]] for the [[Pt.WebHome][program transformation]] course (February-April 2006)
+
+	* [[http://www.cs.uu.nl/~visser/ftp/JavaTransform-Dagstuhl06.pdf][A Framework for Transformation of Java Programs]]. [[http://smart-generators.org/M3Schedule][IFIP WG 2.11 meeting]] at Dagstuhl	25-28 January, 2006.
+
+	* [[http://www.cs.uu.nl/~visser/ftp/PEPM06-inv.pdf][Stratego/XT 0.16: Components for Transformation Systems]]. PEPM'06, January 9, 2006.
+
+	* [[http://www.cs.uu.nl/~visser/ftp/Stratego-IBM-2006-01-06.pdf][Stratego/XT 0.16: A Language and Toolset for Program Transformation]]. IBM Research, New York, January 6, 2006.
+
+------+++ 2005
+
+	* [[http://www.cs.uu.nl/~visser/ftp/Visser-Philips-2005.pdf][Advanced Program Transformation with Stratego/XT]]. Informatica Colloquium, Philips Research, Eindhoven, November 23, 2005. (variation on Dagstuhl talk)
+
+	* [[http://www.cs.uu.nl/~visser/ftp/TUE05-GP.pdf][Generative Software Development. Overview and Examples]]. Guest lecture TUE, Eindhoven. October 27, 2005. (Based on paper by Czarnecki)
+
+	* [[Transformations for Abstractions]]. Keynote talk for the Fifth IEEE International Workshop on Source Code Analysis and Manipulation (SCAM'05), Budapest, Hungary, October 2005
+
+	* [[http://www.cs.uu.nl/~visser/ftp/Visser-Dagstuhl-2005.pdf][Strategies for Rule-Based Program Transformation Software Engineering Techniques for Program Transformation]]. Invited tutorial, Dagstuhl Seminar 05161 on Transformation Techniques in Software Engineering. April 2005.
+
+	* [[http://www.cs.uu.nl/~visser/ftp/OV05-CC.pdf][Composing source-to-source data-flow transformations with rewriting strategies and dependent dynamic rewrite rules]]. International Conference on Compiler Construction (CC'05), Edinburgh, April 2005.
+
+	* [[http://www.cs.uu.nl/~visser/ftp/Visser-WG211-2005.pdf][Extensible Program Transformation Systems]]. IFIP WG 2.11 (Program Generation) meeting Rice University, Houston, March 6, 2005.
+
+	* [[http://www.cs.uu.nl/~visser/ftp/TraCE-Jacquard-2005.pdf][TraCE: Transparent Configuration Environments]]. Jacquard Conference 2005. Zeist, January 2005.
+
+	* [[http://www.cs.uu.nl/~visser/ftp/Visser-XTC-Jacquard-2005.pdf][XTC: A Lightweight Component Model for Transformation Tool Composition]]. Jacquard Conference 2005. Zeist, January 2005.
+
+------+++ 2004
+
+	* [[http://www.cs.uu.nl/~visser/ftp/SUD04-Intro.pdf][Fifth Stratego User Days (SUD'04)]] -- Introduction to the [[%HTTPSTRATEGO%FifthStrategoUserDays][meeting]] on March 1, 2004 with an overview of developments since the [[%HTTPSTRATEGO%FourthStrategoUsersDay][previous meeting]].
+
+	* [[http://www.cs.uu.nl/~visser/ftp/FRW04-slides.pdf][Implementation of Partial Evaluation in Stratego/XT]] -- slides for talk at [[http://www.cs.kent.ac.uk/projects/refactor-fp/workshop.html][Functional Refactoring Workshop]] in Canterbury on February 9, 2004. I also gave this talk at SUD'04 ([[http://www.cs.uu.nl/~visser/ftp/SUD04-PE.pdf][pdf]]) on March 3, 2004.
+
+	* [[http://www.cs.uu.nl/~visser/ftp/WG21-2004-01-28.pdf][Program Transformation with Scoped Dynamic Rewrite Rules in Stratego]] -- slides for talk at [[http://web.comlab.ox.ac.uk/oucl/work/jeremy.gibbons/wg21/][IFIP WG 2.1]] in Rome, January 2004
+
+------+++ 2003
+
+	* [[Pt03.CourseSlides][Slides]] for the [[Pt.WebHome][program transformation]] course (november 2003 - january 2004)
+
+	* [[http://www.cs.uu.nl/~visser/ftp/STC-2003-10-09.pdf][An Introduction to Program Transformation]] -- talk given at the [[Stc.WebHome][Software Technology Colloquium]] on October 9, 2003 (an introduction to the [[Pt.WebHome][course]] that I teach later this year).
+
+	* [[http://www.cs.uu.nl/~visser/ftp/FV03-slides.pdf][Adding Concrete Syntax to a Prolog-Based Program Synthesis System]] -- talk given at LOPSTR'03, August 2003
+
+	* [[ftp://ftp.stratego-language.org/pub/stratego/SUD03/sud03-xtc.pdf][Transformation Tool Composition with XTC]] -- talk given at Fourth Stratego Users Day
+
+	* [[ftp://ftp.stratego-language.org/pub/stratego/SUD03/sud03-autoxt.pdf][Building Stratego Programs with AutoXT]] -- talk given at Fourth Stratego Users Day
+
+	* [[http://www.cs.uu.nl/~visser/ftp/Vis03-Dagstuhl.pdf][Strategies for Program Transformation. From rules to tool composition with Stratego/XT]] -- talk given at [[http://www.dagstuhl.de/03131/][Dagstuhl Seminar 03131]] on Domain-Specific Program Generation, March 2003
+
+%META:TOPICMOVED{by="EelcoVisser" date="1055745438" from="Visser.Talks" to="Visser.ResearchTalks"}%

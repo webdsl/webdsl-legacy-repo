@@ -1,0 +1,10 @@
+%META:TOPICINFO{author="EelcoVisser" date="1161118201" format="1.0" version="1.2"}%
+%META:TOPICPARENT{name="SyntaxDefinition"}%
+E. Visser. *Scannerless Generalized-LR Parsing.* Technical Report P9707, Programming Research Group, University of Amsterdam, July 1997. ([[http://www.cs.uu.nl/people/visser/ftp/P9707.ps.gz][ps.gz]])
+
+-----+++ <nop>BibTeX
+
+<pre>
+%INCLUDE{http://www.cs.uu.nl/groups/ST/stbib/visser-by-year/Vis97.sglr.bib}%
+</pre>
+

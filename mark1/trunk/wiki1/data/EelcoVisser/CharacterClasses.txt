@@ -1,0 +1,10 @@
+%META:TOPICINFO{author="EelcoVisser" date="1161118213" format="1.0" version="1.2"}%
+%META:TOPICPARENT{name="SyntaxDefinition"}%
+E. Visser. *Character Classes.* Technical Report P9708, Programming Research Group, University of Amsterdam, August 1997. ([[http://www.cs.uu.nl/people/visser/ftp/P9708.ps.gz][psgz]]).
+
+-----+++ <nop>BibTeX
+
+<pre>
+%INCLUDE{http://www.cs.uu.nl/groups/ST/stbib/visser-by-year/Vis97.cc.bib}%
+</pre>
+

@@ -1,0 +1,57 @@
+head	1.2;
+access;
+symbols;
+locks
+	apache:1.2; strict;
+comment	@# @;
+
+
+1.2
+date	2005.04.29.20.04.47;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.11.24.23.55.45;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.2
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1114805087" format="1.0" version="1.2"}%
+%META:TOPICPARENT{name="WebHome"}%
+%INCLUDE{http://www.stratego-language.org/Stratego/DesignOfTheCodeBoostTransformationSystem?skin=plain}%
+
+[[http://www.stratego-language.org/Stratego/DesignOfTheCodeBoostTransformationSystem][Source]]
+
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1069718144" format="1.0" version="1.1"}%
+d3 4
+a6 8
+
+%INCLUDE{http://www.stratego-language.org/twiki/bin/view/Stratego/DesignOfTheCodeBoostTransformationSystem?skin=plain}%
+
+[[http://www.stratego-language.org/twiki/bin/view/Stratego/DesignOfTheCodeBoostTransformationSystem][Source]]
+
+<!--
+	* Set SKIN = notitle
+-->
+@

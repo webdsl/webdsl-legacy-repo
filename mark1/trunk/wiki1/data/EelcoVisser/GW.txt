@@ -1,0 +1,9 @@
+%META:TOPICINFO{author="EelcoVisser" date="1159799659" format="1.0" version="1.1"}%
+some screenshots
+
+	 <img src="%ATTACHURLPATH%/gw.png" alt="gw.png"  height="900"  />
+
+	 <img src="%ATTACHURLPATH%/gw-edit.png" alt="gw-edit.png"  height="900"  />
+
+%META:FILEATTACHMENT{name="gw.png" attr="" comment="" date="1159799332" path="gw.png" size="277790" user="EelcoVisser" version="1.1"}%
+%META:FILEATTACHMENT{name="gw-edit.png" attr="" comment="" date="1159799348" path="gw-edit.png" size="141773" user="EelcoVisser" version="1.1"}%

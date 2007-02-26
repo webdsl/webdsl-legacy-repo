@@ -1,0 +1,49 @@
+head	1.1;
+access;
+symbols;
+locks
+	apache:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2003.07.23.09.01.00;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.1
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1058950860" format="1.0" version="1.1"}%
+
+<verbatim>
+ ScriptAlias /twiki/bin/ "/users/www/staff/twiki/bin/"
+ Alias /twiki/ "/users/www/staff/twiki/"
+ <Directory "/users/www/staff/twiki/bin">
+	 Options +ExecCGI
+	 SetHandler cgi-script
+	 AllowOverride all
+	 Allow from all
+ </Directory>
+ <Directory "/users/www/staff/twiki/pub">
+	 Options FollowSymLinks +Includes
+	 AllowOverride None
+	 Allow from all
+ </Directory>
+ <Directory "/users/www/staff/twiki/data">
+	 deny from all
+ </Directory>
+ <Directory "/users/www/staff/twiki/templates">
+	 deny from all
+ </Directory>
+</verbatim>
+
+@

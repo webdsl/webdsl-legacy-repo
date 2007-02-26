@@ -1,0 +1,86 @@
+head	1.2;
+access;
+symbols;
+locks
+	apache:1.2; strict;
+comment	@# @;
+
+
+1.2
+date	2002.01.03.10.15.19;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2001.11.27.22.36.07;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.2
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1010052919" format="1.0" version="1.2"}%
+%META:TOPICPARENT{name="WebHome"}%
+----+++ Deriving Optimization Strategies from Evaluation Strategies
+
+An program optimizer reduces a program to a more efficient program with the same behaviour.
+This often means that part of the computation the program defines is performed at compile time.
+This suggests that it should be possible to derive an optimizer from an interpreter.
+If this can be done systematically we would obtain a correct 
+
+In several prototypes interpreters were defined using the following approach:
+
+	* Define a set of constant folding rules defining computations
+	* Define an abstract syntax tree traversal that defines the control flow
+
+Using this approach it is very easy to make different versions of an interpreter defining different evaluation strategies or incorporating new language constructs. The approach has been used succesfully for the following languages:
+
+	* Stratego:TigerCompiler
+	* Stratego:RhoStratego
+	* Stratego:StrategoScript
+
+The paper Stratego:BuildingInterpretersWithRewritingStrategies describes the approach.
+
+Now the question is whether optimizers can be obtained by taking a different evaluation strategy (and maybe adding a few rules).
+
+In the end it would be interesting to _automatically_ derive an optimizer from an interpreter. In this project we restrict the question to exploring systematic derivations _by hand_.
+
+----+++ Rearch Project
+
+	* Define/take an interpreter for a language using rewrite rules and a strategy for combining them
+
+	* Explore optimizations for this language
+
+	* How is an optimizer related to the interpreter
+
+	* What extra rules are needed for optimization?
+
+	* How does the strategy differ from the evaluation strategy?
+	
+	* Does an interpreter provide enough information to optimize programs?
+
+	* In practice optimizers are quite different beasts than interpreters. Why?
+
+
+-- Main.EelcoVisser - 27 Nov 2001 <br />
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1006901344" format="1.0" version="1.1"}%
+d20 2
+@

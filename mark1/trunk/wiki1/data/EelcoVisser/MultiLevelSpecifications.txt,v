@@ -1,0 +1,42 @@
+head	1.1;
+access;
+symbols;
+locks
+	apache:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2003.06.30.08.57.29;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.1
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1056963449" format="1.0" version="1.1"}%
+%META:TOPICPARENT{name="ResearchProjects"}%
+E. Visser. *Multi-level specifications.* In A. van Deursen, J. Heering, and P. Klint, editors, Language Prototyping. An Algebraic Specification Approach, volume 5 of AMAST Series in Computing, pages 105--196. World Scientific, Singapore, September 1996. ([[http://www.cs.uu.nl/people/visser/ftp/P9604.ps.gz][ps.gz]]). 
+
+The MLS formalism for multi-level algebraic specification allows the specification of the types used in a signature by means of a specification at a higher-level. The design and a prototype implementation are described in the book chapter cited above. The implementation is in ASF+SDF and may or may not work with the current version of the ASF+SDF meta-environment.
+
+See http://homepages.cwi.nl/~gipe/language_prototyping/msig.html
+
+-- Main.EelcoVisser - 30 Jun 2003
+
+----+++ Abstract
+
+This chapter introduces a modular, applicative, multi-level equational specification formalism that supports algebraic specification with user-definable type constructors, polymorphic functions and higher-order functions. Specifications consist of one or more levels numbered 0 to n. Level 0 defines the object level terms. Level 1 defines the types used in the signature of level 0. In general, the terms used as types in level n are defined in level n+1 . This setup makes the algebra of types and the algebra of types of types, etc., user-definable. The applicative term structure makes functions first-class citizens and facilitates higher-order functions. The use of variables in terms used as types provides polymorphism (including higher-order polymorphism, i.e., abstraction over type constructors). Functions and variables can be overloaded. Specifications can be divided into modules. Modules can be imported at several levels by means of a specification lifting operation. Equations define the semantics of terms over a signature. The formalism also allows equations over types, by means of which many type systems can be described. The typechecker presented in this chapter does not take into account type equations.
+
+The specification, in ASF+SDF, of the syntax, type system and semantics of the formalism is presented in three stages: (1) untyped equational specifications (2) applicative one-level specifications (3) modular multi-level specifications. The definition of a typechecker for stages (2) and (3) is divided into four parts: (a) well-formedness judgements verifying type correctness of fully annotated terms and specifications, (b) non well-formedness rules giving descriptive error messages for the cases not covered under (a), (c) a type assignment function annotating the terms in a plain specification with types, and (d) a typechecking function which checks well-formedness after applying type assignment. These functions are defined uniformly for all levels of a specification.
+
+Aside of defining a new specification formalism, this chapter illustrates the use of ASF+SDF for the design and prototyping of sophisticated specification formalisms. 
+@

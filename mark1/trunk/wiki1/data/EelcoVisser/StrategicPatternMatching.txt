@@ -1,0 +1,32 @@
+%META:TOPICINFO{author="EelcoVisser" date="1007659735" format="1.0" version="1.2"}%
+StrategicPatternMatching is a paper about the extending standard first-order term pattern matching using strategies to define complex patterns. Specifically it describes the StrategoIdiom's RecursivePatterns, ContextualPatterns and OverlayDefinitions.
+
+*Bibliographic Information*
+
+Eelco Visser. Strategic Pattern Matching. In _Rewriting Techniques and Applications (RTA'99)_, volume 1631 of Lecture Notes in Computer Science, pages 30-44, Trento, Italy. July 1999. 
+
+*Abstract*
+
+		  Stratego is a language for the specification of transformation
+		  rules and strategies for applying them.  The basic actions of
+		  transformations are matching and building instantiations of
+		  first-order term patterns.  The language supports concise
+		  formulation of generic and data type-specific term traversals.
+		  One of the unusual features of Stratego is the separation of
+		  scope from matching, allowing sharing of variables through
+		  traversals.  The combination of first-order patterns with
+		  strategies forms an expressive formalism for pattern matching.
+		  In this paper we discuss three examples of _strategic pattern matching_: (1) ContextualRules allow matching
+		  and replacement of a pattern at an arbitrary depth of a
+		  subterm of the root pattern.  (2) [[Recursive patterns]]
+		  can be used to characterize concisely the structure of
+		  languages that form a restriction of a larger language. (3)
+		  [[OverlayDefinitions][Overlays]] serve to hide the representation of a language
+		  in another (more generic) language.  These techniques are
+		  illustrated by means of specifications in Stratego.							
+
+*Download*
+
+	* http://www.cs.uu.nl/people/visser/ftp/Vis99.ps.gz
+-----
+Transform.CategoryPaper

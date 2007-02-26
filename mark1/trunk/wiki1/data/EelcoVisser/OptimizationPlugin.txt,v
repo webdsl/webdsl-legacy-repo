@@ -1,0 +1,63 @@
+head	1.2;
+access;
+symbols;
+locks
+	apache:1.2; strict;
+comment	@# @;
+
+
+1.2
+date	2002.01.02.16.31.42;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2001.11.28.12.24.15;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.2
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1009989102" format="1.0" version="1.2"}%
+%META:TOPICPARENT{name="WebHome"}%
+----+++ Description
+
+An optimization plugin is a compiler component that can be provided by the programmer.
+
+----+++ Issues
+
+	* interference with other optimizations
+
+	* in what stage to plug in
+
+	* architecture of a pluggable compiler
+
+----+++ Literature and Resources
+
+	* Transform:LxLanguage
+	* Transform:BroadwayCompiler
+	* Transform:SharLit / Transform:SUIF
+
+-- Main.EelcoVisser - 28 Nov 2001 <br />
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1006950255" format="1.0" version="1.1"}%
+d18 2
+@

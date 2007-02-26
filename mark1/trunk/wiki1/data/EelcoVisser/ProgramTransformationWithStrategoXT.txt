@@ -1,0 +1,6 @@
+%META:TOPICINFO{author="EelcoVisser" date="1161097459" format="1.0" version="1.5"}%
+%META:TOPICPARENT{name="WebHome"}%
+%INCLUDE{http://www.stratego-language.org/Stratego/ProgramTransformationWithStrategoXT?skin=plain}%
+
+[[http://www.stratego-language.org/Stratego/ProgramTransformationWithStrategoXT][Source]]
+

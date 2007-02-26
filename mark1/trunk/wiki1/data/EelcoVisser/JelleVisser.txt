@@ -1,0 +1,65 @@
+%META:TOPICINFO{author="EelcoVisser" date="1084790585" format="1.0" version="1.3"}%
+%META:TOPICPARENT{name="BenteSofie"}%
+-------+ Jelle Visser
+
+------++ Summer 2004
+
+<center>
+	 <img src="%ATTACHURLPATH%/jelle-a-2004.jpg" alt="jelle-a-2004.jpg"  width="614" height="410"  />
+
+
+	 <img src="%ATTACHURLPATH%/jelle-bas-pepermolen-2004.jpg" alt="jelle-bas-pepermolen-2004.jpg"  width="614" height="410"  />
+
+
+	 <img src="%ATTACHURLPATH%/eelco-jelle-2004.jpg" alt="eelco-jelle-2004.jpg"  width="614" height="410"  />
+</center>
+
+-------++ Winter 2001
+
+<center>
+<img SRC="http://www.cs.uu.nl/~visser/jelle/Jelle-slaapt.jpg">
+<p />
+
+<hr width="50%">
+
+Hoera!
+
+<p />
+
+<h1 align="center">Jelle</h1>
+
+<p />
+
+is geboren op 11 december 2001 om 20:52
+
+<p />
+
+zoon van <br>
+[[Eelco Visser]] & [[Janine Mets]]
+
+<p />
+
+<a href="mailto:visser@acm.org">visser@acm.org</a><br>
+<a href="mailto:janinemets@altavista.com">janinemets@altavista.com</a>
+
+<hr width="50%">
+<p />
+
+<img SRC="first-lecture.jpg" height="300">
+<p />
+<img SRC="http://www.cs.uu.nl/~visser/jelle/moeder.jpg" height="300">
+<img SRC="http://www.cs.uu.nl/~visser/jelle/vader.jpg" height="300">
+<p />
+<img SRC="http://www.cs.uu.nl/~visser/jelle/massage.jpg" height="300">
+<p />
+<img SRC="http://www.cs.uu.nl/~visser/jelle/eelcoenjelle.jpg" height="300">
+
+</center>
+<!--
+	* Set SKIN = notitle
+-->
+
+
+%META:FILEATTACHMENT{name="jelle-a-2004.jpg" attr="h" comment="" date="1108253419" path="jelle-a-2004.jpg" size="57055" user="EelcoVisser" version="1.1"}%
+%META:FILEATTACHMENT{name="jelle-bas-pepermolen-2004.jpg" attr="h" comment="" date="1108253719" path="jelle-bas-pepermolen-2004.jpg" size="79309" user="EelcoVisser" version="1.1"}%
+%META:FILEATTACHMENT{name="eelco-jelle-2004.jpg" attr="h" comment="" date="1108253961" path="eelco-jelle-2004.jpg" size="83642" user="EelcoVisser" version="1.1"}%

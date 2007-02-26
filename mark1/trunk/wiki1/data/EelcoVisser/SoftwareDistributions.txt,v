@@ -1,0 +1,707 @@
+head	1.21;
+access;
+symbols;
+locks
+	apache:1.21; strict;
+comment	@# @;
+
+
+1.21
+date	2006.10.17.14.53.35;	author EelcoVisser;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2005.10.28.21.21.49;	author EelcoVisser;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2005.06.12.12.33.57;	author EelcoVisser;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2005.06.05.16.43.15;	author EelcoVisser;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2005.06.05.11.22.51;	author EelcoVisser;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2004.09.04.11.25.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2004.04.06.23.12.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2004.01.20.17.09.28;	author EelcoDolstra;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.12.14.20.52.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.12.11.11.10.58;	author EelcoVisser;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.08.04.21.25.12;	author EelcoVisser;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.06.16.06.41.24;	author EelcoVisser;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.05.31.12.00.48;	author EelcoVisser;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.05.08.13.25.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.02.23.13.12.07;	author EelcoVisser;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.02.05.12.25.45;	author EelcoVisser;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.01.11.23.58.54;	author EelcoVisser;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2002.11.23.22.50.28;	author EelcoVisser;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2002.11.17.21.15.08;	author EelcoVisser;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2002.11.17.21.02.30;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.08.23.09.50.30;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.21
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1161096815" format="1.0" version="1.21"}%
+%META:TOPICPARENT{name="WebHome"}%
+-------++ Projects
+
+These are software projects that I am involved in:
+
+--------+++ Transformation
+
+	* [[http://www.stratego-language.org][Stratego]] is a language for the specification of program transformation systems based on the paradigm of rewriting strategies.
+
+	* [[http://www.syntax-definition.org][SDF2]] is a modular formalism for syntax definition that integrates lexical and context-free syntax.
+
+	* [[http://www.stratego-language.org/Stratego/StrategoXT][Stratego/XT]] is a bundle of tools for program transformation built around Stratego, SDF2 and the ATerm library.
+
+	* [[http://www.stratego-language.org/Stratego/JavaFront][Java-Front]] provides a syntax definition for Java and [[http://www.stratego-language.org/Stratego/JavaBorg][JavaBorg]] implements sample domain-specific language extensions for Java.
+
+	* [[http://www.stratego-language.org/Stratego/JavaBorg][JavaBorg]]: example domain-specific language embeddings 
+
+	* [[http://www.octave-compiler.org][Octave Compiler]]
+
+	* [[http://www.stratego-language.org/Stratego/BibtexTools][BibTeX Tools]] is a set of tools for transforming <nop>BibTeX files, in particular production of html bibliographies and extraction of bib files based on a .aux file.
+
+	* [[http://www.stratego-language.org/Tiger][Tiger in Stratego]] is a collection of components for the compilation and transformation of Tiger programs designed for the purpose of education and demonstration of program transformation techniques.
+
+	* [[http://www.codeboost.org][CodeBoost]] is a transformation system for C++ 
+
+--------+++ Software Deployment
+
+	* [[http://nix.cs.uu.nl][Nix]] is a system for software deployment
+
+--------+++ Hacks
+
+	* [[Latex Styles]]
+
+	* [[http://www.cs.uu.nl/~visser/ftp/mh-to-evolution][mh-to-evolution]] is a script for converting [[http://www.exmh.org][MH]] mail directories to [[http://www.ximian.org][Evolution]] mail directories.
+
+-------++ Releases
+
+	* [[http://www.stratego-language.org/Stratego/StrategoDownload][Stratego Download]]: stable releases of Stratego/XT
+
+	* [[http://www.stratego-language.org/Stratego/ContinuousBuild][Continuous builds]]: bleeding edge releases and build reports from build farm
+
+-------++ Logistics
+
+	* [[https://bugs.cs.uu.nl][JIRA]] issue tracking system
+
+	* [[http://svn.cs.uu.nl][Subversion server]]
+		* [[https://svn.cs.uu.nl:12443/repoman/info/StrategoXT][StrategoXT repository]]
+
+	* [[ftp://ftp.stratego-language.org/pub/stratego][FTP directory]]
+
+%META:TOPICMOVED{by="EelcoVisser" date="1055745684" from="Visser.Software" to="Visser.SoftwareDistributions"}%
+@
+
+
+1.20
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1130534509" format="1.0" version="1.20"}%
+d29 1
+a29 1
+	* [[Trace.Nix][Nix]] is a system for software deployment
+@
+
+
+1.19
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1118579637" format="1.0" version="1.19"}%
+d45 1
+a45 1
+	* [[https://catamaran.labs.cs.uu.nl/jira][JIRA]] issue tracking system
+@
+
+
+1.18
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1117989795" format="1.0" version="1.18"}%
+a44 2
+Issue tracking
+
+a46 2
+Version management
+
+d48 1
+a48 3
+	* [[https://svn.cs.uu.nl:12443/repoman/info/StrategoXT][StrategoXT repository]]
+
+FTP
+@
+
+
+1.17
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1117970571" format="1.0" version="1.17"}%
+d17 5
+a21 1
+	* [[http://www.stratego-language.org/Stratego/BibtexTools][BibTeX Tools]] is a set of tools for transforming <nop>BibTeX files, in particular production of html bibliographies
+@
+
+
+1.16
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1094297100" format="1.0" version="1.16"}%
+d3 51
+a53 53
+-------+++ Projects
+
+These are software projects that I am involved in:
+
+	* [[http://www.stratego-language.org][Stratego]] is a language for the specification of program transformation systems based on the paradigm of rewriting strategies.
+
+	* [[http://www.syntax-definition.org][SDF2]] is a modular formalism for syntax definition that integrates lexical and context-free syntax.
+
+	* [[http://www.stratego-language.org/Stratego/StrategoXT][Stratego/XT]] is a bundle of tools for program transformation built around Stratego, SDF2 and the ATerm library.
+
+	* [[http://www.stratego-language.org/Tiger][Tiger in Stratego]] is a collection of components for the compilation and transformation of Tiger programs designed for the purpose of education and demonstration of program transformation techniques.
+
+	* [[http://www.stratego-language.org/Stratego/JavaFront][Java-Front]] provides a syntax definition for Java and [[http://www.stratego-language.org/Stratego/JavaBorg][JavaBorg]] implements sample domain-specific language extensions for Java.
+
+	* [[http://www.codeboost.org][CodeBoost]] is a transformation system for C++ 
+
+	* [[Trace.Nix][Nix]] is a system for software deployment
+
+-------+++ Download
+
+	* [[http://www.stratego-language.org/Stratego/StrategoDownload][Stratego Download]]
+
+	* [[http://catamaran.labs.cs.uu.nl/dist/stratego/][Daily builds]]
+		* bibtex-tools
+		* tiger
+		* strategoxt
+		* java-front
+
+	* [[Latex Styles]]
+
+	* Scripts
+		* [[http://www.cs.uu.nl/~visser/ftp/mh-to-evolution][mh-to-evolution]] is a script for converting [[http://www.exmh.org][MH]] mail directories to [[http://www.ximian.org][Evolution]] mail directories.
+
+-------+++ Logistics
+
+Issue tracking
+
+	* [[https://catamaran.labs.cs.uu.nl/jira][JIRA]] issue tracking system
+
+Version management
+
+	* [[http://svn.cs.uu.nl][Subversion server]]
+	* [[https://svn.cs.uu.nl:12443/repoman/info/StrategoXT][StrategoXT repository]]
+
+Daily builds and release management
+
+	* [[http://www.stratego-language.org/release][Releases and daily builds]]
+	* [[http://www.stratego-language.org/Stratego/DailyBuild][Autobuild daily builds]]
+	* [[http://strategoxt.org/cgi/dbs/overview][Current buildfarm results]]
+
+FTP
+
+	* [[ftp://ftp.stratego-language.org/pub/stratego][FTP directory]]
+@
+
+
+1.15
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1081293120" format="1.0" version="1.15"}%
+d9 1
+a9 1
+	* [[http://www.program-transformation.org/Tools/SDF2][SDF2]] is a modular formalism for syntax definition that integrates lexical and context-free syntax.
+d15 1
+a15 1
+	* [[http://www.program-transformation.org/Tools/GrammarBase][Grammar Base]] is a collection of syntax definitions for common languages
+d21 1
+a21 1
+-------+++ Packages
+d25 1
+a25 7
+	* [[http://www.stratego-language.org/Stratego/AdditionalPackageDownload][Additional Package Download]]: lots of packages built with StrategoXT
+		* stratego-regular
+		* xml-tools
+		* xdoc
+		* stratego-net
+		* java-front
+		* sql-front
+a26 1
+		* prolog-tools
+d28 2
+d47 1
+a47 1
+Daily builds
+d49 2
+a50 1
+	* [[http://www.stratego-language.org/Stratego/DailyBuild][Daily build system]]
+d53 1
+a53 1
+Release management
+a55 2
+	* [[http://www.stratego-language.org/release][Releases]]
+
+@
+
+
+1.14
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoDolstra" date="1074618568" format="1.0" version="1.14"}%
+d41 1
+a41 1
+-------+++ Download
+d43 5
+a47 3
+	* [[ftp://ftp.stratego-language.org/pub/stratego][FTP directory]]
+	
+-------+++ Repositories
+d52 1
+a52 1
+-------+++ Daily Build
+d56 5
+@
+
+
+1.13
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1071435120" format="1.0" version="1.13"}%
+d19 1
+a19 1
+	* [[Trace.NixDeploymentSystem][Nix]] is a system for software deployment
+@
+
+
+1.12
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1071141058" format="1.0" version="1.12"}%
+d5 2
+d11 1
+a11 1
+	* [[http://www.stratego-language.org/Stratego/StrategoXT][StrategoXT]] is a bundle of tools for program transformation build around Stratego and SDF2.
+d15 20
+a34 1
+	* [[http://www.program-transformation.org/Tools/GrammarBase][Grammar Base]] is a collection of syntax definitions for common languages.
+d43 1
+a43 1
+	* ftp://ftp.stratego-language.org/pub/stratego
+d45 9
+a53 1
+-------+++ Version management
+a54 2
+	* [[http://losser.st-lab.cs.uu.nl:12080/repoman][Subversion server]]
+		* [[http://losser.st-lab.cs.uu.nl:12080/repoman/info/StrategoXT][StrategoXT]]
+@
+
+
+1.11
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1060032312" format="1.0" version="1.11"}%
+d3 1
+a3 1
+Projects
+d20 1
+a20 1
+Download
+d24 1
+a24 1
+Version management
+@
+
+
+1.10
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1055745684" format="1.0" version="1.10"}%
+d9 1
+a9 1
+	* [[http://www.program-transformation.org/Tools/GrammarBase][Grammar Base]] is a collection of syntax definitions for common languages.
+d11 1
+a11 1
+	* [[http://www.program-transformation.org/Tools/XT][XT]] is a bundle of tools for program transformation.
+d13 1
+a13 1
+	* [[http://www.stratego-language.org/Tiger][Tiger in Stratego]] is a collection of components for the compilation and transformation of Tiger programs designed for the purpose of education and demonstration of program transformation techniques.
+a24 4
+
+	* [[http://cvs.cs.uu.nl/][CVS Server]]
+		* [[http://cvs.cs.uu.nl/cgi-bin/cvsweb.cgi/StrategoXT/][StrategoXT]]
+		* [[http://cvs.cs.uu.nl/cgi-bin/cvsweb.cgi/tiger/][Tiger]]
+@
+
+
+1.9
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1054382448" format="1.0" version="1.9"}%
+d32 1
+@
+
+
+1.8
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1052400300" format="1.0" version="1.8"}%
+d5 1
+a5 1
+	* [[http://www.stratego-language.org][Stratego]] is a language for the specification of program transformation systems based on the paradigm of rewriting strategies. (See also ftp://ftp.stratego-language.org/pub/stratego)
+@
+
+
+1.7
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1046005927" format="1.0" version="1.7"}%
+d5 1
+a5 1
+<ul>
+d7 1
+a7 1
+<li> [[http://www.stratego-language.org][Stratego]] is a language for the specification of program transformation systems based on the paradigm of rewriting strategies. (See also ftp://ftp.stratego-language.org/pub/stratego)
+d9 1
+a9 1
+<li> [[http://www.program-transformation.org/Tools/SDF2][SDF2]] is a modular formalism for syntax definition that integrates lexical and context-free syntax.
+d11 1
+a11 1
+<li> [[http://www.program-transformation.org/Tools/GrammarBase][Grammar Base]] is a collection of syntax definitions for common languages.
+d13 1
+a13 1
+<li> [[http://www.program-transformation.org/Tools/XT][XT]] is a bundle of tools for program transformation.
+d15 1
+a15 1
+<li> [[http://www.stratego-language.org/Tiger][Tiger in Stratego]] is a collection of components for the compilation and transformation of Tiger programs designed for the purpose of education and demonstration of program transformation techniques.
+d17 2
+a18 3
+<li> [[Latex Styles]]
+
+</ul>
+@
+
+
+1.6
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1044447945" format="1.0" version="1.6"}%
+d28 2
+a29 1
+		* [[http://cvs.cs.uu.nl/cgi-bin/cvsweb.cgi/StrategoXT/][StrategoXT Repository]]
+d31 2
+a32 1
+	* [[http://losser.st-lab.cs.uu.nl:12080/repoman][Subversion server]]
+@
+
+
+1.5
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1042329534" format="1.0" version="1.5"}%
+d3 2
+d20 11
+@
+
+
+1.4
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1038091828" format="1.0" version="1.4"}%
+d5 1
+a5 1
+<li> [[http://www.stratego-language.org][Stratego]] is a language for the specification of program transformation systems based on the paradigm of rewriting strategies. 
+@
+
+
+1.3
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1037567708" format="1.0" version="1.3"}%
+d13 1
+a13 1
+<li> [[http://www.stratego-language.org/Hpc/TigerInStratego][Tiger in Stratego]] is a collection of components for the compilation and transformation of Tiger programs designed for the purpose of education and demonstration of program transformation techniques.
+@
+
+
+1.2
+log
+@none
+@
+text
+@d1 2
+a2 2
+%META:TOPICINFO{author="EelcoVisser" date="1037566950" format="1.0" version="1.2"}%
+%META:TOPICPARENT{name="Publications"}%
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1030096230" format="1.0" version="1.1"}%
+d3 1
+d5 1
+a5 1
+<h3><a href="http://www.stratego-language.org">Stratego - Program Transformation</a></h3>
+d7 1
+a7 3
+Stratego is a language for the specification of program
+		transformation systems based on the paradigm of rewriting
+		strategies. 
+d9 1
+a9 9
+		The basic transformation steps are specified by means of
+		conditional rewrite rules. The individual rewrite rules are
+		combined into a transformation system by means of a strategy, a
+		program in a dedicated language of strategy combinators. This
+		language supports controlled application of rewrite rules and
+		concise description of traversals over abstract syntax trees.
+		
+		This entails a separation of concerns between specification of
+		the transformation rules and the control of their application.
+d11 1
+a11 3
+		<p></p>
+The Stratego compiler (<em>sc</em>) translates a specification
+		to a C program.
+d13 1
+a13 7
+<h3><a href="http://www.program-transformation.org/Tools/SDF2">SDF2 - Syntax Definition</a></h3> SDF2 is a formalism for syntax definition.
+		
+		One of its key innovative features is the full integration of
+		lexical and context-free syntax. This entails that all aspects
+		of the syntax of a language can be described in one
+		formalism. At the implementation level this entails that no
+		separate scanner is needed.
+d15 1
+a15 69
+		In addition, the formalism provides a number of features that
+		make syntax definitions concise: modules, priorities, follow
+		restrictions, reject productions, a wide range of regular
+		expressions, aliases and character ranges.
+
+		<p />
+
+The implementation of SDF2 consists of a parser generator (pgen)
+		that generates parse tables and an interpreter for these tables
+		(sglr) that parses files.  The implementation is not yet
+		available for distribution.
+
+<h3><a href="http://www.program-transformation.org/Tools/GrammarTools">GT - Grammar Tools</a></h3> GT is a collection of tools for grammar engineering.
+
+<h3><a href="http://www.program-transformation.org/Tools/GrammarBase">GB - Grammar Base</a></h3>
+
+GB is a collection of syntax definitions for common languages.
+
+<h3><a href="http://www.program-transformation.org/Tools/XT">XT - Transformation Tools</a></h3>
+
+Distribution of a number of tools for the construction of
+		program transformation systems.
+
+	  <p />
+
+The package includes
+		<ul>
+<li> ATerm library
+	<li> Stratego : specification of program transformation systems
+	<li> GPP : generic pretty-printing package
+	<li> SGLR : scannerless generalized LR parser </li>
+<li> PGEN : parser generator for SDF2 </li>
+<li> GB : grammar base
+	<li> GT : grammar tools
+		</ul>
+
+<h3><a href="http://www.stratego-language.org/Hpc/TigerInStratego">Tiger in Stratego</a></h3>
+
+Implementation of a compiler for Andrew Appe's Tiger language as a case study in compilation by
+	  transformation. Used in a course on <a href="http://www.stratego-language.org/Hpc">High-Performance Compilers</a>.
+
+<h3><a href="http://www.cs.uu.nl/~visser/ftp/dir.shar">Dir Package - Modularity for LaTeX</a></h3>
+
+The <em>dir</em> package is a small (La)TeX package that
+		supports true modularity for LaTeX. It allows one to
+		transparantly input a file in another directory without having
+		to adapt all the inputs in the included file.
+
+		<p />
+
+<em>Usage</em> Put <code>\usepackage{dir}</code> in the preamble
+		of your document. To input a (collection of) files in another
+		directory: <code>{\cd{/the/other/directory}
+		\input{file.ltx}}</code>. Due to the <code>\cd</code> command,
+		all <code>\input<code>s will be relative to
+		<code>/the/other/directory</code>.
+
+		<em>Note</em> The above is the only documentation about the
+		package.
+
+<h3><a href="http://www.cs.uu.nl/~visser/ftp/thesis.cls">Thesis - LaTeX document class</a></h3>
+
+LaTeX document class that I wrote for my <a href="../thesis/index.html">PhD thesis</a>. 
+
+<h3><a href="http://www.cs.uu.nl/~visser/ftp/stop-report.cls">STOP-report - LaTeX document class</a></h3>
+
+LaTeX document class supporting the production of reports and
+		proposals in the style of <em>Sequential Topic-Oriented
+		Publications</em>. 
+d17 1
+@

@@ -1,0 +1,8 @@
+%META:TOPICINFO{author="EelcoVisser" date="1069769160" format="1.0" version="1.1"}%
+%INCLUDE{http://www.stratego-language.org/twiki/bin/view/Book/WebHome?skin=plain}%
+
+<!--
+	* Set SKIN = notitle
+-->
+
+

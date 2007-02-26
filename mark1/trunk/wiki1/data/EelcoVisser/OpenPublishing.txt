@@ -1,0 +1,19 @@
+%META:TOPICINFO{author="EelcoVisser" date="1054759961" format="1.0" version="1.1"}%
+%META:TOPICPARENT{name="HotSpots"}%
+Principles
+
+	* [[http://www.cat.org.au/maffew/cat/openpub.html][Open publishing is the same as free software]]
+	* [[http://dru.ca/imc/open_pub.html][Three Proposals for Open Publishing]]
+	* [[http://www.opencontent.org/openpub/][Open Content]]
+
+Open publishing sites
+
+	* http://www.indymedia.org/
+	* http://www.eprints.org/
+	* http://www.oreilly.com/openbook/
+
+	* http://www.shaker-online.com/ (?)
+
+Resources
+
+	* [[http://directory.google.com/Top/Society/Organizations/Open_Access/][Open Access]] at Google

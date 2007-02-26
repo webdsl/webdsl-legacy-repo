@@ -1,0 +1,32 @@
+head	1.1;
+access;
+symbols;
+locks
+	apache:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2002.03.17.17.32.51;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.1
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1016386371" format="1.0" version="1.1"}%
+%META:TOPICPARENT{name="WebHome"}%
+Implement goto elimination
+
+Can this be prhased in a language independent manner?
+
+-- Main.EelcoVisser - 17 Mar 2002 <br />
+@

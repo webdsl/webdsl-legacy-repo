@@ -1,0 +1,675 @@
+head	1.21;
+access;
+symbols;
+locks
+	apache:1.21; strict;
+comment	@# @;
+
+
+1.21
+date	2005.04.28.22.53.56;	author wiki;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2002.03.29.20.22.17;	author EelcoVisser;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2002.03.29.13.18.25;	author EelcoVisser;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2002.03.17.17.18.21;	author EelcoVisser;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2002.03.11.09.55.36;	author EelcoVisser;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2002.01.02.16.30.52;	author EelcoVisser;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2001.11.30.10.42.46;	author EelcoVisser;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2001.11.29.14.21.36;	author EelcoVisser;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2001.11.27.21.47.27;	author EelcoVisser;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2001.11.27.18.22.37;	author EelcoVisser;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2001.11.27.13.17.20;	author EelcoVisser;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2001.11.27.09.00.50;	author EelcoVisser;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2001.11.17.08.43.05;	author EelcoVisser;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2001.11.16.21.10.55;	author EelcoVisser;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2001.11.13.12.52.35;	author EelcoVisser;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2001.11.08.23.16.36;	author EelcoVisser;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2001.11.08.18.57.53;	author ArieVanDeursen;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2001.11.08.15.20.14;	author EelcoVisser;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2001.11.07.17.17.28;	author guest;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2001.11.07.15.32.47;	author guest;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2001.11.07.12.33.53;	author guest;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.21
+log
+@testenv
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1042239324" format="1.0" version="1.21"}%
+%META:TOPICPARENT{name="WebHome"}%
+Current and past master thesis projects in the area of program transformation and some ideas for future projects.
+
+----+++ Ongoing Projects
+
+	* Java and XML -- Martin Bravenboer
+	* Domain-specific optimization -- Stratego:CodeBoost - Transform:OttoSkroveBagge (Bergen)
+	* [[Simplifying the Simplifier]] -- Main.AlanVanDam
+	* Documentation generation -- Rob Vermaas
+
+----+++ Finished Projects
+
+	* [[Similix in Stratego]] -- Main.LennartSwart
+	* Software Renovation -- Stratego:CobolX - Hedzer Westra - 2002
+	* Inlining Strategies -- Arne de Bruijn - 2001
+	* First-Class Rules and Generic Traversal -- Stratego:RhoStratego - Transform:EelcoDolstra - 2001
+
+-----+++ Project Ideas
+
+Source to source transformation
+
+	* [[Java generation and optimization]]
+		* Program Refactoring
+		* Concrete Java
+
+	* Haskell transformation
+		* Functions from Data
+
+	* [[C sharp transformation]]
+
+	* C transformation
+		* typedefs by post-parse disambiguation
+
+Reverse engineering
+
+	* [[Language independent program visualization]]
+
+Optimization
+
+	* [[Optimizers from interpreters]]
+	* [[Control flow normalization]]
+	* Code generation for VLIW architectures
+	* Strategies for loop optimization
+	* Strategies for instruction scheduling
+	* Instruction selection for quadruples
+
+Extending, improving Stratego
+
+	* [[Optimizing Stratego programs]]
+	* [[Representing object variables]]
+	* [[Transformation aspects]]
+	* StrategoDebug
+	* [[Transformation composer]]
+	* [[Optimization plugin]]
+
+	* Back-ends
+		* [[Stratego to JVM]]
+		* [[Stratego to CLI]]
+
+----+++ Resources
+
+	* Transform:ProgramTransformation: survey website on program transformation
+	* Stratego:StrategoLanguage: language for specification of program transformation systems
+
+
+@
+
+
+1.20
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1017436342" format="1.0" version="1.20"}%
+d3 1
+a3 3
+This website provides information about Master's projects in the area of program transformation.
+Here you can find information about finished and ongoing projects and topics for new projects. This site is accessible only from the cs.uu.nl domain _and_ requires a registration with password. 
+If you are interested in doing a project in this area contact Main.EelcoVisser. 
+d7 4
+a10 4
+	* ? - Martin Bravenboer
+	* Domain-specific optimization - Stratego:CodeBoost - Transform:OttoSkroveBagge (Bergen)
+	* [[Similix in Stratego]] - Main.LennartSwart
+	* [[Simplifying the Simplifier]] - Main.AlanVanDam
+d14 4
+a17 3
+	* Software Renovation - Stratego:CobolX - Hedzer Westra - 2002
+	* Inlining Strategies - Arne de Bruijn - 2001
+	* First-Class Rules and Generic Traversal - Stratego:RhoStratego - Transform:EelcoDolstra - 2001
+d24 2
+a25 2
+		* [[Program Refactoring]]
+		* [[Concrete Java]]
+d27 2
+a28 2
+	* [[Haskell transformation]]
+		* [[Functions from Data]]
+d43 4
+a46 4
+	* [[Code generation for VLIW architectures]]
+	* [[Strategies for loop optimization]]
+	* [[Strategies for instruction scheduling]]
+	* [[Instruction selection for quadruples]]
+a65 3
+----+++ New
+
+<!-- %SEARCH{".*" regex="on" nosearch="on" nototal="on" order="modified" reverse="on" limit="10" nosummary="on" noheader="on" format="	* $date - $topic"}% -->
+@
+
+
+1.19
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1017408036" format="1.0" version="1.19"}%
+d31 5
+a53 1
+	* [[Stratego to JVM]]
+d58 4
+d69 1
+a69 1
+%SEARCH{".*" regex="on" nosearch="on" nototal="on" order="modified" reverse="on" limit="10" nosummary="on" noheader="on" format="	* $date - $topic"}%
+@
+
+
+1.18
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1016385501" format="1.0" version="1.18"}%
+d9 1
+a9 2
+	* Software Renovation - Stratego:CobolX - Hedzer Westra
+	* Refactoring - Martin Bravenboer
+d16 1
+d22 10
+a31 1
+Program transformation applications
+d34 9
+a42 3
+	* [[Optimizers from Interpreters]]
+	* [[Control Flow Normalization]]
+	* [[Java Generation and Optimization]]
+d46 1
+a46 1
+	* [[Optimizing Stratego Programs]]
+d48 1
+a48 1
+	* [[Transformation Aspects]]
+d51 2
+a52 2
+	* [[Transformation Composer]]
+	* [[Optimization Plugin]]
+@
+
+
+1.17
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1015840536" format="1.0" version="1.17"}%
+d20 1
+a20 1
+-----+++ New Projects
+d22 1
+a22 1
+The following pages describe topics for new projects.
+d24 4
+a27 1
+	* [[Optimizing Stratego Programs]]
+d29 1
+a29 3
+-----+++ Research Ideas
+
+The following pages contain research ideas that could be the basis of a graduation project.
+d31 2
+a33 3
+	* [[Language independent program visualization]]
+	* [[Optimizers from Interpreters]]
+	* [[Representing object variables]]
+d35 2
+a37 3
+	* [[Control Flow Normalization]]
+	* [[Transformation Composer]]
+	* StrategoDebug
+@
+
+
+1.16
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1009989468" format="1.0" version="1.16"}%
+d13 1
+a23 1
+	* [[Simplifying the Simplifier]]
+@
+
+
+1.15
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1007116966" format="1.0" version="1.15"}%
+d37 2
+@
+
+
+1.14
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1007043696" format="1.0" version="1.14"}%
+d12 1
+a32 1
+	* [[Similix in Stratego]]
+@
+
+
+1.13
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1006904294" format="1.0" version="1.13"}%
+d36 1
+@
+
+
+1.12
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1006886120" format="1.0" version="1.12"}%
+d10 1
+a10 1
+	* Refactoring - Transform:MartinBravenboer
+d23 1
+d27 1
+a27 1
+The following pages give research ideas that could be the basis of a graduation project.
+a29 1
+	* [[Optimizing Stratego Programs]]
+a32 1
+	* [[Optimization Plugins]]
+d34 2
+d44 1
+a44 1
+%SEARCH{".*" regex="on" nosearch="on" nototal="on" order="modified" reverse="on" limit="10" nosummary="on" noheader="on" format="	* $topic changed by $wikiusername on $date"}%
+@
+
+
+1.11
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1006868140" format="1.0" version="1.11"}%
+d3 3
+a5 1
+This website provides information about ongoing and possible Master's projects on program transformation. This site is accessible only from the cs.uu.nl domain.
+d7 12
+a18 1
+If you are interested in doing one of these project contact Main.EelcoVisser.
+d20 1
+a20 1
+-----+++ Open Projects
+d23 6
+a33 1
+	* [[Transformation Aspects]]
+a34 12
+
+----+++ Ongoing Projects
+
+	* Software Renovation - Stratego:CobolX - Hedzer Westra
+	* Refactoring - Transform:MartinBravenboer
+
+	* Domain-specific optimization - Stratego:CodeBoost - Transform:OttoSkroveBagge (Bergen)
+
+----+++ Finished Projects
+
+	* Inlining Strategies - Arne de Bruijn
+	* First-Class Rules and Generic Traversal - Stratego:RhoStratego - Transform:EelcoDolstra
+@
+
+
+1.10
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1006851650" format="1.0" version="1.10"}%
+a9 1
+
+a10 1
+
+a11 1
+
+a12 1
+
+a13 1
+
+a14 1
+
+d16 1
+a16 2
+	
+	* Representing object variables
+d34 5
+@
+
+
+1.9
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1006816658" format="1.0" version="1.9"}%
+d20 2
+@
+
+
+1.8
+log
+@none
+@
+text
+@d1 3
+a3 3
+%META:TOPICINFO{author="EelcoVisser" date="1005946972" format="1.0" version="1.8"}%
+%META:TOPICPARENT{name="OriginalWebHome"}%
+-----+++ Program-Transformation.Org
+d5 1
+a5 1
+Program-Transformation.Org is dedicated to collecting, organizing and disseminating information about all aspects of Transform.ProgramTransformation. The site is based on TWiki, a tool for web collaboration wich makes it possible for anyone with a browser to contribute to this site. Read the TWiki.TWikiTutorial to learn about TWiki.
+d7 1
+a7 1
+----+++ Webs
+d9 1
+a9 1
+This site is divided into a number of _webs_, collections of pages on specific topics that have their own name space.
+d11 1
+a11 1
+The [[Transform.WebHome][Transform]] web is a collection of surveys of Transform.ProgramTransformation, including the Transform.ProgramTransformationTaxonomy and the Transform.ReverseAndReengineeringRoadmap.
+d13 1
+a13 1
+The [[Stratego.WebHome][Stratego]] web is the website for Stratego, a language for program transformation based on the paradigm of Stratego.RewritingStrategies.
+d15 1
+a15 1
+The [[Tools.WebHome][Tools]] web is the home of the [[Tools.XT][XT]] bundle of program transformation tools.
+d17 1
+a17 1
+The [[Main.WebHome][Main]] web is dedicated to administrative issues of the websites.
+d19 3
+a21 2
+Here is a complete list of all webs:
+%WEBLIST{" [[$name.WebHome][$name]]"}%
+d23 1
+a23 1
+----+++ New at Program-Transformation.Org (November 2001)
+d25 2
+a26 1
+	* The twiki is now really installed under the program-transformation.org and stratego-language.org domains. This means it is now possible to make bookmarks of individual topics.
+d28 1
+a28 1
+	* User authentication is now based on .htaccess. This means that fiddling with re-registration is over. Now you have to fill in your wiki name and password to be able to edit pages. Some pages can be edited even by TWikiGuest; use =guest= as password. You know whether you are logged in if your TWiki.WikiName shows up in the last item in the sidebar (instead of TWikiGuest).
+d30 1
+a30 24
+	* All user pages have been moved to the [[Oldmain.WebHome][Oldmain]] web. Because of the new registration procedure, it is necessary for you to re-register. If you had information on your old user page you can find it in Oldmain.TWikiUsers and copy it to the new page. Apologies for the inconvenience.
+
+	* The wiki is based on the September 2001 version of TWiki. It has powerful new features. See [[TWiki.WebHome]] for more information.
+
+	* The twiki is no longer tweaked to use all uppercase words as wiki-links, as was the old one at losser. However, it is possible to force links by enclosing the word in =[[...]]=. This can be used to make such links work again. Note that this has not been done yet. 
+
+There is still plenty of stuff to do, see the Transform.TodoList
+
+----+++ Wiki
+
+	* SandBox: try out editing wiki pages
+
+-----+++ Breaking News
+
+The 10 most recently edited pages:
+
+%SEARCH{".*" regex="on" nosearch="on" nototal="on" order="modified" reverse="on" limit="3" nosummary="on" web="Main Transform Stratego Tools"}%
+ 
+----+++ Statistics
+
+Usage statistics for stratego-language and program-transformation
+
+	* http://www.cs.uu.nl/stats/progtrans/
+	* http://www.cs.uu.nl/stats/stratego/
+d32 2
+d35 1
+d37 2
+@
+
+
+1.7
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1005656971" format="1.0" version="1.7"}%
+d40 6
+@
+
+
+1.6
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1005263235" format="1.0" version="1.6"}%
+d3 1
+a3 1
+This is the Main web of the all new Transform.ProgramTransformation wiki.
+d5 18
+a22 1
+----+++ New at Program-Transformation.Org
+a34 6
+
+----+++ Webs
+
+The following webs are part of this TWiki:
+
+%WEBLIST{"	* [[$name.WebHome]]"}%
+@
+
+
+1.5
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="ArieVanDeursen" date="1005245873" format="1.0" version="1.5"}%
+d3 1
+a3 1
+This is the webhome of the new twiki
+d5 17
+a21 1
+Webs
+d25 1
+a25 1
+blabla
+d27 1
+a27 1
+-----
+d29 1
+a29 1
+	* OriginalWebHome
+d31 1
+a31 1
+Statistics
+a36 1
+[[OOPSLA]]
+a37 1
+SandBox
+@
+
+
+1.4
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1005232813" format="1.0" version="1.4"}%
+d22 2
+@
+
+
+1.3
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="guest" date="1005153448" format="1.0" version="1.3"}%
+d9 2
+d21 1
+a21 1
+[[OOPSLA]]
+@
+
+
+1.2
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="guest" date="1005147167" format="1.0" version="1.2"}%
+d16 4
+a19 1
+	* http://www.cs.uu.nl/stats/stratego/
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="guest" date="1005137441" format="1.0" version="1.1"}%
+d13 4
+@

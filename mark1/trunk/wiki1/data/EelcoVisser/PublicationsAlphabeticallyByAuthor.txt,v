@@ -1,0 +1,56 @@
+head	1.2;
+access;
+symbols;
+locks
+	apache:1.2; strict;
+comment	@# @;
+
+
+1.2
+date	2004.07.20.10.52.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2004.07.16.20.20.00;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.2
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1090320720" format="1.0" version="1.2"}%
+%META:TOPICPARENT{name="PublicationsByYear"}%
+%INCLUDE{PublicationPages}%
+
+%INCLUDE{http://www.cs.uu.nl/~visser/visser/visser-alpha.html}%
+
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1090009200" format="1.0" version="1.1"}%
+d3 1
+a3 4
+	* [[Publications by year]]
+	* [[Publications by topic]]
+	* [[http://www.informatik.uni-trier.de/~ley/db/indices/a-tree/v/Visser:Eelco.html][DBLP]] ([[http://hpsearch.uni-trier.de/hp/cgi/hps.cgi?coauthor=DBLP-Coauthors&query=Eelco+Visser][Coauthors]])
+	* [[http://citeseer.nj.nec.com/cs?cs=1&q=Eelco+w%2F2+Visser+or+E+w%2F2+Visser&submit=Documents&co=Expected+Citations&cm=50&cf=Any&ao=Expected+Citations&am=20&af=Header][ResearchIndex]]
+d5 1
+a5 1
+%INCLUDE{http://www.cs.uu.nl/~visser/visser-bib/visser-bib-alpha.html}%
+@

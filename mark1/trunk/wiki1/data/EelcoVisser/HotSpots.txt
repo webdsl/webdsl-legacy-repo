@@ -1,0 +1,384 @@
+%META:TOPICINFO{author="EelcoVisser" date="1102846226" format="1.0" version="1.55"}%
+%META:TOPICPARENT{name="WebHome"}%
+%STARTINCLUDE%
+
+*2004-12-12*
+
+Paper: '[[ComposingSourceToSourceDataFlowTransformations][Composing Source-to-Source Data-Flow Transformations with Rewriting Strategies and Dependent Dynamic Rewrite Rules]]' describes the composition of source-to-source data-flow transformations in the program transformation language Stratego. The language supports the high-level specification of transformations by means of rewriting strategy combinators that allow a natural modeling of data- and control-flow without committing to a specific source language. Data-flow facts are propagated using dynamic rewriting rules. In particular, we introduce the concept of dependent dynamic rewrite rules, for modeling the dependencies of data-flow facts on program entitities such as variables. The approach supports the combination of analysis and transformation, the combination of multiple transformations, the combination with other types of transformations, and the correct treatment of variable binding constructs and lexical scope to avoid variable capture.
+
+The paper has been accepted for publication in the proceedings of CC'05, the 14th international conference on Compiler Construction in Edinburgh.
+
+*2004-12-08*
+
+[[http://khason.biz/blog/2004/12/why-microsoft-can-blow-off-with-c.html][Proof]] that Stratego has a real chance at becoming a succesful language.
+
+*2004-12-04*
+
+Paper: '[[Program Transformation With Scoped Dynamic Rewrite Rules]]' describes the new design of dynamic rewrite rules including scope labels, extended dynamic rules, and union and intersection of rulesets. It has been conditionally accepted for inclusion to the special issue on program transformation of Fundamenta Informaticae.
+
+*2004-11-03*
+
+During the after-OOPSLA/GPCE-conference-beer Tijs van der Storm challenged me to write a program that prints its
+own source in Stratego. That was not too hard of course, but getting the quotes right is tricky. Here
+it is:
+
+<verbatim>
+-----------------------------------------------------------------------------
+module quine imports lib strategies main = !["module quine imports 
+lib strategies main = ![\"","\"]; \\ [x, y] -> [x, <escape>x,
+ \"\\\",\\\"\", <escape>y, y] \\; concat-strings; <print>(stdout
+, [<id>]); <exit> 0"]; \ [x, y] -> [x, <escape>x, "\",\"", <escape>y, y] \; 
+concat-strings; <print>(stdout, [<id>]); <exit> 0
+-----------------------------------------------------------------------------
+</verbatim>
+
+I wrote a little educational [[http://www.stratego-language.org/Stratego/QuineInStratego][reconstruction of the design process]].
+
+There are some further challenges here. The above program uses strings for code generation, which
+is against everything we stand for of course. So the next thing to do is write a program which uses
+concrete syntax to produce a syntax tree for its own source and then pretty-prints it. Another one
+is a program that prints its own source _and_ compiles it. Calling XTC components is allowed of course;-)
+
+*2004-11-01*
+
+Back from Vancouver and a good conference.
+
+*2004-10-18*
+
+Springer published the [[http://www.program-transformation.org/Gpce/ConferenceProceedings][conference proceedings]] of [[http://www.program-transformation.org/GPCE][GPCE 2004]] online.
+
+Of course we will also present our paper on [[Concrete Syntax for Objects]] next week at OOPSLA (on Thursday to be precise). If you are close to Utrecht this week and not in Vancouver next week you might consider attending Martin's rehearsal at the [[Stc.WebHome][Software Technology Colloquium]] this Thursday.
+
+Karina Olmos and I finished a paper on definition of data-flow optimizations with dependent dynamic rules. It is not available publicly yet, but if you are interested and present good arguments, we may let you have a peek.
+
+*2004-10-14*
+
+[[Martin.WebHome][Martin Bravenboer]] and I are going to state that the world needs [[Reusable and Adaptable Strategies for Generative Programming]] next week at the [[http://www.program-transformation.org/Gpce/STS][Software Transformation Systems Workshop]] of [[http://www.program-transformation.org/GPCE][GPCE'04]] in Vancouver. In fact _dependent dynamic rules_ 
+are a step in the right direction since it is a generic mechanism that allows higher level specification of data-flow transformations without restricting applications to a fixed language or semantic model. (Now you are really becoming intrigued what those new dynamic rules are ...)
+
+Just when I thought my [[http://www.program-transformation.org/GPCE][GPCE]] tour of duty was over, [[http://www.disi.unige.it/person/MoggiE/][Eugenio Moggi]] asked me to be publicity chair for GPCE'05. So you better get ready to write a generative paper for GPCE next year. It will be co-located with ICFP. 
+
+*2004-10-12*
+
+Today was my birthday and it was well spent writing a paper. Gifts are always welcome. High on the wish list are Stratego applications (toy, but preferably ready for deployment), new components for the Stratego compiler (I may have some specific ideas if necessary), a typechecker (for Stratego), and some grant money (or a lot even).
+
+*2004-10-11*
+
+Apparently I am a [[http://www.stratego-language.org/Stratego/StrategoBloggers][Stratego blogger]] and I have to [[http://mbravenboer.blogspot.com/2004/10/research-and-blogging.html][blog more]]. I'll do my best, here goes ...
+
+Dependent dynamic rules are a cool (that's a good blog word isn't it)  generative extension of the basic dynamic rules in StrategoXT. Dependent dynamic rules kill themselves if you tell them to and also behave well under lexical scope so to avoid free variable capture. A complete common-subexpression elimination transformation component for Tiger (based on a generic data-flow traversal) is defined in 29 lines, of which 13 are empty lines and module header and such overhead. Excited? Read more about it in our upcoming paper.
+
+Actually if you want to stay up to date, or check if the Stratego project is alive, read the viewcvs `blog' in the [[https://svn.cs.uu.nl:12443/repoman/info/StrategoXT][Stratego/XT subversion repository]]. 
+
+*2004-08-28*
+
+Releases are now constructed automatically for Stratego/XT, <nop>BibTeX-Tools, Tiger, and the new 
+Stratego Core compiler; see http://catamaran.labs.cs.uu.nl/dist/stratego
+
+*2004-08-25*
+
+Sent out call for participation for [[http://www.program-transformation.org/Gpce][GPCE'04]]. Early registration closes September 16.
+
+*2004-08-24*
+
+All 500 pages of the [[http://www.program-transformation.org/Gpce][GPCE'04]] proceedings on their way to Springer; well the pdf files.
+
+Visiting ATOS-Origin
+
+*2004-08-23*
+
+My first steps on the path to [[http://www.cs.uu.nl/groups/ST/Swe/GeneralizingWiki][generalizing wiki]] were remarkably smooth using Java servlets.
+A first prototype emerged after two days work; one day to get deployment set up, another for programming. First test version will be available soon.
+
+*2004-08-20*
+
+Jack Greenfield and Peter Mosses agree to give invited talks at [[http://www.program-transformation.org/Gpce][GPCE'04]].
+
+*2004-08-13*
+
+After searching and hacking scripts to automatically number pages for a proceedings based on a set of postscript files it turns
+out that Springer no longer wants hard copy as they describe in their manual for volume editors. 
+
+*2004-07-29*
+
+[[http://catamaran.labs.cs.uu.nl/dist/new/][Release management]] for Stratego/XT is starting to happen.
+
+*2004-07-23*
+
+[[http://www.stratego-language.org/Stratego/BibtexTools][bibtex-tools]] now supports production of publication lists [[PublicationsByYear][by year]], [[PublicationsByType][by type]], [[PublicationsByYearAndType][by year and type]], etc. All based on a query language for selecting <nop>BibTeX entries and an embedding of this query language in <nop>LaTeX templates for specifying the presentation.
+
+*2004-07-09*
+
+[[https://svn.cs.uu.nl:12443/repos/StrategoXT/trunk/strc-core/][strc-core]]: Working on redesign of the Stratego compiler based on a new definition of a [[https://svn.cs.uu.nl:12443/repos/StrategoXT/trunk/StrategoXT/stratego-front/syn/Stratego-Core.def][Stratego Core language]]. (It doesn't yet build completely in the [[http://catamaran.labs.cs.uu.nl/dist/armijn/][new Nix buildfarm]].)
+
+*2004-07-03*
+
+Martin Bravenboer and I wrote a little position paper on 'Reusable and Adaptable Strategies for Generative Programming' for the [[http://www.program-transformation.org/Gpce/STS][Software Transformation Systems]] workshop at [[http://www.program-transformation.org/Gpce/STS][GPCE'04]].
+
+*2004-06-30*
+
+[[http://www.xs4all.nl/~rmarques/][Randy Marques]] visited Utrecht again and revealed his Generic Build System.
+
+*2004-06-28*
+
+The website of the [[Master.WebHome][Master Program Software Technology]] looks all fresh, clean, and up-to-date again.
+
+*2004-06-28*
+
+I'm organizing a new [[Sgc.WebHome][Seminar on Software Generation and Configuration]] next winter. The plan is to look at software variability from all possible angles. There is a [[Sgc.CourseDescription][course description]]. Pointers to interesting papers are welcome.
+
+*2004-06-22*
+
+A fresh plan for the [[Swe.WebHome][Software Engineering]] course. All that remains is execution of the plan, and a prototype for Swe.GenWiki of course. (If the question mark is still there, I haven't done it yet.)
+
+*2004-06-19*
+
+Tinkering with [[http://www.stratego-language.org/Stratego/BibtexTools][bibtex-tools]] to get the entire composition into Stratego with XTC. Fiddling with directories to catch all the side effects caused by latex runs.
+
+*2004-06-17*
+
+[[http://www.xs4all.nl/~rmarques/][Randy Marques]] visited Utrecht and talked about ANSI C, coding standards and static analysis tools.
+
+*2004-06-04*
+
+Visit to Philips Research.
+
+*2004-06-03*
+
+Paper: '[[A survey of strategies in rule based program transformation systems]]' accepted for publication in the Journal of Symbolic Computation.
+ 
+*2004-05-25* - 28
+
+Attending [[http://www.icse-conferences.org/2004/index.html][ICSE 2004]]
+
+*2004-05-25*
+
+Finally submitted a new paper on the redesign of [[scoped dynamic rewrite rules]] in Stratego.
+
+*2004-05-24*
+
+NWO meeting about possible collaboration between astrophysics and computer science.
+
+*2004-05-18*
+
+Chairing a program committee is a huge time-sink, but the [[http://www.program-transformation.org/Gpce/AcceptedPapers][result]] is worth it.
+The [[http://www.program-transformation.org/Gpce/][GPCE]] PC selected [[http://www.program-transformation.org/Gpce/AcceptedPapers][25 papers]] from 75 submissions.
+
+*2004-05-13*
+
+This morning [[http://www.eelco-visser.nl/bente][Bente Sofie]] was born.
+
+*2004-05-10*
+
+Release of [[%HTTPSTRATEGO%/StrategoRelease010][StrategoXT-0.10]] introduce a complete redesign of [[scoped dynamic rewrite rules]].
+
+*2004-05-08*
+
+Paper: '[[Concrete syntax for objects]]' describes the [[%HTTPSTRATEGO%MetaBorg][MetaBorg]] approach to embedding and assimilating
+domain-specific languages in a host language illustrated with several extensions of Java. It has been accepted for [[http://www.oopsla.org/2004/ShowPage.do?id=ProgramHome][OOPSLA'04]].
+
+*2004-03-26*
+
+Release of [[%HTTPSTRATEGO%/StrategoRelease095][StrategoXT-0.9.5]].
+
+[[Students.RobVermaas][Master's thesis]] of Rob Vermaas on [[%HTTPSTRATEGO%][ExtendibleDocumentationGeneration]].
+
+*2004-03-25*
+
+What do you think http://www.software-deployment.org refers to?
+
+*2004-03-24*
+
+[[http://www.stratego-language.org/Stratego/FifthStrategoUserDaysPictures][Pictures]] of the Fifth Stratego User Days (SUD'04).
+%STOPINCLUDE%
+
+*2004-03-23*
+
+[[My Erdos number]] is at most 5.
+
+We (the [[Trace.WebHome][TraCE]] team) had a nice meeting with the [[http://www.cwi.nl/htbin/sen1/twiki/bin/view/Deliver][Deliver]] team at CWI.
+
+*2004-03-19*
+
+Yet another domain: http://www.metaborg.org
+
+75 submissions for GPCE'04!
+
+*2004-03-17*
+
+[[My Erdos number]] is at most 6.
+
+*2004-03-16*
+
+[[My Erdos number]] is at most 7.
+
+*2004-03-12*
+
+Finally, a new revision of [[A survey of strategies in rule based program transformation systems]].
+
+*2004-03-11*
+
+Visit by Rob van Ommeringen who gave a talk about [[Stc.BuildingProductPopulationsWithKoala2][Building product populations with Koala2]].
+
+*2004-03-10*
+
+[[http://www.jacquard.nl][Jacquard match making event]]
+
+*2004-03-08*
+
+Installing [[http://www.cyberchair.org][CyberChair]] is pretty straightforward (modulo some tweaking of the server configuration).
+
+*2004-03-03*
+
+The [[http://www.stratego-language.org/Stratego/FifthStrategoUserDays][Fifth Stratego User Days (SUD'04)]] was attended by 25 people, had a full program with 21 interesting talks _and_ long walks after lunch. The slides of most talks are linked from the program of the meeting.
+
+*2004-02-17*
+
+Finished revisions of papers `[[Retrofitting the AutoBayes Program Synthesis System with Concrete Syntax]]' and `[[Program Transformation with StrategoXT]]' for the book on the Dagstuhl meeting about '[[http://www.dagstuhl.de/03131][Domain-Specific Program Generation]]'.
+
+Updated [[PublicationsByYear][publication list]] for 2003 including a technical report with a new version of the paper on [[http://www.stratego-language.org/Stratego/FusingLogicAndControl][Fusing Logic and Control]]
+with Patricia Johann.
+
+With [[http://www.cs.uu.nl/staff/karina.html][Karina Olmos]] I found out that data-flow optimizations with dynamic rules can be further improved by employing `self'-destructive rules.
+
+*2004-02-10*
+
+At the [[http://www.cs.kent.ac.uk/projects/refactor-fp/workshop.html][Functional Refactoring Workshop]] in Kent I gave a talk about [[http://www.cs.uu.nl/~visser/ftp/FRW04-slides.pdf][Implementation of Partial Evaluation in Stratego/XT]]. For the demonstration I developed a primitive emacs mode for Tiger with menus for applying various transformations. It is quite easy to make Stratego transformations interactively usable.
+
+*2004-02-03*
+
+Visit to Microsoft in Aachen.
+
+*2004-01-23-26*
+
+Attended the [[http://web.comlab.ox.ac.uk/oucl/work/jeremy.gibbons/wg21/][IFIP WG 2.1]] meeting in Rome
+and gave a [[http://www.cs.uu.nl/~visser/ftp/WG21-2004-01-28.pdf][talk]] about the refactored implementation of constant propagation for Tiger. Thanks to the excellent explanation by [[http://web.comlab.ox.ac.uk/oucl/people/ganesh.sittampalam.html][Ganesh Sittampalam]] I finally understand the implementation of regular path queries. 
+
+*2004-01-22*
+
+Stratego:StrategoRelease094 --- finally a new release
+
+*2003-01-20*
+
+http://www.stratego-language.org/release : automatic generation of releases
+
+*2003-12-29 - 2004-01-02*
+
+Implementing a partial evaluator for Tiger:TigerLanguage for the [[Pt.WebHome][program transformation course]]. Required extension of Tiger with command-line arguments and modules.
+
+*2003-12-22 - 30*
+
+Distribution of StrategoXT with the [[Trace.Nix][Nix deployment system]]; towards completely automatic release management.
+
+*2003-12-22*
+
+Creating and linking with a shared library for the Stratego Standard Library is a matter of getting the libtool to do the right thing.
+
+*2003-12-17 - 19*
+
+Stratego:SeparateCompilation : implementation of a seperate compilation scheme for Stratego.
+
+*2003-12-15*
+
+Paper about Trace.Nix accepted at ICSE'04 and writing another paper about Nix.
+
+*2003-12-10*
+
+Chapter 10 of StrategoBook on 'Generic Traversal Strategies' rewritten.
+
+*2003-12-08*
+
+Chapter 9 of StrategoBook on 'First Class Pattern Matching' rewritten.
+
+*2003-12-03*
+
+Chapter 8 of StrategoBook on 'Composing Strategies' rewritten.
+
+*2003-12-01*
+
+Chapter 7 of StrategoBook on 'In Control of Rewriting' rewritten
+
+*2003-11-25*
+
+Chapter 5 of StrategoBook on 'Term Rewriting' rewritten
+
+*2003-11-21* 
+
+Paper: [[Retrofitting the AutoBayes Program Synthesis System with Concrete Syntax]] -- Prolog with concrete syntax
+
+*2003-11-16* 
+
+I decided to make the draft StrategoBook available on the web
+
+*2003 Winter (Nov - Jan)* 
+
+Teaching [[Pt.WebHome][Program Transformation]]
+
+*2003-11-10* 
+
+[[Program Transformation with StrategoXT]] -- revision with an extra section about annotations in Stratego and a paragraph on foreign functions
+
+*2003-10-23*
+
+Stratego:BibtexTools to convert a bibtex file to a publication list in html and pdf. 
+Used to generate the personal and group [[http://www.cs.uu.nl/groups/ST/stbib/][bibliographies]] for the [[Center.WebHome][CST]].
+
+*2003-10-01*
+
+[[Program chair]] for [[http://www.program-transformation.org/GPCE][GPCE 2004]]
+
+*2003 Fall*
+
+Teaching [[Swe.WebHome][software engineering]] and [[Hpc.WebHome][high-performance compilers]]
+
+*2003-07-15 -- 2003-08-16* 
+
+Stratego:StrategoOptimizer (Stratego:AvoidRunTimeChecksOnVariables, Stratego:ConstantAndCopyPropagation, ...) -- adding optimizations to the Stratego:StrategoCompiler
+
+*2003-07-14*
+ 
+[[Buildfarm.WebHome][Buildfarm]] -- prototyping buildfile language
+
+*2003-07-11*
+
+
+Stratego:NativePrimitives -- extension of strategies with term arguments and primitives with strategy arguments
+
+*2003-07-07* 
+
+[[Trace.TransparantieInVariabiliteit][Beheersen van Variabiliteit met Transparante Configuratieomgevingen]] -- paper for [[http://www.informatie.nl][Informatie]]
+
+*2003-07-05* 
+
+Stratego:PrologTools -- a bridge between Prolog and Stratego
+
+*2003-07-04*
+
+Stratego:StrategoRelease092 -- new release of StrategoXT
+
+*2003-06-12* 
+
+[[Program Transformation with StrategoXT]] -- Overview paper of StrategoXT for Dagstuhl seminar
+
+
+*2003-06-06* 
+
+Stratego:StrategoRelease091 -- new release of StrategoXT
+
+*2003-06-04* 
+
+
+Talk about Stratego:TransformationToolComposition for SUD'03
+
+*2003-06-04* 
+
+Is [[open publishing]] possible?
+
+*2003-05-21* 
+
+Stratego:PrologTools -- syntax definition for Prolog to make extension with concrete syntax for AutoBayes
+
+*2003-05-21* 
+
+[[Buildfarm.WebHome][Buildfarm]] -- what is the best architecture for a buildfarm?
+

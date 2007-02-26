@@ -1,0 +1,5 @@
+%META:TOPICINFO{author="EelcoVisser" date="1080651101" format="1.0" version="1.1"}%
+%META:TOPICPARENT{name="PublicationsByYear"}%
+AutoBayes is a program synthesis engine for the domain of machine learning.
+
+

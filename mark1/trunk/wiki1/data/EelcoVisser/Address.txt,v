@@ -1,0 +1,452 @@
+head	1.10;
+access;
+symbols;
+locks
+	apache:1.10; strict;
+comment	@# @;
+
+
+1.10
+date	2006.12.08.20.38.08;	author EelcoVisser;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2006.11.15.10.06.52;	author EelcoVisser;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2006.11.08.10.19.08;	author EelcoVisser;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2006.10.18.11.16.28;	author EelcoVisser;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2006.10.17.21.58.32;	author EelcoVisser;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2006.10.17.14.38.03;	author EelcoVisser;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2004.12.24.08.45.02;	author EelcoVisser;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2004.06.06.20.25.40;	author EelcoVisser;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.01.16.15.35.22;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.08.25.21.52.00;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.10
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1165610288" format="1.0" version="1.10"}%
+%META:TOPICPARENT{name="WebHome"}%
+<a href="http://www.flickr.com/photos/eelcovisser/272578793/" title="Photo Sharing"><img src="http://static.flickr.com/92/272578793_555b3b9f72_m.jpg" width="190" height="240" alt="mekelweg 4" align="right" /></a>
+------++ Coordinates
+
+	* [[http://swerl.tudelft.nl][Software Engineering Research Group]]
+	* [[http://www.st.ewi.tudelft.nl][Department of Software Technology]]
+	* [[http://www.ewi.tudelft.nl][Electrical Engineering, Mathematics and Computer Science (EWI)]]
+	* [[http://www.tudelft.nl/][Delft University of Technology]]
+
+------++ WWW
+
+	* http://www.st.ewi.tudelft.nl/~eelco
+
+------++ E-Mail
+
+	* mailto:visser@@acm.org
+
+------++ Phone
+
+	* +31 (015) 27 87088
+
+------++ Fax
+
+	* +31 (015) 27 86632
+
+------++ Mail
+
+<verbatim>
+Dr Eelco  Visser
+ST / EWI
+Delft University of Technology
+Mekelweg 4
+2628 CD Delft
+The Netherlands
+</verbatim>
+
+<a href="http://www.flickr.com/photos/eelcovisser/272578134/" title="Photo Sharing"><img src="http://static.flickr.com/84/272578134_dc3fbfe89a_m.jpg" width="240" height="160" alt="mekelweg 4" align="right"/></a>
+------++ Visiting
+
+	* Mekelweg 4 (the big building)
+	* Room: HB 8.270
+
+See the faculty's [[http://www.ewi.tudelft.nl/live/pagina.jsp?id=742139c8-2eb2-42ef-80a7-6e483b3f4caa&lang=en][contact information]] for a route description. We're located on the 8th floor. 
+
+@
+
+
+1.9
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1163585212" format="1.0" version="1.9"}%
+d23 4
+@
+
+
+1.8
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1162981148" format="1.0" version="1.8"}%
+d40 2
+@
+
+
+1.7
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1161170188" format="1.0" version="1.7"}%
+d19 4
+@
+
+
+1.6
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1161122312" format="1.0" version="1.6"}%
+d22 6
+a27 6
+	Dr Eelco  Visser
+	ST / EWI
+	Delft University of Technology
+	Mekelweg 4
+	2628 CD Delft
+	The Netherlands
+@
+
+
+1.5
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1161095883" format="1.0" version="1.5"}%
+d3 1
+a3 1
+
+d30 1
+@
+
+
+1.4
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1103877902" format="1.0" version="1.4"}%
+a2 1
+<h1>Dr E.  Visser</h1>
+d4 30
+a33 78
+<p>
+<table CELLPADDING=0 CELLSPACING=5 BORDER=0>
+<tr>
+	 <td ROWSPAN="10"><a HREF="http://www.cs.uu.nl/people/visser/"><img SRC="http://www.cs.uu.nl/staff/faces/visser.jpg" ALT="visser"></a><p></td>
+
+	 <td ROWSPAN="10">&nbsp;&nbsp;</td>
+	 <td ROWSPAN="10" BGCOLOR="BLUE">&nbsp;</td>
+	 <td ROWSPAN="10">&nbsp;&nbsp;</td>
+	 <td>full name</td><td>:</td>
+	 <td>Dr E.  Visser</td>
+</tr>
+<tr><td>first name</td><td>:</td>
+
+	 <td>Eelco</td>
+</tr>
+<tr><td>email</td><td>:</td>
+	 <td><a HREF="mailto:visser@@cs.uu.nl">visser@@cs.uu.nl</a></td>
+</tr>
+<tr><td>office</td><td>:</td>
+	 <td><a HREF="http://www.cs.uu.nl/docs/reach/padualaan.html">CGN-B040</a></td>
+
+</tr>
+<tr><td>telephone</td><td>:</td>
+	 <td>+31 - 30 - 253 4592</td>
+</tr>
+<tr><td>faxnumber</td><td>:</td>
+	 <td>+31 - 30 - 251 3791</td>
+</tr>
+<tr><td>secretary</td><td>:</td>
+
+	 <td>+31 - 30 - 253 1454</td>
+</tr>
+<tr><td>group</td><td>:</td>
+	 <td><a HREF="http://www.cs.uu.nl/groups/ST/">software technology</a></td>
+</tr>
+<tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td COLSPAN=3><a HREF="/people/visser/">personal WWW pages</a><br>
+<a HREF="/research/ozis/visser.html">some of my publications</a><br>
+<a HREF="/research/techreps/aut/visser.html">technical reports</a><br>
+<a HREF="/education/docent/visser.html">recent courses</a>
+</td>
+</tr>
+</table>
+
+<br CLEAR=ALL>
+<p>
+<table CELLPADDING=0 CELLSPACING=5 BORDER=0>
+<tr><th ROWSPAN=2 BGCOLOR="#FFFFCC">&nbsp;</th>
+	 <th ROWSPAN=2>&nbsp;</th>
+	 <th><a HREF="http://www.cs.uu.nl/docs/reach/">visit me</a></th>
+	 <th ROWSPAN=2>&nbsp;</th>
+
+	 <th ROWSPAN=2>&nbsp;</th>
+	 <th ROWSPAN=2 BGCOLOR="#FFFFCC">&nbsp;</th>
+	 <th ROWSPAN=2>&nbsp;</th>
+	 <th>mail me</th>
+</tr>
+<tr>
+	 <td>Universiteit Utrecht<br>
+		  Institute of Information and Computing Sciences<br>
+
+		  Centrumgebouw Noord, office B032<br>
+		  Padualaan 14, De Uithof<br>
+		  3584CH Utrecht
+	 </td>
+	 <td>PO Box 80.089<br>
+		  3508TB Utrecht<br>
+		  The Netherlands<br>
+
+		  <br>
+		  
+	 </td>
+</tr>
+</table>
+
+<!--
+	* Set SKIN = notitle
+-->
+@
+
+
+1.3
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1086553540" format="1.0" version="1.3"}%
+d3 81
+a83 76
+<h2>Dr E.  Visser</h2>
+
+<p>
+<table CELLPADDING=0 CELLSPACING=5 BORDER=0>
+<tr>
+	 <td ROWSPAN="10"><a HREF="/people/visser/"><img SRC="/staff/faces/visser.jpg" ALT="visser"></a><p></td>
+
+	 <td ROWSPAN="10">&nbsp;&nbsp;</td>
+	 <td ROWSPAN="10" BGCOLOR="BLUE">&nbsp;</td>
+	 <td ROWSPAN="10">&nbsp;&nbsp;</td>
+	 <td>full name</td><td>:</td>
+	 <td>Dr E.  Visser</td>
+</tr>
+<tr><td>first name</td><td>:</td>
+
+	 <td>Eelco</td>
+</tr>
+<tr><td>email</td><td>:</td>
+	 <td><a HREF="mailto:visser@@cs.uu.nl">visser@@cs.uu.nl</a></td>
+</tr>
+<tr><td>office</td><td>:</td>
+	 <td><a HREF="http://www.cs.uu.nl/docs/reach/padualaan.html">CGN-B040</a></td>
+
+</tr>
+<tr><td>telephone</td><td>:</td>
+	 <td>+31 - 30 - 253 4592</td>
+</tr>
+<tr><td>faxnumber</td><td>:</td>
+	 <td>+31 - 30 - 251 3791</td>
+</tr>
+<tr><td>secretary</td><td>:</td>
+
+	 <td>+31 - 30 - 253 1454</td>
+</tr>
+<tr><td>group</td><td>:</td>
+	 <td><a HREF="http://www.cs.uu.nl/groups/ST/">software technology</a></td>
+</tr>
+<tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td COLSPAN=3><a HREF="/people/visser/">personal WWW pages</a><br>
+<a HREF="/research/ozis/visser.html">some of my publications</a><br>
+<a HREF="/research/techreps/aut/visser.html">technical reports</a><br>
+<a HREF="/education/docent/visser.html">recent courses</a>
+</td>
+</tr>
+</table>
+
+<br CLEAR=ALL>
+<p>
+<table CELLPADDING=0 CELLSPACING=5 BORDER=0>
+<tr><th ROWSPAN=2 BGCOLOR="#FFFFCC">&nbsp;</th>
+	 <th ROWSPAN=2>&nbsp;</th>
+	 <th><a HREF="http://www.cs.uu.nl/docs/reach/">visit me</a></th>
+	 <th ROWSPAN=2>&nbsp;</th>
+
+	 <th ROWSPAN=2>&nbsp;</th>
+	 <th ROWSPAN=2 BGCOLOR="#FFFFCC">&nbsp;</th>
+	 <th ROWSPAN=2>&nbsp;</th>
+	 <th>mail me</th>
+</tr>
+<tr>
+	 <td>Universiteit Utrecht<br>
+		  Institute of Information and Computing Sciences<br>
+
+		  Centrumgebouw Noord, office B032<br>
+		  Padualaan 14, De Uithof<br>
+		  3584CH Utrecht
+	 </td>
+	 <td>PO Box 80.089<br>
+		  3508TB Utrecht<br>
+		  The Netherlands<br>
+
+		  <br>
+		  
+	 </td>
+</tr>
+</table>
+@
+
+
+1.2
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1042731322" format="1.0" version="1.2"}%
+d24 1
+a24 1
+	 <td><a HREF="http://www.cs.uu.nl/docs/reach/padualaan.html">CGN-B032</a></td>
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1030312320" format="1.0" version="1.1"}%
+a4 1
+<table BORDER=0 CELLPADDING=0 CELLSPACING=0>
+d8 7
+a14 6
+<td ROWSPAN="10"><a HREF="http://www.cs.uu.nl/people/visser/"><img SRC="http://www.cs.uu.nl/staff/faces/visser.jpg"></a><p></td>
+<td ROWSPAN="10">&nbsp;&nbsp;</td>
+<td ROWSPAN="10" BGCOLOR="BLUE">&nbsp;</td>
+<td ROWSPAN="10">&nbsp;&nbsp;</td>
+<td>full name</td><td>:</td>
+<td>Dr E.  Visser</td>
+d17 2
+a18 1
+<td>Eelco</td>
+d21 1
+a21 1
+<td><a HREF="mailto:visser@@cs.uu.nl">visser@@cs.uu.nl</a></td>
+d24 2
+a25 1
+<td><a HREF="http://www.cs.uu.nl/docs/reach/padualaan.html">CGN-B032</a></td>
+d28 1
+a28 1
+<td>+31 - 30 - 253 4592</td>
+d31 1
+a31 1
+<td>+31 - 30 - 251 3791</td>
+d34 2
+a35 1
+<td>+31 - 30 - 253 1454</td>
+d38 1
+a38 1
+<td><a HREF="http://www.cs.uu.nl/groups/ST/">software technology</a></td>
+d41 4
+a44 1
+<tr><td COLSPAN=3><a HREF="/people/visser/">my personal WWW pages</a><br><a HREF="/research/techreps/aut/visser.html">technical reports</a>
+d48 1
+d53 8
+a60 7
+<th ROWSPAN=2>&nbsp;</th>
+<th><a HREF="http://www.cs.uu.nl/docs/reach/">visit me</a></th>
+<th ROWSPAN=2>&nbsp;</th>
+<th ROWSPAN=2>&nbsp;</th>
+<th ROWSPAN=2 BGCOLOR="#FFFFCC">&nbsp;</th>
+<th ROWSPAN=2>&nbsp;</th>
+<th>mail me</th>
+d63 13
+a75 5
+<td>Universiteit Utrecht<br>
+Institute of Information and Computing Sciences<br>
+Centrumgebouw Noord, office B032<br>
+Padualaan 14, De Uithof<br>
+3584CH Utrecht
+a76 5
+<td>PO Box 80.089<br>
+3508TB Utrecht<br>
+The Netherlands<br>
+<br>
+</td>
+a78 2
+
+
+@

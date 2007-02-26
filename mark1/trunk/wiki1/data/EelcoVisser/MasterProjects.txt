@@ -1,0 +1,19 @@
+%META:TOPICINFO{author="EelcoVisser" date="1161097232" format="1.0" version="1.8"}%
+%META:TOPICPARENT{name="MasterProjectsInProgramTransformation"}%
+--------+ Master Thesis Projects
+
+%RED% This page is not very up-to-date. If you are interested in the general topics on this page, contact me for a discussion on possible new projects %ENDCOLOR%
+
+This page lists some ideas for master thesis projects in the areas of program transformation and software configuration management. If you are interested in one of these areas, contact [[WebHome][Eelco Visser]] for further information.
+
+%TOC%
+
+-------------------------
+-------++ Program Transformation
+%INCLUDE{MasterProjectsPT}%
+
+-------------------------
+--------++ Transparent Configuration Environments
+
+%INCLUDE{MasterProjectsSCM}%
+

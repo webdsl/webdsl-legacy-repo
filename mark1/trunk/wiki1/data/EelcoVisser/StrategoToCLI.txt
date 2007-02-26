@@ -1,0 +1,7 @@
+%META:TOPICINFO{author="EelcoVisser" date="1017433478" format="1.0" version="1.1"}%
+%META:TOPICPARENT{name="WebHome"}%
+Consider making a back-end for Stratego that translates to the .NET common language infrastructure.
+
+	* http://www.research.microsoft.com/~emeijer/Papers/CLR.pdf
+
+-- Main.EelcoVisser - 29 Mar 2002 <br />

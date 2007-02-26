@@ -1,0 +1,8 @@
+%META:TOPICINFO{author="EelcoVisser" date="1080294692" format="1.0" version="1.3"}%
+%META:TOPICPARENT{name="StrategoPublications"}%
+%INCLUDE{http://www.stratego-language.org/Stratego/FusingLogicAndControl?skin=plain}%
+
+<!--
+	* Set SKIN = notitle
+-->
+

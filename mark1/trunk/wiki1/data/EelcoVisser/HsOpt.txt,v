@@ -1,0 +1,52 @@
+head	1.2;
+access;
+symbols;
+locks
+	apache:1.2; strict;
+comment	@# @;
+
+
+1.2
+date	2003.07.23.10.28.26;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.07.09.15.17.43;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.2
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1058956106" format="1.0" version="1.2"}%
+%META:TOPICPARENT{name="SupervisedTheses"}%
+See 
+
+	* [[Simplifying the Simplifier]]
+	* Stratego:HsOpt 
+	* Stratego:SimplifyingTheSimplifier
+
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1057763863" format="1.0" version="1.1"}%
+d3 5
+a7 1
+See Stratego:HsOpt and Stratego:SimplifyingTheSimplifier.
+@

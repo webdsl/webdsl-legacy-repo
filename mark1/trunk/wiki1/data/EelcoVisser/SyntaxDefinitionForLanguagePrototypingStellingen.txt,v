@@ -1,0 +1,267 @@
+head	1.3;
+access;
+symbols;
+locks
+	apache:1.3; strict;
+comment	@# @;
+
+
+1.3
+date	2006.10.17.20.48.09;	author EelcoVisser;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.09.02.15.53.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.09.02.13.19.06;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.3
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1161118089" format="1.0" version="1.3"}%
+%META:TOPICPARENT{name="SyntaxDefinitionForLanguagePrototyping"}%
+<hr>
+<center>
+<h3 align = center>
+	Stellingen 
+</h3>	
+	behorende bij het proefschrift<br>
+<h1 align = center>
+	[[SyntaxDefinitionForLanguagePrototyping][Syntax Definition for<br> Language Prototyping]]
+</h1>
+	door
+<h3 align = center>
+	<a HREF="/~visser/">Eelco Visser</a>
+</h3>
+</center>
+<hr>
+
+<ol>
+	<li>
+
+	The parsing problem for context-free grammars with
+	reject productions (without rejects in cycles) is decidable.
+
+	<p> Chapter 3 of this thesis
+
+	<p>
+	<li>  Scannerless parsing has not been introduced earlier
+	because of the limitations of deterministic parsing
+	techniques, in particular with respect to the expression of
+	lexical disambiguation, not because of the alleged
+	inefficiency of scannerless parsers.
+
+	<p>
+	<li>  For every type system there exists a data type that
+	cannot be completely expressed in it without allowing junk.
+
+	<p>
+	<li>  De formalisering van de wiskunde wordt uitgevoerd door
+	informatici.
+
+	<p> Jan Bergstra in masterclass <em>Programmeren met
+	Datatypen</em>, Universiteit van Amsterdam, Oktober 1995
+
+	<p>
+
+	<li>  Formalismen met onbeslisbare eigenschappen worden
+	ten onrechte negatief beoordeeld, zoals blijkt uit: (a) Het
+	halting probleem is onbeslisbaar, maar er bestaan terminerende
+	programma's.  (b) De ambiguiteit van context-vrije
+	grammatica's is onbeslisbaar, maar er bestaan niet-ambigue
+	grammatica's.  (c) Het ontleedprobleem voor twee-niveau
+	grammatica's is onbeslisbaar, maar er bestaan twee-niveau
+	grammatica's met terminerende ontleders.
+
+
+	<p>
+	<li>  The emphasis on the expression of (static) semantic
+	properties of Algol68 has obscured the utility of two-level
+	grammars for polymorphic syntax definition.
+
+	<p>
+	<li>  The parsing problem for finite-chain two-level grammars
+	is decidable. 
+
+	<p> Chapter 15 of this thesis
+
+	<p>
+	<li>  Programming leads to legacy systems. 
+
+	<p>
+
+	<li>  Any method (such as parameterization) that relies on
+	a-priori indication of the parts of programs or modules that
+	can be adapted (instantiation) anticipates future applications
+	and thereby restricts possibilities for reuse.
+
+	<p>
+	<li>  Semantic equivalence under some semantics does not
+	necessarily have to entail equality in an algebra. For
+	example, two functions can have the same result, but achieve
+	it in a different way.
+
+	<p>
+	<li>  Conditional term rewriting is a good example of a
+	paradigm that can function well for a long time despite its
+	anomalies.
+
+	<p> See Kuhn --- <em>The Structure of Scientific Revolutions</em>
+
+	<p>
+
+	<li>  Het gebruik van `hoi' bij het afscheid komt voort
+	uit het besef dat ieder einde ook een begin is.
+
+</ol>
+<hr>
+
+@
+
+
+1.2
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1062517980" format="1.0" version="1.2"}%
+d3 96
+a98 101
+<hr>
+<center>
+<h3 align = center>
+	Stellingen 
+</h3>	
+	behorende bij het proefschrift<br>
+<h1 align = center>
+	[[SyntaxDefinitionForLanguagePrototyping][Syntax Definition for<br> Language Prototyping]]
+</h1>
+	door
+<h3 align = center>
+	<a HREF="/~visser/">Eelco Visser</a>
+</h3>
+</center>
+<hr>
+
+<ol>
+	<li>
+
+	The parsing problem for context-free grammars with
+	reject productions (without rejects in cycles) is decidable.
+
+	<p> Chapter 3 of this thesis
+
+	<p>
+	<li>  Scannerless parsing has not been introduced earlier
+	because of the limitations of deterministic parsing
+	techniques, in particular with respect to the expression of
+	lexical disambiguation, not because of the alleged
+	inefficiency of scannerless parsers.
+
+	<p>
+	<li>  For every type system there exists a data type that
+	cannot be completely expressed in it without allowing junk.
+
+	<p>
+	<li>  De formalisering van de wiskunde wordt uitgevoerd door
+	informatici.
+
+	<p> Jan Bergstra in masterclass <em>Programmeren met
+	Datatypen</em>, Universiteit van Amsterdam, Oktober 1995
+
+	<p>
+
+	<li>  Formalismen met onbeslisbare eigenschappen worden
+	ten onrechte negatief beoordeeld, zoals blijkt uit: (a) Het
+	halting probleem is onbeslisbaar, maar er bestaan terminerende
+	programma's.  (b) De ambiguiteit van context-vrije
+	grammatica's is onbeslisbaar, maar er bestaan niet-ambigue
+	grammatica's.  (c) Het ontleedprobleem voor twee-niveau
+	grammatica's is onbeslisbaar, maar er bestaan twee-niveau
+	grammatica's met terminerende ontleders.
+
+
+	<p>
+	<li>  The emphasis on the expression of (static) semantic
+	properties of Algol68 has obscured the utility of two-level
+	grammars for polymorphic syntax definition.
+
+	<p>
+	<li>  The parsing problem for finite-chain two-level grammars
+	is decidable. 
+
+	<p> Chapter 15 of this thesis
+
+	<p>
+	<li>  Programming leads to legacy systems. 
+
+	<p>
+
+	<li>  Any method (such as parameterization) that relies on
+	a-priori indication of the parts of programs or modules that
+	can be adapted (instantiation) anticipates future applications
+	and thereby restricts possibilities for reuse.
+
+	<p>
+	<li>  Semantic equivalence under some semantics does not
+	necessarily have to entail equality in an algebra. For
+	example, two functions can have the same result, but achieve
+	it in a different way.
+
+	<p>
+	<li>  Conditional term rewriting is a good example of a
+	paradigm that can function well for a long time despite its
+	anomalies.
+
+	<p> See Kuhn --- <em>The Structure of Scientific Revolutions</em>
+
+	<p>
+
+	<li>  Het gebruik van `hoi' bij het afscheid komt voort
+	uit het besef dat ieder einde ook een begin is.
+
+</ol>
+<hr>
+
+<!--
+
+	* Set SKIN = notitle
+
+-->
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1062508746" format="1.0" version="1.1"}%
+d10 1
+a10 3
+	<a HREF="index.html">Syntax Definition for<br>
+
+	Language Prototyping</a>
+d97 7
+a103 2
+<hr>
+
+@

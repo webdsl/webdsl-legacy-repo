@@ -1,0 +1,8 @@
+%META:TOPICINFO{author="EelcoVisser" date="1161096585" format="1.0" version="1.4"}%
+
+%INCLUDE{http://www.cs.uu.nl/wiki/Trace/JacquardProjectProposal?skin=plain}%
+
+----++ Publications
+
+%INCLUDE{http://www.cs.uu.nl/~visser/trace/trace-by-year.html}%
+

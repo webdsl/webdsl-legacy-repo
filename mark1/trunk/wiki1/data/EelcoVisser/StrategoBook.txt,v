@@ -1,0 +1,33 @@
+head	1.1;
+access;
+symbols;
+locks
+	apache:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2003.11.25.14.06.00;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.1
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1069769160" format="1.0" version="1.1"}%
+%INCLUDE{http://www.stratego-language.org/twiki/bin/view/Book/WebHome?skin=plain}%
+
+<!--
+	* Set SKIN = notitle
+-->
+
+
+@

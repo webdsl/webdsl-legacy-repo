@@ -1,0 +1,4 @@
+%META:TOPICINFO{author="EelcoVisser" date="1054572761" format="1.0" version="1.3"}%
+%META:TOPICPARENT{name="StrategoPublications"}%
+%INCLUDE{http://www.stratego-language.org/twiki/bin/view/Stratego/RewritingStrategiesForInstructionSelection?skin=plain}%
+

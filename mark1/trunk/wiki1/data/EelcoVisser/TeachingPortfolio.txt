@@ -1,0 +1,96 @@
+%META:TOPICINFO{author="EelcoVisser" date="1161096770" format="1.0" version="1.10"}%
+%META:TOPICPARENT{name="WebHome"}%
+----------+ Teaching Portfolio
+
+
+--------++ Teaching at Utrecht University
+
+	* http://www.cs.uu.nl/education/docent/visser.html
+
+2005 - 2006
+
+	* [[http://www.cs.uu.nl/wiki/Swe05][Software Engineering]] (Period 1)
+	* [[http://www.cs.uu.nl/wiki/Sgc][Software Generation and Configuration]] (Period 2)
+	* [[http://www.cs.uu.nl/wiki/Pt][Program Transformation]] (Period 3)
+
+2004 - 2005
+
+	* [[http://www.cs.uu.nl/wiki/Swe04/WebHome][Software Engineering]] (Period 1)
+	* [[http://www.cs.uu.nl/wiki/Sgc04/WebHome][Software Generation and Configuration]] (Period 2)
+	* [[http://www.cs.uu.nl/wiki/Pt04/WebHome][Program Transformation]] (Period 3)
+
+2003 - 2004
+
+	* [[http://www.cs.uu.nl/wiki/Swe03/WebHome][Software Engineering]] (Period 1)
+	* [[http://www.cs.uu.nl/wiki/Hpc/WebHome][High-Performance Compilers]] (Period 1)
+	* [[http://www.cs.uu.nl/wiki/Pt03/WebHome][Program Transformation]] (Period 2)
+
+2002 - 2003
+
+	* [[http://www.cs.uu.nl/wiki/Hpc02/WebHome][High-Performance Compilers]] (Period 1; seminar)
+	* [[http://www.cs.uu.nl/wiki/Ist/CourseSchedule][Introduction Software Technology]] (Period 1)
+	* [[http://www.cs.uu.nl/wiki/Swe02/WebHome][Software Engineering]] (Period 2)
+	* [[http://www.cs.uu.nl/wiki/Pt02/WebHome][Program Transformation]] (Period 3)
+	* [[http://www.cs.uu.nl/docs/vakken/oomp/][Object-Oriented Programming]] (Period 3 & 5)
+
+2001 - 2002
+<ul>
+  <li> <a href="http://www.cs.uu.nl/docs/vakken/sg">Software Generation</a> (Period 1)
+  </li>
+  <li> <a href="http://www.cs.uu.nl/docs/vakken/oomp/">Object-Oriented Programming</a>; lab (Period 1)
+  </li>
+  <li> <a href="http://www.cs.uu.nl/docs/vakken/hpc">High-Performance Compilers</a>
+		  (Period 2)
+  </li>
+  <li> <a href="http://www.cs.uu.nl/docs/vakken/ipt">Imperative Programming</a>; lab (Period 2)
+  </li>
+  <li> <a href="http://www.cs.uu.nl/docs/vakken/oomp/">Object-Oriented Modeling</a>; lab (Period 2)
+  </li>
+  <li> <a href="http://www.cs.uu.nl/docs/vakken/fp">Functional Programming</a>;
+lab (Period 4)
+  </li>
+</ul>
+
+2000 - 2001
+<ul>
+  <li> <a href="hpc/index.html">High-Performance Compilers</a>
+		  (Period 1)
+  </li>
+  <li> <a href="http://www.cs.uu.nl/docs/vakken/oomp/">Object-Oriented Modeling
+and Programming</a> (Period 1)
+  </li>
+  <li> <a href="acc240/index.html">Software Engineering</a> (Period 2)
+  </li>
+  <li> Academic Writing for Graduate Students (December 2000 - March 2001)
+  </li>
+  <li> <a href="sg01/index.html">Software Generation</a> (Period 5)
+  </li>
+</ul>
+
+1999 - 2000
+<ul>
+  <li> <a href="ipt/index.html">Implementation of Programming Languages</a>
+		  (Period 1)
+  </li>
+  <li> <a href="acc240-F1999/index.html">Software Engineering</a> (Fall)
+  </li>
+  <li> <a href="pos/index.html">Program Optimization Seminar</a>
+		  (Period 3)
+  </li>
+  <li> <a href="acc240-S2000/index.html">Software Engineering</a> (Spring)
+  </li>
+  <li> <a href="sg00/index.html">Software Generation</a> (Period 5)
+  </li>
+
+</ul>
+
+1998 - 1999
+<ul>
+  <li> Object-Oriented Modeling and Programming (practicum)
+  </li>
+  <li> <a href="acc240-S1999/index.html">Software Engineering</a>
+		  (Spring)
+  </li>
+</ul>
+
+%META:TOPICMOVED{by="EelcoVisser" date="1030108679" from="Visser.Teaching" to="Visser.TeachingPortfolio"}%

@@ -1,0 +1,27 @@
+%META:TOPICINFO{author="EelcoVisser" date="1068646911" format="1.0" version="1.1"}%
+-----++ Master Projects in Software Configuration Management
+
+%STARTINCLUDE%
+Managing the variability in software systems is rapidly becoming an important factor in software development. Instead of developing and deploying a fixed one-of-a-kind system, it is now common to develop a family of systems whose members differ with respect to functionality or technical facilities offered. Variability is represented conceptually by variation points that identify a set of variants for which a choice or decision can be made at a particular moment--binding time--in the development and deployment cycle of a software system. Depending on the needs of the system's stakeholders, it may be desirable to allow these decisions to be made at several moments in time. This timeline variability is an extra dimension to variability that is often ignored.
+
+In the NWO/Jacquard project [[http://www.cs.uu.nl/groups/ST/twiki/bin/view/Trace/][TraCE]] we are studying the modeling and realization of variability in modern software systems with an emphasis on a more general and generic treatment of timing-issues for variant addition/removal and binding of variation points, the related effects and the opportunities for optimization. The vehicle for the research is the development of a framework for transparent configuration environments which present a uniform interface to a variety of underlying configuration mechanisms, thus closing the current gap between variability at the conceptual and implementation levels. 
+
+Various opportunities for thesis projects exist.
+Contact [[Visser.WebHome][Eelco Visser]] for further information. 
+The following sections describe areas with which thesis projects can be associated.
+
+	* *Variability Modelling*: This part of the project is concerned with developing a formalism for describing the variability  in software systems in a declarative manner. This involves language design and validation by investigating and modelling actual software systems.
+
+	* *Software Deployment*: Software variability is a complicating factor or software deployment, especially when variability becomes more fine grained. We are developing the Nix deployment system to  deal with this problem.
+
+	* *Component Composition and Integration*: Flexibility can be improved by dividing software systems into components. We work on component composition mechanisms such as [[http://www.stratego-language.org/Stratego/TransformationToolComposition][XTC]] and methods to integrate (specialize) such compositions.
+
+	* *Software Logistics*: A software logistics environment integrates all aspects of the management of software artifacts, from development, to release and deployment. 
+
+	* *Buildfarm*: Part of a logistics environment is a buildfarm for testing software packages on various platforms and in different configurations.
+
+%STOPINCLUDE%
+<!--
+	* Set SKIN = notitle
+-->
+

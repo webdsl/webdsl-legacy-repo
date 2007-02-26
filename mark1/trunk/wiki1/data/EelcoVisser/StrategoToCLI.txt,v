@@ -1,0 +1,32 @@
+head	1.1;
+access;
+symbols;
+locks
+	apache:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2002.03.29.20.24.38;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.1
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1017433478" format="1.0" version="1.1"}%
+%META:TOPICPARENT{name="WebHome"}%
+Consider making a back-end for Stratego that translates to the .NET common language infrastructure.
+
+	* http://www.research.microsoft.com/~emeijer/Papers/CLR.pdf
+
+-- Main.EelcoVisser - 29 Mar 2002 <br />
+@

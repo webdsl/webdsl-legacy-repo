@@ -1,0 +1,9 @@
+%META:TOPICINFO{author="EelcoVisser" date="1114805117" format="1.0" version="1.2"}%
+%META:TOPICPARENT{name="WebHome"}%
+M. Bravenboer and E. Visser. *Reusable and Adaptable Strategies for Generative Programming.* In Position paper for the Software Transformation Systems Workshop (STSW'04). Vancouver, October 2004. (position paper) ([[http://www.cs.uu.nl/~visser/ftp/BV04-STS.pdf][pdf]])
+
+Generative programming aims at increasing programmer productivity by automating programming tasks using some form of automatic program generation or transformation, such as code generation from a domain-specific language, aspect weaving, optimization, or specialization of a generic program to a particular context. Key for achieving this aim is the construction of tools that implement the automating transformations. If generative programming is to become a staple ingredient of the software engineering process, the construction of generative tools itself should be automated as much as possible. This requires an infrastructure with support for the common tasks in the construction of transformation systems. In the Stratego/XT project we have built a generic infrastructure for program transformation. In this position paper we give an outline of this infrastructure and indicate where we think the challenges for research and development of program transformations systems lie in the coming years.
+
+
+<img src="http://www.cs.uu.nl/~visser/ftp/transformation-components.png">
+

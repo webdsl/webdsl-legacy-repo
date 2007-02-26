@@ -1,0 +1,4 @@
+%META:TOPICINFO{author="EelcoVisser" date="1114807222" format="1.0" version="1.4"}%
+%META:TOPICPARENT{name="StrategoPublications"}%
+%INCLUDE{http://www.stratego-language.org/Stratego/MetaProgrammingWithConcreteObjectSyntax?skin=plain}%
+

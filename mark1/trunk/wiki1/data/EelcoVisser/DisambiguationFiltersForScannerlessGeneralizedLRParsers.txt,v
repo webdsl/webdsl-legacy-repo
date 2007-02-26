@@ -1,0 +1,64 @@
+head	1.2;
+access;
+symbols;
+locks
+	apache:1.2; strict;
+comment	@# @;
+
+
+1.2
+date	2005.04.29.20.39.49;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2004.06.09.11.01.42;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.2
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1114807189" format="1.0" version="1.2"}%
+%META:TOPICPARENT{name="SyntaxDefinition"}%
+M. G. J. van den Brand, J. Scheerder, J. Vinju, and E. Visser. *Disambiguation Filters for Scannerless Generalized LR Parsers.* In N. Horspool, editor, Compiler Construction (CC'02), volume 2304 of Lecture Notes in Computer Science, pages 143--158, Grenoble, France, April 2002. Springer-Verlag. ([[http://www.cs.uu.nl/people/visser/ftp/BSVV02.pdf][pdf]]).
+
+------+++ <nop>BibTeX
+
+<pre>
+%INCLUDE{http://www.cs.uu.nl/groups/ST/stbib/visser-by-year/BSVV02.bib}%
+</pre>
+
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1086778902" format="1.0" version="1.1"}%
+d3 7
+a9 11
+M. G. J. van den Brand, J. Scheerder, J. Vinju, and E. Visser. *Disambiguation Filters for Scannerless Generalized LR Parsers.* In N. Horspool, editor, Compiler Construction (CC'02), volume 2304 of Lecture Notes in Computer Science, pages 143--158, Grenoble, France, April 2002. Springer-Verlag. ([[http://www.cs.uu.nl/people/visser/ftp/BSVV02.pdf][pdf]]).
+
+------+++ <nop>BibTeX
+
+<pre>
+%INCLUDE{http://www.cs.uu.nl/groups/ST/stbib/visser-by-year/BSVV02.bib}%
+</pre>
+
+<!--
+	* Set SKIN = notitle
+-->
+@

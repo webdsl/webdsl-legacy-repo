@@ -1,0 +1,6 @@
+%META:TOPICINFO{author="EelcoVisser" date="1161097555" format="1.0" version="1.3"}%
+%META:TOPICPARENT{name="WebHome"}%
+%INCLUDE{http://www.stratego-language.org/Stratego/ProgramTransformationWithScopedDynamicRewriteRules?skin=plain}%
+
+[[http://www.stratego-language.org/Stratego/ProgramTransformationWithScopedDynamicRewriteRules][Source]]
+

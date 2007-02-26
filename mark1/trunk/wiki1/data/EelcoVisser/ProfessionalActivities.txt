@@ -1,0 +1,62 @@
+%META:TOPICINFO{author="EelcoVisser" date="1164120365" format="1.0" version="1.52"}%
+%META:TOPICPARENT{name="WebHome"}%
+-------+ Professional Activities
+
+--------++ Websites
+
+	* http://www.program-transformation.org
+	* http://www.stratego-language.org
+	* http://www.cs.uu.nl/wiki/
+
+--------++ Ongoing activities
+
+	* [[http://www.program-transformation.org/PEPM07][Partial Evaluation and Program Manipulation (PEPM '07)]] (program co-chair)
+
+--------++ Past activities
+
+	* [[http://www.program-transformation.org/GPCE06][Generative Programming and Component Engineering (GPCE'06)]] (PC member)
+	* [[http://www.program-transformation.org/Sts/STS06][Software Transformation Systems (STS'06)]] (Co-organizer)
+	* [[http://www.dcc.uchile.cl/~etanter/dsal06/][Domain-Specific Aspect Languages (DSAL'06)]] (PC member)
+	* [[http://www.model-transformation.org/IWMEC2006/][Models for Enterprise Computing (IWMEC'06)]] at [[http://www4.comp.polyu.edu.hk/~edoc06/][EDOC 2006]] (PC member)
+	* [[http://congress.cimne.upc.es/jisbd06/prole][PROgramación y LEnguajes (PROLE'06)]] (invited speaker)
+	* [[http://www.ieee-scam.org/][Source Code Analysis and Manipulation (SCAM'06)]] (PC member)
+	* [[http://hor.pps.jussieu.fr/06/][3rd International Workshop on Higher-Order Rewriting (HOR'06)]] (invited speaker)
+	* [[http://research.microsoft.com/floc06/rta.htm][Conference on Rewriting Techniques and Applications (RTA'06)]] (PC member)
+	* [[http://www.model-transformation.org][ACM SAC Track on Model Transformation 2006]] (PC member)
+	* [[http://www.cis.ksu.edu/santos/pepm06/][ACM SIGPLAN 2006 Workshop on Partial Evaluation and Program Manipulation (PEPM'06)]] (PC member)
+	* [[http://www.di.uminho.pt/GTTSE2005][Summer School on Generative and Transformational Techniques in Software Engineering (GTTSE'05)]] (member of scientific board)
+	* [[http://www.dcs.kcl.ac.uk/staff/mark/scam2005/][Source Code Analysis and Manipulation (SCAM'05)]] (keynote speaker)
+	* [[http://www.program-transformation.org/Gpce05][Generative Programming and Component Engineering (GPCE'05)]] (publicity chair)
+	* [[http://www.stratego-language.org/Stratego/SixthStrategoUserDays][Sixth Stratego User Days (SUD'05)]]
+	* [[http://rule2005.loria.fr/][International Workshop on Rule-Based Programming]] (RULE'05) (PC member)
+	* [[http://www.program-transformation.org/GPCE][Generative Programming and Component Engineering (GPCE'04)]] ([[program chair]])
+		* [[http://www.program-transformation.org/Gpce/ConferenceProceedings][Conference proceedings]]
+	* [[http://www.program-transformation.org/Gpce/STS][Software Transformation Systems Workshop]]
+		* [[http://www.program-transformation.org/Sts][Software Transformation Systems]] wiki
+	* [[http://www.cs.auckland.ac.nz/~herm/WoDiSEE2004/][ICSE Workshop on Directions in Software Engineering Environments (WoDiSEE'04)]] (PC member)
+	* [[http://www.stratego-language.org/Stratego/FifthStrategoUserDays][Fifth Stratego User Days (SUD'04)]]
+	* [[http://www.cc.gatech.edu/~yannis/GPCE03/cfp.html][Generative Programming and Component Engineering (GPCE'03)]] (PC member)
+	* [[http://www.stratego-language.org/Stratego/FourthStrategoUsersDay][Fourth Stratego Users Day (SUD'03)]]
+	* [[http://www.dsic.upv.es/~rdp03/wrs/][Workshop on Reduction Strategies in Rewriting and Programming (WRS'03)]] ([[http://www.elsevier.nl/gej-ng/31/29/23/135/49/show/Products/notes/index.htt][Proceedings]]) (PC member)
+	* [[Center.ResearchDay2003][ICS Researchday 2003]] (organizer)
+	* [[http://www-sop.inria.fr/LDTA2003/][Workshop on Language Descriptions, Tools and Applications (LDTA'03)]] ([[http://www.cis.uab.edu/info/faculty/bryant/ldta2003/][Proceedings]]) (PC member)
+	* [[http://www.program-transformation.org/Transform/WorkshopOnRuleBasedProgramming][2002 ACM SIGPLAN Workshop on Rule-Based Programming (RULE'02)]] (PC co-chair)
+	* [[http://www.stratego-language.org/Stratego/ThirdStrategoUsersDay][Third Stratego Users Day (SUD'02)]]
+	* [[http://www.cwi.nl/~markvdb/RULE2001/][Second International Workshop on Rule-Based Programming (RULE'01)]] (PC member)
+	* [[http://www.logic.at/wrs01/"> ][Workshop on Reduction Strategies in Rewriting and Programming (WRS'01)]] (Invited talk)
+	* [[http://www.stratego-language.org/SecondStrategoUsersDay][Second Stratego Users Day (SUD'01)]]
+	* [[http://www-sop.inria.fr/oasis/LDTA/ldta.html][Workshop on Language Descriptions, Tools and Applications (LDTA'01)]] (PC member)
+	* [[http://www.stratego-language.org/FirstStrategoUsersDay][First Stratego Users Day (SUD'00)]]
+	* ASF+SDF'95 (organizer)
+
+--------++ Organizations
+
+	* IFIP [[http://smart-generators.org][WG2.11]] 
+	* [[http://www.acm.org/][ACM]]
+	* ACM [[http://www.acm.org/sigplan/][SIGPLAN]]
+	* ACM [[http://www.acm.org/sigsoft/][SIGSOFT]]
+	* (ACM [[http://www.acm.org/sigsam/][SIGSAM]])
+	* [[http://www.computer.org/][IEEE Computer Society]]
+ 
+
+%META:TOPICMOVED{by="EelcoVisser" date="1055745555" from="Visser.Activities" to="Visser.ProfessionalActivities"}%

@@ -1,0 +1,57 @@
+head	1.2;
+access;
+symbols;
+locks
+	apache:1.2; strict;
+comment	@# @;
+
+
+1.2
+date	2003.05.21.21.06.23;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.08.29.16.54.57;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.2
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1053551183" format="1.0" version="1.2"}%
+%META:TOPICPARENT{name="ResearchInterests"}%
+Transformation systems consist of many aspects including
+	  parsing, tree manipulation, and
+	  pretty-printing. Reimplementation of components for all
+	  aspects is expensive; reuse of existing components is
+	  desirable.
+
+	  This requires a format for the exchange of data between
+	  components and availability of the source code of the
+	  components such that modifications can be made if necessary.
+
+	* [[http://www.program-transformation.org/package-base/][The Online Package Base]]:  an interactive collection of packages that bundles packages on demand
+	* [[http://www.program-transformation.org/xt/][XT]]: A bundle of tools for program transformation
+
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 2
+a2 2
+%META:TOPICINFO{author="EelcoVisser" date="1030640097" format="1.0" version="1.1"}%
+%META:TOPICPARENT{name="Research"}%
+@

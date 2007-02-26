@@ -1,0 +1,52 @@
+%META:TOPICINFO{author="EelcoVisser" date="1161096815" format="1.0" version="1.21"}%
+%META:TOPICPARENT{name="WebHome"}%
+-------++ Projects
+
+These are software projects that I am involved in:
+
+--------+++ Transformation
+
+	* [[http://www.stratego-language.org][Stratego]] is a language for the specification of program transformation systems based on the paradigm of rewriting strategies.
+
+	* [[http://www.syntax-definition.org][SDF2]] is a modular formalism for syntax definition that integrates lexical and context-free syntax.
+
+	* [[http://www.stratego-language.org/Stratego/StrategoXT][Stratego/XT]] is a bundle of tools for program transformation built around Stratego, SDF2 and the ATerm library.
+
+	* [[http://www.stratego-language.org/Stratego/JavaFront][Java-Front]] provides a syntax definition for Java and [[http://www.stratego-language.org/Stratego/JavaBorg][JavaBorg]] implements sample domain-specific language extensions for Java.
+
+	* [[http://www.stratego-language.org/Stratego/JavaBorg][JavaBorg]]: example domain-specific language embeddings 
+
+	* [[http://www.octave-compiler.org][Octave Compiler]]
+
+	* [[http://www.stratego-language.org/Stratego/BibtexTools][BibTeX Tools]] is a set of tools for transforming <nop>BibTeX files, in particular production of html bibliographies and extraction of bib files based on a .aux file.
+
+	* [[http://www.stratego-language.org/Tiger][Tiger in Stratego]] is a collection of components for the compilation and transformation of Tiger programs designed for the purpose of education and demonstration of program transformation techniques.
+
+	* [[http://www.codeboost.org][CodeBoost]] is a transformation system for C++ 
+
+--------+++ Software Deployment
+
+	* [[http://nix.cs.uu.nl][Nix]] is a system for software deployment
+
+--------+++ Hacks
+
+	* [[Latex Styles]]
+
+	* [[http://www.cs.uu.nl/~visser/ftp/mh-to-evolution][mh-to-evolution]] is a script for converting [[http://www.exmh.org][MH]] mail directories to [[http://www.ximian.org][Evolution]] mail directories.
+
+-------++ Releases
+
+	* [[http://www.stratego-language.org/Stratego/StrategoDownload][Stratego Download]]: stable releases of Stratego/XT
+
+	* [[http://www.stratego-language.org/Stratego/ContinuousBuild][Continuous builds]]: bleeding edge releases and build reports from build farm
+
+-------++ Logistics
+
+	* [[https://bugs.cs.uu.nl][JIRA]] issue tracking system
+
+	* [[http://svn.cs.uu.nl][Subversion server]]
+		* [[https://svn.cs.uu.nl:12443/repoman/info/StrategoXT][StrategoXT repository]]
+
+	* [[ftp://ftp.stratego-language.org/pub/stratego][FTP directory]]
+
+%META:TOPICMOVED{by="EelcoVisser" date="1055745684" from="Visser.Software" to="Visser.SoftwareDistributions"}%

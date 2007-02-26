@@ -1,0 +1,30 @@
+head	1.1;
+access;
+symbols;
+locks
+	apache:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2006.06.23.16.17.16;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.1
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1151079436" format="1.0" version="1.1"}%
+%META:TOPICPARENT{name="ScheduleAndTravelPlans"}%
+
+<iframe src="http://www.google.com/calendar/embed?src=61ivfppiv3d40eiol6ne46g9ic%40group.calendar.google.com&epr=3&height=614" style=" border-width:0 " width="800" frameborder="0" height="614"></iframe>
+
+@

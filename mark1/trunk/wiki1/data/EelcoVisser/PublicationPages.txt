@@ -1,0 +1,6 @@
+%META:TOPICINFO{author="EelcoVisser" date="1162989208" format="1.0" version="1.4"}%
+Publications by [[Publications by year][year]] | [[Publications by type][type]] | [[Publications by topic][topic]] | [[Publications by year and type][year and type]] | [[Publications by type and year][type and year]] | [[Publications alphabetically by author][alphabetically]] | [[Publications on Wiki][wiki]] | [[DBLP][dblp]] | 
+[[PublicationsCiteseer][citeseer]] | [[PublicationsGoogle][google]] | [[PublicationMetrics][metrics]]
+
+(Note that the url of techreps has changed; UU techreps are available from the [[technical reports]] page.)
+

@@ -1,0 +1,7 @@
+%META:TOPICINFO{author="EelcoVisser" date="1109775732" format="1.0" version="1.16"}%
+%META:TOPICPARENT{name="WebHome"}%
+%INCLUDE{PublicationPages}%
+
+%INCLUDE{http://www.cs.uu.nl/~visser/visser/visser-by-year.html}%
+
+%META:TOPICMOVED{by="EelcoVisser" date="1053557649" from="Visser.Publications" to="Visser.PublicationsByYear"}%

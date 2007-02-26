@@ -1,0 +1,76 @@
+head	1.3;
+access;
+symbols;
+locks
+	apache:1.3; strict;
+comment	@# @;
+
+
+1.3
+date	2006.10.17.14.19.23;	author EelcoVisser;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2006.10.17.11.41.04;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2006.02.06.11.21.04;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.3
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1161094763" format="1.0" version="1.3"}%
+%META:TOPICPARENT{name="WebHome"}%
+%INCLUDE{http://www.stratego-language.org/Stratego/StrategoXTComponentsForTransformationSystems?skin=plain}%
+
+[[http://www.stratego-language.org/Stratego/StrategoXTComponentsForTransformationSystems][Source]]
+
+@
+
+
+1.2
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1161085264" format="1.0" version="1.2"}%
+d3 1
+a3 3
+
+
+<!-- %INCLUDE{http://www.stratego-language.org/Stratego/StrategoXTComponentsForTransformationSystems?skin=plain}% -->
+a6 4
+<!--
+	* Set SKIN = notitle
+-->
+
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1139224864" format="1.0" version="1.1"}%
+d3 3
+a5 1
+%INCLUDE{http://www.stratego-language.org/Stratego/StrategoXTComponentsForTransformationSystems?skin=plain}%
+@

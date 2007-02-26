@@ -1,0 +1,53 @@
+%META:TOPICINFO{author="EelcoVisser" date="1161096581" format="1.0" version="1.7"}%
+%META:TOPICPARENT{name="SyntaxDefinition"}%
+
+--------+ A Transformation Factory for Digital Signal Processing Software
+
+----++ Summary
+
+		  The current practice of hand coding DSP software based on a
+		  specification is time consuming and error-prone. Furthermore,
+		  it leads to software that is hard to maintain and reuse.  A
+		  critical factor for selling embedded processors is the
+		  availability of programming tools.
+
+		  The DSP software production problem can be alleviated by
+		  producing implementation code <em>automatically</em> from its
+		  specification by means of a series of transformations.  In
+		  this approach the currently implicit implementation knowledge
+		  is formalized in a large set of transformation rules, which
+		  forms a better basis for maintainance and reuse.
+
+		  In order to make the DSP implementations maintainable it is
+		  crucial that the transformation system itself can easily be
+		  adapted. Stratego is a language for the specification of
+		  program transformation systems that has been designed to make
+		  the specification of transformation systems themselves
+		  maintainable and adaptable through the separation of rules and
+		  strategies.
+
+		  In this project we will investigate the feasibility of the
+		  approach by developing implementations for a number of
+		  realistic DSP case studies that will be provided by Philips
+		  Research Laboratories.  The result of the research will be a
+		  factory for DSP software consisting of a domain-specific
+		  language for the specification of DSP problems and a library
+		  of program transformations applicable in the DSP domain.
+
+----++ Project Members
+
+		  The project is a collaboration between the Software Technology
+		  Group at Utrecht University and the IST group at Philips
+		  Research Laboratories.  The following people are involved in
+		  the project:
+
+	* [[WebHome][Dr E. Visser]]: principal investigator
+	* Henk Schepers: contact at Philips
+	* <a href="http://www.cs.uu.nl/~doaitse/">Prof. Dr S D. Swierstra</a>: promotor
+	* <a href="http://www.cs.uu.nl/staff/karina.html">Drs K. J. Olmos</a>: PhD student
+	* Rob Vermaas: programmer
+	* Remko van Beusekom: Master's student
+	* Mart Kolthoff: Master's student
+
+
+%META:TOPICMOVED{by="EelcoVisser" date="1030526259" from="Visser.DSPTransformation" to="Visser.DspTransformation"}%

@@ -1,0 +1,50 @@
+%META:TOPICINFO{author="EelcoVisser" date="1007659384" format="1.0" version="1.2"}%
+Language Independent Traversals for Program Transformation. EelcoVisser. Workshop on Transform.GenericProgramming (Transform.WGP'00), July 2000. Ponte de Lima, Portugal. [<a href="http://www.cs.uu.nl/~visser/ftp/Vis00.ps">Postscript</a>] 
+
+-----
+*Abstract*
+
+ Many language processing operations have a generic underlying
+		  algorithm. However, these generic algorithms either have to be
+		  implemented specifically for the language under consideration
+		  or the language needs to be encoded in a generic format that
+		  the generic algorithm works on.  Stratego is a language for
+		  program transformation that supports both specific and generic
+		  views of data types.
+ 
+		  A Stratego program defines a transformation on first-order
+		  ground terms. Transformation rules define single
+		  transformation steps. Transformation rules are combined into
+		  transformation _strategies_ by means of combinators that
+		  determine where and in what order rules are applied.  These
+		  combinators include: primitives for traversal to the direct
+		  subterms of a node, allowing the definition of many kinds of
+		  full term traversals; full control over recursion in
+		  traversals; patterns as first-class citizens; generic term
+		  construction and deconstruction.
+ 
+		  These features create a setting in which it is possible to
+		  combine generic traversal with data type specific pattern
+		  matching, and separating logic (transformation, pattern
+		  matching) from control (traversal).  This makes it possible to
+		  give language independent descriptions of language processing
+		  operations that can be instantiated to a specific language by
+		  providing the patterns of the relevant constructs. These
+		  generic algorithms only touch relevant constructors and do not
+		  need to know the entire datatype, making the algorithms
+		  insensitive to changes in the abstract syntax that do not
+		  affect the constructors relevant to the operation.
+ 
+		  Stratego is currently implemented by compilation to C code.
+		  All constructs of the language are implemented directly, i.e.,
+		  the compiled program is as large as the specification, in
+		  contrast to approaches that rely on preprocessing or program
+		  generation which may have a scaling problem when dealing with
+		  large languages.
+ 
+		  The approach to generic programming in Stratego is illustrated
+		  by means of several examples including free variable
+		  extraction, bound variable renaming, substitution and
+		  syntactic unification.
+-----
+Transform.CategoryPaper | -- Main.EelcoVisser - 14 May 2001 <br>

@@ -1,0 +1,21 @@
+%META:TOPICINFO{author="EelcoVisser" date="1009989102" format="1.0" version="1.2"}%
+%META:TOPICPARENT{name="WebHome"}%
+----+++ Description
+
+An optimization plugin is a compiler component that can be provided by the programmer.
+
+----+++ Issues
+
+	* interference with other optimizations
+
+	* in what stage to plug in
+
+	* architecture of a pluggable compiler
+
+----+++ Literature and Resources
+
+	* Transform:LxLanguage
+	* Transform:BroadwayCompiler
+	* Transform:SharLit / Transform:SUIF
+
+-- Main.EelcoVisser - 28 Nov 2001 <br />

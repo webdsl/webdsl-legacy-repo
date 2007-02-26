@@ -1,0 +1,45 @@
+head	1.2;
+access;
+symbols;
+locks
+	apache:1.2; strict;
+comment	@# @;
+
+
+1.2
+date	2004.02.24.09.31.14;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.08.28.09.06.46;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.2
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1077615074" format="1.0" version="1.2"}%
+%META:TOPICPARENT{name="StudentsAndPostdocs"}%
+PhD = Philosophical Doctorate
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 2
+a2 2
+%META:TOPICINFO{author="EelcoVisser" date="1030525606" format="1.0" version="1.1"}%
+%META:TOPICPARENT{name="Students"}%
+@

@@ -1,0 +1,29 @@
+%META:TOPICINFO{author="EelcoVisser" date="1036937338" format="1.0" version="1.4"}%
+%META:TOPICPARENT{name="StrategoPublications"}%
+Main.EelcoDolstra and Main.EelcoVisser. Building Interpreters With Rewriting Strategies
+In Transform.MarkVanDenBrand and Transform.RalfLaemmel (editors)
+_Workshop on Language Descriptions, Tools and Applications ([[Transform.LDTA][LDTA]]'02)._ volume 65.3 of _Electronic Notes in Theoretical Computer Science._ Elsevier Science Publishers, April 2002. (To appear)
+
+*Abstract*
+
+Programming language semantics based on pure rewrite rules suffers from
+the gap between rewriting strategy implemented in rewriting engines and
+the intended evaluation strategy. This paper shows how programmable
+rewriting strategies can be used to implement interpreters for programming languages based on rewrite rules. The advantage of this approach is
+that reduction rules are first class entities that can be reused in different
+strategies, even in other kinds of program transformations such as optimizers. The approach is illustrated with several interpreters for the lambda
+calculus based on implicit and explicit (parallel) substitution, different
+strategies including normalization, eager evaluation, lazy evaluation, and
+lazy evaluation with updates. An extension with pattern matching and
+choice shows that such interpreters can easily be extended.
+
+*Preprint*
+
+	* http://www.cs.uu.nl/people/visser/ftp/DV02.pdf
+
+*Related*
+
+	* RhoStratego
+
+------
+CategoryPaper

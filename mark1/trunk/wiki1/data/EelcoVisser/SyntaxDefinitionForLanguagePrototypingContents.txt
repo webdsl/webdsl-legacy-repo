@@ -1,0 +1,159 @@
+%META:TOPICINFO{author="EelcoVisser" date="1062508618" format="1.0" version="1.1"}%
+%META:TOPICPARENT{name="SyntaxDefinitionForLanguagePrototyping"}%
+<pre>
+1	Introduction																		 1
+	 1.1  General																		 1
+	 1.2  Part I: Context-free Parsing Techniques							  4
+	 1.3  Part II: A Family of Syntax Definition Formalisms				 6
+	 1.4  Part III: Multi-Level Algebraic Specification					  7
+	 1.5  Part IV: Polymorphic Syntax Definition								9
+	 1.6  Short Trips																	9
+	 1.7  Origins of the Chapters												  11
+
+2	Specification in ASF+SDF														13
+	 2.1  Introduction																 13
+	 2.2  Many-Sorted Algebra														14
+	 2.3  Grammars as Signatures													15
+	 2.4  Conditional Equations													 18
+	 2.5  Term Rewriting															  18
+	 2.6  Modularization															  18
+	 2.7  The ASF+SDF Meta-Environment											18
+	 2.8  Literate Specification													19
+	 2.9  Specification of Programming Languages							  19
+	 2.10 Literature																	21
+
+I	Context-Free Parsing Techniques											  23
+
+3	Scannerless Generalized-LR Parsing										  25
+	 3.1  Introduction																 25
+	 3.2  Scannerless Parsing														30
+	 3.3  Grammar Normalization													 36
+	 3.4  Disambiguation															  40
+	 3.5  Parser Generation														  45
+	 3.6  Automatic Lexical Disambiguation									  50
+	 3.7  Reject Productions														 52
+	 3.8  Generalized-LR Parsing													56
+	 3.9  Implementation															  66
+	3.10  Related Work																 68
+	3.11  Conclusions																  69
+
+4  Disambiguation Filters															71
+	4.1	Introduction																 71
+	4.2	Disambiguation															  72
+	4.3	Preliminaries																74
+	4.4	Filters																		76
+	4.5	Priorities																	80
+	4.6	Prolog Operators															84
+	4.7	Offside Rule																 86
+	4.8	Pattern Matching Filters												 86
+	4.9	Discussion																	90
+	4.10  Conclusions																  92
+
+5  A Case Study in Optimizing Parsing Schemata by Disambiguation Filters 93
+	5.1	Introduction																 93
+	5.2	Preliminaries																95
+	5.3	Disambiguation Filters													96
+	5.4	Parsing Schemata															97
+	5.5	Priority Conflicts														 99
+	5.6	From Earley to LR														 102
+	5.7	Multi-set Filter														  107
+	5.8	Conclusions																 111
+
+II	Context-Free Syntax Definition											 113
+
+6  A Family of Syntax Definition Formalisms								  115
+	6.1	Introduction																115
+	6.2	An Overview of SDF2													  118
+	6.3	Design																		123
+	6.4	Organization																126
+
+7  Context-Free Grammars															129
+	7.1	Symbols																	  129
+	7.2	Grammars																	 131
+	7.3	Context-Free Grammars (Kernel)										133
+	7.4	Basic Symbols															  138
+	7.5	Parse Trees																 144
+
+8  Disambiguation and Abbreviation											  157
+	8.1	Priorities																  157
+	8.2	Regular Expressions													  166
+	8.3	Lexical and Context-Free Syntax									  174	  
+	8.4  Restrictions																 181
+																							
+9	Renaming and Modularization												  185
+	 9.1  Renamings																	185
+	 9.2  Aliases																	  192
+	 9.3  Modules																	  195
+
+10  The Syntax Definition Formalism SDF2									  203
+	 10.1 SDF2																		  203
+	 10.2 Comparison to SDF														 208
+	 10.3 Discussion and Concluding Remarks									209
+
+III	Multi-Level Algebraic Specification									 215
+
+11  Extensions of First-Order Specification								  217
+	 11.1 Introduction																218
+	 11.2 Multi-Level Specifications											 220
+	 11.3 Related Formalisms														223
+	 11.4 Outline																	  226
+
+12  Untyped and Simply Typed Specifications								  227
+	 12.1 Untyped Equational Specifications									227
+	 12.2 One-Level Specifications												232
+	 12.3 Typechecking One-Level Specifications							  241
+
+13  Examples of Multi-Level Specifications									253
+	 13.1 Introduction																253
+	 13.2 One Level																	254
+	 13.3 Two Levels																  255
+	 13.4 Polymorphic Data Types												  257
+	 13.5 Three Levels																262
+	 13.6 Type Equations															 264
+
+14  Definition of Multi-Level Specifications								 273
+	 14.1 Syntax and Equational Logic											273
+	 14.2 Modular Specifications												  277
+	 14.3 Well-Formedness															279
+	 14.4 Type Assignment															285
+	 14.5 Typechecking																295
+	 14.6 Discussion and Concluding Remarks									296
+
+IV	Polymorphic Syntax Definition					  303
+
+15  Polymorphic Syntax Definition												305
+	15.1 Introduction																 305
+	15.2  Signatures and Grammars												 307
+	15.3  Two-Level Grammars														317
+	15.4  Examples																	 319
+	15.5  Properties																  324
+	15.6  Parsing																	  327
+	15.7  Related Formalisms														330
+	15.8  Conclusions																 332
+
+V	Epilogue																			333
+
+16 Concluding Remarks																335
+	16.1  Syntax																		335
+	16.2  Type Systems																337
+	16.3  Program and Specification Schemata								  337
+
+VI	Appendices																		339
+
+A  Auxiliary Modules for the Specification of SDF2						 341
+	A.1	Literals																	 341
+	A.2	ATerms																		341
+	A.3	Renamings																	346
+	A.4	SDF2																		  349
+
+B  Auxiliary Modules for Multi-Level Specifications						351
+	B.1	Library Modules															351
+	B.2	Term Utilities															 354
+
+C  Samenvatting																		365
+	C.1	Algemeen																	 365
+	C.2	Resultaten																  367
+
+D  Bibliography																		371
+</pre>
+

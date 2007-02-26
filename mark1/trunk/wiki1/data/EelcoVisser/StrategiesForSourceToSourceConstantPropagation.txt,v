@@ -1,0 +1,62 @@
+head	1.2;
+access;
+symbols;
+locks
+	apache:1.2; strict;
+comment	@# @;
+
+
+1.2
+date	2003.06.02.16.56.22;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.06.02.12.38.08;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.2
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1054572982" format="1.0" version="1.2"}%
+%META:TOPICPARENT{name="StrategoPublications"}%
+%INCLUDE{http://www.stratego-language.org/twiki/bin/view/Stratego/StrategiesForSourceToSourceConstantPropagation?skin=plain}%
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1023021488" format="1.0" version="1.1"}%
+d3 1
+a3 16
+K. Olmos and E. Visser. Strategies for source-to-source constant propagation. In B. Gramlich and S. Lucas, editors, Workshop on Reduction Strategies (WRS'02), Electronic Notes in Theoretical Computer Science, Copenhagen, Denmark, 2002. Elsevier Science Publishers. (To appear).
+
+*Abstract*
+
+Data-flow optimizations are usually implemented on low-level
+intermediate representations. This is not appropriate for
+source-to-source optimizations, which reconstruct a source level
+program after transformation.  In this paper we show how constant
+propagation, a well known data-flow optimization problem, can be
+implemented on abstract syntax trees in Stratego, a rewriting system
+extended with programmable rewriting strategies for the control over
+the application of rules and dynamic rewrite rules for the propagation
+of information.
+
+-----
+Transform.CategoryPaper
+@

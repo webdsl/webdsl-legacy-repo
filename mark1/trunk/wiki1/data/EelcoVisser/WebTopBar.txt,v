@@ -1,0 +1,29 @@
+head	1.1;
+access;
+symbols;
+locks
+	apache:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2006.10.18.09.07.06;	author LeonMoonen;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.1
+log
+@none
+@
+text
+@%META:TOPICINFO{author="LeonMoonen" date="1161162426" format="1.0" version="1.1"}%
+%META:TOPICPARENT{name="WebPreferences"}%
+foo
+
+@

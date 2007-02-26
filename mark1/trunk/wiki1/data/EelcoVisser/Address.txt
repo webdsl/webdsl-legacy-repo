@@ -1,0 +1,45 @@
+%META:TOPICINFO{author="EelcoVisser" date="1165610288" format="1.0" version="1.10"}%
+%META:TOPICPARENT{name="WebHome"}%
+<a href="http://www.flickr.com/photos/eelcovisser/272578793/" title="Photo Sharing"><img src="http://static.flickr.com/92/272578793_555b3b9f72_m.jpg" width="190" height="240" alt="mekelweg 4" align="right" /></a>
+------++ Coordinates
+
+	* [[http://swerl.tudelft.nl][Software Engineering Research Group]]
+	* [[http://www.st.ewi.tudelft.nl][Department of Software Technology]]
+	* [[http://www.ewi.tudelft.nl][Electrical Engineering, Mathematics and Computer Science (EWI)]]
+	* [[http://www.tudelft.nl/][Delft University of Technology]]
+
+------++ WWW
+
+	* http://www.st.ewi.tudelft.nl/~eelco
+
+------++ E-Mail
+
+	* mailto:visser@acm.org
+
+------++ Phone
+
+	* +31 (015) 27 87088
+
+------++ Fax
+
+	* +31 (015) 27 86632
+
+------++ Mail
+
+<verbatim>
+Dr Eelco  Visser
+ST / EWI
+Delft University of Technology
+Mekelweg 4
+2628 CD Delft
+The Netherlands
+</verbatim>
+
+<a href="http://www.flickr.com/photos/eelcovisser/272578134/" title="Photo Sharing"><img src="http://static.flickr.com/84/272578134_dc3fbfe89a_m.jpg" width="240" height="160" alt="mekelweg 4" align="right"/></a>
+------++ Visiting
+
+	* Mekelweg 4 (the big building)
+	* Room: HB 8.270
+
+See the faculty's [[http://www.ewi.tudelft.nl/live/pagina.jsp?id=742139c8-2eb2-42ef-80a7-6e483b3f4caa&lang=en][contact information]] for a route description. We're located on the 8th floor. 
+

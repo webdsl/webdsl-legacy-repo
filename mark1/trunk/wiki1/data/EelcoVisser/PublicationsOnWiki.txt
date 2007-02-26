@@ -1,0 +1,64 @@
+%META:TOPICINFO{author="EelcoVisser" date="1119387971" format="1.0" version="1.4"}%
+%META:TOPICPARENT{name="PublicationsByYear"}%
+%INCLUDE{PublicationPages}%
+
+------+++ 2005
+
+	* [[Program Transformation with Scoped Dynamic Rewrite Rules]] (FI)
+	* [[A survey of strategies in rule based program transformation systems]] (JSC)
+	* [[Composing Source to Source Data Flow Transformations][Composing Source-to-Source Data-Flow Transformations with Rewriting Strategies and Dependent Dynamic Rewrite Rules]] (CC'05)
+
+------+++ 2004
+
+	* [[Reusable and Adaptable Strategies for Generative Programming]] (STS'04)
+	* [[Nix a safe and policy-free system for software deployment]] (LISA'04)
+	* [[Concrete syntax for objects]] (OOPSLA'04) 
+	* [[Reusable and Adaptable Strategies for Generative Programming]] (STS'04)
+	* [[Transparantie in variabiliteit]] (Informatie)
+	* [[Imposing a memory management discipline on software deployment]] (ICSE'04)
+	* [[Retrofitting the AutoBayes program synthesis system with concrete syntax]] (DSPG)
+	* [[Program Transformation with StrategoXT][Program transformation with Stratego/XT: Rules, strategies, tools, and systems in StrategoXT 0.9]] (DSPG)
+
+------+++ 2003
+
+	* [[Turning dynamic typing into static typing by program specialization]] (SCAM'03)
+	* [[Design of the CodeBoost transformation system]] (SCAM'03)
+	* [[Fusing logic and control]]
+	* [[Capturing timeline variability with transparent configuration environments]]
+	* [[Transformation mechanics]]
+	* [[Strategic programming meets adaptive programming]] (AOSD'03)
+	* [[TimelineVariabilityTheVariabilityOfBindingTimeOfVariationPoints][Timeline variability: The variability of binding time of variation points]]
+
+------+++ 2002
+
+	* [[Disambiguation filters for scannerless generalized LR parsers]]
+	* [[Meta programming with concrete object syntax]]
+
+------+++ 2001
+
+	* [[XT A Bundle of Program Transformation Tools]]
+
+------+++ 2000
+------+++ 1999
+------+++ 1998
+------+++ 1997
+
+	* [[Syntax Definition for Language Prototyping]]
+	* [[A family of syntax definition formalisms]]
+	* [[Character classes]]
+	* [[Scannerless generalized LR parsing]]
+	* [[A case study in optimizing parsing schemata by disambiguation filters]]
+	* [[From context-free grammars with priorities to character class grammars]]
+
+------+++ 1996
+
+	* [[Generation of formatters for context-free languages]]
+
+------+++ 1995
+
+	* [[From Box to TeX]]
+
+------+++ 1994
+
+	* [[Using filters for the disambiguation of context-free grammars]]
+

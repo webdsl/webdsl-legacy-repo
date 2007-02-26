@@ -1,0 +1,18 @@
+%META:TOPICINFO{author="EelcoVisser" date="1161097577" format="1.0" version="1.2"}%
+%META:TOPICPARENT{name="WebHome"}%
+A. H. Bagge, M. Bravenboer, K. T. Kalleberg, K. Muilwijk, and E. Visser. *Adaptive Code Reuse by Aspects, Cloning and Renaming.* [[http://www.cs.uu.nl/research/techreps/UU-CS-2005-031.html][Technical Report UU-CS-2005-031]], Department of Information and Computing Sciences, Universiteit Utrecht, Utrecht, The Netherlands, August 2005. 
+
+-------+++ Abstract
+
+		  Effective code reuse is desirable, but difficult to achieve in
+		  practice, since it is often necessary to adapt code before it can be
+		  reused successfully.  The good old solution to code reuse is simple:
+		  copy, paste, then edit as needed.  This is a brilliant idea, except
+		  for the maintenance problems it causes. In this paper we introduce
+		  a language extension for declaratively performing adaptive code
+		  reuse at compile-time. We decompose reuse into two operations;
+		  clone existing code, and adapt it to new requirements.
+		  The clone and adapt technique allows flexible code reuse, untangled
+		  from subtyping and other irrelevant features, and without the
+		  maintenance nightmare of copy and paste programming.
+

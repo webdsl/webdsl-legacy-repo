@@ -1,0 +1,65 @@
+head	1.2;
+access;
+symbols;
+locks
+	apache:1.2; strict;
+comment	@# @;
+
+
+1.2
+date	2006.10.17.20.50.01;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2004.06.09.10.51.01;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.2
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1161118201" format="1.0" version="1.2"}%
+%META:TOPICPARENT{name="SyntaxDefinition"}%
+E. Visser. *Scannerless Generalized-LR Parsing.* Technical Report P9707, Programming Research Group, University of Amsterdam, July 1997. ([[http://www.cs.uu.nl/people/visser/ftp/P9707.ps.gz][ps.gz]])
+
+-----+++ <nop>BibTeX
+
+<pre>
+%INCLUDE{http://www.cs.uu.nl/groups/ST/stbib/visser-by-year/Vis97.sglr.bib}%
+</pre>
+
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1086778261" format="1.0" version="1.1"}%
+d3 8
+a10 12
+E. Visser. *Scannerless Generalized-LR Parsing.* Technical Report P9707, Programming Research Group, University of Amsterdam, July 1997. ([[http://www.cs.uu.nl/people/visser/ftp/P9707.ps.gz][ps.gz]])
+
+-----+++ <nop>BibTeX
+
+<pre>
+%INCLUDE{http://www.cs.uu.nl/groups/ST/stbib/visser-by-year/Vis97.sglr.bib}%
+</pre>
+
+<!--
+	* Set SKIN = notitle
+-->
+
+@

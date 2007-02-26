@@ -1,0 +1,96 @@
+head	1.4;
+access;
+symbols;
+locks
+	apache:1.4; strict;
+comment	@# @;
+
+
+1.4
+date	2006.10.17.15.06.34;	author EelcoVisser;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2005.09.02.12.10.02;	author EelcoVisser;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2005.04.29.20.05.46;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2004.10.12.08.42.53;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.4
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1161097594" format="1.0" version="1.4"}%
+%META:TOPICPARENT{name="WebHome"}%
+%INCLUDE{http://www.cs.uu.nl/wiki/Trace/NixASafeAndPolicy-FreeSystemForSoftwareDeployment?skin=plain}%
+
+
+[[http://www.cs.uu.nl/wiki/Trace/NixASafeAndPolicy-FreeSystemForSoftwareDeployment][Source]]
+
+@
+
+
+1.3
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1125663002" format="1.0" version="1.3"}%
+d3 1
+a3 1
+%INCLUDE{Trace.NixASafeAndPolicy-FreeSystemForSoftwareDeployment}%
+a4 3
+<!--
+	* Set SKIN = notitle
+-->
+d6 1
+a6 1
+[[Trace.NixASafeAndPolicy-FreeSystemForSoftwareDeployment][Source]]
+@
+
+
+1.2
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1114805146" format="1.0" version="1.2"}%
+d5 6
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1097570573" format="1.0" version="1.1"}%
+a4 4
+<!--
+	* Set SKIN = notitle
+-->
+
+@

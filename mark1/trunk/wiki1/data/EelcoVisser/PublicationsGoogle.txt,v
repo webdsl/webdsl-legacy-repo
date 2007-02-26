@@ -1,0 +1,34 @@
+head	1.1;
+access;
+symbols;
+locks
+	apache:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2004.12.20.17.33.55;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.1
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1103564035" format="1.0" version="1.1"}%
+%INCLUDE{PublicationPages}%
+
+%INCLUDE{http://scholar.google.com/scholar?as_q=&num=100&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=Eelco+Visser&as_publication=&as_ylo=&as_yhi=&hl=en&lr=}%
+
+<!--
+	* Set SKIN = notitle
+-->
+
+@

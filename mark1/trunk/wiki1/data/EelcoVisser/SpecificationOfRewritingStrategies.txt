@@ -1,0 +1,31 @@
+%META:TOPICINFO{author="EelcoVisser" date="1009749750" format="1.0" version="1.1"}%
+%META:TOPICPARENT{name="StrategoPublications"}%
+by Transform.BasLuttik and Main.EelcoVisser In Transform.AlexSellink (editor) _Proceedings of the 2nd International Workshop on the Theory and Practice of Algebraic Specifications (ASF+SDF'97)_. _Electronic Workshops in Computing_, Springer-Verlag, Berlin, November 1997.
+	
+*Abstract*
+
+	User-definable strategies for the application of rewrite rules
+	provide a means to construct transformation systems that apply
+	rewrite rules in a controlled way. This paper describes a
+	strategy language and its interpretation.  The language is
+	used to control the rewriting of terms using labeled rewrite
+	rules. Rule labels are atomic strategies. Compound strategies
+	are formed by means of sequential composition,
+	non-deterministic choice, sequential choice, fixed point
+	recursion, and a primitive for expressing term traversal.  The
+	traversal primitive called `push-down' applies a strategy to
+	all arguments of the outermost function symbol of a
+	term. Several complex term traversal strategies such as
+	bottom-up and top-down application and (parallel) innermost
+	and (parallel) outermost reduction can be defined in terms of
+	this primitive.  The paper contains two case studies of the
+	application of strategies.
+
+*Online*
+
+	* http://www.springer.co.uk/ewic/workshops/ASFSDF97/
+	* http://www.cs.uu.nl/people/visser/ftp/LV97.ps.gz
+	* http://www.cs.uu.nl/people/visser/ftp/LV97.ps.zip
+
+-----
+Transform.CategoryPaper

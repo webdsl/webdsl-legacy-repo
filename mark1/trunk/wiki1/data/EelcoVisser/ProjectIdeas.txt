@@ -1,0 +1,66 @@
+%META:TOPICINFO{author="EelcoVisser" date="1042239324" format="1.0" version="1.21"}%
+%META:TOPICPARENT{name="WebHome"}%
+Current and past master thesis projects in the area of program transformation and some ideas for future projects.
+
+----+++ Ongoing Projects
+
+	* Java and XML -- Martin Bravenboer
+	* Domain-specific optimization -- Stratego:CodeBoost - Transform:OttoSkroveBagge (Bergen)
+	* [[Simplifying the Simplifier]] -- Main.AlanVanDam
+	* Documentation generation -- Rob Vermaas
+
+----+++ Finished Projects
+
+	* [[Similix in Stratego]] -- Main.LennartSwart
+	* Software Renovation -- Stratego:CobolX - Hedzer Westra - 2002
+	* Inlining Strategies -- Arne de Bruijn - 2001
+	* First-Class Rules and Generic Traversal -- Stratego:RhoStratego - Transform:EelcoDolstra - 2001
+
+-----+++ Project Ideas
+
+Source to source transformation
+
+	* [[Java generation and optimization]]
+		* Program Refactoring
+		* Concrete Java
+
+	* Haskell transformation
+		* Functions from Data
+
+	* [[C sharp transformation]]
+
+	* C transformation
+		* typedefs by post-parse disambiguation
+
+Reverse engineering
+
+	* [[Language independent program visualization]]
+
+Optimization
+
+	* [[Optimizers from interpreters]]
+	* [[Control flow normalization]]
+	* Code generation for VLIW architectures
+	* Strategies for loop optimization
+	* Strategies for instruction scheduling
+	* Instruction selection for quadruples
+
+Extending, improving Stratego
+
+	* [[Optimizing Stratego programs]]
+	* [[Representing object variables]]
+	* [[Transformation aspects]]
+	* StrategoDebug
+	* [[Transformation composer]]
+	* [[Optimization plugin]]
+
+	* Back-ends
+		* [[Stratego to JVM]]
+		* [[Stratego to CLI]]
+
+----+++ Resources
+
+	* Transform:ProgramTransformation: survey website on program transformation
+	* Stratego:StrategoLanguage: language for specification of program transformation systems
+
+

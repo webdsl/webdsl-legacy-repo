@@ -1,0 +1,77 @@
+head	1.3;
+access;
+symbols;
+locks
+	apache:1.3; strict;
+comment	@# @;
+
+
+1.3
+date	2005.04.29.20.04.26;	author EelcoVisser;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2004.02.13.22.45.27;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.11.24.23.51.00;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.3
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1114805066" format="1.0" version="1.3"}%
+%META:TOPICPARENT{name="WebHome"}%
+%INCLUDE{http://www.stratego-language.org/Stratego/TurningDynamicTypingIntoStaticTypingByProgramSpecialization?skin=plain}%
+
+[[%HTTPSTRATEGO%TurningDynamicTypingIntoStaticTypingByProgramSpecialization][Source]]
+
+@
+
+
+1.2
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1076712327" format="1.0" version="1.2"}%
+d3 4
+a6 7
+%INCLUDE{http://www.stratego-language.org/twiki/bin/view/Stratego/TurningDynamicTypingIntoStaticTypingByProgramSpecialization?skin=plain}%
+
+[[%HTTPSTRATEGO%TurningDynamicTypingIntoStaticTypingByProgramSpecialization][Source]]
+
+<!-- 
+	* Set SKIN = notitle
+-->
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1069717860" format="1.0" version="1.1"}%
+a2 1
+
+d5 1
+a5 1
+[[%HTTPSTRATEGO%/TurningDynamicTypingIntoStaticTypingByProgramSpecialization][Source]]
+@

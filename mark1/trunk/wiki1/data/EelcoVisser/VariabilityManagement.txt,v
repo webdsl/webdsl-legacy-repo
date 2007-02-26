@@ -1,0 +1,146 @@
+head	1.5;
+access;
+symbols;
+locks
+	apache:1.5; strict;
+comment	@# @;
+
+
+1.5
+date	2003.05.31.11.40.22;	author EelcoVisser;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.05.21.21.06.22;	author EelcoVisser;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2002.09.13.08.54.20;	author EelcoVisser;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2002.09.13.08.05.47;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.08.23.13.14.16;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.5
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1054381222" format="1.0" version="1.5"}%
+%META:TOPICPARENT{name="ResearchInterests"}%
+<font size=+3><b>Models and Techniques for Variability Management</b></font>
+
+[This project is subsumed by the TraCE project.]
+
+----+++ Description
+
+Variability is rapidly becoming an important factor in software development. Modern software products are frequently developed and delivered in multiple combinations and variants. As a simple example, consider development tools that are delivered in light, professional and enterprise versions, each providing increasing amount of functionality and features. Furthermore, most products can be run on different computing platforms and provide a user interface in different natural languages and possibly interaction styles. In addition, most products offer substantial configurability during installation, startup and run-time.
+
+Variability is studied - amongst others - in the field of system families or software product lines. A common approach found there is to identify features that are common for a family of products or specific for one or a few of its members. A (variable) feature thus represents a variation point in the system for which multiple variants can be made available. This model is then used as a basis for designing and implementing family-common and product-specific assets.
+
+To chose a proper implementation, the timing characteristics of the variation point play a prominent role. We have to ask ourselves when (during the development, deployment and usage timeline) it should be possible to extend or reduce the set of variants (and possibly by whom) and when the variation point should be bound. In addition, the parts of the software product affected by the variation point (code, help files, documentation, et cetera) should be clear.
+
+To implement variability, a lot of different mechanisms and techniques exist. For example, conditional compilation allows us to choose a particular variant during compilation by identifying whether or not a piece of code should be compiled. Likewise, we can transform existing code to introduce particular behaviour. Configuration selection on the other hands, works on the software configuration and can be used to include or exclude particular (source) components. For more late-time variability we can use OO techniques like inheritance and abstract-coupling combined with a factory object and a parameter file that defines the correct variant to use. Alternatively, we can use run-time discovery and binding of (distributed) objects in platforms such as Corba.
+
+In practice, there is a significant distance between variability on a conceptual level (features, variation points) and the variability mechanisms actually used. In many cases, variability appears to be treated in an ad-hoc fashion, i.e., by just choosing a particular mechanism (and therefore, implicitly, a particular timeline for addition/binding) without considering the alternatives. Since features and variation points do not have an explicit representation there is often no traceability from the conceptual level to the implementation. Another issue of current practice and mechanisms is that changing the timing-characteristics of a variation point involves a lot of work, typically because the implementation of the variation point is scattered across many different artefacts (source code files, build files, et cetera). For example, allowing the "pre-binding" of a run-time configurable option during installation may involve a lot of work in different parts of the program. Finally, the consequences of a particular choice, e.g., in terms of performance or resource overhead or in maintainability are often unclear or not considered. And, similarly, potential techniques to optimize the software at a particular binding time are not used.
+
+The goal of this project is to study the modelling and realization of variability in modern software products with an emphasis on a more general and generic treatment of timing-issues for addition, reduction and binding of variability and the related effects and opportunities for optimization. The aim of the project is to produce insights that assist the current practice, not so much on solutions that work only in minimal, theorethical applications. Because of this, part of the project will be to study the handling of variability in existing systems.
+
+We propose that the project is phased in the following stages:
+
+	* Produce a model for reasoning about features, variability, and timing aspects.
+	* Apply the model to a number of case-studies, taken both from the public domain and from industry.
+	* Classify variability mechanisms with respect to the model and study their time aspects.
+	* Study possibilities for a more generic handling of variability, including the changing of time-aspects with considerations of the consequences and opportunities for optimization.
+
+----+++ Project Members
+
+The project is a collaboration between the Software Technology Group at Utrecht University and the Software Engineering ResearchInterests Center (SERC). The following people are involved in the project:
+
+	* Dr E. Visser: principal investigator
+	* Ing G. Florijn: contact at SERC
+	* Prof. Dr S D. Swierstra: promotor
+	* Drs E. Dolstra: PhD student
+
+
+<!--
+
+	* Set SKIN = notitle
+
+-->
+
+%META:TOPICMOVED{by="EelcoVisser" date="1031904347" from="Visser.TraCE" to="Visser.VariabilityManagement"}%
+@
+
+
+1.4
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1053551182" format="1.0" version="1.4"}%
+d5 2
+d42 2
+a43 2
+-->
+
+@
+
+
+1.3
+log
+@none
+@
+text
+@d1 2
+a2 2
+%META:TOPICINFO{author="EelcoVisser" date="1031907260" format="1.0" version="1.3"}%
+%META:TOPICPARENT{name="Research"}%
+d28 1
+a28 1
+The project is a collaboration between the Software Technology Group at Utrecht University and the Software Engineering Research Center (SERC). The following people are involved in the project:
+d41 1
+@
+
+
+1.2
+log
+@none
+@
+text
+@d1 2
+a2 2
+%META:TOPICINFO{author="EelcoVisser" date="1031904347" format="1.0" version="1.2"}%
+%META:TOPICPARENT{name="WebHome"}%
+d36 5
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1030108456" format="1.0" version="1.1"}%
+d36 1
+@

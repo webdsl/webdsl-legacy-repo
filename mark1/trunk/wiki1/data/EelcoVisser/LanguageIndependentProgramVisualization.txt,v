@@ -1,0 +1,53 @@
+head	1.1;
+access;
+symbols;
+locks
+	apache:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2001.11.27.22.54.55;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.1
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1006901695" format="1.0" version="1.1"}%
+%META:TOPICPARENT{name="WebHome"}%
+----+++ Literature
+
+	* Overview of visualization techniques
+	* What aspects to visualize
+	* What tools are already available
+
+----+++ Case Study: Understanding the Linux Kernel
+
+	* Develop a set of tools for visualizing aspects of C programs using Stratego and the XT tool set
+
+	* Discover which parts are
+		* generic 
+		* specific for the language model
+		* specific to the language (C)
+
+	* Try to separate these parts such that the generic elements can be reused for other languages
+
+----+++ Visualizations
+
+	* Call-graph
+		* how to visualize higher-order functions / function pointers / methods
+	* Module / package structure
+		* Discover modules / remodularize
+		* Clustering
+
+-- Main.EelcoVisser - 27 Nov 2001 <br />
+@

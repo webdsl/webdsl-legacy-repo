@@ -1,0 +1,50 @@
+head	1.2;
+access;
+symbols;
+locks
+	apache:1.2; strict;
+comment	@# @;
+
+
+1.2
+date	2004.02.11.20.18.31;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.06.02.16.44.28;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.2
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1076530711" format="1.0" version="1.2"}%
+%META:TOPICPARENT{name="WebHome"}%
+%INCLUDE{Trace.CapturingTimelineVariabilityWithTransparentConfigurationEnvironments}%
+
+<!--
+	* Set SKIN = notitle
+-->
+
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1054572268" format="1.0" version="1.1"}%
+d4 5
+@

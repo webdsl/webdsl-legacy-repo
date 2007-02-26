@@ -1,0 +1,75 @@
+head	1.2;
+access;
+symbols;
+locks
+	apache:1.2; strict;
+comment	@# @;
+
+
+1.2
+date	2004.05.14.21.42.59;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2001.12.06.17.13.04;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.2
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1084570979" format="1.0" version="1.2"}%
+%META:TOPICPARENT{name="StrategoPublications"}%
+%INCLUDE{http://www.stratego-language.org/Stratego/ScopedDynamicRewriteRules?skin=plain}%
+
+<!--
+	* Set SKIN = notitle
+-->
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1007659778" format="1.0" version="1.1"}%
+d3 1
+a3 1
+[[EelcoVisser][E. Visser]]. Scoped dynamic rewrite rules. In [[Transform.MarkVanDenBrand][M. van den Brand ]]and [[Transform.RakeshVerma][R. Verma]], editors, Rule Based Programming (RULE'01), volume 59/4 of _Electronic Notes in Theoretical Computer Science_. Elsevier Science Publishers, September 2001. 
+d5 3
+a7 22
+*Abstract*
+
+	The applicability of term rewriting to program transformation is
+	limited by the lack of control over rule application and by the
+	context-free nature of rewrite rules. The first problem is
+	addressed by languages supporting user-definable rewriting
+	strategies. This paper addresses the second problem by extending
+	rewriting strategies with scoped dynamic rewrite rules. Dynamic
+	rules are generated at run-time and can access variables available
+	from their definition context. Rules generated within a rule scope
+	are automatically retracted at the end of that scope. The technique
+	is illustrated by means of several program tranformations: bound
+	variable renaming, function inlining, and dead function
+	elimination.	
+
+*Download*
+
+	* http://www.cs.uu.nl/people/visser/ftp/Vis01-rule.pdf
+	* http://www.cs.uu.nl/people/visser/ftp/Vis01-rule.ps.gz
+	* http://www.cs.uu.nl/people/visser/ftp/Vis01-rule.ps.zip
+------
+Transform.CategoryPaper
+@

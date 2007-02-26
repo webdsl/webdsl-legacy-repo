@@ -1,0 +1,90 @@
+%META:TOPICINFO{author="EelcoVisser" date="1080168064" format="1.0" version="1.4"}%
+%META:TOPICPARENT{name="HotSpots"}%
+My [[http://personalwebs.oakland.edu/~grossman/erdoshp.html][Erdös number]] is at most 5:
+
+	* Erdös (0)
+	* Csiszar (1)
+	* [[http://136.199.54.185/%7Eley/db/indices/a-tree/l/Longo%3AGiuseppe.html][Giuseppe Longo]] (2) 
+	* [[http://136.199.54.185/%7Eley/db/indices/a-tree/m/Moggi%3AEugenio.html][Eugenio Moggi]] (3)
+	* [[http://136.199.54.185/%7Eley/db/indices/a-tree/b/Benaissa%3AZine=El=Abidine.html][Zino Benaissa]] (4)
+	* [[http://136.199.54.185/%7Eley/db/indices/a-tree/v/Visser%3aEelco.html][Eelco Visser]] (5)
+
+At least according to Dave Clarke who wrote "My Erdos number is 5 ([[http://www.informatik.uni-trier.de/~ley/db/indices/a-tree/c/Clarke%3ADave.html][Clarke]], [[http://136.199.54.185/%7Eley/db/indices/a-tree/j/Jay%3AC=_Barry.html][Jay]], Moggi, Longo, Csiszar, Erdos).".
+(But DBLP does not confirm the link Clarke/Jay nor the link Longo/Csiszar.)
+
+-- Main.EelcoVisser - 23 Mar 2004
+
+Dave writes:
+For the record, the Longo/Csiszar connection can be found on [[http://personalwebs.oakland.edu/~grossman/Erdos2][Erdos2]]. I can confirm the Clarke/Jay paper:  Exploiting Shape in Parallel Programming. C B Jay, D Clarke, J Edwards. IEEE Second International Conference on Algorithms and	Architectures for Parallel Processing, June 1996. http://citeseer.ist.psu.edu/jay96exploiting.html
+
+-- Main.EelcoVisser - 24 Mar 2004
+
+-----------------------------------------
+------+++ Root: Shela (6)
+
+My [[http://personalwebs.oakland.edu/~grossman/erdoshp.html][Erdös number]] is at most 6:
+
+According to the [[http://personalwebs.oakland.edu/~grossman/Erdos2][Erdos2]] list
+
+	* Erdös (0)
+	* Saharon Shela (1)
+	* Amir Pnueli (2)
+
+According to DBLP
+
+	* [[http://www.informatik.uni-trier.de/~ley/db/indices/a-tree/a/Apt%3AKrzysztof_R=.html][Krzysztof R. Apt]] (3)
+	* [[http://www.informatik.uni-trier.de/~ley/db/indices/a-tree/b/Bergstra%3AJan_A=.htmlJan Bergstra]] (4)
+	* [[http://www.informatik.uni-trier.de/~ley/db/indices/a-tree/k/Klint%3APaul.html][Paul Klint]] (5)
+	* [[http://136.199.54.185/%7Eley/db/indices/a-tree/v/Visser%3aEelco.html][Eelco Visser]] (6)
+
+Here is a part of the search tree
+
+	* SHELAH, SAHARON (1)
+	* Pnueli, Amir (2)
+		* Willem P. de Roever (3)
+		* Krzysztof R. Apt (3)
+			* Jan Bergstra (4)
+				* Paul Klint (5)
+					* Eelco Visser (6)
+			* Jacob Brunekreef (4)
+				* Sjouke Mauw (5)
+					* Wilco Koorn (6)
+			* Gordon D. Plotkin (4)
+				* Rob J. van Glabbeek (5)
+					* Wan Fokkink (6)
+						* S. P. Luttik (7)
+							* Eelco Visser (8)
+
+-----------------------------------------
+------+++ Root: Ullman (7)
+
+Computer scientists should really refer to their Ullman number. Mine is 5. This is the first Erdos
+link that I found quite quickly with the help of DBLP.
+
+According to the [[http://personalwebs.oakland.edu/~grossman/Erdos2][Erdos2]] list
+
+	* Erdös (0)
+	* Ronald L. Graham (1)
+	* [[http://136.199.54.185/%7Eley/db/indices/a-tree/u/Ullman%3AJeffrey_D=.html][Jeffrey D. Ullman]] (2)
+
+According to DBLP
+
+	* [[http://136.199.54.185/%7Eley/db/indices/a-tree/s/Sethi%3ARavi.html][Ravi Sethi]] (3)
+	* [[http://136.199.54.185/%7Eley/db/indices/a-tree/m/MacQueen%3ADavid_B=.html][David MacQueen]] (4)
+	* [[http://136.199.54.185/%7Eley/db/indices/a-tree/a/Appel%3AAndrew_W=.html][Andrew Appel]] (5)
+	* [[http://136.199.54.185/%7Eley/db/indices/a-tree/t/Tolmach%3AAndrew_P=.html][Andrew Tolmach]] (6)
+	* [[http://136.199.54.185/%7Eley/db/indices/a-tree/v/Visser%3aEelco.html][Eelco Visser]] (7)
+
+-----------------------------------------
+-------+++ Root: Salomaa
+
+Another path might exist through [[http://www.informatik.uni-trier.de/~ley/db/indices/a-tree/s/Salomaa%3AArto.html][Arto Salomaa]] (2) but I haven't found it yet.
+
+-----------------------------------------
+-------+++ Conclusion
+
+(1) The length 6 and 7 paths are completely disjoint and correspond to algebraic and strategic periods, respectively.
+
+(2) It is surprising (or maybe not) how people with offices next to each other don't write papers together. Should do that more often.
+
+-- Main.EelcoVisser - 16 Mar 2004

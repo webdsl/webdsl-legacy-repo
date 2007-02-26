@@ -1,0 +1,40 @@
+%META:TOPICINFO{author="EelcoVisser" date="1161097618" format="1.0" version="1.4"}%
+%META:TOPICPARENT{name="WebHome"}%
+M. Bravenboer, R. Vermaas, J. Vinju, and E. Visser. *Generalized Type-Based Disambiguation of Meta Programs with Concrete Object Syntax.* In R. Glück and M. Lowry, editors, Proceedings of the Fourth International Conference on Generative Programming and Component Engineering (GPCE 2005), Lecture Notes in Computer Science, Tallin, Estonia, September 2005. Springer. 
+
+--------++++ Abstract
+
+		  In meta-programming with concrete object syntax, object-level
+		  programs are composed from fragments written in concrete
+		  syntax. The use of small program fragments in such quotations
+		  and the use of meta-level expressions within these fragments
+		  (anti-quotation) often lead to ambiguities. This problem is
+		  usually solved through explicit disambiguation, resulting in
+		  considerable syntactic overhead.  A few systems manage to
+		  reduce this overhead by using type information during
+		  parsing. Since this is hard to achieve with traditional
+		  parsing technology, these systems provide specific
+		  combinations of meta- and object-languages, and their
+		  implementations are difficult to reuse.
+
+		  In this paper, we generalize these approaches and present a
+		  _language independent_ method for introducing concrete
+		  object syntax without explicit disambiguation.  The method
+		  uses scannerless generalized-LR parsing to parse meta-programs
+		  with embedded object-level fragments, which produces a forest
+		  of all possible parses. This forest is reduced to a tree by a
+		  disambiguating typechecker for the meta-language.  To validate
+		  our method we have developed embeddings of several object
+		  languages in Java, including <nop>AspectJ and Java itself.
+
+--------++++ <nop>BibTeX
+<pre>
+%INCLUDE{http://www.cs.uu.nl/~visser/visser/BVVV05.bib}%
+</pre>
+
+--------++++ Authors
+
+Bravenboer, Vinju and Visser in Vancouver where the project was conceived
+
+<a href="http://www.flickr.com/photos/38456545@N00/138508001/" title="Photo Sharing"><img src="http://static.flickr.com/44/138508001_e98c592017_m.jpg" width="240" height="180" alt="Bravenboer, Vinju & Visser" /></a>
+

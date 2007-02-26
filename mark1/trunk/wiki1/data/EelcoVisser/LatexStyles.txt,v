@@ -1,0 +1,160 @@
+head	1.4;
+access;
+symbols;
+locks
+	apache:1.4; strict;
+comment	@# @;
+
+
+1.4
+date	2005.06.05.16.44.48;	author EelcoVisser;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.12.14.20.55.29;	author EelcoVisser;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.05.21.22.54.09;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.11.17.21.02.00;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.4
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1117989888" format="1.0" version="1.4"}%
+----+++ Dir Package - Modularity for <nop>LaTeX
+
+Download: http://www.cs.uu.nl/~visser/ftp/dir.shar
+
+Description: The <em>dir</em> package is a small (La)TeX package that supports true modularity for <nop>LaTeX. It allows one to transparantly input a file in another directory without having to adapt all the inputs in the included file.
+
+Usage: Put <code>\usepackage{dir}</code> in the preamble of your document. To input a (collection of) files in another directory: 
+<verbatim>
+  {\cd{/the/other/directory}
+	 \input{file.ltx}}
+</verbatim>
+Due to the <code>\cd</code> command, all <code>\input<code>s will be relative to <code>/the/other/directory</code>.
+
+Note: The above is the only documentation for the package.
+
+----+++ Thesis Document Class
+
+Download: http://www.cs.uu.nl/~visser/ftp/thesis.cls
+
+Description: <nop>LaTeX document class that I wrote for my <a href="../thesis/index.html">PhD thesis</a>. 
+
+-----+++ STOP-report Document Class
+
+Download: http://www.cs.uu.nl/~visser/ftp/stop-report.cls
+
+<nop>LaTeX document class supporting the production of reports and proposals in the style of <em>Sequential Topic-Oriented Publications</em>. 
+
+----+++ EVPRES -- Document Class for Presentations
+
+Download: http://www.cs.uu.nl/~visser/ftp/evpres-1.0.tar.gz
+
+This is the EVPRES document class for the production of presentations in PDF. The class is essentialy a wrapper for the pdfscreen and texpower packages.
+The class was inspired by a first experiment for using these packages by Piet van Oostrum. The class should be further parameterized to adapt it to personal styles. Feedback is welcome.
+
+(Completely obsolete; use the beamer latex class)
+
+-- Main.EelcoVisser - 17 Nov 2002
+
+%META:TOPICMOVED{by="EelcoVisser" date="1037566881" from="Visser.LaTeXStyles" to="Visser.LatexStyles"}%
+@
+
+
+1.3
+log
+@none
+@
+text
+@d1 39
+a39 36
+%META:TOPICINFO{author="EelcoVisser" date="1071435329" format="1.0" version="1.3"}%
+----+++ EVPRES -- Document Class for Presentations
+
+Download: http://www.cs.uu.nl/~visser/ftp/evpres-1.0.tar.gz
+
+This is the EVPRES document class for the production of presentations in PDF. The class is essentialy a wrapper for the pdfscreen and texpower packages.
+The class was inspired by a first experiment for using these packages by Piet van Oostrum. The class should be further parameterized to adapt it to personal styles. Feedback is welcome.
+
+----+++ Dir Package - Modularity for <nop>LaTeX
+
+Download: http://www.cs.uu.nl/~visser/ftp/dir.shar
+
+Description: The <em>dir</em> package is a small (La)TeX package that supports true modularity for <nop>LaTeX. It allows one to transparantly input a file in another directory without having to adapt all the inputs in the included file.
+
+Usage: Put <code>\usepackage{dir}</code> in the preamble of your document. To input a (collection of) files in another directory: 
+<verbatim>
+  {\cd{/the/other/directory}
+	 \input{file.ltx}}
+</verbatim>
+Due to the <code>\cd</code> command, all <code>\input<code>s will be relative to <code>/the/other/directory</code>.
+
+Note: The above is the only documentation for the package.
+
+----+++ Thesis Document Class
+
+Download: http://www.cs.uu.nl/~visser/ftp/thesis.cls
+
+Description: <nop>LaTeX document class that I wrote for my <a href="../thesis/index.html">PhD thesis</a>. 
+
+-----+++ STOP-report Document Class
+
+Download: http://www.cs.uu.nl/~visser/ftp/stop-report.cls
+
+<nop>LaTeX document class supporting the production of reports and proposals in the style of <em>Sequential Topic-Oriented Publications</em>. 
+
+-- Main.EelcoVisser - 17 Nov 2002
+@
+
+
+1.2
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1053557649" format="1.0" version="1.2"}%
+d13 1
+a13 1
+Description: The <em>dir</em> package is a small (La)TeX package that supports true modularity for LaTeX. It allows one to transparantly input a file in another directory without having to adapt all the inputs in the included file.
+d28 1
+a28 1
+Description: LaTeX document class that I wrote for my <a href="../thesis/index.html">PhD thesis</a>. 
+d34 1
+a34 1
+LaTeX document class supporting the production of reports and proposals in the style of <em>Sequential Topic-Oriented PublicationsByYear</em>. 
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1037566920" format="1.0" version="1.1"}%
+d34 1
+a34 1
+LaTeX document class supporting the production of reports and proposals in the style of <em>Sequential Topic-Oriented Publications</em>. 
+@

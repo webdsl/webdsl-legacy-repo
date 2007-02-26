@@ -1,0 +1,7 @@
+%META:TOPICINFO{author="EelcoVisser" date="1016386371" format="1.0" version="1.1"}%
+%META:TOPICPARENT{name="WebHome"}%
+Implement goto elimination
+
+Can this be prhased in a language independent manner?
+
+-- Main.EelcoVisser - 17 Mar 2002 <br />

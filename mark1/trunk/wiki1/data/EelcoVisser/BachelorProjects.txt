@@ -1,0 +1,5 @@
+%META:TOPICINFO{author="EelcoVisser" date="1055020680" format="1.0" version="1.2"}%
+%META:TOPICPARENT{name="WebHome"}%
+Starting with the 2003 academic year there will be no more bachelor projects.
+
+

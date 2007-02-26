@@ -1,0 +1,14 @@
+%META:TOPICINFO{author="EelcoVisser" date="1161097585" format="1.0" version="1.2"}%
+%META:TOPICPARENT{name="WebHome"}%
+E. Visser. *The Stratego/XT <nop>BibTeX Tools. Tool documentation.* Draft ([[http://nix.cs.uu.nl/dist/stratego/bibtex-tools-unstable-latest/bibtex-tools.pdf][pdf]],[[http://www.stratego-language.org/Stratego/BibtexTools][download]])
+
+------+++ Abstract
+
+This paper provides documentation for the Stratego/XT <nop>BibTeX Tools,
+a collection of tools for processing <nop>BibTeX bibliography files. The
+main tools in the collection are <code>bib-to-html</code> for generating a
+sectioned publication list from a <nop>BibTeX file according to
+selection criteria and a layout template, and
+<code>aux-to-bib</code> for extracting a <nop>BibTeX file based on the
+citations in a <nop>LaTeX document.
+

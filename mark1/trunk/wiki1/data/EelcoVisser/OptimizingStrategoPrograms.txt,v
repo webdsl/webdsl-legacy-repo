@@ -1,0 +1,101 @@
+head	1.3;
+access;
+symbols;
+locks
+	apache:1.3; strict;
+comment	@# @;
+
+
+1.3
+date	2005.04.28.22.53.55;	author wiki;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2001.12.10.18.02.18;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2001.11.27.23.04.09;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.3
+log
+@testenv
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1053551183" format="1.0" version="1.3"}%
+%META:TOPICPARENT{name="WebHome"}%
+----+++ Description
+
+Stratego programs are composed from highly generic components (e.g., a generic traversal combined
+with a set of rules). This allows the definition of a library of powerful combinators that can be reused in many circumstances (e.g., topdown, collect, innermost). However, in some cases the price for this generality is paid in run-time performance. 
+
+The goal of this project is to find optimizations for Stratego programs.
+
+----+++ Project
+
+	* Compose a set of benchmark programs, candidates include
+		* implode-asfix
+		* pretty-printing components from GPP
+
+	* Analyze the run-time behaviour of these programs, e.g., by profiling
+
+	* Find bottlenecks in performance and analyze the cause
+		* Bad translation by the compiler
+		* Lack of knowledge by the compiler due to genericity
+
+	* Design and implement optimizations (possibly in the form of CompilerPlugins)
+
+----+++ ResearchInterests Questions
+
+	* What determines the performance of strategies?
+
+	* Can optimizations be implemented as CompilerPlugins separately from other optimizations?
+
+----+++ Resources / Literature
+
+	* Source of the Stratego:StrategoCompiler (obtain from Stratego:StrategoDownload)
+	* Stratego:StrategoPublications
+		* innermost optimization
+	* Stratego:StrategoOptimization
+
+-- Main.EelcoVisser - 27 Nov 2001 <br />
+@
+
+
+1.2
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1008007338" format="1.0" version="1.2"}%
+d24 1
+a24 1
+----+++ Research Questions
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1006902249" format="1.0" version="1.1"}%
+d32 1
+a32 1
+	* Source of the Stratego Compiler (obtain from Stratego:StrategoDownload)
+d35 1
+@

@@ -1,0 +1,3352 @@
+head	1.152;
+access;
+symbols;
+locks
+	apache:1.152; strict;
+comment	@# @;
+
+
+1.152
+date	2007.01.02.10.41.48;	author EelcoVisser;	state Exp;
+branches;
+next	1.151;
+
+1.151
+date	2006.12.13.22.35.20;	author EelcoVisser;	state Exp;
+branches;
+next	1.150;
+
+1.150
+date	2006.12.13.17.20.07;	author EelcoVisser;	state Exp;
+branches;
+next	1.149;
+
+1.149
+date	2006.12.07.10.46.42;	author EelcoVisser;	state Exp;
+branches;
+next	1.148;
+
+1.148
+date	2006.12.06.13.01.32;	author EelcoVisser;	state Exp;
+branches;
+next	1.147;
+
+1.147
+date	2006.12.06.11.36.06;	author EelcoVisser;	state Exp;
+branches;
+next	1.146;
+
+1.146
+date	2006.12.06.09.43.59;	author EelcoVisser;	state Exp;
+branches;
+next	1.145;
+
+1.145
+date	2006.12.04.12.42.01;	author EelcoVisser;	state Exp;
+branches;
+next	1.144;
+
+1.144
+date	2006.11.27.10.36.06;	author EelcoVisser;	state Exp;
+branches;
+next	1.143;
+
+1.143
+date	2006.11.21.14.44.56;	author EelcoVisser;	state Exp;
+branches;
+next	1.142;
+
+1.142
+date	2006.11.07.15.17.28;	author EelcoVisser;	state Exp;
+branches;
+next	1.141;
+
+1.141
+date	2006.11.07.13.50.31;	author EelcoVisser;	state Exp;
+branches;
+next	1.140;
+
+1.140
+date	2006.11.06.17.04.14;	author EelcoVisser;	state Exp;
+branches;
+next	1.139;
+
+1.139
+date	2006.10.22.13.37.17;	author EelcoVisser;	state Exp;
+branches;
+next	1.138;
+
+1.138
+date	2006.10.18.19.29.03;	author EelcoVisser;	state Exp;
+branches;
+next	1.137;
+
+1.137
+date	2006.10.17.21.59.14;	author EelcoVisser;	state Exp;
+branches;
+next	1.136;
+
+1.136
+date	2006.10.17.20.46.52;	author EelcoVisser;	state Exp;
+branches;
+next	1.135;
+
+1.135
+date	2006.10.17.14.33.11;	author EelcoVisser;	state Exp;
+branches;
+next	1.134;
+
+1.134
+date	2006.09.28.21.35.53;	author EelcoVisser;	state Exp;
+branches;
+next	1.133;
+
+1.133
+date	2006.09.28.11.38.59;	author EelcoVisser;	state Exp;
+branches;
+next	1.132;
+
+1.132
+date	2006.09.13.08.41.13;	author EelcoVisser;	state Exp;
+branches;
+next	1.131;
+
+1.131
+date	2006.07.23.12.33.18;	author EelcoVisser;	state Exp;
+branches;
+next	1.130;
+
+1.130
+date	2006.06.30.14.00.40;	author EelcoVisser;	state Exp;
+branches;
+next	1.129;
+
+1.129
+date	2006.05.27.23.32.40;	author EelcoVisser;	state Exp;
+branches;
+next	1.128;
+
+1.128
+date	2006.05.22.17.53.22;	author EelcoVisser;	state Exp;
+branches;
+next	1.127;
+
+1.127
+date	2006.05.22.09.24.09;	author EelcoVisser;	state Exp;
+branches;
+next	1.126;
+
+1.126
+date	2006.05.21.15.08.01;	author EelcoVisser;	state Exp;
+branches;
+next	1.125;
+
+1.125
+date	2006.05.12.13.21.15;	author EelcoVisser;	state Exp;
+branches;
+next	1.124;
+
+1.124
+date	2006.05.10.13.24.06;	author EelcoVisser;	state Exp;
+branches;
+next	1.123;
+
+1.123
+date	2006.05.06.21.52.48;	author EelcoVisser;	state Exp;
+branches;
+next	1.122;
+
+1.122
+date	2006.04.20.10.39.39;	author EelcoVisser;	state Exp;
+branches;
+next	1.121;
+
+1.121
+date	2006.03.10.20.34.05;	author EelcoVisser;	state Exp;
+branches;
+next	1.120;
+
+1.120
+date	2006.03.01.21.00.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.119;
+
+1.119
+date	2006.02.06.11.06.49;	author EelcoVisser;	state Exp;
+branches;
+next	1.118;
+
+1.118
+date	2005.12.15.16.19.11;	author EelcoVisser;	state Exp;
+branches;
+next	1.117;
+
+1.117
+date	2005.12.14.23.31.02;	author EelcoVisser;	state Exp;
+branches;
+next	1.116;
+
+1.116
+date	2005.11.11.18.09.20;	author EelcoVisser;	state Exp;
+branches;
+next	1.115;
+
+1.115
+date	2005.11.04.20.31.02;	author EelcoVisser;	state Exp;
+branches;
+next	1.114;
+
+1.114
+date	2005.09.25.20.53.33;	author EelcoVisser;	state Exp;
+branches;
+next	1.113;
+
+1.113
+date	2005.09.23.20.30.08;	author EelcoVisser;	state Exp;
+branches;
+next	1.112;
+
+1.112
+date	2005.09.15.20.01.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.111;
+
+1.111
+date	2005.09.11.20.34.35;	author EelcoVisser;	state Exp;
+branches;
+next	1.110;
+
+1.110
+date	2005.09.11.14.00.33;	author EelcoVisser;	state Exp;
+branches;
+next	1.109;
+
+1.109
+date	2005.09.06.21.06.26;	author MartinBravenboer;	state Exp;
+branches;
+next	1.108;
+
+1.108
+date	2005.09.06.20.24.20;	author EelcoVisser;	state Exp;
+branches;
+next	1.107;
+
+1.107
+date	2005.09.06.09.57.42;	author EelcoVisser;	state Exp;
+branches;
+next	1.106;
+
+1.106
+date	2005.09.02.11.58.49;	author EelcoVisser;	state Exp;
+branches;
+next	1.105;
+
+1.105
+date	2005.08.25.10.26.27;	author EelcoVisser;	state Exp;
+branches;
+next	1.104;
+
+1.104
+date	2005.08.23.09.00.49;	author EelcoVisser;	state Exp;
+branches;
+next	1.103;
+
+1.103
+date	2005.08.22.08.09.32;	author EelcoVisser;	state Exp;
+branches;
+next	1.102;
+
+1.102
+date	2005.08.09.19.06.16;	author EelcoVisser;	state Exp;
+branches;
+next	1.101;
+
+1.101
+date	2005.07.09.21.12.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.100;
+
+1.100
+date	2005.06.29.20.48.01;	author EelcoVisser;	state Exp;
+branches;
+next	1.99;
+
+1.99
+date	2005.06.21.21.06.17;	author EelcoVisser;	state Exp;
+branches;
+next	1.98;
+
+1.98
+date	2005.06.21.08.49.43;	author EelcoVisser;	state Exp;
+branches;
+next	1.97;
+
+1.97
+date	2005.06.09.18.04.24;	author EelcoVisser;	state Exp;
+branches;
+next	1.96;
+
+1.96
+date	2005.06.07.15.00.28;	author EelcoVisser;	state Exp;
+branches;
+next	1.95;
+
+1.95
+date	2005.06.07.12.43.01;	author EelcoVisser;	state Exp;
+branches;
+next	1.94;
+
+1.94
+date	2005.06.05.11.04.19;	author EelcoVisser;	state Exp;
+branches;
+next	1.93;
+
+1.93
+date	2005.05.31.08.25.34;	author EelcoVisser;	state Exp;
+branches;
+next	1.92;
+
+1.92
+date	2005.04.29.21.43.08;	author EelcoVisser;	state Exp;
+branches;
+next	1.91;
+
+1.91
+date	2005.04.29.20.39.01;	author EelcoVisser;	state Exp;
+branches;
+next	1.90;
+
+1.90
+date	2005.04.15.12.26.23;	author EelcoVisser;	state Exp;
+branches;
+next	1.89;
+
+1.89
+date	2005.02.25.14.07.45;	author EelcoVisser;	state Exp;
+branches;
+next	1.88;
+
+1.88
+date	2005.02.18.09.21.48;	author EelcoVisser;	state Exp;
+branches;
+next	1.87;
+
+1.87
+date	2005.01.20.20.38.31;	author EelcoVisser;	state Exp;
+branches;
+next	1.86;
+
+1.86
+date	2005.01.19.23.11.15;	author EelcoVisser;	state Exp;
+branches;
+next	1.85;
+
+1.85
+date	2004.12.24.08.45.13;	author EelcoVisser;	state Exp;
+branches;
+next	1.84;
+
+1.84
+date	2004.12.21.23.27.50;	author EelcoVisser;	state Exp;
+branches;
+next	1.83;
+
+1.83
+date	2004.12.12.09.47.19;	author EelcoVisser;	state Exp;
+branches;
+next	1.82;
+
+1.82
+date	2004.12.04.20.12.17;	author EelcoVisser;	state Exp;
+branches;
+next	1.81;
+
+1.81
+date	2004.12.03.09.35.15;	author EelcoVisser;	state Exp;
+branches;
+next	1.80;
+
+1.80
+date	2004.12.02.22.38.48;	author EelcoVisser;	state Exp;
+branches;
+next	1.79;
+
+1.79
+date	2004.12.02.18.37.17;	author EelcoVisser;	state Exp;
+branches;
+next	1.78;
+
+1.78
+date	2004.11.01.19.38.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.77;
+
+1.77
+date	2004.10.14.18.43.40;	author EelcoVisser;	state Exp;
+branches;
+next	1.76;
+
+1.76
+date	2004.10.12.08.41.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.75;
+
+1.75
+date	2004.10.09.23.25.19;	author EelcoVisser;	state Exp;
+branches;
+next	1.74;
+
+1.74
+date	2004.08.06.12.12.54;	author EelcoVisser;	state Exp;
+branches;
+next	1.73;
+
+1.73
+date	2004.07.15.19.19.21;	author EelcoVisser;	state Exp;
+branches;
+next	1.72;
+
+1.72
+date	2004.06.08.18.34.29;	author EelcoVisser;	state Exp;
+branches;
+next	1.71;
+
+1.71
+date	2004.06.07.21.04.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.70;
+
+1.70
+date	2004.06.06.20.36.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.69;
+
+1.69
+date	2004.06.06.16.20.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.68;
+
+1.68
+date	2004.05.30.07.46.02;	author EelcoVisser;	state Exp;
+branches;
+next	1.67;
+
+1.67
+date	2004.05.23.20.46.01;	author EelcoVisser;	state Exp;
+branches;
+next	1.66;
+
+1.66
+date	2004.05.17.16.36.40;	author EelcoVisser;	state Exp;
+branches;
+next	1.65;
+
+1.65
+date	2004.05.15.07.57.10;	author EelcoVisser;	state Exp;
+branches;
+next	1.64;
+
+1.64
+date	2004.05.11.21.15.02;	author EelcoVisser;	state Exp;
+branches;
+next	1.63;
+
+1.63
+date	2004.05.08.21.55.14;	author EelcoVisser;	state Exp;
+branches;
+next	1.62;
+
+1.62
+date	2004.05.01.15.00.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.61;
+
+1.61
+date	2004.03.29.08.55.04;	author EelcoVisser;	state Exp;
+branches;
+next	1.60;
+
+1.60
+date	2004.03.26.09.50.19;	author EelcoVisser;	state Exp;
+branches;
+next	1.59;
+
+1.59
+date	2004.03.23.22.57.34;	author EelcoVisser;	state Exp;
+branches;
+next	1.58;
+
+1.58
+date	2004.03.23.20.44.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.57;
+
+1.57
+date	2004.03.12.10.38.46;	author EelcoVisser;	state Exp;
+branches;
+next	1.56;
+
+1.56
+date	2004.03.11.21.54.44;	author EelcoVisser;	state Exp;
+branches;
+next	1.55;
+
+1.55
+date	2004.03.09.22.47.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.54;
+
+1.54
+date	2004.02.29.10.17.59;	author EelcoVisser;	state Exp;
+branches;
+next	1.53;
+
+1.53
+date	2004.02.21.13.59.45;	author EelcoVisser;	state Exp;
+branches;
+next	1.52;
+
+1.52
+date	2004.02.12.10.35.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.51;
+
+1.51
+date	2004.01.20.17.09.27;	author EelcoDolstra;	state Exp;
+branches;
+next	1.50;
+
+1.50
+date	2004.01.16.08.38.25;	author EelcoVisser;	state Exp;
+branches;
+next	1.49;
+
+1.49
+date	2003.12.20.00.07.24;	author EelcoVisser;	state Exp;
+branches;
+next	1.48;
+
+1.48
+date	2003.12.12.08.20.23;	author EelcoVisser;	state Exp;
+branches;
+next	1.47;
+
+1.47
+date	2003.12.11.11.11.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.46;
+
+1.46
+date	2003.11.28.13.31.18;	author EelcoVisser;	state Exp;
+branches;
+next	1.45;
+
+1.45
+date	2003.11.24.23.47.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.44;
+
+1.44
+date	2003.11.23.11.09.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.43;
+
+1.43
+date	2003.10.15.14.33.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.42;
+
+1.42
+date	2003.10.01.17.38.20;	author EelcoVisser;	state Exp;
+branches;
+next	1.41;
+
+1.41
+date	2003.09.21.14.56.12;	author EelcoVisser;	state Exp;
+branches;
+next	1.40;
+
+1.40
+date	2003.09.07.18.18.10;	author EelcoVisser;	state Exp;
+branches;
+next	1.39;
+
+1.39
+date	2003.09.07.15.44.28;	author EelcoVisser;	state Exp;
+branches;
+next	1.38;
+
+1.38
+date	2003.09.05.08.45.16;	author EelcoVisser;	state Exp;
+branches;
+next	1.37;
+
+1.37
+date	2003.08.31.10.39.23;	author EelcoVisser;	state Exp;
+branches;
+next	1.36;
+
+1.36
+date	2003.07.30.13.18.01;	author EelcoVisser;	state Exp;
+branches;
+next	1.35;
+
+1.35
+date	2003.07.09.22.19.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.34;
+
+1.34
+date	2003.07.02.09.00.38;	author EelcoVisser;	state Exp;
+branches;
+next	1.33;
+
+1.33
+date	2003.06.16.06.54.19;	author EelcoVisser;	state Exp;
+branches;
+next	1.32;
+
+1.32
+date	2003.06.16.06.41.24;	author EelcoVisser;	state Exp;
+branches;
+next	1.31;
+
+1.31
+date	2003.06.16.06.20.58;	author EelcoVisser;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	2003.06.12.12.34.14;	author EelcoVisser;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	2003.06.07.21.26.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	2003.06.06.14.07.24;	author EelcoVisser;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	2003.06.02.16.45.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	2003.05.28.08.10.23;	author EelcoVisser;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	2003.05.21.20.41.34;	author EelcoVisser;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	2003.05.21.12.56.52;	author EelcoVisser;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	2003.05.21.12.36.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	2003.05.10.21.32.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2003.05.10.17.56.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2003.05.01.14.57.10;	author EelcoVisser;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2003.04.25.14.14.23;	author EelcoVisser;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2003.04.09.08.12.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2003.03.30.13.40.36;	author EelcoVisser;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2003.02.26.22.35.08;	author EelcoVisser;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.02.25.22.26.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.01.27.23.07.44;	author EelcoVisser;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.01.16.15.37.16;	author EelcoVisser;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.01.14.12.45.25;	author EelcoVisser;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.01.08.16.06.59;	author EelcoVisser;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2002.11.16.01.17.04;	author EelcoVisser;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2002.11.15.00.12.31;	author EelcoVisser;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2002.10.29.21.54.59;	author EelcoVisser;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2002.10.16.21.12.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2002.08.28.09.19.55;	author EelcoVisser;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2002.08.26.20.23.06;	author EelcoVisser;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2002.08.14.09.26.14;	author EelcoVisser;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2002.08.10.12.03.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2001.11.24.11.40.23;	author PeterThoeny;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2001.08.08.05.20.01;	author PeterThoeny;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.152
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1167734508" format="1.0" version="1.152"}%
+---------+ Eelco Visser
+------
+
+<a href="http://www.flickr.com/photos/eelcovisser/141569082/" title="Photo Sharing"><img src="http://static.flickr.com/56/141569082_372ea07ea9_m.jpg" width="180" height="240" alt="self" align="right"/></a>
+
+-------+++ News 
+
+Looking for postdocs and <nop>PhD students in the following projects
+
+	* [[http://swerl.tudelft.nl/bin/view/TFA/JobOpening][Transformations for Abstractions]] (NWO Open Competition 2005) - 1 postdoc
+	* [[http://swerl.tudelft.nl/bin/view/MoDSE/JobOpenings][Model-Driven Software Evolution]] (Jacquard 2006) - 2 postdocs + 2 <nop>PhD students
+
+-------+++ Coordinates
+
+	* Associate professor 
+	* [[http://www.se.ewi.tudelft.nl][Software Engineering Research Group]]
+	* [[http://www.st.ewi.tudelft.nl][Department of Software Technology]]
+	* [[http://www.ewi.tudelft.nl][Electrical Engineering, Mathematics and Computer Science (EWI)]]
+	* [[http://www.tudelft.nl/][Delft University of Technology]]
+	* Delft, The Netherlands ([[http://www.timeanddate.com/worldclock/custom.html?cities=16][CEST/CET]])
+
+	* Email: mailto:visser@@acm.org
+	* http://www.st.ewi.tudelft.nl/~eelco
+	* http://www.eelcovisser.net
+	* [[http://blog.eelcovisser.net/][Blog]]
+
+ <!-- [[http://eelcovisser.blogspot.com][Blog]] -->
+
+-------++ Recent Papers
+
+	* [[DeclarativeFormalAndExtensibleSyntaxDefinitionForAspectJ][Declarative, Formal, and Extensible Syntax Definition for AspectJ]] (OOPSLA'06)
+	* [[StrategoXT016ComponentsForTransformationSystems][Stratego/XT 0.16. Components for Transformation Systems]] (PEPM'06)
+	* [[StrategoXtManual][Stratego/XT Manual]] (documentation)
+	* [[Transformations for Abstractions]] (Keynote SCAM'05)
+	* [[GeneralizedTypeBasedDisambiguationOfMetaProgramsWithConcreteObjectSyntax][Generalized Type-Based Disambiguation of Meta Programs with Concrete Object Syntax]] (GPCE'05)
+	* [[MetaBorg in Action]] (GTTSE'05)
+	* [[Service Configuration Management]] (SCM-12)
+	* [[TheStrategoXTBibTeXTools][The Stratego/XT BibTeX Tools]] (documentation)
+	* [[AdaptiveCodeReuseByAspectsCloningAndRenaming][Adaptive Code Reuse by Aspects, Cloning and Renaming]] (techrep)
+	* [[CombiningAspectOrientedAndStrategicProgramming][Combining Aspect-Oriented and Strategic Programming]] (RULE'05)
+	* [[ComposingSourceToSourceDataFlowTransformations][Composing Source-to-Source Data-Flow Transformations with Rewriting Strategies and Dependent Dynamic Rewrite Rules]] (CC'05)
+	* [[Program Transformation with Scoped Dynamic Rewrite Rules]] (FI)
+	* [[Nix a safe and policy-free system for software deployment]] (LISA'04)
+	* [[A survey of strategies in rule based program transformation systems]] (JSC)
+	* [[Concrete syntax for objects]] (OOPSLA'04) 
+	* [[Imposing a memory management discipline on software deployment]] (ICSE'04)
+	* [[Program Transformation with StrategoXT][Program transformation with Stratego/XT: Rules, strategies, tools, and systems in StrategoXT 0.9]] (DSPG)
+	* Older [[PublicationsOnWiki][recent papers]] and full [[Publications by Year][publication list]]
+
+-------++ Recent Software
+
+<a href="http://www.stratego-language.org"><img src="http://www.stratego-language.org/pub/Stratego/StrategoLogo/StrategoLogoText-100px.png"	border="0" align="right"/></a>
+
+	* [[http://www.stratego-language.org/Stratego/StrategoRelease016][Stratego/XT 0.16]]: program transformation language and toolset
+		* [[http://nix.cs.uu.nl/dist/stratego/strategoxt-unstable-latest/][Stratego/XT unstable]]: the latest and the greatest
+	* [[http://www.program-transformation.org/Stratego/AdditionalPackageDownload][Extensions and utilities]]
+		* [[http://www.stratego-language.org/Stratego/StrategoShell][Stratego Shell]]: an interactive interpreter
+		* [[http://nix.cs.uu.nl/dist/stratego/strategoxt-utils-0.14/][Stratego/XT Utilities 0.14]]: utilities for developers
+		* [[http://www.stratego-language.org/Stratego/ExtendibleDocumentationGenerator][xdoc]]: documentation generation for Stratego
+		* [[http://www.program-transformation.org/Stratego/AspectStratego][Aspect Stratego]]: an experimental extension with aspects
+	* Transformation tools for Java
+		* [[http://www.stratego-language.org/Stratego/JavaFront][JavaFront]]: front-end for the Java language
+		* [[http://www.stratego-language.org/Stratego/TheDryad][Dryad]]: static analysis and bytecode
+		* [[http://www.stratego-language.org/Stratego/JavaBorg][JavaBorg]]: domain-specific language embeddings
+		* [[http://www.stratego-language.org/Stratego/Java-Swul][JavaSwul]]: user-interface language embedding
+	* Other transformation applications
+		* [[http://www.octave-compiler.org][Octave Compiler]]: a compiler for the Matlab clone
+		* [[http://www.stratego-language.org/Stratego/BibtexTools][bibtex-tools]]: bibliography processing
+		* [[http://www.stratego-language.org/Tiger/][Tiger in Stratego]]: demonstration compiler
+		* [[http://www.stratego-language.org/Stratego/PrologTools][prolog-tools]]: language front-end and DSL embedding
+		* [[http://www.stratego-language.org/Stratego/XWeb][xweb]]: website generation
+	* [[http://nix.cs.uu.nl/dist/nix/nix-10.1][Nix 10.1]]: software deployment system
+		* [[http://nix.cs.uu.nl/dist/nix/][recent releases]]
+	* Other [[Software Distributions][software]]
+
+-------++ Ongoing Activities
+
+	* [[http://www.program-transformation.org][program-transformation.org]]
+	* [[http://www.stratego-language.org/Stratego/SeventhStrategoUserDays][Seventh Stratego User Days (SUD'06)]]
+	* [[http://www.program-transformation.org/PEPM07][Partial Evaluation and Program Manipulation (PEPM '07)]]
+	* Domain-Specific Aspect Languages (DSAL'07)
+	* [[http://www.sciences.univ-nantes.fr/MoDSE2007/][Model-Driven Software Evolution Workshop (<nop>MoDSE'07)]]
+	* [[http://www.lsv.ens-cachan.fr/rdp07/rule.html][Rule-Based Programming (RULE'07)]]
+	* [[http://wiki.di.uminho.pt/wiki/bin/view/GTTSE2007/WebHome][Summer School on Generative and Transformational Techniques in Software Engineering (GTTSE'07)]]
+	* [[http://www.oopsla.org/oopsla2007/][Object-Oriented Languages and Systems (OOPSLA'07)]]
+	* [[http://www.ase-conference.org/][Automated Software Engineering (ASE'07)]]
+	* Other [[Professional Activities][activities]]
+</td>
+
+@
+
+
+1.151
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1166049320" format="1.0" version="1.151"}%
+d87 1
+a87 1
+	* [[http://www.cse.msu.edu/ase2007/][Automated Software Engineering (ASE'07)]]
+@
+
+
+1.150
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1166030407" format="1.0" version="1.150"}%
+d26 3
+a28 1
+	* [[http://eelcovisser.blogspot.com][Blog]]
+@
+
+
+1.149
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1165488402" format="1.0" version="1.149"}%
+d25 1
+@
+
+
+1.148
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1165410092" format="1.0" version="1.148"}%
+d80 1
+a80 1
+	* [[http://www.sciences.univ-nantes.fr/info/Modse2007][Model-Driven Software Evolution Workshop (<nop>MoDSE'07)]]
+d84 1
+@
+
+
+1.147
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1165404966" format="1.0" version="1.147"}%
+d80 1
+a80 1
+	* Model-Driven Software Evolution Workshop (<nop>MoDSE'07)
+@
+
+
+1.146
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1165398239" format="1.0" version="1.146"}%
+d79 2
+a80 1
+	* Model-Driven Software Evolution Workshop
+d83 1
+a83 1
+	* [[http://www.oopsla.org/oopsla2007/][OOPSLA'07]]
+@
+
+
+1.145
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1165236121" format="1.0" version="1.145"}%
+d82 1
+@
+
+
+1.144
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1164623766" format="1.0" version="1.144"}%
+@
+
+
+1.143
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1164120296" format="1.0" version="1.143"}%
+d79 3
+@
+
+
+1.142
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1162912648" format="1.0" version="1.142"}%
+d77 1
+a77 4
+	* [[http://www.program-transformation.org/GPCE06][Generative Programming and Component Engineering (GPCE'06)]]
+	* [[http://www.program-transformation.org/Sts/STS06][Software Transformation Systems (STS'06)]]
+	* [[http://www.dcc.uchile.cl/~etanter/dsal06/][Domain-Specific Aspect Languages (DSAL'06)]]
+	* [[http://www.model-transformation.org/IWMEC2006/][Models for Enterprise Computing (IWMEC'06)]] at [[http://www4.comp.polyu.edu.hk/~edoc06/][EDOC 2006]]
+@
+
+
+1.141
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1162907431" format="1.0" version="1.141"}%
+d12 1
+a12 1
+	* [[http://swerl.tudelft.nl/bin/view/MoDSE/JobOpenings][Model-Driven Software Evolution]] (Jacquard 2006) - 1 postdoc + 2 <nop>PhD students
+@
+
+
+1.140
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1162832654" format="1.0" version="1.140"}%
+d9 1
+a9 1
+Looking for postdocs and <nop>PhD students
+d11 2
+a12 2
+	* [[http://eelco-visser.blogspot.com/2006/05/transformations-for-abstractions.html][Transformations for Abstractions]] (NWO Open Competition 2005)
+	* [[http://eelco-visser.blogspot.com/2006/06/model-driven-software-evolution.html][Model-Driven Software Evolution]] (Jacquard 2006)
+d17 1
+a17 1
+	* [[http://swerl.tudelft.nl][Software Engineering Research Group]]
+@
+
+
+1.139
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1161524237" format="1.0" version="1.139"}%
+d25 1
+a25 1
+	* [[http://eelco-visser.blogspot.com][Blog]]
+@
+
+
+1.138
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1161199743" format="1.0" version="1.138"}%
+d3 1
+a6 1
+
+@
+
+
+1.137
+log
+@none
+@
+text
+@d1 4
+a4 4
+%META:TOPICINFO{author="EelcoVisser" date="1161122354" format="1.0" version="1.137"}%
+<table width="100%">
+<tr>
+<td valign="top">
+a5 1
+---------+ Eelco Visser
+d50 2
+a83 11
+<td valign="top" style="margin-left : 20px;">
+<center>
+<a href="http://www.flickr.com/photos/eelcovisser/141569082/" title="Photo Sharing"><img src="http://static.flickr.com/56/141569082_372ea07ea9_m.jpg" width="180" height="240" alt="self" /></a>
+<p>
+<br>
+<a href="http://www.stratego-language.org"><img src="http://www.stratego-language.org/pub/Stratego/StrategoLogo/StrategoLogoText-100px.png"	border="0" /></a>
+<br>
+</center>
+</td>
+</tr>
+</table>
+@
+
+
+1.136
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1161118012" format="1.0" version="1.136"}%
+@
+
+
+1.135
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1161095591" format="1.0" version="1.135"}%
+d28 1
+a28 1
+-------+++ Recent Papers
+d49 1
+a49 1
+-------+++ Recent Software
+d73 1
+a73 1
+-------+++ Ongoing Activities
+a75 4
+	* [[http://research.microsoft.com/floc06/rta.htm][Rewriting Techniques and Applications (RTA'06)]]
+	* [[http://hor.pps.jussieu.fr/06/][Higher-Order Rewriting (HOR'06)]] (invited talk)
+	* [[http://www.ieee-scam.org/][Source Code Analysis and Manipulation (SCAM'06)]]
+	* [[http://congress.cimne.upc.es/jisbd06/prole][PROgramación y LEnguajes (PROLE'06)]] (invited talk)
+@
+
+
+1.134
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1159479353" format="1.0" version="1.134"}%
+d6 2
+d15 1
+d17 6
+a22 5
+I am [[http://eelco-visser.blogspot.com/2006/06/career-evolution-moving-to-delft.html][moving to Delft University of Technology]] to become associate professor.
+
+I will be on leave/sabatical from July to mid-October 2006. 
+
+-------+++ Coordinates
+d24 2
+a25 12
+	* Assistant professor 
+	* [[Center.WebHome][Center for Software Technology]]
+	* [[http://www.cs.uu.nl/][Department of Information and Computing Sciences]]
+	* Faculty of Science
+	* [[http://www.uu.nl/][Universiteit Utrecht]]
+	* Utrecht, The Netherlands ([[http://www.timeanddate.com/worldclock/custom.html?cities=16][CEST/CET]])
+
+	* Student advisor for the [[Master.WebHome][Master Program Software Technology]]
+
+	* Email: mailto:visser@@acm.org or mailto:visser@@cs.uu.nl 
+	* http://www.cs.uu.nl/~visser
+	* [[http://www.cs.uu.nl/staff/visser.html][Address]] ([[Card]])
+d56 1
+a56 1
+		* [[%HTTPSTRATEGO%ExtendibleDocumentationGenerator][xdoc]]: documentation generation for Stratego
+d59 4
+a62 4
+		* [[%HTTPSTRATEGO%JavaFront][JavaFront]]: front-end for the Java language
+		* [[%HTTPSTRATEGO%TheDryad][Dryad]]: static analysis and bytecode
+		* [[%HTTPSTRATEGO%JavaBorg][JavaBorg]]: domain-specific language embeddings
+		* [[%HTTPSTRATEGO%Java-Swul][JavaSwul]]: user-interface language embedding
+d65 1
+a65 1
+		* [[%HTTPSTRATEGO%BibtexTools][bibtex-tools]]: bibliography processing
+d67 3
+a69 3
+		* [[%HTTPSTRATEGO%PrologTools][prolog-tools]]: language front-end and DSL embedding
+		* [[%HTTPSTRATEGO%XWeb][xweb]]: website generation
+	* [[http://nix.cs.uu.nl/dist/nix/nix-0.9.2][Nix 0.9.2]]: [[Trace.Nix][software deployment system]]
+@
+
+
+1.133
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1159443539" format="1.0" version="1.133"}%
+a103 6
+<!--
+	* Set SKIN = customtitle
+	* Set CUSTOMHEADTITLE = Homepage of Eelco Visser
+	* Set CUSTOMTOPICTITLE = <em>Eelco Visser</em>
+	* Set WEBTITLE = 
+-->
+@
+
+
+1.132
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1158136873" format="1.0" version="1.132"}%
+@
+
+
+1.131
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1153657998" format="1.0" version="1.131"}%
+d10 1
+a10 1
+	* [[http://eelco-visser.blogspot.com/2006/05/looking-for-postdoc-or-phd-student.html][Transformations for Abstractions]] (NWO Open Competition 2005)
+@
+
+
+1.130
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1151676040" format="1.0" version="1.130"}%
+d8 1
+a8 1
+Looking postdocs and <nop>PhD students
+@
+
+
+1.129
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1148772760" format="1.0" version="1.129"}%
+d6 11
+a16 1
+[[http://eelco-visser.blogspot.com/2006/05/looking-for-postdoc-or-phd-student.html][Looking for a postdoc or PhD student]]
+@
+
+
+1.128
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1148320402" format="1.0" version="1.128"}%
+d85 1
+a85 3
+<a href="http://www.flickr.com/photos/38456545@@N00/141569082/" title="Photo Sharing"><img src="http://static.flickr.com/56/141569082_372ea07ea9_m.jpg" width="180" height="240" alt="self" /></a>
+<p>
+<!--img width=200 src="http://www.cs.uu.nl/~visser/pictures/portret-6-1999.jpg"-->
+a89 2
+<p>
+<!--a href="http://www.stratego-language.org/Stratego/FifthStrategoUserDays"><img width=200 border="0" src="http://www.stratego-language.org/pub/sud04-pics/r3_med_imm001_2.jpg" ></a-->
+@
+
+
+1.127
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1148289849" format="1.0" version="1.127"}%
+d24 21
+a68 21
+-------+++ Recent Papers
+
+	* [[DeclarativeFormalAndExtensibleSyntaxDefinitionForAspectJ][Declarative, Formal, and Extensible Syntax Definition for AspectJ]] (OOPSLA'06)
+	* [[StrategoXT016ComponentsForTransformationSystems][Stratego/XT 0.16. Components for Transformation Systems]] (PEPM'06)
+	* [[StrategoXtManual][Stratego/XT Manual]] (documentation)
+	* [[Transformations for Abstractions]] (Keynote SCAM'05)
+	* [[GeneralizedTypeBasedDisambiguationOfMetaProgramsWithConcreteObjectSyntax][Generalized Type-Based Disambiguation of Meta Programs with Concrete Object Syntax]] (GPCE'05)
+	* [[MetaBorg in Action]] (GTTSE'05)
+	* [[Service Configuration Management]] (SCM-12)
+	* [[TheStrategoXTBibTeXTools][The Stratego/XT BibTeX Tools]] (documentation)
+	* [[AdaptiveCodeReuseByAspectsCloningAndRenaming][Adaptive Code Reuse by Aspects, Cloning and Renaming]] (techrep)
+	* [[CombiningAspectOrientedAndStrategicProgramming][Combining Aspect-Oriented and Strategic Programming]] (RULE'05)
+	* [[ComposingSourceToSourceDataFlowTransformations][Composing Source-to-Source Data-Flow Transformations with Rewriting Strategies and Dependent Dynamic Rewrite Rules]] (CC'05)
+	* [[Program Transformation with Scoped Dynamic Rewrite Rules]] (FI)
+	* [[Nix a safe and policy-free system for software deployment]] (LISA'04)
+	* [[A survey of strategies in rule based program transformation systems]] (JSC)
+	* [[Concrete syntax for objects]] (OOPSLA'04) 
+	* [[Imposing a memory management discipline on software deployment]] (ICSE'04)
+	* [[Program Transformation with StrategoXT][Program transformation with Stratego/XT: Rules, strategies, tools, and systems in StrategoXT 0.9]] (DSPG)
+	* Older [[PublicationsOnWiki][recent papers]] and full [[Publications by Year][publication list]]
+
+a71 1
+	* [[http://www.model-transformation.org][Model Transformation (MT'06)]]
+d74 1
+a78 1
+	* [[http://www.ieee-scam.org/][Source Code Analysis and Manipulation (SCAM'06)]]
+@
+
+
+1.126
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1148224081" format="1.0" version="1.126"}%
+d72 3
+a74 3
+	* [[http://www.model-transformation.org][ACM SAC Track on Model Transformation 2006]]
+	* [[http://research.microsoft.com/floc06/rta.htm][Conference on Rewriting Techniques and Applications (RTA'06)]]
+	* [[http://hor.pps.jussieu.fr/06/][3rd International Workshop on Higher-Order Rewriting (HOR'06)]] (invited talk)
+d76 1
+d78 1
+a78 1
+	* [[http://www.program-transformation.org/GPCE06][Generative Programming and Component Engineering (GPCE'06)]]
+d80 2
+a81 1
+	* [[http://www.model-transformation.org/IWMEC2006/][International Workshop on Models for Enterprise Computing (IWMEC'06)]] at [[http://www4.comp.polyu.edu.hk/~edoc06/][EDOC 2006]]
+@
+
+
+1.125
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1147440075" format="1.0" version="1.125"}%
+d50 1
+@
+
+
+1.124
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1147267446" format="1.0" version="1.124"}%
+d75 1
+@
+
+
+1.123
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1146952368" format="1.0" version="1.123"}%
+d5 3
+@
+
+
+1.122
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1145529579" format="1.0" version="1.122"}%
+d79 3
+a81 1
+<img width=200 src="http://www.cs.uu.nl/~visser/pictures/portret-6-1999.jpg">
+d87 1
+a87 1
+<a href="http://www.stratego-language.org/Stratego/FifthStrategoUserDays"><img width=200 border="0" src="http://www.stratego-language.org/pub/sud04-pics/r3_med_imm001_2.jpg" ></a>
+@
+
+
+1.121
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1142022845" format="1.0" version="1.121"}%
+d71 1
+@
+
+
+1.120
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1141246800" format="1.0" version="1.120"}%
+d73 1
+a73 1
+	* International Workshop on Models for Enterprise Computing (IWMEC'06) at [[http://www4.comp.polyu.edu.hk/~edoc06/][EDOC 2006]]
+@
+
+
+1.119
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1139224009" format="1.0" version="1.119"}%
+d73 1
+d92 1
+a92 1
+	* Set CUSTOMTOPICTITLE = <it>Eelco Visser</it>
+@
+
+
+1.118
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1134663551" format="1.0" version="1.118"}%
+d47 1
+a67 1
+	* [[http://www.cis.ksu.edu/santos/pepm06/][ACM SIGPLAN 2006 Workshop on Partial Evaluation and Program Manipulation (PEPM'06)]]
+d70 1
+@
+
+
+1.117
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1134603062" format="1.0" version="1.117"}%
+d68 1
+d71 1
+a71 1
+	* Source Code Analysis and Manipulation (SCAM'06)
+@
+
+
+1.116
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1131732560" format="1.0" version="1.116"}%
+a66 1
+	* [[http://www.di.uminho.pt/GTTSE2005][Summer School on Generative and Transformational Techniques in Software Engineering (GTTSE'05)]]
+a67 1
+	* [[http://www.model-transformation.org][ACM SAC Track on Model Transformation 2006]]
+d69 2
+a70 1
+	* [[http://www.program-transformation.org/GPCE06][Generative Programming and Component Engineering (GPCE'06)]] 
+@
+
+
+1.115
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1131136262" format="1.0" version="1.115"}%
+d23 1
+a23 2
+	* [[http://www.stratego-language.org/Stratego/StrategoRelease014][Stratego/XT 0.14]]: program transformation language and toolset
+		* [[http://www.stratego-language.org/Stratego/StrategoRelease016M1][Stratego/XT 0.16M1]]: experimental refactoring of the Stratego compiler
+@
+
+
+1.114
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1127681613" format="1.0" version="1.114"}%
+d48 1
+a68 2
+	* [[http://www.program-transformation.org/Gpce05][Generative Programming and Component Engineering (GPCE'05)]] in Tallin, Estonia
+	* [[http://www.dcs.kcl.ac.uk/staff/mark/scam2005/][Source Code Analysis and Manipulation (SCAM'05)]] in Budapest: keynote talk about Stratego
+@
+
+
+1.113
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1127507408" format="1.0" version="1.113"}%
+d43 1
+@
+
+
+1.112
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1126814460" format="1.0" version="1.112"}%
+d42 1
+a42 1
+	* [[http://catamaran.labs.cs.uu.nl/dist/nix/nix-0.8.1/][Nix 0.8.1]]: [[Trace.Nix][software deployment system]]
+@
+
+
+1.111
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1126470875" format="1.0" version="1.111"}%
+d49 1
+@
+
+
+1.110
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1126447233" format="1.0" version="1.110"}%
+d19 1
+@
+
+
+1.109
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="MartinBravenboer" date="1126040786" format="1.0" version="1.109"}%
+d26 1
+@
+
+
+1.108
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1126038260" format="1.0" version="1.108"}%
+d23 1
+a23 1
+		* [[http://www.stratego-language.org/Stratego/StrategoRelease015][Stratego/XT 0.15]]: experimental refactoring of the Stratego compiler
+@
+
+
+1.107
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1126000662" format="1.0" version="1.107"}%
+d35 1
+a35 1
+		* [[http://www.octave-compiler.org][Octave Compiler]]: a compiler for the Mathlab clone
+a56 1
+	* [[Retrofitting the AutoBayes program synthesis system with concrete syntax]] (DSPG)
+@
+
+
+1.106
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1125662329" format="1.0" version="1.106"}%
+d48 2
+a49 1
+	* [[AdaptiveCodeReuseByAspectsCloningAndRenaming][Adaptive Code Reuse by Aspects, Cloning and Renaming]]
+a63 1
+	* [[http://www.stratego-language.org/Stratego/SixthStrategoUserDays][Sixth Stratego User Days (SUD'05)]] (slides available)
+@
+
+
+1.105
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1124965587" format="1.0" version="1.105"}%
+d47 3
+@
+
+
+1.104
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1124787649" format="1.0" version="1.104"}%
+d35 1
+@
+
+
+1.103
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1124698172" format="1.0" version="1.103"}%
+d24 8
+a31 1
+	* [[http://www.program-transformation.org/Stratego/AdditionalPackageDownload][Transformation utilities and applications]]; including:
+d33 4
+a36 1
+		* [[%HTTPSTRATEGO%JavaFront][java-front]]: language front-end
+a37 2
+		* [[%HTTPSTRATEGO%BibtexTools][bibtex-tools]]: bibliography processing
+		* [[%HTTPSTRATEGO%XmlTools][xml-tools]]: transformation of XML in Stratego
+d39 1
+a39 3
+		* [[%HTTPSTRATEGO%ExtendibleDocumentationGenerator][xdoc]]: documentation generation
+		* [[http://www.stratego-language.org/Tiger/][Tiger in Stratego]]: demonstration compiler
+	* [[http://catamaran.labs.cs.uu.nl/dist/nix/nix-0.8/][Nix 0.8]]: [[Trace.Nix][software deployment system]]
+@
+
+
+1.102
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1123614376" format="1.0" version="1.102"}%
+d38 1
+@
+
+
+1.101
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1120943520" format="1.0" version="1.101"}%
+d59 1
+a59 1
+	* [[http://www.program-transformation.org/GPCE06][Generative Programming and Component Engineering (GPCE'06)]]
+@
+
+
+1.100
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1120078081" format="1.0" version="1.100"}%
+d23 1
+@
+
+
+1.99
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1119387977" format="1.0" version="1.99"}%
+d55 3
+a57 1
+	* [[http://www.model-transformation.org][Model Transformation 2006]]
+a58 1
+	* [[http://research.microsoft.com/floc06/rta.htm][Conference on Rewriting Techniques and Applications (RTA'06)]]
+@
+
+
+1.98
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1119343783" format="1.0" version="1.98"}%
+a39 1
+	* [[Reusable and Adaptable Strategies for Generative Programming]] (STS'04)
+a42 1
+	* [[Transparantie in variabiliteit]] (Informatie)
+d46 1
+a46 4
+	* [[Turning dynamic typing into static typing by program specialization]] (SCAM'03)
+	* [[Design of the CodeBoost transformation system]] (SCAM'03)
+	* [[Strategic programming meets adaptive programming]] (AOSD'03)
+	* Older [[PublicationsOnWiki][recent papers]] and other [[Publications by Year][publications]]
+@
+
+
+1.97
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1118340264" format="1.0" version="1.97"}%
+d62 1
+a62 1
+	* [[http://research.microsoft.com/floc06][Conference on Rewriting Techniques and Applications (RTA'06)]]
+@
+
+
+1.96
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1118156428" format="1.0" version="1.96"}%
+d31 1
+a31 1
+	* [[http://www.stratego-language.org/Tiger/][Tiger in Stratego]]: demonstration compiler
+@
+
+
+1.95
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1118148181" format="1.0" version="1.95"}%
+d62 1
+a62 1
+	* [[http://research.microsoft.com/floc06][RTA'06]]
+@
+
+
+1.94
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1117969459" format="1.0" version="1.94"}%
+d62 1
+@
+
+
+1.93
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1117527934" format="1.0" version="1.93"}%
+d22 1
+a22 1
+	* [[http://www.stratego-language.org/Stratego/StrategoRelease013][Stratego/XT 0.13]]: program transformation language and toolset
+d32 1
+a32 1
+	* [[http://catamaran.labs.cs.uu.nl/dist/nix/nix-0.7/][Nix 0.7]]: [[Trace.Nix][software deployment system]]
+@
+
+
+1.92
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1114810988" format="1.0" version="1.92"}%
+d37 1
+d56 1
+a56 2
+	* [[http://rule2005.loria.fr/][International Workshop on Rule-Based Programming (RULE'05)]]
+	* [[http://www.stratego-language.org/Stratego/SixthStrategoUserDays][Sixth Stratego User Days (SUD'05)]]
+d60 2
+@
+
+
+1.91
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1114807141" format="1.0" version="1.91"}%
+@
+
+
+1.90
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1113567983" format="1.0" version="1.90"}%
+d67 1
+a67 1
+<a href="http://www.stratego-language.org"><img src="http://www.stratego-language.org/twiki/pub/Stratego/StrategoLogo/StrategoLogoText-100px.png"	border="0" /></a>
+d70 1
+a70 1
+<a href="http://www.stratego-language.org/Stratego/FifthStrategoUserDays"><img width=200 border="0" src="http://www.stratego-language.org/twiki/pub/sud04-pics/r3_med_imm001_2.jpg" ></a>
+@
+
+
+1.89
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1109340465" format="1.0" version="1.89"}%
+d9 3
+a11 2
+	* [[http://www.cs.uu.nl/][Institute of Information and Computing Sciences]]
+	* [[http://www.uu.nl/][Utrecht University]]
+@
+
+
+1.88
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1108718508" format="1.0" version="1.88"}%
+d54 1
+a54 1
+	* [[http://rule2005.loria.fr/][International Workshop on Rule-Based Programming]] (RULE'05)
+d56 1
+@
+
+
+1.87
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1106253511" format="1.0" version="1.87"}%
+@
+
+
+1.86
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1106176275" format="1.0" version="1.86"}%
+d21 1
+a21 1
+	* [[http://www.stratego-language.org/Stratego/StrategoRelease012][Stratego/XT 0.12]]: program transformation language and toolset
+d31 1
+a31 1
+	* [[Trace.Nix][Nix Deployment System]] ([[http://catamaran.labs.cs.uu.nl/dist/nix/nix-0.5/][nix-0.5]])
+@
+
+
+1.85
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1103877913" format="1.0" version="1.85"}%
+d57 1
+@
+
+
+1.84
+log
+@none
+@
+text
+@d1 1
+a1 2
+%META:TOPICINFO{author="EelcoVisser" date="1103671670" format="1.0" version="1.84"}%
+-------+ _Eelco Visser_
+d73 4
+a76 1
+	* Set SKIN = notitle
+@
+
+
+1.83
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1102844839" format="1.0" version="1.83"}%
+d55 1
+a57 4
+	* [[http://www.program-transformation.org/GPCE][Generative Programming and Component Engineering (GPCE'04)]]
+		* [[http://www.program-transformation.org/Gpce/ConferenceProceedings][Conference proceedings]]
+	* [[http://www.program-transformation.org/Gpce/STS][Software Transformation Systems Workshop]]
+		* [[http://www.program-transformation.org/Sts][Software Transformation Systems]] wiki
+@
+
+
+1.82
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1102191137" format="1.0" version="1.82"}%
+d37 2
+a38 1
+	* [[Program Transformation with Scoped Dynamic Rewrite Rules]] 
+@
+
+
+1.81
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1102066515" format="1.0" version="1.81"}%
+a60 1
+
+a74 1
+
+@
+
+
+1.80
+log
+@none
+@
+text
+@d1 2
+a2 1
+%META:TOPICINFO{author="EelcoVisser" date="1102027128" format="1.0" version="1.80"}%
+a5 4
+
+-------+ _Eelco Visser_
+<br>
+
+@
+
+
+1.79
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1102012637" format="1.0" version="1.79"}%
+d5 4
+d40 1
+@
+
+
+1.78
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1099337880" format="1.0" version="1.78"}%
+d6 1
+d20 1
+d33 1
+d35 1
+d48 1
+d50 1
+d59 1
+@
+
+
+1.77
+log
+@none
+@
+text
+@d1 71
+a71 71
+%META:TOPICINFO{author="EelcoVisser" date="1097779420" format="1.0" version="1.77"}%
+<table width="100%">
+<tr>
+<td valign="top">
+-------+++ Coordinates
+	* Assistant professor 
+	* [[Center.WebHome][Center for Software Technology]]
+	* [[http://www.cs.uu.nl/][Institute of Information and Computing Sciences]]
+	* [[http://www.uu.nl/][Utrecht University]]
+	* Utrecht, The Netherlands ([[http://www.timeanddate.com/worldclock/custom.html?cities=16][CEST/CET]])
+
+	* Student advisor for the [[Master.WebHome][Master Program Software Technology]]
+
+	* Email: mailto:visser@@acm.org or mailto:visser@@cs.uu.nl 
+	* http://www.cs.uu.nl/~visser
+	* [[http://www.cs.uu.nl/staff/visser.html][Address]] ([[Card]])
+
+-------+++ Recent Software
+	* [[http://www.stratego-language.org/Stratego/StrategoRelease012][Stratego/XT 0.12]]: program transformation language and toolset
+	* [[http://www.program-transformation.org/Stratego/AdditionalPackageDownload][Transformation utilities and applications]]; including:
+		* [[%HTTPSTRATEGO%JavaBorg][JavaBorg]]: domain-specific language embeddings
+		* [[%HTTPSTRATEGO%JavaFront][java-front]]: language front-end
+		* [[%HTTPSTRATEGO%PrologTools][prolog-tools]]: language front-end and DSL embedding
+		* [[%HTTPSTRATEGO%BibtexTools][bibtex-tools]]: bibliography processing
+		* [[%HTTPSTRATEGO%XmlTools][xml-tools]]: transformation of XML in Stratego
+		* [[%HTTPSTRATEGO%XWeb][xweb]]: website generation
+		* [[%HTTPSTRATEGO%ExtendibleDocumentationGenerator][xdoc]]: documentation generation
+	* [[http://www.stratego-language.org/Tiger/][Tiger in Stratego]]: demonstration compiler
+	* [[Trace.Nix][Nix Deployment System]] ([[http://catamaran.labs.cs.uu.nl/dist/nix/nix-0.5/][nix-0.5]])
+	* Other [[Software Distributions][software]]
+-------+++ Recent Papers
+	* [[Reusable and Adaptable Strategies for Generative Programming]] (STS'04)
+	* [[Nix a safe and policy-free system for software deployment]] (LISA'04)
+	* [[A survey of strategies in rule based program transformation systems]] (JSC)
+	* [[Concrete syntax for objects]] (OOPSLA'04) 
+	* [[Transparantie in variabiliteit]] (Informatie)
+	* [[Imposing a memory management discipline on software deployment]] (ICSE'04)
+	* [[Retrofitting the AutoBayes program synthesis system with concrete syntax]] (DSPG)
+	* [[Program Transformation with StrategoXT][Program transformation with Stratego/XT: Rules, strategies, tools, and systems in StrategoXT 0.9]] (DSPG)
+	* [[Turning dynamic typing into static typing by program specialization]] (SCAM'03)
+	* [[Design of the CodeBoost transformation system]] (SCAM'03)
+	* [[Strategic programming meets adaptive programming]] (AOSD'03)
+	* Older [[PublicationsOnWiki][recent papers]] and other [[Publications by Year][publications]]
+-------+++ Ongoing Activities
+	* [[http://www.program-transformation.org][program-transformation.org]]
+	* [[http://www.program-transformation.org/GPCE][Generative Programming and Component Engineering (GPCE'04)]]
+		* [[http://www.program-transformation.org/Gpce/AcceptedPapers][Accepted papers]]
+		* [[http://www.program-transformation.org/Gpce/ConferenceProgram][Preliminary program]]
+		* [[http://www.program-transformation.org/Gpce/STS][Software Transformation Systems Workshop]] (submit a position paper!)
+	* [[http://www.cs.auckland.ac.nz/~herm/WoDiSEE2004/][ICSE Workshop on Directions in Software Engineering Environments (WoDiSEE'04)]]
+	* [[http://www.stratego-language.org/Stratego/FifthStrategoUserDays][Fifth Stratego User Days (SUD'04)]] (slides available)
+	* [[http://www.stratego-language.org/Stratego/SixthStrategoUserDays][Sixth Stratego User Days (SUD'05)]]
+	* Other [[Professional Activities][activities]]
+</td>
+<td valign="top" style="margin-left : 20px;">
+<center>
+<img width=200 src="/~visser/pictures/portret-6-1999.jpg">
+<p>
+<br>
+<a href="http://www.stratego-language.org"><img src="http://www.stratego-language.org/twiki/pub/Stratego/StrategoLogo/StrategoLogoText-100px.png"	border="0" /></a>
+<br>
+<p>
+<a href="http://www.stratego-language.org/Stratego/FifthStrategoUserDays"><img width=200 border="0" src="http://www.stratego-language.org/twiki/pub/sud04-pics/r3_med_imm001_2.jpg" ></a>
+</center>
+</td>
+</tr>
+</table>
+
+<!--
+	* Set SKIN = notitle
+-->
+@
+
+
+1.76
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1097570460" format="1.0" version="1.76"}%
+d32 1
+a32 1
+
+@
+
+
+1.75
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1097364318" format="1.0" version="1.75"}%
+d32 2
+a41 3
+	* [[Fusing logic and control]]
+	* [[Capturing timeline variability with transparent configuration environments]]
+	* [[Transformation mechanics]]
+d43 1
+a43 2
+	* [[TimelineVariabilityTheVariabilityOfBindingTimeOfVariationPoints][Timeline variability: The variability of binding time of variation points]]
+	* Other [[Publications by Year][publications]]
+@
+
+
+1.74
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1091794374" format="1.0" version="1.74"}%
+d19 1
+a19 1
+	* [[http://www.stratego-language.org/Stratego/StrategoRelease011][Stratego/XT 0.11]]: program transformation language and toolset
+@
+
+
+1.73
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1089919161" format="1.0" version="1.73"}%
+d19 1
+a19 1
+	* [[http://www.stratego-language.org/Stratego/StrategoRelease010][StrategoXT 0.10]]: program transformation language and toolset
+@
+
+
+1.72
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1086719669" format="1.0" version="1.72"}%
+d51 1
+a51 1
+		* [[http://www.program-transformation.org/STS][Software Transformation Systems Workshop]] (submit a position paper!)
+@
+
+
+1.71
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1086642240" format="1.0" version="1.71"}%
+d15 1
+@
+
+
+1.70
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1086554160" format="1.0" version="1.70"}%
+d46 1
+d50 1
+@
+
+
+1.69
+log
+@none
+@
+text
+@d1 4
+a4 2
+%META:TOPICINFO{author="EelcoVisser" date="1086538800" format="1.0" version="1.69"}%
+<img style="margin-left : 20px;" width=200 src="/~visser/pictures/portret-6-1999.jpg" align=right>
+d18 1
+a18 1
+	* [[http://www.stratego-language.org/Stratego/StrategoRelease010][StrategoXT 0.10]]: program transformation language and toolset<a href="http://www.stratego-language.org"><img src=http://www.stratego-language.org/twiki/pub/Stratego/StrategoLogo/StrategoLogoText-100px.png  align=right border="0" /></a>
+d32 2
+a33 2
+	* [[Concrete syntax for objects]] (OOPSLA'04) <a href="http://www.stratego-language.org/Stratego/FifthStrategoUserDays"><img style="margin-left : 20px;" width=200 border="0" src="http://www.stratego-language.org/twiki/pub/sud04-pics/r3_med_imm001_2.jpg" align=right></a>
+	* [[Transparantie in variabiliteit]]
+d35 2
+a36 2
+	* [[Retrofitting the AutoBayes program synthesis system with concrete syntax]]
+	* [[Program Transformation with StrategoXT][Program transformation with Stratego/XT: Rules, strategies, tools, and systems in StrategoXT 0.9]] 
+d53 15
+@
+
+
+1.68
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1085903162" format="1.0" version="1.68"}%
+d16 10
+a25 4
+	* [[http://www.stratego-language.org/Stratego/StrategoRelease010][StrategoXT 0.10]]<a href="http://www.stratego-language.org"><img src=http://www.stratego-language.org/twiki/pub/Stratego/StrategoLogo/StrategoLogoText-100px.png  align=right border="0" /></a>
+	* [[http://www.program-transformation.org/Stratego/AdditionalPackageDownload][Lots of transformation utilities and applications]]: [[%HTTPSTRATEGO%BibtexTools][bibtex-tools]], [[%HTTPSTRATEGO%PrologTools][prolog-tools]], [[%HTTPSTRATEGO%XWeb][xweb]], [[%HTTPSTRATEGO%XmlTools][xml-tools]], [[%HTTPSTRATEGO%ExtendibleDocumentationGenerator][xdoc]], [[%HTTPSTRATEGO%StrategoNetworking][stratego-net]], [[%HTTPSTRATEGO%JavaFront][java-front]], 
+	* [[%HTTPSTRATEGO%JavaBorg][JavaBorg]]...
+	* [[http://www.stratego-language.org/Tiger/][Tiger in Stratego 1.2]]
+d29 2
+a30 2
+	* [[Concrete syntax for objects]] (OOPSLA'04!)
+	* [[A survey of strategies in rule based program transformation systems]]<a href="http://www.stratego-language.org/Stratego/FifthStrategoUserDays"><img style="margin-left : 20px;" width=200 border="0" src="http://www.stratego-language.org/twiki/pub/sud04-pics/r3_med_imm001_2.jpg" align=right></a>
+d32 1
+a32 1
+	* [[Imposing a memory management discipline on software deployment]]
+d35 2
+a36 2
+	* [[Turning dynamic typing into static typing by program specialization]]
+	* [[Design of the CodeBoost transformation system]]
+d40 1
+a40 1
+	* [[Strategic programming meets adaptive programming]]
+@
+
+
+1.67
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1085345161" format="1.0" version="1.67"}%
+d17 2
+a18 1
+	* [[http://www.program-transformation.org/Stratego/AdditionalPackageDownload][Lots of transformation utilities and applications]]: [[%HTTPSTRATEGO%BibtexTools][bibtex-tools]], [[%HTTPSTRATEGO%PrologTools][prolog-tools]], [[%HTTPSTRATEGO%/StrategoRegular][stratego-regular]], [[%HTTPSTRATEGO%XWeb][xweb]], [[%HTTPSTRATEGO%XmlTools][xml-tools]], [[%HTTPSTRATEGO%ExtendibleDocumentationGenerator][xdoc]], [[%HTTPSTRATEGO%StrategoNetworking][stratego-net]], [[%HTTPSTRATEGO%JavaFront][java-front]], ...
+@
+
+
+1.66
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1084811800" format="1.0" version="1.66"}%
+d38 2
+@
+
+
+1.65
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1084607830" format="1.0" version="1.65"}%
+d8 1
+@
+
+
+1.64
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1084310102" format="1.0" version="1.64"}%
+d15 1
+a15 1
+	* [[http://www.stratego-language.org/Stratego/StrategoRelease095][StrategoXT 0.9.5]]<a href="http://www.stratego-language.org"><img src=http://www.stratego-language.org/twiki/pub/Stratego/StrategoLogo/StrategoLogoText-100px.png  align=right border="0" /></a>
+@
+
+
+1.63
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1084053314" format="1.0" version="1.63"}%
+d22 1
+a22 1
+	* [[A survey of strategies in rule based program transformation systems]]<a href="http://www.stratego-language.org/Stratego/FifthStrategoUserDays"><img style="margin-left : 20px;" width=200 border="0" src="http://losser.st-lab.cs.uu.nl/~adam/sud04-pics/r3_med_imm001_2.jpg" align=right></a>
+@
+
+
+1.62
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1083423600" format="1.0" version="1.62"}%
+d21 1
+@
+
+
+1.61
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1080550503" format="1.0" version="1.61"}%
+d15 1
+a15 1
+	* [[http://www.stratego-language.org/Stratego/StrategoRelease094][StrategoXT 0.9.4]]<a href="http://www.stratego-language.org"><img src=http://www.stratego-language.org/twiki/pub/Stratego/StrategoLogo/StrategoLogoText-100px.png  align=right border="0" /></a>
+d18 1
+a18 1
+	* [[Trace.Nix][Nix Deployment System]]
+d42 1
+a42 2
+-->
+
+@
+
+
+1.60
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1080294619" format="1.0" version="1.60"}%
+a14 1
+
+a19 1
+
+a20 1
+ 
+a33 2
+
+
+a34 1
+
+a39 2
+	
+
+d42 2
+a43 1
+-->
+@
+
+
+1.59
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1080082654" format="1.0" version="1.59"}%
+d31 1
+@
+
+
+1.58
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1080074640" format="1.0" version="1.58"}%
+d16 1
+a16 1
+	* [[http://www.stratego-language.org/Stratego/StrategoRelease094][StrategoXT 0.9.4]]<img src=http://www.stratego-language.org/twiki/pub/Stratego/StrategoLogo/StrategoLogoText-100px.png  align=right border="0" /></a>
+d32 1
+a32 1
+	* [[Transformation mechanics]]<a href="http://www.stratego-language.org">
+@
+
+
+1.57
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1079087926" format="1.0" version="1.57"}%
+d16 1
+a16 1
+	* [[http://www.stratego-language.org/Stratego/StrategoRelease094][StrategoXT 0.9.4]]
+d24 1
+a24 1
+	* [[A survey of strategies in rule based program transformation systems]]
+d32 1
+a32 1
+	* [[Transformation mechanics]]<a href="http://www.stratego-language.org"><img src=http://www.stratego-language.org/twiki/pub/Stratego/StrategoLogo/StrategoLogoText-100px.png  align=right border="0" /></a>
+@
+
+
+1.56
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1079042084" format="1.0" version="1.56"}%
+d24 1
+a32 1
+	* [[A survey of rewriting strategies in program transformation systems]]
+@
+
+
+1.55
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1078872420" format="1.0" version="1.55"}%
+d41 1
+d46 1
+@
+
+
+1.54
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1078049879" format="1.0" version="1.54"}%
+d37 1
+d41 2
+a42 1
+	* [[http://www.stratego-language.org/Stratego/FifthStrategoUserDays][Fifth Stratego User Days (SUD'04)]]
+@
+
+
+1.53
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1077371985" format="1.0" version="1.53"}%
+d32 1
+a32 1
+	* [[A Survey of rewriting strategies in program transformation systems]]
+@
+
+
+1.52
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1076582100" format="1.0" version="1.52"}%
+d23 12
+a34 11
+
+	* [[Imposing a Memory Management Discipline on Software Deployment]]
+	* [[Retrofitting the AutoBayes Program Synthesis System with Concrete Syntax]]
+	* [[Program Transformation with StrategoXT][Program Transformation with Stratego/XT: Rules, Strategies, Tools, and Systems in StrategoXT 0.9]] 
+	* [[Turning Dynamic Typing into Static Typing by Program Specialization]]
+	* [[Design of the CodeBoost Transformation System]]
+	* [[Capturing Timeline Variability with Transparent Configuration Environments]]
+	* [[Transformation Mechanics]]<a href="http://www.stratego-language.org"><img src=http://www.stratego-language.org/twiki/pub/Stratego/StrategoLogo/StrategoLogoText-100px.png  align=right border="0" /></a>
+	* [[A Survey of Rewriting Strategies in Program Transformation Systems]]
+	* [[Strategic Programming meets Adaptive Programming]]
+	* [[TimelineVariabilityTheVariabilityOfBindingTimeOfVariationPoints][Timeline Variability: The Variability of Binding Time of Variation Points]]
+@
+
+
+1.51
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoDolstra" date="1074618567" format="1.0" version="1.51"}%
+d16 2
+a17 3
+	* [[http://www.stratego-language.org/Stratego/StrategoRelease093][StrategoXT 0.9.3]]
+	* [[http://www.program-transformation.org/Stratego/AdditionalPackageDownload][Lots of utilities and applications]]
+		* [[%HTTPSTRATEGO%/BibtexTools][bibtex-tools]], [[%HTTPSTRATEGO%/PrologTools][prolog-tools]], [[%HTTPSTRATEGO%/StrategoRegular][stratego-regular]], [[%HTTPSTRATEGO%/XWeb][xweb]], [[%HTTPSTRATEGO%/XmlTools][xml-tools]], [[%HTTPSTRATEGO%/ExtendibleDocumentationGenerator][xdoc]], stratego-net, java-front, ...
+d26 1
+a26 1
+	* [[Program Transformation with StrategoXT][Program Transformation with Stratego/XT: Rules, Strategies, Tools, and Systems in StrategoXT 0.9.]] 
+d39 1
+a39 1
+	* [[http://www.stratego-language.org/Stratego/FifthStrategoUsersDay][Fifth Stratego Users Day (SUD'04)]]
+@
+
+
+1.50
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1074242305" format="1.0" version="1.50"}%
+d20 1
+a20 1
+	* [[Trace.NixDeploymentSystem][Nix Deployment System]]
+@
+
+
+1.49
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1071878844" format="1.0" version="1.49"}%
+d20 1
+@
+
+
+1.48
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1071217223" format="1.0" version="1.48"}%
+d24 1
+@
+
+
+1.47
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1071141060" format="1.0" version="1.47"}%
+d29 1
+a29 1
+	* [[Transformation Mechanics]]
+a34 4
+<a href="http://www.stratego-language.org"><img src=http://www.stratego-language.org/twiki/pub/Stratego/StrategoLogo/StrategoLogoText-100px.png  align=right border="0" /></a>
+	* Slides of the [[http://www.stratego-language.org/Stratego/FourthStrategoUsersDay][Fourth Stratego Users Day]]
+	* [[http://www.cis.uab.edu/info/faculty/bryant/ldta2003/][Proceedings]] of the [[http://www-sop.inria.fr/oasis/LDTA2003/][Third Workshop on Language Descriptions, Tools and Applications (LDTA'03)]]
+
+d38 1
+@
+
+
+1.46
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1070026278" format="1.0" version="1.46"}%
+d3 1
+d14 1
+a14 1
+Download
+d22 1
+a22 1
+Read
+d39 1
+a39 1
+Submit a paper to
+@
+
+
+1.45
+log
+@none
+@
+text
+@d1 2
+a2 2
+%META:TOPICINFO{author="EelcoVisser" date="1069717620" format="1.0" version="1.45"}%
+<img style="margin-left : 20px;" src="/~visser/pictures/portret-6-1999.jpg" align=right>
+d34 1
+@
+
+
+1.44
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1069585740" format="1.0" version="1.44"}%
+a23 1
+	* [[Adding Concrete Syntax to a Prolog Based Program Synthesis System]]
+d25 2
+@
+
+
+1.43
+log
+@none
+@
+text
+@d1 2
+a2 2
+%META:TOPICINFO{author="EelcoVisser" date="1066228380" format="1.0" version="1.43"}%
+<img style="margin-left : 10px;" src="/~visser/pictures/portret-6-1999.jpg" align=right>
+d16 2
+a17 1
+	* [[http://www.program-transformation.org/Stratego/AdditionalPackageDownload][Lots of utilities]] (stratego-regular, xml-tools, xdoc, stratego-net, java-front, ...)
+d23 1
+@
+
+
+1.42
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1065029900" format="1.0" version="1.42"}%
+d16 1
+@
+
+
+1.41
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1064156172" format="1.0" version="1.41"}%
+d33 1
+a33 1
+Attend
+d35 1
+a35 1
+	* [[http://www.gpce03.gpce.org][Generative Programming and Component Engineering (GPCE'03)]]
+@
+
+
+1.40
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1062958690" format="1.0" version="1.40"}%
+a11 4
+
+News
+
+	* [[Trace.JobOpening][job opening]] for postdoc or phd student in the [[Trace.WebHome][TraCE]] project
+@
+
+
+1.39
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1062949468" format="1.0" version="1.39"}%
+a15 2
+	* [[http://www.stratego-language.org/Stratego/FourthStrategoUsersDay][Fourth Stratego Users Day]] held on June 5, 2003 in Utrecht
+	* [[Trace.JacquardProjectProposal][TraCE]] project funded by Jacquard/NWO
+@
+
+
+1.38
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1062751516" format="1.0" version="1.38"}%
+d15 3
+a17 3
+	* June 2003: [[Trace.JobOpening][job opening]] for postdoc or phd student in the [[Trace.WebHome][TraCE]] project
+	* April 2003: [[http://www.stratego-language.org/Stratego/FourthStrategoUsersDay][Fourth Stratego Users Day]] held on June 5, 2003 in Utrecht
+	* March 2003: [[Trace.JacquardProjectProposal][TraCE]] project funded by Jacquard/NWO
+@
+
+
+1.37
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1062326363" format="1.0" version="1.37"}%
+d21 2
+a22 2
+	* [[http://www.stratego-language.org/Stratego/StrategoRelease093][StrategoXT 0.9.3]] (September 2003)
+	* [[http://www.stratego-language.org/Tiger/][Tiger in Stratego 1.2]] (January 2003)
+d27 7
+a33 7
+	* [[Adding Concrete Syntax to a Prolog Based Program Synthesis System]] (July 2003)
+	* [[Program Transformation with StrategoXT][Program Transformation with Stratego/XT: Rules, Strategies, Tools, and Systems in StrategoXT 0.9.]] (June 2003)
+	* [[Capturing Timeline Variability with Transparent Configuration Environments]] (May 2003)
+	* [[Transformation Mechanics]] (April 2003)
+	* [[A Survey of Rewriting Strategies in Program Transformation Systems]] (February 2003; new version!)
+	* [[Strategic Programming meets Adaptive Programming]] (AOSD March 2003)
+	* [[TimelineVariabilityTheVariabilityOfBindingTimeOfVariationPoints][Timeline Variability: The Variability of Binding Time of Variation Points]] (SVM February 2003)
+d36 2
+a37 2
+	* Slides of the [[http://www.stratego-language.org/Stratego/FourthStrategoUsersDay][Fourth Stratego Users Day]] (June 2003)
+	* [[http://www.cis.uab.edu/info/faculty/bryant/ldta2003/][Proceedings]] of the [[http://www-sop.inria.fr/oasis/LDTA2003/][Third Workshop on Language Descriptions, Tools and Applications (LDTA'03)]] (April 2003)
+d41 1
+a41 1
+	* [[http://www.gpce03.gpce.org][Generative Programming and Component Engineering (GPCE'03)]] (September 2003)
+@
+
+
+1.36
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1059571081" format="1.0" version="1.36"}%
+d21 1
+a21 1
+	* [[http://www.stratego-language.org/Stratego/StrategoRelease092][StrategoXT 0.9.2]] (July 2003)
+@
+
+
+1.35
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1057789140" format="1.0" version="1.35"}%
+d27 1
+@
+
+
+1.34
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1057136438" format="1.0" version="1.34"}%
+d21 1
+a21 1
+	* [[http://www.stratego-language.org/Stratego/StrategoRelease091][StrategoXT 0.9.1]] (June 2003)
+d23 1
+d33 1
+a33 4
+	* [[The Essence of Strategic Programming]] (October 2002)
+	* [[MetaProgrammingWithConcreteObjectSyntax][Meta-Programming with Concrete Object Syntax]] (GPCE October 2002)
+	* [[StrategiesForSourceToSourceConstantPropagation][Strategies for Source-to-Source Constant Propagation]] (WRS July 2002)
+	* [[Rewriting Strategies for Instruction Selection]] (RTA July 2002)
+a39 1
+	* [[http://www.dsic.upv.es/~rdp03/wrs/][Workshop on Reduction Strategies in Rewriting and Programming (WRS'03)]] (June 2003)
+d41 1
+@
+
+
+1.33
+log
+@none
+@
+text
+@d1 2
+a2 4
+%META:TOPICINFO{author="EelcoVisser" date="1055746459" format="1.0" version="1.33"}%
+<img src="/~visser/pictures/portret-6-1999.jpg" align=right>
+<font size=+3><b>Eelco Visser</b></font>
+
+@
+
+
+1.32
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1055745684" format="1.0" version="1.32"}%
+d6 1
+a6 1
+	* [[Center.WebHome][Center for SoftwareDistributions Technology]]
+d10 1
+a10 1
+	* Student advisor for the [[Master.WebHome][Master Program SoftwareDistributions Technology]]
+@
+
+
+1.31
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1055744458" format="1.0" version="1.31"}%
+d6 1
+a6 1
+	* [[Center.WebHome][Center for Software Technology]]
+d10 1
+a10 1
+	* Student advisor for the [[Master.WebHome][Master Program Software Technology]]
+@
+
+
+1.30
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1055421254" format="1.0" version="1.30"}%
+d27 2
+@
+
+
+1.29
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1055021160" format="1.0" version="1.29"}%
+d23 1
+a23 1
+	* [[http://www.stratego-language.org/Stratego/StrategoRelease09][StrategoXT 0.9.1]] (June 2003)
+@
+
+
+1.28
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1054908444" format="1.0" version="1.28"}%
+d17 1
+d37 1
+a41 1
+	* [[http://www.stratego-language.org/Stratego/FourthStrategoUsersDay][Fourth Stratego Users Day]] (June 2003)
+@
+
+
+1.27
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1054572300" format="1.0" version="1.27"}%
+d22 1
+a22 1
+	* [[http://www.stratego-language.org/Stratego/StrategoRelease09][StrategoXT 0.9]] (January 2003)
+@
+
+
+1.26
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1054109423" format="1.0" version="1.26"}%
+d26 1
+a26 1
+
+d28 7
+a34 7
+	* [[http://www.stratego-language.org/Transform/ASurveyOfRewritingStrategiesInProgramTransformationSystems][A Survey of Rewriting Strategies in Program Transformation Systems]] (February 2003; new version!)
+	* [[http://www.stratego-language.org/Transform/StrategicProgrammingMeetsAdaptiveProgramming][Strategic Programming meets Adaptive Programming]] (AOSD March 2003)
+	* [[Trace.TimelineVariabilityTheVariabilityOfBindingTimeOfVariationPoints][Timeline Variability: The Variability of Binding Time of Variation Points]] (SVM February 2003)
+	* [[http://www.program-transformation.org/Transform/TheEssenceOfStrategicProgramming][The Essence of Strategic Programming]] (October 2002)
+	* [[http://www.stratego-language.org/Stratego/MetaProgrammingWithConcreteObjectSyntax][Meta-Programming with Concrete Object Syntax]] (GPCE October 2002)
+	* [[http://www.stratego-language.org/Stratego/StrategiesForSourceToSourceConstantPropagation][Strategies for Source-to-Source Constant Propagation]] (WRS July 2002)
+	* [[http://www.stratego-language.org/Stratego/RewritingStrategiesForInstructionSelection][Rewriting Strategies for Instruction Selection]] (RTA July 2002)
+@
+
+
+1.25
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1053549694" format="1.0" version="1.25"}%
+d29 1
+a29 1
+	* [[http://www.stratego-language.org/Transform/AdaptiveProgrammingMeetsStrategicProgramming][Adaptive Programming meets Strategic Programming]] (AOSD March 2003)
+@
+
+
+1.24
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1053521812" format="1.0" version="1.24"}%
+d40 2
+a42 1
+	* [[http://www.dsic.upv.es/~rdp03/wrs/][Workshop on Reduction Strategies in Rewriting and Programming (WRS'03)]] (June 2003)
+@
+
+
+1.23
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1053520560" format="1.0" version="1.23"}%
+a26 1
+	* [[http://www.stratego-language.org/Transform/TransformationMechanics][Transformation Mechanics]] (April 2003)
+@
+
+
+1.22
+log
+@none
+@
+text
+@d1 2
+a2 6
+%META:TOPICINFO{author="EelcoVisser" date="1052602320" format="1.0" version="1.22"}%
+<table cellspacing = 0 cellpadding = 10 border = 0>
+<tr> <td valign="top">
+<img src="/~visser/pictures/portret-6-1999.jpg" align=left>
+</td>
+<td valign="top">
+a19 4
+</td>
+</tr>
+</table>
+
+d28 1
+@
+
+
+1.21
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1052589360" format="1.0" version="1.21"}%
+d6 1
+a6 1
+<td>
+d19 8
+a26 1
+----+++ New
+a50 3
+</td>
+</tr>
+</table>
+@
+
+
+1.20
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1051801030" format="1.0" version="1.20"}%
+d23 2
+a24 2
+	* [[http://www.stratego-language.org/Stratego/StrategoRelease09][StrategoXT 0.9]]
+	* [[http://www.stratego-language.org/Tiger/][Tiger in Stratego 1.2]]
+d28 8
+a35 9
+	* [[http://www.stratego-language.org/Transform/TransformationMechanics][Transformation Mechanics]] 
+	* [[http://www.stratego-language.org/Transform/ASurveyOfRewritingStrategiesInProgramTransformationSystems][A Survey of Rewriting Strategies in Program Transformation Systems]] (new version!)
+	* [[http://www.cs.uu.nl/groups/ST/twiki/bin/view/Trace/TimelineVariabilityTheVariabilityOfBindingTimeOfVariationPoints][Timeline Variability: The Variability of Binding Time of Variation Points]]
+	* [[http://www.stratego-language.org/Stratego/StrategiesForSourceToSourceConstantPropagation][Strategies for Source-to-Source Constant Propagation]]
+	* [[http://www.program-transformation.org/Transform/TheEssenceOfStrategicProgramming][The Essence of Strategic Programming]] (new version!)
+	* [[http://www.stratego-language.org/Stratego/MetaProgrammingWithConcreteObjectSyntax][Meta-Programming with Concrete Object Syntax]]
+	* [[http://www.stratego-language.org/Stratego/RewritingStrategiesForInstructionSelection][Rewriting Strategies for Instruction Selection]]
+	* [[http://www.program-transformation.org/Transform/DisambiguationFiltersForScannerlessGeneralizedLRParsers][Disambiguation Filters for Scannerless Generalized LR Parsers]]
+	* [[http://www.stratego-language.org/Stratego/BuildingInterpretersWithRewritingStrategies][Building Interpreters with Rewriting Strategies]]
+d37 1
+a37 1
+	* [[http://www.cis.uab.edu/info/faculty/bryant/ldta2003/][Proceedings]] of the [[http://www-sop.inria.fr/oasis/LDTA2003/][Third Workshop on Language Descriptions, Tools and Applications (LDTA'03)]]
+d41 2
+a42 2
+	* [[http://www.gpce03.gpce.org][Generative Programming and Component Engineering (GPCE'03)]]
+	* [[http://www.dsic.upv.es/~rdp03/wrs/][Workshop on Reduction Strategies in Rewriting and Programming (WRS'03)]]
+@
+
+
+1.19
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1051280063" format="1.0" version="1.19"}%
+d28 1
+@
+
+
+1.18
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1049875920" format="1.0" version="1.18"}%
+d39 1
+a39 1
+Submit a paper to
+@
+
+
+1.17
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1049031636" format="1.0" version="1.17"}%
+@
+
+
+1.16
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1046298908" format="1.0" version="1.16"}%
+d37 2
+a40 1
+	* [[http://www-sop.inria.fr/oasis/LDTA2003/][Third Workshop on Language Descriptions, Tools and Applications (LDTA'03)]]
+@
+
+
+1.15
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1046211960" format="1.0" version="1.15"}%
+d29 1
+@
+
+
+1.14
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1043708864" format="1.0" version="1.14"}%
+d28 1
+@
+
+
+1.13
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1042731436" format="1.0" version="1.13"}%
+d23 2
+a24 2
+	* [[http://www.stratego-language.org/Stratego/StrategoRelease09][StrategoXT 0.9 (beta10)]]
+	* [[http://www.stratego-language.org/Tiger/][Tiger in Stratego 1.1]]
+@
+
+
+1.12
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1042548325" format="1.0" version="1.12"}%
+d17 1
+a17 1
+	* [[http://www.cs.uu.nl/staff/visser.html][Address]] ([[http:/~visser/pictures/card.jpg][Card]])
+@
+
+
+1.11
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1042042019" format="1.0" version="1.11"}%
+d23 2
+a24 2
+	* [[http://www.stratego-language.org/Stratego/StrategoRelease09][StrategoXT 0.9]]
+	* [[http://www.stratego-language.org/Tiger/][Tiger in Stratego 1.0]]
+@
+
+
+1.10
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1037409424" format="1.0" version="1.10"}%
+d39 1
+@
+
+
+1.9
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1037319151" format="1.0" version="1.9"}%
+d23 1
+a23 1
+	* [[http://www.stratego-language.org/Stratego/StrategoRelease09][StrategoXT-0.9beta1]]
+@
+
+
+1.8
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1035928499" format="1.0" version="1.8"}%
+d23 1
+@
+
+
+1.7
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1034802719" format="1.0" version="1.7"}%
+d27 1
+@
+
+
+1.6
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1030526395" format="1.0" version="1.6"}%
+d21 7
+a29 1
+	* [[http://www.program-transformation.org/Transform/TheEssenceOfStrategicProgramming][The Essence of Strategic Programming]]
+d33 1
+a33 2
+	* [[http://www.program-transformation.org/rule02][Third ACM SIGPLAN Workshop on Rule-Based Programming (RULE'02)]]
+	* Report of the [[http://www.stratego-language.org/Stratego/ThirdSudReport][Third Stratego Users Day]]
+d35 3
+@
+
+
+1.5
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1030393386" format="1.0" version="1.5"}%
+a17 3
+
+	* [[Undergraduate Projects]]
+	* [[Master Projects in Program Transformation]]
+@
+
+
+1.4
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1030095882" format="1.0" version="1.4"}%
+d10 1
+a10 1
+	* [[Main.WebHome][Center for Software Technology]]
+@
+
+
+1.3
+log
+@none
+@
+text
+@d1 7
+a7 4
+%META:TOPICINFO{author="EelcoVisser" date="1028980980" format="1.0" version="1.3"}%
+<hr noshade size=1>
+----+ The Default Web
+<hr noshade size=1>
+d9 4
+d14 22
+@
+
+
+1.2
+log
+@none
+@
+text
+@d1 4
+a4 2
+%META:TOPICINFO{author="PeterThoeny" date="1006602023" format="1.0" version="1.2"}%
+Welcome to the home of <b>%WIKITOOLNAME%.%WEB%</b>. This is a web-based collaboration area for ...
+a5 2
+	* MeetingMinutes
+	* 
+d7 3
+a9 15
+---++ Maintenance of the %WEB% web
+<form action="%SCRIPTURLPATH%/search%SCRIPTSUFFIX%/%WEB%/SearchResult">
+	* <input type="text" name="search" size="32" /> <input type="submit" value="Search" /> &nbsp;&nbsp; (More options in WebSearch)
+	* WebChanges: Find out recent modifications to the %WIKITOOLNAME%.%WEB% web.
+	* WebIndex: Display all %WIKITOOLNAME%.%WEB% topics in alphabetical order. See also the faster WebTopicList 
+	* %NOTIFYTOPIC%: Subscribe to be automatically notified when something changes in the %WIKITOOLNAME%.%WEB% web.
+	* %STATISTICSTOPIC%: View access statistics of the %WIKITOOLNAME%.%WEB% web.
+	* %WEBPREFSTOPIC%: Preferences of the %WIKITOOLNAME%.%WEB% web.
+</form>
+
+*Notes:*
+	* You are currently in the %WIKITOOLNAME%.%WEB% web. The color code for this web is a (SPECIFY COLOR) background, so you know where you are.
+	* If you are not familiar with the %WIKITOOLNAME% collaboration tool, please visit %TWIKIWEB%.WelcomeGuest in the %WIKITOOLNAME%.%TWIKIWEB% web first.
+
+%INCLUDE{"%TWIKIWEB%.TWikiWebsTable"}%
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="PeterThoeny" date="997248001" format="1.0beta2" version="1.1"}%
+d11 1
+a11 1
+	* WebIndex: Display all %WIKITOOLNAME%.%WEB% topics in alphabetical order.
+@

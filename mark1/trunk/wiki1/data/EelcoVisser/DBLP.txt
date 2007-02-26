@@ -1,0 +1,8 @@
+%META:TOPICINFO{author="EelcoVisser" date="1168715662" format="1.0" version="1.4"}%
+
+<noautolink>
+%INCLUDE{PublicationPages}%
+
+%INCLUDE{http://www.informatik.uni-trier.de/~ley/db/indices/a-tree/v/Visser:Eelco.html}%
+</noautolink>
+

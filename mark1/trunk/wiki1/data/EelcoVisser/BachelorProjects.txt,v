@@ -1,0 +1,100 @@
+head	1.2;
+access;
+symbols;
+locks
+	apache:1.2; strict;
+comment	@# @;
+
+
+1.2
+date	2003.06.07.21.18.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.08.28.09.10.49;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.2
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1055020680" format="1.0" version="1.2"}%
+%META:TOPICPARENT{name="WebHome"}%
+Starting with the 2003 academic year there will be no more bachelor projects.
+
+
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1030525849" format="1.0" version="1.1"}%
+d3 1
+a3 3
+This page contains a few ideas for third year undergraduate projects
+in the area of program transformation.  If you are interested in doing
+a project in this area, contact [[WebHome][Eelco Visser]] (mailto:visser@@cs.uu.nl)
+a4 48
+[[http://www.cs.uu.nl/groups/ST/MiniProjects/index.html][Other projects in the area of Software Technology]]
+
+----+++ Program Transformation
+
+Program transformation is the process of manipulating programs.
+
+The aim of program transformation is to increase programmer
+productivity by automating programming tasks, thus enabling
+programming at a higher-level of abstraction, and increasing
+maintainability and re-usability.
+
+Program transformation has applications in many areas of software
+engineering including compilation, optimization, refactoring, program
+synthesis, software renovation, and reverse engineering.  
+
+----+++ Stratego
+
+[[http://www.stratego-language.org][Stratego]] is a language
+for program transformation based on the paradigm of rewriting
+strategies. Various projects with Stratego are possible depending on
+your interest.
+
+<a name="#CCG">
+----+++ Implementing Character Class Grammars
+
+Character class grammars provide a formalism for compactly expressing
+the syntax of programming languages. Instead of using non-terminals,
+which represent a fixed set of productions, the symbols used in
+productions are classes of productions conveniently represented by
+means of character classes. This allows a fine-grained specification
+of which production may be used where. Thus, it is possible to express
+the conventional disambiguatoin of expression syntax without
+introducing auxiliary productions. Furthermore, all kinds of
+optimizations can be expressed directly on grammars.
+
+The formalism of character class grammmars (CCGs) and a translation
+from context-free grammars to CCGs is described in the technical
+report <a href="publications/index.html#Vis97.ccg">From Context-free
+Grammars with Priorities to Character Class Grammars</a>. The report
+provides a specification of the transformation in ASF+SDF, which 
+was used as a proto-type.
+
+The goal of this project is to implement in a programming language of
+your choice the transformation from context-free grammars with
+priorities to character class grammars.  This involves writing parsers
+and pretty-printers for the grammar formalisms involved. If time
+allows, also write a back-end translating character class grammars to
+an existing grammar formalism such as YACC.
+@

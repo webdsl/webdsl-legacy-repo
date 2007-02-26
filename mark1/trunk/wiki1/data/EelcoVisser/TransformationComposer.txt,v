@@ -1,0 +1,48 @@
+head	1.1;
+access;
+symbols;
+locks
+	apache:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2002.03.17.17.31.47;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.1
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1016386307" format="1.0" version="1.1"}%
+%META:TOPICPARENT{name="WebHome"}%
+It is the common style in Stratego and XT to implement small transformation components that can be reused
+in different transformation systems. Obtaining a transformation system then consists of composing a bunch of
+such components into a pipeline, possibly with conditional evaluation, and often command line options have to be propagated. This is currently done in an ad hoc manner, by means of Make rules, a shell script,
+or a Stratego program. 
+
+This is not strange: the task asks for a combination of the features provided by Make, shell, and Stratego.
+
+Make provides caching *memoization) of previously created results. Shell provides easy file manipulation and programmable (conditional) control flow. Control flow is not  supported by Make since make rules are
+rule driven: the engine determines which rules to apply to build some target. Make and shell are too clumsy to do anything with the data that they are manipulating.
+
+Stratego provides control flow constructs and caching at the term level (using dynamic rules). However, file 
+access is clumsy; to create a pipeline of two external processes it is necessary to write the intermediate result to a file. 
+
+The goal of this project is to design and implement a tool or library for the composition of transformation components. 
+
+It would be interesting to create compositions visually using data-flow diagrams and generate code from
+such diagrams.
+
+A background in Unix/Linux hacking is probably useful.
+
+-- Main.EelcoVisser - 17 Mar 2002 <br />
+@

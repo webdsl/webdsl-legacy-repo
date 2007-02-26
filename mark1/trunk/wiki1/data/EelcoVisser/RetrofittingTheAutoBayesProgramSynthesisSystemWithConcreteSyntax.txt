@@ -1,0 +1,10 @@
+%META:TOPICINFO{author="EelcoVisser" date="1125663599" format="1.0" version="1.5"}%
+%META:TOPICPARENT{name="WebHome"}%
+%INCLUDE{http://www.stratego-language.org/Stratego/RetrofittingTheAutoBayesProgramSynthesisSystemWithConcreteSyntax?skin=plain}%
+
+[[%HTTPSTRATEGO%RetrofittingTheAutoBayesProgramSynthesisSystemWithConcreteSyntax][Source]]
+
+<!--
+	* Set SKIN = notitle
+-->
+

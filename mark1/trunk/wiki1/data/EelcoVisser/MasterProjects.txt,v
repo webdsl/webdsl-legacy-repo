@@ -1,0 +1,306 @@
+head	1.8;
+access;
+symbols;
+locks
+	apache:1.8; strict;
+comment	@# @;
+
+
+1.8
+date	2006.10.17.15.00.32;	author EelcoVisser;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2005.06.30.21.26.17;	author EelcoVisser;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.11.12.14.22.15;	author EelcoVisser;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.10.24.22.42.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.06.11.21.36.34;	author EelcoVisser;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.06.11.21.22.41;	author EelcoVisser;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.06.07.21.22.22;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.06.07.21.12.00;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.8
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1161097232" format="1.0" version="1.8"}%
+%META:TOPICPARENT{name="MasterProjectsInProgramTransformation"}%
+--------+ Master Thesis Projects
+
+%RED% This page is not very up-to-date. If you are interested in the general topics on this page, contact me for a discussion on possible new projects %ENDCOLOR%
+
+This page lists some ideas for master thesis projects in the areas of program transformation and software configuration management. If you are interested in one of these areas, contact [[WebHome][Eelco Visser]] for further information.
+
+%TOC%
+
+-------------------------
+-------++ Program Transformation
+%INCLUDE{MasterProjectsPT}%
+
+-------------------------
+--------++ Transparent Configuration Environments
+
+%INCLUDE{MasterProjectsSCM}%
+
+@
+
+
+1.7
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1120166777" format="1.0" version="1.7"}%
+d3 2
+@
+
+
+1.6
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1068646934" format="1.0" version="1.6"}%
+d3 13
+a15 11
+This page lists some ideas for master thesis projects in the areas of program transformation and software configuration management. If you are interested in one of these areas, contact [[WebHome][Eelco Visser]] for further information.
+
+%TOC%
+
+-------------------------
+-------++ Program Transformation
+%INCLUDE{MasterProjectsPT}%
+
+-------------------------
+--------++ Transparent Configuration Environments
+
+@
+
+
+1.5
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1067035320" format="1.0" version="1.5"}%
+d8 2
+a9 48
+%STARTINCLUDE%
+------------++ Program Transformation
+
+The program transformation group headed by [[Visser.WebHome][Eelco Visser]] researches 
+high-level specification methods for program transformations and applications of these
+methods to a variety of program transformation problems. The main product of this
+research is the [[http://www.stratego-language.org][Stratego/XT]] language and toolset
+for program transformation. In the context of this project there are many opportunities for thesis projects. If you are interested in any of these projects contact [[Visser.WebHome][Eelco Visser]].
+
+--------+++ Optimization Strategies
+
+High-level abstractions improve programmer productivity but often at the expense of performance, since compilers do not cater well for such abstractions.
+In this line of research we investigate the specification of optimizations for supporting higher-level styles of programming.
+There are several ongoing compiler and optimization projects in the context of which projects
+are possible.
+
+	* The *[[http://www.stratego-language.org/twiki/bin/view/Stratego/HsOpt][Helium Optimizer]]* is	an optimizer for a functional language in the tradition of the 'compilation by transformation' paradigm, i.e., gradually deriving an efficient program by repeatedly applying transformation rules. The goal of this project is to create an optimizer that is truly based on a set of rules that can be combined in many different ways. A first prototype has already been built, such that  a continuation project can start with the interesting stuff immediately
+
+	* In collaboration with Philips research and University of Dresden we are building a *[[http://www.stratego-language.org/Stratego/TurningDynamicTypingIntoStaticTypingByProgramSpecialization][compiler for Octave]]* (an open source clone of<nop>MatLab). The compiler targets various machines, among which a vector machine under construction at the University of Dresden. The high-level Octave code is usually written for prototyping. In order to be usable on embedded systems it has to be disambiguated and drastically optimized.
+
+	* In collaboration with [[http://ase.arc.nasa.gov/people/fischer/][Bernd Fischer]] at the NASA/Ames research center we are working on an *optimzer for the <nop>AutoBayes program synthesis system*. The system derives high-level algorithms from declarative specifications in the domain of statistical data analysis. The intermediate code produced by the system has many opportunities for optimization. A first prototype optimizer has been written by Karina Olmos and  Jozef Kruger. 
+
+	* In collaboration with the University of Bergen (Norway) we are working on *[[http://www.codeboost.org][CodeBoost]]* a transformation system for C++ programs, especially aimed at the optimization of numeric programs written in the Sophus style. Many opportunities for adding optimizations, in particular if you are numerically inclined.
+
+	* In the paper '[[http://www.stratego-language.org/Stratego/RewritingStrategiesForInstructionSelection][Rewriting Strategies for Instruction Selection]]' an elegant encoding of *instruction selection* with dynamic programming is described. As a case study the approach should be further explored by working out a complete instruction selection component for the Tiger compiler based on this approach. Unlike existing tools for instruction selection, this approach is not restricted to low-level code generation, but can also be used for query translation or program synthesis. Furthermore, the highly generic selection algorithm should be optimized itself by specialization to a specific set of rules.
+
+	* The *[[http://www.stratego-language.org/twiki/bin/view/Stratego/StrategoOptimizer][Stratego optimizer]]* applies an increasing number of transformations to Stratego programs. Areas for further work include specialization of generic strategies to specific data types and effect analysis.
+
+--------+++ Documentation Generation
+
+Rob Vermaas has created [[http://www.stratego-language.org/Stratego/ExtendibleDocumentationGenerator][xDoc]], a documentation generator, which has been designed to be extensible to different
+source languages. Given a source code package, the system produces a web-site giving an overview at different levels. Currently these views include API and code browsing, aided by various indices, cross-references, and import graphs. The system has been instantiated for Stratego and SDF. There are many ways to extend the system
+
+	* Instantiate for other languages
+	* Visualize the connections between programs in different languages
+	* Visualize the composition of components
+
+Beyond documentation generation xDoc could be used to provide help in refactoring programs. For instance, by giving advice on remodularization.
+
+--------+++ Types for Strategies
+
+Although Stratego is a typeful language in the sense that it deals with typed and structured
+data, the genericity of its transformation strategies is beyond conventional type systems. By now there are proposals for type systems for strategic programming languges.
+
+	* In '[[http://homepages.cwi.nl/~ralf/jlap02/][Typed Generic Traversal With Term Rewriting Strategies]]' Ralf Laemmel develops a type system for a variant of System S, the core of Stratego. 
+	* [[http://www.stratego-language.org/Stratego/RhoStratego][RhoStratego]] is a higher-order functional language using rules (case alternatives) as first-class objects.
+
+The goal of this project is to implement a type system for the existing Stratego language using inspiration from the approaches mentioned above. A large set of actual programs exist against which this type system can be validated. Guiding principle should be that the type system helps programmers find errors in code, while not unnecessarily restricting expressivity.
+d14 2
+a15 19
+Managing the variability in software systems is rapidly becoming an important factor in software development. Instead of developing and deploying a fixed one-of-a-kind system, it is now common to develop a family of systems whose members differ with respect to functionality or technical facilities offered. Variability is represented conceptually by variation points that identify a set of variants for which a choice or decision can be made at a particular moment--binding time--in the development and deployment cycle of a software system. Depending on the needs of the system's stakeholders, it may be desirable to allow these decisions to be made at several moments in time. This timeline variability is an extra dimension to variability that is often ignored.
+
+In the NWO/Jacquard project [[http://www.cs.uu.nl/groups/ST/twiki/bin/view/Trace/][TraCE]] we are studying the modeling and realization of variability in modern software systems with an emphasis on a more general and generic treatment of timing-issues for variant addition/removal and binding of variation points, the related effects and the opportunities for optimization. The vehicle for the research is the development of a framework for transparent configuration environments which present a uniform interface to a variety of underlying configuration mechanisms, thus closing the current gap between variability at the conceptual and implementation levels. 
+
+Various opportunities for thesis projects exist.
+Contact [[Visser.WebHome][Eelco Visser]] for further information. 
+The following sections describe areas with which thesis projects can be associated.
+
+	* *Variability Modelling*: This part of the project is concerned with developing a formalism for describing the variability  in software systems in a declarative manner. This involves language design and validation by investigating and modelling actual software systems.
+
+	* *Software Deployment*: Software variability is a complicating factor or software deployment, especially when variability becomes more fine grained. We are developing the Nix deployment system to  deal with this problem.
+
+	* *Component Composition and Integration*: Flexibility can be improved by dividing software systems into components. We work on component composition mechanisms such as [[http://www.stratego-language.org/Stratego/TransformationToolComposition][XTC]] and methods to integrate (specialize) such compositions.
+
+	* *Software Logistics*: A software logistics environment integrates all aspects of the management of software artifacts, from development, to release and deployment. 
+
+	* *Buildfarm*: Part of a logistics environment is a buildfarm for testing software packages on various platforms and in different configurations.
+
+%STOPINCLUDE%
+@
+
+
+1.4
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1055367394" format="1.0" version="1.4"}%
+d5 1
+a5 1
+---+++ Program Transformation
+d7 3
+a9 1
+In the context of the StrategoXT project there are plenty of opportunities for applying program transformation techniques
+d11 5
+a15 6
+	* Develop optimizations for the
+		* Helium Compiler
+		* Octave (MatLab) Compiler
+		* AutoBayes program synthesis system
+		* Stratego compiler
+	* Design strategies for instruction scheduling
+d17 1
+a17 1
+for improving the support for program transformation in Stratego
+d19 4
+a22 3
+	* Extend Stratego with support for bound object variables such that generation and matching of program fragments is done modulo bound variables
+	* Extend Stratego with list matching and associative matching in order to make patterns more declarative
+	* Design and implement a type system for Stratego
+d24 1
+a24 1
+and for improving the StrategoXT programming environment
+d26 1
+a26 1
+	* Create an interactive programming environment based on existing components such as the Meta-Environment and/or Eclipse which supports interactive transformational programming
+d28 1
+a28 1
+For background information see: [[Master Projects in Program Transformation]]
+d30 1
+a30 1
+----+++ Software Configuration Management
+d32 1
+a32 1
+In the context of the [[Trace.WebHome][TraCE]] project there are some opportunities for master projects 
+d34 1
+a34 3
+	* Modeling variability in existing systems
+	* Webservices for software deployment
+	* Design and implementation of a [[Buildfarm.WebHome][Buildfarm]] (ongoing)
+d36 43
+a78 1
+For more ideas see the [[Trace.WebHome][TraCE]] [[Trace.MasterProjects][Master Projects]] page
+@
+
+
+1.3
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1055366561" format="1.0" version="1.3"}%
+d36 1
+a36 1
+For background information see: [[Trace.MasterProjects][Master Projects]]
+@
+
+
+1.2
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1055020942" format="1.0" version="1.2"}%
+d7 20
+a26 1
+	* Background: [[Master Projects in Program Transformation]]
+a27 5
+	* [[Helium Optimizer]]
+	* [[Octave Compiler]]
+	* [[Bound Object Variables]]
+	* [[Strategies for List Matching]]
+	
+d30 5
+a34 1
+	* Background: [[Trace.WebHome][TraCE]] project
+d36 1
+a36 2
+	* [[Buildfarm.WebHome][Buildfarm]] (ongoing)
+	* [[Variability Modeling]]
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1055020320" format="1.0" version="1.1"}%
+d3 1
+@

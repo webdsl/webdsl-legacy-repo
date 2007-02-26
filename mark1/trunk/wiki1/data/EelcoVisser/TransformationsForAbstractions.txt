@@ -1,0 +1,16 @@
+%META:TOPICINFO{author="EelcoVisser" date="1161097407" format="1.0" version="1.5"}%
+%META:TOPICPARENT{name="WebHome"}%
+E. Visser. *Transformations for Abstractions.* In J. Krinke and G. Antoniol, editors, [[http://www.dcs.kcl.ac.uk/staff/mark/scam2005/][Fifth IEEE International Workshop on Source Code Analysis and Manipulation (SCAM'05)]], Budapest, Hungary, October 2005. IEEE Computer Society Press. Keynote paper. ([[http://www.cs.uu.nl/research/techreps/UU-CS-2005-034.html][techrep]], [[http://eelco-visser.blogspot.com/2005/07/transformations-for-abstractions.html][blog]], [[http://www.stratego-language.org/Stratego/TransformationsForAbstractions][source]], [[http://www.cs.uu.nl/~visser/ftp/Vis05-SCAM.pdf][slides]])
+
+------+++ Abstract
+
+The transformation language Stratego provides high-level abstractions
+for implementation of a wide range of transformations.  Our aim is to
+integrate transformation in the software development process and make
+it available to programmers.  This requires the transformations
+provided by the programming environment to be extensible.  This paper
+presents a case study in the implementation of extensible programming
+environments using Stratego, by developing a small collection of
+language extensions and several typical transformations for these
+languages.
+

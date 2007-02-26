@@ -1,0 +1,40 @@
+%META:TOPICINFO{author="EelcoVisser" date="1161097606" format="1.0" version="1.2"}%
+%META:TOPICPARENT{name="WebHome"}%
+M. Bravenboer, R. de Groot, and E. Visser. *MetaBorg in Action: Examples of Domain-specific Language Embedding and Assimilation using Stratego/XT.* In Proceedings of the [[http://www.di.uminho.pt/GTTSE2005][Summer School on Generative and Transformational Techniques in Software Engineering (GTTSE'05)]], Braga, Portugal, July 2005. ([[http://www.cs.uu.nl/~visser/ftp/BGV05.pdf][pdf]]).
+
+------+++ Abstract
+
+		  General-purpose programming languages provide limited
+		  facilities for expressing domain-specific concepts in a
+		  natural manner. All domain concepts need to be captured using
+		  the same generic syntactic and semantic constructs. Generative
+		  programming methods and program transformation techniques can
+		  be used to overcome this lack of abstraction in
+		  general-purpose languages.
+
+		  In this tutorial we describe the <nop>MetaBorg method for
+		  embedding domain-specific languages, tailored syntactically
+		  and semantically to the application domain at hand, in a
+		  general-purpose language. <nop>MetaBorg is based on
+		  Stratego/XT, a language and toolset for the implementation of
+		  program transformation systems, which is used for the
+		  definition of syntactic embeddings and assimilation of the
+		  embedded constructs into the surrounding code.
+
+		  We illustrate <nop>MetaBorg with three examples. <nop>JavaSwul is a
+		  custom designed language for implementing graphical
+		  user-interfaces, which provides high-level abstractions for
+		  component composition and event-handling. <nop>JavaRegex is a
+		  new embedding of regular expression matching and string
+		  rewriting. <nop>JavaJava is an embedding of Java in Java for
+		  generating Java code. For these cases we show how Java
+		  programs in these domains become dramatically more readable,
+		  and we give an impression of the implementation of the
+		  language embeddings.
+
+---------+++ Links
+
+	* [[Concrete Syntax for Objects]]
+	* [[http://www.stratego-language.org/Stratego/MetaBorg][MetaBorg]]
+	* [[http://www.stratego-language.org/Stratego/JavaBorg][JavaBorg]]
+

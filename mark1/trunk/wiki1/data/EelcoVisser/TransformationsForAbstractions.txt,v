@@ -1,0 +1,120 @@
+head	1.5;
+access;
+symbols;
+locks
+	apache:1.5; strict;
+comment	@# @;
+
+
+1.5
+date	2006.10.17.15.03.27;	author EelcoVisser;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2005.11.15.15.50.21;	author EelcoVisser;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2005.09.25.08.08.21;	author EelcoVisser;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2005.09.02.12.04.31;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2005.08.22.08.14.12;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.5
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1161097407" format="1.0" version="1.5"}%
+%META:TOPICPARENT{name="WebHome"}%
+E. Visser. *Transformations for Abstractions.* In J. Krinke and G. Antoniol, editors, [[http://www.dcs.kcl.ac.uk/staff/mark/scam2005/][Fifth IEEE International Workshop on Source Code Analysis and Manipulation (SCAM'05)]], Budapest, Hungary, October 2005. IEEE Computer Society Press. Keynote paper. ([[http://www.cs.uu.nl/research/techreps/UU-CS-2005-034.html][techrep]], [[http://eelco-visser.blogspot.com/2005/07/transformations-for-abstractions.html][blog]], [[http://www.stratego-language.org/Stratego/TransformationsForAbstractions][source]], [[http://www.cs.uu.nl/~visser/ftp/Vis05-SCAM.pdf][slides]])
+
+------+++ Abstract
+
+The transformation language Stratego provides high-level abstractions
+for implementation of a wide range of transformations.  Our aim is to
+integrate transformation in the software development process and make
+it available to programmers.  This requires the transformations
+provided by the programming environment to be extensible.  This paper
+presents a case study in the implementation of extensible programming
+environments using Stratego, by developing a small collection of
+language extensions and several typical transformations for these
+languages.
+
+@
+
+
+1.4
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1132069821" format="1.0" version="1.4"}%
+a16 4
+<!--
+	* Set SKIN = notitle
+-->
+
+@
+
+
+1.3
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1127635701" format="1.0" version="1.3"}%
+d3 1
+a3 1
+E. Visser. *Transformations for Abstractions.* In J. Krinke and G. Antoniol, editors, [[http://www.dcs.kcl.ac.uk/staff/mark/scam2005/][Fifth IEEE International Workshop on Source Code Analysis and Manipulation (SCAM'05)]], Budapest, Hungary, October 2005. IEEE Computer Society Press. Keynote paper. ([[http://www.cs.uu.nl/research/techreps/UU-CS-2005-034.html][techrep]], [[http://eelco-visser.blogspot.com/2005/07/transformations-for-abstractions.html][blog]], [[http://www.stratego-language.org/Stratego/TransformationsForAbstractions][source]], [[http://www.cs.uu.nl/~visser/ftp/Vis05-SCAM.pdf][draft slides]])
+@
+
+
+1.2
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1125662671" format="1.0" version="1.2"}%
+d3 1
+a3 1
+E. Visser. *Transformations for Abstractions.* In J. Krinke and G. Antoniol, editors, [[http://www.dcs.kcl.ac.uk/staff/mark/scam2005/][Fifth IEEE International Workshop on Source Code Analysis and Manipulation (SCAM'05)]], Budapest, Hungary, October 2005. IEEE Computer Society Press. Keynote paper. ([[http://www.cs.uu.nl/research/techreps/UU-CS-2005-034.html][techrep]], [[http://eelco-visser.blogspot.com/2005/07/transformations-for-abstractions.html][blog]], [[http://www.stratego-language.org/Stratego/TransformationsForAbstractions][source]])
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1124698452" format="1.0" version="1.1"}%
+d3 1
+a3 1
+E. Visser. Transformations for Abstractions. In J. Krinke and G. Antoniol, editors, [[http://www.dcs.kcl.ac.uk/staff/mark/scam2005/][Fifth IEEE International Workshop on Source Code Analysis and Manipulation (SCAM'05)]], Budapest, Hungary, October 2005. IEEE Computer Society Press. Keynote paper. ([[http://www.cs.uu.nl/~visser/ftp/Vis05-tfa.pdf][pdf]], [[http://eelco-visser.blogspot.com/2005/07/transformations-for-abstractions.html][blog]], [[http://www.stratego-language.org/Stratego/TransformationsForAbstractions][source]])
+d17 4
+@

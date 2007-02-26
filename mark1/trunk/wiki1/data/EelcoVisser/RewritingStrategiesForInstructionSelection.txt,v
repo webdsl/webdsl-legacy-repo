@@ -1,0 +1,90 @@
+head	1.3;
+access;
+symbols;
+locks
+	apache:1.3; strict;
+comment	@# @;
+
+
+1.3
+date	2003.06.02.16.52.41;	author EelcoVisser;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2002.05.09.12.31.45;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.03.30.21.14.11;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.3
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1054572761" format="1.0" version="1.3"}%
+%META:TOPICPARENT{name="StrategoPublications"}%
+%INCLUDE{http://www.stratego-language.org/twiki/bin/view/Stratego/RewritingStrategiesForInstructionSelection?skin=plain}%
+
+@
+
+
+1.2
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1020947504" format="1.0" version="1.2"}%
+d3 1
+a3 1
+Transform.MartinBravenboer and Main.EelcoVisser. *Rewriting Strategies for Instruction Selection.* In S. Tison (editor) _Rewriting Techniques and Applications ([[Transform.RTA][RTA]]'02)_. volume ? of Lecture Notes in Computer Science, Springer-Verlag, 2002. To appear
+a4 21
+*Abstract.* 
+
+Instruction selection (mapping IR trees to machine instructions) can
+be expressed by means of rewrite rules. Typically, such sets of
+rewrite rules are highly ambiguous. Therefore, standard rewriting
+engines based on fixed, exhaustive strategies are not appropriate for
+the execution of instruction selection. Code generator generators use
+special purpose implementations employing dynamic programming.  In
+this paper we show how rewriting strategies for instruction selection
+can be encoded concisely in Stratego, a language for program
+transformation based on the paradigm of programmable rewriting
+strategies.  This embedding obviates the need for a language dedicated
+to code generation, and makes it easy to combine code generation with
+other optimizations.
+
+*Preprint*
+
+	* http://www.cs.uu.nl/~visser/ftp/BV02.pdf
+
+-----
+Transform.CategoryPaper | StrategoPublications
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1017522850" format="1.0" version="1.1"}%
+d5 3
+a7 1
+*Abstract.* Instruction selection (mapping IR trees to machine instructions) can
+d19 4
+@

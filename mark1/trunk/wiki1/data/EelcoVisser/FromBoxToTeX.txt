@@ -1,0 +1,18 @@
+%META:TOPICINFO{author="EelcoVisser" date="1086779160" format="1.0" version="1.1"}%
+%META:TOPICPARENT{name="SyntaxDefinition"}%
+M. van den Brand and E. Visser. *From Box to <nop>TeX: An algebraic approach to the generation of documentation tools.* Technical Report P9420, Programming Research Group, University of Amsterdam, July 1994. ([[http://www.cs.uu.nl/people/visser/ftp/P9420.ps.gz][psgz]]).
+
+------+++ Abstract
+
+We define a translation from an intermediate box language for pretty printing to \TeX. This translation can be used as a back-end for pretty printers in documentation tools for programming languages. The translation is formulated in an executable algebraic specification formalism. An important aspect of the translation is the transformation of boxes according to a set of equations. These equations preserve the text formatting semantics of boxes which is also defined algebraically. New in this approach is that algebraic transformations of box terms are used to circumvent the limitations of the typesetter.\par The \TeX\ generator, which translates the box language to \TeX\ code, is a component of documentation tools generated for the programming environments developed with the ASF+SDF meta-environment, but can also be used as a separate tool. As a case study, the construction of a typesetter for the process specification formalism PSF is shown.},
+
+------+++ <nop>BibTeX
+
+<pre>
+%INCLUDE{http://www.cs.uu.nl/groups/ST/stbib/visser-by-year/BV94.bib}%
+</pre>
+
+<!--
+	* Set SKIN = notitle
+-->
+

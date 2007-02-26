@@ -1,0 +1,1145 @@
+head	1.52;
+access;
+symbols;
+locks
+	apache:1.52; strict;
+comment	@# @;
+
+
+1.52
+date	2006.11.21.14.46.05;	author EelcoVisser;	state Exp;
+branches;
+next	1.51;
+
+1.51
+date	2006.10.17.20.43.15;	author EelcoVisser;	state Exp;
+branches;
+next	1.50;
+
+1.50
+date	2006.05.22.17.52.36;	author EelcoVisser;	state Exp;
+branches;
+next	1.49;
+
+1.49
+date	2006.05.12.13.21.38;	author EelcoVisser;	state Exp;
+branches;
+next	1.48;
+
+1.48
+date	2006.04.20.10.40.28;	author EelcoVisser;	state Exp;
+branches;
+next	1.47;
+
+1.47
+date	2006.03.20.09.00.03;	author EelcoVisser;	state Exp;
+branches;
+next	1.46;
+
+1.46
+date	2006.03.10.20.34.27;	author EelcoVisser;	state Exp;
+branches;
+next	1.45;
+
+1.45
+date	2006.03.01.21.06.29;	author EelcoVisser;	state Exp;
+branches;
+next	1.44;
+
+1.44
+date	2006.03.01.13.01.37;	author EelcoVisser;	state Exp;
+branches;
+next	1.43;
+
+1.43
+date	2006.02.24.13.16.57;	author EelcoVisser;	state Exp;
+branches;
+next	1.42;
+
+1.42
+date	2006.02.06.11.10.15;	author EelcoVisser;	state Exp;
+branches;
+next	1.41;
+
+1.41
+date	2006.02.03.23.43.16;	author EelcoVisser;	state Exp;
+branches;
+next	1.40;
+
+1.40
+date	2006.01.02.20.39.20;	author EelcoVisser;	state Exp;
+branches;
+next	1.39;
+
+1.39
+date	2005.12.15.16.17.47;	author EelcoVisser;	state Exp;
+branches;
+next	1.38;
+
+1.38
+date	2005.12.14.14.40.31;	author EelcoVisser;	state Exp;
+branches;
+next	1.37;
+
+1.37
+date	2005.11.15.15.59.34;	author EelcoVisser;	state Exp;
+branches;
+next	1.36;
+
+1.36
+date	2005.10.12.12.51.44;	author EelcoVisser;	state Exp;
+branches;
+next	1.35;
+
+1.35
+date	2005.08.09.19.06.41;	author EelcoVisser;	state Exp;
+branches;
+next	1.34;
+
+1.34
+date	2005.06.29.20.49.55;	author EelcoVisser;	state Exp;
+branches;
+next	1.33;
+
+1.33
+date	2005.06.28.14.04.20;	author EelcoVisser;	state Exp;
+branches;
+next	1.32;
+
+1.32
+date	2005.06.21.08.49.27;	author EelcoVisser;	state Exp;
+branches;
+next	1.31;
+
+1.31
+date	2005.06.15.07.07.07;	author EelcoVisser;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	2005.06.07.12.44.21;	author EelcoVisser;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	2005.05.31.08.23.30;	author EelcoVisser;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	2005.05.24.08.39.27;	author EelcoVisser;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	2005.03.11.16.27.32;	author EelcoVisser;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	2005.03.11.11.47.32;	author EelcoVisser;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	2005.01.11.13.45.20;	author EelcoVisser;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	2004.11.18.22.58.15;	author EelcoVisser;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	2004.10.15.11.19.14;	author EelcoVisser;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	2004.05.29.22.10.55;	author EelcoVisser;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2004.03.11.21.56.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2004.03.09.22.45.02;	author EelcoVisser;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2004.02.11.15.05.36;	author EelcoVisser;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2004.01.19.10.37.38;	author EelcoVisser;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2004.01.14.09.08.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2003.12.18.08.04.42;	author EelcoVisser;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.12.12.08.18.13;	author EelcoVisser;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.11.13.23.02.43;	author EelcoVisser;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.10.14.21.58.39;	author EelcoVisser;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.10.01.17.39.18;	author EelcoVisser;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.07.09.22.28.20;	author EelcoVisser;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.06.17.21.31.02;	author EelcoVisser;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.06.16.06.39.15;	author EelcoVisser;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.06.02.10.05.00;	author EelcoVisser;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.05.31.11.59.57;	author EelcoVisser;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.04.09.08.12.18;	author EelcoVisser;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2002.11.17.15.01.26;	author EelcoVisser;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2002.10.17.15.04.43;	author EelcoVisser;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2002.09.07.06.48.42;	author EelcoVisser;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2002.09.06.07.03.29;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.08.28.08.48.00;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.52
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1164120365" format="1.0" version="1.52"}%
+%META:TOPICPARENT{name="WebHome"}%
+-------+ Professional Activities
+
+--------++ Websites
+
+	* http://www.program-transformation.org
+	* http://www.stratego-language.org
+	* http://www.cs.uu.nl/wiki/
+
+--------++ Ongoing activities
+
+	* [[http://www.program-transformation.org/PEPM07][Partial Evaluation and Program Manipulation (PEPM '07)]] (program co-chair)
+
+--------++ Past activities
+
+	* [[http://www.program-transformation.org/GPCE06][Generative Programming and Component Engineering (GPCE'06)]] (PC member)
+	* [[http://www.program-transformation.org/Sts/STS06][Software Transformation Systems (STS'06)]] (Co-organizer)
+	* [[http://www.dcc.uchile.cl/~etanter/dsal06/][Domain-Specific Aspect Languages (DSAL'06)]] (PC member)
+	* [[http://www.model-transformation.org/IWMEC2006/][Models for Enterprise Computing (IWMEC'06)]] at [[http://www4.comp.polyu.edu.hk/~edoc06/][EDOC 2006]] (PC member)
+	* [[http://congress.cimne.upc.es/jisbd06/prole][PROgramación y LEnguajes (PROLE'06)]] (invited speaker)
+	* [[http://www.ieee-scam.org/][Source Code Analysis and Manipulation (SCAM'06)]] (PC member)
+	* [[http://hor.pps.jussieu.fr/06/][3rd International Workshop on Higher-Order Rewriting (HOR'06)]] (invited speaker)
+	* [[http://research.microsoft.com/floc06/rta.htm][Conference on Rewriting Techniques and Applications (RTA'06)]] (PC member)
+	* [[http://www.model-transformation.org][ACM SAC Track on Model Transformation 2006]] (PC member)
+	* [[http://www.cis.ksu.edu/santos/pepm06/][ACM SIGPLAN 2006 Workshop on Partial Evaluation and Program Manipulation (PEPM'06)]] (PC member)
+	* [[http://www.di.uminho.pt/GTTSE2005][Summer School on Generative and Transformational Techniques in Software Engineering (GTTSE'05)]] (member of scientific board)
+	* [[http://www.dcs.kcl.ac.uk/staff/mark/scam2005/][Source Code Analysis and Manipulation (SCAM'05)]] (keynote speaker)
+	* [[http://www.program-transformation.org/Gpce05][Generative Programming and Component Engineering (GPCE'05)]] (publicity chair)
+	* [[http://www.stratego-language.org/Stratego/SixthStrategoUserDays][Sixth Stratego User Days (SUD'05)]]
+	* [[http://rule2005.loria.fr/][International Workshop on Rule-Based Programming]] (RULE'05) (PC member)
+	* [[http://www.program-transformation.org/GPCE][Generative Programming and Component Engineering (GPCE'04)]] ([[program chair]])
+		* [[http://www.program-transformation.org/Gpce/ConferenceProceedings][Conference proceedings]]
+	* [[http://www.program-transformation.org/Gpce/STS][Software Transformation Systems Workshop]]
+		* [[http://www.program-transformation.org/Sts][Software Transformation Systems]] wiki
+	* [[http://www.cs.auckland.ac.nz/~herm/WoDiSEE2004/][ICSE Workshop on Directions in Software Engineering Environments (WoDiSEE'04)]] (PC member)
+	* [[http://www.stratego-language.org/Stratego/FifthStrategoUserDays][Fifth Stratego User Days (SUD'04)]]
+	* [[http://www.cc.gatech.edu/~yannis/GPCE03/cfp.html][Generative Programming and Component Engineering (GPCE'03)]] (PC member)
+	* [[http://www.stratego-language.org/Stratego/FourthStrategoUsersDay][Fourth Stratego Users Day (SUD'03)]]
+	* [[http://www.dsic.upv.es/~rdp03/wrs/][Workshop on Reduction Strategies in Rewriting and Programming (WRS'03)]] ([[http://www.elsevier.nl/gej-ng/31/29/23/135/49/show/Products/notes/index.htt][Proceedings]]) (PC member)
+	* [[Center.ResearchDay2003][ICS Researchday 2003]] (organizer)
+	* [[http://www-sop.inria.fr/LDTA2003/][Workshop on Language Descriptions, Tools and Applications (LDTA'03)]] ([[http://www.cis.uab.edu/info/faculty/bryant/ldta2003/][Proceedings]]) (PC member)
+	* [[http://www.program-transformation.org/Transform/WorkshopOnRuleBasedProgramming][2002 ACM SIGPLAN Workshop on Rule-Based Programming (RULE'02)]] (PC co-chair)
+	* [[http://www.stratego-language.org/Stratego/ThirdStrategoUsersDay][Third Stratego Users Day (SUD'02)]]
+	* [[http://www.cwi.nl/~markvdb/RULE2001/][Second International Workshop on Rule-Based Programming (RULE'01)]] (PC member)
+	* [[http://www.logic.at/wrs01/"> ][Workshop on Reduction Strategies in Rewriting and Programming (WRS'01)]] (Invited talk)
+	* [[http://www.stratego-language.org/SecondStrategoUsersDay][Second Stratego Users Day (SUD'01)]]
+	* [[http://www-sop.inria.fr/oasis/LDTA/ldta.html][Workshop on Language Descriptions, Tools and Applications (LDTA'01)]] (PC member)
+	* [[http://www.stratego-language.org/FirstStrategoUsersDay][First Stratego Users Day (SUD'00)]]
+	* ASF+SDF'95 (organizer)
+
+--------++ Organizations
+
+	* IFIP [[http://smart-generators.org][WG2.11]] 
+	* [[http://www.acm.org/][ACM]]
+	* ACM [[http://www.acm.org/sigplan/][SIGPLAN]]
+	* ACM [[http://www.acm.org/sigsoft/][SIGSOFT]]
+	* (ACM [[http://www.acm.org/sigsam/][SIGSAM]])
+	* [[http://www.computer.org/][IEEE Computer Society]]
+ 
+
+%META:TOPICMOVED{by="EelcoVisser" date="1055745555" from="Visser.Activities" to="Visser.ProfessionalActivities"}%
+@
+
+
+1.51
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1161117795" format="1.0" version="1.51"}%
+a2 1
+
+a12 4
+	* [[http://www.program-transformation.org/GPCE06][Generative Programming and Component Engineering (GPCE'06)]] (PC member)
+	* [[http://www.program-transformation.org/Sts/STS06][Software Transformation Systems (STS'06)]] (co-organizer)
+	* [[http://www.dcc.uchile.cl/~etanter/dsal06/][Domain-Specific Aspect Languages (DSAL'06)]] (PC member)
+	* [[http://www.model-transformation.org/IWMEC2006/][International Workshop on Models for Enterprise Computing (IWMEC'06)]] at [[http://www4.comp.polyu.edu.hk/~edoc06/][EDOC 2006]] (PC member)
+d17 4
+@
+
+
+1.50
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1148320356" format="1.0" version="1.50"}%
+d3 4
+a6 1
+Websites
+d12 1
+a13 8
+<!--	* [[http://www.program-transformation.org/Compare][Compare]] : comparing transformation systems -->
+
+Ongoing activities
+
+	* [[http://research.microsoft.com/floc06/rta.htm][Conference on Rewriting Techniques and Applications (RTA'06)]] (PC member)
+	* [[http://hor.pps.jussieu.fr/06/][3rd International Workshop on Higher-Order Rewriting (HOR'06)]] (invited speaker)
+	* [[http://www.ieee-scam.org/][Source Code Analysis and Manipulation (SCAM'06)]] (PC member)
+	* [[http://congress.cimne.upc.es/jisbd06/prole][PROgramación y LEnguajes (PROLE'06)]] (invited speaker)
+d20 1
+a20 1
+Past activities
+d22 4
+d53 1
+a53 1
+Organizations
+@
+
+
+1.49
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1147440098" format="1.0" version="1.49"}%
+a13 1
+	* [[http://www.model-transformation.org][ACM SAC Track on Model Transformation 2006]] (PC member)
+d16 1
+d18 1
+d20 1
+a20 2
+	* [[http://www.program-transformation.org/GPCE06][Generative Programming and Component Engineering (GPCE'06)]] (PC member)
+	* [[http://www.ieee-scam.org/][Source Code Analysis and Manipulation (SCAM'06)]] (PC member)
+d22 1
+d26 1
+@
+
+
+1.48
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1145529628" format="1.0" version="1.48"}%
+d18 1
+@
+
+
+1.47
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1142845203" format="1.0" version="1.47"}%
+d17 1
+@
+
+
+1.46
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1142022867" format="1.0" version="1.46"}%
+d14 1
+a15 1
+	* [[http://www.model-transformation.org][ACM SAC Track on Model Transformation 2006]] (PC member)
+@
+
+
+1.45
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1141247189" format="1.0" version="1.45"}%
+d19 1
+a19 1
+	* International Workshop on Models for Enterprise Computing (IWMEC'06) at [[http://www4.comp.polyu.edu.hk/~edoc06/][EDOC 2006]] (PC member)
+@
+
+
+1.44
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1141218097" format="1.0" version="1.44"}%
+d19 1
+@
+
+
+1.43
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1140787017" format="1.0" version="1.43"}%
+d17 1
+a17 1
+	* [[http://www.program-transformation.org/Gpce06][Generative Programming and Component Engineering (GPCE'06)]] (PC member)
+@
+
+
+1.42
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1139224215" format="1.0" version="1.42"}%
+a5 1
+		* [[http://www.program-transformation.org/Compare][Compare]] : comparing transformation systems
+d9 3
+@
+
+
+1.41
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1139010196" format="1.0" version="1.41"}%
+d14 1
+@
+
+
+1.40
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1136234360" format="1.0" version="1.40"}%
+a11 1
+	* [[http://www.cis.ksu.edu/santos/pepm06/][ACM SIGPLAN 2006 Workshop on Partial Evaluation and Program Manipulation (PEPM'06)]] (PC member)
+d19 1
+@
+
+
+1.39
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1134663467" format="1.0" version="1.39"}%
+d15 2
+a16 2
+	* [[http://www.program-transformation.org/Gpce06][Generative Programming and Component Engineering (GPCE'06)]] (PC member and publicity chair)
+	* [[http://www.ieee-scam.org/][Source Code Analysis and Manipulation (SCAM'06)]]
+d47 1
+a47 1
+	* IFIP [[http://www.cs.rice.edu/~taha/wg2.11/][WG2.11]] 
+@
+
+
+1.38
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1134571231" format="1.0" version="1.38"}%
+d14 1
+d16 1
+a20 1
+	* [[http://www.model-transformation.org][ACM SAC Track on Model Transformation 2006]] (PC member)
+@
+
+
+1.37
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1132070374" format="1.0" version="1.37"}%
+a11 1
+	* [[http://www.di.uminho.pt/GTTSE2005][Summer School on Generative and Transformational Techniques in Software Engineering (GTTSE'05)]] (member of scientific board)
+a12 1
+	* [[http://www.model-transformation.org][ACM SAC Track on Model Transformation 2006]] (PC member)
+d18 2
+@
+
+
+1.36
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1129121504" format="1.0" version="1.36"}%
+d35 1
+a35 1
+	* [[http://www.program-transformation.org/rule02][2002 ACM SIGPLAN Workshop on Rule-Based Programming (RULE'02)]] (PC co-chair)
+@
+
+
+1.35
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1123614401" format="1.0" version="1.35"}%
+d10 1
+a10 1
+Upcoming events
+a12 2
+	* [[http://www.program-transformation.org/Gpce05][Generative Programming and Component Engineering (GPCE'05)]] (publicity chair)
+	* [[http://www.dcs.kcl.ac.uk/staff/mark/scam2005/][Source Code Analysis and Manipulation (SCAM'05)]] (keynote speaker)
+d16 1
+a16 1
+	* [[http://www.program-transformation.org/Gpce06][Generative Programming and Component Engineering (GPCE'06)]] (PC member and Publicity chair)
+d18 1
+a18 1
+Past events
+d20 2
+@
+
+
+1.34
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1120078195" format="1.0" version="1.34"}%
+d18 1
+a18 1
+	* [[http://www.program-transformation.org/Gpce06][Generative Programming and Component Engineering (GPCE'06)]] (publicity chair)
+@
+
+
+1.33
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1119967460" format="1.0" version="1.33"}%
+d15 3
+a17 1
+	* [[http://www.model-transformation.org][Model Transformation 2006]] (PC member)
+a18 1
+	* [[http://research.microsoft.com/floc06/rta.htm][Conference on Rewriting Techniques and Applications (RTA'06)]] (PC member)
+@
+
+
+1.32
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1119343767" format="1.0" version="1.32"}%
+d6 1
+@
+
+
+1.31
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1118819227" format="1.0" version="1.31"}%
+d16 1
+a16 1
+	* [[http://research.microsoft.com/floc06][Conference on Rewriting Techniques and Applications (RTA'06)]] (PC member)
+@
+
+
+1.30
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1118148261" format="1.0" version="1.30"}%
+d7 1
+a7 1
+	* http://www.cs.uu.nl/groups/ST
+d11 1
+a11 1
+	* [[http://www.di.uminho.pt/GTTSE2005][Summer School on Generative and Transformational Techniques in Software Engineering (GTTSE'05)]]
+d14 1
+a14 1
+	* [[http://www.model-transformation.org][Model Transformation 2006]]
+@
+
+
+1.29
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1117527810" format="1.0" version="1.29"}%
+d16 1
+@
+
+
+1.28
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1116923967" format="1.0" version="1.28"}%
+d11 1
+a11 2
+	* [[http://www.stratego-language.org/Stratego/SixthStrategoUserDays][Sixth Stratego User Days (SUD'05)]]
+	* [[http://rule2005.loria.fr/][International Workshop on Rule-Based Programming]] (RULE'05) (PC member)
+d14 1
+d19 2
+@
+
+
+1.27
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1110558452" format="1.0" version="1.27"}%
+d15 1
+@
+
+
+1.26
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1110541652" format="1.0" version="1.26"}%
+d40 1
+a40 1
+	* IFIP [[http://www.cs.rice.edu/~taha/wg2.11/][WG2.11]]  ([[WG211.WebHome][Wiki]], WG211.GenerationTools)
+@
+
+
+1.25
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1105451120" format="1.0" version="1.25"}%
+d40 1
+a40 1
+	* IFIP [[http://www.cs.rice.edu/~taha/wg2.11/][WG2.11]]
+@
+
+
+1.24
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1100818695" format="1.0" version="1.24"}%
+d3 45
+a47 41
+Websites
+
+	* http://www.program-transformation.org
+	* http://www.stratego-language.org
+	* http://www.cs.uu.nl/groups/ST
+
+Upcoming events
+
+	* [[http://www.stratego-language.org/Stratego/SixthStrategoUserDays][Sixth Stratego User Days (SUD'05)]]
+	* International Workshop on Rule-Based Programming (RULE'05)
+	* [[http://www.program-transformation.org/GPCE][Generative Programming and Component Engineering (GPCE'05)]] (publicity chair)
+
+Past events
+
+	* [[http://www.program-transformation.org/GPCE][Generative Programming and Component Engineering (GPCE'04)]] ([[program chair]])
+	* [[http://www.cs.auckland.ac.nz/~herm/WoDiSEE2004/][ICSE Workshop on Directions in Software Engineering Environments (WoDiSEE'04)]] (PC member)
+	* [[http://www.stratego-language.org/Stratego/FifthStrategoUserDays][Fifth Stratego User Days (SUD'04)]]
+	* [[http://www.cc.gatech.edu/~yannis/GPCE03/cfp.html][Generative Programming and Component Engineering (GPCE'03)]] (PC member)
+	* [[http://www.stratego-language.org/Stratego/FourthStrategoUsersDay][Fourth Stratego Users Day (SUD'03)]]
+	* [[http://www.dsic.upv.es/~rdp03/wrs/][Workshop on Reduction Strategies in Rewriting and Programming (WRS'03)]] ([[http://www.elsevier.nl/gej-ng/31/29/23/135/49/show/Products/notes/index.htt][Proceedings]]) (PC member)
+	* [[Center.ResearchDay2003][ICS Researchday 2003]] (organizer)
+	* [[http://www-sop.inria.fr/LDTA2003/][Workshop on Language Descriptions, Tools and Applications (LDTA'03)]] ([[http://www.cis.uab.edu/info/faculty/bryant/ldta2003/][Proceedings]]) (PC member)
+	* [[http://www.program-transformation.org/rule02][2002 ACM SIGPLAN Workshop on Rule-Based Programming (RULE'02)]] (PC co-chair)
+	* [[http://www.stratego-language.org/Stratego/ThirdStrategoUsersDay][Third Stratego Users Day (SUD'02)]]
+	* [[http://www.cwi.nl/~markvdb/RULE2001/][Second International Workshop on Rule-Based Programming (RULE'01)]] (PC member)
+	* [[http://www.logic.at/wrs01/"> ][Workshop on Reduction Strategies in Rewriting and Programming (WRS'01)]] (Invited talk)
+	* [[http://www.stratego-language.org/SecondStrategoUsersDay][Second Stratego Users Day (SUD'01)]]
+	* [[http://www-sop.inria.fr/oasis/LDTA/ldta.html][Workshop on Language Descriptions, Tools and Applications (LDTA'01)]] (PC member)
+	* [[http://www.stratego-language.org/FirstStrategoUsersDay][First Stratego Users Day (SUD'00)]]
+	* ASF+SDF'95 (organizer)
+
+Organizations
+
+	* IFIP [[http://www.cs.rice.edu/~taha/wg2.11/][WG2.11]]
+	* [[http://www.acm.org/][ACM]]
+	* ACM [[http://www.acm.org/sigplan/][SIGPLAN]]
+	* ACM [[http://www.acm.org/sigsoft/][SIGSOFT]]
+	* (ACM [[http://www.acm.org/sigsam/][SIGSAM]])
+	* [[http://www.computer.org/][IEEE Computer Society]]
+ 
+
+@
+
+
+1.23
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1097839154" format="1.0" version="1.23"}%
+a10 1
+	* [[http://www.program-transformation.org/GPCE][Generative Programming and Component Engineering (GPCE'04)]] ([[program chair]])
+d17 1
+@
+
+
+1.22
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1085868655" format="1.0" version="1.22"}%
+d13 2
+@
+
+
+1.21
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1079042160" format="1.0" version="1.21"}%
+a11 1
+	* [[http://www.cs.auckland.ac.nz/~herm/WoDiSEE2004/][ICSE Workshop on Directions in Software Engineering Environments (WoDiSEE'04)]] (PC member)
+d16 1
+@
+
+
+1.20
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1078872302" format="1.0" version="1.20"}%
+d12 1
+@
+
+
+1.19
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1076511936" format="1.0" version="1.19"}%
+d12 1
+a12 1
+	* [[http://www.stratego-language.org/Stratego/FifthStrategoUserDays][Fifth Stratego User Days (SUD'04)]]
+d16 1
+@
+
+
+1.18
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1074508658" format="1.0" version="1.18"}%
+d12 1
+a12 1
+	* [[http://www.stratego-language.org/Stratego/FifthStrategoUsersDay][Fifth Stratego User Days (SUD'04)]]
+@
+
+
+1.17
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1074071280" format="1.0" version="1.17"}%
+d12 1
+@
+
+
+1.16
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1071734682" format="1.0" version="1.16"}%
+a11 1
+	* [[http://www.cs.rice.edu/~taha/wg2.11/][WG2.11]]
+d29 1
+d31 6
+@
+
+
+1.15
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1071217093" format="1.0" version="1.15"}%
+d18 1
+a18 1
+	* [[http://www.dsic.upv.es/~rdp03/wrs/][Workshop on Reduction Strategies in Rewriting and Programming (WRS'03)]] (PC member)
+d31 2
+a32 2
+ 
+
+@
+
+
+1.14
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1068764563" format="1.0" version="1.14"}%
+d20 1
+a20 1
+	* [[http://www-sop.inria.fr/LDTA2003/][Workshop on Language Descriptions, Tools and Applications (LDTA'03)]] (PC member)
+d31 2
+@
+
+
+1.13
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1066168719" format="1.0" version="1.13"}%
+d12 1
+@
+
+
+1.12
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1065029958" format="1.0" version="1.12"}%
+d27 1
+@
+
+
+1.11
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1057789700" format="1.0" version="1.11"}%
+d11 1
+a11 1
+	* [[http://www.cc.gatech.edu/~yannis/GPCE03/cfp.html][Generative Programming and Component Engineering (GPCE'03)]] (PC member)
+d15 1
+@
+
+
+1.10
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1055885462" format="1.0" version="1.10"}%
+d16 1
+a16 1
+	* [[http://www.dsic.upv.es/~rdp03/wrs/][Workshop on Reduction Strategies in Rewriting and Programming (WRS'03)]]
+@
+
+
+1.9
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1055745555" format="1.0" version="1.9"}%
+d9 1
+a9 1
+Events
+a10 1
+	* [[http://www.stratego-language.org/Stratego/FourthStrategoUsersDay][Fourth Stratego Users Day (SUD'03)]]
+a11 1
+	* [[http://www.dsic.upv.es/~rdp03/wrs/][Workshop on Reduction Strategies in Rewriting and Programming (WRS'03)]]
+d13 1
+a13 1
+Past
+d15 2
+@
+
+
+1.8
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1054548300" format="1.0" version="1.8"}%
+d28 1
+@
+
+
+1.7
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1054382397" format="1.0" version="1.7"}%
+d11 1
+@
+
+
+1.6
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1049875938" format="1.0" version="1.6"}%
+a10 1
+	* [[Center.ResearchDay2003][ICS Researchday 2003]] (organizer)
+d16 1
+@
+
+
+1.5
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1037545286" format="1.0" version="1.5"}%
+d11 1
+a11 1
+	* [[http://www-sop.inria.fr/LDTA2003/][Workshop on Language Descriptions, Tools and Applications (LDTA'03)]] (PC member)
+d13 1
+d17 1
+@
+
+
+1.4
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1034867083" format="1.0" version="1.4"}%
+d7 1
+a7 1
+	* http://www.cs.uu.nl/groups/ST/twiki/bin/view/
+@
+
+
+1.3
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1031381321" format="1.0" version="1.3"}%
+a10 1
+	* [[http://www.program-transformation.org/rule02][2002 ACM SIGPLAN Workshop on Rule-Based Programming (RULE'02)]] (PC co-chair)
+d16 1
+@
+
+
+1.2
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1031295809" format="1.0" version="1.2"}%
+d9 1
+a9 1
+Workshops
+d11 3
+a13 2
+	* [[http://www.program-transformation.org/rule02][2002 ACM SIGPLAN Workshop on Rule-Based Programming (RULE'02)]] (PC chair)
+	* Workshop on Language Descriptions, Tools and Applications (LDTA'03) (PC member)
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1030524480" format="1.0" version="1.1"}%
+d7 1
+@

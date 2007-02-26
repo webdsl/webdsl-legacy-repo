@@ -1,0 +1,69 @@
+head	1.2;
+access;
+symbols;
+locks
+	apache:1.2; strict;
+comment	@# @;
+
+
+1.2
+date	2005.04.28.22.53.56;	author wiki;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2001.11.27.23.15.05;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.2
+log
+@testenv
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1053551183" format="1.0" version="1.2"}%
+%META:TOPICPARENT{name="WebHome"}%
+-----+++ Description
+
+Stratego treats variables in the object language as ordinary data objects. This disregards the special role of variables in programming languages and requires a lot of plumbing to treat operations such as substitution right.
+If variable bindings could be treated transparently in program transformation specifications, they
+would probably be more readable. There are approaches to achieve this:
+
+	* Higher-Order Abstract Syntax
+	* Transform:FreshML
+	* Transform:LambdaProlog
+
+	* Domenic Duggan. Higer-Order Substitutions. Information and Computation 164 (2001) 1-53
+
+----+++ ResearchInterests Questions
+
+	* What would be the best approach to incorporate in a language based on rewriting strategies / Stratego ?
+
+	* How could this approach be implemented?
+
+	* How do these approaches interfere with generic travesal strategies?
+
+	* What are the performance / complexity penalties of these approaches?
+
+-- Main.EelcoVisser - 28 Nov 2001 <br />
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1006904002" format="1.0" version="1.1"}%
+d15 1
+a15 1
+----+++ Research Questions
+@

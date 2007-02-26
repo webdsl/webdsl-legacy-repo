@@ -1,0 +1,15 @@
+%META:TOPICINFO{author="EelcoVisser" date="1086778982" format="1.0" version="1.1"}%
+%META:TOPICPARENT{name="SyntaxDefinition"}%
+M. G. J. van den Brand and E. Visser. *Generation of Formatters for Context-free Languages.* ACM Transactions on Software Engineering and Methodology, 5(1):1--41, January 1996. ([[http://www.acm.org/pubs/toc/TOC/1049-331X/Vol5.html][acmdl]], [[http://www.cs.uu.nl/people/visser/ftp/BV96.ps.gz][psgz]]).
+
+------+++ <nop>BibTeX
+
+<pre>
+%INCLUDE{http://www.cs.uu.nl/groups/ST/stbib/visser-by-year/BV96.bib}%
+</pre>
+
+<!--
+	* Set SKIN = notitle
+-->
+
+-- Main.EelcoVisser - 09 Jun 2004

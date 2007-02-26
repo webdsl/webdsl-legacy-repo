@@ -1,0 +1,30 @@
+head	1.1;
+access;
+symbols;
+locks
+	apache:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2003.06.02.17.00.34;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.1
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1054573234" format="1.0" version="1.1"}%
+%META:TOPICPARENT{name="WebHome"}%
+%INCLUDE{http://www.program-transformation.org/twiki/bin/view/Transform/TheEssenceOfStrategicProgramming?skin=plain}%
+
+
+@

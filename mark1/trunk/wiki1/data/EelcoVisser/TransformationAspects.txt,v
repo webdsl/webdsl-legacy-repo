@@ -1,0 +1,124 @@
+head	1.1;
+access;
+symbols;
+locks
+	apache:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2001.11.27.09.11.00;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.1
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1006852260" format="1.0" version="1.1"}%
+%META:TOPICPARENT{name="WebHome"}%
+Ideas on the subject by Hedzer Westra.
+
+----+++ Considerations for a Stratego Reporting Project
+
+It can be very valuable to get meta-information about the execution of a
+transformation. This meta-information tells us something about how the
+input was transformed to the output. We discern two types of meta-data:
+
+	* profiling information: how fast, what parts of the program are used the most,  
+	* effects: report the changes that were made, statistics about the data 
+
+---+++ Profiling
+
+All profiling should be done automatically when and if the user requests
+this. One can think of extending the \texttt{iowrap} library function with
+a few options.
+
+Profiling meta-data can be:
+
+	* timing: read file, execute, write file (absolute and relative to total)
+
+	* timing per strategy: time spent in each strategy, with and without time spent in called strategies. (==child coverage)
+
+	* strategy counts: the number of times a strategy is called
+
+	* maximum call depth
+
+	* data information: tree size, number of nodes, number of terms thatuse a certain constructor, tree depth. Since this information is dynamic, a report should be made on a certain interval, or min/avg/max/stddev information should be calculated. It should be possible for the user to request the current data information using a SSL strategy.
+
+----+++ Effects
+
+Effects are application-specific and can therefore not be automatically
+provided by the compiler. The SSL can provide a standard mechanism to
+administer effects, though.
+
+One can think of SSL support for counters, which the user can increase of
+decrease when certain events happen, e.g. a 'rule' succeeds. With a 'rule'
+we mean a transformation that has higher granularity or stricter
+conditions than a strategy, and therefore can't be automatically counted
+by the builtin strategy counting facility.
+ 
+Another effect that one would want to measure is a user-defined statistic,
+e.g. the number of GO statements in the program that is being transformed.
+Calculating this statictic is of course the responsibility of the
+user. What the SSL could supply is strategies for doing statictical
+operations (min/avg/max/stddev/et cetera) on this data.
+ 
+----+++ Creating and handling reports
+ 
+The reports that are gathered during execution should be written to a
+standard Stratego report file. If would be very practical to extend
+=iowrap= with an extra option, so the user can specify where this
+file should be placed. A grammar should be defined in the GB (and more
+importantly: a Stratego signature), so standard tools can be developed to
+handle reports from all kinds of program executions.
+ 
+The following report handling tools could be developed:
+ 
+	* pretty printing (human readable reports)
+	* GNUplot input generation (data and GNUplot definition)
+	* LaTeX tabular creation
+ 
+It should be possible to combine reports to calculate statistics about
+e.g. how input size relates to exection time, generating plots for sets of
+transformed files, et cetera.
+ 
+Combining reports should be done on two axes: transformation phase and
+transformed file. The transformation phase axis is about parsing,
+imploding, transforming and pretty printing one file. The transformed file
+axis is about sets of files being transformed.
+ 
+The previous paragraph suggests that each component of a transformation
+system should generate reports. Since most XT tools are coded in Stratego,
+this should be fairly easy. Sglr is an important exception. It should be
+extended with report facilities. Another problem is the use of standard
+Unix tools. Maybe creating a wrapper program that generates a simplistic
+report can be considered.
+ 
+A nice feature would be to compare output files or report files and
+generate reports about the differences.
+ 
+----+++ Reporting so far
+ 
+In the CobolX project, a lot of the reporting that is described above is
+done, although it is done using mostly standard Unix tools like
+=time=, =awk=, =diff= and =grep=. A uniform
+reporting language is not defined. We use parsing of the output that our
+Stratego programs generate on stderr by calling =debug=, which is
+certainly not optimal. A lot of report grammars are handwritten (and
+rewritten often) to parse the textual program output.
+ 
+The statistic calculations and profiling that is described above isn't
+done at all in CobolX, with the exception of very crude timings using the
+Unix \texttt{time} tool in combination with AutoMake. This gives a
+granularity at Unix process level, which is fine for generating plots that
+show what amount of time is spent on e.g. parsing. It doesn't tell us
+anything about where the transformation spends most of its time, though. 
+@

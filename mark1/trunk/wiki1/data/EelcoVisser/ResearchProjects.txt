@@ -1,0 +1,14 @@
+%META:TOPICINFO{author="EelcoVisser" date="1161096431" format="1.0" version="1.14"}%
+%META:TOPICPARENT{name="WebHome"}%
+-------+ Research Projects
+
+	* [[TFA][Transformations for Abstractions]] (NWO; 2007-2009)
+	* [[TraCE][Transparent Configuration Environments (TraCE)]] (Jacquard/SERC; 2002-2008)
+	* [[Dsp Transformation][A Transformation Factory for Digital Signal Processing Software]] (Philips; 2000-2005)
+	* [[VariabilityManagement][Models and Techniques for Variability Management]] (SERC; subsumed by TraCE; 2001-2005)
+	* [[StrategoXT]] (1998 - )
+	* [[Syntax Definition]] (1993-1997)
+	* [[Multi Level Specifications]] (1995-1996)
+
+See also [[supervised theses]] and [[students and postdocs]]
+

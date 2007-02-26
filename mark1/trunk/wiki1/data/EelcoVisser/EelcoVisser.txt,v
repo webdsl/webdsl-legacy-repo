@@ -1,0 +1,35 @@
+head	1.1;
+access;
+symbols;
+locks
+	apache:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2004.05.17.10.23.00;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.1
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1084789380" format="1.0" version="1.1"}%
+
+I'm married to [[Janine Mets]] and father of [[Jelle Visser][Jelle]] and [[Bente Sofie]]. We live in Amersfoort.
+
+I work at <a href="http://www.cs.uu.nl" target="_top">Utrecht University</a> as a computer scientist. My research is in the area of programming languages and software engineering. I have designed two computer languages, <a href="http://www.syntax-definition.org" target="_top">SDF2</a> and <a href="http://www.stratego-language.org" target="_top">Stratego</a>, and done some other stuff. See my <a href="http://www.cs.uu.nl/~visser" target="_top">homepage</a> for publications and other information.
+
+<!--
+	* Set SKIN = plain
+-->
+
+@

@@ -1,0 +1,90 @@
+head	1.4;
+access;
+symbols;
+locks
+	apache:1.4; strict;
+comment	@# @;
+
+
+1.4
+date	2002.09.09.20.19.43;	author EelcoVisser;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2002.04.25.16.36.00;	author JoostVisser;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2001.12.06.17.25.47;	author EelcoVisser;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2001.05.14.21.30.21;	author EelcoVisser;	state Exp;
+branches;
+next	;
+
+
+desc
+@none
+@
+
+
+1.4
+log
+@none
+@
+text
+@%META:TOPICINFO{author="EelcoVisser" date="1031602783" format="1.0" version="1.4"}%
+%SEARCH{"CategoryPaper" header="<br>" format="	* [[$web.$topic][$topic]]<br>" nototal="on" nosearch="on" web="Visser"}%
+
+@
+
+
+1.3
+log
+@none
+@
+text
+@d1 2
+a2 2
+%META:TOPICINFO{author="JoostVisser" date="1019752560" format="1.0" version="1.3"}%
+The category of pages about a paper.
+a3 8
+%SEARCH{"CategoryPaper" header="<br>" format="	* [[$web.$topic][$topic]]<br>" nototal="on" nosearch="on" web="Transform Stratego Tools"}%
+
+*See also*
+
+CategoryBook
+
+----
+CategoryCategory | CategoryCollection
+@
+
+
+1.2
+log
+@none
+@
+text
+@d1 1
+a1 1
+%META:TOPICINFO{author="EelcoVisser" date="1007659683" format="1.0" version="1.2"}%
+d5 5
+d11 1
+a11 1
+CategoryCategory
+@
+
+
+1.1
+log
+@none
+@
+text
+@d1 4
+a4 1
+The category of pages about a paper. Click on the title to get them all.
+@
