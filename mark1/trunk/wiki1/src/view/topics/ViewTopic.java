@@ -36,15 +36,23 @@ public class ViewTopic extends HttpServlet
           request.setAttribute("path", path);
 	  request.setAttribute("pathelements", topicpath.getElements());
 	  request.setAttribute("topic", topic);
-	  request.setAttribute("subtopics", topic.getSubtopics().keySet());
-	  request.setAttribute("authors", topic.getAuthorNames());
 
+	  String mimetype = topic.getMimetype();
+
+	  //if ("text/css".equals(mimetype)) {
+		// copy text field to output
+		// set result type
+  	  //} else if ("text/wiki".equals(mimetype)) {
+		// call wiki parser	  
+  	  //} else if ("text/plain".equals(mimetype)) {
+	    request.setAttribute("subtopics", topic.getSubtopics().keySet());
+	    request.setAttribute("authors", topic.getAuthorNames());
+	    RequestDispatcher dispatcher =
+	      request.getRequestDispatcher("/WEB-INF/classes/view/topics/TopicView.jsp");
+          //}
+	  dispatcher.forward(request, response);
           transaction.commit();
 	  hsession.close();
-
-	  RequestDispatcher dispatcher =
-	    request.getRequestDispatcher("/WEB-INF/classes/view/topics/TopicView.jsp");
-	  dispatcher.forward(request, response);
         } catch (TopicDoesNotExistException e) {
 	  transaction.rollback();
 	  hsession.close();

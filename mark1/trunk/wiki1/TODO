@@ -1,8 +1,12 @@
 - topic view
-  - renderer for each mime type
-    - text/wiki
+  - type-based dispatch to get renderer appropriate for a mimetype
+  - mimetypes
     - text/plain
     - text/css
+    - text/wiki : wiki parser should implement send output to a ContentHandler
+
+- page composition
+  - should be
 
 - topic management
   - remove topic
