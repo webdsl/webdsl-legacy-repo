@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/css" href="synopsis.css"?>
+<SYNOPSIS>
+  <TITLE>Twelfth Night</TITLE>
+
+  <ACT>
+    <ACT_NUMBER>Act 1</ACT_NUMBER>
+    <SCENE>
+      <SCENE_NUMBER>Scene 1</SCENE_NUMBER>
+      <LOCATION><CHARACTER>Duke Orsino</CHARACTER>'s palace
+      </LOCATION>
+    </SCENE>
+    <SCENE>
+      <SCENE_NUMBER>Scene 2</SCENE_NUMBER>
+      <LOCATION>The sea-coast</LOCATION>
+    </SCENE>
+    <SCENE>
+      <SCENE_NUMBER>Scene 3</SCENE_NUMBER>
+      <LOCATION><CHARACTER>Olivia</CHARACTER>'s house
+      </LOCATION>
+    </SCENE>
+    <SCENE>
+      <SCENE_NUMBER>Scene 4</SCENE_NUMBER>
+      <LOCATION><CHARACTER>Duke Orsino</CHARACTER>'s palace.
+      </LOCATION>
+    </SCENE>
+    <SCENE>
+      <SCENE_NUMBER>Scene 5</SCENE_NUMBER>
+      <LOCATION><CHARACTER>Olivia</CHARACTER>'s house
+      </LOCATION>
+    </SCENE>
+  </ACT>
+
+  <ACT>
+    <ACT_NUMBER>Act 2</ACT_NUMBER>
+    <SCENE>
+      <SCENE_NUMBER>Scene 1</SCENE_NUMBER>
+      <LOCATION>The sea-coast</LOCATION>
+    </SCENE>
+    <SCENE>
+      <SCENE_NUMBER>Scene 2</SCENE_NUMBER>
+      <LOCATION>A street</LOCATION>
+    </SCENE>
+    <SCENE>
+      <SCENE_NUMBER>Scene 3</SCENE_NUMBER>
+      <LOCATION><CHARACTER>Olivia</CHARACTER>'s house
+      </LOCATION>
+    </SCENE>
+    <SCENE>
+      <SCENE_NUMBER>Scene 4</SCENE_NUMBER>
+      <LOCATION><CHARACTER>Duke Orsino</CHARACTER>'s palace.
+      </LOCATION>
+    </SCENE>
+    <SCENE>
+      <SCENE_NUMBER>Scene 5</SCENE_NUMBER>
+      <LOCATION><CHARACTER>Olivia</CHARACTER>'s garden
+      </LOCATION>
+    </SCENE>
+  </ACT>
+
+  <ACT>
+    <ACT_NUMBER>Act 3</ACT_NUMBER>
+    <SCENE>
+      <SCENE_NUMBER>Scene 1</SCENE_NUMBER>
+      <LOCATION><CHARACTER>Olivia</CHARACTER>'s garden
+      </LOCATION>
+    </SCENE>
+    <SCENE>
+      <SCENE_NUMBER>Scene 2</SCENE_NUMBER>
+      <LOCATION><CHARACTER>Olivia</CHARACTER>'s house
+      </LOCATION>
+    </SCENE>
+    <SCENE>
+      <SCENE_NUMBER>Scene 3</SCENE_NUMBER>
+      <LOCATION>A street</LOCATION>
+    </SCENE>
+    <SCENE>
+      <SCENE_NUMBER>Scene 4</SCENE_NUMBER>
+      <LOCATION><CHARACTER>Olivia</CHARACTER>'s garden
+      </LOCATION>
+    </SCENE>
+  </ACT>
+
+  <ACT>
+    <ACT_NUMBER>Act 4</ACT_NUMBER>
+    <SCENE>
+      <SCENE_NUMBER>Scene 1</SCENE_NUMBER>
+      <LOCATION><CHARACTER>Olivia</CHARACTER>'s front yard
+      </LOCATION>
+    </SCENE>
+    <SCENE>
+      <SCENE_NUMBER>Scene 2</SCENE_NUMBER>
+      <LOCATION><CHARACTER>Olivia</CHARACTER>'s house
+      </LOCATION>
+    </SCENE>
+    <SCENE>
+      <SCENE_NUMBER>Scene 3</SCENE_NUMBER>
+      <LOCATION><CHARACTER>Olivia</CHARACTER>'s garden
+      </LOCATION>
+    </SCENE>
+  </ACT>
+
+  <ACT>
+    <ACT_NUMBER>Act 5</ACT_NUMBER>
+    <SCENE>
+      <SCENE_NUMBER>Scene 1</SCENE_NUMBER>
+      <LOCATION><CHARACTER>Olivia</CHARACTER>'s front yard
+      </LOCATION>
+    </SCENE>
+  </ACT>
+
+</SYNOPSIS>

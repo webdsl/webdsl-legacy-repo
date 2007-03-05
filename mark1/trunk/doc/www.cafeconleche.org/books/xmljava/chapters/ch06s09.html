@@ -1,0 +1,211 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Receiving Namespace Mappings</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="previous" href="ch06s08.html" title="Receiving Processing Instructions"><link rel="next" href="ch06s10.html" title="Ignorable White Space"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Receiving Namespace Mappings</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch06s08.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;6.&nbsp;SAX</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch06s10.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e9374"></a>Receiving Namespace Mappings</h2></div></div><p>
+    By default namespace declaration attributes such as 
+    <tt>xmlns="http://ns.cafeconleche.org/Orders/"</tt> and 
+    <tt>xmlns:xlink="http://www.w3.org/1999/xlink"</tt>
+    are <span class="emphasis"><em>not</em></span> included in the list of
+    attributes passed to <tt>startElement()</tt>.
+    Instead each such namespace declaration attribute is
+    signaled
+    by a call to <tt>startPrefixMapping()</tt>
+    immediately before the <tt>startElement()</tt> 
+    call corresponding to the start-tag of the element where the declaration
+    appears. Furthermore, the <tt>endElement()</tt> 
+    call corresponding to the end tag of that element is immediately followed
+    by an <tt>endPrefixMapping()</tt> call.
+  </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>startPrefixMapping</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>prefix</i></span></span>, <span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>uri</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">SAXException</span>;</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>endPrefixMapping</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>prefix</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">SAXException</span>;</code><p>
+    90% of the time you can ignore these events. As long as you only care about 
+    URIs and prefixes on element and attribute names, then
+    there&#8217;s really no need to pay attention to these methods. 
+    You simply inspect
+    the URIs and prefixes passed in the arguments to the
+    <tt>startElement()</tt> method. 
+    However, in a few applications, including XSLT, schemas, and SOAP,
+    prefixes appear in attribute values and even element
+    content. If so, you need to keep track of which URIs
+    particular prefixes are bound to where. This is complicated by the
+    fact that, while many documents declare all namespaces 
+    on the root element and most
+    documents map each prefix to exactly one URI, it is possible for
+    namespaces to be declared elsewhere than the root and for one
+    prefix to match different URIs in different parts of the same
+    document. Conversely, one URI can be associated with several
+    prefixes, even in the same part of a document.
+  </p><p>
+    The proper way to manage prefix mappings is to 
+    keep the prefixes and URIs on a per-document
+    stack. <tt>startPrefixMapping()</tt>  
+    pushes the pair onto the stack. 
+    <tt>endPrefixMapping()</tt>  
+    pops them off.<sup>[<a name="d0e9447" href="#ftn.d0e9447">2</a>]</sup> If at any time while parsing you need to know
+    the current binding of a prefix you&#8217;ve encountered, simply
+    search down the stack starting with the top. The first
+    binding you encounter for the prefix is the one you want.
+    The
+    <tt>org.xml.sax.helpers.NamespaceSupport</tt>
+    class implements this logic. It&#8217;s summarized in <a href="ch06s09.html#CompactNamespaceSupport.java" title="Example&nbsp;6.12.&nbsp;The NamespaceSupport class">Example&nbsp;6.12</a>.
+  </p><div class="example"><a name="CompactNamespaceSupport.java"></a><p class="title"><b>Example&nbsp;6.12.&nbsp;The NamespaceSupport class</b></p><pre class="programlisting">package org.xml.sax.helpers;
+
+
+public class NamespaceSupport {
+
+  public final static String XMLNS 
+   = "http://www.w3.org/XML/1998/namespace";
+
+  public NamespaceSupport();
+  
+  public void        reset();
+  public void        pushContext();
+  public void        popContext();
+  public boolean     declarePrefix(String prefix, String uri);
+  public String[]    processName(String qualifedName, 
+   String parts[], boolean isAttribute);
+  public String      getURI(String prefix);
+  public Enumeration getPrefixes();
+  public String      getPrefix(String uri);
+  public Enumeration getPrefixes(String uri);
+  public Enumeration getDeclaredPrefixes();
+
+}
+</pre></div><p>
+    To use this class, you simply  call
+    <tt>pushContext()</tt> in the first 
+    <tt>startPrefixMapping()</tt> event
+    before each <tt>startElement()</tt>,
+    or at the beginning of the
+    <tt>startElement()</tt> method if
+    that event is not preceded by any
+    <tt>startPrefixMapping()</tt> events.
+    Then call 
+    <tt>popContext()</tt> at the end of
+    every <tt>endElement()</tt> event.
+  </p><p>
+    You add namespace declarations to a context by passing their
+    prefix and URI as strings to 
+    <tt>declarePrefix()</tt> inside each
+    <tt>startPrefixMapping()</tt> call. 
+    Use the empty string  
+    as the prefix to declare the default namespace.
+    Here&#8217;s the cookbook code you can paste into your content
+    handler to maintain a stack of namespaces:
+   </p><div class="informalexample"><pre class="programlisting">  private NamespaceSupport namespaces;
+  private boolean needNewContext = true;
+
+  public void startDocument() {
+    namespaces = new NamespaceSupport(); 
+  }
+  
+  public void startPrefixMapping(String prefix, String uri)
+   throws SAXException {
+   
+    if (needNewContext) {
+      namespaces.pushContext();
+      needNewContext = false;
+    }
+    namespaces.declarePrefix(prefix, uri);
+    
+  }
+   
+  public void endPrefixMapping(String prefix) 
+   throws SAXException {
+   
+    // add additional endElement() code...
+    
+    namespaces.popContext();
+  }
+
+   public void startElement(String namespaceURI, 
+    String localName, String qualifiedName, Attributes atts)
+    throws SAXException {
+   
+     if (needNewContext) namespaces.pushContext();
+
+     // add additional startElement() code...
+     
+     needNewContext = true;
+  }   
+    
+  }</pre></div><p> 
+    The <tt>getDeclaredPrefixes()</tt>,
+    <tt>getPrefix()</tt>,
+      <tt>getPrefixes()</tt>,
+      and <tt>getURI()</tt> methods all return
+      various information about the namespaces in scope in the
+      current context. For example, this <tt>startElement()</tt> method
+      prints the namespace URI for the <span class="emphasis"><em>values</em></span> of
+      <tt>type</tt> attributes, such as might be found in a schema:
+    </p><div class="informalexample"><pre class="programlisting">  public void startElement(String namespaceURI, String localName,
+   String qualifiedName, Attributes atts) throws SAXException {
+  
+    String value = atts.getValue("type");
+    if (value != null) {
+      String prefix = "";
+      if (value.indexOf(':') &gt;= 0) {
+        prefix = value.substring(0, value.indexOf(':')); 
+      }
+      String uri = namespaces.getURI(prefix);
+    }
+   
+  }</pre></div><p> 
+    That point&#8217;s easy to miss so let me make it again:
+    the <tt>getURI()</tt> method is being used
+    here to get the namespace URI for the attribute value,
+    not the attribute itself. The attribute in this example is in
+    no namespace at all. <tt>NamespaceSupport</tt> 
+    and 
+    <tt>startPrefixMapping()</tt>/<tt>endPrefixMapping()</tt>
+    are only relevant to namespace prefixes in attribute values and element
+    content, not to namespace prefixes used on attribute and element
+    names. If you only care about namespace prefixes in element and attribute names, then you can ignore this
+    section completely.
+    </p><p>
+    If you want to reuse a
+    <tt>NamespaceSupport</tt> for a new document,
+    call <tt>reset()</tt>, probably from the
+    <tt>startDocument()</tt> method.
+  </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Note</h3><p>
+   The <i>Namespaces in XML</i> 
+   specification explicitly states that
+   the <tt>xml</tt> prefix is always bound to the
+    URL <tt>http://www.w3.org/XML/1998/namespace</tt>. 
+   Even if this is explicitly declared with  
+    an
+    <tt>xmlns:xml="http://www.w3.org/XML/1998/namespace"</tt> attribute,
+    <tt>startPrefixMapping()</tt> and 
+    <tt>endPrefixMapping()</tt> are never invoked 
+    for the <tt>xml</tt> prefix. However, this binding is
+    automatically included in all
+    <tt>NamespaceSupport</tt> objects regardless of
+    context.
+</p><p>
+    Also according to <i>Namespaces in XML</i>, 
+    &#8220;the prefix
+    <tt>xmlns</tt>  is used only for namespace 
+    bindings and is not itself bound to any namespace
+    name.&#8221; Thus it too does not cause 
+<tt>startPrefixMapping()</tt> and 
+    <tt>endPrefixMapping()</tt> invocations.
+  </p></div><div class="footnotes"><br><hr width="100" align="left"><div class="footnote"><p><sup>[<a name="ftn.d0e9447" href="#d0e9447">2</a>] </sup>SAX does state
+    that &#8220;start/endPrefixMapping events are 
+    not guaranteed to be properly nested relative to each 
+    other&#8221;. Thus you might pop mappings off
+    in a different order than you pushed them,
+    and thus pop the wrong mapping at the wrong time. However, as long as
+    you push and pop all mappings as soon as 
+    you see a start/endPrefixMapping event, 
+    you&#8217;ll always pop the same set of mappings you
+    pushed, even if in a different order. Thus this turns out not
+    to matter in practice. 
+    </p></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch06s08.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch06.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch06s10.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Receiving Processing Instructions&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Ignorable White Space</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+December 10,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

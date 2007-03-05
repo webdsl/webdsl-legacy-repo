@@ -1,0 +1,210 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Processing XML with Java</title>
+</head>
+<body bgcolor="white" text="black">
+
+<a href="../../images/xmljavalargecover.jpg"><img src="../../images/xmljavamediumcover.jpg" alt="Procesing XML with Java book cover" border="0" 
+width="240" height="301" hspace="7" vspace="5" align="right" /></a>
+
+<h1 class="title">Processing XML with Java</h1>
+<h2 class="author">Elliotte Rusty Harold</h2>
+<h3 class="copyright">Copyright 2001, 2002 Elliotte Rusty Harold</h3>
+
+<p>
+Welcome to <cite>Processing XML with Java</cite>,
+a complete tutorial about 
+writing Java programs that read and write XML documents.
+This is the most comprehensive and up-to-date book about
+integrating XML with Java (and vice versa) you can buy. It contains over 
+1000 pages of detailed information on SAX, DOM, JDOM, JAXP, TrAX, XPath, 
+XSLT, SOAP, and lots of other juicy acronyms. This book is written for Java programmers 
+who want to learn how to read and write XML documents from their code.
+The paper version is published by
+Addison-Wesley, and can be found at fine bookstores everywhere
+including <a href="http://www.amazon.com/exec/obidos/ISBN%3D0201771861/ref=nosim/cafeaulaitA/">Amazon</a> 
+and  
+<a href="http://search.barnesandnoble.com/booksearch/isbnInquiry.asp?isbn=0201771861">Barnes &amp; Noble</a>. 
+The list price is 
+$54.95, but most bookstores are offering their usual discounts.
+</p>
+
+<p>
+Normally, this is the point where I'd spend a few paragraphs describing just what's in the book and
+how important it is to your education, your career, and your love life; 
+but this time I've done something a little different. 
+The entire book is available online. 
+You can read every chapter and every page so you can see for yourself  how well this book answers your questions such as,
+"<a href="http://cafeconleche.org/books/xmljava/chapters/ch06s07.html">Why 
+does SAX truncate  the text in my documents after a few thousand characters?</a>"
+"<a href="http://cafeconleche.org/books/xmljava/chapters/ch13.html">How do I 
+serialize a DOM <code>Document</code> object
+ in an implementation-independent way?</a>" or, 
+ "<a href="http://www.mentalwardfilm.com/falcon1.htm">Why doesn't 
+ my significant other understand the importance of a building a life size Millennium Falcon in our backyard?</a>" 
+Consequently, I'll forego the usual hype. Check the book out for yourself.
+The entire book is
+here at Cafe con Leche. You can read every word of it,
+all seventeen chapters and two appendixes.
+If you like it, please buy a copy. 
+I promise it's cheaper than printing all 1100+ pages on your laser printer. 
+</p>
+
+<!--
+<p>
+However, as I'm writing it, I'm going to be posting the entire book
+here at Cafe con Leche. You can read every word of it, more or less
+as I write it. Right now the first draft  is available. 
+ This is composed of seventeen chapters and two appendixes,
+organized as follows:
+</p>
+-->
+
+<ul>
+<li><a href="chapters/pr01.html">Preface</a></li>
+<li><a href="chapters/pr02.html">Acknowledgements</a></li>
+<li><a href="chapters/ch01.html">1  XML for Data</a></li>
+<li><a href="chapters/ch02.html">2  XML Protocols</a></li>
+<li><a href="chapters/ch03.html">3  Writing XML with Java</a></li>
+<li><a href="chapters/ch04.html">4  Converting Flat Files to XML</a></li>
+<li><a href="chapters/ch05.html">5  Reading XML</a></li>
+<li><a href="chapters/ch06.html">6  SAX</a></li>
+<li><a href="chapters/ch07.html">7  The XMLReader Interface</a></li>
+<li><a href="chapters/ch08.html">8  SAX Filters</a></li>
+<li><a href="chapters/ch09.html">9  The Document Object Model</a></li>
+<li><a href="chapters/ch10.html">10 Creating New  XML Documents with DOM</li>
+<li><a href="chapters/ch11.html">11 The Document Object Model Core</a></li>
+<li><a href="chapters/ch12.html">12 The DOM Traversal Module</a></li>
+<li><a href="chapters/ch13.html">13 Output from DOM</a></li>
+<li><a href="chapters/ch14.html">14 JDOM</a></li>
+<li><a href="chapters/ch15.html">15 The JDOM Model</a></li>
+<li><a href="chapters/ch16.html">16 XPath</a></li>
+<li><a href="chapters/ch17.html">17 XSLT</a></li>
+<li><a href="chapters/apa.html">A  XML APIs Quick Reference</a></li>
+<li><a href="chapters/apb.html">B  SOAP Schemas</a></li>
+<li><a href="chapters/bi01.html">Recommended Reading</a></li>
+</ul>
+
+<h2>Examples</h2>
+
+<p>
+I've extracted out all the <a href="examples/index.html">examples</a> 
+into individual files.
+You can download them as a <a href="xmljava_examples.zip">zip archive</a> if you like.
+</p>
+
+<!--
+<p>
+Several of the examples in the book communicate with web services
+running on 
+http://www.elharo.com. Unfortunately, between the time the book went to press and now,
+an upgrade to that server necessitated by security concerns
+broke a number of URLs published in the book. The services are still running,
+just not at quite the same URLs.
+I think in all cases you can access them by
+changing /fibonacci to /fibonacci/servlet. 
+For instance, Example 3-10, most of the examples in Chapter 5,
+and Example 6-10
+ attempt to communicate with
+a servlet running at http://www.elharo.com/fibonacci/XML-RPC.
+Instead you can connect to http://www.elharo.com/fibonacci/servlet/XML-RPC.
+In Example 3-11, you would change http://www.elharo.com/fibonacci/SOAP
+to http://www.elharo.com/fibonacci/servlet/SOAP and so forth.
+</p>
+
+<p>
+Or at least you would be able to if I hadn't broken Tomcat 
+completely in an effort to fix the URLs. 
+Neither the servlets themselves nor Tomcat
+are running on that box right now. I think it may be time to 
+throw out the Qube and replace it with a a generic Redhat system running
+generic Apache. I'm less and less thrilled with the Qube's weirdness 
+on a daily basis. I don't want to do that because the Qube occupies less space and draws 
+less power, but I realy do need to get this running again. 
+Bleah.
+</p>
+
+<p>
+I do not know why the new version of the Java Development Kit for the Cobalt Qube
+will not let me map the servlets to the shorter URLs. I just know that it won't.
+If you anyone has a supposition as to how I might fix this so that 
+the shorter URLs work again, please let me know.
+I've been tearing my hair out trying to fix this.
+This is using a special version of Tomcat 3.2.1 for Sun's 
+Cobalt Qube.
+</p>
+-->
+
+<h2>Contacting the Author</h2>
+<p>
+Your commentary and feedback is much desired, both on major issues
+(e.g. "Why don't you cover JAXB?") and minor ones 
+("<i>Cat</i> is misspelled in the first sentence of page 42.")
+Please send all feedback directly to me
+at <a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a>.
+</p>
+
+<h2>Prerequisites</h2>
+
+<p>
+This is not an introductory book.
+It assumes that you're completely familiar with Java including
+objects, classes, polymorphism,
+I/O, network programming, and more. It also assumes that
+you're familiar with XML at about the level
+of the <cite><a href="http://www.cafeconleche.org/books/bible2/">XML Bible, 
+2nd Edition</a></cite>. In many ways this book picks up where that one left
+off.
+</p>
+
+<h2>Copying these Files</h2>
+
+<p>
+I'd like to ask that you not mirror these files on
+your own servers. It's difficult to keep multiple, 
+unoffical mirrors in sync, and I don't
+want to deal with questions based on out of date copies.
+This site is hosted on the very fast, very well-connected 
+IBiblio servers near the 
+Internet backbone and should have enough bandwidth for everyone.
+If you want to save a copy on your local hard drive for your own
+use, feel free, However, please 
+don't pass out copies of your own copies to anyone else.
+Instead refer your friends and colleagues to this web site.
+</p>
+
+<!--
+<p>
+For now the files are available as you see them here in HTML.
+Once I get the stylesheets more debugged, I'll probably
+make a bundle of the full files available in
+Docbook, PDF, and other HTML formats as well.
+However, right now I'm concentrating on writing.
+Some of these tasks are going to have to wait until
+the book is more complete and changing less quickly. 
+</p>
+-->
+
+<h2>Colophon</h2>
+
+<p>
+This entire book was written in XML from start to finish.
+The specific XML application used is DocBook 4.2.0.
+I use the <a href="http://www.jedit.org/">jEdit</a> text editor 
+on Windows and Linux to write.
+ XInclude is used to merge the individual chapters and examples
+ together.
+Michael Kay's SAXON XSLT processor and Norm Walsh's
+XSL stylesheets for Docbook 1.52.2 produce the HTML and XSL-FO
+output. I use FOP 0.20.4 to convert the XSL-FO files to PDFs. 
+The DocBook source files were pulled into Adobe FrameMaker to 
+layout the printed book.
+</p>
+
+<hr />
+Copyright 2001-2003 <a href="http://www.elharo.com/">Elliotte Rusty Harold</a><br>
+<a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a><br>
+Last Modified April 17, 2003
+</body>
+</html>

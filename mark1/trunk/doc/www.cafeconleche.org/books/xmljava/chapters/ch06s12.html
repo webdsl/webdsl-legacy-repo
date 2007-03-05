@@ -1,0 +1,206 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Receiving Locators</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="previous" href="ch06s11.html" title="Receiving Skipped Entities"><link rel="next" href="ch06s13.html" title="What the ContentHandler Doesn&#8217;t Tell You"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Receiving Locators</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch06s11.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;6.&nbsp;SAX</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch06s13.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e9769"></a>Receiving Locators</h2></div></div><p>
+    For debugging purposes, it&#8217;s often useful to know exactly 
+    where a particular element or other item appears.
+    To provide this information, parsers should (but are not
+    required to) implement the <tt>Locator</tt> 
+    interface. A <tt>Locator</tt> object
+    knows
+    at which point in which file the latest event was fired.  
+  </p><p>
+    <a href="ch06s12.html#CompactLocator.java" title="Example&nbsp;6.15.&nbsp;The SAX Locator interface">Example&nbsp;6.15</a> 
+    summarizes the <tt>Locator</tt>
+    interface. You see that it offers both public and system 
+    identifiers for the entity in which the start-tag/end-tag/processing 
+    instruction/skipped entity/etc. was found.
+    Furthermore it tells you approximately at which line and
+    column
+    in that line the item begins. Lines and columns both begin at
+    1. If this information isn&#8217;t available for some reason
+    (most commonly a well-formedness error very early in the
+    document) these methods normally return -1.
+  </p><div class="example"><a name="CompactLocator.java"></a><p class="title"><b>Example&nbsp;6.15.&nbsp;The SAX Locator interface</b></p><pre class="programlisting">package org.xml.sax;
+
+
+public interface Locator {
+        
+  public String getPublicId();
+  public String getSystemId();
+  public int    getLineNumber();
+  public int    getColumnNumber();
+    
+}
+</pre></div><p>
+    The public identifier is normally a string like &#8220;-//OASIS//DTD DocBook XML V4.1.2//EN&#8221;.
+    However, it&#8217;s often absent in which case
+    <tt>getPublicId()</tt> returns null instead.
+    The system identifier is almost always an absolute or relative 
+    URL if  it&#8217;s known at
+    all. However in some contexts no URL may be available.
+    For instance, the <tt>XMLReader</tt> may be
+    receiving its events from a JDOM
+    <tt>SAXOutputter</tt> object or a stream of
+    unknown origin rather than directly from a file or a network
+    connection. In this case, <tt>getSystemId()</tt> 
+    may return null too.
+    Since XML documents can be divided across multiple files,
+    it&#8217;s possible that different items may appear at different
+    URLs, though well-formedness guarantees that every start-tag
+    has the same URL as its corresponding end-tag.
+  </p><p>
+    If the parser does provide location information, then it will
+    invoke the <tt>ContentHandler</tt>&#8217;s
+    <tt>setDocumentLocator()</tt> method before calling 
+    <tt>startDocument()</tt>. If you want
+    location information to be available later, then
+    you need to store a reference to this object somewhere,
+    typically in a field. For example,
+  </p><div class="informalexample"><pre class="programlisting">  private Locator locator;
+  
+  public void setDocumentLocator(Locator locator) {
+    this.locator = locator;
+  }</pre></div><p>
+    If the  <tt>ContentHandler</tt> 
+    is used to parse multiple documents, you&#8217;ll receive a
+    new <tt>Locator</tt> object for each document.
+    That <tt>Locator</tt> is only good
+    while its document is being parsed. Once the 
+    <tt>endDocument()</tt> method has been
+    invoked, the <tt>Locator</tt>
+    may not return sensible results.
+  </p><p>
+    <a href="ch06s12.html#LocatorDemo.java" title="Example&nbsp;6.16.&nbsp;Determining the locations of events">Example&nbsp;6.16</a> demoes this interface
+    with a program that prints out line and column numbers 
+    for each method invocation. To run this program you need
+    a parser that does provide location information; but most,
+    including Xerces, do provide this.
+  </p><div class="example"><a name="LocatorDemo.java"></a><p class="title"><b>Example&nbsp;6.16.&nbsp;Determining the locations of events</b></p><pre class="programlisting">import org.xml.sax.*;
+import org.xml.sax.helpers.XMLReaderFactory;
+
+
+public class LocatorDemo implements ContentHandler {
+
+  private Locator locator;
+  
+  public void setDocumentLocator(Locator locator) {
+    this.locator = locator;
+  }
+  
+  private void printLocation(String s) { 
+    
+    int line = locator.getLineNumber();
+    int column = locator.getColumnNumber();
+    System.out.println(
+     s + " at line " + line + "; column " + column
+    );
+    
+  }
+
+  public void startDocument() { 
+    printLocation("startDocument()");
+  }
+
+  public void endDocument() { 
+    printLocation("endDocument()");
+  }
+
+  public void startElement(String namespaceURI, String localName, 
+   String qualifiedName, Attributes atts) {
+    printLocation("startElement()");
+  }
+
+  public void endElement(String namespaceURI, String localName, 
+  String qualifiedName) {
+    printLocation("endElement()");
+  }
+  
+  public void characters(char[] text, int start, int length) {
+    printLocation("characters()"); 
+  }  
+  
+  public void startPrefixMapping(String prefix, String uri) {
+    printLocation("startPrefixMapping()"); 
+  }
+  
+  public void endPrefixMapping(String prefix) {
+    printLocation("endPrefixMapping()"); 
+  }
+  
+  public void ignorableWhitespace(char[] text, int start, 
+   int length) {
+    printLocation("ignorableWhitespace()");  
+  }
+  
+  public void processingInstruction(String target, String data) {
+    printLocation("processingInstruction()");  
+  }
+  
+  public void skippedEntity(String name) {
+    printLocation("skippedEntity()");     
+  }  
+  
+  public static void main(String[] args) {
+    
+    if (args.length == 0) {
+      System.out.println("Usage: java SAXSpider URL1"); 
+    } 
+    String uri = args[0];
+    
+    try {
+      XMLReader parser = XMLReaderFactory.createXMLReader();
+      
+      // Install the ContentHandler   
+      ContentHandler handler = new LocatorDemo();   
+      parser.setContentHandler(handler);
+      parser.parse(uri);
+
+    }
+    catch (Exception e) {
+      System.err.println(e);
+    }
+        
+  } // end main
+   
+} // end LocatorDemo
+</pre></div><p>
+    Here&#8217;s the output when <a href="ch06s10.html#SymbolLookup.xml" title="Example&nbsp;6.13.&nbsp;A document that uses &#xA;    ignorable white space to prettify the XML">Example&nbsp;6.13</a>
+    is fed into this program:
+  </p><pre class="screen"><tt>C:\XMLJAVA&gt;</tt><b><tt>java LocatorDemo SymbolLookup.xml</tt></b>
+<tt>startDocument() at line 1; column 1
+startElement() at line 10; column 13
+ignorableWhitespace() at line 11; column 3
+startElement() at line 11; column 15
+characters() at line 11; column 27
+endElement() at line 11; column 41
+ignorableWhitespace() at line 12; column 3
+startElement() at line 12; column 11
+ignorableWhitespace() at line 13; column 5
+startElement() at line 13; column 12
+ignorableWhitespace() at line 14; column 7
+startElement() at line 14; column 14
+ignorableWhitespace() at line 15; column 9
+startElement() at line 15; column 17
+characters() at line 17; column 9
+endElement() at line 17; column 19
+ignorableWhitespace() at line 18; column 7
+endElement() at line 18; column 16
+ignorableWhitespace() at line 19; column 5
+endElement() at line 19; column 14
+ignorableWhitespace() at line 20; column 3
+endElement() at line 20; column 13
+ignorableWhitespace() at line 21; column 1
+endElement() at line 21; column 15
+endDocument() at line -1; column -1</tt>
+</pre></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch06s11.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch06.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch06s13.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Receiving Skipped Entities&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;What the ContentHandler Doesn&#8217;t Tell You</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+October 16,
+2001</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

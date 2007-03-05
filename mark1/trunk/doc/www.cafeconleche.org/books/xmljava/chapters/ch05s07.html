@@ -1,0 +1,131 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>dom4j</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="previous" href="ch05s06.html" title="JDOM"><link rel="next" href="ch05s08.html" title="ElectricXML"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">dom4j</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch05s06.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;5.&nbsp;Reading XML</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch05s08.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e7864"></a>dom4j</h2></div></div><p>
+       <a href="http://www.dom4j.org/" target="_top">dom4j</a>
+       began as a fork of the JDOM project by a developer,
+       James Strachan,
+       who disagreed with several aspects of the  JDOM architecture
+       including the decision to use classes instead of
+       interfaces. dom4j has since gone its own way, and features a
+       very different approach to a pure-Java, tree-based API
+       than either DOM or JDOM. Notable unique features
+       in dom4j include integrated XPath and XSLT support
+       and optional DOM compatibility. (e.g., you can wrap
+       a dom4j <tt>Element</tt>
+       inside a DOM <tt>Element</tt>.)
+      </p><p>
+        <a href="ch05s07.html#Fibonaccidom4jClient.java" title="Example&nbsp;5.8.&nbsp;A dom4j based client for the Fibonacci XML-RPC server">Example&nbsp;5.8</a> shows the
+        dom4j version of our standard example. It&#8217;s structured
+        pretty much like the previous two tree based APIs.
+        First a <tt>Document</tt> object representing 
+        the XML-RPC request is
+        constructed in memory; then serialized onto the
+        <tt>URLConnection</tt>&#8217;s output stream. Finally, 
+        the response document is parsed to find the desired value. 
+      </p><div class="example"><a name="Fibonaccidom4jClient.java"></a><p class="title"><b>Example&nbsp;5.8.&nbsp;A dom4j based client for the Fibonacci XML-RPC server</b></p><pre class="programlisting">import java.net.*;
+import java.io.*;
+import org.dom4j.*;
+import org.dom4j.io.*;
+
+
+public class Fibonaccidom4jClient {
+
+  public final static String DEFAULT_SERVER 
+   = "http://www.elharo.com/fibonacci/XML-RPC";  
+  
+  public static void main(String[] args) {
+      
+    if (args.length &lt;= 0) {
+      System.out.println(
+       "Usage: java Fibonaccidom4jClient number url"
+      );
+      return;
+    }
+    
+    String server = DEFAULT_SERVER;
+    if (args.length &gt;= 2) server = args[1];
+      
+    try {
+      // Build request document
+      Document request = DocumentHelper.createDocument();
+      Element methodCall = request.addElement("methodCall");
+      Element methodName = methodCall.addElement("methodName");
+      methodName.addText("calculateFibonacci");
+      Element params = methodCall.addElement("params");
+      Element param = params.addElement("param");
+      Element value = param.addElement("value");
+      // Had to break the naming convention here because of a 
+      // conflict with the Java keyword int
+      Element intElement = value.addElement("int");
+      intElement.addText(args[0]);
+      
+      // Transmit the request document
+      URL u = new URL(server);
+      URLConnection uc = u.openConnection();
+      HttpURLConnection connection = (HttpURLConnection) uc;
+      connection.setDoOutput(true);
+      connection.setDoInput(true); 
+      connection.setRequestMethod("POST");
+      OutputStream out = connection.getOutputStream();
+      
+      XMLWriter serializer = new XMLWriter(out);
+      serializer.write(request);
+      
+      out.flush();
+      out.close();        
+
+      // Read the response
+      InputStream in = connection.getInputStream();
+      SAXReader reader = new SAXReader();
+      Document response = reader.read(in);
+      in.close();
+      connection.disconnect();
+      
+      // Use XPath to find the element we want
+      Node node = response.selectSingleNode( 
+       "/methodResponse/params/param/value/double" 
+      );
+
+      String result = node.getStringValue();
+      System.out.println(result);
+      
+    }
+    catch (Exception e) {
+      System.err.println(e); 
+    }
+  
+  } 
+
+}
+</pre></div><p>
+         In dom4j the request <tt>Document</tt>
+         object is initially created by  the <tt>DocumentHelper.createDocument()</tt> 
+         factory method. The contents of the document are formed 
+         at the same
+         time they&#8217;re added to their parent so that no nodes 
+         are ever orphaned from the tree.
+         The serialization to the server is performed by
+         the <tt>XMLWriter</tt> class. 
+       </p><p>
+         Once the response has been received,
+         dom4j parses it into a <tt>Document</tt>
+         object using the <tt>SAXReader</tt> class
+         that connects dom4j to an underlying
+         parser such as Crimson or Xerces. 
+         XPath is used to 
+         extract the <tt>double</tt> 
+         element from this document.
+         If you&#8217;re comfortable with XPath, this is a very useful
+         and convenient feature.
+       </p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch05s06.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch05.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch05s08.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">JDOM&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;ElectricXML</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+May 25,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

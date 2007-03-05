@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<rss version="0.92">
+  <channel>
+    <title>Cafe con Leche XML News and Resources</title>
+    <link>http://www.cafeconleche.org/</link>
+    <description>Cafe con Leche is the preeminent independent source of XML information on the net. Cafe con Leche is neither beholden to specific companies nor to advertisers. At Cafe con Leche you'll find many resources to help you develop your XML skills here including daily news summaries, examples, book reviews, mailing lists and more.</description>
+    <language>en-us</language>
+    <copyright>Copyright 2007 Elliotte Rusty Harold</copyright>
+    <webMaster>elharo@metalab.unc.edu</webMaster>
+    <image>
+      <title>Cafe con Leche</title>
+      <url>http://www.cafeconleche.org/cup.gif</url>
+      <link>http://www.cafeconleche.org/</link>
+      <width>89</width>
+      <height>67</height>
+      <description>Cafe con Leche is the preeminent independent source of XML information on the net. Cafe con Leche is neither beholden to specific companies nor to advertisers. At Cafe con Leche you'll find many resources to help you develop your XML skills here including daily news summaries, examples, book reviews, mailing lists and more.</description>
+    </image>
+    <item>
+      <title>The W3C HTML Working Group has posted a new working draft of XML Events 2.
+          "The XML Events module defined in this specification provides XML languages with the ability to uniformly integrate event listeners and associated event handlers with Document Object Model (DOM) Level 2 event interfaces [DOM2EVENTS].
+          </title>
+      <description>The W3C HTML Working Group has posted a new working draft of XML Events 2. "The XML Events module defined in this specification provides XML languages with the ability to uniformly integrate event listeners and associated event handlers with Document Object Model (DOM) Level 2 event interfaces [DOM2EVENTS]. The result is to provide an interoperable way of associating behaviors with document-level markup." According to Mark Birbeck, More...</description>
+      <link>http://www.cafeconleche.org/#February_19_2007_33160</link>
+    </item>
+  </channel>
+</rss>

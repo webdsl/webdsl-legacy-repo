@@ -1,0 +1,3 @@
+<!ELEMENT Fibonacci_Numbers (fibonacci*)>
+<!ELEMENT fibonacci (#PCDATA)>
+<!ATTLIST fibonacci index CDATA #IMPLIED>

@@ -1,0 +1,261 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>12. Store metadata in attributes</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.1.0  (Linux)">
+	<META NAME="AUTHOR" CONTENT="Elliotte Rusty Harold">
+	<META NAME="CREATED" CONTENT="20020121;17260000">
+	<META NAME="CHANGED" CONTENT="20031030;12493700">
+	<STYLE>
+	<!--
+		@page { size: 8.5in 11in; margin-left: 0.92in; margin-right: 0.92in; margin-top: 1in; margin-bottom: 1in }
+		P { margin-bottom: 0.08in; color: #000000; text-align: justify; widows: 2; orphans: 2 }
+		P.western { font-family: "Times New Roman", serif; font-size: 10pt; so-language: en-US }
+		P.cjk { font-family: "Times New Roman", serif; font-size: 10pt; so-language:  }
+		BLOCKQUOTE { margin-top: 0.08in; color: #000000; text-align: justify; widows: 2; orphans: 2 }
+		BLOCKQUOTE.western { font-family: "Times New Roman", serif; font-size: 10pt; so-language: en-US }
+		BLOCKQUOTE.cjk { font-family: "Times New Roman", serif; font-size: 10pt; so-language:  }
+		PRE { margin-top: 0.01in; margin-bottom: 0.01in; color: #000000; text-align: justify; widows: 2; orphans: 2 }
+		PRE.western { font-family: "Cumberland", monospace; so-language: en-US }
+		PRE.cjk { font-family: "Cumberland", monospace; so-language:  }
+		PRE.ctl { font-family: "Cumberland", monospace }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="de-DE" TEXT="#000000" DIR="LTR">
+<P LANG="en-US" ALIGN=CENTER STYLE="margin-top: 0.17in; page-break-after: avoid">
+<FONT FACE="Albany, Arial, sans-serif"><FONT SIZE=5><B>12. Store
+metadata in attributes</B></FONT></FONT></P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">There's a
+recurring mild flame war on the xml-dev mailing list about when one
+should use attributes and when one should use elements. There's a
+slightly hotter one about whether one should ever use attributes at
+all. The bottom line is that it's really up to you. Do what feels
+right for your application. Most developers prefer to use attributes
+for metadata as opposed to the data itself, but this is a very rough
+rule of thumb at best. Of course, what's data and what's metadata
+depends heavily on who is reading your documents for what purpose.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">One way to
+determine whether information is metadata or not is ask yourself
+whether a person reading the text would want to see it. For example,
+consider the following paragraph from the XML Base specification:</P>
+<BLOCKQUOTE LANG="en-US" CLASS="western">The set of characters
+allowed in xml:base attributes is the same as for XML, namely
+[Unicode]. However, some Unicode characters are disallowed from URI
+references, and thus processors must encode and escape these
+characters to obtain a valid URI reference from the attribute value.</BLOCKQUOTE>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">If I were
+to mark this up in DocBook, every word above would be part of the
+element content:</P>
+<PRE LANG="en-US" CLASS="western">&lt;para id=&quot;p32&quot;&gt;
+  <SPAN LANG="en-US">The set of characters allowed in &lt;markup&gt;xml:base&lt;/markup&gt; </SPAN>
+  <SPAN LANG="en-US">attributes is the same as for XML, namely </SPAN>
+  <SPAN LANG="en-US">&lt;ulink url=&quot;http://www.w3.org/TR/xmlbase/#Unicode&quot;&gt;[Unicode]&lt;/ulink&gt;.</SPAN>
+  <SPAN LANG="en-US">However, some Unicode characters are disallowed from URI references, </SPAN>
+  <SPAN LANG="en-US">and thus processors &lt;ulink type=&quot;Must, May, etc.&quot; </SPAN>
+  <SPAN LANG="en-US">url=&quot;http://www.w3.org/TR/xmlbase/#dt-must&quot;&gt;must&lt;/ulink&gt; encode </SPAN>
+  <SPAN LANG="en-US">and escape these characters to obtain a valid URI reference from the</SPAN>
+  <SPAN LANG="en-US">attribute value.</SPAN>
+<SPAN LANG="en-US">&lt;/para&gt;</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">
+However, the following parts would be stored in attribute values:</P>
+<UL>
+	<UL>
+		<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">IDs</P>
+		<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">Styles</P>
+		<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">URLs
+		of the remote links</P>
+		<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">Titles
+		of the remote links</P>
+		<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">Revision
+		dates</P>
+		<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">Author's
+		name</P>
+	</UL>
+</UL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">What
+unifies all these pieces of data is that the reader doesn't want to
+see any of them as part of the normal flow of text. They're useful,
+and they have a purpose. For instance, without the URL in the url
+attribute, the browser doesn't know where a link goes to. Without the
+id attribute, other pages can't link to this paragraph. Without
+revision tracking information, the author can't review and accept or
+reject changes. However, none of these things matter to the end
+reader, who just wants to read words in a row. Some of the attribute
+values may affect how the text is presented to the reader; for
+example, whether a word is italicized or whether a link is
+underlined. But in no case does the reader actually want to see the
+text that makes up the attribute value. After all, this would be much
+more confusing:</P>
+<BLOCKQUOTE LANG="en-US" CLASS="western">p32 The set of characters
+allowed in xml:base attributes is the same as for XML, namely
+[Unicode  http://www.w3.org/TR/xmlbase/#Unicode ]. However, some
+Unicode characters are disallowed from URI references, and thus
+processors must Must, May, etc. http://www.w3.org/TR/xmlbase/#dt-must
+encode and escape these characters to obtain a valid URI reference
+from the attribute value.</BLOCKQUOTE>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">In a few
+cases, the reader may want to see the content of the attribute value
+in special circumstances. For instance, when the user moves the mouse
+over a link, the browser may show the link title or URL in a tooltip
+or the browser status bar. However, this is extra information that
+still isn't provided as part of the normal flow of text.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">The
+dividing line between data and metadata isn't nearly as clear in
+record-like documents as it is in narrative documents. Different
+users may well be interested in different aspects of the content.
+What is irrelevant data for one user may well be the whole point for
+another reader. There are often several reasonable ways to divide the
+data between element content and attribute values. Nonetheless the
+same basic principle applies: if the information is core, place it in
+element content. Reserve attributes for housekeeping information such
+as arbitrary ID numbers.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">Although
+the rough distinction between data and metadata is a useful way to
+decide whether or not to place some simple text in an attribute,
+there is one rule that trumps this. Structured data should be part of
+element content. Attribute values contain undifferentiated text. They
+have no substructure, at least none that's accessible to the XML
+parser. An attribute value can contain a number, a URL, a date, a
+time, or some other atomic value. However, more complicated
+structures often require division into component parts, and you can
+only reasonably do this with elements. For example, consider this
+blockquote element where a src attribute is used to identify the
+source of the quote:</P>
+<PRE LANG="en-US" CLASS="western">&lt;blockquote src=&quot;Christopher Locke, &amp;quot;Post-Apocalypso,&amp;quot; in 
+<SPAN LANG="en-US">The Cluetrain Manifesto, (Cambridge: Perseus Books, 1999), p. 175&quot;&gt;</SPAN>
+  <SPAN LANG="en-US">&lt;p&gt;</SPAN>
+    <SPAN LANG="en-US">There never was any grand plan on the Internet, and there isn't one </SPAN>
+    <SPAN LANG="en-US">today. The Net is just the Net. But it &lt;em&gt;has&lt;/em&gt; provided an</SPAN>
+    <SPAN LANG="en-US">extraordinarily efficient means of communication to people so long</SPAN>
+    <SPAN LANG="en-US">ignored, so long invisible, that they're only now figuring out </SPAN>
+    <SPAN LANG="en-US">what to do with it. Funny thing: lawless, planless, </SPAN>
+    <SPAN LANG="en-US">management-free, they're figuring out what to do with the Internet</SPAN>
+    <SPAN LANG="en-US">much faster than government agencies, academic institutions, media</SPAN>
+    <SPAN LANG="en-US">conglomerates, and Fortune-class corporations.</SPAN>
+  <SPAN LANG="en-US">&lt;/p&gt;</SPAN>
+<SPAN LANG="en-US">&lt;/blockquote&gt;</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">
+There are many different units of information in the src attribute:
+the author, the title of the chapter, the title of the book, the
+publisher, the page number, and so on. Perhaps these could be divided
+into separate attributes like this:</P>
+<PRE LANG="en-US" CLASS="western">&lt;blockquote author_name=&quot;Christopher Locke&quot;
+            <SPAN LANG="en-US">chapter_title=&quot;Post-Apocalypso&quot;</SPAN>
+            <SPAN LANG="en-US">book_title=&quot;The Cluetrain Manifesto&quot;</SPAN>
+            <SPAN LANG="en-US">page_number=&quot;175&quot;</SPAN>
+            <SPAN LANG="en-US">publisher_name=&quot;Perseus Books&quot;</SPAN>
+            <SPAN LANG="en-US">publisher_city=&quot;Cambridge&quot;</SPAN>
+            <SPAN LANG="en-US">year=&quot;1999&quot;&gt;</SPAN>
+<SPAN LANG="en-US">... </SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">
+However, this loses track of the substructure such as the difference
+between first and last name, or the order. For instance, I carefully
+wrote the original citation so that it adheres to the rules of the
+<I>Chicago Manual of Style</I>. Once it's split into separate
+attributes, that's no longer true.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">Even
+worse, what if the chapter has more than one author? There can only
+be one attribute with the name author on any given element, but
+there's no limit to the number of child elements it can have. No,
+what's really called for here is a child source element, even though
+the source is obviously metadata about the quotation rather than core
+information.</P>
+<PRE LANG="en-US" CLASS="western">&lt;blockquote&gt;
+  <SPAN LANG="en-US">&lt;p&gt;</SPAN>
+    <SPAN LANG="en-US">There never was any grand plan on the Internet, and there isn't one </SPAN>
+    <SPAN LANG="en-US">today. The Net is just the Net. But it &lt;em&gt;has&lt;/em&gt; provided an</SPAN>
+    <SPAN LANG="en-US">extraordinarily efficient means of communication to people so long</SPAN>
+    <SPAN LANG="en-US">ignored, so long invisible, that they're only now figuring out </SPAN>
+    <SPAN LANG="en-US">what to do with it. Funny thing: lawless, planless, </SPAN>
+    <SPAN LANG="en-US">management-free, they're figuring out what to do with the Internet</SPAN>
+    <SPAN LANG="en-US">much faster than government agencies, academic institutions, media</SPAN>
+    <SPAN LANG="en-US">conglomerates, and Fortune-class corporations.</SPAN>
+  <SPAN LANG="en-US">&lt;/p&gt;</SPAN>
+  
+  <SPAN LANG="en-US">&lt;source&gt;</SPAN>
+     <SPAN LANG="en-US">&lt;author&gt;</SPAN>
+       <SPAN LANG="en-US">&lt;name&gt;&lt;given&gt;Christopher&lt;given&gt; &lt;family&gt;Locke&lt;/family&gt;&lt;/name&gt;</SPAN>
+     <SPAN LANG="en-US">&lt;/author&gt;</SPAN>
+     <SPAN LANG="en-US">&lt;chapter&gt;</SPAN>
+       <SPAN LANG="en-US">&lt;title&gt;Post-Apocalypso&lt;/title&gt; </SPAN>
+      <SPAN LANG="en-US">&lt;/chapter&gt;</SPAN>
+      <SPAN LANG="en-US">&lt;book&gt;The Cluetrain Manifesto&lt;/book&gt;</SPAN>
+      <SPAN LANG="en-US">&lt;page&gt;175&lt;/page&gt;</SPAN>
+      <SPAN LANG="en-US">&lt;city&gt;Cambridge&lt;/city&gt;</SPAN>
+      <SPAN LANG="en-US">&lt;publisher&gt;Perseus Books&lt;/publisher&gt;</SPAN>
+      <SPAN LANG="en-US">&lt;year&gt;1999&lt;/year&gt;</SPAN>
+  <SPAN LANG="en-US">&lt;/source&gt;</SPAN>
+<SPAN LANG="en-US">&lt;/blockquote&gt;</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">
+Once the substructure is expressed with elements, it's
+straight-forward for a stylesheet to show or hide any parts of the
+content you do or do not want shown. For example, you might want to
+include the name of the author, the title of the book, the year, and
+the page number; but leave out the publisher and chapter. These CSS
+rules  accomplish that:</P>
+<PRE LANG="en-US" CLASS="western">source, author, book, year, page { display: inline }
+<SPAN LANG="en-US">publisher, chapter, city { display: none }</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">
+You really couldn't do that if you just had one big attribute to work
+with. 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">Elements
+have one final advantage over attributes: they are much more
+extensible in the face of future changes. For example, many libraries
+like to give the author's birth year in their card catalogs. With
+elements this is easy to add:</P>
+<PRE LANG="en-US" CLASS="western">&lt;author&gt;
+  <SPAN LANG="en-US">&lt;name&gt;&lt;given&gt;Christopher&lt;given&gt; &lt;family&gt;Locke&lt;/family&gt;&lt;/name&gt;</SPAN>
+  <SPAN LANG="en-US">&lt;born&gt;1950&lt;/born&gt;</SPAN>
+<SPAN LANG="en-US">&lt;/author&gt;</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">
+With attributes adding additional content is much more cumbersome.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">One common
+use of attributes that I think does clearly meet the characteristic
+of being metadata that belongs in an attribute rather than data for a
+child element is the need to identify subtype of a particular
+element. For instance, in HTML and XHTML, you often see elements
+annotated with a class attribute, most commonly div and span:</P>
+<PRE LANG="en-US" CLASS="western">&lt;div class=&quot;sect2&quot;&gt;...&lt;/&lt;div&gt;
+<SPAN LANG="en-US">&lt;div class=&quot;titlepage&quot;&gt;...&lt;/div&gt;</SPAN>
+<SPAN LANG="en-US">&lt;div class=&quot;informalexample&quot;&gt;...&lt;/div&gt;</SPAN>
+<SPAN LANG="en-US">&lt;div class=&quot;summary&quot;&gt;...&lt;/div&gt;</SPAN>
+<SPAN LANG="en-US">&lt;span class=&quot;person&quot;&gt;...&lt;/span&gt;</SPAN>
+<SPAN LANG="en-US">&lt;span class=&quot;book&quot;&gt;...&lt;/span&gt;</SPAN>
+<SPAN LANG="en-US">&lt;img class=&quot;equation&quot; src=&quot;maxwell.gif&quot; width=&quot;120&quot; height=&quot;30&quot;/&gt;</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">
+Here, the class attribute is extending the normally fairly fixed HTML
+vocabulary. Identifying elements by class enables the author to apply
+different styles or processing rules to elements of different
+classes, even though they have the same name. This, I think, is
+clearly metadata. It is metadata in the same way that an element name
+is metadata. In effect these attributes are substituting for invalid
+element names. Thus they belong in the start-tag, just like an
+element name. If you find you're using such attributes frequently,
+then it indicates that your markup vocabulary is not a good fit to
+your data. 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">DocBook
+uses the role attribute in a similar way, to allow authors to attach
+arbitrary roles to elements that the designers of DocBook did not
+anticipate. A little more formally, the DocBook systemitem element
+has a class attribute whose value is given as an enumerated list of
+specific types of systemitem such as domainname, ipaddress,
+newsgroup, and username:</P>
+<PRE LANG="en-US" CLASS="western">&lt;phrase role=&quot;formula&quot;&gt;H2O&lt;/phrase&gt;
+<SPAN LANG="en-US">&lt;phrase role=&quot;prescription&quot;&gt;Paxil, 20 mg&lt;/phrase&gt;</SPAN>
+<SPAN LANG="en-US">&lt;personname role=&quot;plumber&quot;&gt;</SPAN>
+  <SPAN LANG="en-US">&lt;firstname&gt;Laurence&lt;/firstname&gt; </SPAN>
+  <SPAN LANG="en-US">&lt;lastname&gt;Bienvenue&lt;/lastname&gt;</SPAN>
+<SPAN LANG="en-US">&lt;/personname&gt;</SPAN>
+<SPAN LANG="en-US">&lt;systemitem class=&quot;domainname&quot;&gt;www.cluetrain.com&lt;/systemitem&gt;</SPAN>
+<SPAN LANG="en-US">&lt;systemitem class=&quot;username&quot;&gt;eharold&lt;/systemitem&gt;</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">
+DocBook treats this very sensibly. If a particular role or class is
+found to be used frequently in practice, then it's a strong candidate
+for addition to the next version of DocBook as an element. Indeed
+several current DocBook elements such as environvar and prompt
+started life as systemitem classes or mere roles.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">In the
+end, if you have any doubt about whether information is metadata or
+data, I suggest that you place it in element content. There's little
+an attribute can do that an element can't, but much that an element
+can do that an attribute can't. The costs of mis-marking data that
+should be elements as attributes are much higher than the cots of
+mis-marking data that should be attributes as elements.</P>
+</BODY>
+</HTML>

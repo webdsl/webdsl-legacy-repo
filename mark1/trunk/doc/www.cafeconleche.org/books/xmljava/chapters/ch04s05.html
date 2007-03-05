@@ -1,0 +1,723 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Building Hierarchical Structures from Flat Data</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="previous" href="ch04s04.html" title="Determining the Output Format"><link rel="next" href="ch04s06.html" title="Alternatives to Java"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Building Hierarchical Structures from Flat Data</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch04s04.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;4.&nbsp;Converting Flat Files to XML</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch04s06.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e6292"></a>Building Hierarchical Structures from Flat Data</h2></div></div><p>
+    Sometimes you want to convert only a subset of the available data.
+    For example, you might want to store each year in a separate 
+    XML document. With a few tweaks to the basic code, this is 
+    not hard to do. Another possibility is to arrange the data hierarchically,
+    with <tt>Agency</tt> elements containing <tt>Bureau</tt> elements which contain
+    <tt>Account</tt> elements which contain <tt>Subfunction</tt> elements.
+    This is a little more complex, but far from impossible.
+    Or perhaps you want to massage the data while converting it, for instance
+    by changing the amounts of thousands of dollars to amounts of single dollars. 
+    Or you can do all three. 
+    The hierarchy would be arranged something like <a href="ch04s05.html#HierarchySample.xml" title="Example&nbsp;4.5.&nbsp;A hierarchical arrangement of the budget data">Example&nbsp;4.5</a>:
+  </p><div class="example"><a name="HierarchySample.xml"></a><p class="title"><b>Example&nbsp;4.5.&nbsp;A hierarchical arrangement of the budget data</b></p><pre class="programlisting">&lt;?xml version="1.0"?&gt;
+&lt;Budget year="2001"&gt;
+  &lt;Agency&gt;
+    &lt;Name&gt;Farm Credit System Financial Assistance Corporation&lt;/Name&gt;
+    &lt;Code&gt;354&lt;/Code&gt;
+    &lt;Bureau&gt;
+      &lt;Name&gt;Farm Credit System Financial Assistance Corporation&lt;/Name&gt;
+      &lt;Code&gt;00&lt;/Code&gt;
+      &lt;Account&gt;
+        &lt;Name&gt;Financial assistance corporation trust fund&lt;/Name&gt;
+        &lt;Code&gt;8202&lt;/Code&gt;
+        &lt;BEACategory&gt;Mandatory&lt;/BEACategory&gt;
+        &lt;Subfunction&gt;
+          &lt;Title&gt;Farm income stabilization&lt;/Title&gt;
+          &lt;Code&gt;351&lt;/Code&gt;
+          &lt;Amount&gt;-1000&lt;/Amount&gt;
+        &lt;/Subfunction&gt;
+      &lt;/Account&gt;
+    &lt;/Bureau&gt;
+  &lt;/Agency&gt;
+  &lt;Agency&gt;
+    &lt;Name&gt;Department of Education&lt;/Name&gt;
+    &lt;Code&gt;018&lt;/Code&gt;
+    &lt;Bureau&gt;
+      &lt;Name&gt;Office of Elementary and Secondary Education&lt;/Name&gt;
+      &lt;Code&gt;10&lt;/Code&gt;
+      &lt;Account&gt;
+        &lt;Name&gt;Reading excellence&lt;/Name&gt;
+        &lt;Code&gt;0011&lt;/Code&gt;
+        &lt;BEACategory&gt;Discretionary&lt;/BEACategory&gt;
+        &lt;Subfunction&gt;
+          &lt;Title&gt;
+            Elementary, secondary, and vocational education
+          &lt;/Title&gt;
+          &lt;Code&gt;501&lt;/Code&gt;
+          &lt;Amount&gt;286000000&lt;/Amount&gt;
+        &lt;/Subfunction&gt;
+      &lt;/Account&gt;
+      &lt;Account&gt;
+        &lt;Name&gt;Indian education&lt;/Name&gt;
+        &lt;Code&gt;0101&lt;/Code&gt;
+        &lt;BEACategory&gt;Discretionary&lt;/BEACategory&gt;
+        &lt;Subfunction&gt;
+          &lt;Title&gt;
+            Elementary, secondary, and vocational education
+          &lt;/Title&gt;
+          &lt;Code&gt;501&lt;/Code&gt;
+          &lt;Amount&gt;116000000&lt;/Amount&gt;
+        &lt;/Subfunction&gt;
+      &lt;/Account&gt;
+      &lt;!-- more accounts...--&gt;
+    &lt;/Bureau&gt;
+    &lt;Bureau&gt;
+      &lt;Name&gt;
+        Office of Bilingual Education and Minority Languages Affairs
+      &lt;/Name&gt;
+      &lt;Code&gt;15&lt;/Code&gt;
+      &lt;Account&gt;
+        &lt;Name&gt;Bilingual and immigrant education&lt;/Name&gt;
+        &lt;Code&gt;1300&lt;/Code&gt;
+        &lt;BEACategory&gt;Discretionary&lt;/BEACategory&gt;
+        &lt;Subfunction&gt;
+          &lt;Title&gt;
+            Elementary, secondary, and vocational education
+          &lt;/Title&gt;
+          &lt;Code&gt;501&lt;/Code&gt;
+          &lt;Amount&gt;460000000&lt;/Amount&gt;
+        &lt;/Subfunction&gt;
+      &lt;/Account&gt;
+    &lt;/Bureau&gt;
+    &lt;!-- more bureaus...--&gt;
+  &lt;/Agency&gt;
+  &lt;!-- many more agencies... --&gt;
+&lt;/Budget&gt;</pre></div><p>
+    There are two basic approaches to imposing hierarchy on the
+    flat structures we&#8217;re starting with. One is to build the hierarchy
+    into the Java data structures in memory. Then these data structures 
+    can be output in XML quite simply. The alternative is to leave the data
+    structures in memory flat, but try to insert the hierarchy as the output code is 
+    being written. The latter approach is not too difficult when the data can
+    be easily sorted, but
+    most of the time I find the former approach to be simpler.
+  </p><p>
+    Although all the data could still be stored in lists of lists and
+    lists of maps and maps of lists and so forth, I really do find
+    that at this point the data structures are clearer if we name them;
+    and in Java there really isn&#8217;t any difference between a named data structure
+    and a class. Thus we can describe the structure as classes and objects.
+    Informally, the structure looks like this:
+  </p><div class="informalexample"><pre class="programlisting">class Budget {
+ 
+  String year;
+  List   agencies;
+            
+}
+
+class Agency {
+ 
+  String code;
+  String treasuryCode;
+  String name;
+  List   bureaus;
+            
+}
+
+class Bureau {
+ 
+  String code;
+  String name;
+  List   accounts;       
+        
+}
+
+class Account {
+ 
+  String code;
+  String name;
+  String BEACategory;
+  List   subfunctions;
+    
+}
+
+class Subfunction {
+ 
+  String code;
+  String title;
+  long   amount;  
+        
+}</pre></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Note</h3><p>
+ I must admit that the lack of generic types (templates to C++
+programmers) hurts a little here. For example, I want to say that an
+<tt>Agency</tt> contains a list of
+<tt>Bureau</tt>s. However, all I can really say is that an
+<tt>Agency</tt> contains a list of objects and that this
+list happens to be named <tt>bureaus</tt>. It&#8217;s not a huge
+problem&#8212;if it were, I could always define my own custom list
+classes with the appropriate types&#8212;but it does lead to a less
+natural solution than generic types do. I thought seriously about using 
+generics for this example,
+but that would limit this code to Java 1.4. Maybe for the second edition.
+    </p></div><p>
+    Of course, we&#8217;ll also need a number of methods in these classes.
+    Factory methods will be used instead of constructors
+    to guarantee that 19 IRS <tt>Bureau</tt> objects aren&#8217;t created just because
+    the IRS has 19 line items in the budget.  (One IRS is bad enough. :-) )
+    Each class will have a <tt>getXML()</tt> method that returns 
+    a <tt>String</tt> containing the
+    XML form of the object. And each class will have a method to add a child 
+    node of the appropriate type. <a href="ch04s05.html#BudgetClasses.jpg" title="Figure&nbsp;4.2.&nbsp;A UML diagram for the budget class hierarchy">Figure&nbsp;4.2</a>
+    shows a UML static structure diagram for the complete group of classes. 
+  </p><div class="figure"><a name="BudgetClasses.jpg"></a><p class="title"><b>Figure&nbsp;4.2.&nbsp;A UML diagram for the budget class hierarchy</b></p><div class="mediaobject"><img src="BudgetClasses.jpg"></div></div><p>
+    The <tt>Budget</tt> class, <a href="ch04s05.html#Budget.java" title="Example&nbsp;4.6.&nbsp;The Budget class">Example&nbsp;4.6</a> 
+    is at the top of the tree. It contains a list of agencies and
+    a year. Line items encoded as maps by <tt>BudgetData</tt> are fed into 
+    the tree through the <tt>add()</tt> method.
+    This method breaks that map up into the relevant parts, encodes each as an
+    object, adds each of those objects to the tree in the right place, and
+    stores the agency in the list of agencies. The various <tt>add()</tt> methods
+    in both this and the other classes are responsible for putting
+    each piece in the right place. 
+  </p><div class="example"><a name="Budget.java"></a><p class="title"><b>Example&nbsp;4.6.&nbsp;The Budget class</b></p><pre class="programlisting">import java.util.*;
+
+
+public class Budget {
+
+  private List   agencies = new ArrayList();
+  private String year;
+  
+  public Budget(String year) {
+    this.year = year;
+  }
+  
+  public void add(Agency agency) {
+    if (!agencies.contains(agency)) agencies.add(agency);     
+  }
+
+  public void add(Map lineItem) { 
+           
+    String agencyName = (String) lineItem.get("AgencyName");
+    agencyName = escapeText(agencyName);
+    String agencyCode = (String) lineItem.get("AgencyCode");
+    String treasuryAgencyCode 
+     = (String) lineItem.get("TreasuryAgencyCode");
+    Agency agency = Agency.getInstance(agencyName, agencyCode, 
+     treasuryAgencyCode, year);
+    this.add(agency);
+    
+    String bureauName = (String) lineItem.get("BureauName");
+    bureauName = escapeText(bureauName);
+    String bureauCode = (String) lineItem.get("BureauCode");
+    Bureau bureau = Bureau.getInstance(bureauName, bureauCode, 
+     agencyCode, year);
+    agency.add(bureau);
+    
+    // Names and codes of two accounts in different bureaus 
+    // can be the same
+    String accountName = (String) lineItem.get("AccountName");
+    accountName = escapeText(accountName);
+    String accountCode = (String) lineItem.get("AccountCode");
+    String category    = (String) lineItem.get("BEACategory");
+    Account account = Account.getInstance(accountName,  
+     accountCode, category, bureauCode, agencyCode, year);
+    bureau.add(account);
+    
+    // Names and codes of two subfunctions in different accounts 
+    // can be the same
+    String subfunctionTitle 
+     = escapeText((String) lineItem.get("SubfunctionTitle"));
+    String subfunctionCode
+     = (String) lineItem.get("SubfunctionCode");
+    String yearKey = year;
+    if (!yearKey.equals("TransitionQuarter")) {
+      yearKey = "FY" + year;
+    }
+    long amount
+     = 1000L * Long.parseLong((String) lineItem.get(yearKey));
+    Subfunction subfunction = new Subfunction(subfunctionTitle,
+     subfunctionCode, amount);
+    account.add(subfunction);
+        
+  } 
+
+  public String getXML() {
+        
+    StringBuffer result = new StringBuffer("&lt;Budget year='" 
+     + this.year +"'&gt;\r\n");
+    Iterator iterator = agencies.iterator();
+    while (iterator.hasNext()) {
+      Agency agency = (Agency) iterator.next();
+      result.append(agency.getXML());
+    }
+    result.append("&lt;/Budget&gt;\r\n");
+    return result.toString();
+    
+  }
+  
+  public static String escapeText(String s) {
+   
+    if (s.indexOf('&amp;') != -1 || s.indexOf('&lt;') != -1
+     || s.indexOf('&gt;') != -1 || s.indexOf('"') != -1
+     || s.indexOf('\'') != -1 ) {
+      StringBuffer result = new StringBuffer(s.length() + 6);
+      for (int i = 0; i &lt; s.length(); i++) {
+        char c = s.charAt(i);
+        if (c == '&amp;') result.append("&amp;amp;");
+        else if (c == '&lt;') result.append("&amp;lt;");
+        else if (c == '"') result.append("&amp;quot;");
+        else if (c == '\'') result.append("&amp;apos;");
+        else if (c == '&gt;') result.append("&amp;gt;");
+        else result.append(c);
+      }
+      return result.toString();  
+    }
+    else {
+      return s;   
+    }
+        
+  }
+  
+}
+</pre></div><p> 
+    Most of the other classes are structurally the same with subtle variations.
+    Each has a list of its children, 
+    a private constructor, a public factory method, 
+    an <tt>add()</tt> method to add a child
+    of the appropriate type, and a <tt>getXML()</tt> method 
+    that returns the XML representation of the object as a 
+    <tt>String</tt>.
+    I&#8217;ll begin with the
+    <tt>Agency</tt> class in <a href="ch04s05.html#Agency.java" title="Example&nbsp;4.7.&nbsp;The Agency class">Example&nbsp;4.7</a>.
+  </p><div class="example"><a name="Agency.java"></a><p class="title"><b>Example&nbsp;4.7.&nbsp;The Agency class</b></p><pre class="programlisting">import java.util.*;
+
+
+public class Agency {
+ 
+  private String code;
+  private String name;
+  private String treasuryCode;
+  private String year;
+  
+  private List   bureaus = new ArrayList();
+  
+  private static Map instances = new HashMap();
+
+  // A private constructor so instantiators 
+  // have to use the factory method
+  private Agency(String name, String code, String treasuryCode, 
+	 String year) {
+        
+    this.name = name;
+    this.code = code;
+    this.treasuryCode = treasuryCode;
+    this.year = year;
+    
+  }
+  
+  public static Agency getInstance(String name, String code, 
+	 String treasuryCode, String year) {
+        
+    // Agencies can be uniquely identified by code alone
+    String key = code+" "+year;
+    Agency agency = (Agency) instances.get(key);
+    if (agency == null) {
+      agency = new Agency(name, code, treasuryCode, year);
+      instances.put(key, agency);
+    }
+    
+    return agency;
+        
+  }
+  
+  public void add(Bureau b) {
+    if (!bureaus.contains(b)) {
+        bureaus.add(b);
+    }
+  }
+  
+  public String getXML() {
+        
+    StringBuffer result = new StringBuffer("  &lt;Agency&gt;\r\n");
+    result.append("    &lt;Name&gt;" + name + "&lt;/Name&gt;\r\n");
+    result.append("    &lt;Code&gt;" + code + "&lt;/Code&gt;\r\n");
+    result.append("    &lt;TreasuryAgencyCode&gt;" + treasuryCode 
+     + "&lt;/TreasuryAgencyCode&gt;\r\n");
+    Iterator iterator = bureaus.iterator();
+    while (iterator.hasNext()) {
+      Bureau bureau = (Bureau) iterator.next();
+      result.append(bureau.getXML());
+    }
+    result.append("  &lt;/Agency&gt;\r\n");
+    return result.toString();
+    
+  }  
+           
+}
+</pre></div><p>
+     This is not a general purpose class. The public interface is limited
+     to a factory method, a method to add 
+     a <tt>Bureau</tt> to the <tt>Agency</tt>, 
+     and a method to get the XML representation of the object as a 
+     <tt>String</tt>. There aren&#8217;t even any
+     getter methods.  I&#8217;ve deliberately chosen not to burden this and the other classes with
+     a lot of error checking. I&#8217;m assuming that will be done both in the database
+     before the data is input here and later through validation
+     after the XML document has been produced. Doing it here too just
+     seemed a tad superfluous. 
+   </p><p>
+   Clients retrieve instances of the class
+     using the <tt>getInstance()</tt> factory method. 
+    The first time this class is asked to get a particular agency
+    it constructs it using the private constructor, stores it
+    in the static <tt>instances</tt> map, and returns a reference to it.
+    Subsequent requests will return 
+    the formerly created object from the map. 
+    The key for the map is the concatenation of the agency&#8217;s code and year.
+   </p><p>
+     The <tt>add()</tt> method simply stores 
+     <tt>Bureau</tt> objects in the 
+     <tt>bureaus</tt> list.  Since <tt>bureaus</tt> 
+     is private and only accessed through this <tt>add()</tt> method, 
+     we can be certain that no
+     non-<tt>Bureau</tt> objects will ever 
+     get added to this list. We can further guarantee that the list 
+     doesn&#8217;t contain any duplicates. 
+   </p><p>
+     The  <tt>getXML()</tt> method returns an 
+     XML representation of this <tt>Agency</tt> object.
+     It loops through all the bureaus the agency contains,
+     and uses their <tt>getXML()</tt> methods 
+     to get the XML representations
+     for each of them. The XML is returned as a <tt>String</tt>.
+     An alternative approach that might be more memory efficient 
+     and perhaps a little faster, especially in streaming applications,
+     would be to
+     pass the <tt>OutputStream</tt> or <tt>Writer</tt> 
+     that the XML should be written onto
+     to the <tt>getXML()</tt> method. In essence, this would be a 
+     <tt>writeXML()</tt> method rather than a 
+     <tt>getXML()</tt> method.
+   </p><p>
+     The code here is far from the most efficient possible.
+     There are a lot of optimizations that could be done, including
+     many that would build far fewer intermediate string representations of
+     each element. For instance, you could pass in the <tt>StringBuffer</tt> 
+     to append to to
+     each <tt>getXML()</tt> method. However,
+     since this is intended primarily as a one-off solution,
+     the optimization didn&#8217;t seem to be worth the investment of time
+     or the added complexity.
+   </p><p>
+     The <tt>Bureau</tt> class shown in 
+     <a href="ch04s05.html#Bureau.java" title="Example&nbsp;4.8.&nbsp;The Bureau Class">Example&nbsp;4.8</a> is much the same except
+     that it contains a list of accounts. Furthermore, both an agency code
+     and a bureau code are required to
+     uniquely identify bureaus. The bureau code alone is not sufficient,
+     so the keys for the <tt>instances</tt> map 
+     are formed by concatenating the agency code, the bureau code,
+     and the year.
+   </p><div class="example"><a name="Bureau.java"></a><p class="title"><b>Example&nbsp;4.8.&nbsp;The Bureau Class</b></p><pre class="programlisting">import java.util.*;
+
+
+public class Bureau {
+ 
+  // Agency code plus bureau code uniquely identify a bureau  
+  // Bureau code alone is definitely not sufficient
+  private String code;
+  private String name;
+  private String year;
+  private String agencyCode;
+  
+  private List   accounts = new ArrayList();
+  
+  private static Map instances = new HashMap();
+
+  // Use a private constructor so instantiators 
+  // have to use the factory method
+  private Bureau(String name, String code, String agencyCode, 
+    String year) {
+        
+    this.name = name;
+    this.code = code;
+    this.agencyCode = agencyCode;
+    this.year = year;
+    
+  }
+  
+  public static Bureau getInstance(String name, String code, 
+   String agencyCode, String year) {
+        
+    String key = agencyCode+" "+code+" "+year;
+    Bureau bureau = (Bureau) instances.get(key);
+    if (bureau == null) {
+      bureau = new Bureau(name, code, agencyCode, year);
+      instances.put(key, bureau);
+    }
+    
+    return bureau;
+        
+  }
+  
+  public void add(Account account) {
+    if (!accounts.contains(account)) accounts.add(account);     
+  }
+  
+  public String getXML() {
+        
+    StringBuffer result = new StringBuffer("    &lt;Bureau&gt;\r\n");
+    result.append("      &lt;Name&gt;" + name + "&lt;/Name&gt;\r\n");
+    result.append("      &lt;Code&gt;" + code + "&lt;/Code&gt;\r\n");
+    Iterator iterator = accounts.iterator();
+    while (iterator.hasNext()) {
+      Account account = (Account) iterator.next();
+      result.append(account.getXML());
+    }
+    result.append("    &lt;/Bureau&gt;\r\n");
+    return result.toString();
+    
+  }
+          
+}
+</pre></div><p>
+     The <tt>Account</tt> class shown in
+     <a href="ch04s05.html#Account.java" title="Example&nbsp;4.9.&nbsp;An Account Class">Example&nbsp;4.9</a> is similar to
+     <tt>Bureau</tt> and <tt>Agency</tt>.
+     Accounts are uniquely identified by an account code, a bureau code, 
+     an agency
+     code, and a BEA code.
+     Otherwise, this class is structured the same as the last two. 
+   </p><div class="example"><a name="Account.java"></a><p class="title"><b>Example&nbsp;4.9.&nbsp;An Account Class</b></p><pre class="programlisting">import java.util.*;
+
+
+public class Account {
+ 
+  // An account is uniquely identified by account code,
+  // bureau code, agency code and BEA category
+  private String code;
+  private String name;
+  private String BEACategory;
+  private String bureauCode;
+  private String agencyCode;
+  private String year;
+  
+  private List   subfunctions = new ArrayList();
+  
+  private static Map instances = new HashMap();
+
+  // Use a private constructor so clients 
+  // have to use the factory method
+  private Account(String name, String code, String BEACategory, 
+   String bureauCode, String agencyCode, String year) {
+        
+    this.name = name;
+    this.code = code;
+    this.BEACategory = BEACategory;
+    this.bureauCode = bureauCode;
+    this.agencyCode = agencyCode;
+    this.year = year;
+    
+  }
+  
+  public static Account getInstance(String name, String code, 
+   String BEACategory, String bureauCode, String agencyCode, 
+   String year) {
+        
+    String key = code + " " + BEACategory + " " + bureauCode 
+     + " " + agencyCode + " " + year;
+    Account account = (Account) instances.get(key);
+    if (account == null) {
+      account = new Account(name, code, BEACategory, bureauCode, 
+       agencyCode, year);
+      instances.put(key, account);
+    }
+    
+    return account;
+        
+  }
+  
+  public void add(Subfunction sfx) {
+    if (!subfunctions.contains(sfx)) subfunctions.add(sfx);     
+  }
+  
+  public String getXML() {
+        
+    StringBuffer result = new StringBuffer();
+    result.append("      &lt;Account&gt;\r\n");
+    result.append("        &lt;Name&gt;" + name + "&lt;/Name&gt;\r\n");
+    result.append("        &lt;Code&gt;" + code + "&lt;/Code&gt;\r\n");
+    result.append("        &lt;BEACategory&gt;" + BEACategory 
+     + "&lt;/BEACategory&gt;\r\n");
+    Iterator iterator = subfunctions.iterator();
+    while (iterator.hasNext()) {
+      Subfunction subfunction = (Subfunction) iterator.next();
+      result.append(subfunction.getXML());
+    }
+    result.append("      &lt;/Account&gt;\r\n");
+    return result.toString();
+    
+  }
+           
+}
+</pre></div><p>
+     Finally the <tt>Subfunction</tt> class, 
+     <a href="ch04s05.html#Subfunction.java" title="Example&nbsp;4.10.&nbsp;The Subfunction Class">Example&nbsp;4.10</a>, contains a title,
+     a code, and an amount of money for a 
+     given year. Unlike agencies, bureaus, and accounts,
+     subfunctions are not necessarily unique. For example, the
+     &#8220;Department of Defense-Military&#8221; subfunction 
+     appears in 222 different accounts. Therefore this class does not 
+     use a factory method, 
+     just a regular constructor. 
+   </p><div class="example"><a name="Subfunction.java"></a><p class="title"><b>Example&nbsp;4.10.&nbsp;The Subfunction Class</b></p><pre class="programlisting">public class Subfunction {
+ 
+  private String code;
+  private String title;
+  private long   amount;
+    
+  public Subfunction(String title, String code, long amount) {
+        
+    this.title  = title;
+    this.code   = code;
+    this.amount = amount;
+    
+  }
+  
+  public String getXML() {
+        
+    StringBuffer result 
+      = new StringBuffer("        &lt;Subfunction&gt;\r\n");
+    result.append("          &lt;Name&gt;" + title + "&lt;/Name&gt;\r\n");
+    result.append("          &lt;Code&gt;" + code + "&lt;/Code&gt;\r\n");
+    result.append("          &lt;Amount&gt;");
+    result.append(amount + "&lt;/Amount&gt;\r\n");
+    result.append("        &lt;/Subfunction&gt;\r\n");
+    return result.toString();
+    
+  } 
+               
+}
+</pre></div><p>
+     The ultimate plan is to read all the records of the budget data, 
+     and use that information to  create objects of these classes. As 
+     each object is created, it will be added to its parent object&#8217;s 
+     list. When all records have been processed, the 
+     <tt>getXML()</tt> method of the  
+     <tt>Budget</tt> object will be invoked to retrieve 
+     the XML representation of the budget. This XML can be written 
+     onto an output stream. <a href="ch04s05.html#HierarchicalXMLBudget.java" title="Example&nbsp;4.11.&nbsp;The driver class that builds the data structure and writes it out again">Example&nbsp;4.11</a> does this. It has a
+     <tt>main()</tt> method to provide a simple user interface.
+     This just reads the year and the
+     input and output file names from the user, and calls  
+     <tt>convert()</tt>. The <tt>convert()</tt> method
+     delegates reading the input to the 
+     <tt>BudgetData</tt> class and the data-structure building 
+     and most of the output to
+     the <tt>Budget</tt> class. 
+   </p><div class="example"><a name="HierarchicalXMLBudget.java"></a><p class="title"><b>Example&nbsp;4.11.&nbsp;The driver class that builds the data structure and writes it out again</b></p><pre class="programlisting">import java.io.*;
+import java.util.*;
+
+
+public class HierarchicalXMLBudget {
+
+  public static void convert(List budgetData, String year, 
+   OutputStream out) throws IOException { 
+     
+    Budget budget = new Budget(year);
+    Iterator records = budgetData.iterator();
+    while (records.hasNext()) {
+      Map lineItem = (Map) records.next();
+      budget.add(lineItem);
+    }
+
+    Writer wout = new OutputStreamWriter(out, "UTF8"); 
+    wout.write("&lt;?xml version=\"1.0\"?&gt;\r\n");
+    wout.write(budget.getXML());
+    wout.flush();
+        
+  }
+
+  public static void main(String[] args) {
+  
+    try {
+        
+      if (args.length &lt; 2) {
+        System.out.println(
+         "Usage: HierarchicalXMLBudget year infile outfile");
+        return;
+      }
+      
+      // simple error checking on the year value
+      try {
+        if (!args[0].equals("TransitionQuarter")) {
+          Integer.parseInt(args[0]);
+        }
+      }
+      catch (NumberFormatException e) {
+        System.out.println(
+         "Usage: HierarchicalXMLBudget year infile outfile");
+        return;        
+      }
+      
+      InputStream in = new FileInputStream(args[1]); 
+      OutputStream out; 
+      if (args.length &lt; 3) {
+        out = System.out;
+      }
+      else {
+        out = new FileOutputStream(args[2]); 
+      }
+
+      List results = BudgetData.parse(in);
+      convert(results, args[0], out);
+    }
+    catch (IOException e) {
+      System.err.println(e);       
+    }
+  
+  }
+
+}
+</pre></div><p>
+    Here&#8217;s the start of a sample run:
+  </p><pre class="screen"><tt>C:\XMLJAVA&gt;</tt><b><tt>java HierarchicalXMLBudget 2002 budauth.txt</tt></b>
+<tt>&lt;?xml version="1.0"?&gt;
+&lt;Budget year='2002'&gt;
+  &lt;Agency&gt;
+    &lt;Name&gt;Legislative Branch&lt;/Name&gt;
+    &lt;Code&gt;001&lt;/Code&gt;
+    &lt;TreasuryAgencyCode&gt;&lt;/TreasuryAgencyCode&gt;
+    &lt;Bureau&gt;
+      &lt;Name&gt;Legislative Branch&lt;/Name&gt;
+      &lt;Code&gt;00&lt;/Code&gt;
+      &lt;Account&gt;
+        &lt;Name&gt;Receipts, Central fiscal operations&lt;/Name&gt;
+        &lt;Code&gt;&lt;/Code&gt;
+        &lt;BEACategory&gt;Mandatory&lt;/BEACategory&gt;
+        &lt;Subfunction&gt;
+          &lt;Name&gt;Central fiscal operations&lt;/Name&gt;
+          &lt;Code&gt;803&lt;/Code&gt;
+          &lt;Amount&gt;0&lt;/Amount&gt;
+        &lt;/Subfunction&gt;
+      &lt;/Account&gt;
+      &lt;Account&gt;
+        &lt;Name&gt;Receipts, Central fiscal operations&lt;/Name&gt;
+        &lt;Code&gt;&lt;/Code&gt;
+        &lt;BEACategory&gt;Net interest&lt;/BEACategory&gt;
+        &lt;Subfunction&gt;
+</tt>...</pre><p>
+  The technique used here is actually an extremely powerful one.
+  The data is read one item at a time. Each item is stored in a data structure.
+  The data structure automatically moves each item into its appropriate slot.
+  The final result is generated 
+  by a single method call to the root of the data structure.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Note</h3><p>
+     A similar approach would be to define classes
+     that represent the XML elements and attributes
+     rather than the input data. Indeed this is the approach taken by the Document
+     Object Model, DOM. I&#8217;ll explore this alternative in coming chapters. 
+   </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch04s04.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch04.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch04s06.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Determining the Output Format&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Alternatives to Java</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+August 17,
+2001</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

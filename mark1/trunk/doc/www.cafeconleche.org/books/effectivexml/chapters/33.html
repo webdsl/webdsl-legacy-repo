@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+	<TITLE>33. Choose DOM for Standards Support</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.3  (Linux)">
+	<META NAME="AUTHOR" CONTENT="Elliotte Rusty Harold">
+	<META NAME="CREATED" CONTENT="20020121;17260000">
+	<META NAME="CHANGED" CONTENT="20030422;9493500">
+	<STYLE>
+	<!--
+		@page { size: 21.59cm 27.94cm; margin-left: 2.33cm; margin-right: 2.33cm; margin-top: 2.54cm; margin-bottom: 2.54cm }
+		P { margin-bottom: 0.21cm; color: #000000; text-align: justify; widows: 2; orphans: 2 }
+		P.western { font-family: "Times New Roman", serif; font-size: 10pt; so-language: en-US }
+		P.cjk { font-family: "Times New Roman", serif; font-size: 10pt; so-language:  }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="de-DE" TEXT="#000000">
+<P LANG="en-US" ALIGN=CENTER STYLE="margin-top: 0.42cm; page-break-after: avoid">
+<FONT FACE="Albany, Arial, sans-serif"><FONT SIZE=5><B>33. Choose DOM
+for Standards Support</B></FONT></FONT></P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">While SAX
+programs are almost always faster and more memory efficient than the
+DOM equivalents, performance is not a god to be worshiped above all
+others. There are many times when using DOM makes sense. In
+particular, for many classes of applications, programmers will find
+DOM much easier to work with. If shaving off 10% of execution time or
+90% of space matters less to you than saving 10% of development time,
+then you need to consider whether DOM might better fit the problem at
+hand than SAX.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">In
+particular, the following characteristics indicate that a problem
+might be profitably addressed by DOM:</P>
+<UL>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">The
+	documents are small relative to the available memory; roughly 10% of
+	the heap size or less.</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Processing
+	requires random access to widely separated parts of the tree. For
+	instance, you need access to the last elements in the document
+	before you can figure out what to do with the first elements.</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">The
+	program needs to navigate backwards and up in the tree, as well as
+	forwards and down.</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">The
+	program needs to access all the data in the document, not just a
+	subset of it. The program's own data structures essentially
+	reproduce the complexity of the XML document. 
+	</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">The
+	developers find working with a tree structure to be easier and more
+	natural than working with an event sequence.</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">The
+	program has to be portable across languages. (I can't honestly say
+	I've ever encountered this requirement in practice, but this need
+	explains a lot of the weirdness in DOM.)</P>
+</UL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">All of
+these are fuzzy. If speed matters more to you than product
+development time or memory usage, you may choose to use SAX even for
+a system that uses data structures as complex as the XML document
+itself and requires random access to the tree. The only criterion
+that's really carved in stone is memory. If the program needs to
+process documents that are large compared to the available memory,
+then you really have to use a streaming API such as SAX. Otherwise, a
+lot depends on your comfort level and the need for each
+characteristic.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">If my
+recommendation for DOM sounds a lot more reticent than that for SAX,
+there's a good reason. DOM can be just plain weird. It is very much
+like the proverbial horse designed by committee, and, to be perfectly
+honest, camels don't smell as bad as DOM. DOM is packed with gotchas.
+Here's a representative sampling of just a few:</P>
+<UL>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">DOM
+	requires code to specify namespace URIs when creating new Element
+	and Attr objects, and to add xmlns and xmlns:prefix attributes to
+	elements where necessary. This is not an either/or. You must do them
+	both, and DOM makes no efforts to make sure they don't accidentally
+	conflict with each other.</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Nodes
+	cannot be moved from one document to another.</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">There
+	are separate methods to add an Attr object to an Element object
+	depending on whether or not the attribute is in a namespace.</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Every
+	node class has a getValue() method, but more often than not this
+	just returns null.</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Every
+	node has a namespaceURI and localName properties, even ones like
+	comments and text nodes that have neither names nor namespace URIs.</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Types
+	are represented by integer constants rather than by classes.</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">The
+	document type declaration can only be set when the document is
+	created, and from thereon after is read-only.</P>
+</UL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">I could go
+on--I haven't even begun to consider issues like naming conventions
+and the use of short constants that may make sense to programmers in
+some languages but not others--but I'll restrain myself. DOM is such
+an incredibly baroque API that most experienced XML developers turn
+to it only as a last resort.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Most of
+the reasons to use DOM are really reasons to use a tree-based API
+that holds the document in memory. There's no particular reason this
+has to be DOM instead of JDOM, XOM, dom4j, or any of the numerous
+other tree-based APIs. Microsoft implements DOM in MSXML, but has
+added so many additional non-standard methods that the resulting API
+really isn't DOM at all. Indeed the proliferation of alternate
+tree-based object models for XML is a symptom of the widespread
+dissatisfaction with DOM in the developer community. By way of
+contrast, the much cleaner SAX API has the field of push parsing XML
+almost completely to itself. There are a few rough spots in SAX, but
+not of them have itched developers enough to make them replace it. By
+contrast, DOM itches developers worse than the fleas of a thousand
+camels.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Considered
+relative to other tree-based APIs, where does DOM stand out? I've
+talked about its unique weaknesses. What, if any, are its unique
+strengths? Believe it or not, there are a few that occasionally
+suggest or even mandate its use:</P>
+<UL>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">You
+	want the option to change implementations to find the one that
+	performs best on your workload. DOM is the only tree-based API that
+	is independently implemented by many vendors.</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">You
+	need to interface with APIs and libraries that expect to receive DOM
+	objects. DOM predates all the efforts to replace it, so it is much
+	more broadly supported than alternative APIs.</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Company
+	rules, government regulations, or contractual obligations require
+	you to use standard APIs where available. DOM is a W3C
+	recommendation. None of the competing APIs are any form of ISO,
+	OASIS, IETF, IEEE, or W3C standard. 
+	</P>
+</UL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">In brief,
+DOM is more standard and more broadly supported than other APIs; and
+thus may be important in situations where you need to exchange code
+with diverse programmers. However, it is not the cleanest, most
+efficient, fastest, or most productive API you can use to process
+XML.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm"><BR><BR>
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm"><BR><BR>
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm"><BR><BR>
+</P>
+</BODY>
+</HTML>

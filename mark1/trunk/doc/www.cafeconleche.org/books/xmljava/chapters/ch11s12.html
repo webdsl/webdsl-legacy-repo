@@ -1,0 +1,168 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>The Notation Interface</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="previous" href="ch11s11.html" title="The Entity Interface"><link rel="next" href="ch11s13.html" title="Summary"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">The Notation Interface</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch11s11.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;11.&nbsp;The Document Object Model Core</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch11s13.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e19548"></a>The Notation Interface</h2></div></div><p>
+     The <tt>Notation</tt> interface
+     represents a notation declared in the DTD. It is not part of
+     the tree. A <tt>Notation</tt> object
+     has no parent and no children. The only way to access a
+     document&#8217;s notations is through the 
+     <tt>getNotations()</tt> method of the
+      <tt>DocumentType</tt> object.
+  </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Note</h3><p>
+      Notations are very uncommon in practice.
+      You may want to skip this section unless you discover
+      a specific need for it. 
+    </p></div><p>
+  <a href="ch11s12.html#CompactNotation.java" title="Example&nbsp;11.24.&nbsp;The Notation interface">Example&nbsp;11.24</a> summarizes the 
+  <tt>Notation</tt> interface.
+  This interface has methods to get the system and public ID for the notation.
+  Either of these IDs may be null.
+  As usual,  <tt>Notation</tt>
+  objects 
+  also have all the methods of the 
+  <tt>Node</tt> super-interface such as
+  <tt>getNodeName()</tt>
+  and   <tt>getNodeValue()</tt>.
+  </p><div class="example"><a name="CompactNotation.java"></a><p class="title"><b>Example&nbsp;11.24.&nbsp;The Notation interface</b></p><pre class="programlisting">package org.w3c.dom;
+
+public interface Notation extends Node {
+
+  public String getPublicId();
+  public String getSystemId();
+
+}
+</pre></div><p>
+    <a href="ch11s12.html#NotationLister.java" title="Example&nbsp;11.25.&nbsp;Listing the Notations declared in a DTD">Example&nbsp;11.25</a> is a simple program
+    that lists all the notations declared in a document&#8217;s DTD. To determine
+    whether these were actually used anywhere in the document,
+    you&#8217;d need to compare them to all the processing instruction
+    targets, notation type attributes, and unparsed entities to
+    see if they matched up anywhere.
+  </p><div class="example"><a name="NotationLister.java"></a><p class="title"><b>Example&nbsp;11.25.&nbsp;Listing the Notations declared in a DTD</b></p><pre class="programlisting">import javax.xml.parsers.*;
+import org.w3c.dom.*;
+import org.xml.sax.SAXException;
+import java.io.IOException;
+
+
+public class NotationLister {
+
+  // No recursion for a change. We don't need to walk the tree.
+  public static void listNotations(Document doc) {
+    
+    DocumentType doctype   = doc.getDoctype();
+    NamedNodeMap notations = doctype.getNotations();
+    for (int i = 0; i &lt; notations.getLength(); i++) {
+      
+      Notation notation = (Notation) notations.item(i);
+      
+      String name       = notation.getNodeName();
+      String publicID   = notation.getPublicId();
+      String systemID   = notation.getSystemId();
+      
+      System.out.print(name + ": ");
+      if (publicID != null) System.out.print(publicID + " ");
+      if (systemID != null) System.out.print(systemID + " ");
+      System.out.println();
+      
+    } 
+    
+  }
+
+  public static void main(String[] args) {
+
+    if (args.length &lt;= 0) {
+      System.out.println("Usage: java NotationLister URL");
+      return;
+    }
+    String url = args[0];
+    
+    try {
+      DocumentBuilderFactory factory 
+       = DocumentBuilderFactory.newInstance();
+      DocumentBuilder parser = factory.newDocumentBuilder();
+      
+      // Read the document
+      Document document = parser.parse(url); 
+      
+      // Process the document
+      listNotations(document);
+
+    }
+    catch (SAXException e) {
+      System.out.println(url + " is not well-formed.");
+    }
+    catch (IOException e) { 
+      System.out.println(
+       "Due to an IOException, the parser could not check " + url
+      ); 
+    }
+    catch (FactoryConfigurationError e) { 
+      System.out.println("Could not locate a factory class"); 
+    }
+    catch (ParserConfigurationException e) { 
+      System.out.println("Could not locate a JAXP parser"); 
+    }
+     
+  } // end main
+  
+}
+</pre></div><p>
+    DocBook is the only XML application I&#8217;m aware of that even
+    declares any notations (and that&#8217;s really only because of
+    legacy compatibility issues with DocBook&#8217;s earlier SGML incarnation). 
+    This book is written in DocBook, so I ran 
+    <tt>NotationLister</tt> across one of
+    its chapters. Here&#8217;s the output:
+  </p><pre class="screen"><tt>D:\books\XMLJAVA&gt;</tt><b><tt>java NotationLister masterbook.xml</tt></b>
+<tt>BMP: +//ISBN 0-7923-9432-1::Graphic Notation//NOTATION Microsoft 
+ Windows bitmap//EN
+CGM-BINARY: ISO 8632/3//NOTATION Binary encoding//EN
+CGM-CHAR: ISO 8632/2//NOTATION Character encoding//EN
+CGM-CLEAR: ISO 8632/4//NOTATION Clear text encoding//EN
+DITROFF: DITROFF
+DVI: DVI
+EPS: +//ISBN 0-201-18127-4::Adobe//NOTATION PostScript Language 
+ Ref. Manual//EN
+EQN: EQN
+FAX: -//USA-DOD//NOTATION CCITT Group 4 Facsimile Type 1 
+ Untiled Raster//EN
+GIF: GIF
+GIF87a: -//CompuServe//NOTATION Graphics Interchange Format 
+ 87a//EN
+GIF89a: -//CompuServe//NOTATION Graphics Interchange Format 
+ 89a//EN
+IGES: -//USA-DOD//NOTATION (ASME/ANSI Y14.26M-1987) Initial 
+ Graphics Exchange Specification//EN
+JPEG: JPG
+JPG: JPG
+PCX: +//ISBN 0-7923-9432-1::Graphic Notation//NOTATION ZSoft PCX 
+ bitmap//EN
+PIC: PIC
+PNG: http://www.w3.org/TR/REC-png
+PS: PS
+SGML: ISO 8879:1986//NOTATION Standard Generalized Markup 
+ Language//EN
+TBL: TBL
+TEX: +//ISBN 0-201-13448-9::Knuth//NOTATION The TeXbook//EN
+TIFF: TIFF
+WMF: +//ISBN 0-7923-9432-1::Graphic Notation//NOTATION Microsoft 
+Windows Metafile//EN
+WPG: WPG
+linespecific: linespecific</tt></pre><p>
+    I had to add a few line breaks to fit the output on the page, but
+    otherwise
+    the result would be the same given any DocBook
+    document because the notations come from the DTD, not the
+    instance document.
+  </p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch11s11.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch11.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch11s13.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">The Entity Interface&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Summary</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+January 04,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

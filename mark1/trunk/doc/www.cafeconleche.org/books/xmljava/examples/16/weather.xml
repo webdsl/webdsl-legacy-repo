@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<weather time="2002-06-06T15:35:00-05:00">
+  <report latitude="41.2° N" longitude="71.6° W">
+    <locality>Block Island</locality>
+    <temperature units="°C">16</temperature>
+    <humidity>88%</humidity>
+    <dewpoint units="°C">14</dewpoint>
+    <wind>
+      <direction>NE</direction>
+      <speed units="km/h">16.1</speed>
+      <gust units="km/h">31</gust>
+    </wind>
+    <pressure units="hPa">1014</pressure>
+    <condition>overcast</condition>
+    <visibility>13 km</visibility>
+  </report>
+  <report latitude="34.1° N" longitude="118.4° W">
+    <locality>Santa Monica</locality>
+    <temperature units="°C">19</temperature>
+    <humidity>79%</humidity>
+    <dewpoint units="°C">16</dewpoint>
+    <wind>
+      <direction>WSW</direction>
+      <speed units="km/h">14.5</speed>
+    </wind>
+    <pressure units="hPa">1010</pressure>
+    <condition>hazy</condition>
+    <visibility>5 km</visibility>
+  </report>  
+</weather>

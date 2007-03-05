@@ -1,0 +1,449 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+	<TITLE>35. Navigate with XPath</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.3  (Linux)">
+	<META NAME="AUTHOR" CONTENT="Elliotte Rusty Harold">
+	<META NAME="CREATED" CONTENT="20020211;21160000">
+	<META NAME="CHANGED" CONTENT="20030428;7285000">
+	<STYLE>
+	<!--
+		@page { size: 21.59cm 27.94cm; margin-left: 2.54cm; margin-right: 2.54cm; margin-top: 1.25cm; margin-bottom: 1.25cm }
+		P { margin-bottom: 0.21cm; color: #000000; line-height: 0.42cm; text-align: justify; widows: 2; orphans: 2 }
+		P.western { font-family: "Times New Roman"; font-size: 10pt; so-language: en-US; font-weight: medium }
+		P.cjk { font-family: "Times New Roman", serif; font-size: 10pt; font-weight: medium }
+		PRE { margin-top: 0.04cm; margin-bottom: 0.04cm; color: #000000; line-height: 0.42cm; text-align: justify; widows: 2; orphans: 2 }
+		PRE.western { so-language: en-US; font-weight: medium }
+		PRE.cjk { font-weight: medium }
+		A:link { color: #ff0000 }
+		A.western:link { font-style: italic }
+		A.cjk:link { font-style: italic }
+		A:visited { color: #800080 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" LINK="#ff0000" VLINK="#800080">
+<DIV TYPE=HEADER>
+	<P CLASS="western" ALIGN=CENTER STYLE="margin-top: 0.21cm; margin-bottom: 0cm">
+	<B>DRAFT, <SDFIELD TYPE=DATETIME SDNUM="1033;0;M/D/YY">4/28/03</SDFIELD></B></P>
+</DIV>
+<P ALIGN=CENTER STYLE="margin-top: 0.42cm; page-break-after: avoid"><FONT FACE="Albany, Arial"><FONT SIZE=5><B>35.
+Navigate with XPath</B></FONT></FONT></P>
+<P CLASS="western" STYLE="margin-top: 0.21cm">Whether you're writing
+code with DOM, JDOM,dom4j, Sparta, or some other tree-based API, one
+of the primary tasks is navigating the document to locate particular
+nodes, whether for query or update. XPath is a very powerful, very
+robust language for navigating XML documents. It often works better
+than explicitly specified navigation using methods such as
+getChildNode() or getNextSibling().</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm">Navigation in a
+tree-based API is a surprisingly complex and error-prone operation.
+For example, consider a simple contacts file that includes names and
+phone numbers that claims to follow the DTD in Example 35-1:</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm">Example 35-1: A DTD for
+a simple contacts file</P>
+<PRE CLASS="western">&lt;!ELEMENT Contacts (Contact+)&gt;
+&lt;!ELEMENT Contact (Name, Phone)&gt;
+&lt;!ELEMENT Name (#PCDATA)&gt;
+&lt;!ELEMENT Phone (#PCDATA)&gt;</PRE><P CLASS="western" STYLE="margin-top: 0.21cm">
+A typical document might look like Example 35-2:</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm">Example 35-2: A simple
+contacts document</P>
+<PRE CLASS="western">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;!DOCTYPE Contacts SYSTEM &quot;contacts.dtd&quot;&gt;
+&lt;Contacts&gt;
+  &lt;Contact&gt;
+    &lt;Name&gt;John Doe&lt;/Name&gt;
+    &lt;Phone&gt;626-555-3456&lt;/Phone&gt;
+  &lt;/Contact&gt;
+  &lt;Contact&gt;
+    &lt;Name&gt;Joe Smith&lt;/Name&gt;
+    &lt;Phone&gt;212-555-3456&lt;/Phone&gt;
+  &lt;/Contact&gt;
+  &lt;Contact&gt;
+    &lt;Name&gt;Jane and Ben Reilly&lt;/Name&gt;
+    &lt;Phone&gt;212-555-2341&lt;/Phone&gt;
+  &lt;/Contact&gt;
+  &lt;Contact&gt;
+    &lt;Name&gt;Mohammed Jones&lt;/Name&gt;
+    &lt;Phone&gt;718-555-2349&lt;/Phone&gt;
+  &lt;/Contact&gt;
+  &lt;Contact&gt;
+    &lt;Name&gt;David Smith&lt;/Name&gt;
+    &lt;Phone&gt;914-555-3145&lt;/Phone&gt;
+  &lt;/Contact&gt;
+  &lt;Contact&gt;
+    &lt;Name&gt;Xao Li&lt;/Name&gt;
+    &lt;Phone&gt;212-555-0998&lt;/Phone&gt;
+  &lt;/Contact&gt;
+&lt;/Contacts&gt;</PRE><P CLASS="western" STYLE="margin-top: 0.21cm">
+This is very straight-forward, very simple record-like data. What can
+go wrong when processing files like this? Actually, quite a lot,
+especially when you realize that not all instance documents are
+likely to be so simple or so valid. In fact, all too often you'll
+find yourself working with documents like Example 35-3 instead, even
+if you're promised data that precisely adheres to the DTD in Example
+35-1. Invalid data is a fact of life. It's not acceptable to just
+throw up your hands in disgust because someone sent you a document
+that's slightly different from what you expected.</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm">Example 35-3: A
+slightly more realistic contacts document</P>
+<PRE CLASS="western">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;Contacts&gt;
+  &lt;Contact&gt;
+    &lt;Name&gt;John Doe&lt;/Name&gt;
+    &lt;Phone&gt;626-555-3456&lt;/Phone&gt;
+  &lt;/Contact&gt;
+  &lt;Contact&gt;
+    &lt;Name&gt;Joe 
+        &lt;!--I need to check whether he prefers Joe or Joseph --&gt;
+        Smith
+    &lt;/Name&gt;
+    &lt;Phone&gt;212-555-3456&lt;/Phone&gt;
+  &lt;/Contact&gt;
+  &lt;Contact&gt;
+    &lt;Name&gt;Jane &lt;![CDATA[&amp; Ben]]&gt; Reilly&lt;/Name&gt;
+    &lt;Phone&gt;212-555-2341&lt;/Phone&gt;
+  &lt;/Contact&gt;
+  &lt;Contact&gt;
+    &lt;Name&gt;Mohammed Jones&lt;/Name&gt;
+    &lt;Phone&gt;718-555-2349&lt;/Phone&gt;
+    &lt;Phone&gt;914-555-7698&lt;/Phone&gt;
+  &lt;/Contact&gt;
+  &lt;Contact&gt;
+    &lt;Phone&gt;914-555-3145&lt;/Phone&gt;
+    &lt;Name&gt;David Smith&lt;/Name&gt;
+  &lt;/Contact&gt;
+  &lt;Contact&gt;
+    &lt;Name&gt;Jason Smith&lt;/Name&gt;
+    &lt;Phone&gt;&lt;/Phone&gt;
+  &lt;/Contact&gt;
+  &lt;Contact&gt;
+    &lt;Name&gt;Xao Li&lt;/Name&gt;
+    &lt;Name&gt;Jonathan Li&lt;/Name&gt;
+    &lt;Phone&gt;212-555-0998&lt;/Phone&gt;
+  &lt;/Contact&gt;
+&lt;/Contacts&gt;</PRE><P CLASS="western" STYLE="margin-top: 0.21cm">
+Potential problems include:</P>
+<UL>
+	<LI><P CLASS="western" STYLE="margin-top: 0.21cm">Runs of text that
+	are divided across multiple text nodes in the API though not in the
+	serialized document</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0.21cm">Runs of text that
+	are interrupted by comments or processing instructions: 
+	</P>
+</UL>
+<PRE CLASS="western">  &lt;Name&gt;Joe 
+        &lt;!--I need to check whether he prefers Joe or Joseph --&gt;
+        Smith
+  &lt;/Name&gt;</PRE>
+<UL>
+	<LI><P CLASS="western" STYLE="margin-top: 0.21cm">Runs of text that
+	are interrupted by child elements: 
+	</P>
+</UL>
+<PRE CLASS="western">  &lt;Name&gt;Joseph &lt;Nickname&gt;Bud&lt;/Nickname&gt; Smith &lt;/Name&gt;</PRE>
+<UL>
+	<LI><P CLASS="western" STYLE="margin-top: 0.21cm">Runs of text that
+	are interrupted by CDATA sections that result in multiple nodes: 
+	</P>
+</UL>
+<PRE CLASS="western">&lt;Name&gt;Jane &lt;![CDATA[&amp; Ben]]&gt; Reilly&lt;/Name&gt;</PRE>
+<UL>
+	<LI><P CLASS="western" STYLE="margin-top: 0.21cm">Elements that
+	occur two or more times, where normally only one would be expected:</P>
+</UL>
+<PRE CLASS="western">  &lt;Contact&gt;
+    &lt;Name&gt;Joe Smith&lt;/Name&gt;
+    &lt;Phone&gt;718-555-1234&lt;/Phone&gt;
+    &lt;Phone&gt;914-555-3145&lt;/Phone&gt;
+  &lt;/Contact&gt;
+  &lt;Contact&gt;
+    &lt;Name&gt;Xao Li&lt;/Name&gt;
+    &lt;Name&gt;Jonathan Li&lt;/Name&gt;
+    &lt;Phone&gt;212-555-0998&lt;/Phone&gt;
+  &lt;/Contact&gt;</PRE>
+<UL>
+	<LI><P CLASS="western" STYLE="margin-top: 0.21cm">White space only
+	text nodes that change the number of nodes in a sequence. How many
+	child nodes does the Contact element have? It has three child
+	elements, but most APIs will report six total child nodes because
+	they're counting the white space.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0.21cm">Elements with an
+	extra, unexpected parent:</P>
+</UL>
+<PRE CLASS="western">&lt;Contact&gt;
+  &lt;Personal&gt;
+    &lt;Name&gt;Joe Smith&lt;/Name&gt;
+    &lt;Phone&gt;718-555-1234&lt;/Phone&gt;
+    &lt;Phone&gt;914-555-3145&lt;/Phone&gt;
+  &lt;/Personal&gt;
+&lt;/Contact&gt;</PRE>
+<UL>
+	<LI><P CLASS="western" STYLE="margin-top: 0.21cm">Nodes that are
+	hiding in an entity reference. For instance, in DOM a node loaded
+	from an external entity reference may be a grandchild of its parent
+	element rather than a child:</P>
+</UL>
+<PRE CLASS="western">&lt;Contact&gt;
+  &amp;JoeSmith;
+&lt;/Contact&gt;</PRE>
+<UL>
+	<LI><P CLASS="western" STYLE="margin-top: 0.21cm">Elements that
+	aren't precisely where you expect them; for instance a Contact
+	element where the Name child is the second child element rather than
+	the first:</P>
+</UL>
+<PRE CLASS="western">&lt;Contact&gt;
+    &lt;Phone&gt;914-555-3145&lt;/Phone&gt;
+    &lt;Name&gt;Joe Smith&lt;/Name&gt;
+&lt;/Contact&gt;</PRE>
+<UL>
+	<LI><P CLASS="western" STYLE="margin-top: 0.21cm">Missing elements
+	such as this Contact that doesn't have a phone number:</P>
+</UL>
+<PRE CLASS="western">&lt;Contact&gt;
+    &lt;Name&gt;Joe Smith&lt;/Name&gt;
+&lt;/Contact&gt;</PRE>
+<UL>
+	<LI><P CLASS="western" STYLE="margin-top: 0.21cm">Unexpectedly empty
+	elements:</P>
+</UL>
+<PRE CLASS="western">  &lt;Contact&gt;
+    &lt;Name&gt;Jason Smith&lt;/Name&gt;
+    &lt;Phone&gt;&lt;/Phone&gt;
+  &lt;/Contact&gt;</PRE><P CLASS="western" STYLE="margin-top: 0.21cm">
+Some of these problems are mitigated by particular APIs. XOM resolves
+all entity references. DOM requires parsers to place the maximum
+possible contiguous run of text in each text node. MSXML throws away
+white space only nodes by default. Nonetheless all APIs suffer from
+at least several of these problems. 
+</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm">Validation would catch
+some of these problems, though arguably they're not mistakes. For
+instance, if people do have multiple phone numbers, but the schema
+only allows one, then it's the schema that's mistaken, not the
+document. The instance document more correctly reflects reality than
+the schema does. The same can be said of a program that assumes every
+person has exactly one phone number. The software should be changed,
+not the document.</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm">Is it possible to write
+programs that behave correctly even in the face of unexpected changes
+in document structure? Surprisingly the answer is yes, it is.
+Well-written programs can handle a lot of cases their designers did
+not explicitly plan for. The trick is to write programs that fit
+document structures loosely rather than tightly. The program should
+ask only for the information it needs without tying that to
+information it doesn't really care about. For example, if you want to
+find Joe Smith's phone numbers, then you need to ask for the Phone
+siblings of the Name element whose value is &quot;Joe Smith&quot;.
+You don't want to ask for the Phone sibling of the Name element whose
+first text node is Joe Smith that's a child of a Contact element
+which is a child of the Contacts element which is the root element of
+the document. That's too specific. There are too many extra
+conditions such as &quot;The root element is Contacts&quot; that
+don't have anything to do with what you really want to know.</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm">It is not possible, of
+course, to write perfectly robust software. For instance, there's no
+way to find Joe Smith's phone number if it's not in the document
+somewhere. However, you can write software that behaves reliably on a
+much broader class of documents, and fails gracefully when the
+information truly isn't there.</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm">XPath is a fourth
+generation declarative language that allows you to specify which
+nodes you want to process without specifying exactly how the
+processor is supposed to navigate to those nodes. XPath's data model
+is very well designed to support exactly what almost all developers
+want from XML. For instance, it merges all adjacent text including
+that in CDATA sections, allows values to be calculated that skip over
+comments and processing instructions` and include text from child and
+descendant elements, and requires all external entity references to
+be resolved. In practice, XPath expressions tend to be much more
+robust against unexpected but perhaps insignificant changes in the
+input document. 
+</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm">For example, consider a
+very simple DOM code fragment that prints all the names in the
+contacts file. 
+</P>
+<PRE CLASS="western">Element contactsElement = doc.getDocumentElement();
+NodeList contacts = contactsElement.getChildNodes();
+      
+for (int i = 0; i &lt; contacts.getLength(); i++) {
+  Node current = contacts.item(i);
+  if (current.getNodeType() == Node.ELEMENT_NODE) {
+     Element contact = (Element) current;
+     NodeList children = contact.getChildNodes();
+     for (int j = 0; j &lt; contacts.getLength(); j++) {
+       Node candidate = children.item(j);
+       if (candidate.getNodeType() == Node.ELEMENT_NODE) {
+          // Assuming name is the first child element 
+          String name = candidate.getFirstChild().getNodeValue();
+          System.out.println(name);
+          // Assuming there's only one name per contact
+          break;
+       }
+     }
+  }
+}</PRE><P CLASS="western" STYLE="margin-top: 0.21cm">
+This code is very closely tied to the structure of the document. When
+actually run on Example 35-3 here's the output:</P>
+<PRE CLASS="western">John Doe
+Joe 
+        
+Jane 
+Mohammed Jones
+914-555-3145
+Jason Smith
+Xao Li</PRE><P CLASS="western" STYLE="margin-top: 0.21cm">
+You can see that it lost half of Joe Smith's name, as well as missing
+Ben Reilly completely. It also lost track of Jonathan Li and replaced
+David Smith with his phone number.</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm">With a little effort,
+we can improve the DOM code to fix most of the problems. The most
+important improvement we can make is relying on element names rather
+than positions. The second most important improvement is using the
+getElementsByTagName() method to search the entire tree rather than
+just some expected parts of it. The third most important improvement
+(and the most difficult to implement correctly) is not assuming all
+text nodes are adjacent. The final fix is removing the assumption
+that there's only one name per contact. The improved code follows:</P>
+<PRE CLASS="western">      NodeList names = doc.getElementsByTagName(&quot;Name&quot;);
+      
+      for (int i = 0; i &lt; names.getLength(); i++) {
+          Node name = names.item(i);
+          String value = getFullText(name);
+          System.out.println(value);
+      }
+  
+   // ...
+  
+    public static String getFullText(Node node) {
+        StringBuffer result = new StringBuffer(12);
+        NodeList children = node.getChildNodes();
+        for (int i = 0; i &lt; children.getLength(); i++) {
+          Node child = children.item(i);
+          int type = child.getNodeType();
+          if (type == Node.TEXT_NODE) {
+            result.append(child.getNodeValue());
+          }
+          else if (type == Node.CDATA_SECTION_NODE) {
+            result.append(child.getNodeValue());
+          }
+          else if (type == Node.ELEMENT_NODE) {
+            result.append(getFullText(child));
+          }
+          else if (type == Node.ENTITY_REFERENCE_NODE) {
+            result.append(getFullText(child));
+          }
+        }
+        return result.toString();
+    }</PRE><P CLASS="western" STYLE="margin-top: 0.21cm">
+As you can see, this is somewhat more complex. Note especially the
+recursion that's necessary to accumulate the complete text of the
+node. Complexity would increase further in an API that doesn't have
+an equivalent to getElementsByTagName(), a fairly unique feature of
+DOM. 
+</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm">Is there perhaps an
+easier way? Yes, there is; and that way is XPath. Now consider this
+XPath expression:</P>
+<PRE CLASS="western">/Contacts/Contact/Name</PRE><P CLASS="western" STYLE="margin-top: 0.21cm">
+It's about ten times simpler than the DOM version, but accomplishes
+almost as much. This returns the desired content even if the Name
+elements contain CDATA sections and child elements, and no matter how
+many of them appear in any given Contact element. This particular,
+XPath expression would still fail if the hierarchy were not just what
+was expected; for instance, if the root element were something other
+than Contacts or if a Name element were not an immediate child of a
+Contact element. However, an XPath expression that uses the
+descendant axis would be even more robust. This XPath expression
+still succeeds:</P>
+<PRE CLASS="western">//Name</PRE><P CLASS="western" STYLE="margin-top: 0.21cm">
+There are numerous ways to integrate XPath processing into your
+programs. Most XSLT processors such as Xalan, libxslt, and MSXML
+include APIs you can use to merge XPath expressions with your own
+code. Unfortunately, there is as yet no standard API for XPath
+queries. For example, using Xalan, the above query might look like
+this:</P>
+<PRE CLASS="western">NodeList results = XPathAPI.selectNodeList(doc, &quot;//Name&quot;);
+for (int i = 0; i &lt; results.getLength(); i++) {
+  Node result = results.item(i);
+  XObject value = XPathAPI.eval(result, &quot;string()&quot;);
+  System.out.println(value.str());
+}</PRE><P CLASS="western" STYLE="margin-top: 0.21cm">
+In MSXML XPath evaluation is built-into the DOM implementation
+classes, which makes for slightly more concise if less portable code.
+For example, here's the same XPath search implemented in JavaScript
+such as you might use from Internet Explorer:</P>
+<PRE CLASS="western">var results = doc.selectNodes(&quot;//Name&quot;);
+for (i=0; i &lt; results.length; i++) {
+  var node = results.item(i);
+  alert(node.text);
+}</PRE><P CLASS="western" STYLE="margin-top: 0.21cm">
+Many Java APIs are supported by the Jaxen XPath library
+(http://jaxen.sourceforge.net/) including DOM, JDOM, and dom4j. Using
+Jaxen on top of DOM, the above query would look something like this:</P>
+<PRE CLASS="western">XPath expression = new org.jaxen.dom.DOMXPath(&quot;//Name&quot;);
+Navigator navigator = expression.getNavigator();
+List results = expression.selectNodes(doc);
+Iterator iterator = results.iterator();
+while (iterator.hasNext()) {
+  Node result = (Node) iterator.next();
+  String value = StringFunction.evaluate(result, navigator);
+  System.out.println(value);
+}</PRE><P CLASS="western" STYLE="margin-top: 0.21cm">
+There are a few things you need to be wary of when integrating XPath
+with your more traditional code. First of all, XPath queries return
+node-sets, not single nodes. You should be prepared to iterate
+through the result, even if you only expect a single node. This
+handles cases both where the expected node is missing and where
+there's more than you expected. Avoid methods like selectSingleNode()
+in MSXML and Xalan that hide such results from the library client.
+They significantly reduce robustness. If you absolutely insist that
+there can be only one result, then by all means validate the document
+against a schema which requires this (Item 38) before processing the
+document, and reject it if it fails the schema. Do not simply assume
+that all documents passed to the program meet the constraints. Such
+assumptions fail far more often than most developers initially
+expect, and over a time period of several years almost all such
+assumptions fail.</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm">Secondly, be aware that
+you may take a performance hit for choosing XPath, especially if you
+use the tree-walking descendant and descendant-or-self axes. The
+following axis also tends to be slow. Some (but not all) XPath
+engines have major performance problems with the ancestor and
+ancestor-or-self axes. You can use the child axis and more explicit
+descent instead. However, as noted above this does reduce your
+program's robustness. Like all other performance issues, this should
+be evaluated within the context of a particular program, system,
+library, and use-case. Some systems have CPU power to spare. Others
+may be so CPU or memory-limited that the cost of even the most basic
+XPath processing is prohibitive. Sometimes switching to a different
+XPath engine can produce an order of magnitude improvement in
+processing particular XPath expressions. I recommend designing
+processing for maximum robustness, and only optimizing the XPath
+expressions when and if profiling proves this is a significant
+bottleneck.</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm">Personally, I'm willing
+to trade performance for robustness, and I find the opposite opinion
+(a willingness to trade correctness for performance) completely
+incomprehensible. XPath based navigation is both easier to write and
+easier to write correctly than explicit navigation. It produces much
+more robust software. If you'd rather process more documents faster,
+at the cost of processing some of them incorrectly, you can do so;
+but please at least test the performance of an XPath based
+alternative before you rule it out.</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm"><BR><BR>
+</P>
+<DIV TYPE=FOOTER>
+	<P CLASS="western" ALIGN=CENTER STYLE="margin-right: 0.64cm; text-indent: 0.64cm; margin-top: 2.14cm">
+	<SPAN ID="Frame1" STYLE="float: right; width: 0.71cm; height: 0.04cm; border: none; padding: 0cm; background: #ffffff">
+		<P CLASS="western" STYLE="margin-top: 0.21cm"><SDFIELD TYPE=PAGE SUBTYPE=RANDOM FORMAT=PAGE>5</SDFIELD><BR CLEAR=RIGHT>
+		</P>
+	</SPAN><BR><BR>
+	</P>
+</DIV>
+</BODY>
+</HTML>

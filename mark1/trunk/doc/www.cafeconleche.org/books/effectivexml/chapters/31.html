@@ -1,0 +1,372 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+	<TITLE>31. Program to Standard APIs</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.3  (Linux)">
+	<META NAME="AUTHOR" CONTENT="Elliotte Rusty Harold">
+	<META NAME="CREATED" CONTENT="20020121;17260000">
+	<META NAME="CHANGED" CONTENT="20030426;10435400">
+	<STYLE>
+	<!--
+		@page { size: 21.59cm 27.94cm; margin-left: 2.33cm; margin-right: 2.33cm; margin-top: 2.54cm; margin-bottom: 2.54cm }
+		P { margin-bottom: 0.21cm; color: #000000; text-align: justify; widows: 2; orphans: 2 }
+		P.western { font-family: "Times New Roman", serif; font-size: 10pt; so-language: en-US }
+		P.cjk { font-family: "Times New Roman", serif; font-size: 10pt; so-language:  }
+		H1 { margin-bottom: 0.11cm; color: #000000; text-align: justify; widows: 2; orphans: 2 }
+		H1.western { font-family: "Arial", sans-serif; font-size: 16pt; so-language: en-US }
+		H1.cjk { font-family: "Times New Roman", serif; font-size: 16pt; so-language:  }
+		H1.ctl { font-family: "Arial Unicode MS"; font-size: 12pt; font-weight: medium }
+		PRE { margin-top: 0.04cm; margin-bottom: 0.04cm; color: #000000; text-align: left; widows: 2; orphans: 2 }
+		PRE.western { so-language: en-US }
+		PRE.cjk { so-language:  }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="de-DE" TEXT="#000000">
+<P LANG="en-US" ALIGN=CENTER STYLE="margin-top: 0.42cm; page-break-after: avoid">
+<FONT FACE="Albany, Arial, sans-serif"><FONT SIZE=5><B>31. Program to
+Standard APIs</B></FONT></FONT></P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Parsers,
+DOM implementations, XSLT engines,  and other XML-related tools vary
+widely in speed, efficiency,  specification conformance, and
+bugginess. Sometimes these characteristics are innate characteristics
+of the code and the skill of the programmers who wrote it. Other
+times the relative quality depends on the environment. For instance,
+early versions of the Xerces XML parser for Java, written by IBM,
+tended to perform very well on IBM's Java virtual machine and very
+poorly on Sun's Java virtual machine, while the Crimson parser
+written by the Sun team had almost precisely opposite performance
+characteristics. And still other times, the relative performance of
+tools depends on the documents they process. For instance, some DOM
+implementations are tuned for relatively small document sizes while
+others are tuned for very large documents. Benchmarks based primarily
+on large or small documents can come to very different conclusions
+about the same tools.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">One of the
+best ways to improve performance is to try out different libraries on
+your code and pick the one that performs the best for your
+application in your environment. However, this only works if you
+haven't tied yourself too closely to one parser's API. In SAX2 and
+DOM3 it's normally possible to write completely parser independent
+code. Do so. For Java, JAXP extends this capability to DOM2. Always
+prefer implementation independent APIs like DOM and SAX to parser
+dependent APIs like the Xerces Native Interface or ElectricXML.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">A few APIs
+such as XOM and JDOM fall somewhere in the middle. They allow you to
+choose a different parser, but not a different implementation of
+their core classes. If parsing is the bottleneck, this can be
+helpful. However, if the bottleneck lies elsewhere, for instance an
+inefficient use of strings that bedeviled one JDOM beta, then you're
+pretty much stuck with it.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Unfortunately,
+not all standard APIs are as complete as you might wish, so you may
+sometimes need to tie yourself to a specific implementation. If this
+proves necessary, try to clearly delineate the implementation
+dependent parts of your code, and keep those parts as small as
+possible.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Let us now
+investigate the details of writing implementation independent code
+with different APIs and tools.</P>
+<OL>
+	<LI><H1 LANG="en-US" CLASS="western">SAX</H1>
+</OL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">SAX
+enables you to write code that is completely independent of the
+underlying parser. The major issue is that you use the
+XMLReaderFactory.createXMLReader() method to construct new instances
+of the XMLReader interface rather than calling the constructor
+directly. For example, this is the correct way to load a SAX2 parser:</P>
+<PRE LANG="en-US" CLASS="western">XMLReader parser = XMLReaderFactory.createXMLReader();</PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+This is the wrong way to load a SAX  parser:</P>
+<PRE LANG="en-US" CLASS="western">XMLReader parser = new org.apache.xerces.parsers.SAXParser();</PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+The first statement loads the parser named by the org.xml.sax.driver
+system property. This is easy to adjust at runtime. The second always
+loads Xerces, and can't be changed without recompiling. Both
+statements may actually create the same object, but the first leaves
+open the possibility of using a different parser, without even
+recompiling the code. 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">You can
+hard code the parser you want as a string if you really want to rely
+on a specific parser:</P>
+<PRE LANG="en-US" CLASS="western">XMLReader parser = XMLReaderFactory.createXMLReader(&quot;org.apache.xerces.parsers.SAXParser&quot;);</PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+Ideally, however, the string containing the fully package qualified
+class name should be part of a resource bundle or other configuration
+file that is separate from the code itself, so it can be modified
+without recompiling.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Note</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">This
+doesn't work quite as well in other languages as it does in Java. For
+instance C and C++ bind early rather than late so you probably need
+to recompile to switch to a different parser. Furthermore, although
+SAX is fairly common in C and C++ parsers, there is no official
+standard for it, so there are often subtle differences between
+implementations. Editing code may be required. Languages like Python
+and Perl fall somewhere in between Java and C++ in terms of ease of
+switching parsers. This doesn't reflect any fundamental limitations
+in these languages, just that the programmers who wrote the first
+parsers and defined SAX preferred to work in Java. Nonetheless, even
+if you're not working in Java, you should still endeavor to write
+code that's as parser independent as possible in order to minimize
+the amount of work you have to do when swapping out one parser for
+another.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">End Note</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Furthermore,
+unless you have very good reasons to limit the choice of parser, you
+should always provide a fallback to the default parser if you fail to
+load a specific parser by name. Exactly which parsers are available
+can vary a lot from environment to environment, especially in Java
+1.3 and earlier. For example,</P>
+<PRE LANG="en-US" CLASS="western">XMLReader parser;
+<SPAN LANG="en-US">try {</SPAN>
+<SPAN LANG="en-US">  parser =</SPAN>
+<SPAN LANG="en-US">    XMLReaderFactory.createXMLReader(&quot;org.apache.xerces.parsers.SAXParser&quot;);</SPAN>
+<SPAN LANG="en-US">}</SPAN>
+<SPAN LANG="en-US">catch (SAXException ex) { // Xerces not found</SPAN>
+<SPAN LANG="en-US">  parser = XMLReaderFactory.createXMLReader();</SPAN>
+<SPAN LANG="en-US">}</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+As long as you stick to the core classes in the org.xml.sax and
+org.xml.sax.helpers packages, your code should be reasonably portable
+to any parser that implements SAX2. And although technically
+optional, every SAX2 parser I've ever encountered also implements the
+optional interfaces in the org.xml.sax.ext packages; that is,
+LexicalHandler and DeclHandler.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">One area
+in which SAX parsers do differ is support for various features and
+properties. Although SAX2 defines  over a dozen standard features and
+properties, only two must be implemented by all conformant processors
+(http://xml.org/sax/features/namespaces and
+http://xml.org/sax/features/namespace-prefixes). The others are all
+optional, and some parsers do omit them. If you attempt to set or
+read a feature or property which the parser does not understand, it
+will throw a SAXNotRecognizedException. If it recognizes the feature
+or property name, but cannot set that feature/property to the
+requested value, it will throw a SAXNotSupportedException. Both are
+subclasses of SAXException. Be sure to catch these, and respond
+appropriately. 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Sometimes,
+the feature or property is optional for processing, and you can just
+ignore a failure to set it. For example, if you attempt to set a
+LexicalHandler object and fail, you may not be able to round-trip the
+document. However, you'll still get all the information you really
+care about:</P>
+<PRE LANG="en-US" CLASS="western">try {
+<SPAN LANG="en-US">  parser.setProperty(&quot;http://xml.org/sax/properties/lexical-handler&quot;,</SPAN>
+<SPAN LANG="en-US">                      new MyLexicalHandler());</SPAN>
+<SPAN LANG="en-US">}</SPAN>
+<SPAN LANG="en-US">catch (SAXNotRecognizedException ex) { </SPAN>
+<SPAN LANG="en-US">  // no big deal; continue normal processing</SPAN>
+<SPAN LANG="en-US">}</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+Other times, you may want to give up completely. For example, if your
+code depends on interning of names for proper operations--for
+instance, it compares element names using the == operator--then 
+you'll want to make sure that the 
+http://xml.org/sax/features/string-interning property is true, and
+not continue if it isn't: 
+</P>
+<PRE LANG="en-US" CLASS="western">try {
+<SPAN LANG="en-US">  parser.setFeature(&quot;http://xml.org/sax/features/string-interning&quot;, true);</SPAN>
+<SPAN LANG="en-US">}</SPAN>
+<SPAN LANG="en-US">catch (SAXException ex) { </SPAN>
+<SPAN LANG="en-US">  System.exit();</SPAN>
+<SPAN LANG="en-US">}</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+And still other times, you may want to take some intermediate course.
+For example, if the parser doesn't support validation, you might try
+to load a different parser that does:</P>
+<PRE LANG="en-US" CLASS="western">XMLReader parser = XMLReaderFactory.createXMLReader();
+<SPAN LANG="en-US">try {</SPAN>
+<SPAN LANG="en-US">  parser.setFeature(&quot;http://xml.org/sax/features/validation&quot;, true);</SPAN>
+<SPAN LANG="en-US">}</SPAN>
+<SPAN LANG="en-US">catch (SAXNotRecognizedException ex) {</SPAN>
+<SPAN LANG="en-US">  try { // Load a parser that is known to validate</SPAN>
+<SPAN LANG="en-US">    parser = </SPAN>
+<SPAN LANG="en-US">     XMLReaderFactory.createXMLReader(&quot;org.apache.xerces.parsers.SAXParser&quot;);</SPAN>
+<SPAN LANG="en-US">     parser.setFeature(&quot;http://xml.org/sax/features/validation&quot;, true);</SPAN>
+<SPAN LANG="en-US">  }</SPAN>
+<SPAN LANG="en-US">  catch (SAXException se) {</SPAN>
+<SPAN LANG="en-US">    // Xerces is not in the classpath</SPAN>
+<SPAN LANG="en-US">    System.exit();</SPAN>
+<SPAN LANG="en-US">  }</SPAN>
+<SPAN LANG="en-US">}</SPAN>
+<SPAN LANG="en-US">// continue with parsing and validating...</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+In all cases, however, you should not assume that you can actually
+set the feature or property you're trying to set. Be prepared for the
+attempt to fail, and respond accordingly. This will help your code
+either work properly or fail gracefully no matter which parser is
+used. 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Another
+area in which parsers differ is support for SAX 2.0.1 This minor
+upgrade to SAX adds Locator2, Attributes2, and EntityResolver2
+interfaces that fill a few small holes in SAX 2.0. These interfaces
+are not yet broadly supported (and arguably cannot be supported in a
+JAXP-compliant environment). Thus, you need to be more careful when
+using them. However, you can test for availability before using them
+using instanceof. For example, this code prints the encoding if and
+only if the Locator passed to setDocumentLocator() is a Locator2
+object:</P>
+<PRE LANG="en-US" CLASS="western">public void setDocumentLocator(Locator locator) { 
+<SPAN LANG="en-US">  if (locator instanceof Locator2) {</SPAN>
+<SPAN LANG="en-US">    Locator2 locator2 = (Locator2) locator;</SPAN>
+<SPAN LANG="en-US">    System.out.println(&quot;Encoding is &quot; + locator2.getEncoding());</SPAN>
+<SPAN LANG="en-US">  } </SPAN>
+<SPAN LANG="en-US">}</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+Alternately, you can simply check the values of the
+http://xml.org/sax/features/use-locator2,
+http://xml.org/sax/features/use-attributes2, and
+http://xml.org/sax/features/use-entity-resolver2 features. If the
+parser supports these SAX 2.0.1 classes, then these features will
+have the value true. However, if it does not support them, reading
+these URLs will probably throw a SAXNotRecognizedException rather
+than returning false. This makes them a little more cumbersome than
+simply using instanceof.</P>
+<OL START=2>
+	<LI><H1 LANG="en-US" CLASS="western">DOM</H1>
+</OL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">DOM Level
+3 should finally make it possible to write completely implementation
+independent DOM code, at least in Java. However, in DOM Level 2 some
+crucial parts of DOM require parser dependent code, and in other
+languages this is likely to remain true in DOM Level 3. In
+particular, DOM2 defines no way to:</P>
+<UL>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Construct
+	an instance of the DOMImplementation interface</P>
+</UL>
+<UL>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Parse
+	a document from a stream</P>
+</UL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Everything
+else can be done with pure DOM, but these two operations require
+implementation-specific classes. For example, Xerces loads its
+DOMImplementation using a non-standard static method in the
+org.apache.xerces.dom.DOMImplementationImpl class:</P>
+<PRE LANG="en-US" CLASS="western">DOMImplementation impl = DOMImplementationImpl.getDOMImplementation();</PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+Parsing a document into a DOM tree with Xerces requires instantiating
+a non-standard DOMParser class through its constructor like so:</P>
+<PRE LANG="en-US" CLASS="western">DOMParser parser = new DOMParser(); 
+<SPAN LANG="en-US">parser.parse(&quot;http://www.example.com/&quot;); </SPAN>
+<SPAN LANG="en-US">Document doc = parser.getDocument();</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+Other DOM implementations such as Crimson, GNU JAXP, and Oracle use
+different classes and patterns.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">In Java,
+JAXP provides a partial solution for those DOM implementations that
+implement JAXP (which is most of the major DOM implementations for
+Java nowadays). The javax.xml.parsers.DOMBuilderFactory class can
+load a javax.xml.parsers.DOMBuilder object. This DOMBuilder object
+can parse a document or locate a DOMImplementation object:</P>
+<PRE LANG="en-US" CLASS="western">DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+<SPAN LANG="en-US">DocumentBuilder parser = builderFactory.newDocumentBuilder(); </SPAN>
+<SPAN LANG="en-US">DOMImplementation impl = parser.getDOMImplementation();</SPAN>
+<SPAN LANG="en-US">Document doc = parser.parse(&quot;http://www.example.com&quot;);</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+The exact implementation loaded is read from the
+javax.xml.parsers.DocumentBuilderFactory Java system property.  If
+this property is not set, then JAXP looks in the lib/jaxp.properties
+properties file in the JRE directory. If that fails to locate a
+parser, next JAXP looks for a META-
+INF/services/javax.xml.parsers.DocumentBuilderFactory file in all the
+JAR files in the classpath. Finally if that fails, then
+DocumentBuilderFactory.newInstance() returns a default
+implementation.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">As with
+SAX parsers, you do have to worry a little about exactly which
+features the underlying implementation supports. However, for most
+applications the basic features shared by all conformant
+implementations suffice.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">The second
+step in writing implementation independent DOM code is making sure
+you only use standard DOM methods. Many DOM implementations including
+Xerces's provide extra, useful methods in their implementation
+classes. Sometimes these methods can be very helpful and even let you
+do things that simply cannot be done via  standard methods, such as
+changing or adding a document type declaration to a document.
+However, using any of these methods  ties your code to that one
+implementation, binding it far more tightly than how you load the
+parser or the implementation. Implementation-specific methods can
+infect the entire design of your code,  requiring you to completely
+redesign a program in order to move it to another implementation, not
+just changing a few lines here or there. Think very carefully about
+whether you're willing to lock yourself into  a single implementation
+before doing this.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">By far the
+worst offender here is the Microsoft DOM implementation in MSXML and
+.Net. While MSXML supports all the standard parts of DOM, it also
+includes many, many non-standard extensions. Worse yet, very little
+third-party documentation and almost no official Microsoft
+documentation bothers to note the difference between the standard
+parts and the Microsoft extensions. Most tutorials and sample code
+make very heavy use of the Microsoft extensions, even to the point
+where there's almost no standard DOM code left. (By contrast, the
+documentation for Xerces-J focuses almost exclusively on the standard
+DOM interfaces. The documentation for their non-standard extensions
+is relatively hidden, and few books discuss it. It is meant primarily
+for &quot;maintainers and developers of the Xerces2 reference
+implementation&quot;, not for end users, and its existence is an open
+secret for the initiated.) In particular be wary of the following
+fields and methods that are very common in programs that use the
+MSXML DOM:</P>
+<UL>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">IXMLDOMNode,
+	IXMLDOMNodeList, IXMLDOMAttribute, IXMLDOMComment, IXMLDOMDocument,
+	IXMLDOMElement, IXMLDOMText, etc.</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">innerXml,
+	outerXml, or xml</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">innerText,
+	outerText, or text</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">transformNode</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">transformNodeToObject</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">SelectSingleNode</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">SelectNodes</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">definition</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">dataType</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">baseName</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">nodeTypedValue</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">nodeTypeString</P>
+</UL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">These are
+all non-standard Microsoft extensions to DOM, and using any of them
+effectively ties your program to MSXML such that it cannot be easily
+ported to other implementations. 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">One final
+thing to keep in mind: although with care you can swap one DOM
+implementation for another, you cannot generally mix and match
+different DOM implementations in the same program. For example, you
+cannot add a GNU JAXP Element object to a Xerces Document object.
+Internally, all DOM implementations I've encountered do make intimate
+use of the detailed implementation classes, rather than limiting
+themselves to the public interfaces. This may be necessary and even
+desirable for the implementation internals, but it is not an excuse
+for doing the same in the public code that lives above the interface.</P>
+<OL START=3>
+	<LI><H1 LANG="en-US" CLASS="western">JDOM</H1>
+</OL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">There's
+only one implementation of JDOM, and JDOM is designed around classes
+rather than interfaces. Thus,  some of the same issues that arise
+with DOM and SAX don't apply here. It's always been intended that you
+use the classes directly in JDOM. However, JDOM does not include its
+own parser. Instead it relies on an underlying SAX parser. By default
+JDOM ships with and uses Xerces, but this can be changed. Simply pass
+the fully package qualified name of the SAX XMLReader implementation
+class you want to use to the SAXBuilder constructor. For example,</P>
+<PRE LANG="en-US" CLASS="western">SAXBuilder parser = new SAXBuilder(&quot;com.bluecast.xml.Piccolo&quot;);</PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+This may speed up parsing a little and save some memory (Piccolo is
+quite bit more efficient than Xerces). However any improvement is
+limited to the actual parsing of the document. Everything after that,
+including building, manipulating, and serializing the object tree
+takes place with the same JDOM classes no matter which parser you
+used initially.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Whichever
+API you choose, try to stick to its well-documented parts. To the
+extent possible, use only those methods and classes that are part of
+the standard API. That way, if you do encounter performance problems
+or outright bugs, you'll have the opportunity to easily fix the
+problem by switching to a better implementation rather than having to
+adjust your processing avoid the issues. 
+</P>
+</BODY>
+</HTML>

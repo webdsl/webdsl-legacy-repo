@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!-- XPath axes example -->
+<SOAP-ENV:Envelope
+  xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" 
+  xmlns="http://namespaces.cafeconleche.org/xmljava/ch2/">
+  <SOAP-ENV:Body>
+    <Quote symbol="RHAT">
+      <Price currency="USD">7.02</Price>
+    </Quote>
+    <Quote symbol="AAPL">
+      <Price currency="USD">24.85</Price>
+    </Quote>
+    <Quote symbol="BAC">
+      <Price currency="USD">68.59</Price>
+    </Quote>
+  </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

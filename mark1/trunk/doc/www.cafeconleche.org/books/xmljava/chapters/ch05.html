@@ -1,0 +1,272 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;5.&nbsp;Reading XML</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="index.html" title="Processing XML with Java"><link rel="previous" href="ch04s08.html" title="Summary"><link rel="next" href="ch05s02.html" title="XML Parsers"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"><link rel="section" href="ch05.html#d0e6851" title="InputStreams and Readers"><link rel="section" href="ch05s02.html" title="XML Parsers"><link rel="section" href="ch05s03.html" title="SAX"><link rel="section" href="ch05s04.html" title="DOM"><link rel="section" href="ch05s05.html" title="JAXP"><link rel="section" href="ch05s06.html" title="JDOM"><link rel="section" href="ch05s07.html" title="dom4j"><link rel="section" href="ch05s08.html" title="ElectricXML"><link rel="section" href="ch05s09.html" title="XMLPULL"><link rel="section" href="ch05s10.html" title="Summary"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter&nbsp;5.&nbsp;Reading XML</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch04s08.html">Prev</a>&nbsp;</td><th width="60%" align="center">&nbsp;</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch05s02.html">Next</a></td></tr></table><hr></div><div class="chapter"><div class="titlepage"><div><h2 class="title"><a name="ch_readingxml"></a>Chapter&nbsp;5.&nbsp;Reading XML</h2></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><a href="ch05.html#d0e6851">InputStreams and Readers</a></dt><dt><a href="ch05s02.html">XML Parsers</a></dt><dd><dl><dt><a href="ch05s02.html#d0e7095">Choosing an XML API</a></dt><dt><a href="ch05s02.html#d0e7217">Choosing an XML Parser</a></dt><dt><a href="ch05s02.html#d0e7346">Available Parsers</a></dt></dl></dd><dt><a href="ch05s03.html">SAX</a></dt><dt><a href="ch05s04.html">DOM</a></dt><dt><a href="ch05s05.html">JAXP</a></dt><dt><a href="ch05s06.html">JDOM</a></dt><dt><a href="ch05s07.html">dom4j</a></dt><dt><a href="ch05s08.html">ElectricXML</a></dt><dt><a href="ch05s09.html">XMLPULL</a></dt><dt><a href="ch05s10.html">Summary</a></dt></dl></div><p>
+Writing XML documents is very straightforward, as I hope the last two
+chapters proved. Reading them is not nearly as simple. Fortunately, you don&#8217;t have to
+do all the work yourself. You can use an XML parser to read the document for you.
+The XML parser exposes the contents of an XML document
+through an API. A client application reads an XML document 
+through this API. As well as reading the document and providing
+the contents to the client application, the parser also checks the document for
+well-formedness and (optionally) validity.
+If it finds an error, it informs the client application.
+</p><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e6851"></a>InputStreams and Readers</h2></div></div><p>
+      It&#8217;s time to reverse the examples of previous two chapters.
+      Instead of putting information into an XML document,
+      I&#8217;m going to take it out of one. 
+      In particular, I&#8217;m going to use an example that reads the
+      response from the Fibonacci XML-RPC servlet 
+      introduced in Chapter 3. This document
+      has the form shown in <a href="ch05.html#sample_fibonacci_response.xml" title="Example&nbsp;5.1.&nbsp;A response from the Fibonacci XML-RPC server">Example&nbsp;5.1</a>.
+      </p><div class="example"><a name="sample_fibonacci_response.xml"></a><p class="title"><b>Example&nbsp;5.1.&nbsp;A response from the Fibonacci XML-RPC server</b></p><pre class="programlisting">&lt;?xml version="1.0"?&gt;
+&lt;methodResponse&gt;
+  &lt;params&gt;
+    &lt;param&gt;
+      &lt;value&gt;&lt;double&gt;28657&lt;/double&gt;&lt;/value&gt;
+    &lt;/param&gt;
+  &lt;/params&gt;
+&lt;/methodResponse&gt;</pre></div><p>
+     The clients for the XML-RPC server developed in Chapter 3
+      simply printed the entire document on the console.
+      Now I want to extract just the answer and strip out all the
+      markup. That is, the user interface will look something
+      like this: 
+      </p><pre class="screen"><tt>C:\XMLJAVA&gt;</tt><b><tt>java FibonacciClient 9</tt></b>
+<tt>34</tt></pre><p>
+     From the user&#8217;s perspective, the XML is completely
+     hidden. The user neither knows nor cares that the request is
+     being sent and the response received in an XML document.
+     That&#8217;s merely an implementation detail.
+     In fact, the user may not even know that the request is
+     being sent over the network rather than being processed
+     locally.
+     All the user sees is the very basic command line interface.
+     Obviously you could attach a fancier GUI front-end, but
+     since this is not a book about GUI programming, 
+     I&#8217;ll leave that as an exercise for the
+     reader. 
+      </p><p>
+      Given that you&#8217;re writing a client to talk to 
+      an XML-RPC server, you know that the documents you&#8217;re
+      processing always take this form. You know that the 
+      root element is <tt>methodResponse</tt>.
+      You know that the  <tt>methodResponse</tt> element contains
+      a single  <tt>params</tt> element that in turn contains a
+       <tt>param</tt> element. You know that this 
+        <tt>param</tt> element contains a single <tt>value</tt>
+        element. 
+        (For the moment, I'm going to ignore the possibility
+        of a fault response
+        to keep the examples smaller and
+        simpler. Adding that would be straightforward, and we'll
+        do that in later chapters.)
+        All of this is specified by the XML-RPC specification.
+        If any of this is violated in the response you get back
+        from the server, then that server is not sending correct XML-RPC.
+        You&#8217;d probably respond to this by throwing an exception.
+      </p><p>
+      Given that you&#8217;re writing a client to talk to 
+      the specific servlet at 
+      <tt>http://www.elharo.com/fibonacci/XML-RPC</tt>, 
+      you know that the <tt>value</tt> element contains
+       a single <tt>double</tt> element that in turn contains a
+       string representing a double. This isn&#8217;t true for all XML-RPC servers,
+       but it is for this one. If the server returns a value with a type
+       other than double, you&#8217;d probably respond 
+       by throwing an exception,
+       just as you would if a local method you expected to return a <tt>Double</tt>
+       instead returned a <tt>String</tt>. The only significant difference 
+       is that in the XML-RPC case neither the compiler nor the
+       virtual machine can do any type checking. Thus you may want to be a little 
+       bit more explicit about handling the case where something 
+       unexpected is returned.
+      </p><p>
+        The main point is this: most programs you write are going to
+        read documents written in a specific XML vocabulary.
+        They are not going to be designed to handle absolutely 
+        any well-formed document that comes down the pipe.
+        Your programs will make assumptions about the content and
+        structure of those documents, just as  they now make assumptions about
+        the content and structure of external objects. 
+        If you are concerned that your assumptions may occasionally be violated
+        (and you should be),
+        you can validate your documents against a schema of some kind
+        so you know up-front if you&#8217;re being fed bad data.
+        However, you do need to make some assumptions about the format of your 
+        documents before you can reasonably process them. 
+      </p><p> 
+It&#8217;s simple enough to hook up an
+<tt>InputStream</tt> and/or an
+<tt>InputStreamReader</tt> to the document, and
+read it out. For example, this method reads an input XML document
+from the specified input stream and copies it to
+<tt>System.out</tt>:
+     </p><div class="informalexample"><pre class="programlisting">public printXML(InputStream xml) {
+
+  int c;
+  while ((c = xml.read()) != -1) System.out.write(c);
+   
+}</pre></div><p>
+     To actually extract the information a little more work is required. 
+     You need to determine which pieces of the input you actually want
+     and separate those out from all the rest of the text.
+     In the Fibonacci XML-RPC example, you need to extract
+     the text string between
+     the 
+     <tt>&lt;double&gt;</tt> and <tt>&lt;/double&gt;</tt>
+     tags and then convert it to a <tt>java.math.BigInteger</tt> 
+     object. (Remember, I&#8217;m only using a double here 
+     because XML-RPC&#8217;s ints aren&#8217;t big enough to handle 
+     Fibonacci numbers. However, all the responses should 
+     contain an integral value.)
+    </p><p>
+     The <tt>readFibonacciXMLRPCResponse()</tt> 
+     method in
+     <a href="ch05.html#FibonacciClient.java" title="Example&nbsp;5.2.&nbsp;Reading an XML-RPC Response">Example&nbsp;5.2</a> does exactly this
+     by first reading the entire XML document into a 
+     <tt>StringBuffer</tt>, converting the 
+     buffer to a <tt>String</tt>,
+     and then using the <tt>indexOf()</tt> and
+     <tt>substring()</tt> methods to 
+     extract the desired information. The <tt>main()</tt> 
+     method connects to the server using the <tt>URL</tt>
+     and <tt>URLConnection</tt> classes,
+     sends a request document to the server using 
+     the <tt>OutputStream</tt>
+     and <tt>OutputStreamWriter</tt> classes,
+     and passes <tt>InputStream</tt> containing
+     the response XML document to the 
+     <tt>readFibonacciXMLRPCResponse()</tt> 
+     method.
+    </p><div class="example"><a name="FibonacciClient.java"></a><p class="title"><b>Example&nbsp;5.2.&nbsp;Reading an XML-RPC Response</b></p><pre class="programlisting">import java.net.*;
+import java.io.*;
+import java.math.BigInteger;
+
+
+public class FibonacciClient {
+
+  static String defaultServer 
+   = "http://www.elharo.com/fibonacci/XML-RPC";
+   
+  public static void main(String[] args) {
+      
+    if (args.length &lt;= 0) {
+      System.out.println(
+       "Usage: java FibonacciClient number url"
+      );
+      return;
+    }
+    
+    String server = defaultServer;
+    if (args.length &gt;= 2) server = args[1];
+      
+    try {
+      // Connect to the server
+      URL u = new URL(server);
+      URLConnection uc = u.openConnection();
+      HttpURLConnection connection = (HttpURLConnection) uc;
+      connection.setDoOutput(true);
+      connection.setDoInput(true); 
+      connection.setRequestMethod("POST");
+      OutputStream out = connection.getOutputStream();
+      Writer wout = new OutputStreamWriter(out);
+       
+      // Write the request
+      wout.write("&lt;?xml version=\"1.0\"?&gt;\r\n");  
+      wout.write("&lt;methodCall&gt;\r\n"); 
+      wout.write(
+       "  &lt;methodName&gt;calculateFibonacci&lt;/methodName&gt;\r\n");
+      wout.write("  &lt;params&gt;\r\n"); 
+      wout.write("    &lt;param&gt;\r\n"); 
+      wout.write("      &lt;value&gt;&lt;int&gt;" + args[0] 
+       + "&lt;/int&gt;&lt;/value&gt;\r\n");
+      wout.write("    &lt;/param&gt;\r\n"); 
+      wout.write("  &lt;/params&gt;\r\n"); 
+      wout.write("&lt;/methodCall&gt;\r\n"); 
+        
+      wout.flush();
+      wout.close();
+      
+      // Read the response
+      InputStream in = connection.getInputStream();
+      BigInteger result = readFibonacciXMLRPCResponse(in);
+      System.out.println(result);
+        
+      in.close();
+      connection.disconnect();
+    }
+    catch (IOException e) {
+      System.err.println(e); 
+    }
+  
+  }
+
+  private static BigInteger readFibonacciXMLRPCResponse(
+   InputStream in) throws IOException, NumberFormatException, 
+   StringIndexOutOfBoundsException {
+    
+    StringBuffer sb = new StringBuffer();
+    Reader reader = new InputStreamReader(in, "UTF-8");
+    int c;
+    while ((c = in.read()) != -1) sb.append((char) c);
+    
+    String document = sb.toString();
+    String startTag = "&lt;value&gt;&lt;double&gt;";
+    String endTag = "&lt;/double&gt;&lt;/value&gt;";
+    int start = document.indexOf(startTag) + startTag.length();
+    int end = document.indexOf(endTag);
+    String result = document.substring(start, end);
+    return new BigInteger(result);
+    
+  }  
+
+}
+</pre></div><p>
+     Reading the response XML document is more work
+     than writing the request document, but still plausible. 
+     However, this stream- and string-based solution is far 
+     from robust.
+     In particular, it will fail if:
+    </p><div class="itemizedlist"><ul type="disc"><li><p>The document returned is encoded 
+      in UTF-16 instead of UTF-8</p></li><li><p>
+          An earlier part of the document contains the
+          text &#8220;&lt;value&gt;&lt;double&gt;&#8221;, even in a comment.
+        </p></li><li><p>
+          The response is written with line breaks between the
+          <tt>value</tt> and <tt>double</tt> tags like this:
+        </p><div class="informalexample"><pre class="programlisting">&lt;value&gt;
+  &lt;double&gt;28657&lt;/double&gt;
+&lt;/value&gt;</pre></div></li><li><p>
+          There&#8217;s extra white space inside the 
+          <tt>double</tt> tags 
+          like this:
+        </p><div class="informalexample"><pre class="programlisting">&lt;double &gt;28657&lt;/double &gt;</pre></div></li></ul></div><p>
+     Perhaps worse than these are all the malformed responses 
+     <tt>FibonacciClient</tt>
+     will accept even though it should recognize and reject
+     them. And this is a simple example where we just want 
+     one piece of data that&#8217;s clearly marked up.
+     The more data you want from an XML document,
+     and the more complex and flexible the markup, the harder it is
+     to find using basic string matching or even the regular expressions
+     introduced in Java 1.4. 
+    </p><p>
+      Straight text parsing is not the appropriate tool with
+      which to navigate an XML document. The structure and
+      semantics of an XML document is encoded in the document&#8217;s
+      markup, its tags and its attributes; and you need a tool
+      that is designed to recognize and understand this structure
+      as well as reporting any possible errors in this structure.
+      This tool is called an XML parser. 
+    </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch04s08.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="index.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch05s02.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Summary&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;XML Parsers</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+September 16,
+2001</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

@@ -1,0 +1,176 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>JDOM</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="previous" href="ch05s05.html" title="JAXP"><link rel="next" href="ch05s07.html" title="dom4j"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">JDOM</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch05s05.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;5.&nbsp;Reading XML</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch05s07.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e7803"></a>JDOM</h2></div></div><p>
+        A large portion of DOM&#8217;s complexity and unintuitiveness
+        is a result of it not actually being a Java API. 
+        DOM is defined in the Interface Definition
+        Language (IDL) from the Object Management Group (OMG)
+        and then compiled to Java. This means that DOM
+        must use interfaces and factory methods
+        instead of classes and constructors. DOM classes must always
+        cater to the lowest common denominator of programming
+        languages. For example, there are no
+        overloaded methods in DOM because JavaScript doesn&#8217;t
+        support method overloading. That a lot of the DOM could be
+        more concisely expressed in Java and C++ with overloaded
+        methods doesn&#8217;t matter. 
+      </p><p>
+        JDOM is a more intuitive, tree-based API designed just for Java.
+        It makes no compromises to support other languages. 
+        It includes Java specific features like 
+        <tt>equals()</tt> and
+        <tt>hashCode()</tt> methods. Where
+        appropriate it makes free use of standard Java classes
+        like <tt>List</tt> and <tt>String</tt>.
+        Consequently JDOM feels a lot more intuitive to most Java
+        programmers than DOM does. Take a look at 
+        <a href="ch05s06.html#FibonacciJDOMClient.java" title="Example&nbsp;5.7.&nbsp;A JDOM based client for the Fibonacci XML-RPC server">Example&nbsp;5.7</a>.
+        I think you&#8217;ll agree that it&#8217;s a lot easier to comprehend at
+        first glance than the DOM equivalent.
+      </p><div class="example"><a name="FibonacciJDOMClient.java"></a><p class="title"><b>Example&nbsp;5.7.&nbsp;A JDOM based client for the Fibonacci XML-RPC server</b></p><pre class="programlisting">import java.net.*;
+import java.io.*;
+import org.jdom.*;
+import org.jdom.output.XMLOutputter;
+import org.jdom.input.SAXBuilder;
+
+
+public class FibonacciJDOMClient {
+
+  public final static String DEFAULT_SERVER 
+   = "http://www.elharo.com/fibonacci/XML-RPC";  
+  
+  public static void main(String[] args) {
+      
+    if (args.length &lt;= 0) {
+      System.out.println(
+       "Usage: java FibonacciJDOMClient number url"
+      );
+      return;
+    }
+    
+    String server = DEFAULT_SERVER;
+    if (args.length &gt;= 2) server = args[1];
+      
+    try {
+      // Build the request document
+      Element methodCall = new Element("methodCall");
+      Element methodName = new Element("methodName");
+      methodName.setText("calculateFibonacci");
+      methodCall.addContent(methodName);
+      Element params = new Element("params");
+      methodCall.addContent(params);
+      Element param = new Element("param");
+      params.addContent(param);
+      Element value = new Element("value");
+      param.addContent(value);
+      // Had to break the naming convention here because of a 
+      // conflict with the Java keyword int
+      Element intElement = new Element("int");
+      intElement.setText(args[0]);
+      value.addContent(intElement);  
+      Document request = new Document(methodCall);
+      
+      // Transmit the request document
+      URL u = new URL(server);
+      URLConnection uc = u.openConnection();
+      HttpURLConnection connection = (HttpURLConnection) uc;
+      connection.setDoOutput(true);
+      connection.setDoInput(true); 
+      connection.setRequestMethod("POST");
+      OutputStream out = connection.getOutputStream();
+      
+      XMLOutputter serializer = new XMLOutputter();
+      serializer.output(request, out);
+      
+      out.flush();
+      out.close();        
+
+      // Read the response
+      InputStream in = connection.getInputStream();
+      SAXBuilder parser = new SAXBuilder();
+      Document response = parser.build(in);
+      in.close();
+      connection.disconnect();
+      
+      // Walk down the tree
+      String result = response.getRootElement()
+                       .getChild("params")
+                       .getChild("param")
+                       .getChild("value")
+                       .getChild("double")
+                       .getText();
+      System.out.println(result);
+    }
+    catch (Exception e) {
+      System.err.println(e); 
+    }
+  
+  } 
+
+}
+</pre></div><p>
+         In JDOM the request document is built as a tree.
+         JDOM, however, uses classes and constructors
+         rather than factory methods.
+         Elements can be created that are not attached to any
+         document. Elements and most other nodes are added to a
+         document by passing them to their parent&#8217;s 
+         <tt>addContent()</tt> method. 
+         However, if an element only contains text, no markup,
+         then its entire content may be set by passing a string
+         to its <tt>setText()</tt> method instead. 
+       </p><p>
+         To serialize documents JDOM provides the 
+         <tt>XMLOutputter</tt> class.
+         This class combines both formatting options such as
+         encoding and the actual writing of the document onto a
+         stream or writer.
+         This is a standard part of JDOM that is used the same
+         way no matter which parser you use underneath JDOM.
+       </p><p>
+         Once the response has been received,
+         JDOM parses it into a <tt>Document</tt>
+         object using the <tt>SAXBuilder</tt> class.
+         This is the class that connects JDOM to an underlying
+         parser that implements the SAX API. 
+         JDOM does not provide convenient methods for
+         extracting subsets of the nodes in a document as DOM
+         does. Consequently to get to the element we want, we
+         must walk the tree. Since the document is very structured,
+         this is straightforward. First get the root element of
+         the document, then get its <tt>params</tt>
+         child,
+         then its <tt>param</tt> child, then its
+         <tt>value</tt> child,
+         then its <tt>double</tt> child, and finally its
+         text content. The result is the string value we need.
+         Although this string value happens to represent a
+         double, JDOM has no way of knowing this (nor does any
+         other XML API). 
+       </p><p>
+         JDOM is definitely easier than DOM for simple problems like this. 
+         However, I think it fails when it comes to the more
+         complex problems such as processing large narrative documents
+         with lots of mixed content or working with XPath based technologies
+         like XSLT, XPointers, XInclude, and XQuery. 
+         The design of the JDOM
+         API has often chosen simplicity and intuitiveness over 
+         power and completeness. The incomplete tree model
+         really begins to hurt as
+         the problems grow more complex. Any operation that requires
+         you to recursively walk the entire document tree is 
+         more complex in JDOM than in DOM. JDOM is much better suited
+         to data oriented documents with well-known record-like structures
+         that do not contain any mixed content. 
+       </p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch05s05.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch05.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch05s07.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">JAXP&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;dom4j</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+September 09,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

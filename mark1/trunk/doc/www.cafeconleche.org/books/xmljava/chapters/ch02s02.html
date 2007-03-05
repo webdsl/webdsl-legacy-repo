@@ -1,0 +1,374 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>HTTP as a Transport Protocol</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="previous" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="next" href="ch02s03.html" title="RSS"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"><link rel="subsection" href="ch02s02.html#d0e2835" title="How HTTP Works"><link rel="subsection" href="ch02s02.html#d0e2869" title="HTTP in Java"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">HTTP as a Transport Protocol</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch02.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch02s03.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e2805"></a>HTTP as a Transport Protocol</h2></div></div><p>
+    XML is just a document format.
+    Documents by themselves don&#8217;t do anything. They simply are.
+    They contain information, but they neither read nor write that
+    information. They tend to stay in one place,
+    and do not move unless somebody or something moves them.
+  </p><p>
+    If two systems want to exchange messages in XML format, it is not
+    hard for them to do so. Each message can be encoded as a complete
+    XML document. The sender can transmit the document to the receiver using
+    FTP, HTTP, NFS, named pipes, RPC, floppy disks, a null-modem cable
+    running between two machines&#8217; serial ports, 
+    modems communicating over telephone lines, or any other
+    means of moving data between systems. It&#8217;s even acceptable for the
+    sender to print out the XML document on paper, seal it in a stamped
+    envelope, and drop it in the mail. After the Post Office delivers the
+    mail, the recipient can scan it in. XML is completely
+    transport-protocol neutral. As long as the 
+    document gets where it&#8217;s going without being corrupted along the way, XML
+    neither knows nor cares how it got there.
+  </p><p>
+   Since XML doesn&#8217;t care how documents are moved from point A to point B,
+   it&#8217;s sensible to pick the simplest broadly supported protocol you can;
+   and that is HTTP, the Hypertext Transport Protocol used by all web browsers
+   and servers.
+   Using HTTP to transport XML has a number of advantages, among them:  
+  </p><div class="itemizedlist"><ul type="disc"><li><p>HTTP is well supported by libraries
+  in Java, Perl, C, and many other languages for both
+  client and server programs.
+  This takes a large burden off the shoulders of the programmer.
+     </p></li><li><p>HTTP is platform independent.
+  Windows PCs, Macs, Unix boxes,
+  mainframes, and more are all happy speaking HTTP.</p></li><li><p>
+    HTTP connections are normally
+     allowed to pass through firewalls.
+    </p></li><li><p>
+    Since the HTTP protocol is text-based,
+    you can use telnet to test out servers.
+    </p></li><li><p>The HTTP header provides a convenient place to store out-of-band
+    information such as the document size and encoding.</p></li><li><p>HTTP is very well understood in the
+  developer community.</p></li></ul></div><p>
+    Thus it should be no surprise that one of the
+    most popular ways to move XML documents between systems is by using
+    HTTP. A server can send an XML document to a client just as easily 
+    as it can send an HTML document or a JPEG image.
+    A little less well-known is that a client can easily
+    send an XML document (or anything else) to a server
+    using HTTP POST.
+  </p><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e2835"></a>How HTTP Works</h3></div></div><p>
+  The simplest possible XML protocol merely 
+  pulls down an XML document from a known URL
+  on a server.
+  You don&#8217;t need to send anything more to the server than a request 
+  for a page.
+  For instance, today&#8217;s Slashdot headlines are available in XML from
+  <tt>http://www.slashdot.org/slashdot.xml</tt>. 
+  All you have to do to get the headlines is load that
+  URL into a browser as shown in <a href="ch02s02.html#slashdot_xml.jpg" title="Figure&nbsp;2.1.&nbsp;Slashdot headlines in XML">Figure&nbsp;2.1</a>.
+  </p><div class="figure"><a name="slashdot_xml.jpg"></a><p class="title"><b>Figure&nbsp;2.1.&nbsp;Slashdot headlines in XML</b></p><div class="screenshot"><div class="mediaobject"><img src="slashdot_xml.jpg"></div></div></div><p>
+  Behind the scenes, here&#8217;s what&#8217;s going over the wire for that request. 
+  First the browser opens a socket to
+  <tt>www.slashdot.org</tt> on port 80. Then 
+   it sends a request that looks something like this:
+</p><pre class="screen">GET /slashdot.xml HTTP/1.1
+Host: www.slashdot.org
+User-Agent: Mozilla/5.0 (Windows; U; WinNT4.0; en-US; rv:0.9.2) 
+Accept: text/xml, text/html;q=0.9, image/jpeg, */*;q=0.1
+Accept-Language: en, fr;q=0.50
+Accept-Encoding: gzip,deflate,compress,identity
+Accept-Charset: ISO-8859-1, utf-8;q=0.66, *;q=0.66
+Keep-Alive: 300
+Connection: keep-alive
+
+</pre><p>
+  The server responds with its own HTTP header, a blank line,
+  and the body of the 
+  requested document. The result looks like this:
+</p><pre class="screen">HTTP/1.1 200 OK
+Date: Fri, 20 Jul 2001 19:31:10 GMT
+Server: Apache/1.3.12 (Unix) mod_perl/1.24
+Last-Modified: Fri, 20 Jul 2001 18:34:06 GMT
+ETag: "de47c-e5e-3b58799e"
+Accept-Ranges: bytes
+Content-Length: 3678
+Connection: close
+Content-Type: text/xml
+
+&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;&lt;backslash
+xmlns:backslash="http://slashdot.org/backslash.dtd"&gt;
+
+  &lt;story&gt;
+    &lt;title&gt;TheKompany's Shawn Gordon Responds In Full&lt;/title&gt;
+    &lt;url&gt;http://slashdot.org/article.pl?sid=01/07/20/1637220&lt;/url&gt;
+    &lt;time&gt;2001-07-20 18:30:28&lt;/time&gt;
+    &lt;author&gt;timothy&lt;/author&gt;
+    &lt;department&gt;what's-good-for-thekompany&lt;/department&gt;
+    &lt;topic&gt;linuxbiz&lt;/topic&gt;
+    &lt;comments&gt;3&lt;/comments&gt;
+    &lt;section&gt;interviews&lt;/section&gt;
+    &lt;image&gt;topiclinuxbiz.gif&lt;/image&gt;
+  &lt;/story&gt;
+
+  &lt;story&gt;
+    &lt;title&gt;GNOME Usability Study Report&lt;/title&gt;
+    &lt;url&gt;http://slashdot.org/article.pl?sid=01/07/20/1752205&lt;/url&gt;
+    &lt;time&gt;2001-07-20 18:08:03&lt;/time&gt;
+    &lt;author&gt;michael&lt;/author&gt;
+    &lt;department&gt;press-ctrl-alt-shift-k-q-z-to-continue&lt;/department&gt;
+    &lt;topic&gt;gnome&lt;/topic&gt;
+    &lt;comments&gt;68&lt;/comments&gt;
+    &lt;section&gt;developers&lt;/section&gt;
+    &lt;image&gt;topicgnome.gif&lt;/image&gt;
+  &lt;/story&gt;
+
+  &lt;story&gt;
+    &lt;title&gt;Mono Unimplementable?&lt;/title&gt;
+    &lt;url&gt;http://slashdot.org/article.pl?sid=01/07/20/1555256&lt;/url&gt;
+    &lt;time&gt;2001-07-20 17:14:39&lt;/time&gt;
+    &lt;author&gt;Hemos&lt;/author&gt;
+    &lt;department&gt;keeping-things-propietary&lt;/department&gt;
+    &lt;topic&gt;microsoft&lt;/topic&gt;
+    &lt;comments&gt;132&lt;/comments&gt;
+    &lt;section&gt;articles&lt;/section&gt;
+    &lt;image&gt;topicms.gif&lt;/image&gt;
+  &lt;/story&gt;
+
+&lt;/backslash&gt;</pre><p>
+  In both directions the HTTP header is pure text.
+  Lines in the header are delimited by carriage-return linefeed pairs;
+  that is, \r\n. The body of the document is separated from the
+  HTTP header by a blank line. The document may or may not be
+  text. For instance, it could be 
+  a JPEG image or a gzipped HTML file.
+</p><p>
+  Servers can also respond with a variety of error codes.
+  For example, here&#8217;s the common 404 Not Found error:
+</p><pre class="screen">HTTP/1.0 404 Not found
+Server: Netscape-Enterprise/2.01
+Date: Wed, 04 Jul 2001 20:35:17 GMT
+Content-length: 207
+Content-type: text/html
+
+&lt;TITLE&gt;Not Found&lt;/TITLE&gt;&lt;H1&gt;Not Found&lt;/H1&gt; The requested object does 
+not exist on this server. The link you followed is either outdated, 
+inaccurate, or the server has been instructed not to let you have it.
+</pre></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e2869"></a>HTTP in Java</h3></div></div><p>
+    Of course, you don&#8217;t have to load these documents into a browser. 
+    Java lets you 
+    write programs that connect to and retrieve information from web sites 
+    with hardly any effort. Once you have a document in memory you 
+    can do whatever you want with it: search it, sort it, transform it, 
+    forward it to somebody else, clean up after the family dog with it, 
+    whatever you want. Future chapters are going to cover the details of 
+    all these operations (except cleaning up after the family dog; 
+    you&#8217;re on your own for that :-) ). But first I want to show you how 
+    to use Java to retrieve such information and dump it to the console. 
+    Later we&#8217;ll move from merely retrieving and printing a document to 
+    reading and understanding it. 
+</p><p>
+    <a href="ch02s02.html#URLGrabber.java" title="Example&nbsp;2.2.&nbsp;URLGrabber">Example&nbsp;2.2</a> is a Java class 
+    that uses the <tt>java.net.URL</tt> class to load 
+    documents via HTTP (or any other supported protocol) from a server. 
+    It has four methods. 
+    <tt>getDocumentAsInputStream()</tt> connects to a 
+    server and returns the unread stream after stripping off 
+    the HTTP header. <tt>getDocumentAsString()</tt> 
+    actually reads the entire document, stores it in a 
+    string buffer, and then returns a string containing 
+    the document at the URL.  Overloaded variants of each method 
+    allow you to pass in either the string form of the URL or a 
+    <tt>java.net.URL</tt> object, whichever is more 
+    convenient. The method that retrieves the document as an input 
+    stream would be used if you want to process the document as it 
+    arrives. The string version would be used if the document wasn&#8217;t too 
+    big and you wanted to make sure the entire document was available 
+    before working with it. 
+</p><div class="example"><a name="URLGrabber.java"></a><p class="title"><b>Example&nbsp;2.2.&nbsp;URLGrabber</b></p><pre class="programlisting">package com.macfaq.net;
+
+import java.net.URL;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.io.InputStream;
+
+
+public class URLGrabber {
+
+  public static InputStream getDocumentAsInputStream(URL url) 
+    throws IOException {
+  
+    InputStream in = url.openStream();
+    return in;
+  
+  }
+
+  public static InputStream getDocumentAsInputStream(String url) 
+    throws MalformedURLException, IOException {
+  
+    URL u = new URL(url);
+    return getDocumentAsInputStream(u);
+  
+  }
+
+  public static String getDocumentAsString(URL url) 
+    throws IOException {
+  
+    StringBuffer result = new StringBuffer();
+    InputStream in = url.openStream();
+    int c;
+    while ((c = in.read()) != -1) result.append((char) c);
+    return result.toString();
+  
+  }
+
+  public static String getDocumentAsString(String url) 
+    throws MalformedURLException, IOException {
+  
+    URL u = new URL(url);
+    return getDocumentAsString(u);
+  
+  }
+
+}
+</pre></div><p>
+   One method you might expect to see here I&#8217;ve deliberately left out.
+   There is no <tt>getReaderFromURL()</tt>. Before you
+   can convert the input stream into a reader, you need to figure out
+   which encoding to use. Because
+   XML documents normally carry their own information about encoding,
+   this requires you to parse the first line or two of the XML document.
+   <tt>URLGrabber</tt>
+    could do that, but the details are rather complicated and 
+   doing this would make
+   this class less generic than it currently is. (Right now it can handle
+   any kind of document, not just XML documents.) 
+   It&#8217;s better to leave all the XML-specific details such as determining the
+   character encoding to the XML parser. 
+</p><p>
+    Since <tt>URLGrabber</tt>
+     is a generally useful class, I&#8217;ve placed it in the 
+    <tt>com.macfaq.net</tt> package. I will use this class again later in this 
+    book without further comment. To do so I will have to import 
+    <tt>com.macfaq.net.*</tt>, and I will have to make sure my source files are 
+    properly organized in my file system. The Java examples in this book 
+    are not all trivial, and cannot all fit in a single class. In 
+    general, I will divide programs into different classes offering 
+    small pieces of functionality like this one so that I can debug and 
+    explain them separately, as well as mix and match them in different 
+    programs. 
+</p><div class="warning" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Warning</h3><p>
+Nothing in Java is as pointlessly confusing as the proper organization 
+of <tt>.class</tt> and 
+<tt>.java</tt> files in different packages on a file system. 
+Learning how to use packages correctly is one of the major hurdles for 
+novice Java programmers. It is also one of the obstacles a good 
+IDE can really help you with. If you are having 
+problems making these programs compile and work as described here 
+because of the package structure, especially if you&#8217;re seeing error 
+messages that involve &#8220;<tt>java.lang.NoClassDefFoundError</tt>&#8221;, please consult 
+a good introductory reference on Java. For these details, I recommend 
+[<i>How the virtual machine locates classes</i>,
+in <i>Core Java 2</i>, Volume 1, by Cay S. Horstmann 
+and Gary Cornell, 
+Sun Microsystems Press 2001, ISBN 0-13-089468-0, pp. 168-171] 
+and [<i><a href="http://java.sun.com/docs/books/tutorial/java/interpack/managingfiles.html" target="_top">Managing 
+Source and Class Files</a></i>,
+in <i>The Java Tutorial</i>, 3rd Edition, by Mary Campione, Kathy Walrath, 
+and Alison Hunt, Addison-Wesley, 2001, ISBN
+ 0-201-70393-9, pp. 238-241]. 
+ (Neither of these is complete. In particular 
+neither covers the crucial 
+<a href="http://java.sun.com/j2se/1.3/docs/tooldocs/win32/javac.html#options" target="_top">sourcepath
+ option</a> 
+to the javac compiler,
+or 
+<a href="http://java.sun.com/j2se/1.3/docs/tooldocs/win32/javac.html#examples" target="_top">shows you how 
+to compile and run a program divided across multiple packages</a>.
+I&#8217;m still looking for a better introductory reference on these topics. 
+If you know of one, please drop an email to elharo@metalab.unc.edu.
+ Thanks!) However, in this book I will assume that you have learned how to 
+navigate the obstacles Java places in your <tt>CLASSPATH</tt> with a reasonable 
+degree of facility.
+</p></div><p>   
+    Isolating the code to communicate with the network in the <tt>URLGrabber</tt> class
+    will allow us to ignore it in the future. For the most part, the
+    details of network transport are not relevant when processing XML.
+    Many of the programs in this book that process XML will expect to
+    receive an XML document as a stream or a string. They really don&#8217;t
+    care where that stream or string comes from as long as it contains a
+    well-formed XML document. In the remainder of this book when I need
+    to load an XML document from a URL via GET, I will refer to this
+    class without duplicating the code.
+</p><p>
+    Another aspect of this program that I find sometimes confuses
+    people: it does not have a <tt>main()</tt>
+    method. It is not intended to be used directly by
+    typing <b><tt>java URLGrabber</tt></b> at the command line.
+    Rather this is a library class meant for other programs to use.
+    <a href="ch02s02.html#URLGrabberTest.java" title="Example&nbsp;2.3.&nbsp;URLGrabberTest">Example&nbsp;2.3</a> is a simple program designed 
+    just to  test <tt>URLGrabber</tt> with a very basic command line user 
+    interface. Since it is not a generally useful class, I have not 
+    placed it anywhere in the <tt>com.macfaq</tt> packages. Instead it is simply 
+    a quick, one-off program so I can make sure that <tt>URLGrabber</tt> actually 
+    works and does what I want it to do. 
+</p><div class="example"><a name="URLGrabberTest.java"></a><p class="title"><b>Example&nbsp;2.3.&nbsp;URLGrabberTest</b></p><pre class="programlisting">import com.macfaq.net.URLGrabber;
+import java.io.IOException;
+import java.net.MalformedURLException;
+
+
+public class URLGrabberTest {
+  
+  public static void main(String[] args) {
+        
+    for (int i = 0; i &lt; args.length; i++) {
+      try {
+        String doc = URLGrabber.getDocumentAsString(args[i]);
+        System.out.println(doc); 
+      }
+      catch (MalformedURLException e) {
+        System.err.println(args[i] 
+         + " cannot be interpreted as a URL.");
+      }   
+      catch (IOException e) {
+        System.err.println("Unexpected IOException: " 
+         + e.getMessage());        
+      }   
+    }
+        
+  }
+
+}
+</pre></div><p>
+    Here&#8217;s a simple example of using <tt>URLGrabberTest</tt>
+     to download the XML document
+    from 
+    <tt>http://www.slashdot.org/slashdot.xml</tt>:  
+</p><pre class="screen"><tt>D:\books\XMLJAVA&gt;</tt><b><tt>java URLGrabberTest http://www.slashdot.org/slashdot.xml</tt></b>
+&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;&lt;backslash
+xmlns:backslash="http://slashdot.org/backslash.dtd"&gt;
+
+  &lt;story&gt;
+    &lt;title&gt;TheKompany's Shawn Gordon Responds In Full&lt;/title&gt;
+...</pre><p>
+    However, <tt>URLGrabberTest</tt> is really nothing more than toy example that fits 
+    nicely and neatly in the space available on a printed page. In 2002, 
+    serious programs either use GUIs or they don&#8217;t have an explicit user 
+    interface at all. <a href="ch02s02.html#URLGrabber.java" title="Example&nbsp;2.2.&nbsp;URLGrabber">Example&nbsp;2.2</a> is a useful 
+    program. <a href="ch02s02.html#URLGrabberTest.java" title="Example&nbsp;2.3.&nbsp;URLGrabberTest">Example&nbsp;2.3</a> is not.
+</p><p>
+    There are many services that can use this simple approach
+    to transmitting XML data across HTTP.
+    For example, besides headlines
+    this is a straightforward way to distribute 
+    the titles and show times of the movies playing at a particular theater,
+    the viewing conditions
+    at an observatory, the operational state of a machine in a factory,
+    the daily sales at a retail store, the surf conditions at Ehukai Beach, 
+    and more.
+    What makes this possible is that
+    all users want pretty much the same document. The response does not
+    need to be customized for each requestor.
+  </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch02.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch02.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch02s03.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;RSS</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+July 26,
+2001</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

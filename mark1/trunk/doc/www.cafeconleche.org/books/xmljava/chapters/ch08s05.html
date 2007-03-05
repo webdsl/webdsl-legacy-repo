@@ -1,0 +1,414 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Parsing non-XML Documents</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="previous" href="ch08s04.html" title="The XMLFilterImpl Class"><link rel="next" href="ch08s06.html" title="Multihandler adapters"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Parsing non-XML Documents</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch08s04.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;8.&nbsp;SAX Filters</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch08s06.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e13030"></a>Parsing non-XML Documents</h2></div></div><p>
+    One of the neatest tricks that a SAX filter can perform is
+    presenting something that isn&#8217;t an XML document as if it were
+    one. The client application doesn&#8217;t need to know that what
+    it&#8217;s parsing is really a tab-delimited text file or a
+    relational database if the filter hides all those details and
+    just presents a view of that source as a well-formed XML
+    document.
+  </p><p>
+  There are several advantages to using this approach as opposed
+  to actually converting the source. For one, it&#8217;s a lot more
+  dynamically adaptable to changing data.
+  For another, it&#8217;s easier to integrate into existing XML processing chains. 
+    A small advantage is that you don&#8217;t need to worry about escaping 
+     illegal characters like &lt; and &amp; because these
+    would normally be unescaped before the parser passed them
+    back to the client application.
+  </p><p>
+    For example, JDBC makes it easy to write a SAX filter that
+    puts an XML face on a SQL table.  The <tt>parse()</tt> 
+    method reads from a JDBC <tt>ResultSet</tt>
+    which it annotates with tags and attributes by
+    firing the appropriate events. 
+    The entire <tt>ResultSet</tt> becomes a single 
+    root <tt>table</tt> element.
+    Each record is presented in a
+    <tt>record</tt> element. This
+    <tt>record</tt> element contains one
+    <tt>field</tt> element for each field.
+    Each <tt>field</tt> element contains the value of the
+    field as text. It also has an <tt>xsi:type</tt>
+    attribute identifying the type of the field
+    and a <tt>name</tt> attribute giving the name of the field.
+    An alternate approach would use the SQL field names as the
+    element names rather than the generic
+    <tt>field</tt> with a <tt>name</tt> attribute.
+    <a href="ch08s05.html#DatabaseFilter.java" title="Example&nbsp;8.13.&nbsp;Accessing databases through SAX">Example&nbsp;8.13</a>
+    demonstrates. 
+  </p><div class="example"><a name="DatabaseFilter.java"></a><p class="title"><b>Example&nbsp;8.13.&nbsp;Accessing databases through SAX</b></p><pre class="programlisting">import org.xml.sax.*;
+import org.xml.sax.helpers.*;
+import java.sql.*;
+import java.io.*;
+
+
+public class DatabaseFilter extends XMLFilterImpl {
+
+  private Connection connection;
+  
+  // The string passed to the constructor must be a JDBC URL that
+  // contains all necessary information for connecting to the
+  // database such as host, port, username, password, and
+  // database name. For example, 
+  // jdbc:mysql://host:port]/dbname?user=username&amp;password=pass
+  // The driver should have been loaded before this method is
+  // called
+  public DatabaseFilter(String jdbcURL) throws SQLException {
+    connection = DriverManager.getConnection(jdbcURL);
+  }
+
+  public void parse(InputSource in) throws SAXException, 
+   IOException, UnsupportedOperationException {
+    throw new UnsupportedOperationException(
+     "Can't read a database from an InputStream or Reader"
+    );
+  }
+  
+  public void parse(String selectQuery) 
+   throws SAXException, IOException {
+    
+    try {
+      Statement statement = connection.createStatement();
+      ResultSet data = statement.executeQuery(selectQuery);
+      ResultSetMetaData metadata = data.getMetaData();
+      int numFields = metadata.getColumnCount();
+      
+      Attributes emptyAttributes = new AttributesImpl();
+      startElement("", "table", "table", emptyAttributes);
+      
+      while (data.next()) {
+        startElement("", "record", "record", emptyAttributes);
+        for (int field = 1; field &lt;= numFields; field++) {
+          AttributesImpl fieldAtts = new AttributesImpl();
+          int type = metadata.getColumnType(field);
+          String typeName = getSchemaType(type);
+          fieldAtts.addAttribute(
+           "http://www.w3.org/2001/XMLSchema-instance", "type", 
+           "xsi:type", "NMTOKEN", typeName);
+          String name = metadata.getColumnName(field);
+          fieldAtts.addAttribute(
+           "", "name", "name", "NMTOKEN", name);
+          
+          // Convert nulls to empty elements with xsi:nil="true"
+          Object value = data.getObject(field);
+          if (value == null) { // null value in database
+            fieldAtts.addAttribute(
+             "http://www.w3.org/2001/XMLSchema-instance", "nil", 
+             "xsi:nil", "NMTOKEN", "true");
+            startElement("", "field", "field", fieldAtts);
+            endElement("", "field", "field");
+          }
+          else { // non-null value
+            startElement("", "field", "field", fieldAtts);
+            convertToXML(data, field, type);
+            endElement("", "field", "field");
+          }
+        }
+        endElement("", "record", "record");
+      }
+      endElement("", "table", "table");
+      statement.close();
+    }
+    catch (SQLException e) {  // convert exception type
+      throw new SAXException(e); 
+    }
+    
+  }
+
+  // I want the XML document to store values in the standard W3C
+  // XML Schema Language forms. This requires certain conversions 
+  // depending on the type of the data
+  private void convertToXML(ResultSet data, int field, int type)
+   throws SQLException, SAXException {
+
+    switch (type) {
+      case Types.BINARY: 
+      case Types.VARBINARY: 
+      case Types.LONGVARBINARY: 
+        hexEncode(data.getBinaryStream(field));
+        break;
+      case Types.BLOB:
+        Blob blob = data.getBlob(field);
+        hexEncode(blob.getBinaryStream());
+        break;
+      case Types.CLOB: 
+        Clob clob = data.getClob(field);
+        Reader r = clob.getCharacterStream();
+        char[] text = new char[1024];
+        int numRead;
+        try {
+          while ((numRead = r.read(text, 0, 1024)) != -1) {
+            escapeText(text, 0, numRead);
+            characters(text, 0, numRead); 
+          }
+        }
+        catch (IOException e) {
+          throw new SAXException("Read from CLOB failed", e); 
+        }
+        break;
+      case Types.ARRAY:
+        Array array = data.getArray(field);
+        writeArray(array);
+        break;
+      default: // All other types can be handled as strings
+        Object o = data.getObject(field); 
+        if (o == null) return;                
+        String s = o.toString(); 
+        char[] value = s.toCharArray();
+        escapeText(value, 0, value.length);
+        characters(value, 0, value.length);
+    }     
+
+  }
+  
+  private void hexEncode(InputStream in) 
+   throws SQLException, SAXException {
+    
+    try {
+      int octet;
+      while ((octet = in.read()) != -1) {
+        StringWriter out = new StringWriter(2);
+        if (octet &lt; 16) out.write('0');
+        out.write(Integer.toHexString(octet));
+        char[] text = out.toString().toCharArray();
+        characters(text, 0, 2);
+      }
+    }
+    catch (IOException e) {
+      throw new SAXException(e);
+    }
+    
+  }
+ 
+  // String types may contain C0 control characters that are
+  // not legal in XML. I convert these to the Unicode replacement
+  // character 0xFFFD
+  private void escapeText(char[] text, int start, int length) {
+    for (int i = start; i &lt; length; i++) {
+        text[i] = escapeChar(text[i]);
+    }
+  }
+
+  private char escapeChar(char c) {
+    if (c &gt;= 0x20) return c;
+    else if (c == '\n') return c;
+    else if (c == '\r') return c;
+    else if (c == '\t') return c;
+    return '\uFFFD';
+  }
+ 
+  private void writeArray(Array array) 
+   throws SQLException, SAXException {
+    
+    ResultSet data = array.getResultSet();
+    int type = array.getBaseType();
+    String typeName = getSchemaType(type);
+
+    while (data.next()) {
+      AttributesImpl fieldAtts = new AttributesImpl();
+      fieldAtts.addAttribute(
+        "http://www.w3.org/2001/XMLSchema-instance", "type", 
+        "xsi:type", "NMTOKEN", typeName);
+      startElement("", "component", "component", fieldAtts);
+      convertToXML(data, 2, type);
+      endElement("", "component", "component");
+    }
+    
+  }
+  
+  public static String getSchemaType(int type) {
+   
+    switch (type) {
+      case Types.ARRAY:         return "array";
+      case Types.BIGINT:        return "xsd:long";
+      case Types.BINARY:        return "xsd:hexBinary";
+      case Types.BIT:           return "xsd:boolean";
+      case Types.BLOB:          return "xsd:hexBinary";
+      case Types.CHAR:          return "xsd:string";
+      case Types.CLOB:          return "xsd:string";
+      case Types.DATE:          return "xsd:date";
+      case Types.DECIMAL:       return "xsd:decimal";
+      case Types.DOUBLE:        return "xsd:double";
+      case Types.FLOAT:         return "xsd:decimal";
+      case Types.INTEGER:       return "xsd:int";
+      case Types.JAVA_OBJECT:   return "xsd:string";
+      case Types.LONGVARBINARY: return "xsd:hexBinary";
+      case Types.LONGVARCHAR:   return "xsd:string";
+      case Types.NUMERIC:       return "xsd:decimal";
+      case Types.REAL:          return "xsd:float";
+      case Types.REF:           return "xsd:IDREF";
+      case Types.SMALLINT:      return "xsd:short";
+      case Types.STRUCT:        return "struct";
+      case Types.TIME:          return "xsd:time";
+      case Types.TIMESTAMP:     return "xsd:dateTime";
+      case Types.TINYINT:       return "xsd:byte";
+      case Types.VARBINARY:     return "xsd:hexBinary";
+                                // most general type
+      default:                  return "xsd:string"; 
+    }
+    
+  }
+  
+  // Warn clients that this filter does not receive its events 
+  // from another XML parser
+  public void setParent(XMLReader parent) 
+   throws UnsupportedOperationException {
+    throw new UnsupportedOperationException(
+     "A DatabaseFilter reads from an underlying SQL database;"
+     + " not an underlying XML parser"
+    );
+  }
+  
+}
+</pre></div><p>
+    The trickiest part of this design was not the XML output. It
+    was figuring out how to pass in the database connection
+    parameters and the SQL queries. SUN has defined a JDBC URL.
+    However, such a URL only indicates the database, username,
+    and password to access. It does not go all the way down to the
+    level of the SQL query, so it could not be used as a system
+    ID. I chose instead to pass in the database connection
+    parameters through constructors and the SQL query as a 
+    system ID string passed to the
+    <tt>parse()</tt> method. 
+    This is not the customary URI system ID, but since
+    this will only be used in this program and not directly in
+    XML documents, this doesn&#8217;t cause any major problems. Nonetheless, I
+    changed the name of the formal argument to the <tt>parse()</tt> method
+    from <tt>systemID</tt> to
+    <tt>SQLQuery</tt> to try to make this more obvious.
+    This filter cannot parse
+    <tt>InputSource</tt> objects because it&#8217;s
+    really not possible to read a database from a stream. Thus
+    the <tt>parse()</tt> method that takes an
+    <tt>InputSource</tt> as an argument throws
+    an <tt>UnsupportedOperationException</tt>.
+  </p><p>
+   A large part of the logic in this filter involves converting
+   JDBC results into text. Most of the JDBC/SQL types have
+   natural string representations which conveniently match W3C
+   XML Schema Language primitive types. These can be retrieved by
+   calling <tt>toString()</tt> on the
+   corresponding Java object returned by the JDBC
+   <tt>getObject()</tt> method. The binary types
+   (BINARY, VARBINARY, LONGVARBINARY, and BLOB) have to be hex
+   encoded first.<sup>[<a name="d0e13116" href="#ftn.d0e13116">2</a>]</sup>
+   CLOBs don&#8217;t have to be hex encoded, but they aren&#8217;t available as a 
+   single string, and thus have to be read from a stream too.
+   Finally, arrays and structs require more detailed treatment as
+   a complex type rather than a simple type.
+ </p><p>
+    The sample driver program for this filter, shown in <a href="ch08s05.html#SQLDriver.java" title="Example&nbsp;8.14.&nbsp;A very simple user &#xA;   interface for extracting XML data from a relational database">Example&nbsp;8.14</a>, is very similar to earlier driver
+    programs except that it requires the user to specify two
+    arguments on the command line, the JDBC URL giving the
+    connection parameters and the SQL query to execute. Because
+    SQL queries normally contain white space, it must be
+    enclosed in double quotes. A more serious example would reuse
+    the same driver (or filter) for multiple queries.
+  </p><div class="example"><a name="SQLDriver.java"></a><p class="title"><b>Example&nbsp;8.14.&nbsp;A very simple user 
+   interface for extracting XML data from a relational database</b></p><pre class="programlisting">import org.xml.sax.*;
+import com.megginson.sax.DataWriter;
+
+
+public class SQLDriver {
+
+  public static void main(String[] args) {
+    
+    if (args.length &lt; 2) {
+      System.out.println(
+       "Usage: java SQLDriver URL query driverClass");
+      return;
+    }
+    String url = args[0];
+    String query = args[1];
+    String driverClass = "org.gjt.mm.mysql.Driver"; // MySQL
+    if (args.length &gt;= 3) driverClass = args[2];
+    
+    try {
+      // Load JDBC driver
+      Class.forName(driverClass).newInstance();
+      // Technically, the newInstance() call isn't needed, 
+      // but the MM.MySQL documentation suggests this to 
+      // "work around some broken JVMs"
+    
+      XMLFilter filter = new DatabaseFilter(url);
+      DataWriter out = new DataWriter();
+      out.forceNSDecl(
+       "http://www.w3.org/2001/XMLSchema-instance", "xsi");
+      out.forceNSDecl("http://www.w3.org/2001/XMLSchema", "xsd");
+      out.setIndentStep(2);
+      filter.setContentHandler(out);
+      filter.parse(query);
+      out.flush();
+    }
+    catch (InstantiationException e) { 
+      System.out.println(driverClass 
+       + " could not be instantiated");
+    }
+    catch (ClassNotFoundException e) { 
+      System.out.println(driverClass + " could not be found");
+    }
+    catch (Exception e) { // SQL, SAX, and IO
+      e.printStackTrace();
+      System.out.println(e);
+    }
+    
+  }
+  
+}
+</pre></div><p>
+    Instead of <tt>XMLWriter</tt>,
+    this driver uses David Megginson&#8217;s other public domain writer
+    program, <tt>DataWriter</tt>, which is designed
+    for record oriented data of this sort
+    and inserts extra white space to prettify the output.
+    Here&#8217;s some output from when I ran <tt>SQLDriver</tt> against one of my 
+    databases:
+  </p><pre class="screen"><tt>% </tt><b><tt>java -Dorg.xml.sax.driver=gnu.xml.aelfred2.XmlReader
+ SQLDriver 'jdbc:mysql://luna.oit.unc.edu/NYWC?user=elharo&amp;password=<i><tt>MyPassword</tt></i>' 
+ "SELECT LastName, FirstName FROM composers
+  WHERE LastName like 'A%'"</tt></b>
+<tt>&lt;table xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;record&gt;
+    &lt;field xsi:type="xsd:string" name="LastName"&gt;Anderson&lt;/field&gt;
+    &lt;field xsi:type="xsd:string" name="FirstName"&gt;Beth&lt;/field&gt;
+  &lt;/record&gt;
+  &lt;record&gt;
+    &lt;field xsi:type="xsd:string" name="LastName"&gt;Austin&lt;/field&gt;
+    &lt;field xsi:type="xsd:string" name="FirstName"&gt;Dorothea&lt;/field&gt;
+  &lt;/record&gt;
+  &lt;record&gt;
+    &lt;field xsi:type="xsd:string" name="LastName"&gt;Austin&lt;/field&gt;
+    &lt;field xsi:type="xsd:string" name="FirstName"&gt;Elizabeth&lt;/field&gt;
+  &lt;/record&gt;
+  &lt;record&gt;
+    &lt;field xsi:type="xsd:string" name="LastName"&gt;Ayers&lt;/field&gt;
+    &lt;field xsi:type="xsd:string" name="FirstName"&gt;Lydia&lt;/field&gt;
+  &lt;/record&gt;
+&lt;/table&gt;</tt>
+</pre><div class="warning" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Warning</h3><p>
+    Depending on platform, inputting the above arguments can be a
+    little tricky. The SQL query contains white space, and the
+    JDBC URL contains characters that are important to the shell
+    like &amp;. You may need to use quote marks to prevent some
+    of these arguments from being interpreted by the shell.
+    Details vary from platform to platform. Of course, this is
+    just a quick hack to demonstrate the filter. A real program
+    would provide a GUI that made these points moot. 
+    </p></div><div class="footnotes"><br><hr width="100" align="left"><div class="footnote"><p><sup>[<a name="ftn.d0e13116" href="#d0e13116">2</a>] </sup>Base-64 encoding would be more efficient
+   but I didn&#8217;t want to introduce another class library
+   just to do  Base-64 encoding.</p></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch08s04.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch08.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch08s06.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">The XMLFilterImpl Class&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Multihandler adapters</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+December 02,
+2001</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

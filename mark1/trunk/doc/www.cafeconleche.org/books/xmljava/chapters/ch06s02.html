@@ -1,0 +1,117 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Parsing</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="previous" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="next" href="ch06s03.html" title="Callback Interfaces"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Parsing</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch06.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;6.&nbsp;SAX</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch06s03.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e8116"></a>Parsing</h2></div></div><p>
+    Parsing is the process of reading an XML document
+    and reporting its content to a client
+    application while checking the document for well-formedness.
+    SAX represents parsers as instances of the
+    <tt>XMLReader</tt> interface.
+    The specific class that implements this interface varies from
+    parser to parser. For example, in Xerces it&#8217;s
+    <tt>org.apache.xerces.parsers.SAXParser</tt>. 
+    In Crimson it&#8217;s <tt>org.apache.crimson.parser.XMLReaderImpl</tt>.
+    Most of the time you don&#8217;t construct instances of this
+    interface
+    directly. Instead you use the static
+    <tt>XMLReaderFactory.createXMLReader()</tt> 
+    factory method to create a parser-specific instance of this class.
+    Then you pass <tt>InputSource</tt> objects
+    containing XML documents to the <tt>parse()</tt> method of
+    <tt>XMLReader</tt>. The parser reads the
+    document, and throws an exception if it detects any
+    well-formedness errors. 
+  </p><p>
+  <a href="ch06s02.html#SAXChecker.java" title="Example&nbsp;6.1.&nbsp;A SAX program that parses a document">Example&nbsp;6.1</a> demonstrates 
+  the complete process with a 
+  simple program whose <tt>main()</tt> method
+  parses a document found at a URL entered on the command line.
+  If this document is well-formed, a simple message to that
+  effect is printed on <tt>System.out</tt>.
+  Otherwise, if the document is not well-formed, the parser
+  throws a <tt>SAXException</tt>. If an I/O error
+  such as a broken network connection occurs, then the 
+  <tt>parse()</tt> method throws an 
+  <tt>IOException</tt>. In this case, you don&#8217;t
+  know whether or not the document is well-formed. 
+  </p><div class="example"><a name="SAXChecker.java"></a><p class="title"><b>Example&nbsp;6.1.&nbsp;A SAX program that parses a document</b></p><pre class="programlisting">import org.xml.sax.*;
+import org.xml.sax.helpers.XMLReaderFactory;
+import java.io.IOException;
+
+
+public class SAXChecker {
+
+  public static void main(String[] args) {
+  
+    if (args.length &lt;= 0) {
+      System.out.println("Usage: java SAXChecker URL");
+      return;
+    }
+    
+    try {
+      XMLReader parser = XMLReaderFactory.createXMLReader();
+      parser.parse(args[0]);
+      System.out.println(args[0] + " is well-formed.");
+    }
+    catch (SAXException e) {
+      System.out.println(args[0] + " is not well-formed.");
+    }
+    catch (IOException e) { 
+      System.out.println(
+       "Due to an IOException, the parser could not check " 
+       + args[0]
+      ); 
+    }
+  
+  }
+
+}
+</pre></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Note</h3><p>
+      Don&#8217;t forget that you&#8217;ll probably 
+      need to install a parser such as Xerces or
+      &AElig;lfred somewhere in your class path
+      before you can compile or run this
+      program. Only Java 1.4
+      and later include a built-in parser. 
+    </p></div><p>
+This program&#8217;s output is straightforward.
+For example, here&#8217;s the output I  got when I first
+ran it across
+my Cafe con Leche home page:
+</p><pre class="screen"><tt>%</tt><b><tt>java SAXChecker http://www.cafeconleche.org</tt></b>
+<tt>http://www.cafeconleche.org is not well-formed.</tt></pre><p>
+After I located and fixed the bugs in that document, I got this
+output:
+</p><pre class="screen"><tt>%</tt><b><tt>java SAXChecker http://www.cafeconleche.org</tt></b>
+<tt>http://www.cafeconleche.org is well-formed.</tt></pre><p>
+    However, some readers will encounter a different result when they
+    run this program. In particular, you may get this output: 
+  </p><pre class="screen"><tt>%</tt><b><tt>java SAXChecker http://www.cafeconleche.org</tt></b>
+org.xml.sax.SAXException: System property org.xml.sax.driver not specified</pre><p>
+  What this really means is that your
+  parser  has not properly customized
+     its version of the <tt>XMLReaderFactory</tt> 
+     class. Unfortunately, far too many parsers including Xerces
+     and Crimson fail to do this. Consequently you need to set
+     the <tt>org.xml.sax.driver</tt> Java system property to the fully
+     package-qualified name of the Java class for your parser.
+     For Xerces, it&#8217;s <tt>org.apache.xerces.parsers.SAXParser</tt>. 
+     For Crimson, it&#8217;s <tt>org.apache.crimson.parser.XMLReaderImpl</tt>.
+     For other parsers, consult the parser documentation.
+     You can specify a
+     one-time value for this property
+     using the <tt>-D</tt> flag to the Java interpeter like
+     this:
+ </p><pre class="screen"><tt>%</tt><b><tt>java -Dorg.xml.sax.driver=org.apache.xerces.parsers.SAXParser 
+  SAXChecker http://www.cafeconleche.org/</tt></b>
+<tt>http://www.cafeconleche.org is well-formed.</tt></pre></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch06.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch06.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch06s03.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&nbsp;6.&nbsp;SAX&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Callback Interfaces</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+October 17,
+2001</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

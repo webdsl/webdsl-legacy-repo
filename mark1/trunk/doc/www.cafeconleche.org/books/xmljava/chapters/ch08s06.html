@@ -1,0 +1,384 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Multihandler adapters</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="previous" href="ch08s05.html" title="Parsing non-XML Documents"><link rel="next" href="ch08s07.html" title="Summary"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Multihandler adapters</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch08s05.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;8.&nbsp;SAX Filters</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch08s07.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e13155"></a>Multihandler adapters</h2></div></div><p>
+   The callback interfaces in SAX are reminiscent of the
+   callback interfaces in the AWT like <tt>ActionListener</tt> and 
+   <tt>MouseListener</tt>. However, there&#8217;s
+   one crucial difference in the patterns followed by the SAX
+   callback interfaces and the AWT callback interfaces. The AWT
+   allows you to register multiple listener objects with any
+   one component, whereas SAX limits you to just one listener 
+   of a certain type per parser. Filters allow you to parse a
+   document through several listeners in turn. However, sometimes
+   you want to install multiple handlers which are
+   not
+   filters. 
+  </p><p>
+   For example, the DocBook XML source for the book you&#8217;re
+   reading now
+   is parsed multiple times to
+   produce HTML, XHTML, PDF, and several other output formats.
+   Each time a new output format is required, the parser has to
+   reparse the document. However this is really wasted effort. 
+   It&#8217;s the same document. If it&#8217;s well-formed and valid for HTML
+   output, then it&#8217;s well-formed and valid for 
+   PDF and XHTML output. There&#8217;s no need to run the checks anew for
+   each separate output document as long as the input is the same.
+   It makes sense to attach multiple handlers to the parser to avoid
+   wasting time by unnecessarily reparsing the same
+   document. 
+  </p><p>
+    A properly designed filter can dispatch its events to multiple handlers.
+    The trick is that rather than storing a single
+    <tt>ContentHandler</tt>/<tt>DTDHandler</tt>/<tt>ErrorHandler</tt>
+    the filter stores a list of each. Then each callback method
+    iterates through one of the lists, invoking the method on each of
+    the registered listeners in turn.
+  </p><p>
+When you change the architecture of a class  in a subclass as I&#8217;m doing here, the naming conventions 
+of the superclass class often don&#8217;t make perfect sense in the
+subclass. In this case, it&#8217;s not clear what the various
+<tt>setFooHandler()</tt> methods should do.
+Do they add a new handler to the list? If so what happens when 
+null is passed (the idiom for removing a handler from an
+<tt>XMLReader</tt>)?
+Or should we provide new <tt>addFooHandler()</tt> 
+and <tt>removeFooHandler()</tt> 
+methods? And which object from the list should 
+<tt>getFooHandler()</tt> return?
+There&#8217;s no obvious answer to these questions.
+Indeed, I changed my mind several times while designing this
+class and writing this chapter. Here,
+I chose to keep the interface as similar to the
+superclass&#8217;s as possible.
+Thus the three <tt>setFooHandler()</tt> methods 
+add a new handler
+without replacing the existing handler. However, if null is passed, 
+the entire list is cleared. There&#8217;s no easy way to remove a 
+ handler or retrieve or delete a specific one from the list.
+ The <tt>getFooHandler()</tt> method simply returns 
+ the first handler in the list. 
+ This is not the most flexible design, but it does keep the
+ interface the same as the interface of the superclass. 
+For example, this is how content handlers are
+stored, added, and removed:
+  </p><div class="informalexample"><pre class="programlisting">  private List contentHandlers = new ArrayList(2);
+    
+  public void setContentHandler(ContentHandler handler) {
+    
+    if (handler == null) {
+      contentHandlers.clear(); 
+    }
+    contentHandlers.add(handler); 
+    
+  }
+
+  public ContentHandler getContentHandler() {
+    if (contentHandlers.isEmpty()) return null;
+    return (ContentHandler) contentHandlers.get(0);
+  }</pre></div><p>
+   However, other approaches are certainly workable. 
+ </p><p>
+    However the list is filled,
+    the <tt>startElement()</tt> method would iterate
+    through the list like this:
+  </p><div class="informalexample"><pre class="programlisting">  public void startElement(String namespaceURI, String localName,
+   String qualifiedName, Attributes atts) throws SAXException {    
+   
+    Iterator handlers = contentHandlers.iterator();
+    while(handlers.hasNext()) {
+      ContentHandler handler = (ContentHandler) handlers.next();
+      handler.startElement(namespaceURI, localName, 
+       qualifiedName, atts);
+    }
+    
+  }</pre></div><p>
+    The other handlers and methods are implemented similarly.
+    <a href="ch08s06.html#MultiHandlerAdapter.java" title="Example&nbsp;8.15.&nbsp;Attaching multiple handlers of the same type to a single parser">Example&nbsp;8.15</a> shows the complete
+    class. 
+  </p><div class="example"><a name="MultiHandlerAdapter.java"></a><p class="title"><b>Example&nbsp;8.15.&nbsp;Attaching multiple handlers of the same type to a single parser</b></p><pre class="programlisting">import org.xml.sax.*;
+import org.xml.sax.helpers.XMLFilterImpl;
+import java.util.*;
+
+
+public class MultiHandlerAdapter extends XMLFilterImpl {
+
+  public MultiHandlerAdapter(XMLReader parent) {
+    super(parent);
+  }
+
+  List contentHandlers = new ArrayList(2);
+  List dtdHandlers = new ArrayList(2);
+  List errorHandlers = new ArrayList(2);
+  
+  public void setContentHandler(ContentHandler handler) {
+    
+    if (handler == null) {
+      contentHandlers.clear(); 
+    }
+    contentHandlers.add(handler); 
+    
+  }
+
+  // There's no good way to handle this within the XMLReader
+  // interface. I just pick the first in the list. 
+  public ContentHandler getContentHandler() {
+    if (contentHandlers.isEmpty()) return null;
+    return (ContentHandler) contentHandlers.get(0);
+  }
+  
+  public void setDTDHandler(DTDHandler handler) {
+    
+    if (handler == null) {
+      dtdHandlers.clear(); 
+    }
+    dtdHandlers.add(handler); 
+    
+  }
+
+  public DTDHandler getDTDHandler() {
+    if (dtdHandlers.isEmpty()) return null;
+    return (DTDHandler) dtdHandlers.get(0);
+  }
+  
+  public void setErrorHandler(ErrorHandler handler) {
+    
+    if (handler == null) {
+      errorHandlers.clear(); 
+    }
+    errorHandlers.add(handler); 
+    
+  }
+
+  public ErrorHandler getErrorHandler() {
+    if (errorHandlers.isEmpty()) return null;
+    return (ErrorHandler) errorHandlers.get(0);
+  }
+  
+  // ContentHandler implementation
+  public void startElement(String namespaceURI, String localName,
+   String qualifiedName, Attributes atts) throws SAXException {    
+   
+    Iterator handlers = contentHandlers.iterator();
+    while(handlers.hasNext()) {
+      ContentHandler handler = (ContentHandler) handlers.next();
+      handler.startElement(namespaceURI, localName, 
+       qualifiedName, atts);
+    }
+    
+  }  
+
+  public void endElement(String namespaceURI, String localName,
+   String qualifiedName) throws SAXException {    
+   
+    Iterator handlers = contentHandlers.iterator();
+    while(handlers.hasNext()) {
+      ContentHandler handler = (ContentHandler) handlers.next();
+      handler.endElement(namespaceURI, localName, 
+       qualifiedName);
+    }
+    
+  }  
+
+  public void characters(char[] text, int start, int length)
+   throws SAXException {
+   
+    Iterator handlers = contentHandlers.iterator();
+    while(handlers.hasNext()) {
+      ContentHandler handler = (ContentHandler) handlers.next();
+      handler.characters(text, start, length);
+    }
+    
+  }
+  
+  public void ignorableWhitespace(char[] text, int start, 
+   int length) throws SAXException {
+   
+    Iterator handlers = contentHandlers.iterator();
+    while(handlers.hasNext()) {
+      ContentHandler handler = (ContentHandler) handlers.next();
+      handler.ignorableWhitespace(text, start, length); 
+    }
+  }
+  
+  public void processingInstruction(String target, String data)
+   throws SAXException {
+   
+    Iterator handlers = contentHandlers.iterator();
+    while(handlers.hasNext()) {
+      ContentHandler handler = (ContentHandler) handlers.next();
+      handler.processingInstruction(target, data); 
+    }
+  }
+  
+  public void skippedEntity(String name)
+   throws SAXException {
+   
+    Iterator handlers = contentHandlers.iterator();
+    while(handlers.hasNext()) {
+      ContentHandler handler = (ContentHandler) handlers.next();
+      handler.skippedEntity(name); 
+    }
+  }
+
+  public void startPrefixMapping(String prefix, String uri)
+   throws SAXException {
+   
+    Iterator handlers = contentHandlers.iterator();
+    while(handlers.hasNext()) {
+      ContentHandler handler = (ContentHandler) handlers.next();
+      handler.startPrefixMapping(prefix, uri); 
+    }
+    
+  }
+  
+  public void endPrefixMapping(String prefix) 
+   throws SAXException {
+     
+    Iterator handlers = contentHandlers.iterator();
+    while(handlers.hasNext()) {
+      ContentHandler handler = (ContentHandler) handlers.next();
+      handler.endPrefixMapping(prefix); 
+    }
+    
+  }
+
+  public void startDocument() throws SAXException {
+
+    Iterator handlers = contentHandlers.iterator();
+    while(handlers.hasNext()) {
+      ContentHandler handler = (ContentHandler) handlers.next();
+      handler.startDocument();
+    }
+    
+  }
+
+  public void endDocument() throws SAXException {
+    
+    Iterator handlers = contentHandlers.iterator();
+    while(handlers.hasNext()) {
+      ContentHandler handler = (ContentHandler) handlers.next();
+      handler.endDocument();
+    }
+    
+  }
+    
+  public void setDocumentLocator(Locator locator) {
+    
+    Iterator handlers = contentHandlers.iterator();
+    while(handlers.hasNext()) {
+      ContentHandler handler = (ContentHandler) handlers.next();
+      handler.setDocumentLocator(locator); 
+    }
+    
+  }  
+
+  // DTDHandler implementation
+  public void notationDecl(String name, String publicID, 
+   String systemID) throws SAXException {
+     
+    Iterator handlers = dtdHandlers.iterator();
+    while(handlers.hasNext()) {
+      DTDHandler handler = (DTDHandler) handlers.next();
+      handler.notationDecl(name, publicID, systemID); 
+    }
+    
+  }
+   
+  public void unparsedEntityDecl(String name, String publicID, 
+   String systemID, String notationName) throws SAXException {
+     
+    Iterator handlers = dtdHandlers.iterator();
+    while(handlers.hasNext()) {
+      DTDHandler handler = (DTDHandler) handlers.next();
+      handler.unparsedEntityDecl(name, publicID, systemID, 
+       notationName); 
+    }
+      
+  }
+  
+  // ErrorHandler implementation
+  public void warning(SAXParseException exception)
+   throws SAXException {
+     
+    Iterator handlers = errorHandlers.iterator();
+    while(handlers.hasNext()) {
+      ErrorHandler handler = (ErrorHandler) handlers.next();
+      handler.warning(exception); 
+    }
+          
+  }
+  
+  public void error(SAXParseException exception)
+   throws SAXException {
+     
+    Iterator handlers = errorHandlers.iterator();
+    while(handlers.hasNext()) {
+      ErrorHandler handler = (ErrorHandler) handlers.next();
+      handler.error(exception); 
+    }
+          
+  }
+  
+  public void fatalError(SAXParseException exception)
+   throws SAXException {
+     
+    Iterator handlers = errorHandlers.iterator();
+    while(handlers.hasNext()) {
+      ErrorHandler handler = (ErrorHandler) handlers.next();
+      handler.fatalError(exception); 
+    }
+          
+  }
+  
+}
+</pre></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Note</h3><p>
+    <tt>MultiHandlerAdapter</tt> is a little on the long side. 
+    It contains a lot of duplicated code.
+    This is definitely a case where some space could be saved by
+    using templates. 
+  </p></div><p>
+    <tt>MultiHandlerAdapter</tt> only
+    provides the three main callback interfaces:
+    <tt>ContentHandler</tt>,
+    <tt>DTDHandler</tt>,
+    and <tt>ErrorHandler</tt>.
+    I chose not to provide <tt>EntityResolver</tt>
+    because having more than one of those responding to the same
+    request doesn&#8217;t make sense. Each entity must be provided
+    exactly once, not two or three or seventeen times.
+    Potentially, you could register multiple entity resolvers and
+    then iterate through them in sequence until one found the
+    entity you were looking for. However, since order would be
+    very 
+    significant in that case, a proper API is much trickier to design.
+  </p><p>
+   I also chose not to implement the property based handlers, 
+   <tt>LexicalHandler</tt> and
+   <tt>DeclHandler</tt>. First, not all parsers
+   support them. 
+   Secondly, they are not part of the standard 
+   <tt>XMLFilterImpl</tt> class. 
+   Most importantly, adding and removing  these objects 
+   solely by setting and getting features and properties would be 
+   very messy. If you need multiples of one of them, it seems simpler to 
+   implement the multi-way dispatching in a 
+   <tt>LexicalHandler</tt>/<tt>DeclHandler</tt>
+   implementation rather than directly in the filter.
+   A similar scheme could work for
+   <tt>ContentHandler</tt>,
+    <tt>DTDHandler</tt>,
+    and <tt>ErrorHandler</tt>. However,
+    here the filter approach seems the most natural. 
+  </p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch08s05.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch08.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch08s07.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Parsing non-XML Documents&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Summary</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+December 02,
+2001</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

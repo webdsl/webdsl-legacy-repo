@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<mathml:math xmlns:mathml="http://www.w3.org/1998/Math/MathML">
+  <mathml:mrow>
+    <mathml:mi>f(1)</mathml:mi>
+    <mathml:mo>=</mathml:mo>
+    <mathml:mn>1</mathml:mn>
+  </mathml:mrow>
+  <mathml:mrow>
+    <mathml:mi>f(2)</mathml:mi>
+    <mathml:mo>=</mathml:mo>
+    <mathml:mn>1</mathml:mn>
+  </mathml:mrow>
+  <mathml:mrow>
+    <mathml:mi>f(3)</mathml:mi>
+    <mathml:mo>=</mathml:mo>
+    <mathml:mn>2</mathml:mn>
+  </mathml:mrow>
+</mathml:math>

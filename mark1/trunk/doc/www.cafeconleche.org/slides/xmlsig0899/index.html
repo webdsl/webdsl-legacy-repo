@@ -1,0 +1,271 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="description" content="Elliotte Rusty Harold's presentation on XLinks and XPointers to the XML SIG of the Object Developer's Group, August 25, 1999">
+<title>XLinks and XPointers</title>
+</head>
+<body>
+<h1>XLinks and XPointers</h1>
+<ul>
+<li>
+<a href="01.html">XLinks and XPointers</a>
+</li>
+<li>
+<a href="02.html">Three Technologies</a>
+</li>
+<li>
+<a href="03.html">Versions</a>
+</li>
+<li>
+<a href="04.html">HTML Links are Limited</a>
+</li>
+<li>
+<a href="05.html">XLinks are More Powerful</a>
+</li>
+<li>
+<a href="06.html">Application Support</a>
+</li>
+<li>
+<a href="07.html">Linking Elements</a>
+</li>
+<li>
+<a href="08.html">For example</a>
+</li>
+<li>
+<a href="09.html">Declaring XLink Attributes in DTDs</a>
+</li>
+<li>
+<a href="10.html">Fixed Attributes</a>
+</li>
+<li>
+<a href="11.html">Other Attributes</a>
+</li>
+<li>
+<a href="12.html">xlink:simple</a>
+</li>
+<li>
+<a href="13.html">Descriptions of the Remote Resource</a>
+</li>
+<li>
+<a href="14.html">role and title</a>
+</li>
+<li>
+<a href="15.html">Link Behavior</a>
+</li>
+<li>
+<a href="16.html"> xlink:show  </a>
+</li>
+<li>
+<a href="17.html">xlink:actuate</a>
+</li>
+<li>
+<a href="18.html">Parameter Entities for Link Attributes</a>
+</li>
+<li>
+<a href="19.html">Extended Links</a>
+</li>
+<li>
+<a href="20.html">Extended Link Elements</a>
+</li>
+<li>
+<a href="21.html">Locators</a>
+</li>
+<li>
+<a href="22.html">xlink:type="locator"</a>
+</li>
+<li>
+<a href="23.html">xlink:locator</a>
+</li>
+<li>
+<a href="24.html">Locators in DTDs</a>
+</li>
+<li>
+<a href="25.html">Parameter Entities for these  DTDs</a>
+</li>
+<li>
+<a href="26.html">Arcs</a>
+</li>
+<li>
+<a href="27.html">xlink:arc</a>
+</li>
+<li>
+<a href="28.html">Arc Traversal Behavior</a>
+</li>
+<li>
+<a href="29.html">show, actuate, actuatedefault, showdefault</a>
+</li>
+<li>
+<a href="30.html">xlink:show, xlink:actuate, xlink:actuatedefault, xlink:showdefault</a>
+</li>
+<li>
+<a href="31.html">Declarations for Extended Link Attributes</a>
+</li>
+<li>
+<a href="32.html">Out-of-Line Links and Extended Link Groups</a>
+</li>
+<li>
+<a href="33.html">Extended Link Group Syntax</a>
+</li>
+<li>
+<a href="34.html">Extended Link Example</a>
+</li>
+<li>
+<a href="35.html">Extended Link Example</a>
+</li>
+<li>
+<a href="36.html">Extended Link Example</a>
+</li>
+<li>
+<a href="37.html">Or, Using Attribute Syntax</a>
+</li>
+<li>
+<a href="38.html">XLink Summary</a>
+</li>
+<li>
+<a href="39.html">XPointers</a>
+</li>
+<li>
+<a href="40.html">What are XPointers?</a>
+</li>
+<li>
+<a href="41.html">Why Use XPointers?</a>
+</li>
+<li>
+<a href="42.html">Three Problems to Solve</a>
+</li>
+<li>
+<a href="43.html">Named Anchors are HTML's solution</a>
+</li>
+<li>
+<a href="44.html">XPointer Examples</a>
+</li>
+<li>
+<a href="45.html">URIs with XPointers</a>
+</li>
+<li>
+<a href="46.html">XLinks with XPointers</a>
+</li>
+<li>
+<a href="47.html">Document Fragments</a>
+</li>
+<li>
+<a href="48.html">A Concrete Example</a>
+</li>
+<li>
+<a href="49.html">Location Steps</a>
+</li>
+<li>
+<a href="50.html">Absolute Location Steps</a>
+</li>
+<li>
+<a href="51.html">id()</a>
+</li>
+<li>
+<a href="52.html">ID shortcut</a>
+</li>
+<li>
+<a href="53.html"> The root /</a>
+</li>
+<li>
+<a href="54.html">Relative Location Steps</a>
+</li>
+<li>
+<a href="55.html">The Parts of a Relative Location Step</a>
+</li>
+<li>
+<a href="56.html">The Twelve Relative Location Axes</a>
+</li>
+<li>
+<a href="57.html">child</a>
+</li>
+<li>
+<a href="58.html">descendant</a>
+</li>
+<li>
+<a href="59.html">descendant-or-self</a>
+</li>
+<li>
+<a href="60.html">parent</a>
+</li>
+<li>
+<a href="61.html">self</a>
+</li>
+<li>
+<a href="62.html">ancestor</a>
+</li>
+<li>
+<a href="63.html">ancestor-or-self</a>
+</li>
+<li>
+<a href="64.html">preceding</a>
+</li>
+<li>
+<a href="65.html">following</a>
+</li>
+<li>
+<a href="66.html">preceding-sibling</a>
+</li>
+<li>
+<a href="67.html">following-sibling</a>
+</li>
+<li>
+<a href="68.html">attribute</a>
+</li>
+<li>
+<a href="69.html">Node Tests</a>
+</li>
+<li>
+<a href="70.html">The wild card *</a>
+</li>
+<li>
+<a href="71.html">text()</a>
+</li>
+<li>
+<a href="72.html">comment()</a>
+</li>
+<li>
+<a href="73.html">processing-instruction()</a>
+</li>
+<li>
+<a href="74.html">Predicates</a>
+</li>
+<li>
+<a href="75.html">XPointer Predicates are booleans</a>
+</li>
+<li>
+<a href="76.html">position()</a>
+</li>
+<li>
+<a href="77.html">String Location Terms</a>
+</li>
+<li>
+<a href="78.html">Position and Length in String Location Terms</a>
+</li>
+<li>
+<a href="79.html">Ranges</a>
+</li>
+<li>
+<a href="80.html">Tumblers</a>
+</li>
+<li>
+<a href="81.html">XPointer Summary</a>
+</li>
+<li>
+<a href="82.html">To Learn More</a>
+</li>
+</ul>
+<hr>
+<div align="center">
+<A HREF="01.html">Start</A> | <A HREF="/xml/">Cafe con Leche</A>
+</div>
+<hr>
+<font size="-1">
+              Copyright 1999 
+              <a href="http://www.macfaq.com/personal.html">Elliotte Rusty Harold</a>
+<br>
+<a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a>
+<br>
+              Last Modified August 25, 1999</font>
+</body>
+</html>

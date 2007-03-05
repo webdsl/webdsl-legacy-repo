@@ -1,0 +1,135 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Java Integration</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="previous" href="ch14s10.html" title="Talking to SAX Programs"><link rel="next" href="ch14s12.html" title="What JDOM doesn&#8217;t do"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"><link rel="subsection" href="ch14s11.html#d0e23383" title="Serializing JDOM Objects"><link rel="subsection" href="ch14s11.html#d0e23410" title="Synchronizing JDOM Objects"><link rel="subsection" href="ch14s11.html#d0e23421" title="Testing Equality"><link rel="subsection" href="ch14s11.html#d0e23477" title="Hash codes"><link rel="subsection" href="ch14s11.html#d0e23499" title="String representations"><link rel="subsection" href="ch14s11.html#d0e23524" title="Cloning"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Java Integration</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch14s10.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;14.&nbsp;JDOM</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch14s12.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e23378"></a>Java Integration</h2></div></div><p>
+     JDOM is the most Java-centric of all the major APIs
+     for processing XML. The JDOM developers have given a lot of
+     thought to exactly how the JDOM classes fit into 
+     common Java systems
+     such as the Java Collections API, Remote Method Invocation (RMI),
+     and the I/O framework. Unlike DOM, the behavior of JDOM objects is very well defined
+     with respect to Java operations such as cloning and
+     serializing. 
+   </p><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e23383"></a>Serializing JDOM Objects</h3></div></div><p>
+    All the major JDOM 
+    classes such as <tt>Element</tt>, <tt>Document</tt>, 
+    <tt>Namespace</tt> implement the
+    <tt>java.io.Serializable</tt>
+    interface.
+    This means JDOM objects can be passed between machines using
+    remote method invocation (RMI) and stored in files using 
+    <tt>ObjectOutputStream</tt> and 
+     <tt>ObjectInputStream</tt>.
+  </p><p>
+    Of course just because something is possible doesn't mean
+    it's a good idea. XML is itself a serialization format for
+    JDOM objects, and it's a much more broadly supported one.
+     What's not as broadly known is that pure textual XML is also 
+     generally much faster and smaller than Java's binary object
+     serialization.
+     There's very little reason to use serialized JDOM objects
+     instead of passing genuine XML documents back and forth.
+  </p><p>
+   At the time of this writing, the long-term plan 
+   for JDOM serialization is still under discussion.
+   While you can use object serialization to pass JDOM objects
+   from one virtual machine to another, both of which have the
+   same version of JDOM, using anything beyond that is up in
+   the air.
+   In particular, it is highly doubtful that 
+   an object you serialize today will be able to be deserialized
+   tomorrow in a different version of JDOM.
+   For long-term persistence, you  should absolutely use XML
+   documents instead of serialized objects.
+  </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e23410"></a>Synchronizing JDOM Objects</h3></div></div><p>
+    For the most part, except for a few accidental
+    exceptions, JDOM classes are not thread-safe.
+    You cannot use a JDOM <tt>Document</tt>,
+    <tt>Element</tt>, or other
+    object safely in multiple threads simultaneously 
+    unless you synchronize it properly. If you
+    build the object in one thread, and therefter only read from
+    in different threads (in essence, if you treat the object as
+    if it were immutable) then you may be OK. But if you plan to write to or modify
+    the object, you're
+    going to have to  synchronize your objects. 
+  </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e23421"></a>Testing Equality</h3></div></div><p>
+       All the core JDOM classes (<tt>Element</tt>,
+       <tt>Attribute</tt>,
+       <tt>ProcessingInstruction</tt>, etc.)
+       implement the <tt>equals()</tt> method.
+       In all cases, the test is for object identity. In other words,
+       <tt>element1.equals(element2)</tt> if and only if
+       <tt>element1 == element2</tt>. That is,
+       <tt>element1</tt> is the same element as <tt>element2</tt>.
+     </p><p>
+        The reasoning is that order and position are significant in XML documents.
+        Thus two nodes can&#8217;t be equal unless they are in fact the same node.
+        For example, consider the two <tt>Price</tt>
+        elements in this XML fragment:
+      </p><div class="informalexample"><pre class="programlisting">  &lt;Item&gt;
+    &lt;Name&gt;2002 Toyota Camry&lt;/Name&gt;
+    &lt;Price&gt;$10,000&lt;/Price&gt;
+  &lt;/Item&gt;
+  &lt;Item&gt;
+     &lt;Name&gt;1976 AMC Gremlin&lt;/Name&gt;
+    &lt;Price&gt;$10,000&lt;/Price&gt;
+  &lt;/Item&gt;</pre></div><p>
+      The two <tt>Price</tt> elements are character-for-character
+      identical. However, one is a very good price and one is a very bad
+      price because of what their positions in the document.
+    </p><p>
+      This behavior is enforced by implementing the <tt>equals()</tt> 
+      method with an <tt>==</tt> test and making the method final.
+      A typical JDOM <tt>equals()</tt> method is defined thusly:
+    </p><div class="informalexample"><pre class="programlisting">  public final boolean equals(Object o) {
+    return (this == o);
+  }</pre></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e23477"></a>Hash codes</h3></div></div><p>
+       Because JDOM tests for equality based on object identity,
+       the default <tt>hashCode()</tt> implementation
+       inherited from <tt>java.lang.Object</tt> suffices. However, to prevent subclasses
+       from violating this contract, the <tt>hashCode()</tt>
+       method is implemented as a final 
+       method that calls <tt>super.hashCode()</tt>. That is, it looks like this:
+     </p><div class="informalexample"><pre class="programlisting"> public final int hashCode() {
+    return super.hashCode();
+  }</pre></div><p>
+       Thus it cannot be overridden, and subclasses cannot change its behavior.
+     </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e23499"></a>String representations</h3></div></div><p>
+       The JDOM <tt>toString()</tt> methods produce strings that
+       look like these:
+     </p><div class="informalexample"><div class="literallayout"><p>[Document:&nbsp;&nbsp;No&nbsp;DOCTYPE&nbsp;declaration,&nbsp;Root&nbsp;is&nbsp;[Element:&nbsp;&lt;html&nbsp;<br>
+&nbsp;[Namespace:&nbsp;http://www.w3.org/1999/xhtml]/&gt;]]<br>
+[Element:&nbsp;&lt;html&nbsp;[Namespace:&nbsp;http://www.w3.org/1999/xhtml]/&gt;]<br>
+[Attribute:&nbsp;xml:lang="en"]<br>
+[Text:<br>
+]<br>
+[Attribute:&nbsp;type="text/css"]<br>
+[Attribute:&nbsp;rel="stylesheet"]<br>
+[Text:&nbsp;Latest&nbsp;Version:&nbsp;]<br>
+[Element:&nbsp;&lt;a&nbsp;[Namespace:&nbsp;http://www.w3.org/1999/xhtml]/&gt;]<br>
+[Attribute:&nbsp;href="http://www.rddl.org/"]<br>
+[Text:&nbsp;June&nbsp;16,&nbsp;2002]</p></div></div><p>
+       They are suitable for debugging, but not for display to an end user. 
+       In particular, they are not the serialized form of the XML node the object represents.
+       To serialize a JDOM object onto a stream or into a <tt>String</tt>,
+       use an <tt>XMLOutputter</tt> chained to a 
+       <tt>StringWriter</tt>. Do not use 
+       <tt>toString()</tt>.
+     </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e23524"></a>Cloning</h3></div></div><p>
+    All the core JDOM classes implement <tt>Cloneable</tt>.
+    Except for <tt>Namespace</tt> objects (which are immutable),
+    all clones are deep clones. For example, cloning an element makes a 
+    copy of the element's contents as well. The clone does not have a parent, 
+    and can be inserted into the same document or a different document.
+  </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch14s10.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch14.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch14s12.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Talking to SAX Programs&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;What JDOM doesn&#8217;t do</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+August 23,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

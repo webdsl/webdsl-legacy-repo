@@ -1,0 +1,38 @@
+<?xml version="1.0" standalone="yes"?>
+<?xml-stylesheet type="text/css" href="books.css"?>
+<document>
+  <bookcategory>
+    Non Java
+    <book>
+      <title>Algorithms in C++</title>
+      <author>Robert Sedgewick</author>
+      <publisher>Addison-Wesley</publisher>
+      <isbn>0-201-51059-6</isbn>
+      <pages>658</pages>
+      <price>46.25</price>
+      <recommendation>Buy It</recommendation>
+      <blurb>
+          This is the best book I know about basic algorithms 
+          and data structures. 
+          I refer to it frequently.
+      </blurb>
+    </book>
+
+    <book>
+      <title>The Design and Evolution of C++</title>
+      <author>Bjarne Stroustrup</author>
+      <publisher>Addison-Wesley</publisher>
+      <isbn>0-201-54330-3</isbn>
+      <pages>461</pages>
+      <recommendation>Buy It</recommendation>
+      <blurb>
+        A fascinating look at why C++ is what it is, for better or worse, by the man 
+        who invented it. Even though Java is never mentioned, 
+         this book should convince convince 
+        you that C++ and Java really are two very 
+         different languages.
+      </blurb>
+    </book>
+  </bookcategory>
+</document>
+

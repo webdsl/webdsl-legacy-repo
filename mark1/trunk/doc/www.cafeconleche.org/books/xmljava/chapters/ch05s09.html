@@ -1,0 +1,147 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>XMLPULL</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="previous" href="ch05s08.html" title="ElectricXML"><link rel="next" href="ch05s10.html" title="Summary"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">XMLPULL</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch05s08.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;5.&nbsp;Reading XML</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch05s10.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e7962"></a>XMLPULL</h2></div></div><p>
+       A pull parser works in streaming mode like SAX. However, the client 
+       specifically requests the next chunk of data from the parser
+       when it&#8217;s ready for it, rather than taking it whenever
+        the parser is ready to provide it.
+        Furthermore, the client has a limited ability to filter out some
+        normally insignificant pieces such as comments and processing instructions.
+       This can be as fast and as memory efficient as SAX parsing
+       while perhaps being more familiar to many programmers.
+     </p><p>
+       The developing standard API for pull parsing is  known as 
+       <a href="http://www.xmlpull.org" target="_top">XMLPULL</a>.
+       This is currently implemented by two parsers, Enhydra&#8217;s
+       <a href="http://kxml.org/" target="_top">kXML2</a> and  
+      Aleksander Slominski&#8217;s 
+       <a href="http://www.extreme.indiana.edu/xgws/xsoap/xpp/mxp1/" target="_top">MXP1</a>.
+       The client application loads a parser-specific instance of
+       the <tt>XmlPullParser</tt> interface. 
+       It sets the <tt>InputStream</tt>
+       or <tt>Reader</tt> from which the parser will read the document.
+       However, the parser does not actually read the document
+       until the client calls the <tt>next()</tt>
+       method.
+       Then the parser reads just enough to report the next start-tag, text string,
+       or end-tag from the document.
+       (Actually, the parser may well read quite a bit more and buffer the result,
+       but that&#8217;s an implementation detail that&#8217;s invisible to the client.)
+       When the client has processed that unit of data, it asks the 
+       parser for the next unit.
+       This continues until <tt>next()</tt> indicates that it&#8217;s
+       at the end of the document.
+       <a href="ch05s09.html#FibonacciPullClient.java" title="Example&nbsp;5.10.&nbsp;An XMLPULL based client for the Fibonacci XML-RPC server">Example&nbsp;5.10</a> demonstrates with an XMLPULL client 
+       for the Fibonacci XML-RPC server.
+     </p><div class="example"><a name="FibonacciPullClient.java"></a><p class="title"><b>Example&nbsp;5.10.&nbsp;An XMLPULL based client for the Fibonacci XML-RPC server</b></p><pre class="programlisting">import org.xmlpull.v1.*;
+import java.io.*;
+import java.net.*;
+
+
+public class FibonacciPullClient {
+
+  public final static String DEFAULT_SERVER 
+   = "http://www.elharo.com/fibonacci/XML-RPC";  
+  
+  public static void main(String[] args) {
+      
+    if (args.length &lt;= 0) {
+      System.out.println(
+       "Usage: java FibonacciPullClient number url"
+      );
+      return;
+    }
+    
+    String server = DEFAULT_SERVER;
+    if (args.length &gt;= 2) server = args[1];
+      
+    try {
+      // Connect to the server
+      URL u = new URL(server);
+      URLConnection uc = u.openConnection();
+      HttpURLConnection connection = (HttpURLConnection) uc;
+      connection.setDoOutput(true);
+      connection.setDoInput(true); 
+      connection.setRequestMethod("POST");
+      OutputStream out = connection.getOutputStream();
+      Writer wout = new OutputStreamWriter(out);
+      
+      // Transmit the request XML document
+      wout.write("&lt;?xml version=\"1.0\"?&gt;\r\n");  
+      wout.write("&lt;methodCall&gt;\r\n"); 
+      wout.write(
+       "  &lt;methodName&gt;calculateFibonacci&lt;/methodName&gt;\r\n");
+      wout.write("  &lt;params&gt;\r\n"); 
+      wout.write("    &lt;param&gt;\r\n"); 
+      wout.write("      &lt;value&gt;&lt;int&gt;" + args[0] 
+       + "&lt;/int&gt;&lt;/value&gt;\r\n"); 
+      wout.write("    &lt;/param&gt;\r\n"); 
+      wout.write("  &lt;/params&gt;\r\n"); 
+      wout.write("&lt;/methodCall&gt;\r\n"); 
+      
+      wout.flush();
+      wout.close();      
+
+      // Load the parser
+      XmlPullParserFactory factory 
+       = XmlPullParserFactory.newInstance();
+      XmlPullParser parser = factory.newPullParser();
+      
+      // Read the response XML document
+      InputStream in = connection.getInputStream();
+      parser.setInput(in, null);
+      //                  ^^^^
+      // Encoding is not known; the parser should guess it based
+      // on the content of the stream.
+      
+      int event;
+      while ( 
+       (event = parser.next()) != XmlPullParser.END_DOCUMENT) {
+        if( event ==  XmlPullParser.START_TAG) {
+          if ( "double".equals(parser.getName()) ) {
+            String value = parser.nextText();
+            System.out.println(value);
+          } // end if
+        } // end if 
+      } // end while
+      
+      in.close();
+      connection.disconnect();
+
+    }
+    catch (Exception e) {
+      System.err.println(e); 
+    }
+  
+  } 
+
+}
+</pre></div><p>
+       Like SAX, XMLPULL is a read-only API. Thus this program begins by sending 
+       the request to the server by writing strings onto an
+       <tt>OutputStream</tt>, just as in the SAX client.
+       The style for reading the response is quite new, however.
+       The pull parser&#8217;&#8217;s <tt>next()</tt> method
+       is repeatedly invoked. Each time it returns an <tt>int</tt> 
+       type code, <tt>XmlPullParser.START_TAG</tt>, 
+       <tt>XmlPullParser.TEXT</tt>,
+       <tt>XmlPullParser.END_TAG</tt>, and so forth.
+       The loop exits when the <tt>next()</tt>
+       method returns <tt>XmlPullParser.END_DOCUMENT</tt>.
+       Until that happens, we look at each start-tag returned to see if its name
+       is <tt>double</tt>. If it is, then the program invokes
+       <tt>nextText()</tt> to return the complete text content
+       of that element as a <tt>String</tt>.
+       This is printed on <tt>System.out</tt>.
+     </p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch05s08.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch05.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch05s10.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">ElectricXML&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Summary</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+September 09,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

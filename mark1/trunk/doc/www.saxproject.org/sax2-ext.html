@@ -1,0 +1,185 @@
+<html><head>
+    <title>SAX</title>
+    <style type="text/css"><!--
+	h1, h2, h3, h4, h5, h6 { color: maroon; }
+	/* make sure that goes OK with the nav column background
+	 * net-friendly colors include: yellow/ffffcc, blue/ccccff
+	 */
+    --></style>
+</head><body color="#000000" bgcolor="#eeeeff">
+    <table border="0" width="100%" cellpadding="15" cellspacing="0" ><tr>
+        <td valign="top" align="left" color="#000000" bgcolor="#ffffff">
+
+    <table border="0" cellpadding="0" cellspacing="0">
+    <tr><td class="toc">
+    <h2>SAX</h2><b>General</b><br />&nbsp;<a href="about.html">About SAX</a><br />
+	&nbsp;<a href="copying.html">Copyright Status</a><br />
+	&nbsp;<a href="event.html">Events vs. Trees</a><br />
+	&nbsp;<a href="faq.html">FAQ</a><br />
+	&nbsp;<a href="links.html">Links</a><br />
+	<br />
+	<b>Java API</b><br />&nbsp;<a href="quickstart.html">Quickstart</a><br />
+	&nbsp;<a href="get-set.html">Features and Properties</a><br />
+	&nbsp;<a href="filters.html">Filters</a><br />
+	&nbsp;<a href="namespaces.html">Namespaces</a><br />
+	&nbsp;<a href="http://www.saxproject.org/apidoc/overview-summary.html">JavaDoc</a><br />
+	<br />
+	<b>SAX Evolution</b><br />&nbsp;<a href="sax1-history.html">Genesis</a><br />
+	&nbsp;<a href="sax1-roadmap.html">SAX 1.0 Overview</a><br />
+	&nbsp;<a href="sax2-history.html">SAX 2.0 Changes</a><br />
+	&nbsp;<em>SAX 2.0 Extensions</em><br />
+	&nbsp;<a href="langs.html">Other Languages</a><br />
+	<br />
+	<b>SourceForge Services</b><br />&nbsp;<a href="http://sourceforge.net/tracker/?group_id=29449">Bugs/RFEs</a><br />
+	&nbsp;<a href="http://sourceforge.net/projects/sax/">Project Page</a><br />
+	<br />
+	<br />
+	</td></tr></table>
+
+    
+    <p>
+    <a href="http://www.sourceforge.net/">
+    <img border="0" src="http://sourceforge.net/sflogo.php?group_id=29449&amp;type=1"
+	height="31" width="88"
+	alt="SourceForge Logo" />
+    </a>
+
+    </p>
+
+    </td>
+
+    <td width="80%" valign="top" align="left">
+    <h2>SAX 2.0 Extensions</h2><div><p>The SAX2 core includes the <em>org.xml.sax</em> and
+<em>org.xml.sax.helpers</em> packages, but that's not all there is to SAX.
+The <a href="/apidoc/org/xml/sax/ext/package-summary.html">
+org.xml.sax.ext</a>  package includes standardized
+extensions, and anyone can define and implement nonstandard ones
+using the SAX2 core "feature flags" and "property objects" mechanisms.
+</p>
+
+<h3>SAX2 Extensions 1.0</h3>
+
+<p>Part of the original motivation to create SAX2 was to let it
+support better "round tripping" of XML data, so that parser outputs
+would more closely match the inputs.
+Another was to let it expose more of the useful DTD information.
+Because not every parser would want to support those two tasks,
+they were supported in optional handlers that are part of
+a new <em>SAX2 Extensions</em> package.
+These needs were met using handlers that are bound using the
+SAX2 <code>XMLReader.setProperty()</code> method, and they can
+be accessed using <code>XMLReader.getProperty()</code>.
+</p>
+
+<p>The <a href="/apidoc/org/xml/sax/ext/DeclHandler.html" >DeclHandler</a>
+and <a href="/apidoc/org/xml/sax/ext/LexicalHandler.html">LexicalHandler</a>
+interface, and the whole <em>org.xml.sax.ext</em> package, were part of
+SAX2 development up through the beta2 release.
+After that time they were put into a separate distribution;
+core-only SAX2 distributions do not need to include those interfaces.
+Final versions of those interface were delivered many months after the
+original SAX2 interfaces were defined.
+</p>
+
+<p>The SAX2r2 release re-bundles those two interfaces.  They're
+still optional in the sense that SAX2 distributions don't need to
+include them.
+In practice, all distributions are already including them, and
+any distribution conforming to the JAXP 1.1 interface specification
+needs to include them.
+</p>
+
+<h3>SAX2 Extensions 1.1 (beta1)</h3>
+
+<p>Since the original release of SAX2, and 1.0 extensions,
+many folk have gained experience with SAX2.
+Naturally, some of these have led to requests for new
+standardized SAX features.
+Notably, not all of the XML Infoset information was available,
+so that applications which needed it couldn't be written on
+top of the raw SAX API.
+Rather than changing the SAX2 core, these new features are
+part of the optional extensions package.
+</p>
+
+<p>Functionality defined in the <em>SAX2 Extensions 1.1beta1</em>
+release includes several new classes and interfaces: </p>  <ul>
+
+<li> The <a href="/apidoc/org/xml/sax/ext/Attributes2.html">Attributes2</a>
+    interface, and its
+    <a href="/apidoc/org/xml/sax/ext/Attributes2Impl.html">Attributes2Impl</a>
+    implementation class.  This exposes which attributes were specified
+    in the source text, rather than defaulted through the DTD.
+    This is important when implementing DOM as a clean layer over SAX.
+    </li>
+
+<li> <a href="/apidoc/org/xml/sax/ext/DefaultHandler2.html">DefaultHandler2</a>
+    is a new class which extends <em>org.xml.sax.helpers.DefaultHandler</em>
+    to provide stubs for all the <em>DeclHandler</em>, <em>LexicalHandler</em>,
+    and <em>EntityResolver2</em> methods.  Most folk using these new handlers
+    need such a class.  Defining it here prevents some duplication of effort.
+    </li>
+
+<li> <a href="/apidoc/org/xml/sax/ext/EntityResolver2.html">EntityResolver2</a>
+    is a new interface supporting two new functionalities, with a clean
+    transition mode in the API.
+    <em>First</em>, it lets you provide external DTD subsets for documents that
+    don't have one.  That lets you validate, or at least perform
+    attribute defaulting and normalization, for documents that would
+    otherwise "only" be well-formed XML.
+    <em>Second</em>, it provides a <em>resolveEntity()</em> method with
+    more parameters, which lets you cope with situations where the base
+    URI of the document and the entity declaration have become mismatched.
+    </li>
+
+<li> The <a href="/apidoc/org/xml/sax/ext/Locator2.html">Locator2</a>
+    interface, and its
+    <a href="/apidoc/org/xml/sax/ext/Locator2Impl.html">Locator2Impl</a>
+    implementation class.  This exposes entity information found in
+    the XML and text declarations, packaging it with the other entity
+    information which parsers may expose.
+    </li>
+
+</ul>
+
+<p> There are also several new feature flags.  These are documented with all
+the others, in the main SAX
+<a href="/apidoc/org/xml/sax/package-summary.html">package summary</a>.
+The feature flags have the usual URI prefix. To summarize them:
+</p><ul>
+
+<li><em>is-standalone</em> ... exposes whether the document is
+    declared to be standalone</li>
+
+<li><em>resolve-dtd-uris</em> ... if explicitly set to false, then
+    system IDs in <code>DTDHandler</code> and <code>DeclHandler</code>
+    won't be resolved against the declaration's base URI.
+    This supports working with new URI schemes, and certain error-prone
+    document management practices.
+    </li>
+
+<li><em>use-attributes2</em> ... exposes whether the <code>Attributes</code>
+    object passed in <em>ContentHandler.startElement()</em> supports
+    the new <code>Attributes2</code> interface (see above).</li>
+
+<li><em>use-locator2</em> ... exposes whether the <code>Locator</code>
+    object passed in <em>ContentHandler.setDocumentLocator()</em> supports
+    the new <code>Locator2</code> interface (see above).</li>
+
+<li><em>use-entity-resolver2</em> ... says whether to use
+    <code>EntityResolver2</code> methods, if the object passed to
+    <em>XMLReader.setEntityResolver()</em> supports them
+    and the parser is processing that class of external entity.
+    </li>
+
+</ul>
+
+<p>At this writing, only the &AElig;lfred2 parser supports many of
+these extensions.  Conformance tests for them are yet to be developed.
+</p>
+</div>
+    <br />
+
+    </td></tr></table>
+
+    </body></html>

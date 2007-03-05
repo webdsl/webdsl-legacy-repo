@@ -1,0 +1,391 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Callback Interfaces</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="previous" href="ch06s02.html" title="Parsing"><link rel="next" href="ch06s04.html" title="Receiving Documents"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"><link rel="subsection" href="ch06s03.html#d0e8305" title="Implementing ContentHandler"><link rel="subsection" href="ch06s03.html#d0e8440" title="Using the ContentHandler"><link rel="subsection" href="ch06s03.html#d0e8544" title="The DefaultHandler Adapter Class"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Callback Interfaces</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch06s02.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;6.&nbsp;SAX</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch06s04.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e8222"></a>Callback Interfaces</h2></div></div><p>
+    SAX uses the Observer design pattern to tell client 
+    applications what&#8217;s in a document.<sup>[<a name="d0e8227" href="#ftn.d0e8227">1</a>]</sup> 
+    Java developers are 
+    most familiar with this pattern from the event architecture
+    of the AWT and Swing. In that context,
+    the client programmer implements an interface such as 
+    <tt>MouseListener</tt> that receives events 
+    through well-known methods. Then the programmer registers
+    the <tt>MouseListener</tt> object 
+    with the component such as a <tt>Button</tt>
+   using the 
+    <tt>setMouseListener()</tt> method. When the end
+    user moves or clicks the mouse in the button&#8217;s area, the button
+    invokes a method in the registered
+    <tt>MouseListener</tt> object.
+    In this example, the <tt>Button</tt> class
+    plays the role of the Subject, the <tt>MouseListener</tt>
+    interface plays the role of the Observer, and the
+    client-defined implementation of that interface plays the
+    role of the ConcreteObserver.
+  </p><p>
+    SAX works in a very similar way. However in SAX,
+     <tt>XMLReader</tt> plays the role of
+     Subject and the <tt>org.xml.sax.ContentHandler</tt> 
+     interface
+     plays the role of Observer. The biggest difference 
+     between the AWT and SAX is that SAX does not allow
+     more than one listener to be registered with each 
+     <tt>XMLReader</tt>. Otherwise, the
+     pattern is exactly the same.
+  </p><p>
+    <a href="ch06s03.html#CompactContentHandler.java" title="Example&nbsp;6.2.&nbsp;The SAX ContentHandler interface">Example&nbsp;6.2</a>
+    shows the SAX <tt>ContentHandler</tt>
+    interface. 
+    Almost any significant SAX program you write is going to 
+    use this interface in one form or another.
+  </p><div class="example"><a name="CompactContentHandler.java"></a><p class="title"><b>Example&nbsp;6.2.&nbsp;The SAX ContentHandler interface</b></p><pre class="programlisting">package org.xml.sax;
+
+
+public interface ContentHandler {
+
+  public void setDocumentLocator(Locator locator);
+  public void startDocument() throws SAXException;
+  public void endDocument() throws SAXException;
+  public void startPrefixMapping(String prefix, String uri)
+   throws SAXException;
+  public void endPrefixMapping(String prefix) 
+   throws SAXException;
+  public void startElement(String namespaceURI, String localName,
+   String qualifiedName, Attributes atts) throws SAXException;
+  public void endElement(String namespaceURI, String localName,
+   String qualifiedName) throws SAXException;
+  public void characters(char[] text, int start, int length)
+   throws SAXException;
+  public void ignorableWhitespace(char[] text, int start, 
+   int length) throws SAXException;
+  public void processingInstruction(String target, String data)
+   throws SAXException;
+  public void skippedEntity(String name)
+   throws SAXException;
+
+}
+</pre></div><p>
+     The <tt>ContentHandler</tt> interface declares eleven methods.
+     As the parser&#8212;that is, the 
+     <tt>XMLReader</tt>&#8212;reads a
+     document,
+     it invokes the methods in this interface.
+     When the parser reads a start-tag, it calls the 
+     <tt>startElement()</tt>
+     method. When the parser reads some text content, it calls
+     the <tt>characters()</tt> method. 
+     When the parser reads an end-tag, it calls
+     the <tt>endElement()</tt> method. 
+     When the parser reads a processing
+     instruction, it calls the <tt>processingInstruction()</tt>
+     method. The details of what
+     the parser&#8217;s read, e.g. the name and attributes of a start-tag,
+     are passed as arguments to the method. 
+    </p><p>
+     Order is maintained
+     throughout. That is, the parser always invokes these methods
+     in the same order it sees items in the document. 
+     In many cases, the parser calls back to these
+     methods immediately. For example, the parser calls the
+     <tt>startElement()</tt> method as soon as it&#8217;s read
+     a complete start-tag. It will not read past that start-tag 
+     until the <tt>startElement()</tt> method 
+     has returned. This means you&#8217;ll generally receive some
+     content from invalid and even 
+     malformed documents before the parser 
+     detects the error. Consequently you should
+     be careful not to take undoable actions until 
+     you&#8217;ve reached the end of a document. 
+   </p><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e8305"></a>Implementing ContentHandler</h3></div></div><p>
+    A concrete example should help make this clearer.
+    I&#8217;m going to write a very simple program that extracts all
+    the text content from an XML document while stripping out
+    all the tags, comments, and processing instructions. 
+    This will be divided into two parts, a class that implements
+    <tt>ContentHandler</tt> and a class
+    that
+    feeds the document into the parser.
+  </p><p>
+    <a href="ch06s03.html#TextExtractor.java" title="Example&nbsp;6.3.&nbsp;A SAX ContentHandler that&#xA; writes all #PCDATA onto a java.io.Writer">Example&nbsp;6.3</a>, <tt>TextExtractor</tt>,
+    is the class that
+    implements
+    <tt>ContentHandler</tt>.
+    It has to provide all eleven methods declared in 
+    <tt>ContentHandler</tt>. However, the
+    only one that&#8217;s actually needed is <tt>characters()</tt>.
+    The other ten are do-nothing methods. They have empty method bodies,
+    and nothing happens
+    when the parser invokes them. 
+  </p><div class="example"><a name="TextExtractor.java"></a><p class="title"><b>Example&nbsp;6.3.&nbsp;A SAX ContentHandler that
+ writes all #PCDATA onto a <tt>java.io.Writer</tt></b></p><pre class="programlisting">import org.xml.sax.*;
+import java.io.*;
+
+
+public class TextExtractor implements ContentHandler {
+
+  private Writer out;
+  
+  public TextExtractor(Writer out) {
+    this.out = out;   
+  }
+    
+  public void characters(char[] text, int start, int length)
+   throws SAXException {
+     
+    try {
+      out.write(text, start, length); 
+    }
+    catch (IOException e) {
+      throw new SAXException(e);   
+    }
+    
+  }  
+    
+  // do-nothing methods
+  public void setDocumentLocator(Locator locator) {}
+  public void startDocument() {}
+  public void endDocument() {}
+  public void startPrefixMapping(String prefix, String uri) {}
+  public void endPrefixMapping(String prefix) {}
+  public void startElement(String namespaceURI, String localName,
+   String qualifiedName, Attributes atts) {}
+  public void endElement(String namespaceURI, String localName,
+   String qualifiedName) {}
+  public void ignorableWhitespace(char[] text, int start, 
+   int length) throws SAXException {}
+  public void processingInstruction(String target, String data){}
+  public void skippedEntity(String name) {}
+
+} // end TextExtractor
+</pre></div><p>
+    Besides the eleven methods declared in <tt>ContentHandler</tt>,
+    <tt>TextExtractor</tt> has a constructor and
+    an <tt>out</tt> field. 
+    The constructor sets this field to the
+    <tt>Writer</tt> on which the parsed text will
+    be output.
+    You can always add as many additional methods, fields, and constructors
+    as you need. You&#8217;re not limited to just those declared in the interface.
+  </p><p>
+    All the real work of this class happens inside  
+    <tt>characters()</tt>. When the parser reads
+    content between tags, it passes this text to the 
+    <tt>characters()</tt>
+    method inside an array of chars. The index of the first character of the
+    text inside that array is given by the
+    <tt>start</tt> argument.
+    The number of characters is given by the <tt>length</tt> argument.
+    In this class, the <tt>characters()</tt> method
+    writes the sub-array of text from <tt>start</tt> 
+    to <tt>start+length</tt>
+    onto the <tt>Writer</tt> stored in the
+    <tt>out</tt> field.
+  </p><p>
+    The <tt>characters()</tt> method in this class
+    invokes 
+    the <tt>write()</tt> method in
+    <tt>java.io.Writer</tt>. It happens that the 
+    <tt>write()</tt> method is declared to throw
+    an <tt>IOException</tt>. The
+    <tt>ContentHandler</tt> interface does
+    not declare that <tt>characters()</tt> throws
+    <tt>IOException</tt>. Therefore 
+    this exception must be caught. However, rather than simply
+    ignoring it
+    or printing a pointless message on <tt>System.err</tt>, we
+    can wrap the <tt>IOException</tt> inside 
+    <tt>SAXException</tt>, which <tt>characters()</tt>
+    is declared to throw, and then throw that exception.
+    This signals the parser that
+    something went wrong, and the parser will pass the exception
+    along to the client application. If the client application
+    wants to know what originally went wrong, it can find out
+    by invoking <tt>SAXException</tt>&#8217;s
+    <tt>getException()</tt> method. 
+  </p><p>
+    In contrast, none of the do-nothing methods such as 
+    <tt>startElement()</tt> and 
+    <tt>processingInstruction()</tt> will ever
+    throw any exceptions. Therefore, they are not declared to
+    throw <tt>SAXException</tt> even though 
+    <tt>ContentHandler</tt> would support
+    this declaration. There&#8217;s no need to clutter up the code with
+    unnecessary <tt>throws</tt> clauses, nor is it good programming
+    practice to advertise a possible exception in the method signature 
+    when you
+    know that exception will never occur. 
+  </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e8440"></a>Using the ContentHandler</h3></div></div><p>
+    By itself the <tt>TextExtractor</tt>
+    class does nothing. There&#8217;s no code in the class to actually
+    invoke any of the methods or parse a document. Although 
+    code to do this could be placed in a <tt>main()</tt>
+    method in <tt>TextExtractor</tt>, I prefer to
+    place it in a class of its own called
+    <tt>ExtractorDriver</tt> which is shown in <a href="ch06s03.html#ExtractorDriver.java" title="Example&nbsp;6.4.&nbsp;The driver method for the text extractor program">Example&nbsp;6.4</a>.
+  </p><div class="example"><a name="ExtractorDriver.java"></a><p class="title"><b>Example&nbsp;6.4.&nbsp;The driver method for the text extractor program</b></p><pre class="programlisting">import org.xml.sax.*;
+import org.xml.sax.helpers.XMLReaderFactory;
+import java.io.*;
+
+
+public class ExtractorDriver {
+
+  public static void main(String[] args) {
+      
+    if (args.length &lt;= 0) {
+      System.out.println(
+       "Usage: java ExtractorDriver url"
+      );
+      return;
+    }
+          
+    try {
+      XMLReader parser = XMLReaderFactory.createXMLReader();
+      
+      // Since this just writes onto the console, it's best
+      // to use the system default encoding, which is what
+      // we get by not specifying an explicit encoding here.
+      Writer out = new OutputStreamWriter(System.out);
+      ContentHandler handler = new TextExtractor(out);
+      parser.setContentHandler(handler);
+    
+      parser.parse(args[0]);
+      
+      out.flush();
+    }
+    catch (Exception e) {
+      System.err.println(e); 
+    }
+  
+  } 
+
+}
+</pre></div><p>
+    The <tt>main()</tt>
+    method in this class performs the following steps:
+  </p><div class="orderedlist"><ol type="1"><li><p>
+     Build an instance of 
+    <tt>XMLReader</tt>
+    using the <tt>XMLReaderFactory.createXMLReader()</tt> 
+    method. </p></li><li><p>Construct a new <tt>TextExtractor</tt>
+    object.</p></li><li><p>Pass this object to the 
+    <tt>setContentHandler()</tt> method of the
+    <tt>XMLReader</tt>.
+    </p></li><li><p>Pass the URL of the document you want to parse
+    (read from the command line) to the <tt>XMLReader</tt>&#8217;s 
+    <tt>parse()</tt> method.</p></li></ol></div><p>
+    One thing to note: there&#8217;s still no code  that
+    actually invokes the <tt>characters()</tt>
+    or any other method in the
+    <tt>TextExtractor</tt> class! This is for the 
+    same reason that you never see any code to invoke
+    <tt>actionPerformed()</tt>
+    or <tt>mouseClicked()</tt> when writing GUI
+    programs in Java. The code that actually calls these methods
+    is hidden deep inside the class library. You rarely need to
+    concern yourself with it directly. Here the relevant code
+    that calls <tt>characters()</tt> is hiding
+    somewhere inside the parser-specific implementation of the 
+    <tt>XMLReader</tt> interface. 
+  </p><p>
+    Let&#8217;s suppose you run this program over the original XML
+    order document,
+    <a href="ch01.html#order.xml" title="Example&nbsp;1.2.&nbsp;An XML document indicating an &#xA;order for 12 Birdsong Clocks, SKU 244">Example&nbsp;1.2</a> from <a href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data">Chapter&nbsp;1</a>.
+    The results look like this:
+  </p><pre class="screen"><tt>C:\&gt;</tt><b><tt>java ExtractorDriver order.xml</tt></b>
+<tt>
+  Chez Fred
+
+    Birdsong Clock
+    244
+    12
+    21.95
+
+
+    135 Airline Highway
+    Narragansett RI 02882
+
+  263.40
+  18.44
+  8.95
+  290.79</tt></pre><p>
+    The text of the original document, including white space, 
+    has been preserved. However, the markup has all been
+    stripped. This is exactly what we asked for. 
+  </p><p>
+    In the next few sections, we&#8217;ll explore the
+    individual methods of the 
+    <tt>ContentHandler</tt> interface 
+    and their behavior in more detail.
+  </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e8544"></a>The DefaultHandler Adapter Class</h3></div></div><p>
+     <tt>TextExtractor</tt> only really used one of the 
+     eleven methods declared in <tt>ContentHandler</tt>. 
+     The other ten methods were all do-nothing methods with empty
+     bodies. In fact, few SAX programs actually use all eleven
+     methods. Most of the time about half suffice. To take
+     advantage of this, SAX includes the
+     <tt>org.xml.sax.helpers.DefaultHandler</tt> 
+     convenience class that
+     implements the <tt>ContentHandler</tt>
+     interface (and several other callback interfaces discussed in
+     upcoming chapters) with do-nothing methods:
+     </p><div class="informalexample"><pre class="programlisting">public class DefaultHandler implements ContentHandler, 
+ DTDHandler, EntityResolver, ErrorHandler
+</pre></div><p>
+     Instead of
+     implementing, <tt>ContentHandler</tt>
+     directly and cluttering up your code with irrelevant methods,
+     you can instead extend
+     <tt>DefaultHandler</tt>. Then you only have to
+     override those methods you actually care about, not all
+     eleven.
+   </p><p>
+     For example, if <tt>TextExtractor</tt>
+      was built on top of <tt>DefaultHandler</tt>,
+      it would be the smaller and simpler class shown in 
+      <a href="ch06s03.html#TextExtractor2.java" title="Example&nbsp;6.5.&nbsp;A subclass of DefaultHandler that&#xA; writes all #PCDATA onto a java.io.Writer">Example&nbsp;6.5</a>.
+   </p><div class="example"><a name="TextExtractor2.java"></a><p class="title"><b>Example&nbsp;6.5.&nbsp;A subclass of DefaultHandler that
+ writes all #PCDATA onto a <tt>java.io.Writer</tt></b></p><pre class="programlisting">import org.xml.sax.*;
+import org.xml.sax.helpers.DefaultHandler;
+import java.io.*;
+
+
+public class TextExtractor extends DefaultHandler {
+
+  private Writer out;
+  
+  public TextExtractor(Writer out) {
+    this.out = out;   
+  }
+    
+  public void characters(char[] text, int start, int length)
+   throws SAXException {
+    try {
+      out.write(text, start, length); 
+    }
+    catch (IOException e) {
+      throw new SAXException(e);   
+    }
+  }
+
+}
+</pre></div><p>
+     Programs in  this book use content handlers that implement 
+     <tt>ContentHandler</tt>
+     directly and content handlers that extend
+     <tt>DefaultHandler</tt>, mostly depending on
+     which subjectively feels more natural to the problem at hand.
+     You should feel free to use whichever variation you prefer.
+   </p></div><div class="footnotes"><br><hr width="100" align="left"><div class="footnote"><p><sup>[<a name="ftn.d0e8227" href="#d0e8227">1</a>] </sup><i>Design Patterns: Elements of
+    Reusable Object-Oriented Software</i> by Erich Gamma,
+    Richard Helm, Ralph Johnson, and John Vlissides, Addison-Wesley, 
+    1995, pp. 293-303</p></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch06s02.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch06.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch06s04.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Parsing&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Receiving Documents</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+May 26,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

@@ -1,0 +1,11 @@
+document {display: block; background-color: white}
+bookcategory {display: block; font-size: 20pt}
+book {display: block; font-size: 12pt; font-weight: normal}
+title {display: block; font-weight: bold}
+author {display: block; font-style: italic; text-indent: 2em}
+publisher {display: block;  text-indent: 2em}
+isbn {display: block; text-indent: 2em}
+pages {display: block; text-indent: 2em}
+price {display: block; color: red; text-indent: 2em}
+recommendation {display: block; text-indent: 2em}
+blurb {display: block; text-indent: 2em}

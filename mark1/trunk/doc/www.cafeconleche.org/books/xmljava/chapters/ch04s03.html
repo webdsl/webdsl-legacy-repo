@@ -1,0 +1,175 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Input</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="previous" href="ch04s02.html" title="The Model"><link rel="next" href="ch04s04.html" title="Determining the Output Format"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Input</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch04s02.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;4.&nbsp;Converting Flat Files to XML</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch04s04.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e5997"></a>Input</h2></div></div><p>
+      By far the hardest part of this or any similar problem is
+      parsing the non-XML input data. Everything else pales by 
+      comparison. Unlike parsing XML, you generally cannot 
+      rely on a library to do the hard work for you.
+      You have to do it yourself. And also unlike XML, there&#8217;s little
+      guarantee that the data is well-formed.
+      It&#8217;s more likely than not that you will encounter incorrectly formatted data.
+    </p><p>
+      In this case, since the records are separated into lines,
+      I&#8217;ll read each line, one at a time, using the
+      <tt>readLine()</tt> method of 
+      <tt>java.io.BufferedReader</tt>.
+      This method works well enough as long as the data is
+      in a file, though it&#8217;s potentially buggy when the data
+      is served over a network socket.
+    </p><p>
+      Each line is dissected into its component fields inside
+      the <tt>splitLine()</tt> method.
+      Each record is stored in its own map.
+      The keys for the map are read from a constant array,
+      because the fields are always in the same positions in each record. 
+    </p><div class="caution" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Caution</h3><p>
+        For parsing the data out of each line, 
+        a lot of Java programmer&#8217;s immediately reach for the
+        <tt>java.util.StringTokenizer</tt> or 
+        <tt>java.io.StreamTokenizer</tt> classes.
+         Don&#8217;t. These classes are very strangely designed
+        and rarely do what developers expect them to do.
+        For example, if <tt>StreamTokenizer</tt> 
+        encounters a \n inside a string literal, it will convert it
+        to a linefeed. This makes sense when parsing Java source code,
+        but in most other environments \n are just another two characters
+        with no special meaning. 
+        Java&#8217;s tokenizer classes are designed for and suited to parsing Java source code.
+        They are not suitable for reading tab-delimited or comma delimited data.
+        If you want to design your program around a tokenization function,
+        you should write one yourself that behaves appropriately for 
+        your data format. 
+      </p></div><p>
+      <a href="ch04s03.html#BudgetData.java" title="Example&nbsp;4.1.&nbsp;A class that parses comma separated values into a List of HashMaps">Example&nbsp;4.1</a> shows the input code. To use 
+      this, open an input stream to the file containing the budget data 
+      and pass that stream as an argument to the 
+      <tt>parse()</tt> method.  You&#8217;ll get back a <tt>List</tt> 
+      containing the parsed data. 
+      Each object in this list is a <tt>Map</tt>
+      containing the data for one line item. Both keys and values for this map
+      are strings. Since the keys are constant, they&#8217;re stored in a 
+      final static  
+      array named <tt>keys</tt>. At various times I plan to use
+      the keys as XML element names, XML attribute names, or SQL field
+      names. Therefore, it&#8217;s necessary to begin them all with letters.
+      Thus the keys for the fiscal year fields will be named, FY1976, FY1977,
+      FY1978, and so forth instead of just 1976, 1977, 1978, and so
+      forth. This will mean we won&#8217;t be trivially able to store the keys
+      as ints. However, this turns out not have been the case anyway because
+      one of the year fields turns out to be
+      the transitional quarter in 1976.
+      which does not represent a full year and does not have a numeric name. 
+    </p><div class="caution" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Caution</h3><p>
+    In 1976
+    the government&#8217;s fiscal year shifted forward one quarter. That means that the 
+    1977 fiscal year started in October, a quarter after the  1976
+    fiscal year ended. There was a transitional quarter from July through September
+    that year. Thus not all the data actually represents a whole year.
+    Here, the special case is very much a result of the data itself.
+    Thus the data can&#8217;t be fixed. However, it still requires extra code,
+    and makes the examples less clean than they otherwise would be. 
+  
+  </p><p>
+      This sort of funky data (a year with only three months in it
+      that can easily be confused with another year) is exactly the sort of thing 
+      you have to watch out for when processing legacy data.
+      The real world does not always fit into neatly typed categories.
+      There's almost always some outlier data that just doesn't fit the schema.
+      All too often it's been forced into the existing system 
+      by some manager or data entry clerk in ways
+      the original designers never intended. This happens <span class="emphasis"><em>all the time</em></span>.
+      You cannot assume the data actually adheres to its schema,
+      either implicit or explicit. 
+     </p></div><p>
+      The code to parse each line of 
+      input is hidden inside the private <tt>splitLine()</tt> 
+      method. This code is relatively complex. It iterates 
+      through the record looking for comma delimiter characters. However, it has to ignore
+      characters that appear inside quoted strings. Furthermore it must also recognize
+      that the end of the string delimits the last token. 
+      Even so, this method is not very robust. It will throw an
+      uncaught exception if any quotes are omitted, or if there are too few fields.
+      It will not notice and report the error if a record contains too many fields.
+    </p><div class="example"><a name="BudgetData.java"></a><p class="title"><b>Example&nbsp;4.1.&nbsp;A class that parses comma separated values into a List of HashMaps</b></p><pre class="programlisting">import java.io.*;
+import java.util.*;
+
+
+public class BudgetData {
+
+  public static List parse(InputStream src) throws IOException {
+      
+    // The document as published by the OMB is encoded in Latin-1
+    InputStreamReader isr = new InputStreamReader(src, "8859_1");
+    BufferedReader in = new BufferedReader(isr);
+    List records = new ArrayList();  
+    String lineItem;
+    while ((lineItem = in.readLine()) != null) {
+      records.add(splitLine(lineItem));
+    }       
+    return records;
+        
+  } 
+
+  // the field names in order
+  public final static String[] keys = {
+    "AgencyCode",
+    "AgencyName",
+    "BureauCode",
+    "BureauName",
+    "AccountCode",
+    "AccountName",
+    "TreasuryAgencyCode",
+    "SubfunctionCode",
+    "SubfunctionTitle",
+    "BEACategory",
+    "On-Off-BudgetIndicator",
+    "FY1976", "TransitionQuarter", "FY1977", "FY1978", "FY1979",  
+    "FY1980", "FY1981", "FY1982", "FY1983", "FY1984", "FY1985",  
+    "FY1986", "FY1987", "FY1988", "FY1989", "FY1990", "FY1991",  
+    "FY1992", "FY1993", "FY1994", "FY1995", "FY1996", "FY1997",  
+    "FY1998", "FY1999", "FY2000", "FY2001", "FY2002", "FY2003", 
+    "FY2004", "FY2005", "FY2006" 
+   };
+
+  private static Map splitLine(String record) {
+     
+    record = record.trim();
+    
+    int index = 0;
+    Map result = new HashMap();
+    for (int i = 0; i &lt; keys.length; i++) {
+      //find the next comma    
+      StringBuffer sb = new StringBuffer();
+      char c;
+      boolean inString = false;
+      while (true) {
+        c = record.charAt(index);
+        if (!inString &amp;&amp; c == '"') inString = true;
+        else if (inString &amp;&amp; c == '"') inString = false;
+        else if (!inString &amp;&amp; c == ',') break;
+        else sb.append(c);
+        index++;
+        if (index == record.length()) break;
+      }
+      String s = sb.toString().trim();
+      result.put(keys[i], s);
+      index++;
+    }  
+        
+    return result;   
+        
+  } 
+
+}
+</pre></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch04s02.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch04.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch04s04.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">The Model&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Determining the Output Format</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+August 21,
+2001</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

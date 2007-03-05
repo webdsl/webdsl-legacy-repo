@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+targetNamespace="http://namespaces.cafeconleche.org/xmljava/ch2/"
+xmlns="http://namespaces.cafeconleche.org/xmljava/ch2/"
+elementFormDefault="qualified">
+
+  <xsd:element name="getQuote">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="symbol" type="StockSymbol" 
+                     maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>  
+  </xsd:element>
+
+  <xsd:simpleType name="StockSymbol">
+    <xsd:restriction base="xsd:string">
+      <!-- two to six upper case letters -->
+      <xsd:pattern value="[A-Z][A-Z][A-Z]?[A-Z]?[A-Z]?[A-Z]?"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+</xsd:schema>

@@ -1,0 +1,376 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.3  (Linux)">
+	<META NAME="AUTHOR" CONTENT="Elliotte Harold">
+	<META NAME="CREATED" CONTENT="20020622;15103600">
+	<META NAME="CHANGED" CONTENT="20030417;15154400">
+	<STYLE>
+	<!--
+		@page { size: 21.59cm 27.94cm; margin: 2.54cm }
+		P { margin-bottom: 0.21cm; text-align: justify }
+		P.western { font-size: 10pt }
+		H1 { margin-bottom: 0.21cm; text-align: justify }
+		H1.western { font-family: "Albany", sans-serif; font-size: 16pt }
+		H1.cjk { font-size: 16pt }
+		H1.ctl { font-size: 16pt }
+		TD P { margin-bottom: 0.21cm; text-align: justify }
+		TD P.western { font-size: 10pt }
+		TH P { margin-bottom: 0.21cm }
+		TH P.western { font-size: 10pt; font-style: italic }
+		TH P.cjk { font-style: italic }
+		TH P.ctl { font-style: italic }
+		PRE { text-align: justify }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US">
+<P ALIGN=CENTER STYLE="margin-top: 0.42cm; page-break-after: avoid"><FONT FACE="Albany, sans-serif"><FONT SIZE=5><B>1.
+Include an XML declaration</B></FONT></FONT></P>
+<P CLASS="western" STYLE="margin-top: 0.21cm">Although XML
+declarations are optional, every XML document should have one. An XML
+declaration helps both human users and automated software identify
+the document as XML. It identifies the version of XML in use,
+specifies the character encoding, and can even help optimize the
+parsing. Most importantly, it's a crucial clue that what you're
+reading is in fact an XML document in environments where file type
+information is unavailable or unreliable.</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm">The following are all
+legal XML declarations:</P>
+<PRE>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot; standalone=&quot;no&quot;?&gt;
+&lt;?xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;</PRE><P CLASS="western" STYLE="margin-top: 0.21cm">
+The XML declaration must be the first thing in the XML document. It
+cannot be preceded by any comments, processing instruction, or even
+white space. The only thing that may sometimes  precede it is the
+optional byte order mark.</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm">The XML declaration is
+not a processing instruction, even though it looks like one. If
+you're processing an XML document through APIs like SAX, DOM, or
+JDOM, then the method calls you use to read and write the XML
+declaration will not be the same as the method calls you use to read
+and write processing instructions. In many cases, including SAX2,
+DOM2, XOM, and JDOM, the information from the XML declaration may not
+be available at all. The parser will use it to determine how to read
+a document, but it will not report it to the client application.</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm">Each XML declaration
+has up to three attributes:</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm">version</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm">The version of XML in
+use. Currently this always has the value 1.0, though there may be an
+XML 1.1 in the future. (See Item 3)</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm">encoding</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm">The character set in
+which the document is written.</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm">standalone</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm">Whether or not the
+external DTD subset makes important contributions to the document's
+infoset. 
+</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm">Like other attributes,
+these may be enclosed in single or double quotes, and any amount of
+white space may separate them from each other. Unlike other
+attributes, order matters. The version must always come before the
+encoding which must always come before the standalone declaration.
+The version is required. The encoding and standalone declaration are
+optional.</P>
+<H1 CLASS="western">Version</H1>
+<P CLASS="western" STYLE="margin-top: 0.21cm">The version attribute
+always has the value 1.0. If XML 1.1 is released in the future (and
+it may not be) then this will probably also be allowed to have the
+value 1.1. Regardless, you should always use 1.0, never 1.1. 1.0 is
+more compatible, more robust, and offers all the features XML 1.1
+does. Item 3 discusses this in more detail.</P>
+<H1 CLASS="western">Encoding</H1>
+<P CLASS="western" STYLE="margin-top: 0.21cm">The encoding
+declaration specifies which character set and encoding the document
+is written in. Sometimes this identifies an encoding of the Unicode
+character set such as UTF-8 and UTF-16, and other times it identifies
+a different character set such as ISO-8859-1 or US-ASCII, which for
+XML's purposes serves mainly as an encoding of a subset of the full
+Unicode character set.</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm">The default encoding is
+UTF-8 if no encoding declaration or other metadata is present. UTF-16
+can also be used if the document begins with a byte order mark.
+However, even in cases where the document is written in the UTF-8 or
+UTF-16 encodings, an encoding declaration helps people reading the
+document recognize the encoding, so it's useful to specify it
+explicitly.</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm">Try to stick to
+well-known standard character sets and encodings if possible such as
+ISO-8859-1, UTF-8, and UTF-16. You should always use the standard
+names for these character sets. Table 1-1 lists the names defined by
+the XML 1.0 specification. All parsers that support these character
+sets should recognize these names. For character encodings not
+defined in XML 1.0, choose a name registered with the IANA. You can
+find a complete list at
+http://www.iana.org/assignments/character-sets/. However, you should
+avoid non-standard names. In particular watch out for Java names like
+8859_1 and UTF16. Relatively few parsers not written in Java
+recognize these, and even some Java parsers don't recognize them by
+default. However, all parsers including those written in Java should
+recognize the IANA standard equivalents like ISO-8859-1 and UTF-16.</P>
+<P CLASS="western">Table 1-1: Character Set Names defined in XML</P>
+<TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=71*>
+	<COL WIDTH=185*>
+	<THEAD>
+		<TR VALIGN=TOP>
+			<TH WIDTH=28%>
+				<P CLASS="western">Name</P>
+			</TH>
+			<TH WIDTH=72%>
+				<P CLASS="western">Set</P>
+			</TH>
+		</TR>
+	</THEAD>
+	<TBODY>
+		<TR VALIGN=TOP>
+			<TD WIDTH=28%>
+				<P CLASS="western">UTF-8</P>
+			</TD>
+			<TD WIDTH=72%>
+				<P CLASS="western">Variable width, byte-order independent Unicode</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=28%>
+				<P CLASS="western">UTF-16</P>
+			</TD>
+			<TD WIDTH=72%>
+				<P CLASS="western">Two-byte Unicode with surrogate pairs</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=28%>
+				<P CLASS="western">ISO-10646-UCS-2</P>
+			</TD>
+			<TD WIDTH=72%>
+				<P CLASS="western">Two-byte Unicode without surrogate pairs;
+				plane 0 only</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=28%>
+				<P CLASS="western">ISO-10646-UCS-4</P>
+			</TD>
+			<TD WIDTH=72%>
+				<P CLASS="western">Four-byte Unicode</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=28%>
+				<P CLASS="western">ISO-8859-1</P>
+			</TD>
+			<TD WIDTH=72%>
+				<P CLASS="western">Latin-1; mostly compatible with the standard
+				U.S. Windows character set</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=28%>
+				<P CLASS="western">ISO-8859-2</P>
+			</TD>
+			<TD WIDTH=72%>
+				<P CLASS="western">Latin-2</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=28%>
+				<P CLASS="western">ISO-8859-3</P>
+			</TD>
+			<TD WIDTH=72%>
+				<P CLASS="western">Latin-3</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=28%>
+				<P CLASS="western">ISO-8859-4</P>
+			</TD>
+			<TD WIDTH=72%>
+				<P CLASS="western">Latin-4</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=28%>
+				<P CLASS="western">ISO-8859-5</P>
+			</TD>
+			<TD WIDTH=72%>
+				<P CLASS="western">ASCII and Cyrillic</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=28%>
+				<P CLASS="western">ISO-8859-6</P>
+			</TD>
+			<TD WIDTH=72%>
+				<P CLASS="western">ASCII and Arabic</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=28%>
+				<P CLASS="western">ISO-8859-7</P>
+			</TD>
+			<TD WIDTH=72%>
+				<P CLASS="western">ASCII and Greek</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=28%>
+				<P CLASS="western">ISO-8859-8</P>
+			</TD>
+			<TD WIDTH=72%>
+				<P CLASS="western">ASCII and Hebrew</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=28%>
+				<P CLASS="western">ISO-8859-9</P>
+			</TD>
+			<TD WIDTH=72%>
+				<P CLASS="western">Latin-5</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=28%>
+				<P CLASS="western">ISO-8859-10</P>
+			</TD>
+			<TD WIDTH=72%>
+				<P CLASS="western">Latin-6</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=28%>
+				<P CLASS="western">ISO-8859-11</P>
+			</TD>
+			<TD WIDTH=72%>
+				<P CLASS="western">ASCII plus Thai</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=28%>
+				<P CLASS="western">ISO-8859-13</P>
+			</TD>
+			<TD WIDTH=72%>
+				<P CLASS="western">Latin-7</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=28%>
+				<P CLASS="western">ISO-8859-14</P>
+			</TD>
+			<TD WIDTH=72%>
+				<P CLASS="western">Latin-8</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=28%>
+				<P CLASS="western">ISO-8859-15</P>
+			</TD>
+			<TD WIDTH=72%>
+				<P CLASS="western">Latin-9, Latin-0</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=28%>
+				<P CLASS="western">ISO-8859-16</P>
+			</TD>
+			<TD WIDTH=72%>
+				<P CLASS="western">Latin-10</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=28%>
+				<P CLASS="western">ISO-2022-JP</P>
+			</TD>
+			<TD WIDTH=72%>
+				<P CLASS="western">A combination of ISO 646 (a slight variant of
+				ASCII) and JISX0208 that uses escape sequences to switch between
+				the two character sets</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=28%>
+				<P CLASS="western">Shift_JIS 
+				</P>
+			</TD>
+			<TD WIDTH=72%>
+				<P CLASS="western">A combination of JIS X0201:1997 and JIS
+				X0208:1997 that uses escape sequences to switch between the two
+				character sets</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=28%>
+				<P CLASS="western">EUC-JP 
+				</P>
+			</TD>
+			<TD WIDTH=72%>
+				<P CLASS="western">A combination of four code sets: ASCII, JIS
+				X0208-1990, half Width Katakana, and JIS X0212-1990 that uses
+				escape sequences to switch between the character sets</P>
+			</TD>
+		</TR>
+	</TBODY>
+</TABLE>
+<P CLASS="western" STYLE="margin-top: 0.21cm">For similar reasons,
+avoid declaring and using vendor-dependent character sets such as
+Cp1252 (U.S. Windows) or MacRoman. These are not as interoperable
+across the heterogeneous set of platforms XML supports as the
+standard character sets.</P>
+<H1 CLASS="western">The Standalone Declaration</H1>
+<P CLASS="western" STYLE="margin-top: 0.21cm">The standalone
+declaration has the value yes or no. If no standalone declaration is
+present, then no is the default.</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm">A yes value means that
+no declarations in the external DTD subset affect the content of the
+document in any way. Specifically:</P>
+<UL>
+	<LI><P CLASS="western" STYLE="margin-top: 0.21cm">No default
+	attribute values are specified for elements 
+	</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0.21cm">No entity
+	references used in the instance document are defined 
+	</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0.21cm">No attribute
+	values need to be normalized</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0.21cm">No elements
+	contain ignorable white space.</P>
+</UL>
+<P CLASS="western" STYLE="margin-top: 0.21cm">If these conditions
+hold, then the parser may choose not to read the external DTD subset,
+which can save a significant amount of time when the DTD is at a
+remote and slow web site.</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm">A non-validating parser
+will not actually check that these conditions hold. For example, it
+will not report an error if an element does not have an attribute for
+which a default value is provided in the external DTD subset.
+Obviously the parser can't find mistakes that are only apparent when
+it reads the external DTD subset if it doesn't read the external DTD
+subset. A validating parser is supposed to report a validity error if
+standalone has the value yes and any of these four conditions are not
+true. 
+</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm">It is always acceptable
+to set standalone to no, even if the document could technically stand
+alone. If you don't want to be bothered figuring out whether all of
+the above four conditions apply, just set standalone=&rdquo;no&rdquo;
+(or leave it unspecified because the default is no). This is always
+correct.</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm">The standalone
+declaration only applies to content read from the external DTD
+subset. It has nothing to do with other means of merging in content
+from remote documents such as schemas, XIncludes, XLinks, application
+specific markup like the img element in XHTML, or anything else. It
+is strictly about the DTD.</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm">Whatever values you
+pick for the version, encoding, and standalone attributes, and
+whether you include encoding and standalone attributes at all, you
+should provide an XML declaration. It only takes a few bytes, and
+makes it much easier for both people and parsers to process your
+document.</P>
+</BODY>
+</HTML>

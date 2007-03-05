@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE math PUBLIC "-//W3C//DTD MathML 2.0//EN"
+ "http://www.w3.org/TR/MathML2/dtd/mathml2.dtd">
+<math xmlns:mathml="http://www.w3.org/1998/Math/MathML">
+  <mrow><mi>f(1)</mi><mo>=</mo><mn>1</mn></mrow>
+  <mrow><mi>f(2)</mi><mo>=</mo><mn>1</mn></mrow>
+  <mrow><mi>f(3)</mi><mo>=</mo><mn>2</mn></mrow>
+  <mrow><mi>f(4)</mi><mo>=</mo><mn>3</mn></mrow>
+  <mrow><mi>f(5)</mi><mo>=</mo><mn>5</mn></mrow>
+  <mrow><mi>f(6)</mi><mo>=</mo><mn>8</mn></mrow>
+  <mrow><mi>f(7)</mi><mo>=</mo><mn>13</mn></mrow>
+  <mrow><mi>f(8)</mi><mo>=</mo><mn>21</mn></mrow>
+  <mrow><mi>f(9)</mi><mo>=</mo><mn>34</mn></mrow>
+  <mrow><mi>f(10)</mi><mo>=</mo><mn>55</mn></mrow>
+</math>

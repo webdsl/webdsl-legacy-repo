@@ -1,0 +1,271 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:UnparsedEntity="http://www.jclark.com/xt/java/com.macfaq.xsl.UnparsedEntity">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="description" content="
+    Elliotte Rusty Harold's presentation on 
+    XML Basics at SDExpo 99 East, November 10, 1999
+  ">
+<title>XML Basics</title>
+</head>
+<body>
+<h1>XML Basics</h1>
+<ul>
+<li>
+<a href="01.html">XML Basics</a>
+</li>
+<li>
+<a href="02.html">What is XML?</a>
+</li>
+<li>
+<a href="03.html">XML is a Meta Markup Language</a>
+</li>
+<li>
+<a href="04.html">XML describes structure and semantics, not formatting</a>
+</li>
+<li>
+<a href="05.html">A Song Description in HTML</a>
+</li>
+<li>
+<a href="06.html">A Song Description in XML</a>
+</li>
+<li>
+<a href="07.html">Style Sheets provide formatting</a>
+</li>
+<li>
+<a href="08.html">Attaching style sheets to documents</a>
+</li>
+<li>
+<a href="09.html">What is XML used for?</a>
+</li>
+<li>
+<a href="10.html">Domain-Specific Markup Languages</a>
+</li>
+<li>
+<a href="11.html">Self-Describing Data</a>
+</li>
+<li>
+<a href="12.html">An XML Fragment</a>
+</li>
+<li>
+<a href="13.html">Interchange of Data Among Applications</a>
+</li>
+<li>
+<a href="14.html">Structured and Integrated Data</a>
+</li>
+<li>
+<a href="15.html">XML Applications</a>
+</li>
+<li>
+<a href="16.html">Example XML Applications</a>
+</li>
+<li>
+<a href="17.html">Mathematical Markup Language</a>
+</li>
+<li>
+<a href="18.html">Channel Definition Format</a>
+</li>
+<li>
+<a href="19.html">Classic Literature</a>
+</li>
+<li>
+<a href="20.html">Vector Graphics</a>
+</li>
+<li>
+<a href="21.html">The Resource Description Framework (RDF)</a>
+</li>
+<li>
+<a href="22.html">An Example of RDF</a>
+</li>
+<li>
+<a href="23.html">XML for XML</a>
+</li>
+<li>
+<a href="24.html">XSL: The Extensible Stylesheet Language</a>
+</li>
+<li>
+<a href="25.html">DCD: The Document Content Description Schema Language</a>
+</li>
+<li>
+<a href="26.html">XLL: The Extensible Linking Language</a>
+</li>
+<li>
+<a href="27.html">File Formats, in-house applications, and other behind the scenes uses</a>
+</li>
+<li>
+<a href="28.html">Hello XML</a>
+</li>
+<li>
+<a href="29.html">The FOO element</a>
+</li>
+<li>
+<a href="30.html">greeting.xml</a>
+</li>
+<li>
+<a href="31.html">Style sheets</a>
+</li>
+<li>
+<a href="32.html">xml-stylesheet</a>
+</li>
+<li>
+<a href="33.html">greeting.css</a>
+</li>
+<li>
+<a href="34.html">greeting.xsl</a>
+</li>
+<li>
+<a href="35.html">Attaching a style sheet to an  XML document</a>
+</li>
+<li>
+<a href="36.html">A larger example: Music Catalog</a>
+</li>
+<li>
+<a href="37.html">Sample Catalog</a>
+</li>
+<li>
+<a href="38.html">Organizing the Data</a>
+</li>
+<li>
+<a href="39.html">What is the Root Element</a>
+</li>
+<li>
+<a href="40.html">The Root Element</a>
+</li>
+<li>
+<a href="41.html">What are the Immediate Children of the Root?</a>
+</li>
+<li>
+<a href="42.html">Child Elements</a>
+</li>
+<li>
+<a href="43.html">White space in XML is not especially significant</a>
+</li>
+<li>
+<a href="44.html">Composers</a>
+</li>
+<li>
+<a href="45.html">Grand Children</a>
+</li>
+<li>
+<a href="46.html">Attributes</a>
+</li>
+<li>
+<a href="47.html">Attributes vs. Elements</a>
+</li>
+<li>
+<a href="48.html">When not to use attributes</a>
+</li>
+<li>
+<a href="49.html">Compositions</a>
+</li>
+<li>
+<a href="50.html">Each composition has a</a>
+</li>
+<li>
+<a href="51.html">Composition Example in XML</a>
+</li>
+<li>
+<a href="52.html">Further Divisions</a>
+</li>
+<li>
+<a href="53.html">Attaching the Composer to the Composition</a>
+</li>
+<li>
+<a href="54.html">Some Keywords For the Search Engines</a>
+</li>
+<li>
+<a href="55.html">Standard Signature</a>
+</li>
+<li>
+<a href="56.html">Cascading Style Sheets</a>
+</li>
+<li>
+<a href="57.html">A Blank Style Sheet</a>
+</li>
+<li>
+<a href="58.html">The Default Rule</a>
+</li>
+<li>
+<a href="59.html">A style rule for the category element</a>
+</li>
+<li>
+<a href="60.html">A style rule for the composer element</a>
+</li>
+<li>
+<a href="61.html">A style rule for the title element</a>
+</li>
+<li>
+<a href="62.html">A style rule for the catalog info</a>
+</li>
+<li>
+<a href="63.html">Style rules for the signature</a>
+</li>
+<li>
+<a href="64.html">Style Rules for composition children</a>
+</li>
+<li>
+<a href="65.html">Finished Style Sheet</a>
+</li>
+<li>
+<a href="66.html">Possible Extensions</a>
+</li>
+<li>
+<a href="67.html">Possible Solutions</a>
+</li>
+<li>
+<a href="68.html">CSS or XSL?</a>
+</li>
+<li>
+<a href="69.html">Well-formedness Rules</a>
+</li>
+<li>
+<a href="70.html">Open and close all tags</a>
+</li>
+<li>
+<a href="71.html">Empty tags end with /&gt;</a>
+</li>
+<li>
+<a href="72.html">There is a unique root element</a>
+</li>
+<li>
+<a href="73.html">Elements may not overlap</a>
+</li>
+<li>
+<a href="74.html">Attribute values are quoted</a>
+</li>
+<li>
+<a href="75.html">&lt; and &amp; are only used to start tags and entities</a>
+</li>
+<li>
+<a href="76.html">Only the five predefined entity references are used</a>
+</li>
+<li>
+<a href="77.html">Programming with XML</a>
+</li>
+<li>
+<a href="78.html">SAX, the Simple API for XML</a>
+</li>
+<li>
+<a href="79.html">The Document Object Model (DOM)</a>
+</li>
+<li>
+<a href="80.html">To Learn More</a>
+</li>
+<li>
+<a href="81.html">Questions?</a>
+</li>
+</ul>
+<hr>
+<div align="center">
+<A HREF="01.html">Start</A> | <A HREF="/xml/">Cafe con Leche</A>
+</div>
+<hr>
+<font size="-1">
+              Copyright 1999 
+              <a href="http://www.macfaq.com/personal.html">Elliotte Rusty Harold</a>
+<br>
+<a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a>
+<br>
+              Last Modified September 29, 1999</font>
+</body>
+</html>

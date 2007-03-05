@@ -1,0 +1,213 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Talking to SAX Programs</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="previous" href="ch14s09.html" title="Talking to DOM Programs"><link rel="next" href="ch14s11.html" title="Java Integration"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"><link rel="subsection" href="ch14s10.html#d0e23116" title="Configuring SAXBuilder"><link rel="subsection" href="ch14s10.html#d0e23317" title="SAXOutputter"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Talking to SAX Programs</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch14s09.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;14.&nbsp;JDOM</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch14s11.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e23111"></a>Talking to SAX Programs</h2></div></div><p>
+    JDOM works very well with SAX parsers.
+    SAX is an almost ideal event model
+    for building a JDOM tree; and when the tree is complete,
+    JDOM makes it easy to walk the tree, firing off SAX events
+    as you go. Since SAX is so fast and memory-efficient,
+    SAX doesn&#8217;t add a lot of extra overhead to JDOM programs.
+  </p><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e23116"></a>Configuring SAXBuilder</h3></div></div><p>
+    When reading a file or stream through a SAX parser,
+    you can set various properties on the parser including
+    the <tt>ErrorHandler</tt>,
+    <tt>DTDHandler</tt>,
+    <tt>EntityResolver</tt>,
+    and any custom features or properties that are supported 
+    by the underlying SAX
+    <tt>XMLReader</tt>.
+    <tt>SAXBuilder</tt> includes several methods 
+    that just delegate these configurations to the 
+    underlying
+    <tt>XMLReader</tt>:
+  </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setErrorHandler</b></span>(<span class="methodparam"><span class="type">ErrorHandler&nbsp;</span><span class="parameter"><i>errorHandler</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setEntityResolver</b></span>(<span class="methodparam"><span class="type">EntityResolver&nbsp;</span><span class="parameter"><i>entityResolver</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setDTDHandler</b></span>(<span class="methodparam"><span class="type">DTDHandler&nbsp;</span><span class="parameter"><i>dtdHandler</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setIgnoringElementContentWhitespace</b></span>(<span class="methodparam"><span class="type">boolean&nbsp;</span><span class="parameter"><i>ignoreWhitespace</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setFeature</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>name</i></span></span>, <span class="methodparam"><span class="type">boolean&nbsp;</span><span class="parameter"><i>value</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setProperty</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>name</i></span></span>, <span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>value</i></span></span>);</code><br><p>
+    For example, suppose you want to schema validate 
+    documents before using them. This requires three
+    additional steps beyond the norm:
+  </p><div class="orderedlist"><ol type="1"><li><p>
+        Explicitly pick a parser class that is known to be able to schema
+        validate such as <tt>org.apache.xerces.parsers.SAXParser</tt> (Most parsers
+        can&#8217;t schema validate.)
+      </p></li><li><p>
+        Install a SAX <tt>ErrorHandler</tt>
+        that reports validity errors.
+      </p></li><li><p>
+        Set the SAX feature 
+        that turns on schema validation to true.
+        Which feature this is depends on which parser you picked
+        in step 1. In Xerces, it&#8217;s 
+        <tt>http://apache.org/xml/features/validation/schema</tt>
+        and you also need to turn validation on using the standard SAX feature
+        <tt>http://xml.org/sax/features/validation</tt>.
+      </p></li></ol></div><p>
+   <a href="ch14s10.html#JDOMSchemaValidator.java" title="Example&nbsp;14.11.&nbsp;A JDOM program that schema validates documents">Example&nbsp;14.11</a> is a simple JDOM
+   program that schema validates a URL named on the command line
+   using Xerces. This is similar to the earlier 
+   <tt>JDOMValidator</tt> example.
+   However here because the installed 
+   <tt>ErrorHandler</tt> (<tt>BestSAXChecker</tt>
+   from <a href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface">Chapter&nbsp;7</a>) merely prints validity error messages
+   on <tt>System.out</tt> and
+   does not throw an exception, validity errors do not terminate
+   the parse. The <tt>Document</tt> object is still
+   built as long as it&#8217;s well-formed, whether or not it&#8217;s valid.
+   You could, of course, change this behavior by using a more draconian
+   <tt>ErrorHandler</tt> that did throw
+   exceptions for validity errors.
+ </p><div class="example"><a name="JDOMSchemaValidator.java"></a><p class="title"><b>Example&nbsp;14.11.&nbsp;A JDOM program that schema validates documents</b></p><pre class="programlisting">import org.jdom.JDOMException;
+import org.jdom.input.SAXBuilder;
+import java.io.IOException;
+
+
+public class JDOMSchemaValidator {
+
+  public static void main(String[] args) {
+  
+    if (args.length == 0) {
+      System.out.println("Usage: java JDOMSchemaValidator URL"); 
+      return;
+    } 
+      
+    SAXBuilder builder = new SAXBuilder(
+     "org.apache.xerces.parsers.SAXParser");
+    builder.setValidation(true);
+    builder.setErrorHandler(new BestSAXChecker());
+                             // ^^^^^^^^^^^^^^
+                             // From Chapter 7
+    // turn on schema support
+    builder.setFeature(
+      "http://apache.org/xml/features/validation/schema", true);                         
+                             
+    // command line should offer URIs or file names
+    try {
+      builder.build(args[0]);
+    }
+    // indicates a well-formedness error
+    catch (JDOMException e) { 
+      System.out.println(args[0] + " is not well-formed.");
+      System.out.println(e.getMessage());
+    }  
+    catch (IOException e) { 
+      System.out.println("Could not check " + args[0]);
+      System.out.println(" because " + e.getMessage());
+    }  
+  
+  }
+
+}
+</pre></div><p>
+    Here&#8217;s the result from when I used this program to check a
+    mildly invalid document.
+    One error was reported:  
+  </p><pre class="screen"><tt>D:\books\XMLJAVA\examples\14&gt;</tt><b><tt>java JDOMSchemaValidator original_hotcop.xml</tt></b>
+<tt>Error: cvc-type.3.1.3: The value '6:20' of element 'LENGTH' is 
+ not valid. 
+ at line 10, column 24
+ in entity file:///D:/books/XMLJAVA/examples/14/original_hotcop.xml</tt></pre><div class="caution" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Caution</h3><p>
+    You should only use <tt>setFeature()</tt> and
+    <tt>setProperty()</tt> for non-standard
+    features and properties like <tt>http://apache.org/xml/features/validation/schema</tt>. 
+    <tt>SAXBuilder</tt> requires certain settings
+    of the standard features such as <tt>http://xml.org/sax/features/namespace-prefixes</tt>
+    and standard properties such as <tt>http://xml.org/sax/properties/lexical-handler</tt>
+    in order to work
+    properly.
+    If you change these, the document may not be built correctly.
+  </p></div><p>
+    Another interesting possibility is the option to set 
+    a SAX filter that is applied to the document as it&#8217;s read:
+  </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setXMLFilter</b></span>(<span class="methodparam"><span class="type">XMLFilter&nbsp;</span><span class="parameter"><i>filter</i></span></span>);</code><p>
+    If you use this, the JDOM <tt>Document</tt>
+    will include only the filtered content. 
+  </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e23317"></a>SAXOutputter</h3></div></div><p>
+    Besides reading a file or stream through a SAX parser,
+    you can also feed a JDOM document into a SAX
+    <tt>ContentHandler</tt> using the
+    <tt>org.jdom.output.SAXOutputter</tt> class.
+    This class is initially configured with a 
+    <tt>ContentHandler</tt> and optionally
+    an <tt>ErrorHandler</tt>,
+    <tt>DTDHandler</tt>,
+    <tt>EntityResolver</tt>, and/or
+    <tt>LexicalHandler</tt>.
+    The <tt>output()</tt> method walks the tree,
+    firing off events to these handlers as it does so.
+  </p><p>
+     For example, suppose you&#8217;ve built a document in memory that
+     happens to contain some XInclude elements and you&#8217;d like to
+     resolve them. JDOM does not have any built-in support for
+     XInclude. To JDOM, an XInclude element is just an element
+     that happens to have the local name <tt>include</tt>
+     and the namespace URI <tt>http://www.w3.org/2001/XInclude</tt>. 
+     However, GNU JAXP does include a
+     filter that can resolve XIncludes. Unfortunately it&#8217;s a SAX
+     filter rather than a JDOM filter. Not to worry.
+     It&#8217;s straightforward to feed a JDOM document into
+     the GNU JAXP <tt>gnu.xml.pipeline.XIncludeFilter</tt> using a
+     <tt>SAXOutputter</tt> as shown in
+     <a href="ch14s10.html#XIncluder.java" title="Example&nbsp;14.12.&nbsp;A JDOM program that passes documents to a SAX ContentHandler">Example&nbsp;14.12</a>:
+  </p><div class="example"><a name="XIncluder.java"></a><p class="title"><b>Example&nbsp;14.12.&nbsp;A JDOM program that passes documents to a SAX ContentHandler</b></p><pre class="programlisting">import org.jdom.*;
+import org.jdom.input.SAXBuilder;
+import org.jdom.output.SAXOutputter;
+import java.io.IOException;
+import gnu.xml.pipeline.*;
+import org.xml.sax.SAXException;
+
+
+public class XIncluder {
+
+  public static void main(String[] args) {
+  
+    if (args.length == 0) {
+      System.out.println("Usage: java XIncluder URL"); 
+      return;
+    } 
+      
+    SAXBuilder builder = new SAXBuilder(
+     "gnu.xml.aelfred2.XmlReader");
+
+    // command line should offer URIs or file names
+    try {
+      Document doc = builder.build(args[0]);
+      XIncludeFilter filter = new XIncludeFilter(
+        new TextConsumer(System.out)
+      );
+      SAXOutputter outputter = new SAXOutputter(filter);
+      outputter.setContentHandler(filter);
+      outputter.setDTDHandler(filter);
+      outputter.setLexicalHandler(filter);
+      outputter.output(doc);
+    }
+    // indicates a well-formedness error
+    catch (JDOMException e) { 
+      System.out.println(args[0] + " is not well-formed.");
+      System.out.println(e.getMessage());
+    }  
+    catch (SAXException e) { 
+      System.out.println(e.getMessage());
+    }  
+    catch (IOException e) { 
+      System.out.println("Could not merge " + args[0]);
+      System.out.println(" because " + e.getMessage());
+    }  
+  
+  }
+
+}
+</pre></div><p>
+     Here the <tt>XIncludeFilter</tt> is itself hooked up to another
+     GNU JAXP class, <tt>TextConsumer</tt>, which
+     merely prints the document on a specified 
+     <tt>OutputStream</tt>.
+  </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch14s09.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch14.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch14s11.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Talking to DOM Programs&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Java Integration</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+April 18,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

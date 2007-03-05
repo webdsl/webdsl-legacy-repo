@@ -1,0 +1,912 @@
+<html xmlns:UnparsedEntity="http://www.jclark.com/xt/java/com.macfaq.xsl.UnparsedEntity">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="description" content="
+    Elliotte Rusty Harold's presentation on 
+    XML Basics at SDExpo 99 East, November 9, 1999
+  ">
+<title>Intro to XML</title>
+</head>
+<body>
+<h1>Intro to XML</h1>
+<ul>
+<li>
+<a href="01.html"></a>
+</li>
+<li>
+<a href="02.html">Outline</a>
+</li>
+<li>
+<a href="03.html">Part I: XML Basics</a>
+</li>
+<li>
+<a href="04.html">What is XML?</a>
+</li>
+<li>
+<a href="05.html">XML is a Meta Markup Language</a>
+</li>
+<li>
+<a href="06.html">XML describes structure and semantics, not formatting</a>
+</li>
+<li>
+<a href="07.html">A Song Description in HTML</a>
+</li>
+<li>
+<a href="08.html">A Song Description in XML</a>
+</li>
+<li>
+<a href="09.html">Style Sheets provide formatting</a>
+</li>
+<li>
+<a href="10.html">Attaching style sheets to documents</a>
+</li>
+<li>
+<a href="11.html">What is XML used for?</a>
+</li>
+<li>
+<a href="12.html">Domain-Specific Markup Languages</a>
+</li>
+<li>
+<a href="13.html">Self-Describing Data</a>
+</li>
+<li>
+<a href="14.html">An XML Fragment</a>
+</li>
+<li>
+<a href="15.html">Interchange of Data Among Applications</a>
+</li>
+<li>
+<a href="16.html">Structured and Integrated Data</a>
+</li>
+<li>
+<a href="17.html">XML Applications</a>
+</li>
+<li>
+<a href="18.html">Example XML Applications</a>
+</li>
+<li>
+<a href="19.html">Mathematical Markup Language</a>
+</li>
+<li>
+<a href="20.html">Channel Definition Format</a>
+</li>
+<li>
+<a href="21.html">Classic Literature</a>
+</li>
+<li>
+<a href="22.html">Vector Graphics</a>
+</li>
+<li>
+<a href="23.html">The Resource Description Framework (RDF)</a>
+</li>
+<li>
+<a href="24.html">An Example of RDF</a>
+</li>
+<li>
+<a href="25.html">XML for XML</a>
+</li>
+<li>
+<a href="26.html">XSL: The Extensible Stylesheet Language</a>
+</li>
+<li>
+<a href="27.html">DCD: The Document Content Description Schema Language</a>
+</li>
+<li>
+<a href="28.html">XLL: The Extensible Linking Language</a>
+</li>
+<li>
+<a href="29.html">File Formats, in-house applications, and other behind the scenes uses</a>
+</li>
+<li>
+<a href="30.html">Hello XML</a>
+</li>
+<li>
+<a href="31.html">The FOO element</a>
+</li>
+<li>
+<a href="32.html">greeting.xml</a>
+</li>
+<li>
+<a href="33.html">Style sheets</a>
+</li>
+<li>
+<a href="34.html">xml-stylesheet</a>
+</li>
+<li>
+<a href="35.html">greeting.css</a>
+</li>
+<li>
+<a href="36.html">greeting.xsl</a>
+</li>
+<li>
+<a href="37.html">Attaching a style sheet to an  XML document</a>
+</li>
+<li>
+<a href="38.html">A larger example: Music Catalog</a>
+</li>
+<li>
+<a href="39.html">Sample Catalog</a>
+</li>
+<li>
+<a href="40.html">Organizing the Data</a>
+</li>
+<li>
+<a href="41.html">What is the Root Element</a>
+</li>
+<li>
+<a href="42.html">The Root Element</a>
+</li>
+<li>
+<a href="43.html">What are the Immediate Children of the Root?</a>
+</li>
+<li>
+<a href="44.html">Child Elements</a>
+</li>
+<li>
+<a href="45.html">White space in XML is not especially significant</a>
+</li>
+<li>
+<a href="46.html">Composers</a>
+</li>
+<li>
+<a href="47.html">Grand Children</a>
+</li>
+<li>
+<a href="48.html">Attributes</a>
+</li>
+<li>
+<a href="49.html">Attributes vs. Elements</a>
+</li>
+<li>
+<a href="50.html">When not to use attributes</a>
+</li>
+<li>
+<a href="51.html">Compositions</a>
+</li>
+<li>
+<a href="52.html">Each composition has a</a>
+</li>
+<li>
+<a href="53.html">Composition Example in XML</a>
+</li>
+<li>
+<a href="54.html">Further Divisions</a>
+</li>
+<li>
+<a href="55.html">Attaching the Composer to the Composition</a>
+</li>
+<li>
+<a href="56.html">Some Keywords For the Search Engines</a>
+</li>
+<li>
+<a href="57.html">Standard Signature</a>
+</li>
+<li>
+<a href="58.html">Cascading Style Sheets</a>
+</li>
+<li>
+<a href="59.html">A Blank Style Sheet</a>
+</li>
+<li>
+<a href="60.html">The Default Rule</a>
+</li>
+<li>
+<a href="61.html">A style rule for the category element</a>
+</li>
+<li>
+<a href="62.html">A style rule for the composer element</a>
+</li>
+<li>
+<a href="63.html">A style rule for the title element</a>
+</li>
+<li>
+<a href="64.html">A style rule for the catalog info</a>
+</li>
+<li>
+<a href="65.html">Style rules for the signature</a>
+</li>
+<li>
+<a href="66.html">Style Rules for composition children</a>
+</li>
+<li>
+<a href="67.html">Finished Style Sheet</a>
+</li>
+<li>
+<a href="68.html">Possible Extensions</a>
+</li>
+<li>
+<a href="69.html">Possible Solutions</a>
+</li>
+<li>
+<a href="70.html">CSS or XSL?</a>
+</li>
+<li>
+<a href="71.html">Well-formedness Rules</a>
+</li>
+<li>
+<a href="72.html">Open and close all tags</a>
+</li>
+<li>
+<a href="73.html">Empty tags end with /&gt;</a>
+</li>
+<li>
+<a href="74.html">There is a unique root element</a>
+</li>
+<li>
+<a href="75.html">Elements may not overlap</a>
+</li>
+<li>
+<a href="76.html">Attribute values are quoted</a>
+</li>
+<li>
+<a href="77.html">&lt; and &amp; are only used to start tags and entities</a>
+</li>
+<li>
+<a href="78.html">Only the five predefined entity references are used</a>
+</li>
+<li>
+<a href="79.html">Questions?</a>
+</li>
+<li>
+<a href="80.html">Part II: DTDs</a>
+</li>
+<li>
+<a href="81.html">What is XML?</a>
+</li>
+<li>
+<a href="82.html">XML is a Meta Markup Language</a>
+</li>
+<li>
+<a href="83.html">A Song Description in HTML</a>
+</li>
+<li>
+<a href="84.html">A Song Description in XML</a>
+</li>
+<li>
+<a href="85.html">A DTD for Songs</a>
+</li>
+<li>
+<a href="86.html">A Valid Song Document</a>
+</li>
+<li>
+<a href="87.html">Validity</a>
+</li>
+<li>
+<a href="88.html">Checking Validity</a>
+</li>
+<li>
+<a href="89.html">What is XML used for?</a>
+</li>
+<li>
+<a href="90.html">Domain-Specific Markup Languages</a>
+</li>
+<li>
+<a href="91.html">Self-Describing Data</a>
+</li>
+<li>
+<a href="92.html">Interchange of Data Among Applications</a>
+</li>
+<li>
+<a href="93.html">Structured and Integrated Data</a>
+</li>
+<li>
+<a href="94.html">XML Applications</a>
+</li>
+<li>
+<a href="95.html">Well-formedness vs validity</a>
+</li>
+<li>
+<a href="96.html">DTDs and Validity</a>
+</li>
+<li>
+<a href="97.html">What is a DTD?</a>
+</li>
+<li>
+<a href="98.html">The importance of validation</a>
+</li>
+<li>
+<a href="99.html">A DTD for greeting.xml</a>
+</li>
+<li>
+<a href="100.html">Document Type Declarations</a>
+</li>
+<li>
+<a href="101.html">Invalid Documents</a>
+</li>
+<li>
+<a href="102.html">Validating Tools</a>
+</li>
+<li>
+<a href="103.html">Internal DTDs</a>
+</li>
+<li>
+<a href="104.html">An Example Document</a>
+</li>
+<li>
+<a href="105.html">Element Declarations</a>
+</li>
+<li>
+<a href="106.html">Content Specifications</a>
+</li>
+<li>
+<a href="107.html">ANY</a>
+</li>
+<li>
+<a href="108.html">#PCDATA</a>
+</li>
+<li>
+<a href="109.html">#PCDATA</a>
+</li>
+<li>
+<a href="110.html">#PCDATA</a>
+</li>
+<li>
+<a href="111.html">Comments in DTDs</a>
+</li>
+<li>
+<a href="112.html">Child Elements</a>
+</li>
+<li>
+<a href="113.html">Child Elements</a>
+</li>
+<li>
+<a href="114.html">Sequences</a>
+</li>
+<li>
+<a href="115.html">More Sequences</a>
+</li>
+<li>
+<a href="116.html">One or More Children +</a>
+</li>
+<li>
+<a href="117.html">Zero or More Children *</a>
+</li>
+<li>
+<a href="118.html">Zero or One Children ?</a>
+</li>
+<li>
+<a href="119.html">Choices</a>
+</li>
+<li>
+<a href="120.html">Grouping With Parentheses</a>
+</li>
+<li>
+<a href="121.html">Mixed Content</a>
+</li>
+<li>
+<a href="122.html">Mixed Content</a>
+</li>
+<li>
+<a href="123.html">Empty elements</a>
+</li>
+<li>
+<a href="124.html">Content Models You Can't Declare</a>
+</li>
+<li>
+<a href="125.html">Attribute Declarations</a>
+</li>
+<li>
+<a href="126.html">Multiple Attribute Declarations</a>
+</li>
+<li>
+<a href="127.html">Attribute Default Values</a>
+</li>
+<li>
+<a href="128.html">#REQUIRED</a>
+</li>
+<li>
+<a href="129.html">#IMPLIED</a>
+</li>
+<li>
+<a href="130.html">#FIXED</a>
+</li>
+<li>
+<a href="131.html">Attribute Types</a>
+</li>
+<li>
+<a href="132.html">CDATA</a>
+</li>
+<li>
+<a href="133.html">ID</a>
+</li>
+<li>
+<a href="134.html">IDREF</a>
+</li>
+<li>
+<a href="135.html">IDREFS</a>
+</li>
+<li>
+<a href="136.html">Finished DTD</a>
+</li>
+<li>
+<a href="137.html">ENTITY</a>
+</li>
+<li>
+<a href="138.html">ENTITIES</a>
+</li>
+<li>
+<a href="139.html">NOTATION</a>
+</li>
+<li>
+<a href="140.html">NMTOKEN</a>
+</li>
+<li>
+<a href="141.html">NMTOKENS</a>
+</li>
+<li>
+<a href="142.html">Enumerated</a>
+</li>
+<li>
+<a href="143.html">The description element</a>
+</li>
+<li>
+<a href="144.html">XHTML</a>
+</li>
+<li>
+<a href="145.html">XHTML strict DTD</a>
+</li>
+<li>
+<a href="146.html">External Parameter Entity References</a>
+</li>
+<li>
+<a href="147.html">Finished DTD</a>
+</li>
+<li>
+<a href="148.html">Internal DTD Subsets</a>
+</li>
+<li>
+<a href="149.html">Schemas</a>
+</li>
+<li>
+<a href="150.html">Questions?</a>
+</li>
+<li>
+<a href="151.html">Part III: XSL, the Extensible Style Language</a>
+</li>
+<li>
+<a href="152.html">What Is XSL?</a>
+</li>
+<li>
+<a href="153.html">Versions</a>
+</li>
+<li>
+<a href="154.html">The Process of an  XSL Transformation</a>
+</li>
+<li>
+<a href="155.html">An Example XML Document</a>
+</li>
+<li>
+<a href="156.html">An XSL Style Sheet</a>
+</li>
+<li>
+<a href="157.html">Output</a>
+</li>
+<li>
+<a href="158.html">Templates</a>
+</li>
+<li>
+<a href="159.html">The actual HTML output</a>
+</li>
+<li>
+<a href="160.html">Adding the root</a>
+</li>
+<li>
+<a href="161.html">The actual HTML output</a>
+</li>
+<li>
+<a href="162.html">Applying Templates</a>
+</li>
+<li>
+<a href="163.html">The actual HTML output</a>
+</li>
+<li>
+<a href="164.html">The select attribute</a>
+</li>
+<li>
+<a href="165.html">The actual HTML output</a>
+</li>
+<li>
+<a href="166.html">Expanding the coverage</a>
+</li>
+<li>
+<a href="167.html">The actual HTML output</a>
+</li>
+<li>
+<a href="168.html">Attributes</a>
+</li>
+<li>
+<a href="169.html">The actual HTML output</a>
+</li>
+<li>
+<a href="170.html">Attribute Value Templates</a>
+</li>
+<li>
+<a href="171.html">The actual HTML output</a>
+</li>
+<li>
+<a href="172.html">xsl:copy</a>
+</li>
+<li>
+<a href="173.html">The generated HTML</a>
+</li>
+<li>
+<a href="174.html">The Or Operator in Match Patterns</a>
+</li>
+<li>
+<a href="175.html">The * wildcard</a>
+</li>
+<li>
+<a href="176.html">The node() and @* wildcards</a>
+</li>
+<li>
+<a href="177.html">Are we being too greedy?</a>
+</li>
+<li>
+<a href="178.html">Testing conditions with xsl:if</a>
+</li>
+<li>
+<a href="179.html">The actual HTML output</a>
+</li>
+<li>
+<a href="180.html">Matching composers with compositions</a>
+</li>
+<li>
+<a href="181.html">Matching composers with compositions</a>
+</li>
+<li>
+<a href="182.html">The actual HTML output</a>
+</li>
+<li>
+<a href="183.html">Sorting with xsl:sort</a>
+</li>
+<li>
+<a href="184.html">The actual HTML output</a>
+</li>
+<li>
+<a href="185.html">Multiple Key Sorts</a>
+</li>
+<li>
+<a href="186.html">The actual HTML output</a>
+</li>
+<li>
+<a href="187.html">Sorting by Composition Title</a>
+</li>
+<li>
+<a href="188.html">The actual HTML output</a>
+</li>
+<li>
+<a href="189.html">xsl:for-each</a>
+</li>
+<li>
+<a href="190.html">The actual HTML output</a>
+</li>
+<li>
+<a href="191.html">Sorting the Table of Contents</a>
+</li>
+<li>
+<a href="192.html">Adding Links from the Table of Contents</a>
+</li>
+<li>
+<a href="193.html">The actual HTML output</a>
+</li>
+<li>
+<a href="194.html">Numbering Output</a>
+</li>
+<li>
+<a href="195.html">String functions</a>
+</li>
+<li>
+<a href="196.html">substring()</a>
+</li>
+<li>
+<a href="197.html">The actual HTML output</a>
+</li>
+<li>
+<a href="198.html">Number Operators</a>
+</li>
+<li>
+<a href="199.html">Number Functions</a>
+</li>
+<li>
+<a href="200.html">Where Does the XML Transformation Happen?</a>
+</li>
+<li>
+<a href="201.html">Client Side Processing</a>
+</li>
+<li>
+<a href="202.html">A style sheet that works with Internet Explorer 5.0</a>
+</li>
+<li>
+<a href="203.html">What else does XSL have?</a>
+</li>
+<li>
+<a href="204.html">What does XSL not have?</a>
+</li>
+<li>
+<a href="205.html">Summary</a>
+</li>
+<li>
+<a href="206.html">To Learn More</a>
+</li>
+<li>
+<a href="207.html">Questions?</a>
+</li>
+<li>
+<a href="208.html">Part IV: XLinks and XPointers</a>
+</li>
+<li>
+<a href="209.html">Three Technologies</a>
+</li>
+<li>
+<a href="210.html">Versions</a>
+</li>
+<li>
+<a href="211.html">HTML Links are Limited</a>
+</li>
+<li>
+<a href="212.html">XLinks are More Powerful</a>
+</li>
+<li>
+<a href="213.html">Application Support</a>
+</li>
+<li>
+<a href="214.html">Linking Elements</a>
+</li>
+<li>
+<a href="215.html">For example</a>
+</li>
+<li>
+<a href="216.html">Declaring XLink Attributes in DTDs</a>
+</li>
+<li>
+<a href="217.html">Fixed Attributes</a>
+</li>
+<li>
+<a href="218.html">Other Attributes</a>
+</li>
+<li>
+<a href="219.html">xlink:simple</a>
+</li>
+<li>
+<a href="220.html">Descriptions of the Remote Resource</a>
+</li>
+<li>
+<a href="221.html">role and title</a>
+</li>
+<li>
+<a href="222.html">Link Behavior</a>
+</li>
+<li>
+<a href="223.html"> xlink:show  </a>
+</li>
+<li>
+<a href="224.html">xlink:actuate</a>
+</li>
+<li>
+<a href="225.html">Parameter Entities for Link Attributes</a>
+</li>
+<li>
+<a href="226.html">Extended Links</a>
+</li>
+<li>
+<a href="227.html">Extended Link Elements</a>
+</li>
+<li>
+<a href="228.html">Locators</a>
+</li>
+<li>
+<a href="229.html">xlink:type="locator"</a>
+</li>
+<li>
+<a href="230.html">xlink:locator</a>
+</li>
+<li>
+<a href="231.html">Locators in DTDs</a>
+</li>
+<li>
+<a href="232.html">Parameter Entities for these  DTDs</a>
+</li>
+<li>
+<a href="233.html">Arcs</a>
+</li>
+<li>
+<a href="234.html">xlink:arc</a>
+</li>
+<li>
+<a href="235.html">Arc Traversal Behavior</a>
+</li>
+<li>
+<a href="236.html">show, actuate, actuatedefault, showdefault</a>
+</li>
+<li>
+<a href="237.html">xlink:show, xlink:actuate, xlink:actuatedefault, xlink:showdefault</a>
+</li>
+<li>
+<a href="238.html">Declarations for Extended Link Attributes</a>
+</li>
+<li>
+<a href="239.html">Out-of-Line Links and Extended Link Groups</a>
+</li>
+<li>
+<a href="240.html">Extended Link Group Syntax</a>
+</li>
+<li>
+<a href="241.html">Extended Link Example</a>
+</li>
+<li>
+<a href="242.html">Extended Link Example</a>
+</li>
+<li>
+<a href="243.html">Extended Link Example</a>
+</li>
+<li>
+<a href="244.html">Or, Using Attribute Syntax</a>
+</li>
+<li>
+<a href="245.html">XLink Summary</a>
+</li>
+<li>
+<a href="246.html">Part V: XPointers</a>
+</li>
+<li>
+<a href="247.html">What are XPointers?</a>
+</li>
+<li>
+<a href="248.html">Why Use XPointers?</a>
+</li>
+<li>
+<a href="249.html">Three Problems to Solve</a>
+</li>
+<li>
+<a href="250.html">Named Anchors are HTML's solution</a>
+</li>
+<li>
+<a href="251.html">XPointer Examples</a>
+</li>
+<li>
+<a href="252.html">URIs with XPointers</a>
+</li>
+<li>
+<a href="253.html">XLinks with XPointers</a>
+</li>
+<li>
+<a href="254.html">Document Fragments</a>
+</li>
+<li>
+<a href="255.html">A Concrete Example</a>
+</li>
+<li>
+<a href="256.html">Location Steps</a>
+</li>
+<li>
+<a href="257.html">Absolute Location Steps</a>
+</li>
+<li>
+<a href="258.html">id()</a>
+</li>
+<li>
+<a href="259.html">ID shortcut</a>
+</li>
+<li>
+<a href="260.html"> The root /</a>
+</li>
+<li>
+<a href="261.html">Relative Location Steps</a>
+</li>
+<li>
+<a href="262.html">The Parts of a Relative Location Step</a>
+</li>
+<li>
+<a href="263.html">The Twelve Relative Location Axes</a>
+</li>
+<li>
+<a href="264.html">child</a>
+</li>
+<li>
+<a href="265.html">descendant</a>
+</li>
+<li>
+<a href="266.html">descendant-or-self</a>
+</li>
+<li>
+<a href="267.html">parent</a>
+</li>
+<li>
+<a href="268.html">self</a>
+</li>
+<li>
+<a href="269.html">ancestor</a>
+</li>
+<li>
+<a href="270.html">ancestor-or-self</a>
+</li>
+<li>
+<a href="271.html">preceding</a>
+</li>
+<li>
+<a href="272.html">following</a>
+</li>
+<li>
+<a href="273.html">preceding-sibling</a>
+</li>
+<li>
+<a href="274.html">following-sibling</a>
+</li>
+<li>
+<a href="275.html">attribute</a>
+</li>
+<li>
+<a href="276.html">Node Tests</a>
+</li>
+<li>
+<a href="277.html">The wild card *</a>
+</li>
+<li>
+<a href="278.html">text()</a>
+</li>
+<li>
+<a href="279.html">comment()</a>
+</li>
+<li>
+<a href="280.html">processing-instruction()</a>
+</li>
+<li>
+<a href="281.html">Predicates</a>
+</li>
+<li>
+<a href="282.html">XPointer Predicates are booleans</a>
+</li>
+<li>
+<a href="283.html">position()</a>
+</li>
+<li>
+<a href="284.html">String Location Terms</a>
+</li>
+<li>
+<a href="285.html">Position and Length in String Location Terms</a>
+</li>
+<li>
+<a href="286.html">Ranges</a>
+</li>
+<li>
+<a href="287.html">Tumblers</a>
+</li>
+<li>
+<a href="288.html">XPointer Summary</a>
+</li>
+<li>
+<a href="289.html">Questions?</a>
+</li>
+<li>
+<a href="290.html">Part VI: Programming with XML</a>
+</li>
+<li>
+<a href="291.html">Programming with XML</a>
+</li>
+<li>
+<a href="292.html">SAX, the Simple API for XML</a>
+</li>
+<li>
+<a href="293.html">The Document Object Model (DOM)</a>
+</li>
+<li>
+<a href="294.html">To Learn More</a>
+</li>
+<li>
+<a href="295.html">Questions?</a>
+</li>
+</ul>
+<hr>
+<div align="center">
+<A HREF="01.html">Start</A> | <A HREF="/xml/">Cafe con Leche</A>
+</div>
+<hr>
+<font size="-1">
+              Copyright 1999 
+              <a href="http://www.macfaq.com/personal.html">Elliotte Rusty Harold</a>
+<br>
+<a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a>
+<br>
+              Last Modified October 10, 1999</font>
+</body>
+</html>

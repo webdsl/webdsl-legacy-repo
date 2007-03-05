@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<SOAP-ENV:Envelope
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" >
+  <SOAP-ENV:Header>
+    <Payment xmlns="http://namespaces.cafeconleche.org/xmljava/ch2/">
+      <Name>Elliotte Harold</Name>
+      <Issuer>VISA</Issuer>
+      <Number>5125456787651230</Number>
+      <Expires>2005-12</Expires>
+    </Payment>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+  <SignedInfo>
+    <CanonicalizationMethod 
+    Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+    <SignatureMethod 
+      Algorithm="http://www.w3.org/2000/09/xmldsig#dsa-sha1" />
+    <Reference URI="file://J/xss4j/requestbody.xml">
+    <DigestMethod 
+      Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <DigestValue>3UxhLrdPpK3faRms5FOS6kAoeZI=</DigestValue>
+    </Reference>
+  </SignedInfo>
+  <SignatureValue>
+    ZeW/PYGT6A9iOqOrbMmeKOq1aQk+ars/QOC95Bj0xYrNAnLo/WK7+g==
+  </SignatureValue>
+</Signature>
+  </SOAP-ENV:Header>
+  <SOAP-ENV:Body>
+    <buy id="buy1"
+         xmlns="http://namespaces.cafeconleche.org/xmljava/ch2/">
+      <symbol>MRBA</symbol> 
+      <shares>100</shares> 
+      <account>777-7777</account> 
+    </buy>
+  </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

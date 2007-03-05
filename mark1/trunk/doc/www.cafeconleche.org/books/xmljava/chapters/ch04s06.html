@@ -1,0 +1,424 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Alternatives to Java</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="previous" href="ch04s05.html" title="Building Hierarchical Structures from Flat Data"><link rel="next" href="ch04s07.html" title="Relational Databases"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"><link rel="subsection" href="ch04s06.html#d0e6579" title="Imposing Hierarchy with XSLT"><link rel="subsection" href="ch04s06.html#d0e6641" title="The XML Query Language"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Alternatives to Java</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch04s05.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;4.&nbsp;Converting Flat Files to XML</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch04s07.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e6569"></a>Alternatives to Java</h2></div></div><p>
+     When all you have is a hammer, most problems look a lot like nails.
+     Since you&#8217;re reading this book, I&#8217;m willing to bet that Java
+     is your hammer of choice, and indeed Java is a very powerful hammer.
+     However, sometimes you really could use a screwdriver; 
+     and this may be one of those times.
+     I must admit that the solution for imposing hierarchy
+     developed in the last section feels more than a little
+     like pounding a screw with a hammer.
+     Maybe it would be better to use the hammer 
+     to set the screw, but then use a screwdriver to drive it in.
+     In this section I want to explore a few possible screwdrivers
+     including XSLT and XQuery.
+     Rather than using such complex Java code, I&#8217;ll use Java to get the data into the
+     simple XML format produced by <a href="ch04s04.html#FlatXMLBudget.java" title="Example&nbsp;4.2.&nbsp;Naively reproducing the original table structure in XML">Example&nbsp;4.2</a> 
+     that closely matches the 
+     flat input data. Then I&#8217;ll use  XSLT to transform this simple intermediate
+     XML format into the less-flat final XML format.
+     To refresh your memory,
+     the flat XML data is organized like this:
+   </p><div class="informalexample"><pre class="programlisting">&lt;?xml version="1.0"?&gt;
+&lt;Budget&gt;
+  &lt;LineItem&gt;
+    &lt;FY1994&gt;-1982&lt;/FY1994&gt;
+    &lt;FY1993&gt;4946&lt;/FY1993&gt;
+    &lt;FY1992&gt;-3251&lt;/FY1992&gt;
+    &lt;FY1991&gt;-17373&lt;/FY1991&gt;
+    &lt;FY1990&gt;-90008&lt;/FY1990&gt;
+    &lt;AccountCode&gt;265197&lt;/AccountCode&gt;
+    &lt;On-Off-BudgetIndicator&gt;On-budget&lt;/On-Off-BudgetIndicator&gt;
+    &lt;TransitionQuarter&gt;0&lt;/TransitionQuarter&gt;
+    &lt;FY1989&gt;-80069&lt;/FY1989&gt;
+    &lt;AccountName&gt;Sale of scrap and salvage materials&lt;/AccountName&gt;
+    &lt;FY1988&gt;-72411&lt;/FY1988&gt;
+    &lt;FY1987&gt;-60964&lt;/FY1987&gt;
+    &lt;FY1986&gt;-61462&lt;/FY1986&gt;
+    &lt;FY1985&gt;-68182&lt;/FY1985&gt;
+    &lt;FY1984&gt;-79482&lt;/FY1984&gt;
+    &lt;FY1983&gt;0&lt;/FY1983&gt;
+    &lt;FY1982&gt;0&lt;/FY1982&gt;
+    &lt;SubfunctionCode&gt;051&lt;/SubfunctionCode&gt;
+    &lt;FY1981&gt;0&lt;/FY1981&gt;
+    &lt;FY2006&gt;-1000&lt;/FY2006&gt;
+    &lt;FY1980&gt;0&lt;/FY1980&gt;
+    &lt;FY2005&gt;-1000&lt;/FY2005&gt;
+    &lt;FY2004&gt;-1000&lt;/FY2004&gt;
+    &lt;FY2003&gt;-1000&lt;/FY2003&gt;
+    &lt;FY2002&gt;-1000&lt;/FY2002&gt;
+    &lt;FY2001&gt;-1000&lt;/FY2001&gt;
+    &lt;FY2000&gt;-2000&lt;/FY2000&gt;
+    &lt;AgencyCode&gt;007&lt;/AgencyCode&gt;
+    &lt;BEACategory&gt;Mandatory&lt;/BEACategory&gt;
+    &lt;FY1979&gt;0&lt;/FY1979&gt;
+    &lt;FY1978&gt;0&lt;/FY1978&gt;
+    &lt;FY1977&gt;0&lt;/FY1977&gt;
+    &lt;FY1976&gt;0&lt;/FY1976&gt;
+    &lt;TreasuryAgencyCode&gt;97&lt;/TreasuryAgencyCode&gt;
+    &lt;AgencyName&gt;Department of Defense--Military&lt;/AgencyName&gt;
+    &lt;BureauCode&gt;00&lt;/BureauCode&gt;
+    &lt;BureauName&gt;Department of Defense--Military&lt;/BureauName&gt;
+    &lt;FY1999&gt;-1000&lt;/FY1999&gt;
+    &lt;FY1998&gt;-2000&lt;/FY1998&gt;
+    &lt;FY1997&gt;-4000&lt;/FY1997&gt;
+    &lt;FY1996&gt;-1000&lt;/FY1996&gt;
+    &lt;SubfunctionTitle&gt;Department of Defense-Military&lt;/SubfunctionTitle&gt;
+    &lt;FY1995&gt;-1000&lt;/FY1995&gt;
+  &lt;/LineItem&gt;
+  &lt;!-- several thousand more LineItem elements... --&gt;
+&lt;/Budget&gt;</pre></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e6579"></a>Imposing Hierarchy with XSLT</h3></div></div><p>
+     
+     The XSLT stylesheet shown in <a href="ch04s06.html#HierarchicalXMLBudget.xsl" title="Example&nbsp;4.12.&nbsp;An XSLT stylesheet that converts flat XML data to hierarchical XML data">Example&nbsp;4.12</a>
+     will convert flat XML budget data of this type into an output document of the 
+     same form produced
+     by <a href="ch04s05.html#HierarchicalXMLBudget.java" title="Example&nbsp;4.11.&nbsp;The driver class that builds the data structure and writes it out again">Example&nbsp;4.11</a>.
+     Because the input file is so large, you may need to raise the memory
+     allocation for your XSLT processor before running the transform. 
+   </p><div class="example"><a name="HierarchicalXMLBudget.xsl"></a><p class="title"><b>Example&nbsp;4.12.&nbsp;An XSLT stylesheet that converts flat XML data to hierarchical XML data</b></p><pre class="programlisting">&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;xsl:stylesheet version="1.0"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"&gt;
+  
+  &lt;!-- Try to make the output look half decent --&gt;
+  &lt;xsl:output indent="yes" encoding="ISO-8859-1"/&gt;
+  
+  &lt;!-- Muenchian method --&gt;
+  &lt;xsl:key name="agencies" match="LineItem" use="AgencyCode"/&gt;
+  &lt;xsl:key name="bureaus"  match="LineItem" 
+    use="concat(AgencyCode,'+',BureauCode)"/&gt;
+  &lt;xsl:key name="accounts" match="LineItem" 
+    use="concat(AgencyCode,'+',BureauCode,'+',AccountCode)"/&gt;
+  &lt;xsl:key name="subfunctions" match="LineItem" 
+    use="concat(AgencyCode,'+',BureauCode,'+',AccountCode,
+    '+',SubfunctionCode)"/&gt;
+  
+  &lt;xsl:template match="Budget"&gt;
+    &lt;Budget year='2001'&gt;
+      &lt;xsl:for-each select="LineItem[generate-id() 
+       = generate-id(key('agencies',AgencyCode)[1])]"&gt;
+        &lt;Agency&gt;
+          &lt;Name&gt;&lt;xsl:value-of select="AgencyName"/&gt;&lt;/Name&gt;
+          &lt;Code&gt;&lt;xsl:value-of select="AgencyCode"/&gt;&lt;/Code&gt;
+          &lt;xsl:for-each 
+            select="/Budget/LineItem[AgencyCode
+            =current()/AgencyCode]
+             [generate-id() = 
+               generate-id(key('bureaus', 
+                     concat(AgencyCode, '+', BureauCode))[1])]"&gt;
+            &lt;Bureau&gt;
+              &lt;Name&gt;&lt;xsl:value-of select="BureauName"/&gt;&lt;/Name&gt;
+              &lt;Code&gt;&lt;xsl:value-of select="BureauCode"/&gt;&lt;/Code&gt;
+              &lt;xsl:for-each select="/Budget/LineItem
+                  [AgencyCode=current()/AgencyCode]
+                  [BureauCode=current()/BureauCode]
+                  [generate-id() = generate-id(key('accounts',
+                   concat(AgencyCode,'+',BureauCode,'+',
+                                            AccountCode))[1])]"&gt;
+                &lt;Account&gt;
+                  &lt;Name&gt;
+                    &lt;xsl:value-of select="AccountName"/&gt;
+                  &lt;/Name&gt;
+                  &lt;Code&gt;
+                    &lt;xsl:value-of select="AccountCode"/&gt;
+                  &lt;/Code&gt;
+                  &lt;xsl:for-each select=
+                    "/Budget/LineItem
+                     [AgencyCode=current()/AgencyCode]
+                     [BureauCode=current()/BureauCode]
+                     [AccountCode=current()/AccountCode]
+                     [generate-id()=generate-id(
+                       key('subfunctions', concat(AgencyCode,'+',
+                       BureauCode,'+',AccountCode,'+',
+                       SubfunctionCode))[1])]"&gt;
+                    &lt;Subfunction BEACategory="{BEACategory}"
+                     BudgetIndicator="{On-Off-BudgetIndicator}"&gt;
+                      &lt;Title&gt;
+                       &lt;xsl:value-of select="SubfunctionTitle"/&gt;
+                      &lt;/Title&gt;
+                      &lt;Code&gt;
+                       &lt;xsl:value-of  select="SubfunctionCode"/&gt;
+                      &lt;/Code&gt;
+                      &lt;Amount&gt;
+                        &lt;xsl:value-of select="FY2001"/&gt;
+                      &lt;/Amount&gt;                       
+                    &lt;/Subfunction&gt;
+                  &lt;/xsl:for-each&gt; 
+                &lt;/Account&gt;
+              &lt;/xsl:for-each&gt;
+            &lt;/Bureau&gt;
+          &lt;/xsl:for-each&gt; 
+        &lt;/Agency&gt;
+      &lt;/xsl:for-each&gt;
+    &lt;/Budget&gt;
+  &lt;/xsl:template&gt;
+  
+&lt;/xsl:stylesheet&gt;
+</pre></div><p>
+    The algorithm for converting flat data to hierarchical data with XSLT is
+    known as the Muenchian method after its inventor,
+    Steve Muench of Oracle. The trick of the Muenchian method
+    is to use the <tt>xsl:key</tt> element 
+    and the <tt>key()</tt> function to create node-sets 
+    of all the <tt>LineItem</tt> elements that share the same agency, bureau,
+    account, or subfunction. Inside the template,
+    the <tt>generate-id()</tt> function 
+    is used to compare the current node
+    to the <span class="emphasis"><em>first</em></span> node in any given group.
+    Output is generated only if we are indeed processing the
+    first <tt>Agency</tt>, <tt>Bureau</tt>, <tt>Account</tt> or
+    <tt>Subfunction</tt> 
+    element with a 
+    specified code. Also note, that the <tt>select</tt> attributes in the 
+    <tt>xsl:for-each</tt> elements keep returning to the root
+    rather than processing children and descendants as is customary.
+    This reflects the fact that the hierarchy in the input is not
+    the same as the hierarchy in the output. 
+  </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Note</h3><p>
+      XSLT 2.0 is going to 
+      make it much easier to write style sheets
+      that group elements in this fashion. 
+      This will likely involve a new
+      <tt>xsl:for-each-group</tt> element
+      that groups elements according to
+      an XPath expression
+      a <tt>current-group()</tt> function that
+      selects all
+      the members of the current group so they can be processed together.
+      </p></div><p>
+    One minor advantage of using XSLT instead of Java data
+    structures is that XSLT preserves the order of the input data.
+    You&#8217;ll notice that the output begins with the 
+    Legislative Branch agency and bureau and the Receipts, Central fiscal operations
+    account, the same as the 
+    input data does. This was not the case for the output produced by Java. 
+  </p><pre class="screen">&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;Budget year="2001"&gt;
+   &lt;Agency&gt;
+      &lt;Name&gt;Legislative Branch&lt;/Name&gt;
+      &lt;Code&gt;001&lt;/Code&gt;
+      &lt;Bureau&gt;
+         &lt;Name&gt;Legislative Branch&lt;/Name&gt;
+         &lt;Code&gt;00&lt;/Code&gt;
+         &lt;Account&gt;
+            &lt;Name&gt;Receipts, Central fiscal operations&lt;/Name&gt;
+            &lt;Code/&gt;
+            &lt;Subfunction BEACategory="Mandatory" 
+              BudgetIndicator="On-budget"&gt;
+               &lt;Title&gt;Central fiscal operations&lt;/Title&gt;
+               &lt;Code&gt;803&lt;/Code&gt;
+               &lt;Amount&gt;0&lt;/Amount&gt;
+            &lt;/Subfunction&gt;
+            &lt;Subfunction BEACategory="Net interest" 
+              BudgetIndicator="On-budget"&gt;
+               &lt;Title&gt;Other interest&lt;/Title&gt;
+               &lt;Code&gt;908&lt;/Code&gt;
+               &lt;Amount&gt;0&lt;/Amount&gt;
+            &lt;/Subfunction&gt;
+         &lt;/Account&gt;
+         &lt;Account&gt;
+            &lt;Name&gt;Charges for services to trust funds&lt;/Name&gt;
+            ...</pre></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e6641"></a>The XML Query Language</h3></div></div><div class="caution" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Caution</h3><p>
+       This section describes bleeding edge technology.
+       The broad picture presented here is likely to be correct,
+       but the details are almost certain to change. 
+       Furthermore, the exact subset of XQuery implemented by early
+       experimental tools varies a lot from one product to the next.
+     </p></div><p>
+    XSLT is Turing complete. Nonetheless some operations are more than
+    a little cumbersome in XSLT. Using the Muenchian method to 
+    impose hierarchy is definitely not something envisioned by XSLT&#8217;s inventors.
+    The W3C has begun work on
+    a language more suitable for querying XML documents.
+    This language is called, simply enough, the XML Query Language, or XQuery for short.
+    XQuery is to XML documents as SQL is to relational
+    tables. However, XQuery is limited to SELECT. It does not have any equivalent
+    of INSERT, UPDATE, or DELETE. It is a read-only language. 
+  </p><p>
+    XQuery queries are not in general well-formed XML.
+    Although there is an XML syntax for XQuery, it is not intended to be used by human beings.
+    Instead humans are supposed to write in a more natural 4GL syntax
+    which will be compiled to XML documents if necessary.
+    If you think about it, this shouldn&#8217;t be so surprising.
+    SQL statements aren&#8217;t tables. Why should XQuery statements be XML documents?
+  </p><p>
+    The basic nature of an XQuery query is the FLWR (pronounced &#8220;flower&#8221;) statement.
+    This is an acronym for for-let-where-return, the basic form 
+    of an XQuery query. In brief, <tt>for</tt> each node in a node-set
+    <tt>let</tt> a variable have a certain value,
+    <tt>where</tt> some condition is true 
+    and <tt>return</tt> an XML fragment based on the values of these variables. 
+    Variables are set and XML returned using XPath 2.0 expressions.
+  </p><p>
+   For example, here&#8217;s an XQuery that
+   generates a list of agency names 
+   from  the 
+   flat XML 
+      budget:
+  </p><div class="informalexample"><pre class="programlisting">for $name in document("budauth.xml")/Budget/LineItem/AgencyName
+return $name </pre></div><p>
+  The <tt>for</tt> clause iterates over every node in the node set returned by the XPath 2.0
+  expression <tt>document("budauth.xml")/Budget/LineItem/AgencyName</tt>.
+  
+  This expression returns a node set containing 3175 <tt>AgencyName</tt> elements.
+  The XQuery variable <tt>$name</tt> is set to each of these elements in turn.
+  The <tt>return</tt> clause is evaluated for each value of <tt>$name</tt>.
+  In this case, the <tt>return</tt> clause says to simply return the node the 
+  <tt>$name</tt> variable currently points to. In this example, the
+  <tt>$name</tt> variable always points to an <tt>AgencyName</tt> element so the 
+  output would begin like this: 
+</p><pre class="screen">&lt;AgencyName&gt;Legislative Branch&lt;/AgencyName&gt;
+&lt;AgencyName&gt;Legislative Branch&lt;/AgencyName&gt;
+&lt;AgencyName&gt;Legislative Branch&lt;/AgencyName&gt;
+&lt;AgencyName&gt;Legislative Branch&lt;/AgencyName&gt;
+&lt;AgencyName&gt;Legislative Branch&lt;/AgencyName&gt;
+&#8230;</pre><p>
+   This is not a well-formed XML document because it does not have a root element. 
+   However, it is a well-formed XML document fragment.
+ </p><p>
+  You can use the XPath 2.0 <tt>distinct-values()</tt> function around the
+  XPath expression to select only one of each <tt>AgencyName</tt> elements:
+</p><div class="informalexample"><pre class="programlisting">for $name in distinct-values(document("budauth.xml")/Budget/LineItem/AgencyName)
+return $name</pre></div><p>
+  The output would now begin like this, repeating each agency name only once: 
+</p><pre class="screen">&lt;AgencyName&gt;Legislative Branch&lt;/AgencyName&gt;
+&lt;AgencyName&gt;Judicial Branch&lt;/AgencyName&gt;
+&lt;AgencyName&gt;Department of Agriculture&lt;/AgencyName&gt;
+&lt;AgencyName&gt;Department of Commerce&lt;/AgencyName&gt;
+&lt;AgencyName&gt;Department of Defense--Military&lt;/AgencyName&gt;
+&#8230;</pre><p>
+  As well as copying existing elements, XQuery can create new elements.
+  You can type the tags literally where you want them to appear.
+  To include the value of a variable (or other expression) inside the tags,
+  enclose it in curly braces. 
+  For example, this query places 
+  <tt>&lt;Name&gt;</tt> and <tt>&lt;/Name&gt;</tt> tags around 
+  each agency name rather than  <tt>&lt;AgencyName&gt;</tt> 
+  and <tt>&lt;/AgencyName&gt;</tt>. Notice also
+  that it only
+  selects the text content of each <tt>AgencyName</tt> element rather than the complete element
+  node:
+</p><div class="informalexample"><pre class="programlisting">for $name in distinct-values(document("budauth.xml")//AgencyName/text())
+return &lt;Name&gt;{ $name }&lt;/Name&gt;</pre></div><p>
+  The output now begins like this: 
+</p><pre class="screen">&lt;Name&gt;Legislative Branch&lt;/Name&gt;
+&lt;Name&gt;Judicial Branch&lt;/Name&gt;
+&lt;Name&gt;Department of Agriculture&lt;/Name&gt;
+&lt;Name&gt;Department of Commerce&lt;/Name&gt;
+&lt;Name&gt;Department of Defense--Military&lt;/Name&gt;
+&#8230;</pre><p>  
+    More complex queries typically require multiple variables.
+    These can be set in a <tt>let</tt> 
+    clause based on  XPath expressions that
+    refer to the variable in the <tt>for</tt>  clause. For example, this query 
+    selects distinct agency codes but returns agency names:
+  </p><div class="informalexample"><pre class="programlisting">for $code in distinct-values(document("budauth.xml")//AgencyCode)
+let $name := $code/../AgencyName
+return $name</pre></div><p>  
+    A <tt>where</tt> clause can further restrict the members of the node set for which results
+    are generated. <tt>where</tt> conditions can use boolean connectors such as 
+    <tt>and</tt>, <tt>or</tt>,
+    and <tt>not()</tt>). For example, this query finds all the bureaus in the
+    Department of Agriculture: 
+  </p><div class="informalexample"><pre class="programlisting">for $bureau in distinct-values(document("budauth.xml")/Budget/LineItem/BureauName)
+where $bureau/../AgencyName = "Department of Agriculture"
+return $bureau</pre></div><p>  
+    XQuery expressions may nest. That is, the <tt>return</tt> statement
+    of the FLWR may contain another FLWR.
+    For example, this statement lists all the bureau names inside their
+    respective agencies:
+  </p><div class="informalexample"><pre class="programlisting">for $ac in distinct-values(document("budauth.xml")//AgencyCode)
+return
+  &lt;Agency&gt;
+    &lt;Name&gt;{ $ac/../AgencyName/text() }&lt;/Name&gt;
+    {  
+      for $bc in distinct-values(document("budauth.xml")//BureauCode)
+      where $bc/../AgencyCode = $ac
+      return 
+        &lt;Bureau&gt;
+          &lt;Name&gt;{ $bc/../BureauName/text() }&lt;/Name&gt;
+        &lt;/Bureau&gt;
+    }
+  &lt;/Agency&gt;</pre></div><p>
+  The output now begins like this: 
+</p><pre class="screen">&lt;Agency&gt;
+  &lt;Name&gt;Legislative Branch&lt;/Name&gt;
+  &lt;Bureau&gt;
+    &lt;Name&gt;Legislative Branch&lt;/Name&gt;
+  &lt;/Bureau&gt;
+  &lt;Bureau&gt;
+    &lt;Name&gt;Senate&lt;/Name&gt;
+  &lt;/Bureau&gt;
+  &lt;Bureau&gt;
+    &lt;Name&gt;House of Representatives&lt;/Name&gt;
+  &lt;/Bureau&gt;
+  &lt;Bureau&gt;
+    &lt;Name&gt;Joint Items&lt;/Name&gt;
+  &lt;/Bureau&gt;
+&#8230;</pre><p>
+      This is all the syntax needed to write a query that
+      will convert flat budget data such as that 
+    produced by <a href="ch04s04.html#FlatXMLBudget.java" title="Example&nbsp;4.2.&nbsp;Naively reproducing the original table structure in XML">Example&nbsp;4.2</a>
+    into a 
+      hierarchical XML document. Such a query is shown in <a href="ch04s06.html#BudgetQuery" title="Example&nbsp;4.13.&nbsp;An XQuery that converts flat data to hierarchical data">Example&nbsp;4.13</a>
+      which selects the data from just 2001.
+      </p><div class="example"><a name="BudgetQuery"></a><p class="title"><b>Example&nbsp;4.13.&nbsp;An XQuery that converts flat data to hierarchical data</b></p><pre class="programlisting">&lt;Budget year="2001"&gt;
+  {
+  for $ac in distinct-values(document("budauth.xml")//AgencyCode)
+  return
+    &lt;Agency&gt;
+      &lt;Name&gt;{ $ac/../AgencyName/text() }&lt;/Name&gt;
+      &lt;Code&gt;{ $ac/text() }&lt;/Code&gt;
+      {  
+        for $bc 
+         in distinct-values(document("budauth.xml")//BureauCode)
+        where $bc/../AgencyCode = $ac
+        return 
+          &lt;Bureau&gt;
+            &lt;Name&gt;{ $bc/../BureauName/text() }&lt;/Name&gt;
+            &lt;Code&gt;{ $bc/text() }&lt;/Code&gt;
+            {  
+            for $acct in distinct-values(
+             document("budauth.xml")//AccountCode)
+            where $acct/../AgencyCode = $ac 
+             AND $acct/../BureauCode = $bc
+            return 
+              &lt;Account 
+                BEACategory="{ $acct/../BEACategory/text() }"&gt;
+                &lt;Name&gt;{ $acct/../AccountName/text() }&lt;/Name&gt;
+                &lt;Code&gt;{ $acct/text() }&lt;/Code&gt;  
+                {  
+                  for $sfx 
+                    in document("budauth.xml")//SubfunctionCode
+                  where $sfx/../AgencyCode = $ac 
+                    and $sfx/../BureauCode = $bc 
+                    and $sfx/../AccountCode = $acct
+                  return 
+                    &lt;Subfunction&gt;
+                 &lt;Title&gt;{$sfx/../SubfunctionTitle/text()}&lt;/Title&gt;
+                      &lt;Code&gt;{ $sfx/text() }&lt;/Code&gt;  
+                      &lt;Amount&gt;{ $sfx/../FY2001/text() }&lt;/Amount&gt;
+                    &lt;/Subfunction&gt;
+               }    
+            &lt;/Account&gt;
+           }
+          &lt;/Bureau&gt;
+      }
+    &lt;/Agency&gt;
+  }
+&lt;/Budget&gt;</pre></div><p>
+  There&#8217;s a lot more to XQuery, but this should give you the idea of what it can do.
+  It&#8217;s definitely worth a look any time you have to perform database-like
+  operations on XML documents.
+</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch04s05.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch04.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch04s07.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Building Hierarchical Structures from Flat Data&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Relational Databases</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+July 25,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format">
+   <fo:layout-master-set>
+      <fo:simple-page-master master-name="only">
+         <fo:region-body margin-left="0.5in" margin-top="0.5in"/>
+      </fo:simple-page-master>
+   </fo:layout-master-set>
+   <fo:page-sequence master-reference="only">
+      <fo:flow flow-name="xsl-region-body">
+         <fo:block font-size="16pt" font-family="serif" line-height="20pt">
+       Ship to:
+    </fo:block>
+         <fo:block font-size="16pt" font-family="serif" margin-left="0.5in" line-height="20pt">Chez Fred</fo:block>
+         <fo:table font-size="12pt" space-before="24pt" space-after="24pt">
+            <fo:table-column column-width="2in"/>
+            <fo:table-column column-width="1in"/>
+            <fo:table-column column-width="1in"/>
+            <fo:table-column column-width="1in"/>
+            <fo:table-body>
+               <fo:table-row font-weight="bold">
+                  <fo:table-cell>
+                     <fo:block>Product</fo:block>
+                  </fo:table-cell>
+                  <fo:table-cell>
+                     <fo:block>Quantity</fo:block>
+                  </fo:table-cell>
+                  <fo:table-cell>
+                     <fo:block>Unit Price</fo:block>
+                  </fo:table-cell>
+                  <fo:table-cell>
+                     <fo:block>Subtotal</fo:block>
+                  </fo:table-cell>
+               </fo:table-row>
+               <fo:table-row>
+                  <fo:table-cell>
+                     <fo:block>Birdsong Clock</fo:block>
+                  </fo:table-cell>
+                  <fo:table-cell>
+                     <fo:block>12</fo:block>
+                  </fo:table-cell>
+                  <fo:table-cell>
+                     <fo:block>$21.95</fo:block>
+                  </fo:table-cell>
+                  <fo:table-cell>
+                     <fo:block>
+          $263.4</fo:block>
+                  </fo:table-cell>
+               </fo:table-row>
+               <fo:table-row>
+                  <fo:table-cell>
+                     <fo:block>Brass Ship's Bell</fo:block>
+                  </fo:table-cell>
+                  <fo:table-cell>
+                     <fo:block>1</fo:block>
+                  </fo:table-cell>
+                  <fo:table-cell>
+                     <fo:block>$144.95</fo:block>
+                  </fo:table-cell>
+                  <fo:table-cell>
+                     <fo:block>
+          $144.95</fo:block>
+                  </fo:table-cell>
+               </fo:table-row>
+            </fo:table-body>
+         </fo:table>
+         <fo:block font-size="16pt" font-family="serif" line-height="20pt">Tax: $28.20</fo:block>
+         <fo:block font-size="16pt" font-family="serif" line-height="20pt">Shipping: $8.95</fo:block>
+         <fo:block font-size="16pt" font-family="serif" line-height="20pt">Total: $431.00</fo:block>
+      </fo:flow>
+   </fo:page-sequence>
+</fo:root>

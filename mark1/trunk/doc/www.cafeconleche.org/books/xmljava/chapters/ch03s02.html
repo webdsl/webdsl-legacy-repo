@@ -1,0 +1,336 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Writing XML</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="previous" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="next" href="ch03s03.html" title="Output Streams, Writers, and Encodings"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"><link rel="subsection" href="ch03s02.html#d0e4976" title="Better Coding Practices"><link rel="subsection" href="ch03s02.html#d0e4988" title="Attributes"><link rel="subsection" href="ch03s02.html#d0e5023" title="Producing Valid XML"><link rel="subsection" href="ch03s02.html#d0e5049" title="Namespaces"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Writing XML</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;3.&nbsp;Writing XML with Java</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch03s03.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e4949"></a>Writing XML</h2></div></div><p>
+  Now suppose you don&#8217;t just want to dump out a bunch 
+  of raw numbers. Instead you want to produce a well-formed XML 
+  document such as <a href="ch03s02.html#FibonacciGoal.xml" title="Example&nbsp;3.2.&nbsp;The first 10 Fibonacci numbers in an XML document">Example&nbsp;3.2</a>.
+</p><div class="example"><a name="FibonacciGoal.xml"></a><p class="title"><b>Example&nbsp;3.2.&nbsp;The first 10 Fibonacci numbers in an XML document</b></p><pre class="programlisting">&lt;?xml version="1.0"?&gt;
+&lt;Fibonacci_Numbers&gt;
+  &lt;fibonacci&gt;1&lt;/fibonacci&gt;
+  &lt;fibonacci&gt;1&lt;/fibonacci&gt;
+  &lt;fibonacci&gt;2&lt;/fibonacci&gt;
+  &lt;fibonacci&gt;3&lt;/fibonacci&gt;
+  &lt;fibonacci&gt;5&lt;/fibonacci&gt;
+  &lt;fibonacci&gt;8&lt;/fibonacci&gt;
+  &lt;fibonacci&gt;13&lt;/fibonacci&gt;
+  &lt;fibonacci&gt;21&lt;/fibonacci&gt;
+  &lt;fibonacci&gt;34&lt;/fibonacci&gt;
+  &lt;fibonacci&gt;55&lt;/fibonacci&gt;
+&lt;/Fibonacci_Numbers&gt;
+</pre></div><p>
+  To produce this, just add 
+  string literals for the <tt>&lt;fibonacci&gt;</tt> 
+  and <tt>&lt;/fibonacci&gt;</tt> tags inside the print statements,
+  as well as a few extra print statements to produce the XML declaration
+  and the root element start- and end-tags. XML documents
+  are just text, and you can output them any way you&#8217;d output any other text
+  document.
+   <a href="ch03s02.html#FibonacciXML.java" title="Example&nbsp;3.3.&nbsp;A program that outputs the Fibonacci numbers as&#xA;an XML document">Example&nbsp;3.3</a> demonstrates.
+</p><div class="example"><a name="FibonacciXML.java"></a><p class="title"><b>Example&nbsp;3.3.&nbsp;A program that outputs the Fibonacci numbers as
+an XML document</b></p><pre class="programlisting">import java.math.BigInteger;
+
+
+public class FibonacciXML {
+
+  public static void main(String[] args) {
+   
+      BigInteger low  = BigInteger.ONE;
+      BigInteger high = BigInteger.ONE;      
+      
+      System.out.println("&lt;?xml version=\"1.0\"?&gt;");  
+      System.out.println("&lt;Fibonacci_Numbers&gt;");  
+      for (int i = 0; i &lt; 10; i++) {
+        System.out.print("  &lt;fibonacci&gt;");
+        System.out.print(low);
+        System.out.println("&lt;/fibonacci&gt;");
+        BigInteger temp = high;
+        high = high.add(low);
+        low = temp;
+      }
+      System.out.println("&lt;/Fibonacci_Numbers&gt;");  
+
+  }
+
+}</pre></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e4976"></a>Better Coding Practices</h3></div></div><p>
+  Although I&#8217;m going to keep the examples as simple and small as I possibly can 
+  in this book, and save my lines of code for the points that are relevant to XML,
+  you shouldn&#8217;t use that as an excuse to forget all the good programming practices
+  you&#8217;ve learned in the past, even if I don&#8217;t use them here.
+  For instance, keeping too much data in string literals throughout the
+  code makes a program very hard to localize and maintain.
+  You may wish to move element names and other constants into final
+ static fields as shown in 
+   <a href="ch03s02.html#FibonacciConstants.java" title="Example&nbsp;3.4.&nbsp;Using named constants for element names">Example&nbsp;3.4</a>. You might even want to read the values
+   of these variables from a resource bundle or system properties
+   so they can be edited independently of the source code. 
+   I&#8217;m not going to do this here, because for purposes of education 
+   it&#8217;s more important to have short, self-contained examples that
+   make the key points easy to grasp. However, in larger, more complex programs
+   these techniques are essential. 
+</p><div class="example"><a name="FibonacciConstants.java"></a><p class="title"><b>Example&nbsp;3.4.&nbsp;Using named constants for element names</b></p><pre class="programlisting">import java.math.BigInteger;
+
+
+public class FibonacciConstants {
+
+  public final static String rootElementName 
+   = "Fibonacci_Numbers";
+  public final static String fibonacciElementName = "fibonacci";
+  public final static String xmlDeclaration 
+   = "&lt;?xml version=\"1.0\"?&gt;";
+
+  public static void main(String[] args) {
+   
+      BigInteger low  = BigInteger.ONE;
+      BigInteger high = BigInteger.ONE;      
+      
+      System.out.println(xmlDeclaration);  
+      System.out.println("&lt;" + rootElementName + "&gt;");  
+      for (int i = 0; i &lt; 10; i++) {
+        System.out.print("  &lt;" + fibonacciElementName +"&gt;");
+        System.out.print(low);
+        System.out.println("&lt;/" + fibonacciElementName +"&gt;");
+        BigInteger temp = high;
+        high = high.add(low);
+        low = temp;
+      }
+      System.out.println("&lt;/" + rootElementName + "&gt;");  
+
+  }
+
+}
+</pre></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e4988"></a>Attributes</h3></div></div><p>
+    Now let&#8217;s suppose you want to add some attributes to the elements.
+    For instance, you might want to give each 
+    <tt>fibonacci</tt> element an <tt>index</tt>
+    attribute specifying which Fibonacci number 
+    it is (the first, the second, the third, and so forth).
+  </p><p>  
+    To do this, just add the extra strings to the source code, and 
+    calculate the index value from the loop index. <a href="ch03s02.html#FibonacciAttributes.java" title="Example&nbsp;3.5.&nbsp;A Java program that writes an XML document &#xA;  that uses attributes">Example&nbsp;3.5</a> demonstrates.
+  </p><div class="example"><a name="FibonacciAttributes.java"></a><p class="title"><b>Example&nbsp;3.5.&nbsp;A Java program that writes an XML document 
+  that uses attributes</b></p><pre class="programlisting">import java.math.BigInteger;
+
+
+public class FibonacciAttributes {
+
+  public static void main(String[] args) {
+   
+      BigInteger low  = BigInteger.ONE;
+      BigInteger high = BigInteger.ONE;      
+      
+      System.out.println("&lt;?xml version=\"1.0\"?&gt;");  
+      System.out.println("&lt;Fibonacci_Numbers&gt;");  
+      for (int i = 1; i &lt;= 10; i++) {
+        System.out.print("  &lt;fibonacci index=\"" + i + "\"&gt;");
+        System.out.print(low);
+        System.out.println("&lt;/fibonacci&gt;");
+        BigInteger temp = high;
+        high = high.add(low);
+        low = temp;
+      }
+      System.out.println("&lt;/Fibonacci_Numbers&gt;");  
+
+  }
+
+}</pre></div><p>
+    The only even remotely difficult part of this is realizing you have
+    to escape the double quotes used to delimit the attribute values
+    as <tt>\"</tt> in the Java source code. An alternative is to use 
+    single quotes to delimit the attribute values. These don&#8217;t need to be escaped inside 
+    Java string literals. For example,
+  </p><div class="informalexample"><pre class="programlisting">        System.out.print("  &lt;fibonacci index='" + i + "'&gt;");</pre></div><p>
+    Here&#8217;s the output from <a href="ch03s02.html#FibonacciAttributes.java" title="Example&nbsp;3.5.&nbsp;A Java program that writes an XML document &#xA;  that uses attributes">Example&nbsp;3.5</a>:
+  </p><pre class="screen"><tt>&lt;?xml version="1.0"?&gt;
+&lt;Fibonacci_Numbers&gt;
+  &lt;fibonacci index="1"&gt;1&lt;/fibonacci&gt;
+  &lt;fibonacci index="2"&gt;1&lt;/fibonacci&gt;
+  &lt;fibonacci index="3"&gt;2&lt;/fibonacci&gt;
+  &lt;fibonacci index="4"&gt;3&lt;/fibonacci&gt;
+  &lt;fibonacci index="5"&gt;5&lt;/fibonacci&gt;
+  &lt;fibonacci index="6"&gt;8&lt;/fibonacci&gt;
+  &lt;fibonacci index="7"&gt;13&lt;/fibonacci&gt;
+  &lt;fibonacci index="8"&gt;21&lt;/fibonacci&gt;
+  &lt;fibonacci index="9"&gt;34&lt;/fibonacci&gt;
+  &lt;fibonacci index="10"&gt;55&lt;/fibonacci&gt;
+&lt;/Fibonacci_Numbers&gt;</tt></pre></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e5023"></a>Producing Valid XML</h3></div></div><p>
+  So far the Java programs have produced
+  XML documents that were well-formed but not valid.
+  Making them valid is not difficult. Simply print a
+  a document type declaration that
+  either includes an internal DTD subset or points to an appropriate external DTD subset.
+  <a href="ch03s02.html#ValidFibonacci.java" title="Example&nbsp;3.6.&nbsp;A Java program that generates a valid document">Example&nbsp;3.6</a> takes the internal subset approach:
+  </p><div class="example"><a name="ValidFibonacci.java"></a><p class="title"><b>Example&nbsp;3.6.&nbsp;A Java program that generates a valid document</b></p><pre class="programlisting">import java.math.BigInteger;
+
+
+public class ValidFibonacci {
+
+  public static void main(String[] args) {
+   
+      BigInteger low  = BigInteger.ONE;
+      BigInteger high = BigInteger.ONE;      
+      
+      System.out.println("&lt;?xml version=\"1.0\"?&gt;");  
+      System.out.println("&lt;!DOCTYPE Fibonacci_Numbers [");  
+      System.out.println(
+       "  &lt;!ELEMENT Fibonacci_Numbers (fibonacci)*&gt;");  
+      System.out.println("  &lt;!ELEMENT fibonacci (#PCDATA)&gt;");  
+      System.out.println(
+       "  &lt;!ATTLIST fibonacci index NMTOKEN #REQUIRED&gt;");  
+      System.out.println("]&gt;");  
+      System.out.println("&lt;Fibonacci_Numbers&gt;");  
+      for (int i = 0; i &lt; 10; i++) {
+        System.out.print("  &lt;fibonacci index=\"" + i + "\"&gt;");
+        System.out.print(low);
+        System.out.println("&lt;/fibonacci&gt;");
+        BigInteger temp = high;
+        high = high.add(low);
+        low = temp;
+      }
+      System.out.println("&lt;/Fibonacci_Numbers&gt;");  
+
+  }
+
+}</pre></div><p>
+    Here&#8217;s the output from this program, including the document type declaration: 
+  </p><pre class="screen">
+<tt>&lt;?xml version="1.0"?&gt;
+&lt;!DOCTYPE Fibonacci_Numbers [
+  &lt;!ELEMENT Fibonacci_Numbers (fibonacci)*&gt;
+  &lt;!ELEMENT fibonacci (#PCDATA)&gt;
+  &lt;!ATTLIST fibonacci index NMTOKEN #REQUIRED&gt;
+]&gt;
+&lt;Fibonacci_Numbers&gt;
+  &lt;fibonacci index="0"&gt;1&lt;/fibonacci&gt;
+  &lt;fibonacci index="1"&gt;1&lt;/fibonacci&gt;
+  &lt;fibonacci index="2"&gt;2&lt;/fibonacci&gt;
+  &lt;fibonacci index="3"&gt;3&lt;/fibonacci&gt;
+  &lt;fibonacci index="4"&gt;5&lt;/fibonacci&gt;
+  &lt;fibonacci index="5"&gt;8&lt;/fibonacci&gt;
+  &lt;fibonacci index="6"&gt;13&lt;/fibonacci&gt;
+  &lt;fibonacci index="7"&gt;21&lt;/fibonacci&gt;
+  &lt;fibonacci index="8"&gt;34&lt;/fibonacci&gt;
+  &lt;fibonacci index="9"&gt;55&lt;/fibonacci&gt;
+&lt;/Fibonacci_Numbers&gt;
+</tt></pre><p>
+    Attaching a schema is no harder. Just place the necessary
+    <tt>xmlns:xsi</tt> and 
+    <tt>xsi:noNamespaceSchemaLocation</tt> attributes
+    on the root element. 
+  </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e5049"></a>Namespaces</h3></div></div><p>
+  Suppose instead of using a custom Fibonacci number vocabulary,
+  you want to use the standard MathML vocabulary as shown in
+  <a href="ch03s02.html#mathml_goal.xml" title="Example&nbsp;3.7.&nbsp;A MathML document containing Fibonacci numbers">Example&nbsp;3.7</a>. The element names
+  all have prefixes and an <tt>xmlns:mathml</tt> attribute on
+  the root element binds the <tt>mathml</tt> prefix to the
+  <tt>http://www.w3.org/1998/Math/MathML</tt>
+  namespace URI. 
+  Each Fibonacci number is included in a
+  <tt>mathml:mrow</tt> divided into
+  a <tt>mathml:mi</tt> element, 
+  a <tt>mathml:mo</tt> element, and 
+  a <tt>mathml:mn</tt> element.
+  </p><div class="example"><a name="mathml_goal.xml"></a><p class="title"><b>Example&nbsp;3.7.&nbsp;A MathML document containing Fibonacci numbers</b></p><pre class="programlisting">&lt;?xml version="1.0"?&gt;
+&lt;mathml:math xmlns:mathml="http://www.w3.org/1998/Math/MathML"&gt;
+  &lt;mathml:mrow&gt;
+    &lt;mathml:mi&gt;f(1)&lt;/mathml:mi&gt;
+    &lt;mathml:mo&gt;=&lt;/mathml:mo&gt;
+    &lt;mathml:mn&gt;1&lt;/mathml:mn&gt;
+  &lt;/mathml:mrow&gt;
+  &lt;mathml:mrow&gt;
+    &lt;mathml:mi&gt;f(2)&lt;/mathml:mi&gt;
+    &lt;mathml:mo&gt;=&lt;/mathml:mo&gt;
+    &lt;mathml:mn&gt;1&lt;/mathml:mn&gt;
+  &lt;/mathml:mrow&gt;
+  &lt;mathml:mrow&gt;
+    &lt;mathml:mi&gt;f(3)&lt;/mathml:mi&gt;
+    &lt;mathml:mo&gt;=&lt;/mathml:mo&gt;
+    &lt;mathml:mn&gt;2&lt;/mathml:mn&gt;
+  &lt;/mathml:mrow&gt;
+  &lt;mathml:mrow&gt;
+    &lt;mathml:mi&gt;f(4)&lt;/mathml:mi&gt;
+    &lt;mathml:mo&gt;=&lt;/mathml:mo&gt;
+    &lt;mathml:mn&gt;3&lt;/mathml:mn&gt;
+  &lt;/mathml:mrow&gt;
+&lt;/mathml:math&gt;</pre></div><p>
+  The markup is somewhat more complex, but the Java code is not
+  significantly more so as <a href="ch03s02.html#MathMLFibonacci.java" title="Example&nbsp;3.8.&nbsp;A Java program that generates a MathML document">Example&nbsp;3.8</a> 
+  demonstrates. 
+  </p><div class="example"><a name="MathMLFibonacci.java"></a><p class="title"><b>Example&nbsp;3.8.&nbsp;A Java program that generates a MathML document</b></p><pre class="programlisting">import java.math.BigInteger;
+
+
+public class MathMLFibonacci {
+
+  public static void main(String[] args) {
+   
+      BigInteger low  = BigInteger.ONE;
+      BigInteger high = BigInteger.ONE;      
+      
+      System.out.println("&lt;?xml version=\"1.0\"?&gt;");  
+      System.out.println(
+        "&lt;mathml:math "
+        + "xmlns:mathml=\"http://www.w3.org/1998/Math/MathML\"&gt;"
+      );  
+      for (int i = 1; i &lt;= 10; i++) {
+        System.out.println("  &lt;mathml:mrow&gt;");
+        System.out.println("    &lt;mathml:mi&gt;f(" + i 
+         + ")&lt;/mathml:mi&gt;");
+        System.out.println("    &lt;mathml:mo&gt;=&lt;/mathml:mo&gt;");
+        System.out.println("    &lt;mathml:mn&gt;" + low 
+         + "&lt;/mathml:mn&gt;");
+        System.out.println("  &lt;/mathml:mrow&gt;");
+        BigInteger temp = high;
+        high = high.add(low);
+        low = temp;
+      }
+      System.out.println("&lt;/mathml:math&gt;");  
+
+  }
+
+}
+</pre></div><p>
+    I could continue, showing you how to add comments, processing
+    instructions, CDATA sections and other features of XML; but I think
+    by now you&#8217;re getting the idea. XML documents
+    are just text. They can be represented inside Java programs as various 
+    combinations of <tt>String</tt> literals and <tt>String</tt> variables.
+    Other data types like <tt>int</tt> and <tt>BigInteger</tt> 
+    can be converted to their string representations
+    either implicitly by concatenating them with strings
+    or explicitly by invoking methods such as
+    <tt>toString()</tt> and 
+    <tt>String.valueOf()</tt>. The fact that XML documents are text 
+    makes it very easy to organize XML output this way.
+  </p><p>
+    When you use this technique, you are responsible for 
+    following all the well-formedness, namespace well-formedness,
+    and validity rules of XML. Nothing prevents you from
+    producing incorrect XML. In fact, your first few efforts are
+    likely to be malformed. You&#8217;ll want to run your output through 
+    a tool such as Xerces&#8217;s <tt>sax.Counter</tt> 
+    to check it for well-formedness
+    and perhaps validity. Making sure the output is correct is simply
+    one part of testing and debugging your code. The same would still
+    be true if you were outputting a non-XML format. In fact, if anything,
+    XML makes these tests easier because it&#8217;s straightforward to write declarative
+    schemas that express exactly what is and is not legal and to compare your output
+    against these schemas. 
+  </p><p>
+    Eventually we&#8217;ll take up some alternatives to the direct string 
+    approach such as DOM and JDOM that do allow you to automatically 
+    maintain well-formedness and sometimes even validity. However, for 
+    many simple cases, these are vast overkill. It can be much simpler 
+    to just write a few strings onto an output stream. In the next 
+    section, we&#8217;ll look at how you can change the characteristics of the 
+    output stream you&#8217;re writing on.
+  </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch03s03.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&nbsp;3.&nbsp;Writing XML with Java&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Output Streams, Writers, and Encodings</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+August 10,
+2001</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

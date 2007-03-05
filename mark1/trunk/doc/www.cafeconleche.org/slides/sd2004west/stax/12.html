@@ -1,0 +1,134 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <meta name="description" content="Slide used in Elliotte Rusty Harold's &#xA;  StAX seminar at Software Development 2004 West, Thursday, March 17, 2004"><title>Listening to Events</title><script language="JAVASCRIPT"><!-- 
+              var isnav
+              
+              if (parseInt(navigator.appVersion) >= 4) {
+                if (navigator.appName == "Netscape") {
+                  isNav = true
+                  document.captureEvents(Event.KEYPRESS)
+                }
+                else {
+                  isNav = false
+                }
+              }
+              document.onkeypress = flipslide
+
+              function flipslide(evt) {
+                var key = isNav ? evt.which : window.event.keyCode
+                if (key == 32 || key == 29 || key == 30 || key == 11) {
+                  
+                    location.href="13.html"
+                  
+                }
+                else if (key == 28 || key == 31 || key == 12) {
+                  
+                    location.href="11.html"
+                  
+                }
+                else if (key == 1) {
+                  location.href="index.html";
+                }
+              } //  --></script></head><body>
+  <h1 align="center">Listening to Events</h1>
+
+<pre xmlns:xinclude="http://www.w3.org/2001/XInclude"><code>import javax.xml.stream.*;
+import java.net.*;
+import java.io.*;
+
+ 
+public class EventLister {
+
+  public static void main(String[] args) {
+        
+    if (args.length == 0) {
+      System.err.println("Usage: java EventLister url" );
+     return;    
+    }
+        
+    try {
+
+      InputStream in;
+      try {
+        URL u = new URL(args[0]);
+        in = u.openStream();
+      }
+      catch (MalformedURLException ex) {
+          // Maybe it's a file name
+          in = new FileInputStream(args[0]);
+      }
+
+      XMLInputFactory factory = XMLInputFactory.newInstance();
+      XMLStreamReader parser = factory.createXMLStreamReader(in);
+        
+      while (true) {
+         int event = parser.next();
+         if (event == XMLStreamConstants.START_ELEMENT) {
+             System.out.println("Start tag");
+         }
+         else if (event == XMLStreamConstants.END_ELEMENT) {
+             System.out.println("End tag");
+         }
+         else if (event == XMLStreamConstants.START_DOCUMENT) {
+             System.out.println("Start document");
+         }
+         else if (event == XMLStreamConstants.CHARACTERS) {
+             System.out.println("Text");
+         }
+         else if (event == XMLStreamConstants.CDATA) {
+             System.out.println("CDATA Section");
+         }
+         else if (event == XMLStreamConstants.COMMENT) {
+             System.out.println("Comment");
+         }
+         else if (event == XMLStreamConstants.DTD) {
+             System.out.println("Document type declaration");
+         }
+         else if (event == XMLStreamConstants.ENTITY_REFERENCE) {
+             System.out.println("Entity Reference");
+         }
+         else if (event == XMLStreamConstants.START_ENTITY) {
+             System.out.println("Entity Reference");
+         }
+         else if (event == XMLStreamConstants.END_ENTITY) {
+             System.out.println("Entity Reference");
+         }
+         else if (event == XMLStreamConstants.SPACE) {
+             System.out.println("Ignorable white space");
+         }
+         else if (event == XMLStreamConstants.NOTATION_DECLARATION) {
+             System.out.println("Notation Declaration");
+         }
+         else if (event == XMLStreamConstants.ENTITY_DECLARATION) {
+             System.out.println("Entity Declaration");
+         }
+         else if (event == XMLStreamConstants.PROCESSING_INSTRUCTION) {
+             System.out.println("Processing Instruction");
+         }
+         else if (event == XMLStreamConstants.END_DOCUMENT) {
+             System.out.println("End Document");
+             break;
+         }
+      }           
+    }
+    catch (XMLStreamException ex) {
+       System.out.println(ex);  
+    }
+    catch (IOException ex) {
+      System.out.println("IOException while parsing " + args[0]);   
+    }
+        
+  }
+
+}
+</code></pre>
+
+  
+  
+<hr><div align="center"><A HREF="11.html">Previous</A> 
+                 | <A HREF="13.html">Next</A> 
+                 | <A HREF="index.html">Top</A> 
+                 | <A HREF="http://www.cafeconleche.org/">Cafe con Leche</A></div><hr><div style="font-size: x-small">
+              Copyright 2000-2004 Elliotte Rusty Harold<br><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a><br>
+              Last Modified 
+              January 7, 2004</div></body></html>

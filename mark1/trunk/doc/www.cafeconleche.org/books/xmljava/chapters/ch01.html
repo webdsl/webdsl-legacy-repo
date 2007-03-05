@@ -1,0 +1,419 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;1.&nbsp;XML for Data</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="index.html" title="Processing XML with Java"><link rel="previous" href="pr02.html" title="Acknowledgements"><link rel="next" href="ch01s02.html" title="XML Syntax"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"><link rel="section" href="ch01.html#d0e361" title="Motivating XML"><link rel="section" href="ch01s02.html" title="XML Syntax"><link rel="section" href="ch01s03.html" title="Validity"><link rel="section" href="ch01s04.html" title="Style sheets"><link rel="section" href="ch01s05.html" title="Summary"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter&nbsp;1.&nbsp;XML for Data</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="pr02.html">Prev</a>&nbsp;</td><th width="60%" align="center">&nbsp;</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch01s02.html">Next</a></td></tr></table><hr></div><div class="chapter"><div class="titlepage"><div><h2 class="title"><a name="ch_xmlsyntax"></a>Chapter&nbsp;1.&nbsp;XML for Data</h2></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><a href="ch01.html#d0e361">Motivating XML</a></dt><dd><dl><dt><a href="ch01.html#d0e383">A Thought Experiment</a></dt><dt><a href="ch01.html#d0e410">Robustness</a></dt><dt><a href="ch01.html#d0e455">Extensibility</a></dt><dt><a href="ch01.html#d0e481">Ease of Use</a></dt></dl></dd><dt><a href="ch01s02.html">XML Syntax</a></dt><dd><dl><dt><a href="ch01s02.html#d0e531">XML Documents</a></dt><dt><a href="ch01s02.html#d0e632">XML Applications</a></dt><dt><a href="ch01s02.html#d0e698">Elements and Tags</a></dt><dt><a href="ch01s02.html#d0e884">Text</a></dt><dt><a href="ch01s02.html#d0e951">Attributes</a></dt><dt><a href="ch01s02.html#d0e1005">XML Declaration</a></dt><dt><a href="ch01s02.html#d0e1055">Comments</a></dt><dt><a href="ch01s02.html#d0e1080">Processing Instructions</a></dt><dt><a href="ch01s02.html#d0e1120">Entities</a></dt><dt><a href="ch01s02.html#d0e1273">Namespaces</a></dt></dl></dd><dt><a href="ch01s03.html">Validity</a></dt><dd><dl><dt><a href="ch01s03.html#d0e1541">DTDs</a></dt><dt><a href="ch01s03.html#d0e1866">Schemas</a></dt><dt><a href="ch01s03.html#d0e1962">Schematron</a></dt><dt><a href="ch01s03.html#d0e2014">The Last Mile</a></dt></dl></dd><dt><a href="ch01s04.html">Style sheets</a></dt><dd><dl><dt><a href="ch01s04.html#d0e2037">CSS</a></dt><dt><a href="ch01s04.html#d0e2133">Associating Style Sheets with XML Documents</a></dt><dt><a href="ch01s04.html#d0e2179">XSL</a></dt></dl></dd><dt><a href="ch01s05.html">Summary</a></dt></dl></div><p>
+XML was designed to be &#8220;SGML for the Web&#8221;. 
+It was meant for the same 
+sorts of narrative documents SGML and HTML had been used for previously: 
+articles, books, short stories, poems, technical manuals, web pages, and 
+so forth. Much to its inventors&#8217; surprise, it achieved its first great 
+successes not in the publishing and writing arenas it was intended for, 
+but rather in the much more prosaic world of data formats. XML was 
+enthusiastically adopted by programmers who needed a robust, extensible, 
+standard format for data. For the most part, this was not narrative data 
+like stories and articles, but record oriented data such as that found 
+in databases. Uses included object serialization, financial records, 
+vector graphics, remote procedure calls, and similar tasks. This chapter 
+explores some of the flaws in traditional formats for such data and 
+elucidates the features of XML that make it surprisingly well-suited for 
+such tasks. 
+   </p><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e361"></a>Motivating XML</h2></div></div><p>
+  If you&#8217;re reading this book you&#8217;re a developer. (At
+  least I hope you are. Otherwise a lot of what I say isn&#8217;t going 
+  to make any sense :-) ) Doubtless over the course of your career
+  you&#8217;ve written 
+  numerous programs that read and write files. And every time you wrote a new
+  program you had to invent or learn a new file format. 
+  File formats I&#8217;ve personally had to deal with over the years include 
+  RTF, Word <tt>.doc</tt> files, tab delimited text, FITS,
+  PDF, PostScript, and many more.  You&#8217;ve probably encountered 
+  a few of these yourself. Doubtless, you&#8217;ve also seen 
+  many other formats. 
+  </p><p>
+If you&#8217;re like me you&#8217;ve learned to dread encountering a new file
+format. If it&#8217;s documented at all, the documentation is likely
+incomplete or worse yet misleading. Important details like 
+byte order and line ending conventions are often left unspecified.
+Different tools that all claim
+to read and write the same format actually produce subtly different
+variants that are often incompatible in practice.
+When you think you&#8217;ve finally wrestled the last bug out of 
+your code, you discover a file
+written by somebody else&#8217;s software that you can&#8217;t read;
+and you realize you&#8217;ve made one too many assumptions
+about the format, so you have to go back to the
+drawing board. 
+</p><p>
+Consequently, when designing new file formats,
+developers have tended to gravitate toward the simplest formats 
+they can imagine, often tab delimited text or comma separated values.
+Nonetheless, even these plain, undecorated formats 
+often present unexpected problems.
+For example, should two tabs in a row be interpreted as the empty string,
+null, or the same as one tab? In fact, all three variations are used in practice.
+Java&#8217;s <tt>StringTokenizer</tt> class takes the last 
+interpretation, two consecutive tabs are the same as one tab,
+even though this is the least common approach in actual data files,
+a fact which has surprised many Java programmers and led to not a few
+bugs in Java programs.<sup>[<a name="d0e376" href="#ftn.d0e376">1</a>]</sup>
+</p><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e383"></a>A Thought Experiment</h3></div></div><p>
+With all that in mind, let&#8217;s do a thought experiment.
+Imagine you&#8217;ve been tasked with writing a server side program that
+accepts orders over the Internet for an e-commerce site. 
+The web server must send each completed order
+to the internal system, one order at a time.
+You&#8217;re responsible for writing the code on the server that sends the order
+to the internal system and for writing the code on the internal system 
+that receives and processes the order. The only connection between the two systems
+is a TCP/IP network; that is, you don&#8217;t have some sort of higher level API
+like JDBC that lets you move data between the two systems.
+You need to invent a data format you can generate on one end and
+parse on the other end that&#8217;s flexible 
+enough to contain all the information in a typical order.
+This includes the customer name, the product ordered, its price,
+the manufacturer&#8217;s  stock keeping unit (SKU) number,
+the address to ship to, the tax, and the shipping and handling charges.  
+One possibility is to 
+place each piece of information on a separate line
+ as shown in <a href="ch01.html#e11" title="Example&nbsp;1.1.&nbsp;A plain text document indicating an &#xA;order for 12 Birdsong Clocks, SKU 244">Example&nbsp;1.1</a>:
+</p><div class="example"><a name="e11"></a><p class="title"><b>Example&nbsp;1.1.&nbsp;A plain text document indicating an 
+order for 12 Birdsong Clocks, SKU 244</b></p><pre class="programlisting">c32
+Chez Fred
+Birdsong Clock
+244
+12
+USD
+21.95
+135 Airline Highway
+Narragansett
+RI
+02882
+USD
+263.40
+7.0
+USD
+18.44
+USPS
+USD
+8.95
+USD
+290.79</pre></div><p>
+An alternative is to use a more complex and verbose
+XML format such as <a href="ch01.html#order.xml" title="Example&nbsp;1.2.&nbsp;An XML document indicating an &#xA;order for 12 Birdsong Clocks, SKU 244">Example&nbsp;1.2</a>:
+</p><div class="example"><a name="order.xml"></a><p class="title"><b>Example&nbsp;1.2.&nbsp;An XML document indicating an 
+order for 12 Birdsong Clocks, SKU 244</b></p><pre class="programlisting">&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;Order&gt;
+  &lt;Customer id="c32"&gt;Chez Fred&lt;/Customer&gt;
+  &lt;Product&gt;
+    &lt;Name&gt;Birdsong Clock&lt;/Name&gt;
+    &lt;SKU&gt;244&lt;/SKU&gt;
+    &lt;Quantity&gt;12&lt;/Quantity&gt;
+    &lt;Price currency="USD"&gt;21.95&lt;/Price &gt;
+  &lt;/Product&gt;
+  &lt;ShipTo&gt;
+    &lt;Street&gt;135 Airline Highway&lt;/Street &gt;
+    &lt;City&gt;Narragansett&lt;/City&gt; &lt;State&gt;RI&lt;/State&gt; &lt;Zip&gt;02882&lt;/Zip&gt;
+  &lt;/ShipTo&gt;
+  &lt;Subtotal currency='USD'&gt;263.40&lt;/Subtotal&gt;
+  &lt;Tax rate="7.0" 
+       currency='USD'&gt;18.44&lt;/Tax&gt;
+  &lt;Shipping  method="USPS" currency='USD'&gt;8.95&lt;/Shipping&gt;
+  &lt;Total currency='USD' &gt;290.79&lt;/Total&gt;
+&lt;/Order&gt;
+</pre></div><p>
+Would you rather write the code 
+to send and receive orders that are formatted as nice, simple
+linefeed delimited files as shown in <a href="ch01.html#e11" title="Example&nbsp;1.1.&nbsp;A plain text document indicating an &#xA;order for 12 Birdsong Clocks, SKU 244">Example&nbsp;1.1</a>
+or as complex, marked up XML documents such as <a href="ch01.html#order.xml" title="Example&nbsp;1.2.&nbsp;An XML document indicating an &#xA;order for 12 Birdsong Clocks, SKU 244">Example&nbsp;1.2</a>?
+Both documents contain the same information. Most uninitiated
+developers prefer the first, simpler form. After all each piece of
+information is presented on a line by itself with no extraneous markup
+characters getting in the way. It&#8217;s my goal to convince you that
+contrary to most developers&#8217; first intuition the second form is  
+more robust, more extensible, and much easier to work with.
+</p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e410"></a>Robustness</h3></div></div><p>
+Let&#8217;s consider robustness first. Suppose your program receives the
+order in <a href="ch01.html#e13" title="Example&nbsp;1.3.&nbsp;A document indicating an &#xA;order for 12 Birdsong Clocks, SKU 244?">Example&nbsp;1.3</a>:
+</p><div class="example"><a name="e13"></a><p class="title"><b>Example&nbsp;1.3.&nbsp;A document indicating an 
+order for 12 Birdsong Clocks, SKU 244?</b></p><pre class="programlisting">c32
+Chez Fred
+Birdsong Clock
+12
+244
+USD
+21.95
+135 Airline Highway
+Narragansett
+RI
+02882
+USD
+263.40
+7.0
+USD
+18.44
+USPS
+USD
+290.79
+USD
+8.95</pre></div><p>Look&#8217;s the same as <a href="ch01.html#e11" title="Example&nbsp;1.1.&nbsp;A plain text document indicating an &#xA;order for 12 Birdsong Clocks, SKU 244">Example&nbsp;1.1</a> doesn&#8217;t it? 
+However, if you compare it very
+carefully with <a href="ch01.html#e13" title="Example&nbsp;1.3.&nbsp;A document indicating an &#xA;order for 12 Birdsong Clocks, SKU 244?">Example&nbsp;1.3</a> you may notice that the 12 and the 244 have
+changed places. What used to be an order for 12 bird clocks may now be
+an order for 244 whoopee cushions. Maybe somebody will notice the
+problem before the order is shipped and maybe they won&#8217;t. Worse yet, the
+shipping charge and the total price got flipped around. This entire order 
+now costs eight dollars and ninety-five cents.
+Again, maybe someone will notice the problem before it&#8217;s too late and maybe
+not. These sorts of problems aren&#8217;t theoretical. More than one
+e-commerce site has lost both revenue and customer goodwill by
+mispricing items.
+</p><p>
+In the XML version, this simply would not be an issue because each datum
+is marked up with what it means. You can freely reorder the quantity and
+the SKU or the shipping cost and the total price without any confusion
+about which is which. <a href="ch01.html#e14" title="Example&nbsp;1.4.&nbsp;Still an &#xA;order for 12 Birdsong Clocks, SKU 244">Example&nbsp;1.4</a> demonstrates. 
+What can be devastating mistakes in a traditional
+system are harmless in XML. 
+</p><div class="example"><a name="e14"></a><p class="title"><b>Example&nbsp;1.4.&nbsp;Still an 
+order for 12 Birdsong Clocks, SKU 244</b></p><pre class="programlisting">&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;Order&gt;
+  &lt;Customer id="c32"&gt;Chez Fred&lt;/Customer&gt;
+  &lt;Product&gt;
+    &lt;Name&gt;Birdsong Clock&lt;/Name&gt;
+    &lt;Quantity&gt;12&lt;/Quantity&gt;
+    &lt;SKU&gt;244&lt;/SKU&gt;
+    &lt;Price currency="USD"&gt;21.95&lt;/Price &gt;
+  &lt;/Product&gt;
+  &lt;ShipTo&gt;
+    &lt;Street&gt;135 Airline Highway&lt;/Street &gt;
+    &lt;City&gt;Narragansett&lt;/City&gt; &lt;State&gt;RI&lt;/State&gt; &lt;Zip&gt;02882&lt;/Zip&gt;
+  &lt;/ShipTo&gt;
+  &lt;Subtotal currency='USD'&gt;263.40&lt;/Subtotal&gt;
+  &lt;Tax rate="7.0" 
+       currency='USD'&gt;18.44&lt;/Tax&gt;
+  &lt;Total currency='USD' &gt;290.79&lt;/Total&gt;
+  &lt;Shipping  method="USPS" currency='USD'&gt;8.95&lt;/Shipping&gt;
+&lt;/Order&gt;</pre></div><p>
+Some readers will be objecting at this point that you would never let a
+mistake like that through your system. After all you check every value
+for sensibility. You look up the SKU in the company database to make
+sure it matches the product name and price before completing an order.
+You check every return value from a method call to see if it&#8217;s null and
+you catch every exception. You write extensive tests to verify that
+each method is doing what you think it&#8217;s doing. You use a source
+code control system so you can always back out changes, and you never
+check code in until it&#8217;s passed all the regression tests.
+Every line of code is scrupulously documented.
+In fact, you write more documentation than actual code.
+And you&#8217;ve never, ever missed church on Sunday. In this case your name
+is Donald Knuth. The rest of us need a little more help making
+sure we don&#8217;t do something stupid. 
+</p><p>
+Even if you are that conscientious, are you really willing to gamble
+on everyone else who sends or receives data from you being equally
+anal retentive? Wouldn&#8217;t it make more sense to use the most robust format possible
+so that when the inevitable errors do creep in, they&#8217;ll do less damage?
+</p><p>
+Of course, XML has a lot to offer the anal developer as well. When 
+defining constraints such as &#8220;Every order must have a shipping address&#8221;, 
+&#8220;the currency must be one of the three letter codes USD, CAN, or GBP&#8221; or 
+&#8220;the total cost must be the sum of the unit price times the number of 
+items, the tax, and the shipping&#8221;, it&#8217;s easiest to use a declarative 
+language that specifies what the constraints are without elaborating the 
+actual code to check these constraints. When your data is XML, you can 
+use a declarative schema language to define and test such constraints. 
+Indeed, you have a choice of several schema languages. The simplest and 
+most broadly supported, the classic document type definition (DTD), 
+allows you to verify that all required elements are present in the 
+required order with any necessary attributes. The W3C XML schema 
+language goes further and lets you constrain the contents of particular 
+elements and attributes so that you can guarantee that the total price 
+is a decimal number greater than 1.00. Schematron, the most powerful 
+schema language of all, allows you to state multi-element constraints 
+such as &#8220;the actual price must be less than or equal to the suggested 
+retail price&#8221;. I&#8217;ll discuss all of these languages in more detail later 
+in this chapter and the rest of the book. For now what you need to know 
+is that you can list all the constraints on a document in a simple 
+fashion and check those constraints without writing a lot of extra code 
+to do so. You feed your documents through a validator before you act on 
+them. Validation becomes a separate, modular and more maintainable part 
+of the process. You can
+even change constraints or add new ones without recompiling your code.
+</p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e455"></a>Extensibility</h3></div></div><p>
+Robustness isn&#8217;t the only advantage of the XML approach. The XML
+solution is also far more extensible. For example, suppose you suddenly
+discover a need to add a discount percentage to some products. The
+change to the XML is straightforward. Just add an extra element:
+</p><div class="informalexample"><pre class="programlisting">  &lt;Product&gt;
+    &lt;Name&gt;Birdsong Clock&lt;/Name&gt;
+    &lt;Quantity&gt;12&lt;/Quantity&gt;
+    &lt;SKU&gt;244&lt;/SKU&gt;
+    &lt;Price currency="USD"&gt;21.95&lt;/Price &gt;
+    &lt;Discount&gt;.10&lt;/Discount&gt; 
+  &lt;/Product&gt;</pre></div><p>
+The change to the plain text file (or the equivalent binary
+file) is much less obvious. You can certainly add an extra line of
+data. However, then everything that follows it will be out of order. You
+could put the new information at the end of the document, 
+but then it isn&#8217;t close to the item it 
+logically belongs with. And suppose not all orders have discounts. Will
+there be blank lines for products that don&#8217;t have discounts? How will
+your program recognize that it&#8217;s supposed to convert an empty string into a
+zero discount rather than NaN or throwing an exception? This is
+not an insurmountable problem, but the simple solution is becoming more
+complex.
+</p><p>
+Now suppose someone wants to add a gift message field whose value can
+contain line breaks. Now the data can contain the delimiter
+character! You can probably escape the line breaks as \n or some such,
+and then escape the backslash character as \\, but your nice simple
+solution is becoming quite a bit more complex.
+However, once again this is not a problem for XML as this solution
+demonstrates:
+</p><div class="informalexample"><pre class="programlisting">  &lt;GiftMessage&gt;
+     Happy Birthday Monica!
+
+    Love Always,
+    Tracy
+  &lt;/GiftMessage&gt;</pre></div><p>
+Throughout this example, I&#8217;ve assumed that each order is for exactly one
+product. That&#8217;s probably not true. Some customers will order multiple
+products at a time. Thus each order will contain between one and an
+indefinite number of products. Different products may even be going to different
+addresses. Do you break each individual item into a separate order
+document and repeat the customer information? If so how do you calculate
+the total shipping and total cost? Or do you allow multiple products in
+a single order? If so how do you tell where one product ends and the
+next begins? Again, none of these
+problems are unsolvable, but the simple solution proves more and
+more complex as the needs grow. The XML approach, by contrast, scales
+very well to expanded functionality in a very obvious way. 
+<a href="ch01.html#finishedorder.xml" title="Example&nbsp;1.5.&nbsp;An XML document indicating an &#xA;order for multiple products shipped to multiple addresses">Example&nbsp;1.5</a> 
+is an XML document that accomplishes all of the above. The boundaries
+between the individual parts are obvious. 
+</p><div class="example"><a name="finishedorder.xml"></a><p class="title"><b>Example&nbsp;1.5.&nbsp;An XML document indicating an 
+order for multiple products shipped to multiple addresses</b></p><pre class="programlisting">&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;Order&gt;
+  &lt;Customer id="c32"&gt;Chez Fred&lt;/Customer&gt;
+  &lt;Product&gt;
+    &lt;Name&gt;Birdsong Clock&lt;/Name&gt;
+    &lt;SKU&gt;244&lt;/SKU&gt;
+    &lt;Quantity&gt;12&lt;/Quantity&gt;
+    &lt;Price currency="USD"&gt;21.95&lt;/Price &gt;
+    &lt;ShipTo&gt;
+      &lt;Street&gt;135 Airline Highway&lt;/Street &gt;
+      &lt;City&gt;Narragansett&lt;/City&gt; &lt;State&gt;RI&lt;/State&gt; &lt;Zip&gt;02882&lt;/Zip&gt;
+    &lt;/ShipTo&gt;
+  &lt;/Product&gt;
+  &lt;Product&gt;
+    &lt;Name&gt;Brass Ship's Bell&lt;/Name&gt;
+    &lt;SKU&gt;258&lt;/SKU&gt;
+    &lt;Quantity&gt;1&lt;/Quantity&gt;
+    &lt;Price currency="USD"&gt;144.95&lt;/Price &gt;
+    &lt;Discount&gt;.10&lt;/Discount&gt;
+    &lt;ShipTo&gt;
+      &lt;GiftRecipient&gt;Samuel Johnson&lt;/GiftRecipient&gt;
+      &lt;Street&gt;271 Old Homestead Way&lt;/Street &gt;
+      &lt;City&gt;Woonsocket&lt;/City&gt; &lt;State&gt;RI&lt;/State&gt; &lt;Zip&gt;02895&lt;/Zip&gt;
+    &lt;/ShipTo&gt;
+    &lt;GiftMessage&gt;
+      Happy Father's Day to a great Dad!
+      
+      Love,
+      Sam and Beatrice
+    &lt;/GiftMessage&gt;
+  &lt;/Product&gt;
+  &lt;Subtotal currency='USD'&gt;393.85&lt;/Subtotal&gt;
+  &lt;Tax rate="7.0" 
+       currency='USD'&gt;28.20&lt;/Tax&gt;
+  &lt;Shipping  method="USPS" currency='USD'&gt;8.95&lt;/Shipping&gt;
+  &lt;Total currency='USD' &gt;431.00&lt;/Total&gt;
+&lt;/Order&gt;
+</pre></div><p>
+This example still isn&#8217;t really complete. Many pieces are missing 
+including the credit card information, billing address, and more. Real 
+world examples are larger and more complex than can comfortably fit in a 
+book. Adding these other parts would only stretch the flat format 
+further and make the advantages of XML still more obvious. The more 
+complex your data is, the more important it is to use a hierarchical 
+format like XML rather than a flat format like tab or line-delimited 
+text.
+</p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e481"></a>Ease of Use</h3></div></div><p>
+Now here&#8217;s the real kicker: not only is the XML document far more robust. 
+Not only is it much more extensible in the face of both expected and 
+unexpected changes. Not only does it more easily adapt to more complex 
+structures. It is also easier for your programs to read! Writing a program 
+to accept orders written in XML will be many times easier than writing a 
+program to accept orders delivered in simple line delimited files. &#8220;How can 
+that be?&#8221; you may be asking. After all, the program reading the XML 
+document has to hunt for less than signs and quotation marks rather than 
+just picking each piece of data off of a line. It has to make sure not to 
+confuse any less than signs and quotation marks that may appear in the data 
+itself with those in the markup. It has to deal with data that may extend 
+across multiple lines. And in fact, there are many more possibilities 
+not evident in this simple example that a real program has to handle.
+</p><p>
+Fortunately <span class="emphasis"><em>none of this matters to you as a developer because you don&#8217;t
+have to do any of it</em></span>. Instead of writing the code to process XML
+documents directly, you let an XML parser do the hard work for you. A
+parser is a software library that knows how to read XML documents and
+handle all the markup it finds. The parser takes responsibility for
+checking documents for well-formedness and validity. Your own code 
+reads the XML document only through the parser&#8217;s API. At this level, you
+can simply ask the parser to tell you what it saw in any particular
+element. Or you can ask the parser to tell you everything it sees as
+soon as it sees it. In either case, the parser just gives you the data
+after resolving all the markup. For instance, if you want to ask the
+parser what the total price was, it can tell you 290.79 and that this
+price has the currency USD. You don&#8217;t have to concern yourself
+with stripping off the markup around the information you want. Nor
+do you necessarily have to take the information in the order it appears
+in the input document. If you want the total price before the customer
+name, you can have it. If you just want to look at the price and ignore
+the rest of the order completely, you can do that too. You take the
+information in the form that&#8217;s convenient to you without worrying
+excessively about low level serialization details.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Note</h3><p>
+One of the original ten goals for XML was that 
+&#8220;It shall be easy to write programs which process XML documents.&#8221;
+ Originally, this was interpreted as meaning that a
+ &#8220;Desperate Perl Hacker&#8221; could write an XML
+ parser in a weekend.
+ Later it became clear that XML was simply too complex, even in its
+ simplest form, for this goal to be met.
+ However, the understanding of this requirement changed to 
+ mean that a typical programmer could use any of a number
+ of free tools and libraries to process XML.
+ Given this interpretation, the goal has most certainly been met. 
+</p></div><p>
+The parser shields you from a lot of irrelevant details that you don&#8217;t
+really care about. These include:
+</p><div class="itemizedlist"><ul type="disc"><li><p>How text is encoded: in Unicode, ASCII, Latin-1, SJIS, or 
+something else</p></li><li><p>Whether carriage returns, line feeds, or both 
+separate lines</p></li><li><p>How reserved characters such as &lt; are 
+escaped when used in the plain text parts of the document</p></li><li><p>Whether the byte order is big-endian or little-endian</p></li></ul></div><p>
+None of these issues actually matter. None of them have any effect on 
+what the data means or what the format allows you to say. However, when 
+designing a data format, you must answer all  these questions. As soon 
+as you&#8217;ve said, &#8220;The underlying format of the data is XML&#8221;, every one of 
+these questions is answered. Some are answered by simply choosing one 
+possible solution. (The less than sign is escaped as 
+<tt>&amp;lt;</tt>.) Others are answered by allowing all 
+possibilities and letting the parser sort things out (line endings). In 
+all cases, the design problem is greatly simplified by picking XML as 
+the underlying format. 
+  </p></div></div><div class="footnotes"><br><hr width="100" align="left"><div class="footnote"><p><sup>[<a name="ftn.d0e376" href="#d0e376">1</a>] </sup>
+This interpretation makes sense once you realize that
+<tt>java.util.StringTokenizer</tt> is designed for parsing Java source code,
+not for reading tab delimited data files. Nonetheless many programmers
+do use it for reading tab delimited data.</p></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="pr02.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="index.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch01s02.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Acknowledgements&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;XML Syntax</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+May 21,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

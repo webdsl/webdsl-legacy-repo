@@ -1,0 +1,265 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>DOM Modules</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="previous" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="next" href="ch09s03.html" title="Application Specific DOMs"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">DOM Modules</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch09.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;9.&nbsp;The Document Object Model</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch09s03.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e13356"></a>DOM Modules</h2></div></div><p>
+    DOM2 is divided into fourteen modules in 
+    eight different
+    packages. 
+    DOM1 roughly corresponds to the 
+    Core and XML modules.
+    The other twelve are new in DOM2. 
+  </p><div class="variablelist"><dl><dt><span class="term">Core: <tt>org.w3c.dom</tt></span></dt><dd><p>
+          The basic interfaces that can be used to represent any 
+          SGMLish, hierarchical tree-structured document
+          including 
+          <tt>DOMException</tt>,
+<tt>DOMImplementation</tt>,
+<tt>DocumentFragment</tt>,
+<tt>Document</tt>,
+<tt>Node</tt>,
+<tt>NodeList</tt>,
+<tt>NamedNodeMap</tt>,
+<tt>CharacterData</tt>,
+<tt>Attr</tt>,
+<tt>Element</tt>,
+<tt>Text</tt>, and
+<tt>Comment</tt>.
+        </p></dd><dt><span class="term">XML: <tt>org.w3c.dom</tt></span></dt><dd><p>
+          The additional sub-interfaces of 
+          <tt>Node</tt> just for XML
+          documents
+          including
+<tt>CDATASection</tt>,
+<tt>DocumentType</tt>,
+<tt>Notation</tt>,
+<tt>Entity</tt>,
+<tt>EntityReference</tt>, and 
+<tt>ProcessingInstruction</tt>. An HTML DOM
+might not implement these.
+        </p></dd><dt><span class="term">HTML: <tt>org.w3c.dom.html</tt></span></dt><dd><p>
+          Interfaces designed specifically to represent the 
+          parts of an HTML document such as
+       <tt>HTMLHtmlElement</tt>, <tt>HTMLHeadElement</tt>, 
+       and <tt>HTMLParagraphElement</tt>.
+         These are all sub-interfaces of the core interfaces like
+         <tt>Node</tt>
+         and <tt>Element</tt>.
+           These aren&#8217;t normally relevant to processing XML
+           documents. However, if you have a DOM aware HTML
+           parser, you can apply the techniques described in this
+           book to HTML as well as XML.
+        </p></dd><dt><span class="term">Views: <tt>org.w3c.dom.views</tt></span></dt><dd><p>
+          The <tt>AbstractView</tt> 
+          and  <tt>DocumentView</tt> interfaces
+           used to associate different views with one
+         document. For instance, 
+          applying two style sheets 
+         to one XML document could produce two views.
+          This is not supported by most XML parsers.
+        </p></dd><dt><span class="term">StyleSheets: <tt>org.w3c.dom.stylesheets</tt></span></dt><dd><p>
+          Basic interfaces for representing style
+          sheets including 
+          <tt>StyleSheet</tt>,
+<tt>StyleSheetList</tt>,
+<tt>MediaList</tt>,
+<tt>LinkStyle</tt>, and 
+<tt>DocumentStyle</tt>.
+        </p></dd><dt><span class="term">CSS: <tt>org.w3c.dom.css</tt></span></dt><dd><p>
+         Interfaces that specifically represent CSS style sheets
+         including <tt>CSSStyleSheet</tt>,
+<tt>CSSRuleList</tt>,
+<tt>CSSRule</tt>,
+<tt>CSSStyleRule</tt>,
+<tt>CSSMediaRule</tt>,
+<tt>CSSFontFaceRule</tt>,
+<tt>CSSPageRule</tt>,
+<tt>CSSImportRule</tt>,
+<tt>CSSCharsetRule</tt>,
+<tt>CSSUnknownRule</tt>,
+<tt>CSSStyleDeclaration</tt>,
+<tt>CSSValue</tt>,
+<tt>CSSPrimitiveValue</tt>,
+<tt>CSSValueList</tt>,
+<tt>RGBColor</tt>,
+<tt>Rect</tt>,
+<tt>Counter</tt>,
+<tt>ViewCSS</tt>,
+<tt>DocumentCSS</tt>,
+<tt>DOMImplementationCSS</tt>, and
+<tt>ElementCSSInlineStyle</tt>.
+        </p></dd><dt><span class="term">CSS2: <tt>org.w3c.dom.css</tt></span></dt><dd><p>
+         The  
+<tt>CSS2Properties</tt> class that provides shortcut methods for 
+setting all the different CSS2 style properties.
+        </p></dd><dt><span class="term">Events: <tt>org.w3c.dom.events</tt></span></dt><dd><p>
+          The interfaces in these classes 
+          establish a generic system that allows event listeners 
+          to be attached to
+          nodes. Events nodes can respond to  
+          user interface events like mouse clicks,
+          structure modification events like document edits,
+          and anything else the implementation wants to support.
+          The next four 
+          modules  define specific kinds of events. However,
+          applications can define their own as well.
+          In practice,
+          events are more relevant to JavaScript and other browser-based
+          script systems than most XML programs; but they can be
+          useful when an XML document is displayed in a browser
+          or otherwise shown to a user.
+        </p></dd><dt><span class="term">UIEvents: <tt>org.w3c.dom.events</tt></span></dt><dd><p>
+          The <tt>UIEvent</tt> interface
+          signals when a node represented
+          on the screen in some form of GUI has
+          received the focus, lost the focus, or been activated.
+        </p></dd><dt><span class="term">MouseEvents: <tt>org.w3c.dom.events</tt></span></dt><dd><p>
+            The <tt>MouseEvent</tt> interface
+          signals when, where, and with which keys pressed the user
+          has clicked the mouse, pressed the mouse button,
+          released the mouse button, moved the mouse, or moved
+          the cursor into or out of an element&#8217;s graphical
+          representation.
+        </p></dd><dt><span class="term">MutationEvents: <tt>org.w3c.dom.events</tt></span></dt><dd><p>
+           The <tt>MutationEvent</tt> interface
+           signals that Cerebro has detected a new mutant of exceptional
+           power. Sorry about that one, I couldn&#8217;t help myself. 
+           Really it signals that a node has been added, removed, or modified
+          in the document.
+        </p></dd><dt><span class="term">HTMLEvents: <tt>org.w3c.dom.events</tt></span></dt><dd><p>
+          The HTML events module doesn&#8217;t define any new
+          interfaces. Instead it uses the base
+          <tt>DOMEvent</tt> interface to report a
+          dozen events specific to web browsers including 
+          load, unload, abort, error, select, change, submit, reset,
+          focus, blur, resize, and scroll.
+        </p></dd><dt><span class="term">Traversal: <tt>org.w3c.dom.traversal</tt></span></dt><dd><p>
+          This package provides simple utility classes for
+          performing common operations on a tree such as walking
+          the entire tree or filtering out nodes that meet
+          certain conditions. It will be discussed
+          in depth in <a href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module">Chapter&nbsp;12</a>.
+        </p></dd><dt><span class="term">Range: <tt>org.w3c.dom.ranges</tt></span></dt><dd><p>
+          This optional module extends DOM to cover sections of
+          documents that don&#8217;t neatly match element boundaries.
+          For instance, it would be
+          useful for indicating the section of text that
+          the user has selected with the mouse. It could also be
+          used for XPointer ranges. 
+        </p></dd></dl></div><p>
+     Aside from the core and XML modules, not all DOM implementations
+     support all of these 
+     modules, or all parts of those modules they do support.
+     Most Java implementations do support the traversal module.
+     The events module is not uncommon.
+     The range module is occasionally supported.
+     As far as I know,
+     only Xerces supports the 
+     HTML module.  
+     So far I haven&#8217;t found any parsers that support the 
+     Views, Style Sheets or CSS modules.
+  </p><p>
+    The <tt>hasFeature()</tt> method 
+    in the <tt>DOMImplementation</tt>
+    interface
+    can
+    tell you if that implementation supports a particular
+    feature. Just pass in the name and version of the feature
+    you&#8217;re looking for. For DOM Level 2 the version is 
+    <tt>"2.0"</tt>. 
+  </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">boolean&nbsp;</span><span class="methodname"><b>hasFeature</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>name</i></span></span>, <span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>version</i></span></span>);</code><p>
+    Besides the standard modules, implementations and application-specific DOMs
+    may define additional feature name strings. 
+    These non-standard features use a reversed domain
+    name, much like a Java package name, to clearly indicate who
+    is responsible for the feature. 
+    For instance, 
+    SVG 1.0 uses the feature name 
+    <tt>"org.w3c.dom.svg"</tt> and the version number 
+    <tt>"1.0"</tt>
+    to
+    indicate support for some part of the SVG DOM.
+    It uses the feature strings
+   <tt>"org.w3c.dom.svg.static"</tt>, 
+   <tt>"org.w3c.dom.svg.animation"</tt>, or 
+   <tt>"org.w3c.dom.svg.dynamic"</tt>
+   to indicate support for specific parts of the SVG DOM.
+  </p><p>
+    Different DOM implementations use different concrete classes
+    to implement the standard interfaces.
+    For example, in Xerces, 
+    the <tt>org.apache.xerces.dom.DOMImplementationImpl</tt>
+    
+    singleton class  implements the
+    <tt>DOMImplementation</tt> interface.
+    In the Oracle XML Parser for Java, 
+    <tt>XMLDOMImplementation</tt>
+     implements the
+    <tt>DOMImplementation</tt> interface.
+    This class has a simple no-args constructor.
+    <a href="ch09s02.html#OracleModuleChecker.java" title="Example&nbsp;9.1.&nbsp;Which modules does Oracle support?">Example&nbsp;9.1</a> uses this class and constructor
+    to check for the standard features
+    in Oracle. </p><div class="example"><a name="OracleModuleChecker.java"></a><p class="title"><b>Example&nbsp;9.1.&nbsp;Which modules does Oracle support?</b></p><pre class="programlisting">import oracle.xml.parser.v2.XMLDOMImplementation;
+import org.w3c.dom.DOMImplementation;
+
+
+public class OracleModuleChecker {
+
+  public static void main(String[] args) {
+     
+    // parser dependent
+    DOMImplementation implementation = new XMLDOMImplementation();
+    String[] features = {"Core", "XML", "HTML", "Views", 
+     "StyleSheets", "CSS", "CSS2", "Events", "UIEvents", 
+     "MouseEvents", "MutationEvents", "HTMLEvents", "Traversal", 
+     "Range"};
+    
+    for (int i = 0; i &lt; features.length; i++) {
+      if (implementation.hasFeature(features[i], "2.0")) {
+        System.out.println("Oracle supports " + features[i]);
+      } 
+      else {
+        System.out.println("Oracle does not support " 
+         + features[i]);
+      } 
+    }
+  
+  }
+
+}
+</pre></div><p>
+    Here&#8217;s the output from version
+    9.0.1.1.0A Production of the Oracle XML Parser for Java.
+   You see that Oracle only supports the
+    XML, events, traversal, and range  modules. The reported lack of
+    support for core is almost certainly
+    just an oversight.
+    The <tt>"Core"</tt> feature string was only added in the final draft
+    of DOM 2, and was not present in earlier drafts. 
+    The Core module is a prerequisite for all the other
+    modules. It&#8217;s hard to believe Oracle really doesn&#8217;t
+    support it.
+  </p><pre class="screen"><tt>D:\books\XMLJAVA\examples\09&gt;</tt><b><tt>java OracleModuleChecker</tt></b>
+<tt>Oracle does not support Core
+Oracle supports XML
+Oracle does not support HTML
+Oracle does not support Views
+Oracle does not support StyleSheets
+Oracle does not support CSS
+Oracle does not support CSS2
+Oracle supports Events
+Oracle does not support UIEvents
+Oracle does not support MouseEvents
+Oracle does not support MutationEvents
+Oracle does not support HTMLEvents
+Oracle supports Traversal
+Oracle supports Range</tt></pre></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch09.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch09.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch09s03.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&nbsp;9.&nbsp;The Document Object Model&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Application Specific DOMs</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+December 20,
+2001</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

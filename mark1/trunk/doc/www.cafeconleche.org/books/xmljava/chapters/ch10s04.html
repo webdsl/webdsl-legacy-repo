@@ -1,0 +1,976 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>The Document Interface as a Node Type</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="previous" href="ch10s03.html" title="The Document Interface as an Abstract Factory"><link rel="next" href="ch10s05.html" title="Normalization"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"><link rel="subsection" href="ch10s04.html#d0e17087" title="Getter methods"><link rel="subsection" href="ch10s04.html#d0e17322" title="Finding elements"><link rel="subsection" href="ch10s04.html#d0e17602" title="Transferring nodes between documents"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">The Document Interface as a Node Type</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch10s03.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch10s05.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e17069"></a>The Document Interface as a Node Type</h2></div></div><p>
+    Besides the factory methods and the methods common to all
+    nodes, the
+    <tt>Document</tt> interface has several
+    unique methods that perform operations relevant only to 
+    document nodes. These include:
+  </p><div class="itemizedlist"><ul type="disc"><li><p>
+        Getter methods
+      </p></li><li><p>
+        Methods to find elements
+      </p></li><li><p>
+        A method to copy nodes from other documents 
+      </p></li></ul></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e17087"></a>Getter methods</h3></div></div><p>
+        The <tt>Document</tt> interface has
+        three methods that simply return particular parts of the 
+        document:
+      </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">Element&nbsp;</span><span class="methodname"><b>getDocumentElement</b></span>();</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">DocumentType&nbsp;</span><span class="methodname"><b>getDoctype</b></span>();</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">DOMImplementation&nbsp;</span><span class="methodname"><b>getImplementation</b></span>();</code><br><p>
+        These are fairly self-explanatory. You&#8217;ve already seen
+        the <tt>getDocumentElement()</tt> method
+        used several times. It just returns the
+        <tt>Element</tt> object representing
+        the root element of the document. Similarly,
+        the <tt>getDoctype()</tt> method
+        returns the document&#8217;s <tt>DocumentType</tt>
+        object or null if the document does not have a document
+        type declaration. The <tt>getImplementation()</tt> method
+        returns the <tt>DOMImplementation</tt>
+        object that created this document.
+      </p><p>
+        Several pieces are missing. In particular, no part of the
+        XML declaration is available: not version, not encoding,
+        not standalone status. Other useful information that&#8217;s 
+        missing from DOM2 includes the actual encoding of the document
+        (which is usually but not always the same as the encoding
+        declared in the XML declaration)
+        and the base URI of the document against which
+        relative URIs in the document should be resolved. DOM
+        Level 3 will add several more getter and setter methods
+        to the <tt>Document</tt> interface
+        to make these available. 
+      </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>getActualEncoding</b></span>();</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setActualEncoding</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>actualEncoding</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>getEncoding</b></span>();</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setEncoding</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>encoding</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">boolean&nbsp;</span><span class="methodname"><b>getStandalone</b></span>();</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setStandalone</b></span>(<span class="methodparam"><span class="type">boolean&nbsp;</span><span class="parameter"><i>standalone</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>getVersion</b></span>();</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setVersion</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>version</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setBaseURI</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>baseURI</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">DOMException</span>;</code><br><p>
+    The obvious <tt>getBaseURI()</tt> is not
+    really missing. It&#8217;s just included in the 
+    <tt>Node</tt> super-interface
+    rather than directly in the
+    <tt>Document</tt> interface.
+    Thus you can find out the base URI for any kind of node.
+    This is important because XML documents can be built from multiple entities
+    and different nodes may come from different files.
+  </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>getBaseURI</b></span>();</code><br><p>
+    Finally DOM Level 3 adds one more setter/getter pair that,
+    strictly speaking, doesn&#8217;t describe the document so much as
+    the implementation. These two methods determine how draconian 
+    DOM is about checking for errors as the document is built in
+    memory:
+  </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">boolean&nbsp;</span><span class="methodname"><b>getStrictErrorChecking</b></span>();</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setStrictErrorChecking</b></span>(<span class="methodparam"><span class="type">boolean&nbsp;</span><span class="parameter"><i>strictErrorChecking</i></span></span>);</code><p>
+    If the strict error checking property is false, then the implementation
+    may not make every test it could possibly make. For instance, it might allow
+    namespace prefixes that are not mapped to namespace URIs or 
+    make a text node a child of the document element. This can be
+    faster, but it is also dangerous since other code may fail
+    when presented with a 
+    <tt>Document</tt> object that does not
+    satisfy all the usual constraints. 
+    Strict error checking is
+    enabled by default. Even if strict error checking is false,
+    however, some error checking may still be done. 
+    The purpose of these methods is to allow implementations to
+    skip some of the tedious checking they normally do and thus
+    improve performance. The purpose is not to allow malformed documents,
+    though that may be the effect in some cases. 
+  </p><p>
+     These properties  
+       are experimentally supported in Xerces 2.0.2.
+       No other parsers support them at the time of this writing. 
+       The detailed signatures are still
+       subject to change though, and you should not rely on them.
+     </p><p>
+       <a href="ch10s04.html#DocumentProperties.java" title="Example&nbsp;10.10.&nbsp;The properties of a Document object">Example&nbsp;10.10</a> is a simple program that 
+       parses a document from a URL passed through the command
+       line and prints the values of these various properties.
+       Since Xerces is currently the only parser to support the
+       DOM3
+       properties, I used its implementation classes 
+       explicitly rather than the more
+       generic JAXP.
+     </p><div class="example"><a name="DocumentProperties.java"></a><p class="title"><b>Example&nbsp;10.10.&nbsp;The properties of a Document object</b></p><pre class="programlisting">import org.apache.xerces.parsers.DOMParser;
+import org.apache.xerces.dom.DocumentImpl;
+import org.w3c.dom.*;
+import org.xml.sax.SAXException;
+import java.io.IOException;
+
+
+public class DocumentProperties {
+
+  public static void main(String[] args) {
+     
+    if (args.length &lt;= 0) {
+      System.out.println("Usage: java DocumentProperties URL"); 
+      return;
+    }
+    String url = args[0];
+    
+    // Since this only works in Xerces 2.0.2, we might as well use the 
+    // Xerces-specific implementation classes instead of JAXP.
+    DOMParser parser = new DOMParser();
+    try {
+      parser.parse(url); 
+      DocumentImpl document = (DocumentImpl) parser.getDocument();
+      
+      // DOM2 properties
+      System.out.println("Implementation: " + document.getImplementation());
+      System.out.println("Root element: " + document.getDocumentElement());
+      System.out.println("DOCTYPE: " + document.getDoctype());
+
+      // DOM3 Properties
+      System.out.println("Version: " + document.getVersion());
+      System.out.println("Standalone: " + document.getStandalone());
+      System.out.println("Declared encoding: " + document.getEncoding());
+      System.out.println("Strict error checking: " + document.getStrictErrorChecking());
+      System.out.println("Actual encoding: " + document.getActualEncoding());
+      System.out.println("Base URI: " + document.getBaseURI());
+
+    }
+    catch (SAXException e) {
+      System.out.println(url + " is not well-formed.");
+    }
+    catch (IOException e) { 
+      System.out.println(
+       "Due to an IOException, the parser could not read " + url
+      ); 
+    }
+   
+  }
+
+}
+</pre></div><p>
+        Here&#8217;s the output from when I ran this program against
+        the DocBook source code for this chapter:
+      </p><pre class="screen"><tt>$ </tt><b><tt>java DocumentProperties ch10.xml</tt></b>
+<tt>Implementation: org.apache.xerces.dom.DOMImplementationImpl@ef9f1d
+Root element: [chapter: null]
+DOCTYPE: [chapter: null]
+Version: 1.0
+Standalone: false
+Declared encoding: UTF-8
+Strict error checking: true
+Actual encoding: UTF-8
+Base URI: file:///home/elharo/books/xmljava/ch10.xml</tt></pre><p>
+        In this case, the detailed output depends on what the 
+        <tt>toString()</tt> method 
+        for each of the implementation classes does.
+        Even once other parsers support DOM3, this will be
+        something different for different parsers. A more serious
+        application would use the methods of each interface
+        (<tt>Document</tt>, 
+        <tt>Doctype</tt>, and <tt>Element</tt>)
+        to provide more complete output.
+      </p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Tip</h3><p>
+        If a non-Xerces DOM implementation
+        precedes Xerces in your class path, then this
+        program won&#8217;t compile. You need to make sure Xerces is
+        the first DOM the compiler and runtime find.
+        This is especially problematic in Java 1.4, which
+        includes a DOM implementation that does not support the
+        DOM3 properties used here. However, in Java 1.4 you can
+        use the <b>java</b> interpreter&#8217;s 
+        <tt>-Xbootclasspath/p:</tt> option 
+        to prepend JAR archives to the boot classpath so that
+        they will be preferred to the ones bundled with Java.
+      </p></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e17322"></a>Finding elements</h3></div></div><p>
+        Some of the most useful methods in the 
+        <tt>Document</tt> interface are
+        those that retrieve all the elements with
+        certain names or IDs in the document, irrespective of
+        where in the document they may actually be.
+        When you&#8217;re only really interested in certain elements,
+        this can avoid a lot of  tedious and complex tree-walking.
+        These three methods are:
+      </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">NodeList&nbsp;</span><span class="methodname"><b>getElementsByTagName</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>tagName</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">NodeList&nbsp;</span><span class="methodname"><b>getElementsByTagNameNS</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>namespaceURI</i></span></span>, <span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>localName</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">Element&nbsp;</span><span class="methodname"><b>getElementByID</b></span>();</code><p>
+        The first two methods return a  <tt>NodeList</tt> 
+        of the elements with the specified name or
+        local name/namespace URI pair.
+        This list is in document order. You can use the asterisk
+        (<tt>*</tt>) to match all names or all
+        namespace URIs. 
+       </p><p>
+        The third method returns the single
+        element with the specified ID value, or null if no such element
+        is present in the document.
+        The ID is given by an ID-type attribute on that element. 
+      </p><div class="caution" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Caution</h3><p>
+          It is possible though invalid for multiple elements in one document to
+          share the same ID. In this case, this method&#8217;s behavior
+          is undefined. For maximum safety, you may want to limit
+          this method to provably valid documents. 
+        </p></div><p>
+        As a demonstration, let&#8217;s develop a
+        an XML-RPC servlet that generates Fibonacci 
+        numbers. (This is actually what was on the other side of
+        the clients you saw in 
+        <a href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML">Chapter&nbsp;5</a> 
+        and <a href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java">Chapter&nbsp;3</a>). 
+        Recall that the request document looks like
+        <a href="ch10s04.html#FibonacciRequest.xml" title="Example&nbsp;10.11.&nbsp;An XML-RPC request document">Example&nbsp;10.11</a>.
+        The server needs to find the integer value of the single 
+        <tt>param</tt>.
+        Since we know there&#8217;s exactly one
+        <tt>int</tt>
+        element in the request, its easy to use
+        <tt>getElementsByTagName()</tt> to find it. 
+      </p><div class="example"><a name="FibonacciRequest.xml"></a><p class="title"><b>Example&nbsp;10.11.&nbsp;An XML-RPC request document</b></p><pre class="programlisting">&lt;?xml version="1.0"?&gt;
+&lt;methodCall&gt;
+  &lt;methodName&gt;calculateFibonacci&lt;/methodName&gt;
+  &lt;params&gt;
+    &lt;param&gt;
+      &lt;value&gt;&lt;int&gt;23&lt;/int&gt;&lt;/value&gt;
+    &lt;/param&gt;
+  &lt;/params&gt;
+&lt;/methodCall&gt;</pre></div><p>
+        The server needs to calculate the result
+        based on the input transmitted by the client,
+        wrap that up in a response document like the one shown in
+       <a href="ch10s04.html#FibonacciResponse.xml" title="Example&nbsp;10.12.&nbsp;An XML-RPC response document">Example&nbsp;10.12</a>,
+        and  transmit that document back to the
+        client.
+</p><div class="example"><a name="FibonacciResponse.xml"></a><p class="title"><b>Example&nbsp;10.12.&nbsp;An XML-RPC response document</b></p><pre class="programlisting">&lt;?xml version="1.0"?&gt;
+&lt;methodResponse&gt;
+  &lt;params&gt;
+    &lt;param&gt;
+      &lt;value&gt;&lt;double&gt;28657&lt;/double&gt;&lt;/value&gt;
+    &lt;/param&gt;
+  &lt;/params&gt;
+&lt;/methodResponse&gt;</pre></div><p>
+      <a href="ch10s04.html#FibonacciXMLRPCDOMServlet.java" title="Example&nbsp;10.13.&nbsp;A DOM based XML-RPC servlet">Example&nbsp;10.13</a> shows the complete servlet.
+      It extends <tt>HttpServlet</tt> and
+      implements
+      <tt>SingleThreadModel</tt>.
+      This interface lets the servlet container know that this servlet is
+      not thread safe, and it should use a different
+      instance of this class for each concurrent thread.
+      However, one instance may be used for successive threads.
+      This was necessary here because the JAXP 
+      <tt>DocumentBuilder</tt> and
+       <tt>Transformer</tt> classes
+       and possibly the class that implements 
+       <tt>DOMImplementation</tt>
+       are not thread-safe. 
+       You could make the servlet thread safe 
+       by loading new instances of these interfaces inside
+       <tt>doPost()</tt> rather than sharing
+       instances created in <tt>init()</tt>.
+       However, in a potentially high-volume server environment
+       the resource cost for that feels disturbingly large.
+       A better alternative would be 
+       to manually synchronize access to these objects
+       inside
+      <tt>doPost()</tt>.
+      However, since proper synchronization is notoriously
+      difficult, I prefer to leave the work to the server.
+   </p><div class="example"><a name="FibonacciXMLRPCDOMServlet.java"></a><p class="title"><b>Example&nbsp;10.13.&nbsp;A DOM based XML-RPC servlet</b></p><pre class="programlisting">import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+import java.math.BigInteger;
+import org.w3c.dom.*;
+import org.xml.sax.SAXException;
+import javax.xml.parsers.*;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+
+public class FibonacciXMLRPCDOMServlet extends HttpServlet 
+ implements SingleThreadModel {
+
+  // Fault codes   
+  public final static int MALFORMED_REQUEST_DOCUMENT = 1;
+  public final static int INVALID_REQUEST_DOCUMENT   = 2;
+  public final static int INDEX_MISSING              = 3;
+  public final static int NON_POSITIVE_INDEX         = 4;
+  public final static int BAD_INTEGER_FORMAT         = 5;
+  public final static int UNEXPECTED_PROBLEM         = 255;
+   
+  private DocumentBuilder   parser;
+  private DOMImplementation impl;
+  private Transformer       idTransform;
+  
+  // Load a parser, transformer, and implementation
+  public void init() throws ServletException {  
+  
+    try {
+      DocumentBuilderFactory factory 
+       = DocumentBuilderFactory.newInstance();
+      this.parser = factory.newDocumentBuilder();
+      this.impl   = parser.getDOMImplementation();
+    }
+    catch (Throwable t) { 
+      // It's unusual to catch a generic Throwable instead of an
+      // exception. Here I'm specifically worried about 
+      // FactoryConfigurationErrors and
+      // ParserConfigurationExceptions, both of which are real
+      // possibilities in a servlet environment because of the
+      // weird ways servlet containers arrange classpaths.
+      throw new ServletException(
+       "Could not locate a JAXP parser", t); 
+    }
+    
+    try {
+      TransformerFactory xformFactory 
+       = TransformerFactory.newInstance();  
+      this.idTransform = xformFactory.newTransformer();
+    }
+    catch (Throwable t) { 
+      throw new ServletException(
+       "Could not locate a JAXP transformer", t); 
+    }
+    
+  }   
+  
+  // Respond to an XML-RPC request
+  public void doPost(HttpServletRequest servletRequest,
+   HttpServletResponse servletResponse)
+   throws ServletException, IOException {
+    
+    servletResponse.setContentType("text/xml; charset=UTF-8");               
+    PrintWriter out = servletResponse.getWriter();
+    InputStream in  = servletRequest.getInputStream();
+
+    Document request;
+    Document response;
+    try {
+      request = parser.parse(in);
+
+      NodeList ints = request.getElementsByTagName("int");
+      if (ints.getLength() == 0) {
+        // XML-RPC allows i4 as an alias for int.
+        ints = request.getElementsByTagName("i4"); 
+      }
+      Node input = ints.item(0); // throws NullPointerException
+      String generations = getFullText(input);
+      int numberOfGenerations = Integer.parseInt(generations);
+      BigInteger result = calculateFibonacci(numberOfGenerations);
+      response = makeResponseDocument(result);
+    }
+    catch (SAXException e) {  
+      response = makeFaultDocument(MALFORMED_REQUEST_DOCUMENT, e.getMessage());
+    }
+    catch (NullPointerException e) {  
+      response = makeFaultDocument(INDEX_MISSING, e.getMessage());
+    }
+    catch (NumberFormatException e) {  
+      response = makeFaultDocument(BAD_INTEGER_FORMAT, e.getMessage());
+    }
+    catch (IndexOutOfBoundsException e) {  
+      response = makeFaultDocument(NON_POSITIVE_INDEX, e.getMessage());
+    }
+    catch (Exception e) {  
+      response = makeFaultDocument(UNEXPECTED_PROBLEM, e.getMessage());
+    }
+    
+    // Transform onto the OutputStream
+    try {
+      Source input = new DOMSource(response);
+      Result output = new StreamResult(out);
+      idTransform.transform(input, output);
+      servletResponse.flushBuffer();
+      out.flush(); 
+      out.println();
+    }
+    catch (TransformerException e) {
+      // If we get an exception at this point, it's too late to
+      // switch over to an XML-RPC fault.
+      throw new ServletException(e); 
+    }
+    
+  }
+
+  
+  // Given a node which does not contain any Element children,
+  // accumulate all its text content from both text nodes and
+  // CDATA sections (but not comments or processing instructions 
+  // and return it as a single string.
+  private static String getFullText(Node node) {
+    
+    StringBuffer result = new StringBuffer();
+    
+    NodeList children = node.getChildNodes();
+    for (int i = 0; i &lt; children.getLength(); i++) {
+      Node child = children.item(i);
+      int type = child.getNodeType();
+      if (type == Node.TEXT_NODE 
+       || type == Node.CDATA_SECTION_NODE) {
+        result.append(child.getNodeValue()); 
+      }
+      else if (type == Node.ENTITY_REFERENCE_NODE) {
+        // The JAXP spec is unclear about whether or not it's
+        // possible for entity reference nodes to appear in the
+        // tree. Just in case, let's expand them recursively:
+        result.append(getFullText(child));
+        // Validity does require that if they do appear their 
+        // replacement text is pure text, no elements.
+      }
+    }
+    
+    return result.toString();
+    
+  }
+  
+  // If performance is an issue, this could be pre-built in the
+  // init() method and then cached. You'd just change one text 
+  // node each time.  This would only work in a SingleThreadModel 
+  // servlet.
+  public Document makeResponseDocument(BigInteger result) {
+    
+    Document response 
+     = impl.createDocument(null, "methodResponse", null);
+     
+    Element methodResponse = response.getDocumentElement();
+    Element params         = response.createElement("params");
+    Element param          = response.createElement("param");
+    Element value          = response.createElement("value");
+    Element doubleElement  = response.createElement("double");
+    Text    text = response.createTextNode(result.toString()); 
+ 
+    methodResponse.appendChild(params);
+    params.appendChild(param);
+    param.appendChild(value);
+    value.appendChild(doubleElement);
+    doubleElement.appendChild(text);
+
+    return response;
+   
+  }
+  
+  public Document makeFaultDocument(int faultCode, String faultString) {
+        
+    Document faultDoc
+     = impl.createDocument(null, "methodResponse", null);
+     
+    Element methodResponse = faultDoc.getDocumentElement();
+    
+    Element fault         = faultDoc.createElement("fault");
+    Element value         = faultDoc.createElement("value");
+    Element struct        = faultDoc.createElement("struct");
+    Element memberCode    = faultDoc.createElement("member");
+    Element nameCode      = faultDoc.createElement("name");
+    Text    nameCodeText  = faultDoc.createTextNode("faultCode");
+    Element valueCode     = faultDoc.createElement("value");
+    Element intCode       = faultDoc.createElement("int");
+    String  codeString    = String.valueOf(faultCode);
+    Text    textCode      = faultDoc.createTextNode(codeString);
+    Element doubleElement = faultDoc.createElement("double");
+    Element memberString  = faultDoc.createElement("member");
+    Element nameString    = faultDoc.createElement("name");
+    Text    nameText    = faultDoc.createTextNode("faultString");
+    Element valueString   = faultDoc.createElement("value");
+    Element stringString  = faultDoc.createElement("string");
+    Text    textString    = faultDoc.createTextNode(faultString);
+
+    methodResponse.appendChild(fault);
+    fault.appendChild(value);
+    value.appendChild(struct);
+    struct.appendChild(memberCode);
+    struct.appendChild(memberString);
+    memberCode.appendChild(nameCode);
+    memberCode.appendChild(valueCode);
+    memberString.appendChild(nameString);
+    memberString.appendChild(valueString);
+    nameCode.appendChild(nameCodeText);
+    nameString.appendChild(nameText);
+    valueCode.appendChild(intCode);
+    valueString.appendChild(stringString);
+    intCode.appendChild(textCode);
+    stringString.appendChild(textString);
+    
+    return faultDoc;
+       
+  } 
+  
+  public static BigInteger calculateFibonacci(int generations) 
+   throws IndexOutOfBoundsException {
+    
+    if (generations &lt; 1) {
+      throw new IndexOutOfBoundsException(
+       "Fibonacci numbers are not defined for " + generations 
+       + "or any other number less than one.");
+    }
+    BigInteger low  = BigInteger.ONE;
+    BigInteger high = BigInteger.ONE;      
+    for (int i = 2; i &lt;= generations; i++) {
+      BigInteger temp = high;
+      high = high.add(low);
+      low = temp;
+    }
+    return low;   
+        
+  }
+
+}
+</pre></div><p>
+      To compile <tt>FibonacciXMLRPCDOMServlet</tt>,
+      you'll need to install 
+       the Java Servlet API somewhere in your class path.
+       This is not included in the default distribution of the
+       JDK.
+      To get this to run in 
+      most servlet containers, you&#8217;ll need to add
+      the JAR files for the DOM and JAXP 
+      implementations to the servlet&#8217;s library. In
+      Tomcat, that directory is <tt>$TOMCAT_HOME/lib</tt>.
+      It is not enough to have them in the virtual machine&#8217;s
+      default <tt>ext</tt> 
+      directory because most servlet engines do not
+      load classes from there.
+      Details are in <a href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java">Chapter&nbsp;3</a>.
+    </p><p>
+      The servlet is divided into six methods.
+      The <tt>init()</tt> method,
+      the servlet substitute for a constructor, 
+      is responsible for finding a 
+      <tt>DOMImplementation</tt> class
+      and 
+      loading a parser and a transformer engine.
+      There&#8217;s no reason to waste time
+      creating new ones for each request.
+    </p><p>
+      <tt>doPost()</tt> is the standard servlet 
+      method for responding to 
+      HTTP POST. Each POST to this servlet represents a
+      separate XML-RPC request.
+      This method first uses 
+      <tt>getElementsByTagName()</tt> 
+      to find the single <tt>int</tt> element in this
+      request. Then it extracts the text content of this element
+      and converts it to a Java <tt>int</tt>. This is more involved than
+      you might expect because it&#8217;s necessary to consider the
+      possibility 
+      that this text might not be part of a single node.
+      For example, any of these three legal elements would give
+      the <tt>int</tt> element
+      multiple children:
+    </p><div class="informalexample"><pre class="programlisting">&lt;int&gt;12&lt;!-- Why is this comment here? --&gt;34&lt;/int&gt;
+&lt;int&gt;&lt;?target data?&gt;1234&lt;/int
+&lt;int&gt;12&lt;![CDATA[34]]&gt;&lt;/int&gt;</pre></div><p>
+      Admittedly these are edge cases, but they have to be
+      handled because they are legal. Comments and 
+      CDATA sections could be eliminated at parse time
+      with the <tt>DocumentBuilderFactory</tt>&#8217;s
+      <tt>setCoalescing(true)</tt> and
+      <tt>setIgnoringComments(true)</tt> methods.
+      However, that still leaves the possibility of a processing
+      instruction.
+    </p><p>
+      There are also a lot of illegal things we aren&#8217;t handling.
+      For instance, nothing notices if the
+      <tt>methodName</tt> element is missing or if the 
+      root element isn&#8217;t <tt>methodCall</tt>.
+      The proper way to handle this is to write a schema and
+      validate the document against it before processing.
+      An XML-RPC schema was demonstrated in <a href="ch02s05.html#xmlrpc.xsd" title="Example&nbsp;2.14.&nbsp;A Schema for XML-RPC">Example&nbsp;2.14</a>.
+      However, actually validating against this requires resorting to
+      parser-specific classes. If you&#8217;re using Xerces, the
+      following code would do the trick:
+    </p><div class="informalexample"><pre class="programlisting">DOMParser parser = new DOMParser();
+parser.setErrorHandler(<i><tt>YourErrorHandler</tt></i>);
+parser.setFeature(
+ "http://apache.org/xml/features/validation/schema", true);
+parser.setProperty(
+ "http://apache.org/xml/properties/schema/"
+ + "external-noNamespaceSchemaLocation",
+ "http://example.com/schemas/xmlrpc.xsd");
+parser.parse(in);
+Document doc = parser.getDocument();
+// Work with the parser as before&#8230;</pre></div><p>
+       <tt><i><tt>YourErrorHandler</tt></i></tt> 
+       is an instance of some
+       <tt>org.xml.sax.ErrorHandler</tt>
+       implementation that throws a
+       <tt>SAXException</tt> on detecting a
+       validity error. Other schema-validating parsers like
+       Oracle have slightly different APIs for checking a
+       document against a known schema. 
+       Neither JAXP nor DOM2 provides a standard way to do this. 
+    When finished and implemented, DOM3 
+    should allow you to perform schema-validation in a parser
+    independent fashion.
+      </p><p>
+      Assuming the request document is valid, 
+      the next step is to calculate the requested Fibonacci
+      number.
+      The <tt>calculateFibonacci()</tt> 
+      method does this. There&#8217;s nothing new here, just math. 
+      This method doesn&#8217;t have to know
+      anything about XML, DOM, or XML-RPC. If the original
+      XML-RPC request contained a non-positive integer, then this
+      method detects it and throws an
+      <tt>IndexOutOfBoundsException</tt>.
+      This will be caught in the <tt>doPost()</tt>
+      method and converted into an XML-RPC fault response.
+     </p><p> 
+      Once the result has been calculated, the 
+      <tt>makeResponseDocument()</tt> method 
+      wraps it up in properly formatted XML-RPC.
+      If at any point something goes wrong, e.g. the request document
+      is missing the required <tt>int</tt> element, an
+      exception is thrown. This is caught and instead of the 
+      normal response, <tt>makeFaultDocument()</tt>
+      is called to produce a proper XML-RPC fault response
+      document. 
+     </p><p>  
+      Finally, a JAXP
+      identity transform copies the finished result document
+      onto the servlet&#8217;s 
+      output <tt>Writer</tt>. 
+      There&#8217;s not a lot we can do about an exception at this
+      point, so any <tt>TransformerException</tt>s 
+      caught during the transform are
+      converted into a <tt>ServletException</tt>
+      with the original exception being available as the 
+      root cause of the
+      <tt>ServletException</tt>.
+      We can&#8217;t just let the <tt>TransformerException</tt>
+      exception bubble up because
+      <tt>doPost()</tt> in the superclass is not
+      declared to throw it.
+    </p><p>
+      The SOAP servlet is similar in structure. However, 
+      namespaces are significant in SOAP
+      so <tt>getElementsByTagNameNS()</tt>
+      and other namespace-aware methods should be used.
+      <a href="ch10s04.html#FibonacciSOAPDOMServlet.java" title="Example&nbsp;10.14.&nbsp;A DOM based SOAP servlet">Example&nbsp;10.14</a> demonstrates.
+    </p><div class="example"><a name="FibonacciSOAPDOMServlet.java"></a><p class="title"><b>Example&nbsp;10.14.&nbsp;A DOM based SOAP servlet</b></p><pre class="programlisting">import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+import java.math.BigInteger;
+import org.w3c.dom.*;
+import org.xml.sax.SAXException;
+import javax.xml.parsers.*;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+
+public class FibonacciSOAPDOMServlet extends HttpServlet 
+  implements SingleThreadModel {
+
+  // Fault codes   
+  public final static String MALFORMED_REQUEST_DOCUMENT 
+   = "MalformedRequest";
+  public final static String INVALID_REQUEST_DOCUMENT 
+   = "InvalidRequest";
+  public final static String INDEX_MISSING 
+   = "IndexMissing";
+  public final static String NON_POSITIVE_INDEX 
+   = "NonPositiveIndex";
+  public final static String BAD_INTEGER_FORMAT
+  = "BadIntegerFormat";
+  public final static String UNEXPECTED_PROBLEM
+  = "UnexpectedProblem";    
+    
+  private DocumentBuilder   parser;
+  private DOMImplementation impl;
+  private Transformer       idTransform;
+  
+  // Load a parser, transformer, and implementation
+  public void init() throws ServletException {  
+  
+    try {
+      DocumentBuilderFactory factory 
+       = DocumentBuilderFactory.newInstance();
+      // Always turn on namespace awareness
+      factory.setNamespaceAware(true);
+
+      this.parser = factory.newDocumentBuilder();
+      this.impl   = parser.getDOMImplementation();
+      
+    }
+    catch (Throwable t) { 
+      throw new ServletException(
+       "Could not locate a JAXP parser", t); 
+    }
+    
+    try {
+      TransformerFactory xformFactory = TransformerFactory.newInstance();  
+      this.idTransform = xformFactory.newTransformer();
+    }
+    catch (Throwable t) { 
+      throw new ServletException(
+       "Could not locate a JAXP transformer", t); 
+    }
+    
+  } 
+  
+  public void doPost(HttpServletRequest servletRequest,
+   HttpServletResponse servletResponse)
+   throws ServletException, IOException {
+    
+    servletResponse.setContentType("text/xml; charset=UTF-8");               
+    PrintWriter out = servletResponse.getWriter();
+    InputStream in  = servletRequest.getInputStream();
+
+    Document request;
+    Document response;
+    String generations ="here";
+    try {
+      request = parser.parse(in);
+       
+      NodeList ints = request.getElementsByTagNameNS(
+       "http://namespaces.cafeconleche.org/xmljava/ch3/", 
+       "calculateFibonacci");
+      Node input = ints.item(0);
+      generations = getFullText(input);
+      int numberOfGenerations = Integer.parseInt(generations);
+      BigInteger result = calculateFibonacci(numberOfGenerations);
+      response = makeResponseDocument(result);
+    }
+    catch (SAXException e) {  
+      response = makeFaultDocument(MALFORMED_REQUEST_DOCUMENT, 
+       e.getMessage());
+    }
+    catch (NullPointerException e) {  
+      response = makeFaultDocument(INDEX_MISSING, 
+       e.getMessage());
+    }
+    catch (NumberFormatException e) {  
+      response = makeFaultDocument(BAD_INTEGER_FORMAT, 
+       generations + e.getMessage());
+    }
+    catch (IndexOutOfBoundsException e) {  
+      response = makeFaultDocument(NON_POSITIVE_INDEX, 
+       e.getMessage());
+    }
+    catch (Exception e) {  
+      response = makeFaultDocument(UNEXPECTED_PROBLEM, 
+       e.getMessage());
+    }
+    
+    // Transform onto the OutputStream
+    try {
+      Source input = new DOMSource(response);
+      Result output = new StreamResult(out);
+      idTransform.transform(input, output);
+      servletResponse.flushBuffer();
+      out.flush(); 
+
+      out.println();
+    }
+    catch (TransformerException e) {
+      // If we get an exception at this point, it's too late to
+      // switch over to a SOAP fault
+      throw new ServletException(e); 
+    }
+    
+  }
+
+  private static String getFullText(Node node) {
+    
+    StringBuffer result = new StringBuffer();
+
+    NodeList children = node.getChildNodes();
+    for (int i = 0; i &lt; children.getLength(); i++) {
+      Node child = children.item(i);
+      int type = child.getNodeType();
+      if (type == Node.TEXT_NODE 
+       || type == Node.CDATA_SECTION_NODE) {
+        result.append(child.getNodeValue()); 
+      }
+    }
+
+    return result.toString();
+    
+  }  
+
+  // The details of the formats and namespace URIs are likely to
+  // change when SOAP 1.2 is released.
+  public Document makeResponseDocument(BigInteger result) {
+    
+    Document response 
+     = impl.createDocument(
+      "http://schemas.xmlsoap.org/soap/envelope/", 
+      "SOAP-ENV:Envelope", null);
+     
+    Element envelope = response.getDocumentElement();
+    Element body = response.createElementNS(
+     "http://schemas.xmlsoap.org/soap/envelope/", 
+     "SOAP-ENV:Body");
+    envelope.appendChild(body);
+ 
+    Element Fibonacci_Numbers = response.createElementNS( 
+     "http://namespaces.cafeconleche.org/xmljava/ch3/",
+     "Fibonacci_Numbers");
+    body.appendChild(Fibonacci_Numbers);
+
+    Element fibonacci = response.createElementNS(
+     "http://namespaces.cafeconleche.org/xmljava/ch3/",
+     "fibonacci");
+    Fibonacci_Numbers.appendChild(fibonacci);
+
+    Text text = response.createTextNode(result.toString()); 
+    fibonacci.appendChild(text);
+
+    return response;
+   
+  }
+  
+  public Document makeFaultDocument(String code, String message){
+    
+    Document faultDoc = impl.createDocument(
+      "http://schemas.xmlsoap.org/soap/envelope/", 
+      "SOAP-ENV:Envelope", null);
+
+    Element envelope = faultDoc.getDocumentElement();
+
+    Element body = faultDoc.createElementNS(
+     "http://schemas.xmlsoap.org/soap/envelope/", 
+     "SOAP-ENV:Body");
+    envelope.appendChild(body);
+ 
+    Element fault = faultDoc.createElementNS(
+     "http://schemas.xmlsoap.org/soap/envelope/", "Fault");
+    body.appendChild(fault);
+
+    Element faultCode = faultDoc.createElement("faultcode");
+    fault.appendChild(faultCode);
+
+    Element faultString = faultDoc.createElement("faultstring");
+    fault.appendChild(faultString);
+
+    Text textCode = faultDoc.createTextNode(code);
+    faultCode.appendChild(textCode);
+
+    Text textString = faultDoc.createTextNode(message);
+    faultString.appendChild(textString);
+    
+    return faultDoc;
+       
+  } 
+  
+  public static BigInteger calculateFibonacci(int generations) 
+   throws IndexOutOfBoundsException {
+    
+    if (generations &lt; 1) {
+      throw new IndexOutOfBoundsException(
+       "Fibonacci numbers are not defined for " + generations 
+       + "or any other number less than one.");
+    }
+    BigInteger low  = BigInteger.ONE;
+    BigInteger high = BigInteger.ONE;      
+    for (int i = 2; i &lt;= generations; i++) {
+      BigInteger temp = high;
+      high = high.add(low);
+      low = temp;
+    }
+    return low;   
+        
+  }
+
+}
+</pre></div><p>
+      This example has the same basic structure as the XML-RPC version.
+      That is, the <tt>init()</tt> 
+      method loads the parser, DOM implementation, and identity transform. 
+      The <tt>doPost()</tt> method reads the 
+      request data and delegates building the request to the
+      <tt>makeResponseDocument()</tt> method.
+      If anything goes wrong, the
+      <tt>makeFaultDocument()</tt> is called to
+      produce a properly formatted SOAP fault response.
+      Finally, a JAXP ID transform serializes the
+      response onto the network stream.
+      The formats of the request and response are
+      a little different, but the program flow is the same.
+    </p><p>
+      I did structure the building of the two response documents
+      (success and fault) a little differently. 
+      <tt>FibonacciXMLRPCServlet</tt>
+      built all the nodes first and then connected them to each
+      other. Here I add them to the tree as soon as they&#8217;re
+      created. There&#8217;s not a lot of reason to do it one way or the
+      other. Just use whichever seems more natural to you. 
+    </p><p>
+      The details can be a little opaque. In a real-world program
+      I&#8217;d definitely add some comments showing an example of the documents
+      each method builds. If you&#8217;re building a lot of XML-RPC or
+      SOAP documents with varying parameters, then it wouldn&#8217;t
+      hurt to either develop a more generic library or 
+      buy or borrow a third-part library such as 
+      <a href="http://xml.apache.org/soap/docs/index.html" target="_top">Apache SOAP</a>.
+      Behind the scenes, they&#8217;re doing something very much like
+      what I&#8217;ve done in these two examples. 
+    </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e17602"></a>Transferring nodes between documents</h3></div></div><p>
+        In DOM, every node belongs to exactly one document at all times. 
+        It cannot exist independently of a 
+        <tt>Document</tt>, and it
+        cannot be part of more than one <tt>Document</tt> at the same
+        time. This is why the
+        <tt>Document</tt> interface serves
+        as the factory for creating node objects of various
+        kinds. 
+        Furthermore, in DOM2, a node cannot be detached from its
+        original document and placed in a new document.
+        However, this restriction is loosened somewhat in DOM3. 
+      </p><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e17616"></a>Copying Nodes</h4></div></div><p>
+          The <tt>importNode()</tt> method 
+          makes a copy of a node found in
+          another document.
+          The copy can then be inserted in the
+          importing document&#8217;s tree using the usual methods like
+          <tt>insertBefore()</tt> and <tt>appendChild()</tt>.
+          The document from which the node is imported is not
+          changed in any way.
+        </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">Node&nbsp;</span><span class="methodname"><b>importNode</b></span>(<span class="methodparam"><span class="type">Node&nbsp;</span><span class="parameter"><i>toBeImported</i></span></span>, <span class="methodparam"><span class="type">boolean&nbsp;</span><span class="parameter"><i>deep</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">DOMException</span>;</code><p>
+          The <i><tt>deep</tt></i> argument determines
+          whether or not all the node&#8217;s descendants are copied
+          with it. If true, they are. If false, they aren&#8217;t.
+        </p><p>
+          Document and document type nodes cannot be imported.
+          Trying to import one will throw a
+          <tt>DOMException</tt>.
+          Entity and notation nodes can be imported but cannot be
+          added as children of the importing document&#8217;s document
+          type node.
+          Thus there&#8217;s really not a lot of reason to import
+          them.
+        </p><p>
+          Most of the other kinds of nodes 
+          can be imported with pretty much the results
+          you&#8217;d expect. (Just remember to pass true for the
+          second argument. This is almost always what you want.)
+          The only really tricky ones are entity reference
+          nodes. Even if <i><tt>deep</tt></i> is true, the
+          children of the entity reference node are not copied.
+          Instead the replacement text (node list) of the imported entity
+          reference depends on what the importing document&#8217;s DTD says it is, 
+          not the original replacement text. 
+        </p></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e17664"></a>Moving Nodes</h4></div></div><p>
+          DOM Level 3 adds  an
+          <tt>adoptNode()</tt> method that moves
+          a node from one document to another. That is, the node
+          is deleted from the original document and inserted into the new
+          document:
+        </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">Node&nbsp;</span><span class="methodname"><b>adoptNode</b></span>(<span class="methodparam"><span class="type">Node&nbsp;</span><span class="parameter"><i>adoptee</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">DOMException</span>;</code><p>
+        Adopted nodes are always moved with all their descendants
+        intact. Otherwise, this behaves pretty much like 
+        <tt>importNode</tt>. That is, 
+        document nodes, document type nodes, notation nodes, and
+        entity nodes cannot be adopted. All other kinds can be. 
+        Descendants of entity reference nodes are deleted from
+        the original document but not copied into the new
+        document. 
+      </p><p>
+        As usual with DOM3 methods, this is past the bleeding
+        edge.
+        The latest versions of Xerces support it, but no other
+        parsers do.
+        There are also still a lot of unresolved issues concerning 
+        the behavior of this method, so I wouldn&#8217;t rely on it. 
+        For the time being, its better to use a two-step
+        procedure in which a node is first copied into the new
+        document with <tt>importNode()</tt> and
+        then deleted from the original document with 
+        <tt>removeChild()</tt>.
+      </p></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch10s03.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch10.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch10s05.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">The Document Interface as an Abstract Factory&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Normalization</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+July 27,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

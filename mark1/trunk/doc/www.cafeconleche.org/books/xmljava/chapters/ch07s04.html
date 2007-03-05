@@ -1,0 +1,1347 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Features and Properties</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="previous" href="ch07s03.html" title="Exceptions and Errors"><link rel="next" href="ch07s05.html" title="DTDHandler"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"><link rel="subsection" href="ch07s04.html#d0e10881" title="Getting and Setting Features"><link rel="subsection" href="ch07s04.html#d0e10988" title="Getting and Setting Properties"><link rel="subsection" href="ch07s04.html#d0e11077" title="Required Features"><link rel="subsection" href="ch07s04.html#d0e11229" title="Standard Features"><link rel="subsection" href="ch07s04.html#d0e11370" title="Standard Properties"><link rel="subsection" href="ch07s04.html#d0e11634" title="Xerces Custom Features"><link rel="subsection" href="ch07s04.html#d0e11769" title="Xerces Custom Properties"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Features and Properties</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch07s03.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;7.&nbsp;The XMLReader Interface</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch07s05.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e10859"></a>Features and Properties</h2></div></div><p>
+    SAX parsers, that is, <tt>XMLReader</tt> objects, are
+    configured by setting features and properties. A feature has
+    a boolean true/false value. A property has an object value.
+    Both features and properties are named by absolute URIs.
+    This allows just a handful of standard methods to support
+    an arbitrary number of standard and non-standard features and
+    properties of various types.
+   </p><p>
+    Features and properties can be read-only, write-only (rare),
+    or read-write. If you attempt to change a read-only feature
+    or property, 
+    a <tt>SAXNotSupportedException</tt>, a subclass of
+    <tt>SAXException</tt>. is thrown.
+    The accessibility of a feature or property can change depending on
+    whether or not the <tt>XMLReader</tt> 
+    is currently parsing a document. For example,
+    you can turn validation on or off before or after parsing a document,
+    but not while the <tt>XMLReader</tt>
+    is parsing a document.
+  </p><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e10881"></a>Getting and Setting Features</h3></div></div><p>
+    The <tt>XMLReader</tt> interface provides these 
+    two methods to turn features on and off:
+  </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setFeature</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>name</i></span></span>, <span class="methodparam"><span class="type">boolean&nbsp;</span><span class="parameter"><i>value</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">SAXNotRecognizedException</span>, <span class="exceptionname">SAXNotSupportedException</span>;</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">boolean&nbsp;</span><span class="methodname"><b>getFeature</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>name</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">SAXNotRecognizedException</span>, <span class="exceptionname">SAXNotSupportedException</span>;</code><p>
+    The first argument is the name of the feature to set or get.
+    Feature names are absolute URIs.
+    Standard features that are supported by multiple parsers have names that begin with 
+    <tt>http://xml.org/sax/features/</tt>.
+        For example,
+    this next code fragment checks to see if the 
+    <tt>XMLReader</tt> object 
+    <tt>parser</tt> is currently validating; and, if
+    it isn&#8217;t,
+    turns on validation by setting the
+    feature <tt>http://xml.org/sax/features/validation</tt>
+    to true.
+  </p><div class="informalexample"><pre class="programlisting">if (!parser.getFeature("http://xml.org/sax/features/validation")) {
+  parser.setFeature("http://xml.org/sax/features/validation", true);
+}</pre></div><p>
+    However, different parsers also support non-standard, custom
+    features. The names of these features begin with
+    URLs somewhere in the parser vendor&#8217;s domain. For example,
+    non-standard features of the Xerces parser from the XML
+    Apache Project begin with 
+    <tt>http://apache.org/xml/features/</tt>.
+   </p><p>
+If the 
+    <tt>XMLReader</tt> object can never
+    access the 
+    feature you&#8217;re trying to get or set, 
+    
+     <tt>setFeature()</tt> throws a
+    <tt>SAXNotRecognizedException</tt>.
+    On the other hand, if you try to get or set a feature 
+    that the parser recognizes but cannot access at the current
+    time, <tt>setFeature()</tt>
+    throws a
+    <tt>SAXNotSupportedException</tt>.  
+    Both are subclasses of  <tt>SAXException</tt>. 
+    For
+    example, if <tt>parser</tt> is a non-validating
+    parser like <tt>gnu.xml.aelfred2.SAXDriver</tt>, 
+    then the above code would throw 
+    <tt>SAXNotRecognizedException</tt>. However, if
+    <tt>parser</tt> is a validating
+    parser like Xerces but the <tt>setFeature()</tt> method were invoked 
+    while it was parsing a document, then it would throw a
+    <tt>SAXNotSupportedException</tt> because you
+    can&#8217;t turn on validation halfway through a document. Since these
+    are checked exceptions,
+    you&#8217;ll need to either catch these exceptions or declare that
+    your method throws them. For example,
+</p><div class="informalexample"><pre class="programlisting">try {
+  if (!parser.getFeature("http://xml.org/sax/features/validation")) {
+    parser.setFeature("http://xml.org/sax/features/validation", true);
+  }
+}
+catch (SAXNotRecognizedException) {
+  System.out.println(parser + " is not a validating parser.");
+}
+catch (SAXNotSupportedException) {
+  System.out.println(
+   "Cannot turn on validation right now. Try again later."
+  ); 
+}</pre></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e10988"></a>Getting and Setting Properties</h3></div></div><p>
+    The <tt>XMLReader</tt> interface uses these 
+    two methods to set and get the values of properties:
+  </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setProperty</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>name</i></span></span>, <span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>value</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">SAXNotRecognizedException</span>, <span class="exceptionname">SAXNotSupportedException</span>;</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">Object&nbsp;</span><span class="methodname"><b>getProperty</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>name</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">SAXNotRecognizedException</span>, <span class="exceptionname">SAXNotSupportedException</span>;</code><p>
+    Properties are named by absolute URIs, just like features.
+    Standard properties have names that begin with 
+    <tt>http://xml.org/sax/properties/</tt> such as 
+    <tt>http://xml.org/sax/properties/declaration-handler</tt>
+    and <tt>http://xml.org/sax/properties/xml-string</tt>.
+    However, most parsers also support some non-standard, custom
+    properties. The names of these will begin with
+    URLs somewhere in the parser vendor&#8217;s domain. For example,
+    non-standard properties of the Xerces parser from the XML
+    Apache Project begin with <tt>http://apache.org/xml/properties/</tt>,
+    for instance <tt>http://apache.org/xml/properties/schema/external-noNamespaceSchemaLocation</tt>.
+   </p><p>
+    The value of a property is an object.
+    The type of the object depends on which property it is.
+    For instance, the value of the 
+    <tt>http://xml.org/sax/properties/declaration-handler</tt> property is an
+    <tt>org.xml.sax.ext.DeclHandler</tt>
+    while the value of the 
+    <tt>http://xml.org/sax/properties/xml-string</tt> 
+    property is a <tt>java.lang.String</tt>.
+    Passing an object of the wrong type for the property
+    to <tt>setProperty()</tt>
+    results in a <tt>SAXNotSupportedException</tt>.
+    </p><p>
+     For example, suppose you&#8217;re using Xerces and you want to set
+     the schema location for elements that are not in any
+     namespace to <tt>http://www.example.com/schema.xsd</tt>. 
+      This code fragment accomplishes that:
+    </p><div class="informalexample"><pre class="programlisting">try {
+  parser.setProperty("http://apache.org/xml/properties/schema/"
+   + "external-noNamespaceSchemaLocation", 
+   "http://www.example.com/schema.xsd");
+}
+catch (SAXNotRecognizedException) {
+  System.out.println(parser 
+   + " is not a schema-validating parser.");
+}
+catch (SAXNotSupportedException) {
+  System.out.println(
+   "Cannot change the schema right now. Try again later."
+  ); 
+}</pre></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e11077"></a>Required Features</h3></div></div><p>
+   There are only a couple of features which all SAX parsers must
+   support and no absolutely required properties. The
+   two required features are:
+  </p><div class="itemizedlist"><ul type="disc"><li><p><tt>http://xml.org/sax/features/namespaces</tt></p></li><li><p><tt>http://xml.org/sax/features/namespace-prefixes</tt></p></li></ul></div><p>
+    The <tt>http://xml.org/sax/features/namespaces</tt>
+    feature determines whether
+    namespace URIs and local names are passed to <tt>startElement()</tt> and
+    <tt>endElement()</tt>.
+    The default, true, passes both namespace URIs and local
+    names.
+    However, if <tt>http://xml.org/sax/features/namespaces</tt>
+    is false,
+    then the parser may pass the namespace URI and the local
+    name, or it may just pass empty strings for these two
+    arguments. The default is true, and there&#8217;s 
+    not a lot of reason to change it.
+    (You can always ignore the URI and local name if you don&#8217;t
+    need them.)
+  </p><p>
+    The <tt>http://xml.org/sax/features/namespace-prefixes</tt> feature 
+    determines two things:
+  </p><div class="itemizedlist"><ul type="disc"><li><p>
+      Whether or not namespace declaration <tt>xmlns</tt> and
+      <tt>xmlns:<i><tt>prefix</tt></i></tt> attributes are
+      included in the  <tt>Attributes</tt> list passed to  
+      <tt>startElement()</tt>.  The default,
+      false, is not to include them.
+      </p></li><li><p>
+      Whether or not the qualified names should be passed as the third argument
+      to the 
+      <tt>startElement()</tt> method.
+      The default,
+      false, is, not to require qualified names. However, even if
+      <tt>http://xml.org/sax/features/namespace-prefixes</tt> is false,
+      parsers are allowed to report the qualified name, and most
+      do so.
+      </p></li></ul></div><p>  
+    For example,
+    consider this start-tag:
+  </p><div class="informalexample"><pre class="programlisting">&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://www.purl.org/dc/" id="R1"&gt;</pre></div><p>
+    If <tt>http://xml.org/sax/features/namespace-prefixes</tt>
+    is false
+    and <tt>http://xml.org/sax/features/namespaces</tt> is true, then 
+    when a SAX parser reads this tag it may invoke the
+    <tt>startElement()</tt> method in its registered 
+    <tt>ContentHandler</tt> object with these arguments:
+  </p><div class="informalexample"><pre class="programlisting">startElement(
+  namespaceURI="http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+  localName = "RDF",
+  qualifiedName="",
+  attributes={id="R1"}
+)</pre></div><p>
+  Alternately, it can choose to provide the qualified name even
+  though it isn&#8217;t required to:
+</p><div class="informalexample"><pre class="programlisting">startElement(
+  namespaceURI="http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+  localName = "RDF",
+  qualifiedName="rdf:RDF",
+  attributes={id="R1"}
+)</pre></div><p>
+    However, if <tt>http://xml.org/sax/features/namespace-prefixes</tt>
+    is true
+    and <tt>http://xml.org/sax/features/namespaces</tt> is true, then 
+    when a SAX parser reads this tag it invokes the
+    <tt>startElement()</tt> method like
+    this:
+  </p><div class="informalexample"><pre class="programlisting">startElement(
+  namespaceURI="http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+  localName = "RDF",
+  qualifiedName="rdf:RDF",
+  attributes={id="R1", xmlns:dc="http://www.purl.org/dc/",
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"}
+)</pre></div><p>
+    If <tt>http://xml.org/sax/features/namespace-prefixes</tt> is true
+    and <tt>http://xml.org/sax/features/namespaces</tt> is false, then 
+    when a SAX parser reads this tag it may invoke the
+    <tt>startElement()</tt> method like
+    this:
+  </p><div class="informalexample"><pre class="programlisting">startElement(
+  namespaceURI="",
+  localName = "",
+  qualifiedName="rdf:RDF",
+  attributes={id="R1", xmlns:dc="http://www.purl.org/dc/",
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"}
+)</pre></div><p>
+    Then again it may provide the namespace URI and local name
+    anyway, even though it doesn&#8217;t have to:
+  </p><div class="informalexample"><pre class="programlisting">startElement(
+  namespaceURI="http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+  localName = "RDF",
+  qualifiedName="rdf:RDF",
+  attributes={id="R1", xmlns:dc="http://www.purl.org/dc/",
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"}
+)</pre></div><p>
+    In other words,
+  </p><div class="itemizedlist"><ul type="disc"><li><p>
+      The parser is only guaranteed to provide the namespace URIs
+      and local names of elements and attributes if 
+      <tt>http://xml.org/sax/features/namespaces</tt> is true (which it is
+      by default). 
+      </p></li><li><p>
+      The parser is only guaranteed to provide the qualified 
+      names of elements and attributes if 
+      <tt>http://xml.org/sax/features/namespace-prefixes</tt> is true (which it is
+      not by default). 
+      </p></li><li><p>
+      The parser provides namespace declaration attributes  if
+      and only if 
+      <tt>http://xml.org/sax/features/namespace-prefixes</tt> is true (which it is
+      not by default). 
+      </p></li><li><p>
+      The parser always has the option to provide the namespace URI, local name,
+      and qualified name, regardless of the values of 
+      <tt>http://xml.org/sax/features/namespaces</tt> and 
+      <tt>http://xml.org/sax/features/namespace-prefixes</tt>. However,
+      you should not rely on this behavior. 
+      </p></li></ul></div><p>
+   To summarize, the defaults are fine as long as you
+   don&#8217;t care about namespace prefixes, only local names and
+   URIs.
+  </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e11229"></a>Standard Features</h3></div></div><p>
+   Besides the 
+   two required features, SAX defines a number of standard
+   features which parsers may support if they choose. These
+   have names which are consistent across different parsers and
+   include:
+  </p><div class="itemizedlist"><ul type="disc"><li><p><tt>http://xml.org/sax/features/external-general-entities</tt></p></li><li><p><tt>http://xml.org/sax/features/external-parameter-entities</tt></p></li><li><p><tt>http://xml.org/sax/features/string-interning</tt></p></li><li><p><tt>http://xml.org/sax/features/validation</tt></p></li></ul></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e11251"></a>external-general-entities</h4></div></div><p>
+    If <tt>http://xml.org/sax/features/external-general-entities</tt> is
+    true, then the parser resolves all external general  entity references.
+    If it&#8217;s false, it does not. If the parser is validating, then
+    this feature is required to be true. 
+  </p><p>
+    The default value is parser-dependent. Not all parsers are able to
+    resolve external entity references. Attempting to set this
+    to true with a parser that cannot resolve external entity
+    references will throw a <tt>SAXNotRecognizedException</tt>.
+  </p></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e11264"></a>external-parameter-entities</h4></div></div><p>
+    If <tt>http://xml.org/sax/features/external-parameter-entities</tt> is
+    true, then the parser resolves all external parameter entity references.
+    If it&#8217;s false, it does not. If the parser is validating, then
+    this feature is required to be true. 
+  </p><p>
+    The default value  of this feature is parser-dependent. Not all parsers are able to
+    resolve external entity references. Attempting to set this
+    to true with a parser that cannot resolve external entity
+    references will throw a <tt>SAXNotRecognizedException</tt>.
+  </p></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e11277"></a>string-interning</h4></div></div><p>
+    If <tt>http://xml.org/sax/features/string-interning</tt> is
+    true, then the parser internalizes all XML names
+    using the <tt>intern()</tt> method of the
+    <tt>String</tt> class
+    before passing them to the various callback methods.
+    Thus if there are 100 different <tt>paragraph</tt>
+    elements in your document, the parser will only use one 
+    <tt>"paragraph"</tt> string for all 100 start-tags and 100 end-tags
+    rather than 200 separate strings. This can save memory as well as
+    allowing you to compare element names using the 
+    <tt>==</tt> operator
+    instead of the <tt>equals()</tt> method. 
+    Besides element names, this also affects attribute names,
+    entity names, notation names,
+    namespace prefixes, and namespace URIs.
+    The default value is parser-dependent. 
+  </p></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e11303"></a>validation</h4></div></div><p>
+    If <tt>http://xml.org/sax/features/validation</tt> is
+    true, then the parser validates the document against its DTD.
+    Of course not all parsers are capable of doing this.
+    Attempting to set <tt>http://xml.org/sax/features/validation</tt> to
+    true for a parser that doesn&#8217;t know how to validate
+    will throw a <tt>SAXNotRecognizedException</tt>.
+  </p><p>
+    Since validation requires resolving all external entity
+    references, setting 
+    <tt>http://xml.org/sax/features/validation</tt> to
+    true automatically sets 
+    <tt>http://xml.org/sax/features/external-general-entities</tt> 
+    and 
+    <tt>http://xml.org/sax/features/external-parameter-entities</tt> to true as well. 
+  </p><p>
+    The default value of this feature is allegedly
+    parser-dependent, though
+    I&#8217;ve yet to encounter a parser that turns it on by default.
+  </p><p>
+    <a href="ch07s04.html#SAXValidator.java" title="Example&nbsp;7.9.&nbsp;A SAX program that validates documents">Example&nbsp;7.9</a> is a program that uses this feature
+    to validate documents.
+    As well as setting
+    the <tt>http://xml.org/sax/features/validation</tt> feature to
+    true, it&#8217;s also necessary to
+    register an
+    <tt>ErrorHandler</tt> object that can
+    receive messages about validity errors.
+  </p><div class="example"><a name="SAXValidator.java"></a><p class="title"><b>Example&nbsp;7.9.&nbsp;A SAX program that validates documents</b></p><pre class="programlisting">import org.xml.sax.*;
+import org.xml.sax.helpers.XMLReaderFactory;
+import java.io.IOException;
+
+
+public class SAXValidator implements ErrorHandler {
+  
+  // Flag to check whether any errors have been spotted.
+  private boolean valid = true;
+  
+  public boolean isValid() {
+    return valid; 
+  }
+  
+  // If this handler is used to parse more than one document, 
+  // its initial state needs to be reset between parses.
+  public void reset() {
+    // Assume document is valid until proven otherwise
+    valid = true; 
+  }
+  
+  public void warning(SAXParseException exception) {
+    
+    System.out.println("Warning: " + exception.getMessage());
+    System.out.println(" at line " + exception.getLineNumber() 
+     + ", column " + exception.getColumnNumber());
+    // Well-formedness is a prerequisite for validity
+    valid = false;
+    
+  }
+  
+  public void error(SAXParseException exception) {
+     
+    System.out.println("Error: " + exception.getMessage());
+    System.out.println(" at line " + exception.getLineNumber() 
+     + ", column " + exception.getColumnNumber());
+    // Unfortunately there's no good way to distinguish between
+    // validity errors and other kinds of non-fatal errors 
+    valid = false;
+    
+  }
+  
+  public void fatalError(SAXParseException exception) {
+     
+    System.out.println("Fatal Error: " + exception.getMessage());
+    System.out.println(" at line " + exception.getLineNumber() 
+     + ", column " + exception.getColumnNumber()); 
+     
+  }
+  
+
+  public static void main(String[] args) {
+  
+    if (args.length &lt;= 0) {
+      System.out.println("Usage: java SAXValidator URL");
+      return;
+    }
+    String document = args[0];
+    
+    try {
+      XMLReader parser = XMLReaderFactory.createXMLReader();
+      SAXValidator handler = new SAXValidator();
+      parser.setErrorHandler(handler);
+      // Turn on validation. 
+      parser.setFeature(
+       "http://xml.org/sax/features/validation", true);
+      parser.parse(document);
+      if (handler.isValid()) {
+        System.out.println(document + " is valid.");
+      }
+      else {
+        // If the document isn't well-formed, an exception has
+        // already been thrown and this has been skipped.
+        System.out.println(document + " is well-formed.");
+      }
+    }
+    catch (SAXParseException e) {
+      System.out.print(document + " is not well-formed at ");
+      System.out.println("Line " + e.getLineNumber() 
+       + ", column " +  e.getColumnNumber() );
+    }
+    catch (SAXException e) {
+      System.out.println("Could not check document because " 
+       + e.getMessage());
+    }
+    catch (IOException e) { 
+      System.out.println(
+       "Due to an IOException, the parser could not check " 
+       + document
+      ); 
+    }
+  
+  }
+
+}
+</pre></div><p>
+   Here&#8217;s the beginning of the 
+   output from running it across the Docbook XML source code
+   for an early version of this chapter:
+  </p><pre class="screen"><tt>%</tt><b><tt>java -Dorg.xml.sax.driver=org.apache.xerces.parsers.SAXParser SAXValidator
+ xmlreader.xml</tt></b>
+<tt>Error: Element type "xinclude:include" must be declared.
+ at line 344, column 92
+Error: Attribute "href" must be declared for 
+ element type "xinclude:include".
+ at line 344, column 92
+Error: Attribute "parse" must be declared for 
+ element type "xinclude:include".
+ at line 344, column 92
+Error: The content of element type "programlisting" must match 
+"(#PCDATA|footnoteref|xref|abbrev|acronym|citation|citerefentry
+|citetitle|emphasis|firstterm|foreignphrase|glossterm|footnote
+|phrase|quote|trademark|wordasword|link|olink|ulink|action
+|application|classname|methodname|interfacename|exceptionname
+|ooclass|oointerface|ooexception|command|computeroutput|database
+|email|envar|errorcode|errorname|errortype|filename|function
+|guibutton|guiicon|guilabel|guimenu|guimenuitem|guisubmenu
+|hardware|interface|keycap|keycode|keycombo|keysym|literal
+|constant|markup|medialabel|menuchoice|mousebutton|option
+|optional|parameter|prompt|property|replaceable|returnvalue
+|sgmltag|structfield|structname|symbol|systemitem|token|type
+|userinput|varname|anchor|author|authorinitials|corpauthor
+|modespec|othercredit|productname|productnumber|revhistory|remark
+|subscript|superscript|inlinegraphic|inlinemediaobject
+|inlineequation|synopsis|cmdsynopsis|funcsynopsis|classsynopsis
+|fieldsynopsis|constructorsynopsis|destructorsynopsis
+|methodsynopsis|indexterm|beginpage|co|lineannotation)*".
+ at line 344, column 110
+&#8230;
+xmlreader.xml is well-formed.</tt></pre><p>
+    <tt>SAXValidator</tt> is
+    complaining about the XInclude elements I use to merge in  
+    source code examples like <a href="ch07s04.html#SAXValidator.java" title="Example&nbsp;7.9.&nbsp;A SAX program that validates documents">Example&nbsp;7.9</a>.
+    These are not expected by the Docbook DTD. They need to be
+    replaced
+    before the file becomes valid. Once I do that, the merged file
+    (ch07.xml) is
+    valid:
+  </p><pre class="screen"><tt>%</tt><b><tt>java -Dorg.xml.sax.driver=org.apache.xerces.parsers.SAXParser SAXValidator
+ ch07.xml</tt></b>
+<tt>ch07.xml is valid.</tt></pre></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e11370"></a>Standard Properties</h3></div></div><p>
+    SAX does not require parsers to support any properties. 
+    However, it does define 
+    four standard properties which parsers may support if they choose. 
+    These are:
+  </p><div class="itemizedlist"><ul type="disc"><li><p><tt>http://xml.org/sax/properties/declaration-handler</tt></p></li><li><p><tt>http://xml.org/sax/properties/dom-node</tt></p></li><li><p><tt>http://xml.org/sax/properties/lexical-handler</tt></p></li><li><p><tt>http://xml.org/sax/properties/xml-string</tt></p></li></ul></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e11392"></a>xml-string</h4></div></div><p>
+         <tt>http://xml.org/sax/properties/xml-string</tt>
+         is a read-only
+         property that contains the string of text
+         corresponding to the current SAX event. For example,
+         in the <tt>startElement()</tt> method,
+         this property would contain the actual start-tag that
+         caused the method invocation.
+       </p><p>
+         This property can be used in a very
+         straightforward program that echoes an XML document
+         onto a  <tt>Writer</tt>, as shown in
+         <a href="ch07s04.html#DocumentMerger.java" title="Example&nbsp;7.10.&nbsp;A SAX program that echoes the parsed document">Example&nbsp;7.10</a>. Assuming a validating parser, 
+         the parsing process merges a document that was originally split
+         across multiple parsed entities into a
+         single entity.
+         Here each callback method in the
+         <tt>ContentHandler</tt> simply
+         invokes a private method that writes out the current
+         value of the 
+         <tt>http://xml.org/sax/properties/xml-string</tt>
+         property.
+       </p><div class="example"><a name="DocumentMerger.java"></a><p class="title"><b>Example&nbsp;7.10.&nbsp;A SAX program that echoes the parsed document</b></p><pre class="programlisting">import org.xml.sax.*;
+import org.xml.sax.helpers.XMLReaderFactory;
+import java.io.*;
+
+
+public class DocumentMerger implements ContentHandler {
+
+  private XMLReader parser;
+  private Writer out;
+  
+  public DocumentMerger(XMLReader parser, Writer out) {
+    this.parser = parser;
+    this.out = out;   
+  }
+  
+  private void output() throws SAXException {
+    
+    try {
+      String s = (String) parser.getProperty(
+       "http://xml.org/sax/properties/xml-string");
+      out.write(s);
+    }
+    catch (IOException e) {
+      throw new SAXException("Nested IOException", e);  
+    }    
+    
+  }
+    
+  public void setDocumentLocator(Locator locator) {}
+  
+  public void startDocument() throws SAXException {
+    this.output();
+  }
+  public void endDocument() throws SAXException {
+    this.output();
+  }
+  
+  public void startPrefixMapping(String prefix, String uri)
+   throws SAXException {
+    this.output();
+  }
+  
+  public void endPrefixMapping(String prefix) 
+   throws SAXException {
+    this.output();
+  }
+  
+  public void startElement(String namespaceURI, String localName,
+   String qualifiedName, Attributes atts) throws SAXException {
+    this.output();
+  }
+  
+  public void endElement(String namespaceURI, String localName,
+   String qualifiedName) throws SAXException {
+    this.output();
+  }
+  
+  public void characters(char[] text, int start, int length)
+   throws SAXException {
+    this.output();
+  }
+  
+  public void ignorableWhitespace(char[] text, int start, 
+   int length) throws SAXException {
+    this.output();
+  }
+  
+  public void processingInstruction(String target, String data)
+   throws SAXException {
+    this.output();
+  }
+  
+   
+  public void skippedEntity(String name)
+   throws SAXException {
+    this.output();
+  }
+
+  public static void main(String[] args) {
+      
+    if (args.length &lt;= 0) {
+      System.out.println(
+       "Usage: java DocumentMerger url"
+      );
+      return;
+    }
+          
+    try {
+      XMLReader parser = XMLReaderFactory.createXMLReader();
+      
+      // Since this just writes onto the console, it's best
+      // to use the system default encoding, which is what
+      // we get by not specifying an explicit encoding here.
+      Writer out = new OutputStreamWriter(System.out);
+      ContentHandler handler = new DocumentMerger(parser, out);
+      parser.setContentHandler(handler);
+    
+      parser.parse(args[0]);
+      
+      out.flush();
+      out.close();
+    }
+    catch (Exception e) {
+      System.err.println(e); 
+    }
+  
+  }   
+  
+}
+</pre></div><p>
+        The document that's output may not be quite the same as the
+        document that was read. Character references will have
+        been resolved. General entity references will probably
+        have been resolved. Parts of the prolog, especially the
+        DOCTYPE declaration, may be missing. Attributes that were read
+        in from defaults in the DTD will be explicitly specified. However, the
+        complete information content of the original document should be
+        present, even if the form is different. 
+      </p><p>
+        The biggest issue with this program is finding a parser
+        that recognizes the 
+        <tt>http://xml.org/sax/properties/xml-string</tt>
+         property. In my tests, Xerces 1.4.3, Crimson, and
+         &AElig;lfred all threw 
+         a <tt>SAXNotRecognizedException</tt> or 
+         a <tt>SAXNotSupportedException</tt>.
+         I have not yet found a parser that supports this property,
+         and there's some suspicion in the SAX community that defining it 
+         in the first place may have been`
+         a mistake.
+      </p></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e11434"></a>dom-node</h4></div></div><p>
+         The <tt>http://xml.org/sax/properties/dom-node</tt> 
+         property contains the
+         <tt>org.w3c.dom.Node</tt> object
+         corresponding to the current SAX event. 
+         For example,
+         in the <tt>startElement()</tt> and
+         <tt>endElement()</tt> methods,
+         this property contains an 
+         <tt>org.w3c.dom.Element</tt>
+         object representing that element.
+         In the <tt>characters()</tt> 
+         method,
+         this property contains the 
+         <tt>org.w3c.dom.Text</tt>
+         object which contained the characters from which the
+         text had been read.
+       </p></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e11460"></a>lexical-handler</h4></div></div><p>
+         Lexical events are those ephemera of parsing that don&#8217;t
+         really mean anything. In some sense, they really aren&#8217;t
+         part of the document&#8217;s information. Comments are the most
+         obvious example. However, lexical data also includes entity boundaries,
+         CDATA section delimiters, and the DOCTYPE declaration.
+         What unifies all these is that they really don&#8217;t matter
+         99.9% of the time. Unfortunately, there&#8217;s that 
+         annoying 0.1% when you really do care about some lexical
+         detail you&#8217;d normally ignore. 
+       </p><p>
+        Parsers are not required to report lexical data; but 
+        if they want to do so, SAX provides a standard
+        callback interface they can use,
+        <tt>LexicalHandler</tt>, shown in
+        <a href="ch07s04.html#CompactLexicalHandler.java" title="Example&nbsp;7.11.&nbsp;The LexicalHandler interface">Example&nbsp;7.11</a>.
+        However, this interface is optional. Parsers are not
+        required to support it. Notice that it is in the 
+        <tt>org.xml.sax.ext</tt> package, not the core
+        <tt>org.xml.sax</tt> package.
+       </p><div class="example"><a name="CompactLexicalHandler.java"></a><p class="title"><b>Example&nbsp;7.11.&nbsp;The LexicalHandler interface</b></p><pre class="programlisting">package org.xml.sax.ext;
+
+public interface LexicalHandler {
+
+  public void startDTD(String name, String publicId, 
+   String systemId) throws SAXException;
+  public void endDTD() throws SAXException;
+
+  public void startEntity(String name)
+   throws SAXException;
+  public void endEntity(String name) throws SAXException;
+
+  public void startCDATA() throws SAXException;
+  public void endCDATA() throws SAXException;
+
+  public void comment(char[] text, int start, int length)
+   throws SAXException;
+
+}
+</pre></div><p>
+        Because parsers are not required to support the
+        <tt>LexicalHandler</tt>  interface, it can&#8217;t be registered
+        with a <tt>setLexicalHandler()</tt> 
+        method in <tt>XMLReader</tt> like
+        the other callback interfaces. Instead,
+        it&#8217;s set as the value of the 
+        <tt>http://xml.org/sax/properties/lexical-handler</tt>
+        property.
+       </p><p>
+        For example, <a href="ch07s04.html#CommentReader.java" title="Example&nbsp;7.12.&nbsp;An implementation of the LexicalHandler interface">Example&nbsp;7.12</a> is a concrete
+        implementation of <tt>LexicalHandler</tt>
+        that dumps comments from an XML document onto
+        <tt>System.out</tt>. 
+       </p><div class="example"><a name="CommentReader.java"></a><p class="title"><b>Example&nbsp;7.12.&nbsp;An implementation of the LexicalHandler interface</b></p><pre class="programlisting">import org.xml.sax.*;
+import org.xml.sax.ext.LexicalHandler;
+import org.xml.sax.helpers.XMLReaderFactory;
+import java.io.IOException;
+
+
+public class CommentReader implements LexicalHandler {
+
+  public void comment (char[] text, int start, int length)
+   throws SAXException {
+
+    String comment = new String(text, start, length);
+    System.out.println(comment);
+
+  }
+
+  public static void main(String[] args) {
+
+    // set up the parser
+    XMLReader parser;
+    try {
+      parser = XMLReaderFactory.createXMLReader();
+    }
+    catch (SAXException e) {
+      System.err.println("Error: could not locate a parser.");
+      System.err.println(
+       "Try setting the org.xml.sax.driver system property to "
+       + "the fully package qualified name of your parser class."
+      );
+      return;
+    }
+
+    // turn on comment handling
+    try {
+      LexicalHandler handler = new CommentReader();
+      parser.setProperty(
+       "http://xml.org/sax/properties/lexical-handler", handler);
+    }
+    catch (SAXNotRecognizedException e) {
+      System.err.println(
+       "Installed XML parser does not provide lexical events...");
+      return;
+    }
+    catch (SAXNotSupportedException e) {
+      System.err.println(
+       "Cannot turn on comment processing here");
+      return;
+    }
+
+    if (args.length == 0) {
+      System.out.println("Usage: java CommentReader URL");
+    }
+
+    // start parsing...
+    try {
+      parser.parse(args[0]);
+    }
+    catch (SAXParseException e) { // well-formedness error
+      System.out.println(args[0] + " is not well formed.");
+      System.out.println(e.getMessage()
+       + " at line " + e.getLineNumber()
+       + ", column " + e.getColumnNumber());
+    }
+    catch (SAXException e) { // some other kind of error
+      System.out.println(e.getMessage());
+    }
+    catch (IOException e) {
+      System.out.println("Could not read " + args[0]
+       + " because of the IOException " + e);
+    }
+
+  }
+
+  // do-nothing methods not needed in this example
+  public void startDTD(String name, String publicId, 
+   String systemId) throws SAXException {}
+  public void endDTD() throws SAXException {}
+  public void startEntity(String name) throws SAXException {}
+  public void endEntity(String name) throws SAXException {}
+  public void startCDATA() throws SAXException {}
+  public void endCDATA() throws SAXException {}
+
+}
+</pre></div><p>
+        The <tt>main()</tt> method
+        builds an <tt>XMLReader</tt>,
+        constructs an instance of <tt>CommentReader</tt>,
+        and uses <tt>setFeature()</tt> to make
+        this <tt>CommentReader</tt> the parser&#8217;s
+        <tt>LexicalHandler</tt>. Then it parses
+        the document indicated on the command line. 
+       </p><p>
+ It&#8217;s amusing
+        to run this across the XML source for various W3C
+        specifications. For example, Here&#8217;s the output
+        when the XML version of the XML 1.0 specification,
+        second edition, is fed into <tt>CommentReader</tt>:
+       </p><pre class="screen"><tt>%</tt><b><tt>java CommentReader http://www.w3.org/TR/2000/REC-xml-20001006.xml</tt></b>
+<tt>ArborText, Inc., 1988-2000, v.4002
+ ...............................................................
+ XML specification DTD .........................................
+ ...............................................................
+
+TYPICAL INVOCATION:
+#  &lt;!DOCTYPE spec PUBLIC
+#       "-//W3C//DTD Specification V2.1//EN"
+#       "http://www.w3.org/XML/1998/06/xmlspec-v21.dtd"&gt;
+
+PURPOSE:
+  This XML DTD is for W3C specifications and other technical reports.
+  It is based in part on the TEI Lite and Sweb DTDs.
+&#8230;</tt>      
+</pre><p>
+  The comments you&#8217;re seeing are actually from the 
+  DTD used by the  XML specification.
+  Comments and processing instructions in the DTD, both internal
+  and external subsets, are reported to
+  their respective callback methods, just like comments and
+  processing instructions in the instance document.
+</p><p>     
+<a href="ch07s04.html#CommentReader.java" title="Example&nbsp;7.12.&nbsp;An implementation of the LexicalHandler interface">Example&nbsp;7.12</a> is a pure
+<tt>LexicalHandler</tt> that does not
+implement any of the other SAX callback interfaces like 
+<tt>ContentHandler</tt>. However, it&#8217;s not
+uncommon to implement several callback interfaces in one class.
+Among other advantages, that makes it a lot easier to write
+programs that rely on information that&#8217;s available in different
+interfaces. 
+</p></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e11558"></a>declaration-handler</h4></div></div><p>
+       The <tt>http://xml.org/sax/properties/declaration-handler</tt>
+       property identifies the parser&#8217;s <tt>DeclHandler</tt>.
+       <tt>DeclHandler</tt>, summarized in 
+       <a href="ch07s04.html#CompactDeclHandler.java" title="Example&nbsp;7.13.&nbsp;The DeclHandler interface">Example&nbsp;7.13</a>, is an optional 
+       interface in the <tt>org.xml.sax.ext</tt>
+       package used by parsers to report those parts of the DTD
+       that don&#8217;t affect the content of instance documents,
+       specifically ELEMENT, ATTLIST and parsed ENTITY
+       declarations. Together with the information reported by
+       the <tt>DTDHandler</tt>, this gives
+       you enough information to reproduce a parsed document&#8217;s
+       DTD. The reproduced DTD may not be exactly the same as the
+       original DTD. For instance, parameter entities will have
+       been resolved and only the first declaration of each general entity
+       will be reported. Nonetheless, the  model
+       represented by the entire DTD should be intact.
+     </p><div class="example"><a name="CompactDeclHandler.java"></a><p class="title"><b>Example&nbsp;7.13.&nbsp;The DeclHandler interface</b></p><pre class="programlisting">package org.xml.sax.ext;
+
+public interface DeclHandler {
+
+  public void elementDecl(String name, String model)
+   throws SAXException;
+  public void attributeDecl(String elementName, 
+   String attributeName, String type, String mode, 
+   String defaultValue) throws SAXException;
+  public void internalEntityDecl(String name, String value) 
+   throws SAXException;
+  public void externalEntityDecl(String name, String publicID, 
+   String systemID) throws SAXException;
+
+}
+</pre></div><p>
+    <a href="ch07s04.html#DTDMerger.java" title="Example&nbsp;7.14.&nbsp;A program that prints out a complete DTD">Example&nbsp;7.14</a> is 
+     a little <tt>DeclHandler</tt> I whipped up to help me make sense out of
+     heavily modular, very customizable DTDs like XHTML 1.1 or
+     SMIL 2.0. It takes advantage of the fact that 
+     all parameter entity references and conditional sections
+     are replaced before the 
+     methods of <tt>DeclHandler</tt> are
+     called. It implements the  <tt>DeclHandler</tt>
+     interface with methods that copy each declaration onto
+     <tt>System.out</tt>. However,
+     because parameter entity references and conditional sections
+     are resolved before these methods are
+     invoked, it outputs a single monolithic DTD. I can see, for
+     example, exactly what the content model for an element such
+     as <tt>blockquote</tt> really is without having to
+     manually trace the parameter entity references through seven
+     separate modules, and figuring out which modules are likely
+     to be included and which ignored.
+    </p><div class="example"><a name="DTDMerger.java"></a><p class="title"><b>Example&nbsp;7.14.&nbsp;A program that prints out a complete DTD</b></p><pre class="programlisting">import org.xml.sax.*;
+import org.xml.sax.ext.DeclHandler;
+import org.xml.sax.helpers.XMLReaderFactory;
+import java.io.IOException;
+
+
+public class DTDMerger implements DeclHandler {
+
+  public void elementDecl(String name, String model)
+   throws SAXException {
+    System.out.println("&lt;!ELEMENT " + name + " " + model + " &gt;");
+  }
+  
+  public void attributeDecl(String elementName, 
+   String attributeName, String type, String mode, 
+   String defaultValue) throws SAXException {
+     
+    System.out.print("&lt;!ATTLIST ");
+    System.out.print(elementName);
+    System.out.print(" ");
+    System.out.print(attributeName);
+    System.out.print(" ");
+    System.out.print(type);
+    System.out.print(" ");
+    if (mode != null) {
+      System.out.print(mode + " ");
+    }
+    if (defaultValue != null) {
+      System.out.print('"' + defaultValue + "\" ");
+    }
+    System.out.println("&gt;");   
+     
+  }
+  
+  public void internalEntityDecl(String name, 
+   String value) throws SAXException {
+     
+    if (!name.startsWith("%")) { // ignore parameter entities
+      System.out.println("&lt;!ENTITY " + name + " \"" 
+       + value + "\"&gt;");        
+    }
+    
+  }
+  
+  public void externalEntityDecl(String name, 
+   String publicID, String systemID) throws SAXException {
+     
+    if (!name.startsWith("%")) { // ignore parameter entities
+      if (publicID != null) { 
+        System.out.println("&lt;!ENTITY " + name + " PUBLIC \"" 
+         + publicID + "\" \"" + systemID + "\"&gt;");        
+      
+      }
+      else {
+        System.out.println("&lt;!ENTITY " + name + " SYSTEM \"" 
+         + systemID + "\"&gt;");        
+      }
+    }
+    
+  }
+
+  public static void main(String[] args) {
+
+    if (args.length &lt;= 0) {
+      System.out.println("Usage: java DTDMerger URL");
+      return;
+    }
+    String document = args[0];
+    
+    XMLReader parser = null;
+    try {
+      parser = XMLReaderFactory.createXMLReader();
+      DeclHandler handler = new DTDMerger();
+      parser.setProperty(
+       "http://xml.org/sax/properties/declaration-handler", 
+       handler);
+      parser.parse(document);
+    }
+    catch (SAXNotRecognizedException e) {
+      System.err.println(parser.getClass() 
+       + " does not support declaration handlers.");
+    }
+    catch (SAXNotSupportedException e) {
+      System.err.println(parser.getClass() 
+       + " does not support declaration handlers.");
+
+    }
+    catch (SAXException e) {
+      System.err.println(e);
+      // As long as we finished with the DTD we really don't care
+    }
+    catch (IOException e) { 
+      System.out.println(
+       "Due to an IOException, the parser could not check " 
+       + document
+      ); 
+    }
+   
+  }
+   
+}
+</pre></div><p>
+    I ran this program
+      across the start of an XHTML document (actually the XHTML
+      1.1
+      specification itself, though that detail doesn&#8217;t really
+      matter since it&#8217;s the DTD we care about here, not the
+      instance document. In fact, the instance document doesn&#8217;t
+      even need to be well-formed as long as the error isn&#8217;t
+      spotted until after the DOCTYPE declaration has been read.)
+      Here&#8217;s the beginning of the merged DTD: 
+    </p><pre class="screen"><tt>%</tt><b><tt>java DTDMerger http://www.w3.org/TR/xhtml11</tt></b>
+<tt>&lt;!ATTLIST a onfocus CDATA #IMPLIED &gt;
+&lt;!ATTLIST a onblur CDATA #IMPLIED &gt;
+&lt;!ATTLIST form onsubmit CDATA #IMPLIED &gt;
+&lt;!ATTLIST form onreset CDATA #IMPLIED &gt;
+&lt;!ATTLIST label onfocus CDATA #IMPLIED &gt;
+&#8230;</tt></pre><p>
+      If what you really want to know is the content
+      specification for a particular element type, the output from this
+      program is a lot easier to read than the original DTD.
+      For example, here&#8217;s the original ELEMENT declaration for
+      the <tt>p</tt> element:
+    </p><div class="informalexample"><pre class="programlisting">&lt;!ENTITY % p.element  "INCLUDE" &gt;
+&lt;![%p.element;[
+&lt;!ENTITY % p.content
+     "( #PCDATA | %Inline.mix; )*" &gt;
+&lt;!ENTITY % p.qname  "p" &gt;
+&lt;!ELEMENT %p.qname;  %p.content; &gt;
+&lt;!-- end of p.element --&gt;]]&gt;</pre></div><p>
+      Now here&#8217;s the merged version:
+    </p><div class="informalexample"><pre class="programlisting">&lt;!ELEMENT p 
+  (#PCDATA|br|span|em|strong|dfn|code|samp|kbd|var|cite|abbr
+   |acronym|q|tt|i|b|big|small|sub|sup|bdo|a|img|map|object|input
+   |select|textarea|label|button|ruby|ins|del|script|noscript)* &gt;</pre></div><p>
+      I think you&#8217;ll agree the second version is a lot easier to
+      follow and understand. There are good and valid reasons to
+      write the original DTD in the form used by the first
+      declaration. However, that&#8217;s just not a form you want to
+      present to a human being instead of a computer.
+    </p></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e11634"></a>Xerces Custom Features</h3></div></div><p>
+    Individual parsers generally have a set of their own custom
+    features and properties that control their own special capabilities.
+    This allows you to configure a parser without having
+    to go outside the standard SAX API, and thus binding your
+    code to one specific parser. There&#8217;s generally no problem
+    with using these non-standard features. Just make sure you 
+    watch out for <tt>SAXNotRecognizedException</tt> in case
+    you later need to switch to a different parser that doesn&#8217;t
+    support the same features.
+  </p><p>
+    For purposes of illustration, I&#8217;ll look at the custom features
+    in Xerces 1.4.3, all of which are in the 
+    <tt>http://apache.org/xml/features/</tt>
+    hierarchy. Other parsers will have some features similar to
+    these and some unique ones of their own. However, all will
+    be in a domain of that parser vendor. 
+  </p><div class="variablelist"><dl><dt><span class="term"><tt>http://apache.org/xml/features/validation/schema</tt></span></dt><dd><p>
+        If true, Xerces will use any XML schemas it finds
+        for applying default attribute values, assigning types to
+        attributes, and possibly validation.
+        (Validation also depends on the http://xml.org/sax/features/validation feature.)
+        If false, then Xerces won&#8217;t use schemas at all, just the
+        DTD. The default is true, use the schema if present.
+      </p></dd><dt><span class="term"><tt>http://apache.org/xml/features/validation/schema-full-checking</tt></span></dt><dd><p>
+        A number of features of the W3C XML Schema Language are 
+        extremely compute intensive. For example,  
+        the rather technical requirement for 
+        &#8220;Unique Particle Attribution&#8221; requires that
+        given any element it&#8217;s possible to tell which part of a schema 
+        that element matches without considering the items the element contains
+        or the elements that follow that element. However, this is
+        extremely difficult to state, much
+        less implement, in a precisely correct way.
+        Consequently, Xerces by default skips these expensive
+        checks.
+        However, if you want them performed despite their cost
+        you can turn them on by setting this feature to true. 
+      </p></dd><dt><span class="term"><tt>http://apache.org/xml/features/validation/dynamic</tt></span></dt><dd><p>
+        If true, then Xerces will only attempt to validate documents 
+        that have a DOCTYPE declaration or
+        an  <tt>xsi:schemaLocation</tt> attribute. 
+        It will not attempt to
+        validate merely well-formed documents that have neither.
+      </p></dd><dt><span class="term"><tt>http://apache.org/xml/features/validation/warn-on-duplicate-attdef</tt></span></dt><dd><p>
+       It is technically legal to declare the same attribute
+       twice, and the declarations don&#8217;t even have to be compatible.
+       For example,
+       </p><div class="informalexample"><pre class="programlisting">&lt;!ATTLIST Order id ID #IMPLIED&gt;
+&lt;!ATTLIST Order id CDATA #REQUIRED&gt;</pre></div><p>
+         The parser simply picks the first declaration and
+         ignores the rest.
+         Nonetheless, this probably indicates a mistake in the DTD.
+         If the warn-on-duplicate-attdef feature is true, then Xerces should warn of
+         duplicate attribute declarations by invoking the
+         <tt>warning()</tt> method in the 
+         registered <tt>ErrorHandler</tt>.
+         The default is
+         to warn of this problem.
+       </p></dd><dt><span class="term"><tt>http://apache.org/xml/features/validation/warn-on-undeclared-elemdef</tt></span></dt><dd><p>
+       It is technically legal to declare an attribute for an
+       element that has not been declared. This might happen if
+       you delete an <tt>ELEMENT</tt> declaration but forget to delete one
+       of the <tt>ATTLIST</tt> declarations for that element. 
+         Nonetheless, this almost certainly indicates a mistake.
+         If this feature is true, then Xerces will warn of
+          attribute declarations for non-existent elements. The default is
+         to warn of this problem.
+       </p></dd><dt><span class="term"><tt>http://apache.org/xml/features/allow-java-encodings</tt></span></dt><dd><p>
+        By default Xerces only recognizes the standard encoding
+        names like ISO-8859-1 and UTF-8. However, if this feature
+        is turned on, then Xerces will also recognize Java style
+        encoding names like 8859_1 and UTF8. The default is
+        false.
+      </p></dd><dt><span class="term"><tt>http://apache.org/xml/features/continue-after-fatal-error</tt></span></dt><dd><p>
+If true, Xerces will continue to parse a document after it
+detects a well-formedness error in order to detect and report more
+errors. This is useful for debugging because it allows you to be 
+informed of and correct multiple errors before parsing a 
+document again.
+The default is false. Note that the only thing Xerces will
+do after it sees the first well-formedness error, is look for
+more errors. It will not invoke any methods in any of the callback interfaces except 
+<tt>ErrorHandler</tt>. 
+      </p></dd><dt><span class="term"><tt>http://apache.org/xml/features/nonvalidating/load-dtd-grammar</tt></span></dt><dd><p>
+        If true, Xerces will attach default attributes to elements 
+        and specify attribute types even if it isn&#8217;t validating. 
+        If
+        false it won&#8217;t. The default is true; and if validation is
+        turned on, this feature is automatically turned on and
+        cannot be turned off. 
+      </p></dd><dt><span class="term"><tt>http://apache.org/xml/features/nonvalidating/load-external-dtd</tt></span></dt><dd><p>
+        If true, Xerces will load the external DTD subset. If
+        false it won&#8217;t. The default is true. If validation is
+        turned on, this feature is automatically turned on and
+        cannot be turned off. 
+      </p></dd></dl></div><p>
+    <a href="ch07s04.html#XercesChecker.java" title="Example&nbsp;7.15.&nbsp;Making maximal use of Xerces&#8217;s special abilities">Example&nbsp;7.15</a> is a variation of the
+    earlier <tt>SAXValidator</tt> program that uses Xerces custom features
+    to provide as many warnings and errors as possible. It uses 
+    dynamic validation so it only reports validity errors if the
+    document is in fact trying to be valid.
+    It turns on all optional warnings.
+    And it continues parsing after a fatal error so it can find
+    and report any more errors it spots in the document. This
+    program is more useful for checking documents 
+    than the earlier generic program in <a href="ch07s04.html#SAXValidator.java" title="Example&nbsp;7.9.&nbsp;A SAX program that validates documents">Example&nbsp;7.9</a>. 
+    The downside is that it is totally dependent on the Xerces
+    parser. It will not run with any other parser. Indeed it
+    might even have troubles with earlier or later versions of
+    Xerces. (I wrote this with 1.4.3.)
+  </p><div class="example"><a name="XercesChecker.java"></a><p class="title"><b>Example&nbsp;7.15.&nbsp;Making maximal use of Xerces&#8217;s special abilities</b></p><pre class="programlisting">import org.xml.sax.*;
+import org.xml.sax.helpers.XMLReaderFactory;
+import java.io.IOException;
+
+
+public class XercesChecker implements ErrorHandler {
+  
+  // Flag to check whether any errors have been spotted.
+  private boolean valid = true;
+  
+  public boolean isValid() {
+    return valid; 
+  }
+  
+  // If this handler is used to parse more than one document, 
+  // its initial state needs to be reset between parses.
+  public void reset() {
+    // Assume document is valid until proven otherwise
+    valid = true; 
+  }
+  
+  public void warning(SAXParseException exception) {
+    
+    System.out.println("Warning: " + exception.getMessage());
+    System.out.println(" at line " + exception.getLineNumber() 
+     + ", column " + exception.getColumnNumber());
+    System.out.println(" in entity " + exception.getSystemId());
+    
+  }
+  
+  public void error(SAXParseException exception) {
+     
+    System.out.println("Error: " + exception.getMessage());
+    System.out.println(" at line " + exception.getLineNumber() 
+     + ", column " + exception.getColumnNumber());
+    // Unfortunately there's no good way to distinguish between
+    // validity errors and other kinds of non-fatal errors 
+    valid = false;
+    
+  }
+  
+  public void fatalError(SAXParseException exception) {
+     
+    System.out.println("Fatal Error: " + exception.getMessage());
+    System.out.println(" at line " + exception.getLineNumber() 
+     + ", column " + exception.getColumnNumber()); 
+    System.out.println(" in entity " + exception.getSystemId());
+     
+  }
+  
+  public static void main(String[] args) {
+  
+    if (args.length &lt;= 0) {
+      System.out.println("Usage: java XercesChecker URL");
+      return;
+    }
+    String document = args[0];
+    
+    try {
+      XMLReader parser = XMLReaderFactory.createXMLReader(
+       "org.apache.xerces.parsers.SAXParser"
+      );
+      XercesChecker handler = new XercesChecker();
+      parser.setErrorHandler(handler);
+      
+      // This is a hack to fit some long lines of code that 
+      // follow between the margins of this printed page
+      String features = "http://apache.org/xml/features/";
+      
+      // Turn on Xerces specific features
+      parser.setFeature(features + "validation/dynamic", true);
+      parser.setFeature(features 
+       + "validation/schema-full-checking", true); 
+      parser.setFeature(features 
+       + "validation/warn-on-duplicate-attdef", true);
+      parser.setFeature(features 
+       + "validation/warn-on-undeclared-elemdef", true);
+      parser.setFeature(features + "continue-after-fatal-error", 
+       true); 
+      parser.parse(document);
+      if (handler.isValid()) {
+        System.out.println(document + " is valid.");
+      }
+      else {
+        // If the document isn't well-formed, an exception has
+        // already been thrown and this has been skipped.
+        System.out.println(document + " is well-formed.");
+      }
+    }
+    catch (SAXParseException e) {
+      System.out.print(document + " is not well-formed at ");
+      System.out.println("Line " + e.getLineNumber() 
+       + ", column " +  e.getColumnNumber() 
+       + " in file " + e.getSystemId());
+    }
+    catch (SAXException e) {
+      System.out.println("Could not check document because " 
+       + e.getMessage());
+    }
+    catch (IOException e) { 
+      System.out.println(
+       "Due to an IOException, the parser could not check " 
+       + document
+      ); 
+    }
+  
+  }
+
+}
+</pre></div><p>
+   Here&#8217;s the beginning of the 
+   output from running it across one of my web pages that was 
+   supposed to be well-formed HTML, but proved not to be:
+  </p><pre class="screen"><tt>%</tt><b><tt>java XercesChecker http://www.cafeconleche.org/</tt></b>
+<tt>Fatal Error: The element type "br" must be terminated by the 
+ matching end-tag "&lt;/br&gt;". 
+ at line 73, column 4
+Fatal Error: The element type "br" must be terminated by the 
+ matching end-tag "&lt;/br&gt;".
+ at line 74, column 16
+Fatal Error: The element type "dd" must be terminated by the 
+ matching end-tag "&lt;/dd&gt;".
+ at line 123, column 4
+Fatal Error: The element type "br" must be terminated by the 
+ matching end-tag "&lt;/br&gt;".
+ at line 162, column 4
+Fatal Error: The reference to entity "section" must end with 
+ the ';' delimiter.
+ at line 183, column 78
+ &#8230;</tt></pre><p>
+   There were actually quite a few more errors that I&#8217;ve omitted here.  
+   The advantage of using <tt>XercesChecker</tt>
+   instead of one of the earlier generic checking programs is
+   that <tt>XercesChecker</tt> gives me a
+   reasonably complete list of all the errors in one pass. 
+   I couldn&#8217;t
+   necessarily do this with any off-the-shelf parser.
+   With
+   the earlier programs that stopped at the first fatal error,
+   I&#8217;d have to fix one error, retest, fix the next error, retest,
+   and so on until I had fixed the final error. 
+  </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e11769"></a>Xerces Custom Properties</h3></div></div><p>
+    DTDs require instance documents to
+    specify what DTDs they should be validated against. While
+    often useful, this can be dangerous. For example, imagine
+    that you&#8217;ve written an order processing system that accepts
+    XML documents containing orders from many heterogenous systems around the world. 
+    You can&#8217;t trust the people sending you orders to necessarily
+    send them in the correct format, so as a first step you
+    validate every order received. If the order document is
+    invalid, your system rejects it. 
+  </p><p>
+    However, this system has a flaw. Since the documents themselves
+    specify which DTD they&#8217;ll be validated against, hackers can
+    introduce bad data into your system by replacing the system
+    identifier for your DTD with a URI for a DTD on a site they
+    control. Then they can send you a document that will test as
+    valid, even though it&#8217;s not, because it&#8217;s being validated
+    against the wrong DTD!
+  </p><p>
+    For this and other reasons, the schema specification
+    explicitly states that the <tt>xsi:schemaLocation</tt> and
+    <tt>xsi:noNamespaceSchemaLocation</tt> attributes are
+    not the only way to attach a schema to an instance document.
+    The client application parsing a document is allowed to override the
+    schema locations given in the document with schemas of its
+    own choosing. For this purpose,
+    Xerces has two custom properties:
+  </p><div class="itemizedlist"><ul type="disc"><li><p><tt>http://apache.org/xml/properties/schema/external-schemaLocation</tt></p></li><li><p><tt>http://apache.org/xml/properties/schema/external-noNamespaceSchemaLocation</tt></p></li></ul></div><p>
+    Both of these properties are strings telling the parser
+    where a schema for elements in 
+    particular namespaces (or no namespace) can be found.
+    They have the same syntax as the 
+    <tt>xsi:schemaLocation</tt> and
+    <tt>xsi:noNamespaceSchemaLocation</tt> attributes in
+    instance documents. For instance, this code fragment
+    says that elements not in any namespace should be validated
+    against the schema found at the relative URL <tt>orders.xsd</tt>:
+  </p><div class="informalexample"><pre class="programlisting">parser.setProperty(
+ "http://apache.org/xml/properties/schema/"
+ + "external-noNamespaceSchemaLocation", "orders.xsd");</pre></div><p>
+    This code fragment
+    says that elements in the <tt>http://schemas.xmlsoap.org/soap/envelope/namespace</tt> should be validated
+    against the schema found at the  URL
+    <tt>http://www.w3.org/2002/06/soap-envelope</tt> and that
+    elements in the <tt>http://schemas.xmlsoap.org/soap/encoding/</tt> namespace should be validated
+    against the schema found at the  URL <tt>http://www.w3.org/2002/06/soap-encoding</tt>:
+  </p><div class="informalexample"><pre class="programlisting">parser.setProperty(
+ "http://apache.org/xml/properties/schema/external-SchemaLocation", 
+ "http://schemas.xmlsoap.org/soap/envelope/ "
+ + "http://www.w3.org/2002/06/soap-envelope "
+ + "http://schemas.xmlsoap.org/soap/encoding/ "
+ + "http://www.w3.org/2002/06/soap-encoding");</pre></div><p>
+    If these properties are used and
+    <tt>xsi:schemaLocation</tt> and/or
+    <tt>xsi:noNamespaceSchemaLocation</tt> attributes are
+    present in the instance document, then 
+    the schemas named by the properties take precedence.
+  </p><p>
+    These properties are only available in Xerces. Other parsers may support
+    something similar, but if so they&#8217;ll place it at their own
+    URL. In fact, as I write this Sun has just 
+    <a href="http://java.sun.com/xml/jaxp/change-requests-12.html" target="_top">proposed</a> adding
+    <tt>http://java.sun.com/xml/jaxp/properties/schemaLanguage</tt> and 
+    <tt>http://java.sun.com/xml/jaxp/properties/schemaLocation</tt>
+    properties to JAXP. The rough idea is the same, though
+    Sun&#8217;s proposal would allow supporting arbitrary schema
+    languages and allow the schemaLocation
+    property to have a value from which the schema itself could
+    be read rather than merely giving the location of the schema.
+    For instance, it could be an
+    <tt>InputStream</tt> or an
+    <tt>InputSource</tt> object.
+    Other parsers will doubtless implement this in other ways.
+  </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch07s03.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch07.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch07s05.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Exceptions and Errors&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;DTDHandler</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+November 10,
+2001</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

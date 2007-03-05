@@ -1,0 +1,217 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Locating a DOMImplementation</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="previous" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="next" href="ch10s03.html" title="The Document Interface as an Abstract Factory"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"><link rel="subsection" href="ch10s02.html#d0e16577" title="Implementation Specific Class"><link rel="subsection" href="ch10s02.html#d0e16613" title="JAXP DocumentBuilder"><link rel="subsection" href="ch10s02.html#d0e16691" title="DOM3 DOMImplementationRegistry"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Locating a DOMImplementation</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch10.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch10s03.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e16550"></a>Locating a DOMImplementation</h2></div></div><p>
+    So far, I&#8217;ve deliberately avoided the crucial question of how
+    one creates a  <tt>DOMImplementation</tt>
+    object in the first place. Since <tt>DOMImplementation</tt>
+    is an interface, not a class, it cannot
+    be instantiated directly through its own constructor. Instead
+    you have to build it in one of three ways:
+  </p><div class="itemizedlist"><ul type="disc"><li><p>
+        Construct the implementation specific class
+      </p></li><li><p>
+        Use the JAXP <tt>DocumentBuilder</tt> factory class.
+      </p></li><li><p>
+        Use the DOM Level 3 
+        <tt>DOMImplementationRegistry</tt> factory class.
+      </p></li></ul></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e16577"></a>Implementation Specific Class</h3></div></div><p>
+    Directly constructing an instance
+    of the vendor class that implements <tt>DOMImplementation</tt>
+    is the simplest of the three alternatives.
+    However, the name of this class and
+    how it&#8217;s created vary
+    from one implementation to the next.
+    For example, in Xerces the 
+    <tt>org.apache.xerces.dom.DOMImplementationImpl</tt>
+    singleton class implements the 
+    <tt>DOMImplementation</tt>
+    interface. The singleton object is retrieved via the 
+    <tt>getDOMImplementation()</tt>
+    factory method like this:
+  </p><div class="informalexample"><pre class="programlisting">DOMImplementation impl 
+ = DOMImplementationImpl.getDOMImplementation();</pre></div><p>
+    However, if you were to switch to a different implementation,
+    you&#8217;d need to change your source code and recompile. For
+    example, in the  Oracle XML parser for Java,
+    <tt>oracle.xml.parser.v2.XMLDOMImplementation</tt> class
+    implements the 
+    <tt>DOMImplementation</tt>
+    interface
+    and instances of this class are created with a no-args constructor,
+    like this:
+  </p><div class="informalexample"><pre class="programlisting">DOMImplementation impl = new XMLDOMImplementation();</pre></div><p>
+    In both cases, the implementation specific object
+    is assigned to a variable of type
+    <tt>DOMImplementation</tt>.
+    This allows the compiler to make sure you don&#8217;t
+    accidentally use any implementation-specific methods in the
+    object, or tie the code too tightly to one vendor.
+    The implementation-dependent code should be limited to this
+    one line. 
+  </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e16613"></a>JAXP DocumentBuilder</h3></div></div><p>
+    The JAXP <tt>DocumentBuilder</tt> class
+    introduced in the last chapter has a
+    <tt>getDOMImplementation()</tt> method
+    that can locate a
+    local <tt>DOMImplementation</tt> class.
+  </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">abstract&nbsp;</span><span class="type">DOMImplementation&nbsp;</span><span class="methodname"><b>getDOMImplementation</b></span>();</code><br><p>
+      For example, this code fragment
+      uses JAXP to create a new SVG 
+      <tt>Document</tt> object in
+      memory:
+  </p><div class="informalexample"><pre class="programlisting">try {
+  DocumentBuilderFactory factory 
+   = DocumentBuilderFactory.newInstance();
+  DocumentBuilder builder = factory.newDocumentBuilder();
+  DOMImplementation impl = builder.getDOMImplementation();
+  
+  DocumentType svgDOCTYPE = impl.createDocumentType("svg", 
+   "-//W3C//DTD SVG 1.0//EN", 
+   "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd");
+  Document svgDoc = impl.createDocument(
+   "http://www.w3.org/2000/svg", "svg", svgDOCTYPE
+  );  
+  // work with the document...   
+}
+catch (FactoryConfigurationError e) { 
+  System.out.println(
+   "Could not locate a JAXP DocumentBuilderFactory class"); 
+}
+catch (ParserConfigurationException e) { 
+  System.out.println(
+   "Could not locate a JAXP DocumentBuilder class"); 
+}</pre></div><p>
+    If you only want to create a new <tt>Document</tt>,
+    then <tt>DocumentBuilder</tt> also has a
+    <tt>newDocument()</tt> method that shortcuts
+    the <tt>DOMImplementation</tt> class: 
+  </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">abstract&nbsp;</span><span class="type">Document&nbsp;</span><span class="methodname"><b>newDocument</b></span>();</code><p>
+    However, this method does not properly set a root
+    element. Thus the documents created by
+    <tt>newDocument()</tt> are at least initially
+    malformed; and therefore I recommend that you don&#8217;t use this
+    method. Just use JAXP to retrieve a <tt>DOMImplementation</tt>
+    object
+    and use its <tt>createDocument()</tt> method instead. 
+  </p><p>
+    The specific implementation JAXP chooses is determined in the
+    same way as described for locating a parser in the last
+    chapter. That is, first JAXP reads the 
+    <tt>javax.xml.parsers.DocumentBuilderFactory</tt>
+    system property, 
+    then  
+    the <tt>lib/jaxp.properties</tt> file, then the
+    <tt>META-INF/services/javax.xml.parsers.DocumentBuilderFactory</tt> 
+    file
+    in all JAR files available to the runtime,
+    and then finally a fallback class hardcoded into the JAXP
+    implementation.
+  </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e16691"></a>DOM3 DOMImplementationRegistry</h3></div></div><p>
+    The final option for locating the 
+    <tt>DOMImplementation</tt>
+    is new in DOM Level 3 and only supported by Xerces 2 so far. 
+    This is the 
+    <tt>DOMImplementationRegistry</tt> class shown in 
+    <a href="ch10s02.html#CompactDOMImplementationRegistry.java" title="Example&nbsp;10.2.&nbsp;The DOMImplementationRegistry class">Example&nbsp;10.2</a>.
+  </p><div class="example"><a name="CompactDOMImplementationRegistry.java"></a><p class="title"><b>Example&nbsp;10.2.&nbsp;The DOMImplementationRegistry class</b></p><pre class="programlisting">package org.w3c.dom; 
+
+public class DOMImplementationRegistry  { 
+
+  // The system property that specifies DOMImplementationSource 
+  // class names. 
+  public static String PROPERTY 
+   = "org.w3c.dom.DOMImplementationSourceList";
+
+  public static DOMImplementation getDOMImplementation(
+   String features) throws ClassNotFoundException, 
+   InstantiationException, IllegalAccessException;
+
+  public static void addSource(DOMImplementationSource s)
+   throws ClassNotFoundException, InstantiationException, 
+   IllegalAccessException;
+   
+}
+</pre></div><p>
+      The <tt>getDOMImplementation()</tt> method 
+      returns a <tt>DOMImplementation</tt>
+      object that supports the features given in the argument, or
+      null if no such implementation can be found. For example,
+      this code fragment requests a
+      <tt>DOMImplementation</tt> that
+      supports XML DOM Level 1, any version of the traversal
+      module,
+      and DOM Level 2 events:
+    </p><div class="informalexample"><pre class="programlisting">try {
+  DOMImplementation impl = DOMImplementationRegistry
+   .getDOMImplementation("XML 1.0 Traversal Events 2.0");
+  if (impl != null) { 
+    DocumentType svgDOCTYPE = impl.createDocumentType("svg", 
+     "-//W3C//DTD SVG 1.0//EN", 
+     "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd");
+    Document svgDoc = impl.createDocument(
+     "http://www.w3.org/2000/svg", "svg", svgDOCTYPE
+    );  
+    // work with the document...
+  }
+}
+catch (Exception e) { 
+  System.out.println(e); 
+}</pre></div><p>
+      Be sure to check whether the implementation returned is
+      null before using it. Many installations may not be able to
+      support all the features you ask for.
+    </p><p>
+      <tt>DOMImplementationRegistry</tt> searches for 
+      <tt>DOMImplementation</tt> classes by looking at the value of
+      the <tt>org.w3c.dom.DOMImplementationSourceList</tt>
+      Java system property. This property should contain a white space
+      separated list of 
+      <tt>DOMImplementationSource</tt> classes
+      on the local system. This interface is summarized in <a href="ch10s02.html#CompactDOMImplementationSource.java" title="Example&nbsp;10.3.&nbsp;The DOMImplementationSource interface">Example&nbsp;10.3</a>.
+    </p><div class="example"><a name="CompactDOMImplementationSource.java"></a><p class="title"><b>Example&nbsp;10.3.&nbsp;The DOMImplementationSource interface</b></p><pre class="programlisting">package org.w3c.dom;
+
+public interface DOMImplementationSource {
+  
+  public DOMImplementation getDOMImplementation(String features);
+
+}
+</pre></div><p>
+      <tt>DOMImplementationRegistry</tt><tt>.getDOMImplementation()</tt> queries 
+      each source for its 
+      <tt>DOMImplementation</tt>.
+      The double indirection (listing <tt>DOMImplementationSource</tt> classes
+      rather than <tt>DOMImplementation</tt> classes) 
+      is necessary to allow 
+      <tt>DOMImplementationRegistry</tt><tt>.getDOMImplementation()</tt>
+      to return different classes of objects depending on which
+      combination of features are requested.
+      
+    </p><p>
+      The three exceptions that <tt>getDOMImplementation()</tt> 
+      throws&#8212;
+      <tt>ClassNotFoundException</tt>, 
+   <tt>InstantiationException</tt>, and
+   <tt>IllegalAccessException</tt>&#8212;
+   shouldn&#8217;t be very common. The only way any of these can be
+   thrown is if the <tt>org.w3c.dom.DOMImplementationSourceList</tt>
+   system property 
+   includes the name of a class that can&#8217;t be found or one that is
+   not a conforming instance of
+   <tt>DOMImplementationSource</tt>.
+    </p><p>
+      However, like the other DOM Level 3 material discussed in
+      this book, all of this is on the wrong side of
+      the bleeding edge and cannot be
+      expected to work in most existing implementations. 
+    </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch10.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch10.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch10s03.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;The Document Interface as an Abstract Factory</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+January 13,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

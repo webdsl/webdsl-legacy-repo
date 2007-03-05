@@ -1,0 +1,109 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <meta name="description" content="Slide used in Elliotte Rusty Harold's &#xA;  StAX seminar at Software Development 2004 West, Thursday, March 17, 2004"><title>XMLInputFactory Properties</title><script language="JAVASCRIPT"><!-- 
+              var isnav
+              
+              if (parseInt(navigator.appVersion) >= 4) {
+                if (navigator.appName == "Netscape") {
+                  isNav = true
+                  document.captureEvents(Event.KEYPRESS)
+                }
+                else {
+                  isNav = false
+                }
+              }
+              document.onkeypress = flipslide
+
+              function flipslide(evt) {
+                var key = isNav ? evt.which : window.event.keyCode
+                if (key == 32 || key == 29 || key == 30 || key == 11) {
+                  
+                    location.href="47.html"
+                  
+                }
+                else if (key == 28 || key == 31 || key == 12) {
+                  
+                    location.href="45.html"
+                  
+                }
+                else if (key == 1) {
+                  location.href="index.html";
+                }
+              } //  --></script></head><body>
+  <h1 align="center">XMLInputFactory Properties</h1>
+
+  
+    <table xmlns:xinclude="http://www.w3.org/2001/XInclude" cellpadding="24">
+      <tr>
+
+        <th>Property Name</th>
+        <th>Behavior</th>
+        <th>Return type</th>
+        <th>Default Value</th>
+        <th>Required</th>
+      </tr>
+
+ <tr><td><code>javax.xml.stream.isValidating</code></td>
+ <td>Validate?</td><td>Boolean</td>
+ <td>False</td><td>No</td>
+ </tr>
+ <tr><td><code>javax.xml.stream.isNamespaceAware</code></td>
+ <td>Support namespaces?</td>
+ <td>Boolean</td>
+ <td>True</td>
+ <td>True (required) / False (optional)</td></tr>
+ <tr>
+ <td><code>javax.xml.stream.isCoalescing</code></td>
+ <td>Always return maximum contiguous run of text 
+ in a CHARACTERS event</td>
+ <td>Boolean</td>
+ <td>False</td>
+ <td>Yes</td>
+ </tr>
+
+ <tr><td><code>javax.xml.stream.isReplacingEntityReferences</code></td>
+ <td>resolve internal entity references </td>
+ <td>Boolean</td>
+ <td>True</td>
+ <td>Yes</td></tr>
+<tr>
+<td><code>javax.xml.stream.isSupportingExternalEntities</code></td>
+<td>resolve external entity references</td>
+<td>Boolean</td>
+<td>Unspecified</td>
+<td>Yes</td>
+</tr>
+
+<tr><td><code>javax.xml.stream.reporter</code></td>
+<td>class used to report errors </td>
+<td>javax.xml.stream.XMLReporter</td>
+<td>Null</td><td>Yes</td></tr>
+<tr><td><code>javax.xml.stream.resolver</code></td>
+<td>class used to resolve URIs</td>
+<td>javax.xml.stream.XMLResolver</td>
+<td>Null</td>
+<td>Yes</td></tr>
+<tr><td><code>javax.xml.stream.allocator</code></td>
+<td>class used to allocate events</td>
+<td>javax.xml.stream.util.XMLEventAllocator</td>
+<td>Null</td><td>Yes</td></tr>
+
+    </table> 
+  
+  <pre xmlns:xinclude="http://www.w3.org/2001/XInclude"><code>public void setProperty(String name, Object value)
+  throws XMLStreamException;
+public Object getProperty(String name);
+public boolean isPropertySupported(String name)</code></pre>
+
+
+  
+  
+ 
+
+<hr><div align="center"><A HREF="45.html">Previous</A> 
+                 | <A HREF="47.html">Next</A> 
+                 | <A HREF="index.html">Top</A> 
+                 | <A HREF="http://www.cafeconleche.org/">Cafe con Leche</A></div><hr><div style="font-size: x-small">
+              Copyright 2000-2004 Elliotte Rusty Harold<br><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a><br>
+              Last Modified 
+              March 18, 2004</div></body></html>

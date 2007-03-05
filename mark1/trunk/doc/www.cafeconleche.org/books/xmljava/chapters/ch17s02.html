@@ -1,0 +1,1300 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>TrAX</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="previous" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="next" href="ch17s03.html" title="Extending XSLT with Java"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"><link rel="subsection" href="ch17s02.html#d0e31774" title="Thread Safety"><link rel="subsection" href="ch17s02.html#d0e31875" title="Locating Transformers"><link rel="subsection" href="ch17s02.html#d0e31963" title="The xml-stylesheet processing instruction"><link rel="subsection" href="ch17s02.html#d0e32171" title="Features"><link rel="subsection" href="ch17s02.html#d0e32285" title="XSLT Processor Attributes"><link rel="subsection" href="ch17s02.html#d0e32363" title="URI Resolution"><link rel="subsection" href="ch17s02.html#d0e32464" title="Error Handling"><link rel="subsection" href="ch17s02.html#d0e32598" title="Passing Parameters to Style Sheets"><link rel="subsection" href="ch17s02.html#d0e32721" title="Output Properties"><link rel="subsection" href="ch17s02.html#d0e33001" title="Sources and Results"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">TrAX</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch17.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;17.&nbsp;XSLT</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch17s03.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e31610"></a>TrAX</h2></div></div><p>
+     TrAX, the Transformations API for XML, is a Java API
+     for performing XSLT transforms. 
+     It is sufficiently parser-independent that it can work with
+     many different XSLT processors including Xalan and SAXON.
+     It is sufficiently model-independent that it can transform
+     to and from
+     XML streams, SAX event sequences, and DOM and JDOM trees. 
+  </p><p>
+    TrAX is a standard part of JAXP, and is bundled with Java 1.4
+    and later.  Furthermore, most current XSLT processors
+    written in Java support TrAX including Xalan-J 2.x, jd.xslt,
+    LotusXSL, and Saxon. The specific implementation included 
+    with Java 1.4.0
+    is Xalan-J 2.2D10. 
+  </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Note</h3><p>
+      Annoyingly, the Xalan-J classes included in Java 1.4 are
+      zipped into the <tt>rt.jar</tt> archive so it&#8217;s hard to replace them
+      with a less-buggy release version of Xalan. 
+      It can be done, but you have to put the xalan.jar 
+       file in your <tt>$JAVA_HOME/lib/endorsed</tt> directory rather than
+       in the normal <tt>jre/lib/ext</tt> 
+       directory. The exact location of 
+       $JAVA_HOME varies from system to system, but it&#8217;s probably
+       something like <tt>C:\j2sdk1.4.0</tt> 
+       on Windows. None of this is an
+       issue with Java 1.3 and earlier, which don&#8217;t bundle these
+       classes. On these systems you just need to install
+       whatever jar files your XSLT engine vendor provides in the usual locations,
+       the same as you would any other third party library.
+    </p></div><p>
+    There are four main classes and interfaces in  TrAX that you
+    need to use, all in the <tt>javax.xml.transforms</tt> package:
+  </p><div class="variablelist"><dl><dt><span class="term"><tt>Transformer</tt></span></dt><dd><p>
+        The class that represents the style sheet.
+        It transforms a <tt>Source</tt> into a 
+        <tt>Result</tt>.
+      </p></dd><dt><span class="term"><tt>TransformerFactory</tt></span></dt><dd><p>
+        The class that represents the XSLT processor.
+        This is a factory class that
+        reads a stylesheet to produce a new
+        <tt>Transformer</tt>.
+      </p></dd><dt><span class="term"><tt>Source</tt></span></dt><dd><p>
+        The interface that represents the input XML document to be
+        transformed, whether presented as a DOM tree, an 
+        <tt>InputStream</tt>, or a SAX event sequence.
+      </p></dd><dt><span class="term"><tt>Result</tt></span></dt><dd><p>
+        The interface that represents the XML document produced by the
+        transformation, whether generated as a DOM tree, an 
+        <tt>OutputStream</tt>, or a SAX event sequence.
+      </p></dd></dl></div><p>
+    To transform an input document into an output document 
+   follow these steps:
+  </p><div class="orderedlist"><ol type="1"><li><p>
+    Load the  <tt>TransformerFactory</tt>
+    with the static <tt>TransformerFactory.newInstance()</tt>
+    factory method.
+    </p></li><li><p>
+    Form a <tt>Source</tt> object from the XSLT stylesheet.
+    </p></li><li><p>
+    Pass this <tt>Source</tt> object
+    to the factory&#8217;s <tt>newTransformer()</tt>
+    factory method to build a <tt>Transformer</tt>
+    object.
+    </p></li><li><p>
+    Build a <tt>Source</tt> object
+    from the input XML document you wish to transform.
+    </p></li><li><p>
+    Build a <tt>Result</tt> object
+    for the target of the transformation.
+    </p></li><li><p>
+    Pass both the source and the result to
+    the <tt>Transformer</tt>
+    object&#8217;s <tt>transform()</tt> method.
+    </p></li></ol></div><p>
+    Steps four through six can be repeated for as many different
+    input documents as you want. You can reuse the same 
+    <tt>Transformer</tt> object repeatedly in
+    series, though you can&#8217;t use it in multiple threads in
+    parallel. 
+  </p><p>
+    For example, suppose you want to use the 
+    Fibonacci stylesheet in <a href="ch17.html#FibonacciXMLRPC.xsl" title="Example&nbsp;17.5.&nbsp;An XSLT stylesheet that calculates Fibonacci numbers">Example&nbsp;17.5</a> to implement a
+    simple XML-RPC server. The request document will arrive on an
+    <tt>InputStream</tt> named <tt>in</tt>
+    and be returned on an 
+    <tt>OutputStream</tt> named <tt>out</tt>.
+    Therefore, we&#8217;ll use  
+    <tt>javax.xml.transform.stream.StreamSource</tt>
+     as the <tt>Source</tt> for
+    the input document and 
+    <tt>javax.xml.transform.stream.StreamResult</tt>
+    as the <tt>Result</tt> for the output document.
+    The stylesheet itself will also be assumed to live at the
+    relative URL <tt>FibonacciXMLRPC.xsl</tt>,
+    and will also be loaded into a 
+    <tt>javax.xml.transform.stream.StreamSource</tt>.
+    This code fragment performs that transform:
+  </p><div class="informalexample"><pre class="programlisting">try {
+  TransformerFactory xformFactory 
+   = TransformerFactory.newInstance();
+  Source xsl = new StreamSource("FibonacciXMLRPC.xsl");
+  Transformer stylesheet = xformFactory.newTransformer(xsl);
+
+  Source request  = new StreamSource(in);
+  Result response = new StreamResult(out);
+  stylesheet.transform(request, response);
+}
+catch (TransformerException e) {
+  System.err.println(e); 
+}</pre></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e31774"></a>Thread Safety</h3></div></div><p>
+    Neither  
+    <tt>TransformerFactory</tt> nor 
+    <tt>Transformer</tt> is guaranteed to be
+    thread-safe. If your program is multi-threaded,
+    the simplest solution is just to give each separate thread
+    its own <tt>TransformerFactory</tt> and
+    <tt>Transformer</tt> objects.
+    However, this can be expensive, especially if you
+    frequently reuse the same large stylesheet, since it will
+    need to be read from  disk or the network and parsed every time you
+    create a new 
+    <tt>Transformer</tt> object.
+    There is also likely to be some overhead in building the
+    processor&#8217;s internal representation of an XSLT stylesheet
+    from the parsed XML tree. 
+  </p><p>
+    An alternative is to ask the  
+    <tt>TransformerFactory</tt> to build a 
+    <tt>Templates</tt> object instead.
+    The <tt>Templates</tt> class represents the
+    parsed stylesheet. You can then ask the <tt>Templates</tt> class
+    to give you as many separate  <tt>Transformer</tt>
+    objects as you need, each of which can be created very
+    quickly by copying the processor&#8217;s in-memory data
+    structures rather than by reparsing the entire stylesheet from
+    disk or the network.
+    The <tt>Templates</tt> class itself
+    can be safely used across multiple threads.
+  </p><p>
+    For example, you might begin loading and compiling the
+    stylesheet like this:
+  </p><div class="informalexample"><pre class="programlisting">  TransformerFactory xformFactory 
+   = TransformerFactory.newInstance();
+  Source xsl = new StreamSource("FibonacciXMLRPC.xsl");
+  Templates templates = xformFactory.newTemplates(xsl);</pre></div><p>
+    Then later in a loop you&#8217;d repeatedly load documents
+    and transform them like this:
+  </p><div class="informalexample"><pre class="programlisting">
+while (true) {
+  InputStream  in   = getNextDocument();
+  OutputStream out  = getNextTarget();
+  Source request    = new StreamSource(in);
+  Result response   = new StreamResult(out);
+  Transformer transformer = templates.newTransformer();
+  transformer.transform(request, response);
+}</pre></div><p>
+    Since the thread-unsafe <tt>Transformer</tt> object 
+    is local to the <tt>while</tt> loop, 
+    references to it don&#8217;t escape into  other threads.
+    This prevents the <tt>transform()</tt> method 
+    from being called concurrently. 
+    The <tt>Templates</tt> object may  be
+    shared among multiple threads. However, it is thread safe so
+    this isn&#8217;t a problem. Furthermore, all the time-consuming 
+    work is done
+    when the <tt>Templates</tt> object is created.
+    Calling <tt>templates.newTransformer()</tt> 
+    is very quick by comparison.
+  </p><p>
+    This technique is particularly important in server environments where the
+    transform may be applied to thousands of different input
+    documents with potentially
+    dozens being processed in parallel in separate threads at the same time. 
+    <a href="ch17s02.html#FibonacciXMLRPCXSLServlet.java" title="Example&nbsp;17.6.&nbsp;A servlet that uses TrAX and XSLT to respond to XML-RPC requests">Example&nbsp;17.6</a> demonstrates
+    with yet another variation of the Fibonacci XML-RPC servlet.
+    This is the first variation that does not implement 
+    the <tt>SingleThreadModel</tt>
+    interface. It can safely run in multiple threads
+    simultaneously. 
+  </p><div class="example"><a name="FibonacciXMLRPCXSLServlet.java"></a><p class="title"><b>Example&nbsp;17.6.&nbsp;A servlet that uses TrAX and XSLT to respond to XML-RPC requests</b></p><pre class="programlisting">import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import javax.xml.transform.*;
+import javax.xml.transform.stream.*;
+
+
+public class FibonacciXMLRPCXSLServlet extends HttpServlet {
+
+  private Templates stylesheet;
+  
+  // Load the stylesheet
+  public void init() throws ServletException {  
+    
+    try {
+      TransformerFactory xformFactory 
+       = TransformerFactory.newInstance();
+      Source source   = new StreamSource("FibonacciXMLRPC.xsl");
+      this.stylesheet = xformFactory.newTemplates(source);
+    }
+    catch (TransformerException e) { 
+      throw new ServletException(
+       "Could not load the stylesheet", e); 
+    }
+    
+  }   
+  
+  // Respond to an XML-RPC request
+  public void doPost(HttpServletRequest servletRequest,
+   HttpServletResponse servletResponse)
+   throws ServletException, IOException {
+
+    servletResponse.setContentType("text/xml; charset=UTF-8");                    
+     
+    try {
+      InputStream in  = servletRequest.getInputStream();
+      Source source   = new StreamSource(in);
+      PrintWriter out = servletResponse.getWriter();
+      Result result   = new StreamResult(out);
+      Transformer transformer = stylesheet.newTransformer();
+      transformer.transform(source, result);
+      servletResponse.flushBuffer();
+      out.flush(); 
+      out.println();
+    }
+    catch (TransformerException e) {
+      // If we get an exception at this point, it's too late to
+      // switch over to an XML-RPC fault. 
+      throw new ServletException(e); 
+    }
+    
+  }
+
+}
+</pre></div><p>
+    The <tt>init()</tt> method simply loads the
+    stylesheet that will
+     transform requests into responses. 
+    The <tt>doPost()</tt> method reads the request
+    and returns the
+    response. The <tt>Source</tt> is a 
+    <tt>StreamSource</tt>. The result is a
+    <tt>StreamResult</tt>.
+  </p><p>
+    I&#8217;m not sure I would recommend this as the proper
+    design for a servlet of this nature. The XSLT
+    transform comes with a lot of overhead.
+    At the least, I would definitely recommend doing the 
+    math in Java since XSLT is not optimized for this sort of
+    work.
+    Still, I&#8217;m quite impressed with the simplicity and robustness
+    of this code. 
+    The thread safety is just the first benefit.
+    Shifting the XML generation into
+    an XSLT document makes the whole program a lot more modular. 
+    It&#8217;s easy to change the expected input or output format
+    without even recompiling the servlet. 
+  </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e31875"></a>Locating Transformers</h3></div></div><p>
+    The 
+    <tt>javax.xml.transform.TransformerFactory</tt> 
+    Java system property
+    determines which
+    XSLT engine TrAX uses. Its value is the fully qualified name of the
+    implementation of the abstract
+    <tt>javax.xml.transform.TransformerFactory</tt>
+    class. Possible values of this property include:
+  </p><div class="itemizedlist"><ul type="disc"><li><p>
+        Saxon 6.x: <tt>com.icl.saxon.TransformerFactoryImpl</tt>
+      </p></li><li><p>
+        Saxon 7.x: <tt>net.sf.saxon.TransformerFactoryImpl</tt>
+      </p></li><li><p>
+        Xalan:
+        <tt>org.apache.xalan.processor.TransformerFactoryImpl</tt>
+      </p></li><li><p>
+        jd.xslt:
+        <tt>jd.xml.xslt.trax.TransformerFactoryImpl</tt>
+      </p></li><li><p>
+       Oracle:
+        <tt>oracle.xml.jaxp.JXSAXTransformerFactory</tt>
+      </p></li></ul></div><p>
+    This property can be set in all the usual ways a Java system property
+    can be set. TrAX picks from them in this order:
+  </p><div class="orderedlist"><ol type="1"><li><p>
+          <tt>System.setProperty( "javax.xml.transform.TransformerFactory", 
+        "<i><tt>classname</tt></i>")</tt>
+      </p></li><li><p>
+        The value specified at the command line using the 
+        <tt>-Djavax.xml.transform.TransformerFactory=<i><tt>classname</tt></i></tt>
+        option to the <b>java</b> interpreter
+      </p></li><li><p>
+        The class named in the  <tt>lib/jaxp.properties</tt> properties file
+ in the JRE directory, in a line like this one:
+      </p><div class="informalexample"><pre class="programlisting">javax.xml.transform.TransformerFactory=<i><tt>classname</tt></i></pre></div></li><li><p>The class named in the 
+    <tt>META-INF/services/javax.xml.transform.TransformerFactory</tt> 
+    file 
+    in the JAR archives available to the runtime
+      </p></li><li><p>
+        Finally, if all of the above options fail,
+        <tt>TransformerFactory.newInstance()</tt>
+        returns a default implementation. In Sun&#8217;s JDK 1.4, this is
+        Xalan 2.2d10. 
+      </p></li></ol></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e31963"></a>The xml-stylesheet processing instruction</h3></div></div><p>
+      XML documents may contain an
+      <tt>xml-stylesheet</tt> processing instruction in
+      their prologs that specifies the stylesheet to apply to the
+      XML document. At a minimum, this has an
+      <tt>href</tt>
+      pseudo-attribute specifying the location of the stylesheet
+      to apply and a <tt>type</tt> pseudo-attribute specifying  
+      the MIME media type of the stylesheet. For XSLT
+      stylesheets the proper type is application/xml.
+      For example, this <tt>xml-stylesheet</tt> processing instruction
+      indicates the XSLT stylesheet found at the relative URL 
+      <tt>docbook-xsl-1.50.0/fo/docbook.xsl</tt>:
+    </p><div class="informalexample"><pre class="programlisting">&lt;?xml-stylesheet href="docbook-xsl-1.50.0/fo/docbook.xsl" 
+                 type="application/xml"?&gt;</pre></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Note</h3><p>
+        Contrary to what some other books will tell you, there is
+        no such MIME media type as <tt>text/xsl</tt>, nor
+        is it correct to use it as the value of the
+        <tt>type</tt> pseudo-attribute. 
+        This alleged type is a figment of
+        Microsoft&#8217;s imagination. It has never been registered
+        with the IANA as MIME types must be. It
+        is not endorsed by
+        the relevant W3C specifications for XSLT and attaching
+        stylesheets to XML documents, and it is not 
+        likely to be in the future. 
+      </p><p>
+        Official registration of an XSLT specific media type
+        application/xml+xslt has begun, and this type may be used in the future
+        to distinguish XSLT stylesheets from other kinds of XML document.
+        However, the registration has not been
+        completed at the time of this writing.
+      </p></div><p>
+      This processing instruction is a hint. It is only a hint. 
+      Programs are not required to use the stylesheet the
+      document indicates. They are free to choose a different
+      transform, multiple transforms, or no transform at all.
+      Indeed, the purpose of this processing instruction is
+      primarily browser display. Programs doing something other
+      than loading the document into a browser for a human to read
+      will likely want to use their own XSLT transforms for their
+      own purposes.
+    </p><p>
+      Besides the required <tt>href</tt> and
+      <tt>type</tt> pseudo-attributes, the 
+      <tt>xml-stylesheet</tt>
+      processing instruction can also have up to four other 
+      optional pseudo-attributes:
+    </p><div class="variablelist"><dl><dt><span class="term"><tt>alternate</tt></span></dt><dd><p>
+        <tt>no</tt> if this stylesheet is the primary 
+        stylesheet for the document; <tt>yes</tt>
+        if it isn&#8217;t. The default is <tt>no</tt>.
+      </p></dd><dt><span class="term"><tt>media</tt></span></dt><dd><p>
+        A string indicating in which kinds of environments this
+        stylesheet should be used. Possible values include
+        <tt>screen</tt> (the default),
+<tt>tty</tt>,
+<tt>tv</tt>,
+<tt>projection</tt>,
+<tt>handheld</tt>,
+<tt>print</tt>,
+<tt>braille</tt>,
+<tt>aural</tt>, and
+<tt>all</tt>.
+      </p></dd><dt><span class="term"><tt>charset</tt></span></dt><dd><p>
+        The character encoding of the stylesheet; e.g.
+        <tt>ISO-8859-1</tt>, <tt>UTF-8</tt>, or 
+        <tt>SJIS</tt>.
+      </p></dd><dt><span class="term"><tt>title</tt></span></dt><dd><p>
+        A name for the stylesheet.
+      </p></dd></dl></div><p>
+      For example, these <tt>xml-stylesheet</tt>
+      processing instructions
+      point at two different XSLT stylesheets, one intended for print
+      and found at the relative URL 
+      <tt>docbook-xsl-1.50.0/fo/docbook.xsl</tt> and the other intended for 
+      onscreen display and found at 
+      <tt>docbook-xsl-1.50.0/html/docbook.xsl</tt>.
+      Both are the primary stylesheet for their media.
+    </p><div class="informalexample"><pre class="programlisting">&lt;?xml-stylesheet href="docbook-xsl-1.50.0/fo/docbook.xsl" 
+                 type="application/xml"
+                 media="print"
+                 title="XSL-FO"
+                 encoding="UTF-8"
+                 alternate="no"?&gt;
+&lt;?xml-stylesheet href="docbook-xsl-1.50.0/html/docbook.xsl" 
+                 type="application/xml"
+                 media="screen"
+                 title="HTML"
+                 encoding="UTF-8"
+                 alternate="no"?&gt;</pre></div><p>
+      The <tt>TransformerFactory</tt> class has a 
+      <tt>getAssociatedStylesheet()</tt> method 
+      that loads the  stylesheet indicated by such a
+      processing instruction:
+    </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">abstract&nbsp;</span><span class="type">Source&nbsp;</span><span class="methodname"><b>getAssociatedStylesheet</b></span>(<span class="methodparam"><span class="type">Source&nbsp;</span><span class="parameter"><i>xmlDocument</i></span></span>, <span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>media</i></span></span>, <span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>title</i></span></span>, <span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>charset</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">TransformerConfigurationException</span>;</code><p>
+    This method reads the XML document indicated by the first
+    argument, and looks in its prolog for the stylesheet that
+    matches the criteria given in the other three arguments.
+    If any of these are null, it ignores that criterion.
+    The method then loads the  stylesheet matching 
+    the criteria into a JAXP
+    <tt>Source</tt> object and returns it.    
+    You can use the <tt>TransformerFactory.newTransformer()</tt> 
+    object to convert this  <tt>Source</tt> into a 
+    <tt>Transformer</tt> object. For example,
+    this code fragment attempts to transform the document read
+    from the <tt>InputStream</tt> 
+    <tt>in</tt> according to an 
+    <tt>xml-stylesheet</tt> processing instruction for
+    print media found in that document&#8217;s prolog.
+    The title and encoding of the 
+    stylesheet are not considered, and thus set to null.
+  </p><div class="informalexample"><pre class="programlisting">// The InputStream in contains the XML document to be transformed
+try {
+  Source inputDocument = new StreamSource(in);
+  TransformerFactory xformFactory 
+   = TransformerFactory.newInstance();
+  Source xsl = xformFactory.getAssociatedStyleSheet(
+   inputDocument, "print", null, null);
+  Transformer stylesheet = xformFactory.newTransformer(xsl);
+
+  Result outputDocument = new StreamResult(out);
+  stylesheet.transform(inputDocument, outputDocument);
+}
+catch (TransformerConfigurationException e) {
+  System.err.println("Problem with the xml-stylesheet processing instruction"); 
+}
+catch (TransformerException e) {
+  System.err.println("Problem with the stylesheet"); 
+}</pre></div><p>
+    A <tt>TransformerConfigurationException</tt> 
+    is thrown if there is no
+    <tt>xml-stylesheet</tt> processing instruction
+    pointing to an XSLT stylesheet 
+    matching the specified criteria.
+  </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e32171"></a>Features</h3></div></div><p>
+      Not all XSLT processors support exactly the same set of
+      capabilities, even within the limits defined by XSLT 1.0.
+      For example, some processors can only  transform DOM trees,
+      whereas others may require a sequence of SAX events, and
+      still others may only be able to work with raw streams of
+      text.  TrAX uses URI-named features to indicate which 
+      of the TrAX classes any given implementation supports. 
+      It defines eight standard features as unresolvable URL
+      strings, each of which is also available as a named
+      constant in the relevant TrAX class:
+    </p><div class="itemizedlist"><ul type="disc"><li><p><tt>StreamSource.FEATURE</tt>: 
+ <tt>http://javax.xml.transform.stream.StreamSource/feature</tt></p></li><li><p><tt>StreamResult.FEATURE</tt>: 
+ <tt>http://javax.xml.transform.stream.StreamResult/feature</tt></p></li><li><p><tt>DOMSource.FEATURE</tt>: 
+ <tt>http://javax.xml.transform.dom.DOMSource/feature</tt></p></li><li><p><tt>DOMResult.FEATURE</tt>: 
+ <tt>http://javax.xml.transform.dom.DOMResult/feature</tt></p></li><li><p><tt>SAXSource.FEATURE</tt>: 
+ <tt>http://javax.xml.transform.dom.SAXSource/feature</tt></p></li><li><p><tt>SAXResult.FEATURE</tt>: 
+ <tt>http://javax.xml.transform.dom.SAXResult/feature</tt></p></li><li><p><tt>SAXTransformerFactory.FEATURE</tt>: 
+ <tt>http://javax.xml.transform.sax.SAXTransformerFactory/feature</tt></p></li><li><p><tt>SAXTransformerFactory.FEATURE_XMLFILTER</tt>: 
+ <tt>http://javax.xml.transform.sax.SAXTransformerFactory/feature/xmlfilter</tt></p></li></ul></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Note</h3><p>
+       These URLs are just identifiers like namespace URLs.
+       They do not need to be and indeed cannot be resolved.
+       A system does not need to be connected to the Internet to use a
+       transformer that supports these features. 
+     </p></div><p>
+      The boolean values of these features for the current XSLT engine can be tested with
+      the <tt>getFeature()</tt> 
+      method in the <tt>TransformerFactory</tt> class:
+    </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">abstract&nbsp;</span><span class="type">boolean&nbsp;</span><span class="methodname"><b>getFeature</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>Name</i></span></span>);</code><p>
+      There&#8217;s no corresponding
+      <tt>setFeature()</tt> method because a TrAX
+      feature
+      reflects the nature of the underlying parser. Unlike, a SAX feature it 
+      is not
+      something you can just turn on or off with a switch. Either
+      a processor supports DOM input or it doesn&#8217;t. Either a
+      processor
+      supports SAX output or it doesn&#8217;t, and so on. 
+    </p><p>
+      <a href="ch17s02.html#TrAXFeatureTester.java" title="Example&nbsp;17.7.&nbsp;Testing the availability of TrAX features">Example&nbsp;17.7</a> is a simple
+      program that can be used to test an XSLT processor&#8217;s
+      support for the standard JAXP 1.1 features.
+    </p><div class="example"><a name="TrAXFeatureTester.java"></a><p class="title"><b>Example&nbsp;17.7.&nbsp;Testing the availability of TrAX features</b></p><pre class="programlisting">import javax.xml.transform.*;
+import javax.xml.transform.dom.*;
+import javax.xml.transform.stream.*;
+import javax.xml.transform.sax.*;
+
+
+public class TrAXFeatureTester {
+
+  public static void main(String[] args) {
+  
+    TransformerFactory xformFactory 
+     = TransformerFactory.newInstance();
+      
+    String name = xformFactory.getClass().getName();
+
+    if (xformFactory.getFeature(DOMResult.FEATURE)) {
+      System.out.println(name + " supports DOM output."); 
+    }
+    else {
+      System.out.println(name + " does not support DOM output."); 
+    }
+    if (xformFactory.getFeature(DOMSource.FEATURE)) {
+      System.out.println(name + " supports DOM input."); 
+    }
+    else {
+      System.out.println(name + " does not support DOM input."); 
+    }
+    
+    if (xformFactory.getFeature(SAXResult.FEATURE)) {
+      System.out.println(name + " supports SAX output."); 
+    }
+    else {
+      System.out.println(name + " does not support SAX output."); 
+    }
+    if (xformFactory.getFeature(SAXSource.FEATURE)) {
+      System.out.println(name + " supports SAX input."); 
+    }
+    else {
+      System.out.println(name + " does not support SAX input."); 
+    }
+    
+    if (xformFactory.getFeature(StreamResult.FEATURE)) {
+      System.out.println(name + " supports stream output."); 
+    }
+    else {
+      System.out.println(name + " does not support stream output."); 
+    }
+    if (xformFactory.getFeature(StreamSource.FEATURE)) {
+      System.out.println(name + " supports stream input."); 
+    }
+    else {
+      System.out.println(name + " does not support stream input."); 
+    }
+    
+    if (xformFactory.getFeature(SAXTransformerFactory.FEATURE)) {
+      System.out.println(name + " returns SAXTransformerFactory "
+       + "objects from TransformerFactory.newInstance()."); 
+    }
+    else {
+      System.out.println(name 
+       + " does not use SAXTransformerFactory."); 
+    }
+    if (xformFactory.getFeature(SAXTransformerFactory.FEATURE_XMLFILTER)) {
+      System.out.println( 
+       name + " supports the newXMLFilter() methods."); 
+    }
+    else {
+      System.out.println( 
+       name + " does not support the newXMLFilter() methods."); 
+    }
+  
+  }
+
+}
+</pre></div><p>
+      Here&#8217;s the results of running this program against Saxon
+      6.5.1:
+    </p><pre class="screen">
+<tt>C:\XMLJAVA&gt;</tt><b><tt>java -Djavax.xml.transform.TransformerFactory=
+com.icl.saxon.TransformerFactoryImpl TrAXFeatureTester</tt></b>
+<tt>com.icl.saxon.TransformerFactoryImpl supports DOM output.
+com.icl.saxon.TransformerFactoryImpl supports DOM input.
+com.icl.saxon.TransformerFactoryImpl supports SAX output.
+com.icl.saxon.TransformerFactoryImpl supports SAX input.
+com.icl.saxon.TransformerFactoryImpl supports stream output.
+com.icl.saxon.TransformerFactoryImpl supports stream input.
+com.icl.saxon.TransformerFactoryImpl returns 
+ SAXTransformerFactory objects from 
+ TransformerFactory.newInstance().
+com.icl.saxon.TransformerFactoryImpl supports the newXMLFilter() 
+ methods.</tt></pre><p>
+    As you can see Saxon supports all eight features.
+    Xalan also supports all eight features. 
+</p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e32285"></a>XSLT Processor Attributes</h3></div></div><p>
+      Some XSLT processors provide non-standard, custom 
+      <i>attributes</i> that control their behavior.
+      Like features, these are also named via
+      URIs.
+      For example, Xalan-J 2.3  defines these three attributes:
+    </p><div class="variablelist"><dl><dt><span class="term"><tt>http://apache.org/xalan/features/optimize</tt></span></dt><dd><p>By default, Xalan rewrites stylesheets in an
+ attempt to optimize them (similar to the behavior of an
+ optimizing compiler for Java or other languages).
+ This can confuse tools that need direct access to the
+ stylesheet such as XSLT profilers and debuggers. If you&#8217;re using
+ such a tool with Xalan, you should set this attribute to false.
+ </p></dd><dt><span class="term"><tt>http://apache.org/xalan/features/incremental</tt></span></dt><dd><p>Setting this feature to true allows Xalan to begin producing output before 
+it has finished processing the entire input document. This may cause problems if an error is detected late
+in the process, but it shouldn&#8217;t be a big problem in fully
+ debugged and tested 
+environments.</p></dd><dt><span class="term"><tt>http://apache.org/xalan/features/source_location</tt></span></dt><dd><p>Setting this to true tells Xalan to provide a
+ JAXP <tt>SourceLocator</tt>
+a program can use to determine the location (line numbers, column
+numbers,
+system IDs, and public IDs) of individual nodes during the
+transform.
+However, it engenders a substantial performance hit
+so it&#8217;s turned off by default. </p></dd></dl></div><p>
+      Other processors define their own attributes. 
+      Although TrAX is designed as 
+      a generic API, it does let you access such custom
+      features with these two methods:
+    </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">abstract&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setAttribute</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>name</i></span></span>, <span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>value</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">IllegalArgumentException</span>;</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">abstract&nbsp;</span><span class="type">Object&nbsp;</span><span class="methodname"><b>getAttribute</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>name</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">IllegalArgumentException</span>;</code><p>
+    For example, this code tries to turn on incremental output:
+  </p><div class="informalexample"><pre class="programlisting">TransformerFactory xformFactory 
+ = TransformerFactory.newInstance();
+try {
+  xformFactory.setAttribute(
+   "http://apache.org/xalan/features/incremental", Boolean.TRUE);
+}
+catch (IllegalArgumentException e) { 
+  // This XSLT processor does not support the
+  // http://apache.org/xalan/features/incremental attribute,
+  // but we can still use the processor anyway
+}</pre></div><p>
+      If you&#8217;re using any processor except Xalan-J
+      2.x. this will not exactly fail
+      but it won&#8217;t exactly succeed 
+      either.
+      Using non-standard attributes
+      may limit  the portability of your programs.
+      However most attributes (and all of the Xalan attributes)
+     merely adjust
+     how the processor achieves its result.
+      They do not change the final result in any way.
+    </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e32363"></a>URI Resolution</h3></div></div><p>
+    An XSLT stylesheet can use the 
+    <tt>document()</tt> function
+    to load additional source documents for processing.
+    It can also import or include additional stylesheets with the
+    <tt>xsl:import</tt> and <tt>xsl:include</tt>
+    instructions. In all three cases the document to load is
+    identified by a URI. 
+  </p><p>
+    Normally a <tt>Transformer</tt> simply loads
+    the document at that URL. However, you can redirect the
+    request to a proxy server, to local copies, or to 
+    previously cached copies using a
+    <tt>URIResolver</tt>.
+    This interface, summarized in <a href="ch17s02.html#CompactURIResolver.java" title="Example&nbsp;17.8.&nbsp;The TrAX URIResolver interface">Example&nbsp;17.8</a>,
+    returns <tt>Source</tt> objects for 
+    a specified URL and an optional base. It is similar in
+    intent to SAX&#8217;s <tt>EntityResolver</tt>.
+    However, <tt>EntityResolver</tt> is based on 
+    public and system IDs whereas this interface is based on URLs
+    and base URLs.
+  </p><div class="example"><a name="CompactURIResolver.java"></a><p class="title"><b>Example&nbsp;17.8.&nbsp;The TrAX URIResolver interface</b></p><pre class="programlisting">package javax.xml.transform;
+
+public interface URIResolver {
+
+  public Source resolve(String href, String base) 
+   throws TransformerException;
+   
+}
+</pre></div><p>
+    The <tt>resolve()</tt> method should return 
+    a <tt>Source</tt> object if it successfully resolves the URL.
+    Otherwise it should return null to indicate that the default
+    URL resolution mechanism should be used. For example, 
+    <a href="ch17s02.html#GZipURIResolver.java" title="Example&nbsp;17.9.&nbsp;A URIResolver class">Example&nbsp;17.9</a> is a simple <tt>URIResolver</tt>
+    implementation that looks for a gzipped version of a
+    document (i.e. one that ends in .gz).
+    If it finds one it uses the
+    <tt>java.util.zip.GZIPInputStream</tt> 
+    class to build a <tt>StreamSource</tt>
+    from the gzipped document.
+    Otherwise, it returns null and the usual methods for
+    resolving URLs are followed. 
+  </p><div class="example"><a name="GZipURIResolver.java"></a><p class="title"><b>Example&nbsp;17.9.&nbsp;A URIResolver class</b></p><pre class="programlisting">import javax.xml.transform.*;
+import javax.xml.transform.stream.StreamSource;
+import java.util.zip.GZIPInputStream;
+import java.net.URL;
+import java.io.InputStream;
+
+
+public class GZipURIResolver implements URIResolver {
+
+  public Source resolve(String href, String base) {
+   
+    try {
+      href = href + ".gz";
+      URL context = new URL(base);
+      URL u = new URL(context, href); 
+      InputStream in = u.openStream();
+      GZIPInputStream gin = new GZIPInputStream(in);
+      return new StreamSource(gin, u.toString());
+    }
+    catch (Exception e) {
+      // If anything goes wrong, just return null and let
+      // the default resolver try.
+    }
+    return null;
+  }
+
+}
+</pre></div><p>
+    The following two methods in 
+    <tt>TransformerFactory</tt>
+    set and get the <tt>URIResolver</tt>
+    that <tt>Transformer</tt> objects created by
+    this factory will use to resolve URIs:
+  </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">abstract&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setURIResolver</b></span>(<span class="methodparam"><span class="type">URIResolver&nbsp;</span><span class="parameter"><i>resolver</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">abstract&nbsp;</span><span class="type">URIResolver&nbsp;</span><span class="methodname"><b>getURIResolver</b></span>();</code><p>
+     For example,
+   </p><div class="informalexample"><pre class="programlisting">URIResolver resolver = new GZipURIResolver();
+factory.setURIResolver(resolver);</pre></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e32464"></a>Error Handling</h3></div></div><p>
+    XSLT transformations can fail for any of several reasons,
+    including:
+  </p><div class="itemizedlist"><ul type="disc"><li><p>The stylesheet is syntactically incorrect.</p></li><li><p>The source document is malformed.</p></li><li><p>
+      Some external resource the processor needs to load, 
+      such as a document referenced by the 
+      <tt>document()</tt> function
+      or the <tt>.class</tt>
+      file that implements an extension function,
+      is not available.
+      </p></li></ul></div><p>
+    By default, any such problems are reported by printing them on
+    <tt>System.err</tt>. However, you can provide
+    more sophisticated error handling, reporting, and logging by
+    implementing the <tt>ErrorListener</tt>
+    interface. This interface, shown in <a href="ch17s02.html#CompactErrorListener.java" title="Example&nbsp;17.10.&nbsp;The TrAX ErrorListener interface">Example&nbsp;17.10</a>,
+    is modeled after SAX&#8217;s <tt>ErrorHandler</tt>
+    interface. Indeed aside from the fact that the arguments are
+    all  <tt>TransformerException</tt>s
+    instead of <tt>SAXException</tt>s, it&#8217;s
+    almost identical.
+  </p><div class="example"><a name="CompactErrorListener.java"></a><p class="title"><b>Example&nbsp;17.10.&nbsp;The TrAX ErrorListener interface</b></p><pre class="programlisting">package javax.xml.transform;
+
+public interface ErrorListener {
+
+  public void warning(TransformerException exception)
+   throws TransformerException;
+  public void error(TransformerException exception)
+   throws TransformerException;
+  public void fatalError(TransformerException exception)
+   throws TransformerException;
+     
+}
+</pre></div><p>
+  <a href="ch17s02.html#LoggingErrorListener.java" title="Example&nbsp;17.11.&nbsp;An ErrorListener that uses the Logging API">Example&nbsp;17.11</a> demonstrates with a
+  simple class that uses the
+  <tt>java.util.logging</tt> package introduced in Java 1.4
+  to report
+  errors rather than printing them on
+  <tt>System.err</tt>. Each exception is logged to
+  a <tt>Logger</tt> specified in the constructor.
+  Unfortunately the Logging API doesn&#8217;t really have separate
+  categories for fatal and non-fatal errors so I just classify
+  them both as &#8220;severe&#8221;.
+  (You could define a custom subclass of <tt>Level</tt>
+  that did differentiate fatal and non-fatal errors; but since this is 
+  not a book about the Logging
+  API, I leave that as exercise for the reader.)
+</p><div class="example"><a name="LoggingErrorListener.java"></a><p class="title"><b>Example&nbsp;17.11.&nbsp;An ErrorListener that uses the Logging API</b></p><pre class="programlisting">import javax.xml.transform.*;
+import java.util.logging.*;
+
+
+public class LoggingErrorListener implements ErrorListener {
+
+  private Logger logger;
+  
+  public LoggingErrorListener(Logger logger) {
+    this.logger = logger;
+  }
+  
+  public void warning(TransformerException exception) {
+   
+    logger.log(Level.WARNING, exception.getMessage(), exception);
+   
+    // Don't throw an exception and stop the processor
+    // just for a warning; but do log the problem
+  }
+  
+  public void error(TransformerException exception)
+   throws TransformerException {
+    
+    logger.log(Level.SEVERE, exception.getMessage(), exception);
+    // XSLT is not as draconian as XML. There are numerous errors
+    // which the processor may but does not have to recover from; 
+    // e.g. multiple templates that match a node with the same
+    // priority. I do not want to allow that so I throw this 
+    // exception here.
+    throw exception;
+    
+  }
+  
+  public void fatalError(TransformerException exception)
+   throws TransformerException {
+    
+    logger.log(Level.SEVERE, exception.getMessage(), exception);
+
+    // This is an error which the processor cannot recover from; 
+    // e.g. a malformed stylesheet or input document
+    // so I must throw this exception here.
+    throw exception;
+    
+  }
+     
+}
+</pre></div><p>
+    The following two methods appear in both 
+    <tt>TransformerFactory</tt> and
+     <tt>Transformer</tt>. They
+    enable you to set and get the <tt>ErrorListener</tt>
+    that the object will report problems to:
+  </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">abstract&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setErrorListener</b></span>(<span class="methodparam"><span class="type">ErrorListener&nbsp;</span><span class="parameter"><i>listener</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">IllegalArgumentException</span>;</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">abstract&nbsp;</span><span class="type">ErrorListener&nbsp;</span><span class="methodname"><b>getErrorListener</b></span>();</code><p>
+    An <tt>ErrorListener</tt> registered
+    with a <tt>Transformer</tt> will report errors
+    with the transformation.
+    An <tt>ErrorListener</tt> registered
+    with a <tt>TransformerFactory</tt> will report errors
+    with the factory&#8217;s attempts to create new 
+    <tt>Transformer</tt> objects.  For example, 
+    this code fragment installs separate 
+    <tt>LoggingErrorListener</tt>s on the 
+    <tt>TransformerFactory</tt> and the 
+    <tt>Transformer</tt> object it creates that
+    will record messages in two different logs.
+  </p><div class="informalexample"><pre class="programlisting">TransformerFactory factory = TransformerFactory.newInstance();
+Logger factoryLogger 
+ = Logger.getLogger("com.macfaq.trax.factory");
+ErrorListener factoryListener 
+ = new LoggingErrorListener(factoryLogger);
+factory.setErrorListener(factoryListener);
+Source source = new StreamSource("FibonacciXMLRPC.xsl");
+Transformer stylesheet = factory.newTransformer(source);
+Logger transformerLogger 
+ = Logger.getLogger("com.macfaq.trax.transformer");
+ErrorListener transformerListener 
+ = new LoggingErrorListener(transformerLogger);
+stylesheet.setErrorListener(transformerListener);</pre></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e32598"></a>Passing Parameters to Style Sheets</h3></div></div><p>
+    Top-level <tt>xsl:param</tt> and 
+    <tt>xsl:variable</tt> elements
+    both define variables by
+    binding a name to a value. This variable can be dereferenced
+    elsewhere in the stylesheet using the form
+    <tt>$<i><tt>name</tt></i></tt>.
+    Once set, the value of an XSLT variable is fixed and cannot
+    be changed. However if the variable is defined with a 
+    top-level <tt>xsl:param</tt> element instead of an
+    <tt>xsl:variable</tt> element, then the default value
+    can be changed before the transformation begins.
+  </p><p>
+    For example, the DocBook XSL stylesheets I use to generate
+    this book have a number of parameters that set various
+    formatting options. For this book I use
+    these settings:
+  </p><div class="informalexample"><pre class="programlisting">  &lt;xsl:param name="fop.extensions"&gt;1&lt;/xsl:param&gt;
+  &lt;xsl:param name="page.width.portrait"&gt;7.375in&lt;/xsl:param&gt;
+  &lt;xsl:param name="page.height.portrait"&gt;9.25in&lt;/xsl:param&gt;
+  &lt;xsl:param name="page.margin.top"&gt;0.5in&lt;/xsl:param&gt;
+  &lt;xsl:param name="page.margin.bottom"&gt;0.5in&lt;/xsl:param&gt;
+  &lt;xsl:param name="region.before.extent"&gt;0.5in&lt;/xsl:param&gt;
+  &lt;xsl:param name="body.margin.top"&gt;0.5in&lt;/xsl:param&gt;
+  &lt;xsl:param name="page.margin.outer"&gt;1.0in&lt;/xsl:param&gt;
+  &lt;xsl:param name="page.margin.inner"&gt;1.0in&lt;/xsl:param&gt;
+  &lt;xsl:param name="body.font.family"&gt;Times&lt;/xsl:param&gt;
+  &lt;xsl:param name="variablelist.as.blocks" select="1"/&gt;
+  &lt;xsl:param name="generate.section.toc.level" select="1"/&gt;
+  &lt;xsl:param name="generate.component.toc" select="0"/&gt;</pre></div><p>
+    The initial (and thus final) value of any parameter can be
+    changed inside your Java code using these three methods of
+    the
+    <tt>Transformer</tt> class:
+  </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">abstract&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setParameter</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>name</i></span></span>, <span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>value</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">abstract&nbsp;</span><span class="type">Object&nbsp;</span><span class="methodname"><b>getParameter</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>name</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">abstract&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>clearParameters</b></span>();</code><p>
+    The <tt>setParameter()</tt> method provides a
+    value for a parameter that overrides any value used in the
+    stylesheet itself.  The processor is responsible for
+    converting the Java object type passed to a reasonable XSLT
+    equivalent. This should work well enough for
+    <tt>String</tt>, 
+    <tt>Integer</tt>, 
+    <tt>Double</tt>, and
+    <tt>Boolean</tt> as well as DOM types like 
+        <tt>Node</tt> and
+        <tt>NodeList</tt>. However, I
+        wouldn&#8217;t rely on it for anything more complex like a
+        <tt>File</tt> or a  
+    <tt>Frame</tt>.
+    </p><p>
+    The <tt>getParameter()</tt> method returns
+    the value of a parameter previously set by Java. It will not
+    return any value from the stylesheet itself, even if it has
+    not been overridden by the Java code. Finally, the 
+    <tt>clearParameters()</tt> method eliminates
+    all Java mappings of parameters so that those variables are
+    returned to whatever value is specified in the stylesheet.
+  </p><p>
+    For example, in Java the above list of parameters for the
+    DocBook stylesheets could be set with a JAXP <tt>Transformer</tt>
+    object like this:
+  </p><div class="informalexample"><pre class="programlisting">transformer.setParameter("fop.extensions", "1");
+transformer.setParameter("page.width.portrait", "7.375in");
+transformer.setParameter("page.height.portrait", "9.25in");
+transformer.setParameter("page.margin.top", "0.5in");
+transformer.setParameter("region.before.extent", "0.5in");
+transformer.setParameter("body.margin.top", "0.5in");
+transformer.setParameter("page.margin.bottom", "0.5in");
+transformer.setParameter("page.margin.outer", "1.0in");
+transformer.setParameter("page.margin.inner", "1.0in");
+transformer.setParameter("body.font.family", "Times");
+transformer.setParameter("variablelist.as.blocks", "1");
+transformer.setParameter("generate.section.toc.level", "1");
+transformer.setParameter("generate.component.toc", "0");</pre></div><p>
+    Here I used strings for all the values. 
+    However, in a few cases I could have used a
+    <tt>Number</tt> of some kind instead.
+  </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e32721"></a>Output Properties</h3></div></div><p>
+    XSLT is defined in terms of a transformation from one tree 
+    to a different tree, all of which takes place in memory.
+    The actual conversion of that tree to a stream of bytes or a
+    file is an optional step. If that step is taken, the 
+    <tt>xsl:output</tt> instruction controls the details
+    of serialization. For example, it can specify 
+    XML, HTML, or plain text output.
+    It can specify the encoding of the output, what the document type declaration
+    points to, whether the elements should be indented, what the value of the standalone declaration
+    is, where CDATA sections should be used, and more.
+    For example, adding this <tt>xsl:output</tt> element
+    to a stylesheet would produce plain text output instead of
+    XML:
+  </p><div class="informalexample"><pre class="programlisting">&lt;xsl:output
+  method="text"
+  encoding="US-ASCII"
+  media-type="text/plain"
+/&gt;</pre></div><p>
+  This <tt>xsl:output</tt> element asks for
+  pretty-printed 
+    XML:
+  </p><div class="informalexample"><pre class="programlisting">&lt;xsl:output
+  method="xml"
+  encoding="UTF-16"
+  indent="yes"
+  media-type="text/xml"
+  standalone="yes"
+/&gt;</pre></div><p>
+    In all, there are ten attributes of the
+    <tt>xsl:output</tt> element that control
+    serialization of the result tree:
+  </p><div class="variablelist"><dl><dt><span class="term"><tt>method="<i><tt>xml | html | text</tt></i>"</tt></span></dt><dd><p>
+       The output method.  <tt>xml</tt> is the default.
+       <tt>html</tt> uses classic
+       HTML syntax such as <tt>&lt;hr&gt;</tt> instead of 
+       <tt>&lt;hr /&gt;</tt>. <tt>text</tt> outputs plain
+       text but no markup.
+      </p></dd><dt><span class="term"><tt>version="1.0"</tt></span></dt><dd><p>
+        The version number used in the XML declaration.
+        Currently, this should always have the value
+        <tt>1.0</tt>.
+      </p></dd><dt><span class="term"><tt>encoding="<i><tt>UTF-8 | UTF-16 | ISO-8859-1 | &#8230;</tt></i>"</tt></span></dt><dd><p>
+        The encoding used for the output and in the encoding
+        declaration of the output document. 
+      </p></dd><dt><span class="term"><tt>omit-xml-declaration="<i><tt>yes | no</tt></i>"</tt></span></dt><dd><p>
+         <tt>yes</tt> if the XML declaration should be omitted, 
+         <tt>no</tt>
+        otherwise. (i.e. <tt>no</tt> if the XML declaration should be included, 
+         <tt>yes</tt> if it shouldn&#8217;t be.) The default is <tt>no</tt>.
+      </p></dd><dt><span class="term"><tt>standalone="<i><tt>yes | no</tt></i>"</tt></span></dt><dd><p>
+        The value of the <tt>standalone</tt> 
+        attribute for the XML declaration; either 
+        <tt>yes</tt> or <tt>no</tt>
+      </p></dd><dt><span class="term"><tt>doctype-public="<i><tt>public ID</tt></i>"</tt></span></dt><dd><p>
+        The public identifier used in the 
+        <tt>DOCTYPE</tt> declaration
+      </p></dd><dt><span class="term"><tt>doctype-system="<i><tt>URI</tt></i>"</tt></span></dt><dd><p>
+        The URL used as a system identifier in the 
+        <tt>DOCTYPE</tt> declaration
+      </p></dd><dt><span class="term"><tt>cdata-section-elements="<i><tt>element_name_1 element_name_2 &#8230;</tt></i>"</tt></span></dt><dd><p>
+        A white space separated list of the qualified names of
+        the elements&#8217; whose content should be output as a CDATA
+        section
+      </p></dd><dt><span class="term"><tt>indent="<i><tt>yes | no</tt></i>"</tt></span></dt><dd><p>
+        <tt>yes</tt> if extra white space should be added
+        to pretty-print the result, <tt>no</tt>
+        otherwise. The default is <tt>no</tt>.
+      </p></dd><dt><span class="term"><tt>media-type="<i><tt>text/xml | text/html | text/plain | application/xml&#8230; </tt></i>"</tt></span></dt><dd><p>
+        The MIME media type of the output such as 
+        text/html, application/xml, or application/xml+svg
+      </p></dd></dl></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Note</h3><p>
+      All of these output properties are at the discretion of the
+      XSLT processor. The processor is not required to serialize
+      the result tree at all, much less to serialize it with
+      extra white space, a document type declaration, and so
+      forth. In particular, I have encountered XSLT processors
+      that only partially support <tt>indent="yes"</tt>.
+    </p></div><p>
+    You can also control these output properties from inside your
+    Java programs using these four methods in the 
+    <tt>Transformer</tt> class.
+    You can either set them one by one or as a group with the
+    <tt>java.util.Properties</tt> class.
+  </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">abstract&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setOutputProperties</b></span>(<span class="methodparam"><span class="type">Properties&nbsp;</span><span class="parameter"><i>outputFormat</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">IllegalArgumentException</span>;</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">abstract&nbsp;</span><span class="type">Properties&nbsp;</span><span class="methodname"><b>getOutputProperties</b></span>();</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">abstract&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setOutputProperty</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>name</i></span></span>, <span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>value</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">IllegalArgumentException</span>;</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">abstract&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>getOutputProperty</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>name</i></span></span>);</code><p>
+    The keys and values for these properties are simply the string names
+    established by the XSLT 1.0
+    specification. For convenience, the
+    <tt>javax.xml.transform.OutputKeys</tt> class
+    shown in <a href="ch17s02.html#CompactOutputKeys.java" title="Example&nbsp;17.12.&nbsp;The TrAX OutputKeys class">Example&nbsp;17.12</a> provides
+    named constants for all the property names.
+  </p><div class="example"><a name="CompactOutputKeys.java"></a><p class="title"><b>Example&nbsp;17.12.&nbsp;The TrAX OutputKeys class</b></p><pre class="programlisting">package javax.xml.transform;
+
+public class OutputKeys {
+
+  private OutputKeys() {}
+
+  public static final String METHOD = "method";
+  public static final String VERSION = "version";
+  public static final String ENCODING = "encoding";
+  public static final String OMIT_XML_DECLARATION 
+   = "omit-xml-declaration";
+  public static final String STANDALONE = "standalone";
+  public static final String DOCTYPE_PUBLIC = "doctype-public";
+  public static final String DOCTYPE_SYSTEM = "doctype-system";
+  public static final String CDATA_SECTION_ELEMENTS 
+   = "cdata-section-elements";
+  public static final String INDENT = "indent";
+  public static final String MEDIA_TYPE = "media-type";
+  
+}</pre></div><p>
+    For example, this Java code fragment has the same effect
+    as the above <tt>xsl:output</tt> element:
+  </p><div class="informalexample"><pre class="programlisting">transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-16");
+transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+transformer.setOutputProperty(OutputKeys.MEDIA_TYPE, "text/xml");
+transformer.setOutputProperty(OutputKeys.STANDALONE, "yes");</pre></div><p>
+    In the event of a conflict between what the Java code
+    requests with output properties
+    requests and what the stylesheet requests with an 
+    <tt>xsl:output</tt> element, the ones specified 
+    in the Java code take precedence.
+  </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e33001"></a>Sources and Results</h3></div></div><p>
+    The <tt>Source</tt>
+    and <tt>Result</tt> interfaces abstract
+    out the API dependent details of exactly how an XML document
+    is represented. You can construct sources from DOM 
+    nodes, SAX event sequences, and raw streams.
+    You can target the result of a transform at 
+    a DOM <tt>Node</tt>,
+    a SAX <tt>ContentHandler</tt>,
+    or a stream-based target such as an
+    <tt>OutputStream</tt>, 
+    <tt>Writer</tt>,  
+    <tt>File</tt>, or <tt>String</tt>. 
+    Other models may also provide their own implementations of
+    these interfaces. For instance, JDOM has an
+    <tt>org.jdom.transform</tt> package that includes a 
+    <tt>JDOMSource</tt> and 
+    <tt>JDOMResult</tt> class.
+  </p><p>
+    In fact, these different models have very little in common, other than that
+    they all hold an XML document.
+    Consequently, the <tt>Source</tt>
+    and <tt>Result</tt> interfaces don&#8217;t
+    themselves provide a lot of the functionality you need, just
+    methods to get the system and public ID of the document.
+    Everything else is deferred to the implementations.
+    In fact, XSLT engines generally need to work directly with the subclasses
+    rather than with the generic superclasses; and not all 
+    engines are able to process all three kinds of sources and
+    targets. Polymorphism just doesn&#8217;t work very well here.
+  </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Note</h3><p>
+    It is important to set at least the system IDs of your
+    sources because some parts of the stylesheet may rely on this. 
+    In particular, if any of your <tt>xsl:import</tt>
+    or <tt>xsl:include</tt> elements or
+    <tt>document()</tt> functions contain relative URLs,
+    then they&#8217;ll be resolved relative to the URL of the
+    stylesheet source. 
+  </p></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e33059"></a>DOMSource and DOMResult</h4></div></div><p>
+    A <tt>DOMSource</tt> is a wrapper around a DOM
+    <tt>Node</tt>. 
+    The <tt>DOMSource</tt> class provides methods
+    to set and get the node that serves as the root of the
+    transform, as well as the system and public IDs of that node.
+  </p><div class="example"><a name="CompactDOMSource.java"></a><p class="title"><b>Example&nbsp;17.13.&nbsp;The TrAX DOMSource class</b></p><pre class="programlisting">package javax.xml.transform.dom;
+
+public class DOMSource implements Source {
+
+  public static final String FEATURE =
+    "http://javax.xml.transform.dom.DOMSource/feature";
+
+  public DOMSource() {}
+  public DOMSource(Node node);
+  public DOMSource(Node node, String systemID);
+
+  public void    setNode(Node node);
+  public Node   getNode();
+  public void    setSystemId(String baseID);
+  public String getSystemId();
+
+}
+</pre></div><p>
+    In theory, you should be able to convert any DOM <tt>Node</tt>
+    object into a <tt>DOMSource</tt> and transform
+    it. In practice, only transforming 
+    document nodes is truly reliable. (It&#8217;s not even clear that
+    the XSLT processing model applies to anything that isn&#8217;t a
+    complete document.)
+    In my tests, Xalan-J could transform all the nodes I threw
+    at it. However, Saxon could only transform
+    <tt>Document</tt> objects 
+    and <tt>Element</tt>
+    objects that were part of a document tree.
+   </p><p>
+    A <tt>DOMResult</tt> is a wrapper around a DOM
+    <tt>Document</tt>,
+    <tt>DocumentFragment</tt>,
+    or <tt>Element</tt>
+    <tt>Node</tt> to which the output
+    of  the transform will be appended.   
+    The <tt>DOMResult</tt> class provides constructors and
+    methods
+    to set and get the node that serves as the root of the
+    transform, as well as the system and public IDs of that node.
+  </p><div class="example"><a name="CompactDOMResult.java"></a><p class="title"><b>Example&nbsp;17.14.&nbsp;The TrAX DOMResult class</b></p><pre class="programlisting">package javax.xml.transform.dom;
+
+public class DOMResult implements Result {
+
+  public static final String FEATURE =
+  "http://javax.xml.transform.dom.DOMResult/feature";
+
+  public DOMResult();
+  public DOMResult(Node node);
+  public DOMResult(Node node, String systemID);
+  
+  public void setNode(Node node);
+  public Node getNode();
+  public void setSystemId(String systemId);
+  public String getSystemId();
+  
+}
+</pre></div><p>
+    If you specify a <tt>Node</tt> for the
+    result, either via the constructor or 
+    by calling <tt>setNode()</tt>, then the
+    output of the transform will be appended to that
+    node&#8217;s children. Otherwise, the transform output will 
+    be appended to  a new 
+    <tt>Document</tt> or 
+    <tt>DocumentFragment</tt>
+    <tt>Node</tt>. The <tt>getNode()</tt>
+    method returns this <tt>Node</tt>.
+  </p></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e33140"></a>SAXSource and SAXResult</h4></div></div><p>
+    The <tt>SAXSource</tt> class,
+    shown in <a href="ch17s02.html#CompactSAXSource.java" title="Example&nbsp;17.15.&nbsp;The TrAX SAXSource class">Example&nbsp;17.15</a>,
+    provides input to the XSLT processor read from 
+    a SAX <tt>InputSource</tt>
+    by an <tt>XMLReader</tt>.
+  </p><div class="example"><a name="CompactSAXSource.java"></a><p class="title"><b>Example&nbsp;17.15.&nbsp;The TrAX SAXSource class</b></p><pre class="programlisting">package javax.xml.transform.sax;
+
+public class SAXSource implements Source {
+
+  public static final String FEATURE =
+   "http://javax.xml.transform.sax.SAXSource/feature";
+
+  public SAXSource();
+  public SAXSource(XMLReader reader, InputSource inputSource);
+  public SAXSource(InputSource inputSource);
+  
+  public void        setXMLReader(XMLReader reader);
+  public XMLReader   getXMLReader();
+  public void        setInputSource(InputSource inputSource);
+  public InputSource getInputSource();
+  public void        setSystemId(String systemID);
+  public String      getSystemId();
+  
+  public static InputSource sourceToInputSource(Source source);
+  
+}
+</pre></div><p>
+    The <tt>SAXResult</tt> class,
+    shown in <a href="ch17s02.html#CompactSAXResult.java" title="Example&nbsp;17.16.&nbsp;The TrAX SAXResult class">Example&nbsp;17.16</a>,
+    receives output from the XSLT processor as a stream of SAX
+    events fired at a specified 
+    <tt>ContentHandler</tt> and optional 
+    <tt>LexicalHandler</tt>.    
+  </p><div class="example"><a name="CompactSAXResult.java"></a><p class="title"><b>Example&nbsp;17.16.&nbsp;The TrAX SAXResult class</b></p><pre class="programlisting">package javax.xml.transform.sax;
+
+public class SAXResult implements Result
+
+  public static final String FEATURE =
+   "http://javax.xml.transform.sax.SAXResult/feature";
+
+  public SAXResult();
+  public SAXResult(ContentHandler handler);
+  
+  public void           setHandler(ContentHandler handler);
+  public ContentHandler getHandler();
+  public void           setLexicalHandler(LexicalHandler handler);
+  public LexicalHandler getLexicalHandler();
+  public void           setSystemId(String systemId);
+  public String         getSystemId();
+  
+}
+</pre></div></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e33179"></a>StreamSource and StreamResult</h4></div></div><p>
+    The <tt>StreamSource</tt> and
+    <tt>StreamResult</tt> classes are used as
+    sources and targets for transforms from sequences of bytes and characters.
+    This includes 
+    streams, readers, writers, strings, and files.
+    What unifies these is that none of them know they contain
+    an XML document.
+    Indeed, on input they may not always contain an XML document.
+    If so, an exception will be thrown as soon as you attempt
+    to build a <tt>Transformer</tt> or
+    a <tt>Templates</tt> object from
+    the 
+    <tt>StreamSource</tt>.
+  </p><p>
+    The <tt>StreamSource</tt> class, shown in 
+    <a href="ch17s02.html#CompactStreamSource.java" title="Example&nbsp;17.17.&nbsp;The TrAX StreamSource class">Example&nbsp;17.17</a>, provides 
+    constructors and methods
+    to get and set the actual source of data.
+  </p><div class="example"><a name="CompactStreamSource.java"></a><p class="title"><b>Example&nbsp;17.17.&nbsp;The TrAX StreamSource class</b></p><pre class="programlisting">package javax.xml.transform.stream;
+
+public class StreamSource implements Source {
+
+  public static final String FEATURE =
+   "http://javax.xml.transform.stream.StreamSource/feature";
+
+  public StreamSource();
+  public StreamSource(InputStream inputStream);
+  public StreamSource(InputStream inputStream, String systemID);
+  public StreamSource(Reader reader);
+  public StreamSource(Reader reader, String systemID);
+  public StreamSource(String systemID);
+  public StreamSource(File f);
+  
+  public void        setInputStream(InputStream inputStream);
+  public InputStream getInputStream();
+  public void        setReader(Reader reader);
+  public Reader      getReader();
+  public void        setPublicId(String publicID);
+  public String      getPublicId();
+  public void        setSystemId(String systemID);
+  public String      getSystemId();
+  public void        setSystemId(File f);
+  
+}
+</pre></div><p>
+    You should not specify both 
+   an <tt>InputStream</tt> and a
+    <tt>Reader</tt>. If you do, which one the processor reads from
+    is implementation dependent. 
+    If neither an  <tt>InputStream</tt> nor a
+    <tt>Reader</tt> is available, then the
+    processor will attempt to open a connection to the URI
+    specified by the system ID.
+    You should set the system ID even if you do specify an 
+    <tt>InputStream</tt> or a
+    <tt>Reader</tt> because this will be needed to
+    resolve relative URLs that appear inside the stylesheet and
+    input document.
+  </p><p>
+    The <tt>StreamResult</tt> class, shown in 
+    <a href="ch17s02.html#CompactStreamResult.java" title="Example&nbsp;17.18.&nbsp;The TrAX StreamResult class">Example&nbsp;17.18</a>, provides 
+    constructors and methods
+    to get and set the actual target of the data.
+  </p><div class="example"><a name="CompactStreamResult.java"></a><p class="title"><b>Example&nbsp;17.18.&nbsp;The TrAX StreamResult class</b></p><pre class="programlisting">package javax.xml.transform.stream;
+
+public class StreamResult implements Result
+
+  public static final String FEATURE =
+   "http://javax.xml.transform.stream.StreamResult/feature";
+
+  public StreamResult() {}
+  public StreamResult(OutputStream outputStream);
+  public StreamResult(Writer writer);
+  public StreamResult(String systemID);
+  public StreamResult(File f);
+  
+  public void         setOutputStream(OutputStream outputStream);
+  public OutputStream getOutputStream();
+  public void         setWriter(Writer writer);
+  public Writer       getWriter();
+  public void         setSystemId(String systemID);
+  public void         setSystemId(File f);
+  public String       getSystemId();
+  
+}
+</pre></div><p>
+    You should specify the system ID URL and one of the
+    other identifiers (<tt>File</tt>,
+    <tt>OutputStream</tt>, <tt>Writer</tt>,
+    or <tt>String</tt>.)
+    If you specify more than one possible target,
+    which one the processor 
+    chooses
+    is implementation dependent.
+  </p></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch17.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch17.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch17s03.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&nbsp;17.&nbsp;XSLT&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Extending XSLT with Java</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+June 19,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

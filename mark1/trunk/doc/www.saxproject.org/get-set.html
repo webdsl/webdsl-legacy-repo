@@ -1,0 +1,144 @@
+<html><head>
+    <title>SAX</title>
+    <style type="text/css"><!--
+	h1, h2, h3, h4, h5, h6 { color: maroon; }
+	/* make sure that goes OK with the nav column background
+	 * net-friendly colors include: yellow/ffffcc, blue/ccccff
+	 */
+    --></style>
+</head><body color="#000000" bgcolor="#eeeeff">
+    <table border="0" width="100%" cellpadding="15" cellspacing="0" ><tr>
+        <td valign="top" align="left" color="#000000" bgcolor="#ffffff">
+
+    <table border="0" cellpadding="0" cellspacing="0">
+    <tr><td class="toc">
+    <h2>SAX</h2><b>General</b><br />&nbsp;<a href="about.html">About SAX</a><br />
+	&nbsp;<a href="copying.html">Copyright Status</a><br />
+	&nbsp;<a href="event.html">Events vs. Trees</a><br />
+	&nbsp;<a href="faq.html">FAQ</a><br />
+	&nbsp;<a href="links.html">Links</a><br />
+	<br />
+	<b>Java API</b><br />&nbsp;<a href="quickstart.html">Quickstart</a><br />
+	&nbsp;<em>Features and Properties</em><br />
+	&nbsp;<a href="filters.html">Filters</a><br />
+	&nbsp;<a href="namespaces.html">Namespaces</a><br />
+	&nbsp;<a href="http://www.saxproject.org/apidoc/overview-summary.html">JavaDoc</a><br />
+	<br />
+	<b>SAX Evolution</b><br />&nbsp;<a href="sax1-history.html">Genesis</a><br />
+	&nbsp;<a href="sax1-roadmap.html">SAX 1.0 Overview</a><br />
+	&nbsp;<a href="sax2-history.html">SAX 2.0 Changes</a><br />
+	&nbsp;<a href="sax2-ext.html">SAX 2.0 Extensions</a><br />
+	&nbsp;<a href="langs.html">Other Languages</a><br />
+	<br />
+	<b>SourceForge Services</b><br />&nbsp;<a href="http://sourceforge.net/tracker/?group_id=29449">Bugs/RFEs</a><br />
+	&nbsp;<a href="http://sourceforge.net/projects/sax/">Project Page</a><br />
+	<br />
+	<br />
+	</td></tr></table>
+
+    
+    <p>
+    <a href="http://www.sourceforge.net/">
+    <img border="0" src="http://sourceforge.net/sflogo.php?group_id=29449&amp;type=1"
+	height="31" width="88"
+	alt="SourceForge Logo" />
+    </a>
+
+    </p>
+
+    </td>
+
+    <td width="80%" valign="top" align="left">
+    <h2>Features and Properties</h2><div><p><em><strong>WARNING:</strong> the properties listed on this page
+are out of date.  Please use the JavaDoc documentation until this page
+can be updated.</em></p>
+
+<p>SAX2 defines standard methods to query and set feature flags
+and property values
+in an <a href="/apidoc/org/xml/sax/XMLReader.html">XMLReader</a>.
+It is possible to change parser behaviors, such as
+requesting that an XML reader to validate (or not validate) a document,
+and register new types of event handlers
+using the <var>getFeature</var>, <var>setFeature</var>,
+<var>getProperty</var>, and <var>setProperty</var> methods:</p>
+
+<blockquote><pre xml:space="preserve">
+try {
+  String id = "http://xml.org/sax/features/validation";
+  if (xmlReader.getFeature(id)) {
+    System.out.println("Parser is validating.");
+  } else {
+    System.out.println("Parser is not validating.");
+  }
+} catch (SAXNotRecognizedException e) {
+  System.out.println("Can't tell.");
+} catch (SAXNotSupportedException e) {
+  System.out.println("Wrong time to ask.");
+}
+</pre></blockquote>
+
+<p> While feature flags are always boolean, property
+values are arbitrary objects.
+All feature and property names are fully-qualified URIs (often URLs),
+such as "http://www.acme.com/features/foo"; as with Namespace URIs,
+people should only define feature and property names based on URIs
+that they control.
+</p>
+
+<h2> Exceptions for Features and Properties </h2>
+
+<p>If an application attempts to query or set a feature
+flag that the XML
+reader does not recognize (can't get or set
+the value for), the XML reader throws a <a
+href="/apidoc/org/xml/sax/SAXNotRecognizedException.html"
+>SAXNotRecognizedException</a>.
+(That might indicate an application provided the wrong URI.)
+If the application attempts to set a
+feature state or property value that the XML reader cannot support at
+that time, or attempts to modify a feature or property when it is
+read-only, the XML reader throws a <a
+href="/apidoc/org/xml/sax/SAXNotSupportedException.html"
+>SAXNotSupportedException</a>.</p>
+
+<p>One important application for properties is getting and setting
+extension event handlers, for event types not supported by the four
+core SAX2 handlers, <a
+href="/apidoc/org/xml/sax/EntityResolver.html">EntityResolver</a>, <a
+href="/apidoc/org/xml/sax/DTDHandler.html">DTDHandler</a>, <a
+href="/apidoc/org/xml/sax/ContentHandler.html">ContentHandler</a>, and
+<a href="/apidoc/org/xml/sax/ErrorHandler.html">ErrorHandler</a>.
+Outside parties are free to define handlers for any kinds of events,
+and to create properties for setting and querying them.</p>
+
+<h2> URIs for Identifying Feature Flags and Properties </h2>
+
+<p>There is no fixed set of features or properties available for SAX2,
+except for two features that all XML parsers must support.
+Implementors are free to define new features and properties as needed,
+using URIs to identify them.
+</p>
+
+<p>All XML readers are required to recognize the
+"http://xml.org/sax/features/namespaces" and the
+"http://xml.org/sax/features/namespace-prefixes" features
+(at least to get the feature values, if not set them)
+and to support a <var>true</var> value for the namespaces property and
+a false value for the <var>namespace-prefixes</var> property.  These
+requirements ensure that all SAX2 XML readers can provide the minimal
+required Namespace support for higher-level specs such as RDF, XSL,
+XML Schemas, and XLink.  XML readers are not required to recognize or
+support any other features or any properties.
+</p>
+
+<p> For the complete list of standard SAX2 features and properties,
+see the <a href=
+"/apidoc/org/xml/sax/package-summary.html#package_description"
+>org.xml.sax Package Description</a>.</p>
+
+</div>
+    <br />
+
+    </td></tr></table>
+
+    </body></html>

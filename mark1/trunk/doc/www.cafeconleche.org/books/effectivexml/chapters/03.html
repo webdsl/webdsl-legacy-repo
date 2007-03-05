@@ -1,0 +1,415 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+	<TITLE>3. Stay with XML 1.0</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.3  (Linux)">
+	<META NAME="AUTHOR" CONTENT="Elliotte Rusty Harold">
+	<META NAME="CREATED" CONTENT="20020121;17260000">
+	<META NAME="CHANGEDBY" CONTENT="Elliotte Harold">
+	<META NAME="CHANGED" CONTENT="20030426;10535400">
+	<STYLE>
+	<!--
+		@page { size: 21.59cm 27.94cm; margin-left: 2.33cm; margin-right: 2.33cm; margin-top: 2.54cm; margin-bottom: 2.54cm }
+		P { margin-bottom: 0.21cm; color: #000000; text-align: justify; widows: 2; orphans: 2 }
+		P.western { font-family: "Times New Roman", serif; font-size: 10pt; so-language: en-US }
+		P.cjk { font-family: "Times New Roman", serif; font-size: 10pt; so-language:  }
+		H1 { margin-bottom: 0.11cm; color: #000000; text-align: justify; widows: 2; orphans: 2 }
+		H1.western { font-family: "Arial", sans-serif; font-size: 16pt; so-language: en-US }
+		H1.cjk { font-family: "Times New Roman", serif; font-size: 16pt; so-language:  }
+		H1.ctl { font-family: "Arial Unicode MS"; font-size: 12pt; font-weight: medium }
+		TD P { margin-bottom: 0.21cm; color: #000000; text-align: justify; widows: 2; orphans: 2 }
+		TD P.western { font-family: "Times New Roman", serif; font-size: 10pt; so-language: en-US }
+		TD P.cjk { font-family: "Times New Roman", serif; font-size: 10pt; so-language:  }
+		PRE { margin-top: 0.02cm; color: #000000; text-align: justify; widows: 2; orphans: 2 }
+		PRE.western { so-language: en-US }
+		PRE.cjk { so-language:  }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="de-DE" TEXT="#000000">
+<P LANG="en-US" ALIGN=CENTER STYLE="margin-top: 0.42cm; page-break-after: avoid">
+<FONT FACE="Albany, Arial, sans-serif"><FONT SIZE=5><B>3. Stay with
+XML 1.0</B></FONT></FONT></P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Everything
+you need to know about XML 1.1 can be summed up in two rules:</P>
+<OL>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Don't
+	use it.</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">(For
+	experts only) If you  speak Mongolian, Yi, Cambodian, Amharic,
+	Dhivehi, Burmese or a very few other languages and you want to write
+	your markup (not your text but your markup) in these languages, then
+	you can set the version attribute of the XML declaration to 1.1.
+	Otherwise, refer to rule 1.</P>
+</OL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">XML 1.1
+does several things, one of them marginally useful to a few
+developers, the rest actively harmful. 
+</P>
+<UL>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">It
+	expands the set of characters allowed as name characters</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">The
+	C0 control characters (except for NUL) such as form feed, vertical
+	tab, BEL, and DC1 through DC4 are now allowed in XML text provided
+	they are escaped as character references.</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">C1
+	control characters (except for NEL) must now be escaped as character
+	references</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">NEL
+	can be used in XML documents, but is resolved to a line feed on
+	parsing.</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Parsers
+	may (but do not have to) tell client applications that Unicode data
+	was not normalized</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Namespace
+	prefixes can be undeclared</P>
+</UL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Let's look
+at these changes in more detail.</P>
+<OL>
+	<LI><H1 LANG="en-US" CLASS="western">New Characters in XML Names</H1>
+</OL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">XML 1.1
+expands the set of characters allowed in XML names (i.e. element
+names, attribute names, entity names, ID-type attribute values, and
+so forth) to allow characters that were not defined in Unicode 2.0,
+the version that was extant when XML 1.0 was first defined. However
+Unicode 2.0 is fully adequate to cover the needs of markup in
+English, French, German, Russian, Chinese, Japanese, Spanish, Danish,
+Dutch, Arabic, Turkish, Hebrew, Farsi, Thai, Hindi, and most other
+languages you're likely to be familiar with as well as several
+thousand you aren't. However, Unicode 2.0 did miss a few important
+living languages including  Mongolian, Yi, Cambodian, Amharic, 
+Dhivehi, and Burmese, so if you want to write your markup in these
+languages, then XML 1.1 is worthwhile.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">However,
+note that this is only relevant if we're talking about <EM><I>markup</I></EM>,
+particularly element and attribute names. It is not necessary to use
+XML 1.1 to write XML data, particularly element content and attribute
+values, in these languages. For example, here's the beginning of an
+Amharic translation of the Book of Matthew written in XML 1.0:</P>
+<PRE LANG="en-US" CLASS="western">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+<SPAN LANG="en-US">&lt;book&gt;</SPAN>
+<SPAN LANG="en-US">&lt;title&gt;<FONT FACE="Clearlyu">&#4840;&#4635;&#4724;&#4814;&#4656;  &#4808;&#4757;&#4876;&#4621;</FONT>&lt;/title&gt;</SPAN>
+<SPAN LANG="en-US">&lt;chapter number=&quot;<FONT FACE="Clearlyu">&#4969;</FONT>&quot;&gt;</SPAN>
+<SPAN LANG="en-US">&lt;title&gt;<FONT FACE="Clearlyu">&#4840;&#4770;&#4840;&#4657;&#4656; &#4840;&#4725;&#4813; &#4621;&#4853; &#4624;&#4648;&#4877;</FONT>&lt;/title&gt;</SPAN>
+<SPAN LANG="en-US">&lt;verse number=&quot;<FONT FACE="Clearlyu">&#4969;</FONT>&quot;&gt;</SPAN>
+<SPAN LANG="en-US"><FONT FACE="Clearlyu">  &#4840;&#4851;&#4810;&#4725;  &#4621;&#4869;&#4963; &#4840;&#4768;&#4776;&#4653;&#4611;&#4637; &#4621;&#4869; &#4840;&#4609; &#4752;&#4813;</FONT> <FONT FACE="Clearlyu">&#4840;&#4770;&#4840;&#4657;&#4656; &#4776;&#4653;&#4656;&#4726;&#4656; &#4840;&#4725;&#4813;</FONT> <FONT FACE="Clearlyu">&#4621;&#4853; &#4624;&#4648;&#4877; &#4840;&#4634;&#4776;&#4720;&#4616;&#4813;  &#4752;&#4813;&#4964;</FONT></SPAN>
+<SPAN LANG="en-US">&lt;/verse&gt;</SPAN>
+<SPAN LANG="en-US">&lt;verse number=&quot;<FONT FACE="Clearlyu">&#4970;</FONT>&quot;&gt;</SPAN></PRE><P LANG="en-US" CLASS="western">
+<FONT FACE="Clearlyu">  &#4768;&#4776;&#4653;&#4611;&#4637; &#4845;&#4656;&#4624;&#4677;&#4752;
+&#4808;&#4616;&#4848;&#4964;</FONT></P>
+<P LANG="en-US" CLASS="western"><FONT FACE="Clearlyu">  &#4845;&#4656;&#4624;&#4677;
+&#4843;&#4821;&#4678;&#4709;&#4752;  &#4808;&#4616;&#4848;&#4964;</FONT></P>
+<P LANG="en-US" CLASS="western"><FONT FACE="Clearlyu">  &#4843;&#4821;&#4678;&#4709;
+&#4845;&#4609;&#4851;&#4752;&#4755; &#4808;&#4752;&#4853;&#4638;&#4729;&#4752;
+&#4808;&#4616;&#4848;&#4964;</FONT></P>
+<PRE LANG="en-US" CLASS="western">&lt;/verse&gt;
+<SPAN LANG="en-US">&lt;/chapter&gt;</SPAN>
+<SPAN LANG="en-US">&lt;/book&gt;</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+Here the element and attribute names are in English although the
+content and attribute values are in Amharic. On the other hand, if we
+were to write the element and attribute names in Amharic, then we
+would need to use XML 1.1:</P>
+<PRE LANG="en-US" CLASS="western">&lt;?xml version=&quot;1.1&quot; encoding=&quot;UTF-8&quot;?&gt;
+<FONT FACE="CLEARLYU"><SPAN LANG="en-US">&lt;<FONT FACE="Clearlyu">&#4632;&#4925;&#4624;&#4939;</FONT>&gt;</SPAN></FONT>
+<FONT FACE="CLEARLYU"><SPAN LANG="en-US">&lt;<FONT FACE="Clearlyu">&#4768;&#4653;&#4773;&#4661;&#4725;</FONT>&gt;&#4840;&#4635;&#4724;&#4814;&#4656;  &#4808;&#4757;&#4876;&#4621;&lt;/<FONT FACE="Clearlyu">&#4768;&#4653;&#4773;&#4661;&#4725;</FONT>&gt;</SPAN></FONT>
+<FONT FACE="CLEARLYU"><SPAN LANG="en-US">&lt;&#4637;<FONT FACE="Clearlyu">&#4821;&#4651;&#4939;</FONT>  <FONT FACE="Clearlyu">&#4812;&#4901;&#4653;</FONT>=&quot;&#4969;&quot;&gt;</SPAN></FONT>
+<FONT FACE="CLEARLYU"><SPAN LANG="en-US">&lt;<FONT FACE="Clearlyu">&#4768;&#4653;&#4773;&#4661;&#4725;</FONT>&gt;&#4840;&#4770;&#4840;&#4657;&#4656; &#4840;&#4725;&#4813; &#4621;&#4853; &#4624;&#4648;&#4877;&lt;/<FONT FACE="Clearlyu">&#4768;&#4653;&#4773;&#4661;&#4725;</FONT>&gt;</SPAN></FONT>
+<FONT FACE="CLEARLYU"><SPAN LANG="en-US">&lt;<FONT FACE="Clearlyu">&#4708;&#4725;</FONT>  <FONT FACE="Clearlyu">&#4812;&#4901;&#4653;</FONT>=&quot;&#4969;&quot;&gt;</SPAN></FONT>
+<FONT FACE="CLEARLYU"><SPAN LANG="en-US">  &#4840;&#4851;&#4810;&#4725;  &#4621;&#4869;&#4963; &#4840;&#4768;&#4776;&#4653;&#4611;&#4637; &#4621;&#4869; &#4840;&#4609; &#4752;&#4813; &#4840;&#4770;&#4840;&#4657;&#4656; &#4776;&#4653;&#4656;&#4726;&#4656; &#4840;&#4725;&#4813; &#4621;&#4853; &#4624;&#4648;&#4877; &#4840;&#4634;&#4776;&#4720;&#4616;&#4813;  &#4752;&#4813;&#4964;</SPAN></FONT>
+<FONT FACE="CLEARLYU"><SPAN LANG="en-US">&lt;/<FONT FACE="Clearlyu">&#4708;&#4725;</FONT>&gt;</SPAN></FONT>
+<FONT FACE="CLEARLYU"><SPAN LANG="en-US">&lt;<FONT FACE="Clearlyu">&#4708;&#4725;</FONT>  <FONT FACE="Clearlyu">&#4812;&#4901;&#4653;</FONT>=&quot;&#4970;&quot;&gt;</SPAN></FONT></PRE><P LANG="en-US" CLASS="western">
+<FONT FACE="CLEARLYU">  &#4768;&#4776;&#4653;&#4611;&#4637; &#4845;&#4656;&#4624;&#4677;&#4752;
+&#4808;&#4616;&#4848;&#4964;</FONT></P>
+<P LANG="en-US" CLASS="western"><FONT FACE="CLEARLYU">  &#4845;&#4656;&#4624;&#4677;
+&#4843;&#4821;&#4678;&#4709;&#4752;  &#4808;&#4616;&#4848;&#4964;</FONT></P>
+<P LANG="en-US" CLASS="western"><FONT FACE="CLEARLYU">  &#4843;&#4821;&#4678;&#4709;
+&#4845;&#4609;&#4851;&#4752;&#4755; &#4808;&#4752;&#4853;&#4638;&#4729;&#4752;
+&#4808;&#4616;&#4848;&#4964;</FONT></P>
+<PRE LANG="en-US" CLASS="western"><FONT FACE="CLEARLYU">&lt;/<FONT FACE="Clearlyu">&#4708;&#4725;</FONT>&gt;</FONT>
+<FONT FACE="CLEARLYU"><SPAN LANG="en-US">&lt;/&#4637;<FONT FACE="Clearlyu">&#4821;&#4651;&#4939;</FONT>&gt;</SPAN></FONT>
+<FONT FACE="CLEARLYU"><SPAN LANG="en-US">&lt;/<FONT FACE="Clearlyu">&#4632;&#4925;&#4624;&#4939;</FONT>&gt;</SPAN></FONT></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+This is plausible. A native Amharic speaker might well want to write
+markup like this. However, the loosening of XML's name character
+rules have effects far beyond the few extra languages they're
+intended to enable.  Whereas XML 1.0 was conservative (Everything not
+permitted is forbidden) XML 1.1 is liberal (Everything not forbidden
+is permitted.) XML 1.0 listed the characters you could use in names.
+XML 1.1 lists the characters you can't use in names. Characters XML
+1.1 allows in names include:</P>
+<UL>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Symbols
+	like the copyright sign &copy;</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Mathematical
+	operators such as &plusmn;,</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm"><SPAN STYLE="font-weight: medium"><SUP>7</SUP></SPAN>
+	(superscript 7)</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">The
+	musical symbol for a six-string fretboard</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">The
+	zero-width space. 
+	</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Private-use
+	characters</P>
+</UL>
+<UL>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Several
+	hundred thousand characters that aren't even defined in Unicode and
+	probably never will be. 
+	</P>
+</UL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">XML 1.1's
+lax name characters rule have the potential to make documents much
+more opaque and obfuscated.</P>
+<OL START=2>
+	<LI><H1 LANG="en-US" CLASS="western">C0 Control Characters</H1>
+</OL>
+<P LANG="en-US" CLASS="western">The first 32 Unicode characters with
+code points from 0 to 31 are known as the C0 controls. They were
+originally defined in ASCII to control teletypes and other monospace
+dumb terminals. Aside from the tab, carriage return, and line feed
+they have no obvious meaning in text. Since XML is text, it does not
+include binary characters such as NULL (#x00), BEL (#x07), DC1 (#x11)
+through DC4 (#x14) and so forth. These non-characters are historical
+relics used to control teletypes and glass terminals. XML 1.0 does
+not allow them. This is a good thing. Although dumb terminals and
+binary-hostile gateways are far less common today than they were
+twenty years ago, they are still used and passing these characters
+through equipment that expects to be seeing plain text can have nasty
+consequences including disabling the screen. (One common problem that
+still occurs is accidentally paging a binary file on a console. This
+is generally quite ugly, and often disables the console.)</P>
+<P LANG="en-US" CLASS="western">A few of these characters
+occasionally do appear in non-XML text data. For example, the form
+feed (#x0C) is sometimes used to indicate a page break. Thus moving
+data from a non-XML system such as a BLOB or CLOB field in a database
+into an XML document can unexpectedly cause malformedness errors.
+Text may need to be cleaned before it can be added to an XML
+document. However, the far more common problem is that a document's
+encoding is misidentified, for example defaulted as UTF-8 when it's
+really UTF-16. In this case, the parser will notice unexpected nulls
+and throw a well-formedness error.</P>
+<P LANG="en-US" CLASS="western">XML 1.1 fortunately still does not
+allow raw binary data in an XML document. However, it does allow you
+to use character references to escape the C0 controls such as form
+feed and bell. The parser will resolve them into the actual
+characters before reporting the data to the client application. You
+simply can't include them directly. For example, this document uses
+form feeds to separate pages:</P>
+<PRE LANG="en-US" CLASS="western">&lt;?xml version=&quot;1.1&quot;&gt;
+<SPAN LANG="en-US">&lt;book&gt;</SPAN>
+<SPAN LANG="en-US">  &lt;title&gt;Nursery Rhymes&lt;/title&gt;</SPAN>
+<SPAN LANG="en-US">  &lt;rhyme&gt;</SPAN>
+<SPAN LANG="en-US">    &lt;verse&gt;Mary, Mary quite contrary&lt;/verse&gt;  </SPAN>
+<SPAN LANG="en-US">    &lt;verse&gt;How does your garden grow?&lt;/verse&gt;</SPAN>
+<SPAN LANG="en-US">  &lt;/rhyme&gt;</SPAN>
+<SPAN LANG="en-US">  &amp;#x0C;</SPAN>
+<SPAN LANG="en-US">  &lt;rhyme&gt;</SPAN>
+<SPAN LANG="en-US">    &lt;verse&gt;Little Miss Muffet sat on a tuffet&lt;/verse&gt;  </SPAN>
+<SPAN LANG="en-US">    &lt;verse&gt;Eating her curds and whey&lt;/verse&gt;</SPAN>
+<SPAN LANG="en-US">  &lt;/rhyme&gt;</SPAN>
+<SPAN LANG="en-US">  &amp;#x0C;</SPAN>
+<SPAN LANG="en-US">  &lt;rhyme&gt;</SPAN>
+<SPAN LANG="en-US">    &lt;verse&gt;Old King Cole was a merry old soul&lt;/verse&gt;  </SPAN>
+<SPAN LANG="en-US">    &lt;verse&gt;And a merry old soul was he&lt;/verse&gt;</SPAN>
+<SPAN LANG="en-US">  &lt;/rhyme&gt;</SPAN>
+<SPAN LANG="en-US">&lt;/book&gt;</SPAN></PRE><P LANG="en-US" CLASS="western">
+However, this style of page break died out with the line printer.
+Modern systems use style sheets or explicit markup to indicate page
+boundaries. For example, you might place each separate page inside a
+page element or add a pagebreak element where you wanted the break to
+occur, like so:</P>
+<PRE LANG="en-US" CLASS="western">&lt;?xml version=&quot;1.1&quot;&gt;
+<SPAN LANG="en-US">&lt;book&gt;</SPAN>
+<SPAN LANG="en-US">  &lt;title&gt;Nursery Rhymes&lt;/title&gt;</SPAN>
+<SPAN LANG="en-US">  &lt;rhyme&gt;</SPAN>
+<SPAN LANG="en-US">    &lt;verse&gt;Mary, Mary quite contrary&lt;/verse&gt;  </SPAN>
+<SPAN LANG="en-US">    &lt;verse&gt;How does your garden grow?&lt;/verse&gt;</SPAN>
+<SPAN LANG="en-US">  &lt;/rhyme&gt;</SPAN>
+<SPAN LANG="en-US">  &lt;pagebreak/&gt;</SPAN>
+<SPAN LANG="en-US">  &lt;rhyme&gt;</SPAN>
+<SPAN LANG="en-US">    &lt;verse&gt;Little Miss Muffet sat on a tuffet&lt;/verse&gt;  </SPAN>
+<SPAN LANG="en-US">    &lt;verse&gt;Eating her curds and whey&lt;/verse&gt;</SPAN>
+<SPAN LANG="en-US">  &lt;/rhyme&gt;</SPAN>
+<SPAN LANG="en-US">  &lt;pagebreak/&gt;</SPAN>
+<SPAN LANG="en-US">  &lt;rhyme&gt;</SPAN>
+<SPAN LANG="en-US">    &lt;verse&gt;Old King Cole was a merry old soul&lt;/verse&gt;  </SPAN>
+<SPAN LANG="en-US">    &lt;verse&gt;And a merry old soul was he&lt;/verse&gt;</SPAN>
+<SPAN LANG="en-US">  &lt;/rhyme&gt;</SPAN>
+<SPAN LANG="en-US">&lt;/book&gt;</SPAN></PRE><P LANG="en-US" CLASS="western">
+Better yet, you might not change the markup at all, just write a
+stylesheet that assigns each poem to a separate page. Any of these
+options would be superior to form feeds. Most uses of the other C0
+controls are equally obsolete.</P>
+<P LANG="en-US" CLASS="western">There is one exception. You still
+cannot embed a null in an XML document, not even with a character
+reference. Allowing this would have caused massive problems for C,
+C++, and other languages that use null-terminated strings. The null
+is still forbidden, even with character escaping, which means it's
+still not possible to directly embed binary data in XML. You have to
+encode it using Base-64 or some similar format first. (See Item 20). 
+</P>
+<OL START=3>
+	<LI><H1 LANG="en-US" CLASS="western">C1 Control Characters</H1>
+</OL>
+<P LANG="en-US" CLASS="western">There is a less common block of C1
+control characters between 128 (#x80) and 159 (#x9F). These include
+start of string, end of string, cancel character, privacy message,
+and a few other equally obscure characters. For the most part these
+are even less useful and less appropriate for XML documents than the
+C0 control characters. However, they were allowed in XML 1.0 mostly
+by mistake. XML 1.1 rectifies this error (with one notable exception
+I'll address shortly) by requiring that these control characters be
+escaped with character references as well. For example, you can no
+longer include a &quot;break permitted here&quot; in element content
+or attribute values. You have to write it as &amp;#x82; instead.</P>
+<P LANG="en-US" CLASS="western">This actually does have one salutary
+effect. There are a lot of documents in the world which are labeled
+as ISO-8859-1 but which actually use the non-standard Microsoft
+character set Cp1252 instead.  Cp1252 does not include the C1
+controls. Instead it uses this space for extra graphic characters
+such as &euro;, <FONT FACE="Times New Roman">&OElig;, and </FONT><FONT FACE="Clearlyu">&trade;</FONT>.
+This causes significant interoperability problems when moving
+documents between Windows and non-Windows systems, and it's not
+always one that's easy to detect. 
+</P>
+<P LANG="en-US" CLASS="western">By making escaping of the C1 controls
+mandatory, such mislabelled documents will now be obvious to parsers.
+Any document that contains an unescaped C1 character which is labeled
+as ISO-8859-1 is malformed. Documents that correctly identify
+themselves as Cp1252 will still be allowed.</P>
+<P LANG="en-US" CLASS="western">The downside to this improvement is
+that there is now a class of XML documents which is well-formed XML
+1.0 but not well-formed XML 1.1. XML 1.1 is not a superset of XML
+1.0. It is neither forwards nor backwards compatible. 
+</P>
+<OL START=4>
+	<LI><H1 LANG="en-US" CLASS="western">NEL used as Line break</H1>
+</OL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">The fourth
+change XML 1.1 makes is of no use to anyone, and should never have
+been adopted. XML 1.1 allows the Unicode next line character (#x85,
+NEL) to be used anywhere a carriage return, linefeed, or carriage
+return-linefeed pair is used in XML 1.0 documents. Note that a NEL
+doesn't mean anything different than a  carriage return or linefeed.
+It's just one more way of adding extra white space. However, it is
+incompatible not only with the installed base of XML software, but
+also with all the various text editors on Unix, Windows, the Mac,
+OS/2, and almost every other non-IBM platform on Earth. For instance,
+you can't open an XML 1.1 document that uses NELs in emacs, vi,
+BBEdit, UltraEdit, jEdit, or most other text editors and expect it to
+put the line breaks in the right places. Figure 3.1 shows what
+happens when you load a NEL-delimited file into emacs. Most other
+editors have equal or bigger problems, especially on large documents.
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm"><BR><BR>
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm"><IMG SRC="03_html_m4e79849c.jpg" NAME="Graphic1" ALIGN=LEFT WIDTH=511 HEIGHT=398 BORDER=0><BR CLEAR=LEFT><BR><BR>
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Figure
+3-1: Loading a NEL delimited file into a non-IBM text editor</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">If so many
+people and platforms have such problems with NEL, why has it been
+added to XML 1.1? The problem is that there's a certain huge
+monopolist of a computer company that doesn't want to use the same
+standard everyone else in the industry uses. And&mdash;surprise,
+surprise&mdash;their name isn't Microsoft. No, this time the villain
+is IBM. Certain IBM mainframe software, particularly console-based
+text editors like XEdit and OS/390 C compilers, do not use the same
+two line ending characters (carriage return and linefeed) that
+everybody else on the planet has been using for the last twenty years
+at least. Instead they use character #x85, NEL (next line).</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">If you're
+one of those few developers writing XML by hand with a plain console
+editor on an IBM mainframe, then you should upgrade your editor to
+support the line ending conventions the rest of the world has
+standardized on. If you're writing C code to generate XML documents
+on a mainframe, you just need to use \x0A instead of  \n to represent
+the line end. (Java does not have this problem.) If you're reading
+XML documents, the parser should convert the line endings for you.
+There's no need to use XML 1.1.</P>
+<OL START=5>
+	<LI><H1 LANG="en-US" CLASS="western">Unicode Normalization</H1>
+</OL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">For
+reasons of compatibility with legacy character sets such as
+ISO-8859-1 (as well as occasional mistakes) Unicode sometimes
+provides multiple representations of the same character. For example,
+the e with accent acute, &eacute;, can be represented as either the
+single character #xE9 or with the two characters #x65 followed by
+#x301 (combining accent acute). XML 1.1 suggests that all generators
+of XML text should normalize such alternatives into a canonical form.
+In this case, you should use the single character rather than the
+double character. 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">However,
+both forms are still accepted. Neither is malformed. Furthermore,
+parsers are explicitly prohibited from doing the normalization for
+the client program. They may merely report a non-fatal error if the
+XML is found to be unnormalized. In fact, this is nothing that
+parsers couldn't have done with XML 1.0, except that it didn't occur
+to anyone to do it. Normalization is more of  a strongly recommended
+best practice than an actual change in the language.</P>
+<OL START=6>
+	<LI><H1 LANG="en-US" CLASS="western">Undeclaring Namespace Prefixes</H1>
+</OL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">There's
+one other new feature that's effectively part of XML 1.1. XML 1.1
+also introduces namespaces 1.1, which adds the ability to undeclare
+namespace prefix mappings. For example, consider this API element: 
+</P>
+<PRE LANG="en-US" CLASS="western">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+<SPAN LANG="en-US">&lt;API xmlns:public=&quot;http://www.example.com&quot; </SPAN>
+<SPAN LANG="en-US">      xmlns:private=&quot;http://www.example.org&quot; &gt;</SPAN>
+<SPAN LANG="en-US">  &lt;title&gt;Geometry&lt;/title&gt;</SPAN>
+<SPAN LANG="en-US">  &lt;cpp xmlns:public=&quot;&quot; xmlns:private=&quot;&quot;&gt;</SPAN>
+<SPAN LANG="en-US">    class CRectangle { </SPAN>
+<SPAN LANG="en-US">      int x, y; </SPAN>
+<SPAN LANG="en-US">      public:void set_values (int,int); </SPAN>
+<SPAN LANG="en-US">      private:int area (void); } </SPAN>
+<SPAN LANG="en-US">  &lt;/cpp&gt;</SPAN>
+<SPAN LANG="en-US">&lt;/API&gt;</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+A system that was looking for qualified names in element content
+might accidentally confuse the public:void  and  private:int  in the
+cpp element with qualified names instead of just C++ syntax (albeit
+ugly C++ syntax that no good programmer would write). Undeclaring the
+public and private prefixes allows them to stand out for what they
+actually are, just plain unadorned text.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">In
+practice, however, very little code looks for qualified names in
+element content. Some code does look for these things in attribute
+values, but in those cases it's normally clear whether or not a given
+attribute can contain qualified names or not. Indeed this example is
+so forced precisely because prefix undeclaration is very rarely
+needed in practice, and never needed if you're only using prefixes on
+element and attribute names.  
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">That's it.
+There is nothing else new in XML 1.1. It doesn't move namespaces or
+schemas into the core. It doesn't  correct admitted mistakes in the
+design of XML such as attribute value normalization. It doesn't
+simplify XML by removing rarely used features like unparsed entities
+and notations. It doesn't even clear up the confusion about what
+parsers should and should not report. All it does is change the list
+of name and whitespace characters. This very limited benefit comes at
+an extremely high cost. There is a huge installed base of XML 1.0
+aware parsers, browsers, databases, viewers, editors, and other tools
+that doesn't work with XML 1.1. They will report well-formedness
+errors when presented with an XML 1.1 document.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">The
+disadvantages of XML 1.1 (including the cost in both time and money
+of upgrading all your software to support it) are just too great for
+the extremely limited benefits it provides most developers. If you're
+more comfortable working in Amharic, Mongolian, Yi, Cambodian,
+Amharic, Dhivehi, or Burmese and you only need to exchange data with
+other speakers of one of these languages (for instance, you're
+developing a system exclusively for a local Amharic-language
+newspaper in Addis Ababa where everybody including the IT staff
+speaks Amharic), then you can set the version attribute of the XML
+declaration to 1.1. Everyone else should stick to XML 1.0. 
+</P>
+</BODY>
+</HTML>

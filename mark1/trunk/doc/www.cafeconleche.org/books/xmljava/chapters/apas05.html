@@ -1,0 +1,1412 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>JDOM Quick Reference</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="previous" href="apas04.html" title="TrAX"><link rel="next" href="apas06.html" title="XMLPULL"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"><link rel="subsection" href="apas05.html#d0e40624" title="org.jdom"><link rel="subsection" href="apas05.html#d0e42688" title="org.jdom.filter"><link rel="subsection" href="apas05.html#d0e42960" title="org.jdom.input"><link rel="subsection" href="apas05.html#d0e43949" title="org.jdom.output"><link rel="subsection" href="apas05.html#d0e44774" title="org.jdom.transform"><link rel="subsection" href="apas05.html#d0e44889" title="org.jdom.xpath"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">JDOM Quick Reference</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="apas04.html">Prev</a>&nbsp;</td><th width="60%" align="center">Appendix&nbsp;A.&nbsp;XML APIs Quick Reference</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="apas06.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e40613"></a>JDOM Quick Reference</h2></div></div><p>
+    JDOM is an open source, pure Java API
+    for reading, writing, and manipulating XML documents.
+    This section provides complete signatures for the
+    documented,
+    public parts of JDOM, with the single exception of the 
+    <tt>org.jdom.adapters</tt> package, which is really intended
+    only for internal use in JDOM. 
+  </p><div class="caution" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Caution</h3><p>
+JDOM is not finished at the time of this writing.
+This appendix is based on an early development release of JDOM
+beta 9, current as of May 17, 2002. I expect some of the details
+here to change before JDOM is released. (In fact, I&#8217;m actively
+lobbying for a few of them to change.)
+</p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e40624"></a>org.jdom</h3></div></div><p>
+     The <tt>org.jdom</tt> package 
+     contains the core classes that JDOM uses to model the XML
+     tree, one class per node type, as well as some generically
+     useful classes such as <tt>Verifier</tt>,
+     <tt>JDOMFactory</tt>, and
+     <tt>JDOMException</tt>.
+    </p><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e40641"></a>Attribute</h4></div></div><p>
+     The <tt>Attribute</tt> class represents an
+     attribute node. Each attribute has a local name, a namespace 
+     (which may be null), a string value, a type, and a parent 
+     <tt>Element</tt>.
+     Attribute types are represented by the named <tt>int</tt>
+     constants  in this class.
+    </p><pre class="programlisting">package org.jdom;
+
+public class <span class="bold"><b>Attribute</b></span> implements Serializable, Cloneable {
+
+  public static final int <span class="bold"><b>UNDECLARED_ATTRIBUTE</b></span>;
+  public static final int <span class="bold"><b>CDATA_ATTRIBUTE</b></span>;
+  public static final int <span class="bold"><b>ID_ATTRIBUTE</b></span>;
+  public static final int <span class="bold"><b>IDREF_ATTRIBUTE</b></span>;
+  public static final int <span class="bold"><b>IDREFS_ATTRIBUTE</b></span>;
+  public static final int <span class="bold"><b>ENTITY_ATTRIBUTE</b></span>;
+  public static final int <span class="bold"><b>ENTITIES_ATTRIBUTE</b></span>;
+  public static final int <span class="bold"><b>NMTOKEN_ATTRIBUTE</b></span>;
+  public static final int <span class="bold"><b>NMTOKENS_ATTRIBUTE</b></span>;
+  public static final int <span class="bold"><b>NOTATION_ATTRIBUTE</b></span>;
+  public static final int <span class="bold"><b>ENUMERATED_ATTRIBUTE</b></span>;
+  
+  protected String    <span class="bold"><b>name</b></span>;
+  protected Namespace <span class="bold"><b>namespace</b></span>;
+  protected String    <span class="bold"><b>value</b></span>;
+  protected int       <span class="bold"><b>type</b></span>;
+  protected Object    <span class="bold"><b>parent</b></span>;
+
+  protected <span class="bold"><b>Attribute</b></span>();
+  public    <span class="bold"><b>Attribute</b></span>(
+   String <i><tt>name</tt></i>, String <i><tt>value</tt></i>, Namespace <i><tt>namespace</tt></i>)
+   throws IllegalNameException, IllegalDataException;
+  public    <span class="bold"><b>Attribute</b></span>(
+   String <i><tt>name</tt></i>, String <i><tt>value</tt></i>, int <i><tt>type</tt></i>, Namespace <i><tt>namespace</tt></i>)
+   throws IllegalNameException, IllegalDataException;
+  public    <span class="bold"><b>Attribute</b></span>(String <i><tt>name</tt></i>, String <i><tt>value</tt></i>)
+   throws IllegalNameException, IllegalDataException;
+  public    <span class="bold"><b>Attribute</b></span>(String <i><tt>name</tt></i>, String <i><tt>value</tt></i>, int <i><tt>type</tt></i>)
+   throws IllegalNameException, IllegalDataException;
+
+  public    Element   <span class="bold"><b>getParent</b></span>();
+  protected Attribute <span class="bold"><b>setParent</b></span>(Element <i><tt>parent</tt></i>);
+  public    Document  <span class="bold"><b>getDocument</b></span>();
+  public    Attribute <span class="bold"><b>detach</b></span>();
+  public    String    <span class="bold"><b>getName</b></span>();
+  public    Attribute <span class="bold"><b>setName</b></span>(String <i><tt>name</tt></i>) 
+   throws IllegalNameException;
+  public    String    <span class="bold"><b>getQualifiedName</b></span>();
+  public    String    <span class="bold"><b>getNamespacePrefix</b></span>();
+  public    String    <span class="bold"><b>getNamespaceURI</b></span>();
+  public    Namespace <span class="bold"><b>getNamespace</b></span>();
+  public    Attribute <span class="bold"><b>setNamespace</b></span>(Namespace <i><tt>namespace</tt></i>)
+   throws IllegalNameException;
+  public    String    <span class="bold"><b>getValue</b></span>();
+  public    Attribute <span class="bold"><b>setValue</b></span>(String <i><tt>value</tt></i>);
+  public    int       <span class="bold"><b>getAttributeType</b></span>();
+  public    Attribute <span class="bold"><b>setAttributeType</b></span>(int <i><tt>type</tt></i>) 
+   throws IllegalDataException;
+  
+  // Java utility methods
+  public       String  <span class="bold"><b>toString</b></span>();
+  public final boolean <span class="bold"><b>equals</b></span>(Object <i><tt>o</tt></i>);
+  public final int     <span class="bold"><b>hashCode</b></span>();
+  public       Object  <span class="bold"><b>clone</b></span>();
+
+  // Convenience methods for converting the value to various
+  // primitive types
+  public int     <span class="bold"><b>getIntValue</b></span>() throws DataConversionException;
+  public long    <span class="bold"><b>getLongValue</b></span>() throws DataConversionException;
+  public float   <span class="bold"><b>getFloatValue</b></span>() throws DataConversionException;
+  public double  <span class="bold"><b>getDoubleValue</b></span>() throws DataConversionException;
+  public boolean <span class="bold"><b>getBooleanValue</b></span>() 
+   throws DataConversionException;
+
+ }</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e40849"></a>CDATA</h4></div></div><p>
+        The <tt>CDATA</tt> class is a subclass of 
+        <tt>Text</tt> (from which it inherits most
+        of its functionality) that represents a CDATA section.
+        The only real difference between this class and  <tt>Text</tt>
+        is that an <tt>XMLOutputter</tt> will use a
+        CDATA section to write out the contents of a
+        <tt>CDATA</tt> object rather than escaping
+        characters like &lt; with entity and character references.
+      </p><pre class="programlisting">package org.jdom;
+
+public class <span class="bold"><b>CDATA</b></span> extends Text {
+
+  protected <span class="bold"><b>CDATA</b></span>();
+  public    <span class="bold"><b>CDATA</b></span>(String <i><tt>s</tt></i>);
+
+  public Text <span class="bold"><b>setText</b></span>(String <i><tt>s</tt></i>) throws IllegalDataException;
+  public void <span class="bold"><b>append</b></span>(String <i><tt>s</tt></i>) throws IllegalDataException;
+  
+  public String <span class="bold"><b>toString</b></span>();
+
+ }</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e40898"></a>Comment</h4></div></div><p>
+     The <tt>Comment</tt> class represents a
+     comment node. Each <tt>Comment</tt>
+     object contains the text of the comment, a parent 
+     <tt>Element</tt> (which will be null if this comment
+     is in the prolog or epilog), and an owner <tt>Document</tt>.
+    </p><pre class="programlisting">package org.jdom;
+
+public class <span class="bold"><b>Comment</b></span> implements Serializable, Cloneable {
+
+  protected String <span class="bold"><b>text</b></span>;
+  protected Object <span class="bold"><b>parent</b></span>;
+
+  protected <span class="bold"><b>Comment</b></span>();
+  public    <span class="bold"><b>Comment</b></span>(String <i><tt>text</tt></i>) throws IllegalDataException;
+
+  public    Element  <span class="bold"><b>getParent</b></span>();
+  protected Comment  <span class="bold"><b>setParent</b></span>(Element <i><tt>parent</tt></i>);
+  public    Comment  <span class="bold"><b>detach</b></span>();
+  public    Document <span class="bold"><b>getDocument</b></span>();
+  protected Comment  <span class="bold"><b>setDocument</b></span>(Document <i><tt>document</tt></i>);
+  public    String   <span class="bold"><b>getText</b></span>();
+  public    Comment  <span class="bold"><b>setText</b></span>(String <i><tt>text</tt></i>)
+   throws IllegalDataException;
+
+  // Java utility methods
+  public       String  <span class="bold"><b>toString</b></span>();
+  public final boolean <span class="bold"><b>equals</b></span>(Object <i><tt>o</tt></i>);
+  public final int     <span class="bold"><b>hashCode</b></span>();
+  public       Object  <span class="bold"><b>clone</b></span>();
+
+ }</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e40980"></a>DocType</h4></div></div><p>
+     The <tt>DocType</tt> class represents a
+     document type declaration. Each <tt>DocType</tt>
+     object contains the declared root element name, the public ID
+     and the system ID (both of which may be null), the owner
+     document, and a <tt>String</tt> containing the
+     internal DTD subset.
+    </p><pre class="programlisting">package org.jdom;
+
+public class <span class="bold"><b>DocType</b></span> implements Serializable, Cloneable {
+
+  protected String   <span class="bold"><b>elementName</b></span>;
+  protected String   <span class="bold"><b>publicID</b></span>;
+  protected String   <span class="bold"><b>systemID</b></span>;
+  protected Document <span class="bold"><b>document</b></span>;
+  protected String   <span class="bold"><b>internalSubset</b></span>;
+
+  protected <span class="bold"><b>DocType</b></span>();
+  public    <span class="bold"><b>DocType</b></span>(String <i><tt>elementName</tt></i>, String <i><tt>publicID</tt></i>, 
+   String <i><tt>systemID</tt></i>)
+   throws IllegalNameException, IllegalDataException;
+  public    <span class="bold"><b>DocType</b></span>(String <i><tt>elementName</tt></i>, String <i><tt>systemID</tt></i>) throws IllegalNameException;
+  public    <span class="bold"><b>DocType</b></span>(String <i><tt>elementName</tt></i>) 
+   throws IllegalNameException;
+
+  public    String   <span class="bold"><b>getElementName</b></span>();
+  public    DocType  <span class="bold"><b>setElementName</b></span>(String <i><tt>elementName</tt></i>) 
+   throws IllegalNameException;
+  public    String   <span class="bold"><b>getPublicID</b></span>();
+  public    DocType  <span class="bold"><b>setPublicID</b></span>(String <i><tt>publicID</tt></i>) 
+   throws IllegalDataException;;
+  public    String   <span class="bold"><b>getSystemID</b></span>();
+  public    DocType  <span class="bold"><b>setSystemID</b></span>(String <i><tt>url</tt></i>);
+  public    Document <span class="bold"><b>getDocument</b></span>();
+  protected DocType  <span class="bold"><b>setDocument</b></span>(Document <i><tt>document</tt></i>);
+  public    void     <span class="bold"><b>setInternalSubset</b></span>(String <i><tt>declarations</tt></i>);
+  public    String   <span class="bold"><b>getInternalSubset</b></span>();
+
+  // Java utility methods
+  public       String  <span class="bold"><b>toString</b></span>();
+  public final boolean <span class="bold"><b>equals</b></span>(Object <i><tt>o</tt></i>);
+  public final int     <span class="bold"><b>hashCode</b></span>();
+  public       Object  <span class="bold"><b>clone</b></span>();
+
+ }</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e41104"></a>Document</h4></div></div><p>
+     The <tt>Document</tt> class represents a complete document
+     and serves as the root of the JDOM tree. Each <tt>Document</tt>
+     object contains a list of its content and the document&#8217;s <tt>DocType</tt>
+     (if it has one). Each <tt>Document</tt> should
+     have exactly one <tt>Element</tt> in its
+     content list. However, documents may be temporarily
+     rootless. Almost anything you do to such a <tt>Document</tt>
+     other than setting the root element will throw an
+     <tt>IllegalStateException</tt>.
+    </p><pre class="programlisting">package org.jdom;
+
+public class <span class="bold"><b>Document</b></span> implements Serializable, Cloneable {
+
+  protected ContentList <span class="bold"><b>content</b></span>;
+  protected DocType     <span class="bold"><b>docType</b></span>;
+
+  public <span class="bold"><b>Document</b></span>();
+  public <span class="bold"><b>Document</b></span>(Element <i><tt>rootElement</tt></i>, DocType <i><tt>docType</tt></i>) 
+   throws IllegalAddException;
+  public <span class="bold"><b>Document</b></span>(Element <i><tt>rootElement</tt></i>);
+  public <span class="bold"><b>Document</b></span>(List <i><tt>newContent</tt></i>, DocType <i><tt>docType</tt></i>) 
+   throws IllegalAddException;
+  public <span class="bold"><b>Document</b></span>(List <i><tt>content</tt></i>) throws IllegalAddException;
+
+  public boolean  <span class="bold"><b>hasRootElement</b></span>();
+  public Element  <span class="bold"><b>getRootElement</b></span>() throws IllegalStateException;
+  public Document <span class="bold"><b>setRootElement</b></span>(Element <i><tt>rootElement</tt></i>);
+  public Element  <span class="bold"><b>detachRootElement</b></span>();
+  public DocType  <span class="bold"><b>getDocType</b></span>();
+  public Document <span class="bold"><b>setDocType</b></span>(DocType <i><tt>docType</tt></i>) 
+   throws IllegalAddException;
+  public Document <span class="bold"><b>addContent</b></span>(ProcessingInstruction <i><tt>pi</tt></i>);
+  public Document <span class="bold"><b>addContent</b></span>(Comment <i><tt>comment</tt></i>);
+  public List     <span class="bold"><b>getContent</b></span>();
+  public List     <span class="bold"><b>getContent</b></span>(Filter <i><tt>filter</tt></i>);
+  public Document <span class="bold"><b>setContent</b></span>(List <i><tt>newContent</tt></i>) 
+   throws IllegalAddException;
+  public boolean  <span class="bold"><b>removeContent</b></span>(ProcessingInstruction <i><tt>pi</tt></i>);
+  public boolean  <span class="bold"><b>removeContent</b></span>(Comment <i><tt>comment</tt></i>);
+
+  // Java utility methods
+  public       String  <span class="bold"><b>toString</b></span>();
+  public final boolean <span class="bold"><b>equals</b></span>(Object <i><tt>o</tt></i>);
+  public final int     <span class="bold"><b>hashCode</b></span>();
+  public       Object  <span class="bold"><b>clone</b></span>();
+
+ }</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e41252"></a>Element</h4></div></div><p>
+     The <tt>Element</tt> class represents a
+     complete element. Each element has a local name, a namespace 
+     (which may be null), a parent <tt>Element</tt> (which
+     is null if this is the root element or not currently part of a document),
+     a list of its children, a list of its attributes, and a
+     list of any namespace prefixes
+     declared on the element that are not used by the element or one of its attributes.
+    </p><pre class="programlisting">package org.jdom;
+
+public class <span class="bold"><b>Element</b></span> implements Serializable, Cloneable {
+
+  protected String        <span class="bold"><b>name</b></span>;
+  protected Namespace     <span class="bold"><b>namespace</b></span>;
+  protected List          <span class="bold"><b>additionalNamespaces</b></span>;
+  protected Object        <span class="bold"><b>parent</b></span>;
+  protected AttributeList <span class="bold"><b>attributes</b></span>;
+  protected ContentList   <span class="bold"><b>content</b></span>;
+
+  protected <span class="bold"><b>Element</b></span>();
+  public    <span class="bold"><b>Element</b></span>(String <i><tt>name</tt></i>, Namespace <i><tt>namespace</tt></i>) 
+   throws IllegalNameException;
+  public    <span class="bold"><b>Element</b></span>(String <i><tt>name</tt></i>) throws IllegalNameException;
+  public    <span class="bold"><b>Element</b></span>(String <i><tt>name</tt></i>, String <i><tt>uri</tt></i>) 
+   throws IllegalNameException;
+  public    <span class="bold"><b>Element</b></span>(String <i><tt>name</tt></i>, String <i><tt>prefix</tt></i>, String <i><tt>uri</tt></i>) 
+   throws IllegalNameException;
+
+  public    String    <span class="bold"><b>getName</b></span>();
+  public    Element   <span class="bold"><b>setName</b></span>(String <i><tt>name</tt></i>) 
+   throws IllegalNameException;
+  public    Namespace <span class="bold"><b>getNamespace</b></span>();
+  public    Element   <span class="bold"><b>setNamespace</b></span>(Namespace <i><tt>namespace</tt></i>);
+  public    String    <span class="bold"><b>getNamespacePrefix</b></span>();
+  public    String    <span class="bold"><b>getNamespaceURI</b></span>();
+  public    Namespace <span class="bold"><b>getNamespace</b></span>(String <i><tt>prefix</tt></i>);
+  public    String    <span class="bold"><b>getQualifiedName</b></span>();
+  public    void      <span class="bold"><b>addNamespaceDeclaration</b></span>(
+   Namespace <i><tt>additional</tt></i>);
+  public    void      <span class="bold"><b>removeNamespaceDeclaration</b></span>(
+   Namespace <i><tt>additionalNamespace</tt></i>);
+  public    List      <span class="bold"><b>getAdditionalNamespaces</b></span>();
+
+  public    Element   <span class="bold"><b>getParent</b></span>();
+  protected Element   <span class="bold"><b>setParent</b></span>(Element <i><tt>parent</tt></i>);
+  public    Element   <span class="bold"><b>detach</b></span>();
+  public    boolean   <span class="bold"><b>isRootElement</b></span>();
+  protected Element   <span class="bold"><b>setDocument</b></span>(Document <i><tt>document</tt></i>);
+  public    Document  <span class="bold"><b>getDocument</b></span>();
+  public    boolean   <span class="bold"><b>isAncestor</b></span>(Element <i><tt>element</tt></i>);
+
+  public    String    <span class="bold"><b>getText</b></span>();
+  public    Element   <span class="bold"><b>setText</b></span>(String <i><tt>text</tt></i>);
+  public    String    <span class="bold"><b>getTextTrim</b></span>();
+  public    String    <span class="bold"><b>getTextNormalize</b></span>();
+
+  public    String    <span class="bold"><b>getChildText</b></span>(String <i><tt>name</tt></i>);
+  public    String    <span class="bold"><b>getChildTextTrim</b></span>(String <i><tt>name</tt></i>);
+  public    String    <span class="bold"><b>getChildTextNormalize</b></span>(String <i><tt>name</tt></i>);
+  public    String    <span class="bold"><b>getChildText</b></span>(String <i><tt>name</tt></i>, Namespace <i><tt>ns</tt></i>);
+  public    String    <span class="bold"><b>getChildTextTrim</b></span>(String <i><tt>name</tt></i>, 
+   Namespace <i><tt>namespace</tt></i>);
+  public    String    <span class="bold"><b>getChildTextNormalize</b></span>(String <i><tt>name</tt></i>, 
+   Namespace <i><tt>namespace</tt></i>);
+
+  public    List      <span class="bold"><b>getContent</b></span>();
+  public    List      <span class="bold"><b>getContent</b></span>(Filter <i><tt>filter</tt></i>);
+  public    Element   <span class="bold"><b>setContent</b></span>(List <i><tt>newContent</tt></i>) 
+   throws IllegalAddException;
+  public    List      <span class="bold"><b>getChildren</b></span>();
+  public    List      <span class="bold"><b>getChildren</b></span>(String <i><tt>name</tt></i>);
+  public    List      <span class="bold"><b>getChildren</b></span>(String <i><tt>name</tt></i>, Namespace <i><tt>ns</tt></i>);
+  public    Element   <span class="bold"><b>getChild</b></span>(String <i><tt>name</tt></i>, Namespace <i><tt>ns</tt></i>);
+  public    Element   <span class="bold"><b>getChild</b></span>(String <i><tt>name</tt></i>);
+  public    Element   <span class="bold"><b>addContent</b></span>(String <i><tt>s</tt></i>) 
+   throws IllegalAddException;
+  public    Element   <span class="bold"><b>addContent</b></span>(Text <i><tt>text</tt></i>) 
+   throws IllegalAddException;
+  public    Element   <span class="bold"><b>addContent</b></span>(Element <i><tt>element</tt></i>) 
+   throws IllegalAddException;
+  public    Element   <span class="bold"><b>addContent</b></span>(ProcessingInstruction <i><tt>pi</tt></i>)
+   throws IllegalAddException;
+  public    Element   <span class="bold"><b>addContent</b></span>(EntityRef <i><tt>ref</tt></i>) 
+   throws IllegalAddException;
+  public    Element   <span class="bold"><b>addContent</b></span>(Comment <i><tt>comment</tt></i>)
+   throws IllegalAddException;
+  public    boolean   <span class="bold"><b>removeChild</b></span>(String <i><tt>name</tt></i>);
+  public    boolean   <span class="bold"><b>removeChild</b></span>(String <i><tt>name</tt></i>, Namespace <i><tt>ns</tt></i>);
+  public    boolean   <span class="bold"><b>removeChildren</b></span>(String <i><tt>name</tt></i>);
+  public    boolean   <span class="bold"><b>removeChildren</b></span>(String <i><tt>name</tt></i>, Namespace <i><tt>ns</tt></i>);
+  public    boolean   <span class="bold"><b>removeContent</b></span>(Element <i><tt>element</tt></i>);
+  public    boolean   <span class="bold"><b>removeContent</b></span>(ProcessingInstruction <i><tt>pi</tt></i>);
+  public    boolean   <span class="bold"><b>removeContent</b></span>(Comment <i><tt>comment</tt></i>);
+  public    boolean   <span class="bold"><b>removeContent</b></span>(Text <i><tt>text</tt></i>);
+  public    boolean   <span class="bold"><b>removeContent</b></span>(EntityRef <i><tt>entity</tt></i>);
+
+  // Attribute methods
+  public    List      <span class="bold"><b>getAttributes</b></span>();
+  public    Attribute <span class="bold"><b>getAttribute</b></span>(String <i><tt>name</tt></i>);
+  public    Attribute <span class="bold"><b>getAttribute</b></span>(String <i><tt>name</tt></i>, Namespace <i><tt>ns</tt></i>);
+  public    String    <span class="bold"><b>getAttributeValue</b></span>(String <i><tt>name</tt></i>);
+  public    String    <span class="bold"><b>getAttributeValue</b></span>(String <i><tt>name</tt></i>, 
+   Namespace <i><tt>ns</tt></i>, String <i><tt>def</tt></i>);
+  public    String    <span class="bold"><b>getAttributeValue</b></span>(String <i><tt>name</tt></i>, String <i><tt>def</tt></i>);
+  public    String    <span class="bold"><b>getAttributeValue</b></span>(String <i><tt>name</tt></i>, Namespace <i><tt>ns</tt></i>);
+  public    Element   <span class="bold"><b>setAttributes</b></span>(List <i><tt>newAttributes</tt></i>) 
+   throws IllegalAddException;
+  public    Element   <span class="bold"><b>setAttribute</b></span>(String <i><tt>name</tt></i>, String <i><tt>value</tt></i>) 
+   throws IllegalNameException, IllegalDataException;
+  public    Element   <span class="bold"><b>setAttribute</b></span>(String <i><tt>name</tt></i>, String <i><tt>value</tt></i>, Namespace <i><tt>ns</tt></i>) 
+   throws IllegalNameException, IllegalDataException;
+  public    Element   <span class="bold"><b>setAttribute</b></span>(Attribute <i><tt>attribute</tt></i>);
+  public    boolean   <span class="bold"><b>removeAttribute</b></span>(String <i><tt>name</tt></i>);
+  public    boolean   <span class="bold"><b>removeAttribute</b></span>(String <i><tt>name</tt></i>, Namespace <i><tt>ns</tt></i>);
+  public    boolean   <span class="bold"><b>removeAttribute</b></span>(Attribute <i><tt>attribute</tt></i>);
+
+  // Java utility methods
+  public       String  <span class="bold"><b>toString</b></span>();
+  public final boolean <span class="bold"><b>equals</b></span>(Object <i><tt>o</tt></i>);
+  public final int     <span class="bold"><b>hashCode</b></span>();
+  public       Object  <span class="bold"><b>clone</b></span>();
+
+ }</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e41730"></a>EntityRef</h4></div></div><p>
+     The <tt>EntityRef</tt> class represents an
+     unexpanded entity reference, such as might be produced by a
+     non-validating parser which does not read the external DTD
+     subset. Entity references for which the replacement text is
+     known are not included as <tt>EntityRef</tt> objects.
+     Instead their replacement text is parsed and included.
+  </p><pre class="programlisting">package org.jdom;
+
+public class <span class="bold"><b>EntityRef</b></span> implements Serializable, Cloneable {
+
+  protected String <span class="bold"><b>name</b></span>;
+  protected String <span class="bold"><b>publicID</b></span>;
+  protected String <span class="bold"><b>systemID</b></span>;
+  protected Object <span class="bold"><b>parent</b></span>;
+
+  protected <span class="bold"><b>EntityRef</b></span>();
+  public    <span class="bold"><b>EntityRef</b></span>(String <i><tt>name</tt></i>);
+  public    <span class="bold"><b>EntityRef</b></span>(String <i><tt>name</tt></i>, String <i><tt>systemID</tt></i>);
+  public    <span class="bold"><b>EntityRef</b></span>(String <i><tt>name</tt></i>, String <i><tt>publicID</tt></i>, 
+   String <i><tt>systemID</tt></i>);
+
+  public    String    <span class="bold"><b>getName</b></span>();
+  public    EntityRef <span class="bold"><b>setName</b></span>(String <i><tt>name</tt></i>) 
+   throws IllegalNameException;
+  public    String    <span class="bold"><b>getPublicID</b></span>();
+  public    String    <span class="bold"><b>getSystemID</b></span>();
+  public    EntityRef <span class="bold"><b>setPublicID</b></span>(String <i><tt>newPublicID</tt></i>) 
+   throws IllegalDataException;
+  public    EntityRef <span class="bold"><b>setSystemID</b></span>(String <i><tt>url</tt></i>) 
+   throws IllegalDataException;
+  public    Document  <span class="bold"><b>getDocument</b></span>();
+  public    Element   <span class="bold"><b>getParent</b></span>();
+  public    EntityRef <span class="bold"><b>detach</b></span>();
+  protected EntityRef <span class="bold"><b>setParent</b></span>(Element <i><tt>parent</tt></i>);
+
+  // Java utility methods
+  public       String  <span class="bold"><b>toString</b></span>();
+  public final boolean <span class="bold"><b>equals</b></span>(Object <i><tt>o</tt></i>);
+  public final int     <span class="bold"><b>hashCode</b></span>();
+  public       Object  <span class="bold"><b>clone</b></span>();  
+  
+ }</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e41845"></a>Namespace</h4></div></div><p>
+     The <tt>Namespace</tt> class encapsulates a namespace URI
+     and possibly a prefix. It uses the flyweight design pattern
+     so that twenty different elements in the same namespace 
+     share only one <tt>Namespace</tt> object between
+     them.
+  </p><pre class="programlisting">package org.jdom;
+
+public final class <span class="bold"><b>Namespace</b></span>  {
+
+  // empty string
+  public static final Namespace <span class="bold"><b>NO_NAMESPACE</b></span>;  
+  
+  // http://www.w3.org/XML/1998/namespace
+  public static final Namespace <span class="bold"><b>XML_NAMESPACE</b></span>; 
+  
+  // The constructor is private
+  
+  // Factory methods
+  public static Namespace <span class="bold"><b>getNamespace</b></span>(String <i><tt>prefix</tt></i>, String <i><tt>uri</tt></i>) 
+   throws IllegalNameException;
+  public static Namespace <span class="bold"><b>getNamespace</b></span>(String <i><tt>uri</tt></i>) 
+   throws IllegalNameException;
+
+  public String <span class="bold"><b>getPrefix</b></span>();
+  public String <span class="bold"><b>getURI</b></span>();
+
+  // Java utility methods
+  public       String  <span class="bold"><b>toString</b></span>();
+  public final boolean <span class="bold"><b>equals</b></span>(Object <i><tt>o</tt></i>);
+  public final int     <span class="bold"><b>hashCode</b></span>();
+
+ }</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e41900"></a>ProcessingInstruction</h4></div></div><p>
+     The <tt>ProcessingInstruction</tt> class represents a
+     complete processing instruction. Each <tt>ProcessingInstruction</tt> has a
+     target, data, a parent 
+     <tt>Element</tt> (which will be null if this
+     instruction
+     is in the prolog or epilog), and an owner <tt>Document</tt>.
+     If the data is stored in pseudo-attributes, then there&#8217;s
+     also a map containing the pseudo-attributes separated into
+     names and values. However, not all processing instructions
+     can be represented in this format. 
+    </p><pre class="programlisting">package org.jdom;
+
+public class <span class="bold"><b>ProcessingInstruction</b></span> 
+ implements Serializable, Cloneable {
+
+  protected String <span class="bold"><b>target</b></span>;
+  protected String <span class="bold"><b>rawData</b></span>;
+  protected Map    <span class="bold"><b>mapData</b></span>;
+  protected Object <span class="bold"><b>parent</b></span>;
+
+  protected <span class="bold"><b>ProcessingInstruction</b></span>();
+  public    <span class="bold"><b>ProcessingInstruction</b></span>(String <i><tt>target</tt></i>, Map <i><tt>data</tt></i>) 
+   throws IllegalTargetException;
+  public    <span class="bold"><b>ProcessingInstruction</b></span>(String <i><tt>target</tt></i>, String <i><tt>data</tt></i>) 
+   throws IllegalTargetException;
+
+  public    ProcessingInstruction <span class="bold"><b>setTarget</b></span>(String <i><tt>newTarget</tt></i>) 
+   throws IllegalTargetException;
+  public    String                <span class="bold"><b>getTarget</b></span>();
+  public    Element               <span class="bold"><b>getParent</b></span>();
+  protected ProcessingInstruction <span class="bold"><b>setParent</b></span>(Element <i><tt>parent</tt></i>);
+  public    ProcessingInstruction <span class="bold"><b>detach</b></span>();
+  public    Document              <span class="bold"><b>getDocument</b></span>();
+  protected ProcessingInstruction <span class="bold"><b>setDocument</b></span>(Document <i><tt>document</tt></i>);
+  public    String                <span class="bold"><b>getData</b></span>();
+  public    ProcessingInstruction <span class="bold"><b>setData</b></span>(String <i><tt>data</tt></i>);
+
+  public    ProcessingInstruction <span class="bold"><b>setData</b></span>(Map <i><tt>data</tt></i>);
+  public    List                  <span class="bold"><b>getNames</b></span>();
+  public    String                <span class="bold"><b>getValue</b></span>(String <i><tt>name</tt></i>);
+  public    ProcessingInstruction <span class="bold"><b>setValue</b></span>(String <i><tt>name</tt></i>, 
+   String <i><tt>value</tt></i>);
+  public    boolean               <span class="bold"><b>removeValue</b></span>(String <i><tt>name</tt></i>);
+
+  // Java utility methods
+  public       String  <span class="bold"><b>toString</b></span>();
+  public final boolean <span class="bold"><b>equals</b></span>(Object <i><tt>o</tt></i>);
+  public final int     <span class="bold"><b>hashCode</b></span>();
+  public       Object  <span class="bold"><b>clone</b></span>();  
+
+ }</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e42039"></a>Text</h4></div></div><p>
+        The <tt>Text</tt> class represents a text
+        node.
+        In general, <tt>Text</tt>  objects are not
+        guaranteed to contain the maximum possible contiguous run
+        of text, though this will be true of documents that have
+        been created by a <tt>SAXBuilder</tt> and not modified since. 
+        In most normal usage you can ignore this class and use
+        strings instead.
+  </p><pre class="programlisting">package org.jdom;
+
+public class <span class="bold"><b>Text</b></span> implements Serializable, Cloneable {
+
+  protected String <span class="bold"><b>value</b></span>;
+  protected Object <span class="bold"><b>parent</b></span>;
+
+  protected <span class="bold"><b>Text</b></span>();
+  public    <span class="bold"><b>Text</b></span>(String <i><tt>s</tt></i>) throws IllegalDataException;
+
+  public String   <span class="bold"><b>getText</b></span>();
+  public String   <span class="bold"><b>getTextTrim</b></span>();
+  public String   <span class="bold"><b>getTextNormalize</b></span>();
+  public Text     <span class="bold"><b>setText</b></span>(String <i><tt>s</tt></i>) throws IllegalDataException;
+  public void     <span class="bold"><b>append</b></span>(String <i><tt>s</tt></i>) throws IllegalDataException;
+  public void     <span class="bold"><b>append</b></span>(Text <i><tt>text</tt></i>) throws IllegalDataException;
+
+  public Element  <span class="bold"><b>getParent</b></span>();
+  public Document <span class="bold"><b>getDocument</b></span>();
+  protected Text  <span class="bold"><b>setParent</b></span>(Element <i><tt>parent</tt></i>);
+  public Text     <span class="bold"><b>detach</b></span>();
+
+  public static String <span class="bold"><b>normalizeString</b></span>(String <i><tt>s</tt></i>);
+  
+  // Java utility methods
+  public       String  <span class="bold"><b>toString</b></span>();
+  public final boolean <span class="bold"><b>equals</b></span>(Object <i><tt>o</tt></i>);
+  public final int     <span class="bold"><b>hashCode</b></span>();
+  public       Object  <span class="bold"><b>clone</b></span>();  
+
+ }</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e42136"></a>Verifier</h4></div></div><p>
+      <tt>Verifier</tt> is a utility class the
+      other JDOM classes rely on to decide whether or not
+      particular strings are acceptable for particular purposes.
+      For example, <tt>TimeLimit</tt> is a legal element name but
+      <tt>Time Limit</tt> is not. You don&#8217;t normally need
+      to use this class directly. If you do, you should note that
+      the various check methods all return null if the argument
+      passes the test and a non-empty string containing an error
+      message if the test fails. 
+      </p><pre class="programlisting">package org.jdom;
+
+public final class <span class="bold"><b>Verifier</b></span>  {
+
+  public static String <span class="bold"><b>checkElementName</b></span>(String <i><tt>name</tt></i>);
+  public static String <span class="bold"><b>checkAttributeName</b></span>(String <i><tt>name</tt></i>);
+  public static String <span class="bold"><b>checkCharacterData</b></span>(String <i><tt>text</tt></i>);
+  public static String <span class="bold"><b>checkCDATASection</b></span>(String <i><tt>data</tt></i>);
+  public static String <span class="bold"><b>checkNamespacePrefix</b></span>(String <i><tt>prefix</tt></i>);
+  public static String <span class="bold"><b>checkNamespaceURI</b></span>(String <i><tt>uri</tt></i>);
+  public static String <span class="bold"><b>checkNamespaceCollision</b></span>(
+   Namespace <i><tt>namespace</tt></i>, Namespace <i><tt>other</tt></i>);
+  public static String <span class="bold"><b>checkNamespaceCollision</b></span>(
+   Attribute <i><tt>attribute</tt></i>, Element <i><tt>element</tt></i>);
+  public static String <span class="bold"><b>checkNamespaceCollision</b></span>(
+   Namespace <i><tt>namespace</tt></i>, Element <i><tt>element</tt></i>);
+  public static String <span class="bold"><b>checkNamespaceCollision</b></span>(
+   Namespace <i><tt>namespace</tt></i>, Attribute <i><tt>attribute</tt></i>);
+  public static String <span class="bold"><b>checkNamespaceCollision</b></span>(
+   Namespace <i><tt>namespace</tt></i>, List <i><tt>list</tt></i>);
+  public static String <span class="bold"><b>checkProcessingInstructionTarget</b></span>(
+   String <i><tt>target</tt></i>);
+  public static String <span class="bold"><b>checkCommentData</b></span>(String <i><tt>data</tt></i>);
+  public static String <span class="bold"><b>checkPublicID</b></span>(String <i><tt>publicID</tt></i>);
+  public static String <span class="bold"><b>checkSystemLiteral</b></span>(String <i><tt>systemID</tt></i>);  
+  public static String <span class="bold"><b>checkXMLName</b></span>(String <i><tt>name</tt></i>);
+  
+  public static boolean <span class="bold"><b>isXMLCharacter</b></span>(char <i><tt>c</tt></i>);
+  public static boolean <span class="bold"><b>isXMLNameCharacter</b></span>(char <i><tt>c</tt></i>);
+  public static boolean <span class="bold"><b>isXMLNameStartCharacter</b></span>(char <i><tt>c</tt></i>);
+  public static boolean <span class="bold"><b>isXMLLetterOrDigit</b></span>(char <i><tt>c</tt></i>);
+  public static boolean <span class="bold"><b>isXMLLetter</b></span>(char <i><tt>c</tt></i>);
+  public static boolean <span class="bold"><b>isXMLCombiningChar</b></span>(char <i><tt>c</tt></i>);
+  public static boolean <span class="bold"><b>isXMLExtender</b></span>(char <i><tt>c</tt></i>);
+  public static boolean <span class="bold"><b>isXMLDigit</b></span>(char <i><tt>c</tt></i>);
+
+ }</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e42314"></a>Exceptions and Errors</h4></div></div><p>
+       JDOM defines a number of unique exceptions.
+       <tt>JDOMException</tt> is the basic
+       superclass for most checked exceptions JDOM methods can
+       throw. A few methods in the input and output packages also
+       throw standard <tt>IOException</tt>s. 
+       Finally, JDOM provides several subclasses of 
+       <tt>IllegalArgumentException</tt>
+       (a runtime exception) that are thrown when a
+       program attempts to set XML constructs like element names
+       to illegal values.
+      </p><div class="sect4"><div class="titlepage"><div><h5 class="title"><a name="d0e42328"></a>DataConversionException</h5></div></div><p>
+         <tt>DataConversionException</tt>
+         is thrown by the five <tt>getInt/Long/Float/Double/BooleanValue()</tt>
+         methods in <tt>Attribute</tt> when 
+         the attribute value cannot be parsed as the requested type.
+         This is a checked exception.
+      </p><pre class="programlisting">package org.jdom;
+
+public class <span class="bold"><b>DataConversionException</b></span> extends JDOMException {
+
+  public <span class="bold"><b>DataConversionException</b></span>(String <i><tt>message</tt></i>, String <i><tt>type</tt></i>);
+
+ }</pre></div><div class="sect4"><div class="titlepage"><div><h5 class="title"><a name="d0e42356"></a>IllegalAddException</h5></div></div><p>
+         <tt>IllegalAddException</tt>
+         is thrown when code attempts to add a node where it doesn&#8217;t belong.
+         This could be because the new child already has a parent
+         or because the new child can never be placed where you&#8217;re
+         trying to fit it (e.g. adding  <tt>Text</tt> 
+         object as a child of a <tt>Document</tt>).
+         This is a runtime exception.
+      </p><pre class="programlisting">package org.jdom;
+
+public class <span class="bold"><b>IllegalAddException</b></span> 
+ extends IllegalArgumentException {
+
+  public <span class="bold"><b>IllegalAddException</b></span>(Element <i><tt>base</tt></i>, Attribute <i><tt>added</tt></i>, 
+   String <i><tt>reason</tt></i>);
+  public <span class="bold"><b>IllegalAddException</b></span>(Element <i><tt>base</tt></i>, Element <i><tt>added</tt></i>, 
+   String <i><tt>reason</tt></i>);
+  public <span class="bold"><b>IllegalAddException</b></span>(Document <i><tt>base</tt></i>, Element <i><tt>added</tt></i>, 
+   String <i><tt>reason</tt></i>);
+  public <span class="bold"><b>IllegalAddException</b></span>(Element <i><tt>base</tt></i>, 
+   ProcessingInstruction <i><tt>added</tt></i>, String <i><tt>reason</tt></i>);
+  public <span class="bold"><b>IllegalAddException</b></span>(Document <i><tt>base</tt></i>, 
+   ProcessingInstruction <i><tt>added</tt></i>, String <i><tt>reason</tt></i>);
+  public <span class="bold"><b>IllegalAddException</b></span>(Element <i><tt>base</tt></i>, Comment <i><tt>added</tt></i>, 
+   String <i><tt>reason</tt></i>);
+  public <span class="bold"><b>IllegalAddException</b></span>(Element <i><tt>base</tt></i>, CDATA <i><tt>added</tt></i>, 
+   String <i><tt>reason</tt></i>);
+  public <span class="bold"><b>IllegalAddException</b></span>(Element <i><tt>base</tt></i>, Text <i><tt>added</tt></i>, 
+   String <i><tt>reason</tt></i>);
+  public <span class="bold"><b>IllegalAddException</b></span>(Document <i><tt>base</tt></i>, Comment <i><tt>added</tt></i>, 
+   String <i><tt>reason</tt></i>);
+  public <span class="bold"><b>IllegalAddException</b></span>(Element <i><tt>base</tt></i>, EntityRef <i><tt>added</tt></i>, 
+   String <i><tt>reason</tt></i>);
+  public <span class="bold"><b>IllegalAddException</b></span>(Element <i><tt>base</tt></i>, Namespace <i><tt>added</tt></i>, 
+   String <i><tt>reason</tt></i>);
+  public <span class="bold"><b>IllegalAddException</b></span>(Document <i><tt>base</tt></i>, DocType <i><tt>added</tt></i>, 
+   String <i><tt>reason</tt></i>);
+  public <span class="bold"><b>IllegalAddException</b></span>(String <i><tt>reason</tt></i>);
+
+ }</pre></div><div class="sect4"><div class="titlepage"><div><h5 class="title"><a name="d0e42525"></a>IllegalDataException</h5></div></div><p>
+         An <tt>IllegalDataException</tt>
+         is thrown when code attempts to set some text content
+         to a string that does not satisfy XML&#8217;s well-formedness rules.
+         Exactly what these rules are depends on context. For
+         instance, a comment cannot contain the two hyphen string
+         <tt>--</tt>. No content can include the ASCII
+         vertical tab or bell characters, and so forth.
+         The <i><tt>data</tt></i> argument contains the 
+         illegal text.
+                  This is a runtime exception.
+      </p><pre class="programlisting">package org.jdom;
+
+public class <span class="bold"><b>IllegalDataException</b></span> 
+ extends IllegalArgumentException {
+
+  public <span class="bold"><b>IllegalDataException</b></span>(String <i><tt>data</tt></i>, String <i><tt>construct</tt></i>, 
+   String <i><tt>reason</tt></i>);
+  public <span class="bold"><b>IllegalDataException</b></span>(String <i><tt>data</tt></i>, String <i><tt>construct</tt></i>);
+
+ }</pre></div><div class="sect4"><div class="titlepage"><div><h5 class="title"><a name="d0e42565"></a>IllegalNameException</h5></div></div><p>
+         An <tt>IllegalNameException</tt>
+         is thrown when code attempts to set the name of an
+         attribute, element, or entity reference 
+         to a string that is not a namespace well-formed XML name.
+                  This is a runtime exception.
+      </p><pre class="programlisting">package org.jdom;
+
+public class <span class="bold"><b>IllegalNameException</b></span> 
+ extends IllegalArgumentException {
+
+  public <span class="bold"><b>IllegalNameException</b></span>(String <i><tt>name</tt></i>, String <i><tt>construct</tt></i>, 
+   String <i><tt>reason</tt></i>);
+  public <span class="bold"><b>IllegalNameException</b></span>(String <i><tt>name</tt></i>, String <i><tt>construct</tt></i>);
+
+ }</pre></div><div class="sect4"><div class="titlepage"><div><h5 class="title"><a name="d0e42599"></a>IllegalTargetException</h5></div></div><p>
+         An <tt>IllegalTargetException</tt>
+         is thrown when code attempts to set the target of a
+         processing instruction 
+         to a string that is not a legal XML name.
+                  This is a runtime exception.
+      </p><pre class="programlisting">package org.jdom;
+
+public class <span class="bold"><b>IllegalTargetException</b></span> 
+ extends IllegalArgumentException {
+
+  public <span class="bold"><b>IllegalTargetException</b></span>(String <i><tt>target</tt></i>, 
+   String <i><tt>reason</tt></i>);
+  public <span class="bold"><b>IllegalTargetException</b></span>(String <i><tt>target</tt></i>);
+
+ }</pre></div><div class="sect4"><div class="titlepage"><div><h5 class="title"><a name="d0e42627"></a>JDOMException</h5></div></div><p>
+    <tt>JDOMException</tt> is the common superclass for the
+    different kinds of checked exceptions that may be thrown while working with JDOM.
+  </p><pre class="programlisting">package org.jdom;
+
+public class <span class="bold"><b>JDOMException</b></span> extends Exception {
+
+  protected Throwable <span class="bold"><b>cause</b></span>;
+
+  public <span class="bold"><b>JDOMException</b></span>();
+  public <span class="bold"><b>JDOMException</b></span>(String <i><tt>message</tt></i>);
+  public <span class="bold"><b>JDOMException</b></span>(String <i><tt>message</tt></i>, Throwable <i><tt>cause</tt></i>);
+
+  public Throwable <span class="bold"><b>initCause</b></span>(Throwable <i><tt>cause</tt></i>);
+  public Throwable <span class="bold"><b>getCause</b></span>();
+  public String    <span class="bold"><b>getMessage</b></span>();
+  public void      <span class="bold"><b>printStackTrace</b></span>();
+  public void      <span class="bold"><b>printStackTrace</b></span>(PrintStream <i><tt>out</tt></i>);
+  public void      <span class="bold"><b>printStackTrace</b></span>(PrintWriter <i><tt>out</tt></i>);
+
+ }</pre></div></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e42688"></a>org.jdom.filter</h3></div></div><p>
+    JDOM uses the filter package internally to make sure client
+    code doesn&#8217;t do silly things like adding a
+    <tt>java.io.InputStream</tt> to an
+    <tt>Element</tt>&#8217;s children,
+    or slightly less silly but still illegal things such as
+    adding a  <tt>Text</tt> object to a
+    <tt>Document</tt>&#8217;s children. You can also use
+    filters in your own code to simplify navigation and
+    search in XML documents. 
+  </p><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e42705"></a>ContentFilter</h4></div></div><p>
+        <tt>ContentFilter</tt> is the basic filter
+        that allows you to specify what kinds of nodes you want
+        to pass the filter. The actual filter is stored as an
+        <tt>int</tt> mask.
+        The individual node types are integral powers of two
+        that set exactly one bit in the mask.
+        As usual with bit masks, you can combine the different
+        fields with the bitwise or operator <tt>|</tt>.
+      </p><pre class="programlisting">package org.jdom.filter;
+
+public class <span class="bold"><b>ContentFilter</b></span> implements Filter {
+
+  public static final int <span class="bold"><b>ELEMENT</b></span>;
+  public static final int <span class="bold"><b>CDATA</b></span>;
+  public static final int <span class="bold"><b>TEXT</b></span>;
+  public static final int <span class="bold"><b>COMMENT</b></span>;
+  public static final int <span class="bold"><b>PI</b></span>;
+  public static final int <span class="bold"><b>ENTITYREF</b></span>;
+  public static final int <span class="bold"><b>DOCUMENT</b></span>;
+  
+  protected int <span class="bold"><b>filterMask</b></span>;
+
+  public <span class="bold"><b>ContentFilter</b></span>();
+  public <span class="bold"><b>ContentFilter</b></span>(boolean <i><tt>allVisible</tt></i>);
+  public <span class="bold"><b>ContentFilter</b></span>(int <i><tt>mask</tt></i>);
+
+  public int  <span class="bold"><b>getFilterMask</b></span>();
+  public void <span class="bold"><b>setFilterMask</b></span>(int <i><tt>mask</tt></i>);
+  public void <span class="bold"><b>setDefaultMask</b></span>();
+
+  public void <span class="bold"><b>setDocumentContent</b></span>();
+  public void <span class="bold"><b>setElementContent</b></span>();
+  public void <span class="bold"><b>setElementVisible</b></span>(boolean <i><tt>visible</tt></i>);
+  public void <span class="bold"><b>setCDATAVisible</b></span>(boolean <i><tt>visible</tt></i>);
+  public void <span class="bold"><b>setTextVisible</b></span>(boolean <i><tt>visible</tt></i>);
+  public void <span class="bold"><b>setCommentVisible</b></span>(boolean <i><tt>visible</tt></i>);
+  public void <span class="bold"><b>setPIVisible</b></span>(boolean <i><tt>visible</tt></i>);
+  public void <span class="bold"><b>setEntityRefVisible</b></span>(boolean <i><tt>visible</tt></i>);
+
+  public boolean <span class="bold"><b>canAdd</b></span>(Object <i><tt>o</tt></i>);
+  public boolean <span class="bold"><b>canRemove</b></span>(Object <i><tt>o</tt></i>);
+  public boolean <span class="bold"><b>matches</b></span>(Object <i><tt>o</tt></i>);
+  public boolean <span class="bold"><b>equals</b></span>(Object <i><tt>o</tt></i>);
+
+ }</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e42841"></a>ElementFilter</h4></div></div><p>
+        The <tt>ElementFilter</tt> class enables you to
+        define filters that pass only elements with a certain name,
+        or a certain namespace, or a certain name in a certain namespace.
+      </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Note</h3><p>
+          It is likely that the behavior of the
+          <tt>ElementFilter(String
+          <i><tt>name</tt></i>)</tt>
+          constructor will be changed so that it creates a filter
+          that selects elements with that name and  no
+          namespace rather than elements with that name in
+          any namespace.
+        </p></div><pre class="programlisting">package org.jdom.filter;
+
+public class <span class="bold"><b>ElementFilter</b></span> implements Filter {
+
+  protected String <span class="bold"><b>name</b></span>;
+  protected Namespace <span class="bold"><b>namespace</b></span>;
+
+  public <span class="bold"><b>ElementFilter</b></span>();
+  public <span class="bold"><b>ElementFilter</b></span>(String <i><tt>name</tt></i>);
+  public <span class="bold"><b>ElementFilter</b></span>(Namespace <i><tt>namespace</tt></i>);
+  public <span class="bold"><b>ElementFilter</b></span>(String <i><tt>name</tt></i>, Namespace <i><tt>namespace</tt></i>);
+
+  public boolean <span class="bold"><b>canAdd</b></span>(Object <i><tt>o</tt></i>);
+  public boolean <span class="bold"><b>canRemove</b></span>(Object <i><tt>o</tt></i>);
+  public boolean <span class="bold"><b>matches</b></span>(Object <i><tt>o</tt></i>);
+  public boolean <span class="bold"><b>equals</b></span>(Object <i><tt>o</tt></i>);
+
+ }</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e42917"></a>Filter</h4></div></div><p>
+        The <tt>Filter</tt> interface 
+        identifies which child nodes should appear in a JDOM list.
+        Node objects for which <tt>matches()</tt>
+        returns false are filtered out of the list.
+      </p><div class="caution" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Caution</h3><p>
+          The
+          <tt>canAdd()</tt>
+          and <tt>canRemove()</tt> methods are
+          probably going to be deprecated and then removed in the
+          near future.
+        </p></div><pre class="programlisting">package org.jdom.filter;
+      
+public interface <span class="bold"><b>Filter</b></span>  {
+
+  public boolean <span class="bold"><b>canAdd</b></span>(Object <i><tt>o</tt></i>);
+  public boolean <span class="bold"><b>canRemove</b></span>(Object <i><tt>o</tt></i>);
+  public boolean <span class="bold"><b>matches</b></span>(Object <i><tt>o</tt></i>);
+
+ }</pre></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e42960"></a>org.jdom.input</h3></div></div><p>
+      The <tt>org.jdom.input</tt> class contains 
+      classes involved with building JDOM objects from other
+      formats such as XML files, DOM
+      <tt>Document</tt> objects, and such.
+    </p><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e42971"></a>BuilderErrorHandler</h4></div></div><p>
+      The <tt>BuilderErrorHandler</tt>
+      class is used to report errors that occur during SAX
+      parsing. By default it rethrows the exception to halt parsing for errors
+      and fatal errors and ignores warnings.
+      You don&#8217;t normally need to interact with this class
+      directly.
+  </p><pre class="programlisting">package org.jdom.input;
+
+public class <span class="bold"><b>BuilderErrorHandler</b></span> implements org.xml.sax.ErrorHandler {
+
+
+  public <span class="bold"><b>BuilderErrorHandler</b></span>();
+
+  public void <span class="bold"><b>warning</b></span>(SAXParseException <i><tt>exception</tt></i>) 
+   throws SAXException;
+  public void <span class="bold"><b>error</b></span>(SAXParseException <i><tt>exception</tt></i>) 
+   throws SAXException;
+  public void <span class="bold"><b>fatalError</b></span>(SAXParseException <i><tt>exception</tt></i>) 
+   throws SAXException;
+
+ }</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e43005"></a>DefaultJDOMFactory</h4></div></div><p>
+        The <tt>DefaultJDOMFactory</tt> class is
+        used by 
+        <tt>SAXBuilder</tt> and <tt>DOMBuilder</tt>
+        to create standard, undecorated JDOM trees. You rarely
+        need to use this class directly. 
+     </p><pre class="programlisting">package org.jdom.input;
+
+public class <span class="bold"><b>DefaultJDOMFactory</b></span> implements JDOMFactory {
+
+  public <span class="bold"><b>DefaultJDOMFactory</b></span>();
+
+  public Attribute             <span class="bold"><b>attribute</b></span>(String <i><tt>name</tt></i>,
+   String <i><tt>value</tt></i>, Namespace <i><tt>namespace</tt></i>) 
+   throws IllegalNameException, IllegalDataException;
+  public Attribute             <span class="bold"><b>attribute</b></span>(String <i><tt>name</tt></i>, 
+   String <i><tt>value</tt></i>, int <i><tt>type</tt></i>, Namespace <i><tt>namespace</tt></i>) 
+   throws IllegalNameException, IllegalDataException;
+  public Attribute             <span class="bold"><b>attribute</b></span>(String <i><tt>name</tt></i>,
+   String <i><tt>value</tt></i>) throws IllegalNameException, IllegalDataException;
+  public Attribute             <span class="bold"><b>attribute</b></span>(String <i><tt>name</tt></i>, 
+   String <i><tt>value</tt></i>, int <i><tt>type</tt></i>) 
+   throws IllegalNameException, IllegalDataException;
+  public CDATA                 <span class="bold"><b>cdata</b></span>(String <i><tt>text</tt></i>) 
+   throws IllegalDataException;
+  public Text                  <span class="bold"><b>text</b></span>(String <i><tt>text</tt></i>) 
+   throws IllegalDataException;
+  public Comment               <span class="bold"><b>comment</b></span>(String <i><tt>text</tt></i>) 
+   throws IllegalDataException;
+  public DocType               <span class="bold"><b>docType</b></span>(String <i><tt>elementName</tt></i>, 
+   String <i><tt>publicID</tt></i>, String <i><tt>systemID</tt></i>) 
+   throws IllegalNameException, IllegalDataException;
+  public DocType               <span class="bold"><b>docType</b></span>(String <i><tt>elementName</tt></i>, 
+   String <i><tt>systemID</tt></i>) throws IllegalNameException, IllegalDataException;
+  public DocType               <span class="bold"><b>docType</b></span>(String <i><tt>elementName</tt></i>) 
+   throws IllegalNameException;
+  public Document              <span class="bold"><b>document</b></span>(Element <i><tt>rootElement</tt></i>, 
+   DocType <i><tt>docType</tt></i>) IllegalAddException;
+  public Document              <span class="bold"><b>document</b></span>(Element <i><tt>rootElement</tt></i>) 
+   throws IllegalAddException;
+  public Element               <span class="bold"><b>element</b></span>(String <i><tt>name</tt></i>, 
+   Namespace <i><tt>namespace</tt></i>) throws IllegalNameException;
+  public Element               <span class="bold"><b>element</b></span>(String <i><tt>name</tt></i>) 
+   throws IllegalNameException;
+  public Element               <span class="bold"><b>element</b></span>(String <i><tt>name</tt></i>, String <i><tt>uri</tt></i>) 
+   throws IllegalNameException;
+  public Element               <span class="bold"><b>element</b></span>(String <i><tt>name</tt></i>, 
+   String <i><tt>prefix</tt></i>, String <i><tt>uri</tt></i>) throws IllegalNameException;
+  public ProcessingInstruction <span class="bold"><b>processingInstruction</b></span>(
+   String <i><tt>target</tt></i>, Map <i><tt>data</tt></i>) throws IllegalTargetException;
+  public ProcessingInstruction <span class="bold"><b>processingInstruction</b></span>(
+   String <i><tt>target</tt></i>, String <i><tt>data</tt></i>) throws IllegalTargetException;
+  public EntityRef             <span class="bold"><b>entityRef</b></span>(String <i><tt>name</tt></i>) 
+   throws IllegalNameException;
+  public EntityRef             <span class="bold"><b>entityRef</b></span>(String <i><tt>name</tt></i>, 
+   String <i><tt>publicID</tt></i>, String <i><tt>systemID</tt></i>) 
+   throws IllegalNameException, IllegalTargetException;
+
+ }</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e43207"></a>DOMBuilder</h4></div></div><p>
+      The <tt>DOMBuilder</tt>
+      class converts DOM <tt>org.w3c.dom.Document</tt> objects into
+      <tt>org.jdom.Document</tt> objects
+      and DOM <tt>org.w3c.dom.Element</tt> objects into
+      <tt>org.jdom.Element</tt> objects.
+      It&#8217;s useful for interoperating with DOM programs and
+      libraries.
+  </p><pre class="programlisting">package org.jdom.input;
+
+public class <span class="bold"><b>DOMBuilder</b></span>  {
+
+  public <span class="bold"><b>DOMBuilder</b></span>();
+  public <span class="bold"><b>DOMBuilder</b></span>(String <i><tt>adapterClass</tt></i>);
+
+  public void <span class="bold"><b>setFactory</b></span>(JDOMFactory <i><tt>factory</tt></i>);
+  
+  public Document <span class="bold"><b>build</b></span>(org.w3c.dom.Document <i><tt>domDocument</tt></i>)
+   throws IllegalDataException;
+  public Element  <span class="bold"><b>build</b></span>(org.w3c.dom.Element  <i><tt>domElement</tt></i>) 
+   throws IllegalDataException;
+
+ }</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e43259"></a>JDOMFactory</h4></div></div><p>
+       <tt>DOMBuilder</tt> and
+       <tt>SAXBuilder</tt> rely on a 
+       <tt>JDOMFactory</tt> to build 
+       node objects. You can implement this class in order to
+       have the builder objects build subclasses of your own
+       devising rather than the standard JDOM classes.
+       This interface is for advanced use, and then only
+       when subclassing the standard <tt>org.jdom</tt>
+       classes.
+     </p><pre class="programlisting">package org.jdom.input;
+
+public interface <span class="bold"><b>JDOMFactory</b></span>  {
+
+  public Attribute             <span class="bold"><b>attribute</b></span>(String <i><tt>name</tt></i>, 
+   String <i><tt>value</tt></i>, Namespace <i><tt>namespace</tt></i>);
+  public Attribute             <span class="bold"><b>attribute</b></span>(String <i><tt>name</tt></i>, 
+   String <i><tt>value</tt></i>, int <i><tt>type</tt></i>, Namespace <i><tt>namespace</tt></i>);
+  public Attribute             <span class="bold"><b>attribute</b></span>(String <i><tt>name</tt></i>, 
+   String <i><tt>value</tt></i>);
+  public Attribute             <span class="bold"><b>attribute</b></span>(String <i><tt>name</tt></i>, 
+   String <i><tt>value</tt></i>, int <i><tt>type</tt></i>);
+  public CDATA                 <span class="bold"><b>cdata</b></span>(String <i><tt>text</tt></i>);
+  public Text                  <span class="bold"><b>text</b></span>(String <i><tt>text</tt></i>);
+  public Comment               <span class="bold"><b>comment</b></span>(String <i><tt>text</tt></i>);
+  public DocType               <span class="bold"><b>docType</b></span>(String <i><tt>elementName</tt></i>, 
+   String <i><tt>publicID</tt></i>, String <i><tt>systemID</tt></i>);
+  public DocType               <span class="bold"><b>docType</b></span>(String <i><tt>elementName</tt></i>, 
+   String <i><tt>systemID</tt></i>);
+  public DocType               <span class="bold"><b>docType</b></span>(String <i><tt>elementName</tt></i>);
+  public Document              <span class="bold"><b>document</b></span>(Element <i><tt>rootElement</tt></i>, 
+   DocType <i><tt>docType</tt></i>);
+  public Document              <span class="bold"><b>document</b></span>(Element <i><tt>rootElement</tt></i>);
+  public Element               <span class="bold"><b>element</b></span>(String <i><tt>name</tt></i>, 
+   Namespace <i><tt>namespace</tt></i>);
+  public Element               <span class="bold"><b>element</b></span>(String <i><tt>name</tt></i>);
+  public Element               <span class="bold"><b>element</b></span>(String <i><tt>name</tt></i>, String <i><tt>uri</tt></i>);
+  public Element               <span class="bold"><b>element</b></span>(String <i><tt>name</tt></i>,
+   String <i><tt>prefix</tt></i>, String <i><tt>uri</tt></i>);
+  public ProcessingInstruction <span class="bold"><b>processingInstruction</b></span>(
+   String <i><tt>target</tt></i>, Map <i><tt>data</tt></i>);
+  public ProcessingInstruction <span class="bold"><b>processingInstruction</b></span>(
+   String <i><tt>target</tt></i>, String <i><tt>data</tt></i>);
+  public EntityRef             <span class="bold"><b>entityRef</b></span>(String <i><tt>name</tt></i>);
+  public EntityRef             <span class="bold"><b>entityRef</b></span>(String <i><tt>name</tt></i>, 
+   String <i><tt>publicID</tt></i>, String <i><tt>systemID</tt></i>);
+
+ }</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e43461"></a>SAXBuilder</h4></div></div><p>
+       <tt>SAXBuilder</tt> is the preferred means
+       of parsing XML documents into JDOM. It relies on an
+       underlying SAX parser, but is agnostic about which parser
+       is used. 
+     </p><pre class="programlisting">package org.jdom.input;
+
+public class <span class="bold"><b>SAXBuilder</b></span>  {
+
+  protected JDOMFactory <span class="bold"><b>factory</b></span>;
+
+  public <span class="bold"><b>SAXBuilder</b></span>();
+  public <span class="bold"><b>SAXBuilder</b></span>(boolean <i><tt>validate</tt></i>);
+  public <span class="bold"><b>SAXBuilder</b></span>(String <i><tt>saxDriverClass</tt></i>);
+  public <span class="bold"><b>SAXBuilder</b></span>(String <i><tt>saxDriverClass</tt></i>, boolean <i><tt>validate</tt></i>);
+
+  public void <span class="bold"><b>setFactory</b></span>(JDOMFactory <i><tt>factory</tt></i>);
+  public void <span class="bold"><b>setValidation</b></span>(boolean <i><tt>validate</tt></i>);
+  public void <span class="bold"><b>setErrorHandler</b></span>(ErrorHandler <i><tt>errorHandler</tt></i>);
+  public void <span class="bold"><b>setEntityResolver</b></span>(EntityResolver <i><tt>entityResolver</tt></i>);
+  public void <span class="bold"><b>setDTDHandler</b></span>(DTDHandler <i><tt>dtdHandler</tt></i>);
+  public void <span class="bold"><b>setXMLFilter</b></span>(XMLFilter <i><tt>xmlFilter</tt></i>);
+  public void <span class="bold"><b>setIgnoringElementContentWhitespace</b></span>(
+   boolean <i><tt>ignoringWhite</tt></i>);
+  public void <span class="bold"><b>setFeature</b></span>(String <i><tt>name</tt></i>, boolean <i><tt>value</tt></i>);
+  public void <span class="bold"><b>setProperty</b></span>(String <i><tt>name</tt></i>, Object <i><tt>value</tt></i>);
+  public void <span class="bold"><b>setExpandEntities</b></span>(boolean <i><tt>expand</tt></i>);
+
+  public Document <span class="bold"><b>build</b></span>(InputSource <i><tt>in</tt></i>) 
+   throws JDOMException, IOException;
+  public Document <span class="bold"><b>build</b></span>(InputStream <i><tt>in</tt></i>) 
+   throws JDOMException, IOException;
+  public Document <span class="bold"><b>build</b></span>(File <i><tt>file</tt></i>) 
+   throws JDOMException, IOException;
+  public Document <span class="bold"><b>build</b></span>(URL <i><tt>url</tt></i>) 
+   throws JDOMException, IOException;
+  public Document <span class="bold"><b>build</b></span>(InputStream <i><tt>in</tt></i>, String <i><tt>systemID</tt></i>) 
+   throws JDOMException, IOException;
+  public Document <span class="bold"><b>build</b></span>(Reader <i><tt>characterStream</tt></i>) 
+   throws JDOMException, IOException;
+  public Document <span class="bold"><b>build</b></span>(Reader <i><tt>characterStream</tt></i>, String <i><tt>SystemID</tt></i>) 
+   throws JDOMException, IOException;
+  public Document <span class="bold"><b>build</b></span>(String <i><tt>systemID</tt></i>) 
+   throws JDOMException, IOException;
+
+  protected SAXHandler <span class="bold"><b>createContentHandler</b></span>();
+  protected void       <span class="bold"><b>configureContentHandler</b></span>(
+   SAXHandler <i><tt>contentHandler</tt></i>);
+  protected XMLReader  <span class="bold"><b>createParser</b></span>() throws JDOMException;
+  protected void       <span class="bold"><b>configureParser</b></span>(XMLReader <i><tt>parser</tt></i>, 
+   SAXHandler <i><tt>contentHandler</tt></i>) throws JDOMException;
+  protected URL        <span class="bold"><b>fileToURL</b></span>(File <i><tt>f</tt></i>) 
+   throws MalformedURLException;
+
+ }</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e43648"></a>SAXHandler</h4></div></div><p>
+        <tt>SAXBuilder</tt> uses <tt>SAXHandler</tt>
+        to receive information from the underlying SAX parser.
+        It&#8217;s extremely rare that you need to use this class
+        yourself.
+      </p><pre class="programlisting">package org.jdom.input;
+
+public class <span class="bold"><b>SAXHandler</b></span> extends DefaultHandler 
+ implements LexicalHandler, DeclHandler, DTDHandler {
+
+  protected Stack      <span class="bold"><b>stack</b></span>;
+  protected boolean    <span class="bold"><b>atRoot</b></span>;
+  protected boolean    <span class="bold"><b>inDTD</b></span>;
+  protected boolean    <span class="bold"><b>inInternalSubset</b></span>;
+  protected boolean    <span class="bold"><b>previousCDATA</b></span>;
+  protected boolean    <span class="bold"><b>inCDATA</b></span>;
+  protected boolean    <span class="bold"><b>suppress</b></span>;
+  protected LinkedList <span class="bold"><b>declaredNamespaces</b></span>;
+  protected LinkedList <span class="bold"><b>availableNamespaces</b></span>;
+
+  public <span class="bold"><b>SAXHandler</b></span>();
+  public <span class="bold"><b>SAXHandler</b></span>(JDOMFactory <i><tt>factory</tt></i>);
+
+  public Document    <span class="bold"><b>getDocument</b></span>();
+  public JDOMFactory <span class="bold"><b>getFactory</b></span>();
+  public Locator     <span class="bold"><b>getDocumentLocator</b></span>();
+
+  public void    <span class="bold"><b>setExpandEntities</b></span>(boolean <i><tt>expand</tt></i>);
+  public boolean <span class="bold"><b>getExpandEntities</b></span>();
+  public void    <span class="bold"><b>setIgnoringElementContentWhitespace</b></span>(
+   boolean <i><tt>ignoringWhite</tt></i>);
+  public boolean <span class="bold"><b>getIgnoringElementContentWhitespace</b></span>();
+  
+  // DeclHandler methods
+  public void    <span class="bold"><b>externalEntityDecl</b></span>(String <i><tt>name</tt></i>, 
+   String <i><tt>publicID</tt></i>, String <i><tt>systemID</tt></i>) 
+   throws SAXException;
+  public void    <span class="bold"><b>attributeDecl</b></span>(String <i><tt>elementName</tt></i>, 
+   String <i><tt>attributeName</tt></i>, String <i><tt>type</tt></i>, String <i><tt>valueDefault</tt></i>, String <i><tt>value</tt></i>) 
+   throws SAXException;
+  public void    <span class="bold"><b>elementDecl</b></span>(String <i><tt>name</tt></i>, String <i><tt>model</tt></i>) throws SAXException;
+  public void    <span class="bold"><b>internalEntityDecl</b></span>(String <i><tt>name</tt></i>, String <i><tt>value</tt></i>) throws SAXException;
+
+  // ContentHandler methods
+  public void <span class="bold"><b>setDocumentLocator</b></span>(Locator <i><tt>locator</tt></i>);
+  public void <span class="bold"><b>startPrefixMapping</b></span>(String <i><tt>prefix</tt></i>, String <i><tt>uri</tt></i>)
+   throws SAXException;
+  public void <span class="bold"><b>endPrefixMapping</b></span>(String <i><tt>prefix</tt></i>) throws SAXException;
+  public void <span class="bold"><b>startElement</b></span>(String <i><tt>namespaceURI</tt></i>, String <i><tt>localName</tt></i>, 
+   String <i><tt>qualifiedName</tt></i>, Attributes <i><tt>atts</tt></i>)
+    throws SAXException;
+  public void <span class="bold"><b>characters</b></span>(char <i><tt>ch</tt></i>, int <i><tt>start</tt></i>, int <i><tt>length</tt></i>)
+   throws SAXException;
+  public void <span class="bold"><b>ignorableWhitespace</b></span>(char <i><tt>ch</tt></i>, int <i><tt>start</tt></i>, int <i><tt>length</tt></i>) 
+   throws SAXException;
+  public void <span class="bold"><b>skippedEntity</b></span>(String <i><tt>name</tt></i>) throws SAXException;
+  public void <span class="bold"><b>processingInstruction</b></span>(String <i><tt>target</tt></i>, String <i><tt>data</tt></i>) 
+   throws SAXException;
+  public void <span class="bold"><b>endElement</b></span>(String <i><tt>namespaceURI</tt></i>, String <i><tt>localName</tt></i>, 
+   String <i><tt>qualifiedName</tt></i>) throws SAXException;
+
+  // LexicalHandler methods
+  public void <span class="bold"><b>startDTD</b></span>(String <i><tt>name</tt></i>, String <i><tt>publicID</tt></i>, String <i><tt>systemID</tt></i>) 
+   throws SAXException;
+  public void <span class="bold"><b>endDTD</b></span>() throws SAXException;
+  public void <span class="bold"><b>startEntity</b></span>(String <i><tt>name</tt></i>) throws SAXException;
+  public void <span class="bold"><b>endEntity</b></span>(String <i><tt>name</tt></i>) throws SAXException;
+  public void <span class="bold"><b>startCDATA</b></span>() throws SAXException;
+  public void <span class="bold"><b>endCDATA</b></span>() throws SAXException;
+  public void <span class="bold"><b>comment</b></span>(char <i><tt>ch</tt></i>, int <i><tt>start</tt></i>, int <i><tt>length</tt></i>) 
+   throws SAXException;
+
+  // DTDHandler methods
+  public void <span class="bold"><b>notationDecl</b></span>(String <i><tt>name</tt></i>, String <i><tt>publicID</tt></i>, 
+   String <i><tt>systemID</tt></i>) throws SAXException;
+  public void <span class="bold"><b>unparsedEntityDecl</b></span>(String <i><tt>name</tt></i>, String <i><tt>publicID</tt></i>, 
+   String <i><tt>systemID</tt></i>, String <i><tt>notationName</tt></i>) throws SAXException;
+
+  // Internal methods
+  protected void    <span class="bold"><b>flushCharacters</b></span>() throws SAXException;
+  protected void    <span class="bold"><b>appendExternalId</b></span>(String <i><tt>publicID</tt></i>,
+   String <i><tt>systemID</tt></i>);
+  protected Element <span class="bold"><b>getCurrentElement</b></span>() throws SAXException;
+
+ }</pre></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e43949"></a>org.jdom.output</h3></div></div><p>
+      The <tt>org.jdom.output</tt> package is
+      responsible for converting JDOM
+      <tt>Document</tt> objects into other forms
+      such as files, streams of text, DOM
+      <tt>Document</tt> objects,
+      and SAX event sequences.
+    </p><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e43963"></a>DOMOutputter</h4></div></div><p>
+      The <tt>DOMOutputter</tt> class
+      converts a  JDOM
+      <tt>Document</tt> object
+      to a DOM <tt>Document</tt> object.
+    </p><pre class="programlisting">package org.jdom.output;
+
+public class <span class="bold"><b>DOMOutputter</b></span>  {
+
+  public <span class="bold"><b>DOMOutputter</b></span>();
+  public <span class="bold"><b>DOMOutputter</b></span>(String <i><tt>adapterClass</tt></i>);
+
+  public org.w3c.dom.Document <span class="bold"><b>output</b></span>(Document <i><tt>document</tt></i>) 
+   throws JDOMException;
+
+  protected org.w3c.dom.Element <span class="bold"><b>output</b></span>(Element <i><tt>element</tt></i>, 
+   org.w3c.dom.Document <i><tt>factory</tt></i>, NamespaceStack <i><tt>namespaces</tt></i>) 
+   throws JDOMException;
+  protected org.w3c.dom.Attr    <span class="bold"><b>output</b></span>(Attribute <i><tt>attribute</tt></i>, 
+   org.w3c.dom.Document <i><tt>factory</tt></i>) throws JDOMException;
+
+ }</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e44018"></a>SAXOutputter</h4></div></div><p>
+      The <tt>SAXOutputter</tt> class
+      walks a  JDOM
+      <tt>Document</tt> tree while
+      firing events at a SAX <tt>ContentHandler</tt>.
+    </p><pre class="programlisting">package org.jdom.output;
+
+public class <span class="bold"><b>SAXOutputter</b></span>  {
+
+  public <span class="bold"><b>SAXOutputter</b></span>();
+  public <span class="bold"><b>SAXOutputter</b></span>(ContentHandler <i><tt>contentHandler</tt></i>);
+  public <span class="bold"><b>SAXOutputter</b></span>(ContentHandler <i><tt>contentHandler</tt></i>,
+   ErrorHandler <i><tt>errorHandler</tt></i>, DTDHandler <i><tt>dtdHandler</tt></i>,
+   EntityResolver <i><tt>entityResolver</tt></i>);
+  public <span class="bold"><b>SAXOutputter</b></span>(ContentHandler <i><tt>contentHandler</tt></i>, 
+   ErrorHandler <i><tt>errorHandler</tt></i>, DTDHandler <i><tt>dtdHandler</tt></i>, 
+   EntityResolver <i><tt>entityResolver</tt></i>, LexicalHandler <i><tt>lexicalHandler</tt></i>);
+
+  public void           <span class="bold"><b>setContentHandler</b></span>(
+   ContentHandler <i><tt>contentHandler</tt></i>);
+  public ContentHandler <span class="bold"><b>getContentHandler</b></span>();
+  public void           <span class="bold"><b>setErrorHandler</b></span>(
+   ErrorHandler <i><tt>errorHandler</tt></i>);
+  public ErrorHandler   <span class="bold"><b>getErrorHandler</b></span>();
+  public void           <span class="bold"><b>setDTDHandler</b></span>(DTDHandler <i><tt>dtdHandler</tt></i>);
+  public DTDHandler     <span class="bold"><b>getDTDHandler</b></span>();
+  public void           <span class="bold"><b>setEntityResolver</b></span>(
+   EntityResolver <i><tt>entityResolver</tt></i>);
+  public EntityResolver <span class="bold"><b>getEntityResolver</b></span>();
+  public void           <span class="bold"><b>setLexicalHandler</b></span>(
+   LexicalHandler <i><tt>lexicalHandler</tt></i>);
+  public LexicalHandler <span class="bold"><b>getLexicalHandler</b></span>();
+  public void           <span class="bold"><b>setDeclHandler</b></span>(DeclHandler <i><tt>declHandler</tt></i>);
+  public DeclHandler    <span class="bold"><b>getDeclHandler</b></span>();
+
+  public void    <span class="bold"><b>setReportNamespaceDeclarations</b></span>(
+   boolean <i><tt>declareNamespaces</tt></i>);
+  public void    <span class="bold"><b>setReportDTDEvents</b></span>(boolean <i><tt>reportDtdEvents</tt></i>);
+  public void    <span class="bold"><b>setFeature</b></span>(String <i><tt>name</tt></i>, boolean <i><tt>value</tt></i>) 
+   throws SAXNotRecognizedException, SAXNotSupportedException;
+  public boolean <span class="bold"><b>getFeature</b></span>(String <i><tt>name</tt></i>) 
+   throws SAXNotRecognizedException, SAXNotSupportedException;
+  public void    <span class="bold"><b>setProperty</b></span>(String <i><tt>name</tt></i>, Object <i><tt>value</tt></i>) 
+   throws SAXNotRecognizedException, SAXNotSupportedException;
+  public Object  <span class="bold"><b>getProperty</b></span>(String <i><tt>name</tt></i>) 
+   throws SAXNotRecognizedException, SAXNotSupportedException;
+
+  public void <span class="bold"><b>output</b></span>(Document <i><tt>document</tt></i>) throws JDOMException;
+
+  protected XMLReader <span class="bold"><b>createParser</b></span>() throws Exception;
+
+ }</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e44184"></a>XMLOutputter</h4></div></div><p>
+      The <tt>XMLOutputter</tt> class
+      writes a JDOM
+      <tt>Document</tt> onto an <tt>OutputStream</tt> or
+      <tt>Writer</tt> or into a <tt>String</tt>. 
+      Using an <tt>OutputStream</tt>
+      is preferable to using a <tt>Writer</tt>
+      because it allows JDOM to more accurately
+      determine which characters need to be escaped. 
+    </p><pre class="programlisting">package org.jdom.output;
+
+public class <span class="bold"><b>XMLOutputter</b></span> implements Cloneable {
+
+  public <span class="bold"><b>XMLOutputter</b></span>();
+  public <span class="bold"><b>XMLOutputter</b></span>(String <i><tt>indent</tt></i>);
+  public <span class="bold"><b>XMLOutputter</b></span>(String <i><tt>indent</tt></i>, boolean <i><tt>newlines</tt></i>);
+  public <span class="bold"><b>XMLOutputter</b></span>(String <i><tt>indent</tt></i>, boolean <i><tt>newlines</tt></i>, 
+   String <i><tt>encoding</tt></i>);
+  public <span class="bold"><b>XMLOutputter</b></span>(XMLOutputter <i><tt>that</tt></i>);
+
+  public void <span class="bold"><b>setLineSeparator</b></span>(String <i><tt>separator</tt></i>);
+  public void <span class="bold"><b>setNewlines</b></span>(boolean <i><tt>newlines</tt></i>);
+  public void <span class="bold"><b>setEncoding</b></span>(String <i><tt>encoding</tt></i>);
+  public void <span class="bold"><b>setOmitEncoding</b></span>(boolean <i><tt>omitEncoding</tt></i>);
+  public void <span class="bold"><b>setOmitDeclaration</b></span>(boolean <i><tt>omitDeclaration</tt></i>);
+  public void <span class="bold"><b>setExpandEmptyElements</b></span>(boolean <i><tt>expandEmpties</tt></i>);
+  public void <span class="bold"><b>setTrimAllWhite</b></span>(boolean <i><tt>trimAllWhite</tt></i>);
+  public void <span class="bold"><b>setTextTrim</b></span>(boolean <i><tt>textTrim</tt></i>);
+  public void <span class="bold"><b>setTextNormalize</b></span>(boolean <i><tt>textNormalize</tt></i>);
+  public void <span class="bold"><b>setIndent</b></span>(String <i><tt>indent</tt></i>);
+
+  public void <span class="bold"><b>output</b></span>(Document <i><tt>doc</tt></i>, OutputStream <i><tt>out</tt></i>) 
+   throws IOException;
+  public void <span class="bold"><b>output</b></span>(DocType <i><tt>doctype</tt></i>, OutputStream <i><tt>out</tt></i>) 
+   throws IOException;
+  public void <span class="bold"><b>output</b></span>(Element <i><tt>element</tt></i>, OutputStream <i><tt>out</tt></i>) 
+   throws IOException;
+  public void <span class="bold"><b>outputElementContent</b></span>(Element <i><tt>element</tt></i>, 
+   OutputStream <i><tt>out</tt></i>) throws IOException;
+  public void <span class="bold"><b>output</b></span>(List <i><tt>list</tt></i>, OutputStream <i><tt>out</tt></i>)
+   throws IOException;
+  public void <span class="bold"><b>output</b></span>(CDATA <i><tt>cdata</tt></i>, OutputStream <i><tt>out</tt></i>) 
+   throws IOException;
+  public void <span class="bold"><b>output</b></span>(Text <i><tt>text</tt></i>, OutputStream <i><tt>out</tt></i>) 
+   throws IOException;
+  public void <span class="bold"><b>output</b></span>(Comment <i><tt>comment</tt></i>, OutputStream <i><tt>out</tt></i>) 
+   throws IOException;
+  public void <span class="bold"><b>output</b></span>(ProcessingInstruction <i><tt>pi</tt></i>, OutputStream <i><tt>out</tt></i>) 
+   throws IOException;
+  public void <span class="bold"><b>output</b></span>(EntityRef <i><tt>entity</tt></i>, OutputStream <i><tt>out</tt></i>) 
+   throws IOException;
+
+  public void <span class="bold"><b>output</b></span>(Document <i><tt>doc</tt></i>, Writer <i><tt>out</tt></i>) 
+   throws IOException;
+  public void <span class="bold"><b>output</b></span>(DocType <i><tt>doctype</tt></i>, Writer <i><tt>out</tt></i>) 
+   throws IOException;
+  public void <span class="bold"><b>output</b></span>(Element <i><tt>element</tt></i>, Writer <i><tt>out</tt></i>) 
+   throws IOException;
+  public void <span class="bold"><b>outputElementContent</b></span>(Element <i><tt>element</tt></i>, Writer <i><tt>out</tt></i>)
+   throws IOException;
+  public void <span class="bold"><b>output</b></span>(List <i><tt>list</tt></i>, Writer <i><tt>out</tt></i>) 
+   throws IOException;
+  public void <span class="bold"><b>output</b></span>(CDATA <i><tt>cdata</tt></i>, Writer <i><tt>out</tt></i>) 
+   throws IOException;
+  public void <span class="bold"><b>output</b></span>(Text <i><tt>text</tt></i>, Writer <i><tt>out</tt></i>) 
+   throws IOException;
+  public void <span class="bold"><b>output</b></span>(Comment <i><tt>comment</tt></i>, Writer <i><tt>out</tt></i>)
+   throws IOException;
+  public void <span class="bold"><b>output</b></span>(ProcessingInstruction <i><tt>pi</tt></i>, Writer <i><tt>out</tt></i>)
+   throws IOException;
+  public void <span class="bold"><b>output</b></span>(EntityRef <i><tt>entity</tt></i>, Writer <i><tt>out</tt></i>) 
+   throws IOException;
+
+  public String <span class="bold"><b>outputString</b></span>(Document <i><tt>doc</tt></i>);
+  public String <span class="bold"><b>outputString</b></span>(DocType <i><tt>doctype</tt></i>);
+  public String <span class="bold"><b>outputString</b></span>(Element <i><tt>element</tt></i>);
+  public String <span class="bold"><b>outputString</b></span>(List <i><tt>list</tt></i>);
+  public String <span class="bold"><b>outputString</b></span>(CDATA <i><tt>cdata</tt></i>);
+  public String <span class="bold"><b>outputString</b></span>(Text <i><tt>text</tt></i>);
+  public String <span class="bold"><b>outputString</b></span>(String <i><tt>s</tt></i>);
+  public String <span class="bold"><b>outputString</b></span>(Comment <i><tt>comment</tt></i>);
+  public String <span class="bold"><b>outputString</b></span>(ProcessingInstruction <i><tt>pi</tt></i>);
+  public String <span class="bold"><b>outputString</b></span>(EntityRef <i><tt>entity</tt></i>);
+
+  public String <span class="bold"><b>escapeAttributeEntities</b></span>(String <i><tt>s</tt></i>);
+  public String <span class="bold"><b>escapeElementEntities</b></span>(String <i><tt>s</tt></i>);
+
+  public int <span class="bold"><b>parseArgs</b></span>(String <i><tt>args</tt></i>, int <i><tt>i</tt></i>);
+
+  protected Writer <span class="bold"><b>makeWriter</b></span>(OutputStream <i><tt>out</tt></i>) 
+   throws UnsupportedEncodingException;
+  protected Writer <span class="bold"><b>makeWriter</b></span>(OutputStream <i><tt>out</tt></i>, String <i><tt>enc</tt></i>) 
+   throws UnsupportedEncodingException;
+
+  protected void <span class="bold"><b>printDeclaration</b></span>(Document <i><tt>doc</tt></i>, Writer <i><tt>out</tt></i>, 
+   String <i><tt>encoding</tt></i>) throws IOException;
+  protected void <span class="bold"><b>printDocType</b></span>(DocType <i><tt>docType</tt></i>, Writer <i><tt>out</tt></i>)
+   throws IOException;
+  protected void <span class="bold"><b>printComment</b></span>(Comment <i><tt>comment</tt></i>, Writer <i><tt>out</tt></i>) 
+   throws IOException;
+  protected void <span class="bold"><b>printProcessingInstruction</b></span>(
+   ProcessingInstruction <i><tt>pi</tt></i>, Writer <i><tt>out</tt></i>) throws IOException;
+  protected void <span class="bold"><b>printEntityRef</b></span>(EntityRef <i><tt>entity</tt></i>, Writer <i><tt>out</tt></i>) 
+   throws IOException;
+  protected void <span class="bold"><b>printCDATA</b></span>(CDATA <i><tt>cdata</tt></i>, Writer <i><tt>out</tt></i>)
+   throws IOException;
+  protected void <span class="bold"><b>printText</b></span>(Text <i><tt>text</tt></i>, Writer <i><tt>out</tt></i>) 
+   throws IOException;
+  protected void <span class="bold"><b>printString</b></span>(String <i><tt>s</tt></i>, Writer <i><tt>out</tt></i>)
+   throws IOException;
+  protected void <span class="bold"><b>printElement</b></span>(Element <i><tt>element</tt></i>, Writer <i><tt>out</tt></i>, 
+   int <i><tt>level</tt></i>, 
+   XMLOutputter.NamespaceStack <i><tt>namespaces</tt></i>) throws IOException;
+  protected void <span class="bold"><b>printContentRange</b></span>(List <i><tt>content</tt></i>, int <i><tt>start</tt></i>, 
+   int <i><tt>end</tt></i>, Writer <i><tt>out</tt></i>, int <i><tt>level</tt></i>, XMLOutputter.NamespaceStack <i><tt>namespaces</tt></i>) throws IOException;
+  protected void <span class="bold"><b>printTextRange</b></span>(List <i><tt>content</tt></i>, int <i><tt>start</tt></i>, int <i><tt>end</tt></i>, 
+   Writer <i><tt>out</tt></i>) throws IOException;
+  protected void <span class="bold"><b>printAttributes</b></span>(List <i><tt>attributes</tt></i>, Element <i><tt>parent</tt></i>, 
+   Writer <i><tt>out</tt></i>, XMLOutputter.NamespaceStack <i><tt>namespaces</tt></i>) 
+   throws IOException;
+  protected void <span class="bold"><b>newline</b></span>(Writer <i><tt>out</tt></i>) throws IOException;
+  protected void <span class="bold"><b>indent</b></span>(Writer <i><tt>out</tt></i>, int <i><tt>level</tt></i>) 
+   throws IOException;
+  
+  protected XMLOutputter.NamespaceStack <span class="bold"><b>createNamespaceStack</b></span>();
+
+  public Object <span class="bold"><b>clone</b></span>();
+  public String <span class="bold"><b>toString</b></span>();
+
+ }</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e44752"></a>XMLOutputter.NamespaceStack</h4></div></div><p>
+    The inner class
+    <tt>NamespaceStack</tt> is used by 
+    <tt>XMLOutputter</tt> to keep track of which
+    namespaces are in scope at any given point, and thus do not
+    need to be redeclared. You only need to use this class
+    if you&#8217;re subclassing <tt>XMLOutputter</tt>.
+  </p><pre class="programlisting">package org.jdom.output;
+
+protected class <span class="bold"><b>XMLOutputter.NamespaceStack</b></span> 
+ extends NamespaceStack {
+
+  protected <span class="bold"><b>XMLOutputter.NamespaceStack</b></span>();
+
+ }</pre></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e44774"></a>org.jdom.transform</h3></div></div><p>
+     The <tt>org.jdom.transform</tt> package allows
+     JDOM programs to interface with TrAX-based XSLT processors
+     by providing JDOM implementations of the TrAX 
+     <tt>Source</tt> and 
+     <tt>Result</tt> interfaces.
+    </p><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e44788"></a>JDOMResult</h4></div></div><p>
+    <tt>JDOMResult</tt> can be used as an output
+    for TrAX transformations that produce JDOM
+    <tt>Document</tt>s. 
+  </p><pre class="programlisting">package org.jdom.transform;
+
+public class <span class="bold"><b>JDOMResult</b></span> extends SAXResult {
+
+  public static final String <span class="bold"><b>JDOM_FEATURE</b></span>;
+
+  public <span class="bold"><b>JDOMResult</b></span>();
+
+  public void        <span class="bold"><b>setDocument</b></span>(Document <i><tt>document</tt></i>);
+  public Document    <span class="bold"><b>getDocument</b></span>();
+  public void        <span class="bold"><b>setFactory</b></span>(JDOMFactory <i><tt>factory</tt></i>);
+  public JDOMFactory <span class="bold"><b>getFactory</b></span>();
+  public void        <span class="bold"><b>setHandler</b></span>(ContentHandler <i><tt>handler</tt></i>);
+  public void        <span class="bold"><b>setLexicalHandler</b></span>(LexicalHandler <i><tt>handler</tt></i>);
+
+ }</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e44840"></a>JDOMSource</h4></div></div><p>
+    <tt>JDOMSource</tt> can be used as an input
+    for TrAX transformations that transform JDOM
+    <tt>Document</tt>s. 
+  </p><pre class="programlisting">package org.jdom.transform;
+
+public class <span class="bold"><b>JDOMSource</b></span> extends SAXSource {
+
+  public static final String <span class="bold"><b>JDOM_FEATURE</b></span>;
+
+  public <span class="bold"><b>JDOMSource</b></span>(Document <i><tt>source</tt></i>);
+
+  public void      <span class="bold"><b>setDocument</b></span>(Document <i><tt>source</tt></i>);
+  public Document  <span class="bold"><b>getDocument</b></span>();
+  public void      <span class="bold"><b>setInputSource</b></span>(InputSource <i><tt>inputSource</tt></i>) 
+   throws UnsupportedOperationException;
+  public void      <span class="bold"><b>setXMLReader</b></span>(XMLReader <i><tt>reader</tt></i>) 
+   throws UnsupportedOperationException;
+  public XMLReader <span class="bold"><b>getXMLReader</b></span>();
+
+ }</pre></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e44889"></a>org.jdom.xpath</h3></div></div><p>
+    The <tt>org.jdom.xpath</tt> package provides a
+    simple interface to XPath evaluation for JDOM
+    <tt>Document</tt>s. Jaxen is the
+    underlying implementation.
+  </p><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e44900"></a>XPath</h4></div></div><p>
+       The <tt>XPath</tt> class
+       allows you to evaluate XPath
+       expressions relative to JDOM node objects.
+     </p><pre class="programlisting">package org.jdom.xpath;
+
+public abstract class <span class="bold"><b>XPath</b></span> implements Serializable {
+
+  protected <span class="bold"><b>XPath</b></span>(String <i><tt>expr</tt></i>) throws JDOMException;
+
+  public static XPath <span class="bold"><b>newInstance</b></span>(String <i><tt>path</tt></i>)
+   throws JDOMException;
+
+  public List   <span class="bold"><b>selectNodes</b></span>(Object <i><tt>context</tt></i>) 
+   throws JDOMException;
+  public Object <span class="bold"><b>selectSingleNode</b></span>(Object <i><tt>context</tt></i>) 
+   throws JDOMException;
+  public String <span class="bold"><b>valueOf</b></span>(Object <i><tt>context</tt></i>) throws JDOMException;
+  public Number <span class="bold"><b>numberValueOf</b></span>(Object <i><tt>context</tt></i>) 
+   throws JDOMException;
+  public void   <span class="bold"><b>setVariable</b></span>(String <i><tt>name</tt></i>, Object <i><tt>value</tt></i>) 
+   throws IllegalArgumentException;
+  public String <span class="bold"><b>getXPath</b></span>();
+
+  public static List   <span class="bold"><b>selectNodes</b></span>(Object <i><tt>context</tt></i>, String <i><tt>path</tt></i>) 
+   throws JDOMException;
+  public static Object <span class="bold"><b>selectSingleNode</b></span>(Object <i><tt>context</tt></i>, 
+   String <i><tt>path</tt></i>) throws JDOMException;
+
+ }</pre></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="apas04.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="apa.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="apas06.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">TrAX&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;XMLPULL</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+June 04,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

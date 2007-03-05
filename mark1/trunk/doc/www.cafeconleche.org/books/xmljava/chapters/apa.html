@@ -1,0 +1,973 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Appendix&nbsp;A.&nbsp;XML APIs Quick Reference</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="index.html" title="Processing XML with Java"><link rel="previous" href="ch17s04.html" title="Summary"><link rel="next" href="apas02.html" title="DOM"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"><link rel="section" href="apa.html#d0e34138" title="SAX"><link rel="section" href="apas02.html" title="DOM"><link rel="section" href="apas03.html" title="JAXP"><link rel="section" href="apas04.html" title="TrAX"><link rel="section" href="apas05.html" title="JDOM Quick Reference"><link rel="section" href="apas06.html" title="XMLPULL"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Appendix&nbsp;A.&nbsp;XML APIs Quick Reference</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch17s04.html">Prev</a>&nbsp;</td><th width="60%" align="center">&nbsp;</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="apas02.html">Next</a></td></tr></table><hr></div><div class="appendix"><div class="titlepage"><div><h2 class="title"><a name="xmlapiref"></a>Appendix&nbsp;A.&nbsp;XML APIs Quick Reference</h2></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><a href="apa.html#d0e34138">SAX</a></dt><dd><dl><dt><a href="apa.html#d0e34161">org.xml.sax</a></dt><dt><a href="apa.html#d0e35309">org.xml.sax.ext</a></dt><dt><a href="apa.html#d0e35485">org.xml.sax.helpers</a></dt></dl></dd><dt><a href="apas02.html">DOM</a></dt><dd><dl><dt><a href="apas02.html#d0e36779">The DOM Data Model</a></dt><dt><a href="apas02.html#d0e36963">org.w3c.dom</a></dt><dt><a href="apas02.html#d0e38466">org.w3c.dom.traversal</a></dt></dl></dd><dt><a href="apas03.html">JAXP</a></dt><dd><dl><dt><a href="apas03.html#d0e38750">javax.xml.parsers</a></dt></dl></dd><dt><a href="apas04.html">TrAX</a></dt><dd><dl><dt><a href="apas04.html#d0e39272">javax.xml.transform</a></dt><dt><a href="apas04.html#d0e39954">javax.xml.transform.stream</a></dt><dt><a href="apas04.html#d0e40190">javax.xml.transform.dom</a></dt><dt><a href="apas04.html#d0e40357">javax.xml.transform.sax</a></dt></dl></dd><dt><a href="apas05.html">JDOM Quick Reference</a></dt><dd><dl><dt><a href="apas05.html#d0e40624">org.jdom</a></dt><dt><a href="apas05.html#d0e42688">org.jdom.filter</a></dt><dt><a href="apas05.html#d0e42960">org.jdom.input</a></dt><dt><a href="apas05.html#d0e43949">org.jdom.output</a></dt><dt><a href="apas05.html#d0e44774">org.jdom.transform</a></dt><dt><a href="apas05.html#d0e44889">org.jdom.xpath</a></dt></dl></dd><dt><a href="apas06.html">XMLPULL</a></dt><dd><dl><dt><a href="apas06.html#d0e44984">org.xmlpull.v1</a></dt></dl></dd></dl></div><p>
+     This appendix provides complete signatures for the
+    documented, public packages, classes, methods, and fields in
+    the various APIs you might use to process
+    XML with Java, including:
+  </p><div class="itemizedlist"><ul type="disc"><li><p>SAX 2.0</p></li><li><p>DOM Level 2</p></li><li><p>JDOM</p></li><li><p>JAXP 1.1</p></li><li><p>TrAX</p></li><li><p>XMLPULL 1.0.8</p></li></ul></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e34138"></a>SAX</h2></div></div><p>
+    SAX, the Simple API for XML, is an event driven API that models the
+    parser and the client application receiving information from
+    the parser, rather than modeling the document.
+    It&#8217;s suitable for documents that are fairly local; that is,
+    where processing one piece of the document does not depend 
+    heavily on content from other pieces of the document.
+    It is extremely fast, and far and away the most memory
+    efficient of the various XML APIs.
+    It is the only API that is easily able to handle documents in
+    the multi-gigabyte range.
+  </p><p>
+    SAX is divided into three packages:
+  </p><div class="itemizedlist"><ul type="disc"><li><p><tt>org.xml.sax</tt>, the core classes and interfaces used by all SAX parsers and by most SAX programs</p></li><li><p><tt>org.xml.sax.helpers</tt>: factory classes for loading instances of the core SAX interfaces, as well as
+  some implementations of those interfaces</p></li><li><p><tt>org.xml.sax.ext</tt>: optional extensions to SAX not all parsers provide</p></li></ul></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e34161"></a>org.xml.sax</h3></div></div><p>
+      The <tt>org.xml.sax</tt> package contains 
+      the core classes and interfaces that represent the
+      parser, the client application, the input document, and more.
+      It also contains a number of classes from SAX1 that can be
+      safely ignored in modern applications.
+    </p><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e34169"></a>AttributeList</h4></div></div><p>
+        The <tt>AttributeList</tt>
+        interface was used in SAX1 to pass attribute sets to the 
+        <tt>startElement()</tt> method of
+        <tt>DocumentHandler</tt>.
+        It is now deprecated and should not be used.
+      </p><pre class="programlisting">package org.xml.sax;
+
+public interface <span class="bold"><b>AttributeList</b></span>  {
+
+  public int    <span class="bold"><b>getLength</b></span>();
+  public String <span class="bold"><b>getName</b></span>(int <i><tt>i</tt></i>);
+  public String <span class="bold"><b>getType</b></span>(int <i><tt>i</tt></i>);
+  public String <span class="bold"><b>getValue</b></span>(int <i><tt>i</tt></i>);
+  public String <span class="bold"><b>getType</b></span>(String <i><tt>name</tt></i>);
+  public String <span class="bold"><b>getValue</b></span>(String <i><tt>name</tt></i>);
+
+}</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e34221"></a>Attributes</h4></div></div><p>
+        The <tt>Attributes</tt>
+        interface is used to pass attribute sets to the 
+        <tt>startElement()</tt> method of
+        <tt>ContentHandler</tt>
+        Although list-like, indexed access is supported for
+        convenience, there is absolutely no guarantee that the
+        attributes will be stored in the list in the order they
+        appear in the start-tag. Indeed, in practice it&#8217;s more likely than
+        not that they aren&#8217;t. 
+        If the attribute is declared to have any type other
+        than CDATA (e.g., ID, NMTOKENS, enumerated, etc.) and the
+        parser has read the DTD, then the reported value is normalized; that
+        is, leading and trailing whitespace is trimmed and runs of
+        whitespace are converted to single space.
+        The unnormalized  value will not be available. 
+        Undeclared attributes are not normalized.
+      </p><pre class="programlisting">package org.xml.sax;
+
+public interface <span class="bold"><b>Attributes</b></span>  {
+
+  public int    <span class="bold"><b>getLength</b></span>();
+  public String <span class="bold"><b>getURI</b></span>(int <i><tt>index</tt></i>);
+  public String <span class="bold"><b>getLocalName</b></span>(int <i><tt>index</tt></i>);
+  public String <span class="bold"><b>getQName</b></span>(int <i><tt>index</tt></i>);
+  public String <span class="bold"><b>getType</b></span>(int <i><tt>index</tt></i>);
+  public String <span class="bold"><b>getValue</b></span>(int <i><tt>index</tt></i>);
+  public int    <span class="bold"><b>getIndex</b></span>(String <i><tt>uri</tt></i>, String <i><tt>localName</tt></i>);
+  public int    <span class="bold"><b>getIndex</b></span>(String <i><tt>qualifiedName</tt></i>);
+  public String <span class="bold"><b>getType</b></span>(String <i><tt>uri</tt></i>, String <i><tt>localName</tt></i>);
+  public String <span class="bold"><b>getType</b></span>(String <i><tt>qualifiedName</tt></i>);
+  public String <span class="bold"><b>getValue</b></span>(String <i><tt>uri</tt></i>, String <i><tt>localName</tt></i>);
+  public String <span class="bold"><b>getValue</b></span>(String <i><tt>qualifiedName</tt></i>);
+
+}</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e34318"></a>ContentHandler</h4></div></div><p>
+         <tt>ContentHandler</tt> is the
+         basic callback interface a client application implements
+         in order to receive information from the parser.
+         Client applications register an instance of this
+         interface with the parser using the 
+         <tt>setContentHandler()</tt> method in
+         <tt>XMLReader</tt>.
+         The parser will invoke the methods in that object in the
+         same order that the corresponding markup and text
+         appears in the original document.
+      </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Note</h3><p>
+          This interface has no relation to the moribund
+          <tt>java.net.ContentHandler</tt>.
+          However, the name does conflict, so don't import
+          <tt>java.net.*</tt> in a class that uses 
+          <tt>org.xml.sax.ContentHandler</tt>.
+          Just import the classes you actually use instead.
+        </p></div><pre class="programlisting">package org.xml.sax;
+
+public interface <span class="bold"><b>ContentHandler</b></span>  {
+
+  public void <span class="bold"><b>setDocumentLocator</b></span>(Locator <i><tt>locator</tt></i>);
+  public void <span class="bold"><b>startDocument</b></span>() 
+   throws SAXException;
+  public void <span class="bold"><b>endDocument</b></span>() 
+   throws SAXException;
+  public void <span class="bold"><b>startPrefixMapping</b></span>(String <i><tt>prefix</tt></i>, String <i><tt>uri</tt></i>) throws SAXException;
+  public void <span class="bold"><b>endPrefixMapping</b></span>(String <i><tt>prefix</tt></i>) throws SAXException;
+  public void <span class="bold"><b>startElement</b></span>(String <i><tt>namespaceURI</tt></i>, String <i><tt>localName</tt></i>, 
+   String <i><tt>qualifiedName</tt></i>, Attributes <i><tt>atts</tt></i>) throws SAXException;
+  public void <span class="bold"><b>endElement</b></span>(String <i><tt>namespaceURI</tt></i>, String <i><tt>localName</tt></i>, 
+   String <i><tt>qualifiedName</tt></i>) throws SAXException;
+  public void <span class="bold"><b>characters</b></span>(char[] <i><tt>text</tt></i>, int <i><tt>start</tt></i>, int <i><tt>length</tt></i>)
+   throws SAXException;
+  public void <span class="bold"><b>ignorableWhitespace</b></span>(char[] <i><tt>space</tt></i>, int <i><tt>start</tt></i>, int <i><tt>length</tt></i>)
+   throws SAXException;
+  public void <span class="bold"><b>processingInstruction</b></span>(String <i><tt>target</tt></i>, String <i><tt>data</tt></i>) throws SAXException;
+  public void <span class="bold"><b>skippedEntity</b></span>(String <i><tt>name</tt></i>) throws SAXException;
+
+}</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e34442"></a>DTDHandler</h4></div></div><p>
+         <tt>DTDHandler</tt> is 
+         a callback interface a client application can implement
+         and register with the <tt>XMLReader</tt>
+         using the <tt>setDTDHandler()</tt>
+         method
+         if it wishes to receive
+         information from the parser about notations and unparsed entities
+         declared in the DTD.
+         These methods will be called sometime after
+         <tt>startDocument()</tt> and sometime
+         before the <tt>startElement()</tt> 
+         method for the root element. You'll generally store the
+         information in some data structure such as a
+         <tt>Map</tt> so you can refer back to it
+         when you an encounter an attribute with type NOTATION or
+         ENTITY.
+      </p><pre class="programlisting">package org.xml.sax;
+
+public interface <span class="bold"><b>DTDHandler</b></span>  {
+
+  public void <span class="bold"><b>notationDecl</b></span>(String <i><tt>name</tt></i>, String <i><tt>publicID</tt></i>,
+   String <i><tt>systemID</tt></i>) throws SAXException;
+  public void <span class="bold"><b>unparsedEntityDecl</b></span>(String <i><tt>name</tt></i>, String <i><tt>publicID</tt></i>, 
+   String <i><tt>systemID</tt></i>, String <i><tt>notationName</tt></i>) throws SAXException;
+
+}</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e34497"></a>DocumentHandler</h4></div></div><p>
+        <tt>DocumentHandler</tt>
+        is the SAX1 equivalent  of
+        <tt>ContentHandler</tt>.
+        It is now deprecated and should not be used.
+      </p><pre class="programlisting">package org.xml.sax;
+
+public interface <span class="bold"><b>DocumentHandler</b></span>  {
+
+  public void <span class="bold"><b>setDocumentLocator</b></span>(Locator <i><tt>locator</tt></i>);
+  public void <span class="bold"><b>startDocument</b></span>() throws SAXException;
+  public void <span class="bold"><b>endDocument</b></span>() throws SAXException;
+  public void <span class="bold"><b>startElement</b></span>(String <i><tt>name</tt></i>, AttributeList <i><tt>atts</tt></i>) 
+   throws SAXException;
+  public void <span class="bold"><b>endElement</b></span>(String <i><tt>name</tt></i>) throws SAXException;
+  public void <span class="bold"><b>characters</b></span>(char[] <i><tt>text</tt></i>, int <i><tt>start</tt></i>, int <i><tt>length</tt></i>) 
+   throws SAXException;
+  public void <span class="bold"><b>ignorableWhitespace</b></span>(char[] <i><tt>space</tt></i>, int <i><tt>start</tt></i>, int <i><tt>length</tt></i>) 
+   throws SAXException;
+  public void <span class="bold"><b>processingInstruction</b></span>(String <i><tt>target</tt></i>, String <i><tt>data</tt></i>) 
+   throws SAXException;
+
+}</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e34573"></a>EntityResolver</h4></div></div><p>
+        A client program can implement the <tt>EntityResolver</tt>
+        interface to substitute different sources for entities
+        referenced in the main document by public or system ID.
+        A specific instance of
+        <tt>EntityResolver</tt> is
+        registered with the parser by passing it to the <tt>setEntityResolver()</tt>
+        method in <tt>XMLReader</tt>.
+        If 
+        <tt>resolveEntity()</tt> cannot locate a requested entity,
+        it should return null to tell 
+        the parser to use its default entity resolution
+        mechanism.
+      </p><pre class="programlisting">package org.xml.sax;
+
+public interface <span class="bold"><b>EntityResolver</b></span>  {
+
+  public InputSource <span class="bold"><b>resolveEntity</b></span>(String <i><tt>publicID</tt></i>, 
+   String <i><tt>systemID</tt></i>) throws SAXException, IOException;
+
+}</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e34607"></a>ErrorHandler</h4></div></div><p>
+       <tt>ErrorHandler</tt> is 
+        a callback interface parsers use to report the three levels of errors
+        that may be encountered while parsing an XML document:
+        a fatal well-formedness error, a non-fatal error such as a validity violation, and a warning.
+       Parsers normally stop parsing the current document
+       after reporting a fatal error. That is, the parser calls
+       <tt>endDocument()</tt> and the <tt>parse()</tt>
+       method returns. If you want the same behavior from a non-fatal error, you should rethrow the exception 
+       from inside the <tt>error()</tt> method. 
+       You install a specific instance of this interface by passing
+       it to the <tt>setErrorHandler()</tt>
+        method in <tt>XMLReader</tt>. 
+        </p><pre class="programlisting">package org.xml.sax;
+
+public interface <span class="bold"><b>ErrorHandler</b></span>  {
+
+  public void <span class="bold"><b>warning</b></span>(SAXParseException <i><tt>ex</tt></i>) throws SAXException;
+  public void <span class="bold"><b>error</b></span>(SAXParseException <i><tt>ex</tt></i>) throws SAXException;
+  public void <span class="bold"><b>fatalError</b></span>(SAXParseException <i><tt>ex</tt></i>) 
+   throws SAXException;
+
+}</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e34653"></a>HandlerBase</h4></div></div><p>
+        <tt>HandlerBase</tt>
+        is the SAX1 equivalent  of
+        <tt>DefaultHandler</tt>, that is an
+        adapter class that provides do-nothing implementations of
+        the SAX1 callback interfaces.
+        It is now deprecated and should not be used.
+      </p><pre class="programlisting">package org.xml.sax;
+
+public class <span class="bold"><b>HandlerBase</b></span> implements EntityResolver, 
+ DTDHandler, DocumentHandler, ErrorHandler {
+
+  public <span class="bold"><b>HandlerBase</b></span>();
+
+  // EntityResolver methods
+  public InputSource <span class="bold"><b>resolveEntity</b></span>(String <i><tt>publicID</tt></i>, 
+   String <i><tt>systemID</tt></i>) throws SAXException;
+
+  // DTDHandler methods
+  public void <span class="bold"><b>notationDecl</b></span>(String <i><tt>name</tt></i>, String <i><tt>publicID</tt></i>,
+   String <i><tt>systemID</tt></i>);
+  public void <span class="bold"><b>unparsedEntityDecl</b></span>(String <i><tt>name</tt></i>, String <i><tt>publicID</tt></i>,
+   String <i><tt>systemID</tt></i>, String <i><tt>notationName</tt></i>);
+
+  // DocumentHandler methods
+  public void <span class="bold"><b>setDocumentLocator</b></span>(Locator <i><tt>locator</tt></i>);
+  public void <span class="bold"><b>startDocument</b></span>() throws SAXException;
+  public void <span class="bold"><b>endDocument</b></span>() throws SAXException;
+  public void <span class="bold"><b>startElement</b></span>(String <i><tt>name</tt></i>, AttributeList <i><tt>attributes</tt></i>)
+   throws SAXException;
+  public void <span class="bold"><b>endElement</b></span>(String <i><tt>name</tt></i>) throws SAXException;
+  public void <span class="bold"><b>characters</b></span>(char[] <i><tt>text</tt></i>, int <i><tt>start</tt></i>, int <i><tt>length</tt></i>) 
+   throws SAXException;
+  public void <span class="bold"><b>ignorableWhitespace</b></span>(char[] <i><tt>space</tt></i>, int <i><tt>start</tt></i>, int <i><tt>length</tt></i>) 
+   throws SAXException;
+  public void <span class="bold"><b>processingInstruction</b></span>(String <i><tt>target</tt></i>, String <i><tt>data</tt></i>) 
+   throws SAXException;
+
+  // ErrorHandler methods
+  public void <span class="bold"><b>warning</b></span>(SAXParseException <i><tt>ex</tt></i>) throws SAXException;
+  public void <span class="bold"><b>error</b></span>(SAXParseException <i><tt>ex</tt></i>) throws SAXException;
+  public void <span class="bold"><b>fatalError</b></span>(SAXParseException <i><tt>ex</tt></i>)
+   throws SAXException;
+
+}</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e34786"></a>InputSource</h4></div></div><p>
+        <tt>InputSource</tt> is a wrapper
+        for all the different things that may contain an XML
+        document including URLs,
+        <tt>InputStream</tt>s, and
+        <tt>Reader</tt>s.
+        An <tt>InputSource</tt> should be
+        configured with a system ID URL and either an
+        <tt>InputStream</tt> or a
+        <tt>Reader</tt>. 
+      </p><pre class="programlisting">package org.xml.sax;
+
+public class <span class="bold"><b>InputSource</b></span>  {
+
+  public <span class="bold"><b>InputSource</b></span>();
+  public <span class="bold"><b>InputSource</b></span>(String <i><tt>systemID</tt></i>);
+  public <span class="bold"><b>InputSource</b></span>(InputStream <i><tt>byteStream</tt></i>);
+  public <span class="bold"><b>InputSource</b></span>(Reader <i><tt>characterStream</tt></i>);
+
+  public void        <span class="bold"><b>setPublicId</b></span>(String <i><tt>publicID</tt></i>);
+  public String      <span class="bold"><b>getPublicId</b></span>();
+  public void        <span class="bold"><b>setSystemId</b></span>(String <i><tt>url</tt></i>);
+  public String      <span class="bold"><b>getSystemId</b></span>();
+  public void        <span class="bold"><b>setByteStream</b></span>(InputStream <i><tt>in</tt></i>);
+  public InputStream <span class="bold"><b>getByteStream</b></span>();
+  public void        <span class="bold"><b>setEncoding</b></span>(String <i><tt>encoding</tt></i>);
+  public String      <span class="bold"><b>getEncoding</b></span>();
+  public void        <span class="bold"><b>setCharacterStream</b></span>(Reader <i><tt>in</tt></i>);
+  public Reader      <span class="bold"><b>getCharacterStream</b></span>();
+
+}</pre><p>
+  You should always set the system ID for an
+  <tt>InputSource</tt>. If nothing else is set,
+  then the parser will read the document from that URL. You
+  may also set either the byte stream or the character stream, in
+  which case that will be used to read the document.
+  If you set both the byte stream and the character stream,
+  then the parser will read from the character stream.
+</p></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e34885"></a>Locator</h4></div></div><p>
+        Many parsers pass a  <tt>Locator</tt> object
+        to the <tt>setLocator()</tt> method of 
+        <tt>ContentHandler</tt> before they call
+         <tt>startDocument()</tt>. If a
+        parser does this (and it&#8217;s not required to), client
+        applications can use that <tt>Locator</tt> object 
+        to determine in which entity at which line and column a
+        particular event occurs. The location information returned is not
+        guaranteed to be perfectly accurate, but it&#8217;s normally
+        close enough to help in debugging.
+      </p><pre class="programlisting">package org.xml.sax;
+
+public interface <span class="bold"><b>Locator</b></span>  {
+
+  public String <span class="bold"><b>getPublicId</b></span>();
+  public String <span class="bold"><b>getSystemId</b></span>();
+  public int    <span class="bold"><b>getLineNumber</b></span>();
+  public int    <span class="bold"><b>getColumnNumber</b></span>();
+
+}</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e34922"></a>Parser</h4></div></div><p>
+        <tt>Parser</tt> is the SAX1 class that
+        represents an XML parser.
+        Modern programs should use SAX2&#8217;s <tt>XMLReader</tt>
+        instead.
+      </p><pre class="programlisting">package org.xml.sax;
+
+public interface <span class="bold"><b>Parser</b></span>  {
+
+  public void <span class="bold"><b>setLocale</b></span>(Locale <i><tt>locale</tt></i>) throws SAXException;
+  public void <span class="bold"><b>setEntityResolver</b></span>(EntityResolver <i><tt>resolver</tt></i>);
+  public void <span class="bold"><b>setDTDHandler</b></span>(DTDHandler <i><tt>handler</tt></i>);
+  public void <span class="bold"><b>setDocumentHandler</b></span>(DocumentHandler <i><tt>handler</tt></i>);
+  public void <span class="bold"><b>setErrorHandler</b></span>(ErrorHandler <i><tt>handler</tt></i>);
+
+  public void <span class="bold"><b>parse</b></span>(InputSource <i><tt>source</tt></i>) 
+   throws SAXException, IOException;
+  public void <span class="bold"><b>parse</b></span>(String <i><tt>systemID</tt></i>)
+   throws SAXException, IOException;
+
+}</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e34980"></a>XMLFilter</h4></div></div><p>
+        <tt>XMLFilter</tt>
+        is an <tt>XMLReader</tt>
+        that receives its content from another
+        <tt>XMLReader</tt> rather than
+        directly from a parsed document. Thus it has the
+        opportunity to modify, log, replace, or otherwise
+        manipulate the content the parser sends.
+        However, most of the time it is much easier to 
+        write a filter  by subclassing the
+        <tt>org.xml.sax.helpers.XMLFilterImpl</tt>
+        class
+        rather than by implementing this interface directly.
+      </p><pre class="programlisting">package org.xml.sax;
+
+public interface <span class="bold"><b>XMLFilter</b></span> implements XMLReader {
+
+  public void      <span class="bold"><b>setParent</b></span>(XMLReader <i><tt>parent</tt></i>);
+  public XMLReader <span class="bold"><b>getParent</b></span>();
+
+}</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e35011"></a>XMLReader</h4></div></div><p>
+      <tt>XMLReader</tt>
+      is SAX2&#8217;s representation of an XML parser.
+      It has methods to get and set features and properties, to
+      configure the parser with the various handler classes,
+      and to parse documents from an
+      <tt>InputSource</tt> or a URL. 
+      </p><pre class="programlisting">package org.xml.sax;
+
+public interface <span class="bold"><b>XMLReader</b></span>  {
+
+  public boolean <span class="bold"><b>getFeature</b></span>(String <i><tt>name</tt></i>) 
+   throws SAXNotRecognizedException, SAXNotSupportedException;
+  public void    <span class="bold"><b>setFeature</b></span>(String <i><tt>name</tt></i>, boolean <i><tt>value</tt></i>) 
+   throws SAXNotRecognizedException, SAXNotSupportedException;
+  public Object  <span class="bold"><b>getProperty</b></span>(String <i><tt>name</tt></i>) 
+   throws SAXNotRecognizedException, SAXNotSupportedException;
+  public void    <span class="bold"><b>setProperty</b></span>(String <i><tt>name</tt></i>, Object <i><tt>value</tt></i>) 
+   throws SAXNotRecognizedException, SAXNotSupportedException;
+
+  public void         <span class="bold"><b>setEntityResolver</b></span>(EntityResolver <i><tt>resolver</tt></i>);
+  public EntityResolver <span class="bold"><b>getEntityResolver</b></span>();
+  public void           <span class="bold"><b>setDTDHandler</b></span>(DTDHandler <i><tt>handler</tt></i>);
+  public DTDHandler     <span class="bold"><b>getDTDHandler</b></span>();
+  public void          <span class="bold"><b>setContentHandler</b></span>(ContentHandler <i><tt>handler</tt></i>);
+  public ContentHandler <span class="bold"><b>getContentHandler</b></span>();
+  public void           <span class="bold"><b>setErrorHandler</b></span>(ErrorHandler <i><tt>handler</tt></i>);
+  public ErrorHandler   <span class="bold"><b>getErrorHandler</b></span>();
+
+  public void <span class="bold"><b>parse</b></span>(InputSource <i><tt>input</tt></i>) 
+   throws IOException, SAXException;
+  public void <span class="bold"><b>parse</b></span>(String <i><tt>systemID</tt></i>) 
+   throws IOException, SAXException;
+
+}</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e35105"></a>Exceptions and Errors</h4></div></div><p>
+        All SAX exceptions are checked exceptions and all are
+        derived from
+        <tt>org.xml.sax.SAXException</tt>.
+        In addition, a few methods that perform I/O can also
+        throw an <tt>IOException</tt>.
+      </p><div class="sect4"><div class="titlepage"><div><h5 class="title"><a name="d0e35116"></a>SAXException</h5></div></div><p>
+          <tt>SAXException</tt> is the
+          generic checked exception for just about anything that
+          can go wrong while parsing an XML document except an
+          I/O error.
+          Often a more specific subclass of <tt>SAXException</tt>
+          will be thrown instead, even if the method is only
+          declared to throw
+          <tt>SAXException</tt>.
+          The <tt>SAXException</tt>
+          class predates Java 1.4 by a couple of years,
+          so it uses its own 
+          <tt>getException()</tt> method to report the
+          nested exception that caused the <tt>SAXException</tt>
+          (if such exists)
+          rather than the 
+          <tt>getCause()</tt>
+          method introduced in  Java 1.4.
+        </p><pre class="programlisting">package org.xml.sax;
+
+public class <span class="bold"><b>SAXException</b></span> extends Exception {
+
+  public <span class="bold"><b>SAXException</b></span>(String <i><tt>message</tt></i>);
+  public <span class="bold"><b>SAXException</b></span>(Exception <i><tt>ex</tt></i>);
+  public <span class="bold"><b>SAXException</b></span>(String <i><tt>message</tt></i>, Exception <i><tt>ex</tt></i>);
+
+  public String    <span class="bold"><b>getMessage</b></span>();
+  public Exception <span class="bold"><b>getException</b></span>();
+  public String    <span class="bold"><b>toString</b></span>();
+
+}</pre></div><div class="sect4"><div class="titlepage"><div><h5 class="title"><a name="d0e35177"></a>SAXNotRecognizedException</h5></div></div><p>
+          A <tt>SAXNotRecognizedException</tt>
+          signals that the parser does not support the
+          feature or property you&#8217;re trying to set; e.g. you're
+          trying to turn on validation for a non-validating
+          parser.
+        </p><pre class="programlisting">package org.xml.sax;
+
+public class <span class="bold"><b>SAXNotRecognizedException</b></span> extends SAXException {
+
+  public <span class="bold"><b>SAXNotRecognizedException</b></span>(String <i><tt>message</tt></i>);
+
+}</pre></div><div class="sect4"><div class="titlepage"><div><h5 class="title"><a name="d0e35196"></a>SAXNotSupportedException</h5></div></div><p>
+          A <tt>SAXNotSupportedException</tt>
+          indicates one of two things. Either
+          the parser cannot set a feature or property to the
+          requested value (e.g. you&#8217;re trying to set the value of the 
+          <tt>http://xml.org/sax/properties/lexical-handler</tt>
+          property to
+          an object that does not implement <tt>LexicalHandler</tt>) or 
+          it cannot set that feature or property at this point in
+          time (e.g. you&#8217;re trying to turn on validation when
+          the parser is halfway through the document.)
+        </p><pre class="programlisting">package org.xml.sax;
+
+public class <span class="bold"><b>SAXNotSupportedException</b></span> extends SAXException {
+
+  public <span class="bold"><b>SAXNotSupportedException</b></span>(String <i><tt>message</tt></i>);
+
+}</pre></div><div class="sect4"><div class="titlepage"><div><h5 class="title"><a name="d0e35221"></a>SAXParseException</h5></div></div><p>
+        A <tt>SAXParseException</tt>
+          normally indicates a well-formedness error.
+          In <tt>ErrorHandler</tt> it is
+          also used to indicate
+          validity errors, other non-fatal errors, and warnings.
+          It normally provides line and column numbers locating the position
+          of the error 
+          in the XML document that caused the exception.
+          However, these are sometimes set to -1 if the error
+          occurs very early in the document or if the parser can't
+          determine exactly where the problem is.
+        </p><pre class="programlisting">package org.xml.sax;
+
+public class <span class="bold"><b>SAXParseException</b></span> extends SAXException {
+
+  public <span class="bold"><b>SAXParseException</b></span>(String <i><tt>message</tt></i>, Locator <i><tt>locator</tt></i>);
+  public <span class="bold"><b>SAXParseException</b></span>(String <i><tt>message</tt></i>, Locator <i><tt>locator</tt></i>, 
+   Exception <i><tt>e</tt></i>);
+  public <span class="bold"><b>SAXParseException</b></span>(String <i><tt>message</tt></i>, String <i><tt>publicID</tt></i>, 
+   String <i><tt>systemID</tt></i>, int <i><tt>lineNumber</tt></i>, int <i><tt>columnNumber</tt></i>);
+  public <span class="bold"><b>SAXParseException</b></span>(String <i><tt>message</tt></i>, String <i><tt>publicID</tt></i>, 
+   String <i><tt>systemID</tt></i>, int <i><tt>lineNumber</tt></i>, int <i><tt>columnNumber</tt></i>,
+   Exception <i><tt>e</tt></i>);
+
+  public String <span class="bold"><b>getPublicId</b></span>();
+  public String <span class="bold"><b>getSystemId</b></span>();
+  public int    <span class="bold"><b>getLineNumber</b></span>();
+  public int    <span class="bold"><b>getColumnNumber</b></span>();
+
+}</pre></div></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e35309"></a>org.xml.sax.ext</h3></div></div><p>
+      The <tt>org.xml.sax.ext</tt> package contains
+      optional extensions to SAX that parsers are not required to
+      implement. In practice, the major parsers do
+      implement the <tt>DeclHandler</tt>
+      and <tt>LexicalHandler</tt>
+      callback interfaces from this package. 
+    </p><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e35323"></a>DeclHandler</h4></div></div><p>
+        <tt>DeclHandler</tt>
+        is a callback interface client applications can implement
+        and register with the parser in order to receive
+        notification of element, attribute, and parsed entity
+        declarations. Parsers are not required to
+        provide this information, but most validating parsers do.
+        If a <tt>LexicalHandler</tt>
+        is also installed, then all calls to these methods
+        occur in between the calls to 
+        <tt>startDTD()</tt> and  
+        <tt>endDTD()</tt>.
+      </p><p>
+        A <tt>DeclHandler</tt> is
+        installed 
+        in an <tt>XMLReader</tt>
+        as the value of the
+        <tt>http://xml.org/sax/properties/declaration-handler</tt>
+        property with the 
+         <tt>setProperty()</tt> method. Parsers
+         that do not provide declaration events
+         will throw a
+         <tt>SAXNotRecognizedException</tt>
+         when you do this.
+      </p><pre class="programlisting">package org.xml.sax.ext;
+
+public interface <span class="bold"><b>DeclHandler</b></span>  {
+
+  public void <span class="bold"><b>elementDecl</b></span>(String <i><tt>name</tt></i>, String <i><tt>model</tt></i>) 
+   throws SAXException;
+  public void <span class="bold"><b>attributeDecl</b></span>(String <i><tt>elementName</tt></i>, 
+   String <i><tt>attributeName</tt></i>, String <i><tt>type</tt></i>, String <i><tt>valueDefault</tt></i>, 
+   String <i><tt>value</tt></i>) throws SAXException;
+  public void <span class="bold"><b>internalEntityDecl</b></span>(String <i><tt>name</tt></i>, String <i><tt>value</tt></i>) 
+   throws SAXException;
+  public void <span class="bold"><b>externalEntityDecl</b></span>(String <i><tt>name</tt></i>, String <i><tt>publicID</tt></i>, 
+   String <i><tt>systemID</tt></i>) throws SAXException;
+
+}</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e35410"></a>LexicalHandler</h4></div></div><p>
+        <tt>LexicalHandler</tt>
+        is a callback interface client applications can implement
+        and register with the parser in order to receive
+        notification of lexical information such as comments,
+        parsed entities, and
+        CDATA section boundaries. Parsers are not required to
+        provide lexical information, though most do.
+        In normal usage, this interface is not common.
+        Excessive reliance on it often indicates a misdesigned
+        XML application.
+      </p><p>
+        A <tt>LexicalHandler</tt> is
+        installed 
+        in an <tt>XMLReader</tt>
+        as the value of the
+        <tt>http://xml.org/sax/properties/lexical-handler</tt>
+        property with the 
+         <tt>setProperty()</tt> method. 
+         Parsers
+         that do not provide lexical events
+         will throw a
+         <tt>SAXNotRecognizedException</tt>
+         when you do this.
+      </p><pre class="programlisting">package org.xml.sax.ext;
+
+public interface <span class="bold"><b>LexicalHandler</b></span>  {
+
+  public void <span class="bold"><b>startDTD</b></span>(String <i><tt>name</tt></i>, String <i><tt>publicID</tt></i>, 
+   String <i><tt>systemID</tt></i>) throws SAXException;
+  public void <span class="bold"><b>endDTD</b></span>() throws SAXException;
+  public void <span class="bold"><b>startEntity</b></span>(String <i><tt>name</tt></i>) throws SAXException;
+  public void <span class="bold"><b>endEntity</b></span>(String <i><tt>name</tt></i>) throws SAXException;
+  public void <span class="bold"><b>startCDATA</b></span>() throws SAXException;
+  public void <span class="bold"><b>endCDATA</b></span>() throws SAXException;
+  public void <span class="bold"><b>comment</b></span>(char[] <i><tt>text</tt></i>, int <i><tt>start</tt></i>, int <i><tt>length</tt></i>) 
+   throws SAXException;
+
+}</pre></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e35485"></a>org.xml.sax.helpers</h3></div></div><p>
+      The <tt>org.xml.sax.helpers</tt> package contains
+      classes that may assist with many SAX tasks, but are not necessarily 
+      required. The ones client programmers will find most useful
+      are the factory classes for locating <tt>XMLReader</tt>s,
+      but there are also classes that provide minimal implementations
+      of several SAX interfaces 
+      such as <tt>Attributes</tt> and that can be useful
+      when writing filters. 
+    </p><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e35499"></a>AttributeListImpl</h4></div></div><p>
+        The legacy <tt>AttributeListImpl</tt> class
+        is a SAX1 class that parser
+        vendors may (or may not) use to implement the
+         <tt>AttributesList</tt>
+        interface. There&#8217;s little to no need for this in SAX2.
+      </p><pre class="programlisting">package org.xml.sax.helpers;
+
+public class <span class="bold"><b>AttributeListImpl</b></span> implements AttributeList {
+
+  public <span class="bold"><b>AttributeListImpl</b></span>();
+  public <span class="bold"><b>AttributeListImpl</b></span>(AttributeList <i><tt>atts</tt></i>);
+
+  public int    <span class="bold"><b>getLength</b></span>();
+  public String <span class="bold"><b>getName</b></span>(int <i><tt>i</tt></i>);
+  public String <span class="bold"><b>getType</b></span>(int <i><tt>i</tt></i>);
+  public String <span class="bold"><b>getValue</b></span>(int <i><tt>i</tt></i>);
+  public String <span class="bold"><b>getType</b></span>(String <i><tt>name</tt></i>);
+  public String <span class="bold"><b>getValue</b></span>(String <i><tt>name</tt></i>);
+
+  public void   <span class="bold"><b>setAttributeList</b></span>(AttributeList <i><tt>atts</tt></i>);
+  public void   <span class="bold"><b>addAttribute</b></span>(String <i><tt>name</tt></i>, String <i><tt>type</tt></i>, 
+   String <i><tt>value</tt></i>);
+  public void   <span class="bold"><b>removeAttribute</b></span>(String <i><tt>name</tt></i>);
+  public void   <span class="bold"><b>clear</b></span>();
+
+}</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e35584"></a>AttributesImpl</h4></div></div><p>
+        <tt>AttributesImpl</tt> is a class that parser
+        vendors may (or may not) use to implement the
+         <tt>Attributes</tt>
+        interface. It can also be useful for taking persistent snapshots of 
+        <tt>Attributes</tt> objects and 
+        modifying <tt>Attributes</tt> lists in filters.
+      </p><pre class="programlisting">package org.xml.sax.helpers;
+
+public class <span class="bold"><b>AttributesImpl</b></span> implements Attributes {
+
+  public <span class="bold"><b>AttributesImpl</b></span>();
+  public <span class="bold"><b>AttributesImpl</b></span>(Attributes <i><tt>atts</tt></i>);
+
+  public int    <span class="bold"><b>getLength</b></span>();
+  public String <span class="bold"><b>getURI</b></span>(int <i><tt>index</tt></i>);
+  public String <span class="bold"><b>getLocalName</b></span>(int <i><tt>index</tt></i>);
+  public String <span class="bold"><b>getQName</b></span>(int <i><tt>index</tt></i>);
+  public String <span class="bold"><b>getType</b></span>(int <i><tt>index</tt></i>);
+  public String <span class="bold"><b>getValue</b></span>(int <i><tt>index</tt></i>);
+  public void   <span class="bold"><b>removeAttribute</b></span>(int <i><tt>index</tt></i>);
+  public void   <span class="bold"><b>setURI</b></span>(int <i><tt>index</tt></i>, String <i><tt>uri</tt></i>);
+  public void   <span class="bold"><b>setLocalName</b></span>(int <i><tt>index</tt></i>, String <i><tt>localName</tt></i>);
+  public void   <span class="bold"><b>setQName</b></span>(int <i><tt>index</tt></i>, String <i><tt>qualifiedName</tt></i>);
+  public void   <span class="bold"><b>setType</b></span>(int <i><tt>index</tt></i>, String <i><tt>type</tt></i>);
+  public void   <span class="bold"><b>setValue</b></span>(int <i><tt>index</tt></i>, String <i><tt>value</tt></i>);
+
+  public int    <span class="bold"><b>getIndex</b></span>(String <i><tt>uri</tt></i>, String <i><tt>localName</tt></i>);
+  public int    <span class="bold"><b>getIndex</b></span>(String <i><tt>qualifiedName</tt></i>);
+  public String <span class="bold"><b>getType</b></span>(String <i><tt>uri</tt></i>, String <i><tt>localName</tt></i>);
+  public String <span class="bold"><b>getType</b></span>(String <i><tt>qualifiedName</tt></i>);
+  public String <span class="bold"><b>getValue</b></span>(String <i><tt>uri</tt></i>, String <i><tt>localName</tt></i>);
+  public String <span class="bold"><b>getValue</b></span>(String <i><tt>qualifiedName</tt></i>);
+
+  public void   <span class="bold"><b>clear</b></span>();
+  public void   <span class="bold"><b>setAttributes</b></span>(Attributes <i><tt>atts</tt></i>);
+  public void   <span class="bold"><b>addAttribute</b></span>(String <i><tt>uri</tt></i>, String <i><tt>localName</tt></i>, 
+   String <i><tt>qualifiedName</tt></i>, String <i><tt>type</tt></i>, String <i><tt>value</tt></i>);
+  public void   <span class="bold"><b>setAttribute</b></span>(int <i><tt>index</tt></i>, String <i><tt>uri</tt></i>, 
+   String <i><tt>localName</tt></i>, String <i><tt>qualifiedName</tt></i>, String <i><tt>type</tt></i>, 
+   String <i><tt>value</tt></i>);
+
+}</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e35792"></a>DefaultHandler</h4></div></div><p>
+        <tt>DefaultHandler</tt> is an adapter class
+        that implements the four required SAX2 callback
+        interfaces&#8212;<tt>EntityResolver</tt>,
+        <tt>DTDHandler</tt>,
+        <tt>ContentHandler</tt>,
+        and <tt>ErrorHandler</tt>&#8212;
+        with do-nothing implementations of all their methods.
+        It&#8217;s often more convenient to subclass this class rather
+        than implement those interfaces directly.
+      </p><pre class="programlisting">package org.xml.sax.helpers;
+
+public class <span class="bold"><b>DefaultHandler</b></span> implements EntityResolver, 
+ DTDHandler, ContentHandler, ErrorHandler {
+
+  public <span class="bold"><b>DefaultHandler</b></span>();
+
+  // EntityResolver methods
+  public InputSource <span class="bold"><b>resolveEntity</b></span>(String <i><tt>publicID</tt></i>, 
+   String <i><tt>systemID</tt></i>) throws SAXException;
+ 
+  // DTDHandler methods
+  public void <span class="bold"><b>notationDecl</b></span>(String <i><tt>name</tt></i>, String <i><tt>publicID</tt></i>, 
+   String <i><tt>systemID</tt></i>) throws SAXException;
+  public void <span class="bold"><b>unparsedEntityDecl</b></span>(String <i><tt>name</tt></i>, String <i><tt>publicID</tt></i>, 
+   String <i><tt>systemID</tt></i>, String <i><tt>notationName</tt></i>) throws SAXException;
+
+  // ContentHandler methods
+  public void <span class="bold"><b>setDocumentLocator</b></span>(Locator <i><tt>locator</tt></i>);
+  public void <span class="bold"><b>startDocument</b></span>() throws SAXException;
+  public void <span class="bold"><b>endDocument</b></span>() throws SAXException;
+  public void <span class="bold"><b>startPrefixMapping</b></span>(String <i><tt>prefix</tt></i>, String <i><tt>uri</tt></i>) 
+   throws SAXException;
+  public void <span class="bold"><b>endPrefixMapping</b></span>(String <i><tt>prefix</tt></i>) 
+   throws SAXException;
+  public void <span class="bold"><b>startElement</b></span>(String <i><tt>uri</tt></i>, String <i><tt>localName</tt></i>, 
+   String <i><tt>qualifiedName</tt></i>, Attributes <i><tt>attributes</tt></i>)
+   throws SAXException;
+  public void <span class="bold"><b>endElement</b></span>(String <i><tt>uri</tt></i>, String <i><tt>localName</tt></i>, 
+   String <i><tt>qualifiedName</tt></i>) throws SAXException;
+  public void <span class="bold"><b>characters</b></span>(char[] <i><tt>text</tt></i>, int <i><tt>start</tt></i>, int <i><tt>length</tt></i>) 
+   throws SAXException;
+  public void <span class="bold"><b>ignorableWhitespace</b></span>(char[] <i><tt>space</tt></i>, int <i><tt>start</tt></i>, int <i><tt>length</tt></i>) 
+   throws SAXException;
+  public void <span class="bold"><b>processingInstruction</b></span>(String <i><tt>target</tt></i>, String <i><tt>data</tt></i>) 
+   throws SAXException;
+  public void <span class="bold"><b>skippedEntity</b></span>(String <i><tt>name</tt></i>) throws SAXException;
+
+  // ErrorHandler methods
+  public void <span class="bold"><b>warning</b></span>(SAXParseException <i><tt>e</tt></i>) throws SAXException;
+  public void <span class="bold"><b>error</b></span>(SAXParseException <i><tt>e</tt></i>) throws SAXException;
+  public void <span class="bold"><b>fatalError</b></span>(SAXParseException <i><tt>e</tt></i>) throws SAXException;
+
+}</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e35967"></a>LocatorImpl</h4></div></div><p>
+        <tt>LocatorImpl</tt> is a class that parser
+        vendors may take advantage of to help them provide the
+        optional <tt>Locator</tt>
+        interface. There&#8217;s little reason for most developers to
+        use it, though it may occasionally be useful if you want
+        to provide pseudo-location information from a filter or
+        non-parser-based <tt>XMLReader</tt>
+        or you want to take a persistent snapshot of location information at some point in the 
+        parse process.
+      </p><pre class="programlisting">package org.xml.sax.helpers;
+
+public class <span class="bold"><b>LocatorImpl</b></span> implements Locator {
+
+  public <span class="bold"><b>LocatorImpl</b></span>();
+  public <span class="bold"><b>LocatorImpl</b></span>(Locator <i><tt>locator</tt></i>);
+
+  public String <span class="bold"><b>getPublicId</b></span>();
+  public String <span class="bold"><b>getSystemId</b></span>();
+  public int    <span class="bold"><b>getLineNumber</b></span>();
+  public int    <span class="bold"><b>getColumnNumber</b></span>();
+  
+  public void <span class="bold"><b>setPublicId</b></span>(String <i><tt>publicID</tt></i>);
+  public void <span class="bold"><b>setSystemId</b></span>(String <i><tt>systemID</tt></i>);
+  public void <span class="bold"><b>setLineNumber</b></span>(int <i><tt>lineNumber</tt></i>);
+  public void <span class="bold"><b>setColumnNumber</b></span>(int <i><tt>columnNumber</tt></i>);
+
+}</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e36031"></a>NamespaceSupport</h4></div></div><p>
+        The <tt>NamespaceSupport</tt> class provides a
+         stack for storing namespace prefix-URI
+        mappings. It&#8217;s useful when a program needs to resolve namespace
+        prefixes that occur in attribute values and element
+        content.
+        You can reuse a <tt>NamespaceSupport</tt>
+        object for multiple documents.
+        However, if you do so, you
+        need to call <tt>reset()</tt> in between
+        documents (typically in
+        <tt>startDocument()</tt>).
+      </p><pre class="programlisting">package org.xml.sax.helpers;
+
+public class <span class="bold"><b>NamespaceSupport</b></span>  {
+
+  public static final String <span class="bold"><b>XMLNS</b></span>;
+
+  public <span class="bold"><b>NamespaceSupport</b></span>();
+
+  public void        <span class="bold"><b>reset</b></span>();
+  public void        <span class="bold"><b>pushContext</b></span>();
+  public void        <span class="bold"><b>popContext</b></span>();
+  public boolean     <span class="bold"><b>declarePrefix</b></span>(String <i><tt>prefix</tt></i>, String <i><tt>uri</tt></i>);
+  public String[]    <span class="bold"><b>processName</b></span>(String <i><tt>qualifiedName</tt></i>, 
+   String <i><tt>parts</tt></i>, boolean <i><tt>isAttribute</tt></i>);
+
+  public String      <span class="bold"><b>getURI</b></span>(String <i><tt>prefix</tt></i>);
+  public Enumeration <span class="bold"><b>getPrefixes</b></span>();
+  public String      <span class="bold"><b>getPrefix</b></span>(String <i><tt>uri</tt></i>);
+  public Enumeration <span class="bold"><b>getPrefixes</b></span>(String <i><tt>uri</tt></i>);
+  public Enumeration <span class="bold"><b>getDeclaredPrefixes</b></span>();
+
+}</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e36113"></a>ParserAdapter</h4></div></div><p>
+        <tt>ParserAdapter</tt> uses the adapter
+        design pattern to convert SAX1
+        <tt>Parser</tt> objects into SAX2
+        <tt>XMLReader</tt> objects.
+        Given the large number of high-quality, native SAX2
+        parsers that are now available, there&#8217;s little reason to
+        use this class anymore.
+      </p><pre class="programlisting">package org.xml.sax.helpers;
+
+public class <span class="bold"><b>ParserAdapter</b></span> implements XMLReader, DocumentHandler {
+
+  public <span class="bold"><b>ParserAdapter</b></span>() throws SAXException;
+  public <span class="bold"><b>ParserAdapter</b></span>(Parser <i><tt>parser</tt></i>);
+
+  // XMLReader methods
+  public void <span class="bold"><b>setFeature</b></span>(String <i><tt>name</tt></i>, boolean <i><tt>state</tt></i>) 
+   throws SAXNotRecognizedException, SAXNotSupportedException;
+  public boolean <span class="bold"><b>getFeature</b></span>(String <i><tt>name</tt></i>) 
+   throws SAXNotRecognizedException, SAXNotSupportedException;
+  public void <span class="bold"><b>setProperty</b></span>(String <i><tt>name</tt></i>, Object <i><tt>value</tt></i>) 
+   throws SAXNotRecognizedException, SAXNotSupportedException;
+  public Object <span class="bold"><b>getProperty</b></span>(String <i><tt>name</tt></i>) 
+   throws SAXNotRecognizedException, SAXNotSupportedException;
+  public void <span class="bold"><b>setEntityResolver</b></span>(EntityResolver <i><tt>resolver</tt></i>);
+  public EntityResolver <span class="bold"><b>getEntityResolver</b></span>();
+  public void <span class="bold"><b>setDTDHandler</b></span>(DTDHandler <i><tt>handler</tt></i>);
+  public DTDHandler <span class="bold"><b>getDTDHandler</b></span>();
+  public void <span class="bold"><b>setContentHandler</b></span>(ContentHandler <i><tt>handler</tt></i>);
+  public ContentHandler <span class="bold"><b>getContentHandler</b></span>();
+  public void <span class="bold"><b>setErrorHandler</b></span>(ErrorHandler <i><tt>handler</tt></i>);
+  public ErrorHandler <span class="bold"><b>getErrorHandler</b></span>();
+  
+  public void <span class="bold"><b>parse</b></span>(String <i><tt>systemID</tt></i>) 
+   throws IOException, SAXException;
+  public void <span class="bold"><b>parse</b></span>(InputSource <i><tt>input</tt></i>) 
+   throws IOException, SAXException;
+
+  // DocumentHandler methods
+  public void <span class="bold"><b>setDocumentLocator</b></span>(Locator <i><tt>locator</tt></i>);
+  public void <span class="bold"><b>startDocument</b></span>() throws SAXException;
+  public void <span class="bold"><b>endDocument</b></span>() throws SAXException;
+  public void <span class="bold"><b>startElement</b></span>(String <i><tt>qualifiedName</tt></i>, 
+   AttributeList <i><tt>qAtts</tt></i>) throws SAXException;
+  public void <span class="bold"><b>endElement</b></span>(String <i><tt>qualifiedName</tt></i>) 
+   throws SAXException;
+  public void <span class="bold"><b>characters</b></span>(char[] <i><tt>text</tt></i>, int <i><tt>start</tt></i>, int <i><tt>length</tt></i>) 
+   throws SAXException;
+  public void <span class="bold"><b>ignorableWhitespace</b></span>(char[] <i><tt>space</tt></i>, int <i><tt>start</tt></i>, int <i><tt>length</tt></i>) 
+   throws SAXException;
+  public void <span class="bold"><b>processingInstruction</b></span>(String <i><tt>target</tt></i>, String <i><tt>data</tt></i>) 
+   throws SAXException;
+
+}</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e36279"></a>ParserFactory</h4></div></div><p>
+        <tt>ParserFactory</tt> is a factory
+        class used to create implementation specific instances
+        of the SAX1 <tt>Parser</tt> class.
+        The default implementation is determined by the
+        <tt>org.xml.sax.parser</tt> Java system property.
+        <tt>ParserFactory</tt>  is now deprecated
+        like the rest of SAX1, and should not be used. 
+      </p><pre class="programlisting">package org.xml.sax.helpers;
+
+public class <span class="bold"><b>ParserFactory</b></span>  {
+
+  public static Parser <span class="bold"><b>makeParser</b></span>() 
+   throws ClassNotFoundException, IllegalAccessException, 
+          InstantiationException, NullPointerException, 
+          ClassCastException;
+  public static Parser <span class="bold"><b>makeParser</b></span>(String <i><tt>className</tt></i>) 
+   throws ClassNotFoundException, IllegalAccessException, 
+          InstantiationException, ClassCastException;
+
+}</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e36310"></a>XMLFilterImpl</h4></div></div><p>
+        Although there is a more generic <tt>XMLFilter</tt>
+        interface, <tt>XMLFilterImpl</tt>
+        is the class you should actually subclass to implement SAX
+        filters. The parent <tt>XMLReader</tt> is
+        the object from which the filter will receive its
+        information. By default, all the methods in this class
+        simply delegate to the parent&#8217;s equivalent methods or
+        objects. However, you can override any or all of them to perform the
+        filtering.
+      </p><pre class="programlisting">package org.xml.sax.helpers;
+
+public class <span class="bold"><b>XMLFilterImpl</b></span> 
+ implements XMLFilter, EntityResolver, DTDHandler, 
+            ContentHandler, ErrorHandler {
+
+  public <span class="bold"><b>XMLFilterImpl</b></span>();
+  public <span class="bold"><b>XMLFilterImpl</b></span>(XMLReader <i><tt>parent</tt></i>);
+
+  public void      <span class="bold"><b>setParent</b></span>(XMLReader <i><tt>parent</tt></i>);
+  public XMLReader <span class="bold"><b>getParent</b></span>();
+
+  // XMLReader methods
+  public void           <span class="bold"><b>setFeature</b></span>(String <i><tt>name</tt></i>, boolean <i><tt>state</tt></i>) 
+   throws SAXNotRecognizedException, SAXNotSupportedException;
+  public boolean        <span class="bold"><b>getFeature</b></span>(String <i><tt>name</tt></i>) 
+   throws SAXNotRecognizedException, SAXNotSupportedException;
+  public void           <span class="bold"><b>setProperty</b></span>(String <i><tt>name</tt></i>, Object <i><tt>value</tt></i>) 
+   throws SAXNotRecognizedException, SAXNotSupportedException;
+  public Object         <span class="bold"><b>getProperty</b></span>(String <i><tt>name</tt></i>) 
+   throws SAXNotRecognizedException, SAXNotSupportedException;
+  public void          <span class="bold"><b>setEntityResolver</b></span>(EntityResolver <i><tt>resolver</tt></i>);
+  public EntityResolver <span class="bold"><b>getEntityResolver</b></span>();
+  public void           <span class="bold"><b>setDTDHandler</b></span>(DTDHandler <i><tt>handler</tt></i>);
+  public DTDHandler     <span class="bold"><b>getDTDHandler</b></span>();
+  public void          <span class="bold"><b>setContentHandler</b></span>(ContentHandler <i><tt>handler</tt></i>);
+  public ContentHandler <span class="bold"><b>getContentHandler</b></span>();
+  public void           <span class="bold"><b>setErrorHandler</b></span>(ErrorHandler <i><tt>handler</tt></i>);
+  public ErrorHandler   <span class="bold"><b>getErrorHandler</b></span>();
+
+  public void           <span class="bold"><b>parse</b></span>(InputSource <i><tt>input</tt></i>) 
+   throws SAXException, IOException;
+  public void           <span class="bold"><b>parse</b></span>(String <i><tt>systemID</tt></i>) 
+   throws SAXException, IOException;
+
+  // EntityResolver methods
+  public InputSource <span class="bold"><b>resolveEntity</b></span>(String <i><tt>publicID</tt></i>, 
+   String <i><tt>systemID</tt></i>) throws SAXException, IOException;
+
+  // DTDHandler methods
+  public void <span class="bold"><b>notationDecl</b></span>(String <i><tt>name</tt></i>, String <i><tt>publicID</tt></i>,
+   String <i><tt>systemID</tt></i>) throws SAXException;
+  public void <span class="bold"><b>unparsedEntityDecl</b></span>(String <i><tt>name</tt></i>, String <i><tt>publicID</tt></i>, 
+   String <i><tt>systemID</tt></i>, String <i><tt>notationName</tt></i>) throws SAXException;
+
+  // ContentHandler methods
+  public void <span class="bold"><b>setDocumentLocator</b></span>(Locator <i><tt>locator</tt></i>);
+  public void <span class="bold"><b>startDocument</b></span>() throws SAXException;
+  public void <span class="bold"><b>endDocument</b></span>() throws SAXException;
+  public void <span class="bold"><b>startPrefixMapping</b></span>(String <i><tt>prefix</tt></i>, String <i><tt>uri</tt></i>) 
+   throws SAXException;
+  public void <span class="bold"><b>endPrefixMapping</b></span>(String <i><tt>prefix</tt></i>)
+   throws SAXException;
+  public void <span class="bold"><b>startElement</b></span>(String <i><tt>uri</tt></i>, String <i><tt>localName</tt></i>, 
+   String <i><tt>qualifiedName</tt></i>, Attributes <i><tt>atts</tt></i>) throws SAXException;
+  public void <span class="bold"><b>endElement</b></span>(String <i><tt>uri</tt></i>, String <i><tt>localName</tt></i>, 
+   String <i><tt>qualifiedName</tt></i>) throws SAXException;
+  public void <span class="bold"><b>characters</b></span>(char[] <i><tt>text</tt></i>, int <i><tt>start</tt></i>, int <i><tt>length</tt></i>) 
+   throws SAXException;
+  public void <span class="bold"><b>ignorableWhitespace</b></span>(char[] <i><tt>space</tt></i>, int <i><tt>start</tt></i>, int <i><tt>length</tt></i>) 
+   throws SAXException;
+  public void <span class="bold"><b>processingInstruction</b></span>(String <i><tt>target</tt></i>, String <i><tt>data</tt></i>) 
+   throws SAXException;
+  public void <span class="bold"><b>skippedEntity</b></span>(String <i><tt>name</tt></i>) throws SAXException;
+
+  // ErrorHandler methods
+  public void <span class="bold"><b>warning</b></span>(SAXParseException <i><tt>e</tt></i>) throws SAXException;
+  public void <span class="bold"><b>error</b></span>(SAXParseException <i><tt>e</tt></i>) throws SAXException;
+  public void <span class="bold"><b>fatalError</b></span>(SAXParseException <i><tt>e</tt></i>) 
+   throws SAXException;
+
+}</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e36572"></a>XMLReaderAdapter</h4></div></div><p>
+        <tt>XMLReaderAdapter</tt> uses the adapter
+        design pattern to convert SAX2
+        <tt>XMLReader</tt> objects into SAX1
+        <tt>Parser</tt> objects for compatibility
+        with legacy code.
+      </p><pre class="programlisting">package org.xml.sax.helpers;
+
+public class <span class="bold"><b>XMLReaderAdapter</b></span> implements Parser, ContentHandler {
+
+  public <span class="bold"><b>XMLReaderAdapter</b></span>() throws SAXException;
+  public <span class="bold"><b>XMLReaderAdapter</b></span>(XMLReader <i><tt>xmlReader</tt></i>);
+
+  // Parser methods
+  public void <span class="bold"><b>setLocale</b></span>(Locale <i><tt>locale</tt></i>) throws SAXException;
+  public void <span class="bold"><b>setEntityResolver</b></span>(EntityResolver <i><tt>resolver</tt></i>);
+  public void <span class="bold"><b>setDTDHandler</b></span>(DTDHandler <i><tt>handler</tt></i>);
+  public void <span class="bold"><b>setDocumentHandler</b></span>(DocumentHandler <i><tt>handler</tt></i>);
+  public void <span class="bold"><b>setErrorHandler</b></span>(ErrorHandler <i><tt>handler</tt></i>);
+
+  public void <span class="bold"><b>parse</b></span>(String <i><tt>systemID</tt></i>) throws IOException, SAXException;
+  public void <span class="bold"><b>parse</b></span>(InputSource <i><tt>input</tt></i>) throws IOException, SAXException;
+
+  // ContentHandler methods
+  public void <span class="bold"><b>setDocumentLocator</b></span>(Locator <i><tt>locator</tt></i>);
+  public void <span class="bold"><b>startDocument</b></span>() throws SAXException;
+  public void <span class="bold"><b>endDocument</b></span>() throws SAXException;
+  public void <span class="bold"><b>startPrefixMapping</b></span>(String <i><tt>prefix</tt></i>, String <i><tt>uri</tt></i>);
+  public void <span class="bold"><b>endPrefixMapping</b></span>(String <i><tt>prefix</tt></i>);
+  public void <span class="bold"><b>startElement</b></span>(String <i><tt>uri</tt></i>, String <i><tt>localName</tt></i>, 
+   String <i><tt>qualifiedName</tt></i>, Attributes <i><tt>atts</tt></i>) throws SAXException;
+  public void <span class="bold"><b>endElement</b></span>(String <i><tt>uri</tt></i>, String <i><tt>localName</tt></i>, 
+   String <i><tt>qualifiedName</tt></i>) throws SAXException;
+  public void <span class="bold"><b>characters</b></span>(char[] <i><tt>text</tt></i>, int <i><tt>start</tt></i>, int <i><tt>length</tt></i>) 
+   throws SAXException;
+  public void <span class="bold"><b>ignorableWhitespace</b></span>(char[] <i><tt>space</tt></i>, int <i><tt>start</tt></i>, int <i><tt>length</tt></i>) 
+   throws SAXException;
+  public void <span class="bold"><b>processingInstruction</b></span>(String <i><tt>target</tt></i>, String <i><tt>data</tt></i>) 
+   throws SAXException;
+  public void <span class="bold"><b>skippedEntity</b></span>(String <i><tt>name</tt></i>) throws SAXException;
+
+}</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e36735"></a>XMLReaderFactory</h4></div></div><p>
+        <tt>XMLReaderFactory</tt> is a factory
+        class used to create implementation specific instances
+        of  <tt>XMLReader</tt>.
+        The default implementation is determined by the
+        <tt>org.xml.sax.driver</tt> Java system property.
+      </p><pre class="programlisting">package org.xml.sax.helpers;
+
+public final class <span class="bold"><b>XMLReaderFactory</b></span>  {
+
+  public static XMLReader <span class="bold"><b>createXMLReader</b></span>() throws SAXException;
+  public static XMLReader <span class="bold"><b>createXMLReader</b></span>(String <i><tt>className</tt></i>) 
+   throws SAXException;
+
+}</pre></div></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch17s04.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="index.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="apas02.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Summary&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;DOM</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+June 03,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

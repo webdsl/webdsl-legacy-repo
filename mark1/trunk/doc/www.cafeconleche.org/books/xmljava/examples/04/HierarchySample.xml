@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<Budget year="2001">
+  <Agency>
+    <Name>Farm Credit System Financial Assistance Corporation</Name>
+    <Code>354</Code>
+    <Bureau>
+      <Name>Farm Credit System Financial Assistance Corporation</Name>
+      <Code>00</Code>
+      <Account>
+        <Name>Financial assistance corporation trust fund</Name>
+        <Code>8202</Code>
+        <BEACategory>Mandatory</BEACategory>
+        <Subfunction>
+          <Title>Farm income stabilization</Title>
+          <Code>351</Code>
+          <Amount>-1000</Amount>
+        </Subfunction>
+      </Account>
+    </Bureau>
+  </Agency>
+  <Agency>
+    <Name>Department of Education</Name>
+    <Code>018</Code>
+    <Bureau>
+      <Name>Office of Elementary and Secondary Education</Name>
+      <Code>10</Code>
+      <Account>
+        <Name>Reading excellence</Name>
+        <Code>0011</Code>
+        <BEACategory>Discretionary</BEACategory>
+        <Subfunction>
+          <Title>
+            Elementary, secondary, and vocational education
+          </Title>
+          <Code>501</Code>
+          <Amount>286000000</Amount>
+        </Subfunction>
+      </Account>
+      <Account>
+        <Name>Indian education</Name>
+        <Code>0101</Code>
+        <BEACategory>Discretionary</BEACategory>
+        <Subfunction>
+          <Title>
+            Elementary, secondary, and vocational education
+          </Title>
+          <Code>501</Code>
+          <Amount>116000000</Amount>
+        </Subfunction>
+      </Account>
+      <!-- more accounts...-->
+    </Bureau>
+    <Bureau>
+      <Name>
+        Office of Bilingual Education and Minority Languages Affairs
+      </Name>
+      <Code>15</Code>
+      <Account>
+        <Name>Bilingual and immigrant education</Name>
+        <Code>1300</Code>
+        <BEACategory>Discretionary</BEACategory>
+        <Subfunction>
+          <Title>
+            Elementary, secondary, and vocational education
+          </Title>
+          <Code>501</Code>
+          <Amount>460000000</Amount>
+        </Subfunction>
+      </Account>
+    </Bureau>
+    <!-- more bureaus...-->
+  </Agency>
+  <!-- many more agencies... -->
+</Budget>

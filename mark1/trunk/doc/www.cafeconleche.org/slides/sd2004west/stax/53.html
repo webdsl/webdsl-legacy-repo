@@ -1,0 +1,69 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <meta name="description" content="Slide used in Elliotte Rusty Harold's &#xA;  StAX seminar at Software Development 2004 West, Thursday, March 17, 2004"><title>XMLStreamWriter Example: Convert RDDL to XHTML</title><script language="JAVASCRIPT"><!-- 
+              var isnav
+              
+              if (parseInt(navigator.appVersion) >= 4) {
+                if (navigator.appName == "Netscape") {
+                  isNav = true
+                  document.captureEvents(Event.KEYPRESS)
+                }
+                else {
+                  isNav = false
+                }
+              }
+              document.onkeypress = flipslide
+
+              function flipslide(evt) {
+                var key = isNav ? evt.which : window.event.keyCode
+                if (key == 32 || key == 29 || key == 30 || key == 11) {
+                  
+                    location.href="54.html"
+                  
+                }
+                else if (key == 28 || key == 31 || key == 12) {
+                  
+                    location.href="52.html"
+                  
+                }
+                else if (key == 1) {
+                  location.href="index.html";
+                }
+              } //  --></script></head><body>
+  <h1 align="center">XMLStreamWriter Example: Convert RDDL to XHTML</h1>
+
+  <ul xmlns:xinclude="http://www.w3.org/2001/XInclude">
+  <li><p>Goal: Convert a RDDL document to pure XHTML. </p></li>
+ <li><p>RDDL is
+ just an XHTML Basic document in which there's one extra element:
+ <code>rddl:resource</code> 
+ which can appear anywhere a <code>p</code> 
+ element can appear, and can contain anything a 
+ <code>div</code> element can contain. </p></li>
+ <li><p>The customary <code>rddl</code> prefix is mapped to the 
+ http://www.rddl.org/ namespace URL:
+ 
+<pre><code>&lt;rddl:resource id="rec-xhtml"
+        xlink:title="W3C REC XHTML"
+        xlink:role="http://www.w3.org/1999/xhtml"
+        xlink:arcrole="http://www.rddl.org/purposes#reference"
+        xlink:href="http://www.w3.org/tr/xhtml1"
+        &gt;
+&lt;li&gt;&lt;a href="http://www.w3.org/tr/xhtml1"&gt;W3C XHTML 1.0&lt;/a&gt;&lt;/li&gt;
+&lt;/rddl:resource&gt;</code></pre>
+</p></li>
+<li><p>The program needs to throw away the 
+<code>&lt;rddl:resource&gt;</code> start-tag and <code>&lt;/rddl:resource&gt;</code>
+ end-tag while leaving everything else intact. </p></li>
+  </ul>
+  
+  
+ 
+  
+<hr><div align="center"><A HREF="52.html">Previous</A> 
+                 | <A HREF="54.html">Next</A> 
+                 | <A HREF="index.html">Top</A> 
+                 | <A HREF="http://www.cafeconleche.org/">Cafe con Leche</A></div><hr><div style="font-size: x-small">
+              Copyright 2000-2004 Elliotte Rusty Harold<br><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a><br>
+              Last Modified 
+              January 8, 2004</div></body></html>

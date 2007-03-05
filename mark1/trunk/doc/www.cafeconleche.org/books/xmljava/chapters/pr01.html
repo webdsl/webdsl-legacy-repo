@@ -1,0 +1,196 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Preface</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="index.html" title="Processing XML with Java"><link rel="previous" href="index.html" title="Processing XML with Java"><link rel="next" href="pr01s02.html" title="How to Use This Book"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"><link rel="section" href="pr01.html#d0e124" title="Who You Are"><link rel="section" href="pr01s02.html" title="How to Use This Book"><link rel="section" href="pr01s03.html" title="The Online Edition"><link rel="section" href="pr01s04.html" title="Some grammatical notes"><link rel="section" href="pr01s05.html" title="Contacting the Author"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Preface</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="index.html">Prev</a>&nbsp;</td><th width="60%" align="center">&nbsp;</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="pr01s02.html">Next</a></td></tr></table><hr></div><div class="preface"><div class="titlepage"><div><h2 class="title"><a name="d0e41"></a>Preface</h2></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><a href="pr01.html#d0e124">Who You Are</a></dt><dd><dl><dt><a href="pr01.html#d0e158">What You Need to Know</a></dt><dt><a href="pr01.html#d0e184">What You Need to Have</a></dt></dl></dd><dt><a href="pr01s02.html">How to Use This Book</a></dt><dt><a href="pr01s03.html">The Online Edition</a></dt><dt><a href="pr01s04.html">Some grammatical notes</a></dt><dt><a href="pr01s05.html">Contacting the Author</a></dt></dl></div><p>
+   One night five developers, all of whom wore very thick glasses
+   and had recently been hired by Elephants, Inc.,
+   the world&#8217;s largest purveyor of elephants and elephant supplies, 
+   were familiarizing themselves with the 
+   company&#8217;s order processing system
+   when they stumbled into a directory full of
+   XML documents on the main server.
+&#8220;What&#8217;s this?&#8221; the team leader asked excitedly.
+None of them had ever heard 
+ of XML before so they decided to split up the files between
+ them and try to figure out just what this strange and wondrous
+ new technology actually was. 
+</p><p>
+The first developer, who specialized in 
+optimizing Oracle databases,
+ printed out  a stack of FMPXMLRESULT documents generated by the 
+ FileMaker database where all the orders were stored,
+and began poring over them.
+&#8220;So this is XML! Why, it&#8217;s nothing novel.
+As anyone can see who&#8217;s able, an XML document is nothing but a
+table!&#8221;
+</p><p>
+&#8220;What do you mean, a table?&#8221; replied the second programmer, 
+well versed in object oriented theory and occupied with 
+ a collection of  XMI documents that encoded
+UML diagrams for the system. 
+&#8220;Even a Visual Basic programmer could see that
+XML documents aren&#8217;t tables. 
+
+Duplicates aren&#8217;t allowed in a table relation,
+unless this is truly some strange mutation. 
+Classes and objects is what these document are. 
+Indeed, it should be obvious on the very first pass.
+ An XML document is an object and a DTD is a class.&#8221;
+</p><p>
+&#8220;Objects? A strange kind of object, indeed!&#8221; 
+said the third developer,
+a web designer of some renown, who had loaded the XHTML user documentation for 
+the order processing system into Mozilla.
+&#8220;I don&#8217;t see any types at all. If you think this is an object, then it&#8217;s
+your software I refuse to install. 
+But with all those stylesheets there, it should be clear to anyone not sedated,
+that  XML is just HTML updated!&#8221;
+</p><p>
+&#8220;HTML? You must be joking&#8221; said the fourth, a computer
+science professor on sabbatical from MIT, who was engrossed in an XSLT
+stylesheet that validated all the other documents against a Schematron schema. 
+&#8220;Look at the clean nesting of hierarchical structures, each tag
+matching its partner as it should. I&#8217;ve never seen HTML that looks
+this good. What we have here is S-expressions, which 
+is certainly nothing new. Babbage invented this back in 1882!&#8221; 
+</p><p>
+&#8220;An S expression?&#8221; queried
+ the technical writer, who was occupied
+with  documentation for the project written in 
+DocBook. 
+&#8220;Maybe that means something to those in your learned profession. 
+But to me, this looks just like a FrameMaker MIF file. 
+However, locating the GUI is taking me awhile.&#8221;
+</p><p>
+  And so they argued into the night, none of them willing to give
+  an inch, all of them presenting still more examples to prove
+  their points, none of them bothering to look at the others&#8217;
+  examples. 
+   Indeed, they&#8217;re probably still arguing today.
+   You can even hear their shouts from time to time on xml-dev. 
+   Their mistake, of course, was in trying to force XML into the
+   patterns of technologies they were already familiar with
+   rather than taking it on its own terms.
+   XML can store data, but it is not a database.
+   XML can serialize objects, but an XML document is not an
+   object.
+   Web pages can be written in XML,
+   but XML is not HTML.
+   Functional (and other) programming languages can be written in
+   XML, but XML is not a programming language. 
+   Books are written in XML, but that doesn&#8217;t make XML
+   desktop publishing software.
+</p><p>
+   XML is  something truly new that has not been seen  before in
+   the world of computing. There have been precursors to it,
+   and there are always fanatics who insist on seeing XML
+    through database (or object, or functional, or
+   S-expression) colored glasses. But XML is none of these
+   things. It is something genuinely unique and new in the world of
+   computing; and it can only be understood when you&#8217;re willing to accept it on
+   its own terms, rather than forcing it into yesterday&#8217;s pigeon
+   holes. 
+ </p><p>
+    There are a lot of tools, APIs, and applications in the world 
+    that try to pretend XML
+    is something more familiar to programmers; that it&#8217;s just 
+    a funny kind of database, or just like an object,
+    or just like remote procedure calls.
+    These APIs are occasionally useful in very restricted and
+    predictable environments. However, they are
+    not suitable for processing XML in its most general format.
+    They work well in their limited domains, but they fail when
+    presented with XML that steps outside the artificial
+    boundaries they&#8217;ve defined. 
+    XML was designed to be extensible, but it&#8217;s a sad fact that
+    many of the tools designed for XML aren&#8217;t nearly as
+    extensible as XML itself. 
+  </p><p>
+    This book is going to show you how to handle XML in its full
+    generality. It pulls no punches. It does not pretend that XML is
+    anything except XML, and it shows you how to design your programs
+    so that they handle real XML in all its messiness:
+    valid and invalid, mixed and unmixed, typed and untyped,
+    and both all and none of these at the same time.
+    To that end, this book focuses on those APIs that don&#8217;t try
+    to hide the XML. In particular, 
+    there are three major Java APIs that correctly model XML,
+    as opposed to modeling
+    a particular class of XML documents or 
+    some narrow subset of XML. These are:
+  </p><div class="itemizedlist"><ul type="disc"><li><p>SAX, the Simple API for XML</p></li><li><p>DOM, the Document Object Model</p></li><li><p>JDOM, a Java native API</p></li></ul></div><p>
+    These APIs are the core of this book. In addition I cover 
+    a number of preliminaries and supplements to the basic APIs including: 
+  </p><div class="itemizedlist"><ul type="disc"><li><p>XML syntax</p></li><li><p>DTDs, schemas, and validity</p></li><li><p>XPath</p></li><li><p>XSLT and the TrAX API</p></li><li><p>JAXP, a combination of SAX, DOM, and TrAX with a few factory classes</p></li></ul></div><p> And, since we&#8217;re going to need a few examples of XML
+applications to demonstrate the APIs with, I also cover XML-RPC,
+SOAP, and RSS in some detail. However, the techniques this book
+teaches are hardly limited to just those three applications.
+</p><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e124"></a>Who You Are</h2></div></div><p> This book is written for experienced Java programmers who
+want to integrate XML into their systems. Java is the ideal
+language for processing XML documents. Its strong Unicode support
+in particular made it the preferred language for many early
+implementers. Consequently, more XML tools have been written in
+Java than in any other language. More open source XML tools are
+written
+in Java than in any other language. More programmers process XML
+in Java than in any other language. </p><p>
+<i>Processing XML with Java</i> will teach you how to:
+</p><div class="itemizedlist"><ul type="disc"><li><p>Save XML documents from applications written in Java</p></li><li><p>Read XML documents produced by other programs</p></li><li><p>Search, query, and update XML documents</p></li><li><p>Convert legacy flat data into hierarchical XML</p></li><li><p>Communicate with network servers that send and receive XML data</p></li><li><p>Validate documents against DTDs, schemas, and business rules</p></li><li><p>Combine functional XSLT transforms with traditional imperative Java code</p></li></ul></div><p>
+This book is meant for  Java programmers who need to do anything 
+with XML. It teaches the fundamentals and advanced topics, leaving 
+nothing out. It is a comprehensive course in processing XML with Java 
+that takes developers from little knowledge of XML to 
+ designing sophisticated XML applications and parsing 
+complicated documents. The examples cover a wide range of possible 
+uses including file formats, data exchange, document transformation, 
+database integration, and more. 
+</p><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e158"></a>What You Need to Know</h3></div></div><p>
+  This is not an introductory book with respect to either Java or
+  XML. I assume you have substantial prior experience with
+  Java and preferably some experience with XML.
+  On the Java side, I will freely use 
+  advanced features of the language and its class library without 
+  explanation or apology. Among other things, I assume
+  you are thoroughly familiar with:
+  </p><div class="itemizedlist"><ul type="disc"><li><p>Object oriented programming including inheritance and polymorphism</p></li><li><p>Packages and the CLASSPATH. You should not be surprised by classes
+    that do not have <tt>main()</tt> methods or that are not in the default package. </p></li><li><p>I/O including streams, readers, and writers.
+    You should understand that <tt>System.out</tt> is a horrible example of what 
+    really goes on in Java programs. 
+    </p></li><li><p>The Java Collections API including hash tables, maps, sets, iterators, and lists. 
+    </p></li></ul></div><p>
+    
+    In addition, in one or two places in this book I&#8217;m going to 
+    use some SQL and JDBC.
+    However, these sections are relatively independent of the rest of the book;
+    and chances are if you aren&#8217;t already familiar with SQL, then you don&#8217;t
+    need the material in these sections anyway. 
+  </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e184"></a>What You Need to Have</h3></div></div><p> XML is deliberately architecture, platform, operating
+system, GUI, and language agnostic (in fact, more so than Java).
+It works equally well on Mac OS, Windows, Linux, OS/2,
+various flavors of Unix,
+and more. It can be processed with Python, C++, Haskell,
+ECMAScript, C#, Perl, Visual Basic, Ruby, and of course Java. No
+byte order issues need concern you if you switch between PowerPC, X86, or
+other architectures. Almost everything in this book should work
+equally well on any platform that&#8217;s capable of running
+Java. </p><p> Most of the material in this book is relatively
+independent of the specific Java version. Java 1.4 bundles SAX,
+DOM, and a few other useful classes into the core JDK. However,
+these are easily installed in earlier JVMs as open source
+libraries from the Apache XML Project and other vendors. For the
+most part, I used Java 1.3 and 1.4 when testing the examples; and
+it&#8217;s possible that a few classes and methods have been used that
+are not available in earlier versions. In most cases, it should
+be fairly obvious how to backport them. All of the basic XML APIs
+except TrAX should work in Java 1.1 and later. TrAX requires Java
+1.2 or later. </p></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="index.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="index.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="pr01s02.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Processing XML with Java&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;How to Use This Book</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+July 12,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

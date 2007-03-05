@@ -1,0 +1,161 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;3.&nbsp;Writing XML with Java</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="index.html" title="Processing XML with Java"><link rel="previous" href="ch02s08.html" title="Summary"><link rel="next" href="ch03s02.html" title="Writing XML"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"><link rel="section" href="ch03.html#d0e4890" title="Fibonacci Numbers"><link rel="section" href="ch03s02.html" title="Writing XML"><link rel="section" href="ch03s03.html" title="Output Streams, Writers, and Encodings"><link rel="section" href="ch03s04.html" title="A Simple XML-RPC Client"><link rel="section" href="ch03s05.html" title="A Simple SOAP Client"><link rel="section" href="ch03s06.html" title="Servlets"><link rel="section" href="ch03s07.html" title="Summary"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter&nbsp;3.&nbsp;Writing XML with Java</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch02s08.html">Prev</a>&nbsp;</td><th width="60%" align="center">&nbsp;</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch03s02.html">Next</a></td></tr></table><hr></div><div class="chapter"><div class="titlepage"><div><h2 class="title"><a name="ch_writing_xml"></a>Chapter&nbsp;3.&nbsp;Writing XML with Java</h2></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><a href="ch03.html#d0e4890">Fibonacci Numbers</a></dt><dt><a href="ch03s02.html">Writing XML</a></dt><dd><dl><dt><a href="ch03s02.html#d0e4976">Better Coding Practices</a></dt><dt><a href="ch03s02.html#d0e4988">Attributes</a></dt><dt><a href="ch03s02.html#d0e5023">Producing Valid XML</a></dt><dt><a href="ch03s02.html#d0e5049">Namespaces</a></dt></dl></dd><dt><a href="ch03s03.html">Output Streams, Writers, and Encodings</a></dt><dt><a href="ch03s04.html">A Simple XML-RPC Client</a></dt><dt><a href="ch03s05.html">A Simple SOAP Client</a></dt><dt><a href="ch03s06.html">Servlets</a></dt><dt><a href="ch03s07.html">Summary</a></dt></dl></div><p>
+No one ever believes me when I tell them how easy it is to develop 
+programs that write XML documents. In fact, writing a program to
+output an XML document is unbelievably trivial. It&#8217;s something
+an eight-year old typing BASIC in their first class
+at computer camp can do. In Java, it&#8217;s even easier than that due to
+Java&#8217;s strong Unicode support.
+You don&#8217;t need to know any special APIs like DOM or SAX or JDOM.
+All you have to know is how to <tt>System.out.println()</tt>. 
+If you want to store your XML document in a file, you can
+use the 
+<tt>FileOutputStream</tt> class instead. 
+If you want to serve the document dynamically over a network, it
+helps to know something about servlets;
+but in the end it all reduces to writing bytes onto 
+an output stream.
+</p><p>
+  In this chapter, I&#8217;m going to develop a program that
+  writes Fibonacci numbers into an XML document.
+  I chose this example because the Fibonacci numbers are a well-known 
+  series that&#8217;s very easy to generate algorithmically
+  so the examples will be nicely self-contained. 
+  However, the principles of XML you learn here will be much more
+  broadly applicable to other, more complex systems.
+  The key idea is that data arrives from some source,
+  is encoded in XML, and is then output.
+  Where the input comes from, whether an algorithm, a file,
+  a network socket, user input, or some other source,
+  really doesn&#8217;t concern us here. 
+</p><p>
+  I&#8217;m going to show you how to use classes you&#8217;re already familiar with like
+  <tt>OutputStreamWriter</tt>, <tt>String</tt>, 
+  and <tt>HTTPServlet</tt> to generate XML documents.
+  I am going to beat this idea into the ground until you are absolutely convinced that
+  there is nothing special about XML documents that requires any fancy tricks to
+  produce them. Once you&#8217;ve finished this chapter you&#8217;ll be thoroughly  
+  immunized against the snake-oil peddlers who want to sell you
+  multi-hundred thousand dollar software to do what you can do 
+  with your existing systems for free. 
+</p><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e4890"></a>Fibonacci Numbers</h2></div></div><p>
+    As far as we know, the Fibonacci series was first
+  discovered by Leonardo of Pisa around 1200 C.E.
+  Leonardo was trying to answer the question,
+  
+  &#8220;<i>Quot paria coniculorum in 
+  uno anno ex uno pario germinatur?</i>&#8221;, or, 
+  in English, &#8220;How many pairs of rabbits are born in one year from one pair?&#8221;
+    To solve his problem, 
+  Leonardo estimated that rabbits have a 
+  one month gestation period, and can first mate at the age of one 
+  month, so that each female rabbit has its first litter at two months. 
+  He made the simplifying assumption that each litter consisted of exactly
+  one male and one female.  
+</p><p>
+  Leonardo begins with one pair of baby rabbits, a male and a female. 
+  At the end of the first month,
+  these two have reached puberty and mate. There&#8217;s still one pair of rabbits.
+  At the end of the second month, the female gives birth to a new pair of rabbits.
+  There are now two pairs of rabbits, one pair of adults and one pair of babies. 
+  The adult pair mates again, so that they will
+  produce one more pair at the end of the third month, at which point there are now
+  three pairs of rabbits. One of these pairs has just been born, but the other two
+  are old enough to mate, which, being rabbits, they do.
+  At the end of the third month, two of the three pairs have babies producing five pairs of rabbits.
+  Meanwhile all rabbits born in previous months mate, so that at the end of the fourth month
+  there will be three more pairs of rabbits. Leonardo realized that 
+  the number of pairs at the end of each month was the sum of
+  the number of pairs the preceding month and the number of pairs the 
+  month before that. The rabbits don&#8217;t simply double in population
+  each month because it takes two months before a rabbit can have 
+  its first litter. Nonetheless, the numbers do grow only slightly
+  more slowly than exponentially; and
+   the process continues indefinitely, at least 
+  until you run out of rabbit food or the rabbits take over the world, 
+  whichever comes first. 
+  The number of pairs each month&#8212;1, 1, 2, 3, 5, 8, 13, ...&#8212;
+  has come to be known as the Fibonacci series
+  after Leonardo&#8217;s Latin nickname, Fibonacci (short for 
+  <i>filius Bonacci</i>,
+  son of Bonacci).
+  </p><p>
+   The rabbits aren&#8217;t so important, but the math is. 
+   Each integer in the series is formed
+   by the sum of the two previous integers. The first two integers in the series
+   are 1 and 1.<sup>[<a name="d0e4909" href="#ftn.d0e4909">1</a>]</sup> The Fibonacci series turns up in some very unexpected places
+   including decimal expansions of &#960;, the golden ratio,
+   the Mandelbrot set,  the number of petals on many flowers,
+   the number of spirals on pine cones and pineapples,
+   the number of chambers in a Nautilus shell, and many more.
+  </p><p>
+   It&#8217;s very easy to calculate the Fibonacci sequence
+   by computer. A simple <tt>for</tt> loop will do. For example,
+   this code fragment prints the first 40 Fibonacci numbers: 
+  </p><div class="informalexample"><pre class="programlisting">    int low = 1;
+    int high = 1;
+    for (int i = 1; i &lt;= 40; i++) {
+      System.out.println(low);
+      int temp = high;
+      high = high+low;
+      low = temp;
+    }</pre></div><p>
+   However, the Fibonacci numbers do grow very large very quickly,
+   and exceed the bounds of an <tt>int</tt> shortly before the fiftieth
+    generation.
+   Consequently, it&#8217;s better to use the 
+   <tt>java.math.BigInteger</tt>
+   class instead, as <a href="ch03.html#FibonacciNumbers.java" title="Example&nbsp;3.1.&nbsp;A program that calculates the Fibonacci numbers">Example&nbsp;3.1</a> demonstrates:
+  </p><div class="example"><a name="FibonacciNumbers.java"></a><p class="title"><b>Example&nbsp;3.1.&nbsp;A program that calculates the Fibonacci numbers</b></p><pre class="programlisting">import java.math.BigInteger;
+
+public class FibonacciNumbers {
+
+  public static void main(String[] args) {
+  
+    BigInteger low  = BigInteger.ONE;
+    BigInteger high = BigInteger.ONE;
+    for (int i = 1; i &lt;= 10; i++) {
+      System.out.println(low);
+      BigInteger temp = high;
+      high = high.add(low);
+      low = temp;
+    }
+    
+  }
+
+}
+</pre></div><p>
+   When run, this program produces the first ten Fibonacci numbers:
+  </p><pre class="screen">
+<tt>C:\XMLJAVA&gt;</tt><b><tt>java FibonacciNumbers</tt></b>
+<tt>1
+1
+2
+3
+5
+8
+13
+21
+34
+55</tt></pre><p>
+   It would be straightforward to read
+    the number of Fibonacci numbers to generate from the command line.
+    However, since user interfaces aren&#8217;t the focus of this book,
+    I don&#8217;t want to obscure the important parts with too much extraneous 
+    fluff. 
+  </p></div><div class="footnotes"><br><hr width="100" align="left"><div class="footnote"><p><sup>[<a name="ftn.d0e4909" href="#d0e4909">1</a>] </sup>
+   In some variations, the first two 
+   integers are 0 and 1. Aside from the initial zero, 
+   this produces the same series.</p></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch02s08.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="index.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch03s02.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Summary&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Writing XML</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+January 21,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

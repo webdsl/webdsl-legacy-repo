@@ -1,0 +1,327 @@
+<html><head>
+    <title>SAX</title>
+    <style type="text/css"><!--
+	h1, h2, h3, h4, h5, h6 { color: maroon; }
+	/* make sure that goes OK with the nav column background
+	 * net-friendly colors include: yellow/ffffcc, blue/ccccff
+	 */
+    --></style>
+</head><body color="#000000" bgcolor="#eeeeff">
+    <table border="0" width="100%" cellpadding="15" cellspacing="0" ><tr>
+        <td valign="top" align="left" color="#000000" bgcolor="#ffffff">
+
+    <table border="0" cellpadding="0" cellspacing="0">
+    <tr><td class="toc">
+    <h2>SAX</h2><b>General</b><br />&nbsp;<a href="about.html">About SAX</a><br />
+	&nbsp;<a href="copying.html">Copyright Status</a><br />
+	&nbsp;<a href="event.html">Events vs. Trees</a><br />
+	&nbsp;<em>FAQ</em><br />
+	&nbsp;<a href="links.html">Links</a><br />
+	<br />
+	<b>Java API</b><br />&nbsp;<a href="quickstart.html">Quickstart</a><br />
+	&nbsp;<a href="get-set.html">Features and Properties</a><br />
+	&nbsp;<a href="filters.html">Filters</a><br />
+	&nbsp;<a href="namespaces.html">Namespaces</a><br />
+	&nbsp;<a href="http://www.saxproject.org/apidoc/overview-summary.html">JavaDoc</a><br />
+	<br />
+	<b>SAX Evolution</b><br />&nbsp;<a href="sax1-history.html">Genesis</a><br />
+	&nbsp;<a href="sax1-roadmap.html">SAX 1.0 Overview</a><br />
+	&nbsp;<a href="sax2-history.html">SAX 2.0 Changes</a><br />
+	&nbsp;<a href="sax2-ext.html">SAX 2.0 Extensions</a><br />
+	&nbsp;<a href="langs.html">Other Languages</a><br />
+	<br />
+	<b>SourceForge Services</b><br />&nbsp;<a href="http://sourceforge.net/tracker/?group_id=29449">Bugs/RFEs</a><br />
+	&nbsp;<a href="http://sourceforge.net/projects/sax/">Project Page</a><br />
+	<br />
+	<br />
+	</td></tr></table>
+
+    
+    <p>
+    <a href="http://www.sourceforge.net/">
+    <img border="0" src="http://sourceforge.net/sflogo.php?group_id=29449&amp;type=1"
+	height="31" width="88"
+	alt="SourceForge Logo" />
+    </a>
+
+    </p>
+
+    </td>
+
+    <td width="80%" valign="top" align="left">
+    <h2>FAQ</h2><div><p> This document contains a list of 
+Frequently Asked Questions (FAQ) about SAX.
+If you have questions about SAX that aren't answered here,
+try sending them to the
+<a href="mailto:sax-users@lists.sourceforge.net"
+>sax-users@lists.sourceforge.net</a>
+mailing list,
+or to xml-dev.
+</p>
+
+<p><em>Last Modified: 28 November 2001</em></p>
+
+<h3>SAX in Java</h3>
+
+<dl>
+
+    <dt><strong>How do I learn to use SAX?</strong></dt>
+	
+	<dd><p>Start with the QuickStart link at the left.
+	Current books covering Java and XML also address SAX2.
+	</p></dd>
+
+    <dt><strong>What's a <em>SAX driver</em>, and how do I find
+    one?</strong></dt>
+
+	<dd>
+	<p>A driver implements the SAX2 <var>XMLReader</var> interface.
+	It either parses XML directly, or repackages the parser so
+	you can talk to it using SAX interfaces like
+	<var>ContentHandler</var>.
+	Although you can have the SAX2 interfaces without a driver,
+	that's not useful;
+	it'd be like using JDBC without a database.
+	</p>
+
+	<p>Most current Java programming environments include SAX2
+	drivers, along with the interfaces, in the core of their
+	XML support.  That includes servlet environments and JDK 1.4
+	(from Sun).
+	See the "links" page (in this website's menu) for some parser
+	distributions you can get if you're temporarily SAX-deprived.
+	Read the documentation with that distribution; you may need to
+	know the name of the driver class to make
+	<var>XMLReaderFactory.createXMLReader()</var> behave.
+	(See the "quickstart" link for a table of some common
+	names for SAX drivers.)
+	</p>
+
+	</dd>
+
+<!--
+What are the class names of some popular SAX parsers?
+How do I make sure my default parser is one of those?
+-->
+
+    <dt><strong>The <var>ContentHandler.characters()</var> callback is
+    missing data!</strong></dt>
+
+	<dd>
+	<p><em>Please</em> read the JavaDoc for this method.  A parser may
+	split text into any number of separate chunks, and some characters
+	may be reported using <var>ignorableWhitespace()</var> instead
+	of this callback.</p>
+
+	<p>If you want all the text inside an element, you need to collect the
+	text from the various <var>characters</var> callbacks into a buffer.
+	Only when you see the <var>endElement</var> event can you be sure that
+	you have seen all the text, and some of it may really "belong" to
+	child elements.
+	</p>
+	</dd>
+
+    <dt><strong>Why doesn't this SAX parser report the XML
+    declaration with
+    <var>ContentHandler.processingInstruction()</var>?</strong></dt>
+
+	<dd>
+	<p>Your parser is correct.  The XML and text declarations look like
+	processing instructions for historical reasons (to avoid breaking
+	legacy SGML parsers) but they are <em>not</em> processing
+	instructions.  See production 23 in the XML 1.0 Recommendation.
+	(A SAX2 Extensions 1.1 API will expose the information in
+	these declarations, although not all parsers will support it.)
+	</p>
+	</dd>
+
+    <dt><strong>Does SAX support comments/CDATA sections/DOCTYPE
+    declarations, etc.?</strong></dt>
+
+	<dd>
+	<p>Not in the core API.  These kinds of things are
+	pure lexical details, and are not relevant to most kinds of XML
+	processing, so it doesn't make sense to put them in the core and
+	force all implementors to support them.</p>
+
+	<p>However, SAX2 is designed to be extensible, and the
+	<a href="/apidoc/org/xml/sax/ext/LexicalHandler.html"
+	>LexicalHandler</a> interface is supported by most SAX parsers.
+	SAX2 parsers are <em>not</em> required to support this handler,
+	but they are required to report an error if you try to use
+	handlers they don't support. </p>
+	</dd>
+
+    <dt><strong>Should I use SAX or DOM?</strong></dt>
+
+	<dd>
+	<p><em>Yes!</em>
+	SAX and DOM are appropriate for different situations.  If you're
+	interested in the advantages and disadvantages of each, see the
+	link at the left contrasting event based APIs to tree based ones.
+	If you're interested in socio-political aspects, remember that
+	SAX was designed without requiring people to drive or fly to any
+	face-to-face meetings or conferences, so it causes less pollution
+	than the DOM.  It was also designed fully in the open, not
+	behind closed doors.
+	</p>
+	</dd>
+
+    <dt><strong>J2SE 1.4 bundles an old version of SAX2.
+		How do I make SAX2 r2 or later available?
+		</strong></dt>
+	
+	<dd><p>Use the new <a href=
+	    "http://java.sun.com/j2se/1.4/docs/guide/standards"
+	    >Endorsed Standards Override Mechanism</a> and copy
+	the new <code>sax.jar</code> into the directory specified there.
+	It'll be something like
+	<code>$JAVA_HOME/jre/lib/endorsed</code>
+	for the JDK (or drop the "jre" for the JRE).
+	Notice that SAX is on the list of standards it's OK
+	to do this with, right there in alphabetical order.
+	Using this mechanism should let you redistribute a JRE
+	with current SAX support.
+	</p>
+
+	<p>SAX2 r2 is API compatible with the older SAX2 version
+	used in the JDK, but it's got better documentation and
+	some bugfixes.  The "SAX2 Extensions 1.1" is where new
+	features get added.
+	</p></dd>
+
+    <dt><strong>Are there SAX2 Conformance Tests?</strong></dt>
+	
+	<dd><p>Some; they're not hosted on this website, since
+	they're under GPL.  See the links page for the xmlconf
+	project.  There are two kinds of tests.
+	The older tests make sure that SAX2 parsers all do the
+	Right Thing in terms of parsing XML and reporting errors
+	or document data.  That's essentially an issue of conforming
+	to the XML 1.0 spec, as its requirements map to SAX2.
+	There are some newer <em>sax2unit</em> tests covering
+	SAX2 APIs that don't relate so directly to XML 1.0
+	conformance requirements.
+	</p>
+	<p>Those tests are mostly important as a way that you
+	can be sure that different SAX2 parsers do the things
+	described in the API specification.
+	If they don't, you'd probably end up writing code that
+	depended on some particular parser, which is just what
+	SAX is trying to prevent!
+	</p></dd>
+
+
+</dl>
+
+<h3>SAX in Other Languages</h3>
+
+<dl>
+
+    <dt><strong>Where's the formal language-independent
+    SAX2 Specification?</strong></dt>
+
+	<dd>
+	<p>There <em>isn't</em> any, and probably there won't ever be one.
+	SAX2 in Java is defined by its interfaces and by the 
+	base of running code -- it's more like English Common Law rather than
+	the heavily codified Civil Code of ISO or W3C specifications.  Outside
+	of Java, SAX is whatever programmers in that language decide it
+	should be. </p>
+	</dd>
+
+
+    <dt><strong>Where can I find SAX for a language other than
+    Java?</strong></dt>
+
+	<dd>
+	<p>See the link at the left; there are bindings in
+	programming languages environments such as Python, Perl,
+	Pascal, C/C++, and COM.</p>
+	</dd>
+
+    <dt><strong>I'm having trouble using SAX with COM/Visual Basic/C/C++.
+    Can you help?</strong></dt>
+
+	<dd>
+	<p>Sorry, no.  Microsoft and other organizations and individuals
+	have released their own software under the name 'SAX', but every one
+	is slightly different.  They are free to use the name, but if you need
+	help, you'll need to get in touch with the authors directly.</p>
+	</dd>
+
+</dl>
+
+<h3>Licensing</h3>
+
+<p> These answers are from David Megginson, who made the
+original decision to put SAX into the Public Domain. </p>
+
+<dl>
+
+    <dt><strong>Why is SAX in the Public Domain?  Why not LGPL or another
+    open-source license?</strong></dt>
+
+	<dd>
+	<p>There are two reasons:</p>
+
+	<ol>
+
+	<li>
+	<p>A license is a threat -- follow the terms or I'll sue you.  I
+	don't like to make threats because (a) it's rude, and (b) I know that
+	I could never afford to sue a big company like Sun, Microsoft, Oracle,
+	or IBM anyway, so it would be undignified to pretend.</p>
+	</li>
+
+	<li>
+	<p>Open source licenses cause big headaches for project managers, and
+	not only because of the recent anti-GPL FUD coming out of Redmond --
+	including an LGPL or MPL component in a private system may delay a
+	project for weeks trying to get approval from the legal department and
+	senior management, at least until the company adapts its culture to an
+	open-source world.</p>
+	</li>
+
+	</ol>
+
+	<p>I respect and use the GPL and other open-source licenses when I
+	work on other projects, of course, and I appreciate all of the good
+	that the GPL has done for the world.</p>
+	</dd>
+
+
+    <dt><strong>Is the SAX name trademarked?</strong></dt>
+
+	<dd>
+	<p>No: I (David Megginson)
+	assert no intellectual property rights over it.  You can use
+	the names <cite>SAX</cite> or <cite>Simple API for XML</cite> for
+	anything you want, anywhere you want.  That doesn't mean that you can
+	use <em>my</em> name any way you want.  </p>
+	</dd>
+
+    <dt><strong>May we include part or all of the SAX code and/or
+    documentation in a book or on a CD?</strong></dt>
+
+	<dd>
+	<p>See the previous answers.  SAX is in the Public Domain, so you can
+	do whatever you want with it.  There is <em>no</em> need for
+	clearance editors at publishing companies to ask for permission.</p>
+	</dd>
+
+    <dt><strong>Why do so many Canadians work with XML?</strong></dt>
+
+	<dd>
+	<p>It's the only international career open to us if we're not good
+	skaters.</p>
+	</dd>
+
+</dl>
+
+</div>
+    <br />
+
+    </td></tr></table>
+
+    </body></html>

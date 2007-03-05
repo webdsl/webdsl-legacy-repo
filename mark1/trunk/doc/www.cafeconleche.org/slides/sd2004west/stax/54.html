@@ -1,0 +1,141 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <meta name="description" content="Slide used in Elliotte Rusty Harold's &#xA;  StAX seminar at Software Development 2004 West, Thursday, March 17, 2004"><title>Example: RDDLStripper</title><script language="JAVASCRIPT"><!-- 
+              var isnav
+              
+              if (parseInt(navigator.appVersion) >= 4) {
+                if (navigator.appName == "Netscape") {
+                  isNav = true
+                  document.captureEvents(Event.KEYPRESS)
+                }
+                else {
+                  isNav = false
+                }
+              }
+              document.onkeypress = flipslide
+
+              function flipslide(evt) {
+                var key = isNav ? evt.which : window.event.keyCode
+                if (key == 32 || key == 29 || key == 30 || key == 11) {
+                  
+                    location.href="55.html"
+                  
+                }
+                else if (key == 28 || key == 31 || key == 12) {
+                  
+                    location.href="53.html"
+                  
+                }
+                else if (key == 1) {
+                  location.href="index.html";
+                }
+              } //  --></script></head><body>
+  <h1 align="center">Example: RDDLStripper</h1>
+  
+  <pre xmlns:xinclude="http://www.w3.org/2001/XInclude"><code>import javax.xml.stream.*;
+import java.net.*;
+import java.io.*;
+
+ 
+public class RDDLStripper {
+    
+  public final static String RDDL_NS = "http://www.rddl.org/";
+
+  public static void main(String[] args) {
+        
+    if (args.length == 0) {
+      System.err.println("Usage: java RDDLStripper url" );
+      return;    
+    }
+        
+    try {      
+      InputStream in;
+      try {
+        URL u = new URL(args[0]);
+        in = u.openStream();
+      }
+      catch (MalformedURLException ex) {
+          // Maybe it's a file name
+          in = new FileInputStream(args[0]);
+      }
+      
+      XMLStreamReader parser = XMLInputFactory.newInstance().createXMLStreamReader(in);
+      XMLStreamWriter serializer = XMLOutputFactory.newInstance().createXMLStreamWriter(System.out);
+        
+      while (true) {
+         int event = parser.next();
+         if (parser.isStartElement()) {
+             String namespaceURI = parser.getNamespaceURI();
+             if (!namespaceURI.equals(RDDL_NS)) {
+                 serializer.writeStartElement(namespaceURI, parser.getLocalName());
+                 // add attributes
+                 for (int i = 0; i &lt; parser.getAttributeCount(); i++) {
+                     serializer.writeAttribute(
+                       parser.getAttributeNamespace(i),
+                       parser.getAttributeName(i),
+                       parser.getAttributeValue(i)
+                     );
+                 }
+                 // add namespace declarations
+                 for (int i = 0; i &lt; parser.getNamespaceCount(); i++) {
+                     String uri = parser.getNamespaceURI(i);
+                     if (!RDDL_NS.equals(uri)) {
+                       serializer.writeNamespace(parser.getNamespacePrefix(i), uri);
+                     }
+                 }
+             }
+         }
+         else if (parser.isEndElement()) {
+             String namespaceURI = parser.getNamespaceURI();
+             if (!namespaceURI.equals(RDDL_NS)) {
+                 serializer.writeEndElement();
+             }
+         }
+         else if (event == XMLStreamConstants.CHARACTERS || event == XMLStreamConstants.SPACE) {
+             serializer.writeCharacters(parser.getText());
+         }
+         else if (event == XMLStreamConstants.CDATA) {
+             serializer.writeCData(parser.getText());
+         }
+         else if (event == XMLStreamConstants.COMMENT) {
+             serializer.writeComment(parser.getText());
+         }
+         else if (event == XMLStreamConstants.DTD) {
+             serializer.writeDTD(parser.getText());
+         }
+         else if (event == XMLStreamConstants.ENTITY_REFERENCE) {
+             serializer.writeEntityRef(parser.getLocalName());
+         }
+         else if (event == XMLStreamConstants.PROCESSING_INSTRUCTION) {
+             serializer.writeProcessingInstruction(parser.getPITarget(), parser.getPIData());
+         }
+         else if (event == XMLStreamConstants.END_DOCUMENT) {
+            serializer.flush();
+            break;
+         }
+      }  
+      serializer.close();         
+      parser.close();
+      
+    }
+    catch (XMLStreamException ex) {
+       System.out.println(ex);  
+    }
+    catch (IOException ex) {
+      System.out.println("IOException while parsing " + args[0]);   
+    }
+        
+  }
+
+}
+</code></pre>
+    
+  
+  
+<hr><div align="center"><A HREF="53.html">Previous</A> 
+                 | <A HREF="55.html">Next</A> 
+                 | <A HREF="index.html">Top</A> 
+                 | <A HREF="http://www.cafeconleche.org/">Cafe con Leche</A></div><hr><div style="font-size: x-small">
+              Copyright 2000-2004 Elliotte Rusty Harold<br><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a><br>
+              Last Modified 
+              November 6, 2002</div></body></html>

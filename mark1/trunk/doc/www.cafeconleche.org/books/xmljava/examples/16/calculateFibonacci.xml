@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<methodCall>
+  <methodName>calculateFibonacci</methodName>
+  <params>
+    <param>
+      <value>
+        <int>23</int>
+      </value>
+    </param>
+  </params>
+</methodCall>

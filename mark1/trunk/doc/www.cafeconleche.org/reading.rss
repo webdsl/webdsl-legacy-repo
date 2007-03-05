@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<rss version="0.92">
+  <channel>
+    <title>Cafe con Leche XML News and Resources Recommended Reading</title>
+    <link>http://www.cafeconleche.org/</link>
+    <description>Cafe con Leche is the preeminent independent source of XML information on the net. Cafe con Leche is neither beholden to specific companies nor to advertisers. At Cafe con Leche you'll find many resources to help you develop your XML skills here including daily news summaries, examples, book reviews, mailing lists and more.</description>
+    <language>en-us</language>
+    <copyright>Copyright 2005 Elliotte Rusty Harold</copyright>
+    <webMaster>elharo@metalab.unc.edu</webMaster>
+    <image>
+      <title>Cafe con Leche</title>
+      <url>http://www.cafeconleche.org/cup.gif</url>
+      <link>http://www.cafeconleche.org/</link>
+      <width>89</width>
+      <height>67</height>
+    </image>
+    <item>
+      <title>Web Browser CSS Support (www.webdevout.net)</title>
+      <link>http://www.webdevout.net/browser-support-css</link>
+    </item>
+    <item>
+      <title>Debtors Search for Discipline via Blogs  (New York Times)</title>
+      <link>http://www.nytimes.com/2007/02/18/us/18debt.html?ex=1329454800&amp;en=39a324f3f935ebac&amp;ei=5090&amp;partner=rssuserland&amp;emc=rss</link>
+    </item>
+    <item>
+      <title>XML.com: Introducing RDFa (www.xml.com)</title>
+      <link>http://www.xml.com/pub/a/2007/02/14/introducing-rdfa.html</link>
+    </item>
+    <item>
+      <title>Comcast Customer Uses "Unlimited Service" Excessively, Gets Disconnected For A Year  (www.consumerist.com)</title>
+      <link>http://www.consumerist.com/search/comcast%20comcast-customer-uses-unlimited-service-excessively-gets-disconnected-for-a-year-235585.php</link>
+    </item>
+  </channel>
+</rss>

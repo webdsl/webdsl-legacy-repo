@@ -1,0 +1,491 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Validity</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="previous" href="ch01s02.html" title="XML Syntax"><link rel="next" href="ch01s04.html" title="Style sheets"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"><link rel="subsection" href="ch01s03.html#d0e1541" title="DTDs"><link rel="subsection" href="ch01s03.html#d0e1866" title="Schemas"><link rel="subsection" href="ch01s03.html#d0e1962" title="Schematron"><link rel="subsection" href="ch01s03.html#d0e2014" title="The Last Mile"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Validity</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch01s02.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;1.&nbsp;XML for Data</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch01s04.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e1498"></a>Validity</h2></div></div><p>
+    Programmers have long known the value of verifiable preconditions on 
+    functions and methods. (A lot of us carelessly don&#8217;t use them, but 
+    that&#8217;s a topic for another book.) One of the important innovations 
+    of XML is the ability to place preconditions on the data the 
+    programs read, and to do this in a simple declarative way. XML 
+    allows you to say that every <tt>Order</tt> element must 
+    contain exactly one <tt>Customer</tt> element, that each 
+    <tt>Customer</tt> element must have an <tt>id</tt> 
+    attribute that contains an XML name token, that every 
+    <tt>ShipTo</tt> element must contain one or more 
+    <tt>Street</tt>s, one <tt>City</tt>, one 
+    <tt>State</tt>, and one <tt>Zip</tt>, and so forth. 
+    Checking an XML document against this list of conditions is called 
+    <i>validation</i>. Validation is an optional step 
+    but an important one.
+  </p><p>
+    There is more than one language in which you can express such 
+    conditions. Generically, these are called 
+    <i>schema languages</i>, and the documents
+    that list the constraints are called <i>schemas</i>.
+    Different schema languages have different strengths and 
+    weaknesses. The document type definition (DTD) is the only 
+    schema language built into most XML parsers and endorsed as a 
+    standard part of XML. However, because of the extensible nature of 
+    XML, many other schema languages have been invented that  can  easily be
+    integrated with your systems. 
+  </p><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e1541"></a>DTDs</h3></div></div><p>
+    A DTD focuses on the element structure of a document.
+    It says what elements a document may contain,
+     what each element may and must contain
+    in what order, and what attributes each element
+    has. 
+    </p><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e1546"></a>Element Declarations</h4></div></div><p>
+    In order to be valid according to a DTD, 
+    each element used in the document must
+    be declared in an <i>ELEMENT declaration</i>.
+    For example, this is an ELEMENT declaration that says 
+    that <tt>Name</tt> elements contain 
+    <tt>#PCDATA</tt>, 
+    that is, text but no child elements.
+    </p><div class="informalexample"><pre class="programlisting">&lt;!ELEMENT Name (#PCDATA)&gt;</pre></div><p>
+    Elements that can have children are declared by listing the names
+    of their children in order, separated by commas.
+     For example, this ELEMENT declaration says 
+    that an <tt>Order</tt> element contains a <tt>Customer</tt> element,
+    a <tt>Product</tt> element, a <tt>Subtotal</tt> element, a <tt>Tax</tt> element, a <tt>Shipping</tt> element,
+    and a <tt>Total</tt> element in that order:
+    </p><div class="informalexample"><pre class="programlisting">&lt;!ELEMENT Order (Customer, Product, Subtotal, Tax, Shipping, Total)&gt;</pre></div><p>
+    The parenthesized list of things an element can contain is called 
+    the element&#8217;s <i>content model</i>. You can attach a 
+    question mark after an element name in the content model to indicate 
+    that the element is optional; that is, that either zero or one 
+    instance of the element may occur at that position. You can attach 
+    an asterisk after the element name to indicate that zero or more 
+    instances of the element may occur at that position, or a plus sign 
+    to indicate that one or more instances of the element must occur at 
+    that position. For example, this element declaration states that a 
+    <tt>ShipTo</tt> element must contain zero or one 
+    <tt>GiftRecipient</tt> elements, one or more 
+    <tt>Street</tt> elements, and exactly one 
+    <tt>City</tt>, <tt>State</tt>, and 
+    <tt>Zip</tt> elements in that order:
+    </p><div class="informalexample"><pre class="programlisting">&lt;!ELEMENT ShipTo (GiftRecipient?, Street+, City, State, Zip)&gt;</pre></div><p>
+    You can use a vertical bar instead of a comma to indicate that 
+    either one or the other of the elements may appear. You can group 
+    collections of elements with parentheses to indicate that the entire 
+    group should be treated as a unit. You can suffix a 
+    <tt>*</tt>, <tt>?</tt>, or <tt>+</tt> to the 
+    group to indicate that zero or more, zero or one, or one or more of 
+    those groups may appear at that point. Finally, you may replace the 
+    entire content model with the keyword <tt>EMPTY</tt> to 
+    specify that the element must not contain any content at all. 
+    </p></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e1629"></a>Attribute Declarations</h4></div></div><p>
+    A DTD also specifies which attributes may and must appear on which 
+    elements. Each attribute is declared in an <i>ATTLIST 
+    declaration</i> which specifies:
+    </p><div class="itemizedlist"><ul type="disc"><li><p>The element to which the attribute belongs</p></li><li><p>The name of the attribute</p></li><li><p>The type of the attribute</p></li><li><p>The default value of the attribute</p></li></ul></div><p>
+    For example, this ATTLIST declaration says that every 
+    <tt>Customer</tt> element must have an attribute named 
+    <tt>id</tt> with type ID:
+    </p><div class="informalexample"><pre class="programlisting">&lt;!ATTLIST Customer id ID #REQUIRED&gt;</pre></div><p>
+    DTDs define ten different types for attributes:
+    </p><div class="variablelist"><dl><dt><span class="term"><tt>CDATA</tt></span></dt><dd><p>Any string of text;
+    the default type for undeclared attributes in
+    invalid documents</p></dd><dt><span class="term"><tt>NMTOKEN</tt></span></dt><dd><p>
+      A string composed of one or more legal XML name characters.
+      Unlike an XML name, a name token may start with a digit.
+      </p></dd><dt><span class="term"><tt>NMTOKENS</tt></span></dt><dd><p>A white space separated list of name tokens</p></dd><dt><span class="term"><tt>ID</tt></span></dt><dd><p>An XML name that is unique among
+    ID type attributes in the document</p></dd><dt><span class="term"><tt>IDREF</tt></span></dt><dd><p>An XML name used as an ID attribute value
+    on some element in the document</p></dd><dt><span class="term"><tt>IDREFS</tt></span></dt><dd><p>A white space separated list of 
+    XML names used as ID attribute values
+    somewhere in the document</p></dd><dt><span class="term"><tt>ENTITY</tt></span></dt><dd><p>The name of an unparsed entity declared
+    in an ENTITY declaration in the DTD</p></dd><dt><span class="term"><tt>ENTITIES</tt></span></dt><dd><p>A white space separated list of unparsed entities
+     declared in the DTD</p></dd><dt><span class="term"><tt>NOTATION</tt></span></dt><dd><p>The name of a notation declared
+    in a NOTATION declaration in the DTD</p></dd><dt><span class="term">Enumeration</span></dt><dd><p>A list of all legal values for the attribute,
+    separated by vertical bars. Each possible value must be
+    an XML name token.</p></dd></dl></div><p>
+   Most parsers and APIs will tell you what the type of an
+   attribute is if you want to know, but in practice this knowledge
+   is not very useful.
+   W3C XML schema language schemas offer much more complete data typing for
+   both elements and attributes, including not only these types but
+   also the more customary data types like <tt>int</tt> and <tt>double</tt>. 
+    </p><p>
+    DTDs allow four possible default values for attributes:
+    </p><div class="variablelist"><dl><dt><span class="term"><tt>#REQUIRED</tt></span></dt><dd><p>Each element in the 
+    instance document must provide a value for this attribute.</p></dd><dt><span class="term"><tt>#IMPLIED</tt></span></dt><dd><p>
+      Each element in the 
+    instance document may or may not
+     provide a value for this attribute.
+     If an element does not, then
+     no default value is provided from the DTD.<sup>[<a name="d0e1758" href="#ftn.d0e1758">7</a>]</sup>
+      </p></dd><dt><span class="term"><tt>#FIXED "<i><tt>value</tt></i>"</tt></span></dt><dd><p>The attribute always has the value that follows
+     <tt>#FIXED</tt> in double or single quotes,
+      whether or not it&#8217;s present in the instance document.</p></dd><dt><span class="term">"<i><tt>value</tt></i>"</span></dt><dd><p>By default the attribute has the
+    value specified in the DTD in single or double quotes.
+    However, individual instances of the element may
+    specify a different value. 
+    </p></dd></dl></div><p>
+   Parsers may or may not tell you whether an attribute came from the 
+   instance document or was defaulted in from the DTD. It&#8217;s relatively 
+   rare that you care about this one way or the other. However, if 
+   you&#8217;re using a document that relies heavily on attribute values
+   from DTDs, (e.g. for namespace declarations) make sure you&#8217;re
+   using a parser that does read the external DTD subset.
+    </p><p>
+    <a href="ch01s03.html#order.dtd" title="Example&nbsp;1.8.&nbsp;A DTD for order documents">Example&nbsp;1.8</a> is a complete DTD for 
+    order documents of the type shown in this chapter.
+    It uses both ELEMENT and ATTLIST declarations.
+    </p><div class="example"><a name="order.dtd"></a><p class="title"><b>Example&nbsp;1.8.&nbsp;A DTD for order documents</b></p><pre class="programlisting">&lt;!ELEMENT Order (Customer, Product+, Subtotal, Tax, Shipping, Total)&gt;
+&lt;!ELEMENT Customer (#PCDATA)&gt;
+&lt;!ATTLIST Customer id ID #REQUIRED&gt;
+&lt;!ELEMENT Product (Name, SKU, Quantity, Price, Discount?, 
+                   ShipTo, GiftMessage?)&gt;
+&lt;!ELEMENT Name (#PCDATA)&gt;
+&lt;!ELEMENT SKU (#PCDATA)&gt;
+&lt;!ELEMENT Quantity (#PCDATA)&gt;
+&lt;!ELEMENT Price (#PCDATA)&gt;
+&lt;!ATTLIST Price currency (USD | CAN | GBP) #REQUIRED&gt;
+&lt;!ELEMENT Discount (#PCDATA)&gt;
+&lt;!ELEMENT ShipTo (GiftRecipient?, Street+, City, State, Zip)&gt;
+&lt;!ELEMENT GiftRecipient (#PCDATA)&gt;
+&lt;!ELEMENT Street (#PCDATA)&gt;
+&lt;!ELEMENT City   (#PCDATA)&gt;
+&lt;!ELEMENT State  (#PCDATA)&gt;
+&lt;!ELEMENT Zip    (#PCDATA)&gt;
+&lt;!ELEMENT GiftMessage (#PCDATA)&gt;
+&lt;!ELEMENT Subtotal (#PCDATA)&gt;
+&lt;!ATTLIST Subtotal currency (USD | CAN | GBP) #REQUIRED&gt;
+&lt;!ELEMENT Tax (#PCDATA)&gt;
+&lt;!ATTLIST Tax currency (USD | CAN | GBP) #REQUIRED
+              rate CDATA "0.0"
+&gt;
+
+&lt;!ELEMENT Shipping (#PCDATA)&gt;
+&lt;!ATTLIST Shipping currency (USD | CAN | GBP) #REQUIRED
+                   method   (USPS | UPS | Overnight) "UPS"&gt;
+&lt;!ELEMENT Total (#PCDATA)&gt;
+&lt;!ATTLIST Total currency (USD | CAN | GBP) #REQUIRED&gt;
+</pre></div></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e1801"></a>Document Type Declarations</h4></div></div><p>
+    Documents are associated with particular DTDs using 
+    <i>document type declarations</i>.
+    This is a document type declaration that points to 
+    the DTD in <a href="ch01s03.html#order.dtd" title="Example&nbsp;1.8.&nbsp;A DTD for order documents">Example&nbsp;1.8</a>:
+  </p><div class="informalexample"><pre class="programlisting">&lt;!DOCTYPE Order SYSTEM "order.dtd"&gt;</pre></div><p>
+    The document type declaration is placed in the
+    instance document&#8217;s prolog, after the XML declaration
+    but before the root element start-tag. For example,
+  </p><div class="informalexample"><pre class="programlisting">&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;!DOCTYPE Order SYSTEM "order.dtd"&gt;
+&lt;Order&gt;
+  ...</pre></div><p>
+    This does assume that the DTD can be found 
+    in the same directory where the document itself is.
+    If you prefer you can use an absolute URL instead.
+    For example,
+  </p><div class="informalexample"><pre class="programlisting">&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;!DOCTYPE Order SYSTEM "http://www.ibiblio.org/xml/dtds/order.dtd"&gt;
+&lt;Order&gt;
+  ...</pre></div><p>
+    Even though <a href="ch01.html#finishedorder.xml" title="Example&nbsp;1.5.&nbsp;An XML document indicating an &#xA;order for multiple products shipped to multiple addresses">Example&nbsp;1.5</a> satisfies all the
+    conditions expressed in <a href="ch01s03.html#order.dtd" title="Example&nbsp;1.8.&nbsp;A DTD for order documents">Example&nbsp;1.8</a>,
+    it is not valid because it does not have a document
+    type declaration pointing to that DTD.    
+  </p><div class="caution" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Caution</h3><p>The acronym DTD is correctly used only to
+  mean &#8220;document type <span class="emphasis"><em>definition</em></span>&#8221;. 
+  It should never be used to mean
+  &#8220;document type <span class="emphasis"><em>declaration</em></span>&#8221;. The document type 
+  <span class="emphasis"><em>declaration</em></span> may
+  contain or point to the document type <span class="emphasis"><em>definition</em></span> 
+  (or both); but it is not the same thing. 
+  </p></div><p>
+      DTDs are not just about validation.
+      They can also affect the content of the instance document itself.
+      In particular, they can:
+    </p><div class="itemizedlist"><ul type="disc"><li><p>Define entities</p></li><li><p>Define notations</p></li><li><p>Provide default values for attributes</p></li></ul></div><p>
+      Assuming you&#8217;re using a validating parser, there is little reason 
+      to care about how such things happen. The entities the DTD defines 
+      will be resolved before you see them. The notations will be 
+      applied to the appropriate elements and entities. 
+      A default attribute value will be just one more attribute in an 
+      element&#8217;s list of attributes. Some APIs may tell you what entity a 
+      particular element came form or whether an attribute value was 
+      defaulted from the DTD or present in the instance document. 
+      However, most of the time you simply do not need to know this. 
+    </p></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e1866"></a>Schemas</h3></div></div><p>
+    The W3C XML Schema Language (schemas for short, though it&#8217;s hardly 
+    the only schema language) addresses several limitations of DTDs. First 
+    schemas are written in XML instance document syntax, using tags, 
+    elements, 
+    and attributes. Secondly, schemas are fully namespace aware. 
+    Thirdly, schemas can assign data types like integer and date to 
+    elements, and validate documents not only based on the element 
+    structure but also on the contents of the elements. 
+    </p><p>
+    <a href="ch01s03.html#order.xsd" title="Example&nbsp;1.9.&nbsp;order.xsd: a schema for order documents">Example&nbsp;1.9</a> shows a schema for order documents. 
+    Where <tt>order.dtd</tt> uses an ELEMENT declaration, 
+    <tt>order.xsd</tt> uses an <tt>xsd:element</tt> 
+    element. Where <tt>order.dtd</tt> uses an ATTLIST 
+    declaration, <tt>order.xsd</tt> uses an 
+    <tt>xsd:attribute</tt> element.
+    </p><p>
+    But <tt>order.xsd</tt> doesn&#8217;t just repeat the same 
+    constraints found in <tt>order.dtd</tt>. It also assigns 
+    types and ranges to the elements. For instance, it requires that all 
+    the money elements&#8212;<tt>Tax</tt>, 
+    <tt>Shipping</tt>, <tt>Subtotal</tt>, 
+    <tt>Total</tt>, and <tt>Price</tt>&#8212;contain a 
+    decimal number such as 9.85, 7.2, or -3.25. <sup>[<a name="d0e1916" href="#ftn.d0e1916">8</a>]</sup> If one of these elements contained text 
+    that was not a decimal number such as &#8220;France&#8221;, then the validator 
+    would notice and report the problem.  DTDs cannot detect mistakes 
+    like this. A DTD can note that there is no <tt>Price</tt> 
+    element where one is expected, but it cannot determine that the 
+    <tt>Price</tt> element does not actually give a price.  
+    </p><div class="example"><a name="order.xsd"></a><p class="title"><b>Example&nbsp;1.9.&nbsp;order.xsd: a schema for order documents</b></p><pre class="programlisting">&lt;?xml version="1.0"?&gt;
+&lt;xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+
+  &lt;xsd:element name="Order"&gt;
+    &lt;xsd:complexType&gt;
+      &lt;xsd:sequence&gt;
+        &lt;xsd:element name="Customer"&gt;
+          &lt;xsd:complexType&gt;
+            &lt;xsd:simpleContent&gt;
+              &lt;xsd:extension base="xsd:string"&gt;
+                &lt;xsd:attribute name="id" type="xsd:ID"/&gt;
+              &lt;/xsd:extension&gt;
+            &lt;/xsd:simpleContent&gt;
+          &lt;/xsd:complexType&gt;
+         &lt;/xsd:element&gt;
+        &lt;xsd:element name="Product" maxOccurs="unbounded"&gt;
+          &lt;xsd:complexType&gt;
+            &lt;xsd:sequence&gt;
+              &lt;xsd:element name="Name"     type="xsd:string"/&gt;
+              &lt;xsd:element name="SKU" 
+               type="xsd:positiveInteger"/&gt;
+              &lt;xsd:element name="Quantity" 
+               type="xsd:positiveInteger"/&gt;
+              &lt;xsd:element name="Price"    type="MoneyType"/&gt;
+              &lt;xsd:element name="Discount" type="xsd:decimal" 
+                           minOccurs="0"/&gt;
+              &lt;xsd:element name="ShipTo"&gt;
+                &lt;xsd:complexType&gt;
+                  &lt;xsd:sequence&gt;
+                    &lt;xsd:element name="GiftRecipient" 
+                     type="xsd:string" 
+                     minOccurs="0" maxOccurs="unbounded"/&gt;
+                    &lt;xsd:element name="Street" 
+                     type="xsd:string"/&gt;
+                    &lt;xsd:element name="City" type="xsd:string"/&gt;
+                    &lt;xsd:element name="State" 
+                     type="xsd:string"/&gt;
+                    &lt;xsd:element name="Zip" type="xsd:string"/&gt;
+                  &lt;/xsd:sequence&gt;
+                &lt;/xsd:complexType&gt;
+              &lt;/xsd:element&gt;
+              &lt;xsd:element name="GiftMessage" type="xsd:string" 
+                           minOccurs="0"/&gt;
+            &lt;/xsd:sequence&gt;        
+          &lt;/xsd:complexType&gt;           
+        &lt;/xsd:element&gt;
+        &lt;xsd:element name="Subtotal" type="MoneyType"/&gt;
+        &lt;xsd:element name="Tax"&gt;
+          &lt;xsd:complexType&gt;
+            &lt;xsd:simpleContent&gt;
+              &lt;xsd:extension base="MoneyType"&gt;
+                &lt;xsd:attribute name="rate" type="xsd:decimal"/&gt;
+              &lt;/xsd:extension&gt;
+            &lt;/xsd:simpleContent&gt;
+          &lt;/xsd:complexType&gt;        
+        &lt;/xsd:element&gt;
+        &lt;xsd:element name="Shipping"&gt;
+          &lt;xsd:complexType&gt;
+            &lt;xsd:simpleContent&gt;
+              &lt;xsd:extension base="MoneyType"&gt;
+                &lt;xsd:attribute name="method" type="xsd:string"/&gt;
+              &lt;/xsd:extension&gt;
+            &lt;/xsd:simpleContent&gt;
+          &lt;/xsd:complexType&gt;                
+        &lt;/xsd:element&gt;
+        &lt;xsd:element name="Total" type="MoneyType"/&gt;
+      &lt;/xsd:sequence&gt;
+    &lt;/xsd:complexType&gt;  
+  &lt;/xsd:element&gt;
+
+  &lt;xsd:complexType name="MoneyType"&gt;
+    &lt;xsd:simpleContent&gt;
+      &lt;xsd:extension base="xsd:decimal"&gt;
+        &lt;xsd:attribute name="currency" type="xsd:string"/&gt;
+      &lt;/xsd:extension&gt;
+    &lt;/xsd:simpleContent&gt;
+  &lt;/xsd:complexType&gt;
+
+&lt;/xsd:schema&gt;
+</pre></div><p>
+      There are multiple ways to indicate that a document should 
+      satisfy a known schema.  The most common is an 
+      <tt>xsi:noNamespaceSchemaLocation</tt> attribute on the 
+      root element of the instance document. The <tt>xsi</tt> 
+      prefix is bound to the 
+      <tt>http://www.w3.org/2001/XMLSchema-instance</tt> 
+      URI. For example,
+    </p><div class="informalexample"><pre class="programlisting">&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;Order xsi:noNamespaceSchemaLocation="order.xsd"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  ...</pre></div><p>
+      Some parsers  also provide ways to specify a 
+      schema from inside a program, for instance by setting various 
+      properties. I&#8217;ll discuss this more when we get to programmatic 
+      validation in <a href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface">Chapter&nbsp;7</a>.
+    </p><p>
+      Schemas are still pretty bleeding edge technology at the time of this 
+      writing. (May, 2002). There are only a few parsers that 
+      provide incomplete implementations of the full W3C XML Schemas 1.0 
+      specification. Nonetheless, developers have been clamoring for 
+      this functionality (if not necessarily this syntax) for some time 
+      so schemas seem likely to achieve broad adoption relatively 
+      quickly. 
+    </p><p> 
+    For the moment, schema support is limited to simple validation, much 
+    as DTD support is. A schema-aware parser will read an XML document, 
+    compare what it sees there to a schema, and return a boolean result: 
+    either the document satisfies the schema or it does not. In 
+    the event the document fails to satisfy the schema, the parser might 
+    give you a line number and a more detailed error message about 
+    exactly what the problem is, but that&#8217;s it. More complete use of 
+    schemas, in which parsers tell you what the type of any element is 
+    so you can, for example, convert elements with type 
+    <tt>xsd:int</tt> to actual 
+    Java <tt>int</tt>s, are 
+    still a matter for research and experiment.   
+     </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e1962"></a>Schematron</h3></div></div><p> 
+    Rick Jelliffe&#8217;s 
+    <a href="http://www.ascc.net/xml/resource/schematron/schematron.html" target="_top">Schematron</a> 
+    is a radically different 
+    approach to an XML schema language.
+    Whereas other languages are conservative (everything not
+    permitted is forbidden) Schematron is liberal (everything not
+    forbidden is permitted).
+    Furthermore, 
+    Schematron is based on XPath so it can check cooccurence constraints
+    between elements and attributes; e.g.
+    that the content of the total price element must be equal to the
+    sum of the content
+    of the subtotal, tax, and shipping elements.  
+    Finally, Schematron
+    can be implemented as an XSLT stylesheet rather than
+    requiring special software.     
+    </p><p>
+    <a href="ch01s03.html#order.sct" title="Example&nbsp;1.10.&nbsp;order.sct: a Schematron schema for order documents">Example&nbsp;1.10</a> shows a Schematron schema for order 
+    documents. To keep the example smaller, I did not test absolutely 
+    everything I could. Instead, I took advantage of Schematron&#8217;s liberality
+    to test only those conditions that neither 
+    DTDs nor schemas can validate; for instance, that the total price is 
+    the sum of the subtotal, the tax, and the shipping. I haven&#8217;t 
+    necessarily lost anything by doing this. I can validate a single 
+    document against multiple different kinds of schemas. For instance, 
+    orders could first be checked against the DTD, then checked against 
+    a W3C XML Schema Language schema, and only checked against this 
+    Schematron schema if they passed the first two tests.
+    </p><div class="example"><a name="order.sct"></a><p class="title"><b>Example&nbsp;1.10.&nbsp;order.sct: a Schematron schema for order documents</b></p><pre class="programlisting">&lt;?xml version="1.0"?&gt;
+&lt;schema xmlns="http://www.ascc.net/xml/schematron"&gt;
+  &lt;title&gt;A Schematron Schema for Orders&lt;/title&gt;
+  &lt;pattern&gt;
+    &lt;rule context="Order"&gt;
+      &lt;!-- Due to round-off error, floating point numbers 
+           should rarely be compared for direct equality. 
+           For this purpose, it's enough if they're accurate 
+           within one penny. --&gt;
+      &lt;assert test="(Shipping+Subtotal+Tax - Total)&amp;lt;0.01 
+                and (Shipping+Subtotal+Tax - Total)&amp;gt;-0.01"&gt;
+        The subtotal, tax, and shipping 
+        must add up to the total.
+      &lt;/assert&gt;
+      
+      &lt;assert test= 
+       "(Subtotal+Shipping)*((Tax/@rate) div 100.0) 
+         - Tax &amp;lt; 0.01 and (Subtotal+Shipping)*((Tax/@rate) 
+         div 100.0)-Tax &amp;gt; -0.01
+      "&gt;
+        The tax was incorrectly calculated.
+      &lt;/assert&gt;
+  
+    &lt;/rule&gt;
+  &lt;/pattern&gt;
+&lt;/schema&gt;
+</pre></div><p>
+    XPath is not by itself Turing complete so there are still
+    some limits to what you can express in a Schematron schema.
+    For instance, you can&#8217;t sum up the <tt>Quantity</tt> 
+    times the <tt>Price</tt> for
+    each <tt>Product</tt> element and make sure that equals the <tt>Subtotal</tt>.
+    However, Schematron is still a lot more powerful 
+    than other schema languages.  
+    </p><p>
+   Schematron is implemented in a very unusual fashion. First you run 
+   your Schematron schema through an XSLT processor using a skeleton 
+   stylesheet Jelliffe provides. This produces a new XSLT stylesheet. 
+   In essence, this compiles the Schematron schema into an XSLT 
+   stylesheet. The compiler is itself written in XSLT. You then transform all 
+   your instance documents using the compiled schema. If any of the 
+   assertions fail, the output will contain the assertion message. 
+   Otherwise it will contain just the XML declaration. For example, 
+   using Michael Kay&#8217;s SAXON XSLT processor, to validate
+   <a href="ch01.html#order.xml" title="Example&nbsp;1.2.&nbsp;An XML document indicating an &#xA;order for 12 Birdsong Clocks, SKU 244">Example&nbsp;1.2</a> against <a href="ch01s03.html#order.sct" title="Example&nbsp;1.10.&nbsp;order.sct: a Schematron schema for order documents">Example&nbsp;1.10</a>:
+    </p><pre class="screen"><tt>C:\XMLJAVA&gt;</tt><b><tt>saxon order.sct skeleton1-5.xsl&gt;order_sct.xsl</tt></b>
+<tt>C:\XMLJAVA&gt;</tt><b><tt>saxon order.xml order_sct.xsl</tt></b>
+<tt>&lt;?xml version="1.0" encoding="utf-8"?&gt;</tt></pre><p>
+   Schematron is the idiosyncratic product of one person. 
+   It is therefore not a standard part of any major parsers,
+   unlike DTDs and the W3C XML Schema Language.
+   However, it&#8217;s not particularly difficult to install 
+   Jelliffe&#8217;s Schematron validation software into most systems.
+   Since Schematron is implemented in XSLT, all you need is
+   a good API to access an XSLT engine.
+   I&#8217;ll take this up again in the final chapter when I discuss
+   APIs for XSLT.  
+    </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e2014"></a>The Last Mile</h3></div></div><p>
+      Schematron is powerful, but there are still some checks it cannot 
+      perform. In particular, it cannot perform any checks that require 
+      information external to the document and the schema. For example, 
+      it cannot verify that the page at a referenced URL is reachable. 
+      It cannot verify that a file exists on the local file system. It 
+      cannot compare the SKUs, names, and prices in an order document 
+      with their values in a remote database. None of the extant schema 
+      languages allow you to state conditions like these.
+    </p><p>
+      Java can do all of these things. The 
+      <tt>java.net.URL</tt> class can easily test whether 
+      a URL is live. The <tt>exists()</tt> method of the 
+      <tt>java.io.File</tt> class is a simple test for 
+      whether a file is where you think it is. JDBC is a whole API 
+       remote database access. 
+      However, unlike the more 
+      limited constraints of DTDs, the W3C XML Schema Language, or even 
+      Schematron, simply listing the conditions is not enough. To test 
+      such conditions, you have to write the code that tests them.  
+      Nobody&#8217;s done the hard work for you. There will always be some 
+      constraints you need a full-blown programming language to check. 
+      Indeed doing exactly this will be a major focus of the remainder 
+      of this book.  
+    </p><p>
+      One thing you can learn from the existing languages is the clean
+      way they separate validation from processing.
+      If you design your own validation layer, you should do that too.
+      Perform all validation before the document is processed for
+      its contents. If possible, separate the constraints from
+      the code that checks them. 
+    </p></div><div class="footnotes"><br><hr width="100" align="left"><div class="footnote"><p><sup>[<a name="ftn.d0e1758" href="#d0e1758">7</a>] </sup>
+     This is really a bad choice of terminology.
+     Nothing is being implied here. A more accurate keyword
+     would be <tt>#OPTIONAL</tt>. However <tt>#IMPLIED</tt> is what XML gives us. 
+     </p></div><div class="footnote"><p><sup>[<a name="ftn.d0e1916" href="#d0e1916">8</a>] </sup>
+    It would 
+    be possible to go further and require that each money item be a 
+    positive number with two decimal digits of precision such as 9.85 
+    but not 7.2 or -3.25, but for now I wanted to keep this example 
+    smaller.</p></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch01s02.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch01.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch01s04.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">XML Syntax&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Style sheets</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+May 21,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

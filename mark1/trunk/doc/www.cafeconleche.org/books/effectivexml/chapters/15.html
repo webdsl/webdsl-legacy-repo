@@ -1,0 +1,405 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+	<TITLE>15. Build on top of structures, not syntax</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.3  (Linux)">
+	<META NAME="AUTHOR" CONTENT="Elliotte Rusty Harold">
+	<META NAME="CREATED" CONTENT="20020211;16570000">
+	<META NAME="CHANGED" CONTENT="20030426;10551100">
+	<STYLE>
+	<!--
+		@page { size: 21.59cm 27.94cm; margin-left: 2.54cm; margin-right: 2.54cm; margin-top: 1.25cm; margin-bottom: 1.25cm }
+		P { margin-bottom: 0.21cm; color: #000000; line-height: 0.42cm; text-align: justify; widows: 2; orphans: 2 }
+		P.western { font-family: "Times New Roman"; font-size: 10pt; so-language: en-US; font-style: italic }
+		P.cjk { font-family: "Times New Roman", serif; font-size: 10pt; font-weight: medium }
+		H1 { margin-top: 0.56cm; margin-bottom: 0.28cm; color: #ff0000; line-height: 0.42cm; text-align: justify; widows: 2; orphans: 2 }
+		H1.western { font-family: "Times New Roman"; font-size: 18pt; so-language: en-US; font-style: italic }
+		H1.cjk { font-family: "Times New Roman", serif; font-size: 18pt }
+		H1.ctl { font-family: "Arial Unicode MS"; font-size: 12pt; font-weight: medium }
+		P.sdfootnote-western { margin-top: 0.11cm; margin-bottom: 0.11cm; font-family: "Times New Roman"; font-size: 9pt; so-language: en-US; font-style: italic }
+		P.sdfootnote-cjk { margin-top: 0.11cm; margin-bottom: 0.11cm; font-family: "Times New Roman", serif; font-size: 9pt; font-weight: medium }
+		P.sdfootnote-ctl { margin-top: 0.11cm; margin-bottom: 0.11cm }
+		PRE { color: #000000; line-height: 0.42cm; text-align: left; widows: 2; orphans: 2; page-break-before: auto }
+		PRE.western { font-family: "Courier New"; so-language: en-US; font-style: normal; font-weight: medium }
+		PRE.cjk { font-weight: medium }
+		A:link { color: #ff0000 }
+		A.western:link { font-style: italic }
+		A.cjk:link { font-style: italic }
+		A.sdfootnoteanc { font-size: 57% }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" LINK="#ff0000">
+<DIV TYPE=HEADER>
+	<P CLASS="western" ALIGN=CENTER STYLE="margin-top: 0.21cm; margin-bottom: 0cm">
+	<B>DRAFT, <SDFIELD TYPE=DATETIME SDNUM="1033;0;M/D/YY">4/26/03</SDFIELD></B></P>
+</DIV>
+<P ALIGN=CENTER STYLE="margin-top: 0.42cm; page-break-after: avoid"><FONT FACE="Albany, Arial"><FONT SIZE=5><B>15.
+Build on top of structures, not syntax</B></FONT></FONT></P>
+<P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">Entity
+references, CDATA sections, character references, empty-element tags
+and the like are just syntax sugar. They make it a little easier to
+include certain hard-to-type constructs in XML documents. They do not
+in any way change a document's information content. Many parsers will
+not even tell you whether such syntax sugar was used or not. Your
+documents should convey the same meaning if each of these is replaced
+with an equivalent representation of the same content.</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">XML
+processing can be thought of as a five layer stack as shown in Figure
+15-1. Each layer of data is processed to generate the successively
+more abstract, more useful layer that follows it. Binary data is
+converted into characters. Characters are converted into syntax.
+Syntax is processed to form structures. Finally structures are
+interpreted to form semantics. Each layer has its place and each
+layer is necessary. However, it's important not to mix them. A
+program processing XML can safely operate on only a single layer.
+Programs that attempt to operate in multiple layers simultaneously
+risk corrupting the clean, well-formed nature of XML. 
+</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">Normally
+processing begins with binary data that is translated into Unicode
+text according to a particular encoding. It be necessary to decrypt,
+decompress, or otherwise transform the binary data before passing it
+to the parser. It may also be necessary to first strip off and
+interpret metadata from the binary stream to locate the XML document.
+For example when reading an XML document from a web server over a
+socket, you would have to read and remove the HTTP header while
+storing the information the header contained about the document's
+content type and encoding. (See Item 45.) Once the beginning of the
+document has been located, the parser will read ahead far enough to
+detect the encoding. Once it's confident it knows the encoding, it
+backs up to the beginning of the document and begins converting bytes
+into Unicode characters. This may happen before the XML parser begins
+its work, and is technically not a part of XML, though for
+convenience most XML parsers at least have options to perform some of
+this work, especially encoding detection. In Java the APIs for the
+binary layer are java.io.InputStream and java.io.OutputStream.</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">The
+Unicode characters form the lexical layer. In Java the APIs for this
+layer are java.io.Reader and java.io.Writer. These are not
+specifically XML APIs because this data is not necessarily XML until
+well-formedness has been verified. The only well-formedness check
+that can be performed at this level is verifying that the characters
+are all legal in an XML document; for example, that there are no
+vertical tabs or unmatched halves of surrogate pairs in the data
+stream. 
+</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">The
+parser then reads the raw Unicode characters to recognize the
+low-level syntax of an XML document: tags, text, entity references,
+CDATA section delimiters, and so forth.<A CLASS="sdfootnoteanc" NAME="sdfootnote1anc" HREF="#sdfootnote1sym"><SUP>1</SUP></A>
+This is the layer where most of the well-formedness rules defined by
+XML's BNF grammar are checked. There are very few existing APIs that
+truly expose the constructs in this layer, partially because it's not
+always recognized as a separate layer and partially because few
+programs really need to operate at this level, mostly just
+source-code-level XML editors. However, a number of APIs have dug
+holes for themselves by mixing a few pieces of this layer in with the
+next higher structure layer. 
+</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">The
+parser combines these low-level syntax items into higher-level
+information structures: elements, attributes, text nodes, processing
+instructions, and so forth. During this process, the parser checks
+the XML well-formedness constraints that the XML specification calls
+out separately because they cannot be encoded in the BNF grammar. The
+most important of these is that each start-tag has a matching
+end-tag. At this point many of the details about exactly how the
+information was encoded are deliberately lost. For instance, the
+parser will merge the text inside a CDATA section with the text
+outside the CDATA section without in any way noting which characters
+came from inside and which from outside. Most common XML APIs operate
+primarily at the structure level. These include SAX, DOM, JDOM, and
+XOM. Both DOM and SAX parsers can optionally mix in a lot of syntax
+layer information, but neither is required to support this.</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">Finally,
+the parser passes the information about these high-level structures
+to the client program that invoked the parser. This client program
+then acts on these structures to produce semantic objects and data
+structures that are appropriate for its local process. This is the
+domain of data binding APIs such as JAXB, Castor and Zeus. These
+attempt to completely hide the fact that the data came from XML and
+treat it as some kind of programming object.</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal"><IMG SRC="15_html_4c0ef805.gif" NAME="Graphic1" ALIGN=LEFT WIDTH=418 HEIGHT=857 BORDER=0><BR CLEAR=LEFT><BR><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-left: 1.27cm; margin-right: 1.27cm; text-indent: 0cm; margin-top: 0.14cm; margin-bottom: 0.14cm; page-break-before: always">
+<FONT COLOR="#800000">Figure 15-1: The 5-layer XML processing model</FONT></P>
+<P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">A
+clean program that processes XML works exclusively with a single
+layer. Almost  always the appropriate layer to work with is the
+structure layer. In this layer, a well-designed program exclusively
+processes the elements, attributes, text, and other post-parse
+content. It is responsible for transforming from the structure layer
+to the semantic layer. It does not involve itself with syntactic
+issues such as whether a dollar sign was typed as $, &amp;#36;,
+&amp;dollar;, &amp;#x24;, or even &lt;![CDATA[$]]&gt;. It has even
+less interest in lexical and binary layer issues such as which
+character encoding the document uses. The parser handles all of this
+before the program ever sees the document. 
+</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">Note</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">There
+is perhaps one exception to this rule. Source code level, generic XML
+editors such as XML Spy, XED, or jEdit do need access to the syntax
+layer in order to preserve the appearance of the document. For
+instance, they do not want to change a named entity reference to a
+numeric character reference or vice versa. They may even allow for
+partially malformed documents because users may want to type content
+after start-tags before they type the end-tags. Thus these tools tend
+to operate on the syntax layer rather than the structure layer.
+However, XML editors are a very special case in the realm of XML
+software. The very unusual needs of these tools should not influence
+the design of other, more conventional applications.</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">End
+Note</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">Particularly
+common layer-confusions include:</P>
+<UL>
+	<LI><P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">
+	Treating empty-element tags differently from the equivalent
+	start-tag end-tag pairs</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">
+	Using CDATA sections as pseudo-elements that contain malformed
+	markup</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">
+	Considering character and entity references as somehow different
+	from their replacement text</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">
+	Skipping or forbidding the document type declaration</P>
+</UL>
+<P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">Let's
+explore some of the problems that commonly arise as a result of these
+layer confusions.</P>
+<H1 CLASS="western">Empty-Element Tags</H1>
+<P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">Developers
+trained in database theory often latch onto the empty-element tag
+(e.g. &lt;para/&gt;) as a way of indicating a null value, which they
+rightly consider to be distinct from 0 or the empty string. From
+their perspective this makes sense. &lt;para&gt;AA&lt;/para&gt; is a
+para element whose value is the string &quot;AA&quot;. &lt;para&gt;A&lt;/para&gt;
+is a para element whose value is the string &quot;A&quot;.
+&lt;para&gt;&lt;/para&gt; is a para element whose value is the empty
+string. Finally &lt;para/&gt; is the para element whose value is
+null.</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">This
+is all perfectly sensible, but it does not reflect the way XML
+parsers actually behave. An XML parser will produce exactly the same
+data from &lt;para&gt;&lt;/para&gt; as from &lt;para/&gt;. There is
+no detectable difference between the two. They both have the same
+value, and that value is the empty string, not null.</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">The
+right way to indicate a null element is by attaching an extra
+attribute to the element. In particular the W3C XML Schema Language
+defines an attribute for exactly this purpose, xsi:nil. The customary
+xsi prefix is mapped to the namespace URL
+http://www.w3.org/2001/XMLSchema-instance, and as always the prefix
+can change as long as the URL stays the same. For example, this para
+element genuinely has a null value:</P>
+<PRE CLASS="western">&lt;para xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; 
+      xsi:nil=&quot;true&quot;/&gt;</PRE><P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">
+A schema aware parser may actually report the value of this element
+as being null. However it's more likely you'll have to explicitly
+test each empty element for the presence of an xsi:nil attribute. For
+example, in DOM to convert an Element object known to be empty to a
+string, you might write code something like this:</P>
+<PRE CLASS="western">String elementText;
+String isNil = element.getAttributeNS(
+ &quot;http://www.w3.org/2001/XMLSchema-instance&quot;, nil);
+if (&quot;true&quot;.equals(isNil)) {
+ elementText = null;
+}
+else {  // either there is no xsi:nil attribute or its value is false
+  elementText = &quot;&quot;;
+}</PRE><P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">
+It is an error to set xsi:nil=&quot;true&quot; on a non-empty
+element. However, the difference between two tags and one is not
+important. This para element is also nil:</P>
+<PRE CLASS="western">&lt;para xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; 
+      xsi:nil=&quot;true&quot;&gt;&lt;/para&gt;</PRE><H1 CLASS="western">
+CDATA Sections</H1>
+<P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">CDATA
+sections are probably the most frequently abused drugs in the XML
+pharmacy. The normal reason for this abuse is to embed
+non-well-formed HTML inside an XML document. For example, the
+description element in a catalog entry might contain an entire web
+page for a product:</P>
+<PRE CLASS="western">&lt;Vehicle&gt;
+  &lt;price&gt;30000&lt;/price&gt;
+  &lt;inStock&gt;4&lt;/inStock&gt;
+  &lt;color&gt;black&lt;/color&gt;
+  &lt;description&gt;&lt;![CDATA[
+    &lt;html&gt;
+      &lt;title&gt;The G2 SUV&lt;/title&gt;
+      &lt;body&gt;
+        &lt;img src=g2suv.jpg height=100 width=100&gt;
+        The G2 Sport Utility Vehicle is one of our best-selling models.
+        &lt;p&gt;
+
+        It's built on a truck base for all the stability of a pickup
+        driving down a bumpy country road.
+        &lt;p&gt;
+
+        It gets an astonishing eight miles to the liter.
+        &lt;p&gt;
+        &lt;hr&gt;
+        &lt;a href=G3SUV.html&gt;Next Car&lt;/a&gt;
+      &lt;/body&gt;
+    &lt;/HTML&gt;
+  ]]&gt;&lt;/description&gt;
+&lt;/Vehicle&gt;</PRE><P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">
+Given this structure, it's temptingly easy to write code that
+extracts the contents of the description element and writes the raw
+text into a file or onto a network socket that expects to receive
+HTML. 
+</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">Even
+worse is the case where the CDATA section is not the exclusive
+contents of an element, but is instead one of several children, so
+that it becomes almost a pseudo-element. For example, imagine that
+the above catalog entry did not contain a separate description
+element child, just a CDATA section holding HTML:</P>
+<PRE CLASS="western">&lt;Vehicle&gt;
+  &lt;price&gt;30000&lt;/price&gt;
+  &lt;inStock&gt;4&lt;/inStock&gt;
+  &lt;color&gt;black&lt;/color&gt;
+  &lt;![CDATA[
+    &lt;html&gt;
+      &lt;title&gt;The G2 SUV&lt;/title&gt;
+      &lt;body&gt;
+        &lt;img src=g2suv.jpg height=100 width=100&gt;
+        The G2 Sport Utility Vehicle is one of our best-selling models.
+        &lt;p&gt;
+
+        It's built on a truck base for all the stability of a pickup
+        driving down a bumpy country road.
+        &lt;p&gt;
+
+        It gets an astonshing eight miles to the liter.
+        &lt;p&gt;
+        &lt;hr&gt;
+        &lt;a href=G3SUV.html&gt;Next Car&lt;/a&gt;
+      &lt;/body&gt;
+    &lt;/HTML&gt;
+  ]]&gt;
+&lt;/Vehicle&gt;</PRE><P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">
+This sort of structure causes major problems for all sorts of XML
+tools. It severely limits the validation that can be performed with a
+DTD or a schema. It is extremely difficult to transform properly with
+XSLT. DOM parsers may or may not separate out the CDATA sections from
+the surrounding text, and SAX parsers might not even notice the CDATA
+sections.</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">The
+solution in both cases is simple: make the HTML well-formed and treat
+it as an html element rather than raw text:</P>
+<PRE CLASS="western">&lt;Vehicle&gt;
+  &lt;price&gt;30000&lt;/price&gt;
+  &lt;inStock&gt;4&lt;/inStock&gt;
+  &lt;color&gt;black&lt;/color&gt;
+  &lt;html&gt;
+    &lt;title&gt;The G2 SUV&lt;/title&gt;
+    &lt;body&gt;
+      &lt;img src=&quot;g2suv.jpg&quot; height=&quot;100&quot; width=&quot;100&quot; /&gt;
+      &lt;p&gt;
+        The G2 Sport Utility Vehicle is one of our best-selling models.
+      &lt;/p&gt;
+      &lt;p&gt;
+        It's built on a truck base for all the stability of a pickup
+        driving down a bumpy country road.
+      &lt;/p&gt;
+
+      &lt;p&gt;
+        It gets an astonishing eight miles to the gallon.
+      &lt;/p&gt;
+      &lt;hr /&gt;
+      &lt;a href=&quot;G3SUV.html&quot;&gt;Next Car&lt;/a&gt;
+    &lt;/body&gt;
+  &lt;/html&gt;
+&lt;/Vehicle&gt;</PRE><P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">
+If you want to get the text from the HTML, you'll have to serialize
+the root html element, just like you'd serialize any other XML
+element. In DOM3 you can use the DOMWriter class.</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">The
+general rule for CDATA sections is that nothing should change if the
+CDATA section is replaced by its content text with all &lt; and &amp;'s
+suitably escaped. CDATA sections are meant as a convenience for human
+authors, especially ones writing books about markup like the one you
+hold in your hands right now. They are not meant to replace elements
+for indicating the structure and semantics of content or as a means
+of hiding malformed markup inside an XML document.</P>
+<H1 CLASS="western">Character and Entity References</H1>
+<P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">Entity
+and character references are also often abused. Many XML parser APIs
+sometimes let you see which entity any given character came from
+(though not all do, and in SAX and DOM this ability is not
+implemented by all parsers). However you shouldn't rely on this, and
+no parsers will tell you whether each character came from raw text or
+a character reference. 
+</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">The
+classic example of what not to do here is mix XML's escaping
+mechanisms with your application's escaping mechanism. For instance,
+an application could specify that a string of text beginning with a
+literal dollar sign ($, Unicode character 36) is a variable
+reference. For example, this Para element includes a variable
+reference:</P>
+<PRE CLASS="western">&lt;Para&gt;Hello $name&lt;/Para&gt;</PRE><P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">
+This is fine. However, it does require some means to escape the
+dollar sign when it's used as just a dollar sign. I've occasionally
+seen applications that attempt to use XML character references for
+such escaping. For example, this would not be a variable reference:</P>
+<PRE CLASS="western">&lt;Para&gt;Hello &amp;#36;name&lt;/Para&gt;</PRE><P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">
+This is a bad design that makes it impossible to parse these
+documents correctly with standard APIs like SAX and DOM or standard
+parsers like Crimson and &AElig;lfred because they won't distinguish
+between a literal $ and &amp;#36;. Instead a custom parser is
+required. This makes development much harder than it needs to be. 
+</P>
+<P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">The
+mistake is tying application level semantics (how to tell what's a
+variable and what isn't) to syntactic aspects of the document that
+the parser hides. The correct approach is to define a new escaping
+mechanism that's visible above the XML parser layer instead of below
+it. For example, you could declare that all variables begin with a $,
+whichever way that character was typed. However, a double dollar sign
+would be converted to a single plain text dollar sign. For example,
+these Para elements would both contain a variable reference:</P>
+<PRE CLASS="western">&lt;Para&gt;Hello $name&lt;/Para&gt;
+&lt;Para&gt;Hello &amp;#36;name&lt;/Para&gt;</PRE><P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">
+However, these two would not:</P>
+<PRE CLASS="western">&lt;Para&gt;Hello $$name&lt;/Para&gt;
+&lt;Para&gt;Hello &amp;#36;&amp;#36;name&lt;/Para&gt;</PRE><P CLASS="western" STYLE="margin-top: 0.21cm; font-style: normal">
+Design your processing software and XML applications so that they
+only depend on those aspects of XML that parsers reliably report:
+element boundaries, text content, attribute values, and processing
+instructions. Do not write markup that depends on syntax that the
+parser may resolve before reporting to the client application: CDATA
+sections, entity references, attribute order, character references,
+comments, whether attributes are defaulted from the DTD or included
+in the instance document, etc. You may indeed be able to write
+software that supports such lower level syntax using one particular
+parser or API. However, you won't be able to validate it with
+standard schema languages, and I guarantee that you'll confuse
+document authors who won't always follow your rules. Worst of all,
+many and perhaps most XML parsers and APIs won't be able to fully
+process  your documents, even if you can. Build applications on top
+of the structure layer, and let the parser do the hard work of
+sorting out the syntax. 
+</P>
+<DIV ID="sdfootnote1">
+	<P CLASS="sdfootnote-western"><A CLASS="sdfootnotesym" NAME="sdfootnote1sym" HREF="#sdfootnote1anc">1</A>In
+	a traditional compiler we'd say this step is performed by the lexer
+	rather than the parser. However, in XML the distinction between
+	lexers and parsers is rarely made, and lexers are not normally
+	available separately from parsers.</P>
+</DIV>
+<DIV TYPE=FOOTER>
+	<P CLASS="western" ALIGN=CENTER STYLE="margin-right: 0.64cm; text-indent: 0.64cm; margin-top: 2.14cm">
+	<SPAN ID="Frame1" STYLE="float: right; width: 0.71cm; height: 0.04cm; border: none; padding: 0cm; background: #ffffff">
+		<P CLASS="western" STYLE="margin-top: 0.21cm"><SDFIELD TYPE=PAGE SUBTYPE=RANDOM FORMAT=PAGE>1</SDFIELD><BR CLEAR=RIGHT>
+		</P>
+	</SPAN><BR><BR>
+	</P>
+</DIV>
+</BODY>
+</HTML>

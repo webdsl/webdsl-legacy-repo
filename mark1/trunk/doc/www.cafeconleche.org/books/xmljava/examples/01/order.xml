@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Order>
+  <Customer id="c32">Chez Fred</Customer>
+  <Product>
+    <Name>Birdsong Clock</Name>
+    <SKU>244</SKU>
+    <Quantity>12</Quantity>
+    <Price currency="USD">21.95</Price >
+  </Product>
+  <ShipTo>
+    <Street>135 Airline Highway</Street >
+    <City>Narragansett</City> <State>RI</State> <Zip>02882</Zip>
+  </ShipTo>
+  <Subtotal currency='USD'>263.40</Subtotal>
+  <Tax rate="7.0" 
+       currency='USD'>18.44</Tax>
+  <Shipping  method="USPS" currency='USD'>8.95</Shipping>
+  <Total currency='USD' >290.79</Total>
+</Order>

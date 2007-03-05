@@ -1,0 +1,128 @@
+<html>
+<head>
+<title>Cafe au Lait Special Report: Internet Explorer 5.5</title>
+<META name="description" content="Reader Reports on Microsoft's Internet Explorer 5.5">
+<META name="keywords" content="IE 5.5, Internet Explorer 5.5">
+<SCRIPT LANGUAGE=JAVASCRIPT> <!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (location.host.toLowerCase().indexOf("metalab") < 0 && location.host.toLowerCase().indexOf("sunsite") < 0 && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://metalab.unc.edu/xml/reports/ie55.html";
+  }
+} // -->
+</SCRIPT>
+</head>
+<body bgcolor="#FFFFFF" text="#000000">
+
+
+<h1 align=center>Cafe au Lait Special Report: Internet Explorer 5.5</h1>
+
+<ul>
+   <li><a href="#initial">Initial Report</a></li>
+</ul>
+
+
+<h2><a name="initial">Initial Report, Wednesday  July 12, 2000</a></h2>	
+
+<p>
+Microsoft's released <a href="http://www.microsoft.com/windows/ie/download/ie55.htm">Internet Explorer 
+5.5 for Windows</a>.
+This release includes a lot of XML support.
+CSS support is expanded. A print preview function has been added. 
+I don't yet know whether or not this supports real XSLT as opposed to 
+the pseudo-XSLT
+IE5 used. 
+More news as I try it out.  
+</p>
+
+<p>
+OK, I've installed it and ran some simple test files at it and I am sad to report that
+<strong>IE 5.5 failed almost all my tests quickly, obviously, and immediately. </strong>
+It does a worse job on XML pages with XSLT stylesheets
+than the latest beta of MSXML3 that I had running with IE5.
+Many other known bugs and annoyances
+have yet to be fixed. In particular:
+</p>
+
+
+<ul>
+<p>
+<li>The open file dialog still doesn't let you select XML files. To open an XML file
+you have to select All Files. </li>
+</p>
+<p>
+<li>Some long-standing bugs in handling of entity declarations in DTDs remain.
+This means IE5.5 is still unable to parse the 
+<a href="http://www.w3c.org/TR/REC-xml">XML 1.0 specification</a> and many
+of Jon Bosak's marked up Shakespeare plays, 
+<a href="http://metalab.unc.edu/xml/examples/shakespeare/all_well.xml"><cite>All's Well that Ends 
+Well</cite></a>, for just one example.
+</p>
+</li>
+<li>
+<p>
+While IE5.5 finally recognizes the
+correct namespace URI for XSLT, it does not recognize the correct MIME type (text/xml, not text/xsl). 
+Furthermore, it has some major problems with XSLT 1.0 stylesheets.
+</p>
+</li>
+</ul>
+
+<p>
+I cut Microsoft a lot of slack for IE5, probably more than I should have.
+ What they provided in IE5 was a reasonable implementation of what was then the current draft
+ specification. However, the XSLT 1.0 spec preceded IE5.5 by more than half a year, and 
+ Microsoft still hasn't gotten it right! At this point,  I can only attribute their failure 
+ to
+ incompetence or malice. Take your pick. 
+</p>
+
+
+
+<h2><a name="external">External Links and Reports</a></h2>
+
+<ul>
+</ul>
+
+<hr>
+<a name="opinion"></a>
+<p>
+If you'd like to add your own comments on this topic, write them up and email them to
+<a href="mailto:elharo@metalab.unc.edu?Subject=IE5.5">elharo@metalab.unc.edu</a>.
+I reserve the right to edit for style and content as well as to select which reports are and are not posted.
+Generally speaking, the most comprehensive, accurate, and interesting reports 
+will be posted; especially those that introduce new information not already included here.
+Please be sure to tell me that what you send is intended for publication.
+By default, I assume that personal email is a private communication and will not
+republish it unless told otherwise. At the same time, if you specifically wish to 
+remain anonymous, tell me that
+too. Otherwise I'll assume it's permissible to cite you as the source of a 
+particular piece of information
+or story. Thanks!
+</p>
+
+
+
+<div align=center>
+<FONT SIZE="2">
+<a href="../index.shtml">Cafe au Lait Home</a> 
+| <a href="../books.html">Java Books</a> 
+| <a href="../tradeshows.html">Java Trade Shows</a> | <a href="../course/">Java Course Notes</a> | 
+<a href="../javafaq.html">Java FAQ</a> | <a href="../javatutorial.html">Java Tutorial</a> | 
+<a href="../usergroups.html">Java User Groups</a> 
+| <a href="../mailinglists.html">Java Mailing Lists</a>
+| <A HREF="../questions/1998.html">Java Questions</A> | <A HREF="../quotes1999.html">Java Quotes</A>
+</font>
+</div>
+
+
+
+<hr>
+Copyright 2000 <a href="http://www.macfaq.com/personal.html">Elliotte Rusty Harold</a><br>
+Individual reports copyright by their respective authors. <br>
+<a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a><br>
+<!-- lm -->Last Modified July 12, 2000<!-- lm -->
+</BODY>
+</HTML>

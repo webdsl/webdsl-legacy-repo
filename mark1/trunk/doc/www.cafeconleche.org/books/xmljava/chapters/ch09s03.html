@@ -1,0 +1,84 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Application Specific DOMs</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="previous" href="ch09s02.html" title="DOM Modules"><link rel="next" href="ch09s04.html" title="Trees"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Application Specific DOMs</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch09s02.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;9.&nbsp;The Document Object Model</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch09s04.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e13728"></a>Application Specific DOMs</h2></div></div><p>
+      A number of XML applications have built useful
+      application-specific DOMs by extending the standard DOM
+      interfaces. XML applications with their own custom DOMs
+      include HTML and XHTML,
+      the Wireless Markup Language (WML),  Scalable Vector Graphics
+      (SVG), and MathML. 
+    </p><p>  
+      Where the generic DOM would use an <tt>Element</tt> object,
+      a WML-specific DOM might use a <tt>WMLOptionElement</tt> or a
+      <tt>WMLPElement</tt> or a <tt>WMLPostfieldElement</tt>
+      object, as appropriate for the actual type of element it
+      represents. These custom subclasses and subinterfaces
+      have all the methods and properties of the standard
+      interfaces, as well as other methods and properties
+      appropriate only for their type. For example, A WML 
+      <tt>p</tt> element has <tt>align</tt>, 
+      <tt>mode</tt>, and <tt>xml:lang</tt>
+      attributes, like this:
+    </p><div class="informalexample"><pre class="programlisting">&lt;p align="center" mode="wrap" xml:lang="en"&gt;
+  Hello!
+&lt;/p&gt;</pre></div><p>
+      Therefore, the <tt>WMLPElement</tt>
+      interface has getter and setter methods for those three
+       attributes:
+    </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setMode</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>mode</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setAlign</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>align</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setXMLLang</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>lang</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>getMode</b></span>();</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>getAlign</b></span>();</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>getXMLLang</b></span>();</code><p>
+    An application specific DOM can enforce
+    application specific rules such as 
+    &#8220;The mode attribute must have one of the values
+    <tt>wrap</tt> or 
+    <tt>nowrap</tt>,&#8221;
+    though currently this isn&#8217;t very common.
+  </p><p>
+      Of course, since <tt>WMLPElement</tt>
+      extends <tt>Element</tt>
+      which extends <tt>Node</tt>,
+      it also has the usual methods of any DOM node.
+      When processing a WML document,
+      you can use the generic DOM interfaces if you prefer
+      or you can use the more specific WML subclasses and
+      subinterfaces.
+     </p><p>
+        The big issue for most of the application specific DOMs
+        is parser support. To read these documents,
+        you not only need a custom DOM. You also need a custom parser  
+        that knows how to generate the  application specific DOM.
+        That&#8217;s a little harder to come by.
+        
+        With some effort, 
+        the Xerces DOM parser can be configured to produce 
+        HTML DOM
+        <tt>Document</tt> objects for well-formed HTML
+        and XHTML.
+        The XML Apache Project&#8217;s open source 
+        <a href="http://xml.apache.org/batik/domapi.html" target="_top">Batik</a> includes
+        an SVG parser that can produce SVG DOM 
+        <tt>Document</tt> objects.
+        For other application specific DOMs, the 
+        pickings are a little slim right now.
+                
+                
+      
+      </p><p>
+        Creating new WML/SVG/MathML/etc.
+        documents in a particular vocabulary using an application
+        specific DOM is somewhat easier. However, you do still
+        need a concrete implementation of that DOM&#8217;s abstract interfaces.
+        Xerces includes HTML and WML implementations.
+        Batik includes one for SVG.
+        For other models, you&#8217;ll have to roll your own. 
+      </p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch09s02.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch09.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch09s04.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">DOM Modules&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Trees</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+May 08,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

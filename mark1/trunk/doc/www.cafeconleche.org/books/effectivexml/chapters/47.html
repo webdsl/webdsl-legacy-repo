@@ -1,0 +1,284 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+	<TITLE>47. Catalog Common Resources</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.3  (Linux)">
+	<META NAME="AUTHOR" CONTENT="Elliotte Rusty Harold">
+	<META NAME="CREATED" CONTENT="20020121;17260000">
+	<META NAME="CHANGED" CONTENT="20030423;10390400">
+	<STYLE>
+	<!--
+		@page { size: 21.59cm 27.94cm; margin-left: 2.33cm; margin-right: 2.33cm; margin-top: 2.54cm; margin-bottom: 2.54cm }
+		P { margin-bottom: 0.21cm; color: #000000; text-align: justify; widows: 2; orphans: 2; page-break-before: auto }
+		P.western { font-family: "Times New Roman", serif; font-size: 10pt; so-language: en-US }
+		P.cjk { font-family: "Times New Roman", serif; font-size: 10pt; so-language:  }
+		H1 { margin-bottom: 0.11cm; color: #000000; text-align: justify; widows: 2; orphans: 2; page-break-before: auto }
+		H1.western { font-family: "Arial", sans-serif; font-size: 16pt; so-language: en-US }
+		H1.cjk { font-family: "Times New Roman", serif; font-size: 16pt; so-language:  }
+		H1.ctl { font-family: "Arial Unicode MS"; font-size: 12pt; font-weight: medium }
+		H2 { margin-left: 1.02cm; text-indent: 0cm; margin-bottom: 0.11cm; color: #000000; text-align: justify; widows: 2; orphans: 2; page-break-before: auto }
+		H2.western { font-family: "Arial", sans-serif; font-size: 14pt; so-language: en-US; font-style: italic }
+		H2.cjk { font-family: "Times New Roman", serif; font-size: 14pt; so-language: ; font-style: italic }
+		H2.ctl { font-family: "Arial Unicode MS"; font-size: 12pt; font-weight: medium }
+		PRE { margin-top: 0.04cm; margin-bottom: 0.04cm; color: #000000; text-align: justify; widows: 2; orphans: 2; page-break-before: auto }
+		PRE.western { font-family: "Cumberland", "Courier New", monospace; so-language: en-US }
+		PRE.cjk { font-family: "Cumberland", "Courier New", monospace; so-language:  }
+		PRE.ctl { font-family: "Arial Unicode MS"; font-size: 12pt }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="de-DE" TEXT="#000000">
+<P LANG="en-US" ALIGN=CENTER STYLE="page-break-after: avoid"><FONT FACE="Albany, Arial, sans-serif"><FONT SIZE=5><B>47.
+Catalog Common Resources</B></FONT></FONT></P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Many XML
+processes use system IDs (in practice URLs) to locate the standard
+DTDs, schemas, style sheets, and other supporting files for
+applications like DocBook, XHTML, and SVG. However, this can put
+quite a load on the central server and means your application may
+have to wait on a potentially slow remote server you don't control.
+You might not even be able to process your documents when the central
+(which you don't have any control over) is down to hardware failure,
+a system crash, or network outages. Alternately you can use XML
+catalogs to remap public IDs and URLs. A catalog can convert  public
+IDs like -//OASIS//DTD DocBook XML V4.2//EN into absolute URLs like
+http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd. It can
+replace remote URLs like 
+http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd with local
+URLs like file:///home/elharo/docbook/docbookx.dtd. This offers fast,
+reliable access to the DTDs and schemas without making the documents
+less portable across systems and networks.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Catalogs
+provide the extra level of indirection that makes XML processing much
+more flexible. They allow URNs (Uniform Resource Names) to be used
+just as easily as URLs. Even if you're only using URLs, they allow
+documents to be much more easily moved between systems. For instance,
+when I move the text of my manuscripts from my Linux desktop to my
+Windows laptop, I can change the location of the DTD just by editing
+one catalog file. I don't have to edit every chapter document
+separately to tell the XML parser and the XSLT processor where to
+find the right DTD.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Of course,
+not all requests have to (or should) go through a catalog. If the
+catalog doesn't have an entry for a particular public ID or URL, then
+the parser can fall back to the original remote URL. For instance, it
+could load the XHTML DTD from the W3C web site. However, it only
+needs to make a network connection if the resource isn't available
+locally. This saves both processing time and network bandwidth. 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">You can
+even use catalogs to choose different stylesheets or schemas
+depending on your needs. For instance, by editing the catalog, you
+can test several different possible schemas or style sheets to see
+which one you prefer. You might even choose between a style sheet
+that generates HTML and one that generates XHTML. 
+</P>
+<OL>
+	<LI><H1 LANG="en-US" CLASS="western" STYLE="page-break-after: avoid">
+	Catalog Syntax</H1>
+</OL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">A catalog
+is just an XML document in the syntax defined by the OASIS XML
+Catalogs standard
+(http://www.oasis-open.org/committees/entity/spec-2001-08-06.html).
+The root element of this document is catalog which is in the
+urn:oasis:names:tc:entity:xmlns:xml:catalog namespace. The catalog
+element contains public elements that remap PUBLIC IDs and system
+elements that remap SYSTEM IDs. Example 47-1 shows a simple catalog
+that maps the public ID for DocBook to a file in the local file
+system:</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Example
+47-1: A catalog document</P>
+<PRE LANG="en-US" CLASS="western">&lt;?xml version=&quot;1.0&quot;?&gt;
+<SPAN LANG="en-US">&lt;catalog xmlns=&quot;urn:oasis:names:tc:entity:xmlns:xml:catalog&quot;&gt;</SPAN>
+
+<SPAN LANG="en-US">  &lt;public publicId=&quot;-//OASIS//DTD DocBook XML V4.2//EN&quot;</SPAN>
+<SPAN LANG="en-US">          uri=&quot;file:///usr/local/xml/docbook/docbookx.dtd&quot;/&gt;</SPAN>
+
+<SPAN LANG="en-US">&lt;/catalog&gt;</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+The public element maps the public ID -//OASIS//DTD DocBook XML
+V4.2.0//EN to the local URL 
+file:///usr/local/xml/docbook/docbookx.dtd. The beginning of each
+chapter has this document type declaration:</P>
+<PRE LANG="en-US" CLASS="western">&lt;!DOCTYPE chapter PUBLIC &quot;-//OASIS//DTD DocBook XML V4.2//EN&quot; 
+<SPAN LANG="en-US">     &quot;http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd&quot;&gt;</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+Its system ID points to the remote DTD on the OASIS web site.
+However, that won't be used. The parser looks for the public ID in
+the local catalog.xml file. When it finds it, it uses the URL from
+the catalog instead of the one in the document itself. However, if
+the catalog doesn't contain a mapping for the public ID, then it will
+use the URL included in the document itself.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">As well as
+public IDs, you can remap system IDs. This is useful for loading
+content that doesn't have a public ID, such as stylesheets referenced
+by an xml-stylesheet processing instruction or multiple source
+documents loaded by the document() function in XSLT.  This is done
+with the system element. For example, this system element remaps the
+DocBook XSL stylesheet at Sourceforge to a local copy stored in
+/usr/local/xml/docbook-xsl/:</P>
+<PRE LANG="en-US" CLASS="western">&lt;system systemId=
+<SPAN LANG="en-US">  &quot;http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl&quot; </SPAN>
+<SPAN LANG="en-US">   uri=&quot;file:///usr/local/xml/docbook-xsl/html/docbook.xsl&quot;/&gt;</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+The rewriteURI element can remap a whole set of URLs from a
+particular server. This is very much like the mod-rewrite module in
+the Apache web server. For example, this maps all the DocBook
+stylesheet URLs to a local directory on a Unix box:</P>
+<PRE LANG="en-US" CLASS="western">    &lt;rewriteURI
+<SPAN LANG="en-US">        uriStartString=&quot;http://docbook.sourceforge.net/release/xsl/current/&quot;</SPAN>
+<SPAN LANG="en-US">        rewritePrefix=&quot;file:///usr/local/xml/docbook-xsl/&quot; /&gt;</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+For various technical reasons, if you're remapping the URLs in DTD
+system identifiers, you use a rewriteSystem element instead of a
+rewriteURI element:</P>
+<PRE LANG="en-US" CLASS="western"> &lt;rewriteSystem
+<SPAN LANG="en-US">        systemIdStartString=&quot;http://www.oasis-open.org/docbook/xml/4.2/&quot;</SPAN>
+<SPAN LANG="en-US">        rewritePrefix=&quot;/usr/local/xml/docbook/&quot; /&gt;</SPAN></PRE>
+<OL START=2>
+	<LI><H1 LANG="en-US" CLASS="western" STYLE="page-break-after: avoid">
+	Using Catalog Files</H1>
+</OL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">The
+details of how to load a catalog file when processing  a document
+vary from parser to parser and tool to tool. Not all XML processors
+yet support catalogs, but most of the important ones do. The Gnome
+Project's xsltproc, Michael Kay's Saxon, and the XML Apache Project's
+Xerces-J and Xalan-J all support catalogs. Notably lacking from this
+list are the C++ versions of Xerces and Xalan and Microsoft's MSXML.
+And of course it isn't hard to integrate catalog processing into your
+own applications with just a little bit of open source code.</P>
+<OL START=3>
+	<LI><H2 LANG="en-US" CLASS="western" STYLE="text-indent: 0cm; page-break-after: avoid">
+	libxml2</H2>
+</OL>
+<P LANG="en-US" CLASS="western">Daniel Veillard's libxml2 XML parser
+for C supports catalogs, as does his libxslt processor that sits on
+top of libxml2. libxml2 reads the catalog location from the
+XML_CATALOG_FILES  environment variable, which contains a white space
+separated list of file names. This can be set in all the usual ways.
+For example in bash or other Bourne shell derivatives, to specify
+that libxml should use the catalog file found at
+/usr/local/xml/catalog.xml you would simply type:</P>
+<PRE LANG="en-US" CLASS="western">% XML_CATALOG_FILES=/usr/local/xml/catalog.xml
+<SPAN LANG="en-US">% export XML_CATALOG_FILES</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+In Windows, you'd set this environment variable in the System control
+panel. 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">This
+property can also be set to a white space separated list of file
+names to indicate that libxml should try several different catalogs
+in sequence. For example, this setting requests that libxml first
+look in the file catalog.xml in the current working directory and
+then in the file /usr/local/xml/docbook/docbook.cat:</P>
+<PRE LANG="en-US" CLASS="western">% XML_CATALOG_FILES=&quot;catalog.xml /usr/local/xml/docbook/docbook.cat&quot;
+<SPAN LANG="en-US">% export XML_CATALOG_FILES</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+If you expect to use the same catalog file consistently, you could
+set XML_CATALOG_FILES in your .bashrc file.</P>
+<P LANG="en-US" CLASS="western">Once this environment variable is
+set, libxml will consult the catalog for all documents it loads,
+whether you're calling the library from your own C++ source code,
+from the XSLT stylesheet with the document() function, or using the
+command line tools xmllint and xsltproc.</P>
+<P LANG="en-US" CLASS="western">If you're having trouble with the
+catalog, you can put libxml in debug mode by setting the
+XML_DEBUG_CATALOG variable. (No value is required. It just needs to
+be set.) libxml will then tell you when it recognizes a catalog entry
+and what it's actually loading when. I often find this useful for
+discovering small, inobvious mismatches between the IDs used in the
+instance documents and those used in the catalog. For instance, when
+I was writing this chapter, this helped me uncover a mismatch between
+the public ID in the catalog and the documents. The catalog was using
+-//OASIS//DTD DocBook XML V4.2.0//EN and the source documents were
+using -//OASIS//DTD DocBook XML V4.2//EN. The strings really do have
+to match exactly. 4.2 is not the same as 4.2.0 when resolving public
+IDs.</P>
+<OL START=4>
+	<LI><H2 LANG="en-US" CLASS="western" STYLE="text-indent: 0cm; page-break-after: avoid">
+	Saxon, Xalan, and other Java based XSLT processors</H2>
+</OL>
+<P LANG="en-US" CLASS="western">Most XML parsers and XSLT processors
+written in Java can use Norm Walsh's catalog library (now donated to
+the XML Apache Project). You yourself can download it from
+http://xml.apache.org/dist/commons/. Download the file
+resolver-1.0.jar (the version number may have changed) and add it to
+your class path. Next create a CatalogManager.properties file in a
+directory that is included in your CLASSPATH. The resolver will look
+in this file to determine the locations of the catalog files. Example
+47-2 shows a properties file that loads the catalog named catalog.xml
+from the current working directory and the standard DocBook catalog
+from the absolute path /usr/local/xml/docbook/docbook.cat.</P>
+<P LANG="en-US" CLASS="western">Example 47-2: A
+CatalogManager.properties for Norm Walsh's catalog resolver</P>
+<PRE LANG="en-US" CLASS="western">catalogs=catalog.xml;/usr/local/xml/docbook/docbook.cat
+<SPAN LANG="en-US">relative-catalogs=true</SPAN>
+<SPAN LANG="en-US">static-catalog=yes</SPAN>
+<SPAN LANG="en-US">catalog-class-name=org.apache.xml.resolver.Resolver</SPAN>
+<SPAN LANG="en-US">verbosity=1</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+If you're having trouble, turn up the verbosity to 4 to provide more
+detailed error messages about exactly what files the resolver is
+loading when.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">You tell
+Saxon to use the Apache Commons catalog using several command line
+options, like this:</P>
+<PRE LANG="en-US" CLASS="western">% java com.icl.saxon.StyleSheet 
+<SPAN LANG="en-US">   -x org.apache.xml.resolver.tools.ResolvingXMLReader </SPAN>
+<SPAN LANG="en-US">   -y org.apache.xml.resolver.tools.ResolvingXMLReader </SPAN>
+<SPAN LANG="en-US">   -r org.apache.xml.resolver.tools.CatalogResolver </SPAN>
+<SPAN LANG="en-US">  chapter1.xml docbook.xsl</SPAN></PRE><P LANG="en-US" CLASS="western">
+Xalan is similar:</P>
+<PRE LANG="en-US" CLASS="western">% java org.apache.xalan.xslt.Process 
+<SPAN LANG="en-US">   -ENTITYRESOLVER org.apache.xml.resolver.tools.CatalogResolver </SPAN>
+<SPAN LANG="en-US">   -URIRESOLVER org.apache.xml.resolver.tools.CatalogResolver </SPAN>
+<SPAN LANG="en-US">   -in chapter1.xml -xsl  docbook.xsl</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+jd.xslt works the same except that it uses lower case argument names:</P>
+<PRE LANG="en-US" CLASS="western">% java jd.xml.xslt.Stylesheet 
+<SPAN LANG="en-US">   -entityresolver org.apache.xml.resolver.tools.CatalogResolver </SPAN>
+<SPAN LANG="en-US">   -uriresolver org.apache.xml.resolver.tools.CatalogResolver </SPAN>
+<SPAN LANG="en-US">   chapter1.xml docbook.xsl </SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+In all three cases, what you're really doing is telling the processor
+where to find an instance of the SAX EntityResolver interface and the
+TrAX URIResolver interface. The
+org.apache.xml.resolver.tools.CatalogResolver class can also be used
+for these purposes in your own SAX and TrAX programs. 
+</P>
+<OL START=5>
+	<LI><H2 LANG="en-US" CLASS="western" STYLE="text-indent: 0cm; page-break-after: avoid">
+	TrAX</H2>
+</OL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">In TrAX
+both the Transformer and TransformerFactory classes have
+setURIResolver methods that allow you to provide a resolver that's
+used to look up URIs used by the document function and the xsl:import
+and xsl:include elements. Setting the URIResolver for a Transformer
+just changes that one Transformer object. Setting the URIResolver for
+a TransformerFactory sets the default resolver for all Transformer
+objects created by that factory. 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">To use
+catalogs, just pass in an instance of  the
+org.apache.xml.resolver.tools.CatalogResolver class. For instance,</P>
+<PRE LANG="en-US" CLASS="western">URIResolver resolver = new CatalogResolver();
+<SPAN LANG="en-US">TransformerFactory factory = TransformerFactory.newInstance();</SPAN>
+<SPAN LANG="en-US">factory.setURIResolver(resolver);</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+The location of the catalog file is determined by a
+CatalogManager.properties file as shown previously in Example 49-2.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">You will
+of course need to add the resolver.jar file to your CLASSPATH to make
+this work.</P>
+<OL START=6>
+	<LI><H2 LANG="en-US" CLASS="western" STYLE="text-indent: 0cm; page-break-after: avoid">
+	SAX</H2>
+</OL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">SAX
+programs access catalogs through the EntityResolver interface which,
+conveniently,  org.apache.xml.resolver.tools.CatalogResolver also
+implements. To add catalog support to your own application just pass
+an instance of this class to the setEntityResolver method of the
+XMLReader class before beginning to parse a document. For example,</P>
+<PRE LANG="en-US" CLASS="western">EntityResolver resolver = new CatalogResolver();
+<SPAN LANG="en-US">XMLReader parser = XMLReaderFactory.createXMLReader();</SPAN>
+<SPAN LANG="en-US">parser.setEntityResolver(resolver);</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm; margin-bottom: 0cm; widows: 2; orphans: 2">
+That's all there is to it. From here on, you just parse the XML like
+normal. Whenever, the XMLReader loads a DTD fragment from either a
+SYSTEM or a PUBLIC ID it will first consult the catalogs identified
+by the  CatalogManager.properties file.</P>
+</BODY>
+</HTML>

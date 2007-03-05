@@ -1,0 +1,161 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;6.&nbsp;SAX</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="index.html" title="Processing XML with Java"><link rel="previous" href="ch05s10.html" title="Summary"><link rel="next" href="ch06s02.html" title="Parsing"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"><link rel="section" href="ch06.html#d0e8069" title="What is SAX?"><link rel="section" href="ch06s02.html" title="Parsing"><link rel="section" href="ch06s03.html" title="Callback Interfaces"><link rel="section" href="ch06s04.html" title="Receiving Documents"><link rel="section" href="ch06s05.html" title="Receiving Elements"><link rel="section" href="ch06s06.html" title="Handling Attributes"><link rel="section" href="ch06s07.html" title="Receiving Characters"><link rel="section" href="ch06s08.html" title="Receiving Processing Instructions"><link rel="section" href="ch06s09.html" title="Receiving Namespace Mappings"><link rel="section" href="ch06s10.html" title="Ignorable White Space"><link rel="section" href="ch06s11.html" title="Receiving Skipped Entities"><link rel="section" href="ch06s12.html" title="Receiving Locators"><link rel="section" href="ch06s13.html" title="What the ContentHandler Doesn&#8217;t Tell You"><link rel="section" href="ch06s14.html" title="Summary"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter&nbsp;6.&nbsp;SAX</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch05s10.html">Prev</a>&nbsp;</td><th width="60%" align="center">&nbsp;</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch06s02.html">Next</a></td></tr></table><hr></div><div class="chapter"><div class="titlepage"><div><h2 class="title"><a name="ch_sax"></a>Chapter&nbsp;6.&nbsp;SAX</h2></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><a href="ch06.html#d0e8069">What is SAX?</a></dt><dt><a href="ch06s02.html">Parsing</a></dt><dt><a href="ch06s03.html">Callback Interfaces</a></dt><dd><dl><dt><a href="ch06s03.html#d0e8305">Implementing ContentHandler</a></dt><dt><a href="ch06s03.html#d0e8440">Using the ContentHandler</a></dt><dt><a href="ch06s03.html#d0e8544">The DefaultHandler Adapter Class</a></dt></dl></dd><dt><a href="ch06s04.html">Receiving Documents</a></dt><dt><a href="ch06s05.html">Receiving Elements</a></dt><dt><a href="ch06s06.html">Handling Attributes</a></dt><dt><a href="ch06s07.html">Receiving Characters</a></dt><dt><a href="ch06s08.html">Receiving Processing Instructions</a></dt><dt><a href="ch06s09.html">Receiving Namespace Mappings</a></dt><dt><a href="ch06s10.html">Ignorable White Space</a></dt><dt><a href="ch06s11.html">Receiving Skipped Entities</a></dt><dt><a href="ch06s12.html">Receiving Locators</a></dt><dt><a href="ch06s13.html">What the ContentHandler Doesn&#8217;t Tell You</a></dt><dt><a href="ch06s14.html">Summary</a></dt></dl></div><p>
+At its core, SAX, the Simple API for XML,
+is based on just two interfaces,  the 
+<tt>XMLReader</tt> interface that
+represents the parser 
+and the
+<tt>ContentHandler</tt> interface that 
+receives data from the parser. These two interfaces alone suffice
+for 90% of what you need to do with SAX. This chapter shows the
+basic operation of <tt>XMLReader</tt>
+and discusses <tt>ContentHandler</tt> in
+detail. The next chapter explores a variety of ways to customize
+the parsing process through the more advanced features of the
+<tt>XMLReader</tt> interface.
+</p><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e8069"></a>What is SAX?</h2></div></div><p>
+    The Simple API for XML, SAX, was invented in late 1997/early 1998
+    when Peter Murray-Rust and several 
+    authors of XML parsers written in Java
+    decided there wasn&#8217;t
+    much point to maintaining multiple similar yet incompatible
+    APIs to do exactly the same thing. 
+    Murray-Rust was the first to suggest what he called 
+    &#8220;YAXPAPI&#8221;.
+    The reason Murray-Rust wanted Yet Another XML Parser API 
+    was that he was thoroughly sick of  supporting multiple,
+    incompatible XML parsers for his parser-client application JUMBO.
+    Instead, he wanted
+    a standard API everyone could agree on.
+    Parser authors Tim Bray 
+    and David Megginson quickly signed on to the project,
+    and work began in public on the xml-dev
+    mailing list where many people participated.
+    Megginson wrote the initial draft of SAX. 
+    After a short beta period, SAX 1.0 was released on May 11, 
+    1998.
+  </p><p>
+    SAX was designed around  abstract
+    interfaces rather than concrete classes so
+    it could be layered on top of parsers&#8217; existing
+    native APIs.
+    SAX is not the most sophisticated XML API imaginable,
+    but that&#8217;s part of its beauty. The ease with which SAX could
+    be implemented by many parser vendors with very different 
+    architectures contributed to its success and rapid
+    standardization.
+  </p><table class="sidebar" border="0"><tr><td width="10%"></td><td width="80%" style="font-family: Helvetica, Arial, sans" cellpadding="5"><p class="title" style="font-size: larger" align="center"><b>SAX in other languages</b></p><p>
+    SAX has been unofficially ported to several other 
+    object oriented languages
+    including C++, Visual Basic, Python, and Perl. The general patterns and
+    names of most functions remain the same. However, the details of 
+    implementation change quite a bit. For instance, C++ doesn&#8217;t
+    have interfaces, but does have multiple inheritance, so 
+    <tt>ContentHandler</tt>, <tt>XMLReader</tt>
+    and the like become classes containing nothing but pure
+    virtual functions. The C++ string classes can&#8217;t handle
+    Unicode so parsers must use pointers to arrays of custom types such as
+    <tt>XMLCh</tt> instead.
+    Unfortunately, there&#8217;s no standard C++ binding
+    for SAX so the custom classes
+    vary from one parser to the next, and you can&#8217;t easily port
+    C++ SAX programs between different compilers and platforms
+    in either binary or source form.
+  </p><p>
+   Although supporting the &#8220;Desperate Perl Hacker&#8221;
+   was a goal of the original XML working group,
+   Perl has always lagged other languages quite a bit when it 
+   comes to XML. The initial problem was the lack of support for
+   Unicode, a sine qua non for XML. 
+   Today modern Perls have decent Unicode support. To really handle XML
+    you  need at least version 5.005_52 of Perl,
+    preferably,  5.6.1 or later and ideally 5.8.
+    
+    </p><p>
+   There are several XML parsers available for Perl, though
+   far and away the most popular is
+   Larry Wall and Clark Cooper&#8217;s XML::Parser. 
+   This is a wrapper around James Clark&#8217;s 
+   <a href="http://www.jclark.com/xml/expat.html" target="_top">expat</a> 
+   XML parser written in C.
+   However, this parser isn&#8217;t really SAX compatible though it&#8217;s used in a
+   lot of legacy code.
+   New projects should use  <a href="http://sax.perl.org/" target="_top">XML::SAX</a> 
+   instead. 
+   </p><p>
+   However, even with this module,
+   in my opinion Perl is still not as ideal a language for processing
+   XML as you might expect. Perl&#8217;s strength is its ability
+   to work with the 
+   implicit structure in text documents such as tab delimited text files
+   and comma separated values files. However, XML documents tend to
+   have very explicit structure that is easily addressed by a
+   language like Java. 
+   Perl&#8217;s strengths don&#8217;t come into play; but you 
+   still suffer the numerous well-known disadvantages of working with Perl,
+   The inevitable 
+   obfuscation of Perl code seems to me too high a price to pay.
+  </p><p>
+    Python probably has the best support for SAX and XML of any of the
+    non-Java languages.
+    XML parsing including a SAX port has been a standard
+    part of Python since version 2.0. Furthermore, Python has a
+    standard Unicode string type. This is not quite the same as
+    Python&#8217;s regular string type, but Python&#8217;s weak typing means
+    this isn&#8217;t nearly as big an inconvenience as it is in C++.
+    However, the fact remains that SAX is designed in and for Java,
+    and Java is certainly the most convenient language with
+    which to write SAX programs. 
+  </p></td><td width="10%"></td></tr></table><p>
+    Although SAX is very much a de facto standard, it has not gone through
+    any formal standardization process. Its development
+    was open to anyone interested. All you had to do was
+    join the xml-dev mailing list and participate in the
+    discussions. The end result was explicitly placed in the
+    public domain. It is free to be implemented or extended by
+    anyone for any purpose without permission from anybody. 
+    It is not copyrighted or trademarked. As far as is known,
+    no parts of it are patented by anyone either. 
+  </p><p>
+    In late 1999, work began on SAX2. This was a radical reformulation
+    of SAX that, while maintaining the same basic event-oriented
+    architecture, replaced almost every class in SAX1. The main
+    impetus for this radical shift was the need to make SAX
+    namespace aware. However many other new capabilities were added in
+    SAX2 including filters and optional support for 
+    lexical events and DTDs.
+    SAX2 was finished in May 2000, and
+    has proven even more successful than SAX1. Indeed SAX2 is the
+    most complete XML API available anywhere. In 2002, all major
+    parsers that support SAX at all support SAX2. There is no
+    reason to learn or concern yourself with the older classes
+    and interfaces from SAX1, and henceforth I will discuss SAX2
+    exclusively. 
+  </p><p>  
+    For the first few years of
+    its life, the official SAX distribution and documentation
+    was maintained by David Megginson. However, he
+    recently passed the torch to David Brownell who has begun work
+    on SAX 2.1. At the time of this writing, SAX 2.1 seems unlikely
+    to be as radical a shift relative to SAX2
+    as SAX2 was relative to SAX1. Version 2.1 will add 
+    a few bits of information
+    from the XML document that are not exposed by SAX2 such as
+    the encoding declaration. However, no SAX2 classes,
+    interfaces, or methods 
+    will be deprecated in SAX 2.1; and only programmers with very 
+    special needs will need to concern themselves with the new
+    functionality in SAX 2.1.
+  </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch05s10.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="index.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch06s02.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Summary&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Parsing</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+May 26,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

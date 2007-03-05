@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Order>
+  <Customer id="c32">Chez Fred</Customer>
+  <Product>
+    <Name>Birdsong Clock</Name>
+    <SKU>244</SKU>
+    <Quantity>12</Quantity>
+    <Price currency="USD">21.95</Price >
+    <ShipTo>
+      <Street>135 Airline Highway</Street >
+      <City>Narragansett</City> <State>RI</State> <Zip>02882</Zip>
+    </ShipTo>
+  </Product>
+  <Product>
+    <Name>Brass Ship's Bell</Name>
+    <SKU>258</SKU>
+    <Quantity>1</Quantity>
+    <Price currency="USD">144.95</Price >
+    <Discount>.10</Discount>
+    <ShipTo>
+      <GiftRecipient>Samuel Johnson</GiftRecipient>
+      <Street>271 Old Homestead Way</Street >
+      <City>Woonsocket</City> <State>RI</State> <Zip>02895</Zip>
+    </ShipTo>
+    <GiftMessage>
+      Happy Father's Day to a great Dad!
+      
+      Love,
+      Sam and Beatrice
+    </GiftMessage>
+  </Product>
+  <Subtotal currency='USD'>393.85</Subtotal>
+  <Tax rate="7.0" 
+       currency='USD'>28.20</Tax>
+  <Shipping  method="USPS" currency='USD'>8.95</Shipping>
+  <Total currency='USD' >431.00</Total>
+</Order>

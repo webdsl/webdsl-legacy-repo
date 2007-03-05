@@ -1,0 +1,116 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <meta name="description" content="Slide used in Elliotte Rusty Harold's &#xA;  StAX seminar at Software Development 2004 West, Thursday, March 17, 2004"><title>Example: PullValidator</title><script language="JAVASCRIPT"><!-- 
+              var isnav
+              
+              if (parseInt(navigator.appVersion) >= 4) {
+                if (navigator.appName == "Netscape") {
+                  isNav = true
+                  document.captureEvents(Event.KEYPRESS)
+                }
+                else {
+                  isNav = false
+                }
+              }
+              document.onkeypress = flipslide
+
+              function flipslide(evt) {
+                var key = isNav ? evt.which : window.event.keyCode
+                if (key == 32 || key == 29 || key == 30 || key == 11) {
+                  
+                    location.href="49.html"
+                  
+                }
+                else if (key == 28 || key == 31 || key == 12) {
+                  
+                    location.href="47.html"
+                  
+                }
+                else if (key == 1) {
+                  location.href="index.html";
+                }
+              } //  --></script></head><body>
+  <h1 align="center">Example: PullValidator</h1>
+  
+  <pre xmlns:xinclude="http://www.w3.org/2001/XInclude"><code>import javax.xml.stream.*;
+import java.net.*;
+import java.io.*;
+
+ 
+public class PullValidator {
+
+  private static boolean valid;
+
+  public static void main(String[] args) {
+        
+    if (args.length == 0) {
+      System.err.println("Usage: java PullValidator url" );
+      return;   
+    }
+        
+    try {
+
+      InputStream in;
+      try {
+        URL u = new URL(args[0]);
+        in = u.openStream();
+      }
+      catch (MalformedURLException ex) {
+          // Maybe it's a file name
+          in = new FileInputStream(args[0]);
+      }
+      
+      XMLInputFactory factory = XMLInputFactory.newInstance();
+      if (!factory.isPropertySupported("javax.xml.stream.isValidating")) {
+        System.err.println("This StAX implementation does not support validation.");
+        return;   
+      }
+      factory.setProperty("javax.xml.stream.isValidating", Boolean.TRUE);
+      XMLStreamReader parser = factory.createXMLStreamReader(in);
+      
+      valid = true;
+      factory.setProperty("javax.xml.stream.reporter", new XMLReporter() {
+        public void report(String message, String errorType, Object relatedInformation, Location location) {
+          System.err.println(message);
+          valid = false;
+        }
+      });
+      
+        
+      while (true) {
+           int event = parser.next();
+           if (event == XMLStreamConstants.END_DOCUMENT) {
+                parser.close();
+                break;
+           }
+      }
+      parser.close();
+            
+      // If we get here there are no exceptions
+      if (valid) System.out.println(args[0] + " is valid.");      
+      else System.out.println(args[0] + " is not valid.");      
+    }
+    catch (XMLStreamException ex) {
+       System.out.println(args[0] + " is not well-formed."); 
+       System.out.println(ex);  
+    }
+    catch (IOException ex) {
+      System.out.println(args[0] + " could not be checked due to an " 
+       + ex.getClass().getName());   
+      ex.printStackTrace();      
+    }
+        
+  }
+
+}
+</code></pre>
+    
+  
+ 
+<hr><div align="center"><A HREF="47.html">Previous</A> 
+                 | <A HREF="49.html">Next</A> 
+                 | <A HREF="index.html">Top</A> 
+                 | <A HREF="http://www.cafeconleche.org/">Cafe con Leche</A></div><hr><div style="font-size: x-small">
+              Copyright 2000-2004 Elliotte Rusty Harold<br><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a><br>
+              Last Modified 
+              January 8, 2004</div></body></html>

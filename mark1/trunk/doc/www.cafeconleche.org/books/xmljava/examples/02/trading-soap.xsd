@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="http://schemas.xmlsoap.org/soap/envelope/">
+
+  <!-- Standard SOAP schemas -->
+  <xsd:include 
+    schemaLocation="http://schemas.xmlsoap.org/soap/envelope/"
+  />
+  <xsd:import 
+    schemaLocation="http://schemas.xmlsoap.org/soap/encoding/"
+    namespace="http://schemas.xmlsoap.org/soap/encoding/" 
+  />
+
+  <!-- Local schema -->
+  <xsd:import schemaLocation="trading.xsd"
+    namespace="http://namespaces.cafeconleche.org/xmljava/ch2/"
+  />  
+  
+</xsd:schema>

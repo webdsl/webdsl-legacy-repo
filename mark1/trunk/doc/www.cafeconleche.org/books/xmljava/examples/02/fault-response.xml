@@ -1,0 +1,20 @@
+HTTP/1.0 500 Internal Server Error
+Content-Type: text/xml; charset="utf-8"
+Content-Length: 498
+
+<?xml version="1.0"?>
+<SOAP-ENV:Envelope
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" 
+ xmlns:stock="http://namespaces.cafeconleche.org/xmljava/ch2/">
+  <SOAP-ENV:Body>
+    <SOAP-ENV:Fault>
+      <faultcode>SOAP-ENV:Client</faultcode>
+      <faultstring>
+        There is no stock with the symbol ABCD.
+      </faultstring>
+      <faultdetail>
+        <stock:InvalidSymbol>ABCD</stock:InvalidSymbol>
+      </faultdetail>
+    </SOAP-ENV:Fault>
+  </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

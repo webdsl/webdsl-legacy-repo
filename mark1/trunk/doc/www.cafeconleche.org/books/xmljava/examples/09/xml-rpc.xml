@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/css" href="xml-rpc.css"?>
+<!-- It's unusual to have an xml-stylesheet processing 
+     instruction in an XML-RPC document but it is legal, unlike 
+     SOAP where processing instructions are forbidden. -->
+<!DOCTYPE methodCall SYSTEM "xml-rpc.dtd">
+<methodCall>
+  <methodName>getQuote</methodName>
+  <params>
+    <param>
+      <value><string>RHAT</string></value>
+    </param>
+  </params>
+</methodCall>

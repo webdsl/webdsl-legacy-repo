@@ -1,0 +1,222 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Output Streams, Writers, and Encodings</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="previous" href="ch03s02.html" title="Writing XML"><link rel="next" href="ch03s04.html" title="A Simple XML-RPC Client"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Output Streams, Writers, and Encodings</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03s02.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;3.&nbsp;Writing XML with Java</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch03s04.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e5118"></a>Output Streams, Writers, and Encodings</h2></div></div><p>
+    Most of the time you don&#8217;t 
+    want to dump an XML document to <tt>System.out</tt>.
+    Instead you want to write it in a file or onto
+    a network socket. You might even store it in a string
+    and pass it to some other process. What connects all
+    these possible targets in Java is the 
+    <tt>java.io.OutputStream</tt> class.
+    Files, sockets, and even strings can all be treated
+    as just another kind of stream.
+  </p><p>
+    XML documents are text. The text is made up of Unicode characters.
+    When those Unicode characters are actually written 
+    onto a stream, you need to pick a character encoding
+    that specifies how each character is converted into bytes. 
+    This encoding can be
+    one of the Unicode encodings such as UTF-8 or UTF-16
+    or it can be a local code page such as ISO-8859-1 or
+    MacRoman. Characters that don&#8217;t exist in the local code page
+    can be escaped using numeric character references. 
+    The encoding declaration will be set to indicate the character set in use.
+    The normal way Java converts characters into bytes in a specific encoding
+    is by chaining an <tt>OutputStreamWriter</tt> to an  <tt>OutputStream</tt>.
+    As chars and strings are written onto the <tt>OutputStreamWriter</tt>,
+    they are converted to bytes in the specified encoding which are then written
+    onto the underlying <tt>OutputStream</tt>.  
+  </p><p>
+    Let&#8217;s suppose you want to dump the Fibonacci numbers into a file
+    called <tt>fibonacci.xml</tt> in the current working directory.
+    First you would open a <tt>FileOutputStream</tt> to that file,
+    like this:
+  </p><div class="informalexample"><pre class="programlisting">OutputStream fout = new FileOutputStream("fibonacci.xml");</pre></div><p>
+    If performance is at all a concern, you would immediately chain
+    this <tt>FileOutputStream</tt> to a <tt>BufferedOutputStream</tt>
+    like this:
+  </p><div class="informalexample"><pre class="programlisting">OutputStream bout = new BufferedOutputStream(fout);</pre></div><p>
+    Then you would chain the <tt>BufferedOutputStream</tt> to 
+    an <tt>OutputStreamWriter</tt>. You&#8217;d pass the Java name of the
+    encoding you want as the second argument to the
+    <tt>OutputStreamWriter()</tt> constructor.
+    For example, this line chooses the ISO-8859-1, Latin-1 encoding, though it uses Java&#8217;s 
+    name for this encoding, &#8220;8859_1&#8221;:
+  </p><div class="informalexample"><pre class="programlisting">OutputStreamWriter out = new OutputStreamWriter(bout, "8859_1");</pre></div><p>
+    Finally, you&#8217;d write the output onto that <tt>OutputStreamWriter</tt>, making
+    sure to include the right encoding declaration using the XML name for
+    the encoding. <a href="ch03s03.html#FibonacciFile.java" title="Example&nbsp;3.9.&nbsp;A Java program that writes an XML file">Example&nbsp;3.9</a> demonstrates. 
+  </p><div class="example"><a name="FibonacciFile.java"></a><p class="title"><b>Example&nbsp;3.9.&nbsp;A Java program that writes an XML file</b></p><pre class="programlisting">import java.math.BigInteger;
+import java.io.*;
+
+
+public class FibonacciFile {
+
+  public static void main(String[] args) {
+   
+      BigInteger low  = BigInteger.ONE;
+      BigInteger high = BigInteger.ONE;      
+      
+      try {        
+        OutputStream fout= new FileOutputStream("fibonacci.xml");
+        OutputStream bout= new BufferedOutputStream(fout);
+        OutputStreamWriter out 
+         = new OutputStreamWriter(bout, "8859_1");
+      
+        out.write("&lt;?xml version=\"1.0\" ");
+        out.write("encoding=\"ISO-8859-1\"?&gt;\r\n");  
+        out.write("&lt;Fibonacci_Numbers&gt;\r\n");  
+        for (int i = 1; i &lt;= 10; i++) {
+          out.write("  &lt;fibonacci index=\"" + i + "\"&gt;");
+          out.write(low.toString());
+          out.write("&lt;/fibonacci&gt;\r\n");
+          BigInteger temp = high;
+          high = high.add(low);
+          low = temp;
+        }
+        out.write("&lt;/Fibonacci_Numbers&gt;\r\n"); 
+        
+        out.flush();  // Don't forget to flush!
+        out.close();
+      }
+      catch (UnsupportedEncodingException e) {
+        System.out.println(
+         "This VM does not support the Latin-1 character set."
+        );
+      }
+      catch (IOException e) {
+        System.out.println(e.getMessage());        
+      }
+
+  }
+
+}
+</pre></div><p>
+    One change from the <tt>System.out</tt> version
+     is that
+    the line breaks have to be encoded explicitly.
+    They&#8217;re not really necessary for this XML document,
+    but the examples are prettier if the XML isn&#8217;t just one long line
+    of text. I recommend using a carriage-return/linefeed pair 
+    (<tt>\r\n</tt>)
+    as your line
+    break. This is the native format for DOS and Windows, and most 
+    Unix and Macintosh text editors can handle it.
+    More importantly it is the standard line ending for network protocols
+    such as HTTP and SMTP.
+    XML  parsers do normalize all line breaks to a single linefeed on input,
+    so the proper choice of line break for an XML document
+    is not nearly as fraught as for some other types of files.
+    Nonetheless, picking  carriage-return/linefeed does help
+    when processing or transmitting XML documents with non-XML-aware
+    tools.
+  </p><p>
+    Although most XML parsers written in Java support exactly those
+    encodings that are available in Java,
+    they don&#8217;t use the same names. Java tends to use underscores where
+    XML uses hyphens in encoding names, or to eliminate the hyphens completely.
+    The reason is that earlier Java virtual machines used 
+    reflection to locate the classes that
+    convert between different encodings, so its encoding names had to be
+    legal Java class names. 
+    <a href="ch03s03.html#encoding_table" title="Table&nbsp;3.1.&nbsp;Standard Character Sets and Encodings">Table&nbsp;3.1</a> lists the Java and XML equivalents of the
+    standard character sets and encodings. Later versions of Java often allow
+    multiple names for the same encoding, especially in Java 1.4.
+    Here I&#8217;ve picked the names that are supported across the broadest 
+    range of virtual machines.
+  </p><div class="table"><a name="encoding_table"></a><p class="title"><b>Table&nbsp;3.1.&nbsp;Standard Character Sets and Encodings</b></p><table summary="Standard Character Sets and Encodings" border="1"><colgroup><col><col><col><col></colgroup><thead><tr><th>XML Name</th><th>Java Name</th><th>First supported in Java</th><th>Scripts and Languages</th></tr></thead><tbody><tr><td>ISO-8859-1</td><td>8859_1</td><td>1.1</td><td>Latin-1: ASCII plus the accented characters needed for most
+  Western European languages including Albanian, Basque, Breton, Catalan, Cornish, 
+  Danish, Dutch, English, Estonian, Faroese, Finnish, French, Frisian, Galician, German, Greenlandic, 
+  Icelandic, Irish, Italian, Latin, 
+  Luxemburgish, Norwegian, Portuguese, Rhaeto-Romanic, Scottish Gaelic,
+Sorbian, Spanish, and Swedish as well as many non-European languages written
+in the Latin alphabet such as Swahili and Malaysian </td></tr><tr><td>ISO-8859-2</td><td>8859_2</td><td>1.1</td><td>Latin-2: ASCII plus the accented characters needed for most
+  Central European languages including Albanian,
+  Croatian, Czech, Finnish, German, Hungarian, Latin, Polish, Romanian, 
+Slovak, Slovenian, and Sorbian</td></tr><tr><td>ISO-8859-3</td><td>8859_3</td><td>1.1</td><td>Latin-3: ASCII plus the accented characters needed for most
+  Southern European languages including 
+  English, Esperanto, Finnish, 
+French, German, Italian, Latin,
+Maltese,  Portuguese, and Turkish </td></tr><tr><td>ISO-8859-4</td><td>8859_4</td><td>1.1</td><td>Latin-4: ASCII plus the accented characters needed for most
+  Northern European languages including 
+Danish, English, Estonian,  Finnish,
+German, Greenlandic, 
+Latin, Latvian, Lithuanian, Norwegian, S&#65533;mi, 
+Slovenian, and Swedish </td></tr><tr><td>ISO-8859-5</td><td>8859_5</td><td>1.1</td><td>ASCII plus Cyrillic</td></tr><tr><td>ISO-8859-6</td><td>8859_6</td><td>1.1</td><td>ASCII plus Arabic</td></tr><tr><td>ISO-8859-7</td><td>8859_7</td><td>1.1</td><td>ASCII plus Greek</td></tr><tr><td>ISO-8859-8</td><td>8859_8</td><td>1.1</td><td>ASCII plus Hebrew</td></tr><tr><td>ISO-8859-9</td><td>8859_9</td><td>1.1</td><td>Latin-5: same as Latin-1 except the Turkish letters
+  &#286;, &#287;, &#304;, &#305;, &#350;, and &#351;
+   take the place of the Icelandic letters &thorn;, &THORN;, &yacute;, &Yacute;, &ETH;, and &eth;</td></tr><tr><td>ISO-8859-13</td><td>ISO8859_13</td><td>1.3</td><td>Latin-7: ASCII plus the accented characters needed for most
+  Baltic languages including Latvian, Lithuanian, Estonian, and Finnish,
+  as well as English, Danish, Swedish, German, Slovenian,
+  and Norwegian. </td></tr><tr><td>ISO-8859-15</td><td>ISO8859_15_FDIS</td><td>1.2</td><td>Latin-9: same as Latin-1 but with the Euro sign 
+  &#8364;
+  instead of the international currency
+  symbol &curren;. It also replaces the infrequently used symbol characters
+  &brvbar;, &uml;, &acute;, &cedil;, &frac14;, &frac12;,
+and &frac34; with the 
+  infrequently used French and Finnish letters &#352;, &#353;, &#381;, &#382;,
+  &#338;, &#339;, and &#376;. 
+  </td></tr><tr><td>UTF-8</td><td>UTF8</td><td>1.1</td><td>The default encoding of XML documents; each Unicode character
+  is represented in between 1 and 4 bytes.</td></tr><tr><td>UTF-16</td><td>UnicodeBig or UnicodeLittle</td><td>1.2</td><td>An encoding of Unicode in which characters in the Basic Multilingual Plane
+  are encoded in two bytes, and all other characters are encoded as two two-byte
+  surrogates</td></tr><tr><td>ISO-10646-UCS-2</td><td>N/A</td><td>N/A</td><td>A straightforward encoding in which each Unicode character
+  is represented as a two-byte integer; cannot represent characters outside the 
+  Basic Multilingual Plane</td></tr><tr><td>ISO-10646-UCS-4</td><td>N/A</td><td>N/A</td><td>A straightforward encoding in which each Unicode character
+  is represented as a four-byte integer</td></tr><tr><td>ISO-2022-JP</td><td>JIS</td><td>1.1</td><td>Japanese</td></tr><tr><td>Shift_JIS</td><td>SJIS</td><td>1.1</td><td>Japanese</td></tr><tr><td>EUC-JP</td><td>EUCJIS</td><td>1.1</td><td>Japanese</td></tr><tr><td>US-ASCII</td><td>ASCII</td><td>1.2</td><td>English</td></tr><tr><td>GBK</td><td>GBK</td><td>1.1</td><td>Simplified Chinese </td></tr><tr><td>Big5</td><td>Big5</td><td>1.1</td><td>Traditional Chinese</td></tr><tr><td>ISO-2022-CN</td><td>ISO2022CN</td><td>1.1</td><td>Traditional Chinese</td></tr><tr><td>ISO-2022-KR</td><td>ISO2022KR</td><td>1.1</td><td>Korean</td></tr></tbody></table></div><p>
+    I have deliberately omitted XML legal encodings that are not yet supported by Java
+    such as ISO-8859-10, ISO-8859-11, ISO-8859-14, and ISO-8859-16.
+    It&#8217;s not hard to add them in Java 1.4; but since they&#8217;re not available by default, 
+    you&#8217;re better
+    off picking UTF-8 or one of the other encodings of Unicode. 
+  </p><p>
+    The exact list of encodings Java supports varies from virtual machine to
+    virtual machine and
+    version to version. Java 1.4 is a major leap forward in support
+    for many character sets, as well as for different aliases for character
+    set names. However, since the standard Unicode and ISO encodings 
+    let you handle most environments today, there&#8217;s little reason to use
+    other encodings in XML documents.
+  </p><p>
+    Some parsers, including Xerces-J, have an option to recognize the Java names,
+    as well as all the other encodings Java supports.
+    This can be useful when you&#8217;re reading XML documents sent to you by other 
+    people and systems. However, you should not generate documents that
+    use these encodings. The standard encodings in <a href="ch03s03.html#encoding_table" title="Table&nbsp;3.1.&nbsp;Standard Character Sets and Encodings">Table&nbsp;3.1</a>
+    should be sufficient for any document you need to create, and are a lot more
+    cross-platform compatible than platform-specific code pages such as Cp1252
+    and MacRoman. In a few cases you might prefer to use
+    standard non-Unicode, non-ISO national character sets such as 
+    KS C 5601 for Korean or KOI8-R for Cyrillic. These are OK too, but still
+    a little less well recognized around the world than the standard encodings
+    shown in <a href="ch03s03.html#encoding_table" title="Table&nbsp;3.1.&nbsp;Standard Character Sets and Encodings">Table&nbsp;3.1</a>.
+    The general principle is to be conservative in what you generate, 
+    but liberal in what you accept.
+    Try to stick to the most standard encodings when writing documents,
+    but accept any encoding you recognize when reading documents.
+  </p><p>
+    Other character sets you should not use in XML but that are
+    available in Java include UTF-16BE and UTF16-LE. These are big-endian and
+    little-endian encodings of Unicode without an explicit byte order mark.
+    XML documents in UTF-16 must have an explicit byte order mark.
+    It may not be omitted. UTF-8 documents may have a byte order mark,
+    but in general should not for maximum compatibility with
+    other software. 
+  </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Note</h3><p>
+    Output streams, output stream writers, files, Unicode,
+    character sets and character encodings, 
+    and many other aspects of input and output in Java 
+    are covered in much more detail in my book
+    [<i><a href="http://www.cafeaulait.org/books/javaio/" target="_top">Java 
+    I/O</a></i>, 
+O&#8217;Reilly &amp; Associates, 1999, ISBN 1-56592-485-1]
+  </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03s02.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch03s04.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Writing XML&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;A Simple XML-RPC Client</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+May 24,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

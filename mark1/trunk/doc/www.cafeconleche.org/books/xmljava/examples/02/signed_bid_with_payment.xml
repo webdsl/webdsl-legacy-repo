@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<SOAP-ENV:Envelope
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" >
+  <SOAP-ENV:Header>
+    <Payment xmlns="http://namespaces.cafeconleche.org/xmljava/ch2/"
+             SOAP-ENV:mustUnderstand="1">
+      <Name>Elliotte Harold</Name>
+      <Issuer>VISA</Issuer>
+      <Number>5125456787651230</Number>
+      <Expires>2005-12</Expires>
+    </Payment>
+  </SOAP-ENV:Header>
+  <SOAP-ENV:Body>
+    <buy xmlns="http://namespaces.cafeconleche.org/xmljava/ch2/">
+      <symbol>MRBA</symbol> 
+      <shares>100</shares> 
+      <account>777-7777</account> 
+    </buy>
+  </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

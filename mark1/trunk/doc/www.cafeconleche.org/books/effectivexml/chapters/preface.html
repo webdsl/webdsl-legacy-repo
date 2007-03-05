@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+	<TITLE>Preface</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.3  (Linux)">
+	<META NAME="AUTHOR" CONTENT="Elliotte Rusty Harold">
+	<META NAME="CREATED" CONTENT="20020121;17260000">
+	<META NAME="CHANGED" CONTENT="20030422;12461800">
+	<STYLE>
+	<!--
+		@page { size: 21.59cm 27.94cm; margin-left: 2.33cm; margin-right: 2.33cm; margin-top: 2.54cm; margin-bottom: 2.54cm }
+		P { margin-bottom: 0.21cm; color: #000000; text-align: justify; widows: 2; orphans: 2 }
+		P.western { font-family: "Times New Roman", serif; font-size: 10pt; so-language: en-US }
+		P.cjk { font-family: "Times New Roman", serif; font-size: 10pt; so-language:  }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="de-DE" TEXT="#000000">
+<P LANG="en-US" ALIGN=CENTER STYLE="margin-top: 0.42cm; page-break-after: avoid">
+<FONT FACE="Albany, Arial, sans-serif"><FONT SIZE=5><B>Preface</B></FONT></FONT></P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Learning
+the fundamentals of XML might take a programmer a week. Learning how
+to use XML effectively might take a lifetime. While many books have
+been written that teach developers how to use the basic syntax of
+XML, this  is the first one that really focuses on how to use XML
+well. This book is not a tutorial. It is not going to teach you what
+a tag is or how to write a DTD. I assume you know these things.
+Instead it's going to tell you when, why, where, and how to use such
+tools effectively (and perhaps equally importantly when not to use
+them). 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">This book
+derives directly from my own experiences teaching and writing about
+XML. Over the last five years. I've written several books and taught
+numerous introductory courses about XML syntax, APIs, and tools.
+Increasingly I'm finding that audiences are already familiar with the
+basics of XML. They know what a tag is, how to validate a document 
+against a DTD, and how to transform a document with an XSLT style
+sheet. The question of what XML is and why to use it has been
+sufficiently well evangelized. The essential syntax and rules are
+reasonably well understood. However, although most developers know
+what a CDATA section is, they are not sure what to use one for.
+Although programmers know how to add attribute and child nodes to
+elements, they are not certain which one to use when. 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Since XML
+has become a fundamental underpinning of new software systems, it
+becomes important to begin asking new questions, not just what XML
+is, but how does one use it effectively? Which techniques work and
+which don't? Perhaps most importantly, which techniques appear to
+work at first but fail to scale as systems are further developed?
+When I teach programming at my university, one of the first things I
+tell my students is that it is not enough to write programs that
+compile and produce the expected results. It is as important (perhaps
+more important) to write code that is extensible, legible, and
+maintainable. XML can be used to produce robust, extensible,
+maintainable, comprehensible systems or it can be used to create
+masses of unmaintainable, illegible, fragile, closed code. In the
+immortal words of Eric Clapton, &ldquo;It's in the way that you use
+it.&rdquo; 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">XML is not
+a programming language. It is a markup language; but it is being
+successfully used by many programmers. There have been markup
+languages before, but in the developer community XML is far and away
+the most successful. However, the newness and unfamiliarity of markup
+languages have meant that many developers are using it less
+effectively than they could. Many programmers are hacking together
+systems that work, but are not as robust, extensible, or portable as
+XML promises. This is to be expected. Programmers working with XML
+are pioneers exploring new territory, opening up new vistas in
+software, and accomplishing things that could not easily be
+accomplished just a few years ago. However one definition of a
+pioneer is someone with an arrow in their back, and more than a few
+XML pioneers have returned from the frontier with arrows in their
+backs.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Five years
+after the initial release of XML into the world, certain patterns and
+antipatterns for the proper design of XML applications are becoming
+apparent. All of us in the XML community have made mistakes while
+exploring this new territory, the author of this book prominently
+among them. However, we've learned from those mistakes, and we're
+beginning to develop some principles that may help those who follow
+in our footsteps to avoid making the same mistakes we did. It is time
+to put up some caution signs in the road. We may not exactly say
+&ldquo;Here there be dragons&rdquo;, but we can at least say, &ldquo;That
+road is a lot rockier than it looks at first glance, and you might
+really want to take this slightly less obvious but much smoother path
+off to the left.&rdquo;</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">This book
+is divided into four parts beginning with the lowest layer of XML and
+gradually working up to the highest:</P>
+<UL>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Part
+	I covers XML syntax, those aspects of XML that don't really affect
+	the information content of an XML document, but may have large
+	impacts on how easy or hard those documents are to edit and process.
+		</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Part
+	II looks at XML structures, the general organization and annotation
+	of information in an XML document.  
+	</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Part
+	III discusses the various techniques and APIs that are available for
+	processing XML with languages such as C++, C#, Java, Python, and
+	Perl and thus local semantics to the labeled structures of XML. 
+	</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Part
+	IV explores effective techniques for systems built around XML
+	documents, rather than looking at individual documents in isolation.</P>
+</UL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Although,
+this is how I've organized the book, you should be able to begin
+reading at essentially any chapter. This book makes an excellent
+bathroom reader. :-) You may wish to read the introduction first,
+which defines a number of key terms that are used throughout the
+book, and which are frequently misused or confused. However, after
+that feel free to pick and choose from the topics as your interest
+and needs dictate. I've made liberal use of cross-references to
+throughout to direct you along other paths through the book that may
+be of interest.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">I hope
+that this book is a beginning, not an end. It's still early in the
+lifespan of XML, and much remains to be discovered and invented. You
+may well develop best practices of your own that are not mentioned
+here. If you do I'd love to hear about them. You may also take issue
+with some of the principles stated here. I'd like to hear about that
+too. Discussion of many of the guidelines identified here has taken
+place on the xml-dev mailing list, and seems likely to continue in
+future. If you're interested in further discussion of the issues
+raised in this book, I recommend you subscribe and participate there.
+Complete details can be found at <A HREF="http://lists.xml.org/O">http://lists.xml.org/</A>.
+On the other hand, if you find out and out mistakes in this book (The
+ID attribute value on p. 87 is missing a closing quote. The word
+&ldquo;Cat&rdquo; is misspelled on p. 46.) you can write me directly
+at <A HREF="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</A>.
+I maintain a web page listing known errata for this book, as well as
+any updates at http://www.cafeconleche.org/books/effectivexml/</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">I hope
+this book makes your use of XML both more effective and more
+enjoyable.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">--<BR>Elliotte
+Rusty Harold<BR><A HREF="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu<BR>Brooklyn
+NY<BR>April 22, 2003</A></P>
+</BODY>
+</HTML>

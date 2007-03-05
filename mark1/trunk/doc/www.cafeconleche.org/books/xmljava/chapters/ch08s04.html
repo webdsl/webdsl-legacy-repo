@@ -1,0 +1,187 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>The XMLFilterImpl Class</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="previous" href="ch08s03.html" title="Content Filters"><link rel="next" href="ch08s05.html" title="Parsing non-XML Documents"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">The XMLFilterImpl Class</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch08s03.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;8.&nbsp;SAX Filters</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch08s05.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e12876"></a>The XMLFilterImpl Class</h2></div></div><p>
+    SAX includes an adapter class you can subclass to build these
+    sorts of two-way filters, <tt>org.xml.sax.helpers.XMLFilterImpl</tt>.
+    Its general design is similar to what I&#8217;ve shown above.
+    However, it implements all the relevant interfaces in one
+    class: 
+  </p><div class="informalexample"><pre class="programlisting">public class XMLFilterImpl implements XMLFilter, 
+ EntityResolver, DTDHandler, ContentHandler, ErrorHandler</pre></div><p>
+    When the various setter methods like
+    <tt>setContentHandler()</tt> and 
+    <tt>setErrorHandler()</tt> in this class are
+    invoked, the handler is stored in a private field.
+    For example, here&#8217;s the <tt>setContentHandler()</tt>
+    method:
+  </p><div class="informalexample"><pre class="programlisting">    public void setContentHandler (ContentHandler handler)
+    {
+        contentHandler = handler;
+    }</pre></div><p>
+    When the <tt>parse()</tt>  method is called,
+    it swaps out all the installed  handlers for the
+    <tt>XMLFilterImpl</tt> object itself:
+  </p><div class="informalexample"><pre class="programlisting">    private void setupParse ()
+    {
+        if (parent == null) {
+          throw new NullPointerException("No parent for filter");
+        }
+        parent.setEntityResolver(this);
+        parent.setDTDHandler(this);
+        parent.setContentHandler(this);
+        parent.setErrorHandler(this);
+    }</pre></div><p>
+    When the parent parser calls back to the 
+    <tt>ContentHandler</tt>
+    methods, the <tt>XMLFilterImpl</tt> passes 
+    the call back to the original 
+    <tt>ContentHandler</tt>
+    object stored in the <tt>contentHandler</tt> field.
+    For example, here&#8217;s the
+    <tt>startElement()</tt> method:
+  </p><div class="informalexample"><pre class="programlisting">    public void startElement (String uri, String localName, String qName,
+      Attributes atts)
+      throws SAXException
+    {
+      if (contentHandler != null) {
+        contentHandler.startElement(uri, localName, qName, atts);
+      }
+    }</pre></div><p>
+    The other callback methods are similar.
+    Thus by default, <tt>XMLFilterImpl</tt> doesn&#8217;t
+    filter anything, much like the earlier
+    <tt>TransparentFilter</tt> example. 
+    However, you can subclass this class and
+    override those methods where you want to change the data
+    passed back. You pass your changed data by invoking the usual
+    callback methods in this class. Since you may have
+    overridden the relevant methods in a subclass, you may need
+    to use <tt>super</tt> to access the methods in 
+    <tt>XMLFilterImpl</tt> directly. 
+  </p><p>
+    For example, the <tt>startElement()</tt>
+    method in <a href="ch08s04.html#IDFilter.java" title="Example&nbsp;8.12.&nbsp;A subclass of XMLFilterImpl">Example&nbsp;8.12</a>
+    adds an <tt>id</tt> attribute to every element that
+    doesn&#8217;t already have one, and then passes 
+    that modified element on to the underlying content handler
+    to do whatever it needs to do.
+  </p><div class="example"><a name="IDFilter.java"></a><p class="title"><b>Example&nbsp;8.12.&nbsp;A subclass of XMLFilterImpl</b></p><pre class="programlisting">import org.xml.sax.*;
+import org.xml.sax.helpers.*;
+import java.util.*;
+
+
+public class IDFilter extends XMLFilterImpl {
+
+  public void startElement(String namespaceURI, String localName,
+   String qualifiedName, Attributes atts) throws SAXException {    
+
+    boolean hasID = false;
+    for (int i = 0; i &lt; atts.getLength(); i++) {
+      if (atts.getQName(i).equalsIgnoreCase("id") ||
+       atts.getType(i).equals("ID")) {
+         hasID = true;
+         ids.add(atts.getValue(i));
+         break; 
+      }
+    } 
+
+    if (!hasID) {
+      AttributesImpl newAttributes = new AttributesImpl(atts);
+      String idValue = makeID();
+      newAttributes.addAttribute("", "id", "id", "ID", idValue);
+      atts = newAttributes;
+    }
+    super.startElement(namespaceURI, localName, qualifiedName, 
+     atts);
+
+  }
+  
+  // need to track which IDs we've already used, including IDs
+  // that were included in the document
+  int id = 1;
+  private Set ids; // requires Java 1.2
+  
+  public void startDocument() {
+    // reinitialize id list for each document
+    ids = new HashSet();
+    id = 1;
+  }
+  
+  // Generate an ID that hasn't been used yet
+  private String makeID() {
+    
+    while (ids.contains("_" + id)) id++;
+    ids.add("_" + id);
+    return "_" + id;
+    
+  }
+  
+}
+</pre></div><p>
+    You&#8217;ll notice that this code is much shorter and simpler than
+    the programs that implemented
+    <tt>XMLFilter</tt> directly.
+    There&#8217;s a lot of code inside <tt>XMLFilterImpl</tt>
+    you can reuse without a lot of thought. 
+    When subclassing <tt>XMLFilterImpl</tt>, you only need
+    to override the methods that implement the filter.
+    The remaining methods can be left to the superclass. 
+    In fact, it is so much easier to use 
+    <tt>XMLFilterImpl</tt> rather than 
+    <tt>XMLFilter</tt> that almost all
+    real-world filters are based on
+    <tt>XMLFilterImpl</tt>.
+    A few books even ignore the existence of the <tt>XMLFilter</tt>
+    interface completely. I mostly covered it here because I spent
+    a lot of time being confused by  <tt>XMLFilter</tt>
+    since I didn&#8217;t realize how much more
+    <tt>XMLFilterImpl</tt> does. It is not
+    just an implementation of the <tt>XMLFilter</tt>
+    interface.
+  </p><p>
+    Since <tt>XMLFilterImpl</tt> is still an
+    <tt>XMLReader</tt>,
+    the client application uses it like it would use any other
+     <tt>XMLReader</tt>, by setting handlers, features, and properties and
+    then parsing documents. The only difference is that the
+    client application needs to pass an actual parser object to the 
+    <tt>setParent()</tt> method before doing anything else.
+  </p><p>
+   Here&#8217;s the beginning of the output from when I used
+   <tt>IDFilter</tt> and
+   <tt>FilterTester</tt>
+   on the RDDL specification, after the usual adjustments for line 
+   length. The initial <tt>doc</tt> 
+   processing instruction is an artifact of the 
+   <tt>XMLWriter</tt> class.
+ </p><pre class="screen"><tt>% </tt><b><tt>java -Dorg.xml.sax.driver=gnu.xml.aelfred2.XmlReader
+  FilterTester http://www.rddl.org/ IDFilter</tt></b>
+<tt>&lt;?doc type="doctype" role="title" {Resource Directory Description Language 1.0 } ?&gt;
+&lt;html xml:lang="en" xml:base="http://www.rddl.org/" 
+ version="-//XML-DEV//DTD XHTML RDDL 1.0//EN" id="_1" 
+ xmlns="http://www.w3.org/1999/xhtml"&gt;
+&lt;head profile="" id="_2"&gt;
+      &lt;title id="_3"&gt;
+      XML Resource Directory Description Language (RDDL)&lt;/title&gt;
+&lt;link href="xrd.css" type="text/css" rel="stylesheet" 
+ id="_4"&gt;&lt;/link&gt;
+&lt;/head&gt;
+&lt;body id="_5"&gt;
+&lt;h1 id="_6"&gt;Resource Directory Description Language (RDDL)&lt;/h1&gt;
+&lt;div class="head" id="_7"&gt;
+&lt;p id="_8"&gt;This Version: 
+&lt;a href="http://www.openhealth.org/RDDL/20010305" id="_9"&gt; 
+March 5, 2001&lt;/a&gt;&lt;/p&gt;
+&#8230;</tt>
+</pre></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch08s03.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch08.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch08s05.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Content Filters&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Parsing non-XML Documents</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+December 02,
+2001</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

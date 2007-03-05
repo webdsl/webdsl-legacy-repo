@@ -1,0 +1,132 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <meta name="description" content="Slide used in Elliotte Rusty Harold's &#xA;  StAX seminar at Software Development 2004 West, Thursday, March 17, 2004"><title>Attributes Example: XLinkSpider</title><script language="JAVASCRIPT"><!-- 
+              var isnav
+              
+              if (parseInt(navigator.appVersion) >= 4) {
+                if (navigator.appName == "Netscape") {
+                  isNav = true
+                  document.captureEvents(Event.KEYPRESS)
+                }
+                else {
+                  isNav = false
+                }
+              }
+              document.onkeypress = flipslide
+
+              function flipslide(evt) {
+                var key = isNav ? evt.which : window.event.keyCode
+                if (key == 32 || key == 29 || key == 30 || key == 11) {
+                  
+                    location.href="34.html"
+                  
+                }
+                else if (key == 28 || key == 31 || key == 12) {
+                  
+                    location.href="32.html"
+                  
+                }
+                else if (key == 1) {
+                  location.href="index.html";
+                }
+              } //  --></script></head><body>
+  <h1 align="center">Attributes Example: XLinkSpider</h1>
+
+  <pre xmlns:xinclude="http://www.w3.org/2001/XInclude"><code>import javax.xml.stream.*;
+import java.net.*;
+import java.io.*;
+import java.util.*;
+
+public class PullSpider {
+
+  // Need to keep track of where we've been 
+  // so we don't get stuck in an infinite loop
+  private List spideredURIs = new Vector();
+
+  // This linked list keeps track of where we're going.
+  // Although the LinkedList class does not guarantee queue like
+  // access, I always access it in a first-in/first-out fashion.
+  private LinkedList queue = new LinkedList();
+  
+  private URL currentURL;
+  private XMLInputFactory factory;
+  
+  public PullSpider() {
+      this.factory = XMLInputFactory.newInstance();
+  }
+
+  private void processStartTag(XMLStreamReader parser) {
+    
+    String type 
+     = parser.getAttributeValue("http://www.w3.org/1999/xlink", "type");
+    if (type != null) {
+      String href 
+       = parser.getAttributeValue("http://www.w3.org/1999/xlink", "href");
+          if (href != null) {
+            try {
+              URL foundURL = new URL(currentURL, href);
+              if (!spideredURIs.contains(foundURL)) {
+                queue.addFirst(foundURL);
+              }
+            }
+           catch (MalformedURLException ex) {
+             // skip this URL  
+           }
+        }
+    }
+  }
+  
+  public void spider(URL url) {
+      
+    System.out.println("Spidering " + url);
+    currentURL = url;
+    try {
+      XMLStreamReader parser = factory.createXMLStreamReader(currentURL.openStream());
+      spideredURIs.add(currentURL);
+      
+      for (int event = parser.next(); 
+           parser.hasNext(); 
+           event = parser.next()) {
+         if (event == XMLStreamConstants.START_ELEMENT) {
+             processStartTag(parser);
+         }
+       }  // end for
+       parser.close();
+       
+       while (!queue.isEmpty()) {
+         URL nextURL = (URL) queue.removeLast();
+         spider(nextURL);
+       }
+      
+    }
+    catch (Exception ex) {
+       // skip this document
+    }
+    
+  }
+
+  public static void main(String[] args) throws Exception {
+        
+    if (args.length == 0) {
+      System.err.println("Usage: java PullSpider url" );
+       return;  
+    }
+        
+    PullSpider spider = new PullSpider();
+    spider.spider(new URL(args[0]));
+        
+  } // end main
+
+} // end PullSpider
+
+</code></pre>
+  
+  
+   
+<hr><div align="center"><A HREF="32.html">Previous</A> 
+                 | <A HREF="34.html">Next</A> 
+                 | <A HREF="index.html">Top</A> 
+                 | <A HREF="http://www.cafeconleche.org/">Cafe con Leche</A></div><hr><div style="font-size: x-small">
+              Copyright 2000-2004 Elliotte Rusty Harold<br><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a><br>
+              Last Modified 
+              January 8, 2004</div></body></html>

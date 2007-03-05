@@ -1,0 +1,52 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <meta name="description" content="&#xA;      A slide from Elliotte Rusty Harold's Processing XML with Java course at&#xA;      Software Development 2004 West, Thursday, March 17, 2004&#xA;    "><title>Pull Parsing</title><script language="JAVASCRIPT"><!-- 
+              var isnav
+              
+              if (parseInt(navigator.appVersion) >= 4) {
+                if (navigator.appName == "Netscape") {
+                  isNav = true
+                  document.captureEvents(Event.KEYPRESS)
+                }
+                else {
+                  isNav = false
+                }
+              }
+              document.onkeypress = flipslide
+
+              function flipslide(evt) {
+                var key = isNav ? evt.which : window.event.keyCode
+                if (key == 32 || key == 29 || key == 30 || key == 11) {
+                  
+                    location.href="05.html"
+                  
+                }
+                else if (key == 28 || key == 31 || key == 12) {
+                  
+                    location.href="03.html"
+                  
+                }
+                else if (key == 1) {
+                  location.href="index.html";
+                }
+              } //  --></script></head><body>
+  <h1 align="center">Pull Parsing</h1>
+
+   
+<blockquote xmlns:xinclude="http://www.w3.org/2001/XInclude">
+	pull parsing is the way to go in the future.  
+    The first 3 XML parsers (Lark, NXP, and expat) all were event-driven because... 
+    er well that was 1996, can't exactly remember, seemed like a good idea at the time.
+	</blockquote><p xmlns:xinclude="http://www.w3.org/2001/XInclude">
+	--Tim Bray on the  xml-dev mailing list,  Wednesday, September 18, 2002
+	</p>
+          
+  
+  
+<hr><div align="center"><A HREF="03.html">Previous</A> 
+                 | <A HREF="05.html">Next</A> 
+                 | <A HREF="index.html">Top</A> 
+                 | <A HREF="http://www.cafeconleche.org/">Cafe con Leche</A></div><hr><div style="font-size: x-small">
+              Copyright 2000-2004 Elliotte Rusty Harold<br><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a><br>
+              Last Modified 
+              January 16, 2003</div></body></html>

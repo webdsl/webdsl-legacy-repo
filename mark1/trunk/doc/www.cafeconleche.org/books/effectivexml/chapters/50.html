@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+	<TITLE>50. Compress if space is a problem</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.3  (Linux)">
+	<META NAME="AUTHOR" CONTENT="Elliotte Rusty Harold">
+	<META NAME="CREATED" CONTENT="20020121;17260000">
+	<META NAME="CHANGED" CONTENT="20030426;10400700">
+	<STYLE>
+	<!--
+		@page { size: 21.59cm 27.94cm; margin-left: 2.33cm; margin-right: 2.33cm; margin-top: 2.54cm; margin-bottom: 2.54cm }
+		P { margin-bottom: 0.21cm; color: #000000; text-align: justify; widows: 2; orphans: 2 }
+		P.western { font-family: "Times New Roman", serif; font-size: 10pt; so-language: en-US }
+		P.cjk { font-family: "Times New Roman", serif; font-size: 10pt; so-language:  }
+		PRE { margin-top: 0.04cm; margin-bottom: 0.04cm; color: #000000; text-align: justify; widows: 2; orphans: 2 }
+		PRE.western { so-language: en-US }
+		PRE.cjk { so-language:  }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="de-DE" TEXT="#000000">
+<P LANG="en-US" ALIGN=CENTER STYLE="margin-top: 0.42cm; page-break-after: avoid">
+<FONT FACE="Albany, Arial, sans-serif"><FONT SIZE=5><B>50. Compress
+if space is a problem</B></FONT></FONT></P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm; margin-bottom: 0cm">
+Verbosity is a common criticism of XML. However, in practice, most
+developers' intuitions about the verbosity of XML are wrong. XML
+documents are almost always smaller than the equivalent binary file
+format. The sad truth is that most modern software pays little to no
+attention to optimizing documents for space. However, if your XML
+documents are so big or your available space so small that size is a
+real issue, you can simply gzip (or zip or bzip or compress) the XML
+documents.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm; margin-bottom: 0cm">
+For example, consider Microsoft Word. A seventy page chapter
+including about a dozen screen shots and diagrams from one of my
+previous books occupied 6.7 MB.&nbsp;Opening that document in
+OpenOffice 1.0 and immediately resaving it into OpenOffice's native
+compressed XML format reduced the file's size to 522K, a savings of
+more than 90%. I unzipped the OpenOffice document into its component
+parts, and the resulting directory was also 6.7 MB, almost exactly
+the same size as the original binary file format. Most of that space
+was taken up by the pictures. 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm; margin-bottom: 0cm">
+For another example, consider a typical database. One of the
+fundamental principles of a modern RDBMS  is that the physical
+storage is decoupled from the logical representation. This allows the
+database to optimize performance by carefully deciding where to place
+which fields on the disk. Holes are left in the files to allow for
+insertion of additional data in the future. Indexes are created
+across the data. Some data may even be duplicated in multiple places
+if that helps to optimize performance. But one thing that is not
+optimized is storage space. A typical relational database uses
+several times to several dozen times the space that would be required
+purely to store the data without worrying about optimization. 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm; margin-bottom: 0cm">
+As an experiment, I took a small FileMaker Pro 6 database containing
+information about 650 books and exported it to XML. The original
+database was 1.5 megabytes. The exported XML document was only 1.0
+megabytes large, a savings of 33%. This is actually on the small side
+of the savings you can expect by moving to XML, mostly because
+FileMaker does a better than average job of cramming data into
+limited space. It's not uncommon to produce XML documents that are as
+small as 10% of the size of the original database.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm; margin-bottom: 0cm">
+Information theory tells us that given a perfectly efficient
+compression algorithm two documents containing the same information
+will compress to the same final size, regardless of format.
+Reasonably fast compression algorithms like gzip and bzip2 aren't
+perfectly efficient. Nonetheless, in actual tests I've found that
+comparing gzipped XML documents to the gzipped binary equivalents
+mostly results in files that are within 10% of each other in size.
+Whether the gzipped binary file is 10% smaller or 10% larger than the
+gzipped XML equivalent seems unpredictable. Sometimes it's one way,
+sometimes the other; but at this point the details are too small to
+care about.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm; margin-bottom: 0cm">
+Java includes built-in support for zip, gzip and inflate/deflate
+algorithms in the java.util.zip package. These are all implemented as
+filter streams so it's straight-forward to hook one up to your
+original source of data, and then pass it to a parser which reads
+from or writes to the stream as normal. For example, suppose you've
+built up a DOM document object named doc in memory and you want to
+serialize it into a file named data.xml.gz in the current working
+directory. The data in the file will be gzipped. First open a
+FileOutputStream to the file, chain this to a GZipOutputStream, and
+then write the document onto the OutputStream as normal. For example,
+the following code uses Xerces's XMLSerializer class to write a DOM
+Document object into a compressed file:</P>
+<PRE LANG="en-US" CLASS="western">Document doc;
+<SPAN LANG="en-US">// load the document...</SPAN>
+<SPAN LANG="en-US">try {</SPAN>
+<SPAN LANG="en-US">  OutputStream fout    = new FileOutputStream(&quot;data.xml.gz&quot;);</SPAN>
+<SPAN LANG="en-US">  OutputStream out     = new GZipOutputStream(fout);</SPAN>
+<SPAN LANG="en-US">  OutputFormat format  = new OutputFormat(document);</SPAN>
+<SPAN LANG="en-US">  XMLSerializer output = new XMLSerializer(out, format);</SPAN>
+<SPAN LANG="en-US">  output.serialize(doc);</SPAN>
+<SPAN LANG="en-US">}</SPAN>
+<SPAN LANG="en-US">catch (IOException ex) {</SPAN>
+<SPAN LANG="en-US">  System.err.println(ex);</SPAN>
+<SPAN LANG="en-US">}</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm; margin-bottom: 0cm">
+From this point forward you neither need to know nor care that the
+data is compressed. It's all done behind the scenes automatically. 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm; margin-bottom: 0cm">
+Input is equally easy. For example, suppose later you want to read
+data.xml.gz back into your program. Decompression adds just one line
+of code to hook up the GZipInputStream:</P>
+<PRE LANG="en-US" CLASS="western">  InputStream fin = new FileInputStream(&quot;data.xml.gz&quot;);
+<SPAN LANG="en-US">  InputStream in  = new GZipInputStream(fin);</SPAN>
+<SPAN LANG="en-US">  DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();   </SPAN>
+<SPAN LANG="en-US">  DocumentBuilder parser = factory.newDocumentBuilder();</SPAN>
+<SPAN LANG="en-US">  Document doc = parser.parse(in);</SPAN>
+<SPAN LANG="en-US">  // work with the document...</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm; margin-bottom: 0cm">
+Of course, the same techniques work if you need to read or write from
+the network instead of a file. You'll just hook up the filter streams
+to network streams rather than file streams.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm; margin-bottom: 0cm">
+Similar techniques are available for C and C++. Although compression
+is not a standard part of the C or C++ libraries, Greg Roelofs, Mark
+Adler, and Jean-loup Gailly's zlib library
+&lt;http://www.gzip.org/zlib/&gt; should satisfy most needs. zlib is
+available in source and binary forms for pretty much all modern
+platforms. Indeed the java.util.zip package is just a wrapper around
+calls to this library. Python includes the GzipFile class for
+convenient access to this same library. The Compress::Zlib module
+available from CPAN &lt;http://www.cpan.org/modules/by-module/Compress/&gt;
+performs the same task for Perl. .Net aficionados can use Mike
+Krueger's open source #ziplib
+&lt;http://www.icsharpcode.net/OpenSource/SharpZipLib/&gt;.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm; margin-bottom: 0cm">
+Finally, if you're serving data over the web, modern web servers and
+browsers have built in support for compression. They can
+transparently compress and decompress documents as necessary before
+transmitting them. Since bandwidth tends to be a lot more expensive
+and limited on both ends than CPU speed, this is normally a win-win
+proposition.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm; margin-bottom: 0cm">
+By no means should you let fear of fatness stop you from using XML
+file formats. Most of the time the fear is unfounded. Even in those
+rare cases where it isn't, standard compression algorithms neatly
+solve the problem.</P>
+</BODY>
+</HTML>

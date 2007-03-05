@@ -1,0 +1,1565 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+   <head xmlns:html="http://www.w3.org/1999/xhtml">
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   
+      <title>
+         XLinks
+         
+      </title>
+   </head>
+   <body xmlns:html="http://www.w3.org/1999/xhtml" bgcolor="#FFFFFF" text="#000000">
+      <h1>Chapter 
+         19
+         
+         of the <cite>
+            XML Bible, Second Edition
+            </cite>: 
+         
+         XLinks
+         
+      </h1>
+      <h2>In This Chapter</h2>
+      <ul>
+         <li><a href="#d1e477">XLinks versus HTML Links</a></li>
+         <li><a href="#d1e516">Linking Elements</a></li>
+         <li><a href="#d1e876">Descriptions of the Remote Resource</a></li>
+         <li><a href="#d1e957">Link Behavior</a></li>
+         <li><a href="#d1e1438">Extended Links</a></li>
+         <li><a href="#d1e1486">Extended Link Syntax</a></li>
+         <li><a href="#d1e1963">Arcs</a></li>
+         <li><a href="#d1e2528">Out-of-Line Links</a></li>
+      </ul>
+    
+      
+      <p class="GX">Linking in XML is divided into two parts, XLink and XPointers. XLink, the XML Linking Language, defines how one document links
+         to another document. XPointer, the XML Pointer Language, defines how individual parts of a document are addressed. An XLink
+         points to a URI (in practice, a URL) that specifies a particular resource. This URI may include an XPointer part that more
+         specifically identifies the desired part or section of the targeted resource or document. This chapter explores XLinks. The
+         next chapter explores XPointers.
+      </p>
+      
+      <h2><a name="d1e477">XLinks versus HTML Links</a></h2>
+      
+      <p class="GX">The Web conquered the more established gopher protocol for one main reason: HTML made it possible to embed hypertext links
+         in documents. These links could insert images or let the user to jump from inside one document to another document or another
+         part of the same document. To the extent that XML is rendered into HTML for viewing, the same syntax that HTML uses for linking
+         can be used in XML documents. Alternate syntaxes can be converted into HTML syntax using XSLT.
+      </p>
+      
+      <p class="SBT" style="font-weight: bold; margin-left: 0.5in; margin-right: 0.5in;        font-family: Arial, Helvetica, sans; color: #0000ff">Cross-Reference</p>
+      
+      <p class="SBT" style="font-family: Arial, Helvetica, sans;        margin-left: 0.5in; margin-right: 0.5in">XSLT, including several examples of converting XML markup to HTML links, is discussed in Chapter 17.</p>
+      
+      <p class="GX">However, HTML linking has limits. For one thing, URLs are limited to pointing at a single document. More granularity than
+         that, such as linking to the third sentence of the seventeenth paragraph in a document, requires you to manually insert named
+         anchors in the targeted file. It can't be done without write access to the document to which you're linking.
+      </p>
+      
+      <p class="GX">Furthermore, HTML links don't maintain any sense of history or relations between documents. Although browsers may track the
+         path you've followed through a series of documents, such tracking isn't very reliable. From inside the HTML, there's no way
+         to know from where a reader came. Links are purely one-way. The linking document knows to whom it's linking, but the linked
+         document doesn&#8217;t know who's linking to it.
+      </p>
+      
+      <p class="GX">XLink is a proposal for more powerful links between documents designed especially for use with XML documents. XLink achieves
+         everything possible with HTML's URL-based hyperlinks and anchors. Beyond this, however, it supports multidirectional links
+         where the links run in more than one direction. Any element can become a link, not just the <code>A</code> element. Links do not even have to be stored in the same file as the documents they connect. These features make XLinks more
+         suitable not only for new uses, but for things that can be done only with considerable effort in HTML, such as cross-references,
+         footnotes, end notes, interlinked data, and more.
+      </p>
+      
+      <p class="SBT" style="font-weight: bold; margin-left: 0.5in; margin-right: 0.5in;        font-family: Arial, Helvetica, sans; color: #0000ff">Caution</p>
+      
+      <p class="SBT" style="font-family: Arial, Helvetica, sans;        margin-left: 0.5in; margin-right: 0.5in">I should warn you that at the time of this writing (April 2001), XLink is still undergoing significant development and modification.
+         Although it is beginning to stabilize, some bits and pieces likely will change by the time you're reading this. This chapter
+         is based on the December 20, 2000 Proposed Recommendation of XLink. I'm hopeful that this won't be too far removed from the
+         final specification. Nonetheless, if you do encounter inconsistencies, you should compare the examples in this book against
+         the most current specification at <code>http:</code>//<code>www.w3.org/TR/xlink/</code>.
+      </p>
+      
+      <p class="SBT" style="font-family: Arial, Helvetica, sans;        margin-left: 0.5in; margin-right: 0.5in">To make matters worse, only Mozilla and Netscape 6.0 have any support for XLinks, and that support is incomplete. Internet
+         Explorer 5.5 and Opera 5.0 and earlier have absolutely no support for any kind of XLink. There are no general-purpose applications
+         that support arbitrary XLinks. That's because XLinks have a much broader base of applicability than HTML links. XLinks are
+         not just used for hypertext connections and embedding images in documents. They can be used by any custom application that
+         needs to establish connections between documents and parts of documents, for any reason. Thus, even when XLinks are fully
+         implemented in browsers they may not always be blue underlined text that you click to jump to another page. They can be that,
+         but they can also be both more and less, depending on your needs.
+      </p>
+      
+      <h2><a name="d1e516">Linking Elements</a></h2>
+      
+      <p class="GX">In HTML, a link is defined with the <code>&lt;A&gt;</code> tag. However, just as XML is more flexible with tags that describe elements, it is more flexible with tags that refer to
+         external resources. In XML, any element can be a link or part of a link. XLink elements are identified by an <code>xlink:type</code> attribute with one of these seven values:
+      </p>
+      
+      <ul>
+         <li><code>simple</code></li>
+         <li><code>extended</code></li>
+         <li><code>locator</code></li>
+         <li><code>arc</code></li>
+         <li><code>resource</code></li>
+         <li><code>title</code></li>
+         <li><code>none</code></li>
+      </ul>
+      
+      
+      
+      
+      
+      
+      
+      <p class="GX">The <code>xlink</code> prefix must be bound to the <code>http://www.w3.org/1999/xlink</code> namespace URI. As usual, the prefix can change as long as the URI remains the same. The <code>xlink</code> prefix is customary and should be used unless you've got a really good reason to change it. In this chapter, I assume that
+         the prefix <code>xlink</code> has been bound to the <code>http://www.w3.org/1999/xlink</code> URI.
+      </p>
+      
+      <p class="GX">XLinks elements whose <code>xlink:type</code> attribute has the value <code>simple</code> or <code>extended</code> are called <span class="italic">linking elements</span>. For example, these are three linking elements:
+      </p>
+      <pre><code>&lt;COMPOSER xmlns:xlink="http://www.w3.org/1999/xlink"
+          xlink:type="simple"
+          xlink:href="http://www.users.interport.net/~beand/"&gt;
+    Beth Anderson
+&lt;/COMPOSER&gt;
+&lt;FOOTNOTE xmlns:xlink="http://www.w3.org/1999/xlink"
+          xlink:type="simple"
+          xlink:href="footnote7.xml"&gt;7&lt;/FOOTNOTE&gt;
+&lt;IMAGE xmlns:xlink="http://www.w3.org/1999/xlink"
+       xlink:type="simple" xlink:href="logo.gif"
+       xlink:actuate="onLoad" xlink:show="embed"/&gt;
+</code></pre>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <p class="GX">Notice that the elements have semantic names that describe the content they contain rather than how the elements behave. The
+         information that these elements are links is included in the attributes, not the element names. Attributes define the linking
+         behavior.
+      </p>
+      
+      <p class="GX">These three examples are simple XLinks. Simple XLinks are similar to standard HTML links and are the only kind of link supported
+         by application software, so I'll begin with them. Later, we'll talk about the more complex (and more powerful) extended links.
+      </p>
+      
+      <p class="GX">In the <code>COMPOSER</code> example above, the <code>xlink:href</code> attribute defines the target of the link. The value of this attribute is the absolute URL <code>http://www.users.interport.net/~beand/</code>. This linking element describes a connection from the <code>COMPOSER</code> element in the current document with the content "Beth Anderson" to the remote document at <code>http://www.users.interport.net/~beand/</code>. If you were to include this element in an XML document and load that document into an XLink-aware Web browser such as Mozilla
+         or Netscape 6, then the browser would underline the link, color it blue, and let the user click on it to jump to the page
+         <code>http://www.users.interport.net/~beand/</code>.
+      </p>
+      
+      <p class="GX">However, you can also interpret this link more abstractly, as simply defining a one-way connection from one resource, the
+         <code>COMPOSER</code> element, to another resource, the Web page at <code>http://www.users.interport.net/~beand/</code>. Figure 19-1 diagrams this connection. This connection does not truly imply any particular semantics or behavior. It's up
+         to the application reading the document to decide what this abstract link means to it.
+      </p>
+
+
+      <div align="center"><img src="19/picture1.jpg" width="299" height="59" alt="Image: 19\picture1.jpg"></div>
+      
+      
+      <p style="font-weight: bold">Figure 19-1: 
+         A link from the COMPOSER element to http://www.users.interport.net/~beand/
+      </p>
+      
+      
+      <p class="GX">In the <code>FOOTNOTE</code> example, the link target attribute's name is <code>xlink:href</code>. Its value is the relative URL <code>footnote7.xml</code>. This describes a connection from the <code>FOOTNOTE</code> element in the current document with the content "7" to the document named footnote7.xml on the same server in the same directory
+         as the document in which this link appears.
+      </p>
+      
+      <p class="GX">In the third example above, the value of the <code>xlink:href</code> attribute is the relative URL <code>logo.gif</code>. Again, the protocol, host, and directory of this document are taken from the protocol, host, and directory of the document
+         in which this link appears. However, this element requests slightly different behavior. Instead of waiting for the user to
+         activate the link, the <code>xlink:actuate</code> attribute asks that the link be activated automatically as soon as the document is loaded. The <code>xlink:show</code> attribute requests that the result be embedded in the current document instead of replacing the current document.
+      </p>
+      
+      <h3>Declaring XLink attributes in document type definitions</h3>
+      
+      <p class="GX">If the document has a DTD, these attributes should be declared like any other. For example, declarations of the <code>FOOTNOTE</code>, <code>COMPOSER</code>, and <code>IMAGE</code> elements might look like this:
+      </p>
+      <pre><code>&lt;!ELEMENT FOOTNOTE (#PCDATA)&gt;
+&lt;!ATTLIST FOOTNOTE
+    xmlns:xlink CDATA  #FIXED "http://www.w3.org/1999/xlink"
+    xlink:type  CDATA  #FIXED "simple"
+    xlink:href  CDATA  #REQUIRED
+&gt;
+&lt;!ELEMENT COMPOSER (#PCDATA)&gt;
+&lt;!ATTLIST COMPOSER
+    xmlns:xlink CDATA  #FIXED "http://www.w3.org/1999/xlink"
+    xlink:type  CDATA  #FIXED "simple"
+    xlink:href  CDATA  #REQUIRED
+&gt;
+&lt;!ELEMENT IMAGE EMPTY&gt;
+&lt;!ATTLIST IMAGE
+    xmlns:xlink   CDATA  #FIXED "http://www.w3.org/1999/xlink"
+    xlink:type    CDATA  #FIXED "simple"
+    xlink:href    CDATA  #REQUIRED
+    xlink:show    CDATA  #FIXED "onLoad"
+    xlink:actuate CDATA  #FIXED "embed"
+&gt;
+</code></pre>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <p class="GX">With these declarations, the <code>xlink:type</code>, <code>xmlns:xlink</code>, <code>xlink:show</code>, and <code>xlink:actuate</code> attributes have fixed values. Therefore they do not need to be included in the instances of the elements, which you may now
+         write more compactly like this:
+      </p>
+      <pre><code>&lt;FOOTNOTE xlink:href="footnote7.xml"&gt;7&lt;/FOOTNOTE&gt;
+&lt;COMPOSER xlink:href="http://www.users.interport.net/~beand/"&gt;
+  Beth Anderson
+&lt;/COMPOSER&gt;
+&lt;IMAGE xlink:href="logo.gif"/&gt;
+</code></pre>
+      
+      
+      
+      
+      <p class="GX">Making an element a link doesn't impose any restriction on other attributes or contents of the element. An XLink element may
+         contain arbitrary children or other attributes, always subject to the restrictions of the DTD, of course. For example, a more
+         realistic <code>IMAGE</code> element would look like this:
+      </p>
+      <pre><code>&lt;IMAGE ALT="Cafe con Leche Logo of a coffee cup"
+       WIDTH="89" HEIGHT="67"
+       xmlns:xlink="http://www.w3.org/1999/xlink"
+       xlink:type="simple" xlink:href="logo.gif"
+       xlink:actuate="onLoad" xlink:show="embed"/&gt;
+</code></pre>
+      
+      
+      
+      
+      <p class="GX">Half of the attributes don't have anything to do with linking. The declaration in the DTD would then look like this:</p>
+      <pre><code>&lt;!ELEMENT IMAGE EMPTY&gt;
+&lt;!ATTLIST IMAGE
+    xmlns:xlink   CDATA  #FIXED "http://www.w3.org/1999/xlink"
+    xlink:type    CDATA  #FIXED "simple"
+    xlink:href    CDATA  #REQUIRED
+    xlink:show    CDATA  #FIXED "onLoad"
+    xlink:actuate CDATA  #FIXED "embed"
+    ALT           CDATA  #REQUIRED
+    ALIGN         CDATA  #IMPLIED
+    HEIGHT        CDATA  #REQUIRED
+    WIDTH         CDATA  #REQUIRED
+&gt;
+</code></pre>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <p class="GX">In fact, a linking element may even have children that are themselves linking elements! That is, a linking element may contain
+         another linking element or elements. This doesn't have any special meaning. As far as links go, each linking element is treated
+         in isolation.
+      </p>
+      
+      <h2><a name="d1e876">Descriptions of the Remote Resource</a></h2>
+      
+      <p class="GX">A linking element may have optional <code>xlink:role</code> and <code>xlink:title</code> attributes that describe the remote resource; that is, the document or other resource to which the link points. The title
+         contains plain text that describes the resource. The role contains a URI pointing to a document that more fully describes
+         the resource. For example, the title might describe what a page does and the role might point to a help page for the page:
+      </p>
+      <pre><code>&lt;SEARCH xlink:type="simple"
+ xlink:href="http://www.google.com/advanced_search"
+ xlink:title="Search with Google"
+ xlink:role="http://www.google.com/help.html"&gt;
+   Search the Web with Google
+&lt;/SEARCH&gt;
+</code></pre>
+      
+      
+      
+      
+      
+      <p class="GX">Both the role and title describe the remote resource, not the local element. The remote resource in the above example is the
+         document at <code>http://www.google.com/advanced_search</code>. It's not uncommon, though it's not required, for the <code>xlink:title</code> to be the same as the contents of the <code>TITLE</code> element of the page to which you are linking.
+      </p>
+      
+      <p class="GX">XLink does not define the user interface by which link roles and titles are presented to users. For instance, Mozilla shows
+         the user the title of the link in a tool tip when the cursor is hovering over the link, and does nothing with the role. A
+         different application might choose to put the title in the status bar of the browser window, or do both, or neither. How or
+         whether any particular application makes use of the role and title is completely up to it.
+      </p>
+      
+      <p class="GX">As with all other attributes, the <code>xlink:title</code> and <code>xlink:role</code> attributes should be declared in the DTD for all the elements to which they belong. For example, this is a reasonable declaration
+         for the above <code>SEARCH</code> element:
+      </p>
+      <pre><code>&lt;!ELEMENT SEARCH (#PCDATA)&gt;
+&lt;!ATTLIST SEARCH
+    xmlns:xlink CDATA  #FIXED "http://www.w3.org/1999/xlink"
+    xlink:type  CDATA  #FIXED "simple"
+    xlink:href  CDATA  #REQUIRED
+    xlink:title CDATA  #IMPLIED
+    xlink:role  CDATA  #IMPLIED
+&gt;
+</code></pre>
+      
+      
+      
+      
+      
+      
+      
+      <h2><a name="d1e957">Link Behavior</a></h2>
+      
+      <p class="GX">Linking elements can contain two more optional attributes that suggest to applications how the link behaves when activated.
+         These are:
+      </p>
+      
+      <ul>
+         <li><code>xlink:show</code></li>
+         <li><code>xlink:actuate</code></li>
+      </ul>
+      
+      
+      <p class="GX">The <code>xlink:show</code> attribute suggests <span class="italic">how</span> the content should be displayed when the link is activated, for example, by opening a new window to hold the target content
+         or by loading the target into the current window. The <code>xlink:actuate</code> attribute suggests <span class="italic">when</span> the link should be activated; for instance, as soon as the document is loaded or only after a specific user request. Behavior
+         is application dependent, however, and applications are free to ignore the suggestions.
+      </p>
+      
+      <h3>The xlink:show attribute</h3>
+      
+      <p class="GX">The <code>xlink:show</code> attribute has five possible values:
+      </p>
+      
+      <ul>
+         <li><code>replace</code></li>
+         <li><code>new</code></li>
+         <li><code>embed</code></li>
+         <li><code>other</code></li>
+         <li><code>none</code></li>
+      </ul>
+      
+      
+      
+      
+      
+      <p class="GX">If the value of <code>xlink:show</code> is <code>replace</code>, then when the link is activated (generally by clicking on it, at least in GUI browsers), the target of the link replaces
+         the current document in the same window. This is the default behavior of HTML links. For example:
+      </p>
+      <pre><code>&lt;COMPOSER xlink:type="simple"
+          xlink:show="replace"
+          xlink:href="http://www.users.interport.net/~beand/"&gt;
+    Beth Anderson
+&lt;/COMPOSER&gt;
+</code></pre>
+      
+      
+      
+      
+      <p class="GX">If the value of <code>xlink:show</code> is <code>new</code>, activating the link opens a new window in which the targeted resource is displayed. This is similar to the behavior of HTML
+         links when the <code>target</code> attribute is set to <code>_blank</code>. For example:
+      </p>
+      <pre><code>&lt;WEBSITE xlink:type="simple"
+         xlink:show="new"
+         xlink:href="http://www.quackwatch.com/"&gt;
+  Check this out, but don't leave our site completely!
+&lt;/WEBSITE&gt;
+</code></pre>
+      
+      
+      
+      
+      <p class="SBT" style="font-weight: bold; margin-left: 0.5in; margin-right: 0.5in;        font-family: Arial, Helvetica, sans; color: #0000ff">Caution</p>
+      
+      <p class="SBT" style="font-family: Arial, Helvetica, sans;        margin-left: 0.5in; margin-right: 0.5in">Readers do not expect a new window to open after clicking a link. They expect that when they click a link, the new page will
+         load into the current window, unless they specifically ask that the link open in a new window.
+      </p>
+      
+      <p class="SBT" style="font-family: Arial, Helvetica, sans;        margin-left: 0.5in; margin-right: 0.5in">Some Web sites are so self-important that they find it impossible to believe that any user would ever want to leave. Thus
+         they "help" the readers by opening new windows. Most of the time this only serves to confuse and annoy. Don't change the behavior
+         users expect without a very good reason. The thin hope that a reader might spend an additional two seconds on your site or
+         view one more page and see one more ad is not a good enough reason.
+      </p>
+      
+      <p class="GX">If the value of <code>xlink:show</code> is <code>embed</code>, activating the link inserts the targeted resource into the existing document. Exactly what this means is application dependent.
+         Mostly, it implies that the application should somehow render the linked content and display it as part of the finished document.
+         This is how the <code>IMG</code>, <code>APPLET</code>, and <code>OBJECT</code> elements behave in HTML. For example, an element like this one might be used to indicate that a JPEG image should be embedded
+         in the document:
+      </p>
+      <pre><code>&lt;PHOTO xlink:type="simple"
+       xlink:href="images/nypride.jpg"
+       xlink:show="embed"
+       ALT="Marchers on 5th Avenue, June 2000"/&gt;
+</code></pre>
+      
+      
+      
+      <p class="GX">If the value of <code>xlink:show</code> is <code>other</code>, then the application is supposed to look for other markup in the document that explains what to do. Generally this would
+         be used when a particular XML application used different, non-XLink elements or attributes to describe the link behavior.
+         For example, many Web pages have a <code>LINK</code> element in their header that references a style sheet and looks similar to this:
+      </p>
+      <pre><code>&lt;LINK REL="stylesheet" TYPE="text/css"
+      HREF="http://www.w3.org/StyleSheets/TR/W3C-WD" /&gt;
+</code></pre>
+      
+      <p class="GX">This is a link, but what's at the end of the link does not replace the existing document; it does not embed itself into the
+         existing document; it is not displayed in a new window. In XML documents, you might agree that this behavior was implied whenever
+         a <code>STYLESHEET</code> element was encountered. Because this is not one of the three predetermined link behaviors, you'd set <code>xlink:show</code> to <code>other</code>.
+      </p>
+      <pre><code>&lt;STYLESHEET xlink:show="other"  
+           xlink:href="http://www.w3.org/StyleSheets/TR/W3C-WD"
+/&gt;
+</code></pre>
+      
+      
+      <p class="GX">Finally, you can set <code>xlink:show</code> to <code>none</code> to indicate that the document contains no information to help the application decide what, if anything, to do with the link.
+         It's completely up to the application reading the document to make its own choices.
+      </p>
+      
+      <p class="GX">Regardless of what behavior <code>xlink:show</code> suggests, the browser or other application reading the document is free to do whatever it wants when the link is activated,
+         including nothing at all. For instance, a browser with "Automatically load images" turned off might well choose to ignore
+         <code>xlink:show="embed"</code>.
+      </p>
+      
+      <p class="GX">Like all attributes in valid documents, the <code>xlink:show</code> attribute must be declared in a <code>&lt;!ATTLIST&gt;</code> declaration for the linking element. For example:
+      </p>
+      <pre><code>&lt;!ELEMENT WEBSITE (#PCDATA)&gt;
+&lt;!ATTLIST WEBSITE
+    xmlns:xlink CDATA  #FIXED "http://www.w3.org/1999/xlink"
+    xlink:type  CDATA  #FIXED "simple"
+    xlink:href  CDATA  #REQUIRED
+    xlink:show (new | replace | embed) #IMPLIED "replace"
+&gt;
+</code></pre>
+      
+      
+      
+      
+      
+      
+      <p class="GX">This particular DTD fragment doesn't allow the <code>xlink:show</code> attribute to have the value <code>other</code> or <code>none</code>. That's OK, too. Not all linking elements necessarily support all possible values of <code>xlink:show</code>.
+      </p>
+      
+      <h3>The xlink:actuate attribute</h3>
+      
+      <p class="GX">A linking element's <code>xlink:actuate</code> attribute has four possible values:
+      </p>
+      
+      <ul>
+         <li><code>onRequest</code></li>
+         <li><code>onLoad</code></li>
+         <li><code>other</code></li>
+         <li><code>none</code></li>
+      </ul>
+      
+      
+      
+      
+      <p class="GX">The value <code>onRequest</code> specifies that the link should be traversed only when and if the user requests it. This is the behavior of a normal HTML
+         link. For example, this link jumps to the FatBrain bookstore when the user specifically requests that action:
+      </p>
+      <pre><code>&lt;PURCHASE xlink:type="simple" xlink:actuate="onRequest"
+          xlink:href="http://www.fatbrain.com/"&gt;
+  Buy from FatBrain
+&lt;/PURCHASE&gt;
+</code></pre>
+      
+      
+      
+      <p class="GX">On the other hand, if the linking element's <code>xlink:actuate</code> attribute is set to <code>onLoad</code>, the link is traversed once the document containing the link is loaded. For example, you might set the actuate attribute
+         to <code>onLoad</code> for an image or other piece of external content that's to be embedded in the linking document. This way the user doesn't
+         have to click the link to follow it. The code might look like this:
+      </p>
+      <pre><code>&lt;IMAGE xlink:type="simple" xlink:href="logo.gif"
+       xlink:actuate="onLoad" xlink:show="embed"/&gt;
+</code></pre>
+      
+      <p class="GX">If the linking element's <code>xlink:actuate</code> attribute value is <code>other</code>, then the application should look at other markup, not defined by XLink, to decide when to traverse the link. For instance,
+         a browser might define a <code>PRELOAD</code> element as indicating that a document or image is not used on this page, but will likely soon be used. For example,
+      </p>
+      <pre><code>&lt;PRELOAD xlink:type="simple"   xlink:href="logo.gif"
+         xlink:actuate="other" xlink:show="none"/&gt;
+</code></pre>
+      
+      <p class="GX">Therefore, if the browser has extra bandwidth available while the user is reading the page, it should load the document and
+         cache it. Otherwise, it waits until the user actually actuates the link. Applications that don't recognize the <code>PRELOAD</code> element would simply ignore it. (I should warn you that this is a purely hypothetical example that is not yet and probably
+         never will be implemented by any actual browser.)
+      </p>
+      
+      <p class="GX">Finally, setting <code>xlink:actuate</code> to <code>none</code> leaves it completely up to the application to decide when or if to traverse the link.
+      </p>
+      
+      <p class="GX">Like all attributes in valid documents, the <code>xlink:actuate</code> attribute must be declared in the DTD in an <code>&lt;!ATTLIST&gt;</code> declaration for the linking elements in which it appears. For example:
+      </p>
+      <pre><code>&lt;!ELEMENT IMAGE EMPTY&gt;
+&lt;!ATTLIST IMAGE
+    xmlns:xlink CDATA  #FIXED "http://www.w3.org/1999/xlink"
+    xlink:type  CDATA  #FIXED "simple"
+    xlink:href  CDATA  #REQUIRED
+    xlink:show    (new | replace | embed) #IMPLIED "embed"
+    xlink:actuate (onLoad)                #FIXED "onLoad"
+&gt;
+</code></pre>
+      
+      
+      
+      
+      
+      
+      
+      <p class="GX">This particular DTD fragment doesn't allow the <code>xlink:actuate</code> attribute to have the values <code>onRequest</code>, <code>other</code>, or <code>none</code>. That's OK, too. Not all linking elements necessarily support all possible values of <code>xlink:actuate</code>.
+      </p>
+      
+      <p class="SBT" style="font-weight: bold; text-align: center;         font-family: Arial, Helvetica, sans">A Shortcut for the DTD</p>
+      
+      <p class="SBT" style="font-family: Arial, Helvetica, sans;        margin-left: 0.5in; margin-right: 0.5in">Because the attribute names and types are standardized, it's often convenient to make the attribute declarations a parameter
+         entity reference and simply repeat that in the declaration of each linking element if there is more than one linking element
+         in a document. For example:
+      </p>
+      <pre><code>&lt;!ENTITY % link-attributes
+"xlink:type    CDATA  #FIXED 'simple'
+ xlink:role    CDATA  #IMPLIED
+ xlink:title   CDATA  #IMPLIED
+ xmlns:xlink   CDATA  #FIXED 'http://www.w3.org/1999/xlink'
+ xlink:href    CDATA  #REQUIRED
+ xlink:show    (new|replace|embed|other|none) #IMPLIED 'replace'
+ xlink:actuate (onRequest|onLoad|other|none) #IMPLIED 'onRequest'
+"
+&gt;
+&lt;!ELEMENT COMPOSER (#PCDATA)&gt;
+&lt;!ATTLIST COMPOSER
+    %link-attributes;
+&gt;
+&lt;!ELEMENT AUTHOR (#PCDATA)&gt;
+&lt;!ATTLIST AUTHOR
+    %link-attributes;
+&gt;
+&lt;!ELEMENT WEBSITE (#PCDATA)&gt;
+&lt;!ATTLIST WEBSITE
+    %link-attributes;
+&gt;
+</code></pre>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <h2><a name="d1e1438">Extended Links</a></h2>
+      
+      <p class="GX">Simple links behave more or less like the standard links you're accustomed to from HTML. A simple link connects one element
+         in the linking document to one target document. Furthermore, the link is one-way, from the source to the target.
+      </p>
+      
+      <p class="GX">Extended links, however, go substantially beyond HTML links to include multidirectional links between many documents and out-of-line
+         links. An extended link consists of a set of resources and a set of the connections between them. The resources may be local
+         (part of the extended link element) or remote (not part of the extended link element, and generally, though not necessarily,
+         in another document). Each resource may be either a target or a source of a link or both. If a link does not contain any local
+         resources, only remote resources, then it's called an <span class="italic">out-of-line link</span>.
+      </p>
+      
+      <p class="GX">In computer science terms, an extended link is a directed, labeled graph in which the resources are vertices and the links
+         between resources are edges. Thought of abstractly like this, an extended link is really just an XML format for a directed
+         graph. The tricky part comes in deciding exactly what any particular application is supposed to do with such a data structure.
+         For now, I can only speculate about what applications might do with extended links and what sort of user interfaces they might
+         provide.
+      </p>
+      
+      <p class="GX">An extended link is included in an XML document as an element of some arbitrary type such as <code>COMPOSER</code> or <code>TEAM</code> that has an <code>xlink:type</code> attribute with the value <code>extended</code>. As usual the <code>xlink</code> prefix is associated with the <code>http://www.w3.org/1999/xlink</code> namespace URI. For example,
+      </p>
+      <pre><code>&lt;WEBSITE xmlns:xlink="http://www.w3.org/1999/xlink"
+         xlink:type="extended"&gt;
+ ...
+&lt;/WEBSITE&gt;
+</code></pre>
+      
+      
+      
+      <h2><a name="d1e1486">Extended Link Syntax</a></h2>
+      
+      <p class="GX">Extended links generally point to more than one target and from more than one source. Both sources and targets are called
+         by the more generic word <span class="italic"><span class="HTML-Definition">resource</span></span>. In fact, whether a resource is a source or a target can change depending on which link is being followed and in which direction.
+      </p>
+      
+      <p class="GX">Resources are divided into <span class="italic"><span class="HTML-Definition">remote resources</span></span> and<span class="italic"><span class="HTML-Definition"> local resources</span></span>. A local resource is actually contained inside the extended link element. It is the content of an element of arbitrary type
+         that has an <code>xlink:type</code> attribute with the value <code>resource</code>.
+      </p>
+      
+      <p class="GX">A remote resource exists outside the extended link element, very possibly in another document. The extended link element contains
+         locator child elements that point to the remote resource. These are elements with any name that have an <code>xlink:type</code> attribute with the value <code>locator</code>. Each locator element has an <code>xlink:href</code> attribute whose value is a URI locating the remote resource.
+      </p>
+      
+      <p class="SBT" style="font-weight: bold; margin-left: 0.5in; margin-right: 0.5in;        font-family: Arial, Helvetica, sans; color: #0000ff">Caution</p>
+      
+      <p class="SBT" style="font-family: Arial, Helvetica, sans;        margin-left: 0.5in; margin-right: 0.5in">The terminology is unnecessarily confusing here. Both <code>xlink:type="locator"</code> and <code>xlink:type="resource"</code> elements locate resources. An <code>xlink:type="locator"</code> element locates a remote resource. An <code>xlink:type="resource"</code> element locates a local resource. Personally, I think <code>xlink:type="local"</code> and <code>xlink:type="remote"</code> would be better choices here, but <code>xlink:type="resource"</code> and <code>xlink:type="locator"</code> are what the standard has given us.
+      </p>
+      
+      <p class="GX">For example, suppose you're writing a page of links to Java sites. One of the sites you want to link to is Cafe au Lait at
+         <code>http://ibiblio.org/javafaq/</code>. However, there are also three mirrors of that site in three other countries. Some people coming to your site will want to
+         access the home site while others will want to go to one of the mirror sites. With HTML links or simple XLinks you have to
+         write four different links, one for the home site and one for each mirror and let the user pick. However with an extended
+         XLink you can provide one link that connects all four sites as well as the page you're linking from. The browser can choose
+         the one closest to the user when the link is activated (though I feel compelled to reiterate here that browser support for
+         this is strictly hypothetical). The four remote sites are identified by locator elements. The text that will be shown to the
+         user on your page is identified by a resource element. Here's the XML:
+      </p>
+      <pre><code>&lt;WEBSITE xmlns:xlink="http://www.w3.org/1999/xlink"
+         xlink:type="extended"&gt;
+  &lt;NAME xlink:type="resource"&gt;Cafe au Lait&lt;/NAME&gt;
+  &lt;HOMESITE xlink:type="locator"
+            xlink:href="http://ibiblio.org/javafaq/"/&gt;
+  &lt;MIRROR xlink:type="locator"
+          xlink:href="http://sunsite.kth.se/javafaq"/&gt;
+  &lt;MIRROR xlink:type="locator"
+          xlink:href="http://sunsite.informatik.rwth-aachen.de/javafaq/"/&gt;
+  &lt;MIRROR xlink:type="locator"
+          xlink:href="http://sunsite.cnlab-switch.ch/javafaq/"/&gt;
+&lt;/WEBSITE&gt;
+</code></pre>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <p class="GX">This <code>WEBSITE</code> element describes an extended link with five resources:
+      </p>
+      
+      <ul>
+         <li>The text <code>Cafe au Lait</code>, a local resource
+         </li>
+         <li>The document at <code>http://ibiblio.org/javafaq/</code>, a remote resource
+         </li>
+         <li>The document at <code>http://sunsite.kth.se/javafaq</code>, a remote resource
+         </li>
+         <li>The document at <code>http://sunsite.informatik.rwth-aachen.de/javafaq/</code>, a remote resource
+         </li>
+         <li>The document at <code>http://sunsite.cnlab-switch.ch/javafaq/</code>, a remote resource
+         </li>
+      </ul>
+      
+      
+      
+      
+      
+      <p class="GX">Figure 19-2 shows the <code>WEBSITE</code> extended link element and five resources. The <code>WEBSITE</code> element contains one resource and refers to the other four by URLs. However, this just describes these resources. No connections
+         are implied between them.
+      </p>
+      
+      <div align="center"><img src="19/picture3.jpg" width="299" height="155" alt="Image: 19\picture3.jpg"></div>
+      
+      
+      <p style="font-weight: bold">Figure 19-2: 
+         An extended link with one local and four remote resources
+      </p>
+      
+      
+      <p class="GX">Both the extended link element itself and the individual locator children may have descriptive attributes such as <code>xlink:role</code> and <code>xlink:title</code>. The <code>xlink:role</code> and <code>xlink:title</code> attributes of the e<a id="s" name="s" shape="rect"></a>xtended link element provide default roles and titles for each of the individual locator child elements. Individual resource
+         and locator elements may override these defaults with <code>xlink:role</code> and <code>xlink:title</code> attributes of their own. Listing 19-1 demonstrates:
+      </p>
+      
+      <p style="font-weight: bold">Listing 19-1: 
+         An extended link with one local and four remote resources
+      </p>
+      
+      <pre><code>&lt;WEBSITE xmlns:xlink="http://www.w3.org/1999/xlink"
+         xlink:type="extended" xlink:title="Cafe au Lait"&gt;
+  &lt;NAME xlink:type="resource"
+        xlink:role="http://ibiblio.org/javafaq/"&gt;
+    Cafe au Lait
+  &lt;/NAME&gt;
+  &lt;HOMESITE xlink:type="locator"
+          xlink:href="http://ibiblio.org/javafaq/"
+          xlink:role="http://ibiblio.org/"/&gt;
+  &lt;MIRROR xlink:type="locator"
+         xlink:title="Cafe au Lait Swedish Mirror"
+         xlink:role="http://sunsite.kth.se/"
+         xlink:href="http://sunsite.kth.se/javafaq"/&gt;
+  &lt;MIRROR xlink:type="locator"
+         xlink:title="Cafe au Lait German Mirror"
+         xlink:role="http://sunsite.informatik.rwth-aachen.de/"
+         xlink:href=
+          "http://sunsite.informatik.rwth-aachen.de/javafaq/"/&gt;
+  &lt;MIRROR xlink:type="locator"
+         xlink:title="Cafe au Lait Swiss Mirror"
+         xlink:role="http://sunsite.cnlab-switch.ch/"
+         xlink:href="http://sunsite.cnlab-switch.ch/javafaq/"/&gt;
+&lt;/WEBSITE&gt;
+</code></pre>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <p class="GX">As always, in valid documents, the XLink elements and all their possible attributes must be declared in the DTD. For example,
+         Listing 19-2 is a DTD that declares the <code>WEBSITE</code>, <code>HOMESITE</code>, <code>NAME</code>, and <code>MIRROR</code> elements as used in the example above, as well as their attributes:
+      </p>
+      
+      <p style="font-weight: bold">Listing 19-2: 
+         A DTD that declares the WEBSITE, NAME, HOMESITE, and MIRROR elements
+      </p>
+      
+      <pre><code>&lt;!ELEMENT WEBSITE (NAME, HOMESITE, MIRROR*) &gt;
+&lt;!ATTLIST WEBSITE
+  xmlns:xlink  CDATA     #FIXED  "http://www.w3.org/1999/xlink"
+  xlink:type  (extended) #FIXED  "extended"
+  xlink:title  CDATA     #IMPLIED
+  xlink:role   CDATA     #IMPLIED
+&gt;
+&lt;!ELEMENT NAME (#PCDATA)&gt;
+&lt;!ATTLIST NAME
+   xlink:type  (resource) #FIXED    "resource"
+   xlink:role   CDATA     #IMPLIED
+   xlink:title  CDATA     #IMPLIED
+&gt;
+&lt;!ELEMENT HOMESITE (#PCDATA)&gt;
+&lt;!ATTLIST HOMESITE
+   xlink:type  (locator)  #FIXED    "locator"
+   xlink:href   CDATA     #REQUIRED
+   xlink:role   CDATA     #IMPLIED
+   xlink:title  CDATA     #IMPLIED
+&gt;
+&lt;!ELEMENT MIRROR (#PCDATA)&gt;
+&lt;!ATTLIST MIRROR
+   xlink:type  (locator)  #FIXED    "locator"
+   xlink:href   CDATA     #REQUIRED
+   xlink:role   CDATA     #IMPLIED
+   xlink:title  CDATA     #IMPLIED
+&gt;
+</code></pre>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <p class="SBT" style="font-weight: bold; text-align: center;         font-family: Arial, Helvetica, sans">Another Shortcut for the DTD</p>
+      
+      <p class="SBT" style="font-family: Arial, Helvetica, sans;        margin-left: 0.5in; margin-right: 0.5in">If you have many extended link, resource, and locator elements, it may be advantageous to define the common attributes in
+         parameter entities in the DTD, which you can reuse in different elements. For example:
+      </p>
+      <pre><code>&lt;!ENTITY % extended.att
+  "xlink:type   CDATA    #FIXED 'extended'
+   xmlns:xlink  CDATA    #FIXED 'http://www.w3.org/1999/xlink'
+   xlink:role   CDATA    #IMPLIED
+   xlink:title  CDATA    #IMPLIED"
+&gt;
+&lt;!ENTITY % resource.att
+  "xlink:type (resource) #FIXED  'resource'
+   xlink:href    CDATA   #REQUIRED
+   xlink:role    CDATA   #IMPLIED
+   xlink:title   CDATA   #IMPLIED"
+&gt;
+&lt;!ENTITY % locator.att
+  "xlink:type (locator)  #FIXED  'locator'
+   xlink:href    CDATA   #REQUIRED
+   xlink:role    CDATA   #IMPLIED
+   xlink:title   CDATA   #IMPLIED"
+&gt;
+&lt;!ELEMENT WEBSITE (HOMESITE, MIRROR*) &gt;
+&lt;!ATTLIST WEBSITE
+   %extended.att;
+&gt;
+&lt;!ELEMENT NAME (#PCDATA)&gt;
+&lt;!ATTLIST NAME
+   %resource.att;
+&gt;
+&lt;!ELEMENT HOMESITE (#PCDATA)&gt;
+&lt;!ATTLIST HOMESITE
+   %locator.att;
+&gt;
+&lt;!ELEMENT MIRROR (#PCDATA)&gt;
+&lt;!ATTLIST MIRROR
+   %locator.att;
+&gt;
+</code></pre>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <h2><a name="d1e1963">Arcs</a></h2>
+      
+      <p class="GX">The <code>xlink:show</code> and <code>xlink:actuate</code> attributes of a simple link define how and when a link is traversed. Extended links are a little more complicated because
+         they provide many different possible traversal paths. For example in an extended link with three resources, A, B, and C; there
+         are nine different possible traversals. These are:
+      </p>
+      
+      
+      <ul>
+         <li>A --&gt; A</li>
+         <li>B --&gt; B</li>
+         <li>C --&gt; C</li>
+         <li>A --&gt; B</li>
+         <li>B --&gt; A</li>
+         <li>A --&gt; C</li>
+         <li>C --&gt; A</li>
+         <li>B --&gt; C</li>
+         <li>C --&gt; B</li>
+      </ul>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <p class="GX">Each of these possible paths between resources can have different rules for when the link is traversed and what happens when
+         it's traversed. These potential traversals are called <span class="italic"><span class="HTML-Definition">arcs</span></span>, and they're represented in XML by elements that have an <code>xlink:type</code> attribute with the value <code>arc</code>. Traversal rules are specified by attaching <code>xlink:actuate</code> and <code>xlink:show</code> attributes to arc elements. These attributes have the same values and meanings as they do for simple links. Applications
+         can use arc elements to determine which traversals are and are not allowed and when a link is traversed.
+      </p>
+      
+      <p class="GX">An arc element also has an <code>xlink:from</code> attribute and an <code>xlink:to</code> attribute. The <code>xlink:from</code> attribute says which resource or resources the arc comes from. The <code>xlink:to</code> attribute says which resource or resources the arc goes to. They do this by matching the value of the <code>xlink:label</code> attributes on the various resources in the extended link. For instance, if the <code>xlink:from</code> attribute has the value A, and the <code>xlink:to</code> attribute has the value B, then the arc goes from the resource whose <code>xlink:label</code> has the value A to the resource whose <code>xlink:label</code> has the value B. Listing 19-3 demonstrates.
+      </p>
+      
+      <p style="font-weight: bold">Listing 19-3: 
+         An extended link with arcs
+      </p>
+      
+      <pre><code>&lt;WEBSITE xmlns:xlink="http://www.w3.org/1999/xlink"
+         xlink:type="extended" xlink:title="Cafe au Lait"&gt;
+  &lt;NAME xlink:type="resource" xlink:label="source"&gt;
+    Cafe au Lait
+  &lt;/NAME&gt;
+  &lt;HOMESITE xlink:type="locator"
+           xlink:href="http://ibiblio.org/javafaq/"
+           xlink:label="us"/&gt;
+  &lt;MIRROR xlink:type="locator"
+         xlink:title="Cafe au Lait Swedish Mirror"
+         xlink:label="se"
+         xlink:href="http://sunsite.kth.se/javafaq"/&gt;
+  &lt;MIRROR xlink:type="locator"
+         xlink:title="Cafe au Lait German Mirror"
+         xlink:label="sk"
+         xlink:href="http://sunsite.informatik.rwth-aachen.de/javafaq/"/&gt;
+  &lt;MIRROR xlink:type="locator"
+         xlink:title="Cafe au Lait Swiss Mirror"
+         xlink:label="ch"
+         xlink:href="http://sunsite.cnlab-switch.ch/javafaq/"/&gt;
+  &lt;CONNECTION xlink:type="arc" xlink:from="source"
+              xlink:to="ch"    xlink:show="replace"
+              xlink:actuate="onRequest"/&gt;
+  &lt;CONNECTION xlink:type="arc" xlink:from="source"
+              xlink:to="us"    xlink:show="replace"
+              xlink:actuate="onRequest"/&gt;
+  &lt;CONNECTION xlink:type="arc" xlink:from="source"
+              xlink:to="se"    xlink:show="replace"
+              xlink:actuate="onRequest"/&gt;
+  &lt;CONNECTION xlink:type="arc" xlink:from="source"
+              xlink:to="sk"    xlink:show="replace"
+              xlink:actuate="onRequest"/&gt;
+&lt;/WEBSITE&gt;
+</code></pre>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <p class="GX">The first <code>CONNECTION</code> element above defines an arc from the resource with the label "source" to the resource with the label "ch". The second <code>CONNECTION</code> element defines an arc from the resource with the label "source" to the resource with the label "us", and so on. Figure 19-3
+         diagrams this link with ovals representing the resources and arrows representing the arcs. This is the same as Figure 19-2,
+         but now connections have been added between resources as specified by the arc elements.
+      </p>
+      
+      <div align="center"><img src="19/picture5.jpg" width="299" height="146" alt="Image: 19\picture5.jpg"></div>
+      
+      
+      <p style="font-weight: bold">Figure 19-3: 
+         An extended link with one local and four remote resources and arcs going from the local resource to each of the remote resources
+      </p>
+      
+      
+      <p class="GX">In this case, each arc element defines exactly one connection because the target and source labels aren't shared by multiple resources. However,
+         this isn't necessarily the case. Each arc goes from exactly one resource to exactly one other resource. However, a single
+         arc element may actually describe multiple arcs. If more than one resource has the <code>xlink:label</code> A, then <code>xlink:from="A"</code> and <code>xlink:to="B"</code> defines multiple arcs from all resources with the label A to the resource with label B. If more than one resource has the
+         label B, then arcs go from all resources with the label A to all resources with label B. For instance, consider the <code>WEBSITE</code> element in Listing 19-4:
+      </p>
+      
+      <p style="font-weight: bold">Listing 19-4: 
+         Labels can be shared between resources
+      </p>
+      
+      <pre><code>&lt;WEBSITE xmlns:xlink="http://www.w3.org/1999/xlink"
+         xlink:type="extended" xlink:title="Cafe au Lait"&gt;
+  &lt;NAME xlink:type="resource" xlink:label="source"&gt;
+    Cafe au Lait
+  &lt;/NAME&gt;
+  &lt;HOMESITE xlink:type="locator"
+            xlink:href="http://ibiblio.org/javafaq/"
+            xlink:label="home"/&gt;
+  &lt;MIRROR xlink:type="locator"
+          xlink:title="Cafe au Lait Swedish Mirror"
+          xlink:label="mirror"
+          xlink:href="http://sunsite.kth.se/javafaq"/&gt;
+  &lt;MIRROR xlink:type="locator"
+          xlink:title="Cafe au Lait Slovakian Mirror"
+          xlink:label="mirror"
+          xlink:href="http://sunsite.informatik.rwth-aachen.de/javafaq/"/&gt;
+  &lt;MIRROR xlink:type="locator"
+         xlink:title="Cafe au Lait Swiss Mirror"
+         xlink:label="mirror"
+         xlink:href="http://sunsite.cnlab-switch.ch/javafaq/"/&gt;
+  &lt;CONNECTION xlink:type="arc"  xlink:from="source"
+              xlink:to="mirror" xlink:show="replace"
+              xlink:actuate="onRequest"/&gt;
+&lt;/WEBSITE&gt;
+</code></pre>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <p class="GX">Here, the "mirror" label is shared by three different elements and the single arc element defines three arcs: One from the
+         source to the Swedish mirror, one from the source to the Swiss mirror, and one from the source to the German mirror. Figure
+         19-4 diagrams this. It's very similar to Figure 19-3 except that the link between the <code>NAME</code> element and the home site at <code>http://ibiblio.org/javafaq/</code> is missing. Because the <code>HOMESITE</code> has a different label, it isn't connected by the single arc element.
+      </p>
+      
+      <div align="center"><img src="19/picture7.jpg" width="299" height="146" alt="Image: 19\picture7.jpg"></div>
+      
+      
+      <p style="font-weight: bold">Figure 19-4: 
+         An extended link with one local and four remote resources and three arcs going from the local resource to each of the mirror
+         resources
+      </p>
+      
+      
+      <p class="GX">Although I don't recommend it, you can omit either the <code>xlink:from</code> attribute, the <code>xlink:to</code> attribute, or both from an arc element. In this case, all resources participating in the link, both local and remote, take
+         the place of the missing attribute. For instance, consider the <code>WEBSITE</code> element in Listing 19-5.
+      </p>
+      
+      <p style="font-weight: bold">Listing 19-5: 
+         An omitted to attribute
+      </p>
+      
+      <pre><code>&lt;WEBSITE xmlns:xlink="http://www.w3.org/1999/xlink"
+         xlink:type="extended" xlink:title="Cafe au Lait"&gt;
+  &lt;NAME xlink:type="resource" xlink:label="source"&gt;
+    Cafe au Lait
+  &lt;/NAME&gt;
+  &lt;HOMESITE xlink:type="locator"
+            xlink:href="http://ibiblio.org/javafaq/"
+            xlink:label="us"/&gt;
+  &lt;MIRROR xlink:type="locator"
+          xlink:title="Cafe au Lait Swedish Mirror"
+          xlink:label="se"
+          xlink:href="http://sunsite.kth.se/javafaq"/&gt;
+  &lt;MIRROR xlink:type="locator"
+          xlink:title="Cafe au Lait Slovakian Mirror"
+          xlink:label="sk"
+          xlink:href="http://sunsite.informatik.rwth-aachen.de/javafaq/"/&gt;
+  &lt;MIRROR xlink:type="locator"
+          xlink:title="Cafe au Lait Swiss Mirror"
+          xlink:label="ch"
+         xlink:href="http://sunsite.cnlab-switch.ch/javafaq/"/&gt;
+  &lt;CONNECTION xlink:type="arc" xlink:from="source"
+              xlink:show="replace" xlink:actuate="onRequest"/&gt;
+&lt;/WEBSITE&gt;
+</code></pre>
+      
+        
+      
+      
+      <p class="GX">Its single arc element is missing the <code>xlink:to</code> attribute. Consequently this extended link includes five arcs &#8212; one from the source to <code>us</code>, three from the source to each of the mirrors, and one from the source to itself. All arcs start at the <code>NAME</code> element because the <code>xlink:from</code> attribute is present and so specifies. Figure 19-5 diagrams this. It's very similar to Figure 19-3 except that there's now
+         an extra circular arc from the <code>NAME</code> element to itself.
+      </p>
+      
+      <div align="center"><img src="19/picture9.jpg" width="299" height="162" alt="Image: 19\picture9.jpg"></div>
+      
+      
+      <p style="font-weight: bold">Figure 19-5: 
+         An extended link with one local and four remote resources and five arcs going from the local resource to each of the resources,
+         including to itself
+      </p>
+      
+      
+      <p class="GX">As usual, if the document has a DTD, then to be valid all the attributes and elements must be fully declared. Listing 19-6
+         is a DTD fragment that describes the above <code>WEBSITE</code> element.
+      </p>
+      
+      <p style="font-weight: bold">Listing 19-6: 
+         A DTD for the WEBSITE extended link
+      </p>
+      
+      <pre><code>&lt;!ELEMENT WEBSITE (HOMESITE, MIRROR*, xlink:arc*) &gt;
+&lt;!ATTLIST WEBSITE
+  xmlns:xlink  CDATA  #FIXED "http://www.w3.org/1999/xlink"
+  xlink:type  (extended) #FIXED  "extended"
+  xlink:title  CDATA     #IMPLIED
+  xlink:role   CDATA     #IMPLIED
+&gt;
+&lt;!ELEMENT HOMESITE (#PCDATA)&gt;
+&lt;!ATTLIST HOMESITE
+   xlink:type     (locator) #FIXED  "locator"
+   xlink:href      CDATA    #REQUIRED
+   xlink:label     CDATA    #IMPLIED
+   xlink:role      CDATA    #REQUIRED
+   xlink:title     CDATA    #IMPLIED
+&gt;
+&lt;!ELEMENT MIRROR (#PCDATA)&gt;
+&lt;!ATTLIST MIRROR
+   xlink:type     (locator) #FIXED  "locator"
+   xlink:href      CDATA    #REQUIRED
+   xlink:label     CDATA    #IMPLIED
+   xlink:role      CDATA    #REQUIRED
+   xlink:title     CDATA    #IMPLIED
+&gt;
+&lt;!ELEMENT xlink:arc EMPTY&gt;
+&lt;!ATTLIST CONNECTION
+  xlink:type    (arc)                #FIXED   "arc"
+  xlink:from     CDATA               #IMPLIED
+  xlink:to       CDATA               #IMPLIED
+  xlink:show    (replace)            #IMPLIED "replace"
+  xlink:actuate (onRequest | onLoad) #IMPLIED "onRequest"
+&gt;
+</code></pre>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <h2><a name="d1e2528">Out-of-Line Links</a></h2>
+      
+      <p class="GX">Inline links, such as the familiar <code>A</code> element from HTML, are themselves part of the source or target of the link. Generally, they link from the document that they're
+         part of to some other document. However, they can also link to a different part of the same document. The source of the link,
+         that is the blue underlined text, is included inside the <code>A</code> element that defines the link. Most simple links are inline.
+      </p>
+      
+      <p class="GX">Extended links can also be out-of-line. An out-of-line link does not contain any part of any of the resources it connects.
+         Instead, the links are stored in a separate document called the <span class="italic"><span class="HTML-Definition">linkbase</span></span>. For example, you might use a linkbase to maintain a slide show where each slide requires next and previous links. By changing
+         the order of the slides in the linkbase, you can change the targets of the previous and next links on each page without having
+         to edit the slides themselves.
+      </p>
+      
+      <p class="GX">Out-of-line links also allow you to add links to and from documents that can't be modified, such as a page on someone else's
+         Web site. For instance, media watchdog groups such as FAIR (<code>http://www.fair.org/</code>) and AIM (<code>http://www.aim.org/</code>) could put out-of-line links from the New York Times editorial page to analyses of those editorials. The links would only
+         be visible to users who loaded the right linkbase, however.
+      </p>
+      
+      <p class="GX">Finally, out-of-line links allow you to add links to different parts of non-XML content. For instance, you could link to the
+         third minute of a QuickTime movie, even though the movie doesn't contain any attributes or elements that would normally be
+         used to identify the linked position.
+      </p>
+      
+      <p class="GX">For example, a list of mirror sites for a document such as Listing 19-5 might be stored in a separate file on a Web server
+         in a known location where browsers can find and query it to determine the nearest mirror of a page they're looking for. The
+         out-of-line-ness, however, is that this element does not appear in the document from which the link is activated.
+      </p>
+      
+      <p class="GX">This expands the abstraction of style sheets into the linking domain. A style sheet is completely separate from the document
+         it describes and yet provides rules that modify how the document is presented to the reader. A linkbase containing out-of-line
+         links is separated from the documents it connects, yet it provides the necessary links to the reader. This has several advantages,
+         including keeping more presentation-oriented markup separate from the document and allowing the linking of read-only documents.
+      </p>
+      
+      <p class="SBT" style="font-weight: bold; margin-left: 0.5in; margin-right: 0.5in;        font-family: Arial, Helvetica, sans; color: #0000ff">Caution</p>
+      
+      <p class="SBT" style="font-family: Arial, Helvetica, sans;        margin-left: 0.5in; margin-right: 0.5in">I feel compelled to note that application support for out-of-line links is at best hypothetical at the time of this writing.
+         Although I can show you how to write such links, their actual implementation and support is almost certainly some time away.
+         Some of the details remain to be defined and likely will be implemented in vendor-specific fashions, at least initially. Still,
+         they hold the promise of enabling more sophisticated linking than can be achieved with HTML.
+      </p>
+      
+      <p class="GX">For example, I've put the notes for a Java course I teach on my Web site. Figure 19-6 shows the introductory page. This particular
+         course consists of 13 classes, each of which contains between 30 and 60 individual pages of notes. A table of contents page
+         for each class is then provided that links to each note page used in that class. Each of the several hundred pages making
+         up the entire site has links to the previous document (Previous link), the next document (Next link), and the table of contents
+         (Top link) for the week, as shown in Figure 19-7. Putting it all together, this amounts to more than a thousand interconnections
+         among this set of documents.
+      </p>
+      
+      <div align="center"><img src="19/picture11.jpg" width="335" height="307" alt="Image: 19\picture11.jpg"></div>
+      
+      
+      <p style="font-weight: bold">Figure 19-6: 
+         The introductory page for my class Web site shows 13 weeks of lecture notes.
+      </p>
+      
+      
+      <div align="center"><img src="19/picture13.jpg" width="335" height="315" alt="Image: 19\picture13.jpg"></div>
+      
+      
+      <p style="font-weight: bold">Figure 19-7: 
+         One page of lecture notes displaying the Previous, Next, and Top links
+      </p>
+      
+      
+      <p class="GX">The possible interconnections grow exponentially with the number of documents. Every time a document is moved, renamed, or
+         divided into smaller pieces, the links need to be adjusted on that page, on the page before it and after it in the set, and
+         on the table of contents for the week. Quite frankly, this is a lot more work than it should be, and it tends to discourage
+         necessary modifications and updates to the course notes.
+      </p>
+      
+      <p class="GX">The sensible thing to do, if HTML supported it, would be to store the connections in a separate document. Pages could then
+         be reorganized by editing that one document. HTML links don't support this, but extended XLinks do. Listing 19-7 demonstrates
+         one such document. This document describes links from the main index page to the individual classes and vice versa.
+      </p>
+      
+      <p style="font-weight: bold">Listing 19-7: 
+         An out-of-line extended link
+      </p>
+      
+      <pre><code>&lt;COURSE xmlns:xlink="http://www.w3.org/1999/xlink"
+        xlink:type="extended"&gt;
+  &lt;TOC xlink:type="locator" xlink:href="index.xml"
+       xlink:label="index"/&gt;
+  &lt;CLASS xlink:type="locator" xlink:href="week1.xml"
+         xlink:label="class"/&gt;
+  &lt;CLASS xlink:type="locator" xlink:href="week2.xml"
+         xlink:label="class"/&gt;
+  &lt;CLASS xlink:type="locator" xlink:href="week3.xml"
+         xlink:label="class"/&gt;
+  &lt;CLASS xlink:type="locator" xlink:href="week4.xml"
+         xlink:label="class"/&gt;
+  &lt;CLASS xlink:type="locator" xlink:href="week5.xml"
+         xlink:label="class"/&gt;
+  &lt;CLASS xlink:type="locator" xlink:href="week6.xml"
+         xlink:label="class"/&gt;
+  &lt;CLASS xlink:type="locator" xlink:href="week7.xml"
+         xlink:label="class"/&gt;
+  &lt;CLASS xlink:type="locator" xlink:href="week8.xml"
+         xlink:label="class"/&gt;
+  &lt;CLASS xlink:type="locator" xlink:href="week9.xml"
+         xlink:label="class"/&gt;
+  &lt;CLASS xlink:type="locator" xlink:href="week10.xml"
+         xlink:label="class"/&gt;
+  &lt;CLASS xlink:type="locator" xlink:href="week11.xml"
+         xlink:label="class"/&gt;
+  &lt;CLASS xlink:type="locator" xlink:href="week12.xml"
+         xlink:label="class"/&gt;
+  &lt;CLASS xlink:type="locator" xlink:href="week13.xml"
+         xlink:label="class"/&gt;
+  &lt;CONNECTION xlink:type="arc" from="index" to="class"/&gt;
+  &lt;CONNECTION xlink:type="arc" from="class" to="index"/&gt;
+&lt;/COURSE&gt;
+</code></pre>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <p class="GX">Listing 19-8 demonstrates another possible out-of-line extended link. This one provides previous and next links between the
+         13 classes.
+      </p>
+      
+      <p style="font-weight: bold">Listing 19-8: 
+         An out-of-line extended link
+      </p>
+      
+      <pre><code>&lt;COURSE xmlns:xlink="http://www.w3.org/1999/xlink"
+         xlink:type="extended"&gt;
+  &lt;CLASS xlink:type="locator" xlink:href="week1.xml"
+         xlink:label="1"/&gt;
+  &lt;CLASS xlink:type="locator" xlink:href="week2.xml"
+         xlink:label="2"/&gt;
+  &lt;CLASS xlink:type="locator" xlink:href="week3.xml"
+         xlink:label="3"/&gt;
+  &lt;CLASS xlink:type="locator" xlink:href="week4.xml"
+         xlink:label="4"/&gt;
+  &lt;CLASS xlink:type="locator" xlink:href="week5.xml"
+         xlink:label="5"/&gt;
+  &lt;CLASS xlink:type="locator" xlink:href="week6.xml"
+         xlink:label="6"/&gt;
+  &lt;CLASS xlink:type="locator" xlink:href="week7.xml"
+         xlink:label="7"/&gt;
+  &lt;CLASS xlink:type="locator" xlink:href="week8.xml"
+         xlink:label="8"/&gt;
+  &lt;CLASS xlink:type="locator" xlink:href="week9.xml"
+         xlink:label="9"/&gt;
+  &lt;CLASS xlink:type="locator" xlink:href="week10.xml"
+         xlink:label="10"/&gt;
+  &lt;CLASS xlink:type="locator" xlink:href="week11.xml"
+         xlink:label="11"/&gt;
+  &lt;CLASS xlink:type="locator" xlink:href="week12.xml"
+         xlink:label="12"/&gt;
+  &lt;CLASS xlink:type="locator" xlink:href="week13.xml"
+         xlink:label="13"/&gt;
+  &lt;!-- Previous Links --&gt;
+  &lt;CONNECTION xlink:type="arc" xlink:from="2"  xlink:to="1"/&gt;
+  &lt;CONNECTION xlink:type="arc" xlink:from="3"  xlink:to="2"/&gt;
+  &lt;CONNECTION xlink:type="arc" xlink:from="4"  xlink:to="3"/&gt;
+  &lt;CONNECTION xlink:type="arc" xlink:from="5"  xlink:to="4"/&gt;
+  &lt;CONNECTION xlink:type="arc" xlink:from="6"  xlink:to="5"/&gt;
+  &lt;CONNECTION xlink:type="arc" xlink:from="7"  xlink:to="6"/&gt;
+  &lt;CONNECTION xlink:type="arc" xlink:from="8"  xlink:to="7"/&gt;
+  &lt;CONNECTION xlink:type="arc" xlink:from="9"  xlink:to="8"/&gt;
+  &lt;CONNECTION xlink:type="arc" xlink:from="10" xlink:to="9"/&gt;
+  &lt;CONNECTION xlink:type="arc" xlink:from="11" xlink:to="10"/&gt;
+  &lt;CONNECTION xlink:type="arc" xlink:from="12" xlink:to="11"/&gt;
+  &lt;CONNECTION xlink:type="arc" xlink:from="13" xlink:to="12"/&gt;
+  &lt;!-- Next Links --&gt;
+  &lt;CONNECTION xlink:type="arc" xlink:from="1"  xlink:to="2"/&gt;
+  &lt;CONNECTION xlink:type="arc" xlink:from="2"  xlink:to="3"/&gt;
+  &lt;CONNECTION xlink:type="arc" xlink:from="3"  xlink:to="4"/&gt;
+  &lt;CONNECTION xlink:type="arc" xlink:from="4"  xlink:to="5"/&gt;
+  &lt;CONNECTION xlink:type="arc" xlink:from="5"  xlink:to="6"/&gt;
+  &lt;CONNECTION xlink:type="arc" xlink:from="6"  xlink:to="7"/&gt;
+  &lt;CONNECTION xlink:type="arc" xlink:from="7"  xlink:to="8"/&gt;
+  &lt;CONNECTION xlink:type="arc" xlink:from="8"  xlink:to="9"/&gt;
+  &lt;CONNECTION xlink:type="arc" xlink:from="9"  xlink:to="10"/&gt;
+  &lt;CONNECTION xlink:type="arc" xlink:from="10" xlink:to="11"/&gt;
+  &lt;CONNECTION xlink:type="arc" xlink:from="11" xlink:to="12"/&gt;
+  &lt;CONNECTION xlink:type="arc" xlink:from="12" xlink:to="13"/&gt;
+&lt;/COURSE&gt;
+</code></pre>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <p class="GX">Now the topics can be reordered simply by rearranging what's connected to what in the out-of-line extended link. The course
+         notes themselves don't have to be touched. However, there are a couple of pieces missing from this puzzle. The first is some
+         notion of how or where in the individual week documents the links will be displayed. It would be easy enough to add <code>&lt;PREVIOUS/&gt;</code> and <code>&lt;NEXT/&gt;</code> tags to the individual week pages. The XPointers you'll learn about in the next chapter would allow you to select these elements
+         in particular as the sources of outgoing links rather than the entire document.
+      </p>
+      
+      <p class="GX">A single XML document may contain multiple out-of-line extended links. Listings 19-7 and 19-8 could be combined into a single
+         document. However, the XLink specification is relatively silent on exactly what the format of such a compound document should
+         look like. About all it says is that such a document must be a well-formed XML document. An XLink processor would presumably
+         read the entire document and extract and store any extended links it found there.
+      </p>
+      
+      <p class="GX">The final thing that's missing is some way for a browser or other application that's reading the individual pages to be informed
+         that there is a separate linkbase elsewhere that it should read and parse so that it can show the links to the user. This
+         is probably the area in which the specification is weakest. Ideally, it would be handled through some external mechanism such
+         as HTTP headers. However, the only currently defined way to do this (which still isn't supported by any browsers or other
+         software) is to add an extended link inside the documents the out-of-line link connects.
+      </p>
+      
+      <p class="GX">One of the arcs in this extended link has an <code>xlink:arcrole</code> attribute with the value <code>http://www.w3.org/1999/xlink/properties/linkbase</code>. The <code>xlink:to</code> attribute of this arc should identify a locator element that gives the URL of the linkbase. The <code>xlink:actuate</code> attribute of the arc determines whether the links are loaded automatically or whether a user request is required. For example,
+         if Listing 19-7 and Listing 19-8 were found in a file at the URL <code>http://ibiblio.org/javafaq/course/courselinks.xml</code>, then this element might be included in the main page for the Java course notes:
+      </p>
+      <pre><code>&lt;LINKBASE xlink:type="xlink:extended"
+          xmlns:xlink="http://www.w3.org/1999/xlink"&gt;
+  &lt;SOURCE xlink:type="resource" xlink:label="source"/&gt;
+  &lt;LINKS xlink:type="locator" xlink:label="linkbase"
+         xlink:href=
+          "http://ibiblio.org/javafaq/course/courselinks.xml"/&gt;
+  &lt;LOAD  xlink:type="arc"
+         xlink:arcrole=
+          "http://www.w3.org/1999/xlink/properties/linkbase"
+         xlink:from="source" xlink:to="linkbase"
+         xlink:actuate="onLoad" /&gt;
+&lt;/LINKBASE&gt;
+</code></pre>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <p class="GX">Of course, the problem with this approach is that it again requires that you be able to modify the documents before you can
+         link them. At least in this case, however, it may be enough for the browser to load one such document to find the linkbase,
+         so you may not need to modify every document the linkbase connects.
+      </p>
+      
+      <h2 class="sum-H">Summary</h2>
+      
+      <p class="sum-X">In this chapter, you learned about XLinks. In particular, you learned that:</p>
+      
+      <ul>
+         <li>XLinks can do everything HTML links can do and quite a bit more, but they aren't well supported by current applications.</li>
+         <li>XLink elements are all defined by attributes attached to the existing elements in other XML applications.</li>
+         <li>XLink attributes of all types are placed in the <code>http://www.w3.org/1999/xlink</code> namespace, normally with the <code>xlink</code> prefix.
+         </li>
+         <li>Simple links behave much like HTML links, but they are not restricted to a single <code>&lt;A&gt;</code> tag.
+         </li>
+         <li>XLink elements are identified by <code>xlink:type</code> attributes.
+         </li>
+         <li>Simple link elements are identified by <code>xlink:type</code> attributes with the value <code>simple</code>.
+         </li>
+         <li>Simple link elements have an <code>xlink:href</code> whose value is the URI the link points to.
+         </li>
+         <li>Linking elements can describe the resource they're linking to with <code>xlink:title</code> and <code>xlink:role</code> attributes. The value of the <code>xlink:role</code> attribute must be a URI.
+         </li>
+         <li>Linking elements can use the <code>xlink:show</code> attribute to tell the application how the content should be displayed when the link is activated, for example, by opening
+            a new window.
+         </li>
+         <li>Linking elements can use the <code>xlink:actuate</code> attribute to tell the application whether the link should be traversed without a specific user request.
+         </li>
+         <li>Extended link elements are identified by <code>xlink:type</code> attributes with the value <code>extended</code>.
+         </li>
+         <li>Extended links can contain multiple locators, resources, and arcs.</li>
+         <li>Local resource elements are identified by <code>xlink:type</code> attributes with the value <code>resource</code>. The resource is the content of the resource element.
+         </li>
+         <li>Remote resource locator elements are identified by <code>xlink:type</code> attributes with the value <code>locator</code>.
+         </li>
+         <li>A locator element has an <code>xlink:href</code> attribute whose value is the URI of the resource it locates.
+         </li>
+         <li>Arc elements are identified by <code>xlink:type</code> attributes with the value <code>arc</code>.
+         </li>
+         <li>Arc elements have <code>xlink:from</code> and <code>xlink:to</code> attributes that identify the resources they connect by their labels.
+         </li>
+         <li>Arc elements may have <code>xlink:show</code> and <code>xlink:actuate</code> attributes to determine when and how traversal of the link occurs.
+         </li>
+         <li>An out-of-line link is a link that does not contain any local resources.</li>
+         <li>A linkbase is a document containing multiple out-of-line, extended link elements.</li>
+         <li>A linkbase is found when a document with an extended link whose <code>xlink:arcrole</code> has the value <code>http://www.w3.org/1999/xlink/properties/linkbase</code> is read.
+         </li>
+      </ul>
+      
+      <p class="sum-X">In the next chapter, you learn how XPointers can be used to link not only to remote documents, but also to very specific elements
+         in remote documents.
+      </p>
+      
+      <hr>
+      <div style="text-align: center">
+         [ <a href="../../index.html">Cafe con Leche</a> 
+         | <a href="../index.html">XML Bible Home Page</a>
+         | Order from <a href="http://www.amazon.com/exec/obidos/ASIN/0764547607/ref=nosim/cafeaulaitA/">amazon.com</a> ]
+         
+      </div>
+      <hr>
+      Copyright 2001, 2002 <a href="http://www.elharo.com/">Elliotte Rusty Harold</a><br /><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a><br />
+      Last Modified December 31, 2002
+      
+   </body>
+</html>

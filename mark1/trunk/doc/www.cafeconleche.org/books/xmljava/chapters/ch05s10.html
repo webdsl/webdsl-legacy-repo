@@ -1,0 +1,75 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Summary</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="previous" href="ch05s09.html" title="XMLPULL"><link rel="next" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Summary</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch05s09.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;5.&nbsp;Reading XML</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch06.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e8038"></a>Summary</h2></div></div><p>
+      Reading an XML document is a complicated, error-prone operation,
+      which is why it&#8217;s fortunate that you never have to write the code that does this.
+      Instead you install an XML parser class library and only access the
+      document through the parser&#8217;s API. Numerous XML parsers for Java
+      are available as
+      free-beer, open source, and payware including the Apache XML Project&#8217;s
+      Xerces, Sun&#8217;s Crimson, Enhydra&#8217;s kXML, the GNU 
+      Classpath Project&#8217;s &AElig;lfred, and Yuval Oren&#8217;s Piccolo.
+      Most XML parsers implement one or more standard APIs such as SAX, DOM,
+      and XMLPULL. 
+      As long as you only write code to the standard APIs, 
+      you can change the underlying parser with relatively little effort. 
+    </p><p>
+      Which API you pick is largely a matter of personal taste
+      and appropriateness for the problem at hand. SAX is an event based API
+      that presents the contents of a document from beginning to end 
+      in the order
+      the parser encounters them. 
+      XMLPULL is a similar read-only, streaming API. However, it&#8217;s
+      based on the Iterator design
+      pattern rather than the Observer design pattern.
+      That is, in XMLPULL the client has to ask the parser for the next 
+      chunk of data whereas in SAX the parser tells the client when it has a new chunk of
+      data. Both SAX and XMLPULL can 
+      manipulate  documents
+      larger than available memory.
+    </p><p>  
+      SAX and XMLPULL both work well for documents where the
+      processing is local; that is, where all the information the program needs
+      at one time tends to be close together in the document.
+      Programs that need random access to widely separated parts of the document
+      are often better served by 
+      one of the tree-based APIs such as DOM or JDOM.
+      These often feel more natural to programmers
+      than XMLPULL and SAX, mostly because DOM models the XML document 
+      while SAX and XMLPULL model the XML parser;
+      and most programmers are more interested in what&#8217;s in the 
+      document than how the
+      parser behaves. The flip side is that SAX and XMLPULL
+      are much easier APIs for parser vendors
+      to implement so that some parsers implement SAX or XMLPULL
+      but not DOM.
+      JAXP bundles both SAX and DOM together so they can become a standard part of the JDK.
+      However it really isn&#8217;t a separate API in itself. 
+    </p><p>
+      In addition to DOM,
+      there are several alternative 
+      tree-based APIs that layer on top of an
+      underlying parser. These include JDOM, ElectricXML, and dom4j.
+      These all correct various perceived flaws in the DOM API and
+      often seem easier-to-use to a Java programmer with little 
+      background in XML.
+      However, in my experience these APIs are much more limited than DOM and SAX
+      and leave out some important information from an XML document needed by more
+      complex applications. Worse yet, they occasionally increase ease-of-use by catering
+      to common preexisting programmer misconceptions about XML syntax and grammar,
+      and thus help propagate the mistaken beliefs. SAX and DOM are both much more in
+      sync with the broad family of XML specifications from XML 1.0 on up.
+      These days I try to stick to standard SAX and DOM for most 
+      of my programs.
+    </p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch05s09.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch05.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch06.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">XMLPULL&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Chapter&nbsp;6.&nbsp;SAX</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+September 09,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

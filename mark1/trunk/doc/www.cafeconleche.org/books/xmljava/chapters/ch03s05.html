@@ -1,0 +1,150 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>A Simple SOAP Client</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="previous" href="ch03s04.html" title="A Simple XML-RPC Client"><link rel="next" href="ch03s06.html" title="Servlets"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">A Simple SOAP Client</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03s04.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;3.&nbsp;Writing XML with Java</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch03s06.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e5543"></a>A Simple SOAP Client</h2></div></div><p>
+    Talking to a SOAP server that provides Fibonacci numbers
+    is not significantly harder than talking to an XML-RPC server. 
+    You just have to adjust the syntax of your request to use SOAP instead of 
+    XML-RPC. Again, we&#8217;ll talk to a Fibonacci generator
+    I&#8217;ll develop in later chapters, but that can be previewed at
+    <tt>http://www.elharo.com/fibonacci/SOAP</tt>.
+    The body of each request document 
+    contains a <tt>calculateFibonacci</tt> 
+    element in the <tt>http://namespaces.cafeconleche.org/xmljava/ch3/</tt>
+    namespace.
+    This element contains a single positive integer:
+  </p><div class="informalexample"><pre class="programlisting">&lt;?xml version="1.0"?&gt;
+&lt;SOAP-ENV:Envelope
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" &gt;
+  &lt;SOAP-ENV:Body&gt;
+    &lt;calculateFibonacci 
+      xmlns="http://namespaces.cafeconleche.org/xmljava/ch3/"
+      type="xsi:positiveInteger"&gt;10&lt;/calculateFibonacci&gt;
+  &lt;/SOAP-ENV:Body&gt;
+&lt;/SOAP-ENV:Envelope&gt;</pre></div><p>
+     The server responds with a list of Fibonacci numbers
+    using the vocabulary designed earlier in this chapter,
+    enclosed in the usual SOAP response envelope.
+  For example, here&#8217;s the response to a request for the first ten Fibonacci numbers:
+  </p><div class="informalexample"><pre class="programlisting">&lt;?xml version="1.0"?&gt;
+&lt;SOAP-ENV:Envelope
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" /&gt;
+  &lt;SOAP-ENV:Body&gt;
+    &lt;Fibonacci_Numbers 
+      xmlns="http://namespaces.cafeconleche.org/xmljava/ch3/"&gt;
+      &lt;fibonacci index="1"&gt;1&lt;/fibonacci&gt;
+      &lt;fibonacci index="2"&gt;1&lt;/fibonacci&gt;
+      &lt;fibonacci index="3"&gt;2&lt;/fibonacci&gt;
+      &lt;fibonacci index="4"&gt;3&lt;/fibonacci&gt;
+      &lt;fibonacci index="5"&gt;5&lt;/fibonacci&gt;
+      &lt;fibonacci index="6"&gt;8&lt;/fibonacci&gt;
+      &lt;fibonacci index="7"&gt;13&lt;/fibonacci&gt;
+      &lt;fibonacci index="8"&gt;21&lt;/fibonacci&gt;
+      &lt;fibonacci index="9"&gt;34&lt;/fibonacci&gt;
+      &lt;fibonacci index="10"&gt;55&lt;/fibonacci&gt;
+    &lt;/Fibonacci_Numbers&gt;
+  &lt;/SOAP-ENV:Body&gt;
+&lt;/SOAP-ENV:Envelope&gt;</pre></div><p>
+  Conceptually, the SOAP
+  client is almost identical to <a href="ch03s04.html#FibonacciXMLRPCClient.java" title="Example&nbsp;3.10.&nbsp;Connecting an XML-RPC server with URLConnection">Example&nbsp;3.10</a>.
+  It reads one or more integers from the command lines, 
+  opens a <tt>URLConnection</tt> to the server, 
+  and POSTs each integer to the server
+  wrapped inside a bunch of XML markup.
+  It then receives a batch of XML markup in response which it prints on <tt>System.out</tt>.
+  The markup used has changed. However, 
+  all the markup is just strings. One string is more or less the same as the next
+  as far as Java is concerned. <a href="ch03s05.html#FibonacciSOAPClient.java" title="Example&nbsp;3.11.&nbsp;Connecting to a SOAP server with URLConnection">Example&nbsp;3.11</a>
+  shows the completed code.
+</p><div class="example"><a name="FibonacciSOAPClient.java"></a><p class="title"><b>Example&nbsp;3.11.&nbsp;Connecting to a SOAP server with URLConnection</b></p><pre class="programlisting">import java.net.*;
+import java.io.*;
+
+
+public class FibonacciSOAPClient {
+
+  public final static String DEFAULT_SERVER 
+   = "http://www.elharo.com/fibonacci/SOAP";
+  public final static String SOAP_ACTION 
+   = "http://www.example.com/fibonacci";
+
+  public static void main(String[] args) {
+  
+    if (args.length == 0) {
+      System.out.println(
+       "Usage: java FibonacciSOAPClient index URL");
+      return;
+    }
+    String input = args[0];
+    String server = DEFAULT_SERVER;
+    if (args.length &gt;= 2) server = args[1];
+    
+    try {
+      URL u = new URL(server);
+      URLConnection uc = u.openConnection();
+      HttpURLConnection connection = (HttpURLConnection) uc;
+      
+      connection.setDoOutput(true);
+      connection.setDoInput(true);
+      connection.setRequestMethod("POST");
+      connection.setRequestProperty("SOAPAction", SOAP_ACTION);
+      
+      OutputStream out = connection.getOutputStream();
+      Writer wout = new OutputStreamWriter(out);
+      
+      wout.write("&lt;?xml version='1.0'?&gt;\r\n");  
+      wout.write("&lt;SOAP-ENV:Envelope ");
+      wout.write("xmlns:SOAP-ENV=");
+      wout.write(
+        "'http://schemas.xmlsoap.org/soap/envelope/' "
+      );
+      wout.write("xmlns:xsi=");
+      wout.write(
+        "'http://www.w3.org/2001/XMLSchema-instance'&gt;\r\n"); 
+      wout.write("  &lt;SOAP-ENV:Body&gt;\r\n");
+      wout.write("    &lt;calculateFibonacci ");
+      wout.write(
+    "xmlns='http://namespaces.cafeconleche.org/xmljava/ch3/'\r\n"
+      ); 
+      wout.write("    type='xsi:positiveInteger'&gt;" + input 
+       + "&lt;/calculateFibonacci&gt;\r\n"); 
+      wout.write("  &lt;/SOAP-ENV:Body&gt;\r\n"); 
+      wout.write("&lt;/SOAP-ENV:Envelope&gt;\r\n"); 
+      
+      wout.flush();
+      wout.close();
+      
+      InputStream in = connection.getInputStream();
+      int c;
+      while ((c = in.read()) != -1) System.out.write(c);
+      in.close();
+
+    }
+    catch (IOException e) {
+      System.err.println(e); 
+    }
+  
+  } // end main
+
+} // end FibonacciSOAPClient
+</pre></div><p>
+    The one new piece here is that SOAP 1.1 requires the client to set a
+    SOAPAction field in the HTTP header.
+    This is done with <tt>URLConnection</tt>&#8217;s
+    <tt>setRequestProperty()</tt> method.
+    Some servers may dispatch the request based on this field without actually
+    parsing the body of the request.
+    This server doesn't pay any attention to the SOAPAction field, however,
+    so I just set it to a reaosnable default value.
+    SOAP 1.2 will make SOAPAction optional.
+  </p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03s04.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch03s06.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">A Simple XML-RPC Client&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Servlets</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+May 24,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

@@ -1,0 +1,45 @@
+<Budget year="2001">
+  {
+  for $ac in distinct-values(document("budauth.xml")//AgencyCode)
+  return
+    <Agency>
+      <Name>{ $ac/../AgencyName/text() }</Name>
+      <Code>{ $ac/text() }</Code>
+      {  
+        for $bc 
+         in distinct-values(document("budauth.xml")//BureauCode)
+        where $bc/../AgencyCode = $ac
+        return 
+          <Bureau>
+            <Name>{ $bc/../BureauName/text() }</Name>
+            <Code>{ $bc/text() }</Code>
+            {  
+            for $acct in distinct-values(
+             document("budauth.xml")//AccountCode)
+            where $acct/../AgencyCode = $ac 
+             AND $acct/../BureauCode = $bc
+            return 
+              <Account 
+                BEACategory="{ $acct/../BEACategory/text() }">
+                <Name>{ $acct/../AccountName/text() }</Name>
+                <Code>{ $acct/text() }</Code>  
+                {  
+                  for $sfx 
+                    in document("budauth.xml")//SubfunctionCode
+                  where $sfx/../AgencyCode = $ac 
+                    and $sfx/../BureauCode = $bc 
+                    and $sfx/../AccountCode = $acct
+                  return 
+                    <Subfunction>
+                 <Title>{$sfx/../SubfunctionTitle/text()}</Title>
+                      <Code>{ $sfx/text() }</Code>  
+                      <Amount>{ $sfx/../FY2001/text() }</Amount>
+                    </Subfunction>
+               }    
+            </Account>
+           }
+          </Bureau>
+      }
+    </Agency>
+  }
+</Budget>

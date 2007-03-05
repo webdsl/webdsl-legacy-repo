@@ -1,0 +1,750 @@
+<html xmlns:UnparsedEntity="http://www.jclark.com/xt/java/com.macfaq.xsl.UnparsedEntity">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="description" content="
+    Elliotte Rusty Harold's tutorial on 
+    XML and Java at SD2000 West, March 20, 2000
+  ">
+<title>Processing XML with Java</title>
+</head>
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>Processing XML with Java</h1>
+<ul>
+<li>
+<a href="01.html">Processing XML with Java</a>
+</li>
+<li>
+<a href="02.html">Where we're going</a>
+</li>
+<li>
+<a href="03.html">Relevant Standards</a>
+</li>
+<li>
+<a href="04.html">Processing XML with Java is easy</a>
+</li>
+<li>
+<a href="05.html">Prerequisites</a>
+</li>
+<li>
+<a href="06.html">A simple example</a>
+</li>
+<li>
+<a href="07.html">Markup and Character Data</a>
+</li>
+<li>
+<a href="08.html">Markup and Character Data Example</a>
+</li>
+<li>
+<a href="09.html">Entities</a>
+</li>
+<li>
+<a href="10.html">Parsed Character Data</a>
+</li>
+<li>
+<a href="11.html">CDATA sections</a>
+</li>
+<li>
+<a href="12.html">Comments</a>
+</li>
+<li>
+<a href="13.html">Processing Instructions</a>
+</li>
+<li>
+<a href="14.html">The XML Declaration</a>
+</li>
+<li>
+<a href="15.html">Document Type Declaration</a>
+</li>
+<li>
+<a href="16.html">Document Type Definition</a>
+</li>
+<li>
+<a href="17.html">XML Names</a>
+</li>
+<li>
+<a href="18.html">XML Namespaces</a>
+</li>
+<li>
+<a href="19.html">Namespace Syntax</a>
+</li>
+<li>
+<a href="20.html">Namespace URIs</a>
+</li>
+<li>
+<a href="21.html">Binding Prefixes to Namespace URIs</a>
+</li>
+<li>
+<a href="22.html">The Default Namespace</a>
+</li>
+<li>
+<a href="23.html">How Parsers Handle Namespaces</a>
+</li>
+<li>
+<a href="24.html">Canonical XML</a>
+</li>
+<li>
+<a href="25.html">Trees</a>
+</li>
+<li>
+<a href="26.html">Part II: Writing XML Documents with Java</a>
+</li>
+<li>
+<a href="27.html">Unicode</a>
+</li>
+<li>
+<a href="28.html">Readers and Writers</a>
+</li>
+<li>
+<a href="29.html">A Java program that writes Fibonacci numbers into a text file</a>
+</li>
+<li>
+<a href="30.html">fibonacci.txt</a>
+</li>
+<li>
+<a href="31.html">A Java program that writes Fibonacci numbers into an XML file</a>
+</li>
+<li>
+<a href="32.html">fibonacci.xml</a>
+</li>
+<li>
+<a href="33.html">Suppose we want to use a different encoding than UTF-8</a>
+</li>
+<li>
+<a href="34.html">fibonacci_8859_1.xml</a>
+</li>
+<li>
+<a href="35.html">Suppose you want to include a DTD</a>
+</li>
+<li>
+<a href="36.html">valid_fibonacci.xml</a>
+</li>
+<li>
+<a href="37.html">Converting data to XML</a>
+</li>
+<li>
+<a href="38.html">Sample Tab Delimited Data: Baseball Statistics</a>
+</li>
+<li>
+<a href="39.html">A Program to convert tab delimited data to XML</a>
+</li>
+<li>
+<a href="40.html">Baseball Stats in XML</a>
+</li>
+<li>
+<a href="41.html">Converting data to XML while Processing it</a>
+</li>
+<li>
+<a href="42.html">Batting Averages in XML</a>
+</li>
+<li>
+<a href="43.html">The point is this:</a>
+</li>
+<li>
+<a href="44.html">Part III: Reading XML Documents with SAX1</a>
+</li>
+<li>
+<a href="45.html">Parser APIs</a>
+</li>
+<li>
+<a href="46.html">SAX</a>
+</li>
+<li>
+<a href="47.html">SAX Parsers for Java</a>
+</li>
+<li>
+<a href="48.html">The SAX1 Process</a>
+</li>
+<li>
+<a href="49.html">Making a Parser</a>
+</li>
+<li>
+<a href="50.html">Making a Parser Example </a>
+</li>
+<li>
+<a href="51.html">Parsing a Document</a>
+</li>
+<li>
+<a href="52.html">SAXParseException</a>
+</li>
+<li>
+<a href="53.html">Using SAXParseException</a>
+</li>
+<li>
+<a href="54.html">DocumentHandler.java</a>
+</li>
+<li>
+<a href="55.html">DocumentHandler interface</a>
+</li>
+<li>
+<a href="56.html">Event Reporter</a>
+</li>
+<li>
+<a href="57.html">Event Reporter Output</a>
+</li>
+<li>
+<a href="58.html">SAX based TagStripper</a>
+</li>
+<li>
+<a href="59.html">Output from a SAX based TagStripper</a>
+</li>
+<li>
+<a href="60.html">An Improved TagStripper</a>
+</li>
+<li>
+<a href="61.html">Output from XMLToText</a>
+</li>
+<li>
+<a href="62.html">SAX based XMLPrettyPrinter</a>
+</li>
+<li>
+<a href="63.html">Output from a SAX based XMLPrettyPrinter</a>
+</li>
+<li>
+<a href="64.html">Event Based API Caveats</a>
+</li>
+<li>
+<a href="65.html">SAX based XMLPrettyPrinter</a>
+</li>
+<li>
+<a href="66.html">Output from a SAX based XMLPrettyPrinter</a>
+</li>
+<li>
+<a href="67.html">The AttributeList Interface</a>
+</li>
+<li>
+<a href="68.html">XMLPrettyPrinter3</a>
+</li>
+<li>
+<a href="69.html">Output from a SAX based XMLPrettyPrinter</a>
+</li>
+<li>
+<a href="70.html">The HandlerBase class</a>
+</li>
+<li>
+<a href="71.html">An XLink Spider Utility</a>
+</li>
+<li>
+<a href="72.html">Converting XML to other Formats</a>
+</li>
+<li>
+<a href="73.html">Converting slashdot.xml to  Tab Delimited Text</a>
+</li>
+<li>
+<a href="74.html">InputSource</a>
+</li>
+<li>
+<a href="75.html">The InputSource interface</a>
+</li>
+<li>
+<a href="76.html">Example of InputSource</a>
+</li>
+<li>
+<a href="77.html">What SAX1 doesn't do</a>
+</li>
+<li>
+<a href="78.html">Part IV: Reading XML Documents with SAX2</a>
+</li>
+<li>
+<a href="79.html">SAX2</a>
+</li>
+<li>
+<a href="80.html">The SAX2 Process</a>
+</li>
+<li>
+<a href="81.html">Making an XMLReader</a>
+</li>
+<li>
+<a href="82.html">Parsing a Document with XMLReader</a>
+</li>
+<li>
+<a href="83.html">ContentHandler.java</a>
+</li>
+<li>
+<a href="84.html">The ContentHandler interface</a>
+</li>
+<li>
+<a href="85.html">SAX2 Event Reporter</a>
+</li>
+<li>
+<a href="86.html">Event Reporter Output</a>
+</li>
+<li>
+<a href="87.html">ContentHandler Example</a>
+</li>
+<li>
+<a href="88.html">Design</a>
+</li>
+<li>
+<a href="89.html">User Interface Class</a>
+</li>
+<li>
+<a href="90.html">ContentHandler Class</a>
+</li>
+<li>
+<a href="91.html">Weblogs Output</a>
+</li>
+<li>
+<a href="92.html">Features and Properties</a>
+</li>
+<li>
+<a href="93.html">Feature/Property SAXExceptions</a>
+</li>
+<li>
+<a href="94.html">Required Features</a>
+</li>
+<li>
+<a href="95.html">Core Features</a>
+</li>
+<li>
+<a href="96.html">Turning on  Validation</a>
+</li>
+<li>
+<a href="97.html">Three Levels of Errors</a>
+</li>
+<li>
+<a href="98.html">The ErrorHandler interface</a>
+</li>
+<li>
+<a href="99.html">An ErrorHandler for Reporting Validity Errors</a>
+</li>
+<li>
+<a href="100.html">Validating</a>
+</li>
+<li>
+<a href="101.html">Post DTD Validation Example</a>
+</li>
+<li>
+<a href="102.html">Schemas</a>
+</li>
+<li>
+<a href="103.html">Schema for Songs</a>
+</li>
+<li>
+<a href="104.html">Core Properties</a>
+</li>
+<li>
+<a href="105.html">Nonstandard Features in Xerces 1.0.2</a>
+</li>
+<li>
+<a href="106.html">Nonstandard Properties in Xerces 1.0.2 </a>
+</li>
+<li>
+<a href="107.html">Properties for Extension Handlers</a>
+</li>
+<li>
+<a href="108.html">Handling Attributes in SAX2</a>
+</li>
+<li>
+<a href="109.html">Attributes Example</a>
+</li>
+<li>
+<a href="110.html">Resolving Entities</a>
+</li>
+<li>
+<a href="111.html">EntityResolver Example</a>
+</li>
+<li>
+<a href="112.html">Handling DTDs</a>
+</li>
+<li>
+<a href="113.html">DTDHandler Example</a>
+</li>
+<li>
+<a href="114.html">TextEntityReplacer</a>
+</li>
+<li>
+<a href="115.html">Handling Declarations</a>
+</li>
+<li>
+<a href="116.html">The DeclHandler interface:</a>
+</li>
+<li>
+<a href="117.html">Handling Lexical Events</a>
+</li>
+<li>
+<a href="118.html">The LexicalHandler interface</a>
+</li>
+<li>
+<a href="119.html">LexicalHandler Example</a>
+</li>
+<li>
+<a href="120.html">The Locator interface</a>
+</li>
+<li>
+<a href="121.html">Locator Example</a>
+</li>
+<li>
+<a href="122.html">The DefaultHandler class</a>
+</li>
+<li>
+<a href="123.html">The NamespaceSupport class</a>
+</li>
+<li>
+<a href="124.html">Filtering XML</a>
+</li>
+<li>
+<a href="125.html">XMLFilter Example</a>
+</li>
+<li>
+<a href="126.html">TextMerger</a>
+</li>
+<li>
+<a href="127.html">What SAX2 doesn't do</a>
+</li>
+<li>
+<a href="128.html">Part V: Document Object Model</a>
+</li>
+<li>
+<a href="129.html">Document Object Model</a>
+</li>
+<li>
+<a href="130.html">DOM Evolution</a>
+</li>
+<li>
+<a href="131.html">Eight Modules:</a>
+</li>
+<li>
+<a href="132.html">Which modules and features are supported?</a>
+</li>
+<li>
+<a href="133.html">Which modules are supported?</a>
+</li>
+<li>
+<a href="134.html">Which modules are supported? Results</a>
+</li>
+<li>
+<a href="135.html">DOM Trees</a>
+</li>
+<li>
+<a href="136.html">org.w3c.dom</a>
+</li>
+<li>
+<a href="137.html">DOM Parsers for Java</a>
+</li>
+<li>
+<a href="138.html">The DOM Process</a>
+</li>
+<li>
+<a href="139.html">Parsing documents with a DOM Parser Example </a>
+</li>
+<li>
+<a href="140.html">The Node Interface </a>
+</li>
+<li>
+<a href="141.html">The NodeList Interface </a>
+</li>
+<li>
+<a href="142.html">Node Iterator</a>
+</li>
+<li>
+<a href="143.html">Node Reporter</a>
+</li>
+<li>
+<a href="144.html">Node Reporter Output</a>
+</li>
+<li>
+<a href="145.html">Node Values as returned by getNodeValue()</a>
+</li>
+<li>
+<a href="146.html">DOM based TagStripper</a>
+</li>
+<li>
+<a href="147.html">Output from a DOM based TagStripper</a>
+</li>
+<li>
+<a href="148.html">The Document Node</a>
+</li>
+<li>
+<a href="149.html">The Document Interface </a>
+</li>
+<li>
+<a href="150.html">Grab HeadLines</a>
+</li>
+<li>
+<a href="151.html">Element Nodes</a>
+</li>
+<li>
+<a href="152.html">The Element Interface</a>
+</li>
+<li>
+<a href="153.html">IDTagger</a>
+</li>
+<li>
+<a href="154.html">CharacterData interface</a>
+</li>
+<li>
+<a href="155.html">The CharacterData Interface</a>
+</li>
+<li>
+<a href="156.html">ROT13 XML Text</a>
+</li>
+<li>
+<a href="157.html">Text Nodes</a>
+</li>
+<li>
+<a href="158.html">The Text Interface</a>
+</li>
+<li>
+<a href="159.html">Document Fragment Nodes</a>
+</li>
+<li>
+<a href="160.html">The DocumentFragment Interface</a>
+</li>
+<li>
+<a href="161.html">DocumentType Nodes</a>
+</li>
+<li>
+<a href="162.html">The DocumentType Interface</a>
+</li>
+<li>
+<a href="163.html">Example of the DocumentType Interface</a>
+</li>
+<li>
+<a href="164.html">XHTMLValidator</a>
+</li>
+<li>
+<a href="165.html">EntityReference Nodes</a>
+</li>
+<li>
+<a href="166.html">The EntityReference Interface</a>
+</li>
+<li>
+<a href="167.html">Attr Nodes</a>
+</li>
+<li>
+<a href="168.html">The Attr Interface</a>
+</li>
+<li>
+<a href="169.html">XLinkSpider with DOM</a>
+</li>
+<li>
+<a href="170.html">ProcessingInstruction Nodes</a>
+</li>
+<li>
+<a href="171.html">The ProcessingInstruction Interface</a>
+</li>
+<li>
+<a href="172.html">XLinkSpider that Respects robots processing instruction</a>
+</li>
+<li>
+<a href="173.html">Notation Nodes</a>
+</li>
+<li>
+<a href="174.html">The Notation Interface</a>
+</li>
+<li>
+<a href="175.html">Comment Nodes</a>
+</li>
+<li>
+<a href="176.html">The Comment Interface</a>
+</li>
+<li>
+<a href="177.html">Comment Example</a>
+</li>
+<li>
+<a href="178.html">CommentReader Output</a>
+</li>
+<li>
+<a href="179.html">CDATA section Nodes</a>
+</li>
+<li>
+<a href="180.html">The CDATASection Interface</a>
+</li>
+<li>
+<a href="181.html">Entity Nodes</a>
+</li>
+<li>
+<a href="182.html">The Entity Interface</a>
+</li>
+<li>
+<a href="183.html">The Named Node Map interface</a>
+</li>
+<li>
+<a href="184.html">DOMException</a>
+</li>
+<li>
+<a href="185.html">Part V.5: Writing XML Documents with DOM</a>
+</li>
+<li>
+<a href="186.html">org.apache.xerces.dom.DOMImplementationImpl</a>
+</li>
+<li>
+<a href="187.html">A DOM program that writes Fibonacci numbers into an XML document</a>
+</li>
+<li>
+<a href="188.html">Serialization</a>
+</li>
+<li>
+<a href="189.html">A DOM program that writes Fibonacci numbers onto System.out</a>
+</li>
+<li>
+<a href="190.html">fibonacci.xml</a>
+</li>
+<li>
+<a href="191.html">OutputFormat</a>
+</li>
+<li>
+<a href="192.html">Better formatted output</a>
+</li>
+<li>
+<a href="193.html">formatted_fibonacci.xml</a>
+</li>
+<li>
+<a href="194.html">DOM based XMLPrettyPrinter</a>
+</li>
+<li>
+<a href="195.html">Output from a DOM based XMLPrettyPrinter</a>
+</li>
+<li>
+<a href="196.html">The point is this:</a>
+</li>
+<li>
+<a href="197.html">Part VI: Database Integration</a>
+</li>
+<li>
+<a href="198.html">The Advantages of XML for Database Integration</a>
+</li>
+<li>
+<a href="199.html">The Advantages of XML for Database Heavy Web Servers</a>
+</li>
+<li>
+<a href="200.html">Database Technologies</a>
+</li>
+<li>
+<a href="201.html">Database-Java Integration</a>
+</li>
+<li>
+<a href="202.html">Reading XML from Databases</a>
+</li>
+<li>
+<a href="203.html">Fixed XML Vocabulary</a>
+</li>
+<li>
+<a href="204.html">Looser Vocabulary</a>
+</li>
+<li>
+<a href="205.html">Customizable Vocabulary</a>
+</li>
+<li>
+<a href="206.html">If the database serves XML directly, you're in luck</a>
+</li>
+<li>
+<a href="207.html">Middleware to convert to XML</a>
+</li>
+<li>
+<a href="208.html">PHP to XML</a>
+</li>
+<li>
+<a href="209.html">Loose Coupling is Better</a>
+</li>
+<li>
+<a href="210.html">NYWC database through JDBC</a>
+</li>
+<li>
+<a href="211.html">NYWC database through JDBC to XML</a>
+</li>
+<li>
+<a href="212.html">NYWC database through JDBC to DOM</a>
+</li>
+<li>
+<a href="213.html">NYWC database through JDBC to Piped Reader</a>
+</li>
+<li>
+<a href="214.html">NYWC database through JDBC to InputSource</a>
+</li>
+<li>
+<a href="215.html">Generic database access</a>
+</li>
+<li>
+<a href="216.html">Generic database grammar</a>
+</li>
+<li>
+<a href="217.html">Generic database through JDBC to InputSource</a>
+</li>
+<li>
+<a href="218.html">Database Dependent Grammar</a>
+</li>
+<li>
+<a href="219.html">Generic database access through JDBC to InputSource</a>
+</li>
+<li>
+<a href="220.html">Putting XML into Databases</a>
+</li>
+<li>
+<a href="221.html">XML to SQL</a>
+</li>
+<li>
+<a href="222.html">Part VII: XML-RPC</a>
+</li>
+<li>
+<a href="223.html">XML-RPC</a>
+</li>
+<li>
+<a href="224.html">Uses</a>
+</li>
+<li>
+<a href="225.html">Implemented in Various Languages</a>
+</li>
+<li>
+<a href="226.html">Sample Invocation with HTTP Headers</a>
+</li>
+<li>
+<a href="227.html">The  HTTP Header</a>
+</li>
+<li>
+<a href="228.html">The XML Payload</a>
+</li>
+<li>
+<a href="229.html">Scalar Values</a>
+</li>
+<li>
+<a href="230.html">Struct Values</a>
+</li>
+<li>
+<a href="231.html">Array Values</a>
+</li>
+<li>
+<a href="232.html">Sample XML-RPC Response with HTTP Header</a>
+</li>
+<li>
+<a href="233.html">XML-RPC Response HTTP Header</a>
+</li>
+<li>
+<a href="234.html">XML-RPC Response XML Payload</a>
+</li>
+<li>
+<a href="235.html">XML-RPC Fault Response</a>
+</li>
+<li>
+<a href="236.html">Communicating with XML-RPC Servers</a>
+</li>
+<li>
+<a href="237.html">Fibonacci Server</a>
+</li>
+<li>
+<a href="238.html">Fibonacci Thread</a>
+</li>
+<li>
+<a href="239.html">Fibonacci Client</a>
+</li>
+<li>
+<a href="240.html">To Learn More</a>
+</li>
+<li>
+<a href="241.html">Questions?</a>
+</li>
+</ul>
+<hr>
+<div align="center">
+<A HREF="01.html">Start</A> | <A HREF="/xml/">Cafe con Leche</A>
+</div>
+<hr>
+<font size="-1">
+              Copyright 2000 
+              <a href="http://www.macfaq.com/personal.html">Elliotte Rusty Harold</a>
+<br>
+<a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a>
+<br>
+              Last Modified March 18, 2000</font>
+</body>
+</html>

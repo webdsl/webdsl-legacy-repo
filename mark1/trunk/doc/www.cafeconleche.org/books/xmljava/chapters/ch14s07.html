@@ -1,0 +1,216 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Reading XML Documents with JDOM</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="previous" href="ch14s06.html" title="Namespaces"><link rel="next" href="ch14s08.html" title="Navigating JDOM Trees"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Reading XML Documents with JDOM</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch14s06.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;14.&nbsp;JDOM</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch14s08.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e22605"></a>Reading XML Documents with JDOM</h2></div></div><p>
+    Naturally, JDOM can read existing XML
+    documents from files, network sockets, strings, or 
+    anything else you can hook a stream or reader to. 
+    JDOM does not, however, include its own native parser.
+    Instead it relies on any of a number of very fast,
+    well-tested SAX2 parsers such as Xerces and Crimson.
+  </p><p>
+    The rough outline for working with an existing XML document using JDOM
+    is as follows:
+  </p><div class="orderedlist"><ol type="1"><li><p>
+          Construct an 
+          <tt>org.jdom.input.SAXBuilder</tt> object
+          using a simple no-args constructor
+        </p></li><li><p>
+      Invoke the builder&#8217;s <tt>build()</tt> 
+      method to build a <tt>Document</tt> 
+      object from a
+          <tt>Reader</tt>, 
+          <tt>InputStream</tt>, 
+          <tt>URL</tt>, 
+          <tt>File</tt>, 
+          or a <tt>String</tt>
+          containing a system ID.
+        </p></li><li><p>
+      If there&#8217;s a problem reading the document, an 
+      <tt>IOException</tt> is thrown.
+       If there&#8217;s a problem building the document, a 
+      <tt>JDOMException</tt> is thrown.
+        </p></li><li><p>
+      Otherwise, navigate the document using the methods of the 
+      <tt>Document</tt> class, the
+      <tt>Element</tt> class, 
+      and the other JDOM classes.
+              </p></li></ol></div><p>
+    The <tt>SAXBuilder</tt> class represents the
+    underlying XML parser. Parsing a document from a URL is
+    straightforward. Just create a
+    <tt>SAXBuilder</tt> object with the no-args
+    constructor and pass the string form of the URL to its 
+    <tt>build()</tt> method. This returns a
+    JDOM <tt>Document</tt> object. For example,
+  </p><div class="informalexample"><pre class="programlisting"> SAXBuilder parser = new SAXBuilder();
+ Document doc = parser.build("http://www.cafeconleche.org/");
+ // work with the document...</pre></div><p>
+    That&#8217;s all there is to it. If you prefer, you can build the
+    <tt>Document</tt> from a <tt>java.io.File</tt>,
+    a <tt>java.net.URL</tt>, 
+    a <tt>java.io.InputStream</tt>, 
+    a <tt>java.io.Reader</tt>, or an 
+   <tt>org.xml.sax.InputSource</tt>.     
+  </p><p>
+    The <tt>build()</tt> method throws 
+    an <tt>IOException</tt>
+    if an I/O error such as a broken socket prevents the document
+    from being completely read. It throws a
+    <tt>JDOMException</tt> if the document
+    is malformed. This is the generic superclass for most things
+    that can go wrong while working with JDOM other than I/O
+    errors.
+    <a href="ch14s07.html#JDOMChecker.java" title="Example&nbsp;14.7.&nbsp;A JDOM program that checks XML documents for well-formedness">Example&nbsp;14.7</a> demonstrates a simple
+    program that checks XML documents for well-formedness
+    by looking for these exceptions.
+  </p><div class="example"><a name="JDOMChecker.java"></a><p class="title"><b>Example&nbsp;14.7.&nbsp;A JDOM program that checks XML documents for well-formedness</b></p><pre class="programlisting">import org.jdom.JDOMException;
+import org.jdom.input.SAXBuilder;
+import java.io.IOException;
+
+
+public class JDOMChecker {
+
+  public static void main(String[] args) {
+  
+    if (args.length == 0) {
+      System.out.println("Usage: java JDOMChecker URL"); 
+      return;
+    } 
+      
+    SAXBuilder builder = new SAXBuilder();
+     
+    // command line should offer URIs or file names
+    try {
+      builder.build(args[0]);
+      // If there are no well-formedness errors, 
+      // then no exception is thrown
+      System.out.println(args[0] + " is well-formed.");
+    }
+    // indicates a well-formedness error
+    catch (JDOMException e) { 
+      System.out.println(args[0] + " is not well-formed.");
+      System.out.println(e.getMessage());
+    }  
+    catch (IOException e) { 
+      System.out.println("Could not check " + args[0]);
+      System.out.println(" because " + e.getMessage());
+    }  
+  
+  }
+
+}
+</pre></div><p>
+    I used this program to test my Cafe con Leche web site for
+    well-formedness. It&#8217;s supposed to be well-formed XML,
+    but  I&#8217;m often
+    sloppy. The results were informative:
+  </p><pre class="screen"><tt>D:\books\XMLJAVA\examples\14&gt;</tt><b><tt>java JDOMChecker http://www.cafeconleche.org/</tt></b>
+<tt>http://www.cafeconleche.org is not well formed.
+Error on line 351 of document http://www.cafeconleche.org: The 
+element type "img" must be terminated by the matching end-tag 
+"&lt;/img&gt;".</tt></pre><p>
+    I fixed the problem. However, JDOM only reports
+    the first error in a document, so it&#8217;s not surprising that
+    running the program again uncovered a
+    second problem:
+  </p><pre class="screen"><tt>D:\books\XMLJAVA\examples\14&gt;</tt><b><tt>java JDOMChecker http://www.cafeconleche.org/</tt></b>
+<tt>http://www.cafeconleche.org is not well formed.
+Error on line 363 of document http://www.cafeconleche.org: The 
+element type "input" must be terminated by the matching end-tag 
+"&lt;/input&gt;".</tt></pre><p>
+    Several more problems were encountered in order.
+    Once I fixed the last one, everything finally checked out:
+  </p><pre class="screen"><tt>D:\books\XMLJAVA\examples\14&gt;</tt><b><tt>java JDOMChecker http://www.cafeconleche.org/</tt></b>
+<tt>http://www.cafeconleche.org is well formed.</tt></pre><p>
+    Exactly which SAX parser JDOM uses to build documents depends on the local environment.
+    By default, JDOM relies on JAXP to choose the parser class.
+    If that fails, it picks Xerces.
+However, if you really care which  parser is used, specify
+the fully package qualified name of the
+<tt>XMLReader</tt> class you want as the
+first argument to the constructor. For example, this sets 
+the parser as Crimson:
+  </p><div class="informalexample"><pre class="programlisting"> SAXBuilder parser 
+  = new SAXBuilder("org.apache.crimson.parser.XMLReaderImpl");
+ Document doc = parser.build("http://www.cafeconleche.org/");
+ // work with the document...</pre></div><p>
+  By default, <tt>SAXBuilder</tt> only checks
+  documents for well-formedness, not validity.
+  If you want to validate as well, then pass the boolean
+  <tt>true</tt> to the
+  <tt>SAXBuilder()</tt> constructor.
+  Then any validity errors will also cause <tt>JDOMException</tt>s.
+  <a href="ch14s07.html#JDOMValidator.java" title="Example&nbsp;14.8.&nbsp;A JDOM program that validates XML documents">Example&nbsp;14.8</a> demonstrates with a simple
+  validation program. 
+</p><div class="example"><a name="JDOMValidator.java"></a><p class="title"><b>Example&nbsp;14.8.&nbsp;A JDOM program that validates XML documents</b></p><pre class="programlisting">import org.jdom.JDOMException;
+import org.jdom.input.SAXBuilder;
+import java.io.IOException;
+
+
+public class JDOMValidator {
+
+  public static void main(String[] args) {
+  
+    if (args.length == 0) {
+      System.out.println("Usage: java JDOMValidator URL"); 
+      return;
+    } 
+      
+    SAXBuilder builder = new SAXBuilder(true);
+                                    //  ^^^^
+                                    // Turn on validation
+     
+    // command line should offer URIs or file names
+    try {
+      builder.build(args[0]);
+      // If there are no well-formedness or validity errors, 
+      // then no exception is thrown.
+      System.out.println(args[0] + " is valid.");
+    }
+    // indicates a well-formedness or validity error
+    catch (JDOMException e) { 
+      System.out.println(args[0] + " is not valid.");
+      System.out.println(e.getMessage());
+    }  
+    catch (IOException e) { 
+      System.out.println("Could not check " + args[0]);
+      System.out.println(" because " + e.getMessage());
+    }  
+  
+  }
+
+}
+</pre></div><p>
+  Here are the results from running this program across two
+  documents, the first invalid (because it doesn&#8217;t even have a
+  DTD) and the second valid:
+</p><pre class="screen"><tt>D:\books\XMLJAVA\examples\14&gt;</tt><b><tt>java JDOMValidator http://cafeconleche.org/</tt></b>
+<tt>http://cafeconleche.org is not valid.
+Error on line 1 of document http://cafeconleche.org: Document root 
+element "html", must match DOCTYPE root "null".</tt>
+<tt>D:\books\XMLJAVA\examples\14&gt;</tt><b><tt>java JDOMValidator 
+http://www.w3.org/TR/2000/REC-xml-20001006.html</tt></b>
+<tt>http://www.w3.org/TR/2000/REC-xml-20001006.html is well formed.</tt>
+</pre><p>
+  This does assume that the default parser JDOM picks can in fact
+  validate, which is true of most modern parsers you&#8217;re likely to
+  encounter. However, if you really want to make sure you could
+  always ask for a known validating parser by name. For example,
+  this requests the Xerces <tt>SAXParser</tt>:
+</p><div class="informalexample"><pre class="programlisting">SAXBuilder parser 
+ = new SAXBuilder("org.apache.xerces.parsers.SAXParser", true);</pre></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Note</h3><p>
+JDOM does not currently distinguish between validity and
+well-formedness errors. I&#8217;m working on a patch for this.
+Of course, any malformed document is de facto invalid.
+</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch14s06.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch14.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch14s08.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Namespaces&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Navigating JDOM Trees</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+July 29,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

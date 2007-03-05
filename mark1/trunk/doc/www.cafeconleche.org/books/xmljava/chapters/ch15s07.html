@@ -1,0 +1,167 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>The Comment Class</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="previous" href="ch15s06.html" title="The ProcessingInstruction Class"><link rel="next" href="ch15s08.html" title="Namespaces"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">The Comment Class</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch15s06.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;15.&nbsp;The JDOM Model</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch15s08.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e26409"></a>The Comment Class</h2></div></div><p>
+    The <tt>org.jdom.Comment</tt> class represents
+    an XML comment such as <tt>&lt;-- Remember to verify
+    this --&gt;</tt>. As you can see from <a href="ch15s07.html#ZCompactComment.java" title="Example&nbsp;15.15.&nbsp;The JDOM Comment class">Example&nbsp;15.15</a>, <tt>Comment</tt>
+    is really a very simple class that contains some
+    string data, the usual <tt>getParent()</tt>
+    and <tt>getDocument()</tt>
+    methods, and the customary Java utility methods like 
+    <tt>equals()</tt> and
+    <tt>toString()</tt>.
+  </p><div class="example"><a name="ZCompactComment.java"></a><p class="title"><b>Example&nbsp;15.15.&nbsp;The JDOM Comment class</b></p><pre class="programlisting">package org.jdom;
+
+public class Comment implements Serializable, Cloneable {
+
+  protected String text;
+  protected Object parent;
+
+  protected Comment();
+  public Comment(String text);
+  
+  public Element    getParent(); 
+  protected Comment setParent(Element parent);
+  public Comment    detach();
+  public Document   getDocument();
+  protected Comment setDocument(Document document);
+  public String     getText();
+  public Comment    setText(String text);
+
+  public       String  toString();
+  public final boolean equals(Object ob);
+  public final int     hashCode();
+  public       Object  clone();
+  
+}
+</pre></div><p>
+    For example, this code fragment adds the comment
+    <tt>&lt;--An example from Chapter 15 of Processing XML with Java--&gt;</tt>
+    at the top of 
+    the <tt>Document</tt> object
+    <tt>doc</tt>:
+  </p><div class="informalexample"><pre class="programlisting">Comment comment = new Comment(
+ "An example from Chapter 15 of Processing XML with Java");
+List content = doc.getContent();
+content.add(0, comment); </pre></div><p>
+    As with the other JDOM node classes, JDOM does attempt to verify that any data
+    you supply for a <tt>Comment</tt> is well-formed.
+    There are really only two constraints that matter for comments:
+  </p><div class="itemizedlist"><ul type="disc"><li><p>
+        The comment cannot contain any illegal characters such as a null
+        or a vertical tab.
+      </p></li><li><p>
+        The comment cannot contain the double hyphen <tt>--</tt>
+        that signals the end of the comment.
+      </p></li></ul></div><p>
+    JDOM checks both of them.
+  </p><p>
+    There&#8217;s not a lot you can do with comments, nor is there a lot you
+    should do with them. Comments are intended purely as a convenience
+    for human authors. Programs really shouldn&#8217;t consider them or
+    attempt to parse their contents. The only reason they&#8217;re in the API at all
+    is to support round-tripping between the document that&#8217;s read
+    and the document that&#8217;s written. 
+    Thus the examples are going to be fairly simple.
+  </p><p>
+    Earlier in the book, you saw
+    SAX and DOM programs that printed the comments in an XML document
+    on <tt>System.out</tt>. 
+    Now in <a href="ch15s07.html#JDOMCommentReader.java" title="Example&nbsp;15.16.&nbsp;Printing comments">Example&nbsp;15.16</a> you can see
+    the JDOM equivalent. The pattern is very much the same as in the DOM
+    version, recursively descending the tree looking for objects
+    of type <tt>Comment</tt>. However, the 
+    detailed classes are different.
+  </p><div class="example"><a name="JDOMCommentReader.java"></a><p class="title"><b>Example&nbsp;15.16.&nbsp;Printing comments</b></p><pre class="programlisting">import org.jdom.*;
+import org.jdom.input.SAXBuilder;
+import java.util.*;
+import java.io.IOException;
+
+
+public class JDOMCommentReader {
+
+  public static void main(String[] args) {
+    
+    if (args.length &lt;= 0) {
+      System.out.println("Usage: java JDOMCommentReader url");
+      return; 
+    }
+    SAXBuilder builder = new SAXBuilder();
+    
+    try {
+      // Read the entire document into memory
+      Document doc = builder.build(args[0]);
+      List content = doc.getContent();
+      Iterator iterator = content.iterator();
+      while (iterator.hasNext()) {
+        Object o = iterator.next();
+        if (o instanceof Comment) {
+          Comment c = (Comment) o;
+          System.out.println(c.getText());     
+          System.out.println();     
+        }
+        else if (o instanceof Element) {
+          processElement((Element) o);   
+        }
+      }
+    }
+    catch (JDOMException e) {
+      System.err.println(e); 
+    }
+    catch (IOException e) {
+      System.err.println(e); 
+    }
+        
+  } // end main
+
+  // note use of recursion
+  public static void processElement(Element element) {
+    
+    List content = element.getContent();
+    Iterator iterator = content.iterator();
+    while (iterator.hasNext()) {
+      Object o = iterator.next();
+      if (o instanceof Comment) {
+        Comment c = (Comment) o;
+        System.out.println(c.getText());     
+        System.out.println();     
+      }
+      else if (o instanceof Element) {
+        processElement((Element) o);   
+      }
+    } // end while
+    
+  }
+
+}
+</pre></div><p>
+    Here&#8217;s the result of running this program on 
+    the XLink specification:
+  </p><pre class="screen"><tt>D:\books\XMLJAVA&gt;</tt><b><tt>java JDOMCommentReader 
+ http://www.w3.org/TR/2001/REC-xlink-20010627/Overview.xml</tt></b>
+<tt>
+Last edited: 19 December 2000 by elm
+
+TO DO:
+- Point to the linking/style Note if it gets published in time
+
+
+
+http://www.w3.org/TR/2000/CR-xlink-20000703/
+http://www.w3.org/TR/WD-xlink-20000221
+http://www.w3.org/TR/WD-xlink-20000119
+http://www.w3.org/TR/WD-xlink-19991220
+http://www.w3.org/1999/07/WD-xlink-19990726
+http://www.w3.org/TR/1998/WD-xlink-19980303
+http://www.w3.org/TR/WD-xml-link-970731</tt></pre></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch15s06.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch15.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch15s08.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">The ProcessingInstruction Class&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Namespaces</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+May 06,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

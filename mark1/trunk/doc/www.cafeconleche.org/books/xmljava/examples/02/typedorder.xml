@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Order xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Customer id="c32" xsi:type="xsd:string">Chez Fred</Customer>
+  <Product>
+    <Name xsi:type="xsd:string">Birdsong Clock</Name>
+    <SKU xsi:type="xsd:string">244</SKU>
+    <Quantity xsi:type="xsd:positiveInteger">12</Quantity>
+    <Price currency="USD"  xsi:type="xsd:decimal">21.95</Price>
+    <ShipTo>
+      <Street xsi:type="xsd:string">135 Airline Highway</Street>
+      <City xsi:type="xsd:string">Narragansett</City> 
+      <State xsi:type="xsd:NMTOKEN">RI</State> 
+      <Zip xsi:type="xsd:string">02882</Zip>
+    </ShipTo>
+  </Product>
+  <Product>
+    <Name xsi:type="xsd:string">Brass Ship's Bell</Name>
+    <SKU xsi:type="xsd:string">258</SKU>
+    <Quantity xsi:type="xsd:positiveInteger">1</Quantity>
+    <Price currency="USD" xsi:type="xsd:decimal">144.95</Price>
+    <Discount xsi:type="xsd:decimal">.10</Discount>
+    <ShipTo>
+      <GiftRecipient xsi:type="xsd:string">
+        Samuel Johnson
+      </GiftRecipient>
+     <Street xsi:type="xsd:string">271 Old Homestead Way</Street>
+      <City xsi:type="xsd:string">Woonsocket</City> 
+      <State xsi:type="xsd:NMTOKEN">RI</State> 
+      <Zip xsi:type="xsd:string">02895</Zip>
+    </ShipTo>
+    <GiftMessage xsi:type="xsd:string">
+      Happy Father's Day to a great Dad!
+      
+      Love,
+      Sam and Beatrice
+    </GiftMessage>
+  </Product>
+  <Subtotal currency='USD' xsi:type="xsd:decimal">
+    393.85
+  </Subtotal>
+  <Tax rate="7.0" 
+       currency='USD' xsi:type="xsd:decimal">28.20</Tax>
+  <Shipping method="USPS" currency='USD' 
+            xsi:type="xsd:decimal">8.95</Shipping>
+  <Total currency='USD' xsi:type="xsd:decimal">431.00</Total>
+</Order>

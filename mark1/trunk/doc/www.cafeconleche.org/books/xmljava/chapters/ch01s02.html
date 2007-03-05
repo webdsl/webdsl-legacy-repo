@@ -1,0 +1,954 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>XML Syntax</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="previous" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="next" href="ch01s03.html" title="Validity"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"><link rel="subsection" href="ch01s02.html#d0e531" title="XML Documents"><link rel="subsection" href="ch01s02.html#d0e632" title="XML Applications"><link rel="subsection" href="ch01s02.html#d0e698" title="Elements and Tags"><link rel="subsection" href="ch01s02.html#d0e884" title="Text"><link rel="subsection" href="ch01s02.html#d0e951" title="Attributes"><link rel="subsection" href="ch01s02.html#d0e1005" title="XML Declaration"><link rel="subsection" href="ch01s02.html#d0e1055" title="Comments"><link rel="subsection" href="ch01s02.html#d0e1080" title="Processing Instructions"><link rel="subsection" href="ch01s02.html#d0e1120" title="Entities"><link rel="subsection" href="ch01s02.html#d0e1273" title="Namespaces"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">XML Syntax</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch01.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;1.&nbsp;XML for Data</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch01s03.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e526"></a>XML Syntax</h2></div></div><p>
+  This is not an introductory book about XML.
+  I certainly expect that you have some experience with XML documents before
+  now. Nonetheless, when writing programs to process XML it&#8217;s 
+  even more important to make sure that you are totally crystal clear about 
+  the exact terminology used when discussing XML. Therefore I&#8217;d like
+  to take a few pages to briefly review the proper terminology 
+  for discussing XML, as well as to clarify a few points that are
+  often confused or misunderstood. 
+  </p><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e531"></a>XML Documents</h3></div></div><p>
+  The precise meaning of &#8220;XML document&#8221; is defined by the 
+  <a href="http://www.w3.org/TR/REC-xml" target="_top">XML 1.0 
+  specification</a> published by the Worldwide Web Consortium 
+  (W3C). This specification provides a detailed BNF 
+  grammar defining exactly what is and is not an XML document.
+  Anything that satisfies the document production in
+  that BNF grammar and adheres to the fifteen well-formedness 
+  constraints is an XML document.<sup>[<a name="d0e545" href="#ftn.d0e545">2</a>]</sup>
+  Anything that does not is not an XML document.
+  </p><p>
+  Well-formedness is the minimum requirement for an XML document.
+  A document that is not well-formed is not an XML document.
+  Parsers cannot read it. A parser is not allowed 
+   to fix a malformed document. It cannot take a best-guess at what 
+   the document author intended.
+  When a parser encounters a malformed document, it stops parsing and reports 
+  the error. It will not read any further in the document.
+  <sup>[<a name="d0e554" href="#ftn.d0e554">3</a>]</sup>
+  Depending on which API you&#8217;re accessing the parser through,
+  you may or may not have already received some information
+  from the parts of the document before the error. However,
+  under no circumstances will the parser give you any data from after 
+  the first well-formedness error in the document. 
+  </p><p>
+    The detailed rules an XML document must follow aren&#8217;t so important 
+    here since the parser will check them for you. Very roughly an XML 
+    document must have a single root element. All start-tags must be 
+    matched by end-tags. All attribute values must be quoted. And only 
+    the Unicode characters that are legal in XML may be used in the 
+    document. (Almost all Unicode characters are legal in XML documents. 
+    The only ones really ruled out are the C0 controls like null,
+    bell, and form feed.) 
+  </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Note</h3><p>
+   Occasionally developers ask how they can parse a document 
+   that is almost, but not quite a well-formed XML document.
+   For example, it may end with a form feed inserted by some Unix
+    text editor to separate documents. Or perhaps it&#8217;s part of an 
+    infinite stream
+    of elements, the last of which is never seen so there&#8217;s
+    no end-tag for the root element. Imagine, for example,
+    weather observations or stock quotes being pushed across the Internet 
+    as XML elements. 
+    </p><p>
+    The short answer is that you can&#8217;t parse these
+    things because they are not XML documents, even if they
+    use a lot of tags and attributes and other XML-like markup.
+    The long answer is that you may be able to write a non-XML-aware program
+     to preprocess the streams,
+    fix up any well-formedness mistakes you see, and only then
+    pass the fixed documents to the XML parser.
+    However, the XML parser must receive a complete well-formed document.
+    It cannot work with anything less.
+  </p></div><p>
+There&#8217;s another way to look at XML documents besides simply as a 
+sequence of characters that adheres to certain rules, and it&#8217;s one that 
+sometimes makes sense, especially when writing programs that process XML 
+documents. An XML document is a <i>tree</i>. It has a 
+<i>root node</i> that contains various <i>child 
+nodes</i>. Some of these child nodes have children of their own. 
+Others are <i>leaf nodes</i> that have no children. 
+</p><p>
+There are roughly five different kinds of nodes in an XML tree:
+</p><div class="variablelist"><dl><dt><span class="term">root</span></dt><dd><p>
+        Also known as the document node, this 
+        is the abstract node that contains the entire XML document.
+        Its children include comments, processing instructions, and 
+        the root element of the document.
+      </p></dd><dt><span class="term">element</span></dt><dd><p>
+        An XML element with a name, a list of attributes, 
+        a list of in-scope namespaces, and
+        a list of children.
+      </p></dd><dt><span class="term">text</span></dt><dd><p>
+        The parsed character data between two tags
+        (or any other kind of non-text node). 
+      </p></dd><dt><span class="term">comment</span></dt><dd><p>
+        An XML comment such as <tt>&lt;!-- This needs to be fixed. --&gt;</tt>.
+        The contents of the comment are its data.
+        A comment does not have any children. 
+      </p></dd><dt><span class="term">processing instruction</span></dt><dd><p>
+        A processing instruction such as <tt>&lt;?xml-stylesheet type="text/css" href="order.css"?&gt;</tt>
+        A processing instruction has a target and a value.
+        It does not have any children.  
+      </p></dd></dl></div><p>
+Depending on context, some details of this tree structure can be 
+understood differently. For example, some tree models consider parsed 
+entities or CDATA sections to be additional kinds of nodes. Others 
+simply merge them into the tree structure as elements and text nodes. 
+Some models allow one text node to follow another. Others require each 
+text node to be the maximum contiguous run of text not interrupted by 
+some other kind of node. Some models include the document type 
+declaration and/or the XML declaration as a node. Others ignore them. 
+Probably the most hotly debated point is how to handle attributes and 
+namespaces. I chose to not consider them as nodes in the tree in their 
+own right, treating them instead as properties of elements. Generally 
+even those tree models such as XPath that do treat them as separate 
+nodes still don&#8217;t make them children of the element they belong to. For 
+now the details aren&#8217;t too important. The broad outline is the same for 
+pretty much all 
+the tree models. 
+</p><div class="caution" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Caution</h3><p>
+   There&#8217;s some argument about whether it really makes sense to talk 
+   about an XML document as having any independent existence separate 
+   from the text that makes up the document. After all, the XML 1.0 specification only 
+   defines concepts like <i>document</i> 
+   and <i>element</i> in terms of text strings. 
+   Later W3C specifications like the 
+   <a href="http://www.w3.org/TR/xml-infoset/" target="_top">XML Information Set</a> 
+   (Infoset) and 
+   the Document Object Model (DOM) do suggest a more abstract understanding 
+   of the components of an XML document. However, these specifications 
+   are much more controversial than XML 1.0 itself, and not as broadly 
+   implemented or accepted. For the purposes of writing programs that 
+   process XML, I do find it useful to consider XML documents more 
+   abstractly; and I will do so in this book.  However, even here there&#8217;s 
+   a split depending on which API you choose. DOM is a very abstract 
+   model of XML documents that defines classes representing elements, 
+   attributes, comments, and more. SAX defines almost no such classes, 
+   however. It presents the content of an XML document almost 
+   exclusively as strings and arrays of characters. 
+    </p></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e632"></a>XML Applications</h3></div></div><p>
+  An <i>XML application</i> is a specific XML vocabulary 
+  that contains particular elements and attributes. It is not a software 
+  program that somehow uses XML like the EditML Pro XML editor or the 
+  Mozilla web browser. XML applications limit the very flexible rules of 
+  XML to a finite set of elements of certain types. For example, DocBook 
+  is an XML application designed for technical manuscripts such as the 
+  book you&#8217;re reading now. Elements it defines include 
+  <tt>book</tt>, <tt>chapter</tt>, 
+  <tt>para</tt>, <tt>sect1</tt>, <tt>sect2</tt>, 
+  <tt>programlisting</tt>, and several hundred others. When 
+  writing a DocBook document, you have to use these elements; and you 
+  have to use them in certain ways. For instance, a 
+  <tt>sect2</tt> element can be a child of a 
+  <tt>sect1</tt> but not a child of a <tt>sect3</tt> or 
+  a <tt>chapter</tt>. Scalable Vector Graphics (SVG) is an XML 
+  application for line art. Elements it defines include 
+  <tt>line</tt>, <tt>circle</tt>, 
+  <tt>ellipse</tt>, 
+  <tt>polygon</tt>, <tt>polyline</tt>, and so forth. All 
+  SVG documents are XML documents, but not all XML documents are SVG 
+  documents.
+  </p><p>
+  An XML application can have a <i>schema</i>
+  that defines what is and is not a legal document
+  for that application. 
+  Schemas can be written in a variety of languages including 
+  Document Type Definitions (DTDs), the W3C XML Schema Language,
+  RELAX NG, Schematron, and numerous others.
+  Depending on the power of the schema language used, it may 
+  also be necessary to specify additional rules for the application
+  in less-formal prose. 
+  For example, the XHTML 1.1 specification includes the 
+  requirement that &#8220;There must be a DOCTYPE declaration 
+  in the document prior to the root element. If present, the 
+  public identifier included in the DOCTYPE declaration must 
+  reference the DTD found in Appendix C using its Formal 
+  Public Identifier.&#8221;
+  None of the common schema languages allow you to require
+  anything about the DOCTYPE declaration.  
+  </p><p>
+  An <i>instance document</i>
+  is an instance of an XML application, whether formally defined or not.
+  That is, it is an XML document with a root element and whatever other
+  content it possesses that satisfies all the rules of some
+  XML application.  
+  There are many possible instance documents for any one
+  XML application, just as there are many programs that
+  can be written in any one programming language.
+  </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e698"></a>Elements and Tags</h3></div></div><p>
+    The fundamental unit of XML is the <i>element</i>.
+    You can write good XML documents without using 
+    any other XML construct. If for some reason you have a grudge against
+    comments, processing instructions, attributes, or namespaces,
+    you can pretend they don&#8217;t exist and 
+    still write well-formed XML documents.
+    However, you must use elements. Every XML document 
+    has at least one element. You cannot write XML documents
+    without using elements.
+    </p><p>
+    Logically every element has four key pieces:
+    </p><div class="itemizedlist"><ul type="disc"><li><p>A name</p></li><li><p>The attributes of the element</p></li><li><p>The namespaces in scope on the element</p></li><li><p>The content of the element</p></li></ul></div><p>
+    In addition, once schemas become more prevalent and parsers and APIs
+    are revised to support them, it may also make sense to talk about the element&#8217;s
+    <i>type</i>. For now, though, there&#8217;s not a lot of practical help
+    to be gained by considering the type. 
+    </p><p>
+    Furthermore, DOM and XPath also have mutually incompatible concepts 
+    of the <i>value</i> of an element. However, in both 
+    cases, the value is derived purely from the element content, so it&#8217;s 
+    not really a separate thing.
+    </p><p>
+     Syntactically, in the text form of an XML document,
+     elements are delimited by <i>tags</i>. 
+     Start-tags begin with 
+     a <tt>&lt;</tt> immediately followed by
+     the element name.
+     End-tags begin with a <tt>&lt;/</tt> immediately followed by
+     the element name. Both start and end-tags terminate with 
+    <tt>&gt;</tt>. Everything in between the two tags is
+    the content of the element. For example, this is a
+    <tt>Quantity</tt> element with the content &#8220;12&#8221;:
+    </p><div class="informalexample"><pre class="programlisting">&lt;Quantity&gt;12&lt;/Quantity&gt;</pre></div><p>
+     Tags and elements are closely related, but they are not the same thing.
+     Be wary of books that confuse them. 
+     An element is the whole sandwich including bread, meat, cheese, pickles, and 
+     mayonnaise, while the tags are just the bread.  
+     An element
+     is composed of a start-tag, followed by content, followed by an end-tag.
+    </p><p>
+     It is possible that an element may have no content.
+     In this case it is called an <i>empty element</i>. 
+     For example,
+     this is an empty <tt>Quantity</tt> element:
+    </p><div class="informalexample"><pre class="programlisting">&lt;Quantity&gt;&lt;/Quantity&gt;</pre></div><p>
+     The start-tag butts right up against the end-tag.
+     There is not even a single space character between them.
+     By contrast, this next element is not empty because it does contain
+     some white space, even if it doesn&#8217;t contain anything else: 
+    </p><div class="informalexample"><pre class="programlisting">&lt;Quantity&gt; &lt;/Quantity&gt;</pre></div><p>
+    Besides start-tags and end-tags, there is one other kind of tag, the 
+    <i>empty-element tag</i>. An empty-element tag 
+    begins with a <tt>&lt;</tt> followed by an element name 
+    like a start-tag. However, it ends with a <tt>/&gt;</tt>. 
+    For example, this is an empty <tt>Quantity</tt> tag:
+    </p><div class="informalexample"><pre class="programlisting">&lt;Quantity/&gt;</pre></div><p>
+    This tag both starts and ends a <tt>Quantity</tt> element. 
+    The content of this 
+    element is nothing, just like the content of 
+    <tt>&lt;Quantity&gt;&lt;/Quantity&gt;</tt>. Indeed 
+    <tt>&lt;Quantity/&gt;</tt> is just syntax sugar for 
+    <tt>&lt;Quantity&gt;&lt;/Quantity&gt;</tt>. They mean exactly the same 
+    thing. No application should treat these two constructs as different in 
+    any way. Indeed, most XML parsers and APIs won&#8217;t even tell you which 
+    form the element took in the source document. In both cases, what&#8217;s 
+    reported is an empty element with the name &#8220;Quantity&#8221;. How that element 
+    was represented is not important.   
+    </p><p>
+    As well as text, an element can also contain one or more
+    <i>child elements</i>. These are elements that are 
+    completely contained between 
+    the element&#8217;s start-tag and end-tag, and are not
+    contained inside any other element also contained in the parent element.
+    For example, this <tt>ShipTo</tt> element has four child elements:
+    <tt>Street</tt>, <tt>City</tt>, 
+    <tt>State</tt>, and <tt>Zip</tt>: 
+    </p><div class="informalexample"><pre class="programlisting">  &lt;ShipTo&gt;
+    &lt;Street&gt;135 Airline Highway&lt;/Street &gt;
+    &lt;City&gt;Narragansett&lt;/City&gt; &lt;State&gt;RI&lt;/State&gt; &lt;Zip&gt;02882&lt;/Zip&gt;
+  &lt;/ShipTo&gt;</pre></div><p> In addition to the four child elements, this
+<tt>ShipTo</tt>
+
+element also contains some white space; for example, the single
+space character between <tt>&lt;/City&gt;</tt> and
+<tt>&lt;State&gt;</tt>. These spaces form text nodes that
+are
+
+also counted among the element&#8217;s children. Text nodes like
+these that are composed of nothing but white space are sometimes
+called
+
+<i>ignorable white space</i>. This is an
+unfortunate
+
+turn of phrase. Sometimes you can ignore these nodes, but most of
+the time you can&#8217;t. The more proper term is
+<i>white space in element content</i>.<sup>[<a name="d0e846" href="#ftn.d0e846">4</a>]</sup> </p><p>
+    All the elements contained inside an element are called the element&#8217;s
+    <i>descendants</i>. Only the highest level are the children.
+    The descendants include not only the children, but the children
+    of the children, the children of the children&#8217;s children, and so forth.
+    If you look at <a href="ch01.html#order.xml" title="Example&nbsp;1.2.&nbsp;An XML document indicating an &#xA;order for 12 Birdsong Clocks, SKU 244">Example&nbsp;1.2</a> again, you&#8217;ll see that the
+    <tt>Order</tt> element has 15 descendant elements.
+    </p><p>
+     An element can also have <i>mixed content</i>.
+     This is when an element contains both child elements and 
+     text nodes containing non-whitespace characters. 
+    For example, this variant <tt>ShipTo</tt> element has both the child elements
+    you saw before as well as text nodes containing the strings
+    &#8220;Chez Fred&#8221; and
+    &#8220;Apt. 17D&#8221;: 
+    </p><div class="informalexample"><pre class="programlisting">  &lt;ShipTo&gt;
+    Chez Fred
+    &lt;Street&gt;135 Airline Highway&lt;/Street &gt;
+    Apt. 17D
+    &lt;City&gt;Narragansett&lt;/City&gt; &lt;State&gt;RI&lt;/State&gt; &lt;Zip&gt;02882&lt;/Zip&gt;
+  &lt;/ShipTo&gt;</pre></div><p>
+     Mixed content is very useful, indeed almost essential, for XML 
+     applications that contain narratives such as books and stories. 
+     Such applications include XHTML, DocBook, TEI, and XSL Formatting 
+     Objects. Mixed content is much less useful and much more cumbersome 
+     for data-oriented applications. XML documents that are intended 
+     for computers to read, 
+     as opposed to XML documents that are intended for humans to read, 
+     should use mixed content sparingly, if at all. 
+    </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e884"></a>Text</h3></div></div><p>
+     XML documents are text. Each XML document is a sequence of 
+     characters. These characters are taken from the Unicode character 
+     set. However, XML documents can be written in any character set 
+     which your XML parser knows how to convert to Unicode, providing 
+     that it is properly specified in the document&#8217;s encoding 
+     declaration in the XML declaration.
+  </p><div class="caution" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Caution</h3><p>
+   Many developers have decided
+   that they can make XML more efficient by defining a binary
+   version. This tends to be based on some vague notion that
+   binary formats are inherently smaller or faster than text formats.
+   These developers rarely have any actual evidence to back up this 
+   claim, which is not surprising since it isn&#8217;t true.
+   XML documents are routinely smaller 
+   and faster to read than the equivalent binary files
+   in standard applications like Oracle, Microsoft Word, Microsoft Excel,
+   and so forth. The fact is modern binary file formats are quite bloated,
+   but disks have gotten so large that
+   almost no one&#8217;s noticed or cared.
+   Nonetheless, there seems to be a large pool
+    of programmers who mistakenly believe:
+</p><div class="orderedlist"><ol type="1"><li><p>File size matters.</p></li><li><p>They can compress better than gzip.</p></li><li><p>Human legible/human editable data doesn&#8217;t matter.</p></li></ol></div><p>
+All three beliefs have been empirically proven false time and time 
+again. Nonetheless, about once a month some developer somewhere 
+announces that they&#8217;ve come up with yet another special purpose binary 
+compression format for XML. These have proven completely pointless in 
+practice. There is no actual benefit to these formats, and no one needs 
+one. Worse yet, such a format substantially eliminates many of the 
+existing benefits of XML. 
+ </p></div><p>
+     Unicode is a character set with room for over one million different 
+     characters, though currently (Unicode 3.2) a few less than 100,000 
+     are defined. Scripts covered by Unicode include Latin, Cyrillic, 
+     Greek, Hebrew, Arabic, Devanagari, the Han ideographs, and many more.      
+  </p><div class="caution" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Caution</h3><p>
+Contrary to what you may have heard, Unicode is not a two-byte 
+character set and really never has been. Since there are more than 
+a million different spaces for characters in Unicode, an arbitrary 
+Unicode character cannot be represented by a single two-byte unsigned 
+integer such as Java&#8217;s <tt>char</tt> data type. Prior to 
+Unicode 3.1 all defined Unicode characters had code points less than 
+65,536, which fooled some developers into thinking they could get away 
+with using two-byte chars. However, it&#8217;s long been known that more than 
+65,536 characters are actually used on Earth today and that Unicode 
+would have to assign characters outside the Basic Multilingual Plane 
+(the first 65,535 characters) to accommodate them. Although characters 
+were not actually assigned code points greater than 65,536 until Unicode 
+3.1, the space for them has long been reserved. XML was designed by 
+forward-thinkers who saw the problems ahead, and prepared for the 
+eventual expansion of Unicode. Consequently XML documents can use the 
+full range of all million-plus characters available in Unicode. Java&#8217;s 
+designers weren&#8217;t as prescient though, and restricted the 
+<tt>char</tt> data type to two-bytes. Consequently Java 
+programmers  need to go through some pretty nasty gyrations to 
+adequately handle Unicode documents (including XML documents). 
+ </p></div><p>
+      With a very few exceptions any character defined in Unicode can be 
+      used in the text content of an element or the value of an 
+      attribute. In brief, the exceptions are:
+  </p><div class="variablelist"><dl><dt><span class="term">The C0 controls</span></dt><dd><p>
+        The <i>non-printing characters</i> 
+        such as null and formfeed,
+        between code points
+        0 and 31 (decimal). 
+        The 
+        carriage return, linefeed, and the horizontal tab are allowed.        
+      </p></dd><dt><span class="term">The surrogate blocks</span></dt><dd><p>The <i>surrogate blocks</i> are two sets
+    of 1024 code points each,
+    which are used to extend Unicode beyond the Basic Multilingual Plane 
+    by allowing some characters to be represented as two surrogate 
+    characters.  You can include surrogate pairs in an XML 
+    document in an encoding like UTF-16 that uses surrogate pairs. You
+    just can&#8217;t treat an individual half of a surrogate pair as a 
+    character by itself.
+    </p></dd><dt><span class="term">The byte order mark</span></dt><dd><p>
+     The <i>byte order mark</i>, also known as the zero-width non-breaking space, 
+     can be used at the beginning of a document to indicate the encoding and 
+     endianness of the document, but cannot be used elsewhere in the 
+     document. 
+    </p></dd></dl></div><p>
+  All other characters are fair game, including some you probably 
+  shouldn&#8217;t be using anyway such as characters in the private use area 
+  and compatibility characters Unicode offers purely for 
+  interoperability with existing character sets. 
+  </p><p>
+    The rules for characters used in the names of things (elements, 
+    attributes, entities, etc.) are a little stricter. In brief, 
+    only letters, digits, and ideographs defined in Unicode 2.0 can be 
+    used. In addition the punctuation marks -, ., _, and : are also 
+    legal. Digits, the hyphen, and the period cannot be the first 
+    character in a name. Other punctuation marks as well as new 
+    characters first defined in Unicode 3.0 and later are not allowed 
+    anywhere in a name. These are essentially the same rules used for 
+    naming variables, methods, and classes in Java. The major difference 
+    is that XML allows the hyphen and Java doesn&#8217;t (it&#8217;s reserved for 
+    the minus sign) while Java allows the dollar sign and XML doesn&#8217;t. 
+    XML also allows the colon, unlike Java. However, XML reserves this 
+    for use with namespaces.
+    It should not be used as an arbitrary name character.
+  </p><p>
+     XML parsers faithfully preserve white space.
+     A string containing only white space is not the same
+     as a string containing nothing at all.
+     A string with leading and trailing white space
+     is not the same as the equivalent string with white space trimmed.
+      Some specific XML applications may decide that white space
+      is not significant in certain contexts. However, in generic XML 
+      all white space is significant and must be accounted for. 
+    </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e951"></a>Attributes</h3></div></div><p>
+      Attributes are name value pairs associated with elements. The name 
+      of an attribute may be any legal XML name. The value may be any 
+      string of text, even potentially including characters like &lt; 
+      and ". The document author needs to escape such characters as 
+      <tt>&amp;lt;</tt> and <tt>&amp;quot;</tt>. 
+      However, the parser will resolve these 
+      references before passing the data to your application. The 
+      attribute value is enclosed in either single or double quotes, and 
+      the name is separated from the value by an equals sign. For 
+      example, this <tt>Subtotal</tt> element has a <tt>currency</tt> attribute with the 
+      value USD:
+    </p><div class="informalexample"><pre class="programlisting">&lt;Subtotal currency='USD'&gt;393.85&lt;/Subtotal&gt;</pre></div><p>
+     The quote marks are not part of the attribute value.
+     Whether single or double quotes
+      are used or whether there&#8217;s extra white
+      space around the equals sign is not important. 
+      Most parsers don&#8217;t bother to report the difference. 
+      These two elements are also the same as the previous one: 
+    </p><div class="informalexample"><pre class="programlisting">&lt;Subtotal currency="USD"&gt;393.85&lt;/Subtotal&gt;
+&lt;Subtotal currency = "USD"&gt;393.85&lt;/Subtotal&gt;</pre></div><p>
+      Attributes are unordered. There is no difference between these two 
+      elements: 
+    </p><div class="informalexample"><pre class="programlisting">&lt;Tax rate="7.0" currency="USD"&gt;27.57&lt;/Tax&gt;
+&lt;Tax currency="USD" rate="7.0"&gt;27.57&lt;/Tax&gt;</pre></div><p>
+      When a parser tells you which attributes are attached
+       to an element, it may or may not provide them in the same
+       order they had in the input document.
+       Some APIs report the attributes using an 
+       unordered data structure like a hash table. 
+       Others use an array or a list, but even in these cases there&#8217;s
+       no guarantee that the order of the attributes in the list matches the
+       order of the attributes in the start-tag.
+    </p><p>
+      Perhaps most surprisingly, attribute values whose type is not CDATA 
+      are <i>normalized</i>. This means that all leading 
+      and trailing white space is stripped from the value, and runs of 
+      white space characters are compressed to a single space. This does 
+      not apply to any of the attributes in the examples seen so far 
+      because untyped attributes are not normalized. However, once 
+      you add a DTD it is possible to declare that an attribute has type 
+      ID, IDREF, IDREFS, NMTOKEN, and several other types. Attributes of 
+      these types are always normalized before being passed to the 
+      client application.
+    </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Note</h3><p>
+      Tim Bray, one of the primary authors of XML 1.0,
+      has admitted
+      that normalization of attribute values was a mistake.
+      In his words, &#8220;Why the
+$#%%!@! should attribute values be &#8216;normalized&#8217; anyhow?  This was a pure
+process failure: at no point during the 18-month development cycle of
+XML 1.0 did anyone stand up and say &#8216;why are you doing this?&#8217;  
+I&#8217;d bet
+big bucks that if someone had, the silly thing would have died a 
+well-deserved death.&#8221;
+      <sup>[<a name="d0e997" href="#ftn.d0e997">5</a>]</sup>
+      
+      
+      
+     
+    </p></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e1005"></a>XML Declaration</h3></div></div><p>Most XML documents begin with an 
+    <i>XML declaration</i>.
+    An XML declaration has a <tt>version</tt>
+     attribute with the value <tt>1.0</tt>
+    and may have optional <tt>standalone</tt> 
+    and <tt>encoding</tt> attributes. For example,
+    this XML declaration
+    says that the document is written in XML 1.0 in the 
+    ISO-8859-1 (Latin-1) character set and does 
+    not require the parser to read the external DTD subset:
+    </p><div class="informalexample"><pre class="programlisting">&lt;?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?&gt;</pre></div><p>
+     The <tt>version</tt>
+     attribute always has the value <tt>1.0</tt>. If XML 1.0 is ever 
+     revised, this may change to some other value. As I write this, there&#8217;s 
+     a hotly debated proposal at the W3C for a new version of XML code named 
+     &#8220;Blueberry&#8221; which would make XML marginally more compatible with 
+     Unicode 3.0 and later as well as making it easier to edit with some brain 
+     damaged IBM mainframe software that can&#8217;t handle files where lines end 
+     in carriage returns, line feeds, or both. If this gets adopted (and I 
+     for one hope it doesn&#8217;t) this may lead to a new value for  the 
+     <tt>version</tt> attribute. However, for now, <tt>version</tt>
+     is effectively 
+     fixed with the value 1.0.
+    </p><p>
+    The <tt>encoding</tt> 
+    attribute identifies the character set and encoding 
+    in which the document is written. 
+    Whatever the encoding is, one of the jobs of the parser is
+    to convert the document to Unicode before passing it to the
+    client application.  
+    Most APIs don&#8217;t offer any means of finding out what the 
+    original encoding was. You&#8217;ll simply receive Unicode strings
+    from which all traces of the original encoding have been removed.  
+    </p><p>
+   The <tt>standalone</tt> 
+    attribute specifies whether the XML parser may
+    have to read parts of the DTD that are outside
+    the instance document to correctly parse the file. 
+    This is mostly a hint for the
+    parser. Some parser APIs may tell you what the value was,
+    but you generally don&#8217;t need to worry about it.
+    The parser either will or won&#8217;t read external entities as necessary.
+    By the time your code gets hold of the document, 
+    all of this will have already been taken care of.
+    You need not concern yourself with it.
+    </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e1055"></a>Comments</h3></div></div><p>
+    XML comments are almost exactly like HTML comments.
+    They begin with <tt>&lt;!--</tt> and end with 
+     <tt>--&gt;</tt>. For example, here&#8217;s a comment 
+     you might find in an order document:
+     </p><div class="informalexample"><pre class="programlisting">&lt;!-- Please make sure this order goes out ASAP! --&gt;</pre></div><p>
+     
+     Everything between the <tt>&lt;!--</tt> and the 
+     <tt>--&gt;</tt> should be ignored.  In fact, most parsers 
+     and APIs do make the comments available to you if you want them, 
+     mostly so you can <i>round trip</i> documents (read them in and then write 
+     them back out again with everything still intact). However, beyond 
+     this use case, you really shouldn&#8217;t pay much attention to comments 
+     in your programs. Some HTML systems abuse comments to support 
+     server side includes or editor specific extensions. Since XML is 
+     much more flexible than HTML, however, you can use elements, 
+     attributes, or, as a last resort, processing instructions for these 
+     use cases.  
+    </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e1080"></a>Processing Instructions</h3></div></div><p>
+    Processing instructions are used to tell particular software how it 
+    should handle an XML document after the document has been parsed. 
+    Generally, processing instructions are used for meta-information 
+    that may apply to documents from many different domains and XML 
+    vocabularies. For instance, the most common processing instruction, 
+    <tt>xml-stylesheet</tt>, tells a browser or other formatter 
+    where it can find the stylesheet it should apply to the document. 
+    This can be used with DocBook documents, XHTML documents, Human 
+    Resources Markup Language documents, or the custom XML 
+    application you invented last Tuesday to catalog your  
+    baseball card collection. For another example, the Apache XML Project&#8217;s Cocoon 
+    application server reads <tt>cocoon-process</tt> processing 
+    instructions to figure out what processes to apply to a document 
+    before sending it to a user. This processing
+    instruction tells Cocoon to replace the XInclude
+    include elements with the contents of the documents
+    they reference:
+    </p><div class="informalexample"><pre class="programlisting">&lt;?cocoon-process type="xinclude"?&gt;</pre></div><p>The basic syntax of a processing instruction is 
+    <tt>&lt;?</tt>, followed immediately by an XML name
+    identifying the <i>target</i> of the processing instruction,
+    followed by white space and any data at all, followed by 
+    <tt>?&gt;</tt>. 
+    </p><p>
+    Unlike elements or attributes, processing instructions can be added 
+    to a document without considering whether or not the DTD or schema 
+    allows it. Most schema languages
+    do not consider the presence, absence, or structure of
+    processing 
+    instructions when determining validity. 
+    Furthermore, unlike elements, processing instructions 
+    can appear before, after, or inside the root element. 
+    They are frequently 
+    placed in the document prolog, though they can appear in the 
+    document body or after the root element as well. 
+    </p><p>
+   Most of the time, the processing instruction is not associated with 
+   any one
+   XML application. For instance, an XML application may describe
+   gene sequences, 16th century Italian love poetry, financial records,
+   or vector graphics. However, each of these might need to be loaded
+   into a Web browser which would apply a stylesheet to it.
+   Processing instructions can be inserted into a document to
+   support this without changing or affecting the normal document structure.
+   In essence, processing instructions provide an out-of-band channel for 
+   passing information to software other than the program that would
+   normally read a document.  
+    </p><p>
+   XML parsers report the target and contents of processing instructions
+   to the client application. However, they provide no further support for
+   interpreting the data in the processing instruction.
+   For instance, many processing instructions use a 
+   pseudo-attribute format like this:
+   </p><div class="informalexample"><pre class="programlisting">&lt;?xml-stylesheet type="text/xml" href="limited.xsl"?&gt;</pre></div><p>
+   However, as far as the XML parser is concerned, the data in this 
+   processing instruction is just a string that happens to contain some 
+   equals signs and quotation marks. These are not treated differently than 
+   any other character.<sup>[<a name="d0e1116" href="#ftn.d0e1116">6</a>]</sup> 
+   Both the syntax and semantics of the data is 
+   completely up to the application reading the document. Processing 
+   instructions are specifically for information that is not related to XML. 
+    </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e1120"></a>Entities</h3></div></div><p>
+    <span class="emphasis"><em>XML documents</em></span> are not necessarily the same 
+    thing as <span class="emphasis"><em>XML files</em></span>. A single XML 
+    document may be composed of several different files. Indeed, the 
+    pieces that make up an XML document may not be files at all, but may 
+    instead be records in a database, data sent out over the Internet by 
+    a web server in response to a CGI query, a small part of a much 
+    larger file, or something stranger still.
+    </p><p>
+    The individual storage units that make up any one XML document are 
+    called <i>entities</i>. Every XML document has at 
+    least one entity, the <i>document entity</i>. This 
+    is the storage unit, be it a file or something else, that holds the 
+    root element of the document. Every other entity in a document has a 
+    name. There are five such kinds of named entities, and they are 
+    classified according to three criteria:
+    </p><div class="variablelist"><dl><dt><span class="term">Internal or external</span></dt><dd><p>The replacement text of an internal entity is 
+       defined as a string literal in the document&#8217;s DTD. The replacement
+       text of 
+      an external entity is read out of a different file located via  a 
+      URL. </p></dd><dt><span class="term">Parsed or unparsed</span></dt><dd><p>
+      A parsed entity contains XML. It is itself 
+      well-formed, and may even be a complete XML document if it has a 
+      root element. (Some entities that are only intended to be used as 
+      parts of other documents do not have root elements). You can think 
+      of a parsed entity as something that will be pasted right into 
+      the middle of an XML document, such that the resulting document 
+      would still be well-formed. 
+      </p><p>An <i>unparsed entity</i> can contain 
+    anything at all, including binary data. Unparsed entities are not 
+    pasted (even metaphorically) into XML documents. Instead a URL to 
+    the entity&#8217;s data is provided in an <i>ENTITY 
+    declaration</i> in the DTD. Then this entity is referenced 
+    in an attribute with the type ENTITY or ENTITIES in the document. An 
+    unparsed entity also has a notation that defines the type of the 
+    data in the unparsed entity (e.g. GIF image or C source code). Like 
+    the URL, the notation is also specified in the DTD rather than in 
+    the instance document. In practice, unparsed entities and notations 
+    are not much used.  
+    </p></dd><dt><span class="term">General or parameter</span></dt><dd><p>A general entity is used within the
+      instance document. A general entity reference begins with
+      an <tt>&amp;</tt>.  A parameter entity is used within the
+      DTD. A parameter entity reference begins with
+      a <tt>%</tt>. Since this book focuses on processing instance documents,
+      we&#8217;ll consider general entities primarily.  
+      </p></dd></dl></div><p>Not all combinations are possible.
+ In fact, there are exactly five kinds of named entities:
+ </p><div class="variablelist"><dl><dt><span class="term">Internal parsed general entities</span></dt><dd><p>
+        The familiar entity references like <tt>&amp;amp;</tt>
+        and <tt>&amp;copy;</tt> that are defined 
+        completely in the DTD. For example, this declaration
+        defines the <tt>copy</tt> entity as the
+        text &#8220;Copyright&#8221;:</p><div class="informalexample"><pre class="programlisting">&lt;!ENTITY copy "Copyright"&gt;</pre></div><p>
+        These entities are used in element content and attribute values.
+      </p></dd><dt><span class="term">External parsed general entities</span></dt><dd><p>
+       External parsed general entities are just like 
+       internal parsed general entities except that their
+       replacement text is read from a separate document
+       rather than the DTD. 
+       The document is identified by a relative or absolute URL.
+       For example, this declaration
+       defines the <tt>legal</tt> entity as the
+        content read from the URL <tt>http://www.example.com/legal.xml</tt>:
+        </p><div class="informalexample"><pre class="programlisting">&lt;!ENTITY legal SYSTEM "http://www.example.com/legal.xml"&gt;</pre></div><p>
+       The file such an entity is read from
+       is just like another XML document except that it
+       has a <i>text declaration</i> instead
+       of an XML declaration, may not have a document type declaration,
+       and might not have a single root element.
+      </p></dd><dt><span class="term">External unparsed general entities</span></dt><dd><p>
+        External unparsed general entities refer to files containing 
+        non-XML, binary data. They are declared similarly to
+        external parsed entities, but they also have
+        a notation. For example, these definitions identify
+        an unparsed entity named logo at the URL
+       <tt>http://www.example.com/logo.png</tt> with the notation
+        image/png:
+      </p><div class="informalexample"><pre class="programlisting">&lt;!NOTATION PNG SYSTEM "image/png"&gt;
+&lt;!ENTITY logo SYSTEM "http://www.example.com/logo.png" NDATA PNG&gt;</pre></div><p>  
+        Unparsed entities are referenced by attributes 
+        with type ENTITY or ENTITIES rather than by entity references. 
+        For example, such an attribute might be declared
+        like this:
+      </p><div class="informalexample"><pre class="programlisting">&lt;!ELEMENT figure EMPTY&gt;
+&lt;!ATTLIST figure logo ENTITY #REQUIRED&gt;</pre></div><p>  
+        Instances of the <tt>figure</tt> element would look like this:
+      </p><div class="informalexample"><pre class="programlisting">&lt;figure source="logo"/&gt;</pre></div><p>
+        The parser does not actually provide you with the contents of an 
+        unparsed entity. Instead it tells you the URI from which the 
+        data can be retrieved and the notation for that data. 
+        However, you have to use Java&#8217;s 
+        networking and I/O classes to get the data at that URI. 
+      </p></dd><dt><span class="term">Internal parsed parameter entities</span></dt><dd><p>
+        Internal parsed parameter entities are used purely within the DTD. 
+        The replacement text is provided by a string literal in the DTD. 
+        References to these entities begin with a percent sign.
+        They&#8217;re 
+        often used to parameterize content models and attribute types. 
+        For example, the DocBook DTD defines the intermod.redecl.module
+        parameter entity as the word IGNORE:
+      </p><div class="informalexample"><pre class="programlisting">&lt;!ENTITY % intermod.redecl.module "IGNORE"&gt;</pre></div><p>
+        Unlike a general entity reference, the
+        <tt>%intermod.redecl.module;</tt> parameter entity reference
+        can only be used in the DTD, not in the instance document.
+        Since our focus is on instance documents, not DTDs, you won&#8217;t 
+        see a lot of these in this book. 
+      </p></dd><dt><span class="term">External parsed parameter entities</span></dt><dd><p>
+        External parsed parameter entities are used purely with the DTD. 
+        The replacement text is provided by a DTD fragment at a given 
+        URL. References to these entities begin with a percent sign. 
+        They often connect the different parts of a modular DTD into one 
+        coherent whole. For example, the DocBook DTD defines 
+        the dbpool parameter entity using a PUBLIC ID
+        that loads the DTD fragment at the relative URL
+        <tt>dbpoolx.mod</tt>:
+      </p><div class="informalexample"><pre class="programlisting">&lt;!ENTITY % dbpool PUBLIC 
+"-//OASIS//ELEMENTS DocBook XML Information Pool V4.1.2//EN"
+"dbpoolx.mod"&gt;</pre></div><p>Again, since our focus is on instance documents and not 
+        DTDs, you won&#8217;t see a lot of these in this book.
+      </p></dd></dl></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e1273"></a>Namespaces</h3></div></div><p>
+    Namespaces are not part of XML 1.0. Namespaces were invented about a 
+    year after XML 1.0 was released to help sort out the rapidly expanding 
+    world of XML applications that all needed to be mixed together in 
+    the same documents. There are many good XML applications that don&#8217;t 
+    use them at all. For example, DocBook 4.1.2, the XML application in 
+    which this book was written, is completely namespace free as are 
+    XML-RPC and RSS 0.9.1. However, even if you can write very useful XML 
+    applications without thinking about namespaces, you&#8217;re going to 
+    encounter namespaces when you work 
+    with XML applications designed by other developers. 
+    Consequently it&#8217;s important to have a solid 
+    understanding of them.
+    </p><p>
+      The key idea of namespaces is that each element is bound to 
+      a <i>Uniform Resource Identifier</i> 
+      (URI) (a URL in practice). 
+      If IBM only uses URIs in the <tt>ibm.com</tt> domain
+      and Sun only uses URIs in the <tt>sun.com</tt>
+      domain, then
+      there won&#8217;t be any confusion between Sun&#8217;s 
+      <tt>Book</tt> element and IBM&#8217;s <tt>Book</tt>
+      element, even if they&#8217;re used 
+      in the same document. Just look at the URIs to tell which is which.
+    </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Note</h3><p>
+A URI identifies a resource, but it does not necessarily locate it.
+URIs include not only Uniform Resource Locators (URLs) 
+but also Uniform Resource Names (URNs).
+For instance, a URN for this book based on its ISBN number is
+<tt>urn:isbn:0201771861</tt>; 
+but this does not tell you where you
+can find a copy of the book.
+However, most developers agree that only absolute URLs should be used
+as namespace URIs, and most XML applications follow this 
+suggestion. 
+</p></div><p>
+      The URIs are purely string identifiers. Even if the URI is a URL,
+      the parser does not 
+      connect to the server and try to download the document that&#8217;s found 
+      there. Indeed there may not be any such document. 
+      When plugged into web browsers,
+      namespace URLs often 
+      produce 404 Not Found errors. You can use namespaces in standalone 
+      systems without any network connection at all. You don&#8217;t even have 
+      to have access to DNS. For the same reason, two different URLs 
+      that point to the same page define two different namespaces. For 
+      example, the following URLs identify the same page but
+       three different namespaces:
+       </p><div class="itemizedlist"><ul type="disc"><li><tt>http://ns.cafeconleche.org/Orders/</tt></li><li><tt>http://ns.cafeconleche.org/Orders</tt></li><li><tt>http://ns.cafeconleche.org/Orders/index.html</tt></li></ul></div><p>
+      Since URIs contain many characters which are illegal in element 
+      names as well as being excessively long to type, short prefixes 
+      stand in for the URIs. The prefixes are separated from the 
+      <i>local name</i> by a colon. For instance, 
+      instead of the URI <tt>http://www.w3.org/2001/XInclude</tt> you might use 
+      the prefix <tt>xinclude</tt> or <tt>xi</tt>. An 
+      <tt>include</tt> element in the 
+      <tt>http://www.w3.org/2001/XInclude</tt>
+      namespace would then be written as 
+      <tt>xi:include</tt>. This element has the prefix <tt>xi</tt>, the 
+      <i>local name</i> <tt>include</tt>, 
+      the <i>qualified name</i> 
+      <tt>xi:include</tt>, and the namespace URI 
+      <tt>http://www.w3.org/2001/XInclude</tt>.
+    </p><p>
+      <tt>xmlns:<i><tt>prefix</tt></i></tt> 
+      attributes bind particular 
+      prefixes to particular URIs within the element
+      where the attribute appears. For example, inside this 
+      <tt>Order</tt> element, the prefix <tt>xi</tt> 
+      is bound to the URI
+      <tt>http://www.w3.org/2001/XInclude</tt>:
+    </p><div class="informalexample"><pre class="programlisting">&lt;Order xmlns:xi="http://www.w3.org/2001/XInclude"&gt;
+  &lt;xi:include href="order_details.xml"/&gt;
+&lt;/Order&gt;</pre></div><p>
+      Each prefix used in an element or attribute name must be bound to 
+      a URI. Failure to do this is a <i>namespace well-formedness 
+      error</i>. Although you can parse documents without 
+      considering namespaces, in practice most parsers and APIs check 
+      namespaces by default and a violation of namespace well-formedness 
+      is as serious as a violation of the rules of XML 1.0. 
+      </p><p>
+      The prefix can change as long as the URI stays the same.
+      For example, this element is the same as the previous one:
+    </p><div class="informalexample"><pre class="programlisting">&lt;Order xmlns:xinclude="http://www.w3.org/2001/XInclude"&gt;
+  &lt;xinclude:include href="order_details.xml"/&gt;
+&lt;/Order&gt;</pre></div><p>
+      You can also define a default namespace
+      that applies to elements without prefixes.
+      For example, <a href="ch01s02.html#namespace_order.xml" title="Example&nbsp;1.6.&nbsp;An XML document that &#xA;uses a default namespace">Example&nbsp;1.6</a> 
+      places the <tt>Order</tt> element and all its descendants
+      in the <tt>http://ns.cafeconleche.org/Orders/</tt>
+      namespace, even though none of them have prefixes. 
+    </p><div class="example"><a name="namespace_order.xml"></a><p class="title"><b>Example&nbsp;1.6.&nbsp;An XML document that 
+uses a default namespace</b></p><pre class="programlisting">&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;Order xmlns="http://ns.cafeconleche.org/Orders/"&gt;
+  &lt;Customer id="c32"&gt;Chez Fred&lt;/Customer&gt;
+  &lt;Product&gt;
+    &lt;Name&gt;Birdsong Clock&lt;/Name&gt;
+    &lt;SKU&gt;244&lt;/SKU&gt;
+    &lt;Quantity&gt;12&lt;/Quantity&gt;
+    &lt;Price currency="USD"&gt;21.95&lt;/Price &gt;
+    &lt;ShipTo&gt;
+      &lt;Street&gt;135 Airline Highway&lt;/Street &gt;
+      &lt;City&gt;Narragansett&lt;/City&gt; &lt;State&gt;RI&lt;/State&gt; &lt;Zip&gt;02882&lt;/Zip&gt;
+    &lt;/ShipTo&gt;
+  &lt;/Product&gt;
+  &lt;Subtotal currency='USD'&gt;263.405&lt;/Subtotal&gt;
+  &lt;Tax rate="7.0" 
+       currency='USD'&gt;18.44&lt;/Tax&gt;
+  &lt;Shipping  method="USPS" currency='USD'&gt;8.95&lt;/Shipping&gt;
+  &lt;Total currency='USD' &gt;290.79&lt;/Total&gt;
+&lt;/Order&gt;
+</pre></div><p>
+   Although it&#8217;s most common to place the namespace binding attributes 
+   on the root element, they can appear on other elements deeper in the 
+   hierarchy. They can even override previous bindings in the ancestor 
+   elements.  This is especially common with the binding of the default 
+   namespace. For instance, in <a href="ch01s02.html#namespace_order_2.xml" title="Example&nbsp;1.7.&nbsp;An XML document that uses two&#xA; default namespaces">Example&nbsp;1.7</a> 
+   the <tt>Order</tt>, <tt>Customer</tt>, <tt>Product</tt>, <tt>Name</tt>, 
+   <tt>SKU</tt>, <tt>Quantity</tt>, <tt>Price</tt>, <tt>Subtotal</tt>, <tt>Tax</tt>, 
+   <tt>Shipping</tt>, 
+   and <tt>Total</tt> elements are all in the 
+   <tt>http://ns.cafeconleche.org/Orders/</tt> namespace. However, the 
+   <tt>ShipTo</tt>, 
+   <tt>Street</tt>, <tt>City</tt>, <tt>State</tt>, and <tt>Zip</tt>
+   elements are in the 
+   <tt>http://ns.cafeconleche.org/Address/</tt> namespace.
+</p><div class="example"><a name="namespace_order_2.xml"></a><p class="title"><b>Example&nbsp;1.7.&nbsp;An XML document that uses two
+ default namespaces</b></p><pre class="programlisting">&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;Order xmlns="http://ns.cafeconleche.org/Orders/"&gt;
+  &lt;Customer id="c32"&gt;Chez Fred&lt;/Customer&gt;
+  &lt;Product&gt;
+    &lt;Name&gt;Birdsong Clock&lt;/Name&gt;
+    &lt;SKU&gt;244&lt;/SKU&gt;
+    &lt;Quantity&gt;12&lt;/Quantity&gt;
+    &lt;Price currency="USD"&gt;21.95&lt;/Price &gt;
+    &lt;ShipTo xmlns="http://ns.cafeconleche.org/Address/"&gt;
+      &lt;Street&gt;135 Airline Highway&lt;/Street &gt;
+      &lt;City&gt;Narragansett&lt;/City&gt; &lt;State&gt;RI&lt;/State&gt; &lt;Zip&gt;02882&lt;/Zip&gt;
+    &lt;/ShipTo&gt;
+  &lt;/Product&gt;
+  &lt;Subtotal currency='USD'&gt;263.40&lt;/Subtotal&gt;
+  &lt;Tax rate="7.0" 
+       currency='USD'&gt;18.44&lt;/Tax&gt;
+  &lt;Shipping  method="USPS" currency='USD'&gt;8.95&lt;/Shipping&gt;
+  &lt;Total currency='USD' &gt;290.79&lt;/Total&gt;
+&lt;/Order&gt;
+</pre></div><p>
+      Although it&#8217;s less common, prefixes can also be attached to 
+      attribute names to indicate what namespace the attribute is in. 
+      For example, XLink uses this to distinguish between the XLink 
+      attributes such as <tt>type</tt> and <tt>href</tt> 
+      and attributes with the same names 
+      that might be used in elements that need to become XLinks. 
+      This <tt>ShipTo</tt> element is also a simple XLink to the 
+      recipient&#8217;s e-mail address:
+    </p><div class="informalexample"><pre class="programlisting">    &lt;ShipTo xmlns="http://ns.cafeconleche.org/Address/"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xlink:type="simple" xlink:href="mailto:chezfred@yahoo.com"
+    &gt;
+      &lt;GiftRecipient&gt;Samuel Johnson&lt;/GiftRecipient&gt;
+      &lt;Street&gt;271 Old Homestead Way&lt;/Street &gt;
+      &lt;City&gt;Woonsocket&lt;/City&gt; &lt;State&gt;RI&lt;/State&gt; &lt;Zip&gt;02895&lt;/Zip&gt;
+    &lt;/ShipTo&gt;</pre></div><p>
+      Unprefixed attributes are never in any namespace.
+      Unlike elements, they cannot be in the default namespace.
+      Furthermore, they are not in the same namespace as the
+      element to which they are attached.
+      If an attribute does not have a prefix, it is not in a namespace.
+    </p><p>
+      On occasion namespace prefixes are used in attribute values,
+      element content, and even in processing instructions.
+      In these cases the nearest ancestor element
+      that contains a binding for that prefix establishes what URI
+      the prefix is mapped to. Inside an element with an 
+      <tt>xmlns:<i><tt>prefix</tt></i></tt> 
+      attribute, we say that the namespace is 
+      <i>in scope</i>
+      even if it isn&#8217;t obviously used anywhere in that element.
+      Namespaces in scope on an element include not only
+      those that the element itself declares but also
+      those that are declared on
+      that element&#8217;s ancestors.
+      An element can redeclare a namespace prefix so that it&#8217;s mapped
+      to a different URI on the element and the element&#8217;s children
+      than in the element&#8217;s parent. Slightly more commonly, an element
+      can change the default namespace that applies within the
+      element and its content. 
+    </p><p>
+      When writing software to process XML documents that use 
+      namespaces, you almost always want to make your code dependent on 
+      the URI, not the prefix. If you&#8217;re comparing two elements for 
+      equality, compare them by URI and local name, not prefix and local 
+      name. If you&#8217;re searching for an element of a certain type, look 
+      for an element with the right URI and local name, not the right 
+      prefix and local name. 
+    </p></div><div class="footnotes"><br><hr width="100" align="left"><div class="footnote"><p><sup>[<a name="ftn.d0e545" href="#d0e545">2</a>] </sup>
+  The well-formedness constraints specify requirements that are difficult or 
+  impossible to express in BNF form; for example, that &#8220;The Name 
+  in an element&#8217;s end-tag must match the element type in the 
+  start-tag.&#8221;
+  </p></div><div class="footnote"><p><sup>[<a name="ftn.d0e554" href="#d0e554">3</a>] </sup>
+  A few parsers continue reading so they can report further 
+  errors after the first one. However, they only report
+  errors, not content.</p></div><div class="footnote"><p><sup>[<a name="ftn.d0e846" href="#d0e846">4</a>] </sup>
+Technically,
+whether or not white space only nodes are considered to be
+&#8220;white space in element content&#8221; depends on the
+content specification for the element given by the DTD. A white
+space only text node is only white space in element content when
+the content specification for the parent element in the DTD
+indicates that the parent element can only contain child elements
+but not mixed content. Since <a href="ch01.html#order.xml" title="Example&nbsp;1.2.&nbsp;An XML document indicating an &#xA;order for 12 Birdsong Clocks, SKU 244">Example&nbsp;1.2</a> doesn't
+have a DTD, this can't possibly be white space in element
+content.</p></div><div class="footnote"><p><sup>[<a name="ftn.d0e997" href="#d0e997">5</a>] </sup>
+      <i><a href="http://www.lists.ic.ac.uk/hypermail/xml-dev/xml-dev-Jan-2000/1085.html" target="_top">Re: 
+      Attribute normalisation and character entities</a></i>, 
+      posted on the xml-dev
+      mailing list, January 27, 2000
+      </p></div><div class="footnote"><p><sup>[<a name="ftn.d0e1116" href="#d0e1116">6</a>] </sup>
+   JDOM and dom4j actually do provide
+   special support for processing instructions written in this
+   pseudo-attribute format. However, they both do a substantial amount of
+   work in their own classes to support this interface, beyond what
+   the parser provides.</p></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch01.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch01.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch01s03.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&nbsp;1.&nbsp;XML for Data&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Validity</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+July 22,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

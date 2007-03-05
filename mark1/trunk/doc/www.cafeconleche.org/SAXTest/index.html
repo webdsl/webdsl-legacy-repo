@@ -1,0 +1,83 @@
+<html>
+<head>
+<title>SAX Conformance Testing</title>
+</head>
+<body>
+<h1>SAX Conformance Testing</h1>
+
+<p>
+This is the official site for Elliotte Rusty Harold's SAX conformance test suite.
+To learn more about the test suite consult the 
+<a href="paper.html">paper</a> presented at XML Europe 2004. 
+</p>
+
+<h2>Results for Different Parsers</h2>
+
+<ul>
+<li><a href="oracle.html">Oracle 9</a></li>
+<li><a href="xerces.html">Xerces</a></li>
+<li><a href="crimson.html">Crimson</a></li>
+<li><a href="gnu.html">Gnu JAXP</a></li>
+<li><a href="piccolo.html">Piccolo</a></li>
+<li><a href="xp.html">XP</a></li>
+<li><a href="saxon.html">Saxon's &AElig;lfred</a></li>
+<li><a href="dom4j.html">dom4j's &AElig;lfred</a></li>
+</ul>
+
+<h2>Running the Tests Yourself</h2>
+
+<p>
+You'll need Java and Ant installed. Any recent version should do. 
+</p>
+
+<ol>
+ <li>Download the <a href="SAXTest.zip">test framework</a> and unzip it.
+ This creates a directory named SAXTest.</li>
+ <li>Download the <a href="http://www.w3.org/XML/Test">W3C XML Conformance Test Suite</a> and unzip it in the SAXTest directory.
+ This creates a directory named xmlconf.</li>
+ <li>Place the jar archives for the parsers you wish to test in the SAXTest/lib directory.</li>
+ <li>Generate the expected output:
+ <p><samp>% ant expected</samp></p>
+ This creates the directory SAXTest/results/preexpected
+ </li>
+ <li>Copy SAXTest/results/preexpected to SAXTest/expected. 
+ (This step really shouldn't be necessary. I need tom fix this.)
+ </li>
+ <li>Generate the actual output. There are targets in the build file for the major parsers.
+ For example,
+ 
+  <p><samp>% ant generate-oracle</samp></p>
+ 
+
+ <p>To try out a new parser, copy one of the ant tasks, and change the argument to the 
+ fully package-qualified class name of your parser.</p>
+ 
+ </li>
+<li>Compare the results.  For example,
+ 
+  <p><samp>% ant compare-oracle</samp></p>
+  
+  This creates XML output such as oracle.xml.parser.v2.SAXParser.xml.
+  The file is named after the fully package qualified parser name. 
+  
+  
+ </li>
+ <li>Use the XSLT 
+ stylesheet results.xsl to convert the XML into HTMl for viewing. For example,
+ 
+ <p><samp>% xsltproc results.xsl oracle.xml.parser.v2.SAXParser.xml>oracle.xml.parser.v2.SAXParser.html</samp></p>
+ </li>
+</ol>
+
+<p>
+These instructions are pretty rough at this point, and have not been heavily tested except on my system.
+The whole process needs to be more automated. 
+If you have any trouble getting this to run, please send me <a href="mailto:elharo@metalab.unc.edu">e-mail</a>,
+and I'll see what I can do. 
+</p>
+
+<hr />
+Copyright 2004 Elliotte Rusty Harold
+<a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a>
+</body>
+</html>

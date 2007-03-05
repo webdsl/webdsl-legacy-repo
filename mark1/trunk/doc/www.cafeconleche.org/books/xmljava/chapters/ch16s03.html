@@ -1,0 +1,646 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Location Paths</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="previous" href="ch16s02.html" title="The XPath Data Model"><link rel="next" href="ch16s04.html" title="Expressions"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"><link rel="subsection" href="ch16s03.html#d0e27497" title="Axes"><link rel="subsection" href="ch16s03.html#d0e27660" title="Node tests"><link rel="subsection" href="ch16s03.html#d0e27874" title="Predicates"><link rel="subsection" href="ch16s03.html#d0e27980" title="Compound Location Paths"><link rel="subsection" href="ch16s03.html#d0e28087" title="Absolute Location Paths"><link rel="subsection" href="ch16s03.html#d0e28195" title="Abbreviated Location paths"><link rel="subsection" href="ch16s03.html#d0e28451" title="Combining location paths"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Location Paths</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch16s02.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;16.&nbsp;XPath</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch16s04.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e27428"></a>Location Paths</h2></div></div><p>
+   Although there are many different kinds of XPath expressions,
+   the one that&#8217;s of primary use in Java programs is the 
+   <i>location
+   path</i>. 
+   A location path selects a set of nodes from an XML document.
+   Each location path is composed of one or more
+   <i>location steps</i>.
+   Each location step has an <i>axis</i>,
+   a <i>node test</i> and, optionally,
+   one or more <i>predicates</i>.
+   Furthermore, each location step is evaluated with respect to a
+   particular <i>context node</i>.
+   A double colon (<tt>::</tt>) separates the axis from the node test, and each
+   predicate is
+   enclosed in square brackets.
+  </p><p> 
+   Some examples will help explain all these terms.
+    Consider the simple XML-RPC request document 
+    in <a href="ch16s03.html#calculateFibonacci.xml" title="Example&nbsp;16.3.&nbsp;An XML-RPC request document">Example&nbsp;16.3</a>. 
+   </p><div class="example"><a name="calculateFibonacci.xml"></a><p class="title"><b>Example&nbsp;16.3.&nbsp;An XML-RPC request document</b></p><pre class="programlisting">&lt;?xml version="1.0"?&gt;
+&lt;methodCall&gt;
+  &lt;methodName&gt;calculateFibonacci&lt;/methodName&gt;
+  &lt;params&gt;
+    &lt;param&gt;
+      &lt;value&gt;
+        &lt;int&gt;23&lt;/int&gt;
+      &lt;/value&gt;
+    &lt;/param&gt;
+  &lt;/params&gt;
+&lt;/methodCall&gt;
+</pre></div><p>
+    Exactly how the context node for a location step
+    is determined depends on the environment
+    in which the location step appears. When using XPath in Java code,
+    you normally pass the context node as an argument to the method that evaluates the expression.
+    In XSLT the context node is normally the currently matched node in the input document.
+    In other environments, other means are provided to choose the context node.
+    For now,     
+    let&#8217;s just pick the root <tt>methodCall</tt>
+    element as the context node.
+    Then <tt>child::methodName</tt>
+    is a location step that selects a node-set
+    containing the single <tt>methodName</tt> element. 
+    It moves along the child axis with the node test
+    <tt>methodName</tt>.
+    That is, it selects
+    all the children of the context node named <tt>methodName</tt>. 
+    <tt>child::params</tt> returns a node-set 
+    containing the single <tt>params</tt> element.
+  </p><p>
+    Location paths are not guaranteed to return a node-set that
+    contains
+    exactly one
+    node (and assuming they do is a very common mistake).
+    <tt>child::*</tt>
+    returns a node-set containing two element nodes, one for the
+    <tt>methodName</tt> element and one for the 
+    <tt>params</tt> element. The asterisk is a wild card
+    node test that matches any element, regardless of name. 
+  </p><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e27497"></a>Axes</h3></div></div><p>
+      There are twelve axes along which a location step can move.
+      Each selects a different subset of the nodes in the
+      document, depending on the context node. These are:
+    </p><div class="variablelist"><dl><dt><span class="term"><tt>self</tt></span></dt><dd><p>
+            The node itself.
+          </p></dd><dt><span class="term"><tt>child</tt></span></dt><dd><p>
+            All child nodes of the context node. (Attributes and
+            namespaces are not considered to be children of the
+            node they belong to.)
+          </p></dd><dt><span class="term"><tt>descendant</tt></span></dt><dd><p>
+            All nodes completely 
+            contained inside the context node (between the end of its start-tag
+            and the beginning of its end-tag); that is, all
+            child nodes, plus all children of the child nodes,
+            and all children of the children&#8217;s children, and so
+            forth.
+            This axis is empty if the context node is not
+            an element node or a root node.
+          </p></dd><dt><span class="term"><tt>descendant-or-self</tt></span></dt><dd><p>
+            All descendants of the context node and the context
+            node itself. 
+          </p></dd><dt><span class="term"><tt>parent</tt></span></dt><dd><p>
+            The node which most immediately contains the context
+            node. The root node has no parent.
+            The parent of the root element and comments and processing instructions
+            in the document&#8217;s prolog and epilog is the root
+            node. The parent of every other node is an element
+            node. The parent of a namespace or attribute node is the 
+            element node that contains it, even though namespaces
+            and attributes aren&#8217;t children of their parent
+            elements.
+          </p></dd><dt><span class="term"><tt>ancestor</tt></span></dt><dd><p>
+            The root node and all element nodes that contain
+            the context node.
+          </p></dd><dt><span class="term"><tt>ancestor-or-self</tt></span></dt><dd><p>
+            All ancestors of the context node and the context
+            node itself.
+          </p></dd><dt><span class="term"><tt>preceding</tt></span></dt><dd><p>
+            All non-attribute, non-namespace 
+            nodes which come before the context node in
+            document order and which are not ancestors of the context
+            node
+          </p></dd><dt><span class="term"><tt>preceding-sibling</tt></span></dt><dd><p>
+            All non-attribute, non-namespace 
+            nodes which come before the context node in
+            document order and have the same parent node
+          </p></dd><dt><span class="term"><tt>following</tt></span></dt><dd><p>
+            All non-attribute, non-namespace nodes which follow the context node in
+            document order and which are not descendants of the
+            context node.
+          </p></dd><dt><span class="term"><tt>following-sibling</tt></span></dt><dd><p>
+            All non-attribute, non-namespace 
+            nodes which follow the context node in
+            document order and have the same parent node
+          </p></dd><dt><span class="term"><tt>attribute</tt></span></dt><dd><p>
+            Attributes of the context node.
+            This axis is empty if the context node is not an element
+            node.
+          </p></dd><dt><span class="term"><tt>namespace</tt></span></dt><dd><p>
+            Namespaces in scope on the context node.
+            This axis is empty if the context node is not an element
+            node.
+          </p></dd></dl></div><p>
+      For example, consider the slightly more complex 
+      SOAP request document in
+      <a href="ch16s03.html#MultiSOAP.xml" title="Example&nbsp;16.4.&nbsp;A SOAP request document">Example&nbsp;16.4</a>. Let us pick the
+      middle <tt>Quote</tt> element (the one whose
+      symbol is AAPL) as the context node 
+      and move along each of the axes from there.
+    </p><div class="example"><a name="MultiSOAP.xml"></a><p class="title"><b>Example&nbsp;16.4.&nbsp;A SOAP request document</b></p><pre class="programlisting">&lt;?xml version="1.0"?&gt;
+&lt;!-- XPath axes example --&gt;
+&lt;SOAP-ENV:Envelope
+  xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" 
+  xmlns="http://namespaces.cafeconleche.org/xmljava/ch2/"&gt;
+  &lt;SOAP-ENV:Body&gt;
+    &lt;Quote symbol="RHAT"&gt;
+      &lt;Price currency="USD"&gt;7.02&lt;/Price&gt;
+    &lt;/Quote&gt;
+    &lt;Quote symbol="AAPL"&gt;
+      &lt;Price currency="USD"&gt;24.85&lt;/Price&gt;
+    &lt;/Quote&gt;
+    &lt;Quote symbol="BAC"&gt;
+      &lt;Price currency="USD"&gt;68.59&lt;/Price&gt;
+    &lt;/Quote&gt;
+  &lt;/SOAP-ENV:Body&gt;
+&lt;/SOAP-ENV:Envelope&gt;
+</pre></div><div class="itemizedlist"><ul type="disc"><li><p>
+        The self axis contains one node, the middle 
+        <tt>Quote</tt> element that was chosen as the context node.
+          </p></li><li><p>
+        The child axis contains three nodes:
+        a text node containing white space, an element node with
+        the local name Price, and another text node containing only
+        white space, in that order. (All the white space counts, though there
+        are ways to get rid of it or ignore it if you want to, as you&#8217;ll see
+        later.)
+          </p></li><li><p>
+        The descendant axis contains four nodes:
+        a text node containing white space, an element node with
+        the local name Price, 
+        a text node with the value "24.85", 
+        and another text node containing only
+        white space, in that order.
+          </p></li><li><p>
+        The descendant-or-self axis contains five nodes:
+        an element node with the local name Quote,
+        a text node containing white space, an element node with
+        the local name Price, 
+        a text node with the value "24.85", 
+        and another text node containing only
+        white space, in that order.
+          </p></li><li><p>
+        The parent axis contains a single element node with the local
+        name Body. 
+          </p></li><li><p>
+        The ancestor axis contains three nodes: 
+          an element node with the local name Body, an element node
+          with the local name Envelope, and the root node in that
+          order.
+          </p></li><li><p>
+   The ancestor-or-self axis contains four nodes: an element node
+   with the local name Quote, an element node with the local name Body, an element node
+          with the local name Envelope, and the root node in that
+          order.
+          </p></li><li><p>
+        The preceding axis contains eight nodes:
+        a text node containing only white space, 
+        another text node containing only white space, 
+        a text node containing the string 7.02, 
+        an element node named Price,
+        another text node containing only white space, 
+        an element node named Quote,
+        a text node containing only white space,
+        a comment node  
+        in that order.
+        Note that ancestor elements and attribute and namespace nodes
+        are not counted along
+        the preceding axis. 
+          </p></li><li><p>
+        The preceding-sibling axis  contains three nodes:
+        a text node containing white space, an element node with
+        the name Quote and the symbol RHAT, and another text node containing only
+        white space.
+          </p></li><li><p>
+        The following axis contains eight nodes:
+        a text node containing only white space,
+a <tt>Quote</tt> element node,
+        a text node containing only white space,
+a <tt>Price</tt> element node,
+a text node containing the string 68.59,
+and three text nodes containing only white space. 
+Descendants are not included in the following axis.
+          </p></li><li><p>
+        The following-sibling axis contains
+           three nodes:
+        a text node containing white space, an element node with
+        the name Quote and the symbol BAC, and another text node containing only
+        white space.
+          </p></li><li><p>
+        The attribute axis contains one attribute node with the 
+        name symbol and the value AAPL.
+          </p></li><li><p>
+
+        The namespace axis contains two namespace nodes,
+        one with the name SOAP-ENV and the
+        value http://schemas.xmlsoap.org/soap/envelope/ and the
+        other with an empty string name and the value 
+        http://namespaces.cafeconleche.org/xmljava/ch2/.
+          </p></li></ul></div><p>
+        Generally these sets would be further subsetted via a node
+        test. For example, if the location step 
+        <tt>preceding::Quote</tt> were applied to this context
+        node, then the resulting node-set would only contain
+        a single node, 
+        an element node named Quote.
+      </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e27660"></a>Node tests</h3></div></div><p>
+      The axis chooses the direction to move from the context
+      node. The node test determines what kinds of nodes will be
+      selected along that axis. The node tests are:
+    </p><div class="variablelist"><dl><dt><span class="term"><tt><i><tt>Name</tt></i></tt></span></dt><dd><p>
+            Any element or attribute with the specified name.
+            If the name is prefixed, then the local name and
+            namespace URI are compared, not the qualified names.
+            If the name is not prefixed, then the element must be
+            in 
+            no namespace at all. An unprefixed name in an XPath expression never matches 
+            an element in a namespace, even in the default
+            namespace. When using XPath to search for an
+            unprefixed element like <tt>Quote</tt> that is in a namespace,
+            you have to use a prefixed name instead such as
+            stk:Quote. Exactly how the prefix is mapped to the
+            namespace depends on the environment in which the
+            XPath expression is used. 
+          </p></dd><dt><span class="term"><tt>*</tt></span></dt><dd><p>
+            Along the attribute axis the asterisk matches all attribute nodes.            
+            Along the namespace axis the asterisk matches all namespace nodes.
+            Along all other axes, this matches all element nodes.
+          </p></dd><dt><span class="term"><tt><i><tt>prefix</tt></i>:*</tt></span></dt><dd><p>
+            Any element or attribute in the namespace mapped to 
+            the prefix.
+          </p></dd><dt><span class="term"><tt>comment()</tt></span></dt><dd><p>
+            Any comment
+          </p></dd><dt><span class="term"><tt>text()</tt></span></dt><dd><p>
+            Any text node
+          </p></dd><dt><span class="term"><tt>node()</tt></span></dt><dd><p>
+            Any node
+          </p></dd><dt><span class="term"><tt>processing-instruction()</tt></span></dt><dd><p>
+            Any processing instruction
+          </p></dd><dt><span class="term"><tt>processing-instruction('<i><tt>target</tt></i>')</tt></span></dt><dd><p>
+            Any processing instruction with the specified target
+          </p></dd></dl></div><p>
+      For example, once again considering the  
+      SOAP request document in
+      <a href="ch16s03.html#MultiSOAP.xml" title="Example&nbsp;16.4.&nbsp;A SOAP request document">Example&nbsp;16.4</a> and choosing the
+      AAPL <tt>Quote</tt> element 
+      as the context node, consider these location steps:
+    </p><div class="itemizedlist"><ul type="disc"><li><p>
+        <tt>self::*</tt> selects one node, the middle 
+        <tt>Quote</tt> element that serves as the context node.
+          </p></li><li><p>
+        <tt>child::*</tt> selects one node, an element node with
+        the name Price and the value 24.85.
+          </p></li><li><p>
+        <tt>child::Price</tt> selects no nodes because
+        there are no <tt>Price</tt> elements in this
+        document that are not in any namespace.
+          </p></li><li><p>
+        <tt>child::stk:Price</tt> selects one node, an element node with
+        the name Price and the value 24.85, provided that the prefix  <tt>stk</tt> is bound 
+        to the 
+        <tt>http://namespaces.cafeconleche.org/xmljava/ch2/</tt>
+        namespace URI
+        in the
+        local
+        environment.
+          </p></li><li><p>
+        <tt>descendant::text()</tt> selects three nodes:
+        a text node containing white space, 
+        a text node with the value "24.85", 
+        and another text node containing only
+        white space.
+          </p></li><li><p>
+        <tt>descendant-or-self::*</tt> selects two nodes:
+        an element node with the name Quote
+        and an element node with
+        the name Price.
+          </p></li><li><p>
+        <tt>parent::SOAP-ENV:Envelope</tt> selects an
+        empty node set because the parent of the context node is
+        not <tt>SOAP-ENV:Envelope</tt>.
+          </p></li><li><p>
+         <tt>ancestor::SOAP-ENV:Envelope</tt>  selects one node,
+         the document element, assuming that the
+        local environment maps the prefix  <tt>SOAP-ENV</tt>
+        to the namespace URI 
+        <tt>http://schemas.xmlsoap.org/soap/envelope/</tt>.
+          </p></li><li><p>
+         <tt>ancestor::SOAP-ENV:*</tt>  selects two nodes,
+         the <tt>SOAP-ENV:Body</tt> element
+         and  the <tt>SOAP-ENV:Envelope</tt> element,
+         again assuming that the prefixes are properly mapped.
+          </p></li><li><p>
+   <tt>ancestor-or-self::*</tt> selects three nodes: an element node
+   with the local name Quote, an element node with the local name Body, 
+   and an element node
+          with the local name Envelope.
+          </p></li><li><p>
+        <tt>preceding::comment()</tt> selects the
+        single comment in the prolog.
+          </p></li><li><p>
+        <tt>preceding-sibling::node()</tt>  selects three nodes:
+        a text node containing white space, an element node with
+        the name Quote and the symbol RHAT, and another text node containing only
+        white space, in that order.
+          </p></li><li><p>
+
+        <tt>following::*</tt> selects two nodes:
+a <tt>Quote</tt> element node and 
+a <tt>Price</tt> element node.
+          </p></li><li><p>
+        <tt>following-sibling::processing-instruction()</tt> 
+        returns an empty node-set.
+          </p></li><li><p>
+        <tt>attribute::symbol</tt> selects 
+        the attribute node with the 
+        name symbol and the value AAPL.
+          </p></li><li><p>
+         <tt>namespace::SOAP-ENV</tt> returns a node-set containing
+         a namespace node with name SOAP-ENV and the
+        value http://schemas.xmlsoap.org/soap/envelope/.
+          </p></li><li><p>
+         <tt>namespace::*</tt> returns a node-set containing
+         two namespace nodes, one with the name SOAP-ENV and the
+        value http://schemas.xmlsoap.org/soap/envelope/ and the other with an
+        empty string name and the value http://namespaces.cafeconleche.org/xmljava/ch2/.
+          </p></li></ul></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e27874"></a>Predicates</h3></div></div><p>
+      Each location step can have zero or more predicates that
+      further filter the node-set. A predicate is an XPath
+      expression
+      in square brackets that is evaluated for each node selected
+      by the location step. If the predicate is true,
+      then the node is kept in the node-set. If the predicate is false,
+      then the node is removed from the node-set.
+      For example, given  
+      the same SOAP request document,
+      suppose the context node is now the <tt>SOAP-ENV:Body</tt>
+      element and that the <tt>stk</tt> prefix is mapped
+      to the <tt>http://namespaces.cafeconleche.org/xmljava/ch2/</tt>
+      namespace URI. 
+      This location step returns a node-set
+      containing all the <tt>Quote</tt> elements
+      whose price is less than ten:
+    </p><div class="informalexample"><pre class="programlisting">child::stk:Quote[child::stk:Price &lt; 10]</pre></div><p>
+      If this XPath expression were embedded in an XML document,
+      you might need to escape the less than sign as 
+      <tt>&amp;lt;</tt>. However, this is not necessary
+      when using XPath expressions in Java programs.
+    </p><p>
+      There can be more than one predicate. For example,
+      this location step checks both that the 
+      absolute price is greater than ten and that the 
+      currency is U.S. dollars:
+    </p><div class="informalexample"><pre class="programlisting">child::stk:Quote[child::stk:Price &gt; 10][attribute::currency = "USD"]</pre></div><p>
+      If the
+      predicate returns a number, then the node is kept in the
+      set only if the number is equal to the position of the
+      context node in the context node list.
+      For example, this location step selects the third 
+      <tt>Quote</tt> child of the context node but not
+      the first or second:
+    </p><div class="informalexample"><pre class="programlisting">child::stk:Quote[3]</pre></div><p>
+      If the context node has fewer than three
+      <tt>Quote</tt> children, then this returns an
+      empty node-set.
+    </p><p>
+       If the predicate returns a string, then the context
+      node is deleted from the set if the string is empty and
+      kept otherwise.
+      For example, this location step selects those 
+      <tt>Quote</tt> elements whose
+      <tt>symbol</tt> attribute has a value:
+    </p><div class="informalexample"><pre class="programlisting">child::stk:Quote[string(attribute::symbol)]</pre></div><p>
+      This is not quite the same as selecting the
+      <tt>Quote</tt> elements that have a
+      <tt>symbol</tt> attribute. This 
+      <tt>Quote</tt>
+      element would not be matched by the above location step:
+    </p><div class="informalexample"><pre class="programlisting">    &lt;Quote symbol=""&gt;
+      &lt;Price currency="USD"&gt;17.32&lt;/Price&gt;
+    &lt;/Quote&gt;</pre></div><p>
+     If the predicate
+      returns a node-set,
+      then the source node is kept in the returned set only if the predicate node-set
+      is non-empty. It is deleted otherwise.
+       For example, this location step finds those <tt>Quote</tt> children
+       of the context node that have at least
+      one <tt>Price</tt> child:
+    </p><div class="informalexample"><pre class="programlisting">child::stk:Quote[child::stk:Price]</pre></div><p>
+     This location step finds those <tt>Quote</tt> children
+       of the context node that have at least
+      one <tt>Price</tt> child and at least one 
+      <tt>Quantity</tt> child:
+    </p><div class="informalexample"><pre class="programlisting">child::stk:Quote[child::stk:Price][child::stk:Quantity]</pre></div><p>
+     When applied to the <tt>SOAP-ENV:Body</tt> element
+     in
+     <a href="ch16s03.html#MultiSOAP.xml" title="Example&nbsp;16.4.&nbsp;A SOAP request document">Example&nbsp;16.4</a>, it returns an empty
+     node-set because none of its <tt>Quote</tt> children
+     have a <tt>Quantity</tt> child.
+    </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e27980"></a>Compound Location Paths</h3></div></div><p>
+       The forward slash (<tt>/</tt>) combines
+       location steps into a location path. The node-set selected
+       by the first step becomes the context node-set for the
+       second step. The node-set identified by the second step
+       becomes the context node-set for the third step, and so
+       on.
+     </p><p>
+       Continuing with the same example in <a href="ch16s03.html#MultiSOAP.xml" title="Example&nbsp;16.4.&nbsp;A SOAP request document">Example&nbsp;16.4</a> 
+       and still using 
+       the second <tt>Quote</tt> element as the context
+       node,
+       consider these location paths (Here I assume that the 
+       environment for the XPath expressions maps the prefix 
+       <tt>stk</tt> to 
+       the namespace URI 
+       <tt>http://namespaces.cafeconleche.org/xmljava/ch2/</tt>
+       and the prefix 
+       <tt>SOAP-ENV</tt> to 
+       the namespace URI 
+       <tt>http://schemas.xmlsoap.org/soap/envelope/</tt>):
+     </p><div class="variablelist"><dl><dt><span class="term"><tt>child::stk:Price/attribute::currency</tt></span></dt><dd><p>
+            This selects the <tt>currency</tt> attribute node
+            <tt>currency="USD"</tt>
+          </p></dd><dt><span class="term"><tt>preceding-sibling::stk:Quote/descendant::*</tt></span></dt><dd><p>
+            This selects one node, the first
+            <tt>value</tt> element in the document.
+          </p></dd><dt><span class="term"><tt>parent::*/child::stk:Quote</tt></span></dt><dd><p>
+            This selects all three <tt>Quote</tt> element
+            nodes in the document, including the context node
+            itself.
+          </p></dd><dt><span class="term"><tt>parent::*/child::stk:Quote[child::stk:Price &gt; 20]</tt></span></dt><dd><p>
+            This selects the AAPL and the BAC <tt>Quote</tt> element
+            nodes, but not the RHAT <tt>Quote</tt> element
+            node.
+          </p></dd><dt><span class="term"><tt>parent::*/descendant::stk:Price</tt></span></dt><dd><p>
+            This selects all three <tt>Price</tt> element
+            nodes in the document.
+          </p></dd><dt><span class="term"><tt>parent::*/child::stk:Quote[attribute::symbol='BAC']/child::stk:Price</tt></span></dt><dd><p>
+            This selects the <tt>Price</tt> element node
+            of the BAC <tt>Quote</tt> element.
+          </p></dd><dt><span class="term"><tt>parent::*/descendant::stk:Price/attribute::currency</tt></span></dt><dd><p>
+            This selects all three <tt>currency</tt>
+            attribute
+            nodes in the document.
+          </p></dd></dl></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e28087"></a>Absolute Location Paths</h3></div></div><p>
+       So far all the location paths have been relative to a
+       specified context node. To date, I&#8217;ve just identified that
+       context node in prose. When we begin discussing
+       XPath APIs, you&#8217;ll see that most methods for evaluating
+       an XPath expression have a context node  argument.
+       However, not all location paths require context nodes.
+       In particular, a location path that begins with 
+       a forward slash (<tt>/</tt>) is an absolute path that 
+       starts at the root
+       node of the document (not the root element but the root
+       node).
+     </p><p>
+       Continuing with the same example in <a href="ch16s03.html#MultiSOAP.xml" title="Example&nbsp;16.4.&nbsp;A SOAP request document">Example&nbsp;16.4</a>
+       and once again assuming that
+       the 
+       environment binds the prefix 
+       <tt>stk</tt> to 
+       the namespace URI <tt>http://namespaces.cafeconleche.org/xmljava/ch2/</tt>
+       and the prefix 
+       <tt>SOAP-ENV</tt> to 
+       the namespace URI 
+       <tt>http://schemas.xmlsoap.org/soap/envelope/</tt>,
+       consider these location paths:
+     </p><div class="variablelist"><dl><dt><span class="term"><tt>/child::SOAP-ENV:Envelope/child::SOAP-ENV:Body/child::stk:Quote/child::stk:Price</tt></span></dt><dd><p>
+            This selects all three <tt>Price</tt> element nodes.
+          </p></dd><dt><span class="term"><tt>/child::SOAP-ENV:Envelope/child::SOAP-ENV:Body</tt></span></dt><dd><p>
+            This selects the single <tt>SOAP-ENV:Body</tt> element node.
+          </p></dd><dt><span class="term"><tt>/descendant::stk:Price</tt></span></dt><dd><p>
+            This selects all three <tt>Price</tt> element
+            nodes in the document.
+          </p></dd><dt><span class="term"><tt>/descendant::stk:Quote[child::stk:Price &gt; 20]</tt></span></dt><dd><p>
+            This selects the  <tt>Quote</tt> element
+            nodes whose <tt>Price</tt> is greater than 20; i.e.
+            it selects the AAPL and the BAC <tt>Quote</tt> element
+            nodes, but not the RHAT <tt>Quote</tt> element
+            node.
+          </p></dd><dt><span class="term"><tt>/child::SOAP-ENV:Body</tt></span></dt><dd><p>
+            This returns an empty node-set because the root element of the document 
+            is <tt>SOAP-ENV:Envelope</tt>, not <tt>SOAP-ENV:Body</tt>.
+          </p></dd><dt><span class="term"><tt>/descendant::*/attribute:*</tt></span></dt><dd><p>
+            This returns a node-set containing all attribute nodes
+            in the document.
+          </p></dd><dt><span class="term"><tt>/descendant-or-self::node()</tt></span></dt><dd><p>
+            This returns a node-set containing all non-attribute,
+            non-namespace nodes
+            in the document.
+          </p></dd><dt><span class="term"><tt>/</tt></span></dt><dd><p>
+            This selects the root node of the document.
+          </p></dd></dl></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e28195"></a>Abbreviated Location paths</h3></div></div><p>
+       XPath location paths can use the abbreviations listed
+       in <a href="ch16s03.html#XPathAbbreviations" title="Table&nbsp;16.2.&nbsp;Abbreviated syntax for XPath">Table&nbsp;16.2</a>
+       in location paths. The semantics are the same. The syntax
+       is just a little easier to type.
+     </p><div class="table"><a name="XPathAbbreviations"></a><p class="title"><b>Table&nbsp;16.2.&nbsp;Abbreviated syntax for XPath</b></p><table summary="Abbreviated syntax for XPath" border="1"><colgroup><col><col></colgroup><thead><tr><th>Abbreviation</th><th>Expanded form </th></tr></thead><tbody><tr><td><tt><i><tt>Name</tt></i></tt></td><td><tt>child::<i><tt>Name</tt></i></tt></td></tr><tr><td><tt>@<i><tt>Name</tt></i></tt></td><td><tt>attribute::<i><tt>Name</tt></i></tt></td></tr><tr><td><tt>//</tt></td><td><tt>/descendant-or-self::node()/</tt></td></tr><tr><td><tt>.</tt></td><td><tt>self::node()</tt></td></tr><tr><td><tt>..</tt></td><td><tt>parent::node()</tt></td></tr></tbody></table></div><p>
+       Using the abbreviated forms, the previous batch of relative XPaths
+       selecting from <a href="ch16s03.html#MultiSOAP.xml" title="Example&nbsp;16.4.&nbsp;A SOAP request document">Example&nbsp;16.4</a> 
+        using 
+       the second <tt>Quote</tt> element as the context
+       node can be rewritten like this:
+     </p><div class="variablelist"><dl><dt><span class="term"><tt>stk:Price/@currency</tt></span></dt><dd><p>
+            This selects the <tt>currency</tt> attribute node
+            <tt>currency="USD"</tt>
+          </p></dd><dt><span class="term"><tt>preceding-sibling::stk:Quote//*</tt></span></dt><dd><p>
+          This isn&#8217;t an exact abbreviation for
+            <tt>preceding-sibling::stk:Quote/descendant::*</tt>
+            (<tt>//</tt> expands to <tt>/descendant-or-self::node()/</tt>,
+            not <tt>/descendant::</tt>)
+            but the node-set selected is the same, the first
+            <tt>Price</tt> element in the document.
+          </p></dd><dt><span class="term"><tt>../stk:Quote</tt></span></dt><dd><p>
+            This selects all three <tt>Quote</tt> element
+            nodes in the document, including the context node
+            itself.
+          </p></dd><dt><span class="term"><tt>..//stk:Price</tt></span></dt><dd><p>
+            This also 
+            isn&#8217;t an exact abbreviation for the original
+            expression, but again it selects the same node-set,
+            which in this case contains
+            all three <tt>Price</tt> element
+            nodes in the document.
+          </p></dd><dt><span class="term"><tt>../stk:Quote[stk:Price &gt; 20]</tt></span></dt><dd><p>
+            This selects the AAPL and the BAC <tt>Quote</tt> element
+            nodes, but not the RHAT <tt>Quote</tt> element
+            node.
+          </p></dd><dt><span class="term"><tt>../stk:Quote[@symbol='BAC']/stk:Price</tt></span></dt><dd><p>
+            This selects the <tt>Price</tt> child element node
+            of the BAC <tt>Quote</tt> element.
+          </p></dd><dt><span class="term"><tt>..//stk:Price/@currency</tt></span></dt><dd><p>
+            This too 
+            isn&#8217;t an exact abbreviation for the original
+            expression, but once
+            again it selects the same node-set containing 
+            all three <tt>currency</tt>
+            attribute
+            nodes in the document.
+          </p></dd></dl></div><p>
+    Absolute location paths can also be abbreviated.
+    In this case <tt>//</tt> is especially convenient
+    because at the start of a location path
+    it produces a node-set containing every non-attribute,
+    non-namespace node in the document. However, you should be
+    warned that it is quite inefficient in most XPath processors.
+    If it&#8217;s possible to rewrite an expression so that it 
+    does not use 
+    <tt>//</tt> (or the unabbreviated 
+    <tt>descendant</tt> or
+    <tt>descendant-or-self</tt> axes), you probably should.
+  </p><p>
+       Here are some example of 
+       abbreviated absolute location paths that apply to
+       <a href="ch16s03.html#MultiSOAP.xml" title="Example&nbsp;16.4.&nbsp;A SOAP request document">Example&nbsp;16.4</a>:
+     </p><div class="variablelist"><dl><dt><span class="term"><tt>/SOAP-ENV:Envelope/SOAP-ENV:Body/stk:Quote</tt></span></dt><dd><p>
+            This selects all three 
+            <tt>Quote</tt> element nodes.
+          </p></dd><dt><span class="term"><tt>/SOAP-ENV:Envelope/SOAP-ENV:Body</tt></span></dt><dd><p>
+            This selects the single <tt>SOAP-ENV:Body</tt> element node.
+          </p></dd><dt><span class="term"><tt>//stk:Price</tt></span></dt><dd><p>
+            This selects all three <tt>Price</tt> element
+            nodes in the document.
+          </p></dd><dt><span class="term"><tt>//stk:Quote[stk:Price &gt; 20]</tt></span></dt><dd><p>
+            This selects the  <tt>Quote</tt> element
+            nodes whose <tt>Price</tt> is greater than 20; i.e.
+            it selects the AAPL and the BAC <tt>Quote</tt> element
+            nodes, but not the RHAT <tt>Quote</tt> element
+            node.
+          </p></dd><dt><span class="term"><tt>/stk:Price</tt></span></dt><dd><p>
+            This returns an empty node-set because the root element of the document 
+            is <tt>SOAP-ENV:Envelope</tt>, not <tt>Price</tt>.
+          </p></dd><dt><span class="term"><tt>//@*</tt></span></dt><dd><p>
+            This returns a node-set containing all attribute nodes
+            in the document.
+          </p></dd><dt><span class="term"><tt>//.</tt></span></dt><dd><p>
+            This returns a node-set containing all non-attribute,
+            non-namespace nodes
+            in the document.
+          </p></dd></dl></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e28451"></a>Combining location paths</h3></div></div><p>
+       Occasionally it&#8217;s useful to select a node-set that&#8217;s built
+       from multiple, more or less unrelated parts of an XML document.
+       For example, you might want to select all the <tt>Price</tt>
+       elements and all the <tt>Quote</tt> elements in a document.
+            <tt>//stk:Price</tt> selects all the prices. 
+       <tt>//stk:Quote</tt> selects all the quotes.
+       You can use the vertical bar, <tt>|</tt>, to
+       combine these two node-sets into one. 
+      </p><div class="variablelist"><dl><dt><span class="term"><tt>//stk:Price | //stk:Quote</tt></span></dt><dd><p>
+              selects all the
+       <tt>Price</tt> element nodes and all the 
+       <tt>Quote</tt> element nodes in
+       the document.
+          </p></dd><dt><span class="term"><tt>//@currency | //stk:Price</tt></span></dt><dd><p>
+                    selects all the <tt>currency</tt> attribute nodes
+       and all the <tt>Price</tt> element nodes.
+
+          </p></dd><dt><span class="term"><tt>//stk:Quote/stk:Price | //stk:Quote/stk:Quantity</tt></span></dt><dd><p>
+       selects all the <tt>Price</tt> and
+       <tt>Quantity</tt> child elements of all
+       <tt>Quote</tt> elements.
+          </p></dd></dl></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch16s02.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch16.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch16s04.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">The XPath Data Model&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Expressions</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+June 07,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

@@ -1,0 +1,71 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <meta name="description" content="Slide used in Elliotte Rusty Harold's &#xA;  StAX seminar at Software Development 2004 West, Thursday, March 17, 2004"><title>Event Codes</title><script language="JAVASCRIPT"><!-- 
+              var isnav
+              
+              if (parseInt(navigator.appVersion) >= 4) {
+                if (navigator.appName == "Netscape") {
+                  isNav = true
+                  document.captureEvents(Event.KEYPRESS)
+                }
+                else {
+                  isNav = false
+                }
+              }
+              document.onkeypress = flipslide
+
+              function flipslide(evt) {
+                var key = isNav ? evt.which : window.event.keyCode
+                if (key == 32 || key == 29 || key == 30 || key == 11) {
+                  
+                    location.href="12.html"
+                  
+                }
+                else if (key == 28 || key == 31 || key == 12) {
+                  
+                    location.href="10.html"
+                  
+                }
+                else if (key == 1) {
+                  location.href="index.html";
+                }
+              } //  --></script></head><body>
+  <h1 align="center">Event Codes</h1>
+
+  <ul xmlns:xinclude="http://www.w3.org/2001/XInclude">
+    <li><p>The <code>XMLStreamConstants</code> interface defines the 
+    <code>int</code> event codes returned by <code>next()</code>
+    to tell you what kind of node the parser read.</p></li>
+    <li><p>17 event codes:
+    <ul>
+    <li><p><code>XMLStreamConstants.START_DOCUMENT</code></p></li>
+    <li><p><code>XMLStreamConstants.END_DOCUMENT</code></p></li>
+    <li><p><code>XMLStreamConstants.START_ENTITY</code></p></li>
+    <li><p><code>XMLStreamConstants.END_ENTITY</code></p></li>
+    <li><p><code>XMLStreamConstants.START_ELEMENT</code></p></li>
+    <li><p><code>XMLStreamConstants.END_ELEMENT</code></p></li>
+    <li><p><code>XMLStreamConstants.ATTRIBUTE</code></p></li>
+    <li><p><code>XMLStreamConstants.CHARACTERS</code></p></li>
+    <li><p><code>XMLStreamConstants.CDATA</code></p></li>
+    <li><p><code>XMLStreamConstants.SPACE</code></p></li>
+    <li><p><code>XMLStreamConstants.PROCESSING_INSTRUCTION</code></p></li>
+    <li><p><code>XMLStreamConstants.COMMENT</code></p></li>
+    <li><p><code>XMLStreamConstants.ENTITY_REFERENCE</code></p></li>
+    <li><p><code>XMLStreamConstants.NOTATION_DECLARATION</code></p></li>
+    <li><p><code>XMLStreamConstants.ENTITY_DECLARATION</code></p></li>
+    <li><p><code>XMLStreamConstants.NAMESPACE</code></p></li>
+    <li><p><code>XMLStreamConstants.DTD</code></p></li>
+    </ul>
+    </p></li>
+    <li><p>Depending on what the event is, different methods are available on the  <code>XMLStreamReader</code></p></li>
+  </ul>
+  
+  
+  
+<hr><div align="center"><A HREF="10.html">Previous</A> 
+                 | <A HREF="12.html">Next</A> 
+                 | <A HREF="index.html">Top</A> 
+                 | <A HREF="http://www.cafeconleche.org/">Cafe con Leche</A></div><hr><div style="font-size: x-small">
+              Copyright 2000-2004 Elliotte Rusty Harold<br><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a><br>
+              Last Modified 
+              January 7, 2004</div></body></html>

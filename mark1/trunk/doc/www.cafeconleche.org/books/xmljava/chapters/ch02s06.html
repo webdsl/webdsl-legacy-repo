@@ -1,0 +1,901 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>SOAP</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="previous" href="ch02s05.html" title="XML-RPC"><link rel="next" href="ch02s07.html" title="Custom Protocols"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"><link rel="subsection" href="ch02s06.html#d0e3726" title="A SOAP Example"><link rel="subsection" href="ch02s06.html#d0e3782" title="Posting SOAP documents"><link rel="subsection" href="ch02s06.html#d0e3825" title="Faults"><link rel="subsection" href="ch02s06.html#d0e3977" title="Encoding Styles"><link rel="subsection" href="ch02s06.html#d0e4662" title="SOAP Headers"><link rel="subsection" href="ch02s06.html#d0e4767" title="SOAP Limitations"><link rel="subsection" href="ch02s06.html#d0e4780" title="Validating SOAP"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">SOAP</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch02s05.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch02s07.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e3709"></a>SOAP</h2></div></div><p>
+    XML-RPC was in large part invented by a single person who really
+    didn&#8217;t know a lot about XML. Consequently he made many very
+    questionable choices; and since XML-RPC did not go through any sort
+    of standardization process, there was nobody to fix his mistakes.
+    For instance, in XML-RPC the string type is defined as an
+    &#8220;ASCII string&#8221;. Now frankly, this is just plain dumb,
+    as well as not a little ethnocentric. XML documents are Unicode, not
+    ASCII. Modern programming languages like Java can handle Unicode
+    without any trouble. Indeed a language that can&#8217;t process Unicode
+    really isn&#8217;t suitable for processing XML. There is no good reason to
+    limit XML-RPC strings to ASCII. I certainly wouldn&#8217;t say you have to
+    use non-ASCII characters in your XML-RPC documents, but if you want
+    to they should certainly be allowed. However, the inventor
+    of XML-RPC also happened to be the vendor of an 
+    ASCII-limited database, so
+    he inserted the ASCII-only constraint into XML-RPC so he wouldn&#8217;t have to
+    upgrade his database to support Unicode.
+  </p><p>
+    There are a lot of other issues like that with
+    XML-RPC, some equally obvious, some more subtle.
+    Nonetheless, clearly XML-RPC was a good idea in principle
+    if not execution. 
+    Consequently work began on a more serious effort to enable 
+    remote procedure calls by passing XML documents over HTTP.
+    This effort is known as the
+    Simple Object Access Protocol, or just SOAP.
+    Whereas XML-RPC was a quick hack by one developer, 
+    SOAP has been developed by a committee of XML experts
+    from various companies including IBM and Microsoft.
+  </p><p>
+    You&#8217;ve undoubtedly heard the old saw about a camel being a horse
+    designed by committee. However, the fact is a camel is actually
+    superbly adapted to its environment. SOAP is a much more robust
+    protocol than XML-RPC. It is much better designed from an XML
+    standpoint as well. It takes advantage of numerous features of XML
+    such as attributes, Unicode, and namespaces that XML-RPC
+    either ignores or actively opposes. XML-RPC is adequate for simple
+    tasks. However, if you get serious with it you rapidly hit a wall.
+    SOAP can take you a lot farther. Although there are some basic
+    services available using XML-RPC, the future clearly lies with SOAP.
+  </p><p>
+ The biggest conceptual difference between SOAP and XML-RPC is that
+ XML-RPC exchanges a limited number of parameters of six fixed types,
+ plus structs and arrays. However, SOAP allows you to send the server 
+ arbitrary XML elements. This is a much more flexible approach.
+ </p><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e3726"></a>A SOAP Example</h3></div></div><p>
+Let&#8217;s investigate how the stock quote example would likely be
+implemented in SOAP. Encoded as a SOAP document, the request document looks
+quite different, but the same information is present as demonstrated
+in  <a href="ch02s06.html#quote-soap.xml" title="Example&nbsp;2.15.&nbsp;A SOAP document requesting the current stock price of Red Hat">Example&nbsp;2.15</a>.
+  </p><div class="example"><a name="quote-soap.xml"></a><p class="title"><b>Example&nbsp;2.15.&nbsp;A SOAP document requesting the current stock price of Red Hat</b></p><pre class="programlisting">&lt;?xml version="1.0"?&gt;
+&lt;SOAP-ENV:Envelope
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" &gt;
+  &lt;SOAP-ENV:Body&gt;
+    &lt;getQuote xmlns="http://namespaces.cafeconleche.org/xmljava/ch2/"&gt;
+      &lt;symbol&gt;RHAT&lt;/symbol&gt;
+    &lt;/getQuote&gt;
+  &lt;/SOAP-ENV:Body&gt;
+&lt;/SOAP-ENV:Envelope&gt;</pre></div><p>
+  The most obvious difference between this document and the XML-RPC
+  equivalent in <a href="ch02s05.html#quote-xml-rpc.xml" title="Example&nbsp;2.6.&nbsp;An XML-RPC request document">Example&nbsp;2.6</a> is the use of
+  namespaces. Namespaces allow the method request to be an arbitrary XML   
+  element. This goes way beyond passing
+  just a method name and some argument values. SOAP permits much more
+  complex XML messages than does XML-RPC.
+  </p><p>
+  The server&#8217;s response is equally flexible.
+   <a href="ch02s06.html#quote-soap-response.xml" title="Example&nbsp;2.16.&nbsp;A SOAP Response">Example&nbsp;2.16</a> demonstrates:
+  </p><div class="example"><a name="quote-soap-response.xml"></a><p class="title"><b>Example&nbsp;2.16.&nbsp;A SOAP Response</b></p><pre class="programlisting">&lt;?xml version="1.0"?&gt;
+&lt;SOAP-ENV:Envelope
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"&gt;
+  &lt;SOAP-ENV:Body&gt;
+    &lt;Quote xmlns="http://namespaces.cafeconleche.org/xmljava/ch2/"&gt;
+      &lt;Price&gt;4.12&lt;/Price&gt;
+    &lt;/Quote&gt;
+  &lt;/SOAP-ENV:Body&gt;
+&lt;/SOAP-ENV:Envelope&gt;</pre></div><p>
+These two examples are minimal SOAP documents.
+The root element of every SOAP document is 
+<tt>Envelope</tt> which must be in the 
+<tt>http://schemas.xmlsoap.org/soap/envelope/</tt>
+ namespace, at least in SOAP 1.1.
+(The URL will change in SOAP 1.2.)
+Normally a prefix is used, and as always you 
+can pick any prefix as long as the URI stays the same.
+In this chapter, I always assume that the prefix <tt>SOAP-ENV</tt>
+is mapped to that namespace URI. (This is the prefix the 
+SOAP 1.1 specification uses.)
+</p><p>
+Each <tt>SOAP-ENV:Envelope</tt> element contains exactly one 
+<tt>SOAP-ENV:Body</tt> element. The content of this element is 
+one or more XML elements specific to the service.
+These examples use <tt>Quote</tt>, <tt>getQuote</tt>, 
+and <tt>Price</tt> elements in the
+<tt>http://namespaces.cafeconleche.org/xmljava/ch2/</tt> namespace.
+Other services will use other elements from other namespaces.
+It&#8217;s also permissible to use elements from no namespace at all,
+though using namespaces is highly recommended.
+</p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e3782"></a>Posting SOAP documents</h3></div></div><p>
+ Currently, most SOAP messages are
+  passed over HTTP using POST, just like XML-RPC messages.
+  Other transport protocols such as SMTP, BEEP, and Jabber
+  can be supported as well. 
+    However, there are a couple of crucial differences in 
+    the HTTP headers used for SOAP:
+    </p><div class="itemizedlist"><ul type="disc"><li><p>The HTTP request header must contain a
+    SOAPAction field.</p></li><li><p>If the SOAP request fails, the server
+    should return an HTTP 500 Internal Server Error
+    rather than 200 OK.</p></li></ul></div><p>
+   The SOAPAction field alerts web servers and firewalls 
+   that they&#8217;re dealing with a SOAP message. This allows firewalls to more
+   easily filter SOAP requests without looking at the request body.
+   The value of the SOAPAction field is a double quoted URI that somehow 
+   indicates the intent of the message. For instance,
+   if <a href="ch02s06.html#quote-soap.xml" title="Example&nbsp;2.15.&nbsp;A SOAP document requesting the current stock price of Red Hat">Example&nbsp;2.15</a> were POSTed to a servlet 
+   running on <tt>www.ibiblio.org</tt> 
+   under the control of the user <tt>elharo</tt>, then
+   you might use the SOAPAction <tt>http://www.ibiblio.org/#elharo</tt>
+   to indicate to the server and firewall who was responsible for processing
+   this request. 
+   This is shown in
+   <a href="ch02s06.html#post-quote-soap" title="Example&nbsp;2.17.&nbsp;A SOAP document requesting the current stock price of Red Hat">Example&nbsp;2.17</a>.
+   </p><div class="example"><a name="post-quote-soap"></a><p class="title"><b>Example&nbsp;2.17.&nbsp;A SOAP document requesting the current stock price of Red Hat</b></p><pre class="programlisting">POST /xml/cgi-bin/SOAPHandler HTTP/1.1
+Content-Type: text/xml; charset="utf-8"
+Content-Length: 267
+SOAPAction: "http://www.ibiblio.org/#elharo"
+
+&lt;?xml version="1.0"?&gt;
+&lt;SOAP-ENV:Envelope
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" &gt;
+  &lt;SOAP-ENV:Body&gt;
+    &lt;getQuote xmlns="http://namespaces.cafeconleche.org/xmljava/ch2/"&gt;
+      &lt;symbol&gt;RHAT&lt;/symbol&gt;
+    &lt;/getQuote&gt;
+  &lt;/SOAP-ENV:Body&gt;
+&lt;/SOAP-ENV:Envelope&gt;</pre></div><p>
+   Conceptually, SOAPAction URIs are 
+   very similar to namespace URIs because they aren&#8217;t meant to be resolved.
+   They&#8217;re just a convenient way of assigning unique identifiers to 
+   certain classes of SOAP messages. There&#8217;s no particular 
+   standard for how they&#8217;re chosen. You might use the full absolute URL 
+   that receives the SOAP request or you might use some previously agreed upon 
+   URI. You can even use nothing at all.
+   But the SOAPAction header must be present in order for the 
+   request to be identified as a SOAP request.
+   </p><p>
+   The server will normally send the response back to the client over
+   the same socket the client used to send the request and then close
+   the connection. Like any other HTTP response, a SOAP response begins
+   with an HTTP return code, message, and header. Assuming the request
+   was successful, then the response code is 200 OK. Unlike the request,
+   the response does not use any special header fields beyond those used
+   by regular web browsers and servers. <a href="ch02s06.html#post-quote-response.xml" title="Example&nbsp;2.18.&nbsp;A SOAP document returning the current stock price of Red Hat">Example&nbsp;2.18</a> demonstrates:
+   </p><div class="example"><a name="post-quote-response.xml"></a><p class="title"><b>Example&nbsp;2.18.&nbsp;A SOAP document returning the current stock price of Red Hat</b></p><pre class="programlisting">HTTP/1.0 200 OK
+Content-Type: text/xml; charset="utf-8"
+Content-Length: 260
+
+&lt;?xml version="1.0"?&gt;
+&lt;SOAP-ENV:Envelope
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"&gt;
+  &lt;SOAP-ENV:Body&gt;
+    &lt;Quote xmlns="http://namespaces.cafeconleche.org/xmljava/ch2/"&gt;
+      &lt;Price&gt;4.12&lt;/Price&gt;
+    &lt;/Quote&gt;
+  &lt;/SOAP-ENV:Body&gt;
+&lt;/SOAP-ENV:Envelope&gt;</pre></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e3825"></a>Faults</h3></div></div><p>
+    It&#8217;s a fact of life that requests fail.
+    They may fail for reasons beyond control of the SOAP provider. For instance,
+    you may launch your SOAP request into the ether just before
+    the phone company severs the wire
+    connecting  you to the Internet while hooking
+    up your neighbor&#8217;s new DSL line. 
+    That sort of failure would make it itself manifest at a lower layer, below
+    XML and SOAP, probably as a <tt>SocketException</tt> 
+    if you&#8217;re working in Java.
+    </p><p>
+    It&#8217;s also possible that your request will successfully arrive at the server,
+    only to find that the server doesn&#8217;t recognize the URL you&#8217;re posting to. 
+    In fact, the server might not even be configured to support SOAP requests.
+    This sort of error would not throw an exception, but would return a 
+    404 Not Found page rather than the expected SOAP response.
+    Your code should be prepared to handle such events. 
+    </p><p>
+    Finally, it&#8217;s also possible that the SOAP responder itself is able
+    to be reached and correctly invoked, but that it cannot process the
+    request. This may be because
+     the request contained bad data (e.g. a symbol for a stock that
+     doesn&#8217;t exist) or simply because the server code is buggy 
+     and encountered a problem. In these cases the SOAP server itself
+     is responsible for producing the correct error message. 
+     This error message is a SOAP response with a
+     <tt>SOAP-ENV:Envelope</tt> and a <tt>SOAP-ENV:Body</tt>, just like 
+     a normal response. However, the <tt>SOAP-ENV:Body</tt> must contain 
+     exactly one <tt>SOAP_ENV:Fault</tt> element and may not contain anything else.
+    </p><p>
+    The <tt>SOAP_ENV:Fault</tt> element contains up to four child elements:
+    </p><div class="variablelist"><dl><dt><span class="term"><tt>faultcode</tt></span></dt><dd><p>
+        A <tt>faultcode</tt> element contains a qualified name 
+    such as <tt>SOAP-ENV:VersionMismatch</tt> that identifies the fault.  
+      </p></dd><dt><span class="term"><tt>faultstring</tt></span></dt><dd><p>A <tt>faultstring</tt> element contains a plain text
+    message for human readers
+    describing the fault.</p></dd><dt><span class="term"><tt>faultactor</tt></span></dt><dd><p>
+        The optional <tt>faultactor</tt> element contains a URI identifying the
+        node that generated the fault. It&#8217;s used when a SOAP request is
+        passed through a chain of handlers. This element is optional.
+      </p></dd><dt><span class="term"><tt>faultdetail</tt></span></dt><dd><p>
+        A <tt>faultdetail</tt> element is used when the fault is 
+    specifically related to the body of the request (e.g. the stock symbol was
+    not recognized) as opposed to the envelope. It contains child elements 
+    describing the fault. This element is present if and only if the fault was related to
+    the SOAP body as opposed to the SOAP header.  
+      </p></dd></dl></div><div class="caution" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Caution</h3><p>
+    These four elements are not namespace qualified,
+    which is a little surprising. They are not in the 
+    <tt>http://schemas.xmlsoap.org/soap/envelope/</tt>
+     namespace. They are not in some other namespace.
+     They are in no namespace at all.
+    </p></div><p>
+ SOAP defines four specific fault codes in the 
+ <tt>http://schemas.xmlsoap.org/soap/envelope/</tt>
+ namespace to indicate  common conditions in
+ a generic way. These are:
+ </p><div class="variablelist"><dl><dt><span class="term"><tt>SOAP-ENV:VersionMismatch</tt></span></dt><dd><p>
+        The namespace of the <tt>SOAP-ENV</tt> element indicates that this
+        message is intended for a server implementing a different
+        version of the SOAP protocol; e.g. a SOAP 1.2 message has been
+        sent to a SOAP 1.1 server.
+      </p></dd><dt><span class="term"><tt>SOAP-ENV:MustUnderstand</tt></span></dt><dd><p>
+        There&#8217;s something in the header that the message says the server
+        has to understand before acting, but the server does not recognize.
+        (I&#8217;ll talk about this soon in the section on SOAP headers.)
+      </p></dd><dt><span class="term"><tt>SOAP-ENV:Client</tt></span></dt><dd><p>
+        The client sent a message that is somehow defective.
+        Perhaps it omitted a key piece of information the server
+        needs. For instance, the <tt>getQuote</tt> message was sent and understood, but
+        the <tt>getQuote</tt> element did not have a <tt>symbol</tt> child. 
+        The client is to blame 
+        for the problem. 
+      </p></dd><dt><span class="term"><tt>SOAP-ENV:Server</tt></span></dt><dd><p>
+        The client sent a correctly formed message with all the
+        necessary information, but some error prevented the server from
+        processing it. For example, the server may have needed to
+        connect to a remote database to retrieve some information, and
+        the database server had crashed. The server is to blame for the
+        problem.
+      </p></dd></dl></div><p>
+    <a href="ch02s06.html#fault-response.xml" title="Example&nbsp;2.19.&nbsp;A SOAP fault response">Example&nbsp;2.19</a> is a 
+    fault that might be returned in response to a request for 
+     the non-existent stock ABCD.
+     The <tt>faultcode</tt> element 
+     is set to <tt>SOAP-ENV:Client</tt> to indicate that the client's
+     request was incorrect.
+     The <tt>faultstring</tt> element just contains a brief string of unmarked up text
+     that can be used to more fully describe the problem to a human reader.
+      The <tt>faultdetail</tt> content includes elements in the 
+     same namespace as the successful response, 
+     <tt>http://namespaces.cafeconleche.org/xmljava/ch2/</tt>. 
+     Since this request
+     was processed by a single node, no <tt>faultactor</tt> element is necessary. 
+    </p><div class="example"><a name="fault-response.xml"></a><p class="title"><b>Example&nbsp;2.19.&nbsp;A SOAP fault response</b></p><pre class="programlisting">HTTP/1.0 500 Internal Server Error
+Content-Type: text/xml; charset="utf-8"
+Content-Length: 498
+
+&lt;?xml version="1.0"?&gt;
+&lt;SOAP-ENV:Envelope
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" 
+ xmlns:stock="http://namespaces.cafeconleche.org/xmljava/ch2/"&gt;
+  &lt;SOAP-ENV:Body&gt;
+    &lt;SOAP-ENV:Fault&gt;
+      &lt;faultcode&gt;SOAP-ENV:Client&lt;/faultcode&gt;
+      &lt;faultstring&gt;
+        There is no stock with the symbol ABCD.
+      &lt;/faultstring&gt;
+      &lt;faultdetail&gt;
+        &lt;stock:InvalidSymbol&gt;ABCD&lt;/stock:InvalidSymbol&gt;
+      &lt;/faultdetail&gt;
+    &lt;/SOAP-ENV:Fault&gt;
+  &lt;/SOAP-ENV:Body&gt;
+&lt;/SOAP-ENV:Envelope&gt;</pre></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e3977"></a>Encoding Styles</h3></div></div><p>
+The information encoded in the SOAP documents you&#8217;ve seen so far has all
+been nothing more than Unicode text strings. When you want to encode
+other types such as integers, arrays, and objects, you need to specify how the
+characters that make up the XML document should be
+<i>deserialized</i> into the local platform&#8217;s
+understanding of those types. For example, if a Java program encounters
+the element <tt>&lt;Price&gt;4.12&lt;/Price&gt;</tt> should it convert
+this into a <tt>double</tt>? a <tt>float</tt>? 
+a <tt>java.lang.String</tt>?
+a <tt>java.math.BigDecimal</tt>? a custom
+<tt>Price</tt> class? something else?
+</p><p>
+Any element in a SOAP document can have a <tt>SOAP-ENV:encodingStyle</tt>
+attribute whose value is a URI pointing to some kind of schema that says
+what types are assigned to which elements. The most common language to
+use for this schema is the W3C XML Schema Language. However, other
+schema languages such as RELAX NG are allowed too.
+</p><p>
+ <a href="ch02s06.html#encoding-quote-soap.xml" title="Example&nbsp;2.20.&nbsp;A SOAP document that specifies the encoding style">Example&nbsp;2.20</a> uses the
+ <tt>SOAP-ENV:encodingStyle</tt> attribute on the 
+ <tt>getQuote</tt> element to point to a
+ schema at the relative URL <tt>trading.xsd</tt>. 
+ This schema defines the <tt>symbol</tt>
+ element as having the custom
+  type StockSymbol, and is shown in <a href="ch02s06.html#trading.xsd" title="Example&nbsp;2.21.&nbsp;A schema that assigns type to elements in the &#xA;http://namespaces.cafeconleche.org/xmljava/ch2/ namespace">Example&nbsp;2.21</a>. This schema is just used for assigning types.
+ It is not used for validation, though with a little extra work it could
+ be.
+</p><div class="example"><a name="encoding-quote-soap.xml"></a><p class="title"><b>Example&nbsp;2.20.&nbsp;A SOAP document that specifies the encoding style</b></p><pre class="programlisting">&lt;?xml version="1.0"?&gt;
+&lt;SOAP-ENV:Envelope
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"&gt;
+  &lt;SOAP-ENV:Body&gt;
+    &lt;getQuote xmlns="http://namespaces.cafeconleche.org/xmljava/ch2/"
+              SOAP-ENV:encodingStyle="trading.xsd"&gt;
+      &lt;symbol&gt;RHAT&lt;/symbol&gt;
+    &lt;/getQuote&gt;
+  &lt;/SOAP-ENV:Body&gt;
+&lt;/SOAP-ENV:Envelope&gt;</pre></div><div class="example"><a name="trading.xsd"></a><p class="title"><b>Example&nbsp;2.21.&nbsp;A schema that assigns type to elements in the 
+http://namespaces.cafeconleche.org/xmljava/ch2/ namespace</b></p><pre class="programlisting">&lt;?xml version="1.0"?&gt;
+&lt;xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+targetNamespace="http://namespaces.cafeconleche.org/xmljava/ch2/"
+xmlns="http://namespaces.cafeconleche.org/xmljava/ch2/"
+elementFormDefault="qualified"&gt;
+
+  &lt;xsd:element name="getQuote"&gt;
+    &lt;xsd:complexType&gt;
+      &lt;xsd:sequence&gt;
+        &lt;xsd:element name="symbol" type="StockSymbol" 
+                     maxOccurs="unbounded"/&gt;
+      &lt;/xsd:sequence&gt;
+    &lt;/xsd:complexType&gt;  
+  &lt;/xsd:element&gt;
+
+  &lt;xsd:simpleType name="StockSymbol"&gt;
+    &lt;xsd:restriction base="xsd:string"&gt;
+      &lt;!-- two to six upper case letters --&gt;
+      &lt;xsd:pattern value="[A-Z][A-Z][A-Z]?[A-Z]?[A-Z]?[A-Z]?"/&gt;
+    &lt;/xsd:restriction&gt;
+  &lt;/xsd:simpleType&gt;
+
+&lt;/xsd:schema&gt;
+</pre></div><p>
+ The <tt>SOAP-ENV:encodingStyle</tt> attribute can be placed on any element in 
+ the document. It applies to that element and its descendants,
+ and overrides the schemas declared on any ancestor. 
+ It is commonly placed on the root 
+ <tt>SOAP-ENV:Envelope</tt> element. 
+</p><p>
+ SOAP singles out one encoding style for special treatment.
+ If  the <tt>SOAP-ENV:encodingStyle</tt> attribute has the value
+ <tt>http://schemas.xmlsoap.org/soap/encoding/</tt>, then a predefined set
+ of types are available that includes one element
+ for each simple type defined in the W3C XML Schema Language and listed in
+ <a href="ch02.html#datatypes" title="Table&nbsp;2.1.&nbsp;Primitive Data Types defined in the W3C XML Schema Language">Table&nbsp;2.1</a>. For instance, assuming the
+ <tt>SOAP-ENC</tt> prefix is bound to the 
+ <tt>http://schemas.xmlsoap.org/soap/encoding/</tt>
+ URI (Note that this is 
+ not the same as the namespace URI or prefix for the SOAP envelope)
+ then an int can be placed in a <tt>SOAP-ENC:int</tt> element like this  
+ </p><div class="informalexample"><pre class="programlisting">&lt;SOAP-ENC:int&gt;12&lt;/SOAP-ENC:int&gt;
+</pre></div><p> 
+The complete list of types and their normal Java semantics is 
+given in <a href="ch02s06.html#SOAPElements" title="Table&nbsp;2.2.&nbsp;Simple Value Elements defined in SOAP">Table&nbsp;2.2</a>,
+though this really just mirrors <a href="ch02.html#datatypes" title="Table&nbsp;2.1.&nbsp;Primitive Data Types defined in the W3C XML Schema Language">Table&nbsp;2.1</a>.
+In many cases, Java does not have a type that exactly matches one 
+of the derived types. Thus it uses the broader base class.
+For example, Java does not have an unsigned integer type but all values of 
+type xsd:unsignedInt can fit into a Java <tt>long</tt>.
+Java does not have a <tt>PositiveInteger</tt>
+ class, but all 
+xsd:positiveIntegers can be represented by 
+a <tt>java.math.BigInteger</tt>. 
+In some cases the mapping is obvious. In others, different programs 
+may use different Java types and objects to deserialize the same values. For instance, an 
+<tt>xsd:int</tt> is 
+<span class="emphasis"><em>exactly</em></span> a Java <tt>int</tt>,
+and an <tt>xsd:double</tt> is 
+as close to a Java <tt>double</tt> as it&#8217;s possible for a base-10 string to be.
+However, an <tt>xsd:anyURI</tt>, could reasonably be converted to
+a <tt>java.net.URL</tt>, a <tt>java.lang.String</tt>,
+or some custom URI class.
+</p><div class="table"><a name="SOAPElements"></a><p class="title"><b>Table&nbsp;2.2.&nbsp;Simple Value Elements defined in SOAP</b></p><table summary="Simple Value Elements defined in SOAP" border="1"><colgroup><col><col></colgroup><thead><tr><th>SOAP type</th><th>Java type</th></tr></thead><tbody><tr><td>SOAP-ENC:string</td><td><tt>java.lang.String</tt></td></tr><tr><td>SOAP-ENC:boolean</td><td><tt>boolean</tt></td></tr><tr><td>SOAP-ENC:decimal</td><td><tt>java.math.BigDecimal</tt></td></tr><tr><td>SOAP-ENC:float</td><td><tt>float</tt></td></tr><tr><td>SOAP-ENC:double</td><td><tt>double</tt></td></tr><tr><td>SOAP-ENC:integer</td><td><tt>java.math.BigInteger</tt></td></tr><tr><td>SOAP-ENC:positiveInteger</td><td><tt>java.math.BigDecimal</tt></td></tr><tr><td>SOAP-ENC:nonPositiveInteger</td><td><tt>java.math.BigInteger</tt></td></tr><tr><td>SOAP-ENC:negativeInteger</td><td><tt>java.math.BigInteger</tt></td></tr><tr><td>SOAP-ENC:nonNegativeInteger</td><td><tt>java.math.BigInteger</tt></td></tr><tr><td>SOAP-ENC:long</td><td><tt>long</tt></td></tr><tr><td>SOAP-ENC:int</td><td><tt>int</tt></td></tr><tr><td>SOAP-ENC:short</td><td><tt>short</tt></td></tr><tr><td>SOAP-ENC:byte</td><td><tt>byte</tt></td></tr><tr><td>SOAP-ENC:unsignedLong</td><td><tt>double</tt> or <tt>java.math.BigInteger</tt></td></tr><tr><td>SOAP-ENC:unsignedInt</td><td><tt>long</tt></td></tr><tr><td>SOAP-ENC:unsignedShort</td><td><tt>int</tt></td></tr><tr><td>SOAP-ENC:unsignedByte</td><td><tt>int</tt></td></tr><tr><td>SOAP-ENC:duration</td><td>custom class</td></tr><tr><td>SOAP-ENC:dateTime</td><td><tt>java.util.Date</tt></td></tr><tr><td>SOAP-ENC:time</td><td><tt>java.sql.Time</tt></td></tr><tr><td>SOAP-ENC:date</td><td><tt>java.sql.Date</tt></td></tr><tr><td>SOAP-ENC:gYearMonth</td><td>custom class</td></tr><tr><td>SOAP-ENC:gYear</td><td>custom class, <tt>int</tt>, or <tt>java.math.BigInteger</tt></td></tr><tr><td>SOAP-ENC:gMonthDay</td><td>custom class</td></tr><tr><td>SOAP-ENC:gDay</td><td>custom class or <tt>int</tt></td></tr><tr><td>SOAP-ENC:gMonth</td><td>custom class or <tt>int</tt></td></tr><tr><td>SOAP-ENC:hexBinary</td><td><tt>byte[]</tt></td></tr><tr><td>SOAP-ENC:base64Binary</td><td><tt>byte[]</tt></td></tr><tr><td>SOAP-ENC:anyURI</td><td><tt>java.net.URL</tt>,
+  <tt>java.lang.String</tt>, or a custom class</td></tr><tr><td>SOAP-ENC:QName</td><td><tt>java.lang.String</tt> or a custom class</td></tr><tr><td>SOAP-ENC:NOTATION</td><td><tt>org.w3c.dom.Notation</tt></td></tr><tr><td>SOAP-ENC:normalizedString</td><td><tt>java.lang.String</tt></td></tr><tr><td>SOAP-ENC:token</td><td><tt>java.lang.String</tt></td></tr><tr><td>SOAP-ENC:language</td><td><tt>java.lang.String</tt> or a custom class</td></tr><tr><td>SOAP-ENC:NMTOKEN</td><td><tt>java.lang.String</tt> or a custom class</td></tr><tr><td>SOAP-ENC:NMTOKENS</td><td><tt>java.lang.String</tt> or a custom class</td></tr><tr><td>SOAP-ENC:Name</td><td><tt>java.lang.String</tt></td></tr><tr><td>SOAP-ENC:NCName</td><td><tt>java.lang.String</tt></td></tr><tr><td>SOAP-ENC:ID</td><td><tt>java.lang.String</tt></td></tr><tr><td>SOAP-ENC:IDREF</td><td><tt>java.lang.String</tt></td></tr><tr><td>SOAP-ENC:IDREFS</td><td>an array or list
+  of <tt>java.lang.String</tt>s or a custom class</td></tr><tr><td>SOAP-ENC:ENTITY</td><td><tt>org.w3c.dom.Entity</tt></td></tr><tr><td>SOAP-ENC:ENTITIES</td><td>an <tt>org.w3c.dom.NodeList</tt>
+  containing <tt>org.w3c.dom.Entity</tt>
+  objects.</td></tr></tbody></table></div><p> 
+These mappings are not written in stone. 
+Some of the XMLish types like <tt>SOAP-ENC:ENTITY</tt> and <tt>SOAP-ENC:IDREFS</tt>
+are particularly uncertain, and may be implemented in different ways in
+different environments. However, this should give you a pretty good idea
+of the sorts of mappings that are possible between SOAP types and Java types.  
+</p><p>
+      Besides this list of simple types, the
+      <tt>http://schemas.xmlsoap.org/soap/encoding/</tt>
+      encoding also defines
+      concepts of structs, references, byte arrays, and
+      arrays. 
+    </p><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e4472"></a>Structs</h4></div></div><p>
+      A struct is just an element that contains child elements but no
+      mixed content. For example, this is a Quote struct that contains
+      Symbol and Price members:
+    </p><div class="informalexample"><pre class="programlisting">&lt;Quote xmlns="http://namespaces.cafeconleche.org/xmljava/ch2/"&gt;
+  &lt;Symbol&gt;RHAT&lt;/Symbol&gt;
+  &lt;Price&gt;4.12&lt;/Price&gt;
+&lt;/Quote&gt;</pre></div><p>
+      In Java terms, by using the
+      <tt>http://schemas.xmlsoap.org/soap/encoding/</tt>
+      encoding style, you&#8217;re
+      indicating that you would like this element deserialized into an object of
+      type Quote, which has two properties named Symbol and Price. In
+      other words, the class definition looks something like this:
+    </p><div class="informalexample"><pre class="programlisting">public class Quote {
+
+  public String getSymbol();
+  public double getPrice();
+
+}</pre></div><p>
+      You may or may not have such a class in your system. If the SOAP
+      request began its life as a <tt>Quote</tt> object which was then converted
+      to XML, transmitted across the Internet, and then turned back into
+      a Java object, then perhaps you do have such a class. On the other
+      hand, perhaps the object began its life as a C struct or a C++
+      object; or perhaps it was never anything except an XML document. In
+      these cases there may not be a convenient <tt>Quote</tt> class into which
+      you can deserialize this compound object. Another possibility
+      is to decode the name-value pairs into some form of 
+      <tt>Hashtable</tt> or <tt>HashMap</tt>.
+      The names of the fields would be the keys and the values of the fields 
+      would be the values.
+    </p><p>  
+      What this encoding
+      really tells you is roughly how the author intended this document
+      to be handled. However if you have some other way of making sense
+      of this data, you can use it. You are not limited to any one
+      deserialization form.
+    </p></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e4507"></a>References</h4></div></div><p>
+    A reference type uses an <tt>href</tt> attribute to point to 
+    a value stored elsewhere in the SOAP request. This mirrors
+    the structure when two objects both have to contain the same object.
+    For example, consider this trade request:
+    </p><div class="informalexample"><pre class="programlisting">&lt;Bid xmlns="http://namespaces.cafeconleche.org/xmljava/ch2/"&gt;
+  &lt;Symbol&gt;RHAT&lt;/Symbol&gt;
+  &lt;Price&gt;4.12&lt;/Price&gt;
+  &lt;Account&gt;777-7777&lt;/Account&gt;
+&lt;/Bid&gt;
+&lt;Bid xmlns="http://namespaces.cafeconleche.org/xmljava/ch2/"&gt;
+  &lt;Symbol&gt;YHOO&lt;/Symbol&gt;
+  &lt;Price&gt;4.12&lt;/Price&gt;
+  &lt;Account&gt;777-7777&lt;/Account&gt;
+&lt;/Bid&gt;</pre></div><p>
+    In both cases the account number is the same. Furthermore, it&#8217;s not
+    just that the two numbers are equal. They indicate the same object.
+    In Java terms it&#8217;s the difference between the
+    <tt>equals()</tt> method and the <tt>==</tt> operator. The
+    first tests for equality while the second tests for identity. If the
+    local semantics demand that each <tt>Account</tt> element be deserialized as
+    an <tt>Account</tt> object, perhaps with other fields filled in from a
+    database rather than the XML document, then you want some means of
+    saying this document should produce one <tt>Account</tt> object rather than
+    two. This is done with a reference. Give the first <tt>Account</tt> element a
+    unique <tt>id</tt> attribute and use an <tt>href</tt> attribute in the second element
+    to point to it like this:
+    </p><div class="informalexample"><pre class="programlisting">&lt;Bid xmlns="http://namespaces.cafeconleche.org/xmljava/ch2/"&gt;
+  &lt;Symbol&gt;RHAT&lt;/Symbol&gt;
+  &lt;Price&gt;4.12&lt;/Price&gt;
+  &lt;Account id="a1"&gt;777-7777&lt;/Account&gt;
+&lt;/Bid&gt;
+&lt;Bid xmlns="http://namespaces.cafeconleche.org/xmljava/ch2/"&gt;
+  &lt;Symbol&gt;YHOO&lt;/Symbol&gt;
+  &lt;Price&gt;4.12&lt;/Price&gt;
+  &lt;Account href="#a1"/&gt;
+&lt;/Bid&gt;</pre></div><p>
+      This document represents two <tt>Bid</tt> 
+      objects. Each has three properties:
+      Symbol, Price, and Account. The Symbols are completely different.
+      The prices are equal but not identical; that is, one can change without
+      changing the other. There are two separate prices here that 
+      coincidentally have the same value.
+      The Accounts, however, are identical. There is only one account here,
+      used in two different places. 
+    </p></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e4552"></a>Arrays</h4></div></div><p>
+      In Java arrays are a funny kind of object, and in SOAP they are too.
+      An array is represented as an element whose type
+      is <tt>SOAP-ENC:Array</tt>. For example, this is an array
+      of three numbers:
+    </p><div class="informalexample"><pre class="programlisting">&lt;Bid xsi:type="SOAP-ENC:Array"&gt;
+   &lt;Price&gt;4.52&lt;/Price&gt;
+   &lt;Price&gt;0.35&lt;/Price&gt;
+   &lt;Price&gt;34.68&lt;/Price&gt;   
+ &lt;/Bid&gt;</pre></div><p>
+      In an array the names of the elements don&#8217;t really mean anything.
+      Only the positions matter. If the name of the array doesn&#8217;t matter either,
+      you can use a <tt>SOAP-ENC:Array</tt> element instead. For example,
+      this is an array of three doubles, with no extra information:
+    </p><div class="informalexample"><pre class="programlisting">&lt;SOAP-ENC:Array&gt;
+  &lt;SOAP-ENC:double&gt;4.52&lt;/SOAP-ENC:double&gt;
+  &lt;SOAP-ENC:double&gt;0.35&lt;/SOAP-ENC:double&gt;
+  &lt;SOAP-ENC:double&gt;34.68&lt;/SOAP-ENC:double&gt;
+&lt;/SOAP-ENC:Array&gt;</pre></div><p>
+      SOAP arrays are not as strongly typed as Java arrays, at least by default.
+      Whereas each array in Java must contain just ints or just strings or just
+      objects, a SOAP array can contain data of varying types. For example, 
+      this array contains three items, each with a different name and type:
+    </p><div class="informalexample"><pre class="programlisting">&lt;Bid xsi:type="SOAP-ENC:Array"&gt;
+  &lt;Symbol  xsi:type="xsd:token"&gt;RHAT&lt;/Symbol&gt;
+  &lt;Price   xsi:type="xsd:double"&gt;4.12&lt;/Price&gt;
+  &lt;Account xsi:type="xsd:string"&gt;777-7777&lt;/Account&gt;
+&lt;/Bid&gt;</pre></div><p>
+      Given this possibility, it can be difficult to decode
+      a SOAP array into a Java array. The closest Java equivalent is an
+      <tt>Object[]</tt> array. However, primitive types like 
+      <tt>double</tt> would need to
+      be replaced by an instance of the matching type wrapper class
+      such as <tt>java.lang.Double</tt> instead.
+      Another possibility is to use a <tt>java.util.Vector</tt>
+      or <tt>java.util.ArrayList</tt> instead of a straight array,
+      though this still doesn&#8217;t remove the need for the type wrapper classes.
+    </p><p>
+      If you want to restrict the type of array components, you can add 
+      a <tt>SOAP-ENC:arrayType</tt> attribute to the array element. The value of 
+      this attribute is the type of the individual component followed by 
+      square brackets containing the length of the array. This is more 
+      similar to C&#8217;s array declaration syntax than Java&#8217;s. For example, 
+      this array must contain exactly three  doubles:
+    </p><div class="informalexample"><pre class="programlisting">&lt;Bid xsi:type="SOAP-ENC:Array" SOAP-ENC:arrayType="xsd:double[3]"&gt;
+   &lt;Price&gt;4.52&lt;/Price&gt;
+   &lt;Price&gt;0.35&lt;/Price&gt;
+   &lt;Price&gt;34.68&lt;/Price&gt;   
+ &lt;/Bid&gt;</pre></div><p>
+Any array component not specifically typed otherwise can be a struct.
+Furthermore any array component can be another array. However, this does not produce  
+a multidimensional array. Instead, 
+multidimensional arrays are created by
+stringing together the values from the second row after the values
+from the first, the values from the third row after the values from the second, and so on.
+The <tt>SOAP-ENC:arrayType</tt> attribute indicates how many columns there are.
+For example, this is a three row by two column array of doubles:
+</p><div class="informalexample"><pre class="programlisting">&lt;SOAP-ENC:Array SOAP-ENC:arrayType="xsd:double[3,2]"&gt;
+   &lt;SOAP-ENC:double&gt;1.1&lt;/SOAP-ENC:double&gt;
+   &lt;SOAP-ENC:double&gt;1.2&lt;/SOAP-ENC:double&gt;
+   &lt;SOAP-ENC:double&gt;2.1&lt;/SOAP-ENC:double&gt;   
+   &lt;SOAP-ENC:double&gt;2.2&lt;/SOAP-ENC:double&gt;
+   &lt;SOAP-ENC:double&gt;3.1&lt;/SOAP-ENC:double&gt;
+   &lt;SOAP-ENC:double&gt;3.2&lt;/SOAP-ENC:double&gt;   
+ &lt;/SOAP-ENC:Array&gt;</pre></div><p>
+Although the XML representation is one-dimensional, the
+Java interpretation is two-dimensional. When deserialized, this forms
+the following Java array: 
+</p><div class="informalexample"><pre class="programlisting">double[][] array = {
+  {1.1, 1.2},
+  {2.1, 2.2},
+  {3.1, 3.2}
+}</pre></div><p>
+      In the interest of efficiency over potentially slow networks, SOAP
+      allows partially transmitted and sparse arrays. A
+      <i>partially transmitted array</i> (also known as
+      a <i>varying array</i>) does not begin with
+      position 0. Instead it begins at a specified index. For instance,
+      it might have ten components indexed from 3 to 12 inclusive. In
+      SOAP you indicate the position a partially transmitted array
+      begins at with a <tt>SOAP-ENC:offset</tt> attribute. The value of this
+      attribute is the index of the first element in the array enclosed
+      in square brackets. For example, this array begins at 3:
+    </p><div class="informalexample"><pre class="programlisting">&lt;SOAP-ENC:Array SOAP-ENC:offset="[3]"&gt;
+  &lt;SOAP-ENC:string&gt;Component 3&lt;/SOAP-ENC:string&gt;   
+  &lt;SOAP-ENC:string&gt;Component 4&lt;/SOAP-ENC:string&gt;   
+  &lt;SOAP-ENC:string&gt;Component 5&lt;/SOAP-ENC:string&gt;   
+  &lt;SOAP-ENC:string&gt;Component 6&lt;/SOAP-ENC:string&gt;   
+  &lt;SOAP-ENC:string&gt;Component 7&lt;/SOAP-ENC:string&gt;   
+  &lt;SOAP-ENC:string&gt;Component 8&lt;/SOAP-ENC:string&gt;   
+  &lt;SOAP-ENC:string&gt;...&lt;/SOAP-ENC:string&gt;   
+&lt;/SOAP-ENC:Array&gt;</pre></div><p>
+Java doesn&#8217;t have such arrays, though Pascal and some other languages
+do. In Java you&#8217;d probably deserialize such an array by putting null
+values or zeroes in the places before the beginning of the array.
+</p><p>
+      A <i>sparse array</i> is one in which a very large
+      percentage of the components are 0 or null. In SOAP a sparse array
+      would only pass the non-zero/non-null components. However, when
+      the array was deserialized, these would be filled in with zeroes or nulls. For a sparse
+      array, the number of elements in the array must be specified by a
+      <tt>SOAP-ENC:arrayType</tt> attribute. The position of
+      each element that is provided is given by a
+      <tt>SOAP-ENC:position</tt> attribute. For example, this is
+      a 10-element array that only provides the second, third, and fifth
+      elements:
+    </p><div class="informalexample"><pre class="programlisting">&lt;SOAP-ENC:Array SOAP-ENC:arrayType="xsd:string[10]"&gt;
+  &lt;SOAP-ENC:string SOAP-ENC:position="[2]"&gt;
+    2nd component
+  &lt;/SOAP-ENC:string&gt;
+  &lt;SOAP-ENC:string SOAP-ENC:position="[3]"&gt;
+    3rd component
+  &lt;/SOAP-ENC:string&gt;
+  &lt;SOAP-ENC:string SOAP-ENC:position="[5]"&gt;
+    5th component
+  &lt;/SOAP-ENC:string&gt;   
+&lt;/SOAP-ENC:Array&gt;</pre></div><p>
+      The equivalent Java code looks like this:
+    </p><div class="informalexample"><pre class="programlisting">   String[] array = new String[10];
+   array[2] = "\n     2nd component\n    ";
+   array[3] = "\n     3rd component\n    ";
+   array[5] = "\n     5th component\n    ";</pre></div></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e4649"></a>Byte Arrays</h4></div></div><p>
+      A byte array is just a string that somehow encodes binary data.
+      The most common such encoding is Base-64. A schema or an <tt>xsi:type</tt>
+      attribute is needed to identify the encoding. For example, this is
+      a Base-64 encoded byte array that provides an SHA-1 digital signature
+      for a document. The signature is normally 20 bytes, which
+      becomes 56 characters when translated to Base-64:
+    </p><div class="informalexample"><pre class="programlisting">&lt;SignatureValue&gt;
+AgGOvkMdqdKT7QyMuXPsuomkOqqEhGukKkj4Em7OKKQxYzheuseS8Q==
+&lt;/SignatureValue&gt;</pre></div><p>
+      In Java this would normally be deserialized into a byte array. 
+    </p></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e4662"></a>SOAP Headers</h3></div></div><p>
+     As well as the body of the request, each SOAP document can contain
+     a <i>header</i>. 
+     This is not an HTTP header. Rather it is an additional
+     child of the <tt>SOAP-ENV:Envelope</tt> element, specifically a
+     <tt>SOAP-ENV:Header</tt> element. If a SOAP request is an envelope, 
+     then the
+     body is the letter inside the envelope, and the header is the
+     writing on the outside of the envelope that tells the Post Office
+     where to deliver it to, where to send it back if they can&#8217;t deliver
+     it, and how much you paid to get the letter delivered. In other
+     words, a SOAP header provides meta-information about the request.
+    </p><p>
+     The sort of meta-information provided varies from request to request and
+     SOAP application to SOAP application. Some things that can be
+      exchanged in headers include:
+     </p><div class="itemizedlist"><ul type="disc"><li><p>
+    Protocols the server must understand to process the request. 
+    </p></li><li><p>
+    A digital signature for the body of the message
+    </p></li><li><p>
+    A schema for the XML application used in the body
+    </p></li><li><p>
+    Credit card info to pay for the processing
+    </p></li><li><p>
+    A public key to be used to encrypt the response
+    </p></li></ul></div><p>
+     For instance, <a href="ch02s06.html#bid_with_credit_card.xml" title="Example&nbsp;2.22.&nbsp;A SOAP Request with a digital signature in the header">Example&nbsp;2.22</a> shows a bid 
+     document in which the header carries
+     credit card information to pay for the request.
+     In this case, the syntax used for the 
+     <tt>Payment</tt> 
+     element is specific to the XML application used in the body
+     and even comes from the same namespace.
+    </p><div class="example"><a name="bid_with_credit_card.xml"></a><p class="title"><b>Example&nbsp;2.22.&nbsp;A SOAP Request with a digital signature in the header</b></p><pre class="programlisting">&lt;?xml version="1.0"?&gt;
+&lt;SOAP-ENV:Envelope
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" &gt;
+  &lt;SOAP-ENV:Header&gt;
+    &lt;Payment xmlns="http://namespaces.cafeconleche.org/xmljava/ch2/"&gt;
+      &lt;Name&gt;Elliotte Harold&lt;/Name&gt;
+      &lt;Issuer&gt;VISA&lt;/Issuer&gt;
+      &lt;Number&gt;5125456787651230&lt;/Number&gt;
+      &lt;Expires&gt;2005-12&lt;/Expires&gt;
+    &lt;/Payment&gt;
+  &lt;/SOAP-ENV:Header&gt;
+  &lt;SOAP-ENV:Body&gt;
+    &lt;buy id="buy1"
+         xmlns="http://namespaces.cafeconleche.org/xmljava/ch2/"&gt;
+      &lt;symbol&gt;MRBA&lt;/symbol&gt; 
+      &lt;shares&gt;100&lt;/shares&gt; 
+      &lt;account&gt;777-7777&lt;/account&gt; 
+    &lt;/buy&gt;
+  &lt;/SOAP-ENV:Body&gt;
+&lt;/SOAP-ENV:Envelope&gt;</pre></div><p>
+     Like the SOAP body, the SOAP header can use any XML application it
+     cares to use to encode the data. It is not limited to a fixed
+     vocabulary. Indeed it can use more than one such vocabulary. The 
+     <tt>SOAP-ENV:Header</tt> element can contain multiple child elements from a
+     hodge-podge of different namespaces. Each one of these elements is
+     called a <i>header entry</i>, and may be treated
+     independently of the other header entries. For example, <a href="ch02s06.html#signed_bid_with_credit_card.xml" title="Example&nbsp;2.23.&nbsp;A SOAP Request with two header entries">Example&nbsp;2.23</a> adds an additional
+     header containing 
+     a digital signature 
+     for the request body. The syntax used for the 
+     <tt>Signature</tt> element is defined by
+     <a href="http://www.w3.org/TR/xmldsig-core/" target="_top">XML-Signature Syntax and Processing</a>. 
+    </p><div class="example"><a name="signed_bid_with_credit_card.xml"></a><p class="title"><b>Example&nbsp;2.23.&nbsp;A SOAP Request with two header entries</b></p><pre class="programlisting">&lt;?xml version="1.0"?&gt;
+&lt;SOAP-ENV:Envelope
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" &gt;
+  &lt;SOAP-ENV:Header&gt;
+    &lt;Payment xmlns="http://namespaces.cafeconleche.org/xmljava/ch2/"&gt;
+      &lt;Name&gt;Elliotte Harold&lt;/Name&gt;
+      &lt;Issuer&gt;VISA&lt;/Issuer&gt;
+      &lt;Number&gt;5125456787651230&lt;/Number&gt;
+      &lt;Expires&gt;2005-12&lt;/Expires&gt;
+    &lt;/Payment&gt;
+&lt;Signature xmlns="http://www.w3.org/2000/09/xmldsig#"&gt;
+  &lt;SignedInfo&gt;
+    &lt;CanonicalizationMethod 
+    Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/&gt;
+    &lt;SignatureMethod 
+      Algorithm="http://www.w3.org/2000/09/xmldsig#dsa-sha1" /&gt;
+    &lt;Reference URI="file://J/xss4j/requestbody.xml"&gt;
+    &lt;DigestMethod 
+      Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /&gt;
+      &lt;DigestValue&gt;3UxhLrdPpK3faRms5FOS6kAoeZI=&lt;/DigestValue&gt;
+    &lt;/Reference&gt;
+  &lt;/SignedInfo&gt;
+  &lt;SignatureValue&gt;
+    ZeW/PYGT6A9iOqOrbMmeKOq1aQk+ars/QOC95Bj0xYrNAnLo/WK7+g==
+  &lt;/SignatureValue&gt;
+&lt;/Signature&gt;
+  &lt;/SOAP-ENV:Header&gt;
+  &lt;SOAP-ENV:Body&gt;
+    &lt;buy id="buy1"
+         xmlns="http://namespaces.cafeconleche.org/xmljava/ch2/"&gt;
+      &lt;symbol&gt;MRBA&lt;/symbol&gt; 
+      &lt;shares&gt;100&lt;/shares&gt; 
+      &lt;account&gt;777-7777&lt;/account&gt; 
+    &lt;/buy&gt;
+  &lt;/SOAP-ENV:Body&gt;
+&lt;/SOAP-ENV:Envelope&gt;</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e4727"></a>The mustUnderstand attribute</h4></div></div><p>
+An individual SOAP document tends to be tied pretty closely to 
+the service it plans to talk to. You can&#8217;t send a request for a stock quote to 
+a server that&#8217;s designed to provide basketball scores and expect to
+get sensible results back. In order that a SOAP request can 
+indicate what is required of a server, it can place  
+ a <tt>SOAP-ENV:mustUnderstand</tt> attribute on each header entry.
+ If this attribute has the value 1, then the service which receives the 
+ SOAP request must process the header entry. If it cannot, whether
+ because it does not understand the header entry or for some other
+ reason, then it must fail the request and return a fault.
+ If the <tt>SOAP-ENV:mustUnderstand</tt> attribute has the value 0,
+ then processing the header is optional. The service should do it if it can,
+ but failing to do so does not automatically lead to a fault.
+ The default is 0.
+</p><p>
+For example, <a href="ch02s06.html#signed_bid_with_payment.xml" title="Example&nbsp;2.24.&nbsp;A SOAP Request with a mustUnderstand attribute">Example&nbsp;2.24</a> is a BUY order 
+that requires the receiver to understand the <tt>Payment</tt> header.
+If the server does not recognize that header, it
+must not attempt to fulfill the order.
+</p><div class="example"><a name="signed_bid_with_payment.xml"></a><p class="title"><b>Example&nbsp;2.24.&nbsp;A SOAP Request with a mustUnderstand attribute</b></p><pre class="programlisting">&lt;?xml version="1.0"?&gt;
+&lt;SOAP-ENV:Envelope
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" &gt;
+  &lt;SOAP-ENV:Header&gt;
+    &lt;Payment xmlns="http://namespaces.cafeconleche.org/xmljava/ch2/"
+             SOAP-ENV:mustUnderstand="1"&gt;
+      &lt;Name&gt;Elliotte Harold&lt;/Name&gt;
+      &lt;Issuer&gt;VISA&lt;/Issuer&gt;
+      &lt;Number&gt;5125456787651230&lt;/Number&gt;
+      &lt;Expires&gt;2005-12&lt;/Expires&gt;
+    &lt;/Payment&gt;
+  &lt;/SOAP-ENV:Header&gt;
+  &lt;SOAP-ENV:Body&gt;
+    &lt;buy xmlns="http://namespaces.cafeconleche.org/xmljava/ch2/"&gt;
+      &lt;symbol&gt;MRBA&lt;/symbol&gt; 
+      &lt;shares&gt;100&lt;/shares&gt; 
+      &lt;account&gt;777-7777&lt;/account&gt; 
+    &lt;/buy&gt;
+  &lt;/SOAP-ENV:Body&gt;
+&lt;/SOAP-ENV:Envelope&gt;
+</pre></div></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e4750"></a>The actor attribute</h4></div></div><p>
+Although this book mostly focuses on SOAP messages that go straight from the 
+sender system to the receiver who will process it, not all systems are this simple.
+A SOAP message can be forwarded from one SOAP processor to the next until 
+it reaches its ultimate destination. 
+By default, the headers are only read by the
+last processor.
+However, you can indicate that a header is intended for a
+closer processor by using an <tt>actor</tt> attribute on the header entry element.
+The value of this attribute is a URI identifying the processor the 
+header entry is intended for. 
+</p><p>
+When a processor receives a SOAP message, it 
+searches the header for header entries addressed to it.
+It acts on and deletes
+ these  header entries. It may also add new header entries intended
+ for processors later in the chain.
+Then it forwards the message on to the next processor in the chain.
+</p><p>
+All processors except the last one only act on header entries 
+that are specifically addressed to them.
+After acting on an entry, the processor deletes
+ it before forwarding the request to the next processor
+in the chain. 
+Furthermore, the URL <tt>http://schemas.xmlsoap.org/soap/actor/next</tt>
+indicates that the header entry should be processed and deleted by the first 
+processor that sees it.
+The last processor in the chain will 
+process any header entries that are not addressed to any
+processor in particular as well as  any
+header entries that
+are addressed specifically to it.
+</p><p>
+The exact scheme for forwarding SOAP messages from one 
+processor to the next is system dependent.
+For instance, you might set up a gateway server outside the firewall
+that verified certain characteristics of a 
+SOAP message before it forwarded it to a processor inside the firewall.
+Such a gateway would either block or forward each
+message.
+A switching processor might inspect the body of the message 
+and forward the request 
+to different SOAP
+processors depending on what it saw there.
+Some systems might even use  routing 
+included in the messages themselves. 
+</p></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e4767"></a>SOAP Limitations</h3></div></div><p>
+  Regrettably, in my opinion, SOAP does not allow
+  developers to take full advantage of XML&#8217;s expressiveness and
+  extensibility.
+  First of all, 
+   According to the SOAP 1.1 specification,
+  &#8220;A SOAP message MUST NOT contain a Document Type 
+  Declaration.&#8221; This allows non-validating parsers and parsers 
+  that cannot resolve external entities to be used to process SOAP 
+  messages without concern that they may be misinterpreting them because 
+  they don&#8217;t apply default namespaces or resolve
+  external entities. 
+  However, it also means the document can&#8217;t be validated against a DTD.
+</p><p>
+  Also according to the SOAP 1.1 specification,
+  &#8220;A SOAP message MUST NOT contain Processing Instructions.&#8221;
+  Honestly this makes no sense to me whatsoever.
+  I see little reason for forbidding these.
+  This does mean that all information in a SOAP request must be passed
+  through the defined SOAP structure, but it also means that it&#8217;s difficult to 
+  include other useful features beyond the SOAP structure. The most obvious
+  is that you can&#8217;t easily apply a style sheet to a SOAP document, though
+  that&#8217;s not a huge loss since SOAP documents aren&#8217;t meant for humans to 
+  read in the first place. However, it also means it&#8217;s difficult to serve 
+  SOAP documents out of the Cocoon application server. There are probably many other 
+  environment specific instances where this becomes inconvenient.  
+  </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e4780"></a>Validating SOAP</h3></div></div><p>
+   SOAP is actively hostile to DTDs. The SOAP specification specifically
+   forbids a SOAP request from containing a document type declaration.
+   Thus you really have to use a schema to validate your documents,
+   if you validate them at all. 
+  </p><p>
+   Unlike XML-RPC, SOAP does have an official schema. In fact it has
+   two, which you can download from the SOAP namespace URLs.
+   The envelope schema at 
+   <tt>http://schemas.xmlsoap.org/soap/envelope/</tt>
+   describes the SOAP complex types: <tt>SOAP-ENV:Envelope</tt>, 
+   <tt>SOAP-ENV:header</tt>, <tt>SOAP-ENV:Body</tt>, etc.
+   The encoding schema at 
+   <tt>http://schemas.xmlsoap.org/soap/encoding/</tt>
+   defines the SOAP data types shown in 
+   <a href="ch02s06.html#SOAPElements" title="Table&nbsp;2.2.&nbsp;Simple Value Elements defined in SOAP">Table&nbsp;2.2</a>: <tt>SOAP-ENC:int</tt>, 
+   <tt>SOAP-ENC:NMTOKENS</tt>, <tt>SOAP-ENC:gYear</tt>, 
+   <tt>SOAP-ENC:Array</tt>, etc.
+   These schemas are a little too long to reproduce here,
+   but you can find them in <a href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas">Appendix&nbsp;B</a>.
+   </p><p>
+    XML-RPC is a monolithic XML application not designed to be
+    integrated with other XML applications. SOAP, by contrast, is
+    incomplete without some other XML application to form the body of
+    the SOAP request. Thus the SOAP schema cannot be monolithic. It must
+    rely on some other XML application in its own namespace (or perhaps
+    no namespace at all, though this is not recommended) so the SOAP schema
+    cannot on its own validate any SOAP documents. You also need to provide
+    a separate schema for the bodies of your documents, and then you need to
+    merge the two together using <tt>xsd:import</tt> elements.
+    </p><p>
+    For example, <a href="ch02s06.html#trading-soap.xsd" title="Example&nbsp;2.25.&nbsp;A Master Schema for SOAP Trading documents">Example&nbsp;2.25</a> is a master schema 
+    for quote request documents such as <a href="ch02s06.html#quote-soap.xml" title="Example&nbsp;2.15.&nbsp;A SOAP document requesting the current stock price of Red Hat">Example&nbsp;2.15</a>.
+    This schema declares no elements of its own but does import
+    both SOAP schemas, as well as the
+    schema for <tt>getQuote</tt> elements seen earlier in <a href="ch02s06.html#trading.xsd" title="Example&nbsp;2.21.&nbsp;A schema that assigns type to elements in the &#xA;http://namespaces.cafeconleche.org/xmljava/ch2/ namespace">Example&nbsp;2.21</a>.
+    This schema can be used to validate a complete SOAP request that 
+    has a <tt>getQuote</tt>
+    body element. 
+    If you wanted to validate the other SOAP documents in this chapter that use
+    other elements in the header and body, you&#8217;d just need to write
+    declarations for those elements too. They could be placed in 
+    the master schema, trading.xsd, or their own schema documents, whichever seems most
+    convenient.
+  </p><div class="example"><a name="trading-soap.xsd"></a><p class="title"><b>Example&nbsp;2.25.&nbsp;A Master Schema for SOAP Trading documents</b></p><pre class="programlisting">&lt;?xml version="1.0"?&gt;
+&lt;xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="http://schemas.xmlsoap.org/soap/envelope/"&gt;
+
+  &lt;!-- Standard SOAP schemas --&gt;
+  &lt;xsd:include 
+    schemaLocation="http://schemas.xmlsoap.org/soap/envelope/"
+  /&gt;
+  &lt;xsd:import 
+    schemaLocation="http://schemas.xmlsoap.org/soap/encoding/"
+    namespace="http://schemas.xmlsoap.org/soap/encoding/" 
+  /&gt;
+
+  &lt;!-- Local schema --&gt;
+  &lt;xsd:import schemaLocation="trading.xsd"
+    namespace="http://namespaces.cafeconleche.org/xmljava/ch2/"
+  /&gt;  
+  
+&lt;/xsd:schema&gt;
+</pre></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch02s05.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch02.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch02s07.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">XML-RPC&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Custom Protocols</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+July 20,
+2001</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

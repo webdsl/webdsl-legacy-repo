@@ -1,0 +1,500 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>XPath Engines</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="previous" href="ch16s04.html" title="Expressions"><link rel="next" href="ch16s06.html" title="DOM Level 3 XPath"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"><link rel="subsection" href="ch16s05.html#d0e29119" title="XPath with Saxon"><link rel="subsection" href="ch16s05.html#d0e29364" title="XPath with Xalan"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">XPath Engines</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch16s04.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;16.&nbsp;XPath</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch16s06.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e29028"></a>XPath Engines</h2></div></div><p>
+   There are several good open source XPath engines for Java,
+   most distributed as part of XSLT processors. These include:
+  </p><div class="variablelist"><dl><dt><span class="term"><a href="http://saxon.sourceforge.net" target="_top">Saxon 6.5.x</a></span></dt><dd><p>A very fast XSLT 
+      processor written by Michael Kay. It&#8217;s distributed under
+      the Mozilla Public License 1.0.
+      This is the processor I used to generate this book.
+      (Saxon 7.x is also available, but it&#8217;s an incomplete
+      experimental implementation 
+      of XPath 2.0, which itself likely won&#8217;t be finished until sometime in 2003.
+      Both the Saxon 6.5 API and XPath 1.0 are much more stable and bug-free.)</p></dd><dt><span class="term"><a href="http://xml.apache.org/xalan-j" target="_top">Xalan-J</a></span></dt><dd><p>An XSLT processor used by several
+      Apache XML projects including Cocoon. It is of course 
+      distributed under the Apache license. If you happen to work for one of those
+      dinosaur companies with a firm policy against using free software
+      you can buy the same product from IBM under the name 
+      <a href="http://www.alphaworks.ibm.com/tech/LotusXSL" target="_top">LotusXSL</a>.</p></dd><dt><span class="term"><a href="http://jaxen.sourceforge.net" target="_top">Jaxen</a></span></dt><dd><p>A stand-alone XPath implementation that works with 
+      DOM, JDOM, dom4j, and ElectricXML.</p></dd></dl></div><p>
+   Unfortunately, although the XPath data model and expression
+   syntax are standardized, the API for integrating them into your
+   Java programs is not. Each separate XPath 
+   engine does things differently. Saxon uses a custom
+   DOM implementation and does not work with other DOM
+   implementations like Xerces or Crimson.
+   Xalan-J is also based on the DOM, but only requires a generic DOM. It 
+   isn&#8217;t limited to just the Apache XML Project&#8217;s Xerces DOM.
+   Jaxen can work with any underlying data model, but the API
+   still isn&#8217;t portable to other XPath engines.
+   Other implementations do something
+    different still. This means that your code tends to get
+    fairly closely tied to the XPath engine you choose.
+  </p><p>
+    To demonstrate the different APIs, let&#8217;s revisit
+    the Fibonacci SOAP client from <a href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java">Chapter&nbsp;3</a>.
+    However, this time we&#8217;ll use XPath to extract just the parts
+    we want.
+    Recall that the body of each request document 
+    contains a <tt>calculateFibonacci</tt> 
+    element in the 
+    <tt>http://namespaces.cafeconleche.org/xmljava/ch3/</tt>
+    namespace.
+    This element contains a single positive integer:
+  </p><div class="informalexample"><pre class="programlisting">&lt;?xml version="1.0"?&gt;
+&lt;SOAP-ENV:Envelope
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" &gt;
+  &lt;SOAP-ENV:Body&gt;
+    &lt;calculateFibonacci 
+      xmlns="http://namespaces.cafeconleche.org/xmljava/ch3/"
+      type="xsi:positiveInteger"&gt;5&lt;/calculateFibonacci&gt;
+  &lt;/SOAP-ENV:Body&gt;
+&lt;/SOAP-ENV:Envelope&gt;</pre></div><p>
+     The server responds with a list of Fibonacci numbers
+    enclosed in a SOAP response envelope.
+  For example, here&#8217;s the response to a request for the first 
+  five Fibonacci numbers:
+  </p><div class="informalexample"><pre class="programlisting">&lt;?xml version="1.0"?&gt;
+&lt;SOAP-ENV:Envelope
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" /&gt;
+  &lt;SOAP-ENV:Body&gt;
+    &lt;Fibonacci_Numbers 
+      xmlns="http://namespaces.cafeconleche.org/xmljava/ch3/"&gt;
+      &lt;fibonacci index="1"&gt;1&lt;/fibonacci&gt;
+      &lt;fibonacci index="2"&gt;1&lt;/fibonacci&gt;
+      &lt;fibonacci index="3"&gt;2&lt;/fibonacci&gt;
+      &lt;fibonacci index="4"&gt;3&lt;/fibonacci&gt;
+      &lt;fibonacci index="5"&gt;5&lt;/fibonacci&gt;
+    &lt;/Fibonacci_Numbers&gt;
+  &lt;/SOAP-ENV:Body&gt;
+&lt;/SOAP-ENV:Envelope&gt;</pre></div><p>
+  The client needs to find all the <tt>fibonacci</tt>
+  elements. There are many XPath expressions which will do
+  this, the most obvious of which are:
+</p><div class="informalexample"><pre class="programlisting">//fibonacci
+/SOAP-ENV:Envelope/SOAP-ENV:Body/Fibonacci_Numbers/fibonacci</pre></div><p>  
+  However, there&#8217;s a catch. XPath expressions cannot
+  match the default namespace. That is, the <tt>fibonacci</tt>
+  element in the expression is in no namespace at all.
+  It will not match <tt>fibonacci</tt> elements in the
+  <tt>http://namespaces.cafeconleche.org/xmljava/ch3/</tt> namespace.
+  So instead you have to give it a prefix, even though it doesn&#8217;t have one in the
+  original document. For example,
+</p><div class="informalexample"><pre class="programlisting">//f:fibonacci
+/SOAP-ENV:Envelope/SOAP-ENV:Body/f:Fibonacci_Numbers/f:fibonacci</pre></div><p>
+  Having assigned it a prefix, you then have to map that prefix
+  to a namespace URI. Indeed you have to do this for the
+  <tt>SOAP-ENV</tt> prefix as well since the  prefix
+  will be used in a Java program instead of in the XML document
+  where it was defined. Exactly how you do this varies from API
+  to API, but generally you&#8217;ll pass some collection of namespace
+  bindings as an argument to the method that evaluates the
+  expression, as well as the expression itself. 
+</p><p>
+  The second of these two location paths is more efficient in general.
+  The <tt>//</tt> operator, and indeed any location step
+  that uses the descendant, descendant-or-self, ancestor, or
+  ancestor-or-self axis is generally going to be slow relative to
+  a more explicit spelling out of the hierarchy you expect.
+  On the other hand, these axes are much more robust against
+  unexpected changes in document structure. For example, 
+  <tt>//f:fibonacci</tt> would work even if somebody sent
+  you an incorrect but well-formed  document that left out the
+  <tt>SOAP-ENV:Body</tt> element or used the SOAP 1.2
+  namespace instead of the SOAP 1.1 namespace. The more explicit
+  path 
+  <tt>/SOAP-ENV:Envelope/SOAP-ENV:Body/f:Fibonacci_Numbers/f:fibonacci</tt>
+  would not. Generally I recommend starting with the most robust
+  path possible, and only using the more explicit paths if
+  profiling proves performance is a problem. In the latter case, I
+  would also seriously consider checking each document I received
+  against a schema, and rejecting it immediately if it wasn&#8217;t
+  valid.
+</p><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e29119"></a>XPath with Saxon</h3></div></div><p>
+    The Saxon 6.5 API is rather convoluted and involves  
+    over 200 different classes in 18 different packages.
+   
+    Fortunately you can ignore most of these for basic XPath
+    searching. The most common 
+    sequence of steps to search a document is: 
+  </p><div class="orderedlist"><ol type="1"><li><p>Use JAXP to a build a Saxon
+      <tt>Document</tt> object</p></li><li><p>Attach the document to a 
+      <tt>Context</tt> object.</p></li><li><p>Declare the namespaces  used in the XPath expressions in a
+      <tt>StandaloneContext</tt>.</p></li><li><p>Make an 
+      <tt>Expression</tt> from the <tt>StandaloneContext</tt>
+      and the string form of your XPath expression.</p></li><li><p>Evaluate the  
+      <tt>Expression</tt> to return
+      one of the four XPath data types.</p></li></ol></div><p>
+    Saxon requires a custom DOM that has been annotated with the
+    information it needs. You can&#8217;t just pass in a Xerces DOM or
+    a Crimson DOM. Thus before you use JAXP to parse the document
+    you have to set the <tt>javax.xml.parsers.DocumentBuilderFactory</tt>
+    system property
+    to  <tt>com.icl.saxon.om.DocumentBuilderFactoryImpl</tt>.
+    Since you know this at compile time and do <span class="emphasis"><em>not</em></span>
+    want to allow the user to change it at runtime,
+    use
+    <tt>System.setProperty()</tt> in your code rather than passing it in
+    on the command line. In case
+    other parts of the program are using a different
+    implementation,
+    you should save the old value and restore it when you&#8217;re done.
+    Otherwise, parsing a document with Saxon is just like using
+    any other parser. For example,
+  </p><div class="informalexample"><pre class="programlisting">  String oldFactory = System.getProperty(
+   "javax.xml.parsers.DocumentBuilderFactory");
+  System.setProperty("javax.xml.parsers.DocumentBuilderFactory",
+   "com.icl.saxon.om.DocumentBuilderFactoryImpl");
+   factory.setNamespaceAware(true); 
+   
+  // Use the factory...
+  
+  if (oldFactory != null) {
+    System.setProperty(
+     "javax.xml.parsers.DocumentBuilderFactory", oldFactory);
+  }</pre></div><p>
+    Once you&#8217;ve set the <tt>DocumentBuilderFactory</tt>,
+    parse the input document as normal to produce a DOM
+    <tt>Node</tt> 
+    or <tt>Document</tt> object.
+    The exact type doesn&#8217;t really matter because you&#8217;ll
+    immediately cast this to the Saxon implementation class
+    <tt>com.icl.saxon.om.NodeInfo</tt>.
+    For example,
+  </p><div class="informalexample"><pre class="programlisting">  DocumentBuilder builder = factory.newDocumentBuilder();
+  InputSource data = new InputSource(in); // InputSource is a SAX class
+  Node doc = builder.parse(data); // Node is a DOM interface
+  NodeInfo info = (NodeInfo) doc; // NodeInfo is a Saxon class</pre></div><p>
+    You&#8217;ll notice that Saxon freely mixes classes from SAX,
+    DOM, TrAX, JAXP, and its internal implementation.
+    A typical Saxon program imports a lot of packages.
+  </p><p>
+    Before this document can be searched, you&#8217;ll need to establish
+    it as an XPath context node.
+    Saxon uses the <tt>com.icl.saxon.Context</tt>
+    class to represent context nodes. This is constructed with a
+    no-args constructor. You then set its context node with the
+    aptly named
+    <tt>setContextNode()</tt>
+    method like this:
+  </p><div class="informalexample"><pre class="programlisting">  Context context = new Context();
+  context.setContextNode(info);</pre></div><p>
+    Here the root node is the context node. However, you could
+    use standard DOM methods to navigate through the tree and
+    find another node to serve as the context node. Personally,
+    I prefer to leave as much of the navigation work to XPath
+    as possible.
+  </p><p>
+    The document we&#8217;ve just parsed defines its own namespace
+    prefixes and URIs. However, these may not be the same ones
+    used in the XPath expression. In particular, any default
+    namespaces in the document will have to be mapped to prefixes
+    in the XPath expression. As always in XPath, the namespaces
+    matter. The prefixes don&#8217;t. There are two prefixes to map,
+    <tt>SOAP-ENV</tt> and <tt>f</tt>.
+    A Java program is not an XML document
+   so these can&#8217;t be mapped in the customary way with
+   <tt>xmlns</tt>
+   attributes. Instead they have to be added to 
+   a Saxon <tt>com.icl.saxon.expr.StandaloneContext</tt> object.
+   Each such object needs access to the document&#8217;s  
+   <tt>com.icl.saxon.om.NamePool</tt>
+   to which the necessary namespaces can be added.    
+   This is all set up thusly:
+  </p><div class="informalexample"><pre class="programlisting">  DocumentInfo docInfo = info.getDocumentRoot();
+  NamePool pool = docInfo.getNamePool();
+  StandaloneContext sc = new StandaloneContext(pool);
+  sc.declareNamespace("SOAP-ENV", 
+   "http://schemas.xmlsoap.org/soap/envelope/");
+  sc.declareNamespace("f", 
+   "http://namespaces.cafeconleche.org/xmljava/ch3/");</pre></div><p>
+    That does it for the preliminaries. We&#8217;re finally ready to
+    search the document with XPath.
+    The Saxon class that both represents and evaluates XPath
+    expressions is
+    <tt>com.icl.saxon.expr.Expression</tt>.
+    You pass a <tt>String</tt> containing the
+    XPath expression and the
+    <tt>StandaloneContext</tt> object
+    to the static <tt>Expression.make()</tt> factory method.
+    This returns an <tt>Expression</tt> object.
+    You then pass the <tt>Context</tt> object 
+    and a boolean 
+    specifying whether you want the 
+    result to be sorted in document order 
+    to
+    the <tt>enumerate()</tt> method.
+    This returns a <tt>com.icl.saxon.om.NodeEnumeration</tt>,
+    one of Saxon&#8217;s representations of node-sets. For example,
+  </p><div class="informalexample"><pre class="programlisting">Expression xpath = Expression.make(
+ "/SOAP-ENV:Envelope/SOAP-ENV:Body/f:Fibonacci_Numbers/f:fibonacci", 
+ sc);
+NodeEnumeration enum = xpath.enumerate(context, true);
+while (enum.hasMoreElements()) {
+  NodeInfo result = enum.nextElement();
+  System.out.println(result.getStringValue());
+}</pre></div><p>
+   The <tt>NodeEnumeration</tt> class 
+   is modeled after (but does not extend)
+   the <tt>Enumeration</tt>
+   interface in the <tt>java.util</tt> package. It allows you to
+   iterate through the returned node-set. Each node in this set
+   implements the Saxon <tt>NodeInfo</tt>
+   interface. The <tt>getStringValue()</tt>
+   method in this interface returns the XPath string-value of
+   that node. 
+ </p><p>
+   <tt>NodeEnumeration</tt> is limited to a single
+   use. That is, you cannot set it back to its beginning and
+   iterate through a second time. If you need a persistent
+   result, you can  call
+   <tt>evaluateAsNodeSet()</tt> which returns 
+   a <tt>com.icl.saxon.expr.NodeSetValue</tt>
+   instead. You can then sort and enumerate this object repeatedly. For
+   example,
+ </p><div class="informalexample"><pre class="programlisting">Expression xpath = Expression.make(
+ "/SOAP-ENV:Envelope/SOAP-ENV:Body/f:Fibonacci_Numbers/f:fibonacci", 
+ sc);
+NodeSetValue set = xpath.evaluateAsNodeSet(context);
+set.sort();
+NodeEnumeration enum = set.enumerate();
+while (enum.hasMoreElements()) {
+  NodeInfo result = enum.nextElement();
+  System.out.println(result.getStringValue());
+}</pre></div><p>
+  Alternately, if you want the expression to return 
+  a number, string, or boolean, you can call one of these three 
+  methods instead:
+</p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">boolean&nbsp;</span><span class="methodname"><b>evaluateAsBoolean</b></span>(<span class="methodparam"><span class="type">Context&nbsp;</span><span class="parameter"><i>context</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">XPathException</span>;</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">double&nbsp;</span><span class="methodname"><b>evaluateAsNumber</b></span>(<span class="methodparam"><span class="type">Context&nbsp;</span><span class="parameter"><i>context</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">XPathException</span>;</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>evaluateAsString</b></span>(<span class="methodparam"><span class="type">Context&nbsp;</span><span class="parameter"><i>context</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">XPathException</span>;</code><p>
+  If the expression returns the wrong type, then 
+  Saxon will convert the result as if by the XPath
+  <tt>number()</tt>, 
+  <tt>string()</tt>, or
+  <tt>boolean()</tt> function.
+  The only conversion  Saxon can&#8217;t perform is a primitive type to
+  a node-set. If you try to evaluate an expression that returns 
+  one of the three basic types as a node-set, then 
+  <tt>evaluateAsNodeSet()</tt> throws an
+   <tt>XPathException</tt>.
+</p><p>
+  I can now show you the complete method that takes as an
+  argument the <tt>InputStream</tt> from which the
+  response document 
+  will be read and searches out the relevant parts with XPath:
+</p><div class="informalexample"><pre class="programlisting">  public static void readResponse(InputStream in) 
+   throws IOException, SAXException,  XPathException, 
+   ParserConfigurationException, TransformerException {
+
+    String oldFactory = System.getProperty(
+     "javax.xml.parsers.DocumentBuilderFactory");
+    System.setProperty(
+     "javax.xml.parsers.DocumentBuilderFactory",
+     "com.icl.saxon.om.DocumentBuilderFactoryImpl");
+    DocumentBuilderFactory factory 
+     = DocumentBuilderFactory.newInstance();
+    factory.setNamespaceAware(true);   
+    
+    DocumentBuilder builder = factory.newDocumentBuilder();
+     
+    InputSource data = new InputSource(in);
+    Node doc = builder.parse(data);
+    NodeInfo info = (NodeInfo) doc;
+    Context context = new Context();
+    context.setContextNode(info);
+
+    NamePool pool = info.getDocumentRoot().getNamePool();
+    StandaloneContext sc = new StandaloneContext(pool);
+    sc.declareNamespace("SOAP", 
+     "http://schemas.xmlsoap.org/soap/envelope/");
+    sc.declareNamespace("f", 
+     "http://namespaces.cafeconleche.org/xmljava/ch3/");
+
+    Expression xpath = Expression.make(
+     "/SOAP:Envelope/SOAP:Body/f:Fibonacci_Numbers/f:fibonacci", 
+     sc);
+    NodeEnumeration enum = xpath.enumerate(context, true);
+    while (enum.hasMoreElements()) {
+      NodeInfo result = enum.nextElement();
+      System.out.println(result.getStringValue());
+    }
+    
+    // Restore the original factory
+    if (oldFactory != null) {
+      System.setProperty(
+       "javax.xml.parsers.DocumentBuilderFactory", oldFactory);
+    }
+
+  }</pre></div><p>
+    Honestly, this is a little convoluted and perhaps more 
+    complex than the pure DOM, JDOM, or SAX equivalent.
+    However, the advantage is that the code is never
+    <span class="emphasis"><em>more</em></span>
+    complex than this. As the documents you&#8217;re searching grow in
+    complexity, the XPath expressions become only slightly more
+    complex and the Java code becomes no more complex than what
+    you see here. The more details you can defer to the
+    declarative XPath syntax the simpler and more robust your
+    program will be. 
+  </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e29364"></a>XPath with Xalan</h3></div></div><p>
+    The Xalan-J XSLT processor from the Apache XML Project also
+    includes an XPath API that&#8217;s useful for navigation
+    in DOM programs. Underneath the hood,
+    the
+    basic design is strikingly similar to Saxon&#8217;s for two independently 
+    developed programs. However, Xalan does have one class that
+    Saxon doesn&#8217;t which significantly simplifies life for
+    developers, <tt>org.apache.xpath.XPathAPI</tt>. 
+    This
+    class, shown in <a href="ch16s05.html#CompactXPathAPI.java" title="Example&nbsp;16.5.&nbsp;The Xalan XPathAPI class">Example&nbsp;16.5</a>
+    provides static methods that
+    handle many simple use-cases without lots of preliminary configuration. 
+  </p><div class="example"><a name="CompactXPathAPI.java"></a><p class="title"><b>Example&nbsp;16.5.&nbsp;The Xalan XPathAPI class</b></p><pre class="programlisting">package org.apache.xpath;
+
+public class XPathAPI {
+
+  public static Node selectSingleNode(Node context, String xpath)
+   throws TransformerException;
+  public static Node selectSingleNode(Node context, String xpath, 
+   Node namespaceContextNode) throws TransformerException;
+  public static NodeIterator selectNodeIterator(Node context, 
+   String xpath) throws TransformerException;
+  public static NodeIterator selectNodeIterator(Node context, 
+   String xpath, Node namespaceContextNode) 
+   throws TransformerException;
+  public static NodeList selectNodeList(Node context, 
+   String xpath) throws TransformerException;
+  public static NodeList selectNodeList(Node context, 
+   String xpath, Node namespaceContextNode)
+   throws TransformerException;
+  public static XObject eval(Node context, String xpath)
+   throws TransformerException;
+  public static XObject eval(Node context, String xpath, 
+   Node namespaceContextNode) throws TransformerException;
+  public static XObject eval(Node context, String xpath, 
+   PrefixResolver prefixResolver) throws TransformerException;
+   
+}
+</pre></div><p>
+   Each method in this class takes two or three arguments:
+  </p><div class="itemizedlist"><ul type="disc"><li><p>The context node as a DOM <tt>Node</tt> object</p></li><li><p>The XPath expression as a <tt>String</tt></p></li><li><p>The namespace prefix mappings as a DOM <tt>Node</tt> object
+  or a Xalan <tt>PrefixResolver</tt> object.
+  This can be omitted if the XPath expression does not use any namespace prefixes.</p></li></ul></div><p>
+    The methods differ primarily in return type. There are four
+    possible return types:
+  </p><div class="itemizedlist"><ul type="disc"><li><p>A single DOM <tt>Node</tt></p></li><li><p>A DOM <tt>NodeList</tt></p></li><li><p>A DOM traversal  <tt>NodeIterator</tt></p></li><li><p>A Xalan <tt>XObject</tt></p></li></ul></div><p>
+    The first three types you&#8217;ve encountered in previous
+    chapters. I won&#8217;t say anything more about them here except
+    not to use the methods that only return a single 
+    <tt>Node</tt>. They are fragile against
+    unexpected changes in document format. Trust me on this one.
+    No matter how sure you are that all the documents you&#8217;re
+    processing
+    contain exactly one node that matches an XPath expression,
+    sooner or later you&#8217;re going to encounter a document that
+    is either missing the node completely or has two or more.
+    List iteration is far more reliable than selecting a single
+    node. If you disregard this warning and use <tt>selectSingleNode()</tt>
+    anyway, then by all means use a schema to validate your
+    document before accepting it for processing.
+  </p><p>
+    The <tt>XObject</tt> type is new. This is a
+    class in the <tt>org.apache.xpath.objects</tt> 
+    package that represents the various kinds of XPath objects
+   &#8212;string, number, boolean, and node-set&#8212;as well
+    as a few XSLT objects&#8212;result tree fragment, unknown
+    types, and unresolved variables. This class has a number of
+    methods, mostly intended for use in XSLT. For XPath, all you
+    really need are these five methods for converting an <tt>XObject</tt>
+    to a more specific type:
+  </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">boolean&nbsp;</span><span class="methodname"><b>bool</b></span>()<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">TransformerException</span>;</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">double&nbsp;</span><span class="methodname"><b>num</b></span>()<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">TransformerException</span>;</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>str</b></span>()<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">TransformerException</span>;</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">NodeIterator&nbsp;</span><span class="methodname"><b>nodeset</b></span>()<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">TransformerException</span>;</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">NodeList&nbsp;</span><span class="methodname"><b>nodelist</b></span>()<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">TransformerException</span>;</code><p>
+    The last two methods only work if the
+    <tt>XObject</tt> returned by the 
+    <tt>eval()</tt> method
+    is in fact a node-set. Otherwise, they throw a
+    <tt>TransformerException</tt>.
+  </p><p>
+    For the sake of comparison, let&#8217;s look at how we&#8217;d use these
+    classes to solve the Fibonacci SOAP client problem addressed
+    earlier by Saxon. 
+  </p><div class="informalexample"><pre class="programlisting">  public static void readResponse(InputStream in) 
+   throws IOException, SAXException, TransformerException,
+   ParserConfigurationException {
+
+    DocumentBuilderFactory factory 
+     = DocumentBuilderFactory.newInstance();
+    factory.setNamespaceAware(true);   
+    DocumentBuilder builder = factory.newDocumentBuilder();    
+    
+    InputSource data = new InputSource(in);
+    Node doc = builder.parse(data);
+    
+    // set up a document purely to hold the namespace mappings
+    DOMImplementation impl = builder.getDOMImplementation();
+    Document namespaceHolder = impl.createDocument(
+     "http://namespaces.cafeconleche.org/xmljava/ch3/", 
+     "f:namespaceMapping", null);
+    Element root = namespaceHolder.getDocumentElement();
+    root.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:SOAP",
+     "http://schemas.xmlsoap.org/soap/envelope/");
+    root.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:f",
+     "http://namespaces.cafeconleche.org/xmljava/ch3/");
+
+    NodeList results = XPathAPI.selectNodeList(doc, 
+     "/SOAP:Envelope/SOAP:Body/f:Fibonacci_Numbers/f:fibonacci", 
+     root);
+    for (int i = 0; i &lt; results.getLength(); i++) {
+      Node result = results.item(i);
+      XObject value = XPathAPI.eval(result, "string()");
+      System.out.println(value.str());
+    }
+
+  }</pre></div><p>
+    The input document is parsed in the usual way with the JAXP
+    <tt>DocumentBuilder</tt> class.
+    JAXP is also used to create a new <tt>Element</tt> 
+    that provides 
+    namespace bindings for  the XPath expression. Alternately, I
+    could have implemented the 
+    <tt>org.apache.xml.utils.PrefixResolver</tt>
+    interface in a separate class
+    and used that instead, but using a node is simpler. 
+  </p><p>
+    The XPath expression, the input document, and the
+    context node (the root element here) are passed to
+    <tt>XPathAPI.selectNodeList()</tt> to find all the matching elements.
+    This returns a standard DOM
+    <tt>NodeList</tt> which can be iterated
+    through in the usual way.
+    The last XPath axis in the expression, child, is a forward axis
+    so this list is sorted in document order. 
+     The string-value of each node in this list is determined by 
+     calling the XPath <tt>string()</tt> function 
+     with the node as the context. 
+     This returns an instance of the Xalan class <tt>XObject</tt>
+     which can be converted to a Java
+     <tt>String</tt> using the 
+     <tt>str()</tt> method.
+     The final result is printed on
+     <tt>System.out</tt>. 
+  </p><p>
+    One crucial difference you&#8217;ll note between Xalan and Saxon is
+    that at no point does Xalan require or use any specific
+    classes from the DOM implementation. All the DOM nodes are
+    generic DOM nodes. Thus in theory 
+    this same code should work with any DOM2 and JAXP 1.1
+    compliant implementation.
+    In practice, I&#8217;ve verified that it does work with 
+    Xerces and Crimson but not with GNU JAXP.
+  </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch16s04.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch16.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch16s06.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Expressions&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;DOM Level 3 XPath</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+April 28,
+2003</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

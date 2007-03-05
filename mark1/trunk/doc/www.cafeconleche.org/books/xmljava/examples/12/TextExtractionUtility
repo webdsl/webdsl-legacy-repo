@@ -1,0 +1,29 @@
+import org.w3c.dom.*;
+import org.w3c.dom.traversal.*;
+
+
+public class TextExtractor {
+
+  public static String getText(Node node) {
+    
+    if (node == null) return "";
+    
+    // Set up the iterator
+    Document doc = node.getOwnerDocument();
+    DocumentTraversal traversable = (DocumentTraversal) doc;
+    int whatToShow 
+     = NodeFilter.SHOW_TEXT | NodeFilter.SHOW_CDATA_SECTION;
+    NodeIterator iterator = traversable.createNodeIterator(node, 
+     whatToShow, null, true);
+     
+    // Extract the text
+    StringBuffer result = new StringBuffer();
+    Node current;
+    while ((current = iterator.nextNode()) != null) {
+      result.append(current.getNodeValue());
+    }
+    return result.toString();
+    
+  }
+
+}

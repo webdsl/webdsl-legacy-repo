@@ -1,0 +1,720 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>XML Parsers</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="previous" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="next" href="ch05s03.html" title="SAX"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"><link rel="subsection" href="ch05s02.html#d0e7095" title="Choosing an XML API"><link rel="subsection" href="ch05s02.html#d0e7217" title="Choosing an XML Parser"><link rel="subsection" href="ch05s02.html#d0e7346" title="Available Parsers"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">XML Parsers</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch05.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;5.&nbsp;Reading XML</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch05s03.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e7024"></a>XML Parsers</h2></div></div><p>
+      In order to avoid the difficulties inherent in parsing raw XML input,
+      almost all programs that need to process XML documents rely on an XML parser
+      to actually read the document. The parser is a software library
+      (in Java it&#8217;s a class) that reads the XML document and checks it for well-formedness.
+      Client applications use method calls defined in the parser API 
+      to receive or request information the parser retrieves from the 
+      XML document.
+    </p><p>
+      The parser shields the client application from all the complex and 
+      not particularly relevant details of XML including:
+    </p><div class="itemizedlist"><ul type="disc"><li><p>Transcoding the document to Unicode</p></li><li><p>Assembling the different parts of a document divided into multiple entities.</p></li><li><p>Resolving character references</p></li><li><p>Understanding CDATA sections</p></li><li><p>Checking hundreds of well-formedness constraints</p></li><li><p>Maintaining a list of the namespaces in-scope on 
+      each element.</p></li><li><p>Validating the document against its DTD or schema</p></li><li><p>Associating unparsed entities with particular URLs and notations</p></li><li><p>Assigning types to attributes</p></li></ul></div><p>
+      One of the original goals of XML was that it be simple enough that 
+      a &#8220;Desperate Perl Hacker&#8221; (DPH)
+      be able to write an XML parser. The exact interpretation of this
+      requirement varied from person to person. On one extreme, 
+      the DPH was assumed
+      to be a Web designer accustomed to writing CGI scripts 
+      without any formal training
+      in programming who was going to hack it together in a weekend. 
+      On the other extreme, the DPH was assumed to be Larry Wall 
+      and he was allowed two months
+      for the task.
+      The middle ground was a smart grad student and a couple of weeks. 
+    </p><p>
+      Whichever way you interpreted the requirement, it wasn&#8217;t met.
+      In fact, it took Larry Wall more than a couple of months
+      just to add the Unicode support to Perl that XML assumed. 
+      Java developers already had adequate Unicode support, however;
+      and thus Java parsers were a lot faster out the gate.
+      Nonetheless, it still probably isn&#8217;t possible to write a 
+      fully conformant XML
+      parser in a weekend, even in Java. Fortunately, however,
+      you don&#8217;t need to. There are several dozen XML parsers
+      available under a variety of licenses that you can use.
+      In 2002, there&#8217;s very little need for any programmer 
+      to write their own parser. Unless you have very unusual
+      requirements, the chance that you can write a better parser
+      than Sun, IBM, the Apache XML Project, and numerous others 
+      have already written is quite small. 
+    </p><p>
+      Java 1.4 is the first version of Java to include an
+      XML parser as a standard feature. In earlier versions of
+      Java,
+      you need to download a parser from the Web and install it in the 
+      usual way, typically by putting its .jar file in your 
+      <tt>jre/lib/ext</tt> directory. 
+      Even in Java 1.4, you may well
+      want to replace the standard parser with a different one
+      that provides additional features or is simply faster on
+      your documents. 
+    </p><div class="caution" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Caution</h3><p>
+       If you&#8217;re using Windows, then chances are good you have
+       two different <tt>ext</tt> 
+       directories, one where you installed the
+       JDK such as <tt>C:\jdk1.3.1\jre\lib\ext</tt> and one in your
+       <tt>Program Files</tt> folder, probably 
+       <tt>C:\Program Files\Javasoft\jre\1.3.1\lib\ext</tt>. 
+       The first is used for compiling Java programs, the second
+       for running them. 
+       To install a new class library you
+       need to place the relevant JAR file in 
+       <span class="emphasis"><em>both</em></span> directories.
+       It is not sufficient to place the JAR archive in one and a
+       shortcut in the other. You need to place full copies 
+       in each <tt>ext</tt> directory. 
+     </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e7095"></a>Choosing an XML API</h3></div></div><p>
+        The most important decision you'll make at the start of an XML project
+        is the 
+        application programming interface (API) you'll use.
+        Many APIs are implemented by multiple vendors, 
+        so if the specific parser gives you trouble you can swap in an alternative,
+        often without even recompiling your code. 
+        However, if you choose the wrong API, changing to a different one
+        may well involve redesigning and
+        rebuilding the entire application from scratch.
+        Of course, as Fred Brooks taught us, 
+        &#8220;In most projects, the first system built
+        is barely usable. It may be too slow, too big, awkward to use, or all three.
+        There is no alternative but to start again, smarting but smarter,
+        and build a redesigned version in which these problems are solved.&#8230; Hence
+<span class="emphasis"><em>plan to throw one away; you will, anyhow</em></span>. &#8221;
+<sup>[<a name="d0e7106" href="#ftn.d0e7106">1</a>]</sup>
+        Still, it is much easier to change parsers than APIs.
+      </p><p>
+        There are two major standard APIs for processing XML documents
+        with Java, the Simple API for XML (SAX) and the 
+        Document Object Model (DOM), each of which comes in
+        several versions. In addition there are a host of other,
+        somewhat idiosyncratic APIs including JDOM, dom4j, ElectricXML,
+        and XMLPULL.
+        Finally each specific parser generally has a native API that
+        it exposes below the level of the standard APIs. For instance,
+        the Xerces parser has the Xerces Native Interface (XNI).
+        However, picking such an API limits your choice of parser, and indeed
+        may even tie you to one particular version of the parser 
+        since parser vendors tend not to worry a great deal about maintaining
+        native compatibility between releases. 
+        Each of these APIs has its own strengths and weaknesses.
+      </p><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e7115"></a>SAX</h4></div></div><p>
+        SAX, the Simple API for XML, is the gold standard of XML APIs.
+        It is the most complete and correct by far.
+        Given a fully validating parser that supports all its optional features,
+        there is very little you can&#8217;t do with it. It has one or two holes,
+        but they're really off in the weeds of the XML specifications, 
+        and you have to look pretty hard to find them.
+        SAX is a event driven API. The SAX classes and interfaces
+        model the parser, the stream from which the document is read, 
+        and the
+        client application receiving data from the parser.
+        However, no class models the XML document itself. Instead the parser feeds 
+        content to the client application through a callback interface,
+        much like the ones used in Swing and the AWT. 
+        This makes SAX very fast and very memory efficient 
+        (since it doesn&#8217;t have to
+        store the entire document in memory).
+        However, SAX programs can be harder to design and code because you
+        normally need to develop your own data structures to hold the content
+        from the document.
+      </p><p>
+        SAX works best when your processing is fairly <i>local</i>;
+        that is, when all the information you need to use is close together in 
+        the document. For example, you might process one element at a time.
+        Applications that require access to the entire document at once
+        in order to take useful action would be better served by one of the tree-based APIs
+        like DOM or JDOM.
+        Finally, because SAX is so efficient, it&#8217;s the only real choice for truly huge XML documents.
+        Of course, &#8220;truly huge&#8221; has to be defined relative to available memory.
+        However, if the documents you're processing are in the gigabyte range,
+        you really have no choice but to use SAX.
+      </p></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e7128"></a>DOM</h4></div></div><p>
+        DOM, the Document Object Model, is a fairly complex API that models an
+        XML document as a tree. 
+         Unlike SAX, DOM is a read-write API.
+        It can both parse existing XML documents
+        and create new ones.
+        Each XML document is represented
+        as <tt>Document</tt> object.
+        Documents are searched, queried, and updated by invoking
+        methods on this <tt>Document</tt> 
+        object and the objects
+        it contains. This makes DOM much more convenient when
+        random access to widely separated parts of the original
+        document is required. However, it is quite memory
+        intensive compared to SAX, and not nearly as well suited
+        to streaming applications.
+      </p></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e7139"></a>JAXP</h4></div></div><p>
+        JAXP, the Java API for XML Processing, bundles SAX and DOM
+        together along with some factory classes and the TrAX XSLT API.
+        (TrAX is not a general purpose XML API like SAX and DOM.
+        I'll get to it in <a href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT">Chapter&nbsp;17</a>.) 
+        It is a standard part of Java 1.4 and later. However, 
+        it is not 
+        really a different API.  When starting a new program, you ask yourself
+        whether you should choose SAX or DOM. You don&#8217;t ask yourself whether you
+        should use SAX or JAXP, or DOM or JAXP. SAX and DOM are part of JAXP.
+      </p></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e7146"></a>JDOM</h4></div></div><p>
+        JDOM is a Java-native tree-based API that attempts to remove a lot of 
+        DOM&#8217;s ugliness. The JDOM mission statement is, &#8220;There is no compelling reason 
+        for a Java API to manipulate XML to be complex, tricky, unintuitive, or a pain in the neck,&#8221;
+        and for the most part JDOM delivers.
+        Like DOM, JDOM reads the entire document into memory before it begins to work on it;
+        and the broad outline of JDOM programs tends to be the same as for
+        DOM programs. However, the low-level code is a lot less tricky
+        and ugly than the DOM equivalent. JDOM uses concrete classes and constructors
+        rather than interfaces and factory methods.
+        It uses standard Java coding conventions, methods, and classes 
+        throughout. JDOM programs often flow a lot more naturally than 
+        the equivalent DOM program.
+      </p><p>
+        I think JDOM often does make the easy problems easier;
+        but in my experience JDOM also makes the hard problems harder.
+        Its design shows a very solid understanding of Java,
+        but the XML side of the equation feels much rougher.
+        It&#8217;s missing some crucial pieces like a common node interface or
+        superclass for navigation.
+        JDOM works well (and much better than DOM)
+        on fairly simple documents with no recursion, limited mixed content,
+        and a well-known vocabulary.
+        It begins to show some weakness when asked to process arbitrary XML.
+        When I need to write programs that operate on any XML document,
+        I tend to find DOM simpler despite its ugliness. 
+      </p></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e7156"></a>dom4j</h4></div></div><p>
+        dom4j was forked from the JDOM project fairly early on.
+        Like JDOM, it is a Java-native, tree-based, read-write API for 
+        processing generic XML.
+        However, it uses interfaces and factory methods 
+        rather than concrete classes and constructors.
+        This gives you the ability to plug in your own node classes
+        that put XML veneers on other forms of data such as 
+        objects or database records.
+        (In theory, you could do this with DOM interfaces too; but in practice
+        most DOM implementations are too tightly coupled to interoperate 
+        with each other&#8217;s classes.) 
+        It does have a generic node type that can be used for navigation.       
+      </p></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e7161"></a>ElectricXML</h4></div></div><p>
+       ElectricXML
+        is yet another tree-based API for processing
+        XML documents with Java.  It&#8217;s quite small, 
+        which makes it suitable for use
+        in applets and other storage limited environments.
+        It&#8217;s the only API I mention here that isn&#8217;t open source,
+        and the only one that requires its own parser rather than being able
+        to plug into multiple different parsers. 
+        It&#8217;s gained a reputation as a particularly easy-to-use API.
+        However, I&#8217;m afraid its perceived
+        ease-of-use often stems from catering to developers&#8217;
+        misconceptions about XML.
+        It is far and away the least correct of the tree-based APIs.
+        For instance, it tends to throw away a lot of white space
+        it shouldn&#8217;t; and its namespace handling is poorly designed.
+        Ideally, an XML API should be as simple as it can be 
+        <span class="emphasis"><em>and no simpler</em></span>.
+        In particular, it should not be simpler than XML itself is.
+        ElectricXML pretends that XML is less complex than it really is,
+        which may work for a while as long as your needs are simple,
+        but will ultimately fail when you encounter more complex documents. 
+        The only reason I mention it here is because the flaws in its design 
+        aren&#8217;t always apparent to casual users; and I tend to
+        get a lot of e-mail from ElectricXML users asking me why I&#8217;m ignoring it.
+      </p></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e7169"></a>XMLPULL</h4></div></div><p>
+        SAX is fast and very efficient, but its callback nature 
+        is uncomfortable for some programmers. Recently some effort has gone into
+        developing pull parsers that can read streaming content like SAX does,
+        but only when the client application requests it.
+        The recently published standard API for such parsers is XMLPULL.
+        XMLPULL shows promise for the future (especially for developers who
+        need to read large documents quickly but just don&#8217;t like callbacks).
+        However, pull parsing is still clearly in its infancy. 
+        On the XML side, namespace support is turned off by default.
+        Even worse, XMLPULL ignores the DOCTYPE declaration, even the internal DTD 
+        subset, unless you specifically ask it to read it. 
+        From the Java side of things, XMLPULL does not take advantage 
+        of polymorphism, relying instead on such un-OOP constructs as
+        <tt>int</tt> type codes 
+        to distinguish nodes instead of making them instances of different
+        classes or interfaces. I don&#8217;t think XMLPULL is ready for prime time 
+        quite yet. However, 
+        none of this is unusual for such a new technology. Some of the flaws 
+        I cite were
+        also present in earlier versions of SAX, DOM, and JDOM and were only corrected in 
+        later releases.
+        In the next couple of years, as pull parsing evolves,
+        XMLPULL may become a much more serious competitor to SAX.
+      </p></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e7177"></a>Data Binding</h4></div></div><p>
+        Recently, there&#8217;s been a flood of so-called
+        data binding APIs that try to map
+        XML documents into Java classes. While DOM, JDOM, and dom4j all 
+        map XML documents into Java classes, these data binding APIs attempt to
+        go further, mapping a <tt>Book</tt> document into a
+        <tt>Book</tt> object rather than just a
+        generic <tt>Document</tt> object, for example.
+        These are sometimes useful in very limited and predictable domains.
+        However, they tend to make too many assumptions that simply aren&#8217;t
+        true in the general case to make them broadly suitable for XML processing.
+        In particular, these products tend to implicitly
+        depend on one or more of the following common fallacies:
+      </p><div class="itemizedlist"><ul type="disc"><li><p>Documents have schemas or DTDs.</p></li><li><p>Documents that do have schemas and/or DTDs are valid. </p></li><li><p>Structures are fairly flat and definitely not recursive; 
+    that is, they look pretty much like tables.</p></li><li><p>Narrative documents aren&#8217;t worth considering.</p></li><li><p>Mixed content doesn&#8217;t exist.</p></li><li><p>Choices don&#8217;t exist; that is, 
+elements with the same name tend to have the same children.</p></li><li><p>Order doesn&#8217;t matter.</p></li></ul></div><p>
+          The fundamental flaw in these schemes is an insistence 
+          on seeing the world through object-colored glasses.
+          XML documents can be used for object serialization, 
+          and in that use-case all these assumptions are reasonably accurate;
+          but XML is a lot more general than that.
+          The large majority of XML documents cannot be plausibly 
+          understood as serialized objects,
+         though a
+lot of programmers approach it from that point of view because
+that&#8217;s what they&#8217;re familiar with. When you're an expert with a
+hammer, it&#8217;s not surprising that world looks like it&#8217;s full of
+nails. 
+</p><p>
+          The fact is, XML documents are not objects and schemas are not classes.
+          The constraints and structures that apply to objects simply do not apply to
+          XML elements and vice versa. Unlike Java objects, XML elements routinely
+          violate their declared types, if indeed they even have a type in the first place.
+          Even valid XML elements often have different content in different locations.
+          Mixed content is quite common. Recursive content isn&#8217;t quite
+          as common, but it does exist. 
+          A little more subtly, though even more importantly, XML structures
+          are based on hierarchy and position rather than the explicit pointers
+          of object systems. It is possible to map one to the other,
+          but the resulting structures are ugly and fragile; and you tend to find
+          that when you&#8217;re finished what you&#8217;ve accomplished is merely reinventing
+          DOM.
+      XML needs to be approached and understood on its own terms, not Java&#8217;s.
+          Data binding APIs are just a little too limited to interest me, 
+         and I do not plan to treat them in this book.  
+          </p></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e7217"></a>Choosing an XML Parser</h3></div></div><p>
+      When choosing a parser library many factors come into play.
+      These include what features the parser has, how much it costs,
+      which APIs it implements, how buggy it is,
+      and last and certainly least how fast the parser parses.
+    </p><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e7222"></a>Features</h4></div></div><p>
+     The XML 1.0 specification does allow parsers some leeway in
+     how much of the specification they implement. Parsers can be
+     roughly divided into three categories:
+    </p><div class="itemizedlist"><ul type="disc"><li><p>Fully validating parsers</p></li><li><p>Parsers that do not validate, but do read the
+      external DTD subset and resolve external parameter entity references in order 
+      to supply entity replacement text and assign attribute types</p></li><li><p>Parsers that read only the internal DTD subset and do not validate.</p></li></ul></div><p>
+     In practice there&#8217;s also a fourth category of
+     parsers that reads the instance document but do not
+     perform all the mandated well-formedness checks. Technically
+     such parsers are not allowed by the XML specification, but
+     there are still a lot of them out there. 
+   </p><p>
+     If the documents you&#8217;re processing have DTDs, then you
+     need to use a fully validating parser. You don&#8217;t necessarily
+     have to turn on validation if you don&#8217;t want to. 
+     However, XML is designed in such a way that you really can&#8217;t
+     be sure to get the full content of an XML document without
+     reading its DTD. In some cases, the differences between a document whose
+     DTD has been processed and the same document whose DTD
+     has not been processed can be huge. 
+     For instance, a parser that reads the DTD will report default attribute values;
+     but one that doesn&#8217;t won&#8217;t. The handling of ignorable white space 
+     can vary between a validating parser and one 
+     that merely reads the DTD but does not validate.
+     External entity references will be expanded by a validating parser,
+     but not necessarily by a non-validating parser.
+     You should only use a
+     non-validating parser if you&#8217;re confident none of the
+     documents you&#8217;ll process carry document type declarations.
+     One situation in which this is reasonable is a SOAP server or client, 
+     since SOAP specifically
+     prohibits documents from using <tt>DOCTYPE</tt>
+     declarations. 
+     (Even in that case, though, I still recommend that you check 
+     to see whether there is a <tt>DOCTYPE</tt>
+     declaration and throw an exception if you spot one.)
+   </p><p>
+     Beyond the lines set out by XML 1.0, parsers also differ in
+     their support for subsequent specifications and
+     technologies. 
+     In 2002, all parsers worth considering support namespaces and
+     automatically check for namespace well-formedness as well as
+     XML 1.0 well-formedness. Most of these do allow you to
+     disable these checks for the rare legacy documents that 
+     don&#8217;t adhere to namespaces rules. 
+     Currently Xerces and Oracle are the only Java parsers that
+     support
+     schema validation though other parsers are likely to add
+     this in the future. 
+   </p><p>
+     Some parsers also provide extra information not required for
+     normal XML parsing. For instance, 
+     at your request, Xerces can inform you of the <tt>ELEMENT</tt>,
+     <tt>ATTLIST</tt>, and <tt>ENTITY</tt> 
+     declarations in the DTD.
+     Crimson will not do this, so if you need to read the DTD
+     you&#8217;d pick Xerces over Crimson. 
+     
+     
+   </p></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e7260"></a>API support</h4></div></div><p>
+      Most of the major parsers 
+      support both SAX and DOM. However, there are a few parsers
+      that only support SAX, and at least a couple that only
+      support their own proprietary API. If you want to use DOM
+      or SAX, make sure
+      you pick a parser that can handle it. Xerces and Crimson
+      can.
+    </p><p>
+      SAX actually includes a number of optional features that
+      parsers are not required to support. These include
+      validation, reporting comments, reporting declarations in
+      the DTD, reporting the original text of the pre-parsed 
+      document, and more. If any of these are important to you,
+      you&#8217;ll need to make sure that your parser supports them
+      too.
+    </p><p>
+      The other APIs including JDOM and dom4j generally don&#8217;t
+      provide parsers of their own. Instead they use an existing
+      SAX or DOM parser to read a document which they then
+      convert into their own tree model. Thus they can work with
+      any convenient parser. The notable exception here is
+      ElectricXML which does include its own built-in parser.
+      ElectricXML is optimized for speed and size and does not
+      interoperate well with SAX and DOM. 
+    </p></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e7269"></a>License</h4></div></div><p>
+       One often overlooked consideration when choosing a parser
+       is the license under which the parser is published. Most
+       parsers are free in the free-beer sense, and many are also
+       free in the free-speech sense. However, license
+       restrictions can still get in your way. 
+     </p><p>
+       Since parsers are essentially class libraries that are 
+       dynamically linked to your code (as 
+       all Java libraries are) and since parsers are mostly released
+       under fairly lenient licenses, you don&#8217;t have to worry about
+       viral infections of your code with the GPL. In one case
+       I&#8217;m aware of, &AElig;lfred, any changes you make to the
+       parser itself would have to be donated back to the
+       community; but this would not affect the rest of your
+       classes. That being said, you&#8217;ll be happier and more
+       productive if you do donate your changes back to the
+       communities for the more liberally licensed 
+       parsers like Xerces. It&#8217;s better to have your changes
+       rolled into the main code base than to have to keep
+       applying them every time a new version is released. 
+     </p><p>
+       There actually aren&#8217;t that many parsers you can buy.
+       If your company is really insistent about not using open
+       source software, then you can probably talk IBM into
+       selling you an overpriced license for their XML for Java
+       parser (which is just an IBM-branded version of the open source
+       Xerces). However, there isn&#8217;t a shrink-wrapped parser you
+       can buy; nor is one really needed. The free parsers are
+       more than adequate. 
+     </p></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e7278"></a>Correctness</h4></div></div><p>
+     An often overlooked criterion for choosing a parser is
+     correctness, how much of the relevant specifications 
+     are implemented how well. All of the parsers I&#8217;ve used have
+     had non-trivial bugs in at least some versions. However
+     although no parser is perfect,
+     some parsers are definitely more reliable than others.
+    </p><p>
+     I wish I could say that there was one or more good choices
+     here, but the fact is that every single parser I&#8217;ve ever
+     tried has sooner or later exhibited significant conformance 
+     bugs. Most of the time these fall into two categories:
+    </p><div class="itemizedlist"><ul type="disc"><li><p>Reporting correct constructs as errors</p></li><li><p>Failing to report incorrect syntax.</p></li></ul></div><p>
+      It&#8217;s hard to say which is worse.
+      On the one hand, unnecessarily rejecting
+      well-formed documents prevents you from handling
+      data others send you. 
+      On the other hand, when a parser fails to report incorrect XML
+      documents, it&#8217;s virtually guaranteed to cause 
+      problems for people and systems who receive the 
+      malformed documents and correctly reject them.  
+    </p><p> 
+      One thing I will say is that well-formedness is 
+      the most important criterion of all.  To be seriously
+      considered a parser has to be absolutely perfect in this
+      area, and many aren&#8217;t. A parser must allow you to
+      confidently determine whether a document is or is not
+      well-formed. Validity errors are not quite as important,
+      though they&#8217;re still significant. Many programs can ignore
+      validity and consequently ignore any bugs in the validator.
+    </p><p>
+      Continuing downward in the hierarchy of seriousness
+      are failures to properly implement the standard SAX and DOM
+      APIs. A parser might correctly detect and report all well-formedness
+      and validity errors, but fail to pass on the contents of 
+      the document. For example, it might throw away ignorable
+      white space rather than making it available to the
+      application. Even less serious but still important
+      are violations of the
+      contracts of the various public APIs. For example,
+      DOM guarantees that each <tt>Text</tt>
+      object read from a parsed document will contain the
+      longest possible string of characters uninterrupted by
+      markup. However, I have seen parsers that occasionally
+      passed in adjacent text nodes as separate objects rather
+      than merging them. 
+    </p><p>
+      Java parsers are also subject to a number of edge conditions. 
+      For example, in SAX each attribute value is passed to the
+      client application as a single string. 
+      Because the Java <tt>String</tt> class
+      is backed by an array of chars indexed by an <tt>int</tt>, the
+      maximum number of characters in a <tt>String</tt>
+      is the same as the maximum size of an <tt>int</tt>, 2,147,483,647.
+      However, there is no maximum number of characters that may
+      appear in an attribute value. Admittedly a three gigabyte
+      attribute value doesn&#8217;t seem too likely (perhaps a Base-64
+      encoded video?) and you&#8217;d probably run out of memory long before
+      you bumped up against the maximum size of a string;
+      but nonetheless XML doesn&#8217;t prohibit strings of such
+      lengths and it would be nice to think that Java could at
+      least theoretically 
+      handle all XML documents within the limits of available
+      memory. 
+    </p></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e7315"></a>Efficiency</h4></div></div><p>
+     The last consideration is efficiency, how fast the
+     parser is and how much memory it uses. Let me stress that
+     again: efficiency should be your <span class="emphasis"><em>last</em></span>
+     concern when choosing a parser. As long as you use standard
+     APIs and keep parser-dependent code to a minimum, you can
+     always change the underlying parser later if the one you
+     picked initially proves too inefficient. 
+   </p><p>
+     The speed of parsing tends to be dominated by I/O
+     considerations. If the XML document is served over the
+     network,
+     it&#8217;s entirely possible that the speed with which data can
+     move over the network is the bottleneck, not the
+     XML parsing at all. In situations where the XML is
+     being read from the disk, the time to read the data can
+     still be significant even if it&#8217;s not quite the bottleneck
+     it is in network applications. 
+   </p><p>
+     Anytime you&#8217;re reading data from a disk or the network,
+     you should buffer your streams. You can buffer at the
+     byte level with a <tt>BufferedInputStream</tt> 
+     or at the character
+     level with a <tt>BufferedReader</tt>. 
+     Perhaps a little counter-intuitively, you can gain extra speed
+     by double buffering with both byte and character buffers.
+      However, most parsers are happier if you feed them a raw 
+      <tt>InputStream</tt> and let them convert the bytes to characters 
+     (parsers are normally better at detecting the right
+     encoding than most client code) so I prefer to
+     use just a <tt>BufferedInputStream</tt> 
+    and not a <tt>BufferedReader</tt> unless speed is very important
+    and I&#8217;m very sure of the encoding in advance.
+     If you
+     don&#8217;t buffer your I/O, then total performance is going to be
+     limited by I/O considerations no matter how fast the parser is.
+   </p><p>
+     Complicated programs can also be dominated by
+     processing that happens after the document is parsed.
+     For example, if the XML document lists store locations,
+     and the client application is attempting to solve the 
+     traveling salesman problem for those store locations,
+     then parsing the XML document is the least of your worries.
+     In such a situation, changing the
+     parser isn&#8217;t going to help very much at all. The time taken
+     to parse a document normally grows only linearly with the 
+     size of the document.
+    </p><p>
+     One area where parser choice does make a significant difference
+     is in the amount of memory used. SAX is generally quite
+     efficient no matter which parser you pick. However, DOM is
+     exactly the opposite. Building a DOM tree can easily eat up
+     as much as ten times the size of the document itself. 
+     For example, given a one megabyte document, the DOM object 
+     representing it could be ten megabytes. If you&#8217;re using DOM
+     or any other tree-based API to process large
+     documents, you want a parser that uses
+     as little memory as possible. 
+     The initial batch of DOM-capable parsers were not really
+     optimized for space, but the more recent versions are doing
+     a lot better. With some testing you should be able to find
+     parsers that only use two to three times as much memory as the 
+     original document. 
+     Still, it&#8217;s pretty much
+     guaranteed that the memory usage will be larger than the
+     document itself.
+    </p></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e7346"></a>Available Parsers</h3></div></div><p>
+    I now want to discuss a few of the more popular parsers
+    and the relative advantages and disadvantages of each.
+    </p><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e7351"></a>Xerces</h4></div></div><p>
+       I&#8217;ll begin with my parser of choice,
+       <a href="http://xml.apache.org/xerces-j/" target="_top">Xerces-J</a> 
+        from the Apache XML Project.
+        This is a very complete, validating
+         parser that has the best conformance
+        to the XML 1.0 and Namespaces in XML specifications I&#8217;ve encountered.
+        It fully supports the SAX2 and DOM Level 2 APIs, as well as JAXP,
+        though I have encountered a few bugs in the DOM support.
+        The latest versions feature experimental support
+        for parts of the
+        DOM Level 3 working drafts.
+        Xerces-J is highly configurable and suitable for almost any parsing needs.
+        Xerces-J is also notable for being the only current parser to support the
+        W3C XML Schema Language, though that support is not yet 100% complete or
+        bug-free.
+      </p><p>
+       The Apache XML Project publishes Xerces-J
+       under the very liberal open source Apache license.
+       Essentially, you can do anything you like with it except use
+       the Apache name in your own advertising. 
+       
+       
+       Xerces-J 1.x was based on
+       IBM&#8217;s <a href="http://www.alphaworks.ibm.com/tech/xml4j" target="_top">XML for Java</a> 
+       parser, whose code base IBM donated to the Apache XML Project.
+       Today, the relationship&#8217;s reversed and XML for Java
+       is based on Xerces-J 2.x. However, in both versions
+       there&#8217;s no significant technical difference between
+       Xerces-J and XML for Java. The real differentiation is that   
+       if you work for a large company with a policy against using software
+       from somebody you can&#8217;t easily sue, then you can probably
+       pay IBM a few thousand dollars for a support contract
+       for XML for Java. Otherwise, you might as well
+       just use Xerces-J.
+      </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Note</h3><p>
+          The Apache XML Project also publishes Xerces-C, an
+          open source XML parser written in C++, which is based
+          on IBM&#8217;s XML for C++ product. However,
+          since this is a book about Java, henceforth when you
+          see the undifferentiated name &#8220;Xerces&#8221;
+          it should be understood that I&#8217;m talking strictly about
+          the Java version. 
+        </p></div></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e7370"></a>Crimson</h4></div></div><p>
+        Crimson, previously known as Java Project X, is the parser Sun
+        bundles with the JDK 1.4. 
+        Crimson supports more or less the same APIs
+        and specifications Xerces does&#8212;SAX2, DOM2, JAXP,
+        XML 1.0, Namespaces in XML, etc.
+       &#8212;with the notable exception of schemas.
+        In my experience Crimson is somewhat
+        buggier than Xerces. I&#8217;ve encountered well-formed documents that 
+        Crimson incorrectly reported as malformed, but that Xerces could parse without 
+        any problems. The bugs I&#8217;ve encountered in Xerces all related
+        to validation, not to the more basic criterion of well-formedness.
+      </p><p>
+        The reason Crimson exists is because some Sun engineers
+        disagreed with some IBM engineers about the proper
+        internal design for
+        an XML parser.
+        (Also, the IBM code was so convoluted that nobody outside of IBM could figure
+        it out.)
+        Crimson was supposed to be significantly faster, more scalable, and
+        more memory efficient than Xerces-J and not get soggy in milk either.
+         However whether it&#8217;s actually faster than Xerces (much less significantly
+         faster) is
+        questionable. When first released, Sun claimed that Crimson was several
+        times faster than Xerces. IBM ran the same benchmarks and got almost exactly
+        opposite results. They claimed that Xerces was several times
+        faster than Crimson. After a couple of weeks of hooting and hollering
+        on several mailing lists, the true cause was  tracked down.
+        Sun had heavily optimized Crimson for the Sun virtual machine and just-in-time
+        compiler; and they were naturally running their tests on Sun virtual
+        machines. IBM publishes their
+        own Java virtual machine, and they were optimizing for and benchmarking
+        on their virtual machine. To no one&#8217;s great surprise, 
+        Sun&#8217;s optimizations
+        didn&#8217;t perform nearly as well when run on non-Sun
+        virtual machines; and
+        IBM&#8217;s optimizations
+        didn&#8217;t perform nearly as well when run on non-IBM virtual machines.
+        As Donald Knuth wrote back in 1974 (when machines were a
+        lot slower than they are today), &#8220;premature optimization is
+        the root of all
+        evil.&#8221;<sup>[<a name="d0e7379" href="#ftn.d0e7379">2</a>]</sup>
+        Eventually both Sun and IBM began testing on multiple virtual machines
+        and watching out for optimizations that were too tied to the 
+        architecture of any one virtual machine; and now both Xerces-J 
+        and Crimson seem to run about equally fast on equivalent hardware,
+        regardless of VM. 
+      </p><p>
+        The real benefit to Crimson is that it&#8217;s bundled with the JDK 1.4.
+        (Crimson does work with earlier virtual machines back to Java 1.1. 
+        It just isn&#8217;t bundled with them
+        in the default distribution.)
+        Thus if you know you&#8217;re running in a 1.4 or later environment,
+        you don&#8217;t have to worry about installing extra JAR archives and class
+        libraries just to parse XML. You can write your code to the standard
+        SAX and DOM classes and expect it to work out of the box.
+        If you want to use a non-Crimson parser, then you can still install
+        the JAR files for 
+        Xerces-J or some other parser and load its implementation explicitly.
+        However, in Java 1.3 and earlier (which is the vast majority of the installed
+        base at the time of this writing) you have to include some
+        parser library with your own application. 
+       </p><p>
+        Going forward, Sun and IBM are cooperating
+        on Xerces-2 which will probably become the default parser in the JDK in a future release.
+        Crimson is unlikely to be developed further or gain support
+        for new technologies like XInclude and schemas. 
+       </p></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e7396"></a>&AElig;lfred</h4></div></div><p>
+        The GNU Classpath Extensions Project&#8217;s 
+        <a href="http://www.gnu.org/software/classpathx/jaxp/" target="_top">&AElig;lfred</a> 
+        is actually two parsers,
+        <tt>gnu.xml.aelfred2.SAXDriver</tt> and
+        <tt>gnu.xml.aelfred2.XmlReader</tt>.
+        <tt>SAXDriver</tt> aims for a small footprint
+        rather than a large feature set. It supports XML 1.0 and Namespaces in XML.
+        However, it does not validate
+        and it does not make all the well-formedness
+        checks it should make. It can miss malformed documents, and on rare occasions
+        may even report well-formed documents as malformed.
+        It supports SAX but not DOM.
+        Its small size makes 
+        it particularly well-suited for
+        applets. 
+        
+        For less resource constrained environments, &AElig;lfred
+        provides <tt>XmlReader</tt>, a 
+        validating parser that supports both
+        SAX and DOM.
+      </p><p>
+        &AElig;lfred was originally written by the now defunct Microstar,
+        who placed it in the public domain. David Brownell picked
+        up development of the parser and 
+        brought it under the aegis of the 
+        <a href="http://www.gnu.org/software/classpathx/" target="_top">GNU 
+        Classpath Extensions Project</a>,
+        an attempt to reimplement Sun&#8217;s Java extension libraries
+        (the <tt>javax</tt> packages)
+        as free software.  &AElig;lfred  
+        is published under the GNU General Public License 
+        with library exception. In brief, this means that 
+        as long as you only call &AElig;lfred through its public API 
+        and don&#8217;t modify the source code yourself, 
+        the GPL does not infect your code.
+      </p></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e7424"></a>Piccolo</h4></div></div><p> 
+      Yuval Oren&#8217;s 
+   <a href="http://piccolo.sourceforge.net/" target="_top">Piccolo</a> is the
+    latest entry into the parser arena. It is a very small, very fast, open source,
+    non-validating XML parser. 
+    However, it does read the external DTD subset in order to
+    apply default attribute values and
+    resolve external entity references.
+    Piccolo supports the SAX API exclusively.
+    It does not have a DOM implementation.
+      </p></div></div><div class="footnotes"><br><hr width="100" align="left"><div class="footnote"><p><sup>[<a name="ftn.d0e7106" href="#d0e7106">1</a>] </sup>
+Fred Brooks, <i>The Mythical Man-Month</i>, 
+Anniversary Edition, (Addison-Wesley, 1995) p. 116</p></div><div class="footnote"><p><sup>[<a name="ftn.d0e7379" href="#d0e7379">2</a>] </sup>
+        Donald Knuth, 
+        &#8220;Structured Programming with 
+        <tt>go to</tt> Statements&#8221;, 
+        <i>Computing Surveys 6</i> 
+        (1974): 261-301</p></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch05.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch05.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch05s03.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&nbsp;5.&nbsp;Reading XML&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;SAX</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+July 25,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

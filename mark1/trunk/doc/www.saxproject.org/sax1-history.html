@@ -1,0 +1,197 @@
+<html><head>
+    <title>SAX</title>
+    <style type="text/css"><!--
+	h1, h2, h3, h4, h5, h6 { color: maroon; }
+	/* make sure that goes OK with the nav column background
+	 * net-friendly colors include: yellow/ffffcc, blue/ccccff
+	 */
+    --></style>
+</head><body color="#000000" bgcolor="#eeeeff">
+    <table border="0" width="100%" cellpadding="15" cellspacing="0" ><tr>
+        <td valign="top" align="left" color="#000000" bgcolor="#ffffff">
+
+    <table border="0" cellpadding="0" cellspacing="0">
+    <tr><td class="toc">
+    <h2>SAX</h2><b>General</b><br />&nbsp;<a href="about.html">About SAX</a><br />
+	&nbsp;<a href="copying.html">Copyright Status</a><br />
+	&nbsp;<a href="event.html">Events vs. Trees</a><br />
+	&nbsp;<a href="faq.html">FAQ</a><br />
+	&nbsp;<a href="links.html">Links</a><br />
+	<br />
+	<b>Java API</b><br />&nbsp;<a href="quickstart.html">Quickstart</a><br />
+	&nbsp;<a href="get-set.html">Features and Properties</a><br />
+	&nbsp;<a href="filters.html">Filters</a><br />
+	&nbsp;<a href="namespaces.html">Namespaces</a><br />
+	&nbsp;<a href="http://www.saxproject.org/apidoc/overview-summary.html">JavaDoc</a><br />
+	<br />
+	<b>SAX Evolution</b><br />&nbsp;<em>Genesis</em><br />
+	&nbsp;<a href="sax1-roadmap.html">SAX 1.0 Overview</a><br />
+	&nbsp;<a href="sax2-history.html">SAX 2.0 Changes</a><br />
+	&nbsp;<a href="sax2-ext.html">SAX 2.0 Extensions</a><br />
+	&nbsp;<a href="langs.html">Other Languages</a><br />
+	<br />
+	<b>SourceForge Services</b><br />&nbsp;<a href="http://sourceforge.net/tracker/?group_id=29449">Bugs/RFEs</a><br />
+	&nbsp;<a href="http://sourceforge.net/projects/sax/">Project Page</a><br />
+	<br />
+	<br />
+	</td></tr></table>
+
+    
+    <p>
+    <a href="http://www.sourceforge.net/">
+    <img border="0" src="http://sourceforge.net/sflogo.php?group_id=29449&amp;type=1"
+	height="31" width="88"
+	alt="SourceForge Logo" />
+    </a>
+
+    </p>
+
+    </td>
+
+    <td width="80%" valign="top" align="left">
+    <h2>Genesis</h2><div><p>John Tigue, of DataChannel, was the first to attempt to
+develop an XML API collaboratively on the XML-DEV mailing list with
+his earlier <b>XAPI-J</b>.</p>
+
+<p>The process of developing SAX itself started on Saturday 13
+December 1997, mainly as a result the persistence of <b>Peter
+Murray-Rust</b>.  Peter is the author of the free Java-based XML
+browser <a 
+href="http://www.vsms.nottingham.ac.uk/vsms/java/jumbo">JUMBO</a>, and
+after going through the headaches of supporting three different XML
+parsers with their own proprietary APIs, he insisted that parser
+writers should all support a common Java event-based API, which he
+code-named <acronym>YAXPAPI</acronym> (for <dfn>Yet Another XML Parser
+API</dfn>).</p>
+
+<p>Peter initiated a discussion with <b>Tim Bray</b> (the author of
+the <a href="http://www.textuality.com/Lark/">Lark</a>
+XML parser and one of the editors of the XML specification) and
+<b>David Megginson</b> (the author of Microstar's <a 
+href="http://www.microstar.com/XML/">&AElig;lfred</a> XML parser)
+about coming up with a single, standard event-based API for XML
+parsers.  The design discussion took place publicly on the
+<code>XML-DEV</code> mailing list, and many people contributed ideas,
+comments, and criticisms (see below).  At the end, <b>Jon Bosak</b>,
+the founder of XML, kindly allowed SAX to use his <code>xml.org</code>
+domain for the Java package name <code>org.xml.sax</code>.</p>
+
+<p>David co-ordinated the discussion and wrote the proposal for the
+interface, together with its Java implementation.  The first draft
+interface -- together with front-end drivers for the four major Java
+XML parsers -- was released on Monday 12 January 1998, one month less
+a day after the beginning of the discussion.  This could be a record
+for an industry initiative (especially considering that SAX was
+finished under a declared state of emergency, during the worst ice
+storms in Canadian history, when much of Eastern Ontario and Quebec
+were without power).</p>
+
+<p>The first draft of SAX received much attention, and over several
+months, users identified shortcomings and suggested improvements.
+Over a long period of discussions and pre-releases, the XML-DEV
+community developed SAX 1.0, which was released on Monday 11 May 1998,
+less than five months after SAX was first proposed.</p>
+
+<h2>Contributors</h2>
+
+<p>Thank you to the following people for contributing to the initial
+discussion about the design of SAX.  The current proposal contains
+many of their ideas and suggestions, though it does not match exactly
+what any one person wanted. </p>
+
+<ul>
+
+<li>Murray Altheim</li>
+<li>Jacek R. Ambroziak</li>
+<li>Michael Amster</li>
+<li>James Anderson</li>
+<li>Tyler Baker</li>
+<li>Antony Blakey</li>
+<li>Jon Bosak</li>
+<li>Tim Bray</li>
+<li>David Brownell</li>
+<li>Joerg Brunsmann</li>
+<li>Didier Carlier</li>
+<li>Dave Carlson</li>
+<li>James Clark</li>
+<li>Dan Connolly</li>
+<li>Robin Cover</li>
+<li>Ray Cromwell</li>
+<li>Ron Daniel Jr.</li>
+<li>Derek Denny-Brown</li>
+<li>Benoit de Dinechin</li>
+<li>Andy Doyle</li>
+<li>Nick Drew</li>
+<li>David G. Durand</li>
+<li>Matthew J. Evans</li>
+<li>Peter Flynn</li>
+<li>Brian Frank</li>
+<li>Mark L. Fussell</li>
+<li>Lars Marius Garshol</li>
+<li>Matthew Gertner</li>
+<li>Andrew Greene</li>
+<li>Robert Grimm</li>
+<li>Geir Ove Gronmo</li>
+<li>Paul Haahr</li>
+<li>Philippe Le Hegaret</li>
+<li>Chris Hubick</li>
+<li>Jani Jaakkola</li>
+<li>Peter Jordan</li>
+<li>Howard Katz</li>
+<li>Michael Kay</li>
+<li>Candide Kemmler</li>
+<li>TAMURA Kent</li>
+<li>W. Eliot Kimber</li>
+<li>Dmitri Kondratiev</li>
+<li>Glenn R. Kronschn</li>
+<li>David Lewis</li>
+<li>John D. Lewis</li>
+<li>Siping Liu</li>
+<li>Chris Lovett</li>
+<li>Chris Maden</li>
+<li>Andrew N Marshall</li>
+<li>Cynthia L. Mason</li>
+<li>Tim Mattix</li>
+<li>Brian McGinnis</li>
+<li>Sean McGrath</li>
+<li>Gavin McKenzie</li>
+<li>David Megginson</li>
+<li>Norbert Mikula</li>
+<li>Jeremie Miller</li>
+<li>Alex Milowski</li>
+<li>Juergen Modre</li>
+<li>Trevor Morris</li>
+<li>Peter Murray-Rust</li>
+<li>Trong Nguyen</li>
+<li>Gavin Nicol</li>
+<li>Chris Olds</li>
+<li>David Ornstein</li>
+<li>Jacco van Ossenbruggen</li>
+<li>Don Park</li>
+<li>Paul Pazandak</li>
+<li>Eduardo Pelegri-Llopart</li>
+<li>W. E. Perry</li>
+<li>Constantine Plotnikov</li>
+<li>Paul Prescod</li>
+<li>Wilf Reedijk</li>
+<li>Lisa Rein</li>
+<li>Jonathan Robie</li>
+<li>Robin Sharp</li>
+<li>Scott Shields</li>
+<li>Janusz Sienkiewicz</li>
+<li>Simeon Simeonov</li>
+<li>Chris Smith</li>
+<li>Toby Speight</li>
+<li>Simon St.Laurent</li>
+<li>Michael J. Suzio</li>
+<li>John Tigue</li>
+<li>John Wilson</li>
+
+</ul>
+
+</div>
+    <br />
+
+    </td></tr></table>
+
+    </body></html>

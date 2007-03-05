@@ -1,0 +1,951 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Content Filters</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="previous" href="ch08s02.html" title="The XMLFilter interface"><link rel="next" href="ch08s04.html" title="The XMLFilterImpl Class"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"><link rel="subsection" href="ch08s03.html#d0e12518" title="Filtering Tags"><link rel="subsection" href="ch08s03.html#d0e12688" title="Filtering Elements"><link rel="subsection" href="ch08s03.html#d0e12731" title="Filtering attributes"><link rel="subsection" href="ch08s03.html#d0e12804" title="Filters that add content"><link rel="subsection" href="ch08s03.html#d0e12866" title="Filters vs. Transforms"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Content Filters</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch08s02.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;8.&nbsp;SAX Filters</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch08s04.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e12493"></a>Content Filters</h2></div></div><p>
+  By this point, you may have noticed a problem with the
+   <tt>XMLFilter</tt>
+   interface. It filters calls from the client application
+  to the parser.
+  However, most events are passed in the other direction
+  from the parser to the client application 
+  through the various callback
+  interfaces, especially <tt>ContentHandler</tt>. 
+  <tt>XMLFilter</tt>
+  is set up exactly <span class="emphasis"><em>backwards</em></span> for filtering these events.
+  It filters calls from the client application to the parser, but
+  not the much more important calls from the parser to the client application!
+  </p><p>
+  However, it&#8217;s possible to work
+  around this. First intercept the handlers passed
+  to methods like <tt>setContentHandler()</tt>
+  and <tt>setDTDHandler()</tt>. Then replace them with handlers of
+  your own so that your handlers receive the callback
+  events from the parent parser. They can either 
+  pass them along to the client application&#8217;s handler methods or pass something
+  different instead.
+  </p><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e12518"></a>Filtering Tags</h3></div></div><p>
+    For example, let&#8217;s suppose you want to convert a RDDL document
+    to pure XHTML. 
+    RDDL, the Resource Directory Description Language, is used
+    for human and machine readable documents placed at the end of
+    namespace URLs. 
+    RDDL is actually quite close to XHTML to begin with.
+    It&#8217;s just an XHTML Basic document in which
+    there&#8217;s one extra element, <tt>rddl:resource</tt>, which can appear
+    anywhere a <tt>p</tt> element can appear, and can contain anything a
+    <tt>div</tt> element can contain.
+    The customary <tt>rddl</tt> prefix is mapped to the 
+    <tt>http://www.rddl.org/</tt> 
+    namespace URL, and as usual the prefix can change as
+    long as the URL remains the same.
+    For example, this is a <tt>rddl:resource</tt> from
+    the <a href="http://www.rddl.org/" target="_top">RDDL specification</a> 
+    itself:
+  </p><div class="informalexample"><pre class="programlisting">&lt;rddl:resource id="rec-xhtml"
+        xlink:title="W3C REC XHTML"
+        xlink:role="http://www.w3.org/1999/xhtml"
+        xlink:arcrole="http://www.rddl.org/purposes#reference"
+        xlink:href="http://www.w3.org/tr/xhtml1"
+        &gt;
+&lt;li&gt;&lt;a href="http://www.w3.org/tr/xhtml1"&gt;W3C XHTML 1.0&lt;/a&gt;&lt;/li&gt;
+&lt;/rddl:resource&gt;</pre></div><p>
+    The filter needs to throw away the <tt>&lt;rddl:resource&gt;</tt>
+    start-tag and  <tt>&lt;/rddl:resource&gt;</tt>
+    end-tag while leaving everything else intact. <a href="ch08s03.html#RDDLStripper.java" title="Example&nbsp;8.6.&nbsp;A ContentHandler filter">Example&nbsp;8.6</a> does this.
+    The <tt>startElement()</tt> and
+    <tt>endElement()</tt> methods pass everything
+    except <tt>rddl:resource</tt> tags to the
+    parent&#8217;s <tt>ContentHandler</tt>.
+    However, <tt>rddl:resource</tt> tags are just
+    dropped on the floor.  
+  </p><div class="example"><a name="RDDLStripper.java"></a><p class="title"><b>Example&nbsp;8.6.&nbsp;A ContentHandler filter</b></p><pre class="programlisting">import org.xml.sax.*;
+
+
+public class RDDLStripper implements ContentHandler {
+
+  public final static String RDDL_NAMESPACE 
+   = "http://www.rddl.org/";
+  public final static String XHTML_NAMESPACE 
+   = "http://www.w3.org/1999/xhtml";
+  
+  private ContentHandler parent;
+  
+  public RDDLStripper(ContentHandler parent) {
+    this.parent = parent;
+  }
+
+  // Filter out &lt;rddl:resource&gt; start-tags 
+  public void startElement(String namespaceURI, String localName,
+   String qualifiedName, Attributes atts) throws SAXException {
+     
+    if (localName.equals("resource") 
+        &amp;&amp; namespaceURI.equals(RDDL_NAMESPACE)) {
+      return; // having done nothing
+    }
+    else { // pass the element along
+      parent.startElement(namespaceURI, localName, qualifiedName, 
+       atts);
+    }
+    
+  }
+  
+  // Filter out &lt;/rddl:resource&gt; end-tags 
+  public void endElement(String namespaceURI, String localName,
+   String qualifiedName) throws SAXException {
+     
+    if (localName.equals("resource") 
+        &amp;&amp; namespaceURI.equals(RDDL_NAMESPACE)) {
+      return; // having done nothing
+    }
+    else {
+      parent.endElement(namespaceURI, localName, qualifiedName);
+    }
+    
+  }
+  
+  // Methods that pass data along unchanged:
+  public void startDocument() throws SAXException {
+    parent.startDocument(); 
+  }
+  
+  public void startPrefixMapping(String prefix, String uri)
+   throws SAXException {
+    parent.startPrefixMapping(prefix, uri); 
+  }
+  
+  public void endPrefixMapping(String prefix) 
+   throws SAXException {
+    parent.endPrefixMapping(prefix); 
+  }
+
+  public void setDocumentLocator(Locator locator) {
+    parent.setDocumentLocator(locator); 
+  }
+  
+  public void endDocument() throws SAXException {
+    parent.endDocument(); 
+  }
+  
+  public void characters(char[] text, int start, int length)
+   throws SAXException {
+    parent.characters(text, start, length); 
+  }
+  
+  public void ignorableWhitespace(char[] text, int start, 
+   int length) throws SAXException {
+    parent.ignorableWhitespace(text, start, length); 
+  }
+  
+  public void processingInstruction(String target, String data)
+   throws SAXException {
+    parent.processingInstruction(target, data); 
+  }
+  
+  public void skippedEntity(String name)
+   throws SAXException {
+    parent.skippedEntity(name); 
+  }
+
+}
+</pre></div><p>
+     The next step is to install a
+     <tt>RDDLStripper</tt> as an
+     <tt>XMLFilter</tt>&#8217;s  <tt>ContentHandler</tt>.
+     <a href="ch08s03.html#RDDLFilter.java" title="Example&nbsp;8.7.&nbsp;A filter that substitutes its own ContentHandler">Example&nbsp;8.7</a> does this. It&#8217;s just a slight
+    variation on the earlier
+    <tt>TransparentFilter</tt>. Here, however, the 
+    <tt>setContentHandler()</tt>
+    method installs a <tt>RDDLStripper</tt>.
+    <sup>[<a name="d0e12599" href="#ftn.d0e12599">1</a>]</sup>
+   </p><div class="example"><a name="RDDLFilter.java"></a><p class="title"><b>Example&nbsp;8.7.&nbsp;A filter that substitutes its own ContentHandler</b></p><pre class="programlisting">import org.xml.sax.*;
+import java.io.IOException;
+
+
+public class RDDLFilter implements XMLFilter {
+
+  private XMLReader parent;
+  
+  public void setParent(XMLReader parent) {
+    this.parent = parent;
+  }
+  
+  public XMLReader getParent() {
+    return this.parent; 
+  }
+
+  public void setContentHandler(ContentHandler handler) {
+    parent.setContentHandler(new RDDLStripper(handler));
+  }
+  
+  // Transparent pass-along methods
+  public ContentHandler getContentHandler() {
+    return parent.getContentHandler();
+  }  
+  
+  public boolean getFeature(String name)
+   throws SAXNotRecognizedException, SAXNotSupportedException {
+    return parent.getFeature(name);
+  } 
+
+  public void setFeature(String name, boolean value) 
+   throws SAXNotRecognizedException, SAXNotSupportedException { 
+    parent.setFeature(name, value);
+  }
+
+  public Object getProperty(String name) 
+   throws SAXNotRecognizedException, SAXNotSupportedException {
+    return parent.getProperty(name);
+  }
+
+  public void setProperty(String name, Object value)
+   throws SAXNotRecognizedException, SAXNotSupportedException {
+    parent.setProperty(name, value);
+  }
+
+  public void setEntityResolver(EntityResolver resolver) {
+    parent.setEntityResolver(resolver);
+  }
+  
+  public EntityResolver getEntityResolver() {
+    return parent.getEntityResolver();
+  }
+  
+  public void setDTDHandler(DTDHandler handler) {
+    parent.setDTDHandler(handler);
+  }
+  
+  public DTDHandler getDTDHandler() {
+    return parent.getDTDHandler();
+  }
+
+  public void setErrorHandler(ErrorHandler handler) {
+    parent.setErrorHandler(handler);
+  }
+  
+  public ErrorHandler getErrorHandler() {
+    return parent.getErrorHandler();
+  }
+
+  public void parse(InputSource input)
+   throws SAXException, IOException {
+    parent.parse(input);
+  }
+  
+  public void parse(String systemId) 
+   throws SAXException, IOException {
+    parent.parse(systemId);
+  } 
+  
+}
+</pre></div><p>
+  The final step is to write a client application which uses this
+  filter to read XHTML and/or RDDL documents. Whichever kind you
+  feed it, the client app should only see XHTML.
+  For this client application, I&#8217;m going to use a 
+  <tt>ContentHandler</tt> that just 
+  prints the result on <tt>System.out</tt>. 
+  More specifically, I&#8217;m going to use David Megginson&#8217;s 
+  public domain
+  <a href="http://www.megginson.com/Software/index.html" target="_top"><tt>com.megginson.sax.XMLWriter</tt> class</a>. 
+  This class not only 
+  implements <tt>ContentHandler</tt>. It&#8217;s also an
+  <tt>XMLFilter</tt>. However, since it
+  uses a few features we haven&#8217;t discussed yet, detailed analysis
+  of this class will have to wait a bit. In the meantime, all you
+  really need to know is that <tt>XMLWriter</tt> logs all
+  events the parser fires to a specified
+  <tt>java.io.Writer</tt> in a well-formed way.
+  </p><p>
+  <a href="ch08s03.html#FilterTester.java" title="Example&nbsp;8.8.&nbsp;A program that filters documents">Example&nbsp;8.8</a> demonstrates
+  with a driver program that
+  parses a document named by the first command line argument using the 
+  <tt>XMLFilter</tt> class named by the second
+  command line argument. This test program will allow us to inspect 
+  the output of various filters in
+  this chapter. 
+</p><div class="example"><a name="FilterTester.java"></a><p class="title"><b>Example&nbsp;8.8.&nbsp;A program that filters documents</b></p><pre class="programlisting">import org.xml.sax.*;
+import org.xml.sax.helpers.XMLReaderFactory;
+import java.io.*;
+import com.megginson.sax.XMLWriter;
+
+
+public class FilterTester {
+
+  public static void main(String[] args) {
+
+    if (args.length &lt; 2) {
+      System.out.println(
+       "Usage: java FilterTester URL FilterClass");
+      return;
+    }
+    String document = args[0];
+    String filterClass = args[1];
+    
+    try {
+      XMLFilter filter 
+       = (XMLFilter) Class.forName(filterClass).newInstance();
+      filter.setParent(XMLReaderFactory.createXMLReader());
+      filter.setContentHandler(
+       new XMLWriter(new OutputStreamWriter(System.out))
+      );
+      filter.parse(document);
+    }
+    catch (SAXException e) {
+      e.printStackTrace();
+      System.out.println(e);
+    }
+    catch (IOException e) { 
+        e.printStackTrace();
+     System.out.println(
+       "Due to an IOException, the parser could not read " 
+       + args[0]
+      ); 
+    }
+    catch (ClassCastException e) {
+      System.out.println(filterClass 
+       + " does not implement org.xml.sax.XMLFilter");
+    }
+    catch (ClassNotFoundException e) {
+      System.out.println(filterClass 
+       + " cannot be found in the CLASSPATH");
+    }
+    catch (InstantiationException e) {
+      System.out.println(filterClass 
+       + " does not have a no-args constructor");
+    }
+    catch (Exception e) {
+      System.err.println(e);
+    }
+    
+  }
+  
+}
+</pre></div><p>
+  For example, here&#8217;s the actual last few lines of the RDDL
+  specification (modulo the usual white space adjustments):
+  </p><div class="informalexample"><pre class="programlisting">&lt;rddl:resource
+        id="note-xlink2rdf"
+        xlink:title="W3C NOTE XLink2RDF"
+        xlink:role="http://www.w3.org/TR/html4/"
+        xlink:arcrole="http://www.rddl.org/purposes#reference"
+        xlink:href="http://www.w3.org/TR/xlink2rdf/"
+        &gt;
+&lt;li&gt;&lt;a href="http://www.w3.org/TR/xlink2rdf/"&gt;W3C Note Harvesting 
+RDF Statements from XLinks&lt;/a&gt;&lt;/li&gt;
+&lt;/rddl:resource&gt;
+&lt;rddl:resource
+id="rec-modxhtml"
+        xlink:title="W3C REC Modularization for XHTML"
+        xlink:role="http://www.w3.org/1999/xhtml"
+        xlink:arcrole="http://www.rddl.org/purposes#reference"
+        xlink:href="http://www.w3.org/TR/xhtml-modularization/"
+        &gt;
+&lt;li&gt;&lt;a href="http://www.w3.org/TR/xhtml-modularization/"&gt;W3C 
+Modularization of XHTML&lt;/a&gt;&lt;/li&gt;
+&lt;/rddl:resource&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre></div><p>
+    Now here&#8217;s some of the output when the RDDL specification was
+    passed through this program. The
+    <tt>rddl:resource</tt>
+    tags have been removed:
+  </p><pre class="screen">
+<tt>% </tt><b><tt>java -Dorg.xml.sax.driver=org.apache.xerces.parsers.SAXParser
+  FilterTester http://www.rddl.org/ RDDLFilter</tt></b>
+<tt>...
+        &lt;li&gt;&lt;a href="http://www.w3.org/TR/xlink2rdf/"&gt;W3C Note 
+        Harvesting RDF Statements from XLinks&lt;/a&gt;&lt;/li&gt;
+
+
+        &lt;li&gt;&lt;a href="http://www.w3.org/TR/xhtml-modularization/"&gt;
+        W3C Modularization of XHTML&lt;/a&gt;&lt;/li&gt;
+
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</tt></pre><p>
+    The pattern followed here is pretty much exactly what was
+    shown in <a href="ch08.html#filterparse" title="Figure&nbsp;8.2.&nbsp;XML parsing with a filter">Figure&nbsp;8.2</a>.
+    If we revise that figure to include the specific class names
+    used here, what you have is shown in <a href="ch08s03.html#rddlparse.jpg" title="Figure&nbsp;8.4.&nbsp;How data flows through the RDDL stripper program">Figure&nbsp;8.4</a>.
+  </p><div class="figure"><a name="rddlparse.jpg"></a><p class="title"><b>Figure&nbsp;8.4.&nbsp;How data flows through the RDDL stripper program</b></p><div class="screenshot"><div class="mediaobject"><img src="rddlparse.jpg"></div></div></div><p>
+    Because SAX operates in a linear rather
+    than hierarchical fashion, filtering the start-tag and end-tag
+    of each <tt>rddl:resource</tt> element
+    does not filter the contents of the
+    <tt>rddl:resource</tt> element. In this case, that&#8217;s
+    exactly what we want. 
+    RDDL is a little unusual in that it both contains and is contained in XHTML.
+    Most applications that get mixed with XHTML such as SVG and
+    MathML are contained in XHTML but do not themselves contain
+    XHTML. 
+   </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e12688"></a>Filtering Elements</h3></div></div><p>
+    It&#8217;s easy enough to drop out any elements and that are not in the
+    XHTML namespace. However, in the case of SVG, MathML and most
+    other applications you&#8217;ll want to remove the content of
+    these elements as well. 
+    I&#8217;ll assume that the namespace for text is the same as the
+    namespace of the parent element. (This is  not at all
+    clear from the namespaces specification, but it makes sense
+    in many cases.) To track the nearest namespace for non-elements,
+     <tt>startElement()</tt> will push
+     the element&#8217;s namespace
+    onto a stack 
+    and <tt>endElement()</tt> will pop it off.
+    Peeking at the top of the stack will tell you what
+    namespace the nearest element uses.
+    You can&#8217;t use
+    <tt>NamespaceSupport()</tt> or 
+    <tt>startPrefixMapping()</tt> and <tt>endPrefixMapping()</tt>
+    here because those track namespace 
+    declarations rather than the actual namespaces used. 
+        <a href="ch08s03.html#PureXHTMLHandler.java" title="Example&nbsp;8.9.&nbsp;A ContentHandler filter that throws away non-XHTML elements">Example&nbsp;8.9</a> is the 
+        <tt>ContentHandler</tt> that
+        accomplishes this.
+  </p><div class="example"><a name="PureXHTMLHandler.java"></a><p class="title"><b>Example&nbsp;8.9.&nbsp;A ContentHandler filter that throws away non-XHTML elements</b></p><pre class="programlisting">import org.xml.sax.*;
+import java.util.*;
+
+
+public class PureXHTMLHandler implements ContentHandler {
+
+  public final static String XHTML_NAMESPACE 
+   = "http://www.w3.org/1999/xhtml";
+  
+  private ContentHandler parent;
+  private Stack namespaces;  // initialized in startDocument()
+  
+  public PureXHTMLHandler(ContentHandler parent) {
+    this.parent = parent;
+  }
+
+  // Filter out anything that's not in the XHTML namespace 
+  public void startElement(String namespaceURI, String localName,
+   String qualifiedName, Attributes atts) throws SAXException {
+     
+    namespaces.push(namespaceURI);
+    if (namespaceURI.equals(XHTML_NAMESPACE)) {
+      parent.startElement(namespaceURI, localName, qualifiedName, 
+       atts);
+    }
+    // else do nothing
+    
+  }
+  
+  // Filter out anything that's not in the XHTML namespace 
+  public void endElement(String namespaceURI, String localName,
+   String qualifiedName) throws SAXException {
+     
+    namespaces.pop();
+    if (namespaceURI.equals(XHTML_NAMESPACE)) {
+      parent.endElement(namespaceURI, localName, qualifiedName);
+    }
+    // else do-nothing
+    
+  }
+  
+  // simple utility method to determine whether or not the parent
+  // element is an XHTML element
+  private boolean inXHTML() {
+
+    try {
+      String namespace = (String) namespaces.peek();
+      if (namespace.equals(XHTML_NAMESPACE)) return true;
+      return false;
+    }
+    catch (EmptyStackException e) {
+      // This means we're outside the root element in a 
+      // processing instruction. Such processing instructions are
+      // legal in XHTML so I keep it.
+      return true;
+    }
+    
+  }
+  
+  public void characters(char[] text, int start, int length)
+   throws SAXException {
+    if (inXHTML()) parent.characters(text, start, length); 
+  }
+  
+  public void ignorableWhitespace(char[] text, int start, 
+   int length) throws SAXException {
+    if (inXHTML()) parent.ignorableWhitespace(text, start, length); 
+  }
+  
+  public void processingInstruction(String target, String data)
+   throws SAXException {
+    if (inXHTML()) parent.processingInstruction(target, data); 
+  }
+  
+  public void skippedEntity(String name)
+   throws SAXException {
+    if (inXHTML()) parent.skippedEntity(name); 
+  }
+
+  // I could track namespace declarations with these next two
+  // methods and only pass along those for XHTML. However,
+  // that is quite tricky because the endPrefixMapping()
+  // method only reports the prefix, not the URI. 
+  public void startPrefixMapping(String prefix, String uri)
+   throws SAXException {
+    parent.startPrefixMapping(prefix, uri);     
+  }
+  
+  public void endPrefixMapping(String prefix) 
+   throws SAXException {
+    parent.endPrefixMapping(prefix); 
+  }
+
+  // Methods that pass data along unchanged:
+  public void startDocument() throws SAXException {
+    namespaces = new Stack();
+    parent.startDocument(); 
+  }
+
+  public void endDocument() throws SAXException {
+    parent.endDocument(); 
+  }
+    
+  public void setDocumentLocator(Locator locator) {
+    parent.setDocumentLocator(locator); 
+  }
+  
+}
+</pre></div><p>
+     One thing to consider: what happens when a non-XHTML
+     document such as a pure SVG or MathML document is passed
+     through this filter? In other words, what if the root element is not
+     an XHTML element? In this case, the entire document, except
+     perhaps for a few comments and processing instructions that
+     precede or follow the root element, is filtered out. The
+     resulting document does not have a root element.
+     It is thus not well-formed!
+   </p><p>
+     Believe it or not, there is no prohibition against this. XML
+     documents must be well-formed, but the only normative
+     definition of an XML document is as a sequence of
+     characters.
+     Here we no longer have a sequence of characters. Instead we
+     have a sequence of method invocations.
+     If those method invocations are coming straight from a parsed XML
+     document, then there are certain guarantees of
+     well-formedness such as there being a single root element.
+     However, if you&#8217;re a little further removed from the actual XML
+     document, these guarantees no longer hold. Indeed filters
+     can do considerably weirder things like passing along 
+     <tt>startElement()</tt> calls but blocking the
+     corresponding <tt>endElement()</tt> calls
+     or passing non-whitespace characters to the <tt>ignorableWhiteSpace()</tt>
+     method. If your applications have reason to do things like
+     this, go ahead; but document the filter&#8217;s behavior exhaustively
+     and be very careful about the client applications that
+     receive data from your filter.
+     Filters can very easily  
+     violate a handler&#8217;s implicit
+     preconditions with predictably disastrous results. 
+   </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e12731"></a>Filtering attributes</h3></div></div><p>
+    Attributes can be filtered very straightforwardly in the 
+    <tt>startElement()</tt> method.
+    Unlike element content, the complete set of attributes for any element is
+    completely available a single method call as an 
+    <tt>Attributes</tt> object.
+    Thus it&#8217;s easy to read through the list and respond 
+    appropriately without building complicated data structures
+    to maintain state between method invocations.
+   </p><p>
+     The only mildly tricky part is that the <tt>Attributes</tt>
+     interface is read-only. It provides numerous getter methods
+     but no corresponding setter methods.
+     Thus if you want to do anything other than forward the original
+     <tt>Attributes</tt> object along
+     unchanged, you&#8217;ll need to create your own object that
+     implements the <tt>Attributes</tt>
+     interface and is mutable. While doing so would be a simple
+     matter of programming, most of the time it&#8217;s easier to use
+     the class SAX provides for this purpose,
+     <tt>org.xml.sax.helpers.AttributesImpl</tt>,
+     summarized in <a href="ch08s03.html#CompactAttributesImpl.java" title="Example&nbsp;8.10.&nbsp;The AttributesImpl helper class">Example&nbsp;8.10</a>. 
+     This class implements the <tt>Attributes</tt>
+     interface and adds methods for copying existing 
+     <tt>Attributes</tt> objects and adding
+      attributes to and deleting attributes from the list. This class is quite useful 
+     when writing filters that process attributes. 
+   </p><div class="example"><a name="CompactAttributesImpl.java"></a><p class="title"><b>Example&nbsp;8.10.&nbsp;The AttributesImpl helper class</b></p><pre class="programlisting">package org.xml.sax.helpers;
+
+public class AttributesImpl implements Attributes {
+
+  public AttributesImpl();
+  public AttributesImpl(Attributes atts);
+  
+  public int      getLength();
+  public String getURI(int index);
+  public String getLocalName(int index);
+  public String getQualifiedName(int index);
+  public String getType(int index);
+  public String getValue(int index);
+  public int      getIndex(String uri, String localName);
+  public int      getIndex(String qualifiedName);
+  public String getType(String uri, String localName);
+  public String getType(String qualifiedName);
+  public String getValue(String uri, String localName);
+  public String getValue(String qualifiedName);
+  
+  public void clear();
+  public void setAttributes(Attributes atts);
+  public void addAttribute(String uri, String localName, 
+   String qualifiedName, String type, String value);
+  public void setAttribute(int index, String uri, 
+   String localName, String qualifiedName, String type, 
+   String value);
+  public void removeAttribute(int index);
+  public void setURI(int index, String uri);
+  public void setLocalName(int index, String localName);
+  public void setQualifiedName(int index, String qualifiedName);
+  public void setType(int index, String type);
+  public void setValue(int index, String value);
+
+}
+</pre></div><p>
+    As an example, let&#8217;s extend the pure XHTML filter of <a href="ch08s03.html#PureXHTMLHandler.java" title="Example&nbsp;8.9.&nbsp;A ContentHandler filter that throws away non-XHTML elements">Example&nbsp;8.9</a> to remove non-XHTML attributes such as 
+    <tt>xlink:href</tt> from XHTML elements.
+    XHTML attributes are always in no namespace, so we can just
+    drop out any attributes that are in a namespace. 
+    The only exception to this are the three <tt>xml:</tt> attributes:
+    <tt>xml:lang</tt>, <tt>xml:space</tt>, and
+    <tt>xml:base</tt>. These are in the
+    <tt>http://www.w3.org/XML/1998/namespace</tt>
+    namespace, conveniently represented in SAX by the named
+    constant <tt>NamespaceSupport.XMLNS</tt>.
+      The revised <tt>startElement()</tt> method
+      would be as follows:
+  </p><div class="informalexample"><pre class="programlisting">  public void startElement(String namespaceURI, String localName,
+   String qualifiedName, Attributes atts) throws SAXException {
+     
+    namespaces.push(namespaceURI);
+    if (namespaceURI.equals(XHTML_NAMESPACE)) {
+    
+      AttributesImpl newAttributes = new AttributesImpl(); 
+      // copy only those attributes that are not in a namespace 
+      // and do not declare a non-XHTML namespace 
+      for (int i = 0; i &lt; atts.getLength(); i++) {
+        if (atts.getURI(i).equals("") 
+            || atts.getURI(i).equals(NamespaceSupport.XMLNS)) {
+          if (!atts.getQName(i).startsWith("xmlns:")) {
+            if (!atts.getQName(i).equals("xmlns") 
+                || atts.getValue(i).equals(XHTML_NAMESPACE)) {
+              newAttributes.addAttribute(atts.getURI(i), 
+                                         atts.getLocalName(i), 
+                                         atts.getQName(i), 
+                                         atts.getType(i), 
+                                         atts.getValue(i));   
+            }
+          }
+        }
+      }
+    
+      parent.startElement(namespaceURI, localName, qualifiedName, 
+       newAttributes);
+    }
+    // else do nothing
+    
+  }</pre></div><p>
+    The rest of the methods are the same as in <a href="ch08s03.html#PureXHTMLHandler.java" title="Example&nbsp;8.9.&nbsp;A ContentHandler filter that throws away non-XHTML elements">Example&nbsp;8.9</a>, 
+    so I won&#8217;t repeat them
+    here.
+  </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e12804"></a>Filters that add content</h3></div></div><p>
+    So far I&#8217;ve demonstrated filters that simply removed particular
+    tags, elements, and attributes from the parsed document.
+    However, it&#8217;s equally easy to develop filters that insert 
+    new content or replace existing content. 
+    For example, it&#8217;s easy to imagine a filter that converts
+    transitional XHTML to strict XHTML. Such a filter would have
+    to replace deprecated elements like <tt>&lt;font
+    size="-1"&gt;</tt> with their strict equivalents like 
+    <tt>&lt;span style="font-size: small"&gt;</tt>.
+    The details of listing all the tags that need to be fixed are
+    a little tedious, but the algorithm for doing this is not
+    particularly difficult. 
+  </p><p>
+    More simply, we can write a filter
+    that  modifies just one element. <a href="ch08s03.html#ResourceToTable.java" title="Example&nbsp;8.11.&nbsp;Changing one element into another ">Example&nbsp;8.11</a> is such a filter. 
+    It replaces <tt>rddl:resource</tt> elements with a
+    simple table.
+    The various attributes of the resource are mapped to different
+    parts of the table. In particular, a <tt>rddl:resource</tt>
+    like this:
+    </p><div class="informalexample"><pre class="programlisting">&lt;rddl:resource
+        id="note-xlink2rdf"
+        xlink:title="W3C NOTE XLink2RDF"
+        xlink:role="http://www.w3.org/TR/html4/"
+        xlink:arcrole="http://www.rddl.org/purposes#reference"
+        xlink:href="http://www.w3.org/TR/xlink2rdf/"
+        &gt;
+      &lt;li&gt;
+        &lt;a href="http://www.w3.org/TR/xlink2rdf/"&gt;
+          W3C Note Harvesting RDF Statements from XLinks
+        &lt;/a&gt;
+      &lt;/li&gt;
+&lt;/rddl:resource&gt;</pre></div><p>
+      will turn into an XHTML table that looks like this:
+    </p><div class="informalexample"><pre class="programlisting">&lt;table id="note-xlink2rdf"&gt;
+  &lt;caption&gt;W3C NOTE XLink2RDF&lt;/caption&gt;
+  &lt;tr&gt;&lt;td&gt;Role: &lt;/td&gt;&lt;td&gt;http://www.w3.org/TR/html4/&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Arcrole: &lt;/td&gt;&lt;td&gt;http://www.rddl.org/purposes#reference&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Href: &lt;/td&gt;&lt;td&gt;&lt;a href="http://www.w3.org/TR/xlink2rdf/"&gt;
+   http://www.w3.org/TR/xlink2rdf/&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td colspan="2"&gt;
+      &lt;li&gt;
+        &lt;a href="http://www.w3.org/TR/xlink2rdf/"&gt;
+          W3C Note Harvesting RDF Statements from XLinks
+        &lt;/a&gt;
+      &lt;/li&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</pre></div><p>
+    This means that a single <tt>&lt;rddl:resource&gt;</tt> 
+    start-tag must create several elements
+    and tags in the output document. There&#8217;s no guarantee of a
+    one-to-one mapping between elements in the original and
+    filtered content. 
+  </p><div class="example"><a name="ResourceToTable.java"></a><p class="title"><b>Example&nbsp;8.11.&nbsp;Changing one element into another </b></p><pre class="programlisting">import org.xml.sax.*;
+import org.xml.sax.helpers.*;
+
+
+public class ResourceToTable implements ContentHandler {
+
+  public final static String RDDL_NAMESPACE 
+   = "http://www.rddl.org/";
+  public final static String XHTML_NAMESPACE 
+   = "http://www.w3.org/1999/xhtml";
+  public final static String XLINK_NAMESPACE 
+   = "http://www.w3.org/1999/xlink";
+  
+  private ContentHandler parent;
+  
+  public ResourceToTable(ContentHandler parent) {
+    this.parent = parent;
+  }
+
+  // Replace &lt;rddl:resource&gt; start-tags with the beginning of
+  // a table. Move the attributes into table cells.
+  // Make the content of the element the last table row.
+  public void startElement(String namespaceURI, String localName,
+   String qualifiedName, Attributes atts) throws SAXException {
+     
+    if (localName.equals("resource") 
+        &amp;&amp; RDDL_NAMESPACE.equals(namespaceURI)) {
+          
+      String hrefAtt    = atts.getValue(XLINK_NAMESPACE, "href");    
+      String roleAtt    = atts.getValue(XLINK_NAMESPACE, "role");    
+      String arcroleAtt 
+       = atts.getValue(XLINK_NAMESPACE, "arcrole");    
+      String titleAtt   = atts.getValue(XLINK_NAMESPACE, "title");    
+      
+      // We need to copy the id, xml:lang, and xml:base
+      // attributes, if any, from the rddl:resource element to
+      // the XHTML table element
+      AttributesImpl tableAttributes = new AttributesImpl();
+      
+      String id = atts.getValue("id");
+      if (id != null) {
+        tableAttributes.addAttribute("", "id", "id", "ID", id);
+      }
+      
+      String lang = atts.getValue("xml:lang");
+      if (lang != null) {
+        tableAttributes.addAttribute(NamespaceSupport.XMLNS, 
+         "lang", "xml:lang", "NMTOKEN", lang);
+      }
+      
+      String base = atts.getValue("xml:base");
+      // xml:base is not legal in XHTML. Here I just drop it, but
+      // it would be preferable to use it to resolve URLs in the 
+      // XHTML document before passing them along
+      
+      tableAttributes.addAttribute("", "border", "border", 
+       "NMTOKEN", "1");
+      parent.startElement(
+       XHTML_NAMESPACE, "table", "table", tableAttributes);
+      
+      Attributes noAtts = new AttributesImpl();
+      if (titleAtt != null) {
+        parent.startElement(
+         XHTML_NAMESPACE, "caption", "caption", noAtts);
+        characters(titleAtt.toCharArray(), 0, titleAtt.length());
+        endElement(XHTML_NAMESPACE, "caption", "caption");
+      }
+      
+      if (roleAtt != null) {
+        parent.startElement(XHTML_NAMESPACE, "tr", "tr", noAtts);
+        parent.startElement(XHTML_NAMESPACE, "td", "td", noAtts);
+        String role = "Role: ";
+        characters(role.toCharArray(), 0, role.length());
+        endElement(XHTML_NAMESPACE, "td", "td");
+        parent.startElement(XHTML_NAMESPACE, "td", "td", noAtts);
+        characters(roleAtt.toCharArray(), 0, roleAtt.length());
+        endElement(XHTML_NAMESPACE, "td", "td");
+        endElement(XHTML_NAMESPACE, "tr", "tr");
+      }
+
+      if (arcroleAtt != null) {
+        String arcrole = "Arcrole: ";
+        parent.startElement(XHTML_NAMESPACE, "tr", "tr", noAtts);
+        parent.startElement(XHTML_NAMESPACE, "td", "td", noAtts);
+        characters(arcrole.toCharArray(), 0, arcrole.length());
+        endElement(XHTML_NAMESPACE, "td", "td");
+        parent.startElement(XHTML_NAMESPACE, "td", "td", noAtts);
+        characters(
+         arcroleAtt.toCharArray(), 0, arcroleAtt.length());
+        endElement(XHTML_NAMESPACE, "td", "td");
+        endElement(XHTML_NAMESPACE, "tr", "tr");
+      }
+      
+      if (hrefAtt != null) {
+        String href = "href: ";
+        AttributesImpl hrefAtts = new AttributesImpl();
+        hrefAtts.addAttribute("", "href", "href", "CDATA", href);
+        parent.startElement(XHTML_NAMESPACE, "tr", "tr", noAtts);
+        parent.startElement(XHTML_NAMESPACE, "td", "td", noAtts);
+        characters(href.toCharArray(), 0, href.length());
+        endElement(XHTML_NAMESPACE, "td", "td");
+        parent.startElement(XHTML_NAMESPACE, "td", "td", noAtts);
+        parent.startElement(XHTML_NAMESPACE, "a", "a", hrefAtts);
+        characters(hrefAtt.toCharArray(), 0, hrefAtt.length());
+        endElement(XHTML_NAMESPACE, "a", "a");
+        endElement(XHTML_NAMESPACE, "td", "td");
+        endElement(XHTML_NAMESPACE, "tr", "tr");
+      }
+      
+      // Now open the contents of the element
+      parent.startElement(XHTML_NAMESPACE, "tr", "tr", noAtts);
+      AttributesImpl colspanAtts = new AttributesImpl();
+      colspanAtts.addAttribute(
+       "", "colspan", "colspan", "CDATA", "2");
+      parent.startElement(
+       XHTML_NAMESPACE, "td", "td", colspanAtts);
+      
+    }
+    else { // pass the element along
+      parent.startElement(namespaceURI, localName, qualifiedName, 
+       atts);
+    }
+    
+  }
+  
+  // Replace &lt;/rddl:resource&gt; end-tags with the end of a table.
+  public void endElement(String namespaceURI, String localName,
+   String qualifiedName) throws SAXException {
+     
+    if (localName.equals("resource") 
+        &amp;&amp; RDDL_NAMESPACE.equals(namespaceURI)) {
+      parent.endElement(XHTML_NAMESPACE, "td", "td");
+      parent.endElement(XHTML_NAMESPACE, "tr", "tr");
+      parent.endElement(XHTML_NAMESPACE, "table", "table");
+    }
+    else {
+      parent.endElement(namespaceURI, localName, qualifiedName);
+    }
+    
+  }
+
+  // Methods that pass data along unchanged:
+  public void startDocument() throws SAXException {
+    parent.startDocument(); 
+  }
+  
+  public void setDocumentLocator(Locator locator) {
+    parent.setDocumentLocator(locator); 
+  }
+  
+  public void endDocument() throws SAXException {
+    parent.endDocument(); 
+  }
+  
+  public void characters(char[] text, int start, int length)
+   throws SAXException {
+    parent.characters(text, start, length); 
+  }
+  
+  public void ignorableWhitespace(char[] text, int start, 
+   int length) throws SAXException {
+    parent.ignorableWhitespace(text, start, length); 
+  }
+  
+  public void processingInstruction(String target, String data)
+   throws SAXException {
+    parent.processingInstruction(target, data); 
+  }
+  
+  public void startPrefixMapping(String prefix, String uri)
+   throws SAXException {
+    parent.startPrefixMapping(prefix, uri); 
+  }
+  
+  public void endPrefixMapping(String prefix) 
+   throws SAXException {
+    parent.endPrefixMapping(prefix);
+  }
+    
+  public void skippedEntity(String name)
+   throws SAXException {
+    parent.skippedEntity(name); 
+  }
+
+}
+</pre></div><p>
+    <a href="ch08s03.html#rddlbefore.jpg" title="Figure&nbsp;8.5.&nbsp;The end of the RDDL specification as normally presented">Figure&nbsp;8.5</a> shows the end of the RDDL specification
+    before this filter is applied. <a href="ch08s03.html#rddlafter.jpg" title="Figure&nbsp;8.6.&nbsp;The end of the RDDL specification after rddl:resource elements are replaced by small tables">Figure&nbsp;8.6</a> shows the end of the RDDL specification
+    after this filter is applied (by passing the filtered source through an <tt>XMLWriter</tt> 
+    and saving the result in a text file.) You can see that 
+    the tables have been added as specified.
+  </p><div class="figure"><a name="rddlbefore.jpg"></a><p class="title"><b>Figure&nbsp;8.5.&nbsp;The end of the RDDL specification as normally presented</b></p><div class="screenshot"><div class="mediaobject"><img src="rddlbefore.jpg"></div></div></div><div class="figure"><a name="rddlafter.jpg"></a><p class="title"><b>Figure&nbsp;8.6.&nbsp;The end of the RDDL specification after rddl:resource elements are replaced by small tables</b></p><div class="screenshot"><div class="mediaobject"><img src="rddlafter.jpg"></div></div></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e12866"></a>Filters vs. Transforms</h3></div></div><p>
+    By this point, some readers will have noticed that all these operations could perhaps have
+    been more easily  implemented in XSLT.
+    Since XSLT is Turing complete, there really isn&#8217;t a lot you
+    can do with a SAX filter that you can&#8217;t do with XSLT. The
+    reason you choose one vs. the other is mostly a matter of
+    convenience for the problem at hand. 
+    One factor in SAX&#8217;s favor is that it is much more
+    efficient when the input or output can be streamed.
+    Unlike XSLT, SAX does not need to read the entire document
+    into memory before the transformation can be performed. The
+    flip side of this is that filters only work well for
+    localized transformations where the output in one part of the
+    document doesn&#8217;t depend heavily on the input in another part
+    of the document, especially a part of the document that comes
+    later. For these cases, XSLT is
+    preferable.
+  </p><p>
+    The second big advantage to using SAX filters instead of XSLT
+    is that SAX gives you easy access to the full power of Java.
+    For instance a SAX filter can read a book ISBN number and
+    look up the current price of that book at amazon.com 
+    to insert as the value of
+    a <tt>price</tt> attribute it adds to the element.
+    Pure XSLT can&#8217;t do this. Of course, you could write an
+    extension function in Java to add this feature to XSLT, so it really
+    is mostly a question of which approach feels more natural
+    to the developers within their particular system and 
+    for their particular problem. 
+  </p></div><div class="footnotes"><br><hr width="100" align="left"><div class="footnote"><p><sup>[<a name="ftn.d0e12599" href="#d0e12599">1</a>] </sup>In fact, it probably should have been written as
+    a subclass of <tt>TransparentFilter</tt> that
+    overrode this one method, except that I&#8217;ve discovered that
+    whenever I use inheritance to extend one example 
+    from an earlier one I get daily e-mail
+    from readers 
+    asking me where the missing methods are. The next section
+    will introduce a standard class you can extend to avoid
+    repeating all these methods. 
+    </p></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch08s02.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch08.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch08s04.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">The XMLFilter interface&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;The XMLFilterImpl Class</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+December 02,
+2001</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

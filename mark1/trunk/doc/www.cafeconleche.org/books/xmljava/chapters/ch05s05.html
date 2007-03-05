@@ -1,0 +1,202 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>JAXP</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="previous" href="ch05s04.html" title="DOM"><link rel="next" href="ch05s06.html" title="JDOM"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">JAXP</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch05s04.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;5.&nbsp;Reading XML</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch05s06.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e7699"></a>JAXP</h2></div></div><p>
+       Starting in Java 1.4, Sun bundled the Crimson XML parser
+       and the SAX2, DOM2, and TrAX APIs into the standard Java class
+       library. (TrAX is an XSLT API that sits on top of XML APIs like
+       SAX and DOM. We&#8217;ll get to it in the last chapter.)
+       They also threw in a couple of factory classes,
+       and called the whole thing the &#8220;Java API for XML Processing&#8221;
+       (JAXP).
+    </p><p>
+      Crimson&#8217;s a reasonably fast parser and worth your consideration.
+      The fact that this implementation is bundled with Sun&#8217;s VM is a major plus.
+      It allows you to distribute Java programs that use XML without having to 
+      add several megabytes of your own parser and interface classes.
+      However, API-wise there isn&#8217;t a whole lot new here.
+      When starting a new program you ask yourself
+      whether you should choose SAX or DOM. You don&#8217;t ask yourself whether you
+      should use SAX or JAXP, or DOM or JAXP. SAX and DOM are part of JAXP.
+      If you know SAX, DOM, and TrAX, you know 99% of JAXP.
+    </p><p>
+      The only public part of JAXP that isn&#8217;t part of its component
+      APIs are the factory classes in <tt>javax.xml.parsers</tt>.
+      You can use these to create new documents in memory and
+      load existing documents from text files and streams. 
+      You can also use the TrAX API to do some simple serialization
+      by copying a document from a DOM object to a stream.
+      Putting them all together, JAXP can replace most of the parser-dependent
+      part of DOM. <a href="ch05s05.html#FibonacciJAXPClient.java" title="Example&nbsp;5.6.&nbsp;A JAXP based client for the Fibonacci XML-RPC server">Example&nbsp;5.6</a> is a JAXP client
+      for the XML-RPC server. All the DOM standard code is the same as before in
+      <a href="ch05s04.html#FibonacciDOMClient.java" title="Example&nbsp;5.5.&nbsp;A DOM based client for the Fibonacci XML-RPC server">Example&nbsp;5.5</a>. However, the parser-dependent
+      parts from the <tt>org.apache</tt> packages have been replaced with
+      JAXP classes instead.
+     </p><div class="example"><a name="FibonacciJAXPClient.java"></a><p class="title"><b>Example&nbsp;5.6.&nbsp;A JAXP based client for the Fibonacci XML-RPC server</b></p><pre class="programlisting">import java.net.*;
+import java.io.*;
+import org.w3c.dom.*;
+import javax.xml.parsers.*;
+import javax.xml.transform.*;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.dom.DOMSource;
+
+
+public class FibonacciJAXPClient {
+
+  private static String DEFAULT_SERVER 
+   = "http://www.elharo.com/fibonacci/XML-RPC";  
+  
+  public static void main(String[] args) {
+      
+    if (args.length &lt;= 0) {
+      System.out.println(
+       "Usage: java FibonacciJAXPClient number url"
+      );
+      return;
+    }
+    
+    String server = DEFAULT_SERVER;
+    if (args.length &gt;= 2) server = args[1];
+      
+    try {       
+      // Build the request document
+      DocumentBuilderFactory builderFactory 
+       = DocumentBuilderFactory.newInstance();
+      DocumentBuilder builder 
+       = builderFactory.newDocumentBuilder();
+      Document request = builder.newDocument();
+
+      Element methodCall = request.createElement("methodCall");
+      request.appendChild(methodCall);
+       
+      Element methodName = request.createElement("methodName");
+      Text text = request.createTextNode("calculateFibonacci");
+      methodName.appendChild(text);
+      methodCall.appendChild(methodName);
+      
+      Element params = request.createElement("params");
+      methodCall.appendChild(params);
+      
+      Element param = request.createElement("param");
+      params.appendChild(param);
+      
+      Element value = request.createElement("value");
+      param.appendChild(value);
+      
+      // Had to break the naming convention here because of a 
+      // conflict with the Java keyword int
+      Element intElement = request.createElement("int");
+      Text index = request.createTextNode(args[0]);
+      intElement.appendChild(index);
+      value.appendChild(intElement);  
+      
+      // Transmit the request document
+      URL u = new URL(server);
+      URLConnection uc = u.openConnection();
+      HttpURLConnection connection = (HttpURLConnection) uc;
+      connection.setDoOutput(true);
+      connection.setDoInput(true); 
+      connection.setRequestMethod("POST");
+      OutputStream out = connection.getOutputStream();
+      
+      TransformerFactory xformFactory 
+       = TransformerFactory.newInstance();
+      Transformer idTransform = xformFactory.newTransformer();
+      Source input = new DOMSource(request);
+      Result output = new StreamResult(out);
+      idTransform.transform(input, output);
+      
+      out.flush();
+      out.close();        
+
+      // Read the response
+      InputStream in = connection.getInputStream();
+      Document response = builder.parse(in);
+      in.close();
+      connection.disconnect();
+      
+      NodeList doubles = response.getElementsByTagName("double");
+      Node datum = doubles.item(0);
+      Text result = (Text) datum.getFirstChild();
+      System.out.println(result.getNodeValue());
+    }
+    catch (Exception e) {
+      System.err.println(e); 
+    }
+  
+  } 
+
+}
+</pre></div><p>
+         Once again, the request document is built as a tree.
+         However, this time a <tt>DocumentBuilderFactory</tt> from JAXP
+         does the building instead of the Xerces-specific 
+         <tt>DOMImplementationImpl</tt>
+         class. Unlike <tt>DOMImplementation</tt>, 
+         <tt>DocumentBuilder</tt> creates the
+         <tt>Document</tt> without a root element.
+         Consequently the next step is to create the root
+         <tt>methodCall</tt> element and append it to the
+         <tt>Document</tt>&#8217;s list of children.
+         The next lines after this are the same as in the 
+         <tt>FibonacciDOMClient</tt>.
+       </p><p>
+         When it becomes time to serialize the <tt>Document</tt>,
+         the JAXP solution once again diverges.
+         Here, <tt>FibonacciDOMClient</tt> used 
+         Xerces-specific classes. <tt>FibonacciJAXPClient</tt>
+         uses TrAX. Specifically it creates a <tt>Transformer</tt> object
+         initialized to perform an identity transformation.
+         It sets the source for the transform to the original
+         DOM request document and the result to the output stream connected
+         to the server, and the document is transformed from one onto the other.
+         It&#8217;s a little round-about, but it works. 
+       </p><p>
+         Finally, parsing the server response is much the same
+         as before. However, this time instead of using 
+         the Xerces-specific <tt>DOMParser</tt> 
+         class, we use the same <tt>DocumentBuilder</tt>
+         that created the request document.
+         <tt>DocumentBuilder</tt> 
+         may delegate the parsing to Xerces anyway, depending
+         on which classes are where in your class path, and how certain
+         environment variables are set. However, there&#8217;s no need for
+         code at this level to know that implementation detail.
+         If it becomes important to specify the parser for reasons
+         of performance or conformance, you can set the 
+         <tt>javax.xml.parsers.DocumentBuilderFactory</tt> 
+         system property to the name of the factory class you want to load,
+         which then chooses the parser class.
+         If this property is not set, a reasonable default class
+         will be used (most likely 
+         <tt>org.apache.crimson.jaxp.DocumentBuilderFactoryImpl</tt>
+         from Crimson or
+         <tt>org.apache.xerces.jaxp.DocumentBuilderFactoryImpl</tt>
+         from Xerces). 
+       </p><p>
+      The <tt>javax.xml.parsers</tt> package does fill a hole in 
+      DOM Level 2.
+      However, it&#8217;s not as well designed as the similar classes that
+      are coming down the road in DOM Level 3.
+      The <tt>SAXBuilderFactory</tt>
+      class is completely redundant with the much better designed
+      <tt>XMLReaderFactory</tt> class that&#8217;s a standard
+      part of SAX2. Frankly, <tt>javax.xml.parsers</tt> 
+      is just a legacy package
+      dating from the days of SAX1 and DOM2, which did not provide this
+      functionality. Forward-looking programmers can ignore it.   
+        What JAXP really is, is a bundle of the
+        standard APIs. 
+        However, it is not a new API itself;
+        and it is not an alternative to SAX or DOM. 
+      </p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch05s04.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch05.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch05s06.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">DOM&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;JDOM</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+May 25,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

@@ -1,0 +1,344 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>OutputFormat</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="previous" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="next" href="ch13s03.html" title="DOM Level 3"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">OutputFormat</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch13.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;13.&nbsp;Output from DOM</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch13s03.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e20908"></a>OutputFormat</h2></div></div><p>
+    The detailed behavior of a serializer is controlled by
+    an <tt>OutputFormat</tt> object.
+   
+    This class can configure almost any aspect of serialization, 
+    including setting the maximum line length,
+    changing the indenting, specifying which 
+    elements have their text escaped as CDATA
+    sections, and more. There are even a 
+    few options that have the potential to make your documents
+    malformed. For instance, if you add an element to the list of non-escaping
+    elements, then any reserved
+    characters like &lt; and &amp; that appear
+    in its text content will be output as themselves rather than
+    escaped as <tt>&amp;lt;</tt> and
+    <tt>&amp;amp;</tt>. 
+  </p><p>
+    One of the most frequent requests for serializers is pretty
+    printing data with extra line breaks and indentation.
+    Within reasonable limits, the <tt>OutputFormat</tt>
+    class can provide this. Simply pass true to
+    <tt>setIndenting()</tt>,
+    pass the number of spaces you want each level to be indented
+    to
+    <tt>setIndent()</tt>, and pass the maximum
+    line length to 
+    <tt>setLineWidth()</tt>. 
+    <a href="ch13s02.html#IndentedFibonacci.java" title="Example&nbsp;13.1.&nbsp;Using Xerces&#8217; OutputFormat class&#xA;to pretty print XML">Example&nbsp;13.1</a> demonstrates.
+  </p><div class="example"><a name="IndentedFibonacci.java"></a><p class="title"><b>Example&nbsp;13.1.&nbsp;Using Xerces&#8217; OutputFormat class
+to pretty print XML</b></p><pre class="programlisting">import java.math.*;
+import java.io.IOException;
+import org.w3c.dom.*;
+import javax.xml.parsers.*;
+import org.apache.xml.serialize.*;
+
+
+public class IndentedFibonacci {
+
+  public static void main(String[] args) {
+
+    try {
+
+      // Find the implementation
+      DocumentBuilderFactory factory 
+       = DocumentBuilderFactory.newInstance();
+      factory.setNamespaceAware(true);
+      DocumentBuilder builder = factory.newDocumentBuilder();
+      DOMImplementation impl = builder.getDOMImplementation();
+      
+      // Create the document
+      Document doc = impl.createDocument(null, 
+       "Fibonacci_Numbers", null);
+       
+      // Fill the document
+      BigInteger low  = BigInteger.ONE;
+      BigInteger high = BigInteger.ONE;
+
+      Element root = doc.getDocumentElement();
+
+      for (int i = 0; i &lt; 10; i++) {
+        Element number = doc.createElement("fibonacci");
+        Text text = doc.createTextNode(low.toString());
+        number.appendChild(text);
+        root.appendChild(number);
+
+        BigInteger temp = high;
+        high = high.add(low);
+        low = temp;
+      }
+
+      // Serialize the document
+      OutputFormat format = new OutputFormat(doc);
+      format.setLineWidth(65);
+      format.setIndenting(true);
+      format.setIndent(2);
+      XMLSerializer serializer = new XMLSerializer(System.out, format);
+      serializer.serialize(doc);
+      
+    }
+    catch (FactoryConfigurationError e) { 
+      System.out.println("Could not locate a JAXP factory class"); 
+    }
+    catch (ParserConfigurationException e) { 
+      System.out.println(
+        "Could not locate a JAXP DocumentBuilder class"
+      ); 
+    }
+    catch (DOMException e) {
+      System.err.println(e); 
+    }
+    catch (IOException e) {
+      System.err.println(e); 
+    }
+    
+  }
+
+}
+</pre></div><p>
+    When run, this program produces the following output:
+  </p><pre class="screen">
+<tt>C:\XMLJAVA&gt;</tt><b><tt>java IndentedFibonacci</tt></b>
+<tt>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;Fibonacci_Numbers&gt;
+  &lt;fibonacci&gt;1&lt;/fibonacci&gt;
+  &lt;fibonacci&gt;1&lt;/fibonacci&gt;
+  &lt;fibonacci&gt;2&lt;/fibonacci&gt;
+  &lt;fibonacci&gt;3&lt;/fibonacci&gt;
+  &lt;fibonacci&gt;5&lt;/fibonacci&gt;
+  &lt;fibonacci&gt;8&lt;/fibonacci&gt;
+  &lt;fibonacci&gt;13&lt;/fibonacci&gt;
+  &lt;fibonacci&gt;21&lt;/fibonacci&gt;
+  &lt;fibonacci&gt;34&lt;/fibonacci&gt;
+  &lt;fibonacci&gt;55&lt;/fibonacci&gt;
+&lt;/Fibonacci_Numbers&gt;</tt></pre><p>
+    I think you&#8217;ll agree that this looks much more attractive
+    than the smushed together output from the bare serialization
+    without any extra white space. One warning, however: white
+    space is significant in XML. Adding this white space has
+    changed the document. This is not the same document as
+    existed before it was pretty printed. For this application
+    the extra white space is insignificant. However, this is not true
+    in all XML applications.
+  </p><p>
+    White space is just the beginning of what 
+    the <tt>OutputFormat</tt> class can control.
+    Other features include the MIME media type, the XML declaration,
+    the system and public IDs for the document type, 
+    which elements&#8217; content should be escaped 
+    as CDATA sections and more. Here are the various properties you can control by 
+    invoking various methods on <tt>OutputFormat</tt>.
+    In some cases the default is document dependent.
+    When it&#8217;s not the default value is given in parentheses.
+  </p><div class="variablelist"><dl><dt><span class="term">Method</span></dt><dd><p>
+      This is normally set to one the three values
+      <tt>xml</tt>, <tt>html</tt>  or 
+      <tt>text</tt>, indicating the type of output that is desired.
+      The serializer uses this value to configure itself.
+      The default value is determined by the type of document being serialized.
+    </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setMethod</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>method</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>getMethod</b></span>();</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">static&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>whichMethod</b></span>(<span class="methodparam"><span class="type">Document&nbsp;</span><span class="parameter"><i>doc</i></span></span>);</code></dd><dt><span class="term">Media type (null)</span></dt><dd><p>
+      The MIME media type for the output such as application/xml
+      or application/xhtml+xml. This will not be included in the document itself,
+      but may be used as part of the stream's metadata if it's written in to a file system
+      or onto an HTTP connection or some such. 
+    </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setMediaType</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>version</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>getMediaType</b></span>();</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">static&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>whichMediaType</b></span>(<span class="methodparam"><span class="type">Document&nbsp;</span><span class="parameter"><i>doc</i></span></span>);</code></dd><dt><span class="term">Version (1.0)</span></dt><dd><p>
+      The version number used in the encoding declaration.
+      This should always be <tt>"1.0"</tt>.
+      Do not change this.
+    </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setVersion</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>version</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>getVersion</b></span>();</code></dd><dt><span class="term">Standalone (no)</span></dt><dd><p>
+      The value of the <tt>standalone</tt> 
+      attribute in the XML declaration.
+      This should  be true for <tt>"yes"</tt>
+      and false for
+<tt>"no"</tt>.    </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setStandalone</b></span>(<span class="methodparam"><span class="type">boolean&nbsp;</span><span class="parameter"><i>standalone</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">boolean&nbsp;</span><span class="methodname"><b>getStandalone</b></span>();</code></dd><dt><span class="term">Encoding (UTF-8)</span></dt><dd><p>
+      The encoding specifed in the <tt>encoding</tt> 
+      attribute in the XML declaration and used to convert
+      characters to bytes when serializing onto an <tt>OutputStream</tt>.
+    </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setEncoding</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>encoding</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>getEncoding</b></span>();</code></dd><dt><span class="term">Omit XML declaration (false)</span></dt><dd><p>
+      If true, then no XML declaration is output.    
+      If false, an XML declaration is written.
+     </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setOmitXMLDeclaration</b></span>(<span class="methodparam"><span class="type">boolean&nbsp;</span><span class="parameter"><i>omitXMLDeclaration</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">boolean&nbsp;</span><span class="methodname"><b>getOmitXMLDeclaration</b></span>();</code></dd><dt><span class="term">Document type</span></dt><dd><p>
+      This specifies the system and public IDs of the external DTD
+      subset given in the document type declaration.
+      These values are  used only if the <tt>Document</tt> 
+      being serialized does not contain a 
+      <tt>DocumentType</tt> object of its own.
+    </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setDoctype</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>publicID</i></span></span>, <span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>systemID</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>getDoctypePublic</b></span>();</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>getDoctypeSystem</b></span>();</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">static&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>whichDoctypePublic</b></span>(<span class="methodparam"><span class="type">Document&nbsp;</span><span class="parameter"><i>doc</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">static&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>whichDoctypeSystem</b></span>(<span class="methodparam"><span class="type">Document&nbsp;</span><span class="parameter"><i>doc</i></span></span>);</code></dd><dt><span class="term">Omit Document Type (false)</span></dt><dd><p>
+      If true, then no document type declaration is output.    
+      If false, a document type declaration is written.
+      If the document does not have a document type declaration
+      and none
+      has been set with <tt>setDoctype()</tt>,
+      then no document type declaration will be written,
+      regardless of the value of this property.
+     </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setOmitDocumentType</b></span>(<span class="methodparam"><span class="type">boolean&nbsp;</span><span class="parameter"><i>omitDocumentType</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">boolean&nbsp;</span><span class="methodname"><b>getDocumentType</b></span>();</code></dd><dt><span class="term">Non-escaping elements</span></dt><dd><p>
+      The elements whose text node children should not be
+      escaped using entity references.
+    </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setNonEscapingElements</b></span>(<span class="methodparam"><span class="type">String[]&nbsp;</span><span class="parameter"><i>elementNames</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">String[]&nbsp;</span><span class="methodname"><b>getNonEscapingElements</b></span>(<span class="methodparam"><span class="type">String[]&nbsp;</span><span class="parameter"><i>elementNames</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">boolean&nbsp;</span><span class="methodname"><b>isNonEscapingElement</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>name</i></span></span>);</code></dd><dt><span class="term">CDATA elements</span></dt><dd><p>
+      The elements whose text content should be enclosed in a
+      CDATA section.
+    </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setCDATAElements</b></span>(<span class="methodparam"><span class="type">String[]&nbsp;</span><span class="parameter"><i>elementNames</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">String[]&nbsp;</span><span class="methodname"><b>getCDATAElements</b></span>(<span class="methodparam"><span class="type">String[]&nbsp;</span><span class="parameter"><i>elementNames</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">boolean&nbsp;</span><span class="methodname"><b>isCDATAElement</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>name</i></span></span>);</code></dd><dt><span class="term">Omit Comments (false)</span></dt><dd><p>
+      If true, then comments in the document are not written onto
+      the output.    
+      If false, they are written.
+     </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setOmitComments</b></span>(<span class="methodparam"><span class="type">boolean&nbsp;</span><span class="parameter"><i>omitComments</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">boolean&nbsp;</span><span class="methodname"><b>getOmitComments</b></span>();</code></dd><dt><span class="term">Indenting (false)</span></dt><dd><p>
+      If true, then the serializer will add indents at each level
+      and wrap lines that exceed the maximum line width. If false it won't.
+      The number of spaces to indent is set by the indent property,
+      and the column to wrap at is set by the line width property.
+    </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setIndenting</b></span>(<span class="methodparam"><span class="type">boolean&nbsp;</span><span class="parameter"><i>indenting</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">boolean&nbsp;</span><span class="methodname"><b>getIndenting</b></span>();</code></dd><dt><span class="term">Indent (4)</span></dt><dd><p>
+      The number of spaces to indent each level if indenting is true.
+    </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setIndent</b></span>(<span class="methodparam"><span class="type">int&nbsp;</span><span class="parameter"><i>indent</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">int&nbsp;</span><span class="methodname"><b>getIndent</b></span>();</code></dd><dt><span class="term">Line width (72)</span></dt><dd><p>
+      The maximum number of characters in a line
+      when indenting is true.
+      Setting this to zero turns off line wrapping completely.
+    </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setLineWidth</b></span>(<span class="methodparam"><span class="type">int&nbsp;</span><span class="parameter"><i>width</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">int&nbsp;</span><span class="methodname"><b>getLineWidth</b></span>();</code></dd><dt><span class="term">Line Separator (\n)</span></dt><dd><p>
+      The character or characters to use for a line break.
+      You shouldonly set this property to
+      a carriage return, a linefeed, or a carriage return-linefeed pair.
+    </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setLineSeparator</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>separator</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>getLineSeparator</b></span>();</code></dd></dl></div><p>
+    <a href="ch13s02.html#ValidFibonacciMathML.java" title="Example&nbsp;13.2.&nbsp;Using Xerces&#8217; OutputFormat class&#xA;to pretty print MathML">Example&nbsp;13.2</a> uses these methods to create a valid
+    MathML document encoded in ISO-8859-1 with a document type declaration,
+    an XML declaration, no comments, a 65 character maximum line width,
+    a two space indent, a standalone declaration with the value yes,
+    and the MIME media type application/xml:
+  </p><div class="example"><a name="ValidFibonacciMathML.java"></a><p class="title"><b>Example&nbsp;13.2.&nbsp;Using Xerces&#8217; OutputFormat class
+to pretty print MathML</b></p><pre class="programlisting">import java.math.*;
+import java.io.*;
+import org.w3c.dom.*;
+import javax.xml.parsers.*;
+import org.apache.xml.serialize.*;
+
+
+public class ValidFibonacciMathML {
+
+  public static String MATHML_NS 
+   = "http://www.w3.org/1998/Math/MathML";  
+    
+  public static void main(String[] args) {
+
+    try {
+
+      // Find the implementation
+      DocumentBuilderFactory factory 
+       = DocumentBuilderFactory.newInstance();
+      factory.setNamespaceAware(true);
+      DocumentBuilder builder = factory.newDocumentBuilder();
+      DOMImplementation impl = builder.getDOMImplementation();
+      
+      // Create the document
+      Document doc 
+       = impl.createDocument(MATHML_NS, "math", null);
+       
+      // Fill the document
+      BigInteger low  = BigInteger.ONE;
+      BigInteger high = BigInteger.ONE;
+
+      Element root = doc.getDocumentElement();
+      root.setAttribute("xmlns", MATHML_NS);
+
+      for (int i = 1; i &lt;= 10; i++) {
+        Element mrow = doc.createElementNS(MATHML_NS, "mrow");
+        
+        Element mi = doc.createElementNS(MATHML_NS, "mi");
+        Text function = doc.createTextNode("f(" + i + ")");
+        mi.appendChild(function);
+        
+        Element mo = doc.createElementNS(MATHML_NS, "mo");
+        Text equals = doc.createTextNode("=");
+        mo.appendChild(equals);
+        
+        Element mn = doc.createElementNS(MATHML_NS, "mn");
+        Text value = doc.createTextNode(low.toString());
+        mn.appendChild(value);
+        
+        mrow.appendChild(mi);
+        mrow.appendChild(mo);
+        mrow.appendChild(mn);
+        
+        root.appendChild(mrow);
+
+        BigInteger temp = high;
+        high = high.add(low);
+        low = temp;
+      }
+      
+      // Serialize the document onto System.out
+      OutputFormat format = new OutputFormat(doc);
+      format.setLineWidth(65);
+      format.setIndenting(true);
+      format.setIndent(2);
+      format.setEncoding("ISO-8859-1");
+      format.setDoctype("-//W3C//DTD MathML 2.0//EN",
+       "http://www.w3.org/TR/MathML2/dtd/mathml2.dtd"); 
+      format.setMediaType("application/xml");
+      format.setOmitComments(true);
+      format.setOmitXMLDeclaration(false);
+      format.setVersion("1.0");
+      format.setStandalone(true);
+      
+      XMLSerializer serializer 
+       = new XMLSerializer(System.out, format);
+      serializer.serialize(doc);
+      
+    }
+    catch (FactoryConfigurationError e) { 
+      System.out.println("Could not locate a JAXP factory class"); 
+    }
+    catch (ParserConfigurationException e) { 
+      System.out.println(
+        "Could not locate a JAXP DocumentBuilder class"
+      ); 
+    }
+    catch (DOMException e) {
+      System.err.println(e); 
+    }
+    catch (IOException e) {
+      System.err.println(e); 
+    }
+    
+  }
+
+}
+</pre></div><p>
+    Here&#8217;s the beginning of the output:
+  </p><pre class="screen">
+<tt>C:\XMLJAVA&gt;</tt><b><tt>java ValidFibonacciMathML</tt></b>
+<tt>D:\books\XMLJAVA\examples\13&gt;java ValidFibonacciMathML
+&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;!DOCTYPE math PUBLIC "-//W3C//DTD MathML 2.0//EN"
+                  "http://www.w3.org/TR/MathML2/dtd/mathml2.dtd"&gt;
+&lt;math&gt;
+  &lt;mrow&gt;
+    &lt;mi&gt;f(1)&lt;/mi&gt;
+    &lt;mo&gt;=&lt;/mo&gt;
+    &lt;mn&gt;1&lt;/mn&gt;
+  &lt;/mrow&gt;
+  &lt;mrow&gt;
+    &lt;mi&gt;f(2)&lt;/mi&gt;
+    &lt;mo&gt;=&lt;/mo&gt;
+    &lt;mn&gt;1&lt;/mn&gt;
+  &lt;/mrow&gt;
+&#8230;</tt></pre><p>
+    You can imagine other requests for the serializer. For
+    example, maybe you want a line break after
+    each <tt>&lt;/mrow&gt;</tt> end-tag but no line
+    breaks inside <tt>mrow</tt> elements. 
+    <tt>OutputFormat</tt> doesn&#8217;t 
+    give you enough control to arrange serialization at this
+    level of detail, but you could write a custom subclass of 
+    <tt>XMLSerializer</tt> that accomplishes this.
+  </p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch13.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch13.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch13s03.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&nbsp;13.&nbsp;Output from DOM&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;DOM Level 3</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+June 05,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

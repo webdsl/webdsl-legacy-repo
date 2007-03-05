@@ -1,0 +1,49 @@
+SEASON {font-size: 14pt; background-color: white; 
+        color: black; display: block}
+YEAR {display: block; font-size: 32pt; font-weight: bold; 
+      text-align: center; }
+YEAR:after {content: " Major League Baseball"}
+LEAGUE_NAME {display: block; text-align: center; font-size: 28pt; font-weight: bold}
+DIVISION_NAME {display: block; text-align: center; font-size: 24pt; font-weight: bold}
+TEAM_CITY {font-size: 20pt; font-weight: bold; font-style: italic}
+TEAM_NAME {font-size: 20pt; font-weight: bold; font-style: italic}
+TEAM {display: table}
+TEAM_CITY {display: table-caption}
+TEAM_NAME {display: table-caption}
+PLAYER {display: table-row}
+GIVEN_NAME {display: table-cell}
+SURNAME {display: table-cell}
+POSITION {display: table-cell}
+GAMES {display: table-cell}
+GAMES_STARTED {display: table-cell}
+WINS {display: table-cell}
+LOSSES {display: table-cell}
+SAVES {display: table-cell}
+COMPLETE_GAMES {display: table-cell}
+SHUT_OUTS {display: table-cell}
+ERA {display: table-cell}
+INNINGS {display: table-cell}
+HITS_AGAINST {display: table-cell}
+HOME_RUNS_AGAINST {display: table-cell}
+RUNS_AGAINST {display: table-cell}
+EARNED_RUNS {display: table-cell}
+WILD_PITCHES {display: table-cell}
+BALK {display: table-cell}
+WALKED_BATTER {display: table-cell}
+STRUCK_OUT_BATTER {display: table-cell}
+AT_BATS {display: table-cell}
+RUNS {display: table-cell}
+HITS {display: table-cell}
+DOUBLES {display: table-cell}
+TRIPLES {display: table-cell}
+HOME_RUNS {display: table-cell}
+RBI {display: table-cell}
+STEALS {display: table-cell}
+CAUGHT_STEALING {display: table-cell}
+SACRIFICE_HITS {display: table-cell}
+SACRIFICE_FLIES {display: table-cell}
+ERRORS {display: table-cell}
+WALKS {display: table-cell}
+STRUCK_OUT {display: table-cell}
+HIT_BY_PITCH {display: table-cell}
+HIT_BATTER {display: table-cell}

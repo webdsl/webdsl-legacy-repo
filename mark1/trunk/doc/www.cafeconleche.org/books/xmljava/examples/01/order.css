@@ -1,0 +1,17 @@
+Order {font-family: serif; font-size: 16pt; 
+       display: block; line-height: 20pt;
+       margin-left: 0.25in
+      }
+ShipTo {margin-left: 0.5in; display: block }
+ShipTo:before {content: "Ship to:"; margin-left: -0.25in }
+Product {font-size: 12pt; display: block }
+Customer {font-weight: bold; display: block }
+GiftMessage {font-family: ZapfChancery, script}
+Street, Subtotal, Tax, Shipping, Total {display: block}
+Quantity:before {content: "Quantity: "}
+SKU {display: none}
+Subtotal:before {content: "Subtotal: $"}
+Price:before {content: "Unit Price: $"}
+Tax:before {content: "Tax: $"}
+Shipping:before {content: "Shipping: $"}
+Total:before {content: "Total: $"} 

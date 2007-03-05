@@ -1,0 +1,239 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Writing XML Documents with JDOM</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="previous" href="ch14s03.html" title="Creating XML Documents with JDOM"><link rel="next" href="ch14s05.html" title="Document Type Declarations"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Writing XML Documents with JDOM</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch14s03.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;14.&nbsp;JDOM</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch14s05.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e22298"></a>Writing XML Documents with JDOM</h2></div></div><p>
+    Once you&#8217;ve created a document, you&#8217;re likely to want to
+    serialize it to a network socket, a file, a string, or some
+    other stream. JDOM&#8217;s
+    <tt>org.jdom.output.XMLOutputter</tt> class
+    does this in  a standard way. You can create an 
+    <tt>XMLOutputter</tt> object
+    with a no-args constructor 
+    and then write a document onto an 
+    <tt>OutputStream</tt> with its
+    <tt>output()</tt> method. For example, this
+    code fragment writes the  <tt>Document</tt> object
+    named <tt>doc</tt>
+    onto <tt>System.out</tt>. 
+  </p><div class="informalexample"><pre class="programlisting">    XMLOutputter outputter = new XMLOutputter();
+    try {
+      outputter.output(doc, System.out);       
+    }
+    catch (IOException e) {
+      System.err.println(e);
+    }</pre></div><p>
+    Besides streams you can also output a document onto a
+    <tt>java.io.Writer</tt>. However, it&#8217;s
+    recommended that you use an <tt>OutputStream</tt>
+    because it&#8217;s generally not possible to determine the underlying
+    encoding of a  <tt>Writer</tt> and set the
+    encoding declaration accordingly. 
+  </p><p>
+    Besides documents, <tt>XMLOutputter</tt> 
+    can write elements, attributes, CDATA
+    sections, and all the other JDOM node classes. For example, this
+    code fragment writes an empty element named
+    <tt>Greeting</tt>
+    onto <tt>System.out</tt>: 
+  </p><div class="informalexample"><pre class="programlisting">    XMLOutputter outputter = new XMLOutputter();
+    try {
+      Element element = new Element("Greeting");
+      outputter.output(element, System.out);       
+    }
+    catch (IOException e) {
+      System.err.println(e);
+    }</pre></div><p>
+    This may occasionally be useful; but if you write anything
+    other than a single <tt>Document</tt> 
+    or <tt>Element</tt>  onto a
+    stream, the result probably won&#8217;t be a well-formed XML
+    document.
+  </p><p>
+    Finally, instead of writing onto a stream or writer, you can
+    use the <tt>outputString()</tt> methods to
+    store an XML document or node in a
+    <tt>String</tt>. This is often useful when 
+    passing XML data through non-XML aware systems. For example, this
+    code fragment stores an empty element named
+    <tt>Greeting</tt> in the <tt>String</tt> variable
+    named <tt>hello</tt>:
+  </p><div class="informalexample"><pre class="programlisting">  XMLOutputter outputter = new XMLOutputter();
+  Element element = new Element("Greeting");
+  String hello = outputter.outputString(element);</pre></div><p>
+    <a href="ch14s04.html#FibonacciJDOM.java" title="Example&nbsp;14.1.&nbsp;A JDOM program that produces an XML document containing Fibonacci numbers">Example&nbsp;14.1</a> puts this all together
+    with a simple program that generates the Fibonacci series in
+    XML format.
+  </p><div class="example"><a name="FibonacciJDOM.java"></a><p class="title"><b>Example&nbsp;14.1.&nbsp;A JDOM program that produces an XML document containing Fibonacci numbers</b></p><pre class="programlisting">import org.jdom.*;
+import org.jdom.output.XMLOutputter;
+import java.math.BigInteger;
+import java.io.IOException;
+
+
+public class FibonacciJDOM {
+
+  public static void main(String[] args) {
+
+    Element root = new Element("Fibonacci_Numbers");
+
+    BigInteger low  = BigInteger.ONE;
+    BigInteger high = BigInteger.ONE;
+
+    for (int i = 1; i &lt;= 5; i++) {
+      Element fibonacci = new Element("fibonacci");
+      fibonacci.setAttribute("index", String.valueOf(i));
+      fibonacci.setText(low.toString());
+      root.addContent(fibonacci);
+
+      BigInteger temp = high;
+      high = high.add(low);
+      low = temp;
+    }
+
+    Document doc = new Document(root);
+    // serialize it onto System.out
+    try {
+      XMLOutputter serializer = new XMLOutputter();
+      serializer.output(doc, System.out);
+    }
+    catch (IOException e) {
+      System.err.println(e);
+    }
+
+  }
+
+}
+
+</pre></div><p>
+    The output is as follows:
+  </p><pre class="screen"><tt>D:\books\XMLJAVA\examples\14&gt;</tt><b><tt>java FibonacciJDOM</tt></b>
+<tt>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;Fibonacci_Numbers&gt;&lt;fibonacci index="1"&gt;1&lt;/fibonacci&gt;&lt;fibonacci 
+index="2"&gt;1&lt;/fibonacci&gt;&lt;fibonacci index="3"&gt;2&lt;/fibonacci&gt;
+&lt;fibonacci index="4"&gt;3&lt;/fibonacci&gt;&lt;fibonacci index="5"&gt;5
+&lt;/fibonacci&gt;&lt;/Fibonacci_Numbers&gt;</tt></pre><p>
+    This isn&#8217;t especially pretty. There are a couple of ways to
+    clean it up. First off you can recognize that white space is
+    significant in XML and by default JDOM faithfully reproduces
+    it. Thus if you want the output to be indented, you could
+    add strings containing line breaks and extra space in the
+    right place. 
+    However, if you happen to know that white space is not
+    significant in the particular XML vocabulary  the program
+    writes, then you can ask the <tt>XMLOutputter</tt>
+    to format the document for you. For example,
+    this <tt>XMLOutputter</tt> inserts the default
+    line ending after elements and indents elements by two spaces
+    per each layer of the hierarchy:
+  </p><div class="informalexample"><pre class="programlisting">      XMLOutputter serializer = new XMLOutputter();
+      serializer.setIndent("  "); // use two space indent
+      serializer.setNewlines(true); 
+      serializer.output(doc, System.out);</pre></div><p>
+  Now the output looks like this:
+</p><pre class="screen"><tt>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;Fibonacci_Numbers&gt;
+  &lt;fibonacci index="1"&gt;1&lt;/fibonacci&gt;
+  &lt;fibonacci index="2"&gt;1&lt;/fibonacci&gt;
+  &lt;fibonacci index="3"&gt;2&lt;/fibonacci&gt;
+  &lt;fibonacci index="4"&gt;3&lt;/fibonacci&gt;
+  &lt;fibonacci index="5"&gt;5&lt;/fibonacci&gt;
+&lt;/Fibonacci_Numbers&gt;</tt></pre><p>
+    Much prettier, I think you&#8217;ll agree.
+  </p><p>
+    You can also specify the amount
+    of indenting to use and whether or not
+    to add line breaks as arguments to the 
+    <tt>XMLOutputter()</tt>
+    constructor like this:
+  </p><div class="informalexample"><pre class="programlisting">      XMLOutputter serializer = new XMLOutputter("  ", true);
+      serializer.output(doc, System.out);</pre></div><p>
+   For another example, let&#8217;s revisit
+   <tt>FlatXMLBudget</tt>,
+   <a href="ch04s04.html#FlatXMLBudget.java" title="Example&nbsp;4.2.&nbsp;Naively reproducing the original table structure in XML">Example&nbsp;4.2</a> from 
+    <a href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML">Chapter&nbsp;4</a>. Recall that its purpose was
+    to read a tab-delimited file containing financial data and 
+    convert it into XML. The method that actually generated the XML
+    was 
+    <tt>convert()</tt>, and it did this by writing
+    strings onto an <tt>OutputStream</tt> like so:
+ </p><div class="informalexample"><pre class="programlisting">  public static void convert(List data, OutputStream out) 
+   throws IOException {
+      
+    Writer wout = new OutputStreamWriter(out, "UTF8"); 
+    wout.write("&lt;?xml version=\"1.0\"?&gt;\r\n");
+    wout.write("&lt;Budget&gt;\r\n");
+          
+    Iterator records = data.iterator();
+    while (records.hasNext()) {
+      wout.write("  &lt;LineItem&gt;\r\n");
+      Map record = (Map) records.next();
+      Set fields = record.entrySet();
+      Iterator entries = fields.iterator();
+      while (entries.hasNext()) {
+        Map.Entry entry = (Map.Entry) entries.next();
+        String name = (String) entry.getKey();
+        String value = (String) entry.getValue();
+        // some of the values contain ampersands and less than
+        // signs that must be escaped
+        value = escapeText(value);
+        
+        wout.write("    &lt;" + name + "&gt;");
+        wout.write(value);        
+        wout.write("&lt;/" + name + "&gt;\r\n");
+      }
+      wout.write("  &lt;/LineItem&gt;\r\n");
+    }
+    wout.write("&lt;/Budget&gt;\r\n");
+    wout.flush();
+        
+  }</pre></div><p>
+   JDOM can make this method quite a
+   bit simpler as well as eliminating the need for the
+   <tt>escapeText()</tt> method completely, since
+   JDOM handles that internally:
+  </p><div class="informalexample"><pre class="programlisting">  public static void convert(List data, OutputStream out) 
+   throws IOException {
+      
+    Element budget = new Element("Budget");
+          
+    Iterator records = data.iterator();
+    while (records.hasNext()) {
+      Element lineItem = new Element("LineItem");
+      budget.addContent(lineItem);
+      
+      Map record = (Map) records.next();
+      Set fields = record.entrySet();
+      Iterator entries = fields.iterator();
+      while (entries.hasNext()) {
+        Map.Entry entry = (Map.Entry) entries.next();
+        String name = (String) entry.getKey();
+        String value = (String) entry.getValue();
+        
+        Element category = new Element(name);
+        category.setText(value);
+        lineItem.addContent(category);
+      }
+    }
+
+    Document doc = new Document(budget);
+    XMLOutputter outputter = new XMLOutputter("  ", true);
+    outputter.output(doc, out);
+    out.flush();
+        
+  }</pre></div><p>
+    The disadvantage to this approach is that even though the
+    input is streamed the output is not. The entire  document
+    is built and stored in memory before the first byte of output
+    is written.
+    This can be a problem in memory limited devices or with large
+    documents.
+  </p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch14s03.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch14.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch14s05.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Creating XML Documents with JDOM&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Document Type Declarations</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+April 19,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE math:math PUBLIC "-//W3C//DTD MathML 2.0//EN"
+ "http://www.w3.org/TR/MathML2/dtd/mathml2.dtd" [
+  <!ENTITY % MATHML.prefixed "INCLUDE">
+  <!ENTITY % MATHML.prefix "math">
+]>
+<math:math xmlns:mathml="http://www.w3.org/1998/Math/MathML">
+  <math:mrow>
+    <math:mi>f(1)</math:mi>
+    <math:mo>=</math:mo>
+    <math:mn>1</math:mn>
+  </math:mrow>
+  <math:mrow>
+    <math:mi>f(2)</math:mi>
+    <math:mo>=</math:mo>
+    <math:mn>1</math:mn>
+  </math:mrow>
+  <math:mrow>
+    <math:mi>f(3)</math:mi>
+    <math:mo>=</math:mo>
+    <math:mn>2</math:mn>
+  </math:mrow>
+  <math:mrow>
+    <math:mi>f(4)</math:mi>
+    <math:mo>=</math:mo>
+    <math:mn>3</math:mn>
+  </math:mrow>
+</math:math>

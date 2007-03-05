@@ -1,0 +1,644 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+	<TITLE>0. Keep your terminology straight</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.3  (Linux)">
+	<META NAME="AUTHOR" CONTENT="Elliotte Rusty Harold">
+	<META NAME="CREATED" CONTENT="20020121;17260000">
+	<META NAME="CHANGED" CONTENT="20030426;10452800">
+	<STYLE>
+	<!--
+		@page { size: 21.59cm 27.94cm; margin-left: 2.33cm; margin-right: 2.33cm; margin-top: 2.54cm; margin-bottom: 2.54cm }
+		P { margin-bottom: 0.21cm; color: #000000; text-align: justify; widows: 2; orphans: 2 }
+		P.western { font-family: "Times New Roman", serif; font-size: 10pt; so-language: en-US }
+		P.cjk { font-family: "Times New Roman", serif; font-size: 10pt; so-language:  }
+		H1 { margin-bottom: 0.11cm; color: #000000; text-align: justify; widows: 2; orphans: 2 }
+		H1.western { font-family: "Arial", sans-serif; font-size: 16pt; so-language: en-US }
+		H1.cjk { font-family: "Times New Roman", serif; font-size: 16pt; so-language:  }
+		H1.ctl { font-family: "Arial Unicode MS"; font-size: 12pt; font-weight: medium }
+		PRE { margin-top: 0.04cm; margin-bottom: 0.04cm; color: #000000; text-align: justify; widows: 2; orphans: 2 }
+		PRE.western { so-language: en-US }
+		PRE.cjk { so-language:  }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="de-DE" TEXT="#000000">
+<P LANG="en-US" ALIGN=CENTER STYLE="margin-top: 0.42cm; page-break-after: avoid">
+<FONT FACE="Albany, Arial, sans-serif"><FONT SIZE=5><B>Introduction</B></FONT></FONT></P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">As I
+already stated in the preface, this is not an introductory book or an
+XML tutorial. I assume that you're familiar with the basic structure
+of an XML document as elements that contain text, that you know how
+to ask a parser to read an XML document in your language of choice,
+that you can attach a style sheet to a document as necessary and so
+forth.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">However, I
+have noticed over the last few years that certain words and phrases
+have taken on a diverse set of meanings, and are often used
+inconsistently. Sometimes this just confuses people, but occasionally
+it's led to serious process failures. Some of this has been caused by
+authors and trainers (embarrassingly sometimes including the author
+of this book) who weren't sufficiently careful with their use of
+words such as <I>element</I> and <I>tag</I>.  However, some of the
+confusion rests with the XML working groups at the W3C who are often
+not consistent with each other or even within the same specification.
+Before we proceed with the detailed rules, it is worth taking the
+time to define our terms carefully, make sure we agree which words
+mean what, as well as recognizing those areas where there are genuine
+disagreements about the meaning of common technical terms. 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Toward
+that end, I've prepared the following list of the most frequently
+confused XML terms:</P>
+<UL>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Element
+	vs. tag</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Attribute
+	vs. attribute value</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Entity
+	vs. entity reference</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Entity
+	reference vs. character reference</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Children
+	vs. child elements vs. content</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Text
+	vs. Character data vs. markup</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Namespace
+	vs. namespace name vs. namespace URI</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">XML
+	document vs. XML file</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">XML
+	application vs. XML software</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Well-formed
+	vs. valid</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">DTD
+	vs. DOCTYPE</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">XML
+	declaration vs. processing instruction</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Character
+	set vs. character encoding</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">URI
+	vs. URI Reference vs. IRI</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Schema
+	vs. the W3C XML Schema Language</P>
+</UL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Confusing
+these terms often causes much misunderstanding regarding how various
+APIs and tools work. For instance, if you think that a character
+reference is an entity reference, you may find yourself wondering why
+the SAX startEntity method is never invoked for character references
+in your documents. When you ask a question about this on a mailing
+list, you may not phrase your question in a way that others can
+understand. You might even spend several hours carefully devising a
+test case and filing a bug report on a feature that's operating
+exactly as it should.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">The
+answers to many apparently difficult questions become almost obvious
+when you're careful to state exactly what you mean. Thus it behooves
+us to define our terms carefully.</P>
+<OL>
+	<LI><H1 LANG="en-US" CLASS="western">Element vs. Tag</H1>
+</OL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">An element
+is not a tag and a tag is not an element. An element begins with a
+start-tag, includes some content, and then finishes with an end-tag.
+Tags delimit elements. They are part of elements, but not themselves
+elements, any more than a piece of bread is a sandwich. The tags are
+like slices of bread. The element is the entire sandwich made up of
+bread, mustard and mayonnaise,  meat and/or cheese. The tags are just
+the bread. For example, &lt;Headline&gt; is a start-tag. &lt;/Headline&gt;
+is an end-tag. &lt;Headline&gt;Record Crowd Hears Beth
+Giggle&lt;/Headline&gt; is a complete element. Elements may contain
+other elements. Tags may not contain other tags. 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">There is
+one degenerate case. A single empty-element tag may represent an
+entire element. For instance, &lt;Headline/&gt; is both a headline
+tag and a headline element. However, this is a special case. It is
+not true in general. Semantically the empty-element tag is completely
+equivalent to the two-tag version &lt;Headline&gt;&lt;/Headline&gt;,
+and most APIs will not bother to inform you which of the two forms
+was actually present in the document. 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">In brief,
+the structure of an XML document is formed by nested elements. The
+individual elements are delimited by tags.</P>
+<OL START=2>
+	<LI><H1 LANG="en-US" CLASS="western">Attribute vs. Attribute Value</H1>
+</OL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">An
+attribute is a property of an element. It has a name and a value, and
+is normally a part of the element's start-tag. (It can also be
+defaulted in from the DTD.) For example, consider this element:</P>
+<PRE LANG="en-US" CLASS="western">&lt;Headline page=&quot;10&quot;&gt;Record Crowd Hears Beth Giggle&lt;/Headline&gt;</PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+The headline element has a page attribute with the value 10. The
+attribute includes both the name and the value. The attribute value
+is simply the string 10. Either single or double quotes may surround
+the attribute value. The type of quote used is not significant. This
+element is exactly the same as the previous one:</P>
+<PRE LANG="en-US" CLASS="western">&lt;Headline page='10'&gt;Record Crowd Hears Beth Giggle&lt;/Headline&gt;</PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+If an element has multiple attributes, their order is not important.
+These two elements are equivalent:</P>
+<PRE LANG="en-US" CLASS="western">&lt;Headline id=&quot;A3&quot; page=&quot;10&quot;&gt;Record Crowd Hears Beth Giggle&lt;/Headline&gt;
+<SPAN LANG="en-US">&lt;Headline page=&quot;10&quot; id=&quot;A3&quot;&gt;Record Crowd Hears Beth Giggle&lt;/Headline&gt;</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+Parsers do not tell you which attribute came first. If order matters,
+you need to use child elements instead of attributes:</P>
+<PRE LANG="en-US" CLASS="western">&lt;Headline&gt;
+<SPAN LANG="en-US">  &lt;id&gt;A3&lt;/id&gt; &lt;page&gt;10&lt;/page&gt;</SPAN>
+<SPAN LANG="en-US">  Record Crowd Hears Beth Giggle</SPAN>
+<SPAN LANG="en-US">&lt;/Headline&gt;</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+It's not exactly a terminology confusion, but a few technologies
+(notably the W3C XML Schema Language) have recently dug themselves
+into deep holes by attempting to treat attributes and child elements
+as variations of the same thing. They are not. Order is only one of
+the differences between child elements and attributes. Other
+important differences include type, normalization, and the ability or
+inability to express substructure. 
+</P>
+<OL START=3>
+	<LI><H1 LANG="en-US" CLASS="western">Entity vs. Entity Reference</H1>
+</OL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">An entity
+is a storage unit that contains a piece of an XML document. This
+storage unit may be a file, a database record, an object in memory, a
+stream of bytes returned by a network server, or something else. It
+may contain an entire XML document or just a few elements or
+declarations.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Entity
+references point to these entities. There are two kinds of entity
+references, general entity references and parameter entity
+references. A general entity reference begins with an ampersand; for
+instance &amp;amp; or &amp;chapter1;. These normally appear in the
+instance document. For example, you might define the chapter1 entity
+in the DTD like this:</P>
+<PRE LANG="en-US" CLASS="western">&lt;!ENTITY SYSTEM chapter1 &quot;http://www.example.com/chapter1.xml&quot;&gt;</PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+Then in the document you could reference it like this:</P>
+<PRE LANG="en-US" CLASS="western">&lt;book&gt;
+<SPAN LANG="en-US">  &amp;chapter1;</SPAN>
+<SPAN LANG="en-US">...</SPAN>
+<SPAN LANG="en-US">&lt;/book&gt;</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+&amp;chapter1; is an entity reference. The actual content of the
+document found at  http://www.example.com/chapter1.xml is an entity.
+They are related, but they are not the same thing.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Parameter
+entities and parameter entity references follow the same pattern. The
+difference is that parameter entities contain DTD fragments instead
+of instance document fragments and parameter entity references begin
+with a percent sign instead of an ampersand. However, it's still the
+case that the entity reference stands in for and points to the actual
+entity.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">XML APIs
+are schizophrenic about whether they report entities, entity
+references, neither, or both. Some, like XOM, simply replace all
+entity references with their corresponding entities and don't tell
+you that anything has happened. Others, like JDOM, only report
+entities they have not resolved. Still others such as DOM and SAX can
+report both entities and entity references, though this often depends
+on user preferences and the abilities of the underlying parser; and
+normally the five predefined entity references &amp;amp;, &amp;lt;,
+&amp;gt;, &amp;quot; and &amp;apos; are not reported.</P>
+<OL START=4>
+	<LI><H1 LANG="en-US" CLASS="western">Entity Reference vs. Character
+	Reference</H1>
+</OL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Not
+everything that begins with an ampersand is an entity reference.
+<I>Entity references</I> are only used for named entities, including
+the five predefined entity references such as &amp;lt; and any
+entities defined with ENTITY declarations in the DTD such as
+&amp;chapter1; in the example above. 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">By
+contrast character references use a hexadecimal or decimal Unicode
+value to refer to a particular character, not a name. Each always
+refers to a single character, never to a group of characters. For
+example, &amp;#xA0; is a hexadecimal character reference referring to
+the non-breaking space character. &amp;#160; is a decimal character
+reference referring to that same character. However, XHTML's &amp;nbsp;
+is an entity reference referring to that character.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Almost
+always, even APIs that faithfully report all entity references do not
+report character references. Instead, the parser silently merges the
+referenced characters into the surrounding text. Your code should
+never depend on whether a character was typed literally or escaped
+with a character reference. Almost all of the time, it shouldn't
+depend on whether the character was escaped with an entity reference
+either.</P>
+<OL START=5>
+	<LI><H1 LANG="en-US" CLASS="western">Children vs. Child Elements vs.
+	Content</H1>
+</OL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">An
+element's content is everything between the element's start-tag and
+its end-tag. For example, consider this DocBook para element:</P>
+<PRE LANG="en-US" CLASS="western">&lt;para&gt;
+<SPAN LANG="en-US">  As far as we know, the Fibonacci series was first discovered by </SPAN>
+<SPAN LANG="en-US">  Leonardo of Pisa around 1200 C.E. Leonardo was trying to answer the question,</SPAN>
+<SPAN LANG="en-US">  &lt;!-- Scritti di Leonardo Piasano.  Rome: Baldassarre, 1857.</SPAN>
+<SPAN LANG="en-US">       Volume I, pages 283 - 284.Fibonacci, Leonardo. --&gt;</SPAN>
+<SPAN LANG="en-US">  &lt;quote lang=&quot;la&quot;&gt;&lt;foreignphrase&gt;Quot paria coniculorum in </SPAN>
+<SPAN LANG="en-US">  uno anno ex uno pario germinatur?&lt;/foreignphrase&gt;&lt;/quote&gt;, or, </SPAN>
+<SPAN LANG="en-US">  in English, &lt;quote&gt;How many pairs of rabbits are born in one </SPAN>
+<SPAN LANG="en-US">  year from one pair?&lt;/quote&gt; To solve Leonardo&amp;rsquo;s problem, first </SPAN>
+<SPAN LANG="en-US">  estimate that rabbits have a one month gestation period, and </SPAN>
+<SPAN LANG="en-US">  can first mate at the age of one month, so that each female </SPAN>
+<SPAN LANG="en-US">  rabbit has its first litter at two months. Then make the simplifying </SPAN>
+<SPAN LANG="en-US">  assumption that each litter consists of exactly one male and one female.  </SPAN>
+<SPAN LANG="en-US">&lt;/para&gt;</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+The content of this para element contains a some text including white
+space, a comment, some more text, a quote child element, some more
+plain text, another quote child element, some more plain text, the
+&amp;rsquo; entity reference, and finally some more text. All of that
+together, including all the content of child elements such as quote,
+is the para element's content. 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">The para
+element has two child elements, both named quote. However, these are
+not the only children of the element. This element also contains a
+comment, lots of character data, and an entity reference. These are
+considered to be children of the para element as well, though
+different APIs and systems differ in exactly how they represent these
+and how many text children there are. At one extreme, each separate
+character can be a separate child. At the other extreme, each text
+node contains the maximum contiguous run of text after all entity
+references are resolved so the para element has exactly four text
+node children.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">On the
+flip side, the foreignphrase element and other content inside the
+quote elements are not children of the para element though they are
+descendants of it.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">The common
+reason for confusing children with child elements is forgetting about
+the very real possibility of mixed content. However, even when a
+document has more record like structure, the difference between
+children and child elements can be important. For example consider
+this presentation element:</P>
+<PRE LANG="en-US" CLASS="western">&lt;presentation&gt;
+<SPAN LANG="en-US">  &lt;title&gt;DOM&lt;/title&gt;</SPAN>
+<SPAN LANG="en-US">  &lt;date&gt;Thursday, November 21, 2002&lt;/date&gt;</SPAN>
+<SPAN LANG="en-US">  &lt;host&gt;Software Development 2002 East&lt;/host&gt;</SPAN>
+<SPAN LANG="en-US">  &lt;copyright&gt;2000-2002 Elliotte Rusty Harold&lt;/copyright&gt;</SPAN>
+<SPAN LANG="en-US">  &lt;last_modified&gt;November 26, 2002&lt;/last_modified&gt;</SPAN>
+<SPAN LANG="en-US">  &lt;author_name&gt;Elliotte Rusty Harold&lt;/author_name&gt;</SPAN>
+<SPAN LANG="en-US">  &lt;author_url&gt;http://www.elharo.com/&lt;/author_url&gt;</SPAN>
+<SPAN LANG="en-US">  &lt;author_email&gt;elharo@metalab.unc.edu&lt;/author_email&gt;</SPAN>
+<SPAN LANG="en-US">  &lt;abstract&gt;Elliotte Rusty Harold's DOM tutorial&lt;/abstract&gt;</SPAN>
+<SPAN LANG="en-US">&lt;/presentation&gt;</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+It may look like this element only has child elements. However, if
+you're counting child nodes you have to count the white space too.
+There are at least ten text node children containing only white
+space. Furthermore, what about the title, date, host, and similar
+elements? Each of them has a child node containing character data but
+no child elements. Bottom line: elements are not the only kind of
+children. 
+</P>
+<OL START=6>
+	<LI><H1 LANG="en-US" CLASS="western">Text vs. Character Data vs.
+	Markup</H1>
+</OL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">XML
+documents are composed of text. You'll never find anything in an XML
+document that is not text. This text is divided into two
+non-intersecting sets, character data and markup. Markup consists of
+all the tags, comments, processing instructions, entity references,
+character references, CDATA section delimiters, XML declarations,
+text declarations, document type declarations, and white space
+outside the root element. Everything else is character data. For
+example, here's the DocBook para element with the markup identified
+by bold face and the character data is in a plain font:</P>
+<PRE LANG="en-US" CLASS="western"><B>&lt;para&gt;</B>
+<SPAN LANG="en-US">  As far as we know, the Fibonacci series was first discovered by </SPAN>
+<SPAN LANG="en-US">  Leonardo of Pisa around 1200 C.E. Leonardo was trying to answer the question,</SPAN>
+<SPAN LANG="en-US">  <B>&lt;!-- Scritti di Leonardo Piasano.  Rome: Baldassarre, 1857.</B></SPAN>
+<SPAN LANG="en-US"><B>       Volume I, pages 283 - 284.Fibonacci, Leonardo. --&gt;</B></SPAN>
+<SPAN LANG="en-US">  <B>&lt;quote lang=&quot;la&quot;&gt;&lt;foreignphrase&gt;</B>Quot paria coniculorum in </SPAN>
+<SPAN LANG="en-US">  uno anno ex uno pario germinatur?<B>&lt;/foreignphrase&gt;&lt;/quote&gt;</B>, or, </SPAN>
+<SPAN LANG="en-US">  in English, <B>&lt;quote&gt;</B>How many pairs of rabbits are born in one </SPAN>
+<SPAN LANG="en-US">  year from one pair?<B>&lt;/quote&gt;</B> To solve Leonardo<B>&amp;rsquo;</B>s problem, first </SPAN>
+<SPAN LANG="en-US">  estimate that rabbits have a one month gestation period, and </SPAN>
+<SPAN LANG="en-US">  can first mate at the age of one month, so that each female </SPAN>
+<SPAN LANG="en-US">  rabbit has its first litter at two months. Then make the simplifying </SPAN>
+<SPAN LANG="en-US">  assumption that each litter consists of exactly one male and one female.  </SPAN>
+<SPAN LANG="en-US"><B>&lt;/para&gt;</B></SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+The markup includes the &lt;para&gt; and &lt;/para&gt; tags, the
+&lt;quote&gt; and &lt;/quote&gt; tags, the &lt;foreignphrase&gt; and
+&lt;/foreignphrase&gt; tags, the comment, and the &amp;rsquo; entity
+reference. Everything else is character data.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Sometimes
+the everything else part is called PCDATA or parsed character data
+after the PCDATA keyword used in DTDs to declare elements like
+interfacename:</P>
+<PRE LANG="en-US" CLASS="western">&lt;!ELEMENT interfacename (#PCDATA)&gt;</PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+However, that's not perfectly accurate. Generally speaking, the
+parsed character data is what's left after the parser has replaced
+entity and character references by the characters they represent. It
+contains both character data and markup.</P>
+<OL START=7>
+	<LI><H1 LANG="en-US" CLASS="western">Namespace vs. Namespace Name
+	vs. Namespace URI</H1>
+</OL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">An XML
+namespace is a collection of names. For example, all the element
+names defined in XHTML (html, head, title, body, p, div, table, h1,
+etc.) form the XHTML namespace. The SVG namespace is the collection
+of element names used in SVG (svg, rect, polygon, polyline, etc.)
+Only the local parts of prefixed names belong to the namespace. The
+prefix and the prefixed names are not parts of the namespace. 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Each such
+namespace is identified by a URI reference called the <I>namespace
+name</I>. For example the namespace name for XHTML is
+http://www.w3.org/1999/xhtml. The namespace name for SVG is
+http://www.w3.org/2000/svg. The namespace name identifies the
+namespace, but it is not the namespace.  
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">The
+namespace name is supposed to be a URI reference, but it's not
+technically an error if it's not one. For instance, a namespace name
+may contain characters such as { or the Greek letter &lambda;  that
+are illegal in URIs. However, since in practice almost all actual
+namespace names are legal URI references, namespace names are often
+carelessly called namespace URIs. Actually, they are namespace URI
+references; but most developers don't bother to make this
+distinction.</P>
+<OL START=8>
+	<LI><H1 LANG="en-US" CLASS="western">XML Document vs. XML File</H1>
+</OL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Technically,
+an XML document is any sequence of Unicode characters which is
+well-formed according to the rules laid out in the XML 1.0
+specification. Such a document may or may not be stored in a file.
+Instead of being in a file, it can be stored in a database record,
+created in memory by a program, read from a network stream, printed
+in a book, painted on a billboard, or scratched into a subway car
+window. There is not necessarily a file anywhere in the picture. If
+the XML document is stored in a file, then it may be in a single file
+or split across multiple files using external entity references. It's
+even possible for multiple XML documents to be stored in a single
+file, though this is unusual in practice. 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">When
+discussing XML documents it is sometimes useful to distinguish the
+documents themselves from the DTDs or other forms of schemas. In
+these cases, the actual document that adheres to the schema is called
+an <I>instance document</I>. Here the document is an instance of a
+particular schema. 
+</P>
+<OL START=9>
+	<LI><H1 LANG="en-US" CLASS="western">XML Application vs. XML
+	Software</H1>
+</OL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">An XML
+application is a class of XML documents defined by a schema,
+specification, or some group of rules. For example, Scalable Vector
+Graphics (SVG), XHTML, MathML, GedML, XSL Formatting Objects and 
+DocBook are all XML applications. The simple language I invented last
+Thursday to categorize my comic book collection is also an XML
+application even though it doesn't have a DTD, schema, or even a
+specification. An XML application is not a piece of application
+software that somehow processes XML such as the XML Spy editor, the
+Mozilla web browser, or the XEP XSL-FO to PDF converter.</P>
+<OL START=10>
+	<LI><H1 LANG="en-US" CLASS="western">Well-formed vs. Valid</H1>
+</OL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">There are
+two levels of &quot;goodness&quot; for an XML document.
+Well-formedness describes mandatory syntactic constraints. Validity
+describes optional structural and semantic constraints. There's a
+tendency to use the word <I>valid</I> in its common English usage to
+describe any correct document. However, in XML it has a much more
+specific meaning. Documents can be correct and processable, but not
+be valid. 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Well-formedness
+is the minimum requirement necessary for an XML document. It includes
+various syntactic constraints such as every start-tag must have a
+matching end-tag and the document must have exactly one root element.
+If a document is not well-formed, it is not an XML document. Parsers
+that encounter a malformed document are required to report the error
+and stop parsing. They may not attempt to guess what the document
+author intended. They may not fix the error and continue. They have
+to drop the document on the floor.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Validity
+is stronger constraint than well-formedness, but it's not required in
+order to process XML documents. Validity describes which elements and
+attributes are allowed to appear where. It indicates whether a
+document adheres to the constraints listed in the document type
+definition (DTD) and the document type declaration (DOCTYPE). Even if
+a document does not adhere to these constraints, it may still be
+usefully processed in some cases. The decision of whether and how to
+reject invalid documents is made by the client application, not by
+the parser.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">The word
+valid is also sometimes used to refer to validity with respect to a
+schema rather than a DTD. In cases, where this seems likely to be
+confusing, particularly where one is likely to want to validate a
+document against a DTD and against some other schema, the word
+<I>schema-valid</I> is used. As with DTD validity, whether and how to
+handle a schema-invalid document is a decision for the client
+application. A schema-validating parser will inform the client
+application that a document is invalid. However, it will continue to
+parse it. The client application gets to decide whether to accept the
+document or not.</P>
+<OL START=11>
+	<LI><H1 LANG="en-US" CLASS="western">DTD vs. DOCTYPE</H1>
+</OL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">A document
+type definition is a collection of ELEMENT, ATTLIST, ENTITY and
+NOTATION declarations that describes a class of valid documents. A
+document type <I>declaration</I> is placed in the prolog of an XML
+document. It either contains or point to the document's document type
+<I>definition</I> (or both). The document type definition and the
+document type declaration are closely related but they are not the
+same thing. The acronym <I>DTD</I> refers exclusively to the document
+type definition, never to the document type declaration. The
+shorthand form DOCTYPE refers exclusively to the document type
+declaration, never to the document type  definition.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">For
+example, this is a document type declaration:</P>
+<PRE LANG="en-US" CLASS="western">&lt;!DOCTYPE chapter PUBLIC &quot;-//OASIS//DTD DocBook XML V4.1.2//EN&quot;
+<SPAN LANG="en-US">                         &quot;docbook/docbookx.dtd&quot; &gt;</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+It points to the DTD with the public identifier -//OASIS//DTD DocBook
+XML V4.1.2//EN found at the relative URL  docbook/docbookx.dtd . 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">This is
+also a document type declaration. 
+</P>
+<PRE LANG="en-US" CLASS="western">&lt;!DOCTYPE book SYSTEM &quot;http://www.example.com/docbook/docbookx.dtd&quot;&gt;</PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+It points to the DTD at the absolute URL 
+http://www.example.com/docbook/docbookx.dtd.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">This is a
+document type declaration that completely contains the DTD between
+the square brackets that delimit the internal DTD subset:</P>
+<PRE LANG="en-US" CLASS="western">&lt;!DOCTYPE book [
+<SPAN LANG="en-US">  &lt;!ELEMENT book (title, chapter+)&gt;</SPAN>
+<SPAN LANG="en-US">  &lt;!ELEMENT chapter (title, paragraph+)&gt;  </SPAN>
+<SPAN LANG="en-US">  &lt;!ELEMENT title (#PCDATA)&gt;  </SPAN>
+<SPAN LANG="en-US">  &lt;!ELEMENT paragraph (#PCDATA)&gt;</SPAN>
+<SPAN LANG="en-US">]&gt;</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+Finally, this next document type declaration both points to an
+external DTD and contains an internal DTD subset. The full DTD is
+formed by combining the declarations in the external DTD subset with
+those in the internal DTD subset.</P>
+<PRE LANG="en-US" CLASS="western">&lt;!DOCTYPE chapter PUBLIC &quot;-//OASIS//DTD DocBook XML V4.1.2//EN&quot;
+<SPAN LANG="en-US">                      &quot;docbook/docbookx.dtd&quot; [</SPAN>
+<SPAN LANG="en-US"> &lt;!-- add XIncludes --&gt;                     </SPAN>
+<SPAN LANG="en-US"> &lt;!ENTITY % local.para.char.mix &quot; | xinclude:include&quot;&gt;</SPAN>
+<SPAN LANG="en-US"> &lt;!ELEMENT xinclude:include EMPTY&gt;</SPAN>
+<SPAN LANG="en-US"> &lt;!ATTLIST xinclude:include </SPAN>
+<SPAN LANG="en-US">    xmlns:xinclude CDATA #FIXED &quot;http://www.w3.org/2001/XInclude&quot;</SPAN>
+<SPAN LANG="en-US">    href           CDATA #REQUIRED</SPAN>
+<SPAN LANG="en-US">    parse          (text | xml) &quot;xml&quot;</SPAN>
+<SPAN LANG="en-US"> &gt;        </SPAN>
+<SPAN LANG="en-US">]&gt;</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+Whether the DTD is internal, external, or both, it is never the same
+thing as the document type declaration. The document type declaration
+specifies the root element. The DTD does not. The DTD specifies the
+content models and attribute lists of the elements. The document type
+declaration does not. Most APIs routinely expose the contents of the
+document type declaration but not those of the document type
+definition.</P>
+<OL START=12>
+	<LI><H1 LANG="en-US" CLASS="western">XML Declaration vs. Processing
+	Instruction</H1>
+</OL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">One of the
+more needlessly confusing aspects of the XML specification is that
+for various technical reasons the following construct, which appears
+at the top of most XML documents, is in fact not a processing
+instruction:</P>
+<PRE LANG="en-US" CLASS="western">&lt;?xml version=&quot;1.0&quot;?&gt;</PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">
+It looks like a processing instruction, but it isn't one. Processing
+instruction targets are specifically forbidden from being xml, XML,
+Xml, or any other case combination of the word <I>XML</I>. 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">APIs may
+or may not expose the information in the XML declaration to the
+client application; but if one does, it will not use the same
+mechanism it uses to report processing instructions. For instance, in
+SAX 2.1 some of this information is optionally available through the
+Locator2 interface. However, the parser does not call the
+processingInstruction method in ContentHandler when it sees the XML
+declaration.</P>
+<OL START=13>
+	<LI><H1 LANG="en-US" CLASS="western">Character Set vs. Character
+	Encoding</H1>
+</OL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">XML is
+based on the Unicode character set. A character set is a collection
+of characters assigned to particular numbers called code points.
+Currently Unicode 3.2 defines more than 90,000 individual characters.
+Each character in the set is mapped to a number such as 64, 812, or
+87000. These numbers are not ints, shorts, bytes, longs or any other 
+numeric data type. They are simply numbers. Other character sets such
+as SJIS and Latin-1 contain different collections of characters which
+are assigned to different numbers, though there's often substantial
+overlap with the Unicode character set. That is, many character sets
+assign some or all of their characters to the same numbers Unicode
+assigns those characters to.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">A
+character encoding represents the members of a character set as bytes
+in a particular way. There are multiple encodings of Unicode
+including UTF-8, UTF-16, UCS-2, UCS-4, UTF-32, and several other more
+obscure ones. Different encodings may encode the same code point
+using a different sequence of bytes and/or a different number of
+bytes. They may use big-endian or little-endian data. They can even
+use non-twos complement representations. They may use two bytes or
+four bytes for each character. They may even use different numbers of
+bytes for different characters.  
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Changing
+the character set changes which characters can be represented. For
+instance, the ISO-8859-7 set includes Greek letters. The ISO-8859-1
+set  does not. Changing the character encoding does not change which
+characters can be used. It merely changes how each character is
+encoded in bytes. 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">XML
+parsers always convert characters in other sets to Unicode before
+reporting them to the client application. In effect, they treat other
+character sets as different encodings of some subset of Unicode.
+Thus, XML doesn't ever really let you change the character set. This
+is always Unicode. It only lets you adjust how those characters are
+represented. 
+</P>
+<OL START=14>
+	<LI><H1 LANG="en-US" CLASS="western"> URI vs. URI Reference vs. IRI</H1>
+</OL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">A URI
+identifies a resource. A URI reference identifies a part of a
+resource. A URI reference may contain a fragment identifier separated
+from the URI by an octothorpe (#). A plain URI may not. For example,
+http://www.w3.org/TR/REC-xml-names/ is a URI.
+http://www.w3.org/TR/REC-xml-names/#Philosophy is a URI reference.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Most XML
+related specifications such as Namespaces in XML are actually defined
+in terms of URI references rather than URIs. For example, the W3C XML
+Schema language simple type xsd:anyURI actually indicates that
+elements with that type are URI references. In casual conversation
+and writing, most people don't bother to make the distinction.
+Nonetheless, it can be important. For example, the system identifier
+in the document type declaration can be a URI but not a URI
+reference.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Note</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">I've heard
+it claimed that relative URIs are URI references, not true URIs, and
+the authors of the XML specification seem to have believed this.
+However, the URI specification, RFC 2396, does not support this
+belief. It clearly describes both relative URIs and relative URI
+references. Perhaps the authors intended to require all URIs to be
+absolute; but if this is the case, they failed to do so. The only
+difference between a URI and a URI reference is that the latter
+allows a fragment identifier while the former does not.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">End Note</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Currently,
+the IETF is working on Internationalized Resource Identifiers (IRIs).
+These are similar to URIs except that they allow non-ASCII characters
+such as &zeta;  and &eacute; that must be percent escaped in URIs.
+The specification is not finished yet, but several XML specifications
+are already referring to this. For instance, the XLink href attribute
+actually contains an IRI, not a URI.</P>
+<OL START=15>
+	<LI><H1 LANG="en-US" CLASS="western">Schemas  vs. the W3C XML Schema
+	Language</H1>
+</OL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">The word
+<I>schema</I> is a generic term for a document that specifies the
+layout and permissible content of a class of documents. It actually
+entered computer science in the context of database schemas. For XML,
+there are multiple different schema languages with their own
+strengths and weaknesses including DTDs, RELAX NG, Schematron, and,
+of course, the W3C XML Schema Language. 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">There is a
+tendency among developers to use only the word schemas, or perhaps
+the only slightly less generic XML Schemas, when referring to the W3C
+XML Schema Language. This needs to be resisted because the W3C XML
+Schema Language is neither the only such language, nor, in most
+people's opinions, the simplest, the most powerful, or the best
+designed. It is merely one language promulgated by one group of
+inventors. It has some good points and some bad points, but we should
+not implicitly ignore all the other languages (some of which are
+demonstrably simpler and/or more powerful than the W3C XML Schema
+Language) by using the generic term to refer to the specific.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Unfortunately,
+the W3C has not chosen to assign its schema language an appellation
+less cumbersome than &quot;W3C XML Schema Language.&quot;
+Consequently, to avoid repeating this phrase incessantly, I will
+occasionally succumb to temptation and use the word schemas to mean
+the W3C XML Schema Language. However, I will only do this in those
+chapters that discuss this language exclusively, and I will make that
+very clear at the outset of the chapter. Think of the word schema as
+more of a pronoun for the schema language currently being discussed
+than as a proper noun for the W3C's entry into the field.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Words have
+meanings. XML is a very precisely defined language, so its words have
+very precise meanings. It pays to use those words correctly. There
+are indeed some confusing aspects to XML. It doesn't make sense to
+make the problem worse by adding to the confusion. Using the right
+words for the right concepts can simplify many unnecessarily complex
+problems to save the brain power for the things that are genuinely
+hard.</P>
+</BODY>
+</HTML>

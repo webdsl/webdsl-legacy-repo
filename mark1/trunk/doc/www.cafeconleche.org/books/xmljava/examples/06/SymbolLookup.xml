@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE methodCall [
+  <!ELEMENT methodCall (methodName, params)>
+  <!ELEMENT params (param+)>
+  <!ELEMENT param (value)>
+  <!ELEMENT value (string)>
+  <!ELEMENT methodName (#PCDATA)>
+  <!ELEMENT string (#PCDATA)>
+]>
+<methodCall>
+  <methodName>lookupSymbol</methodName>
+  <params>
+    <param>
+      <value>
+        <string>
+          Red Hat 
+        </string>
+      </value>
+    </param>
+  </params>
+</methodCall>

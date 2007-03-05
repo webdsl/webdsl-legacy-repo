@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+	<TITLE>14. Don't rule out legal XML constructs</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.3  (Linux)">
+	<META NAME="AUTHOR" CONTENT="Elliotte Rusty Harold">
+	<META NAME="CREATED" CONTENT="20020121;17260000">
+	<META NAME="CHANGED" CONTENT="20030426;10470100">
+	<STYLE>
+	<!--
+		@page { size: 21.59cm 27.94cm; margin-left: 2.33cm; margin-right: 2.33cm; margin-top: 2.54cm; margin-bottom: 2.54cm }
+		P { margin-bottom: 0.21cm; color: #000000; text-align: justify; widows: 2; orphans: 2 }
+		P.western { font-family: "Times New Roman", serif; font-size: 10pt; so-language: en-US }
+		P.cjk { font-family: "Times New Roman", serif; font-size: 10pt; so-language:  }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="de-DE" TEXT="#000000">
+<P LANG="en-US" ALIGN=CENTER STYLE="margin-top: 0.42cm; page-break-after: avoid">
+<FONT FACE="Albany, Arial, sans-serif"><FONT SIZE=5><B>14. Allow All
+XML Syntax</B></FONT></FONT></P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">XML
+applications should be designed around elements and attributes. You
+can use a schema or a DTD to constrain which elements and attributes
+are allowed where and what their legal content is. You may also
+impose additional constraints that affect the content of the document
+and that are not expressible in a schema. For example, you might
+require that the ID attribute of an Employee element must be the
+actual ID of a current or past employee. All of these are constraints
+on the content and structure of the document. They generally reflect
+the <I>semantics</I> of a particular application domain.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Despite
+some early hype about search engines which understood web pages
+because you used a Shoe tag instead of an LI tag (some of which I was
+guilty myself, I freely admit) XML is not a semantic language. It is
+a syntactic language. Semantics are properly defined by the
+individual applications that are built out of XML rather than by XML
+itself. With the almost negligible exception of xml:lang, there is
+nothing semantic in XML. XML is only syntax.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">It is your
+role as the developer to define the semantics that are appropriate
+for your application using the underlying XML syntax. However, it is
+not your role as a developer to change, add to, or restrict XML's
+underlying syntax. Doing so destroys XML's value proposition of a
+compatible interoperable data format. Once you have decided to use
+XML, you have committed to supporting all of XML: tags, PCDATA,
+attributes, CDATA sections, document type declarations, comments,
+processing instructions, entity references, character references, and
+so on. You do not have the right to throw away any of this. Your
+application must handle all of it. Fortunately, this is not hard to
+do because the XML parser handles all this for you. Changing the
+definition of XML actually requires a lot more work because you can't
+rely on standard parsers. You have to write your own. 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">It takes
+no more effort on your part to allow CDATA sections, comments,
+processing instructions, and so on in your documents than it does to
+forbid them. If you don't care about these, you can freely ignore
+them when processing a document that contains them. You just
+shouldn't say that they are disallowed. 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">The
+classic example of what not to do is SOAP 1.1 (and possibly 1.2; the
+final spec for that version has not been released yet). SOAP
+explicitly requires that documents contain neither a document type
+declaration nor any processing instructions. There are a number of
+problems with these requirements, most notably:</P>
+<UL>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Most
+	schema languages cannot verify these constraints. Checking that no
+	processing instructions are present actually requires walking the
+	entire tree of a SOAP document. For this reason SOAP doesn't
+	actually require processors to verify the constraints. A constraint
+	that isn't verified is no constraint at all.</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">SOAP
+	requests and responses cannot be validated against a DTD, even if
+	the receiver wishes to do so. This removes a powerful tool from the
+	developer's toolbox.</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Both
+	SOAP requests and responses are envelopes intended to wrap other
+	elements from different namespaces and vocabularies. However, when
+	these content elements are copied from existing XML documents and
+	systems, they must first be carefully inspected for any processing
+	instructions. They cannot be sent as is. This imposes a significant
+	burden on a SOAP server or client. 
+	</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">SOAP
+	requests and responses can't be as easily passed through processing
+	chains like Cocoon that use processing instructions for their
+	intended purposes of defining processing in a particular
+	environment.</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Developers
+	who have a real need to use processing instructions or a document
+	type declaration will probably invent hacks that shoehorn the
+	results into comments or empty elements instead, thus reintroducing
+	all the problems these constructs cause for SOAP while causing
+	additional problems for generic XML systems that don't recognize the
+	special comments and elements.</P>
+</UL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Perhaps
+worst of all is the pollution of the XML environment such subsetting
+engenders. Because SOAP is so completely broken with respect to
+normal XML processing, vendors are pushing special-purpose parsers
+that process SOAP documents, but not all well-formed XML 1.0
+documents. Furthermore, as I write this, some members of the SOAP
+community are pushing the W3C to bless their subset, and not require
+XML parsers to support the pieces of XML syntax they disapprove of.
+This is an interoperability disaster. 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">There are
+reasons the SOAP specification chose to forbid processing
+instructions and document type declarations. Forbidding document type
+declarations means that all content is present in a single document.
+This eliminates the possibility of external entities which launch
+multiple connections to remote servers or even enable a denial of
+service attack. Forbidding processing instructions helps eliminate
+covert channels. It means that all information must be passed through
+the SOAP vocabulary all processors should understand. However,
+forbidding these constructs also eliminates many important uses.
+There are other ways to mitigate these problems that don't require
+limiting the syntax of XML.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">A better
+approach, in my opinion, is taken by XML-RPC. XML-RPC neither
+requires nor forbids document type declarations and processing
+instructions. It is (perhaps unintentionally) agnostic about these
+constructs. You can use them if you wish, but generic XML-RPC servers
+and clients will mostly ignore them. The parser may read the document
+type declaration and use it to resolve external entity references and
+supply default attribute values, but this is completely transparent
+to the application receiving data from the parser, as it should be.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.21cm">Restricting
+the syntax an application is willing to parse confuses the role of
+parser and client application. It is the parser that is responsible
+for working with tags, entity references, CDATA sections, document
+type declarations, and so forth and translating all of this into
+labeled structures for the client program. The client program should
+only operate on the output of the parser. It should not require the
+parser to do otherwise than it would normally do. Restricting the
+syntax an application is willing to accept (as opposed to the
+structure it will accept) prevents it from using general purpose
+tools and makes your job as a developer much harder for no good
+reason. Properly designed XML applications neither notice nor care
+how the information is syntactically encoded because the parser
+handles all that work for them. Why make your job harder? Allow all
+legal XML syntax in your XML applications.</P>
+</BODY>
+</HTML>

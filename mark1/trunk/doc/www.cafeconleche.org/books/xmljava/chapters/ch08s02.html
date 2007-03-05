@@ -1,0 +1,637 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>The XMLFilter interface</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="previous" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="next" href="ch08s03.html" title="Content Filters"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">The XMLFilter interface</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch08.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;8.&nbsp;SAX Filters</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch08s03.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e12233"></a>The XMLFilter interface</h2></div></div><p>
+    <a href="ch08s02.html#CompactXMLFilter.java" title="Example&nbsp;8.1.&nbsp;The XMLFilter interface">Example&nbsp;8.1</a> shows the
+    actual code for the <tt>XMLFilter</tt>
+    interface.
+    Besides the methods it inherits from the <tt>XMLReader</tt>
+    superinterface, <tt>XMLFilter</tt> has just two
+    new methods, <tt>getParent()</tt> and
+    <tt>setParent()</tt>. The
+    <span class="emphasis"><em>parent</em></span> of a filter is the 
+    <tt>XMLReader</tt> to which the
+    filter delegates most of its work. (In the context of
+    SAX filters, the <i>parent</i> is <span class="emphasis"><em>not</em></span> 
+    normally understood to be the superclass 
+    of the filter class.)
+  </p><div class="example"><a name="CompactXMLFilter.java"></a><p class="title"><b>Example&nbsp;8.1.&nbsp;The XMLFilter interface</b></p><pre class="programlisting">package org.xml.sax;
+
+public interface XMLFilter extends XMLReader {
+
+  public void      setParent(XMLReader parent);
+  public XMLReader getParent();
+
+}
+</pre></div><p>
+    A class that implements this interface must provide a minimum
+    of 16
+    methods, the <tt>getParent()</tt> and
+    <tt>setParent()</tt> methods declared here and
+    the 14 methods of the <tt>XMLReader</tt>
+    superinterface. <a href="ch08s02.html#OpaqueFilter.java" title="Example&nbsp;8.2.&nbsp;A filter that blocks all events">Example&nbsp;8.2</a> is a
+    minimal XML filter that implements all of these methods but
+    doesn&#8217;t actually do anything.
+  </p><div class="example"><a name="OpaqueFilter.java"></a><p class="title"><b>Example&nbsp;8.2.&nbsp;A filter that blocks all events</b></p><pre class="programlisting">import org.xml.sax.*;
+
+
+public class OpaqueFilter implements XMLFilter {
+
+  private XMLReader parent;
+  
+  public void setParent(XMLReader parent) {
+    this.parent = parent;
+  }
+  
+  public XMLReader getParent() {
+    return this.parent; 
+  }
+
+  public boolean getFeature(String name)
+   throws SAXNotRecognizedException {
+    throw new SAXNotRecognizedException(name);
+  } 
+
+  public void setFeature(String name, boolean value) 
+   throws SAXNotRecognizedException { 
+    throw new SAXNotRecognizedException(name);
+  }
+
+  public Object getProperty(String name) 
+   throws SAXNotRecognizedException {
+    throw new SAXNotRecognizedException(name);
+  }
+
+
+  public void setProperty(String name, Object value)
+   throws SAXNotRecognizedException {
+    throw new SAXNotRecognizedException(name);
+  }
+
+  public void setEntityResolver(EntityResolver resolver) {}
+  public EntityResolver getEntityResolver() {
+    return null; 
+  }
+  
+  public void setDTDHandler(DTDHandler handler) {}
+  public DTDHandler getDTDHandler() {
+    return null; 
+  }
+
+  public void setContentHandler(ContentHandler handler) {}
+  public ContentHandler getContentHandler() {
+    return null; 
+  }
+
+  public void setErrorHandler(ErrorHandler handler) {}
+  public ErrorHandler getErrorHandler() {
+    return null; 
+  }
+
+  public void parse(InputSource input) {}
+  public void parse(String systemID) {} 
+  
+}
+</pre></div><p>
+   The effect of attaching this filter to a parser 
+   is to totally block
+   events.
+   It&#8217;s like a brick wall between the application and the data in
+   the XML document. 
+   A client application that wants to use this filter 
+   (though I really can&#8217;t imagine why one would)
+   would construct an instance of it and an instance of a real
+   parser, then pass the real parser to the filter&#8217;s 
+   <tt>setParent()</tt>
+   method.
+  </p><div class="informalexample"><pre class="programlisting">  XMLReader parser = XMLReaderFactory.createXMLReader();
+  OpaqueFilter filter = new OpaqueFilter();
+  filter.setParent(parser);</pre></div><p>
+   From this point forward, the client application should
+   only interact with the filter. It should forget that the
+   original parser exists. Going behind the back of the filter,
+   for instance, by calling 
+   <tt>setContentHandler()</tt> on
+   <tt>parser</tt> instead of on  
+   <tt>filter</tt>, runs the risk of confusing the
+   filter by violating constraints it expects to be true.
+   In fact, if at all possible, you should eliminate any
+   references to the original parser so that you can&#8217;t
+   accidentally access it later. For example,
+  </p><div class="informalexample"><pre class="programlisting">  XMLReader parser = XMLReaderFactory.createXMLReader();
+  OpaqueFilter filter = new OpaqueFilter();
+  filter.setParent(parser);
+  parser=filter;</pre></div><p>
+    In some cases the filter may set up its own
+    parent parser, typically in its constructor.
+    This avoids the need for the client application to provide an
+    <tt>XMLReader</tt> to the filter. 
+  For example,
+  </p><div class="informalexample"><pre class="programlisting">  public OpaqueFilter(XMLReader parent) {
+    this.parent = parent;
+  }
+  
+  public OpaqueFilter() throws SAXException {
+    this(XMLReaderFactory.createXMLReader());
+  }</pre></div><p>
+    You might even design the
+    <tt>setParent()</tt> method so it&#8217;s impossible to
+    change the parent parser once it&#8217;s initially been set in the
+    constructor. 
+  For example,
+  </p><div class="informalexample"><pre class="programlisting">  public void setParent(XMLReader parent) {
+    throw new UnsupportedOperationException( 
+     "Can&#8217;t change this filter&#8217;s parent"
+    );
+  }</pre></div><p>
+    However, this does tend to limit the flexibility of the
+    filter.
+    In particular, it prevents you from putting it in the middle
+    of a long chain of filters.
+  </p><p> 
+    <a href="ch08s02.html#TransparentFilter.java" title="Example&nbsp;8.3.&nbsp;A filter that filters nothing">Example&nbsp;8.3</a> is a marginally more
+    interesting implementation of the <tt>XMLFilter</tt> interface. It  delegates 
+     to the parent <tt>XMLReader</tt> 
+    by forwarding all method calls from the client application. 
+    It does not change or filter anything.
+  </p><div class="example"><a name="TransparentFilter.java"></a><p class="title"><b>Example&nbsp;8.3.&nbsp;A filter that filters nothing</b></p><pre class="programlisting">import org.xml.sax.*;
+import java.io.IOException;
+
+
+public class TransparentFilter implements XMLFilter {
+
+  private XMLReader parent;
+  
+  public void setParent(XMLReader parent) {
+    this.parent = parent;
+  }
+  
+  public XMLReader getParent() {
+    return this.parent; 
+  }
+
+  public boolean getFeature(String name)
+   throws SAXNotRecognizedException, SAXNotSupportedException {
+    return parent.getFeature(name);
+  } 
+
+  public void setFeature(String name, boolean value) 
+   throws SAXNotRecognizedException, SAXNotSupportedException { 
+    parent.setFeature(name, value);
+  }
+
+  public Object getProperty(String name) 
+   throws SAXNotRecognizedException, SAXNotSupportedException {
+    return parent.getProperty(name);
+  }
+
+
+  public void setProperty(String name, Object value)
+   throws SAXNotRecognizedException, SAXNotSupportedException {
+    parent.setProperty(name, value);
+  }
+
+  public void setEntityResolver(EntityResolver resolver) {
+    parent.setEntityResolver(resolver);
+  }
+  
+  public EntityResolver getEntityResolver() {
+    return parent.getEntityResolver();
+  }
+  
+  public void setDTDHandler(DTDHandler handler) {
+    parent.setDTDHandler(handler);
+  }
+  
+  public DTDHandler getDTDHandler() {
+    return parent.getDTDHandler();
+  }
+
+  public void setContentHandler(ContentHandler handler) {
+    parent.setContentHandler(handler);  
+  }
+  
+  public ContentHandler getContentHandler() {
+    return parent.getContentHandler();
+  }
+
+  public void setErrorHandler(ErrorHandler handler) {
+    parent.setErrorHandler(handler);
+  }
+  
+  public ErrorHandler getErrorHandler() {
+    return parent.getErrorHandler();
+  }
+
+  public void parse(InputSource input)
+   throws SAXException, IOException {
+    parent.parse(input);
+  }
+  
+  public void parse(String systemId) 
+   throws SAXException, IOException {
+    parent.parse(systemId);
+  } 
+  
+}
+</pre></div><p>
+  Of course, in most cases you&#8217;re not going to go to either of
+  these extremes. You&#8217;re going to pass some events
+  through unchanged, block others, and modify still others. 
+  Let&#8217;s continue with a filter that adds a property to the list
+  of those normally supported by an XML parser.
+  This property will provide the wall-clock time needed to parse
+  an XML document, and might be useful for benchmarking.
+  I&#8217;ll write it as a filter so that it can be attached to 
+  different underlying parsers and used in benchmarks that
+  include various content handlers.
+</p><p>
+   The property name will be
+   <tt>http://cafeconleche.org/properties/wallclock/</tt>. The value will
+   be a <tt>java.lang.Long</tt> object containing the 
+   number of milliseconds needed to parse the last document.
+   This can be stored in a private field initialized to null:
+  </p><div class="informalexample"><pre class="programlisting">  private Long wallclock = null;</pre></div><p>
+   The wallclock time is available only after the
+   <tt>parse()</tt> method has returned. At other
+   times, requesting this property throws a
+   <tt>SAXNotSupportedException</tt>.
+   This will be a read-only property so trying to set it will
+   always throw a <tt>SAXNotSupportedException</tt>.
+   This will be implemented through the
+   <tt>setProperty()</tt> and <tt>getProperty()</tt>
+   methods:
+  </p><div class="informalexample"><pre class="programlisting">  public Object getProperty(String name) 
+   throws SAXNotRecognizedException, SAXNotSupportedException {
+     
+    if ("http://cafeconleche.org/properties/wallclock/"
+     .equals(name)) {
+      if (wallclock != null) {
+        return wallclock;
+      }
+      else {
+        throw 
+         new SAXNotSupportedException("Timing not available");
+      }
+    }
+    return parent.getProperty(name);
+    
+  }
+
+  public void setProperty(String name, Object value)
+   throws SAXNotRecognizedException, SAXNotSupportedException {
+     
+    if ("http://cafeconleche.org/properties/wallclock/"
+     .equals(name)) {
+      throw new SAXNotSupportedException(
+       "Wallclock property is read-only");
+    }
+    parent.setProperty(name, value);
+    
+  }</pre></div><p>
+    For any property other than
+    <tt>http://cafeconleche.org/properties/wallclock/</tt>,
+    these calls just delegate the work to the parent
+    parser. 
+  </p><p>
+    The <tt>parse()</tt> method is responsible for
+    tracking the wallclock time. 
+    I&#8217;ll put the work in the 
+    <tt>parse()</tt> method that takes an 
+    <tt>InputSource</tt> as an argument and 
+    call this method from the other overloaded <tt>parse()</tt> method that takes a
+    system ID as the argument. 
+  </p><p>
+    Using the filter enables some standard
+    benchmarking techniques. 
+    First, I&#8217;ll read the entire document into a byte array named
+    <tt>cache</tt> so
+    that it can be parsed from memory. This will eliminate most of the 
+    I/O time which would otherwise be likely to
+    swamp the actual parsing time, especially if the test
+    document were read from a slow network connection.
+    This actually requires separate handling for the three
+    possible sources an <tt>InputSource</tt> may
+    offer: character stream, byte stream, and system ID:
+  </p><div class="informalexample"><pre class="programlisting">    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    Reader charStream = input.getCharacterStream();
+    InputStream byteStream = input.getByteStream();
+    
+    String encoding = null; // I will only set this variable if 
+                            // we have a reader because in this
+                            // case we know the encoding is UTF-8
+                            // regardless of what the encoding
+                            // declaration says
+    if (charStream != null) {
+      OutputStreamWriter filter 
+       = new OutputStreamWriter(out, "UTF-8");
+      int c;
+      while ((c = charStream.read()) != -1) filter.write(c);
+      encoding = "UTF-8";
+    }
+    else if (byteStream != null) {
+      int c;
+      while ((c = byteStream.read()) != -1) out.write(c);
+    }
+    else {
+      URL u = new URL(input.getSystemId());
+      InputStream in = u.openStream();
+      int c;
+      while ((c = in.read()) != -1) out.write(c);
+    }
+    out.flush();
+    out.close();
+    byte[] cache = out.toByteArray();</pre></div><p>
+    Next, I&#8217;ll warm up the JIT
+    with ten untimed parses of the document before I begin taking
+    measurements:</p><div class="informalexample"><pre class="programlisting">    for (int i=0; i &lt; 10; i++) {
+      InputStream in = new ByteArrayInputStream(cache);
+      is.setByteStream(in); 
+      parent.parse(is);
+    }</pre></div><p>Finally I&#8217;ll parse the same document 1000 times
+    and set <tt>wallclock</tt> to the average of the
+    1000 parses:
+   </p><div class="informalexample"><pre class="programlisting">    Date start = new Date();
+    for (int i=0; i &lt; 1000; i++) {
+      InputStream in = new ByteArrayInputStream(cache);
+      is.setByteStream(in);
+      parent.parse(is); 
+    }
+    Date finish = new Date();
+    long totalTime = finish.getTime() - start.getTime();
+    
+    // Average the time
+    this.wallclock = new Long(totalTime/1000);</pre></div><p>
+  <a href="ch08s02.html#WallclockFilter.java" title="Example&nbsp;8.4.&nbsp;A filter that times all parsing">Example&nbsp;8.4</a> shows 
+  the complete benchmarking filter. Besides the previously
+  described methods, it contains implementations of the other
+  <tt>XMLReader</tt> methods that all
+  forward their arguments to the equivalent method in the
+  parent parser.
+</p><div class="example"><a name="WallclockFilter.java"></a><p class="title"><b>Example&nbsp;8.4.&nbsp;A filter that times all parsing</b></p><pre class="programlisting">import org.xml.sax.*;
+import java.io.*;
+import java.util.Date;
+import java.net.URL;
+
+
+public class WallclockFilter implements XMLFilter {
+
+  private XMLReader parent;
+  private Long wallclock = null;
+  
+  public Object getProperty(String name) 
+   throws SAXNotRecognizedException, SAXNotSupportedException {
+     
+    if ("http://cafeconleche.org/properties/wallclock/"
+     .equals(name)) {
+      if (wallclock != null) {
+        return wallclock;
+      }
+      else {
+        throw 
+         new SAXNotSupportedException("Timing not available");
+      }
+    }
+    return parent.getProperty(name);
+    
+  }
+
+  public void setProperty(String name, Object value)
+   throws SAXNotRecognizedException, SAXNotSupportedException {
+     
+    if ("http://cafeconleche.org/properties/wallclock/"
+     .equals(name)) {
+      throw new SAXNotSupportedException(
+       "Wallclock property is read-only");
+    }
+    parent.setProperty(name, value);
+    
+  }
+
+  public void setParent(XMLReader parent) {
+    this.parent = parent;
+  }
+  
+  public XMLReader getParent() {
+    return this.parent; 
+  }
+
+  public void parse(InputSource input)
+   throws SAXException, IOException {
+     
+    //Reset the time
+    this.wallclock = null;
+     
+    // Cache the document 
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    Reader charStream = input.getCharacterStream();
+    InputStream byteStream = input.getByteStream();
+    
+    String encoding = null; // I will only set this variable if 
+                            // we have a reader because in this
+                            // case we know the encoding is UTF-8
+                            // regardless of what the encoding
+                            // declaration says
+    if (charStream != null) {
+      OutputStreamWriter filter 
+       = new OutputStreamWriter(out, "UTF-8");
+      int c;
+      while ((c = charStream.read()) != -1) filter.write(c);
+      encoding = "UTF-8";
+    }
+    else if (byteStream != null) {
+      int c;
+      while ((c = byteStream.read()) != -1) out.write(c);
+    }
+    else {
+      URL u = new URL(input.getSystemId());
+      InputStream in = u.openStream();
+      int c;
+      while ((c = in.read()) != -1) out.write(c);
+    }
+    out.flush();
+    out.close();
+    byte[] cache = out.toByteArray();
+     
+    InputSource is = new InputSource(); 
+    if (encoding != null) is.setEncoding(encoding);
+     
+    // Warm up the JIT
+    for (int i=0; i &lt; 10; i++) {
+      InputStream in = new ByteArrayInputStream(cache);
+      is.setByteStream(in); 
+      parent.parse(is);
+    }
+    System.gc();
+    
+    // Parse 1000 times 
+    Date start = new Date();
+    for (int i=0; i &lt; 1000; i++) {
+      InputStream in = new ByteArrayInputStream(cache);
+      is.setByteStream(in);
+      parent.parse(is); 
+    }
+    Date finish = new Date();
+    long totalTime = finish.getTime() - start.getTime();
+    
+    // Average the time
+    this.wallclock = new Long(totalTime/1000);
+    
+  }
+  
+  public void parse(String systemID) 
+   throws SAXException, IOException {
+    this.parse(new InputSource(systemID));
+  }
+ 
+  // Methods that delegate to the parent XMLReader
+  public boolean getFeature(String name)
+   throws SAXNotRecognizedException, SAXNotSupportedException {
+    return parent.getFeature(name);
+  } 
+
+  public void setFeature(String name, boolean value) 
+   throws SAXNotRecognizedException, SAXNotSupportedException { 
+    parent.setFeature(name, value);
+  }
+
+  public void setEntityResolver(EntityResolver resolver) {
+    parent.setEntityResolver(resolver);
+  }
+  
+  public EntityResolver getEntityResolver() {
+    return parent.getEntityResolver();
+  }
+  
+  public void setDTDHandler(DTDHandler handler) {
+    parent.setDTDHandler(handler);
+  }
+  
+  public DTDHandler getDTDHandler() {
+    return parent.getDTDHandler();
+  }
+
+  public void setContentHandler(ContentHandler handler) {
+    parent.setContentHandler(handler);  
+  }
+  
+  public ContentHandler getContentHandler() {
+    return parent.getContentHandler();
+  }
+
+  public void setErrorHandler(ErrorHandler handler) {
+    parent.setErrorHandler(handler);
+  }
+  
+  public ErrorHandler getErrorHandler() {
+    return parent.getErrorHandler();
+  }  
+ 
+}
+</pre></div><p>
+   We still need a driver class that 
+  constructs a filter
+  <tt>XMLReader</tt> and a
+  normal parser
+  <tt>XMLReader</tt>,
+  connects them to each other, and parses the test document.
+   <a href="ch08s02.html#WallclockDriver.java" title="Example&nbsp;8.5.&nbsp;Parsing a document through a filter">Example&nbsp;8.5</a> is such a class that contains a simple 
+   <tt>main()</tt> method to benchmark a document
+   named on the command line. 
+   No handlers are installed so it tests raw parsing time.
+   If I wanted to  test the
+  behavior of different parsers with various callback interfaces,
+  I could install them on the parser before parsing.
+  After parsing, <tt>WallclockDriver</tt>
+  reads the value of the wallclock property from the
+  filter. The parser tested can be adjusted by setting different
+  values for the <tt>org.xml.sax.driver</tt> 
+  system property. 
+</p><div class="example"><a name="WallclockDriver.java"></a><p class="title"><b>Example&nbsp;8.5.&nbsp;Parsing a document through a filter</b></p><pre class="programlisting">import org.xml.sax.*;
+import org.xml.sax.helpers.XMLReaderFactory;
+import java.io.IOException;
+
+
+public class WallclockDriver {
+
+  public static void main(String[] args) {
+
+    if (args.length &lt;= 0) {
+      System.out.println("Usage: java WallclockDriver URL");
+      return;
+    }
+    String document = args[0];
+    
+    try {
+      XMLFilter filter = new WallclockFilter();
+      filter.setParent(XMLReaderFactory.createXMLReader());
+      filter.parse(document);
+      Long parseTime = (Long) filter.getProperty(
+       "http://cafeconleche.org/properties/wallclock/");
+       double seconds = parseTime.longValue()/1000.0;
+      System.out.println("Parsing " + document + " took "
+       + seconds + " seconds on average.");   
+    }
+    catch (SAXException e) {
+      e.printStackTrace();
+      System.out.println(e);
+    }
+    catch (IOException e) { 
+        e.printStackTrace();
+     System.out.println(
+       "Due to an IOException, the parser could not check " 
+       + args[0]
+      ); 
+    }
+    
+  }
+  
+}
+</pre></div><p>
+  I ran the XML form of the 
+  second edition of the  XML 1.0 specification through this
+  program
+  with a few different parsers using Sun&#8217;s Java Runtime Environment 1.3.1
+  on my 300 MHz Pentium II running Windows NT 4.0SP6. This isn&#8217;t a scientific
+  test (At a minimum this would require testing many different documents
+  on multiple virtual and physical machines, considering
+  pauses that might be caused by garbage collection,
+  making sure background processes were kept to a minimum, and taking multiple
+  measurements to test reproducibility of the results), but the
+  output&#8217;s nonetheless
+  mildly interesting:
+</p><pre class="screen"><tt>% </tt><b><tt>java -Dorg.xml.sax.driver=gnu.xml.aelfred2.XmlReader
+  WallclockDriver http://www.w3.org/TR/2000/REC-xml-20001006.xml</tt></b>
+<tt>Parsing http://www.w3.org/TR/2000/REC-xml-20001006.xml 
+ took 1.209 seconds on average.</tt>
+<tt>% </tt><b><tt>java -Dorg.xml.sax.driver=org.apache.crimson.parser.XMLReaderImpl
+  WallclockDriver http://www.w3.org/TR/2000/REC-xml-20001006.xml</tt></b>
+<tt>Parsing http://www.w3.org/TR/2000/REC-xml-20001006.xml 
+ took 1.414 seconds on average.</tt>
+<tt>% </tt><b><tt>java -Dorg.xml.sax.driver=org.apache.xerces.parsers.SAXParser
+  WallclockDriver http://www.w3.org/TR/2000/REC-xml-20001006.xml</tt></b>
+<tt>Parsing http://www.w3.org/TR/2000/REC-xml-20001006.xml 
+ took 1.133 seconds on average.</tt>
+<tt>% </tt><b><tt>java -Dorg.xml.sax.driver=com.bluecast.xml.Piccolo
+  WallclockDriver http://www.w3.org/TR/2000/REC-xml-20001006.xml</tt></b>
+<tt>Parsing http://www.w3.org/TR/2000/REC-xml-20001006.xml 
+ took 0.849 seconds on average.</tt></pre><p>
+    The four parsers I tested here were all fairly close to
+    each other in raw performance. In fact, given that I&#8217;m
+    testing the wallclock time instead of the actual time used by 
+    this program alone, I&#8217;d venture that the differences are all
+    within the margin of error for the test.
+    Of course, when choosing a parser, you&#8217;d want to run
+    this across your own documents with your own content handlers in
+    place. 
+  </p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch08.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch08.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch08s03.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&nbsp;8.&nbsp;SAX Filters&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Content Filters</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+May 26,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

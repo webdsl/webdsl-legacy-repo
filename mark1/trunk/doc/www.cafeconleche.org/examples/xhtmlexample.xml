@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE catalog [
+  <!ELEMENT catalog (catalog_entry*)>
+  <!ELEMENT catalog_entry (name, price, item_number, color, size, description)>
+  <!ELEMENT name (#PCDATA)>
+  <!ELEMENT size (#PCDATA)>
+  <!ELEMENT price (#PCDATA)>
+  <!ELEMENT item_number (#PCDATA)>
+  <!ENTITY % h3tml SYSTEM "xhtml/xhtml11.dtd">
+  %h3tml; 
+  <!ELEMENT description (%Flow.mix;)>
+  <!ELEMENT color (#PCDATA)>
+]>
+<catalog>
+  <catalog_entry>
+    <name>Aluminum Duck Drainer</name>
+    <price>34.99</price>
+    <item_number>54X8</item_number>
+    <color>silver</color>
+    <size>XL</size>
+    <description>
+     <p>
+       This sturdy <strong>silver</strong> colored
+       sink stopper dignifies the <em>finest
+       kitchens</em>. It makes a great gift for 
+      </p>
+      <ul>
+        <li>Christmas</li>
+        <li>Birthdays</li>
+        <li>Mother's Day</li>
+      </ul>
+      <p>and all other occasions!</p>
+     </description>
+  </catalog_entry>
+</catalog>

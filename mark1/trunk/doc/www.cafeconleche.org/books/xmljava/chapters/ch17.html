@@ -1,0 +1,820 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;17.&nbsp;XSLT</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="index.html" title="Processing XML with Java"><link rel="previous" href="ch16s08.html" title="Summary"><link rel="next" href="ch17s02.html" title="TrAX"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"><link rel="section" href="ch17.html#d0e31003" title="XSL Transformations"><link rel="section" href="ch17s02.html" title="TrAX"><link rel="section" href="ch17s03.html" title="Extending XSLT with Java"><link rel="section" href="ch17s04.html" title="Summary"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter&nbsp;17.&nbsp;XSLT</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch16s08.html">Prev</a>&nbsp;</td><th width="60%" align="center">&nbsp;</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch17s02.html">Next</a></td></tr></table><hr></div><div class="chapter"><div class="titlepage"><div><h2 class="title"><a name="chtrax"></a>Chapter&nbsp;17.&nbsp;XSLT</h2></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><a href="ch17.html#d0e31003">XSL Transformations</a></dt><dd><dl><dt><a href="ch17.html#d0e31017">Template Rules</a></dt><dt><a href="ch17.html#d0e31057">Stylesheets</a></dt><dt><a href="ch17.html#d0e31096">Taking the Value of a Node</a></dt><dt><a href="ch17.html#d0e31228">Applying Templates</a></dt><dt><a href="ch17.html#d0e31297">The Default Template Rules</a></dt><dt><a href="ch17.html#d0e31314">Selection</a></dt><dt><a href="ch17.html#d0e31428">Calling Templates by Name</a></dt></dl></dd><dt><a href="ch17s02.html">TrAX</a></dt><dd><dl><dt><a href="ch17s02.html#d0e31774">Thread Safety</a></dt><dt><a href="ch17s02.html#d0e31875">Locating Transformers</a></dt><dt><a href="ch17s02.html#d0e31963">The xml-stylesheet processing instruction</a></dt><dt><a href="ch17s02.html#d0e32171">Features</a></dt><dt><a href="ch17s02.html#d0e32285">XSLT Processor Attributes</a></dt><dt><a href="ch17s02.html#d0e32363">URI Resolution</a></dt><dt><a href="ch17s02.html#d0e32464">Error Handling</a></dt><dt><a href="ch17s02.html#d0e32598">Passing Parameters to Style Sheets</a></dt><dt><a href="ch17s02.html#d0e32721">Output Properties</a></dt><dt><a href="ch17s02.html#d0e33001">Sources and Results</a></dt></dl></dd><dt><a href="ch17s03.html">Extending XSLT with Java</a></dt><dd><dl><dt><a href="ch17s03.html#d0e33279">Extension Functions</a></dt><dt><a href="ch17s03.html#d0e33998">Extension Elements</a></dt></dl></dd><dt><a href="ch17s04.html">Summary</a></dt></dl></div><p>
+    Extensible Stylesheet Language Transformations (XSLT) 
+    is provably Turing-complete.
+    That is, given enough memory an XSLT stylesheet 
+    can perform any
+    calculation a program written in any other language can perform.
+    However, XSLT is not designed as a general purpose
+    programming language; and attempting to use it as one
+    inevitably causes pain (especially if you&#8217;re accustomed to
+    procedural languages like Java instead of 
+    functional languages like Scheme). 
+    Instead XSLT is designed as a
+    templating language. Used in this manner, it is extremely
+    flexible, powerful, and easy to use. However, you do have to
+    recognize what it is and is not good for. 
+    You could calculate Fibonacci numbers in 
+    XSLT, but Java will do a much better job of that.
+    You could write a Java program that converts DocBook documents
+    to XHTML, but XSLT will 
+    make the task much easier.
+    Use the right tool
+    for the right job. Fortunately, XSLT style sheets can be combined with Java programs 
+    so that each tool can be applied to the parts of the job for
+    which it&#8217;s appropriate. 
+  </p><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e31003"></a>XSL Transformations</h2></div></div><p>
+    XSLT is a transformation language. 
+    An XSLT stylesheet describes how documents in one format
+    are converted to documents in another format.
+    Both input and output documents are represented by the XPath
+    data model.  XPath expressions select nodes from the input
+    document for further processing.
+    Templates containing XSLT instructions
+    are applied to the selected nodes to generate new nodes that are
+    added to the output document.
+    The final result document can be identical to the input document,
+    a little different, or a lot different. Most of the time it&#8217;s somewhere
+    in the middle.
+    </p><p>
+    XSLT is based on the notion of templates. 
+    An XSLT stylesheet contains
+    semi-independent templates for each element or other node 
+    that will be processed. 
+    An XSLT processor parses the stylesheet and an input document.
+    Then it compares the nodes in the input document to the templates
+    in the stylesheet. When it finds a match, it instantiates the
+    template and adds the result to the output tree. 
+    </p><p>
+    The biggest difference between XSLT and traditional
+    programming languages is that 
+     the input document drives the flow
+    of the program rather than the stylesheet 
+    controlling it explicitly.
+    When designing an XSLT stylesheet, you concentrate on which 
+    input constructs map to which 
+    output constructs rather than on 
+    how or when the processor reads the input and generates the
+    output.
+   </p><p>
+    In some sense, XSLT is a push model like SAX rather than a pull
+    model like DOM. This approach is initially uncomfortable for 
+    programmers accustomed to more procedural languages. However,
+    it does have the advantage of being much more robust against
+    unexpected
+    changes in the structure of the input data. An XSLT transform
+    rarely fails completely just because an expected element is
+    missing or misplaced or because an unexpected, invalid 
+    element is encountered.
+  </p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Tip</h3><p>
+    If you are concerned about the exact structure of the input
+    data and want to respond differently if it&#8217;s not precisely
+    correct (for instance, an XML-RPC server should respond
+    to a malformed request with a fault document rather than a
+    best-guess) validate the documents
+    with a DTD or a schema before transforming them.
+    XSLT doesn&#8217;t provide any means to do this.
+    However, you can implement this in Java in a separate layer
+    before deciding whether to pass the input document to the
+    XSLT processor for transformation. 
+  </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e31017"></a>Template Rules</h3></div></div><p>
+    An XSLT stylesheet contains examples of what belongs in the
+    output document, roughly one example for each significantly
+    different construct that exists in the input
+    documents. It also contains instructions telling the XSLT
+    processor how to convert input nodes into the example output
+    nodes.
+    The XSLT processor uses those examples and instructions to
+    convert nodes in the input documents to nodes in the output
+    document. 
+  </p><p>
+    Examples and instructions are written as
+    <i>template rules</i>. Each template rule
+    has a <i>pattern</i> and a <i>template</i>. 
+    The template rule is
+    represented by an <tt>xsl:template</tt> element.
+    The customary prefix <tt>xsl</tt>
+    is bound to the namespace URI
+    <tt>http://www.w3.org/1999/XSL/Transform</tt>, and as usual the prefix
+    can change as long as the URI remains the same.
+    The pattern, a limited form of an XPath expression, 
+    is stored in this element&#8217;s 
+    <tt>match</tt> attribute.
+    The contents of the <tt>xsl:template</tt> element
+    form the template.
+    For example, this is a template rule that matches 
+    <tt>methodCall</tt> elements and responds with 
+    a template consisting of a single
+    <tt>methodResponse</tt> element:
+  </p><div class="informalexample"><pre class="programlisting">&lt;xsl:template match="methodCall"&gt;
+  &lt;methodResponse&gt;
+    &lt;params&gt;
+      &lt;param&gt;
+        &lt;value&gt;&lt;string&gt;Hello&lt;/string&gt;&lt;/value&gt;
+      &lt;/param&gt;
+    &lt;/params&gt;
+  &lt;/methodResponse&gt;
+&lt;/xsl:template&gt;</pre></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e31057"></a>Stylesheets</h3></div></div><p>
+    A complete XSLT stylesheet is a well-formed XML document.
+    The root element of this document is 
+    <tt>xsl:stylesheet</tt> which has a <tt>version</tt> 
+    attribute with the value 1.0.
+    In practice,
+    stylesheets normally
+    contain multiple template rules matching different 
+    kinds of input nodes, but for 
+    now <a href="ch17.html#HelloXMLRPC.xsl" title="Example&nbsp;17.1.&nbsp;An XSLT stylesheet for XML-RPC request documents">Example&nbsp;17.1</a> shows one that just contains 
+    one template rule:
+  </p><div class="example"><a name="HelloXMLRPC.xsl"></a><p class="title"><b>Example&nbsp;17.1.&nbsp;An XSLT stylesheet for XML-RPC request documents</b></p><pre class="programlisting">&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;xsl:stylesheet version="1.0"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"&gt;
+  
+  &lt;xsl:template match="methodCall"&gt;
+    &lt;methodResponse&gt;
+      &lt;params&gt;
+        &lt;param&gt;
+          &lt;value&gt;&lt;string&gt;Hello&lt;/string&gt;&lt;/value&gt;
+        &lt;/param&gt;
+      &lt;/params&gt;
+    &lt;/methodResponse&gt;
+  &lt;/xsl:template&gt;
+
+&lt;/xsl:stylesheet&gt;
+</pre></div><p>
+    Applying this stylesheet to any XML-RPC request
+    document produces the following result:
+  </p><div class="informalexample"><pre class="programlisting">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;methodResponse&gt;&lt;params&gt;
+&lt;param&gt;&lt;value&gt;&lt;string&gt;Hello&lt;/string&gt;&lt;/value&gt;&lt;/param&gt;&lt;/params&gt;
+&lt;/methodResponse&gt;</pre></div><p>
+    The template in <a href="ch17.html#HelloXMLRPC.xsl" title="Example&nbsp;17.1.&nbsp;An XSLT stylesheet for XML-RPC request documents">Example&nbsp;17.1</a>&#8217;s 
+    template rule consists exclusively of
+    <i>literal result elements</i> and 
+    <i>literal data</i> that are copied
+    directly to the output document from the stylesheet. 
+    It also contains some white-space only text nodes, but by
+    default an XSLT processor strips these out. (You can keep the white space
+    by adding an <tt>xml:space="preserve"</tt> attribute to the
+    <tt>xsl:template</tt> element if you want.)
+    A template can also 
+    contain XSLT instructions that copy data from the input document
+    to the output document or create new data algorithmically.
+   </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e31096"></a>Taking the Value of a Node</h3></div></div><p>
+    Perhaps the most common XSLT instruction is
+    <tt>xsl:value-of</tt>. This returns the XPath
+    string-value of an object selected by an XPath expression.
+    For example, the value of an element is the concatenation of
+    all the character data but none of the markup 
+    contained between the element&#8217;s start-tag and end-tag.
+    Each  <tt>xsl:value-of</tt> element has a
+    <tt>select</tt> attribute whose value contains an
+    XPath expression identifying the object to take the value of.
+    For example, this <tt>xsl:value-of</tt> element
+    takes the value of the root <tt>methodCall</tt>
+    element:
+  </p><div class="informalexample"><pre class="programlisting">&lt;xsl:value-of select="/methodCall" /&gt;</pre></div><p>
+    This <tt>xsl:value-of</tt> element
+    takes the value of the root <tt>int</tt>
+    element further down the tree:
+  </p><div class="informalexample"><pre class="programlisting">&lt;xsl:value-of select="/methodCall/params/value/int" /&gt;</pre></div><p>
+    This <tt>xsl:value-of</tt> element
+    uses a relative location path. It calculates  the string-value of 
+    the <tt>int</tt> child of the <tt>value</tt> child 
+    of the <tt>params</tt> child of the context node
+    (normally the node matched by the containing template):
+  </p><div class="informalexample"><pre class="programlisting">&lt;xsl:value-of select="params/value/int" /&gt;</pre></div><p>
+    The <tt>xsl:value-of</tt> element
+    can calculate the value of any of the four XPath data types
+    (number, boolean, string, and node-set). For example, this
+    expression calculates the value of 
+    <i>e</i> 
+    times 
+    <i>&#960;</i>:
+  </p><div class="informalexample"><pre class="programlisting">&lt;xsl:value-of select="2.71828 * 3.141592" /&gt;</pre></div><p>
+    In fact, you can use absolutely any legal XPath expression in 
+    the <tt>select</tt> attribute. This <tt>xsl:value-of</tt> element
+    multiplies the number in the  <tt>int</tt> element
+    by ten and returns it:
+  </p><div class="informalexample"><pre class="programlisting">&lt;xsl:value-of select="10 * params/value/int" /&gt;</pre></div><p>
+  In all cases the value of an object is the XPath string-value
+  that would be returned by the XPath <tt>string()</tt>
+  function.
+</p><p>
+  When <tt>xsl:value-of</tt> is used in a template, the
+  context node is a node matched by the template and for which the
+  template is being instantiated. The
+  template in <a href="ch17.html#EchoXMLRPC.xsl" title="Example&nbsp;17.2.&nbsp;An XSLT stylesheet that echoes XML-RPC requests">Example&nbsp;17.2</a> copies the string-value of
+  the <tt>value</tt> element in the input document to the
+  <tt>string</tt> element in the output document.
+</p><div class="example"><a name="EchoXMLRPC.xsl"></a><p class="title"><b>Example&nbsp;17.2.&nbsp;An XSLT stylesheet that echoes XML-RPC requests</b></p><pre class="programlisting">&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;xsl:stylesheet version="1.0"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"&gt;
+  
+&lt;xsl:template match="methodCall" xml:space="preserve"&gt;
+&lt;methodResponse&gt;
+  &lt;params&gt;
+    &lt;param&gt;
+      &lt;value&gt;
+        &lt;string&gt;
+          &lt;xsl:value-of select="params/param/value" /&gt;
+        &lt;/string&gt;
+      &lt;/value&gt;
+    &lt;/param&gt;
+  &lt;/params&gt;
+&lt;/methodResponse&gt;
+&lt;/xsl:template&gt;
+
+&lt;/xsl:stylesheet&gt;
+</pre></div><p>
+  If this stylesheet is applied to the XML document in <a href="ch17.html#calculateFibonacci_17.xml" title="Example&nbsp;17.3.&nbsp;An XML-RPC request document">Example&nbsp;17.3</a>, then the
+  result is the XML document shown in <a href="ch17.html#calculateFibonacci_17_result.xml" title="Example&nbsp;17.4.&nbsp;An XML-RPC response document">Example&nbsp;17.4</a>.
+  There are a number of GUI, command line, and server side
+  programs that will do this, though our interest is going to be
+  in integrating XSLT stylesheets into Java programs so I&#8217;m going
+  to omit the details of exactly how this takes place for the
+  moment.
+  I&#8217;ll pick it up again in the next section.
+</p><div class="example"><a name="calculateFibonacci_17.xml"></a><p class="title"><b>Example&nbsp;17.3.&nbsp;An XML-RPC request document</b></p><pre class="programlisting">&lt;?xml version="1.0"?&gt;
+&lt;methodCall&gt;
+  &lt;methodName&gt;calculateFibonacci&lt;/methodName&gt;
+  &lt;params&gt;
+    &lt;param&gt;
+      &lt;value&gt;&lt;int&gt;10&lt;/int&gt;&lt;/value&gt;
+    &lt;/param&gt;
+  &lt;/params&gt;
+&lt;/methodCall&gt;
+</pre></div><div class="example"><a name="calculateFibonacci_17_result.xml"></a><p class="title"><b>Example&nbsp;17.4.&nbsp;An XML-RPC response document</b></p><pre class="programlisting">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;methodResponse&gt;
+  &lt;params&gt;
+    &lt;param&gt;
+      &lt;value&gt;
+        &lt;string&gt;
+          10
+        &lt;/string&gt;
+      &lt;/value&gt;
+    &lt;/param&gt;
+  &lt;/params&gt;
+&lt;/methodResponse&gt;</pre></div><p>
+  The white space in the output
+  is a little prettier here than in the last example  because I used an 
+  <tt>xml:space="preserve"</tt> attribute in the
+  stylesheet. More importantly, the content of the 
+  <tt>string</tt> element has now been copied from the
+  input document. The output is a combination of literal result
+  data from the stylesheet and information read from the
+  transformed XML document.
+</p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e31228"></a>Applying Templates</h3></div></div><p>
+    Probably the single most important
+    XSLT instruction is the one that 
+    tells the processor to continue processing
+    other nodes in the input document
+    and instantiate their matching
+    templates. This instruction is the 
+    <tt>xsl:apply-templates</tt> element.
+    Its <tt>select</tt> attribute contains an XPath
+    expression identifying the nodes to apply templates to. The
+    currently matched node is the context node for this
+    expression. For example, this template matches 
+    <tt>methodCall</tt> elements. However, rather than outputting  
+     a fixed response, it generates a 
+     <tt>methodResponse</tt> element whose contents
+     are formed by instantiating the template for 
+     each <tt>params</tt>
+     child element in turn:
+  </p><div class="informalexample"><pre class="programlisting">&lt;xsl:template match="methodCall"&gt;
+  &lt;methodResponse&gt;
+    &lt;xsl:apply-templates select="child::params"/&gt;
+  &lt;/methodResponse&gt;
+&lt;/xsl:template&gt;</pre></div><p>
+    The complete output this template rule 
+    generates depends on what the template rule for 
+    the <tt>params</tt> element does. That
+    template rule may further apply templates 
+    to its own <tt>param</tt> children like this:
+   </p><div class="informalexample"><pre class="programlisting">&lt;xsl:template match="params"&gt;
+  &lt;params&gt;
+    &lt;xsl:apply-templates select="child::param"/&gt;
+  &lt;/params&gt;
+&lt;/xsl:template&gt;</pre></div><p>
+    The <tt>param</tt>
+    template rule may apply templates 
+    to its <tt>value</tt> child like this:
+   </p><div class="informalexample"><pre class="programlisting">&lt;xsl:template match="param"&gt;
+  &lt;param&gt;
+    &lt;xsl:apply-templates select="child::value"/&gt;
+  &lt;/param&gt;
+&lt;/xsl:template&gt;</pre></div><p>
+    The <tt>value</tt>
+    template rule may apply templates 
+    to all its element children whatever their type using the
+    <tt>*</tt> wild card:
+   </p><div class="informalexample"><pre class="programlisting">&lt;xsl:template match="value"&gt;
+  &lt;value&gt;
+    &lt;xsl:apply-templates select="child::*"/&gt;
+  &lt;/value&gt;
+&lt;/xsl:template&gt;</pre></div><p>
+    Finally one template rule may take the value of all the possible
+    children of <tt>value</tt> at once using the union operator 
+    <tt>|</tt>:
+   </p><div class="informalexample"><pre class="programlisting">&lt;xsl:template match="int | i4 | string | boolean | double
+ | dateTime.iso8601 | base64 | struct"&gt;
+  &lt;string&gt;
+    &lt;xsl:value-of select="."/&gt;
+  &lt;/string&gt;
+&lt;/xsl:template&gt;</pre></div><p>
+  This example descended straight down the expected tree, and
+  mostly copied the existing markup. However, XSLT is a lot more
+  flexible and can move in many different directions at any
+  point. Templates can skip nodes, move to preceding or
+  following siblings, reprocess previously processed nodes, or 
+  move along any of the axes defined in XPath. 
+</p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e31297"></a>The Default Template Rules</h3></div></div><p> 
+    XSLT defines several default template rules that are used
+    when no explicit rule matches a node. The first such rule applies
+    to the root node and to element nodes. It simply applies 
+    templates to the children of that node but does not specifically generate
+    any output:
+   </p><div class="informalexample"><pre class="programlisting">&lt;xsl:template match="*|/"&gt;
+  &lt;xsl:apply-templates/&gt;
+&lt;/xsl:template&gt;</pre></div><p>
+    This allows the XSLT processor to walk the tree from top to bottom
+    by default,
+    unless told to do something else by other templates.
+    The default templates are overridden by any explicit
+    templates. 
+  </p><p>
+    The second default rule applies to text and attribute nodes.
+    It copies the value of each of these nodes into the output
+    tree:
+  </p><div class="informalexample"><pre class="programlisting">&lt;xsl:template match="text()|@*"&gt;
+  &lt;xsl:value-of select="."/&gt;
+&lt;/xsl:template&gt;</pre></div><p>
+   Together, these rules have the effect of copying the text contents of an
+   element or document to the output but deleting the markup structure.
+   Of course  you can change this behavior by overriding the
+   built-in template rules with your own template rules. 
+  </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e31314"></a>Selection</h3></div></div><p>
+    Adding XPath predicates to match patterns
+    and select expressions offers a lot of the if-then
+    functionality you need. However, sometimes that&#8217;s not quite
+    enough. In that case, you can take advantage of the
+    <tt>xsl:if</tt> and <tt>xsl:choose</tt> elements.
+  </p><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e31325"></a>xsl:if</h4></div></div><p>
+      The <tt>xsl:if</tt> instruction
+      enables the stylesheet to decide whether or not to 
+      do something.
+      It contains a template. If the XPath expression in the
+      <tt>test</tt>
+      attribute evaluates to true, then the template is instantiated
+      and added to the result tree. If the XPath expression evaluates to false, then it isn&#8217;t.
+      If the XPath expression evaluates to something that isn&#8217;t a boolean,
+      then it is converted to true or false using the
+      XPath <tt>boolean()</tt> function
+      described in the
+      previous chapter. That is,
+      0 and NaN are false. All other numbers are true.
+      Empty strings and node-sets are false. Non-empty strings
+      and node-sets are true.
+    </p><p>
+      For example, when evaluating an XML-RPC request you might
+      want to check that the request document indeed adheres to the
+      specification, or at least that
+      it&#8217;s close enough for what you need it for. This
+      requires checking that the root element is 
+      <tt>methodCall</tt>, that the root element has exactly one 
+      <tt>methodName</tt> child and one 
+      <tt>params</tt> child, and so forth. 
+      Here&#8217;s an XPath expression that checks for various violations of XML-RPC syntax
+      (Remember that according to XPath empty node-sets are false
+      and non-empty node-sets are true.):
+    </p><div class="informalexample"><pre class="programlisting">count(/methodCall/methodName) != 1
+ or count(/methodCall/params) != 1
+ or not(/methodCall/params/param/value)</pre></div><p>
+    I could check considerably more than this, but this suffices
+    for an example. Now we can use this XPath expression in an
+    <tt>xsl:if</tt> test inside the
+    template for the root node. If the test succeeds (that is,
+    the request document is incorrect), then the
+    <tt>xsl:message</tt> instruction  terminates the
+    processing:
+  </p><div class="informalexample"><pre class="programlisting">&lt;xsl:template match="/"&gt;
+  &lt;xsl:if test="count(/methodCall/methodName) != 1
+                 or count(/methodCall/params) != 1
+                 or not(/methodCall/params/param/value)"&gt;
+    &lt;xsl:message terminate="yes"&gt;
+      The request document is invalid.
+    &lt;/xsl:message&gt;
+  &lt;/xsl:if&gt;
+  &lt;xsl:apply-templates select="child::methodCall"/&gt;
+&lt;/xsl:template&gt;</pre></div><p>
+    The exact behavior of the <tt>xsl:message</tt>
+    instruction is processor dependent. The message might be delivered by
+    printing it on <tt>System.out</tt>,
+    writing it into a log file, or popping up a dialog box.
+    Soon, you&#8217;ll see how to
+    generate a fault document instead.
+  </p><p>
+      There is no <tt>xsl:else</tt> or <tt>xsl:else-if</tt> instruction.
+      To choose from multiple alternatives, use the
+      <tt>xsl:choose</tt> instruction instead.
+    </p></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e31383"></a>xsl:choose</h4></div></div><p>
+      The
+      <tt>xsl:choose</tt> instruction selects from
+      multiple alternative templates. It contains 
+      one or more <tt>xsl:when</tt> elements, each of
+      which contains a <tt>test</tt>
+      attribute and a template. The first <tt>xsl:when</tt> element
+      whose <tt>test</tt>
+      attribute evaluates to true is instantiated. The others are
+      ignored. There may also be an optional final
+      <tt>xsl:otherwise</tt> element
+      whose template is instantiated only if all the 
+      <tt>xsl:when</tt> elements are false.
+    </p><p>
+      For example, when an XML-RPC request is 
+      well-formed but syntactically incorrect,
+      the server should respond with a fault document.
+      This template tests for a number of possible
+      problems with an XML-RPC request and
+      only processes it if none of the problems arise. Otherwise
+      it emits an error message:
+    </p><div class="informalexample"><pre class="programlisting">&lt;xsl:template match="/"&gt;
+  &lt;xsl:choose&gt;
+    &lt;xsl:when test="not(/methodCall/methodName)"&gt;
+       Missing methodName
+    &lt;/xsl:when&gt;
+    &lt;xsl:when test="count(/methodCall/methodName) &amp;gt; 1"&gt;
+      Multiple methodNames
+    &lt;/xsl:when&gt;
+    &lt;xsl:when test="count(/methodCall/params) &amp;gt; 1"&gt;
+       Multiple params elements
+    &lt;/xsl:when&gt;
+    &lt;xsl:otherwise&gt;
+      &lt;xsl:apply-templates select="child::methodCall"/&gt;
+    &lt;/xsl:otherwise&gt;
+  &lt;/xsl:choose&gt;
+&lt;/xsl:template&gt;</pre></div><p>
+    XSLT does not have any real exception handling or error reporting mechanism.
+    In the worst case, the processor simply gives up and prints an error
+    message on the console. This template, like every 
+    other template, is instantiated to create a
+    node-set. Depending on which conditions are true, different
+    nodes will be in that set. If there is an error condition, this set will
+    contain a single text node with the contents,
+    &#8220;Missing methodName&#8221;, 
+    &#8220;Multiple methodNames&#8221;, or
+    &#8220;Multiple params elements&#8221;. 
+    Otherwise it will contain whatever nodes are created by applying 
+    templates to the <tt>methodCall</tt> child element.
+    But in both cases a node-set is returned that is inserted into the 
+    output document. 
+  </p></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e31428"></a>Calling Templates by Name</h3></div></div><p>
+    There is a second way a template can be instantiated. As well
+    as matching  a node in the input document, a template can be
+    called by name using the <tt>xsl:call-template</tt> 
+    element. Parameters can be passed to such templates.
+    Templates can even be called recursively. Indeed, it is recursion
+    that makes XSLT Turing-complete. 
+  </p><p>
+      For example, here&#8217;s a template named
+      <tt>faultResponse</tt>
+      that generates a complete XML-RPC fault document when invoked::
+    </p><div class="informalexample"><pre class="programlisting">&lt;xsl:template name="faultResponse"&gt;
+  &lt;methodResponse&gt;
+    &lt;fault&gt;
+      &lt;value&gt;
+        &lt;struct&gt;
+          &lt;member&gt;
+            &lt;name&gt;faultCode&lt;/name&gt;
+            &lt;value&gt;&lt;int&gt;0&lt;/int&gt;&lt;/value&gt;
+          &lt;/member&gt;
+          &lt;member&gt;
+            &lt;name&gt;faultString&lt;/name&gt;
+            &lt;value&gt;&lt;string&gt;Invalid request document&lt;/string&gt;&lt;/value&gt;
+          &lt;/member&gt;
+        &lt;/struct&gt;
+      &lt;/value&gt;
+    &lt;/fault&gt;
+  &lt;/methodResponse&gt;
+&lt;/xsl:template&gt;</pre></div><p>
+      The <tt>xsl:call-template</tt> element 
+      applies a named template to the context node. 
+      For example, earlier you saw a root node template 
+      that terminated the processing if it detected an invalid document.
+      Now it can call the fault template instead:
+    </p><div class="informalexample"><pre class="programlisting">&lt;xsl:template match="/"&gt;
+  &lt;xsl:choose&gt;
+    &lt;xsl:when test="count(/methodCall/methodName) != 1
+                 or count(/methodCall/params) != 1
+                 or not(/methodCall/params/param/value)"&gt;
+      &lt;xsl:call-template name="faultResponse"/&gt;
+    &lt;/xsl:when&gt;
+    &lt;xsl:otherwise&gt;
+      &lt;xsl:apply-templates select="child::methodCall"/&gt;
+    &lt;/xsl:otherwise&gt;
+  &lt;/xsl:choose&gt;
+&lt;/xsl:template&gt;</pre></div><p>
+       Named templates can factor out common code that&#8217;s used in
+       multiple places through top-down design, 
+       just as a complicated algorithm in a Java program may be broken into
+       multiple methods rather than one large monolithic method.
+       Indeed some large stylesheets including the DocBook XSL stylesheets
+       that produced this book do use named templates for this
+       purpose. However, named templates become even more important
+       when you add parameters and recursion to the mix. 
+     </p><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e31454"></a>Passing Parameters to Templates</h4></div></div><p>
+    Each template rule can have any number of
+    parameters represented as <tt>xsl:param</tt>
+    elements. These appear inside the <tt>xsl:template</tt> 
+    element before the template itself.
+    Each <tt>xsl:param</tt>
+    element has a <tt>name</tt> attribute and an
+    optional
+    <tt>select</tt> attribute. The <tt>select</tt> attribute
+    provides a default value for that parameter when the
+    template is invoked but can be overridden. 
+    If the <tt>select</tt> attribute
+    is omitted, then the default value for the
+    parameter is set by the contents of the
+    <tt>xsl:param</tt> element.
+    (For a non-overridable 
+    variable, you can use a local 
+    <tt>xsl:variable</tt> element instead.)
+  </p><p>
+    For example, the  parameters in this fault template
+    specify the faultCode and the faultString.
+    The default fault code is 0. The default fault string 
+    is <tt>Unspecified Error</tt>.
+  </p><div class="informalexample"><pre class="programlisting">&lt;xsl:template name="faultResponse"&gt;
+  &lt;xsl:param name="err_code" select="0"/&gt;
+  &lt;xsl:param name="err_message"&gt;Unspecified Error&lt;/xsl:param&gt;
+  &lt;methodResponse&gt;
+    &lt;fault&gt;
+      &lt;value&gt;
+        &lt;struct&gt;
+          &lt;member&gt;
+            &lt;name&gt;faultCode&lt;/name&gt;
+            &lt;value&gt;
+              &lt;int&gt;&lt;xsl:value-of select="$err_code"/&gt;&lt;/int&gt;
+            &lt;/value&gt;
+          &lt;/member&gt;
+          &lt;member&gt;
+            &lt;name&gt;faultString&lt;/name&gt;
+            &lt;value&gt;
+              &lt;string&gt;
+                &lt;xsl:value-of select="$err_message"/&gt;
+              &lt;/string&gt;
+            &lt;/value&gt;
+          &lt;/member&gt;
+        &lt;/struct&gt;
+      &lt;/value&gt;
+    &lt;/fault&gt;
+  &lt;/methodResponse&gt;
+&lt;/xsl:template&gt;</pre></div><p>
+    XSLT is weakly typed. 
+    There is no <tt>type</tt> attribute on the 
+    <tt>xsl:param</tt> element.
+    You can pass in pretty much any object as
+    the value of one of these parameters. If you use such a
+    variable in a place where an item of that type can&#8217;t be used
+    and can&#8217;t be converted to the right type,
+    then the processor will stop and report an error.
+  </p><p>
+    The <tt>xsl:call-template</tt> element can provide
+    values for each of the named parameters using 
+    <tt>xsl:with-param</tt> child elements, 
+    or it can accept the
+    default values specified by the
+    <tt>xsl:param</tt> elements.
+    For example, this template rule for the root node
+    uses different error codes and messages for different
+    problems:
+  </p><div class="informalexample"><pre class="programlisting">&lt;xsl:template match="/"&gt;
+  &lt;xsl:choose&gt;
+    &lt;xsl:when test="not(/methodCall/methodName)"&gt;
+      &lt;xsl:call-template name="faultResponse"&gt;
+        &lt;xsl:with-param name="err_code" select="1" /&gt;
+        &lt;xsl:with-param name="err_message"&gt;
+          Missing methodName
+        &lt;/xsl:with-param&gt;
+      &lt;/xsl:call-template&gt;
+    &lt;/xsl:when&gt;
+    &lt;xsl:when test="count(/methodCall/methodName) &amp;gt; 1"&gt;
+      &lt;xsl:call-template name="faultResponse"&gt;
+        &lt;xsl:with-param name="err_code" select="1" /&gt;
+        &lt;xsl:with-param name="err_message"&gt;
+          Multiple method names
+        &lt;/xsl:with-param&gt;
+      &lt;/xsl:call-template&gt;
+    &lt;/xsl:when&gt;
+    &lt;xsl:when test="count(/methodCall/params) &amp;gt; 1"&gt;
+      &lt;xsl:call-template name="faultResponse"&gt;
+        &lt;xsl:with-param name="err_code" select="2" /&gt;
+        &lt;xsl:with-param name="err_message"&gt;
+          Multiple params elements
+        &lt;/xsl:with-param&gt;
+      &lt;/xsl:call-template&gt;
+    &lt;/xsl:when&gt;
+  &lt;!-- etc. --&gt;
+    &lt;xsl:otherwise&gt;
+      &lt;xsl:apply-templates select="child::methodCall"/&gt;
+    &lt;/xsl:otherwise&gt;
+  &lt;/xsl:choose&gt;
+&lt;/xsl:template&gt;</pre></div><p>
+     I&#8217;m not sure I would always recommend this approach for validation.
+     Most of the time writing a schema is easier.
+     However, this technique can be used to verify things a
+     schema can&#8217;t. For example, it could test that
+    a <tt>value</tt> element contains either an ASCII string or 
+   a type element such as <tt>int</tt>, but not a 
+   type element and an ASCII string.
+   </p></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e31524"></a>Recursion</h4></div></div><p>
+     The ability for a template to call
+     itself (recursion) is the final ingredient of a
+     fully Turing-complete language. For example, here&#8217;s a
+     template that implements the factorial function:
+   </p><div class="informalexample"><pre class="programlisting">&lt;xsl:template name="factorial"&gt;
+  &lt;xsl:param name="arg" select="0"/&gt;
+  &lt;xsl:param name="return_value" select="1"/&gt;
+  &lt;xsl:choose&gt;
+    &lt;xsl:when test="$arg = 0"&gt;
+      &lt;xsl:value-of select="$return_value"/&gt;
+    &lt;/xsl:when&gt;
+    &lt;xsl:when test="$arg &amp;gt; 0"&gt;
+      &lt;xsl:call-template name="factorial"&gt;
+        &lt;xsl:with-param name="arg" select="$arg - 1"/&gt;
+        &lt;xsl:with-param name="return_value" 
+                        select="$return_value * $arg"/&gt;
+      &lt;/xsl:call-template&gt;
+    &lt;/xsl:when&gt;
+    &lt;xsl:when 
+      test="$arg &amp;lt; 0"&gt;Error: function undefined!&lt;/xsl:when&gt;
+  &lt;/xsl:choose&gt;
+&lt;/xsl:template&gt;</pre></div><p>
+     The factorial template has two arguments, <tt>$arg</tt>
+     and <tt>$return_value</tt>. <tt>$arg</tt>
+     is the number whose factorial the client wants, and must be 
+     passed as parameter the first time this template is invoked.
+     <tt>$return_value</tt> is initially 1.
+     When <tt>$arg</tt> reaches zero,
+     the template returns <tt>$return_value</tt>.
+     However, if <tt>$arg</tt> is not 0, the template decrements
+     <tt>$arg</tt> by 1, multiplies <tt>$return_value</tt>
+     by the current value of
+     <tt>$arg</tt>, and calls itself again.
+   </p><p>
+     Functional languages like XSLT do not allow variables
+     to change their values or permit side effects.
+     This can seem a
+     little strange to programmers accustomed to imperative
+     languages like Java.
+     The key is
+     to remember that almost any task a loop performs in
+     Java, recursion performs in XSLT. For example,
+     consider the most basic CS101 problem, printing out the 
+     integers from
+     1 to 10. In Java it&#8217;s a simple <tt>for</tt> loop:
+     </p><div class="informalexample"><pre class="programlisting">for (int i=1; i &lt;= 10; i++) {
+  System.out.print(i);
+}</pre></div><p>
+     However, in XSLT you&#8217;d use recursion in this fashion:
+   </p><div class="informalexample"><pre class="programlisting">&lt;xsl:template name="CS101"&gt;
+  &lt;xsl:param name="index" select="1"/&gt;
+  &lt;xsl:if test="$index &amp;lt;= 10"&gt;
+    &lt;xsl:value-of select="$index"/&gt;
+    &lt;xsl:call-template name="CS101"&gt;
+      &lt;xsl:with-param name="index" select="$index + 1"/&gt;
+    &lt;/xsl:call-template&gt;
+  &lt;/xsl:if&gt;
+&lt;/xsl:template&gt;</pre></div><p>
+     Similar recursive techniques can be used for other looping operations
+     such as sums, averages, sorting, and more.
+     Neither iteration nor recursion is mathematically better or fundamentally
+     faster than the other. They both
+     produce the same results in the end. 
+   </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Note</h3><p>
+       The XSLT solution is more complex and less obvious than
+       the Java equivalent. However, that has more to do with
+       XSLT&#8217;s XML syntax than with recursio`n itself. In Java the
+       same operation could be written recursively like this:
+     </p><div class="informalexample"><pre class="programlisting">public void fakeLoop(int i) {
+  System.out.print(i);
+  if (i &lt; 10) fakeLoop(i++);
+}</pre></div><p>
+       In fact, it has been proven that given sufficient memory any
+       recursive algorithm can be transformed into an iterative
+       one and vice versa.<sup>[<a name="d0e31587" href="#ftn.d0e31587">1</a>]</sup>
+     </p></div><p>
+      Let&#8217;s look at a more complex example. 
+    <a href="ch17.html#FibonacciXMLRPC.xsl" title="Example&nbsp;17.5.&nbsp;An XSLT stylesheet that calculates Fibonacci numbers">Example&nbsp;17.5</a>
+    is a simple XSLT stylesheet 
+    that reads input XML-RPC requests in the form of <a href="ch17.html#calculateFibonacci_17.xml" title="Example&nbsp;17.3.&nbsp;An XML-RPC request document">Example&nbsp;17.3</a>
+    and converts them into output XML-RPC responses.
+  </p><div class="example"><a name="FibonacciXMLRPC.xsl"></a><p class="title"><b>Example&nbsp;17.5.&nbsp;An XSLT stylesheet that calculates Fibonacci numbers</b></p><pre class="programlisting">&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;xsl:stylesheet version="1.0"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"&gt;
+  
+  &lt;xsl:template match="/"&gt;
+    &lt;xsl:choose&gt;
+      &lt;!-- Basic sanity check on the input --&gt;
+      &lt;xsl:when 
+        test="count(methodCall/params/param/value/int) = 1"&gt;
+        &lt;xsl:apply-templates select="child::methodCall"/&gt;
+      &lt;/xsl:when&gt;
+      &lt;xsl:otherwise&gt;
+        &lt;!-- Sanity check failed --&gt;
+        &lt;xsl:call-template name="faultResponse"/&gt;
+      &lt;/xsl:otherwise&gt;
+    &lt;/xsl:choose&gt;
+  &lt;/xsl:template&gt;
+  
+  &lt;xsl:template match="methodCall"&gt;
+    &lt;methodResponse&gt;
+      &lt;params&gt;
+        &lt;param&gt;
+          &lt;value&gt;
+            &lt;xsl:apply-templates 
+              select="params/param/value/int"/&gt;
+          &lt;/value&gt;
+        &lt;/param&gt;
+      &lt;/params&gt;
+    &lt;/methodResponse&gt;
+  &lt;/xsl:template&gt;
+
+  &lt;xsl:template match="int"&gt;
+    &lt;int&gt;
+      &lt;xsl:call-template name="calculateFibonacci"&gt;
+        &lt;xsl:with-param name="index" select="number(.)"/&gt;
+      &lt;/xsl:call-template&gt;
+    &lt;/int&gt;
+  &lt;/xsl:template&gt;
+
+  &lt;xsl:template name="calculateFibonacci"&gt;
+    &lt;xsl:param name="index"/&gt;
+    &lt;xsl:param name="low"  select="1"/&gt;
+    &lt;xsl:param name="high" select="1"/&gt;
+    &lt;xsl:choose&gt;
+      &lt;xsl:when test="$index &amp;lt;= 1"&gt;
+        &lt;xsl:value-of select="$low"/&gt;
+      &lt;/xsl:when&gt;
+      &lt;xsl:otherwise&gt;
+        &lt;xsl:call-template name="calculateFibonacci"&gt;
+          &lt;xsl:with-param name="index" select="$index - 1"/&gt;
+          &lt;xsl:with-param name="low"   select="$high"/&gt;
+          &lt;xsl:with-param name="high"  select="$high + $low"/&gt;
+        &lt;/xsl:call-template&gt;
+      &lt;/xsl:otherwise&gt;
+    &lt;/xsl:choose&gt;
+  &lt;/xsl:template&gt;
+
+  &lt;xsl:template name="faultResponse"&gt;
+    &lt;xsl:param name="err_code"    select="0" /&gt;    
+    &lt;xsl:param name="err_message" select="'Unspecified Error'"/&gt;    
+    &lt;methodResponse&gt;
+      &lt;fault&gt;
+        &lt;value&gt;
+          &lt;struct&gt;
+            &lt;member&gt;
+              &lt;name&gt;faultCode&lt;/name&gt;
+              &lt;value&gt;
+                &lt;int&gt;&lt;xsl:value-of select="$err_code"/&gt;&lt;/int&gt;
+              &lt;/value&gt;
+            &lt;/member&gt;
+            &lt;member&gt;
+              &lt;name&gt;faultString&lt;/name&gt;
+              &lt;value&gt;
+                &lt;string&gt;
+                  &lt;xsl:value-of select="$err_message"/&gt;
+                &lt;/string&gt;
+              &lt;/value&gt;
+            &lt;/member&gt;
+          &lt;/struct&gt;
+        &lt;/value&gt;
+      &lt;/fault&gt;
+    &lt;/methodResponse&gt;
+  &lt;/xsl:template&gt;  
+  
+&lt;/xsl:stylesheet&gt;
+</pre></div><p>
+    However, although XSLT is Turing-complete in a theoretical sense, practically
+    it is missing a lot of the functionality you&#8217;d expect from a
+    modern programming language such as 
+    mathematical functions, I/O, and network access. To actually
+    use this stylesheet as an XML-RPC server, we need to wrap it
+    up in a Java program that can provide all this. 
+  </p></div></div></div><div class="footnotes"><br><hr width="100" align="left"><div class="footnote"><p><sup>[<a name="ftn.d0e31587" href="#d0e31587">1</a>] </sup>See, for example,
+       Robert Sedgewick, <i>Removing Recursion</i>, in
+       <i>Algorithms in C++</i>, 
+       (Addison-Wesley, 1992) pp. 61-65</p></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch16s08.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="index.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch17s02.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Summary&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;TrAX</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+May 20,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

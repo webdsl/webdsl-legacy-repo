@@ -1,0 +1,146 @@
+<html><head>
+    <title>SAX</title>
+    <style type="text/css"><!--
+	h1, h2, h3, h4, h5, h6 { color: maroon; }
+	/* make sure that goes OK with the nav column background
+	 * net-friendly colors include: yellow/ffffcc, blue/ccccff
+	 */
+    --></style>
+</head><body color="#000000" bgcolor="#eeeeff">
+    <table border="0" width="100%" cellpadding="15" cellspacing="0" ><tr>
+        <td valign="top" align="left" color="#000000" bgcolor="#ffffff">
+
+    <table border="0" cellpadding="0" cellspacing="0">
+    <tr><td class="toc">
+    <h2>SAX</h2><b>General</b><br />&nbsp;<a href="about.html">About SAX</a><br />
+	&nbsp;<a href="copying.html">Copyright Status</a><br />
+	&nbsp;<em>Events vs. Trees</em><br />
+	&nbsp;<a href="faq.html">FAQ</a><br />
+	&nbsp;<a href="links.html">Links</a><br />
+	<br />
+	<b>Java API</b><br />&nbsp;<a href="quickstart.html">Quickstart</a><br />
+	&nbsp;<a href="get-set.html">Features and Properties</a><br />
+	&nbsp;<a href="filters.html">Filters</a><br />
+	&nbsp;<a href="namespaces.html">Namespaces</a><br />
+	&nbsp;<a href="http://www.saxproject.org/apidoc/overview-summary.html">JavaDoc</a><br />
+	<br />
+	<b>SAX Evolution</b><br />&nbsp;<a href="sax1-history.html">Genesis</a><br />
+	&nbsp;<a href="sax1-roadmap.html">SAX 1.0 Overview</a><br />
+	&nbsp;<a href="sax2-history.html">SAX 2.0 Changes</a><br />
+	&nbsp;<a href="sax2-ext.html">SAX 2.0 Extensions</a><br />
+	&nbsp;<a href="langs.html">Other Languages</a><br />
+	<br />
+	<b>SourceForge Services</b><br />&nbsp;<a href="http://sourceforge.net/tracker/?group_id=29449">Bugs/RFEs</a><br />
+	&nbsp;<a href="http://sourceforge.net/projects/sax/">Project Page</a><br />
+	<br />
+	<br />
+	</td></tr></table>
+
+    
+    <p>
+    <a href="http://www.sourceforge.net/">
+    <img border="0" src="http://sourceforge.net/sflogo.php?group_id=29449&amp;type=1"
+	height="31" width="88"
+	alt="SourceForge Logo" />
+    </a>
+
+    </p>
+
+    </td>
+
+    <td width="80%" valign="top" align="left">
+    <h2>Events vs. Trees</h2><div><p>There are two major types of XML (or SGML) APIs:</p>
+
+<dl>
+
+<dt><em>Tree-based APIs</em></dt>
+    <dd>These map an XML document into an internal tree structure,
+    then allow an application to navigate that tree.
+    The <a href="http://www.w3.org/DOM/">Document Object Model</a> (DOM)
+    working group at the World-Wide Web Consortium (W3C) maintains a
+    recommended tree-based API for XML and HTML documents, and
+    there are many such APIs from other sources.
+    </dd>
+
+
+<dt><em>Event-based APIs</em></dt>
+
+    <dd>An <b>event-based API</b>, on the other hand, reports parsing
+    events (such as the start and end of elements) directly to the
+    application through callbacks, and does not usually build an internal
+    tree.  The application implements handlers to deal with the different
+    events, much like handling events in a graphical user interface.
+    SAX is the best known example of such an API.
+    </dd>
+
+</dl>
+
+<p>Tree-based APIs are useful for a wide range of applications, but
+they normally put a great strain on system resources, especially if the
+document is large.
+Furthermore, many applications need to build their own strongly
+typed data structures rather than using a generic tree corresponding
+to an XML document.  It is inefficient to build a tree of
+parse nodes, only to map it onto a new data structure and
+then discard the original.</p>
+
+<p>In both of those cases, an event-based API provides a simpler,
+lower-level access to an XML document: you can parse documents much
+larger than your available system memory, and you can construct your
+own data structures using your callback event handlers.</p>
+
+<p>Consider, for example, the following task:</p>
+
+<blockquote>
+<em>Locate the record element containing the word "Ottawa".</em>
+</blockquote>
+
+<p>If your XML document were 20MB large (or even just 2MB), it would
+be very inefficient to construct and traverse an in-memory parse tree
+just to locate this one piece of contextual information; an
+event-based interface would allow you to find it in a single pass
+using very little memory.</p>
+
+<p>To understand how an event-based API can work, consider the
+following sample document:</p>
+
+<blockquote>
+<pre>
+&lt;?xml version="1.0"?&gt;
+&lt;doc&gt;
+&lt;para&gt;Hello, world!&lt;/para&gt;
+&lt;/doc&gt;
+</pre>
+</blockquote>
+
+<p>An event-based interface will break the structure of
+this document down into a series of linear events,
+such as these:</p>
+
+<blockquote>
+<pre>
+start document
+start element: doc
+start element: para
+characters: Hello, world!
+end element: para
+end element: doc
+end document
+</pre>
+</blockquote>
+
+<p>An application handles these events just as it would
+handle events from a graphical user interface: there is no need to
+cache the entire document in memory or secondary storage.</p>
+
+<p>Finally, it is important to remember that it is possible to
+construct a parse tree using an event-based API, and it is possible to
+use an event-based API to traverse an in-memory tree.
+Have fun!</p>
+
+</div>
+    <br />
+
+    </td></tr></table>
+
+    </body></html>

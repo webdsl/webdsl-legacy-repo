@@ -1,0 +1,403 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Style sheets</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="previous" href="ch01s03.html" title="Validity"><link rel="next" href="ch01s05.html" title="Summary"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"><link rel="subsection" href="ch01s04.html#d0e2037" title="CSS"><link rel="subsection" href="ch01s04.html#d0e2133" title="Associating Style Sheets with XML Documents"><link rel="subsection" href="ch01s04.html#d0e2179" title="XSL"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Style sheets</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch01s03.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;1.&nbsp;XML for Data</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch01s05.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e2032"></a>Style sheets</h2></div></div><p>
+  For the most part this book is going to focus on XML documents used as 
+  input to and output from various kinds of programs. In many cases it&#8217;s 
+  entirely possible that the XML documents will be both written and read 
+  by software and that no human being ever even looks at the documents. 
+  However, on occasion people do need to load XML documents into a 
+  browser or print them on paper so they can read them. For this purpose 
+  XML documents are rather coarse, especially for non-programmers. To 
+  pretty them up, you can attach a style sheet to the document that 
+  specifies how each element should be presented. There are two main 
+  languages used for this purpose today, Cascading Style Sheets (CSS) 
+  and the Extensible Stylesheet Language (XSL).
+  </p><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e2037"></a>CSS</h3></div></div><p>
+  CSS is a very straightforward, non-XML, declarative language.
+  CSS rules attach style properties to elements.
+  Each rule has a selector specifying which elements it applies to.
+  The simplest selector is merely an element name such as 
+  <tt>Order</tt> or <tt>Price</tt>.
+  This is followed by a pair of braces containing the style properties to
+  apply to the selected elements. Each property has a name such as 
+  <tt>font-weight</tt> or <tt>display</tt> and a value that&#8217;s
+  appropriate for that property. The name and value are separated by a colon.
+  For example, this rule says that the <tt>Customer</tt> element 
+  should be bold faced:
+  </p><div class="informalexample"><pre class="programlisting">Customer {font-weight: bold}</pre></div><p>
+CSS rules often set multiple properties for a single element. Individual 
+properties are separated by semicolons. For example, this rule says that 
+the <tt>Order</tt> element (and all its descendants) should have 
+the font-family serif and the font-size 16 points. 
+</p><div class="informalexample"><pre class="programlisting">Order {font-family: serif; font-size: 16pt}</pre></div><p>
+Most of the properties set on an element such as 
+<tt>Order</tt> are inherited by all its descendants such as 
+<tt>Customer</tt>, <tt>Price</tt>, and 
+<tt>State</tt>. However, if a descendant element sets a 
+different value for an inherited property, then that value overrides the 
+inherited value. For example, this rule sets the font-family for the
+gift message to ZapfChancery or any script font if
+ZapfChancery is not available on the local system.
+It overrides the choice of a serif font that <tt>GiftMessage</tt> 
+inherits from
+its ancestor <tt>Order</tt> element.
+</p><div class="informalexample"><pre class="programlisting">GiftMessage {font-family: ZapfChancery, script}</pre></div><p>
+The selector syntax can be adjusted to apply to multiple elements at one 
+time by separating the names by commas. For example, this rule specifies 
+that five different elements all have the value <tt>block</tt>
+for the <tt>display</tt> property. This means each 
+will be separated 
+from the previous and 
+following elements by a line break. 
+</p><div class="informalexample"><pre class="programlisting">Street, Subtotal, Tax, Shipping, Total {display: block}</pre></div><p>
+CSS also allows you to select elements according to
+attributes, parentage, siblings, ID, link status,
+and more. 
+An asterisk can be used to stand in for any element.
+</p><p>
+<a href="ch01s04.html#order.css" title="Example&nbsp;1.11.&nbsp;A CSS stylesheet for order documents">Example&nbsp;1.11</a> is a complete CSS stylesheet for order documents
+such as <a href="ch01.html#order.xml" title="Example&nbsp;1.2.&nbsp;An XML document indicating an &#xA;order for 12 Birdsong Clocks, SKU 244">Example&nbsp;1.2</a>.
+It adds several new features including setting the <tt>display</tt> property
+to <tt>none</tt> to hide the <tt>SKU</tt> element and using the
+<tt>:before</tt> selector and the <tt>content</tt> 
+property to add a little
+boiler-plate text in front of several elements. 
+However, although useful, these facilities are limited.
+You still can&#8217;t reorder the elements,
+and the <tt>content</tt> property is limited
+to plain text, no markup. 
+</p><div class="example"><a name="order.css"></a><p class="title"><b>Example&nbsp;1.11.&nbsp;A CSS stylesheet for order documents</b></p><pre class="programlisting">Order {font-family: serif; font-size: 16pt; 
+       display: block; line-height: 20pt;
+       margin-left: 0.25in
+      }
+ShipTo {margin-left: 0.5in; display: block }
+ShipTo:before {content: "Ship to:"; margin-left: -0.25in }
+Product {font-size: 12pt; display: block }
+Customer {font-weight: bold; display: block }
+GiftMessage {font-family: ZapfChancery, script}
+Street, Subtotal, Tax, Shipping, Total {display: block}
+Quantity:before {content: "Quantity: "}
+SKU {display: none}
+Subtotal:before {content: "Subtotal: $"}
+Price:before {content: "Unit Price: $"}
+Tax:before {content: "Tax: $"}
+Shipping:before {content: "Shipping: $"}
+Total:before {content: "Total: $"} </pre></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e2133"></a>Associating Style Sheets with XML Documents</h3></div></div><p>
+A few browsers may allow the user to specify which stylesheet to apply 
+to a document. In general, however, an XML document that will be read by 
+people must carry an <tt>xml-stylesheet</tt> processing 
+instruction in its prolog that indicates which stylesheet should be 
+applied to that document.  This processing instruction has two 
+pseudo-attributes, <tt>type</tt> and <tt>href</tt>. The 
+<tt>type</tt> pseudo-attribute identifies the MIME media type of 
+the stylesheet, text/css for Cascading Style Sheets. The 
+<tt>href</tt> pseudo-attribute specifies the relative or 
+absolute URL where the style sheet can be found. For example, this 
+<tt>xml-stylesheet</tt> processing instruction says that a CSS 
+style sheet named <tt>order.css</tt> can be found in the 
+same directory where the XML document itself was found:
+</p><div class="informalexample"><pre class="programlisting">&lt;?xml-stylesheet type="text/css" href="order.css"?&gt;</pre></div><p>
+  <a href="ch01s04.html#mozillawithCSS" title="Figure&nbsp;1.1.&nbsp;The clock order styled by CSS">Figure&nbsp;1.1</a> shows <a href="ch01.html#order.xml" title="Example&nbsp;1.2.&nbsp;An XML document indicating an &#xA;order for 12 Birdsong Clocks, SKU 244">Example&nbsp;1.2</a>
+  loaded into Mozilla after the stylesheet in
+  <a href="ch01s04.html#order.css" title="Example&nbsp;1.11.&nbsp;A CSS stylesheet for order documents">Example&nbsp;1.11</a> 
+  has been attached. Loaded into Opera or Netscape 6, the
+  results would be similar.
+  Internet Explorer 5.5 and earlier have much weaker support
+  for CSS, and would not do nearly as good a job formatting
+  the XML. Netscape 4.x and earlier have absolutely no support
+  for displaying XML documents. 
+</p><div class="figure"><a name="mozillawithCSS"></a><p class="title"><b>Figure&nbsp;1.1.&nbsp;The clock order styled by CSS</b></p><div class="screenshot"><div class="mediaobject"><img src="mozillawithCSS.jpg"></div></div></div><p>
+  This isn&#8217;t bad.  A browser with full support for CSS Level 2 does let 
+  you do a lot, but there are still numerous issues. The recipient&#8217;s 
+  name should be included in the ship-to information.  The subtotal, 
+  tax, shipping, and total dollar amounts should really be aligned.  And 
+  the product name, quantity, and price should probably be in a 
+  multi-row table with one row for each item in the order. 
+  Although CSS does 
+  support tables, it requires that the markup in the XML document 
+  already be structured in a very tabular fashion, which it isn&#8217;t here. 
+</p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e2179"></a>XSL</h3></div></div><p>
+  CSS is limited to specifying how the text content of each element is 
+  styled. It presents pretty much the entire content of the XML 
+  document in pretty much the order it was present in the stylesheet. It 
+  cannot add boilerplate text such as the return policy or extract just 
+  the elements needed for an address label. It is limited to specifying 
+  the appearance of elements already present in the XML document
+   without changing their order or content.
+  </p><p>
+  XSL, by contrast, can reorder elements, delete certain 
+  elements, add content that wasn&#8217;t present in the original document,
+  combine multiple documents into a single result, and 
+  more. Because of its ability to add text to what&#8217;s in the XML document 
+  before the document is shown to the user, XSL is much more suited for 
+  many of the examples in this book that contain only the raw data 
+  without a lot of extraneous text. XSL is a much more powerful 
+  stylesheet language than CSS. However, it is
+  also comparatively difficult 
+  to learn.
+  </p><p>
+  XSL is divided into two complementary parts, XSL Transformations (XSLT)
+  and XSL Formatting Objects (XSL-FO). Unlike CSS, both XSLT and XSL-FO
+  are XML applications. XSLT stylesheets and XSL-FO documents
+  are well-formed XML documents.
+  </p><p>
+  XSLT is a Turing-complete 
+  <i>functional programming language</i> designed 
+  specifically for describing transformations from one XML format into 
+  another. 
+  (A functional programming language is one with no side effects,
+  in which the order of evaluation of statements makes no difference
+  to the final
+  result. The classic examples of functional languages
+  are Scheme and Lisp.)
+  An XSLT processor reads an XML document and an XSLT 
+  stylesheet, and transforms the document according to the instructions 
+  found in the stylesheet. It then outputs the transformed document. 
+  XSLT is designed for XML-to-XML transformations, but it can transform  
+  XML to HTML, XML to plain text, or XML to any other text format such as TeX 
+  or troff.
+  </p><p>
+  XSL-FO is an XML application that describes the layout of the various 
+  elements on a printed page. It has elements that represent paragraphs, 
+  list items, margins, and so forth. An XSL-FO processor converts an 
+  XSL-FO document into some other format that can be printed or viewed such 
+  as PDF, TeX, SVG, or plain text. This book was actually written in an 
+  XML application called 
+  <a href="http://www.docbook.org/" target="_top">DocBook</a>. 
+  An XSLT style sheet converted the 
+  source DocBook files into XSL-FO document, which was then further 
+  processed to produce the PDF document that was sent to the printer. 
+  </p><p>
+  XSLT is based on the notion of <i>templates</i>. The 
+  XSLT processor compares nodes in an input document tree to templates 
+  in the stylesheet. When it finds a match, it follows the instructions 
+  in that template. These instructions can include XML to output, 
+  details about what to copy from the input into the output, and 
+  directions for which nodes to process next.
+  </p><p>
+  <a href="ch01s04.html#order.xsl" title="Example&nbsp;1.12.&nbsp;An XSLT stylesheet for order documents">Example&nbsp;1.12</a> is an XSLT stylesheet that describes how 
+  order documents can be converted into XSL Formatting Objects. This 
+  particular stylesheet formats the products as a table, and the rest of 
+  the elements as paragraphs. The products are written in a 12-point 
+  font while the rest of the document uses 16-point fonts.
+  </p><div class="example"><a name="order.xsl"></a><p class="title"><b>Example&nbsp;1.12.&nbsp;An XSLT stylesheet for order documents</b></p><pre class="programlisting">&lt;?xml version="1.0"?&gt;
+&lt;xsl:stylesheet version="1.0"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:fo="http://www.w3.org/1999/XSL/Format"&gt;
+  
+  &lt;!-- Try to make the output look half decent --&gt;
+  &lt;xsl:output indent="yes"/&gt;
+  
+  &lt;xsl:template match="Order"&gt;
+    &lt;fo:root&gt;
+
+      &lt;fo:layout-master-set&gt;
+        &lt;fo:simple-page-master master-name="only"&gt;
+          &lt;fo:region-body margin-left="0.5in" 
+                          margin-top="0.5in"/&gt;
+        &lt;/fo:simple-page-master&gt;
+      &lt;/fo:layout-master-set&gt;
+
+      &lt;fo:page-sequence master-reference="only"&gt;
+
+        &lt;fo:flow flow-name="xsl-region-body"&gt;
+          &lt;xsl:apply-templates select="Customer"/&gt;
+          &lt;xsl:apply-templates select="ShipTo"/&gt;
+          &lt;fo:table font-size="12pt" 
+                    space-before="24pt" space-after="24pt"&gt;
+            &lt;fo:table-column column-width="2in"/&gt;
+            &lt;fo:table-column column-width="1in"/&gt;
+            &lt;fo:table-column column-width="1in"/&gt;
+            &lt;fo:table-column column-width="1in"/&gt;
+            &lt;fo:table-body&gt;
+              &lt;fo:table-row font-weight="bold"&gt;
+                &lt;fo:table-cell&gt;
+                  &lt;fo:block&gt;Product&lt;/fo:block&gt;
+                &lt;/fo:table-cell&gt;
+                &lt;fo:table-cell&gt;
+                  &lt;fo:block&gt;Quantity&lt;/fo:block&gt;
+                &lt;/fo:table-cell&gt;
+                &lt;fo:table-cell&gt;
+                  &lt;fo:block&gt;Unit Price&lt;/fo:block&gt;
+                &lt;/fo:table-cell&gt;
+                &lt;fo:table-cell&gt;
+                  &lt;fo:block&gt;Subtotal&lt;/fo:block&gt;
+                &lt;/fo:table-cell&gt;
+              &lt;/fo:table-row&gt;
+              &lt;xsl:apply-templates select="Product"/&gt;
+            &lt;/fo:table-body&gt;
+          &lt;/fo:table&gt;
+          &lt;xsl:apply-templates select="Tax"/&gt;
+          &lt;xsl:apply-templates select="Shipping"/&gt;
+          &lt;xsl:apply-templates select="Total"/&gt;
+        &lt;/fo:flow&gt;
+
+      &lt;/fo:page-sequence&gt;
+
+    &lt;/fo:root&gt;  
+  &lt;/xsl:template&gt;
+  
+  &lt;xsl:template match="Customer"&gt;
+    &lt;fo:block font-size="16pt" font-family="serif"
+              line-height="20pt"&gt;
+       Ship to:
+    &lt;/fo:block&gt;
+    &lt;fo:block font-size="16pt" font-family="serif" 
+              margin-left="0.5in" line-height="20pt"&gt;
+       &lt;xsl:apply-templates/&gt;
+    &lt;/fo:block&gt;
+  &lt;/xsl:template&gt;
+  
+  &lt;xsl:template match="ShipTo"&gt;
+    &lt;fo:block font-size="16pt" font-family="sans-serif"
+              line-height="18pt" margin-top="20pt" 
+              margin-left="0.5in"&gt;
+      &lt;xsl:apply-templates select="Street"/&gt;
+    &lt;/fo:block&gt;
+    &lt;fo:block font-size="16pt" font-family="sans-serif"
+              line-height="18pt" margin-left="0.5in"&gt;
+      &lt;xsl:apply-templates select="City"/&gt;&amp;#xA0;
+      &lt;xsl:apply-templates select="State"/&gt;&amp;#xA0;
+      &lt;xsl:apply-templates select="Zip"/&gt;
+    &lt;/fo:block&gt;
+  &lt;/xsl:template&gt;
+  
+  &lt;xsl:template match="Product"&gt;
+    &lt;fo:table-row&gt;
+      &lt;fo:table-cell&gt;
+        &lt;fo:block&gt;&lt;xsl:value-of select="Name"/&gt;&lt;/fo:block&gt;
+      &lt;/fo:table-cell&gt;
+      &lt;fo:table-cell&gt;
+        &lt;fo:block&gt;&lt;xsl:value-of select="Quantity"/&gt;&lt;/fo:block&gt;
+      &lt;/fo:table-cell&gt;
+      &lt;fo:table-cell&gt;
+        &lt;fo:block&gt;$&lt;xsl:value-of select="Price"/&gt;&lt;/fo:block&gt;
+      &lt;/fo:table-cell&gt;
+      &lt;fo:table-cell&gt;
+        &lt;fo:block&gt;
+          $&lt;xsl:value-of select="Price*Quantity"/&gt;
+        &lt;/fo:block&gt;
+      &lt;/fo:table-cell&gt;
+    &lt;/fo:table-row&gt;
+  &lt;/xsl:template&gt;
+  
+  &lt;xsl:template match="Tax|Shipping|Total"&gt;
+    &lt;fo:block font-size="16pt" font-family="serif"
+              line-height="20pt"&gt;
+      &lt;xsl:value-of select="name()"/&gt;: $&lt;xsl:apply-templates/&gt;
+    &lt;/fo:block&gt;
+  &lt;/xsl:template&gt;
+  
+  &lt;!-- want to leave this one out of the output --&gt;
+  &lt;xsl:template match="SKU"/&gt;
+
+&lt;/xsl:stylesheet&gt;
+</pre></div><p>
+  The output vocabulary used in this stylesheet
+  is XSL Formatting Objects. The actual document
+  produced by transforming <a href="ch01.html#finishedorder.xml" title="Example&nbsp;1.5.&nbsp;An XML document indicating an &#xA;order for multiple products shipped to multiple addresses">Example&nbsp;1.5</a> with this
+  style sheet is 
+  shown in <a href="ch01s04.html#order.fo" title="Example&nbsp;1.13.&nbsp;An XSL-FO document for the clock order">Example&nbsp;1.13</a> (with a few allowances for white space).
+  This document would then be fed into an XSL-FO
+  processor such as the Apache XML Project&#8217;s open source 
+  <a href="http://xml.apache.org/fop/" target="_top">FOP</a>
+  to convert it to some other format, in this case PDF.
+  </p><div class="example"><a name="order.fo"></a><p class="title"><b>Example&nbsp;1.13.&nbsp;An XSL-FO document for the clock order</b></p><pre class="programlisting">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format"&gt;
+   &lt;fo:layout-master-set&gt;
+      &lt;fo:simple-page-master master-name="only"&gt;
+         &lt;fo:region-body margin-left="0.5in" margin-top="0.5in"/&gt;
+      &lt;/fo:simple-page-master&gt;
+   &lt;/fo:layout-master-set&gt;
+   &lt;fo:page-sequence master-reference="only"&gt;
+      &lt;fo:flow flow-name="xsl-region-body"&gt;
+         &lt;fo:block font-size="16pt" font-family="serif" line-height="20pt"&gt;
+       Ship to:
+    &lt;/fo:block&gt;
+         &lt;fo:block font-size="16pt" font-family="serif" margin-left="0.5in" line-height="20pt"&gt;Chez Fred&lt;/fo:block&gt;
+         &lt;fo:table font-size="12pt" space-before="24pt" space-after="24pt"&gt;
+            &lt;fo:table-column column-width="2in"/&gt;
+            &lt;fo:table-column column-width="1in"/&gt;
+            &lt;fo:table-column column-width="1in"/&gt;
+            &lt;fo:table-column column-width="1in"/&gt;
+            &lt;fo:table-body&gt;
+               &lt;fo:table-row font-weight="bold"&gt;
+                  &lt;fo:table-cell&gt;
+                     &lt;fo:block&gt;Product&lt;/fo:block&gt;
+                  &lt;/fo:table-cell&gt;
+                  &lt;fo:table-cell&gt;
+                     &lt;fo:block&gt;Quantity&lt;/fo:block&gt;
+                  &lt;/fo:table-cell&gt;
+                  &lt;fo:table-cell&gt;
+                     &lt;fo:block&gt;Unit Price&lt;/fo:block&gt;
+                  &lt;/fo:table-cell&gt;
+                  &lt;fo:table-cell&gt;
+                     &lt;fo:block&gt;Subtotal&lt;/fo:block&gt;
+                  &lt;/fo:table-cell&gt;
+               &lt;/fo:table-row&gt;
+               &lt;fo:table-row&gt;
+                  &lt;fo:table-cell&gt;
+                     &lt;fo:block&gt;Birdsong Clock&lt;/fo:block&gt;
+                  &lt;/fo:table-cell&gt;
+                  &lt;fo:table-cell&gt;
+                     &lt;fo:block&gt;12&lt;/fo:block&gt;
+                  &lt;/fo:table-cell&gt;
+                  &lt;fo:table-cell&gt;
+                     &lt;fo:block&gt;$21.95&lt;/fo:block&gt;
+                  &lt;/fo:table-cell&gt;
+                  &lt;fo:table-cell&gt;
+                     &lt;fo:block&gt;
+          $263.4&lt;/fo:block&gt;
+                  &lt;/fo:table-cell&gt;
+               &lt;/fo:table-row&gt;
+               &lt;fo:table-row&gt;
+                  &lt;fo:table-cell&gt;
+                     &lt;fo:block&gt;Brass Ship's Bell&lt;/fo:block&gt;
+                  &lt;/fo:table-cell&gt;
+                  &lt;fo:table-cell&gt;
+                     &lt;fo:block&gt;1&lt;/fo:block&gt;
+                  &lt;/fo:table-cell&gt;
+                  &lt;fo:table-cell&gt;
+                     &lt;fo:block&gt;$144.95&lt;/fo:block&gt;
+                  &lt;/fo:table-cell&gt;
+                  &lt;fo:table-cell&gt;
+                     &lt;fo:block&gt;
+          $144.95&lt;/fo:block&gt;
+                  &lt;/fo:table-cell&gt;
+               &lt;/fo:table-row&gt;
+            &lt;/fo:table-body&gt;
+         &lt;/fo:table&gt;
+         &lt;fo:block font-size="16pt" font-family="serif" line-height="20pt"&gt;Tax: $28.20&lt;/fo:block&gt;
+         &lt;fo:block font-size="16pt" font-family="serif" line-height="20pt"&gt;Shipping: $8.95&lt;/fo:block&gt;
+         &lt;fo:block font-size="16pt" font-family="serif" line-height="20pt"&gt;Total: $431.00&lt;/fo:block&gt;
+      &lt;/fo:flow&gt;
+   &lt;/fo:page-sequence&gt;
+&lt;/fo:root&gt;</pre></div><div class="figure"><a name="d0e2226"></a><p class="title"><b>Figure&nbsp;1.2.&nbsp;The PDF version of the clock order produced by XSL</b></p><div class="screenshot"><div class="mediaobject"><img src="clockorderpdf.jpg"></div></div></div><p>
+  Since this book focuses more on using XML for computer-to-computer 
+  communication rather than computer-to-human or human-to-human 
+  communication, I&#8217;m not going to spend very many pages on style 
+  sheets. Indeed, this is the last time you&#8217;re going to see them for the 
+  next fifteen chapters. However, you should at least be aware that XSLT 
+  is an extremely powerful approach for certain kinds of problems. 
+  Indeed once you&#8217;ve gained a little facility with XSLT, you&#8217;ll 
+  notice that it is often easier to write an XSLT style sheet 
+  to solve a problem than a classic procedural program in Java. Even 
+  when XSLT can&#8217;t do everything you need, you may find that it can solve 
+  a large part of your problem. XML systems are often designed as a 
+  chain of steps: first validation using a DTD or schema, then 
+  transformation using XSLT, and finally whatever custom processing you 
+  wish to apply using Java. Many apparently hard problems become much 
+  simpler and easier to tackle when broken down in this fashion. I&#8217;ll 
+  explore this further when we return to XSLT in <a href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT">Chapter&nbsp;17</a>.
+  </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch01s03.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch01.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch01s05.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Validity&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Summary</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+July 28,
+2001</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

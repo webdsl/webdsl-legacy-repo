@@ -1,0 +1,23 @@
+SYNOPSIS, TITLE, ACT, SCENE { display: block }
+ACT_NUMBER { font-weight: bold}
+SYNOPSIS { font-size: 14pt }
+SYNOPSIS { word-spacing: 1em }
+SCENE_NUMBER  {  color: #FF0000}
+TITLE         {  color: red}
+ACT_NUMBER    {  color: rgb(255,0,0) }
+ACT_NUMBER    { font-variant: small-caps}
+CHARACTER { text-decoration: underline }
+SCENE_NUMBER  {  vertical-align: subscript}
+TITLE    { font-size-adjust: ".58";  }
+SYNOPSIS { font-size-adjust: ".46"
+           font-family: Times, "Times New Roman", serif }
+TITLE {
+font: normal bold x-large Helvetica, Verdana, Arial, sans-serif
+}
+SCENE_NUMBER { font: italic smaller Times, serif }
+TITLE    { text-align: center }
+SYNOPSIS { text-align: justify }
+SCENE { text-indent: 0.5in }
+SYNOPSIS { background-image: url(shakespeare.jpg);
+           background-repeat: no-repeat;
+           background-position: 100% 0% }

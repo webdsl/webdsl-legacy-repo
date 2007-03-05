@@ -1,0 +1,187 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Jaxen</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="previous" href="ch16s06.html" title="DOM Level 3 XPath"><link rel="next" href="ch16s08.html" title="Summary"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Jaxen</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch16s06.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;16.&nbsp;XPath</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch16s08.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e29995"></a>Jaxen</h2></div></div><p>
+    The     <a href="http://www.jaxen.org/" target="_top">Jaxen Java XPath Engine</a>
+    is an open source cross-API (DOM, JDOM, dom4j, and ElectricXML)
+    XPath library for Java.
+    Whereas DOM3 XPath attempts to be a cross-implementation,
+    cross-language XPath API for the Document Object Model alone,
+    Jaxen attempts to be a cross-model API for its own XPath
+    engine. It is a Java class library that can operate on
+    various XML object models using a standard engine rather than
+    an API that can be offered by many different engines for one
+    model. It allows you
+    to pass DOM, JDOM, dom4j,  and ElectricXML 
+    objects directly to XPath functions like
+    <tt>position()</tt> and 
+    <tt>translate()</tt>. 
+    Furthermore,  whereas DOM 3 XPath offers fairly
+    rudimentary interfaces for evaluating XPath expressions in a
+    a particular document against a context node, Jaxen
+    is a more complete object model for XPath expressions. 
+  </p><p>
+    Jaxen&#8217;s class library is quite large, on a par with Saxon&#8217;s
+    or Xalan&#8217;s. It includes classes representing each of XPath&#8217;s
+    functions, iterators, node tests, and axes. Fortunately, you
+    don&#8217;t need to know all that to perform simple searches.
+    Indeed, Jaxen&#8217;s basic API is probably the simplest of the
+    XPath APIs discussed in this chapter.
+    The main interface you need is <tt>XPath</tt>.
+    There are four implementations of this interface
+    in four different packages, one each for 
+    DOM, JDOM, dom4j, and ElectricXML: 
+    <tt>org.jaxen.dom.DOMXPath</tt>, 
+    <tt>org.jaxen.jdom.JDOMXPath</tt>, 
+    <tt>org.jaxen.dom4j.Dom4jXPath</tt>, and
+    <tt>org.jaxen.exml.ElectricXPath</tt>. I&#8217;ll demonstrate
+    this API with the DOM implementation, but the patterns are
+    much the same for the other three APIs.
+  </p><p>
+    The following steps search an XML document with Jaxen:
+  </p><div class="orderedlist"><ol type="1"><li><p>Construct an <tt>XPath</tt> object
+    by passing a <tt>String</tt> containing
+    an XPath expression to the model-specific constructor: </p><code class="constructorsynopsis"><span class="modifier">public&nbsp;</span><span class="methodname"><b>DOMXPath</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>expression</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">JaxenException</span>;</code><br><code class="constructorsynopsis"><span class="modifier">public&nbsp;</span><span class="methodname"><b>JDOMXPath</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>expression</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">JaxenException</span>;</code><br><code class="constructorsynopsis"><span class="modifier">public&nbsp;</span><span class="methodname"><b>Dom4jXPath</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>expression</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">JaxenException</span>;</code><br><code class="constructorsynopsis"><span class="modifier">public&nbsp;</span><span class="methodname"><b>ElectricXPath</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>expression</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">JaxenException</span>;</code></li><li><p>Set the namespace bindings by
+   calling
+  <tt>addNamespace()</tt> for each
+  namespace binding the XPath expression uses:</p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>addNamespace</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>prefix</i></span></span>, <span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>uri</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">JaxenException</span>;</code><p>
+    (You can skip this step if the XPath expression doesn&#8217;t use
+    any prefixed names.)
+  </p></li><li><p>
+    Invoke one of the following methods to evaluate the
+    expression, depending on what type of result you expect
+    or want:
+  </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">Object&nbsp;</span><span class="methodname"><b>evaluate</b></span>(<span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>context</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">JaxenException</span>;</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">List&nbsp;</span><span class="methodname"><b>selectNodes</b></span>(<span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>context</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">JaxenException</span>;</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">Object&nbsp;</span><span class="methodname"><b>selectSingleNode</b></span>(<span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>context</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">JaxenException</span>;</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>stringValueOf</b></span>(<span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>context</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">JaxenException</span>;</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">boolean&nbsp;</span><span class="methodname"><b>booleanValueOf</b></span>(<span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>context</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">JaxenException</span>;</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">Number&nbsp;</span><span class="methodname"><b>numberValueOf</b></span>(<span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>context</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">JaxenException</span>;</code></li></ol></div><p>
+    For an example, let&#8217;s rewrite the Fibonacci XML-RPC client
+    one last time.
+    However, this time, I&#8217;ll use Jaxen:
+  </p><div class="informalexample"><pre class="programlisting">  public static void readResponse(InputStream in) 
+   throws IOException, SAXException, TransformerException,
+   ParserConfigurationException, JaxenException {
+
+    DocumentBuilderFactory factory 
+     = DocumentBuilderFactory.newInstance();
+    factory.setNamespaceAware(true);   
+    DocumentBuilder builder = factory.newDocumentBuilder();    
+    
+    InputSource data = new InputSource(in);
+    Node doc = builder.parse(data);
+    
+    // There are different XPath classes in different packages
+    // for the different APIs Jaxen supports
+    XPath expression = new org.jaxen.dom.DOMXPath(
+     "/SOAP:Envelope/SOAP:Body/f:Fibonacci_Numbers/f:fibonacci");
+    expression.addNamespace("f", 
+     "http://namespaces.cafeconleche.org/xmljava/ch3/");
+    expression.addNamespace("SOAP", 
+     "http://schemas.xmlsoap.org/soap/envelope/");
+    Navigator navigator = expression.getNavigator();
+
+    List results = expression.selectNodes(doc);
+    Iterator iterator = results.iterator();
+    while (iterator.hasNext()) {
+      Node result = (Node) iterator.next();
+      String value = StringFunction.evaluate(result, navigator);
+      System.out.println(value);
+    }
+
+  }</pre></div><p>
+    As usual, first JAXP reads the document from the 
+    <tt>InputStream</tt>. Next a new Jaxen
+    <tt>DOMXPath</tt> object is constructed from the
+    <tt>String</tt> form of the XPath expression.
+     If I were using Jaxen on top of JDOM,
+    I would have constructed an <tt>org.jaxen.jdom.JDOMXPath</tt>
+    object 
+    here
+    instead.      If I were using Jaxen on top of dom4j,
+    I would have constructed an <tt>org.jaxen.dom4j.Dom4jXPath</tt>
+    object 
+    here
+    instead. 
+  </p><p>
+    After the expression is created, I immediately bind all the
+    namespace prefixes it uses by invoking the 
+    <tt>addNamespace()</tt> method. This location path uses
+    two different namespace prefixes, so I call <tt>addNamespace()</tt>
+    twice. Then I get the expression&#8217;s <tt>Navigator</tt> 
+    by invoking 
+    <tt>getNavigator()</tt>. In more advanced programs, you can 
+    use the <tt>Navigator</tt> class directly to
+    move around the tree. Here, however, I just need
+    this to pass as an argument to another method in a few lines.
+    Finally, I pass the context node to the
+    <tt>selectNodes()</tt>
+    method to get a list of all the nodes in that document that
+    satisfy the location path. In this case, the context node is 
+    the document itself because the location path is an absolute path. 
+    However, in other programs you might well pass an element or
+    some other kind of node instead. 
+  </p><p>
+    Jaxen&#8217;s <tt>selectNodes()</tt>
+    method returns a standard
+    <tt>java.util.List</tt>
+    which can be iterated through in the usual way.
+    Since this XPath expression operated on a DOM document and
+    returned a node-set, the items in the list are all 
+    some form of DOM <tt>Node</tt> objects.
+    This location path only selected elements so here they&#8217;re
+    actually all DOM <tt>Element</tt> objects.
+    If the Jaxen <tt>XPath</tt> were operating on a
+    JDOM document, then the list would contain JDOM objects.
+    If the Jaxen <tt>XPath</tt> were operating on a
+    dom4j document, then the list would contain dom4j objects,
+    and so on. In most cases you&#8217;ll want to cast the item in the
+    list to some more specific type before continuing.
+  </p><p>
+    As the program iterates through the list, it deals with each
+    node independently. I could use the DOM methods discussed in 
+    Chapters 9 through 13 to work with these nodes.
+    However, what I really want is to get the XPath string-value
+    of each node. This is provided by the Xpath
+    <tt>string()</tt> which Jaxen represents as the
+    <tt>org.jaxen.function.StringFunction</tt> 
+    class. The <tt>evaluate()</tt> method in this class
+    applies the XPath string function to a specified object
+    (here a DOM <tt>Node</tt>) in the
+    context of a particular Jaxen
+    <tt>Navigator</tt>. It returns the XPath string-value
+    of the object.
+  </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Note</h3><p>
+      This is a little more convoluted than it perhaps needs to
+      be because there&#8217;s no XPath 1.0 way to return a list of
+      strings. For example, <tt>string(node-set)</tt>
+      returns the string-value of the first node in the set
+      rather than a list of the string-values of each node in the
+      set. That&#8217;s why I have to move from XPath to DOM (where I can work with lists and sets) 
+      and back to XPath again rather than working with a single 
+      XPath expression that returns the final result.
+      XPath is not Turing complete. Some of the logic is going
+      to have to be implemented in Java.
+    </p></div><p>
+    In fact, Jaxen&#8217;s <tt>org.jaxen.function</tt>
+    package provides Java representations of most of the
+    functions in XPath 1.0: <tt>BooleanFunction</tt>,
+    <tt>CeilingFunction</tt>,
+    <tt>ConcatFunction</tt>, etc. 
+   Each of these classes has a static 
+   <tt>evaluate()</tt> method that 
+   invokes the function and returns the result. The
+   argument lists and return types of this method change from
+   function to function as appropriate for each function. 
+   In a few cases where the XPath function has a variable length argument
+   list, the Jaxen function class uses overloaded
+   <tt>evaluate()</tt> methods instead.
+   These classes and their corresponding 
+   <tt>evaluate()</tt> methods are:
+ </p><div class="variablelist"><dl><dt><span class="term"><tt>BooleanFunction</tt></span></dt><dd><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">static&nbsp;</span><span class="type">Boolean&nbsp;</span><span class="methodname"><b>evaluate</b></span>(<span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>o</i></span></span>, <span class="methodparam"><span class="type">Navigator&nbsp;</span><span class="parameter"><i>navigator</i></span></span>);</code></dd><dt><span class="term"><tt>CeilingFunction</tt></span></dt><dd><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">static&nbsp;</span><span class="type">Double&nbsp;</span><span class="methodname"><b>evaluate</b></span>(<span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>o</i></span></span>, <span class="methodparam"><span class="type">Navigator&nbsp;</span><span class="parameter"><i>navigator</i></span></span>);</code></dd><dt><span class="term"><tt>ConcatFunction</tt></span></dt><dd><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">static&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>evaluate</b></span>(<span class="methodparam"><span class="type">List&nbsp;</span><span class="parameter"><i>list</i></span></span>, <span class="methodparam"><span class="type">Navigator&nbsp;</span><span class="parameter"><i>navigator</i></span></span>);</code></dd><dt><span class="term"><tt>ContainsFunction</tt></span></dt><dd><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">static&nbsp;</span><span class="type">Boolean&nbsp;</span><span class="methodname"><b>evaluate</b></span>(<span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>string</i></span></span>, <span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>match</i></span></span>, <span class="methodparam"><span class="type">Navigator&nbsp;</span><span class="parameter"><i>navigator</i></span></span>);</code></dd><dt><span class="term"><tt>CountFunction</tt></span></dt><dd><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">static&nbsp;</span><span class="type">Number&nbsp;</span><span class="methodname"><b>evaluate</b></span>(<span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>node-set</i></span></span>);</code></dd><dt><span class="term"><tt>FalseFunction</tt></span></dt><dd><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">static&nbsp;</span><span class="type">Boolean&nbsp;</span><span class="methodname"><b>evaluate</b></span>();</code></dd><dt><span class="term"><tt>FloorFunction</tt></span></dt><dd><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">static&nbsp;</span><span class="type">Double&nbsp;</span><span class="methodname"><b>evaluate</b></span>(<span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>o</i></span></span>, <span class="methodparam"><span class="type">Navigator&nbsp;</span><span class="parameter"><i>navigator</i></span></span>);</code></dd><dt><span class="term"><tt>IdFunction</tt></span></dt><dd><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">static&nbsp;</span><span class="type">List&nbsp;</span><span class="methodname"><b>evaluate</b></span>(<span class="methodparam"><span class="type">List&nbsp;</span><span class="parameter"><i>contextNodes</i></span></span>, <span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>arg</i></span></span>, <span class="methodparam"><span class="type">Navigator&nbsp;</span><span class="parameter"><i>navigator</i></span></span>);</code></dd><dt><span class="term"><tt>LastFunction</tt></span></dt><dd><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">static&nbsp;</span><span class="type">Double&nbsp;</span><span class="methodname"><b>evaluate</b></span>(<span class="methodparam"><span class="type">Context&nbsp;</span><span class="parameter"><i>context</i></span></span>);</code></dd><dt><span class="term"><tt>LocalNameFunction</tt></span></dt><dd><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">static&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>evaluate</b></span>(<span class="methodparam"><span class="type">List&nbsp;</span><span class="parameter"><i>node-set</i></span></span>, <span class="methodparam"><span class="type">Navigator&nbsp;</span><span class="parameter"><i>navigator</i></span></span>);</code></dd><dt><span class="term"><tt>NameFunction</tt></span></dt><dd><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">static&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>evaluate</b></span>(<span class="methodparam"><span class="type">List&nbsp;</span><span class="parameter"><i>node-set</i></span></span>, <span class="methodparam"><span class="type">Navigator&nbsp;</span><span class="parameter"><i>navigator</i></span></span>);</code></dd><dt><span class="term"><tt>NamespaceUriFunction</tt></span></dt><dd><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">static&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>evaluate</b></span>(<span class="methodparam"><span class="type">List&nbsp;</span><span class="parameter"><i>node-set</i></span></span>, <span class="methodparam"><span class="type">Navigator&nbsp;</span><span class="parameter"><i>navigator</i></span></span>);</code></dd><dt><span class="term"><tt>NormalizeSpaceFunction</tt></span></dt><dd><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">static&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>evaluate</b></span>(<span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>string</i></span></span>, <span class="methodparam"><span class="type">Navigator&nbsp;</span><span class="parameter"><i>navigator</i></span></span>);</code></dd><dt><span class="term"><tt>NotFunction</tt></span></dt><dd><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">static&nbsp;</span><span class="type">Boolean&nbsp;</span><span class="methodname"><b>evaluate</b></span>(<span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>object</i></span></span>, <span class="methodparam"><span class="type">Navigator&nbsp;</span><span class="parameter"><i>navigator</i></span></span>);</code></dd><dt><span class="term"><tt>NumberFunction</tt></span></dt><dd><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">static&nbsp;</span><span class="type">Double&nbsp;</span><span class="methodname"><b>evaluate</b></span>(<span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>object</i></span></span>, <span class="methodparam"><span class="type">Navigator&nbsp;</span><span class="parameter"><i>navigator</i></span></span>);</code></dd><dt><span class="term"><tt>PositionFunction</tt></span></dt><dd><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">static&nbsp;</span><span class="type">Double&nbsp;</span><span class="methodname"><b>evaluate</b></span>(<span class="methodparam"><span class="type">Context&nbsp;</span><span class="parameter"><i>context</i></span></span>);</code></dd><dt><span class="term"><tt>RoundFunction</tt></span></dt><dd><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">static&nbsp;</span><span class="type">Double&nbsp;</span><span class="methodname"><b>evaluate</b></span>(<span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>object</i></span></span>, <span class="methodparam"><span class="type">Navigator&nbsp;</span><span class="parameter"><i>navigator</i></span></span>);</code></dd><dt><span class="term"><tt>StartsWithFunction</tt></span></dt><dd><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">static&nbsp;</span><span class="type">Boolean&nbsp;</span><span class="methodname"><b>evaluate</b></span>(<span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>string</i></span></span>, <span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>match</i></span></span>, <span class="methodparam"><span class="type">Navigator&nbsp;</span><span class="parameter"><i>navigator</i></span></span>);</code></dd><dt><span class="term"><tt>StringFunction</tt></span></dt><dd><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">static&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>evaluate</b></span>(<span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>object</i></span></span>, <span class="methodparam"><span class="type">Navigator&nbsp;</span><span class="parameter"><i>navigator</i></span></span>);</code></dd><dt><span class="term"><tt>StringLengthFunction</tt></span></dt><dd><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">static&nbsp;</span><span class="type">Number&nbsp;</span><span class="methodname"><b>evaluate</b></span>(<span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>object</i></span></span>, <span class="methodparam"><span class="type">Navigator&nbsp;</span><span class="parameter"><i>navigator</i></span></span>);</code></dd><dt><span class="term"><tt>SubstringAfterFunction</tt></span></dt><dd><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">static&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>evaluate</b></span>(<span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>string</i></span></span>, <span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>match</i></span></span>, <span class="methodparam"><span class="type">Navigator&nbsp;</span><span class="parameter"><i>navigator</i></span></span>);</code></dd><dt><span class="term"><tt>SubstringBeforeFunction</tt></span></dt><dd><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">static&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>evaluate</b></span>(<span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>string</i></span></span>, <span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>match</i></span></span>, <span class="methodparam"><span class="type">Navigator&nbsp;</span><span class="parameter"><i>navigator</i></span></span>);</code></dd><dt><span class="term"><tt>SubstringFunction</tt></span></dt><dd><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">static&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>evaluate</b></span>(<span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>string</i></span></span>, <span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>start</i></span></span>, <span class="methodparam"><span class="type">Navigator&nbsp;</span><span class="parameter"><i>navigator</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">static&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>evaluate</b></span>(<span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>string</i></span></span>, <span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>start</i></span></span>, <span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>length</i></span></span>, <span class="methodparam"><span class="type">Navigator&nbsp;</span><span class="parameter"><i>navigator</i></span></span>);</code></dd><dt><span class="term"><tt>SumFunction</tt></span></dt><dd><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">static&nbsp;</span><span class="type">Double&nbsp;</span><span class="methodname"><b>evaluate</b></span>(<span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>node-set</i></span></span>, <span class="methodparam"><span class="type">Navigator&nbsp;</span><span class="parameter"><i>navigator</i></span></span>);</code></dd><dt><span class="term"><tt>TranslateFunction</tt></span></dt><dd><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">static&nbsp;</span><span class="type">Boolean&nbsp;</span><span class="methodname"><b>evaluate</b></span>(<span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>original</i></span></span>, <span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>from</i></span></span>, <span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>to</i></span></span>, <span class="methodparam"><span class="type">Navigator&nbsp;</span><span class="parameter"><i>navigator</i></span></span>);</code></dd><dt><span class="term"><tt>TrueFunction</tt></span></dt><dd><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="modifier">static&nbsp;</span><span class="type">Boolean&nbsp;</span><span class="methodname"><b>evaluate</b></span>();</code></dd></dl></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch16s06.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch16.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch16s08.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">DOM Level 3 XPath&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Summary</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+June 04,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

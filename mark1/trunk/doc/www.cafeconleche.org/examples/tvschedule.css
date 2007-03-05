@@ -1,0 +1,58 @@
+SCHEDULE {font-size: 14pt; background-color: white;
+          color: black; display: block}
+
+DATE {display: block; font-size: 32pt; font-weight: bold;
+      text-align: center}
+
+DATE:before {content: "TV Schedule: "}
+
+STATION {display: block}
+SHOW    {display: block} 
+NETWORK, CHANNEL, CALL_LETTERS {font-size: 28pt; 
+                                font-weight: bold} 
+NAME {font-weight: bold}
+
+CAST {display: none}
+AIR_DATE {display: none}
+DIRECTOR  {display: none}
+EPISODE_NUMBER  {display: none}
+PRODUCER  {display: none}
+WRITER  {display: none}
+
+
+/* STATION {display: table-row}
+NETWORK, CHANNEL, CALL_LETTERS {display: table-cell; color: white; background-color: grey}
+SHOW {border-width: 1px; border-style: solid; display: table-cell} */
+
+
+/* TYPE {display: list-item; list-style-type: disc; 
+    margin-left: 0.35in }
+LENGTH {display: list-item; list-style-type: disc; 
+    margin-left: 0.35in}
+START_TIME {display: list-item; list-style-type: disc; 
+    margin-left: 0.35in}
+ORIGINAL_AIR_DATE {display: list-item; list-style-type: disc; 
+    margin-left: 0.35in}
+REPEAT {display: list-item; list-style-type: disc; 
+    margin-left: 0.35in}
+CLOSED_CAPTIONED {display: list-item; list-style-type: disc; 
+    margin-left: 0.35in}
+ORIGINAL_AIR_DATE {display: list-item; list-style-type: disc; 
+    margin-left: 0.35in}
+RATING {display: list-item; list-style-type: disc; 
+    margin-left: 0.35in}
+STARS {display: list-item; list-style-type: disc; 
+    margin-left: 0.35in}
+YEAR_MADE {display: list-item; list-style-type: disc; 
+    margin-left: 0.35in} 
+DESCRIPTION {display: block}  */
+
+
+/* LENGTH:before {content: "Length: "}
+START_TIME:before {content: "Starts at "}
+ORIGINAL_AIR_DATE:before {"First aired on "}
+REPEAT:before {content: "Repeat: "}
+CLOSED_CAPTIONED:before {content: "Closed captioned: "}
+RATING:before {content: "Rating: "}
+STARS:before {content: "Stars: "}
+YEAR_MADE:before {content: "Made in "} */

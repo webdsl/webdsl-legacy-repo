@@ -1,0 +1,14 @@
+POST /xml/cgi-bin/SOAPHandler HTTP/1.1
+Content-Type: text/xml; charset="utf-8"
+Content-Length: 267
+SOAPAction: "http://www.ibiblio.org/#elharo"
+
+<?xml version="1.0"?>
+<SOAP-ENV:Envelope
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" >
+  <SOAP-ENV:Body>
+    <getQuote xmlns="http://namespaces.cafeconleche.org/xmljava/ch2/">
+      <symbol>RHAT</symbol>
+    </getQuote>
+  </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

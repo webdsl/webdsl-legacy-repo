@@ -1,0 +1,255 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Effective XML Errata</title>
+</head>
+<body>
+
+<h1>Errata for Effective XML</h1>
+
+<p>
+All known problems in <cite>Effective XML</cite> are posted here.
+These are based on the first printing. <!-- A few may have been corrected in later printings. -->
+If you spot any mistakes that are not listed here, please send them to
+<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;elharo%40metalab%2Eunc%2Eedu?Subject=XIAN3E%20erratum">elharo@metalab.unc.edu</a> so 
+we can correct them in future printings. 
+</p>
+
+
+<p>
+Item 3, page 11: A question mark is missing from the XML declaration at the bottom of the page. 
+</p>
+
+
+<p>
+<code>&lt;?xml version="1.0" encoding="UTF-8"></code>
+</p>
+  
+<p>
+should be:
+</p>
+
+<p>
+<code>&lt;?xml version="1.0" encoding="UTF-8"?></code>
+</p>
+
+
+<p>
+Item 3, page 14. A question mark is missing from both XML declarations.
+</p>
+
+
+<p>
+<code>&lt;?xml version="1.1"></code>
+</p>
+  
+<p>
+should be:
+</p>
+
+<p>
+<code>&lt;?xml version="1.1"?></code>
+</p>
+
+
+<hr />
+
+<p>
+Item 11, p. 60: In the second code fragment, the <code>Year</code> element end-tag  is missing a slash. It should read
+</p>
+
+<p>
+<code>&lt;Year>2003&lt;/Year></code>
+</p>
+
+
+<p>
+Item 11, p. 65: In the second line, the <code>Family</code> start-tag is missing. It should read
+</p>
+
+<p>
+<code>&lt;Name>&lt;Given>Lenny &lt;Middle>Alfred&lt;/Middle> &lt;Family>Bruce&lt;/Family>&lt;/Name>
+</code>
+</p>
+
+<p>
+A little further down the same page the <code>Family</code> end-tag is missing from Anita Hoffman. That line should read:
+</p>
+
+<p>
+<code>&lt;Name>&lt;Title>Ms.&lt;/Title> &lt;Given>Anita&lt;/Given> &lt;Family>Hoffman&lt;/Name></code>
+</p>
+
+<p>
+Finally in the penultimate and antepenultimate lines, 
+the <code>Given</code> end-tag is missing. These should read:
+</p>
+
+
+<pre>
+<code>&lt;Name>&lt;Family>川端&lt;/Family>&lt;Given>康成&lt;/Given>&lt;/Name>
+&lt;Name>&lt;Family>Kawabata&lt;/Family> &lt;Given>Yasunari&lt;/Given>&lt;/Name>
+</code>
+</pre>
+<hr />
+
+<p>
+Item 15, p. 87:
+</p>
+ 
+<p>
+  <code>element == null;</code>
+</p>
+
+<p>
+Should be:
+</p>
+
+<p>
+  <code>element = null;</code>
+</p>
+ 
+<p>
+That is, use the assignment operator rather than the equality operator.
+</p>
+
+
+<hr />
+
+<p>
+Item 19, p. 110: In the fifth item in the list, a period is missing at the end of
+ the sentence, "You can indicate that a line can be continued on the next line by adding a single equals sign at the very end of the line"
+</p>
+
+
+<hr />
+<p>
+Item 20, p. 113: The end-tag <code>&lt;/chess game></code> 
+should be <code>&lt;/chess:game></code>.
+</p>
+
+<hr />
+<p>
+Item 21, p. 120: This document was so deliberately perverse and confusing,
+I managed to screw it up.  The <code>xmlns:fo</code> namespace declaration should be 
+<code>xmlns:xsl</code>. That is, 
+The root element start-tag should be 
+</p>
+
+
+<pre><code>&lt;xsl:stylesheet
+    xmlns="http://www.w3.org/1999/XSL/Transform"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Format">
+</code></pre>
+
+
+<p>
+p. 121 has a similar mistake. Here <code>&lt;stylesheet</code>
+should be  <code>&lt;xsl:stylesheet </code>.
+</p>
+<hr />
+
+<p>
+Item 24, p. 136. The <code>isPrime()</code> method returns boolean. That is, 
+</p>
+
+<p>
+<code>    public void isPrime(String text) {
+</code>  
+</p>
+
+<p>
+should be
+</p>
+
+<p>
+    <code>public boolean isPrime(String text) {</code>
+</p>
+
+<hr />
+
+<p>
+Item 38, p. 221: In the first paragraph, <i>Lichenstein</i> should be <i>Liechtenstein</i>.
+</p>
+
+<hr />
+
+<p>
+Item 39, p. 222: In the last code example, in the last line of code on the page,
+</p>
+
+<p>
+<code>&lt;xsl:variable name="columns">2&lt;xsl:variable></code>  
+</p>
+
+<p>
+should be
+</p>
+
+<p>
+<code>&lt;xsl:variable name="columns">2&lt;/xsl:variable></code>  
+</p>
+
+
+<hr />
+
+<p>
+Item 50, p. 285: The two code fragments incorrectly capitalize <code>GZIPInputStream</code> and <code>GZIPOutputStream</code>. They should read
+</p>
+
+<blockquote>
+<pre><code>Document doc;
+// load the document...
+try {
+  OutputStream fout    = new FileOutputStream("data.xml.gz");
+  OutputStream out     = new GZIPOutputStream(fout);
+  OutputFormat format  = new OutputFormat(document);
+  XMLSerializer output = new XMLSerializer(out, format);
+  output.serialize(doc);
+}
+catch (IOException ex) {
+  System.err.println(ex);
+}</code></pre>
+
+
+<p>
+From this point forward you neither need to know nor care that the data is compressed. It’s all done behind the scenes automatically. 
+</p>
+
+<p>
+Input is equally easy. For example, suppose later later you want to read data.xml.gz back into your program. Decompression adds just one line of code to hook up the <code>GZIPInputStream</code>.
+</p>
+
+
+<pre><code>  InputStream fin = new FileInputStream("data.xml.gz");
+  InputStream in  = new GZIPInputStream(fin);
+  DocumentBuilderFactory factory 
+    = DocumentBuilderFactory.newInstance();   
+  DocumentBuilder parser = factory.newDocumentBuilder();
+  Document doc = parser.parse(in);
+  // work with the document...
+</code></pre>
+
+</blockquote>
+
+
+
+
+<hr />
+<div align="center">
+[ <a href="http://www.cafeconleche.org/">Cafe con Leche</a> 
+| <a href="index.html">Effective XML</a> 
+| Corrections
+| <a href="http://www.amazon.com/exec/obidos/ISBN=0321150406/cafeaulaitA/ref=nosim">Order</a>
+]</div>
+<hr />
+Copyright 2006 <a href="http://www.elharo.com/">Elliotte Rusty Harold</a><br />
+<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;elharo%40metalab%2Eunc%2Eedu">elharo&#64;metalab&#46;unc&#46;edu</a><br />
+Last Modified November 18, 2006
+
+</body>
+</html>
+
+</body>
+</html>

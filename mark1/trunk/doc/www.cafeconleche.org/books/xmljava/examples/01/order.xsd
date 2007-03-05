@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <xsd:element name="Order">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Customer">
+          <xsd:complexType>
+            <xsd:simpleContent>
+              <xsd:extension base="xsd:string">
+                <xsd:attribute name="id" type="xsd:ID"/>
+              </xsd:extension>
+            </xsd:simpleContent>
+          </xsd:complexType>
+         </xsd:element>
+        <xsd:element name="Product" maxOccurs="unbounded">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="Name"     type="xsd:string"/>
+              <xsd:element name="SKU" 
+               type="xsd:positiveInteger"/>
+              <xsd:element name="Quantity" 
+               type="xsd:positiveInteger"/>
+              <xsd:element name="Price"    type="MoneyType"/>
+              <xsd:element name="Discount" type="xsd:decimal" 
+                           minOccurs="0"/>
+              <xsd:element name="ShipTo">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="GiftRecipient" 
+                     type="xsd:string" 
+                     minOccurs="0" maxOccurs="unbounded"/>
+                    <xsd:element name="Street" 
+                     type="xsd:string"/>
+                    <xsd:element name="City" type="xsd:string"/>
+                    <xsd:element name="State" 
+                     type="xsd:string"/>
+                    <xsd:element name="Zip" type="xsd:string"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="GiftMessage" type="xsd:string" 
+                           minOccurs="0"/>
+            </xsd:sequence>        
+          </xsd:complexType>           
+        </xsd:element>
+        <xsd:element name="Subtotal" type="MoneyType"/>
+        <xsd:element name="Tax">
+          <xsd:complexType>
+            <xsd:simpleContent>
+              <xsd:extension base="MoneyType">
+                <xsd:attribute name="rate" type="xsd:decimal"/>
+              </xsd:extension>
+            </xsd:simpleContent>
+          </xsd:complexType>        
+        </xsd:element>
+        <xsd:element name="Shipping">
+          <xsd:complexType>
+            <xsd:simpleContent>
+              <xsd:extension base="MoneyType">
+                <xsd:attribute name="method" type="xsd:string"/>
+              </xsd:extension>
+            </xsd:simpleContent>
+          </xsd:complexType>                
+        </xsd:element>
+        <xsd:element name="Total" type="MoneyType"/>
+      </xsd:sequence>
+    </xsd:complexType>  
+  </xsd:element>
+
+  <xsd:complexType name="MoneyType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:decimal">
+        <xsd:attribute name="currency" type="xsd:string"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+</xsd:schema>

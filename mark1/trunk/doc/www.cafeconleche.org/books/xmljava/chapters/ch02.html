@@ -1,0 +1,290 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="index.html" title="Processing XML with Java"><link rel="previous" href="ch01s05.html" title="Summary"><link rel="next" href="ch02s02.html" title="HTTP as a Transport Protocol"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"><link rel="section" href="ch02.html#d0e2320" title="XML as a Message Format"><link rel="section" href="ch02s02.html" title="HTTP as a Transport Protocol"><link rel="section" href="ch02s03.html" title="RSS"><link rel="section" href="ch02s04.html" title="Customizing the Request"><link rel="section" href="ch02s05.html" title="XML-RPC"><link rel="section" href="ch02s06.html" title="SOAP"><link rel="section" href="ch02s07.html" title="Custom Protocols"><link rel="section" href="ch02s08.html" title="Summary"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch01s05.html">Prev</a>&nbsp;</td><th width="60%" align="center">&nbsp;</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch02s02.html">Next</a></td></tr></table><hr></div><div class="chapter"><div class="titlepage"><div><h2 class="title"><a name="ch_protocols"></a>Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP</h2></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><a href="ch02.html#d0e2320">XML as a Message Format</a></dt><dd><dl><dt><a href="ch02.html#d0e2342">Envelopes</a></dt><dt><a href="ch02.html#d0e2358">Data Representation</a></dt></dl></dd><dt><a href="ch02s02.html">HTTP as a Transport Protocol</a></dt><dd><dl><dt><a href="ch02s02.html#d0e2835">How HTTP Works</a></dt><dt><a href="ch02s02.html#d0e2869">HTTP in Java</a></dt></dl></dd><dt><a href="ch02s03.html">RSS</a></dt><dt><a href="ch02s04.html">Customizing the Request</a></dt><dd><dl><dt><a href="ch02s04.html#d0e3123">Query Strings</a></dt><dt><a href="ch02s04.html#d0e3170">How POST Works</a></dt></dl></dd><dt><a href="ch02s05.html">XML-RPC</a></dt><dd><dl><dt><a href="ch02s05.html#d0e3353">Data Structures</a></dt><dt><a href="ch02s05.html#d0e3484">Faults</a></dt><dt><a href="ch02s05.html#d0e3519">Validating XML-RPC</a></dt></dl></dd><dt><a href="ch02s06.html">SOAP</a></dt><dd><dl><dt><a href="ch02s06.html#d0e3726">A SOAP Example</a></dt><dt><a href="ch02s06.html#d0e3782">Posting SOAP documents</a></dt><dt><a href="ch02s06.html#d0e3825">Faults</a></dt><dt><a href="ch02s06.html#d0e3977">Encoding Styles</a></dt><dt><a href="ch02s06.html#d0e4662">SOAP Headers</a></dt><dt><a href="ch02s06.html#d0e4767">SOAP Limitations</a></dt><dt><a href="ch02s06.html#d0e4780">Validating SOAP</a></dt></dl></dd><dt><a href="ch02s07.html">Custom Protocols</a></dt><dt><a href="ch02s08.html">Summary</a></dt></dl></div><p>
+Before we can explore the available APIs for
+processing XML documents with Java, we&#8217;re going to need a few good
+examples. For most of this book, my examples are going to focus on
+<i>XML protocols</i>. These are XML applications
+used for
+machine-to-machine exchange of information across the Internet
+over HTTP. In this chapter I&#8217;ll show you how such documents move from
+one machine to another, and how you can use Java to interpose yourself in the 
+process. However, since this is not a book about network 
+programming, I&#8217;m going to be careful to keep all the details of network
+transport separate from the generation and processing of
+XML documents. When you work with an XML document, 
+you don&#8217;t care whether it came from a file, a network socket, 
+a string, or something else. 
+</p><p>
+Three such XML protocol applications are of particular interest. The first
+is a very straightforward application called RSS. 
+RSS is used to exchange headlines and abstracts
+between different Web news sites.
+It is available in two versions, RSS 0.9.1, which is based on an early working draft
+of the Resource Description Framework (RDF), and
+RSS 1.0 which is based on the 
+<a href="http://www.w3.org/TR/1999/REC-rdf-syntax-19990222" target="_top">final 
+W3C recommendation of RDF</a>.
+Both variants are used on the Web today. 
+</p><p>
+The second XML application I&#8217;ll investigate in some detail is
+<i>XML-RPC</i>. XML-RPC supports
+remote procedure calls across the Internet by passing 
+method names and arguments 
+embedded in an XML document over HTTP. 
+The third example application is a
+more complex implementation of this idea called <i>SOAP</i>. 
+Whereas XML-RPC
+uses only elements, SOAP adds attributes and namespaces as well. 
+SOAP even lets the body of the message be an XML element from
+some other vocabulary, so it opens up a host of other
+interesting examples.
+    </p><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e2320"></a>XML as a Message Format</h2></div></div><p>
+    One of the major uses of XML is for exchanging data between 
+    heterogenous systems. Given almost any collection of data, it&#8217;s 
+    straightforward to design some XML markup that fits it. 
+    Since XML is natively supported on essentially any platform of
+    interest, you can send data encoded in such an XML application from
+    point A to point B without worrying about whether point A and point
+    B agree on how many bytes there are in a float, whether ints are big
+    endian or little endian, whether strings are null delimited or use an
+    initial length byte, or any of the myriad of other issues that arise when
+    moving data between systems. As long as both ends of the connection
+    agree on the XML application used, they can exchange information
+    without worrying about what software produced the data. One side can
+    use Perl and the other Java. One can use Windows and the other Unix.
+    One can run on a mainframe and the other on a Mac. 
+    The document can be passed over HTTP, e-mail, NFS, BEEP, Jabber, or sneakernet.
+    Everything except
+    the XML document itself can be ignored.
+  </p><p>
+    The details of the XML markup used depend heavily on the information
+    you&#8217;re exchanging. If you&#8217;re exchanging financial data, you might
+    use the <a href="http://www.ofx.net/ofx/" target="_top">Open Financial Exchange
+    (OFX)</a>. If you&#8217;re exchanging genetic
+    codes, you might use the <a href="http://www.rosettabio.com/products/conductor/geml/" target="_top">Gene
+    Expression Markup Language (GEML)</a>. If
+    you&#8217;re exchanging news articles in a syndication service, you might
+    use <a href="http://www.xmlnews.org/NewsML/" target="_top">NewsML</a>. And
+    if no standard XML application exists that fits your needs, you&#8217;ll
+    probably invent your own; but whatever XML application you choose,
+    there are certain features that will crop up again and again and
+    that can benefit from standardization. These include the envelope
+    used to pass the data and the representations of basic data types
+    like integer and date.
+  </p><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e2342"></a>Envelopes</h3></div></div><p>
+    When only two systems are involved, they only talk to
+    each other, and they always send the same type of message, an envelope
+    may not be needed. It&#8217;s enough for one system to send the other the
+    message in the agreed upon XML format. However, when it&#8217;s actually
+    many dozens, hundreds, or even thousands of different systems
+    exchanging many different kinds of messages in many different ways,
+    it&#8217;s useful to have some standards that are independent of the
+    content of the message. This offers up some hope that when a
+    message in an unrecognized format is received,
+    it can still be processed in a
+    reasonable fashion. For example, a system might receive a
+    message ordering one thousand &#8220;Frodo Lives&#8221;
+    buttons but not know how
+    to handle that order. However, it may be able to read enough
+    information from the envelope to route the request to the program
+    that does know how to process the order.
+  </p><p> 
+    In XML-RPC, essentially all the markup is the envelope and all the
+    text content is the data inside the envelope. SOAP and RSS are a
+    little more complex. For SOAP, the envelope is an XML document, and
+    the data is too. In some ways RSS, especially RSS 1.0, is the most
+    complex of all because it&#8217;s based on the relatively complex RDF
+    syntax. RDF mixes the envelope and the data together so that you
+    can&#8217;t point to any one element in the whole document and say &#8220;That&#8217;s
+    the envelope,&#8221; or &#8220;That element is the data.&#8221; 
+    Instead, pieces of both
+    the envelope and the data are intermingled throughout the complete
+    document. In all three cases, however, it&#8217;s straightforward to
+    extract the data from the envelope for further processing.
+  </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e2358"></a>Data Representation</h3></div></div><p>
+    Another area that&#8217;s ripe for standardization is the
+    proper representation of low-level data such as dates and numbers.
+    Nobody really cares how many bytes there are in an int as long
+    as there are enough to hold all the values they want to hold.
+    Nobody really cares whether dates are written Day-Month-Year
+    or Month-Day-Year as long as it&#8217;s easy to tell which is which. 
+    It doesn&#8217;t really matter how this information is passed,
+    as long as there&#8217;s one standard way of doing it that
+    everyone can agree on and process without excessive hassle.
+   </p><p>
+ In XML all data of any type must be passed as text. The proper textual
+ representation of simple data types such as integer and date is
+ trickier than most developers initially assume. For example, integers
+ can be straightforwardly represented in the form 42, -76, +34562, 0,
+  and so forth. The normal base-10 representation with optional plus or
+ minus signs is fully adequate for most needs. However, consider the
+ number 28562476535, the dollar value of Bill Gates&#8217;s Microsoft stock
+ holdings alone as
+ of July 24, 2002. This is a perfectly good integer, albeit a large one.
+ However, it&#8217;s so large that trying to use it in many programs will lead
+ to a crash or some other form of error.
+  </p><p>
+  Floating point numbers are even worse. Two different computers can
+  look at an unambiguous string such as 65431987467.324345192 and
+  interpret it as two different numbers. Dates cause problems even for
+  humans. Is 07/04/01 the fourth of July, 2001? the fourth of July 1901?
+  the seventh of April 2001? Some other date? These are all very really
+  issues that cause real problems in systems today.
+  </p><p>
+    XML itself doesn&#8217;t standardize the text representation of data, 
+    but the W3C XML Schema Languages does. In particular,
+    schemas define the 44 simple data types shown in <a href="ch02.html#datatypes" title="Table&nbsp;2.1.&nbsp;Primitive Data Types defined in the W3C XML Schema Language">Table&nbsp;2.1</a>. By assigning these types to particular
+    elements, you can clearly state what a particular string means in a
+    syntax everyone can understand. And if these types aren&#8217;t enough,
+    the W3C XML Schema Language also lets you define new types that are
+    combinations or restrictions of these basic types.
+  </p><div class="table"><a name="datatypes"></a><p class="title"><b>Table&nbsp;2.1.&nbsp;Primitive Data Types defined in the W3C XML Schema Language</b></p><table summary="Primitive Data Types defined in the W3C XML Schema Language" border="1"><colgroup><col><col></colgroup><thead><tr><th>Type</th><th>Meaning </th></tr></thead><tbody><tr><td><tt>xsd:string</tt></td><td>The schema equivalent of #PCDATA, any string of Unicode characters
+  that may appear in an XML document</td></tr><tr><td><tt>xsd:boolean</tt></td><td>true, false, 1, 0</td></tr><tr><td><tt>xsd:decimal</tt></td><td>A decimal number such as 
+  44.145629 or -0.32, with an arbitrary size and precision;
+  similar to
+  the <tt>java.math.BigDecimal</tt> class</td></tr><tr><td><tt>xsd:float</tt></td><td>The 4-byte IEEE-754 floating point number which best approximates the
+  specified decimal string, same as 
+  Java&#8217;s <tt>float</tt> type</td></tr><tr><td><tt>xsd:double</tt></td><td>The 8-byte IEEE-754 floating point number which best approximates the
+  specified decimal string, same as 
+  Java&#8217;s <tt>double</tt> type</td></tr><tr><td><tt>xsd:integer</tt></td><td>An integer of arbitrary size, similar to
+  the <tt>java.math.BigInteger</tt> class</td></tr><tr><td><tt>xsd:nonPositiveInteger</tt></td><td>An integer less than or equal to zero</td></tr><tr><td><tt>xsd:negativeInteger</tt></td><td>An integer strictly less than zero</td></tr><tr><td><tt>xsd:nonNegativeInteger</tt></td><td>An integer greater than or equal to zero</td></tr><tr><td><tt>xsd:long</tt></td><td>An integer between -9223372036854775808 
+  and +9223372036854775807 inclusive;
+  equivalent to Java&#8217;s <tt>long</tt> primitive data type</td></tr><tr><td><tt>xsd:int</tt></td><td>An integer between -2147483648 and 2147483647 inclusive;
+  equivalent to Java&#8217;s <tt>int</tt> primitive data type</td></tr><tr><td><tt>xsd:short</tt></td><td>An integer between -32768 and 32767 inclusive;
+  equivalent to Java&#8217;s <tt>short</tt> primitive data type</td></tr><tr><td><tt>xsd:byte</tt></td><td>An integer between -128 and 127 inclusive;
+  equivalent to Java&#8217;s <tt>byte</tt> primitive data type</td></tr><tr><td><tt>xsd:unsignedLong</tt></td><td>An integer between 0 and 18446744073709551615.</td></tr><tr><td><tt>xsd:unsignedInt</tt></td><td>An integer between 0 and 4294967295</td></tr><tr><td><tt>xsd:unsignedShort</tt></td><td>An integer between 0 and 65535</td></tr><tr><td><tt>xsd:unsignedByte</tt></td><td>An integer between 0 and 255</td></tr><tr><td><tt>xsd:positiveInteger</tt></td><td>An integer strictly greater than zero</td></tr><tr><td><tt>xsd:duration</tt></td><td>A length of time given in
+  the ISO 8601 extended format: 
+  <tt><tt>P<i><tt>n</tt></i>Y<i><tt>n</tt></i>M<i><tt>n</tt></i>DT<i><tt>n</tt></i>H<i><tt>n</tt></i>M<i><tt>n</tt></i>S</tt></tt>. 
+  The number of seconds can be a decimal or an integer.
+  All the other values must be non-negative integers.
+  For example, <tt>P1Y2M3DT4H5M6.7S</tt> is one year, two
+  months, three days, four hours, five minutes, and 6.7 seconds.
+  </td></tr><tr><td><tt>xsd:dateTime</tt></td><td>A particular moment of time on a particular day up
+  to an arbitrary fraction of a second in the 
+  ISO 8601 format: 
+  <tt><i><tt>CCYY</tt></i>-<i><tt>MM</tt></i>-<i><tt>DD</tt></i>T<i><tt>hh</tt></i>:<i><tt>mm</tt></i>:<i><tt>ss</tt></i></tt>. 
+  This can be suffixed with a <tt>Z</tt> to indicate coordinated universal time 
+  (UTC) or 
+  an offset from UTC.
+  For example,
+  Neil Armstrong set foot on the moon at
+  <tt>1969-07-20T21:28:00-06:00</tt>  by the clock in Houston mission control
+  which is also known as
+  <tt>1969-07-21T02:28:00Z</tt></td></tr><tr><td><tt>xsd:time</tt></td><td>A certain time of day on no particular day in the 
+  ISO 8601 format: 
+  <tt><i><tt>hh</tt></i>:<i><tt>mm</tt></i>:<i><tt>ss</tt></i>.<i><tt>sss</tt></i></tt>. 
+  A time zone specified as an offset from
+  UTC is optional. For example, on most days I wake up
+  around <tt>07:00:00.000-05:00</tt> and go to bed around 
+  <tt>23:30:00.000-05:00</tt>.
+   </td></tr><tr><td><tt>xsd:date</tt></td><td>A particular date in history given in
+  ISO 8601 format: <tt><i><tt>YYYYMMDD</tt></i></tt>; e.g. <tt>20010706</tt> or
+  <tt>19690920</tt>. 
+ </td></tr><tr><td><tt>xsd:gYearMonth</tt></td><td>A certain month in a certain year;
+  e.g. <tt>2001-12</tt> or <tt>1999-03</tt>.</td></tr><tr><td><tt>xsd:gYear</tt></td><td>A year in the Gregorian calendar ranging from 
+  0001 to 2001 to 9999, 10000, 10001 and beyond.
+  Earlier dates can be represented as &#8209;0001, &#8209;0002, &#8209;0003,
+  and so forth back to the Big Bang.
+  There is no year zero, however. 
+ </td></tr><tr><td><tt>xsd:gMonthDay</tt></td><td>A specific day of a specific month in no particular year
+  in the form 
+   <tt>&#8209;&#8209;02-28</tt>. For example, Christmas comes on 
+   <tt>&#8209;&#8209;12-25</tt>.</td></tr><tr><td><tt>xsd:gDay</tt></td><td>A particular day of no particular 
+  month in the form &#8209;&#8209;&#8209;01, &#8209;&#8209;&#8209;02, &#8209;&#8209;&#8209;03, through
+  &#8209;&#8209;&#8209;31</td></tr><tr><td><tt>xsd:gMonth</tt></td><td>A particular month in no particular 
+  year in the form &#8209;&#8209;01&#8209;&#8209;, &#8209;&#8209;02&#8209;&#8209;, &#8209;&#8209;03&#8209;&#8209;, through
+  &#8209;&#8209;12&#8209;&#8209;</td></tr><tr><td><tt>xsd:hexBinary</tt></td><td>
+  Hexadecimal encoded binary data; 
+  each byte of the data is replaced by the two hexadecimal digits that represent its unsigned value
+  </td></tr><tr><td><tt>xsd:base64Binary</tt></td><td>Base-64 encoded binary data</td></tr><tr><td><tt>xsd:anyURI</tt></td><td>An absolute or relative URL or a URN</td></tr><tr><td><tt>xsd:QName</tt></td><td>An optionally prefixed XML name such as <tt>SOAP-ENV:Body</tt>
+  or <tt>Body</tt>. Unprefixed names must be in the default namespace.</td></tr><tr><td><tt>xsd:NOTATION</tt></td><td>The name of a notation declared in the current schema</td></tr><tr><td><tt>xsd:normalizedString</tt></td><td>A string in which 
+  carriage returns (\r), line feeds (\n) and tab 
+  (\t) characters should be treated the same as spaces</td></tr><tr><td><tt>xsd:token</tt></td><td>A string in which all runs of white space
+  should be treated the same as a single space</td></tr><tr><td><tt>xsd:language</tt></td><td>An <a href="http://www.ietf.org/rfc/rfc1766.txt" target="_top">RFC 1766</a> language identifier such as
+  en, fr-CA, or i-klingon</td></tr><tr><td><tt>xsd:NMTOKEN</tt></td><td>An XML name token</td></tr><tr><td><tt>xsd:NMTOKENS</tt></td><td>A white space separated list of XML name tokens</td></tr><tr><td><tt>xsd:Name</tt></td><td>An XML name</td></tr><tr><td><tt>xsd:NCName</tt></td><td>An XML name that does not contain any colons; that is, an unprefixed name</td></tr><tr><td><tt>xsd:ID</tt></td><td>An NCName which is unique among other things of ID type 
+  in the same document</td></tr><tr><td><tt>xsd:IDREF</tt></td><td>An NCName used as an ID somewhere in the document</td></tr><tr><td><tt>xsd:IDREFS</tt></td><td>A whitespace separated list of IDREFs</td></tr><tr><td><tt>xsd:ENTITY</tt></td><td>An NCName that has been declared as
+  an unparsed entity in the document&#8217;s DTD</td></tr><tr><td><tt>xsd:ENTITIES</tt></td><td>A white space separated list of ENTITY names</td></tr></tbody></table></div><p>
+    Even without using schema validation or the
+    full schema apparatus, you can use these types in your own documents.
+     Simply attach an <tt>xsi:type</tt> attribute to any element 
+    identifying the type of that
+     element&#8217;s content. The <tt>xsi</tt> prefix is mapped to the
+     <tt>http://www.w3.org/2001/XMLSchema-instance</tt> 
+     namespace URI. <a href="ch02.html#typedorder.xml" title="Example&nbsp;2.1.&nbsp;An XML document  that labels&#xA;elements with schema simple types">Example&nbsp;2.1</a> shows an XML document that
+     uses these types to label different parts of an order document.
+     Notice that some things that might naively be assumed 
+     to be numeric types are in fact strings. 
+  </p><div class="example"><a name="typedorder.xml"></a><p class="title"><b>Example&nbsp;2.1.&nbsp;An XML document  that labels
+elements with schema simple types</b></p><pre class="programlisting">&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;Order xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;Customer id="c32" xsi:type="xsd:string"&gt;Chez Fred&lt;/Customer&gt;
+  &lt;Product&gt;
+    &lt;Name xsi:type="xsd:string"&gt;Birdsong Clock&lt;/Name&gt;
+    &lt;SKU xsi:type="xsd:string"&gt;244&lt;/SKU&gt;
+    &lt;Quantity xsi:type="xsd:positiveInteger"&gt;12&lt;/Quantity&gt;
+    &lt;Price currency="USD"  xsi:type="xsd:decimal"&gt;21.95&lt;/Price&gt;
+    &lt;ShipTo&gt;
+      &lt;Street xsi:type="xsd:string"&gt;135 Airline Highway&lt;/Street&gt;
+      &lt;City xsi:type="xsd:string"&gt;Narragansett&lt;/City&gt; 
+      &lt;State xsi:type="xsd:NMTOKEN"&gt;RI&lt;/State&gt; 
+      &lt;Zip xsi:type="xsd:string"&gt;02882&lt;/Zip&gt;
+    &lt;/ShipTo&gt;
+  &lt;/Product&gt;
+  &lt;Product&gt;
+    &lt;Name xsi:type="xsd:string"&gt;Brass Ship's Bell&lt;/Name&gt;
+    &lt;SKU xsi:type="xsd:string"&gt;258&lt;/SKU&gt;
+    &lt;Quantity xsi:type="xsd:positiveInteger"&gt;1&lt;/Quantity&gt;
+    &lt;Price currency="USD" xsi:type="xsd:decimal"&gt;144.95&lt;/Price&gt;
+    &lt;Discount xsi:type="xsd:decimal"&gt;.10&lt;/Discount&gt;
+    &lt;ShipTo&gt;
+      &lt;GiftRecipient xsi:type="xsd:string"&gt;
+        Samuel Johnson
+      &lt;/GiftRecipient&gt;
+     &lt;Street xsi:type="xsd:string"&gt;271 Old Homestead Way&lt;/Street&gt;
+      &lt;City xsi:type="xsd:string"&gt;Woonsocket&lt;/City&gt; 
+      &lt;State xsi:type="xsd:NMTOKEN"&gt;RI&lt;/State&gt; 
+      &lt;Zip xsi:type="xsd:string"&gt;02895&lt;/Zip&gt;
+    &lt;/ShipTo&gt;
+    &lt;GiftMessage xsi:type="xsd:string"&gt;
+      Happy Father's Day to a great Dad!
+      
+      Love,
+      Sam and Beatrice
+    &lt;/GiftMessage&gt;
+  &lt;/Product&gt;
+  &lt;Subtotal currency='USD' xsi:type="xsd:decimal"&gt;
+    393.85
+  &lt;/Subtotal&gt;
+  &lt;Tax rate="7.0" 
+       currency='USD' xsi:type="xsd:decimal"&gt;28.20&lt;/Tax&gt;
+  &lt;Shipping method="USPS" currency='USD' 
+            xsi:type="xsd:decimal"&gt;8.95&lt;/Shipping&gt;
+  &lt;Total currency='USD' xsi:type="xsd:decimal"&gt;431.00&lt;/Total&gt;
+&lt;/Order&gt;
+</pre></div><p>
+    As well as explicit labeling, a document can use a schema to
+    indicate the type. However, right now the APIs for such things
+    aren&#8217;t finished so it&#8217;s best to explicitly label
+    elements when the types are important.
+  </p><p>
+    XML-RPC only uses the int, boolean, decimal, dateTime, and base64
+    types as well as a string type that&#8217;s restricted to ASCII. It also
+    does not allow the NaN, Inf, and -Inf values for double. It does not
+    use <tt>xsi:type</tt> attributes, relying instead on
+    predefined semantics for particular elements. SOAP allows all 44
+    types and does use <tt>xsi:type</tt> attributes to label
+    elements.
+  </p></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch01s05.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="index.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch02s02.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Summary&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;HTTP as a Transport Protocol</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+September 08,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

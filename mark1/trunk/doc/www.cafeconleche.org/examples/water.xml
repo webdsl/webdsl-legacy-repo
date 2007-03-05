@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<CML xmlns="http://www.xml-cml.org/schema/cml2/core"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://www.xml-cml.org/schema/cml2/core cmlCore.xsd">
+  <MOL TITLE="Water">
+    <ATOMS>
+      <ARRAY BUILTIN="ELSYM">H O H</ARRAY>
+    </ATOMS>
+    <BONDS>
+      <ARRAY BUILTIN="ATID1">1 2</ARRAY>
+      <ARRAY BUILTIN="ATID2">2 3</ARRAY>
+      <ARRAY BUILTIN="ORDER">1 1</ARRAY>
+    </BONDS>
+  </MOL>
+</CML>

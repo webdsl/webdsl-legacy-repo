@@ -1,0 +1,153 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>A Simple XML-RPC Client</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="previous" href="ch03s03.html" title="Output Streams, Writers, and Encodings"><link rel="next" href="ch03s05.html" title="A Simple SOAP Client"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">A Simple XML-RPC Client</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03s03.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;3.&nbsp;Writing XML with Java</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch03s05.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e5453"></a>A Simple XML-RPC Client</h2></div></div><p>
+    An XML-RPC request is just an XML document sent over a network socket.
+    It&#8217;s easy to use the techniques of this chapter to write a very simple XML-RPC
+    client for a particular service. You just ask the user for the data 
+    to send to the server, wrap it up in some XML, and write it onto
+    a <tt>URL</tt> object pointing at the server.
+    The response will come back in XML as well. Since we haven&#8217;t yet
+    learned how to read XML documents, I&#8217;ll just dump the 
+    response as text to <tt>System.out</tt>.
+    Later we&#8217;ll pay more attention to the response, and provide a nicer
+    user interface.
+  </p><p>
+    The specific XML-RPC service we&#8217;re going to talk to is a Fibonacci generator
+    I&#8217;ll develop in later chapters. The request passes an <tt>int</tt> to the server.
+    The server responds with the value of that Fibonacci number.
+    For example, this request document asks for the value of the 23rd Fibonacci number:
+  </p><div class="informalexample"><pre class="programlisting">&lt;?xml version="1.0"?&gt;
+&lt;methodCall&gt;
+  &lt;methodName&gt;calculateFibonacci&lt;/methodName&gt;
+  &lt;params&gt;
+    &lt;param&gt;
+      &lt;value&gt;&lt;int&gt;23&lt;/int&gt;&lt;/value&gt;
+    &lt;/param&gt;
+  &lt;/params&gt;
+&lt;/methodCall&gt;</pre></div><p>
+  And here&#8217;s the response:
+  </p><div class="informalexample"><pre class="programlisting">&lt;?xml version="1.0"?&gt;
+&lt;methodResponse&gt;
+  &lt;params&gt;
+    &lt;param&gt;
+      &lt;value&gt;&lt;double&gt;28657&lt;/double&gt;&lt;/value&gt;
+    &lt;/param&gt;
+  &lt;/params&gt;
+&lt;/methodResponse&gt;</pre></div><p>
+ The response is passed back as a <tt>double</tt> because 
+ XML-RPC <tt>int</tt>s are limited to a maximum
+ size of 2,147,483,647, and as previously noted Fibonacci numbers very quickly exceed that. 
+ XML-RPC does not define a maximum size for a <tt>double</tt>.
+ Some implementations may have maximum sizes, nonetheless. 
+ If this is a concern, you can send the 
+ response back as a <tt>string</tt> instead.
+</p><p>
+    The client needs to read an  integer input by the user, wrap that 
+    integer in the XML-RPC envelope, then send that document to the 
+    server using HTTP POST.
+    In Java the simplest way to post a document is through 
+    the <tt>java.net.HttpURLConnection</tt> class.
+    You get an instance of this class by calling a 
+    <tt>URL</tt> object&#8217;s
+    <tt>openConnection()</tt> method, and then
+    casting the resulting <tt>URLConnection</tt> object to
+    <tt>HttpURLConnection</tt>.
+    Once you have an <tt>HttpURLConnection</tt>, 
+    you set its protected
+    <tt>doOutput</tt> field to true 
+    using the <tt>setDoOutput()</tt> method and 
+    its request method to POST using the <tt>setRequestMethod()</tt> method. 
+    Then you grab hold of an output stream using <tt>getOutputStream()</tt>
+    and proceed to write your request body on that. 
+    <a href="ch03s04.html#FibonacciXMLRPCClient.java" title="Example&nbsp;3.10.&nbsp;Connecting an XML-RPC server with URLConnection">Example&nbsp;3.10</a> does all of this. 
+  </p><div class="example"><a name="FibonacciXMLRPCClient.java"></a><p class="title"><b>Example&nbsp;3.10.&nbsp;Connecting an XML-RPC server with URLConnection</b></p><pre class="programlisting">import java.net.*;
+import java.io.*;
+
+
+public class FibonacciXMLRPCClient {
+  
+  private static String defaultServer 
+   = "http://www.elharo.com/fibonacci/XML-RPC";
+   
+  public static void main(String[] args) {
+
+    if (args.length == 0) {
+      System.out.println(
+       "Usage: java FibonacciXMLRPCClient index serverURL"); 
+      return;
+    }
+    
+    String index = args[0];
+    
+    String server;
+    if (args.length &lt;= 1) server = defaultServer;
+    else server = args[1];
+    
+    try {
+      URL u = new URL(server);
+      URLConnection uc = u.openConnection();
+      HttpURLConnection connection = (HttpURLConnection) uc;
+      connection.setDoOutput(true);
+      connection.setDoInput(true); 
+      connection.setRequestMethod("POST");
+      OutputStream out = connection.getOutputStream();
+      OutputStreamWriter wout = new OutputStreamWriter(out, "UTF-8");
+      
+      wout.write("&lt;?xml version=\"1.0\"?&gt;\r\n");  
+      wout.write("&lt;methodCall&gt;\r\n"); 
+      wout.write(
+       "  &lt;methodName&gt;calculateFibonacci&lt;/methodName&gt;\r\n");
+      wout.write("  &lt;params&gt;\r\n"); 
+      wout.write("    &lt;param&gt;\r\n"); 
+      wout.write("      &lt;value&gt;&lt;int&gt;"); 
+      wout.write(index); 
+      wout.write("&lt;/int&gt;&lt;/value&gt;\r\n"); 
+      wout.write("    &lt;/param&gt;\r\n"); 
+      wout.write("  &lt;/params&gt;\r\n"); 
+      wout.write("&lt;/methodCall&gt;\r\n"); 
+      
+      wout.flush();
+      out.close();
+      
+      InputStream in = connection.getInputStream();
+      int c;
+      while ((c = in.read()) != -1) System.out.write(c);
+      System.out.println();
+      in.close();
+      out.close();
+      connection.disconnect();
+    }
+    catch (IOException e) {
+      System.err.println(e); 
+      e.printStackTrace();
+    }
+  
+  }  // end main
+
+}
+</pre></div><p>
+    If you&#8217;d like to test this 
+    program you can point it at 
+    <tt>http://www.elharo.com/fibonacci/XML-RPC</tt>
+    where I have the servlet running.
+    Here&#8217;s some sample output from that site:
+  </p><pre class="screen"><tt>C:\XMLJAVA&gt;</tt><b><tt>java FibonacciXMLRPCClient 10</tt></b>
+<tt>&lt;?xml version="1.0"?&gt;
+&lt;methodResponse&gt;
+  &lt;params&gt;
+    &lt;param&gt;
+      &lt;value&gt;&lt;double&gt;55&lt;/double&gt;&lt;/value&gt;
+    &lt;/param&gt;
+  &lt;/params&gt;
+&lt;/methodResponse&gt;</tt></pre></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03s03.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch03s05.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Output Streams, Writers, and Encodings&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;A Simple SOAP Client</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+December 20,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

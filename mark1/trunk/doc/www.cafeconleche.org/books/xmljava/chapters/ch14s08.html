@@ -1,0 +1,312 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Navigating JDOM Trees</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="previous" href="ch14s07.html" title="Reading XML Documents with JDOM"><link rel="next" href="ch14s09.html" title="Talking to DOM Programs"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Navigating JDOM Trees</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch14s07.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;14.&nbsp;JDOM</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch14s09.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e22805"></a>Navigating JDOM Trees</h2></div></div><p>
+    Once you&#8217;ve parsed a document and formed a <tt>Document</tt>
+    object, you&#8217;ll probably want to search it to select out
+    those parts of it your program is interested in. In JDOM,
+    most navigation takes place through the methods of the 
+    <tt>Element</tt> class. The complete children of each 
+    <tt>Element</tt> are available as a
+    <tt>java.util.List</tt> returned by the
+    <tt>getContent()</tt> method.
+     Just the child elements of each 
+    <tt>Element</tt> are available in a
+    <tt>java.util.List</tt> returned by the
+    <tt>getChildren()</tt> method.
+    (Yes, the terminology is a little confusing here.
+     This is a case where JDOM is marching out of step with the rest of the 
+     XML world. JDOM uses the word <i>children</i>
+     to refer only to child elements.) 
+  </p><p>
+    Because JDOM uses the Java Collections API to manage the
+    tree, it is simultaneously too polymorphic (everything&#8217;s 
+    an object and must be cast to 
+    the right type before you can use it)
+    and not polymorphic enough (there&#8217;s no useful generic
+    interface or superclass for navigation such
+    as DOM&#8217;s <tt>Node</tt>
+    class.) Consequently, you&#8217;re going to find yourself doing
+    numerous tests with <tt>instanceof</tt> and casting
+    to the determined type. This is far and away my least favorite
+    part of JDOM&#8217;s design. Furthermore, there&#8217;s no standard
+    traversal API as there is in DOM to help you avoid
+    reinventing the wheel every time you need to walk a tree or
+    iterate a document. There is a
+    <tt>Filter</tt> interface that can
+    simplify some of the polymorphism and casting
+    issues a little, but it still won&#8217;t let you walk more than
+    one level down the tree at a time.
+  </p><p>
+    Let&#8217;s begin with <a href="ch14s08.html#ElementLister.java" title="Example&nbsp;14.9.&nbsp;A JDOM program that lists the elements used in a document">Example&nbsp;14.9</a>,
+    a simple program that reads a document
+    and prints the names of the elements in that document, nicely
+    indented to show the hierarchy.
+    Pay special attention to the
+    <tt>listChildren()</tt> method. This
+    recursive method is the key to the whole program.
+  </p><div class="example"><a name="ElementLister.java"></a><p class="title"><b>Example&nbsp;14.9.&nbsp;A JDOM program that lists the elements used in a document</b></p><pre class="programlisting">import org.jdom.*;
+import org.jdom.input.SAXBuilder;
+import java.io.IOException;
+import java.util.*;
+
+
+public class ElementLister {
+
+  public static void main(String[] args) {
+  
+    if (args.length == 0) {
+      System.out.println("Usage: java ElementLister URL"); 
+      return;
+    } 
+      
+    SAXBuilder builder = new SAXBuilder();
+     
+    try {
+      Document doc = builder.build(args[0]);
+      Element root = doc.getRootElement();
+      listChildren(root, 0);      
+    }
+    // indicates a well-formedness error
+    catch (JDOMException e) { 
+      System.out.println(args[0] + " is not well-formed.");
+      System.out.println(e.getMessage());
+    }  
+    catch (IOException e) { 
+      System.out.println(e);
+    }  
+  
+  }
+  
+  
+  public static void listChildren(Element current, int depth) {
+   
+    printSpaces(depth);
+    System.out.println(current.getName());
+    List children = current.getChildren();
+    Iterator iterator = children.iterator();
+    while (iterator.hasNext()) {
+      Element child = (Element) iterator.next();
+      listChildren(child, depth+1);
+    }
+    
+  }
+  
+  private static void printSpaces(int n) {
+    
+    for (int i = 0; i &lt; n; i++) {
+      System.out.print(' '); 
+    }
+    
+  }
+
+}
+</pre></div><p>
+    The <tt>main()</tt> method simply parses a
+    document and passes its root element to 
+    the <tt>listChildren()</tt> method
+    along with a depth of zero.
+    The <tt>listChildren()</tt> method indents
+    a number of spaces equal to the depth in the hierarchy.
+    Then it prints the name of the current element.
+    Next it asks for a list of the children of that element
+    by invoking <tt>getChildren()</tt>.
+    This returns a <tt>java.util.List</tt> from
+    the Java Collections API. This list is <i>live</i>.
+    That is, any changes you make to it will be reflected in the
+    original <tt>Element</tt>. However, this program does
+    not take advantage of that. Instead, it retrieves a
+    <tt>java.util.Iterator</tt> object using the
+    <tt>iterator()</tt> method. Then it iterates
+    through the list. Since each item in the list is known to be
+    a JDOM <tt>Element</tt> object, each item
+    returned by <tt>next()</tt> can be safely
+    cast to <tt>Element</tt> and passed recursively
+    to <tt>listChildren()</tt>. Other than the
+    knowledge that each object in the list is 
+    an <tt>Element</tt>, every step is just
+    standard list iteration from the Java Collections API.
+    Internally, JDOM is actually using a special package-private  subclass of
+    <tt>List</tt>, <tt>org.jdom.ContentList</tt>;
+    but you don&#8217;t need to know this. Everything you need to do
+    can be done through the documented
+    <tt>java.util.List</tt> interface.
+  </p><p>
+    Here&#8217;s the beginning of the output when this program is run
+    across this chapter&#8217;s source code:
+  </p><pre class="screen"><tt>D:\books\XMLJAVA\examples\14&gt;</tt><b><tt>java ElementLister file://D/books/XMLJava/jdom.xml</tt></b>
+<tt>chapter
+ title
+ caution
+  para
+ para
+ itemizedlist
+  listitem
+   para
+  listitem
+   para
+  listitem
+   para
+  listitem
+   para
+ para
+ para
+ caution
+  para
+ sect1
+  title
+  para
+  blockquote
+  &#8230;</tt></pre><p>
+    The <tt>getChildren()</tt> method only
+    returns elements. It misses everything else completely.
+    For instance, it doesn&#8217;t report comments, processing
+    instructions, or text nodes. To get this material you need to
+    use the <tt>getContent()</tt> method 
+    which returns everything. However, this makes life a little
+    trickier because you can no longer assume that everything in
+    the list returned is an <tt>Element</tt>.
+    You&#8217;ll probably need to use a big tree of <tt>if (o
+    instance of Element) { &#8230; } else if (o instanceof Text) {
+    &#8230;</tt> in order to choose the processing to perform on
+    each member of the list. <a href="ch14s08.html#NodeLister.java" title="Example&nbsp;14.10.&nbsp;A JDOM program that lists the nodes used in a document">Example&nbsp;14.10</a>
+    demonstrates with a simple program that recursively lists all
+    the nodes used in the document. Elements are identified by
+    their name. All other items are identified just by their
+    types.
+  </p><div class="example"><a name="NodeLister.java"></a><p class="title"><b>Example&nbsp;14.10.&nbsp;A JDOM program that lists the nodes used in a document</b></p><pre class="programlisting">import org.jdom.*;
+import org.jdom.input.SAXBuilder;
+import java.io.IOException;
+import java.util.*;
+
+
+public class NodeLister {
+
+  public static void main(String[] args) {
+  
+    if (args.length == 0) {
+      System.out.println("Usage: java NodeLister URL"); 
+      return;
+    } 
+      
+    SAXBuilder builder = new SAXBuilder();
+     
+    try {
+      Document doc = builder.build(args[0]);
+      listNodes(doc, 0);      
+    }
+    // indicates a well-formedness error
+    catch (JDOMException e) { 
+      System.out.println(args[0] + " is not well-formed.");
+      System.out.println(e.getMessage());
+    }  
+    catch (IOException e) { 
+      System.out.println(e);
+    }  
+  
+  }
+  
+  
+  public static void listNodes(Object o, int depth) {
+   
+    printSpaces(depth);
+    
+    if (o instanceof Element) {
+      Element element = (Element) o;
+      System.out.println("Element: " + element.getName());
+      List children = element.getContent();
+      Iterator iterator = children.iterator();
+      while (iterator.hasNext()) {
+        Object child = iterator.next();
+        listNodes(child, depth+1);
+      }
+    }
+    else if (o instanceof Document) {
+      System.out.println("Document");
+      Document doc = (Document) o;
+      List children = doc.getContent();
+      Iterator iterator = children.iterator();
+      while (iterator.hasNext()) {
+        Object child = iterator.next();
+        listNodes(child, depth+1);
+      }
+    }
+    else if (o instanceof Comment) {
+      System.out.println("Comment");
+    }
+    else if (o instanceof CDATA) {
+      System.out.println("CDATA section");
+      // CDATA is a subclass of Text so this test must come
+      // before the test for Text.
+    }
+    else if (o instanceof Text) {
+      System.out.println("Text");
+    }
+    else if (o instanceof EntityRef) {
+      System.out.println("Entity reference");
+    }
+    else if (o instanceof ProcessingInstruction) {
+      System.out.println("Processing Instruction");
+    }
+    else {  // This really shouldn't happen
+      System.out.println("Unexpected type: " + o.getClass());
+    }
+    
+  }
+  
+  private static void printSpaces(int n) {
+    
+    for (int i = 0; i &lt; n; i++) {
+      System.out.print(' '); 
+    }
+    
+  }
+
+}
+</pre></div><p>
+    Here&#8217;s the beginning of the output when this program is run
+    across this chapter&#8217;s source code:
+  </p><pre class="screen"><tt>D:\books\XMLJAVA\examples\14&gt;</tt><b><tt>java NodeLister file://D/books/XMLJava/jdom.xml</tt></b>
+<tt>Document
+ Element: chapter
+  Text
+  Element: title
+   Text
+  Text
+  Element: caution
+   Text
+   Element: para
+    Text
+   Text
+  Text
+  Element: para
+  &#8230;</tt></pre><p>
+    The only pieces that are missing here are the attributes and
+    namespaces associated with each element.
+    These are not included by either
+    <tt>getContent()</tt> or
+    <tt>getChildren()</tt>. If you want them, you
+    have to ask for them explicitly using the
+    <tt>getAttributes()</tt>,
+    <tt>getNamespace()</tt>,
+    <tt>getAdditionalNamespaces()</tt>,
+    and related 
+    methods of the <tt>Element</tt> class.
+  </p><p>
+    In the next chapter, we&#8217;ll look more closely at the
+    classes of objects that appear when you&#8217;re navigating a JDOM
+    tree
+    (<tt>Element</tt>, <tt>Text</tt>,
+    <tt>Comment</tt>, etc.) and what you can learn
+    from each one.
+  </p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch14s07.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch14.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch14s09.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Reading XML Documents with JDOM&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Talking to DOM Programs</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+June 04,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

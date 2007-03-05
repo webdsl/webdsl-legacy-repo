@@ -1,0 +1,254 @@
+<html><head>
+    <title>SAX</title>
+    <style type="text/css"><!--
+	h1, h2, h3, h4, h5, h6 { color: maroon; }
+	/* make sure that goes OK with the nav column background
+	 * net-friendly colors include: yellow/ffffcc, blue/ccccff
+	 */
+    --></style>
+</head><body color="#000000" bgcolor="#eeeeff">
+    <table border="0" width="100%" cellpadding="15" cellspacing="0" ><tr>
+        <td valign="top" align="left" color="#000000" bgcolor="#ffffff">
+
+    <table border="0" cellpadding="0" cellspacing="0">
+    <tr><td class="toc">
+    <h2>SAX</h2><b>General</b><br />&nbsp;<a href="about.html">About SAX</a><br />
+	&nbsp;<a href="copying.html">Copyright Status</a><br />
+	&nbsp;<a href="event.html">Events vs. Trees</a><br />
+	&nbsp;<a href="faq.html">FAQ</a><br />
+	&nbsp;<a href="links.html">Links</a><br />
+	<br />
+	<b>Java API</b><br />&nbsp;<a href="quickstart.html">Quickstart</a><br />
+	&nbsp;<a href="get-set.html">Features and Properties</a><br />
+	&nbsp;<a href="filters.html">Filters</a><br />
+	&nbsp;<a href="namespaces.html">Namespaces</a><br />
+	&nbsp;<a href="http://www.saxproject.org/apidoc/overview-summary.html">JavaDoc</a><br />
+	<br />
+	<b>SAX Evolution</b><br />&nbsp;<a href="sax1-history.html">Genesis</a><br />
+	&nbsp;<em>SAX 1.0 Overview</em><br />
+	&nbsp;<a href="sax2-history.html">SAX 2.0 Changes</a><br />
+	&nbsp;<a href="sax2-ext.html">SAX 2.0 Extensions</a><br />
+	&nbsp;<a href="langs.html">Other Languages</a><br />
+	<br />
+	<b>SourceForge Services</b><br />&nbsp;<a href="http://sourceforge.net/tracker/?group_id=29449">Bugs/RFEs</a><br />
+	&nbsp;<a href="http://sourceforge.net/projects/sax/">Project Page</a><br />
+	<br />
+	<br />
+	</td></tr></table>
+
+    
+    <p>
+    <a href="http://www.sourceforge.net/">
+    <img border="0" src="http://sourceforge.net/sflogo.php?group_id=29449&amp;type=1"
+	height="31" width="88"
+	alt="SourceForge Logo" />
+    </a>
+
+    </p>
+
+    </td>
+
+    <td width="80%" valign="top" align="left">
+    <h2>SAX 1.0 Overview</h2><div><p> <em> This information was included with the
+SAX 1.0 distribution.
+In SAX 2.0, the structure and concepts remained
+largely the same, although several key interfaces
+changed incompatibly.
+</em> </p>
+
+<p> The SAX 1.0 Java distribution contains eleven core classes and interfaces
+together with three optional helper classes and five demonstration
+classes, but don't let these overwhelm you: there are only three
+interfaces that SAX parser writers need to implement, and while there
+are five interfaces available for application writers, simple XML
+applications will need only one or two of them.  </p>
+
+<p> These SAX classes and interfaces fall into five groups: </p>
+
+<dl>
+
+<dt> interfaces implemented by the parser</dt><dd> Parser and AttributeList
+  (required), and Locator (optional) </dd>
+
+<dt> interfaces implemented by the application</dt><dd> DocumentHandler,
+  ErrorHandler, DTDHandler, and EntityResolver (all optional:
+  DocumentHandler will the most important one for typical XML
+  applications)</dd>
+
+<dt> standard SAX classes</dt><dd> InputSource, SAXException, SAXParseException,
+  HandlerBase (these are all fully implemented by SAX)</dd>
+
+<dt> optional Java-specific helper classes in the org.xml.sax.helpers
+  package</dt><dd> ParserFactory, AttributeListImpl, and LocatorImpl (these
+  are all fully implemented by the SAX Java distribution)</dd>
+
+<dt> Java demonstration classes in the nul package</dt><dd> SystemIdDemo,
+  ByteStreamDemo, CharacterStreamDemo, and EntityDemo, all of which
+  can be run as Java applications; there is also a DemoHandler class
+  that all four share</dd>
+
+</dl>
+
+<h3> Interfaces for Parser Writers (org.xml.sax package)</h3>
+
+<p> A SAX-conformant XML parser needs to implement only two or three
+simple interfaces; in fact, it is even possible (and quite common) to
+implement all of these interfaces in a single class (often called
+something like as `SAXDriver') if desired.  </p>
+
+<dl>
+
+<dt> Parser</dt>
+
+<dd>
+  This is the main interface to a SAX parser: it allows the user to
+  register handlers for callbacks, to set the locale for error
+  reporting, and to start an XML parse.
+</dd>
+
+<dt> AttributeList</dt>
+
+<dd>
+  This simple interface allows users to iterate through an attribute
+  list -- the parser can implement it in the same class as the SAX
+  driver, or implement it in a separate class (it does not need to be
+  persistent).  There is a convenience implementation available in the
+  org.xml.sax.helpers.AttributeListImpl.
+</dd>
+
+<dt> Locator</dt>
+
+<dd>
+  This simple interface allows users to find the current location in
+  the XML source document -- the parser can implement it in the same
+  class as the driver, or implement it in a second class (it does not
+  need to be persistent).
+</dd>
+
+</dl>
+
+<h3> Interfaces for Application Writers (org.xml.sax package)</h3>
+
+<p> A SAX application may implement any or none of the following
+interfaces, as required (simple XML applications may need only
+DocumentHandler and possibly ErrorHandler).  </p>
+
+<p> An application can implement all of these interfaces in a single
+class, if desired.  </p>
+
+<dl>
+<dt> DocumentHandler</dt>
+
+<dd>
+  This is the interface that applications will probably use the most
+  -- in many cases, it is the only one that they will need to
+  implement.  If an application provides an implementation of this
+  interface, it will receive notification of basic document-related
+  events like the start and end of elements.
+</dd>
+
+<dt> ErrorHandler</dt>
+
+<dd>
+  If an application needs to use special error handling, then it must
+  provide an implementation of this interface.
+</dd>
+
+<dt> DTDHandler</dt>
+
+<dd>
+  If an application needs to work with notations and unparsed (binary)
+  entities, it must implement this interface to receive notification
+  of the NOTATION and ENTITY declarations.
+</dd>
+
+<dt> EntityResolver</dt>
+
+<dd>
+  If an application needs to do redirection of URIs in documents (or
+  other types of custom handling), it must provide an implementation
+  of this interface.
+</dd>
+
+</dl>
+
+<h3> Standard SAX Classes (org.xml.sax package) </h3>
+
+<p> SAX consists mostly of interfaces rather than classes, but the
+interfaces refer to two standard exception classes, and a third is
+provided for universal convenience.  </p>
+
+<p> These classes are useful for both parser and application writers.
+</p>
+
+<dl>
+<dt> InputSource</dt>
+
+<dd>
+  This class contains all of the necessary information for a single
+  input source, including a public identifier, system identifier, byte
+  stream, and character stream (as appropriate).  The application must
+  instantiate at least one InputSource for the Parser, and the
+  EntityHandler may instantiate others.
+</dd>
+
+<dt> SAXException</dt>
+  
+<dd>
+  This class represents a general SAX exception.
+</dd>
+
+<dt> SAXParseException</dt>
+
+<dd>
+  This class represents a SAX exception tied to a specific point in an
+  XML source document.
+</dd>
+
+<dt> HandlerBase</dt>
+
+<dd>
+  This class provides default implementations for DocumentHandler,
+  ErrorHandler, DTDHandler, and EntityResolver: parser writers can use
+  this to provide a default implementation when the user does not
+  specify handlers, and application writers can subclass this to
+  simplify handler writing.
+</dd>
+
+</dl>
+
+<h3> Java-Specific Helper Classes (org.xml.sax.helpers package) </h3>
+
+<p> These classes are not part of the core SAX distribution, and may not
+be available in SAX implementations in other languages: they are
+provided simply as a convenience for Java programmers.  </p>
+
+<dl>
+<dt> ParserFactory</dt>
+
+<dd>
+  An application can use the static methods in this class to load SAX
+  parsers dynamically at run time, based on the class name.
+</dd>
+
+<dt> AttributeListImpl</dt>
+
+<dd>
+  An application can use this convenience class to make a persistent
+  copy of an AttributeList, or parser can use it to supply a default
+  implementation of AttributeList to the application.
+</dd>
+
+<dt> LocatorImpl</dt>
+
+<dd>
+  An application can use this convenience class to make a persistent
+  snapshot of a Locator's values at a specific point in the parse.
+</dd>
+</dl>
+</div>
+    <br />
+
+    </td></tr></table>
+
+    </body></html>

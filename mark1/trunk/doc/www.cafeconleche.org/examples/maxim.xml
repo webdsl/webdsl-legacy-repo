@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE maxim [
+
+ <!ENTITY % greek_alphabet SYSTEM "greek.ent">
+ %greek_alphabet;
+ 
+]>
+<maxim>
+  &sigma;&omicron_with_tonos;&phi;&omicron;&final_sigma; 
+  &epsilon_with_tonos;&alpha;&upsilon;&tau;&omicron_with_tonos;&nu;
+  &gamma;&iota;&gamma;&nu;&omega_with_tonos;&sigma;&kappa;&epsilon;&iota;
+  &#x3CD4;
+</maxim>

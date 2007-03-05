@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config 
+search="/SOAP:Envelope/SOAP:Body/f:Fibonacci_Numbers/f:fibonacci"
+ xmlns:f="http://namespaces.cafeconleche.org/xmljava/ch3/"
+ xmlns:SOAP="http://schemas.xmlsoap.org/soap/envelope/"
+/>

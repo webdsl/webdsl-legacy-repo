@@ -1,0 +1,499 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Exceptions and Errors</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="previous" href="ch07s02.html" title="Input"><link rel="next" href="ch07s04.html" title="Features and Properties"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"><link rel="subsection" href="ch07s03.html#d0e10533" title="SAXExceptions"><link rel="subsection" href="ch07s03.html#d0e10744" title="The ErrorHandler interface"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Exceptions and Errors</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch07s02.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;7.&nbsp;The XMLReader Interface</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch07s04.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e10464"></a>Exceptions and Errors</h2></div></div><p>
+    The XML specification defines three classes of
+    problems that can occur in an XML document. In order of decreasing severity, 
+    these are
+  </p><div class="variablelist"><dl><dt><span class="term">Fatal error</span></dt><dd><p>
+        A well-formedness error.
+        As soon as the parser detects it, it must throw in the towel and 
+        stop parsing. The <tt>parse()</tt>
+        method throws a <tt>SAXParseException</tt>
+        when a fatal error is detected. Parsers have a little
+        leeway in whether they detect fatal errors. In
+        particular non-validating parsers may not catch certain
+        fatal errors that occur in the external DTD subset, and many
+        parsers don&#8217;t actually check everything they&#8217;re supposed
+        to check. However, if a parser does detect a fatal error,
+        then it must give up and stop parsing. 
+         </p></dd><dt><span class="term">Error</span></dt><dd><p>
+        An error but not a well-formedness error.
+        The most common such error is a validity error, though
+        there are a few other kinds as well. 
+        Some parsers classify violations of namespace
+        well-formedness as errors.
+        Parsers may or may not detect these errors.
+        If a parser does detect it, it may or may not 
+        throw a <tt>SAXParseException</tt>
+        and it may or may not continue parsing. 
+        (Validity errors generally do not cause 
+        <tt>SAXParseException</tt>s. Other kinds of
+        errors may, depending on the parser.)
+        These sorts of
+        errors are a source of some interoperability problems in
+        XML because two parsers may behave differently given the
+        same document.
+         </p></dd><dt><span class="term">Warning</span></dt><dd><p>
+        Not itself an error. However, it may nonetheless
+        indicate a mistake
+        of some kind in the document.
+        For example, a parser might issue a warning if it
+        encountered an
+        element named <tt>XMLDocument</tt> 
+        because all names beginning with &#8220;XML&#8221; (in any arrangement of case)
+        are reserved by the W3C for future standards.
+        Parsers may or may not detect problems like this.
+        If a parser does detect one, it will not
+        throw an exception and it will
+        continue parsing. 
+         </p></dd></dl></div><p>
+    In addition, a parser may encounter an I/O problem that has
+    nothing to do with XML. For example, your cat might knock the Ethernet
+    cable out of the back of your PC while you&#8217;re downloading a
+    large XML document from a remote web server. 
+  </p><p>
+   If the parser detects a well-formedness error
+   in the document it&#8217;s parsing,
+   <tt>parse()</tt> 
+    throws  a <tt>SAXException</tt>.
+    In the event of an I/O error, it
+    throws an <tt>IOException</tt>.
+    The parser may or may not throw a
+    <tt>SAXException</tt>
+    in the event of a non-fatal error, and will not throw an
+    exception for a warning.
+  </p><p>
+    As you can see, the only kind of problem 
+    the parser is guaranteed to tell you 
+    about through an exception is the well-formedness error.
+    If you want to be informed of the other kinds of errors and
+    possible problems, you have to implement the 
+    <tt>ErrorHandler</tt> interface,
+    and register your  <tt>ErrorHandler</tt>
+    implementation with the
+    <tt>XMLReader</tt>. 
+  </p><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e10533"></a>SAXExceptions</h3></div></div><p>
+      The <tt>SAXException</tt> class, <a href="ch07s03.html#CompactSAXException.java" title="Example&nbsp;7.4.&nbsp;The SAXException class">Example&nbsp;7.4</a>, is the generic
+      exception class for almost anything 
+      other than an I/O problem 
+      that can go wrong while
+      processing an XML document with SAX. Not only the <tt>parse()</tt>
+      method but most of the callback methods in the various SAX
+      interfaces are declared to throw this exception. 
+      If you detect a problem  while processing an XML document,
+      your code can throw its own <tt>SAXException</tt>.
+    </p><div class="example"><a name="CompactSAXException.java"></a><p class="title"><b>Example&nbsp;7.4.&nbsp;The SAXException class</b></p><pre class="programlisting">package org.xml.sax;
+
+public class SAXException extends Exception {
+  
+  public SAXException()
+  public SAXException(String message)
+  public SAXException(Exception rootCause)
+  public SAXException(String message, Exception e)
+  
+  public String    getMessage()
+  public Exception getException()
+  public String    toString()
+
+}
+</pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e10554"></a>Nested Exceptions</h4></div></div><p>
+      <tt>SAXException</tt> may not always be the exception you want to throw,
+      however. For example, suppose you&#8217;re parsing a document
+      containing an XML digital signature, and the
+      <tt>endElement()</tt> method notices that the Base-64 encoded text
+       provided in the <tt>P</tt> element, 
+       which represents the prime modulus of a DSA key,
+      does not decode to a prime number like it&#8217;s supposed to. You naturally want
+      to throw a 
+      <tt>java.security.InvalidKeyException</tt> to warn
+      the client application of this. However, 
+      <tt>endElement()</tt>
+      cannot throw a
+      <tt>java.security.InvalidKeyException</tt>,
+      only a <tt>SAXException</tt>
+      In this case, you wrap the
+      exception you really want to throw inside a <tt>SAXException</tt>
+      and throw the 
+      <tt>SAXException</tt> instead. For example,
+      </p><div class="informalexample"><pre class="programlisting">Exception nestedException 
+ = new InvalidKeyException("Modulus is not prime!");
+SAXException e = new SAXException(nestedException);
+throw e;</pre></div><p>
+      The code that catches the <tt>SAXException</tt>
+      can retrieve the original exception using the
+      <tt>getException()</tt> method. For
+      example, the client application method might indeed be
+      declared to throw  an
+      <tt>InvalidKeyException</tt> so you could
+      cast the nested exception to its real type and throw it
+      into the appropriate catch block elsewhere in the 
+      call chain.
+    </p><div class="informalexample"><pre class="programlisting">catch (SAXException e) { 
+  Exception rootCause = e.getException();
+  if (rootCause == null) {
+    // handle it as an XML problem...
+  }
+  else {
+    if (rootCause instanceof InvalidKeyException) {
+      InvalidKeyException ike = (InvalidKeyException) rootCause;
+      throw ike;
+    }
+    else if (rootCause instanceof SomeOtherException) {
+      SomeOtherException soe = (SomeOtherException) rootCause;
+      throw soe;  
+    }
+    &#8230;
+  }
+}</pre></div></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e10603"></a>SAXException Subclasses</h4></div></div><p>
+      SAX defines several more specific subclasses of
+      <tt>SAXException</tt> for specific problems,
+      though most
+      methods are only declared to throw a generic
+      <tt>SAXException</tt>.
+      These subclasses include
+      <tt>SAXParseException</tt>,
+      <tt>SAXNotRecognizedException</tt>, and
+      <tt>SAXNotSupportedException</tt>.
+      In addition parsers can extend <tt>SAXException</tt>
+      with their own custom subclasses, though few do this. 
+    </p><p>
+    A <tt>SAXParseException</tt> indicates a fatal
+    error, error, or warning in an XML document.
+    The
+    <tt>parse()</tt> method 
+    of the  <tt>XMLReader</tt> interface 
+    throws this when it encounters
+    a well-formedness error.
+    <tt>SAXParseException</tt> is
+    also passed as an argument to the methods of the 
+    <tt>ErrorHandler</tt> interface
+    to signal any of the three kinds of problems an XML document
+    may contain.
+    </p><p>
+    Besides the usual exception methods like 
+    <tt>getMessage()</tt> and 
+    <tt>printStackTrace()</tt>
+    that <tt>SAXParseException</tt> inherits from
+    its superclasses, it provides methods to get the public ID
+    and system ID of the file where the well-formedness error
+    occurs (Remember, XML documents that use external parsed entities
+    can be broken up over multiple separate files.) and 
+    the line number and column number
+    where the well-formedness error appears within that file.
+  </p><div class="example"><a name="CompactSAXParseException.java"></a><p class="title"><b>Example&nbsp;7.5.&nbsp;The SAXParseException class</b></p><pre class="programlisting">package org.xml.sax;
+
+public class SAXParseException extends SAXException {
+    
+  public SAXParseException(String message, Locator locator)
+  public SAXParseException(String message, Locator locator,
+	 Exception e) 
+  public SAXParseException(String message, String publicID, 
+   String systemID, int lineNumber, int columnNumber)
+  public SAXParseException(String message, String publicID, 
+   String systemID, int lineNumber, int columnNumber, 
+   Exception e)
+   
+  public String getPublicId()
+  public String getSystemId()
+  public int    getLineNumber()
+  public int    getColumnNumber()
+    
+}
+</pre></div><p>
+    The lines and column numbers reported by the parser for the
+    problem may not always be perfectly accurate. 
+    Nonetheless, they should be close to where the problem begins or ends.
+    (Some parsers give the line and column numbers for the
+    start-tag of a problem element. Others give the  give the line and column numbers for the
+    end-tag.)
+    If the document is so malformed that the parser can&#8217;t even
+    begin working with it, especially if it isn&#8217;t an XML document
+    at all, then the parser will probably indicate that the error
+    occurred at line -1, column -1. 
+  </p><p>
+    <a href="ch07s03.html#BetterSAXChecker.java" title="Example&nbsp;7.6.&nbsp;A SAX program that parses a document and identifies the &#xA;  line numbers of any well-formedness errors">Example&nbsp;7.6</a> enhances last chapter&#8217;s
+    <tt>SAXChecker</tt> program so that 
+    it reports the line numbers of any well-formedness errors.
+    Since there are two catch blocks, one for <tt>SAXParseException</tt>
+    and one for the more generic
+    <tt>SAXException</tt>, it&#8217;s possible to
+    distinguish between well-formedness errors and other
+    problems such as not being able to find the right
+    <tt>XMLReader</tt> implementation class. 
+  </p><div class="example"><a name="BetterSAXChecker.java"></a><p class="title"><b>Example&nbsp;7.6.&nbsp;A SAX program that parses a document and identifies the 
+  line numbers of any well-formedness errors</b></p><pre class="programlisting">import org.xml.sax.*;
+import org.xml.sax.helpers.XMLReaderFactory;
+import java.io.IOException;
+
+
+public class BetterSAXChecker {
+
+  public static void main(String[] args) {
+  
+    if (args.length &lt;= 0) {
+      System.out.println("Usage: java BetterSAXChecker URL");
+      return;
+    }
+    String document = args[0];
+    
+    try {
+      XMLReader parser = XMLReaderFactory.createXMLReader();
+      parser.parse(document);
+      System.out.println(document + " is well-formed.");
+    }
+    catch (SAXParseException e) {
+      System.out.print(document + " is not well-formed at ");
+      System.out.print("Line " + e.getLineNumber() 
+       + ", column " +  e.getColumnNumber() );
+      System.out.println(" in the entity " + e.getSystemId());
+    }
+    catch (SAXException e) {
+      System.out.println("Could not check document because " 
+       + e.getMessage());
+    }
+    catch (IOException e) { 
+      System.out.println(
+       "Due to an IOException, the parser could not check " 
+       + document
+      ); 
+    }
+  
+  }
+
+}
+</pre></div><p>
+Here&#8217;s the output I  got when I first
+ran it across
+my Cafe con Leche home page. The first time I did not
+specify a parser which produced 
+a generic <tt>SAXException</tt>.
+The second time I corrected that mistake, and a
+ <tt>SAXParseException</tt>
+signaled a well-formedness error. 
+</p><pre class="screen"><tt>%</tt><b><tt>java BetterSAXChecker http://www.cafeconleche.org</tt></b>
+<tt>Could not check document because System property 
+ org.xml.sax.driver not specified</tt>      
+<tt>%</tt><b><tt>java -Dorg.xml.sax.driver=org.apache.xerces.parsers.SAXParser 
+ BetterSAXChecker http://www.cafeconleche.org</tt></b>
+<tt>http://www.cafeconleche.org is not well-formed at Line 64, 
+column 64 in the entity http://www.cafeconleche.org/</tt></pre></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e10706"></a>Not necessarily fatal errors</h4></div></div><p>
+    XML includes a few errors that fall into a gray area.
+    These are errors but neither fatal well-formedness errors
+    nor non-fatal validity errors.
+    The most common such error is an ambiguous content model
+    in an element declaration.
+    For example, consider this declaration  which states that 
+    an <tt>Actor</tt> can have between 0 and 2
+    <tt>Part</tt>s:
+  </p><div class="informalexample"><pre class="programlisting">&lt;!ELEMENT Actor (Part?, Part?)&gt;</pre></div><p>
+    The problem occurs with an  <tt>Actor</tt> element 
+    that has one <tt>Part</tt> like this:
+  </p><div class="informalexample"><pre class="programlisting">&lt;Actor&gt;
+  &lt;Part&gt;Cyrano&lt;/Part&gt;
+&lt;/Actor&gt;</pre></div><p>
+    Does this one <tt>Part</tt> match the first 
+    <tt>Part</tt> in the content model or the second?
+    There&#8217;s no way to tell. Some parsers have trouble with this
+    construct while other parsers don&#8217;t notice any problem at
+    all. The XML specification says this is an error, but does
+    not classify it as a fatal error.
+  </p><p>
+    Different parsers treat these not necessarily fatal errors differently.
+    Some parsers throw a <tt>SAXParseException</tt> when one is
+    encountered. Other parsers let them pass without comment.
+    And still others report them in a different way but not
+    throw an exception.
+    For maximum compatibility, 
+    try to design your DTDs and instance documents so these are
+    not a problem.
+  </p></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e10744"></a>The ErrorHandler interface</h3></div></div><p>
+    Throwing an exception aborts the parsing process. Not all
+    problems encountered in an XML document necessarily 
+    require such a radical step. In particular,
+    validity errors are <span class="emphasis"><em>not</em></span> signaled by
+    an exception because that would stop parsing.
+    If you want your program to be informed of non-fatal errors,
+    you must register an  
+    <tt>ErrorHandler</tt> object with
+    the <tt>XMLReader</tt>. Then the parser will
+    tell you about problems in the document by passing (not throwing!)
+    a <tt>SAXParseException</tt> to one of the methods in 
+    this object. 
+  </p><p>
+   <a href="ch07s03.html#CompactErrorHandler.java" title="Example&nbsp;7.7.&nbsp;The ErrorHandler interface">Example&nbsp;7.7</a> summarizes the 
+   <tt>ErrorHandler</tt> interface.
+   As you can see it has three callback methods corresponding to
+   the three different kinds of problems a parser may detect.
+   When the parser detects one of these problems, it 
+   passes a <tt>SAXParseException</tt> to the
+   appropriate method. 
+   If you want to treat errors or warnings as fatal,
+   then you can throw the exception you were passed. 
+   (The <tt>parse()</tt> method will always throw 
+   an exception for a fatal error, 
+   even if you don&#8217;t.)
+   If you don&#8217;t
+   want to treat them as fatal (and mostly you don&#8217;t), then you
+   can do something else with the information wrapped in the
+   exception. 
+  </p><div class="example"><a name="CompactErrorHandler.java"></a><p class="title"><b>Example&nbsp;7.7.&nbsp;The ErrorHandler interface</b></p><pre class="programlisting">package org.xml.sax;
+
+public interface ErrorHandler {
+
+  public void warning(SAXParseException exception)
+   throws SAXException;
+  public void error(SAXParseException exception)
+   throws SAXException;
+  public void fatalError(SAXParseException exception)
+   throws SAXException;
+    
+}
+</pre></div><p>
+    These two methods  install an
+    <tt>ErrorHandler</tt> into an
+    <tt>XMLReader</tt>:
+  </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setErrorHandler</b></span>(<span class="methodparam"><span class="type">ErrorHandler&nbsp;</span><span class="parameter"><i>handler</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">ErrorHandler&nbsp;</span><span class="methodname"><b>getErrorHandler</b></span>();</code><p>
+    You can 
+    uninstall an
+    <tt>ErrorHandler</tt> by passing null to
+    <tt>setErrorHandler()</tt>.
+  </p><p>
+    <a href="ch07s03.html#BestSAXChecker.java" title="Example&nbsp;7.8.&nbsp;A SAX program that reports all problems found in an XML document">Example&nbsp;7.8</a> is a program that checks documents 
+    for well-formedness errors and other problems. 
+    All errors detected are reported, no matter how small, through
+    the
+    <tt>ErrorHandler</tt>
+    interface.
+  </p><div class="example"><a name="BestSAXChecker.java"></a><p class="title"><b>Example&nbsp;7.8.&nbsp;A SAX program that reports all problems found in an XML document</b></p><pre class="programlisting">import org.xml.sax.*;
+import org.xml.sax.helpers.XMLReaderFactory;
+import java.io.IOException;
+
+
+public class BestSAXChecker implements ErrorHandler {
+  
+  public void warning(SAXParseException exception) {
+    
+    System.out.println("Warning: " + exception.getMessage());
+    System.out.println(" at line " + exception.getLineNumber() 
+     + ", column " + exception.getColumnNumber());
+    System.out.println(" in entity " + exception.getSystemId());
+    
+  }
+  
+  public void error(SAXParseException exception) {
+     
+    System.out.println("Error: " + exception.getMessage());
+    System.out.println(" at line " + exception.getLineNumber() 
+     + ", column " + exception.getColumnNumber());
+    System.out.println(" in entity " + exception.getSystemId());
+    
+  }
+  
+  public void fatalError(SAXParseException exception) {
+     
+    System.out.println("Fatal Error: " + exception.getMessage());
+    System.out.println(" at line " + exception.getLineNumber() 
+     + ", column " + exception.getColumnNumber()); 
+    System.out.println(" in entity " + exception.getSystemId());
+     
+  }
+  
+  public static void main(String[] args) {
+  
+    if (args.length &lt;= 0) {
+      System.out.println("Usage: java BestSAXChecker URL");
+      return;
+    }
+    String document = args[0];
+    
+    try {
+      XMLReader parser = XMLReaderFactory.createXMLReader();
+      ErrorHandler handler = new BestSAXChecker();
+      parser.setErrorHandler(handler);
+      parser.parse(document);
+      // If the document isn't well-formed, an exception has
+      // already been thrown and this has been skipped.
+      System.out.println(document + " is well-formed.");
+    }
+    catch (SAXParseException e) {
+      System.out.print(document + " is not well-formed at ");
+      System.out.println("Line " + e.getLineNumber() 
+       + ", column " +  e.getColumnNumber() );
+      System.out.println(" in entity " + e.getSystemId());
+    }
+    catch (SAXException e) {
+      System.out.println("Could not check document because " 
+       + e.getMessage());
+    }
+    catch (IOException e) { 
+      System.out.println(
+       "Due to an IOException, the parser could not check " 
+       + document
+      ); 
+    }
+  
+  }
+
+}
+</pre></div><p>
+   Here&#8217;s the
+   output from running <tt>BestSAXChecker</tt> 
+   across the Docbook XML source code
+   for an early version of this chapter:
+  </p><pre class="screen"><tt>%</tt><b><tt>java -Dorg.xml.sax.driver=org.apache.xerces.parsers.SAXParser
+ BestSAXChecker xmlreader.xml</tt></b>
+<tt>Error: The namespace prefix "xinclude" was not declared.
+ at line 349, column 92
+ in entity file:///D:/books/XMLJAVA/xmlreader.xml
+Error: The namespace prefix "xinclude" was not declared.
+ at line 530, column 95
+ in entity file:///D:/books/XMLJAVA/xmlreader.xml
+Error: The namespace prefix "xinclude" was not declared.
+ at line 545, column 84
+ in entity file:///D:/books/XMLJAVA/xmlreader.xml
+Error: The namespace prefix "xinclude" was not declared.
+ at line 688, column 93
+ in entity file:///D:/books/XMLJAVA/xmlreader.xml
+Fatal Error: The element type "para" must be terminated by the 
+matching end-tag "&lt;/para&gt;".
+ at line 706, column 42
+ in entity file:///D:/books/XMLJAVA/xmlreader.xml
+Could not check document because Stopping after fatal error: 
+The element type "para" must be terminated by the matching 
+ end-tag "&lt;/para&gt;".</tt></pre><p>
+    <tt>BestSAXChecker</tt> complains several
+    times about an undeclared namespace prefix for  
+    the XInclude elements I use to merge in  
+    source code examples like <a href="ch07s03.html#BestSAXChecker.java" title="Example&nbsp;7.8.&nbsp;A SAX program that reports all problems found in an XML document">Example&nbsp;7.8</a>.
+    Then about three quarters of the way through the document, it
+    encounters a well-formedness error where I neglected to put an
+    end-tag in the right place. At this point parsing stops.
+    If there are any errors after that point, they aren&#8217;t
+    reported. Once I fixed those problems, the file became
+    well-formed and valid:
+  </p><pre class="screen"><tt>%</tt><b><tt>java -Dorg.xml.sax.driver=org.apache.xerces.parsers.SAXParser
+ BestSAXChecker xmlreader.xml</tt></b>
+<tt>xmlreader.xml is well-formed.</tt></pre><p>
+    Beyond simple well-formedness, which errors this program
+    catches depends on the underlying parser.
+    All conformant parsers detect all well-formedness
+    errors.
+    Most modern parsers should also catch any violations of
+    namespace well-formedness.
+    Whether this program catches validity errors depends on the
+    parser. Most parsers do not validate by default.
+    Instead they require the client application to explicitly request validation by
+    setting the <tt>http://xml.org/sax/features/validation</tt> 
+    feature to true. I take this subject up next. 
+  </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch07s02.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch07.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch07s04.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Input&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Features and Properties</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+May 26,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

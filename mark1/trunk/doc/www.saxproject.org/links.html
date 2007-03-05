@@ -1,0 +1,232 @@
+<html><head>
+    <title>SAX</title>
+    <style type="text/css"><!--
+	h1, h2, h3, h4, h5, h6 { color: maroon; }
+	/* make sure that goes OK with the nav column background
+	 * net-friendly colors include: yellow/ffffcc, blue/ccccff
+	 */
+    --></style>
+</head><body color="#000000" bgcolor="#eeeeff">
+    <table border="0" width="100%" cellpadding="15" cellspacing="0" ><tr>
+        <td valign="top" align="left" color="#000000" bgcolor="#ffffff">
+
+    <table border="0" cellpadding="0" cellspacing="0">
+    <tr><td class="toc">
+    <h2>SAX</h2><b>General</b><br />&nbsp;<a href="about.html">About SAX</a><br />
+	&nbsp;<a href="copying.html">Copyright Status</a><br />
+	&nbsp;<a href="event.html">Events vs. Trees</a><br />
+	&nbsp;<a href="faq.html">FAQ</a><br />
+	&nbsp;<em>Links</em><br />
+	<br />
+	<b>Java API</b><br />&nbsp;<a href="quickstart.html">Quickstart</a><br />
+	&nbsp;<a href="get-set.html">Features and Properties</a><br />
+	&nbsp;<a href="filters.html">Filters</a><br />
+	&nbsp;<a href="namespaces.html">Namespaces</a><br />
+	&nbsp;<a href="http://www.saxproject.org/apidoc/overview-summary.html">JavaDoc</a><br />
+	<br />
+	<b>SAX Evolution</b><br />&nbsp;<a href="sax1-history.html">Genesis</a><br />
+	&nbsp;<a href="sax1-roadmap.html">SAX 1.0 Overview</a><br />
+	&nbsp;<a href="sax2-history.html">SAX 2.0 Changes</a><br />
+	&nbsp;<a href="sax2-ext.html">SAX 2.0 Extensions</a><br />
+	&nbsp;<a href="langs.html">Other Languages</a><br />
+	<br />
+	<b>SourceForge Services</b><br />&nbsp;<a href="http://sourceforge.net/tracker/?group_id=29449">Bugs/RFEs</a><br />
+	&nbsp;<a href="http://sourceforge.net/projects/sax/">Project Page</a><br />
+	<br />
+	<br />
+	</td></tr></table>
+
+    
+    <p>
+    <a href="http://www.sourceforge.net/">
+    <img border="0" src="http://sourceforge.net/sflogo.php?group_id=29449&amp;type=1"
+	height="31" width="88"
+	alt="SourceForge Logo" />
+    </a>
+
+    </p>
+
+    </td>
+
+    <td width="80%" valign="top" align="left">
+    <h2>Links</h2><div><p> This page is intended to accumulate a variety of
+links to significant external SAX-related work, primarily
+using <a href="http://www.w3c.org/XML">XML</a>.
+There's so much SAX-related work that it can't possibly
+be a complete listing.
+</p>
+
+<p>Got a tip? 
+Send me a <a href="mailto:dbrownell@users.sourceforge.net">note</a>.
+</p>
+
+<h3>SAX2 Parsers in Java</h3>
+
+<p> This is a collection of some of the XML parsers which
+support the SAX2 interfaces.
+</p>
+
+<ul>
+    <li><a href="http://www.gnu.org/software/classpathx/jaxp">&AElig;lfred2</a>,
+	part of the GNU JAXP project.  Includes a SAX2 pipeline package
+	and other SAX2 utilities including a SAX2 DOM parser.
+	</li>
+    <li><a href="http://xml.apache.org/crimson">Crimson</a>,
+	bundled into JDK 1.4 and later to provide JAXP support;
+	part of the Apache XML project
+	</li>
+    <li><a href="http://xml.apache.org/xerces-j">Xerces-J</a>,
+	part of the Apache XML project, also supports JAXP
+	</li>
+    <li><a href="http://technet.oracle.com/tech/xml">Oracle's XML
+	Parser for Java v2</a> supports SAX2
+	</li>
+    <li><a href="http://piccolo.sourceforge.net">Piccolo</a> is unique
+	in that it's built using parser generators, rather than using
+	a recursive descent parser.  (So it seems likely to sacrifice
+	conformance for speed ... it's quite new yet.)
+	</li>
+    <li><a href="http://www.geocities.com/siaparser">The System Integration
+	Automation Parser for XML</a> includes a layer which tracks some
+	kinds of parse tree context, to address some kinds of "business
+	logic".  (Also quite new.)
+	</li>
+    <li><a href="http://www.jclark.com/xml/xp/">XP 0.5</a> by James Clark
+	is still fast enough and conformant enough to consider using
+	if you want a nonvalidating parser.
+	It's no longer maintained, and only includes a SAX1 driver,
+	but here's a <a href="SAX2Driver.java">SAX2 Driver</a> for it.
+	</li>
+    <li>... more?
+	</li>
+</ul>
+
+<p>Also, since Sun's <a href='http://java.sun.com/xml'>JAXP</a> 1.1 API
+incorporates SAX2, any SAX parser bootstapped with JAXP 1.1 supports
+both SAX2 and the &#x201c;SAX Extensions 1.0&#x201d; interfaces.
+JAXP 1.1 is included with JDK 1.4, but you should manually update it
+to use SAX 2.0.1 instead of the older version (which is missing some
+bugfixes).
+</p>
+
+<p>SAX1 parsers should still be usable with the SAX2 <a href=
+"/apidoc/org/xml/sax/helpers/ParserAdapter.html">ParserAdapter</a>
+class.  (See the simple driver for XP, above.)
+Most of them have been updated to include SAX2 support.
+There's also the
+<a href="http://www.docuverse.com/htmlsdk/index.html">Docuverse
+HTML SDK</a> which provides a SAX1 wrapper around the
+HTML parser found in Swing.  (Swing's parser has significant
+limitations, but it may meet some of your requirements.)
+</p>
+
+<p>If you're interested in SAX parsers that support only subsets
+of XML, there are a lot of them.
+For example, see
+<a href="http://www.wilson.co.uk/xml/minml.htm">MinML</a>
+and <a href="http://www.wilson.co.uk/xml/minml2.htm">MinML2</a>.
+If the reason you're looking at XML subsets is parser size,
+perhaps for embedded environments, look at &AElig;lfred2 
+to see about how small a fully conformant SAX2 parser can be.
+(That has a non-validating parser at its core, as well as
+optional validation and JAXP layers.  It's larger than
+MinML2 since it supports all of XML 1.0 and XML Namespaces.)
+</p>
+
+<h3>Books and Articles about SAX2 </h3>
+
+<p>There are a lot written about how to use SAX with XML.
+This is only a subset of the resources you can find. </p>
+
+<ul>
+    <li><a href="http://www.oreilly.com/catalog/sax2">SAX2</a>
+	... O'Reilly book on SAX</li>
+    <li><a href="http://www.xml.com/pub/a/2001/12/05/sax2.html">Ten
+	SAX2 tips</a> ... for Java programmers </li>
+    <li><a href="http://nostarch.com/sax.htm">The Book of SAX</a>
+	... a SAX book</li>
+    <li><a href="http://www.xml.com/search/index.ncsp?sp-q=SAX">XML.com
+	search for "SAX"</a> ... lots of stories, not just Java</li>
+    <li><a href="http://www.jdance.com/xmlsax.shtml">SAX News
+	and Articles</a> ... jdance.com, seemingly not very current </li>
+    <li><em>...more to come ...</em>
+</ul>
+
+<h3>Software Using SAX2 </h3>
+
+<p> This is is an incomplete list of interesting software using SAX,
+which focusses on infrastructure rather than applications.</p>
+
+<ul>
+    <li><a href="http://jade.dautelle.com">JADE</a>, the
+	<em>Java&#153; Addition to Default Environment</em>,
+	supports manipulation of physical quantities and their units,
+	and 
+	storage of common Java classes in XML representations.
+	</li>
+    <li><a href="http://www.thaiopensource.com/relaxng/jing.html">Jing</a>
+	is a validator for the RelaxNG schema system
+	</li>
+<!--
+    <li><a href="http://newsml-toolkit.sourceforge.net">NewsML Toolkit</a>
+	for news industry packaging and metadata
+	(SourceForge project).
+	</li>
+-->
+    <li><a href="http://xmlconf.sourceforge.net/?selected=sax">SAX/XML
+	conformance testing</a> support at the SourceForge xmlconf project.
+	</li>
+    <li><a href="http://saxon.sourceforge.net">SAXON</a>
+	is a popular XSLT engine built over SAX2
+	</li>
+    <li><a href="http://www.geocities.com/takuki_kamiya/pub/saxnavi.html"
+	>SAX Navigator</a> manages a thread that does the SAX reading
+	for your application, so your code can "pull" XML data instead
+	of having it "pushed".
+	</li>
+    <li><a href="http://iso-relax.sourceforge.net/">ISO
+	RELAX</a> software (another SourceForge project!) provides a
+	standard API for the original RELAX schema system.
+	Schema validators can be XML filters.
+	</li>
+    <li><a href="http://www.sun.com/software/xml/developers/multischema/"
+	>Sun's Multi-Schema Validator</a> uses RELAX API with several
+	different schema systems, including TREX, RELAX-NG, and W3C Schemas.
+	</li>
+    <li><a href="http://xml.apache.org/cocoon2/">Cocoon v2</a> is
+	an Apache project for a web publishing framework.  The
+	basic paradigm is that a kind of SAX2 pipeline should be
+	used to connect content generation and management components.
+	</li>
+</ul>
+
+<p>Of course, SAX1 applications still work with SAX2,
+although they won't be able to leverage XML Namespaces
+very easily, or work at all with information exposed
+through the extension interfaces.
+</p>
+
+<h3>XML-DEV</h3>
+
+<p> SAX started out on the XML-DEV mailing list.
+That list is currently hosted at
+<a href='http://www.xml.org'>http://www.xml.org</a>;
+you can subscribe at
+<a href='http://lists.xml.org/ob/adm.pl'>http://lists.xml.org/ob/adm.pl</a>
+and view archives at 
+<a href='http://lists.xml.org/archives/xml-dev'
+>http://lists.xml.org/archives/xml-dev</a>
+(and there's also the old archive at Imperial College,
+URL TBS).
+</p>
+
+<p> Current XML development uses the lists at SourceForge
+(see the Project Page link at the left), but issues raised
+on xml-dev will likely get appropriate attention also.
+</p>
+</div>
+    <br />
+
+    </td></tr></table>
+
+    </body></html>

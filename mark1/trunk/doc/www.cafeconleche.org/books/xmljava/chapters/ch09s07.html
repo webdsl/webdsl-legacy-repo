@@ -1,0 +1,665 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>The Node Interface</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="previous" href="ch09s06.html" title="Parsing documents with a DOM Parser"><link rel="next" href="ch09s08.html" title="The NodeList interface"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"><link rel="subsection" href="ch09s07.html#d0e15424" title="Node Types"><link rel="subsection" href="ch09s07.html#d0e15483" title="Node Properties"><link rel="subsection" href="ch09s07.html#d0e15642" title="Navigating the tree"><link rel="subsection" href="ch09s07.html#d0e15709" title="Modifying the tree"><link rel="subsection" href="ch09s07.html#d0e15831" title="Utility Methods"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">The Node Interface</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch09s06.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;9.&nbsp;The Document Object Model</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch09s08.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e15402"></a>The Node Interface</h2></div></div><p>
+      Once you&#8217;ve parsed the document and formed an 
+      <tt>org.w3c.dom.Document</tt> object, you can
+      forget about the differences between the various parsers
+      and just work with the standard DOM interfaces
+      (at least until you want to write the document back out to
+      a file again. Then you have to consider parser-specific
+      classes or JAXP once more.)
+    </p><p>
+      All the nodes in the tree are represented by 
+      instances of the <tt>Node</tt> interface
+      summarized in <a href="ch09s07.html#CompactNode.java" title="Example&nbsp;9.8.&nbsp;The Node interface">Example&nbsp;9.8</a>.
+    </p><div class="example"><a name="CompactNode.java"></a><p class="title"><b>Example&nbsp;9.8.&nbsp;The Node interface</b></p><pre class="programlisting">package org.w3c.dom;
+
+public interface Node {
+
+  // Node type constants
+  public static final short ELEMENT_NODE                = 1;
+  public static final short ATTRIBUTE_NODE              = 2;
+  public static final short TEXT_NODE                   = 3;
+  public static final short CDATA_SECTION_NODE          = 4;
+  public static final short ENTITY_REFERENCE_NODE       = 5;
+  public static final short ENTITY_NODE                 = 6;
+  public static final short PROCESSING_INSTRUCTION_NODE = 7;
+  public static final short COMMENT_NODE                = 8;
+  public static final short DOCUMENT_NODE               = 9;
+  public static final short DOCUMENT_TYPE_NODE          = 10;
+  public static final short DOCUMENT_FRAGMENT_NODE      = 11;
+  public static final short NOTATION_NODE               = 12;
+
+  // Node properties
+  public String   getNodeName();
+  public String   getNodeValue() throws DOMException;
+  public void     setNodeValue(String nodeValue) 
+   throws DOMException;
+  public short    getNodeType();
+  public String   getNamespaceURI();
+  public String   getPrefix();
+  public void     setPrefix(String prefix) throws DOMException;
+  public String   getLocalName();
+
+  // Navigation methods 
+  public Node         getParentNode();
+  public boolean      hasChildNodes();
+  public NodeList     getChildNodes();
+  public Node         getFirstChild();
+  public Node         getLastChild();
+  public Node         getPreviousSibling();
+  public Node         getNextSibling();
+  public Document     getOwnerDocument();
+  public boolean      hasAttributes();
+  public NamedNodeMap getAttributes();
+
+  // Manipulator methods 
+  public Node insertBefore(Node newChild, Node refChild)
+   throws DOMException;
+  public Node replaceChild(Node newChild,  Node oldChild)
+   throws DOMException;
+  public Node removeChild(Node oldChild) throws DOMException;
+  public Node appendChild(Node newChild) throws DOMException;
+
+  // Utility methods
+  public Node cloneNode(boolean deep);
+  public void normalize();
+  public boolean isSupported(String feature, String version);
+
+}
+</pre></div><p>
+          You can do quite a lot with just this interface alone.
+      You can add, move, remove, and copy nodes in the tree.
+      You can walk the tree while reading the 
+      names and values of everything in the tree.
+      This interface can be roughly divided into five sections: 
+      node type constants, methods to set and get node properties,
+      methods to navigate the DOM tree, methods to add and remove
+      children of a node,
+      and a few utility methods. Let&#8217;s take them in that order.
+    </p><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e15424"></a>Node Types</h3></div></div><p>
+      There are twelve constants for the twelve named node types
+      defined in the DOM core, and a method that returns the
+      type of the current node using one of these constants.
+      To a Java programmer, these are
+      just weird all around. First of all, you&#8217;d probably expect
+      to use <tt>instanceof</tt>,
+      <tt>getClass()</tt>, and class names to
+      test for types when necessary instead of short constants
+      and a <tt>getNodeType()</tt> method.
+      And even if for some strange reason
+      you did use named constants, you&#8217;d probably use the
+      type-safe enum pattern if you were familiar with it
+      or ints
+      if you weren&#8217;t. Either way, a short constant is just plain
+      weird. 
+    </p><p>
+      What&#8217;s going on here is that DOM is
+      not designed in or for Java.
+      It is written in IDL and intended for all object-oriented
+      languages, including C++, Python, Perl, JavaScript, and
+      more. This means it has to make a lot of compromises to
+      support the broad range of capabilities of those different
+      languages. For example,
+      AppleScript doesn&#8217;t have any equivalent
+      to Java&#8217;s 
+      <tt>instanceof</tt> operator that allows it to test
+      whether a variable is an instance of a particular
+      class.
+      Prior to version 1.4, JavaScript
+       didn&#8217;t have one either.  Some older C++ compilers 
+       don&#8217;t support runtime type information.
+      (RTTI) and no C compilers do.
+      Consequently, the DOM
+      can&#8217;t rely on these features because it has to work in
+      those languages. Therefore, it has to reinvent things
+      Java already has.
+    </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Note</h3><p>
+       Using a <tt>getNodeType()</tt>
+       method also 
+       allows a single class to implements more than one of the
+       standard
+       interfaces, which is possible because Java supports multiple interface  
+       inheritance. For instance, an implementation might use
+       a single <tt>NodeImpl</tt> 
+       class for all
+       twelve different sub-interfaces of <tt>Node</tt>. 
+       Then, an object  
+       could simultaneously be an instance of <tt>Comment</tt>,
+       <tt>Element</tt>, <tt>Text</tt>,
+       and all the other things besides.
+       I've seen exactly one DOM implementation that does this.
+       The Saxon XSLT processor
+       (about which more in <a href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath">Chapter&nbsp;16</a>)
+       uses its <tt>NodeImpl</tt> to represent
+       all non-document and and non-element nodes.       
+       However, all the general purpose DOM implementations
+       I've encountered use a separate class for each separate
+       node type.
+     </p></div><p>
+      The issue of the short constants is a little different.
+      Here, DOM has just chosen to implement a different
+      language&#8217;s
+      idioms rather than Java&#8217;s. In this case, it&#8217;s following
+      the C++ conventions, where shorts and short constants are 
+      much more common than they 
+      are in Java. As for using integers instead of type-safe enums, 
+      I suspect the DOM group simply felt that type-safe enums
+      were too complicated to implement in IDL (if they
+      considered the possibility of type-safe enums at all).
+      After all, this whole set of node types is really just a
+      hack for languages whose reflection isn&#8217;t as complete as
+      Java&#8217;s. 
+    </p><p>
+      <a href="ch09s07.html#NodeTyper.java" title="Example&nbsp;9.9.&nbsp;Changing short type constants to strings">Example&nbsp;9.9</a> is  a simple utility class
+      that uses the <tt>getNodeType()</tt>
+      method and these constants
+      to returns a string specifying the type of the
+      node. In itself, it isn&#8217;t very interesting;
+      but I&#8217;ll need this for a few of the later programs. 
+    </p><div class="example"><a name="NodeTyper.java"></a><p class="title"><b>Example&nbsp;9.9.&nbsp;Changing short type constants to strings</b></p><pre class="programlisting">import org.w3c.dom.Node;
+
+
+public class NodeTyper {
+
+   public static String getTypeName(Node node) {
+    
+    int type = node.getNodeType();
+    /* Yes, getNodeType() returns a short, but Java will
+       almost always upcast this short to an int before
+       using it in any operation, so we might as well just go
+       ahead and use the int in the first place. */
+    
+    switch (type) {
+      case Node.ELEMENT_NODE: return "Element";
+      case Node.ATTRIBUTE_NODE: return "Attribute";
+      case Node.TEXT_NODE: return "Text";
+      case Node.CDATA_SECTION_NODE: return "CDATA Section";
+      case Node.ENTITY_REFERENCE_NODE: return "Entity Reference";
+      case Node.ENTITY_NODE: return "Entity";
+      case Node.PROCESSING_INSTRUCTION_NODE: return "Processing Instruction";
+      case Node.COMMENT_NODE: return "Comment";
+      case Node.DOCUMENT_NODE: return "Document";
+      case Node.DOCUMENT_TYPE_NODE: return "Document Type Declaration";
+      case Node.DOCUMENT_FRAGMENT_NODE: return "Document Fragment";
+      case Node.NOTATION_NODE: return "Notation";
+      default: return "Unknown Type"; 
+   /* It is possible for the default case to be
+      reached. DOM only defines 12 kinds of nodes, but other
+      application specific DOMs can add their own as well.
+      You're not likely to encounter these while parsing an
+      XML document with a standard parser, but you might
+      encounter such things with custom parsers designed for
+      non-XML documents. DOM Level 3 XPath does define a 
+      thirteenth kind of node, XPathNamespace. */
+    }
+    
+  }
+
+}
+</pre></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e15483"></a>Node Properties</h3></div></div><p>
+      The next batch of methods allow you to get and, in a couple of
+      cases, set the common node properties. Although all nodes
+      have these methods, they don&#8217;t necessarily return a
+      sensible value for every kind of node. 
+      For example, only element and attribute nodes have namespace
+      URIs. <tt>getNamespaceURI()</tt> returns null when 
+      invoked on any other kind of node. The 
+      <tt>getNodeName()</tt>
+      method returns the complete name for nodes that have names, and
+      <tt>#<i><tt>node-type</tt></i></tt>
+      for nodes that don&#8217;t have names; i.e. 
+      <tt>#document</tt>, <tt>#text</tt>, 
+      <tt>#comment</tt>, etc.
+   </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>getNodeName</b></span>();</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>getNodeValue</b></span>()<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">DOMException</span>;</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>setNodeValue</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>value</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">DOMException</span>;</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">short&nbsp;</span><span class="methodname"><b>getNodeType</b></span>();</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>getNamespaceURI</b></span>();</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>getPrefix</b></span>();</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setPrefix</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>prefix</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">DOMException</span>;</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>getLocalName</b></span>();</code><p>
+      <a href="ch09s07.html#PropertyPrinter.java" title="Example&nbsp;9.10.&nbsp;A class to inspect the properties of a node">Example&nbsp;9.10</a> is another simple
+      utility class that accepts a <tt>Node</tt> 
+      as an argument and prints
+      out the values of its non-null properties. 
+      Again, I&#8217;ll be using this class shortly in
+      another program.
+    </p><div class="example"><a name="PropertyPrinter.java"></a><p class="title"><b>Example&nbsp;9.10.&nbsp;A class to inspect the properties of a node</b></p><pre class="programlisting">import org.w3c.dom.*;
+import java.io.*;
+
+
+public class PropertyPrinter {
+
+  private Writer out;
+  
+  public PropertyPrinter(Writer out) {
+    if (out == null) {
+      throw new NullPointerException("Writer must be non-null.");
+    }
+    this.out = out;
+  }
+  
+  public PropertyPrinter() {
+    this(new OutputStreamWriter(System.out));
+  }
+  
+  private int nodeCount = 0;
+  
+  public void writeNode(Node node) throws IOException {
+    
+    if (node == null) {
+      throw new NullPointerException("Node must be non-null.");
+    }
+    if (node.getNodeType() == Node.DOCUMENT_NODE 
+     || node.getNodeType() == Node.DOCUMENT_FRAGMENT_NODE) { 
+      // starting a new document, reset the node count
+      nodeCount = 1; 
+    }
+    
+    String name      = node.getNodeName(); // never null
+    String type      = NodeTyper.getTypeName(node); // never null
+    String localName = node.getLocalName();
+    String uri       = node.getNamespaceURI();
+    String prefix    = node.getPrefix();
+    String value     = node.getNodeValue();
+    
+    StringBuffer result = new StringBuffer();
+    result.append("Node " + nodeCount + ":\r\n");
+    result.append("  Type: " + type + "\r\n");
+    result.append("  Name: " + name + "\r\n");
+    if (localName != null) {
+      result.append("  Local Name: " + localName + "\r\n");
+    }
+    if (prefix != null) {
+      result.append("  Prefix: " + prefix + "\r\n");
+    }
+    if (uri != null) {
+      result.append("  Namespace URI: " + uri + "\r\n");
+    }
+    if (value != null) {
+      result.append("  Value: " + value + "\r\n");
+    }
+    
+    out.write(result.toString());
+    out.write("\r\n");
+    out.flush();
+    
+    nodeCount++;
+    
+  }
+
+}
+</pre></div><p>
+      Notice once again the use of polymorphism. 
+      The <tt>writeNode()</tt> method operates on
+      a <tt>Node</tt> object without any
+      clue what its actual type is. It prints the properties of
+      the node onto the configured <tt>Writer</tt>
+      in the following form:
+    </p><pre class="screen">Node 16:
+  Type: Text
+  Name: #text
+  Value: RHAT</pre><p>
+     The format changes depending on what kind of node is passed to it. 
+   </p><p>
+     There are also two methods in the <tt>Node</tt> interface
+     that can change
+     a node. 
+     <tt>setPrefix()</tt> changes a node&#8217;s
+     namespace prefix.
+     Trying to use an illegal or reserved prefix throws a <tt>DOMException</tt>.
+     This method has no effect on anything except an element or
+     an attribute node. 
+   </p><p>
+     The
+     <tt>setValue()</tt> method changes the node&#8217;s
+     string value. It can be used on comment, text, processing
+     instruction, and CDATA section nodes.
+     It has no effect on other kinds of nodes. 
+     It throws a
+     <tt>DOMException</tt> if the node you&#8217;re
+     setting is read-only (as a text node might be inside an
+     entity node.)
+     
+   </p><p>
+     The remaining properties cannot be set from the 
+     <tt>Node</tt> interface.
+     To change names, URIs, and such you have to use the more
+     specific interfaces like <tt>Element</tt>
+     and <tt>Attr</tt>.
+     Most of the time you&#8217;re better off using the more detailed
+     sub-interfaces if you&#8217;re trying to change a tree, anyway.
+   </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e15642"></a>Navigating the tree</h3></div></div><p>
+      The third batch of methods allow you to navigate the tree by finding
+      the parent, first child, last child, previous and next
+      siblings, and attributes of any node. Since not all nodes
+      have children, you should test for the
+      presence of these things with <tt>hasChildren()</tt> 
+        before 
+      calling the <tt>getFirstChild()</tt> and 
+      <tt>getLastChild()</tt>  methods.
+      You should also be prepared for any of these methods to
+      return null in the event that the requested node doesn&#8217;t exist.
+      Similarly, you should check 
+      <tt>hasAttributes()</tt>  before 
+      calling the  
+      <tt>getAttributes()</tt> method.
+      </p><p>
+      <a href="ch09s07.html#TreeReporter.java" title="Example&nbsp;9.11.&nbsp;Walking the tree with the Node interface">Example&nbsp;9.11</a> demonstrates with a
+      simple
+      program that recursively traverses the tree in a
+      preorder fashion. As each node is visited,
+      its name and value is printed using last section&#8217;s 
+      <tt>PropertyPrinter</tt> class. 
+      Once again, <tt>Node</tt>
+      is the only class used from DOM.  That&#8217;s the power of
+      polymorphism. You can do quite a lot without 
+      knowing exactly what it is you&#8217;re doing it to. 
+    </p><div class="example"><a name="TreeReporter.java"></a><p class="title"><b>Example&nbsp;9.11.&nbsp;Walking the tree with the Node interface</b></p><pre class="programlisting">import javax.xml.parsers.*;  // JAXP
+import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
+import java.io.IOException;
+
+
+public class TreeReporter {
+
+  public static void main(String[] args) {
+     
+    if (args.length &lt;= 0) {
+      System.out.println("Usage: java TreeReporter URL");
+      return; 
+    }
+     
+    TreeReporter iterator = new TreeReporter();
+    try {
+      // Use JAXP to find a parser
+      DocumentBuilderFactory factory 
+       = DocumentBuilderFactory.newInstance();
+      // Turn on namespace support
+      factory.setNamespaceAware(true);
+      DocumentBuilder parser = factory.newDocumentBuilder();
+      
+      // Read the entire document into memory
+      Node document = parser.parse(args[0]); 
+      
+      // Process it starting at the root
+      iterator.followNode(document);
+
+    }
+    catch (SAXException e) {
+      System.out.println(args[0] + " is not well-formed.");
+      System.out.println(e.getMessage());
+    }   
+    catch (IOException e) { 
+      System.out.println(e); 
+    }
+    catch (ParserConfigurationException e) { 
+      System.out.println("Could not locate a JAXP parser"); 
+    }
+  
+  } // end main
+
+  private PropertyPrinter printer = new PropertyPrinter();
+  
+  // note use of recursion
+  public void followNode(Node node) throws IOException {
+    
+    printer.writeNode(node);
+    if (node.hasChildNodes()) {
+      Node firstChild = node.getFirstChild();
+      followNode(firstChild);
+    }
+    Node nextNode = node.getNextSibling();
+    if (nextNode != null) followNode(nextNode);
+    
+  }
+
+}
+</pre></div><p>
+    Here&#8217;s the beginning of the output produced by 
+    running this program across <a href="ch09s04.html#xml-rpc.xml" title="Example&nbsp;9.2.&nbsp;An XML-RPC request document">Example&nbsp;9.2</a>:
+    </p><pre class="screen"><tt>% </tt><b><tt>java TreeReporter getQuote.xml</tt></b>
+<tt>Node 1:
+  Type: Document
+  Name: #document
+
+Node 2:
+  Type: Processing Instruction
+  Name: xml-stylesheet
+  Value: type="text/css" href="xml-rpc.css"
+
+Node 3:
+  Type: Comment
+  Name: #comment
+  Value:  It&#8217;s unusual to have an xml-stylesheet processing 
+     instruction in an XML-RPC document but it is legal, unlike 
+     SOAP where processing instructions are forbidden.
+
+
+Node 4:
+  Type: Document Type Declaration
+  Name: methodCall
+
+Node 5:
+  Type: Element
+  Name: methodCall</tt>
+  &#8230;</pre><p>
+    The key to this program is the 
+    <tt>followNode()</tt> method. 
+    It first writes the node using the
+    <tt>PropertyPrinter</tt>,
+    then recursively invokes <tt>followNode()</tt>  on the
+    current node&#8217;s first child and then its next sibling.
+    This is equivalent to XPath document order 
+    (children come before siblings).
+    The
+    <tt>hasChildNodes()</tt> method tests
+    whether there actually are children before asking for the
+    first child node. For siblings, we have to retrieve the next
+    sibling whether there is one or not, and then check to see
+    whether it&#8217;s null before dereferencing it. 
+  </p><p>
+      <tt>TreeReporter</tt> is actually very raw.
+      As you&#8217;ll see, DOM provides a lot of helper classes that
+      make operations like this much simpler to code.
+      However, it never hurts to keep in mind what all those
+      helper classes are doing behind the scenes, which is in
+      fact something very much like this.
+    </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e15709"></a>Modifying the tree</h3></div></div><p>
+     The <tt>Node</tt> interface has
+     four methods that change the tree by inserting,
+     removing, replacing, and appending children at points
+     specified by nodes in the tree:
+   </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">Node&nbsp;</span><span class="methodname"><b>insertBefore</b></span>(<span class="methodparam"><span class="type">Node&nbsp;</span><span class="parameter"><i>toBeInserted</i></span></span>, <span class="methodparam"><span class="type">Node&nbsp;</span><span class="parameter"><i>toBeInsertedBefore</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">DOMException</span>;</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">Node&nbsp;</span><span class="methodname"><b>replaceChild</b></span>(<span class="methodparam"><span class="type">Node&nbsp;</span><span class="parameter"><i>toBeInserted</i></span></span>, <span class="methodparam"><span class="type">Node&nbsp;</span><span class="parameter"><i>toBeReplaced</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">DOMException</span>;</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">Node&nbsp;</span><span class="methodname"><b>removeChild</b></span>(<span class="methodparam"><span class="type">Node&nbsp;</span><span class="parameter"><i>toBeRemoved</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">DOMException</span>;</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">Node&nbsp;</span><span class="methodname"><b>appendChild</b></span>(<span class="methodparam"><span class="type">Node&nbsp;</span><span class="parameter"><i>toBeAppended</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">DOMException</span>;</code><p>
+    All four of these methods throw a
+    <tt>DOMException</tt> if you try to use them to
+    make a document malformed; for instance, by removing the root
+    element or appending a child to a text node.
+    All four methods return the node 
+    being inserted/replaced/removed/appended.
+  </p><p>
+     You can only use these methods to move nodes around in the
+     same document. Although
+     <tt>removeChild()</tt>
+     and <tt>replaceChild()</tt> disconnect nodes
+     from a document&#8217;s tree, they do not change those
+     nodes&#8217;
+     owner document. The disconnected nodes cannot be placed in a
+     different document. Nodes are only allowed to be placed in
+     the document where they begin their life. Moving a node from
+     one document to another requires importing it, a technique
+     which I&#8217;ll take up in the next chapter.
+   </p><p>
+     It&#8217;s hard to come up with a plausible example of
+     these methods until I&#8217;ve shown you how to create new nodes.
+     That will be coming in the next chapter. In the meantime, 
+     <a href="ch09s07.html#Restructurer.java" title="Example&nbsp;9.12.&nbsp;A method that changes a document by reordering nodes">Example&nbsp;9.12</a> is a program that moves all
+     processing instruction nodes from inside the root element
+     to before the root element
+     and all comment nodes from inside the root element to 
+     after the root element.
+     For example, this document:
+     </p><div class="informalexample"><a name="example1.xml"></a><pre class="programlisting">&lt;?xml version="1.0"?&gt;
+&lt;document&gt;
+  Some data
+  &lt;!-- first comment --&gt;
+  &lt;?example first processing instruction ?&gt;
+  Some more data
+  &lt;!-- second comment --&gt;
+  &lt;?example second processing instruction ?&gt;
+  &lt;empty/&gt;
+&lt;/document&gt;
+</pre></div><p>
+     would become this document:
+     </p><div class="informalexample"><a name="example2.xml"></a><pre class="programlisting">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;?example first processing instruction ?&gt;
+&lt;?example second processing instruction ?&gt;&lt;document&gt;
+  Some data
+  
+  
+  Some more data
+  
+  
+  &lt;empty/&gt;
+&lt;/document&gt;&lt;!-- first comment --&gt;&lt;!-- second comment --&gt;</pre></div><p>
+     I don&#8217;t actually think this is a sensible thing to do. 
+     In particular, it inaccurately implies that comments and
+     processing instructions can be removed and reordered
+     willy-nilly without changing anything significant, which is
+     not true in general.
+     This is 
+     just the best example of these methods I could come up with 
+     without using too many classes and
+     interfaces we haven&#8217;t covered yet.
+     </p><div class="example"><a name="Restructurer.java"></a><p class="title"><b>Example&nbsp;9.12.&nbsp;A method that changes a document by reordering nodes</b></p><pre class="programlisting">import org.w3c.dom.*;
+
+
+public class Restructurer {
+
+  // Since this method only operates on its argument and does
+  // not interact with any fields in the class, it's 
+  // plausibly made static.
+  public static void processNode(Node current) 
+   throws DOMException {
+    
+    // I need to store a reference to the current node's next
+    // sibling before we delete the node from the tree, in which
+    // case it no longer has a sibling
+    Node nextSibling = current.getNextSibling();
+    
+    int nodeType = current.getNodeType();
+    if (nodeType == Node.COMMENT_NODE 
+     || nodeType == Node.PROCESSING_INSTRUCTION_NODE) {
+       
+      Node document = current.getOwnerDocument();
+      // Find the root element by looping through the children of 
+      // the document until we find the only one that's an 
+      // element node. There's a quicker way to do this once we 
+      // learn more about the Document class in the next chapter.
+      Node root = document.getFirstChild();
+      while (!(root.getNodeType() == Node.ELEMENT_NODE )) {
+        root = root.getNextSibling();
+      }
+
+      Node parent = current.getParentNode();
+      parent.removeChild(current);
+      if (nodeType == Node.COMMENT_NODE) {
+        document.appendChild(current);
+      }
+      else if (nodeType == Node.PROCESSING_INSTRUCTION_NODE) {
+        document.insertBefore(current, root);
+      }
+      
+    }
+    else if (current.hasChildNodes()) {
+      Node firstChild = current.getFirstChild();
+      processNode(firstChild);
+    }
+    
+    if (nextSibling != null) {
+      processNode(nextSibling);
+    }
+    
+  }
+
+}
+
+
+</pre></div><p>
+     This program walks the tree, 
+     calling the
+     <tt>removeChild()</tt> method every time
+     a comment or processing instruction node is spotted, and
+     then inserting the processing instruction
+     nodes before the root element with 
+     <tt>insertBefore()</tt>
+     and the comment nodes after the root element with
+     <tt>appendChild()</tt>. Both references to
+     the document node, the root element node, and the nearest
+     parent element node have to be stored at all times. 
+      The <tt>Document</tt> 
+     object is modified in place.
+   </p><p>
+     This program does not provide any means of outputting the
+     changed document into a file where you can look at it. That
+     too is coming. 
+   </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e15831"></a>Utility Methods</h3></div></div><p>Finally, there are three assorted utility methods:</p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">Node&nbsp;</span><span class="methodname"><b>cloneNode</b></span>(<span class="methodparam"><span class="type">boolean&nbsp;</span><span class="parameter"><i>deep</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>normalize</b></span>();</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>isSupported</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>feature</i></span></span>, <span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>version</i></span></span>);</code><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e15871"></a>normalize()</h4></div></div><p>
+      The <tt>normalize()</tt>
+      method descends the tree from the given node and 
+      merges all adjacent text nodes. Empty text nodes are
+      deleted. 
+      This operation makes
+      DOM roughly equivalent to an XPath data
+      model in which each text node contains the maximum
+      contiguous run of text not interrupted by markup.
+      However, <tt>normalize()</tt> does not
+      merge CDATA section nodes, which XPath would require.
+      </p><p>
+       The easiest approach is just
+       to invoke <tt>normalize()</tt> on the 
+       <tt>Document</tt> 
+       object as soon as you get it. For example,
+     </p><div class="informalexample"><pre class="programlisting">  Document document = parser.parse(document);
+  document.normalize();</pre></div></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e15893"></a>cloneNode()</h4></div></div><p>
+      The <tt>cloneNode()</tt>
+      method makes a copy of the given node.
+      If the <tt>deep</tt> argument is true, then the copy contains the full contents
+      of the node including all its descendants.
+      If the <tt>deep</tt> argument is false, then the clone
+      does not contain copies of
+      the original node&#8217;s children.
+      The cloned node is disconnected; that is, it is not a
+      child of the original node&#8217;s parent. However, it does
+      belong to the original node&#8217;s document, even though it
+      doesn&#8217;t have a position in that document&#8217;s tree. It can be
+      added via <tt>insertBefore()</tt> or
+      <tt>appendNode()</tt>, or 
+      <tt>replaceNode()</tt>.
+      Conversely, the clone cannot be inserted into a different
+      document. To make a copy for a different document, 
+      use the
+      <tt>importNode()</tt> method in the 
+      <tt>Document</tt>  interface instead.
+      We&#8217;ll look at this in the next chapter.
+      </p></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e15922"></a>isSupported()</h4></div></div><p>
+      The <tt>isSupported()</tt>
+      method determines whether or not this node provides a given
+      feature. For instance, you can pass the string 
+      <tt>"Events"</tt> to
+      this method to find out whether or not this one node supports the
+      events module.
+      The version number for all DOM2 features is 2.0.
+      </p><p>
+         The <tt>isSupported()</tt>
+      method isn&#8217;t used much, since there&#8217;s not a lot of
+        point to asking for the features an individual node
+        supports. There&#8217;s a similar method named 
+        <tt>hasFeature()</tt> in the 
+        <tt>DOMImplementation</tt> interface
+        that&#8217;s more useful.
+      </p></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch09s06.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch09.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch09s08.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Parsing documents with a DOM Parser&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;The NodeList interface</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+March 06,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

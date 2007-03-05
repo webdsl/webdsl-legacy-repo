@@ -1,0 +1,230 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>The ProcessingInstruction Interface</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="previous" href="ch11s07.html" title="The Attr Interface"><link rel="next" href="ch11s09.html" title="The Comment Interface"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">The ProcessingInstruction Interface</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch11s07.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;11.&nbsp;The Document Object Model Core</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch11s09.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e19174"></a>The ProcessingInstruction Interface</h2></div></div><p>
+     The <tt>ProcessingInstruction</tt> interface
+     represents a processing instruction such as
+     <tt>&lt;?xml-stylesheet type="text/css" href="order.css"?&gt;</tt>
+     or <tt>&lt;?php echo "Hello World";?&gt;</tt>. 
+  </p><p>
+  <a href="ch11s08.html#CompactProcessingInstruction.java" title="Example&nbsp;11.17.&nbsp;The ProcessingInstruction interface">Example&nbsp;11.17</a> summarizes the 
+  <tt>ProcessingInstruction</tt> interface.
+  This interface adds methods to get the target and the data
+  of the processing instruction as strings. Even if the data has
+  a pseudo-attribute format as in <tt>&lt;?xml-stylesheet
+  type="text/css" href="order.css"?&gt;</tt>.
+  DOM doesn&#8217;t recognize that. For this processing instruction the
+  target is <tt>xml-stylesheet</tt> and the data is
+  <tt>type="text/css" href="order.css"</tt>.
+  </p><div class="example"><a name="CompactProcessingInstruction.java"></a><p class="title"><b>Example&nbsp;11.17.&nbsp;The ProcessingInstruction interface</b></p><pre class="programlisting">package org.w3c.dom;
+
+public interface ProcessingInstruction extends Node {
+
+  public String getTarget();
+  public String getData();
+  public void   setData(String data) throws DOMException;
+
+}
+</pre></div><p>
+  As usual,  <tt>ProcessingInstruction</tt>
+  objects 
+  also have all the methods of the 
+  <tt>Node</tt> super-interface such as
+  <tt>getNodeName()</tt>
+  and <tt>getNodeValue()</tt>. The value of a
+  processing instruction is its data. However, processing
+  instructions do not have children, so <tt>Node</tt>
+  methods like 
+  <tt>getFirstChild()</tt> return null,
+  and methods like <tt>appendChild()</tt> throw a 
+  <tt>DOMException</tt> with the code
+  <tt>HIERARCHY_REQUEST_ERR</tt>.
+  </p><p>
+  As an example, let&#8217;s extend the earlier <tt>XLinkSpider</tt> 
+  program so that it respects <tt>robots</tt> processing
+  instructions. Such an instruction looks like this, and appears in the 
+  prolog of an XML document:
+  </p><div class="informalexample"><pre class="programlisting">&lt;?robots index="yes" follow="no"?&gt;</pre></div><p>
+    The semantics of this instruction is deliberately similar to
+    the robots <tt>META</tt> tag in HTML. That is, 
+    <tt>follow="yes"</tt> means robots should follow
+    links they find in this page, 
+    <tt>follow="no"</tt> means they shouldn&#8217;t.
+    Similarly,
+     <tt>index="yes"</tt> means search engines should include this page,
+     and <tt>index="no"</tt> means they shouldn&#8217;t.
+  </p><p>
+    Like many processing instructions, the syntax is based on
+    pseudo-attributes. DOM doesn&#8217;t provide any
+    means to parse these, even though it&#8217;s a very common format
+    for processing
+  instructions. However you can fake DOM out. What I&#8217;m going to
+  do is extract the target and data of the processing instruction and use
+  them to form a string that has this format:
+  </p><div class="informalexample"><pre class="programlisting">&lt;<i><tt>target</tt></i> <i><tt>data</tt></i>/&gt;</pre></div><p>
+   In other words, a processing instruction like 
+   <tt>&lt;?robots index="yes" follow="no"?&gt;</tt>
+   is going to
+   turn into a <tt>String</tt> like 
+   <tt>&lt;robots index="yes" follow="no" /&gt;</tt>.
+   This string is in turn a well-formed XML document that can be
+   parsed and its attributes extracted. Admittedly, this approach 
+   is very circuitous and probably not optimally efficient. However, 
+   it&#8217;s a lot easier to code and explain  than writing your own
+   mini-parser just to handle pseudo-attributes. <a href="ch11s08.html#PseudoAttributes.java" title="Example&nbsp;11.18.&nbsp;Reading PseudoAttributes from a ProcessingInstruction">Example&nbsp;11.18</a> is a simple utility class
+   that implements this hack. The parsing is completely hidden
+   inside the constructor, so if this is too offensive to your
+   sensibilities, you can replace it with more appropriate code without
+   changing the public interface. Since this class is quite
+   useful in practice, not merely an example for this 
+   book, I&#8217;ve placed it in the <tt>com.macfaq.xml</tt>
+   package. Don&#8217;t forget to configure your class and source paths 
+   appropriately when compiling it.
+  </p><div class="example"><a name="PseudoAttributes.java"></a><p class="title"><b>Example&nbsp;11.18.&nbsp;Reading PseudoAttributes from a ProcessingInstruction</b></p><pre class="programlisting">package com.macfaq.xml;
+
+import org.w3c.dom.*;
+import javax.xml.parsers.*;
+import org.xml.sax.*;
+import java.io.*;
+
+
+public class PseudoAttributes {
+
+  private NamedNodeMap pseudo;
+
+  public PseudoAttributes(ProcessingInstruction pi) 
+   throws SAXException {
+  
+    StringBuffer sb = new StringBuffer("&lt;");
+    sb.append(pi.getTarget());
+    sb.append(" ");
+    sb.append(pi.getData());
+    sb.append("/&gt;");
+    StringReader reader = new StringReader(sb.toString());
+    InputSource source = new InputSource(reader);
+    try {
+      DocumentBuilderFactory factory 
+       = DocumentBuilderFactory.newInstance();
+      DocumentBuilder parser = factory.newDocumentBuilder();
+      
+      // This line will throw a SAXException if the processing
+      // instruction does not use pseudo-attributes
+      Document doc = parser.parse(source);
+      Element root = doc.getDocumentElement();
+      pseudo = root.getAttributes();
+      
+    }
+    catch (FactoryConfigurationError e) { 
+      // I don't absolutely need to catch this, but I hate to 
+      // throw an Error for no good reason.
+      throw new SAXException(e.getMessage()); 
+    }    
+    catch (SAXException e) { 
+      throw e; 
+    }    
+    catch (Exception e) { 
+      throw new SAXException(e); 
+    }    
+    
+  }
+
+  // delegator methods
+  public Attr item(int index) {
+    return (Attr) pseudo.item(index);
+  }
+  
+  public int getLength() {
+    return pseudo.getLength();
+  }
+
+  public String getValue(String name) {
+    Attr att = (Attr) pseudo.getNamedItem(name);
+    if (att == null) return "";
+    return att.getValue();
+  }
+  
+}
+</pre></div><p>
+   This class makes it easy for the earlier
+   <tt>DOMSpider</tt> program to recognize the 
+   <tt>robots</tt> processing instruction.
+   I won&#8217;t repeat the entire program, most of which hasn&#8217;t changed. 
+   The relevant change is in the
+   <tt>spider()</tt> method. It now has to look
+   for a <tt>robots</tt> processing instruction 
+   in each document and
+   use that to decide whether or not to call
+   <tt>process()</tt> (<tt>index="yes|no"</tt>) and/or 
+   <tt>findLinks()</tt> (<tt>follow="yes|no"</tt>).
+  </p><div class="informalexample"><pre class="programlisting">  public void spider(String systemID) {
+    currentDepth++;
+    try {
+      if (currentDepth &lt; maxDepth) {
+        Document document = parser.parse(systemID);
+        
+        // Look for a robots PI with follow="no"
+        boolean index = true;
+        boolean follow = true;
+        NodeList children = document.getChildNodes();
+        for (int i = 0; i &lt; children.getLength(); i++) {
+          Node child = children.item(i); 
+          int type = child.getNodeType();
+          if (type == Node.PROCESSING_INSTRUCTION_NODE) {
+            ProcessingInstruction pi 
+             = (ProcessingInstruction) child; 
+            if (pi.getTarget().equals("robots")) {
+               PseudoAttributes pseudo = new PseudoAttributes(pi); 
+               if (pseudo.getValue("index").equals("no")) {
+                 index = false; 
+               }
+               if (pseudo.getValue("follow").equals("no")) {
+                 follow = false; 
+               }
+            }
+          }
+        } // end for
+        
+        if (index) process(document, systemID);
+        
+        if (follow) {
+          Vector toBeVisited = new Vector();
+          // search the document for uris, 
+          // store them in vector, and print them
+          findLinks(
+           document.getDocumentElement(), toBeVisited, systemID);
+    
+          Enumeration e = toBeVisited.elements();
+          while (e.hasMoreElements()) {
+            String uri = (String) e.nextElement();
+            visited.add(uri);
+            spider(uri); 
+          } // end while
+        } // end if 
+      
+      }
+    
+    }
+    catch (SAXException e) {
+      // Couldn't load the document, 
+      // probably not well-formed XML, skip it 
+    }
+    catch (IOException e) {
+      // Couldn't load the document, 
+      // likely network failure, skip it 
+    }
+    finally { 
+      currentDepth--;
+      System.out.flush();     
+    }
+      
+  }</pre></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch11s07.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch11.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch11s09.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">The Attr Interface&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;The Comment Interface</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+January 08,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

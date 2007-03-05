@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/2000/REC-xhtml1-20000126/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>XQuisitor</title>
+</head>
+<body>
+
+  <h1>XQuisitor</h1>
+  
+  <p>XQuisitor is a simple GUI interface for XQuery based on Michael Kay's 
+  <a href="http://saxon.sourceforge.net">Saxon 8</a>.
+  XQuisitor is free software, written in Java, published under the GPL.
+  It is an end-user application that has no public API
+  (at least not yet).  Java 1.4 is required.
+  </p>
+  
+  <ul>
+	<li><a href="xquisitor-1.0a5.zip">Zip file</a> </li>
+	<li><a href="xquisitor-1.0a5.tar.gz">.tar.gz</a> </li>
+</ul>
+
+<p>
+  XQuisitor is not complete unto itself. It depends on Saxon to do all the hard work of
+  querying. Saxon-B 8.4 is bundled. Saxon is Copyright 2003 Michael Kay, and
+  is published under the Mozilla Public License 1.0.
+ </p> 
+ 
+ <h2>Running XQuisitor</h2>
+ <p> 
+  The xquisitor.jar file is a runnable Jar archive. 
+  After you've decompressed the archive, you can run it from the command line like so:
+</p>
+
+<p><samp>% java -Xbootclasspath/p:lib/saxon8.jar -jar xquisitor-1.0a5.jar</samp></p>
+
+<p>
+If this doesn't work for you,
+you can launch it like this:
+</p>
+
+<p><samp>% java -classpath lib/saxon8.jar:xquisitor-1.0a5.jar com.macfaq.xquery.XQuisitor</samp></p>
+
+<p>
+Of course you should adjust the classpath to point to whereever you installed the two necessary jar files.
+</p>
+
+<p>
+The Ant build file can also create an <code>XQuisitor.jar</code> file which includes
+the necessary Saxon classes. This can be run without adjusting the bootclasspath.
+However, for licensing reasons a prebuilt version of this file
+is not included. You'll have to build it yourself. 
+</p>
+
+<p>
+Currently, XQuisitor has only been extensively tested on Linux
+and  Mac OS X.
+I'm working on improving the integration with various platforms. 
+</p>
+
+<p>
+  The interface should be self-explanatory. Just type your XQuery into the query box,
+  and press the Run Query button. Queries and output can be saved, loaded, cut, copied,
+  pasted, printed, etc. in the usual way. 
+  You can set a base URI and/or a context document to be used 
+  if the query uses relative URIs and/or relative
+  XPaths.
+</p>
+
+<p>
+If you would like to know more about XQuery, you might start with the 
+<a href="http://www.cafeconleche.org/slides/albany/xquery">notes from
+my XQuery presentation</a> to the XML Developers Network of the Capital District on
+January 21, 2004.
+</p>
+
+<p>
+  The current version is 1.0 alpha 5. Comments, bug fixes, user interface quibbles, etc.
+  are all appreciated. Send feedback to
+  <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;elharo%40metalab%2Eunc%2Eedu?Subject=XQuisitor">elharo&#64;metalab&#46;unc&#46;edu</a>
+</p>
+
+ <hr />
+<div align="center">[ <a href="http://www.cafeconleche.org">Cafe con Leche</a> | 
+<a href="http://www.cafeaulait.org">Cafe au Lait</a> ]</div>
+<hr />
+<p>Copyright 2004, 2005 <a href="http://www.elharo.com/">Elliotte Rusty Harold</a><br />
+<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;elharo%40metalab%2Eunc%2Eedu">elharo&#64;metalab&#46;unc&#46;edu</a><br />
+Last Modified April 23, 2005
+</p>
+
+</body>
+</html>

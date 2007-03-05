@@ -1,0 +1,234 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Receiving Elements</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="previous" href="ch06s04.html" title="Receiving Documents"><link rel="next" href="ch06s06.html" title="Handling Attributes"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Receiving Elements</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch06s04.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;6.&nbsp;SAX</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch06s06.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e8721"></a>Receiving Elements</h2></div></div><p>
+    In a very real sense, SAX reports tags, not elements.
+    When the parser encounters a start-tag, it calls the 
+    <tt>startElement()</tt> method.
+   When the parser encounters an end-tag, it calls the
+    <tt>endElement()</tt> method.
+   When the parser encounters an empty-element tag, it calls the
+    <tt>startElement()</tt> method and then the
+    <tt>endElement()</tt> method.
+  </p><p>
+    If an end-tag does not match its corresponding start-tag,
+    then the parser throws a
+    <tt>SAXParseException</tt>. 
+    Beyond that, however, you are responsible for tracking the 
+    hierarchy. For example, if you want to treat 
+    a <tt>params</tt> element
+    inside a <tt>methodCall</tt> element differently from
+    a <tt>params</tt> element
+    inside a <tt>fault</tt> element, then you&#8217;ll need to
+    store some form of state in-between calls to the 
+    <tt>startElement()</tt> and
+    <tt>endElement()</tt> methods. This is
+    actually quite common. Many SAX content handlers simply
+    build up a data structure as the document is parsed,
+    and then operate on that data structure once the document has
+    been completely read. Provided the data structure is simpler
+    than the XML document itself, this is a reasonable approach.
+    However in the most general case you can find yourself
+    inventing a complete object hierarchy to represent arbitrary
+    XML documents. In this case, you&#8217;re better off using DOM or
+    JDOM instead of SAX, since they&#8217;ll do the hard work of
+    defining and building this object hierarchy for you. 
+  </p><p>
+    The arguments to the
+    <tt>startElement()</tt> and
+    <tt>endElement()</tt> methods are similar:
+  </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>startElement</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>namespaceURI</i></span></span>, <span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>localName</i></span></span>, <span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>qualifiedName</i></span></span>, <span class="methodparam"><span class="type">Attributes&nbsp;</span><span class="parameter"><i>atts</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">SAXException</span>;</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>endElement</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>namespaceURI</i></span></span>, <span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>localName</i></span></span>, <span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>qualifiedName</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">SAXException</span>;</code><p>
+    First the namespace URI is passed as a <tt>String</tt>. If the element
+    is unqualified (i.e. it is not in a namespace), then this
+    argument is the empty string, not null.
+    </p><p>
+    Next the local name is passed as a <tt>String</tt>.
+    This is the part of the name after the prefix and the colon, if any.
+    For instance, if an element is named
+    <tt>SOAP-ENV:Body</tt>, then its local name is
+    <tt>Body</tt>.
+    However, if an element is named
+    <tt>Body</tt> with no prefix, then its local name is
+    still
+    <tt>Body</tt>.
+  </p><p>
+    The third argument contains the qualified name as a <tt>String</tt>.
+    This is the entire element name including the prefix and the colon, if any.
+    For instance, if an element is named
+    <tt>SOAP-ENV:Body</tt>, then its qualified name is
+    <tt>SOAP-ENV:Body</tt>.
+    However, if an  element is named
+    <tt>Body</tt> with no prefix, then its qualified name is
+    just
+    <tt>Body</tt>.
+  </p><p>
+    Finally in the <tt>startElement()</tt> method only,
+    the set of attributes for that element is passed as a
+    SAX-specific
+    <tt>Attributes</tt> object. I&#8217;ll discuss this in
+    the next section.
+  </p><p>
+    As an example I&#8217;m going to build a GUI representation of the tree structure of an 
+    XML document that allows you to collapse and expand the individual elements.
+    The GUI parts will be provided by a
+    <tt>javax.swing.JTree</tt>. The tree will be
+    filled in <tt>startElement()</tt>
+    and displayed in a window 
+    in <tt>endDocument()</tt>.
+    <a href="ch06s05.html#TreeViewer.java" title="Example&nbsp;6.7.&nbsp;A ContentHandler class&#xA; that builds a GUI representation of an XML document">Example&nbsp;6.7</a> shows how.
+  </p><div class="example"><a name="TreeViewer.java"></a><p class="title"><b>Example&nbsp;6.7.&nbsp;A ContentHandler class
+ that builds a GUI representation of an XML document</b></p><pre class="programlisting">import org.xml.sax.*;
+import org.xml.sax.helpers.*;
+import javax.swing.*;
+import javax.swing.tree.*;
+import java.util.*;
+
+
+public class TreeViewer extends DefaultHandler {
+
+  private Stack nodes;
+  
+  // Initialize the per-document data structures
+  public void startDocument() throws SAXException {
+    
+    // The stack needs to be reinitialized for each document
+    // because an exception might have interrupted parsing of a
+    // previous document, leaving an unempty stack.
+    nodes = new Stack();
+    
+  }
+ 
+  // Make sure we always have the root element
+  private TreeNode root;
+ 
+  // Initialize the per-element data structures
+  public void startElement(String namespaceURI, String localName,
+   String qualifiedName, Attributes atts) {
+  
+    String data;
+    if (namespaceURI.equals("")) data = localName;
+    else {
+      data = '{' + namespaceURI + "} " + qualifiedName;
+    }
+    MutableTreeNode node = new DefaultMutableTreeNode(data);
+    try {
+      MutableTreeNode parent = (MutableTreeNode) nodes.peek();
+      parent.insert(node, parent.getChildCount()); 
+    }
+    catch (EmptyStackException e) {
+      root = node; 
+    }
+    nodes.push(node);
+   
+  }
+  
+  public void endElement(String namespaceURI, String localName,
+   String qualifiedName) {
+    nodes.pop();
+  }
+
+  // Flush and commit the per-document data structures
+  public void endDocument() {
+    
+    JTree tree = new JTree(root);
+    JScrollPane treeView = new JScrollPane(tree);
+    JFrame f  = new JFrame("XML Tree");
+    
+    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    f.getContentPane().add(treeView);
+    f.pack();
+    f.show();
+    
+  }
+    
+
+  public static void main(String[] args) {
+      
+    try {
+      XMLReader parser = XMLReaderFactory.createXMLReader(
+        "org.apache.xerces.parsers.SAXParser"
+      );
+      ContentHandler handler = new TreeViewer();
+      parser.setContentHandler(handler);
+      for (int i = 0; i &lt; args.length; i++) {  
+        parser.parse(args[i]);
+      }
+    }
+    catch (Exception e) {
+      System.err.println(e);
+    }
+  
+  }   // end main()
+   
+} // end TreeViewer
+</pre></div><p>
+    The <tt>JTree</tt> class
+    provides a ready-made data structure for this program. All we
+    have to do is fill it. However, it&#8217;s also necessary to track
+    where we are in the XML hierarchy at all times so that the
+    parent to which the current node will be added is accessible.
+    For this purpose a stack is very helpful. The parent element
+    can be pushed onto the stack in
+    <tt>startElement()</tt> and popped off the
+    stack in <tt>endElement()</tt>. Since SAX&#8217;s
+    beginning-to-end parsing of an XML document equates to a 
+    depth-first tree traversal, the top
+    element in the stack always contains the most recently
+    visited element. 
+  </p><p>
+    I find stacks like this to be very useful in
+    many SAX programs. More complex programs may need to build
+    more complicated tree or object structures. If your 
+    purpose is not simply to  display a GUI for the tree, then
+    you should probably roll your own tree structure rather than
+    using <tt>JTree</tt> as I&#8217;ve done here.
+  </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Note</h3><p>
+       <tt>TreeViewer</tt> runs with the default distribution
+       of Java 1.2 or later. It can run with Java 1.1, but you&#8217;ll
+       need to make sure the <tt>swingall.jar</tt> 
+       archive is somewhere in your class
+       path. The <tt>javax.swing</tt> classes used here are not bundled 
+       with the JDK 1.1. 
+     </p></div><p>
+     <a href="ch06s05.html#TreeViewer.jpg" title="Figure&nbsp;6.1.&nbsp;The Swing Based Tree Viewer">Figure&nbsp;6.1</a> shows this program displaying 
+     <a href="ch01s02.html#namespace_order_2.xml" title="Example&nbsp;1.7.&nbsp;An XML document that uses two&#xA; default namespaces">Example&nbsp;1.7</a>
+     from <a href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data">Chapter&nbsp;1</a>. Swing 
+     allows individual parts of the tree to be
+     collapsed or expanded; but the entire
+     element tree is always present even if it&#8217;s hidden. <tt>JTree</tt> 
+     also allows you to customize the icons used, and even enable
+     the user to edit the tree. 
+     However, since that&#8217;s purely Swing programming and
+     says little to nothing about XML, I leave that as an
+     exercise for the reader. 
+   </p><div class="figure"><a name="TreeViewer.jpg"></a><p class="title"><b>Figure&nbsp;6.1.&nbsp;The Swing Based Tree Viewer</b></p><div class="screenshot"><div class="mediaobject"><img src="TreeViewer.jpg"></div></div></div><div class="caution" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Caution</h3><p>
+      This makes a nice little example, but please don&#8217;t treat it as
+      more than that. The tantalizing easiness of representing
+      XML documents with widgets like <tt>java.swing.JTree</tt>
+      and similar things in Windows, Motif, and other GUIs has spawned
+      a lot of editors and browsers that use these tree
+      models as user interfaces. However, not a lot of thought
+      went into whether users actually 
+      thought of XML documents this way or could be quickly
+      trained to do so.
+    </p><p>
+      In actual practice, user interfaces of
+      this sort have failed spectacularly. A good user interface
+      for XML editors and viewers looks a lot more like the user
+      interfaces people are accustomed to from traditional
+      programs such as Microsoft Word, Netscape Navigator, and Adobe
+      Illustrator. The whole point of a GUI is that it can
+      decouple the user interface from the underlying data model.
+      Just because an XML document is a tree is no excuse for
+      making users edit trees when they don&#8217;t want to.
+    </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch06s04.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch06.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch06s06.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Receiving Documents&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Handling Attributes</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+September 09,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

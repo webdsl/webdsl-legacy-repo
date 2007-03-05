@@ -1,0 +1,573 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Parsing documents with a DOM Parser</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="previous" href="ch09s05.html" title="DOM Parsers for Java"><link rel="next" href="ch09s07.html" title="The Node Interface"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"><link rel="subsection" href="ch09s06.html#d0e14951" title="JAXP DocumentBuilder and DocumentBuilderFactory"><link rel="subsection" href="ch09s06.html#d0e15332" title="DOM3 Load and Save"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Parsing documents with a DOM Parser</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch09s05.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;9.&nbsp;The Document Object Model</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch09s07.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e14730"></a>Parsing documents with a DOM Parser</h2></div></div><p>
+    Unlike SAX, DOM does not have a class or interface that
+    represents the XML parser. Each parser vendor provides their own
+    unique class. In Xerces, this is 
+    <tt>org.apache.xerces.parsers.DOMParser</tt>.
+    In Crimson it&#8217;s
+    <tt>org.apache.crimson.jaxp.DocumentBuilderImpl</tt>.
+    In &AElig;lfred  it&#8217;s an inner class,
+    <tt>gnu.xml.dom.JAXPFactory$JAXPBuilder</tt>. 
+    In Oracle, it&#8217;s
+    <tt>oracle.xml.parser.v2.DOMParser</tt>
+    In other implementations
+    it will be something else.
+  </p><p>
+    Furthermore, since these classes do not share a common
+    interface or superclass, the methods they use to parse
+    documents vary too. For example, in Xerces, the two methods that
+    read  
+    XML documents have these signatures:
+  </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>parse</b></span>(<span class="methodparam"><span class="type">InputSource&nbsp;</span><span class="parameter"><i>source</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">SAXException</span>, <span class="exceptionname">IOException</span>;</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>parse</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>systemID</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">SAXException</span>, <span class="exceptionname">IOException</span>;</code><br><p>
+    To get the <tt>Document</tt> object
+    from the parser, you first call one of the 
+    <tt>parse</tt> methods and
+    then call the <tt>getDocument()</tt> method.
+  </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">Document&nbsp;</span><span class="methodname"><b>getDocument</b></span>();</code><br><p>
+    For example, if <tt>parser</tt> is a Xerces
+    <tt>DOMParser</tt> object, then
+    these lines of code load the DOM Core 2.0 
+    specification 
+    into a DOM <tt>Document</tt> object named
+    <tt>spec</tt>:
+  </p><div class="informalexample"><pre class="programlisting">parser.parse("http://www.w3.org/TR/DOM-Level-2-Core");
+Document spec = parser.getDocument();</pre></div><p>
+    In Crimson&#8217;s parser class, by contrast, 
+    the <tt>parse()</tt> method returns
+    a <tt>Document</tt> object directly so no
+    separate <tt>getDocument()</tt> 
+method is needed. For example,
+  </p><div class="informalexample"><pre class="programlisting">Document spec 
+ = parser.parse("http://www.w3.org/TR/DOM-Level-2-Core");</pre></div><p>
+Furthermore, the Crimson <tt>parse()</tt> method
+is five-way overloaded instead of two:
+  </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">Document&nbsp;</span><span class="methodname"><b>parse</b></span>(<span class="methodparam"><span class="type">InputSource&nbsp;</span><span class="parameter"><i>source</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">SAXException</span>, <span class="exceptionname">IOException</span>;</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">Document&nbsp;</span><span class="methodname"><b>parse</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>uri</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">SAXException</span>, <span class="exceptionname">IOException</span>;</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">Document&nbsp;</span><span class="methodname"><b>parse</b></span>(<span class="methodparam"><span class="type">File&nbsp;</span><span class="parameter"><i>file</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">SAXException</span>, <span class="exceptionname">IOException</span>;</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">Document&nbsp;</span><span class="methodname"><b>parse</b></span>(<span class="methodparam"><span class="type">InputStream&nbsp;</span><span class="parameter"><i>in</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">SAXException</span>, <span class="exceptionname">IOException</span>;</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">Document&nbsp;</span><span class="methodname"><b>parse</b></span>(<span class="methodparam"><span class="type">InputStream&nbsp;</span><span class="parameter"><i>in</i></span></span>, <span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>systemID</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">SAXException</span>, <span class="exceptionname">IOException</span>;</code><p>
+  <a href="ch09s06.html#XercesDOMChecker.java" title="Example&nbsp;9.3.&nbsp;A program that uses Xerces to check documents for well-formedness">Example&nbsp;9.3</a> is a simple program that
+    uses Xerces to check documents for well-formedness.
+    You can see that it depends directly on the 
+  <tt>org.apache.xerces.parsers.DOMParser</tt>
+  class. 
+ </p><div class="example"><a name="XercesDOMChecker.java"></a><p class="title"><b>Example&nbsp;9.3.&nbsp;A program that uses Xerces to check documents for well-formedness</b></p><pre class="programlisting">import org.apache.xerces.parsers.DOMParser;
+import org.xml.sax.SAXException;
+import java.io.IOException;
+
+
+public class XercesChecker {
+
+  public static void main(String[] args) {
+     
+    if (args.length &lt;= 0) {
+      System.out.println("Usage: java XercesChecker URL"); 
+      return;
+    }
+    String document = args[0];
+    
+    DOMParser parser = new DOMParser();
+    try {
+      parser.parse(document); 
+      System.out.println(document + " is well-formed.");
+    }
+    catch (SAXException e) {
+      System.out.println(document + " is not well-formed.");
+    }
+    catch (IOException e) { 
+      System.out.println(
+       "Due to an IOException, the parser could not check " 
+       + document
+      ); 
+    }
+   
+  }
+
+}
+</pre></div><p>
+  It&#8217;s
+  not hard to port <tt>XercesChecker</tt> 
+  to a different parser like Oracle, 
+  but you do need to change the
+  source code as shown in 
+  <a href="ch09s06.html#OracleChecker.java" title="Example&nbsp;9.4.&nbsp;A program that uses the &#xA;   Oracle XML parser to check documents for well-formedness">Example&nbsp;9.4</a>
+  and recompile.
+ </p><div class="example"><a name="OracleChecker.java"></a><p class="title"><b>Example&nbsp;9.4.&nbsp;A program that uses the 
+   Oracle XML parser to check documents for well-formedness</b></p><pre class="programlisting">import oracle.xml.parser.v2.*;
+import org.xml.sax.SAXException;
+import java.io.IOException;
+
+
+public class OracleChecker {
+
+  public static void main(String[] args) {
+     
+    if (args.length &lt;= 0) {
+      System.out.println("Usage: java OracleChecker URL"); 
+      return;
+    }
+    String document = args[0];
+    
+    DOMParser parser = new DOMParser();
+    try {
+      parser.parse(document); 
+      System.out.println(document + " is well-formed.");
+    }
+    catch (XMLParseException e) {
+      System.out.println(document + " is not well-formed.");
+      System.out.println(e);
+      
+    }
+    catch (SAXException e) {
+      System.out.println(document + " could not be parsed.");
+    }
+    catch (IOException e) { 
+      System.out.println(
+       "Due to an IOException, the parser could not check " 
+       + document
+      ); 
+    }
+   
+  }
+
+}
+</pre></div><p>
+    Other parsers have slightly different methods still.
+    What all of these have in common is that they read
+    an XML document from a source of text,
+    most commonly a file or a stream, and provide an
+    <tt>org.w3c.dom.Document</tt>
+    object. 
+    Once you have a reference to this <tt>Document</tt>
+    object you can work with it using only the standard methods
+    of the DOM interfaces. There&#8217;s no further need to use parser-specific classes. 
+  </p><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e14951"></a>JAXP DocumentBuilder and DocumentBuilderFactory</h3></div></div><p>
+       The lack of a standard means of parsing an XML document
+       is one of the holes that JAXP fills. If your parser
+       implements JAXP, then instead of using the parser-specific
+       classes, you can use the
+       <tt>javax.xml.parsers.DocumentBuilderFactory</tt>
+       and <tt>javax.xml.parsers.DocumentBuilder</tt>
+       classes to parse the documents. The basic approach is as follows: 
+     </p><div class="itemizedlist"><ul type="disc"><li><p>
+           Use the static 
+           <tt>DocumentBuilderFactory.newInstance()</tt>
+           factory method to return a <tt>DocumentBuilderFactory</tt>
+           object.
+         </p></li><li><p>
+           Use the  
+           <tt>newDocumentBuilder()</tt>
+            method of this <tt>DocumentBuilderFactory</tt>
+           object to return a parser-specific instance of the
+           abstract
+           <tt>DocumentBuilder</tt> class.
+         </p></li><li><p>
+           Use one of the five  
+           <tt>parse()</tt>
+            methods of  <tt>DocumentBuilder</tt>
+           to read the XML document and return an
+           <tt>org.w3c.dom.Document</tt> object.
+         </p></li></ul></div><p>
+  <a href="ch09s06.html#JAXPChecker.java" title="Example&nbsp;9.5.&nbsp;A program that uses JAXP to check documents for well-formedness">Example&nbsp;9.5</a> demonstrates with a simple program that
+    uses JAXP to check documents for well-formedness.
+ </p><div class="example"><a name="JAXPChecker.java"></a><p class="title"><b>Example&nbsp;9.5.&nbsp;A program that uses JAXP to check documents for well-formedness</b></p><pre class="programlisting">import javax.xml.parsers.*; // JAXP
+import org.xml.sax.SAXException;
+import java.io.IOException;
+
+
+public class JAXPChecker {
+
+  public static void main(String[] args) {
+     
+    if (args.length &lt;= 0) {
+      System.out.println("Usage: java JAXPChecker URL");
+      return;
+    }
+    String document = args[0];
+    
+    try {
+      DocumentBuilderFactory factory 
+       = DocumentBuilderFactory.newInstance();
+      DocumentBuilder parser = factory.newDocumentBuilder();
+      parser.parse(document); 
+      System.out.println(document + " is well-formed.");
+    }
+    catch (SAXException e) {
+      System.out.println(document + " is not well-formed.");
+    }
+    catch (IOException e) { 
+      System.out.println(
+       "Due to an IOException, the parser could not check " 
+       + document
+      ); 
+    }
+    catch (FactoryConfigurationError e) { 
+      // JAXP suffers from excessive brain-damage caused by 
+      // intellectual in-breeding at Sun. (Basically the Sun 
+      // engineers spend way too much time talking to each other
+      // and not nearly enough time talking to people outside 
+      // Sun.) Fortunately, you can happily ignore most of the 
+      // JAXP brain damage and not be any the poorer for it.
+      
+      // This, however, is one of the few problems you can't 
+      // avoid if you're going to use JAXP at all. 
+      // DocumentBuilderFactory.newInstance() should throw a 
+      // ClassNotFoundException if it can't locate the factory
+      // class. However, what it does throw is an Error,
+      // specifically a FactoryConfigurationError. Very few 
+      // programs are prepared to respond to errors as opposed
+      // to exceptions. You should catch this error in your 
+      // JAXP programs as quickly as possible even though the
+      // compiler won't require you to, and you should 
+      // never rethrow it or otherwise let it escape from the 
+      // method that produced it. 
+      System.out.println("Could not locate a factory class"); 
+    }
+    catch (ParserConfigurationException e) { 
+      System.out.println("Could not locate a JAXP parser"); 
+    }
+   
+  }
+
+}
+</pre></div><p>
+  For example, here&#8217;s the output from when I ran this program
+  across this chapter&#8217;s DocBook source code:
+</p><pre class="screen"><tt>D:\books\XMLJAVA&gt;</tt><b><tt>java JAXPChecker file:///D:/books/xmljava/dom.xml</tt></b>
+<tt>file:///D:/books/xmljava/dom.xml is well-formed.</tt></pre><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e15015"></a>How JAXP Chooses Parsers</h4></div></div><p>
+   You may be wondering which parser this program actually uses.
+   JAXP, after all, is reasonably parser-independent.
+   The answer depends on which parsers are installed in your
+   class path and how certain system properties are set.
+   The default is to use the class named by the
+   <tt>javax.xml.parsers.DocumentBuilderFactory</tt>
+   system property. For example, if you want to make sure that 
+   Xerces is used to parse documents, then you would run 
+   <tt>JAXPChecker</tt> like this:
+  </p><pre class="screen"><tt>D:\books\XMLJAVA&gt;</tt><b><tt>java 
+ -Djavax.xml.parsers.DocumentBuilderFactory=org.apache.xerces.jaxp.DocumentBuilderFactoryImpl 
+ JAXPChecker file:///D:/books/xmljava/dom.xml</tt></b>
+<tt>file:///D:/books/xmljava/dom.xml is well-formed.</tt></pre><p>
+  If the  <tt>javax.xml.parsers.DocumentBuilderFactory</tt>
+  property is not set, then JAXP looks in
+ the  <tt>lib/jaxp.properties</tt> properties file
+ in the JRE directory
+ to determine a default value for 
+ the <tt>javax.xml.parsers.DocumentBuilderFactory</tt>
+   system property. If you want to consistently use a certain
+   DOM
+   parser, for instance <tt>gnu.xml.dom.JAXPFactory</tt>, place the following line in that
+   file:
+   </p><div class="informalexample"><pre class="programlisting">javax.xml.parsers.DocumentBuilderFactory=gnu.xml.dom.JAXPFactory</pre></div><p>
+    If this fails to locate a parser, next JAXP looks for a
+    <tt>META-INF/services/javax.xml.parsers.DocumentBuilderFactory</tt> 
+    file 
+    in all JAR files available to the runtime to find the name of the 
+    concrete <tt>DocumentBuilderFactory</tt>
+    subclass.
+  </p><p>
+    Finally, if that fails, 
+    then <tt>DocumentBuilderFactory.newInstance()</tt>
+    returns a default class, generally the parser from the
+    vendor who also provided the JAXP classes.
+    For example, the JDK JAXP classes pick 
+    <tt>org.apache.crimson.jaxp.DocumentBuilderFactoryImpl</tt> by default but
+    the &AElig;lfred JAXP classes pick 
+    <tt>gnu.xml.dom.JAXPFactory</tt> instead.
+  </p></div><div class="sect3"><div class="titlepage"><div><h4 class="title"><a name="d0e15070"></a>Configuring DocumentBuilderFactory</h4></div></div><p>
+     The <tt>DocumentBuilderFactory</tt>
+     has a number of options that allow you to determine exactly
+     how the parsers it creates behave. Most of the setter
+     methods take a boolean that turns the feature on if true or
+     off if false. However, a couple of the features are defined 
+     as confusing double negatives, so read carefully.
+   </p><div class="sect4"><div class="titlepage"><div><h5 class="title"><a name="d0e15078"></a>Coalescing</h5></div></div><p>
+       These two methods determine whether CDATA sections are
+       merged with text nodes or not. If the coalescing feature 
+       is true, then the result tree will not contain any CDATA
+       section nodes, even if the parsed XML document does
+       contain CDATA sections.
+     </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">boolean&nbsp;</span><span class="methodname"><b>isCoalescing</b></span>();</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setCoalescing</b></span>(<span class="methodparam"><span class="type">boolean&nbsp;</span><span class="parameter"><i>coalescing</i></span></span>);</code><p>
+       The default is false, but in most situations you 
+       should set this to true, especially if
+       you&#8217;re just reading the document and are not going to
+       write it back out again.
+       CDATA sections should not be treated differently than any
+       other text. Whether or not certain text is written in a
+       CDATA section should be purely a matter of syntax sugar
+       for human convenience, not anything that has any effect
+       on the data model. 
+     </p></div><div class="sect4"><div class="titlepage"><div><h5 class="title"><a name="d0e15104"></a>Expand Entity References</h5></div></div><p>
+The following two methods determine whether the parsers
+       produced by this factory expand entity
+       references. 
+       </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">boolean&nbsp;</span><span class="methodname"><b>isExpandEntityReferences</b></span>();</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setExpandEntityReferences</b></span>(<span class="methodparam"><span class="type">boolean&nbsp;</span><span class="parameter"><i>expandEntityReferences</i></span></span>);</code><p>
+       The default is true. If a parser is validating, then
+       this it will expand entity references, even if this feature is set to false. 
+       That is, the validation feature overrides the expand
+       entity references feature.
+     </p><p>
+        The five predefined references&#8212;
+        <tt>&amp;amp;</tt>, <tt>&amp;lt;</tt>,
+        <tt>&amp;gt;</tt>, <tt>&amp;quot;</tt>, and <tt>&amp;apos;</tt>
+       &#8212;will always be expanded regardless of the
+        value of this property.
+      </p></div><div class="sect4"><div class="titlepage"><div><h5 class="title"><a name="d0e15147"></a>Ignore Comments</h5></div></div><p>
+       The following two methods determine whether the parsers
+       produced by this factory will generate comment nodes for
+       comments seen in the input document. The default, false,
+       means that comment nodes will be produced. 
+       (Watch out for the double negative here. 
+       False means include comments, and true means don&#8217;t include comments. 
+       This confused me
+       initially, and I was getting  my poison pen all ready to
+       write about the brain damage of throwing away comments
+       although the spec required them to be included, when I
+       realized that the method was in fact behaving like it
+       should.) 
+       </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">boolean&nbsp;</span><span class="methodname"><b>isIgnoringComments</b></span>();</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setIgnoringComments</b></span>(<span class="methodparam"><span class="type">boolean&nbsp;</span><span class="parameter"><i>ignoringComments</i></span></span>);</code></div><div class="sect4"><div class="titlepage"><div><h5 class="title"><a name="d0e15171"></a>Ignore Element Content Whitespace</h5></div></div><p>
+The following two methods determine whether the parsers
+       produced by this factory will generate text  nodes for
+      so-called &#8220;ignorable white space&#8221;; that is, white space
+      that occurs between tags where the DTD specifies that 
+       parsed character data cannot appear.
+    </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">boolean&nbsp;</span><span class="methodname"><b>isIgnoringElementContentWhitespace</b></span>();</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setIgnoringElementContentWhitespace</b></span>(<span class="methodparam"><span class="type">boolean&nbsp;</span><span class="parameter"><i>ignoreElementContentWhitespace</i></span></span>);</code><p>
+       The default is false; that is, include text nodes for
+       ignorable white space. Setting this to true might well be
+       useful in record-like documents. However, for this property
+       to make a difference, the documents must have a DTD and
+       should be valid or very nearly so. Otherwise the parser
+       can&#8217;t tell which white space is ignorable and which isn&#8217;t. 
+     </p></div><div class="sect4"><div class="titlepage"><div><h5 class="title"><a name="d0e15200"></a>Namespace Aware</h5></div></div><p>
+       The following two methods determine whether the parsers
+       produced by this factory are 
+       &#8220;namespace aware.&#8221;
+       A namespace aware parser will set the prefix and namespace 
+       URI properties of element and attribute nodes that are in a namespace.
+       A non-namespace aware parser won&#8217;t.
+     </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">boolean&nbsp;</span><span class="methodname"><b>isNamespaceAware</b></span>();</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setNamespaceAware</b></span>(<span class="methodparam"><span class="type">boolean&nbsp;</span><span class="parameter"><i>namespaceAware</i></span></span>);</code><p>
+       The default is false, which is truly brain-damaged.
+       You should always set this to true. For example,
+     </p><div class="informalexample"><pre class="programlisting">DocumentBuilderFactory factory
+ = DocumentBuilderFactory.newInstance();
+factory.setNamespaceAware(true);</pre></div></div><div class="sect4"><div class="titlepage"><div><h5 class="title"><a name="d0e15232"></a>Validating</h5></div></div><p>
+       These methods determine whether or not the parsers
+       produced by this factory
+       validate the document against its DTD. 
+     </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">boolean&nbsp;</span><span class="methodname"><b>isValidating</b></span>();</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setValidating</b></span>(<span class="methodparam"><span class="type">boolean&nbsp;</span><span class="parameter"><i>validating</i></span></span>);</code><p>
+       The default is false, do not validate. If you want to
+       validate your documents, set this property to true.
+       You&#8217;ll also need to register a SAX
+       <tt>ErrorHandler</tt> with the 
+       <tt>DocumentBuilder</tt> using its
+       <tt>setErrorHandler()</tt> 
+       method to receive notice
+       of validity errors. <a href="ch09s06.html#JAXPValidator.java" title="Example&nbsp;9.6.&nbsp;Using JAXP to check documents for well-formedness">Example&nbsp;9.6</a>
+       demonstrates with a program that uses JAXP to validate a
+       document named on the command line.
+     </p><div class="example"><a name="JAXPValidator.java"></a><p class="title"><b>Example&nbsp;9.6.&nbsp;Using JAXP to check documents for well-formedness</b></p><pre class="programlisting">import javax.xml.parsers.*; // JAXP
+import org.xml.sax.*;
+import java.io.IOException;
+
+
+public class JAXPValidator {
+
+  public static void main(String[] args) {
+     
+    if (args.length &lt;= 0) {
+      System.out.println("Usage: java JAXPValidator URL");
+      return;
+    }
+    String document = args[0];
+    
+    try {
+      DocumentBuilderFactory factory 
+       = DocumentBuilderFactory.newInstance();
+      // Always turn on namespace awareness
+      factory.setNamespaceAware(true);
+      // Turn on validation
+      factory.setValidating(true);
+
+      DocumentBuilder parser = factory.newDocumentBuilder();
+      
+      // SAXValidator was developed in Chapter 7
+      ErrorHandler handler = new SAXValidator();
+      parser.setErrorHandler(handler);
+      
+      parser.parse(document); 
+      if (handler.isValid()) {
+        System.out.println(document + " is valid.");
+      }
+      else {
+        // If the document isn't well-formed, an exception has
+        // already been thrown and this has been skipped.
+        System.out.println(document + " is well-formed.");
+      }
+      
+    }
+    catch (SAXException e) {
+      System.out.println(document + " is not well-formed.");
+    }
+    catch (IOException e) { 
+      System.out.println(
+       "Due to an IOException, the parser could not check " 
+       + document
+      ); 
+    }
+    catch (FactoryConfigurationError e) { 
+      System.out.println("Could not locate a factory class"); 
+    }
+    catch (ParserConfigurationException e) { 
+      System.out.println("Could not locate a JAXP parser"); 
+    }
+   
+  }
+
+}
+</pre></div></div><div class="sect4"><div class="titlepage"><div><h5 class="title"><a name="d0e15274"></a>Parser-specific Attributes</h5></div></div><p>
+       Many JAXP aware parsers support various custom features.
+       For example, Xerces, has an 
+       <tt>http://apache.org/xml/features/dom/create-entity-ref-nodes</tt>
+       feature 
+       that lets you choose whether or
+       not to include entity reference nodes in the DOM tree. 
+       This is not the same as deciding whether or not to expand entity 
+       references. That determines whether the entity nodes that 
+       are placed in the tree
+       have children representing their replacement text or not.
+       </p><p>
+       JAXP allows you to set and get these custom features 
+       as objects of the appropriate type using these two methods:
+     </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">Object&nbsp;</span><span class="methodname"><b>getAttribute</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>name</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">IllegalArgumentException</span>;</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setAttribute</b></span>(<span class="methodparam"><span class="type">String&nbsp;</span><span class="parameter"><i>name</i></span></span>, <span class="methodparam"><span class="type">Object&nbsp;</span><span class="parameter"><i>value</i></span></span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">IllegalArgumentException</span>;</code><p>
+      For example, suppose you&#8217;re using Xerces and you don&#8217;t 
+      want to include entity reference nodes.
+      They're included by default so you need to set 
+       <tt>http://apache.org/xml/features/dom/create-entity-ref-nodes</tt>
+      to false.
+      You would use <tt>setAttribute()</tt> on
+      the <tt>DocumentBuilderFactory</tt>
+      like this:
+     </p><div class="informalexample"><pre class="programlisting">DocumentBuilderFactory factory  
+ = DocumentBuilderFactory.newInstance();
+ factory.setAttribute(
+  "http://apache.org/xml/features/dom/create-entity-ref-nodes", 
+  new Boolean(false)
+ );</pre></div><p>
+        The naming conventions for both attribute names and
+        values depends on the underlying parser.
+        Xerces uses URL strings like SAX feature names.
+        Other parsers may do something different.
+        JAXP 1.2 will add a couple of standard attributes related
+        to schema validation.
+      </p></div></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e15332"></a>DOM3 Load and Save</h3></div></div><p>
+       JAXP only works for Java, and it is a Sun proprietary
+       standard. Consequently, the W3C DOM working group is
+       preparing an alternative cross-vendor means of parsing an XML
+       document with a DOM parser. This will be published as part of 
+       DOM Level 3. DOM3 is not close to a finished recommendation
+       at the time of this writing
+       and is not yet implemented by any parsers, but I can show
+       you pretty much what the interface is likely to look like.
+     </p><p>
+     Parsing a document with DOM3 requires four steps:
+     </p><div class="orderedlist"><ol type="1"><li><p>
+       Load a <tt>DOMImplementation</tt> object
+       by passing the feature string <tt>"LS-Load 3.0"</tt> to the
+       <tt>DOMImplementationRegistry.getDOMImplementation()</tt>
+     factory method. (This class is also new in DOM3.)
+     </p></li><li><p>
+     Cast this <tt>DOMImplementation</tt> object
+      to 
+     <tt>DOMImplementationLS</tt>,
+     the sub-interface that provides the extra methods you need.
+      </p></li><li><p>
+     Call the implementation&#8217;s <tt>createDOMBuilder()</tt>
+     method to 
+     create a new <tt>DOMBuilder</tt> object.
+     This is the new DOM3 class that represents the parser.
+     The first argument to <tt>createDOMBuilder()</tt>
+     specifies whether the document is parsed synchronously or asynchronously.
+     The second argument is a URL identifying the type of schema
+     to be used during the parse,
+     <tt>"http://www.w3.org/2001/XMLSchema"</tt> for W3C XML Schemas,
+      <tt>"http://www.w3.org/TR/REC-xml"</tt> for DTDs.
+   You can pass null to ignore all schemas.
+         </p></li><li><p>
+     Pass the document&#8217;s  URL to the  the builder object&#8217;s
+     <tt>parseURI()</tt> method
+     to read the document and
+     return a  <tt>Document</tt> object.
+    </p></li></ol></div><p>
+  <a href="ch09s06.html#DOM3Checker.java" title="Example&nbsp;9.7.&nbsp;A program that uses DOM3 to check documents for well-formedness">Example&nbsp;9.7</a> demonstrates with a simple program that
+    uses DOM3 to check documents for well-formedness.
+ </p><div class="example"><a name="DOM3Checker.java"></a><p class="title"><b>Example&nbsp;9.7.&nbsp;A program that uses DOM3 to check documents for well-formedness</b></p><pre class="programlisting">import org.w3c.dom.*;
+import org.w3c.dom.ls.*;
+
+
+public class DOM3Checker {
+
+  public static void main(String[] args) {
+     
+    if (args.length &lt;= 0) {
+      System.out.println("Usage: java DOM3Checker URL");
+      return;
+    }
+    String document = args[0];
+    
+    try {
+      DOMImplementationLS impl = (DOMImplementationLS) 
+       DOMImplementationRegistry
+       .getDOMImplementation("LS-Load 3.0");
+      DOMBuilder parser = impl.createDOMBuilder(
+       DOMImplementationLS.MODE_SYNCHRONOUS,
+       "http://www.w3.org/TR/REC-xml");
+    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    // Use DTDs when parsing
+      Document doc = parser.parseURI(document); 
+      System.out.println(document + " is well-formed.");
+    }
+    catch (NullPointerException e) {
+      System.err.println("The current DOM implementation does"
+       + " not support DOM Level 3 Load and Save");
+    }
+    catch (DOMException e) {
+      System.err.println(document + " is not well-formed");
+    }
+    catch (IOException e) { 
+      System.out.println(
+       "Due to an IOException, the parser could not check " 
+       + document
+      ); 
+    }
+    catch (Exception e) {
+      // Probably a ClassNotFoundException,
+      // InstantiationException, or IllegalAccessException 
+      // thrown by DOMImplementationRegistry.getDOMImplementation
+      System.out.println("Probable CLASSPATH problem."); 
+      e.printStackTrace(); 
+    }
+   
+  }
+
+}
+</pre></div><p>
+       For the time being, JAXP&#8217;s <tt>DocumentBuilderFactory</tt>
+       is the obvious choice since it works today and is supported
+       by almost all DOM parsers written in Java.
+       Longer term, DOM3 will provide a number of important
+       capabilities JAXP does not, including parse progress
+       notification
+       and document filtering. However, since these APIs 
+       are far from ready
+       for prime time just yet,       
+       for the rest of this book, I&#8217;m mostly going to use JAXP
+       without further comment.
+     </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch09s05.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch09.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch09s07.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">DOM Parsers for Java&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;The Node Interface</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+May 26,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

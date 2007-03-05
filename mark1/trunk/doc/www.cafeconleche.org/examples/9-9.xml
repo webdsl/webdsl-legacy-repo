@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/css" href="baseballstats.css"?>
+<!DOCTYPE SEASON SYSTEM "9-8.dtd">
+<SEASON>
+  <YEAR>1998</YEAR>
+  <LEAGUE>
+    <LEAGUE_NAME>American League</LEAGUE_NAME>
+  </LEAGUE>
+  <LEAGUE>
+    <LEAGUE_NAME>National League</LEAGUE_NAME>
+  </LEAGUE>
+</SEASON>

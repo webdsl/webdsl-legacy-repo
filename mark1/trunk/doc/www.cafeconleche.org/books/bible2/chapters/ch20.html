@@ -1,0 +1,1691 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+   <head xmlns:html="http://www.w3.org/1999/xhtml">
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   
+      <title>
+         XPointers
+         
+      </title>
+   </head>
+   <body xmlns:html="http://www.w3.org/1999/xhtml" bgcolor="#FFFFFF" text="#000000">
+      <h1>Chapter 
+         20
+         
+         of the <cite>
+            XML Bible, Second Edition
+            </cite>: 
+         
+         XPointers
+         
+      </h1>
+      <h2>In This Chapter</h2>
+      <ul>
+         <li><a href="#d1e501">Why Use XPointers?</a></li>
+         <li><a href="#d1e519">XPointer Examples</a></li>
+         <li><a href="#d1e690">A Concrete Example</a></li>
+         <li><a href="#d1e1020">Location Paths, Steps, and Sets</a></li>
+         <li><a href="#d1e1155">The Root Node</a></li>
+         <li><a href="#d1e1200">Axes</a></li>
+         <li><a href="#d1e1946">Node Tests</a></li>
+         <li><a href="#d1e2239">Predicates</a></li>
+         <li><a href="#d1e2574">Functions that Return Node Sets</a></li>
+         <li><a href="#d1e2856">Points</a></li>
+         <li><a href="#d1e3064">Ranges</a></li>
+         <li><a href="#d1e3260">Child Sequences</a></li>
+      </ul>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <p class="GX">XPointer, the XML Pointer Language, defines an addressing scheme for individual parts of an XML document. These addresses
+         can be used by any application that needs to identify parts of or locations in an XML document. For instance, an XML editor
+         could use an XPointer to identify the current position of the insertion point or the range of the selection. An XInclude processor
+         can use an XPointer to determine what part of a document to include. And the URI in an XLink can include an XPointer fragment
+         identifier that locates one particular element in the targeted document. XPointers use the same XPath syntax that you're familiar
+         with from XSL transformations to identify the parts of the document they point to, along with a few additional pieces.
+      </p>
+      
+      <p class="SBT" style="font-weight: bold; margin-left: 0.5in; margin-right: 0.5in;        font-family: Arial, Helvetica, sans; color: #0000ff">Caution</p>
+      
+      <p class="SBT" style="font-family: Arial, Helvetica, sans;        margin-left: 0.5in; margin-right: 0.5in">This chapter is based on the January 8, 2001, XPointer Last Call Working Draft, the November 16, 1999, XPath 1.0 specification,
+         and the December 20, 2000, XLink Proposed Recommendation. The broad picture presented here is likely to be correct, but the
+         details are subject to change. You can find the latest XPointer specification at <code>http://www.w3.org/TR/xptr</code>. Furthermore, no mainstream browsers have any support for XPointers. You can use URLs with XPointer fragment identifiers
+         in Web pages, but browsers will mostly ignore them.
+      </p>
+      
+      <h2><a name="d1e501">Why Use XPointers?</a></h2>
+      
+      <p class="GX">Traditional URLs are simple and easy to use, but they're also quite limited. For one thing, a URL only points at a single,
+         complete document. More granularity than that, such as linking to the third sentence of the seventeenth paragraph in a document,
+         requires the author of the targeted document to manually insert named anchors at the targeted location. The author of the
+         document doing the linking can't do this unless he or she also has write access to the document being linked to. Even if the
+         author doing the linking can insert named anchors into the targeted document, it's almost always inconvenient.
+      </p>
+      
+      <p class="GX">It would be more useful to be able to link to a particular element or group of elements on a page without having to change
+         the document you're linking to. For example, given a large document such as the complete baseball statistics of Chapters 4
+         and 5, you might want to link to only one team or one player. There are several parts to this problem. The first part is addressing
+         the individual elements. This is the part that XPointers solve. XPointers enable you to target a given element by number,
+         name, type, or relation, to other elements in the document.
+      </p>
+      
+      <p class="GX">The second part of the problem is the protocol by which a browser asks a Web server to send only part of a document rather
+         than the whole thing. This is an area of active research. More work is needed. XPointers do little to solve this problem,
+         except for providing a foundation on which such systems can build. For instance, the best efforts to date are the so-called
+         "byte range extensions to HTTP" available in HTTP 1.1. So far these have not achieved widespread adoption, mostly because
+         Web authors aren't comfortable specifying a byte range in a document. Furthermore, byte ranges are extremely fragile. Trivial
+         edits to a document, even simple reformatting, can destroy byte range links. HTTP 1.1 does allow other range units besides
+         raw bytes (for example, XML elements), but does not require Web servers or browsers to support such units. Much work remains
+         to be done.
+      </p>
+      
+      <p class="GX">The third part of the problem is making sure that the retrieved document makes sense without the rest of the document to go
+         along with it. In the context of XML, this effectively means the linked part is well formed, or perhaps valid. This is a tricky
+         proposition, because most XML documents, especially ones with nontrivial prologs, don't decompose well. Again, XPointers don't
+         address this. The World Wide Web Consortium (W3C) XML Fragment Working Group is addressing this issue, but work here is far
+         from finished.
+      </p>
+      
+      <p class="GX">For the moment, therefore, an XPointer can be used as an index into a complete document, the whole of which is loaded and
+         then positioned at the location identified by the XPointer, and even this much is more than most browsers can handle. In the
+         long-term, extensions to XML, XLink, HTTP, and other protocols may allow more sophisticated uses of XPointers. For instance,
+         XInclude will let you quote a remote document by using an XPointer to tell browsers where to copy the quote in the original
+         document, rather than retyping the text of the quote. You could include cross-references inside a document that automatically
+         update themselves as the document is revised. These uses, however, will have to wait for the development of several next-generation
+         technologies. For now, you must be content with precisely identifying the part of a document you want to jump to when following
+         an XLink.
+      </p>
+      
+      <h2><a name="d1e519">XPointer Examples</a></h2>
+      
+      <p class="GX">HTML links generally point to one particular document. Additional granularity &#8212; that is, pointing to a particular section,
+         chapter, or paragraph of a particular document &#8212; isn't well supported. Provided you control both the linking and the linked
+         document, you can insert a named anchor into an HTML file at the position to which you want to link. For example:
+      </p>
+      <pre><code>&lt;H2&gt;&lt;A NAME="xtocid20.2"&gt;XPointer Examples&lt;/A&gt;&lt;/H2&gt;
+</code></pre>
+      <p class="GX">You can then link to this position in the file by adding a <code>#</code> and the name of the anchor to the URL. The piece of the URL after the # is called the <span class="italic">fragment identifier</span>. For example, in this link the fragment identifier is <code>xtocid20.2</code>.
+      </p>
+      <pre><code>&lt;A HREF="http://www.ibiblio.org/xml/bible/20.html#xtocid20.2"&gt;
+  XPointer Examples
+&lt;/A&gt;
+</code></pre>
+      
+      
+      <p class="GX">However, this solution is kludgy. It's not always possible to modify the target document so that the source document can link
+         to it. The target document may be on a different server controlled by someone other than the author of the source document.
+         And the author of the target document may change or move it without notifying the author of the source.
+      </p>
+      
+      <p class="GX">Furthermore, named anchors violate the principle of separating markup from content. Placing a named anchor in a document says
+         nothing about the document or its content. It's just a marker for other documents to refer to. It adds nothing to the document's
+         own content.
+      </p>
+      
+      <p class="GX">XPointers allow much more sophisticated connections between parts of documents. An XPointer can refer to any element of a
+         document; to the first, second, or seventeenth element; to the seventh element named <code>P</code>, to the first element that's a child of the second <code>DIV</code> element, and so on. XPointers provide very precisely targeted addresses of particular parts of documents. They do not require
+         the targeted document to contain additional markup just so its individual pieces can be linked to.
+      </p>
+      
+      <p class="GX">Furthermore, unlike HTML anchors, XPointers don't point to just a single point in a document. They can point to entire elements,
+         to possibly discontiguous sets of elements, or to the range of text between two points. Thus, you can use an XPointer to select
+         a particular part of a document, perhaps so it can be copied or loaded into a program.
+      </p>
+      
+      <p class="GX">Here are a few examples of XPointers:</p>
+      <pre><code>xpointer(id("ebnf"))
+xpointer(descendant::language[position()=2])
+ebnf
+xpointer(/child::spec/child::body/child::*/child::language[2])
+xpointer(/spec/body/*/language[2])
+/1/14/2
+xpointer(id("ebnf"))xpointer(id("EBNF"))
+</code></pre>
+      
+      
+      
+      
+      
+      
+      <p class="GX">Each of these selects a particular element in a document. The first finds the element with the ID <code>ebnf</code>. The second finds the second <code>language</code> element in the document . The third is a shorthand form of finding the element with the ID <code>ebnf</code>. The fourth and fifth both specify the second <code>language</code> child element of any child element of the <code>body</code> child elements of the <code>spec</code> child of the root node. The sixth finds the second child element of the fourteenth child element of the root element. The
+         final URI also points to the element with the ID <code>ebnf</code>. However, if no such element is present, it then finds the element with the ID <code>EBNF</code>.
+      </p>
+      
+      <p class="GX">The document is not specified by the XPointer; rather, the URI that precedes the XPointer specifies the document. This URI
+         may be contained in an XLink linking element, in an XInclude include element, or in something else. The XLinks and URIs you
+         saw in the previous chapter did not contain XPointers, but it isn't hard to add XPointers to them. Most of the time you simply
+         append the XPointer to the URI separated by a <code>#</code>, just as you do with named anchors in HTML. For example, the above list of XPointers could be suffixed to URLs and come out
+         looking similar to the following:
+      </p>
+      <pre><code>http://www.w3.org/TR/1998/REC-xml-19980210.xml#xpointer(id("ebnf"))
+http://www.w3.org/TR/1998/REC-xml-19980210.xml#xpointer(descendant::language[position()=2])
+http://www.w3.org/TR/1998/REC-xml-19980210.xml#ebnf
+http://www.w3.org/TR/1998/REC-xml-19980210.xml#xpointer(/child::spec/child::body/child::*/child::language[2])
+http://www.w3.org/TR/1998/REC-xml-19980210.xml#xpointer(/spec/body/*/language[2])
+http://www.w3.org/TR/1998/REC-xml-19980210.xml#/1/14/2
+http://www.w3.org/TR/1998/REC-xml-19980210.xml#xpointer(id("ebnf"))xpointer(id("EBNF"))
+</code></pre>
+      
+      
+      
+      
+      
+      
+      <p class="GX">In fact, these URIs are just six different ways of pointing to the same element of the document at <code>http://www.w3.org/TR/1998/REC-xml-19980210.xml</code>. Normally such URIs are values of the <code>xlink:href</code> attribute of a linking element. For example:
+      </p>
+      <pre><code>&lt;SPECIFICATION xmlns:xlink="http://www.w3.org/1999/xlink"
+ xlink:type="simple"
+ xlink:href="http://www.w3.org/TR/1998/REC-xml-19980210.xml#xpointer(id('ebnf'))"
+ xlink:actuate="onRequest" xlink:show="replace"&gt;
+  Extensible Markup Language (XML) 1.0
+&lt;/SPECIFICATION&gt;
+</code></pre>
+      
+      
+      
+      
+      
+      <p class="GX">XPointers don't have any special exemptions from the rules of URIs. In particular, if the XPointer contains characters that
+         are not allowed in URLs, (for example, &#937; or ^) then these characters must be encoded in UTF-8, and the bytes of the UTF-8
+         encoding must be hex-escaped using a percent sign. For example, the capital Greek letter Omega is Unicode character 3A9 in
+         hexadecimal. When encoded in UTF-8, this character is the two bytes 206 and 169. In hexadecimal, that's CE and A9. Therefore,
+         the XPointer <code>xpointer(id("&#937;"))</code> would be encoded in a URL as <code>xpointer(id("%CE%A9"))</code>. The caret is Unicode character 5E in hexadecimal. The equals sign is Unicode character 3D in hexadecimal. The colon is Unicode
+         character 3A in hexadecimal. Because these three characters are part of the ASCII character set, their UTF-8 encodings are
+         simply their values. Therefore <code>xpointer(descendant::*[.='^'])</code> would be encoded in a URL as <code>xpointer(descendant%3A%3A*[.%3D'%5E'])</code>. Modern Web browsers allow the square brackets [ and ] in URLs. However, some older browsers do not, so for maximum compatibility
+         you should escape these characters as %5B and %5D respectively. Thus the above XPointer would become <code>xpointer(descendant%3A%3A*%5B.%3D'%5E'%5D)</code>.
+      </p>
+      
+      <h2><a name="d1e690">A Concrete Example</a></h2>
+      
+      <p class="GX">To demonstrate the different types of XPointers, it's useful to have a concrete example in mind. Listing 20-1 is a simple,
+         valid document that should be self-explanatory. It contains information about two related families and their members. The
+         root element is <code>FAMILYTREE</code>. A <code>FAMILYTREE</code> can contain <code>PERSON</code> and <code>FAMILY</code> elements. Each <code>PERSON</code> and <code>FAMILY</code> element has a required <code>ID</code> attribute. Persons contain a name, birth date, death date and spouse. Families contain a husband, a wife, and zero or more
+         children. The individual persons are referred to from the family by reference to their IDs.
+      </p>
+      
+      <p class="SBT" style="font-weight: bold; margin-left: 0.5in; margin-right: 0.5in;        font-family: Arial, Helvetica, sans; color: #0000ff">Cross-Reference</p>
+      
+      <p class="SBT" style="font-family: Arial, Helvetica, sans;        margin-left: 0.5in; margin-right: 0.5in">This XML application is revisited in Chapter 28.</p>
+      
+      <p style="font-weight: bold">Listing 20-1: 
+         A family tree
+      </p>
+      
+      <pre><code>&lt;?xml version="1.0"?&gt;
+&lt;!DOCTYPE FAMILYTREE [
+  &lt;!ELEMENT FAMILYTREE (PERSON | FAMILY)*&gt;
+  &lt;!-- PERSON elements --&gt;
+  &lt;!ELEMENT PERSON (NAME*, BORN*, DIED*, SPOUSE*)&gt;
+  &lt;!ATTLIST PERSON
+    ID      ID     #REQUIRED
+    FATHER  CDATA  #IMPLIED
+    MOTHER  CDATA  #IMPLIED
+  &gt;
+  &lt;!ELEMENT NAME (#PCDATA)&gt;
+  &lt;!ELEMENT BORN (#PCDATA)&gt;
+  &lt;!ELEMENT DIED  (#PCDATA)&gt;
+  &lt;!ELEMENT SPOUSE EMPTY&gt;
+  &lt;!ATTLIST SPOUSE IDREF IDREF #REQUIRED&gt;
+  &lt;!--FAMILY--&gt;
+  &lt;!ELEMENT FAMILY (HUSBAND?, WIFE?, CHILD*) &gt;
+  &lt;!ATTLIST FAMILY ID ID #REQUIRED&gt;
+  &lt;!ELEMENT HUSBAND EMPTY&gt;
+  &lt;!ATTLIST HUSBAND IDREF IDREF #REQUIRED&gt;
+  &lt;!ELEMENT WIFE EMPTY&gt;
+  &lt;!ATTLIST WIFE IDREF IDREF #REQUIRED&gt;
+  &lt;!ELEMENT CHILD EMPTY&gt;
+  &lt;!ATTLIST CHILD IDREF IDREF #REQUIRED&gt;
+]&gt;
+&lt;FAMILYTREE&gt;
+  &lt;PERSON ID="p1"&gt;
+    &lt;NAME&gt;Domeniquette Celeste Baudean&lt;/NAME&gt;
+    &lt;BORN&gt;21 Apr 1836&lt;/BORN&gt;
+    &lt;DIED&gt;Unknown&lt;/DIED&gt;
+    &lt;SPOUSE IDREF="p2"/&gt;
+  &lt;/PERSON&gt;
+  &lt;PERSON ID="p2"&gt;
+    &lt;NAME&gt;Jean Francois Bellau&lt;/NAME&gt;
+    &lt;SPOUSE IDREF="p1"/&gt;
+  &lt;/PERSON&gt;
+  &lt;PERSON ID="p3" FATHER="p2" MOTHER="p1"&gt;
+    &lt;NAME&gt;Elodie Bellau&lt;/NAME&gt;
+    &lt;BORN&gt;11 Feb 1858&lt;/BORN&gt;
+    &lt;DIED&gt;12 Apr 1898&lt;/DIED&gt;
+    &lt;SPOUSE IDREF="p4"/&gt;
+  &lt;/PERSON&gt;
+  &lt;PERSON ID="p4"&gt;
+    &lt;NAME&gt;John P. Muller&lt;/NAME&gt;
+    &lt;SPOUSE IDREF="p3"/&gt;
+  &lt;/PERSON&gt;
+  &lt;PERSON ID="p7"&gt;
+    &lt;NAME&gt;Adolf Eno&lt;/NAME&gt;
+    &lt;SPOUSE IDREF="p6"/&gt;
+  &lt;/PERSON&gt;
+  &lt;PERSON ID="p6" FATHER="p2" MOTHER="p1"&gt;
+    &lt;NAME&gt;Maria Bellau&lt;/NAME&gt;
+    &lt;SPOUSE IDREF="p7"/&gt;
+  &lt;/PERSON&gt;
+  &lt;PERSON ID="p5" FATHER="p2" MOTHER="p1"&gt;
+    &lt;NAME&gt;Eugene Bellau&lt;/NAME&gt;
+  &lt;/PERSON&gt;
+  &lt;PERSON ID="p8" FATHER="p2" MOTHER="p1"&gt;
+    &lt;NAME&gt;Louise Pauline Bellau&lt;/NAME&gt;
+    &lt;BORN&gt;29 Oct 1868&lt;/BORN&gt;
+    &lt;DIED&gt;3 May 1938&lt;/DIED&gt;
+    &lt;SPOUSE IDREF="p9"/&gt;
+  &lt;/PERSON&gt;
+  &lt;PERSON ID="p9"&gt;
+    &lt;NAME&gt;Charles Walter Harold&lt;/NAME&gt;
+    &lt;BORN&gt;about 1861&lt;/BORN&gt;
+    &lt;DIED&gt;about 1938&lt;/DIED&gt;
+    &lt;SPOUSE IDREF="p8"/&gt;
+  &lt;/PERSON&gt;
+  &lt;PERSON ID="p10" FATHER="p2" MOTHER="p1"&gt;
+    &lt;NAME&gt;Victor Joseph Bellau&lt;/NAME&gt;
+    &lt;SPOUSE IDREF="p11"/&gt;
+  &lt;/PERSON&gt;
+  &lt;PERSON ID="p11"&gt;
+    &lt;NAME&gt;Ellen Gilmore&lt;/NAME&gt;
+    &lt;SPOUSE IDREF="p10"/&gt;
+  &lt;/PERSON&gt;
+  &lt;PERSON ID="p12" FATHER="p2" MOTHER="p1"&gt;
+    &lt;NAME&gt;Honore Bellau&lt;/NAME&gt;
+  &lt;/PERSON&gt;
+  &lt;FAMILY ID="f1"&gt;
+    &lt;HUSBAND IDREF="p2"/&gt;
+    &lt;WIFE IDREF="p1"/&gt;
+    &lt;CHILD IDREF="p3"/&gt;
+    &lt;CHILD IDREF="p5"/&gt;
+    &lt;CHILD IDREF="p6"/&gt;
+    &lt;CHILD IDREF="p8"/&gt;
+    &lt;CHILD IDREF="p10"/&gt;
+    &lt;CHILD IDREF="p12"/&gt;
+  &lt;/FAMILY&gt;
+  &lt;FAMILY ID="f2"&gt;
+    &lt;HUSBAND IDREF="p7"/&gt;
+    &lt;WIFE IDREF="p6"/&gt;
+  &lt;/FAMILY&gt;
+&lt;/FAMILYTREE&gt;
+</code></pre>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <p class="GX">In the sections that follow, this document is assumed to be present at the URL <code>http://www.theharolds.com/genealogy.xml</code>. This isn't a real URL, but the emphasis here is on selecting individual parts of a document rather than a document as a
+         whole.
+      </p>
+      
+      <h2><a name="d1e1020">Location Paths, Steps, and Sets</a></h2>
+      
+      <p class="GX">Many (though not all) XPointers are <span class="italic">location paths</span>. These are the same location paths used by XSLT and discussed in Chapter 17. Consequently, much of the syntax should already
+         be familiar to you.
+      </p>
+      
+      <p class="GX">Location paths are built from <span class="italic">location steps</span>. Each location step specifies a point in the targeted document, always relative to some other well-known point such as the
+         start of the document or the previous location step. This well-known point is called the <span class="italic">context node</span>. In general, a location step has three parts: the <span class="italic">axis</span>, the <span class="italic">node test</span>, and an optional <span class="italic">predicate</span>. These are combined in this form:
+      </p>
+      <pre><code><span class="italic">axis</span>::<span class="italic">node-test</span>[<span class="italic">predicate</span>]
+</code></pre>
+      <p class="GX">For example, in the location step <code>child::PERSON[position()=2]</code>, the axis is <code>child</code>, the node-test is <code>PERSON</code>, and the predicate is <code>[position()=2]</code>. This location step selects the second <code>PERSON</code> element along the child axis, starting from the context node or, less formally, the second <code>PERSON</code> child element of the context node. Of course, which element this actually is depends on what the context node is. Consequently,
+         this is what's referred to as a <span class="italic">relative location step</span>. There are also absolute location steps that do not depend on the context node.
+      </p>
+      
+      <p class="GX">The axis tells you in what direction to search from the context node. For instance, an axis can say to look at things that
+         follow the context node, things that precede the context node, things that are children of the context node, things that are
+         attributes of the context node, and so forth.
+      </p>
+      
+      <p class="GX">The node test tells you which nodes to consider along the axis. The most common node test is simply an element name. However
+         the node test may also be the asterisk (<code>*</code>) wild card to indicate that any element is to be matched, or one of several functions for selecting comments, text, attributes,
+         processing instructions, points, and ranges. The group of nodes along the given axis that satisfy the node test form a <span class="italic">location set</span>.
+      </p>
+      
+      <p class="GX">The predicate is a boolean expression (exactly like the expressions you learned about in XSLT) that tests each node in that
+         set. If that expression returns false, then the node is removed from the set.
+      </p>
+      
+      <p class="GX">Often, after the entire location step &#8212; axis, node test, and predicate &#8212; has been evaluated, what's left is a single, unique
+         node. A location set like this with only one node is called a <span class="italic">singleton</span>. However, not all location steps produce singletons. In some cases, you may finish with multiple nodes in the final location
+         set. On occasion, there may be no nodes in the location set; in other words, the location set is the empty set.
+      </p>
+      
+      <p class="GX">A single location step is often not enough to identify the node you want. Commonly, location steps are strung together, separated
+         by slashes, to form a <span class="italic">location path</span>. Each location step's location set becomes the context node set for the next step in the path. For example, consider this
+         XPointer:
+      </p>
+      <pre><code>xpointer(/child::FAMILYTREE/child::PERSON[position()=3])
+</code></pre>
+      <p class="GX">The location path of this XPointer is <code>/child::FAMILYTREE/child::PERSON[position()=3]</code>. It is built from two location steps:
+      </p>
+      
+      <ul>
+         <li><code>/child::FAMILYTREE</code></li>
+         <li><code>child::PERSON[position()=3]</code></li>
+      </ul>
+      
+      
+      <p class="GX">The first location step is an absolute step that selects all child elements of the root node whose name is <code>FAMILYTREE</code>. When applied to Listing 20-1, there's exactly one such element. The second location step is then applied relative to the
+         <code>FAMILYTREE</code> element returned by the first location step. All of its child nodes are considered. Those that satisfy the node test &#8212; that
+         is, elements whose name is <code>PERSON</code> &#8212; are returned. There are 12 of these nodes. Each of these 12 nodes is then compared against the predicate to see if its
+         position is equal to 3. This turns out to be true for only one node, Elodie Bellau's <code>PERSON</code> element, so that is the single node this XPointer points to.
+      </p>
+      
+      <p class="GX">It is not always the case, however, that an XPointer points to exactly one node. For instance, consider this XPointer:</p>
+      <pre><code>xpointer(/child::FAMILYTREE/child::PERSON[position()&gt;3])
+</code></pre>
+      <p class="GX">This is exactly the same as before except that the equals sign has been changed to a greater than sign. Now when each of the
+         12 <code>PERSON</code> elements are compared, the predicate returns true for 9 of them. Each of these nine is included in the location set that
+         this XPointer returns. This XPointer points to nine nodes, not to one.
+      </p>
+      
+      <h2><a name="d1e1155">The Root Node</a></h2>
+      
+      <p class="GX">Although Listing 20-1 includes ID attributes for most elements, and although they are convenient, they are not required for
+         linking into the document. You can select any element in the document simply by working your way down from the root node.
+         An initial <code>/</code> indicates the root node.
+      </p>
+      
+      <p class="GX">The root node of the document is not the same as the root element. Rather it is an abstract node that contains the entire
+         document including the XML declaration, the document type declaration, any comments or processing instructions that come before
+         or after the root element such as <code>xml-stylesheet</code>, and the root element itself. For example, to select the root node of the XML 1.0 specification at <code>http://www.w3.org/TR/REC-xml</code> you can use this URI:
+      </p>
+      <pre><code>http://www.w3.org/TR/REC-xml#xpointer(/)
+</code></pre>
+      <p class="GX">For another example, Domeniquette Celeste Baudean is the first person in Listing 20-1. Therefore to point at her name, you
+         can get the first element child of the root node (that is, the root element of the document, <code>FAMILYTREE</code>), then count one <code>PERSON</code> down from the root element, and then count one <code>NAME</code> down from that like this:
+      </p>
+      <pre><code>/child::*/child::PERSON[position()=1]/child::NAME
+</code></pre>
+      <p class="GX">This location path says to find the root node, then find all element children of the root node (which in a well-formed XML
+         document will be exactly the root element), then find the first <code>PERSON</code> element that's an immediate child of that element, and then find its <code>NAME</code> child elements.
+      </p>
+      
+      <h2><a name="d1e1200">Axes</a></h2>
+      
+      <p class="GX">XPath defines 13 axes along which an XPointer may search for nodes, all from the same XPath syntax used for XSLT. These depend
+         on context to determine exactly what they point to. For instance, consider this location path:
+      </p>
+      <pre><code>id("p6")/child::NAME
+</code></pre>
+      <p class="GX">It begins with the <code>id()</code> function that returns a node set containing the element with the ID type attribute whose value is <code>p6</code>. This provides a context node for the following location step along the relative child axis. Other axes include <code>ancestor</code>, <code>descendant</code>, <code>self</code>, <code>ancestor-or-self</code>, <code>descendant-or-self</code>, <code>attribute</code>, and more. Each serves to select a particular subset of the elements in the document. For instance, the <code>following</code> axis selects from nodes that come after the context node. The <code>preceding</code> axis selects from nodes that come before the context node. Table 20-1 summarizes the 13 axes.
+      </p>
+      
+      <p style="font-weight: bold; text-align: center; font-family: Arial, Helvetica, sans">Table 20-1: 
+         Location Step Axes
+      </p>
+      
+      
+      <table border="1" summary="(unspecified contents)">
+         
+         <colgroup span="1">
+            <col width="71" span="1">
+            <col width="366" span="1">
+         </colgroup>
+         
+         <tr>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p style="font-weight: bold; font-family: Arial, Helvetica, sans">Axis: 
+                  
+               </p>
+               
+            </td>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p style="font-weight: bold; font-family: Arial, Helvetica, sans">Selects From: 
+                  
+               </p>
+               
+            </td>
+            
+         </tr>
+         
+         <tr>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX"><code>child</code></p>
+               
+            </td>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX">All nodes contained in the context node, but not contained in any other nodes the context node contains</p>
+               
+            </td>
+            
+         </tr>
+         
+         <tr>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX"><code>parent</code></p>
+               
+            </td>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX">The unique node that contains the context node but that does not contain any other nodes that also contain the context node</p>
+               
+            </td>
+            
+         </tr>
+         
+         <tr>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX"><code>self</code></p>
+               
+            </td>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX">The context node</p>
+               
+            </td>
+            
+         </tr>
+         
+         <tr>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX"><code>ancestor</code></p>
+               
+            </td>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX">The parent of the context node, the parent of the parent of the context node, the parent of the parent of the parent of the
+                  context node, and so forth, back to the root node
+               </p>
+               
+            </td>
+            
+         </tr>
+         
+         <tr>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX"><code>ancestor-or-self</code></p>
+               
+            </td>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX">The ancestors of the context node and the context node itself</p>
+               
+            </td>
+            
+         </tr>
+         
+         <tr>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX"><code>attribute</code></p>
+               
+            </td>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX">The attributes of the context node</p>
+               
+            </td>
+            
+         </tr>
+         
+         <tr>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX"><code>descendant</code></p>
+               
+            </td>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX">The children of the context node, the children of the children of the context node, and so forth</p>
+               
+            </td>
+            
+         </tr>
+         
+         <tr>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX"><code>Descendant-or-self</code></p>
+               
+            </td>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX">The context node itself and its descendants</p>
+               
+            </td>
+            
+         </tr>
+         
+         <tr>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX"><code>Following</code></p>
+               
+            </td>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX">All nodes that start after the end of the context node, excluding attribute and namespace nodes</p>
+               
+            </td>
+            
+         </tr>
+         
+         <tr>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX"><code>Following-sibling</code></p>
+               
+            </td>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX">All nodes that start after the end of the context node and have the same parent as the context node</p>
+               
+            </td>
+            
+         </tr>
+         
+         <tr>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX"><code>Namespace</code></p>
+               
+            </td>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX">All namespaces defined for the context node</p>
+               
+            </td>
+            
+         </tr>
+         
+         <tr>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX"><code>Preceding</code></p>
+               
+            </td>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX">All nodes that finish before the beginning of the context node, excluding attribute and namespace nodes</p>
+               
+            </td>
+            
+         </tr>
+         
+         <tr>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX"><code>Preceding-sibling</code></p>
+               
+            </td>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX">All nodes that start before the beginning of the context node and have the same parent as the context node</p>
+               
+            </td>
+            
+         </tr>
+         
+      </table>
+      
+      <h3>The child axis</h3>
+      
+      <p class="GX">The <code>child</code> axis selects from the children of the context node. For example, consider this XPointer:
+      </p>
+      <pre><code>xpointer(/child::FAMILYTREE/child::PERSON[position()=3]/child::NAME)
+</code></pre>
+      <p class="GX">Reading from right to left, it selects the <code>NAME</code> child elements of the third <code>PERSON</code> element that's a child of the <code>FAMILYTREE</code> element that's a child of the root of the document. In this example, there's only one such element; but if there are more
+         than one, then all are returned. For instance, consider this XPointer:
+      </p>
+      <pre><code>xpointer(/child::FAMILYTREE/child::PERSON/child::NAME)
+</code></pre>
+      <p class="GX">This selects all <code>NAME</code> children of <code>PERSON</code> elements that are children of <code>FAMILYTREE</code> elements that are children of the root. There are a dozen of these in Listing 20-1.
+      </p>
+      
+      <p class="GX">It's important to note that the <code>child</code> axis only selects from the <span class="italic">immediate</span> children of the context node. For example, consider this URI:
+      </p>
+      <pre><code>http://www.theharolds.com/genealogy.xml#xpointer(/child::NAME)
+</code></pre>
+      <p class="GX">This points nowhere because there are no <code>NAME</code> elements in the document that are direct, immediate children of the root node. There are a dozen <code>NAME</code> elements that are indirect children. If you'd like to refer to these, you should use the <code>descendant</code> axis instead of <code>child</code>.
+      </p>
+      
+      <p class="GX">As in XSLT, the <code>child</code> axis is implied if no explicit axis name is present. For instance, the above three XPointers would more likely be written
+         in this abbreviated form:
+      </p>
+      <pre><code>xpointer(/FAMILYTREE/PERSON[position()=3]/NAME)
+xpointer(/FAMILYTREE/PERSON/NAME)
+xpointer(/NAME)
+</code></pre>
+      
+      
+      <h3>The descendant axis</h3>
+      
+      <p class="GX">The <code>descendant</code> axis searches through all the descendants of the context node, not just the immediate children. For example, <code>/descendant::BORN</code> selects all the <code>BORN</code> elements in the document. <code>/descendant::BORN[position()=3]</code> selects the third <code>BORN</code> element encountered in a depth-first search of the document tree. (Depth first is the order you get if you simply read through
+         the XML document from top to bottom.) In Listing 20-1, that selects Louise Pauline Bellau's birthday, <code>&lt;BORN&gt;29 Oct 1868&lt;/BORN&gt;</code>.
+      </p>
+      
+      <p class="GX">The <code>descendant</code> axis can be abbreviated by using a double slash in place of a single slash. For example, <code>//BORN[position()=3]</code> also selects the third <code>BORN</code> element encountered in a depth-first search of the document tree. <code>//NAME</code> selects all <code>NAME</code> elements in the document. <code>//PERSON/NAME</code> selects all <code>NAME</code> children of <code>PERSON</code> elements.
+      </p>
+      
+      <h3>The descendant-or-self axis</h3>
+      
+      <p class="GX">The <code>descendant-or-self</code> axis searches through all the descendants of the context node and the context node itself. For example, <code>id("p11")/descendant-or-self::PERSON</code> refers to all <code>PERSON</code> children of the element with ID <code>p11</code> as well as that element itself, because it is of type <code>PERSON</code>. There is no abbreviation for <code>descendant-or-self</code>.
+      </p>
+      
+      <h3>The parent axis</h3>
+      
+      <p class="GX">The <code>parent</code> axis refers to the node that's the immediate parent of the context node. For example, <code>/descendant::HUSBAND[position()=1]/parent::*</code> refers to the parent element of the first <code>HUSBAND</code> element in the document. In Listing 20-1, this is the <code>FAMILY</code> element with ID <code>f1</code>.
+      </p>
+      
+      <p class="GX">Without a node test the parent axis can be abbreviated by a <code>..</code> as in <code>//HUSBAND[position()=1]/..</code>.
+      </p>
+      
+      <h3>The self axis</h3>
+      
+      <p class="GX">The <code>self</code> axis selects the context node. It's sometimes useful when making relative links. For example, <code>/self::node()</code> selects the root node of the document (which is not the same as the root element of the document; that would be selected
+         by <code>/child::*</code> or, in this example, <code>/child::FAMILYTREE</code>.) It can be abbreviated by a single period. However, this axis is rarely used in XPointers. It's more useful for XSLT select
+         expressions.
+      </p>
+      
+      <h3>The ancestor axis</h3>
+      
+      <p class="GX">The <code>ancestor</code> axis selects all nodes that contain the context node, starting with its parent. For example, <code>/descendant::BORN[position()=2]/ancestor::*[position()=1]</code> selects the element that contains the second <code>BORN</code> element. Applied to Listing 20-1, it selects Elodie Bellau's <code>PERSON</code> element. There's no abbreviation for the <code>ancestor</code> axis.
+      </p>
+      
+      <h3>The ancestor-or-self axis</h3>
+      
+      <p class="GX">The <code>ancestor-or-self</code> axis selects the context node and all nodes that contain it. For example, <code>id("p1")/ancestor-or-self::*</code> identifies a node set that includes Domeniquette Celeste Baudean's <code>PERSON</code> element, that has ID <code>p1</code>, and its parent, the <code>FAMILYTREE</code> element, and its parent, the root node. There's also no abbreviation for the <code>ancestor-or-self</code> axis.
+      </p>
+      
+      <h3>The preceding axis</h3>
+      
+      <p class="GX">The <code>preceding</code> axis selects all nodes that finish before the context node. The first time it encounters an element's start tag or empty
+         element tag, moving backwards from the start of the context node, it counts that element. For example, consider this rule:
+      </p>
+      <pre><code>/descendant::BORN[position()=3]/preceding::*[position()=6]
+</code></pre>
+      <p class="GX">This says go to the third <code>BORN</code> element from the root, 
+      Louise Pauline Bellau's birthday, <code>&lt;BORN&gt;29 Oct 1868&lt;/BORN&gt;</code>, and then move back 
+      six elements. This lands on Maria Bellau's <code>NAME</code> element. There's no abbreviation for the <code>preceding</code> axis.
+      </p>
+      
+      <h3>The following axis</h3>
+      
+      <p class="GX">The <code>following</code> axis selects all elements that occur after the context node's closing tag. The first time it encounters an element's start
+         tag or empty element tag, it counts that element. For example, consider this rule:
+      </p>
+      <pre><code>/descendant::BORN[position()=2]/following::*[position()=5]
+</code></pre>
+      <p class="GX">This says go to Elodie Bellau's birthday, <code>&lt;BORN&gt;11 Feb 1858&lt;/BORN&gt;</code>, and then move forward five elements. This lands on John P. Muller's <code>SPOUSE</code> element, <code>&lt;SPOUSE IDREF="p3" /&gt;</code>, after passing through Elodie Bellau's <code>DIED</code> element, Elodie Bellau's <code>SPOUSE</code> element, John P. Muller's <code>PERSON</code> element and John P. Muller's <code>NAME</code> element, in this order. There's no abbreviation for the <code>following</code> axis.
+      </p>
+      
+      <h3>The preceding-sibling axis</h3>
+      
+      <p class="GX">The <code>preceding-sibling</code> axis selects elements that precede the context node in the same parent element. For example, <code>/descendant::BORN[position()=2]/preceding-sibling::*[position()=1]</code> selects Elodie Bellau's <code>NAME</code> element, <code>&lt;NAME&gt;Elodie Bellau&lt;/NAME&gt;</code>. <code>/descendant::BORN[position()=2]/preceding-sibling::*[position()=2]</code> doesn&#8217;t point to anything because there's only one sibling of Elodie Bellau's <code>BORN</code> element before it. There's no abbreviation for the <code>preceding-sibling</code> axis.
+      </p>
+      
+      <h3>The following-sibling axis</h3>
+      
+      <p class="GX">The <code>following-sibling</code> axis selects elements that follow the context node in the same parent element. For example, <code>/descendant::BORN[position()=2]/following-sibling::*[position()=1]</code> selects Elodie Bellau's <code>DIED</code> element, <code>&lt;DIED&gt;12 Apr 1898&lt;/DIED&gt;</code>. <code>/descendant::BORN[position()=2]/following-sibling::*[position()=3]</code> doesn't point to anything because there are only two sibling elements following Elodie Bellau's <code>BORN</code> element. There's no abbreviation for the <code>following-sibling</code> axis.
+      </p>
+      
+      <h3>The attribute axis</h3>
+      
+      <p class="GX">The <code>attribute</code> axis selects atributes of the context node. For example, the location path <code>/descendant::SPOUSE/attribute::IDREF</code> selects all <code>IDREF</code> attributes of all <code>SPOUSE</code> elements in the document. The <code>attribute</code> axis can be abbreviated by an <code>@</code> sign. Thus, <code>//SPOUSE/@IDREF</code> also selects all <code>IDREF</code> attributes of all <code>SPOUSE</code> elements in the document. <code>@*</code> is a general abbreviation for an attribute with any name. Thus <code>//SPOUSE/@*</code> indicates all attributes of all <code>SPOUSE</code> elements.
+      </p>
+      
+      <p class="GX">For another example, to find all <code>PERSON</code> elements in the document <code>http://www.theharolds.com/genealogy.xml</code> whose <code>FATHER</code> attribute is Jean Francois Bellau (ID p2), you could write <code>//PERSON[@FATHER="p2"]</code>.
+      </p>
+      
+      <p class="GX">The <code>xmlns</code> and <code>xmlns:</code><span class="italic"><code>prefix</code></span> attributes used to declare namespaces are not attribute nodes. To get information about namespaces, you have to use the <code>namespace</code> axis instead.
+      </p>
+      
+      <h3>The namespace axis</h3>
+      
+      <p class="GX">The <code>namespace</code> axis contains the namespaces in scope on the context node. It only applies to element nodes. There is one namespace node
+         for each prefix that is mapped to a URI on that element (whether the prefix is used or not, and whether the <code>xmlns:</code><span class="italic"><code>prefix</code></span> attribute that created the mapping is on the element itself or one of its ancestors). Furthermore, if the element is in a
+         default, nonprefixed namespace, then there is also a namespace node for the default namespace.
+      </p>
+      
+      <p class="GX">Namespace nodes are very slippery and hard to grab hold of. Although the element is the parent of the namespace node, the
+         namespace node is not the child of the element. A simple walk of the tree or asking for the children of the element will not
+         find the namespaces of the element. Instead, you have to walk the <code>namespace</code> axis explicitly. The only node test that applies to namespace nodes is <code>node()</code>.
+      </p>
+      
+      <p class="GX">Fortunately, there's very little reason to point to a namespace node with an XPointer. This axis is more useful for XSLT and
+         not much used in XPointer.
+      </p>
+      
+      <h2><a name="d1e1946">Node Tests</a></h2>
+      
+      <p class="GX">Most of the time the node test part of a location step is simply an element or attribute name like <code>PERSON</code> or <code>@IDREF</code>. However, there are nine other possibilities:
+      </p>
+      
+      <ul>
+         <li><code>*</code></li>
+         <li><span class="italic"><code>prefix</code></span><code>:*</code></li>
+         <li><code>@</code><span class="italic"><code>prefix</code></span><code>:*</code></li>
+         <li><code>node()</code></li>
+         <li><code>text()</code></li>
+         <li><code>comment()</code></li>
+         <li><code>processing-instruction()</code></li>
+         <li><code>point()</code></li>
+         <li><code>range()</code></li>
+      </ul>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <p class="GX">An asterisk stands for any element. For example, <code>id("p1")/child::*</code> selects all the child elements of the element with the ID <code>p1</code> regardless of their type. This does, however, select only element nodes. It omits comment nodes, text nodes, processing instruction
+         nodes, and attribute nodes. If you want to select absolutely any kind of node, use the <code>node()</code> node test instead.
+      </p>
+      
+      <p class="GX">A prefix followed by an asterisk selects all elements in the namespace that match the prefix. For example, if the <code>svg</code> prefix is mapped to the <code>http://www.w3.org/2000/svg</code> URI, then <code>svg:*</code> matches all SVG elements. Similarly, <code>@</code><span class="italic"><code>prefix</code></span><code>:*</code> matches all attributes in the specified namespace. For instance, if <code>xlink</code> is mapped to the URI <code>http://www.w3.org/1999/xlink</code>, then <code>@xlink:*</code> matches all XLink attributes in the document such as <code>xlink:type</code>, <code>xlink:show</code>, <code>xlink:actuate</code>, <code>xlink:href</code>, <code>xlink:role</code>, and so forth.
+      </p>
+      
+      <p class="GX">Determining which namespace URIs a prefix is mapped to can be tricky. If the XPointer is used in an XML document, then the
+         normal <code>xmlns:</code><span class="italic"><code>prefix</code></span> attributes in scope where the XPointer is used determine which namespace URI a prefix maps to. However, XPointers can also
+         be used in non-XML documents. For instance, an XPointer may be included as a URL fragment identifier in a link to an XML document
+         from an HTML page. HTML has no means of associating prefixes with URIs. In this case, you can prefix the <code>xpointer()</code> part with one or more an <code>xmlns(</code><span class="italic"><code>prefix</code></span><code>=</code><span class="italic"><code>URI</code></span><code>)</code> parts that establish a prefix mapping.
+      </p>
+      
+      <p class="GX">For example, suppose you want to point at the MathML <code>math</code> element in the document at <code>http://www.example.com/equations.xml</code>. You know that this element is in the <code>http://www.w3.org/1998/Math/MathML</code> namespace, but you don&#8217;t know what prefix is used in the document. Regardless of what prefix the target document uses, you
+         can use the prefix <code>mml</code> as long as you use an <code>xmlns(mml=http://www.w3.org/1998/Math/MathML)</code> part to associate it with the right URI. For example,
+      </p>
+      <pre><code>xmlns(mml=http://www.w3.org/1998/Math/MathML) xpointer(//mml:math[1])
+</code></pre>
+      <p class="GX">The <code>text()</code> node test specifically refers to the parsed character data content of an element. It's most commonly used with mixed content.
+         Despite the parentheses, the <code>text()</code> node test does not actually take any arguments. For instance <code>/descendant::text()</code> refers to all of the text but none of the markup of a document. For another example, consider this <code>CITATION</code> element:
+      </p>
+      <pre><code>  &lt;CITATION CLASS="TURING" ID="C2"&gt;
+    &lt;AUTHOR&gt;Turing, Alan M.&lt;/AUTHOR&gt;
+    "&lt;TITLE&gt;On Computable Numbers,
+      With an Application to the Entscheidungs-problem&lt;/TITLE&gt;"
+    &lt;JOURNAL&gt;
+      Proceedings of the London Mathematical Society&lt;/JOURNAL&gt;,
+    &lt;SERIES&gt;Series 2&lt;/SERIES&gt;,
+    &lt;VOLUME&gt;42&lt;/VOLUME&gt;
+    (&lt;YEAR&gt;1936&lt;/YEAR&gt;):
+    &lt;PAGES&gt;230-65&lt;/PAGES&gt;.
+  &lt;/CITATION&gt;
+</code></pre>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <p class="GX">The following location path refers to the quotation mark before the <code>TITLE</code> element.
+      </p>
+      <pre><code> id("C2")/child::text()[position()=2]
+</code></pre>
+      <p class="GX">The first text node in this fragment is the white space between <code>&lt;CITATION CLASS="TURING" ID="C2"&gt;</code> and <code>&lt;AUTHOR&gt;</code>. Technically, this location path refers to all text between <code>&lt;/AUTHOR&gt;</code> and <code>&lt;TITLE&gt;</code>, including the white space and not just the quotation mark.
+      </p>
+      
+      <p class="SBT" style="font-weight: bold; margin-left: 0.5in; margin-right: 0.5in;        font-family: Arial, Helvetica, sans; color: #0000ff">Caution</p>
+      
+      <p class="SBT" style="font-family: Arial, Helvetica, sans;        margin-left: 0.5in; margin-right: 0.5in">XPointers that point to text nodes are tricky. I recommend that you avoid them if possible. Of course, you may not always
+         be able to.
+      </p>
+      
+      <p class="GX">Because character data does not contain any child nodes, child, descendant, descendant-or-self, and attribute relative location
+         steps may not be attached to an XPath that selects a text node. The exception is the <code>point()</code> node test which is discussed later.
+      </p>
+      
+      <p class="GX">The <code>comment()</code> node test specifically refers to comments. For example, this XPointer points to the third comment in the document:
+      </p>
+      <pre><code>xpointer(/descendant::comment()[position()=3])
+</code></pre>
+      <p class="GX">Because comments do not contain attributes or elements, you cannot add an additional child, descendant, or attribute relative
+         location step after the first term that selects a comment. Despite the parentheses, the <code>comment()</code> node test does not actually take any arguments.
+      </p>
+      
+      <p class="GX">Finally, the <code>processing-instruction()</code> node test selects any processing instructions that occur along the chosen axis. You can use it without any arguments to select
+         all processing instructions, or with an argument to specify the targets of the particular processing instructions you want
+         to select. For example, <code>/descendant::processing-instruction()</code> selects all processing instructions in the document. However,<code> /descendant::processing-instruction('xml-stylesheet')</code> only finds processing instructions that begin <code>&lt;?xml-stylesheet </code>. <code>/descendant::processing-instruction("php")</code> only finds processing instructions intended for PHP. As with comments, because processing instructions do not contain attributes
+         or elements, you cannot add an additional child, descendant, or attribute relative location step after the first step that
+         selects a processing instruction.
+      </p>
+      
+      <p class="GX">The <code>point()</code> and <code>range()</code> node tests refer to new ways of dividing an XML document that only work in XPointer, not in other standards that use XPath,
+         such as XSLT. They will be discussed below.
+      </p>
+      
+      <h2><a name="d1e2239">Predicates</a></h2>
+      
+      <p class="GX">Each location step can contain zero or more predicates that further restrict which nodes an XPointer points to. In many cases
+         a predicate is necessary to pick the one node from a node set that you want. This uses the same syntax as you already learned
+         about from XSLT. Each predicate contains an expression in square brackets (<code>[]</code>). This allows an XPointer to select nodes according to many different criteria. For example, you can select:
+      </p>
+      
+      <ul>
+         <li>All elements that have a <code>color</code> attribute
+         </li>
+         <li>All elements that have a <code>width</code> attribute with the value <code>100</code></li>
+         <li>The first element in the document that contains a <code>LIMIT</code> element
+         </li>
+         <li>The second element whose text content includes the word "Gale"</li>
+         <li>All elements that are not the first or last children of their parents</li>
+         <li>All elements whose value is 42</li>
+         <li>All elements whose value is a number greater than 100</li>
+      </ul>
+      
+      
+      
+      
+      
+      
+      
+      <p class="GX">These are just a small sampling of the selections that predicates make possible.</p>
+      
+      <p class="GX">The result of a predicate expression is ultimately converted to a boolean after all calculations are finished. Nonboolean
+         results are converted as follows:
+      </p>
+      
+      <ul>
+         <li>A number is compared against the position of the node in the context node list. If it matches, then the result is true; otherwise,
+            the result is false. (More about this shortly.)
+         </li>
+         <li>An empty node set is false; all other node sets are true.</li>
+         <li>A zero-length string is false; all other strings are true (including the string "false").</li>
+      </ul>
+      
+      
+      
+      <p class="GX">The predicate expression is evaluated for each node in the context node list. Each node for which the expression ultimately
+         evaluates to false is removed from the list. Thus only those nodes that satisfy the predicate remain. I will not repeat the
+         discussion of the operators and functions available to use expressions here . However, I will show you a few examples of predicates
+         using the expression syntax as it's likely to be used in XPointers.
+      </p>
+      
+      <p class="SBT" style="font-weight: bold; margin-left: 0.5in; margin-right: 0.5in;        font-family: Arial, Helvetica, sans; color: #0000ff">Cross-reference</p>
+      
+      <p class="SBT" style="font-family: Arial, Helvetica, sans;        margin-left: 0.5in; margin-right: 0.5in">Expression syntax is covered in Chapter 17.</p>
+      
+      <p class="GX">Probably the most frequently used function in XPointer predicates is <code>position()</code>. This returns the index of the node in the context node list. This enables you to find the first, second, third, or other
+         indexed node. You can compare positions using the relational operators <code>&lt;</code>, <code>&gt;</code>, <code>=</code>, <code>!=</code>, <code>&gt;=</code>, and <code>&lt;=</code>.
+      </p>
+      
+      <p class="GX">For instance, in Listing 20-1 the root <code>FAMILYTREE</code> element has 14 immediate children, 12 <code>PERSON</code> elements, and 2 <code>FAMILY</code> elements. In order, they are:
+      </p>
+      <pre><code>xpointer(/child::FAMILYTREE/child::*[position()=1])
+xpointer(/child::FAMILYTREE/child::*[position()=2])
+xpointer(/child::FAMILYTREE/child::*[position()=3])
+xpointer(/child::FAMILYTREE/child::*[position()=4])
+xpointer(/child::FAMILYTREE/child::*[position()=5])
+xpointer(/child::FAMILYTREE/child::*[position()=6])
+xpointer(/child::FAMILYTREE/child::*[position()=7])
+xpointer(/child::FAMILYTREE/child::*[position()=8])
+xpointer(/child::FAMILYTREE/child::*[position()=9])
+xpointer(/child::FAMILYTREE/child::*[position()=10])
+xpointer(/child::FAMILYTREE/child::*[position()=11])
+xpointer(/child::FAMILYTREE/child::*[position()=12])
+xpointer(/child::FAMILYTREE/child::*[position()=13])
+xpointer(/child::FAMILYTREE/child::*[position()=14])
+</code></pre>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <p class="GX">In fact, this test is so common that XPath offers a shorthand notation for it. Instead of writing <code>[position=X]</code> where X is a number, you can simply enclose the number or an XPath expression that returns the number in the square brackets
+         like this:
+      </p>
+      <pre><code>xpointer(/child::FAMILYTREE/child::*[1])
+xpointer(/child::FAMILYTREE/child::*[2])
+xpointer(/child::FAMILYTREE/child::*[3])
+xpointer(/child::FAMILYTREE/child::*[4])
+xpointer(/child::FAMILYTREE/child::*[5])
+xpointer(/child::FAMILYTREE/child::*[6])
+xpointer(/child::FAMILYTREE/child::*[7])
+xpointer(/child::FAMILYTREE/child::*[8])
+xpointer(/child::FAMILYTREE/child::*[9])
+xpointer(/child::FAMILYTREE/child::*[10])
+xpointer(/child::FAMILYTREE/child::*[11])
+xpointer(/child::FAMILYTREE/child::*[12])
+xpointer(/child::FAMILYTREE/child::*[13])
+xpointer(/child::FAMILYTREE/child::*[14])
+</code></pre>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <p class="GX">Greater numbers, such as <code>/child::FAMILYTREE/child::*[15]</code>, don't point to anything; they're just dangling.
+      </p>
+      
+      <p class="GX">To count all elements in the document, not just the immediate children of the root, you can use the <code>descendant</code> axis instead of <code>child</code>. Table 20-2 shows the first four descendant XPointers for the document element <code>FAMILYTREE</code> of Listing 20-1, and what they point to. Note especially that <code>/child::FAMILYTREE/descendant::*[position()=1]</code> points to the entire first <code>PERSON</code> element, including its children, and not just the <code>&lt;PERSON&gt;</code> start tag.
+      </p>
+      
+      <p style="font-weight: bold; text-align: center; font-family: Arial, Helvetica, sans">Table 20-2: 
+         The First Four Descendants of the Document Element
+      </p>
+      
+      
+      <table border="1" summary="(unspecified contents)">
+         
+         <colgroup span="1">
+            <col width="253" span="1">
+            <col width="185" span="1">
+         </colgroup>
+         
+         <tr>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p style="font-weight: bold; font-family: Arial, Helvetica, sans">Xpointer: 
+                  
+               </p>
+               
+            </td>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p style="font-weight: bold; font-family: Arial, Helvetica, sans">Points To: 
+                  
+               </p>
+               
+            </td>
+            
+         </tr>
+         
+         <tr>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX"><code>/child::FAMILYTREE/descendant::*[position()=1]</code></p>
+               
+            </td>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX"> <code>&lt;PERSON ID="p1"&gt;</code></p>
+               
+               <p class="TX"><code>&lt;NAME&gt;Domeniquette Celeste Baudean&lt;/NAME&gt;</code></p>
+               
+               <p class="TX"><code>&lt;BORN&gt;11 Feb 1858&lt;/BORN&gt;</code></p>
+               
+               <p class="TX"><code>&lt;DIED&gt;12 Apr 1898&lt;/DIED&gt;</code></p>
+               
+               <p class="TX"><code>&lt;SPOUSE IDREF="p2"/&gt;</code></p>
+               
+               <p class="TX"><code>&lt;/PERSON&gt;</code></p>
+               
+            </td>
+            
+         </tr>
+         
+         <tr>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX"><code>/child::FAMILYTREE/descendant::*[position()=2]</code></p>
+               
+            </td>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX"><code>&lt;NAME&gt;Domeniquette Celeste Baudean&lt;/NAME&gt;</code></p>
+               
+            </td>
+            
+         </tr>
+         
+         <tr>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX"><code>/child::FAMILYTREE/descendant::*[position()=3]</code></p>
+               
+            </td>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX"><code>&lt;BORN&gt;21 Apr 1836&lt;/BORN&gt;</code></p>
+               
+            </td>
+            
+         </tr>
+         
+         <tr>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX"><code>/child::FAMILYTREE/descendant::*[position()=4]</code></p>
+               
+            </td>
+            
+            <td valign="top" colspan="1" rowspan="1">
+               
+               <p class="TX"><code>&lt;DIED&gt;Unknown&lt;/DIED&gt;</code></p>
+               
+            </td>
+            
+         </tr>
+         
+      </table>
+      
+      <h2><a name="d1e2574">Functions that Return Node Sets</a></h2>
+      
+      <p class="GX">XPointers are not limited to location paths. In fact they can use any expression that returns a node set. In particular, they
+         can use functions that return node sets. There are three of these:
+      </p>
+      
+      <ul>
+         <li><code>id()</code></li>
+         <li><code>here()</code></li>
+         <li><code>origin()</code></li>
+      </ul>
+      
+      
+      
+      <p class="GX">The last two, <code>here()</code> and <code>origin()</code> are XPointer extensions to XPath that are not available in XSLT.
+      </p>
+      
+      <h3>id()</h3>
+      
+      <p class="GX">The <code>id()</code> function is one of the simplest and most robust means of identifying an element node. It selects the element in the document
+         that has an ID type attribute with a specified value. For example, consider this URI:
+      </p>
+      <pre><code>http://www.theharolds.com/genealogy.xml#xpointer(id("p12"))
+</code></pre>
+      <p class="GX"> If you look at Listing 20-1, you find this element:</p>
+      <pre><code>&lt;PERSON ID="p12" FATHER="p2" MOTHER="p1"&gt;
+  &lt;NAME&gt;Honore Bellau&lt;/NAME&gt;
+&lt;/PERSON&gt;
+</code></pre>
+      
+      
+      <p class="GX">Because ID type attributes are unique, you know there aren't any other elements that match this XPointer. Therefore, <code>http://www.theharolds.com/genealogy.xml#xpointer(id("p12"))</code> must refer to Honore Bellau's <code>PERSON</code> element. Note that the XPointer points to the entire element to which it refers, including all its children, not just the
+         start tag.
+      </p>
+      
+      <p class="GX">Since ID pointers are so common and so useful, there's also a shortcut for this. If all you want to do is point to a particular
+         element with a particular ID, you can skip all the <code>xpointer(id(""))</code> frou frou and just use the bare ID after the <code>#</code> like this:
+      </p>
+      <pre><code>http://www.theharolds.com/genealogy.xml#p12
+</code></pre>
+      <p class="GX">You can only do this if all you want is the particular element with the particular ID. You cannot add additional relative
+         location steps to a URI that uses this shortcut to select children of the element with ID p12 or the third attribute of the
+         element with ID p12. If you want to do that, you have to use the full <code>xpointer(id("p12"))</code> syntax.
+      </p>
+      
+      <p class="GX">The disadvantage of the <code>id()</code> function is that it requires assistance from the targeted document. If the element you want to point to does not have an
+         ID type attribute, you're out of luck. If other elements in the document have ID type attributes, you may be able to point
+         to one of them and use a relative location step to point to the one you really want. Nonetheless, ID type attributes work
+         best when you control both the targeted document and the linking document, so that you can ensure that the IDs match the links
+         even as the documents evolve and change over time.
+      </p>
+      
+      <p class="GX">If the document does not have a DTD, then it cannot have any ID type attributes, although it may have attributes named <code>ID</code>. In this case, you can't point at anything using the <code>id()</code> function.
+      </p>
+      
+      <p class="GX">One possibility is to first use an <code>id()</code>-based XPointer, but back it up with an XPointer that looks for the attribute with the specific name anywhere in the document,
+         <code>ID</code> in this example. Simply append the second XPointer to the first like this:
+      </p>
+      <pre><code>xpointer(id("p12"))xpointer(//*[@ID="p12"])
+</code></pre>
+      <p class="GX">XPointers are evaluated from left to right. The first match found is returned, so the backup is only used if an ID type attribute
+         with the value <code>p12</code> can't be found.
+      </p>
+      
+      <h3>here()</h3>
+      
+      <p class="GX">The second node set returning function is <code>here()</code>. However, it's only useful when used in conjunction with one or more relative location steps. In intradocument links, that
+         is, links from one point in a document to another point in the same document, it's often necessary to refer to "the next element
+         after this one," or "the parent element of this element." The <code>here()</code> function refers to the node that contains the XPointer so that such references are possible.
+      </p>
+      
+      <p class="GX">Consider Listing 20-2, a simple slide show. In this example, <code>here()/../following::SLIDE[1]</code> refers to the next slide in the show. <code>here()/../preceding::SLIDE[1]</code> refers to the previous slide in the show. Presumably, this would be used in conjunction with a style sheet that showed one
+         slide at a time.
+      </p>
+      
+      <p style="font-weight: bold">Listing 20-2: 
+         A slide show
+      </p>
+      
+      <pre><code>&lt;?xml version="1.0"?&gt;
+&lt;SLIDESHOW xmlns:xlink="http://www.w3.org/1999/xlink"&gt;
+  &lt;SLIDE&gt;
+    &lt;H1&gt;Welcome to the slide show!&lt;/H1&gt;
+    &lt;BUTTON xlink:type="simple"
+            xlink:href="here()/../following::SLIDE[1]"&gt;
+      Next
+    &lt;/BUTTON&gt;
+  &lt;/SLIDE&gt;
+  &lt;SLIDE&gt;
+    &lt;H1&gt;This is the second slide&lt;/H1&gt;
+    &lt;BUTTON xlink:type="simple"
+            xlink:href="here()/../preceding::SLIDE[1]"&gt;
+      Previous
+    &lt;/BUTTON&gt;
+    &lt;BUTTON xlink:type="simple"
+            xlink:href="here()/../following::SLIDE[1]"&gt;
+      Next
+    &lt;/BUTTON&gt;
+  &lt;/SLIDE&gt;
+  &lt;SLIDE&gt;
+    &lt;H1&gt;This is the third slide&lt;/H1&gt;
+    &lt;BUTTON xlink:type="simple"
+            xlink:href="here()/../preceding::SLIDE[1]"&gt;
+      Previous
+    &lt;/BUTTON&gt;
+    &lt;BUTTON xlink:type="simple"
+            xlink:href="here()/../following::SLIDE[1]"&gt;
+      Next
+    &lt;/BUTTON&gt;
+  &lt;/SLIDE&gt;
+  ...
+  &lt;SLIDE&gt;
+    &lt;H1&gt;This is the last slide&lt;/H1&gt;
+    &lt;BUTTON xlink:type="simple"
+            xlink:href="here()/../preceding::SLIDE[1]"&gt;
+      Previous
+    &lt;/BUTTON&gt;
+  &lt;/SLIDE&gt;
+&lt;/SLIDESHOW&gt;
+</code></pre>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <p class="GX">Generally, the <code>here()</code> function is only used in fully relative URIs in XLinks. If any URI part is included, it must be the same as the URI of the
+         current document.
+      </p>
+      
+      <h3>origin()</h3>
+      
+      <p class="GX">The <code>origin()</code> function is much the same as <code>here()</code>; that is, it refers to the source of a link. However, <code>origin()</code> is used in out-of-line links where the link is not actually present in the source document. It points to the element in the
+         source document from which the user activated the link.
+      </p>
+      
+      <h2><a name="d1e2856">Points</a></h2>
+      
+      <p class="GX">Selecting a particular element or node is almost always good enough for pointing into well-formed XML documents. However,
+         on occasion you may need to point into XML data in which large chunks of non-XML text is embedded via CDATA sections, comments,
+         processing instructions, or some other means. In these cases, you may need to refer to particular ranges of text in the document
+         that don't map onto any particular markup element. Or, you may need to point into non-XML substructure in the text content
+         of particular elements; for example the month in a <code>BORN</code> element that looks like this:
+      </p>
+      <pre><code>&lt;BORN&gt;11 Feb 1858&lt;/BORN&gt;
+</code></pre>
+      <p class="GX">An XPath expression can identify an element node, an attribute node, a text node, a comment node, or a processing instruction
+         node. However, it can't indicate the first two characters of the <code>BORN</code> element (the date) or the substring of text between the first space and the last space in the <code>BORN</code> element (the month).
+      </p>
+      
+      <p class="GX">XPointer generalizes XPath to allow identifiers like this. An XPointer can address points in the document and ranges between
+         points. These may not correspond to any one node. For instance, the place between the <span class="italic">X</span> and the <span class="italic">P</span> in the word <span class="italic">XPointer</span> at the beginning of this paragraph is a point. The place between the <span class="italic">t</span> and the <span class="italic">h</span> in the word <span class="italic">this</span> at the end of the first sentence of this paragraph is another point. The text fragment "Pointer generalizes XPath to allow
+         pointers like t" between those two points is a range.
+      </p>
+      
+      <p class="GX">Every point is either between two nodes or between two characters in the parsed character data of a document. To make sense
+         of this, you have to remember that parsed character data is part of a text node. For instance, consider this very simple but
+         well-formed XML document:
+      </p>
+      <pre><code>&lt;GREETING&gt;
+Hello
+&lt;/GREETING&gt;
+</code></pre>
+      
+      
+      <p class="GX">There are exactly 3 nodes and 14 distinct points in this document. The nodes are the root node, which contains the <code>GREETING</code> element node, which contains a text node. In order the points are:
+      </p>
+      
+      <ul>
+         <li>&nbsp;1.&nbsp;The point before the root node</li>
+         <li>&nbsp;2.&nbsp;The point before the <code>GREETING</code> element node
+         </li>
+         <li>&nbsp;3.&nbsp;The point before the text node containing the text "Hello" (as well as assorted white space)</li>
+         <li>&nbsp;4.&nbsp;The point before the line break between <code>&lt;GREETING&gt;</code> and <code>Hello</code></li>
+         <li>&nbsp;5.&nbsp;The point before the first <span class="italic">H</span> in <code>Hello</code></li>
+         <li>&nbsp;6.&nbsp;The point between the <span class="italic">H</span> and the <span class="italic">e</span> in <code>Hello</code></li>
+         <li>&nbsp;7.&nbsp;The point between the <span class="italic">e</span> and the <span class="italic">l</span> in <code>Hello</code></li>
+         <li>&nbsp;8.&nbsp;The point between the <span class="italic">l</span> and the <span class="italic">l</span> in <code>Hello</code></li>
+         <li>&nbsp;9.&nbsp;The point between the <span class="italic">l</span> and the <span class="italic">o</span> in <code>Hello</code></li>
+         <li>&nbsp;10.&nbsp;The point after the <span class="italic">o</span> in <code>Hello</code></li>
+         <li>&nbsp;11.&nbsp;The point after the line break between <code>Hello</code> and <code>&lt;/GREETING&gt;</code></li>
+         <li>   12.   The point after the text node node containing the text "Hello"</li>
+         <li>&nbsp;13.&nbsp;The point after the <code>GREETING</code> element
+         </li>
+         <li>&nbsp;14.&nbsp;The point after the root node</li>
+      </ul>
+ 
+      <!--
+      Doesn't seem to be true in latest drafts????
+      <p class="GX">The exact details of the white space in the document are not considered here. XPointer collapses all runs of white space to
+         a single space.
+      </p>-->
+      
+      <p class="GX">Points allow XPointers to indicate arbitrary positions in the parsed character data of a document. They do not, however, enable
+         pointing at a position in the middle of a tag . In essence, what points add is the ability to break up the text content into
+         smaller nodes, one for each character.
+      </p>
+      
+      <p class="GX">A point is selected by using the <code>string-range()</code> function to select a range, 
+      then using the <code>start-point ()</code> or <code>end-point ()</code> function to extract the first 
+      or last point from the range. For example, this XPointer selects the point immediately before
+         the <span class="italic">D</span> in Domeniquette Celeste Baudean's <code>NAME</code> element:  
+      </p>
+      <pre><code>xpointer(start-point(string-range (id('p1')/NAME,"Domeniquette")))
+</code></pre>
+      <p class="GX">This XPointer selects the point after the last <span class="italic">e</span> in <span class="italic">Domeniquett</span>e :
+      </p>
+      <pre><code>xpointer(end-point(string-range(id('p1')/NAME,"Domeniquette")))
+</code></pre>
+      <p class="GX">You can also take the <code>start-point ()</code> or <code>end-point ()</code> of an element, text, comment, processing instruction, or root node to get the first or last point in that node.
+      </p>
+      
+      <h2><a name="d1e3064">Ranges</a></h2>
+      
+      <p class="GX">Some applications need to specify a range across a document rather than a particular point in the document. For instance,
+         the selection a user makes with a mouse is not necessarily going to match up with any one element or node. It may start in
+         the middle of one paragraph, extend across a heading and a picture, and then into the middle of another paragraph two pages
+         down.
+      </p>
+      
+      <p class="GX">Any such contiguous area of a document can be described with a <span class="italic">range</span>. A range begins at one point and continues until another point. The start and end points are each identified by a location
+         path. If the starting path points to a node set rather than a point, then range-to () will return multiple ranges, one starting
+         from the first point of ecah node in the set.
+      </p>
+      
+      <p class="GX">To specify a range, you append <code>/range-to(</code><span class="italic"><code>end-point</code></span><code>)</code>
+      to a location path specifying the start point of the range. The parentheses contain a location path specifying the end point
+         of the range. For example, suppose you want to select everything between the first <code>&lt;PERSON&gt;</code> start tag  
+         and the last <code>&lt;/PERSON&gt;</code> end tag in Listing 20-1. This XPointer accomplishes that:
+      </p>
+      <pre><code>xpointer(/child::FAMILYTREE/child::PERSON[position()=
+1]/range-to(/child::FAMILYTREE/child::PERSON[position()=last()]))
+</code></pre>
+      
+      <h3>Range f<a id="s" name="s" shape="rect"></a>unctions
+      </h3>
+      
+      <p class="GX">XPointer includes several functions specifically for working with ranges. 
+      Most of these operate on <span class="italic">location sets</span>. A location set is just 
+      a node set that can also contain points and ranges, as well as nodes.
+      </p>
+      
+      <p class="GX">The <code>range(location-set)</code> function returns a location set containing one range for each location in the argument. The range is the minimum range necessary
+         to cover the entire location. In essence, this function converts locations to ranges.
+      </p>
+      
+      <p class="GX">The <code>range-inside(location-set)</code> function returns a location set containing the interiors of each of the locations in the input. That is, if one of the locations
+         is an element, then the location returned is the content of the element (but not including the start and end tags). However,
+         if the input location is a range or point, then the interior of the location is just the same as the range or point.
+      </p>
+      
+      <p class="GX">The <code>start-point(location-set)</code> function returns a
+      location set that contains the first point of each location in the input 
+      location set. For example, <code>start-point(//PERSON[1])</code> returns 
+      the point immediately after the first <code>&lt;PERSON&gt;</code> start tag 
+      in the document. <code>start-point(//PERSON)</code> returns the set of points immediately after each <code>&lt;PERSON&gt;</code> start tag.
+      </p>
+      
+      <p class="GX">The <code>end-point(location-set)</code> function acts the same as 
+      <code>start-point()</code> except that it returns the points immediately after each location in its input.
+      </p>
+      
+      <h3>String ranges</h3>
+      
+      <p class="GX">XPointer provides some very basic string-matching capabilities through the <code>string-range()</code> function. This function takes as an argument a location set to search and a substring to search for. It returns a location
+         set containing one range for each nonoverlapping matching substring. You can also provide optional <code>index</code> and <code>length</code> arguments indicating how many characters after the match the range should start and how many characters after the start the
+         range should continue. The basic syntax is:
+      </p>
+      <pre><code>string-range(location-set, substring, index, length)
+</code></pre>
+      <p class="GX">The first argument is an XPath expression that returns a location set specifying which part of the document to search for
+         a matching string. The second substring argument is the actual string to search for. By default, the range returned starts
+         before the first matched character and encompasses all the matched characters. However, the <code>index</code> argument can give a positive number to start after the beginning of the match. For instance, setting it to 2 indicates that
+         the range starts with the second character after the first matched character. The <code>length</code> argument can specify how many characters to include in the range.
+      </p>
+      
+      <p class="GX">A string range points to an occurrence of a specified string, or a substring of a given string in the text (not markup) of
+         the document. For example, this XPointer finds all occurrences of the string Harold:
+      </p>
+      <pre><code>xpointer(string-range(/,"Harold"))
+</code></pre>
+      <p class="GX">You can change the first argument to specify what nodes you want to look in. For example, this XPointer finds all occurrences
+         of the string Harold in <code>NAME</code> elements:
+      </p>
+      <pre><code>xpointer(string-range(//NAME,"Harold"))
+</code></pre>
+      <p class="GX">String ranges may have predicates. For example, this XPointer finds only the first occurrence of the string Harold in the
+         document:
+      </p>
+      <pre><code>xpointer(string-range(/,"Harold")[position()=1])
+</code></pre>
+      <p class="GX">This targets the position immediately preceding the word <span class="italic">Harold</span> in Charles Walter Harold's <code>NAME</code> element. This is not the same as pointing at the entire <code>NAME</code> element as an element-based selector would do.
+      </p>
+      
+      <p class="GX">A third numeric argument targets a particular position in the string. For example, this targets the point between the <span class="italic">l</span> and <span class="italic">d</span> in the first occurrence of the string <span class="italic">Harold</span> because <span class="italic">d</span> is the sixth letter:
+      </p>
+      <pre><code>xpointer(string-range(/,"Harold",6)[position()=1])
+</code></pre>
+      <p class="GX">An optional fourth argument specifies the number of characters to select. For example, this URI selects the <span class="italic">old</span> from the first occurrence of the entire string Harold:
+      </p>
+      <pre><code>xpointer(string-range(/,"Harold",4,3)[position()=1])
+</code></pre>
+      <p class="GX">If the first string argument in the node test is the empty string, then relevant positions in the context node's text contents
+         are selected. For example, the following XPointer targets the first six characters of the document's parsed character data:
+      </p>
+      <pre><code>xpointer(string-range(/,""1,6)[position()=1])
+</code></pre>
+      <p class="GX">For another example, let's suppose that you want to find the year of birth for all people born in the nineteenth century.
+         The following will accomplish that:
+      </p>
+      <pre><code>xpointer(string-range(//BORN, " 18", 2, 4))
+</code></pre>
+      <p class="GX">This says to look in all <code>BORN</code> elements for the string " 18". (The initial space is important to avoid accidentally matching someone born in 1918 or on
+         the 18th day of the month.) When it's found, move one character ahead (to skip the space) and return a range covering the
+         next four characters.
+      </p>
+      
+      <p class="GX">When matching strings, case is considered. Markup characters are ignored.</p>
+      
+      <h2><a name="d1e3260">Child Sequences</a></h2>
+      
+      <p class="GX">The two most common ways to identify an element in an XML document are by ID and by location. Identifying an element by ID
+         is accomplished through the <code>id()</code> function. Identifying an element by location is generally accomplished by counting children down from the root. For example,
+         the following URIs both point to John P. Muller's <code>PERSON</code> element:
+      </p>
+      <pre><code>http://www.theharolds.com/genealogy.xml#xpointer(id("p4"))
+http://www.e.com/genealogy.xml#xpointer(/child::*[position()=1]/child::*[position()=4])
+</code></pre>
+      
+      <p class="GX">A <span class="italic"><span class="HTML-Definition">child sequence</span></span> is a shortcut for XPointers, like the second example above &#8212; that is, an XPointer that consists of nothing but a series of
+         child relative location steps counting down from the root node, each of which selects a particular child by position only.
+         The shortcut is to use only the position number and the slashes that separate individual elements from each other, like this:
+      </p>
+      <pre><code>http://www.theharolds.com/genealogy.xml#/1/4
+</code></pre>
+      <p class="GX"><code>/1/4</code> is a child sequence that selects the fourth child element of the first child element of the root. This syntax can be extended
+         for any depth of child elements. For example these two URIs point to John P. Muller's <code>NAME</code> and <code>SPOUSE</code> elements respectively:
+      </p>
+      <pre><code>http://www.theharolds.com/genealogy.xml#/1/4/1
+http://www.theharolds.com/genealogy.xml#/1/4/2
+</code></pre>
+      
+      <p class="GX">Child sequences may include an initial ID. In that case, the counting begins from the element with that ID rather than from
+         the root. For example, John P. Muller's <code>PERSON</code> element has an <code>ID</code> attribute with the value <code>p4</code>. Consequently <code>xpointer(p4/1)</code> points to his <code>NAME</code> element and <code>xpointer(p4/2)</code> points to his <code>SPOUSE</code> element.
+      </p>
+      
+      <p class="GX">Each child sequence always points to a single element. You cannot use child sequences with any other relative location steps.
+         You cannot use them to select elements of a particular type. You cannot use them to select attributes or strings. You can
+         only use them to select a single element by its relative location in the tree.
+      </p>
+      
+      <h2 class="sum-H">Summary</h2>
+      
+      <p class="sum-X">In this chapter, you learned about XPointers. In particular you learned that:</p>
+      
+      <ul>
+         <li>XPointers refer to particular parts of or locations in XML documents.</li>
+         <li>The syntax of an XPointer is the keyword <code>xpointer</code>, followed by parentheses containing an XPath expression that returns a node set.
+         </li>
+         <li>The <code>id()</code> function points to an element with a specified value for an ID type attribute.
+         </li>
+         <li>Each location step contains an axis, a node test, and zero or more predicates.</li>
+         <li>Location steps can be chained to make location paths.</li>
+         <li>Relative location steps select nodes in a document based on their relationship to a context node.</li>
+         <li>The <code>self</code> axis points to the context node. It can be abbreviated as a period (<code>.</code>).
+         </li>
+         <li>The <code>parent</code> axis points to the node that contains the context node. It can be abbreviated as a double period (<code>..</code>).
+         </li>
+         <li>The <code>child</code> axis includes the immediate children of the context node. It can be abbreviated simply by a node test.
+         </li>
+         <li>The <code>descendant</code> axis includes all nodes contained in the context node. It can effectively be abbreviated as a double slash (<code>//</code>).
+         </li>
+         <li>The <code>descendant-or-self</code> axis includes all nodes contained in the context node as well as the context node itself.
+         </li>
+         <li>The <code>ancestor</code> axis includes all element nodes that contain the context node, as well as the root node.
+         </li>
+         <li>The <code>ancestor-or-self</code> axis includes all nodes that contain the context node, as well as the context node itself.
+         </li>
+         <li>The <code>precedin</code>g axis includes all nodes that finish before the context node.
+         </li>
+         <li>The <code>following</code> axis includes all nodes that start after the context node.
+         </li>
+         <li>The <code>preceding-sibling</code> axis selects from nodes that precede the context node with the same parent node as the context node.
+         </li>
+         <li>The <code>following-sibling</code> axis selects from nodes that follow the context node with the same parent node as the context node.
+         </li>
+         <li>The <code>attribute</code> axis points to attributes of the context node. It can be abbreviated as an <code>@</code> sign.
+         </li>
+         <li>The node test of a relative location step is normally an element or attribute name, but may also be the <code>*</code> wild card to select all elements or one of the keywords <code>comment()</code>, <code>text()</code>, <code>processing-instruction()</code>, <code>node()</code>, <code>point()</code>, or <code>range()</code>.
+         </li>
+         <li>The optional predicate of a relative location step is a boolean XPath expression enclosed in square brackets that further
+            narrows the node set that the XPointer refers to.
+         </li>
+         <li>A point indicates a position preceding or following a node or a character.</li>
+         <li>A range identifies the XML text between two points.</li>
+         <li>The <code>string-range()</code> function points to a specified block of text.
+         </li>
+         <li>A child sequence points to an element by counting children from the root.</li>
+      </ul>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <p class="sum-X">The next chapter explores the Resource Description Framework, RDF, an XML application for encoding metadata.</p>
+      
+      <hr>
+      <div style="text-align: center">
+         [ <a href="../../index.html">Cafe con Leche</a> 
+         | Order from <a href="http://www.amazon.com/exec/obidos/ASIN/0764547607/ref=nosim/cafeaulaitA/">amazon.com</a> ]
+         
+      </div>
+      <hr>
+      Copyright 2001, 2002 <a href="http://www.elharo.com/">Elliotte Rusty 
+      Harold</a><br /><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a><br />
+      Last Modified December 31, 2002 
+      
+   </body>
+</html>

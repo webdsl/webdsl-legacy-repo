@@ -1,0 +1,612 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>DOM Level 3</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="previous" href="ch13s02.html" title="OutputFormat"><link rel="next" href="ch13s04.html" title="Summary"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"><link rel="subsection" href="ch13s03.html#d0e21702" title="Creating DOMWriters"><link rel="subsection" href="ch13s03.html#d0e21773" title="Serialization Features"><link rel="subsection" href="ch13s03.html#d0e21890" title="Filtering Output"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">DOM Level 3</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch13s02.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;13.&nbsp;Output from DOM</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch13s04.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e21511"></a>DOM Level 3</h2></div></div><p>
+    DOM Level 3 will finally add a standard Load and Save package
+    so that it will be possible to write completely
+    implementation independent DOM programs. This
+    package, <tt>org.w3c.dom.ls</tt>,
+    is identified by the feature strings LS-Load and LS-Save.
+    The loading parts includes the 
+    <tt>DOMBuilder</tt> interface you've
+    already encountered.
+    The saving part is based on the
+    <tt>DOMWriter</tt> interface.
+    <tt>DOMWriter</tt> is more powerful
+    than <tt>XMLSerializer</tt>
+    Whereas <tt>XMLSerializer</tt> is limited to
+    outputting documents, document fragments, and elements,
+    <tt>DOMWriter</tt> can output any kind
+    of node at all.
+    Furthermore, you can install a filter into 
+    a <tt>DOMWriter</tt> that controls its
+    output. 
+  </p><div class="caution" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Caution</h3><p>
+      This section is based on very early bleeding edge
+      technology and specifications, particularly the 
+      July 25, 2002 Working Draft of the
+      <i><a href="http://www.w3.org/TR/2002/WD-DOM-Level-3-LS-20020725" target="_top">Document 
+      Object Model (DOM) Level 3 Abstract
+      Schemas and Load and Save Specification</a></i>
+      and Xerces-J 2.0.2. Even with Xerces-J 2.1, most of the code in
+      this section won&#8217;t even compile, much less run. 
+      Furthermore, it&#8217;s virtually guaranteed that the details in this
+      section will change before DOM3 becomes a final
+      recommendation.
+    </p></div><p>
+   As shown by the method signatures in
+   <a href="ch13s03.html#CompactDOMWriter.java" title="Example&nbsp;13.3.&nbsp;The DOM3 DOMWriter interface">Example&nbsp;13.3</a>,
+   <tt>DOMWriter</tt>
+   can copy a <tt>Node</tt> object from
+   memory into serialized bytes or characters. 
+   It has methods to write XML nodes onto
+   a Java <tt>OutputStream</tt>
+   or a <tt>String</tt>. The most common  kind of
+   node you&#8217;ll write is a
+   <tt>Document</tt>,
+   but you can write all the other kinds of node as well
+   such as
+   <tt>Element</tt>,
+   <tt>Attr</tt>, and
+   <tt>Text</tt>.
+   This interface also has methods to control exactly how the
+   output is formatted and how errors are reported.
+  </p><div class="example"><a name="CompactDOMWriter.java"></a><p class="title"><b>Example&nbsp;13.3.&nbsp;The DOM3 DOMWriter interface</b></p><pre class="programlisting">package org.w3c.dom.ls;
+
+public interface DOMWriter {
+
+  public void    setFeature(String name, boolean state)
+   throws DOMException;
+  public boolean canSetFeature(String name, boolean state);
+  public boolean getFeature(String name) throws DOMException;
+
+  public String  getEncoding();
+  public void    setEncoding(String encoding);
+  public String  getNewLine();
+  public void    setNewLine(String newLine);
+  
+  public boolean writeNode(OutputStream out, Node node)
+   throws Exception;
+  public String writeToString(Node node) throws DOMException;
+  
+  public DOMErrorHandler getErrorHandler();
+  public void setErrorHandler(DOMErrorHandler errorHandler);
+
+  public DOMWriterFilter getFilter();
+  public void setFilter(DOMWriterFilter filter);
+
+}
+</pre></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Note</h3><p>
+      <tt>DOMWriter</tt> is not a
+      <tt>java.io.Writer</tt>. In fact, it even
+      prefers <tt>OutputStream</tt>s to
+      <tt>Writer</tt>s. The name is just a
+      coincidence.
+    </p></div><p>
+    The primary purpose of this interface is
+    to write nodes into strings or onto streams. 
+    These nodes can be complete documents or parts thereof like
+    elements or text nodes. For example, this code fragment uses
+    the <tt>DOMWriter</tt> object 
+    <tt>writer</tt> to
+    copy the <tt>Document</tt> object
+    <tt>doc</tt> onto <tt>System.out</tt>
+    and copy its root element into a
+    <tt>String</tt>:
+  </p><div class="informalexample"><pre class="programlisting">try {
+  DOMWriter writer;
+  // initialize the DOMWriter...
+  writer.writeNode(document, System.out);
+  String root = writer.writeToString(document.getDocumentElement());
+}
+catch (Exception e) {
+  System.err.println(e);
+}</pre></div><p>
+    <tt>DOMWriter</tt> 
+    also has several methods to configure the output.
+    The <tt>setNewLine()</tt> method can choose
+    the line separator used for output. The only legal values
+    are carriage
+    return, a line feed, or both; that is, in Java parlance,
+    <tt>"\r"</tt>, <tt>"\n"</tt>, or <tt>"\r\n"</tt>.
+    You can also set this to null to  
+    indicate you want the platform&#8217;s default value.
+  </p><p>
+    The <tt>setEncoding()</tt> method 
+    changes the character encoding used for the output. Which
+    encodings any given serializer supports varies from
+    implementation to implementation, but common values include 
+    UTF-8, UTF-16, and ISO-8859-1. 
+    UTF-8 is the default if a value is not supplied.
+    For example, this writer sets up the output for use on a
+    Macintosh:
+  </p><div class="informalexample"><pre class="programlisting">DOMWriter writer;
+// initialize the DOMWriter...
+writer.setNewLine("\r");
+writer.setEncoding("MacRoman");</pre></div><p>
+    More detailed control of the output can be achieved by getting
+    and setting features of the
+    <tt>DOMWriter</tt>,
+    as you&#8217;ll see shortly.
+  </p><p>
+      The <tt>setErrorHandler()</tt> 
+    method can install an <tt>org.w3c.dom.DOMErrorHandler</tt>
+    object that receives notification of any problems that arise
+    when outputting a node such as an element that uses the
+    same prefix for two different namespace URIs on two attributes.
+    This is a callback interface, similar to 
+    <tt>org.xml.sax.ErrorHandler</tt> but even
+    simpler since it doesn&#8217;t use different methods for different
+    kinds of errors. <a href="ch13s03.html#CompactDOMErrorHandler.java" title="Example&nbsp;13.4.&nbsp;The DOM3 DOMErrorHandler interface">Example&nbsp;13.4</a> shows
+    this interface. The <tt>handleError()</tt> method
+    returns true if processing should continue after
+    the error, false if it shouldn&#8217;t. 
+  </p><div class="example"><a name="CompactDOMErrorHandler.java"></a><p class="title"><b>Example&nbsp;13.4.&nbsp;The DOM3 DOMErrorHandler interface</b></p><pre class="programlisting">package org.w3c.dom;
+
+public interface DOMErrorHandler {
+
+  public boolean handleError(DOMError error);
+
+}
+</pre></div><p>
+    In Xerces-2, the 
+    <tt>XMLSerializer</tt> class implements the
+    <tt>DOMWriter</tt> interface, so if you
+    prefer you can use these methods instead of the ones
+    discussed in the last section. 
+    <a href="ch13s03.html#SVGCircle.java" title="Example&nbsp;13.5.&nbsp;Serializing with DOMWriter">Example&nbsp;13.5</a> demonstrates
+   a complete program that builds a simple 
+   SVG document in memory and
+      writes it into the file 
+      <tt>circle.svg</tt> 
+      in the current working directory using 
+      a \r\n line end and the UTF-16 encoding.
+      The error handler is set to
+      an anonymous inner class that prints error messages on
+      <tt>System.err</tt> and returns false to
+      indicate that processing should stop when an error is
+      detected.
+    </p><div class="example"><a name="SVGCircle.java"></a><p class="title"><b>Example&nbsp;13.5.&nbsp;Serializing with DOMWriter</b></p><pre class="programlisting">import org.w3c.dom.*;
+import org.apache.xerces.dom3.*;
+import org.apache.xerces.dom3.ls.DOMWriter;
+import org.apache.xml.serialize.XMLSerializer;
+import java.io.IOException;
+import javax.xml.parsers.*;
+
+
+public class SVGCircle {
+
+  public static void main(String[] args) {
+     
+    try {
+      // Find the implementation
+      DocumentBuilderFactory factory 
+       = DocumentBuilderFactory.newInstance();
+      factory.setNamespaceAware(true);
+      DocumentBuilder builder = factory.newDocumentBuilder();
+      DOMImplementation impl = builder.getDOMImplementation();
+      
+      // Create the document
+      DocumentType svgDOCTYPE = impl.createDocumentType(
+       "svg", "-//W3C//DTD SVG 1.0//EN", 
+       "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd"
+      );
+      Document doc = impl.createDocument(
+       "http://www.w3.org/2000/svg", "svg", svgDOCTYPE);
+       
+      // Fill the document
+      Node rootElement = doc.getDocumentElement();
+      Element circle = doc.createElementNS(
+       "http://www.w3.org/2000/svg", "circle");
+      circle.setAttribute("r", "100");
+      rootElement.appendChild(circle);
+
+      // Serialize the document onto System.out
+      DOMWriter writer = new XMLSerializer();
+      writer.setNewLine("\r\n");
+      writer.setEncoding("UTF-16");
+      writer.setErrorHandler(
+        new DOMErrorHandler() {
+          public boolean handleError(DOMError error) {
+            System.err.println(error.getMessage());
+            return false;
+          }
+        }
+      );
+      writer.writeNode(System.out, doc);
+      
+    }
+    catch (Exception e) {
+      System.err.println(e);
+    }
+  
+  }
+
+}
+</pre></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Note</h3><p>
+      Xerces-J 2.1 currently puts the
+      <tt>DOMWriter</tt>
+      interface in the <tt>org.apache.xerces.dom3.ls</tt> package
+      instead of the <tt>org.w3c.dom.ls</tt> package.
+      The Xerces team is trying to keep the experimental DOM3
+      classes separate from the main API until DOM3 is more
+      stable.
+    </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e21702"></a>Creating DOMWriters</h3></div></div><p>
+      <a href="ch13s03.html#SVGCircle.java" title="Example&nbsp;13.5.&nbsp;Serializing with DOMWriter">Example&nbsp;13.5</a> depends on Xerces-specific
+      classes. It won&#8217;t work with GNU-JAXP or Oracle or other
+      parsers, even after these parsers are upgraded to support 
+      DOM3. However, you can write the code in a much more 
+      parser-independent fashion by using 
+    the <tt>DOMImplementationLS</tt>
+     interface, shown in <a href="ch13s03.html#CompactDOMImplementationLS.java" title="Example&nbsp;13.6.&nbsp;The DOM3 DOMImplementationLS interface">Example&nbsp;13.6</a>,
+     to create concrete
+     implementations of <tt>DOMWriter</tt>,
+     rather than constructing the implementation classes directly. 
+     <tt>DOMImplementationLS</tt> 
+     is a sub-interface of <tt>DOMImplementation</tt>
+     that adds three methods to create new
+      <tt>DOMBuilder</tt>s, 
+      <tt>DOMWriter</tt>s, and 
+      <tt>DOMInputSource</tt>s.
+    </p><div class="example"><a name="CompactDOMImplementationLS.java"></a><p class="title"><b>Example&nbsp;13.6.&nbsp;The DOM3 DOMImplementationLS interface</b></p><pre class="programlisting">package org.w3c.dom.ls;
+
+public interface DOMImplementationLS {
+
+  public static final short MODE_SYNCHRONOUS  = 1;
+  public static final short MODE_ASYNCHRONOUS = 2;
+
+  public DOMWriter      createDOMWriter();
+  public DOMInputSource createDOMInputSource();
+  public DOMBuilder     createDOMBuilder(short mode, 
+   String schemaType) throws DOMException;
+
+}
+</pre></div><p>
+     You retrieve a concrete instance of this factory interface
+     by using the DOM3 
+     <tt>DOMImplementationRegistry</tt> 
+     factory class 
+     introduced in <a href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM">Chapter&nbsp;10</a> to request a 
+     <tt>DOMImplementation</tt> object that
+     supports the LS-Save feature. Then you cast that object to 
+     <tt>DOMImplementationLS</tt>. For
+     example,
+    </p><div class="informalexample"><pre class="programlisting">try {
+  DOMImplementation impl = DOMImplementationRegistry
+   .getDOMImplementation("Core 2.0 LS-Save 3.0");
+  if (impl != null) {
+      DOMImplementationLS implls = (DOMImplementationLS) impl;
+      DOMWriter writer = implls.createDOMWriter();
+      writer.writeNode(System.out, document);
+  }
+  else {
+    System.out.println(
+     "Could not find a DOM3 Save compliant parser.");
+  }  
+}
+catch (Exception e) {
+  System.err.println(e);   
+}</pre></div><p>
+  Using this technique, it&#8217;s straightforward to write a
+  completely implementation independent program to generate and
+  serialize XML documents. <a href="ch13s03.html#SVGDOMCircle.java" title="Example&nbsp;13.7.&nbsp;An implementation&#xA;independent DOM3 program to&#xA;build and serialize an XML document">Example&nbsp;13.7</a> demonstrates.
+  It uses the <tt>DOMImplementationRegistry</tt>
+  class to load the
+  <tt>DOMImplementationLS</tt>
+  and the <tt>DOMWriter</tt> class to
+  output the final result. Otherwise, it just uses the standard
+  DOM2 classes that you've seen in previous chapters.
+</p><div class="example"><a name="SVGDOMCircle.java"></a><p class="title"><b>Example&nbsp;13.7.&nbsp;An implementation
+independent DOM3 program to
+build and serialize an XML document</b></p><pre class="programlisting">import org.w3c.dom.*;
+import org.w3c.dom.ls.*;
+
+
+public class SVGDOMCircle {
+
+  public static void main(String[] args) {
+     
+    try {
+      // Find the implementation
+      DOMImplementation impl 
+       = DOMImplementationRegistry.getDOMImplementation(
+          "Core 2.0 LS-Load 3.0 LS-Save 3.0");
+      if (impl == null) {
+        System.out.println(
+         "Could not find a DOM3 Load-Save compliant parser.");
+        return;
+      }
+      
+      // Create the document
+      DocumentType svgDOCTYPE = impl.createDocumentType(
+       "svg", "-//W3C//DTD SVG 1.0//EN", 
+       "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd"
+      );
+      Document doc = impl.createDocument(
+       "http://www.w3.org/2000/svg", "svg", svgDOCTYPE);
+       
+      // Fill the document
+      Node rootElement = doc.getDocumentElement();
+      Element circle = doc.createElementNS(
+       "http://www.w3.org/2000/svg", "circle");
+      circle.setAttribute("r", "100");
+      rootElement.appendChild(circle);
+
+      // Serialize the document onto System.out
+      DOMImplementationLS implls = (DOMImplementationLS) impl;
+      DOMWriter writer = implls.createDOMWriter();
+      writer.writeNode(System.out, doc);
+      
+    }
+    catch (Exception e) {
+      System.err.println(e);
+    }
+  
+  }
+
+}
+</pre></div><p>
+  This program has to test for both the LS-Load and LS-Save
+  features because it&#8217;s not absolutely guaranteed that an
+  implementation that has one will have the other, especially in
+  the early days of DOM3. 
+</p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e21773"></a>Serialization Features</h3></div></div><p>
+     The defaults used by the <tt>writeNode()</tt>
+     and <tt>writeToString()</tt> methods are 
+     acceptable for
+     most uses. However, occasionally you want a little more
+     control over the serialized form. For instance, you might
+     want the output to be pretty printed with extra white space
+     added to indent the elements nicely.
+     Or perhaps you want the output to be in canonical form. All
+     of this and more can be controlled by setting features in
+     the writer before invoking 
+     the write method.
+    </p><p>
+      Defined features include:
+    </p><div class="variablelist"><dl><dt><span class="term">normalize-characters, optional, default true</span></dt><dd><p>
+    If true, output text should be normalized according to
+    the W3C Character Model. For example, the word 
+    <i>caf&eacute;</i> would be represented as the 
+    four character string <i>c a f &eacute;</i>
+    rather than the five character string <i>c a f e combining_acute_accent</i>.
+    Implementations are only required to support a false value
+    for this feature.
+    </p></dd><dt><span class="term">split-cdata-sections, required, default true</span></dt><dd><p>
+If true,  CDATA sections containing the CDATA section end delimiter
+<tt>]]&gt;</tt> are split into pieces and the
+<tt>]]&gt;</tt> included in a raw text node.
+If false, such a CDATA section is not split.
+Instead an error is reported and output stops.
+</p></dd><dt><span class="term">entities, required, default true</span></dt><dd><p>
+If true, entity references like  <tt>&amp;copy;</tt>
+ included in the output.
+If false, they are not.
+Instead their replacement text is included.
+</p></dd><dt><span class="term">whitespace-in-element-content, optional, default true</span></dt><dd><p>
+If true, all white space is output.
+If false, text nodes containing only white space
+are deleted if the parent element&#8217;s declaration 
+from the DTD/schema 
+does not allow #PCDATA to appear 
+at that point.
+</p></dd><dt><span class="term">discard-default-content, required, default true</span></dt><dd><p>
+If true, the 
+implementation 
+will attempt write out any nodes whose presence can be inferred from the DTD or schema;
+e.g. default attribute values. If false, it won&#8217;t include them
+explicitly.
+</p></dd><dt><span class="term">canonical-form, optional, default false</span></dt><dd><p>
+If  true,
+ the document will be written according to the rules specified 
+ by the Canonical XML specification. For instance attributes will be lexically
+ordered and CDATA sections will not be included. If false, then
+the exact output is implementation dependent.
+</p></dd><dt><span class="term">format-pretty-print, optional, default false</span></dt><dd><p>
+If true, white space will be adjusted to 
+&#8220;pretty print&#8221;
+the XML. Exactly what this means, e.g. how many spaces elements
+are indented or what maximum line length is used, is left up to
+implementations.
+</p></dd><dt><span class="term">validation, optional, default false</span></dt><dd><p>
+If true, then the document&#8217;s
+ schema is used to validate the document as it is being 
+output. Any
+validation errors that are discovered are reported to the
+the registered error handler.
+(Both validation and error handlers are other new features
+in DOM3.)
+</p></dd></dl></div><p>
+      In addition implementations may define additional custom
+      features. These names will generally begin with
+      vendor specific prefixes like &#8220;apache:&#8221; or
+      &#8220;oracle:&#8221;.
+      For portability, you should check for the
+      existence of such a feature with 
+      <tt>canSetFeature()</tt> before setting
+      it. Otherwise, you&#8217;re likely to encounter an unexpected 
+      <tt>DOMException</tt> when the program is 
+      run with a different 
+      parser.
+    </p><p>
+     For example, this code fragment attempts to output
+     the <tt>Document</tt> object <tt>doc</tt>
+     onto 
+     the <tt>OutputStream</tt> <tt>out</tt>
+     in canonical form.
+     However, if the implementation of 
+     <tt>DOMWriter</tt> doesn&#8217;t support
+     Canonical XML, it just outputs the document in the normal
+     way:
+   </p><div class="informalexample"><pre class="programlisting">try {
+  DOMWriter writer = new XMLSerializer();
+  if (writer.canSetFeature("canonical-form", true)) {
+    writer.setFeature("canonical-form", true);
+  }
+  writer.writeNode(out, doc);
+}
+catch (Exception e) {
+  System.err.println(e);
+}</pre></div></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e21890"></a>Filtering Output</h3></div></div><p>
+       One of the more original aspects of the <tt>DOMWriter</tt> API 
+       is the ability to attach filters to a writer that remove
+       certain nodes from the output. A  <tt>DOMWriterFilter</tt>
+       is a sub-interface of <tt>NodeFilter</tt>
+       from last chapter&#8217;s traversal API, and works almost
+       exactly like it. This shouldn&#8217;t be too surprising since
+       serializing a
+       document is just another tree-walking operation.
+     </p><p>
+       To perform output filtering you first implement the 
+       <tt>DOMWriterFilter</tt> interface shown in 
+       <a href="ch13s03.html#CompactDOMWriterFilter.java" title="Example&nbsp;13.8.&nbsp;The DOMWriterFilter interface">Example&nbsp;13.8</a>.
+       As with the <tt>NodeFilter</tt>
+       superinterface, the
+       <tt>acceptNode()</tt> method returns 
+       one of the three named constants <tt>NodeFilter.FILTER_ACCEPT</tt>,
+       <tt>NodeFilter.FILTER_REJECT</tt>, 
+       or <tt>NodeFilter.FILTER_SKIP</tt>
+       to indicate whether or not a particular node and its
+       descendants should be output. (This method isn&#8217;t 
+       listed here because it&#8217;s inherited from the superinterface.)
+     </p><div class="example"><a name="CompactDOMWriterFilter.java"></a><p class="title"><b>Example&nbsp;13.8.&nbsp;The DOMWriterFilter interface</b></p><pre class="programlisting">package org.w3c.dom.ls;
+
+public interface DOMWriterFilter extends NodeFilter {
+
+  public int getWhatToShow();
+
+}</pre></div><p>
+       The <tt>getWhatToShow()</tt>
+       method returns an <tt>int</tt> 
+       constant indicating which kinds of
+       nodes are passed to this filter for processing. This is a
+       combination of the bit constants used by 
+       <tt>NodeIterator</tt>
+       and <tt>TreeWalker</tt> in the last
+       chapter; that is, <tt>NodeFilter.SHOW_ELEMENT</tt>,
+       <tt>NodeFilter.SHOW_TEXT</tt>, <tt>NodeFilter.SHOW_COMMENT</tt>, etc.
+    </p><p>
+    <a href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters">Chapter&nbsp;8</a> demonstrated a 
+    SAX filter that removed
+    everything that wasn&#8217;t in the XHTML namespace from a document. 
+    <a href="ch13s03.html#XHTMLFilter.java" title="Example&nbsp;13.9.&nbsp;Filtering everything that isn&#8217;t XHTML on output">Example&nbsp;13.9</a> is a
+    <tt>DOMWriterFilter</tt> that accomplishes the same task.
+  </p><div class="example"><a name="XHTMLFilter.java"></a><p class="title"><b>Example&nbsp;13.9.&nbsp;Filtering everything that isn&#8217;t XHTML on output</b></p><pre class="programlisting">import org.w3c.dom.*;
+import org.w3c.dom.traversal.NodeFilter;
+import org.w3c.dom.ls.DOMWriterFilter;
+
+
+public class XHTMLFilter implements DOMWriterFilter {
+  
+  public final static String XHTML_NAMESPACE 
+   = "http://www.w3.org/1999/xhtml";
+
+  // This filter only operates on elements. Everything else
+  // will be output without passing through the filter. However
+  // descendants of non-XHTML elements will not be output
+  // because their ancestor elements have been rejected.
+  // Note that this means we don't fully handle nested XHTML;
+  // e.g. XHTML contains SVG which contains XHTML.
+  // XHTML inside SVG will not be output.
+  public int getWhatToShow() {
+    return NodeFilter.SHOW_ELEMENT;    
+  }
+  
+  
+  public short acceptNode(Node node) {
+     
+    // Is this necessary or does getWhatToShow() handle this????
+    // I've requested clarification from the DOM working group.
+    int type = node.getNodeType();
+    if (type != Node.ELEMENT_NODE) {
+      return NodeFilter.FILTER_ACCEPT;
+    }   
+
+    String namespace = node.getNamespaceURI();
+    if (XHTML_NAMESPACE.equals(namespace)) {
+      return NodeFilter.FILTER_ACCEPT;
+    }
+    else {
+     return NodeFilter.FILTER_SKIP; 
+    }
+
+  }
+
+}
+</pre></div><p>
+     The one thing this doesn&#8217;t filter out is non-XHTML
+     attributes.
+     Those are written out with their elements. They
+     are not passed to <tt>acceptNode()</tt>.
+     To filter out attributes from other namespaces would require
+     a custom <tt>DOMWriter</tt>.
+     You might be able to remove them from the element nodes
+     passed to <tt>acceptNode()</tt>, but this
+     would modify the in-memory tree as well as the streamed
+     output. Furthermore, although Java doesn&#8217;t support this, the
+     IDL code for  <tt>DOMWriter</tt> indicates 
+     that the <tt>Node</tt> passed to
+     <tt>acceptNode()</tt> is read-only.
+     The underlying implementation is probably not expecting 
+     <tt>acceptNode()</tt> to modify its
+     argument.
+     Doing so is asking for corrupt data structures. 
+   </p><p>
+    You can install a filter into a <tt>DOMWriter</tt> 
+    using the <tt>setFilter()</tt> method.
+    Then any node the filter rejects will not be serialized. 
+    <a href="ch13s03.html#XHTMLPurifier.java" title="Example&nbsp;13.10.&nbsp;Using a DOMWriterFilter">Example&nbsp;13.10</a> uses the above <tt>XHTMLFilter</tt>
+    to output pure XHTML from an input document that might contain 
+    SVG, MathML, SMIL, or other non-XHTML elements.
+  </p><div class="example"><a name="XHTMLPurifier.java"></a><p class="title"><b>Example&nbsp;13.10.&nbsp;Using a DOMWriterFilter</b></p><pre class="programlisting">import org.w3c.dom.*;
+import org.w3c.dom.ls.*;
+
+
+public class XHTMLPurifier {
+  
+  public static void main(String[] args) {
+     
+    try {
+      // Find the implementation
+      DOMImplementation impl 
+       = DOMImplementationRegistry.getDOMImplementation(
+          "Core 2.0 LS-Load 3.0 LS-Save 3.0");
+      if (impl == null) {
+        System.out.println(
+         "Could not find a DOM3 Load-Save compliant parser.");
+        return;
+      }
+      DOMImplementationLS implls = (DOMImplementationLS) impl;
+
+      // Load the parser
+      DOMBuilder parser = implls.createDOMBuilder(
+       DOMImplementationLS.MODE_SYNCHRONOUS);
+      
+      // Parse the document
+      Document doc = parser.parseURI(document);
+      
+      // Serialize the document onto System.out while filtering
+      DOMWriter writer = implls.createDOMWriter();
+      DOMWriterFilter filter = new XHTMLFilter();
+      writer.setFilter(filter);
+      writer.writeNode(System.out, doc);
+      
+    }
+    catch (Exception e) {
+      System.err.println(e);
+    }
+  
+  }
+  
+}
+</pre></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch13s02.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch13.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch13s04.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">OutputFormat&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Summary</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+September 11,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

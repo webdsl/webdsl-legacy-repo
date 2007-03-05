@@ -1,0 +1,357 @@
+<html><head>
+    <title>SAX</title>
+    <style type="text/css"><!--
+	h1, h2, h3, h4, h5, h6 { color: maroon; }
+	/* make sure that goes OK with the nav column background
+	 * net-friendly colors include: yellow/ffffcc, blue/ccccff
+	 */
+    --></style>
+</head><body color="#000000" bgcolor="#eeeeff">
+    <table border="0" width="100%" cellpadding="15" cellspacing="0" ><tr>
+        <td valign="top" align="left" color="#000000" bgcolor="#ffffff">
+
+    <table border="0" cellpadding="0" cellspacing="0">
+    <tr><td class="toc">
+    <h2>SAX</h2><b>General</b><br />&nbsp;<a href="about.html">About SAX</a><br />
+	&nbsp;<a href="copying.html">Copyright Status</a><br />
+	&nbsp;<a href="event.html">Events vs. Trees</a><br />
+	&nbsp;<a href="faq.html">FAQ</a><br />
+	&nbsp;<a href="links.html">Links</a><br />
+	<br />
+	<b>Java API</b><br />&nbsp;<a href="quickstart.html">Quickstart</a><br />
+	&nbsp;<a href="get-set.html">Features and Properties</a><br />
+	&nbsp;<a href="filters.html">Filters</a><br />
+	&nbsp;<em>Namespaces</em><br />
+	&nbsp;<a href="http://www.saxproject.org/apidoc/overview-summary.html">JavaDoc</a><br />
+	<br />
+	<b>SAX Evolution</b><br />&nbsp;<a href="sax1-history.html">Genesis</a><br />
+	&nbsp;<a href="sax1-roadmap.html">SAX 1.0 Overview</a><br />
+	&nbsp;<a href="sax2-history.html">SAX 2.0 Changes</a><br />
+	&nbsp;<a href="sax2-ext.html">SAX 2.0 Extensions</a><br />
+	&nbsp;<a href="langs.html">Other Languages</a><br />
+	<br />
+	<b>SourceForge Services</b><br />&nbsp;<a href="http://sourceforge.net/tracker/?group_id=29449">Bugs/RFEs</a><br />
+	&nbsp;<a href="http://sourceforge.net/projects/sax/">Project Page</a><br />
+	<br />
+	<br />
+	</td></tr></table>
+
+    
+    <p>
+    <a href="http://www.sourceforge.net/">
+    <img border="0" src="http://sourceforge.net/sflogo.php?group_id=29449&amp;type=1"
+	height="31" width="88"
+	alt="SourceForge Logo" />
+    </a>
+
+    </p>
+
+    </td>
+
+    <td width="80%" valign="top" align="left">
+    <h2>Namespaces</h2><div><p>SAX2 adds <a
+href="http://www.w3.org/TR/REC-xml-names">XML Namespace</a> support,
+which is required for higher-level standards like <a
+href="http://www.w3.org/TR/xpath">XPath</a>
+(used in XSLT, XPointer, XLink, and more), <a
+href="http://www.w3.org/TR/xmlschema-0/">XML Schemas</a>, <a
+href="http://www.w3.org/TR/REC-rdf-syntax">RDF</a>, and more.
+Every implementation of the SAX2 <a
+href="/apidoc/org/xml/sax/XMLReader.html">XMLReader</a> interface is
+required to support Namespace processing in its default state.
+Additionally, many XML readers allow Namespace processing to be
+modified or disabled.  </p>
+
+<p>Namespace processing changes only element and attribute naming,
+although it places restrictions on some other names.
+With familiar XML 1.0 names, each XML element and attribute has a
+single name called the <em>qName</em> (which may contain colons).
+With Namespaces, elements and attributes have
+two-part name, sometimes called the "Universal" or "Expanded" name,
+which consists of a <em>URI</em> (signifying something analagous to a Java or
+Perl package name) and a <em>localName</em> (which never contains a
+colon). </p>
+
+<p>SAX2 is capable of supporting either of these views or both
+simultaneously.  Similarly, documents may use both views
+simultaneously.
+SAX2 XMLReader implementations are required to report the
+Namespaces style names when documents use them.  </p>
+
+<h3>Namespaces in SAX Events</h3>
+
+<p>Namespace support affects the <a
+href="/apidoc/org/xml/sax/ContentHandler.html" >ContentHandler</a> and
+<a href="/apidoc/org/xml/sax/Attributes.html" >Attributes</a>
+interfaces.  You will pay the most attention to this support in
+<em>startElement()</em> callbacks.</p>
+
+
+<h4>Element names</h4>
+
+<p>In SAX2, the <a
+href="/apidoc/org/xml/sax/ContentHandler.html#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)"
+>startElement</a> and <a
+href="/apidoc/org/xml/sax/ContentHandler.html#endElement(java.lang.String, java.lang.String, java.lang.String)"
+>endElement</a> callbacks in a content handler look like this:</p>
+
+<blockquote><pre xml:space="preserve">
+public void startElement (String uri, String localName,
+                          String qName, Attributes atts)
+  throws SAXException;
+
+public void endElement (String uri, String localName, String qName)
+  throws SAXException;
+</pre></blockquote>
+
+<p>By default, an XML reader will report a Namespace URI and a localName
+for every element that belongs in a namespace,
+in both the start and end handler.  Consider
+the following example:</p>
+
+<blockquote><pre xml:space="preserve">
+  &lt;html:hr xmlns:html="http://www.w3.org/1999/xhtml"/&gt;
+</pre></blockquote>
+
+<p>With the default SAX2 Namespace processing, the XML reader would
+report a start and end element event with the Namespace URI
+<em>http://www.w3.org/1999/xhtml</em> and the localName <em>hr</em>.
+Most XMLReader implementations also report the original qName
+<em>html:hr</em>, but that parameter might simply be an empty string
+(except for elements that aren't in a namespace).</p>
+
+<h4>Attribute Names</h4>
+
+<p>For attributes, you can look up the value of a named attribute
+using the <a
+href="/apidoc/org/xml/sax/Attributes.html#getValue(java.lang.String, java.lang.String"
+>getValue</a> method, and you can look up the Namespace URI or localName
+of an attribute by its index using the
+<a href="/apidoc/org/xml/sax/Attributes.html#getURI(int)">getURI</a> and
+<a href="/apidoc/org/xml/sax/Attributes.html#getLocalName(int)"
+>getLocalName</a> methods (usually when you're iterating
+through the entire attribute list):</p>
+
+<blockquote><pre xml:space="preserve">
+String rdfns = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+String resource = atts.getValue(rdfns, "resource");
+
+for (int i = 0; i &lt; atts.getLength(); i++) {
+  String uri = atts.getURI(i);
+  String localName = atts.getLocalName(i);
+  String value = atts.getValue(i);
+  /* ... */
+}
+</pre></blockquote>
+
+<h4>Prefix Mappings</h4>
+
+<p>In addition to those events, SAX2 reports the scope of Namespace
+declarations using the <a
+href="/apidoc/org/xml/sax/ContentHandler.html#startPrefixMapping(java.lang.String, java.lang.String)"
+>startPrefixMapping</a> and  <a
+href="/apidoc/org/xml/sax/ContentHandler.html#endPrefixMapping(java.lang.String)"
+>endPrefixMapping</a> methods, so that applications can resolve
+prefixes in attribute values or character data if necessary.  The
+callbacks look like this:</p>
+
+<blockquote><pre xml:space="preserve">
+public void startPrefixMapping (String prefix, String uri)
+  throws SAXException;
+public void endPrefixMapping (String prefix)
+  throws SAXException;
+</pre></blockquote>
+
+<p>For the above example, the XML reader would make the following
+callback <em>immediately before</em> the start-element event:</p>
+
+<blockquote><pre xml:space="preserve">
+startPrefixMapping("html", "http://www.w3.org/1999/xhtml")
+</pre></blockquote>
+
+<p>The XML reader would make the following callback
+<em>immediately after</em> the
+end-element event:</p>
+
+<blockquote><pre xml:space="preserve">
+endPrefixMapping("html")
+</pre></blockquote>
+
+<p>For elements with multiple namespace declarations, the
+<em>startPrefixMapping()</em> calls won't necessarily nest
+with the <em>endPrefixMapping()</em> because those 
+<em>endPrefixMapping()</em> calls may be made in any order.
+</p>
+
+<h3>Configuration</h3>
+
+<p>This section applies to SAX2 applications with
+requirements for preserving prefixes and their declarations.
+Applications which write XML text often fall into this category,
+including many XML structure editors.
+</p>
+
+
+<h4>Configuring Namespace Support</h4>
+
+<p>The <em>http://xml.org/sax/features/namespaces</em> feature controls general
+Namespace processing.  When this feature is true (the default),
+any applicable
+Namespace URIs and localNames
+(for elements in namespaces)
+must be available through the
+<var>startElement</var> and <var>endElement</var> callbacks in the <a
+href="/apidoc/org/xml/sax/ContentHandler.html">ContentHandler</a>
+interface, and through the various methods in the <a
+href="/apidoc/org/xml/sax/Attributes.html">Attributes</a> interface,
+and start/endPrefixMapping events must be reported.
+For elements and attributes outside of namespaces,
+the associated namespace URIs will be empty strings
+and the <var>qName</var> parameter is guaranteed to be provided
+as a non-empty string.
+</p>
+
+<p>The <em>http://xml.org/sax/features/namespace-prefixes</em> feature controls
+the reporting of qNames and Namespace declarations (xmlns*
+attributes). Unless the value of this feature flag is changed to
+true (from its default of false),
+qNames may optionally (!) be reported as empty strings for elements
+and attributes that have an associated namespace URI,
+and xmlns* attributes will not be reported.
+When set to true, that information will always be available.
+</p>
+
+<p>The following table summarizes the interaction of these two
+features.  (For general information on using features, see the
+Features and Properties link.)</p>
+
+<table border="1" bgcolor='#ffffcc'>
+
+<thead>
+<tr bgcolor='#ffffff'>
+<th>namespaces</th>
+<th>namespace-prefixes</th>
+<th>Namespace names</th>
+<th>start/end PrefixMapping</th>
+<th>qNames</th>
+<th>xmlns* attributes</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>true</td>
+<td>false</td>
+<td>YES</td>
+<td>YES</td>
+<td><font color='maroon'><em>unknown</em></font></td>
+<td>NO</td>
+</tr>
+<tr>
+<td>true</td>
+<td>true</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>false</td>
+<td>false</td>
+<td colspan="4" align="center"><b>ILLEGAL MODE</b></td>
+</tr>
+<tr>
+<td>false</td>
+<td>true</td>
+<td><font color='maroon'><em>unknown</em></font></td>
+<td><font color='maroon'><em>unknown</em></font></td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+
+</tbody>
+</table>
+
+<p> The SAX2 default is the first entry in that table.
+Note that for documents where every element and attribute
+name is in a namespace,
+<var>qName</var> values (including namespace prefixes)
+<em>might not</em> be reported,
+and <var>xmlns*</var> attributes (declaring them)
+<strong>will not</strong> be reported, unless the
+<var>namespace-prefixes</var> feature is changed from its default setting.
+Also, that the only way to avoid processor-specific behavior is
+to make that change!
+(For names that aren't in namespaces, only
+<var>qName</var> values are provided by all parsers;
+there are no processor-specific behaviors for those names.)
+Also, note that if you can't disable namespace processing just
+by changing the <var>namespaces</var> feature, since that
+places the processor into an illegal (nonsensical) mode.
+</p>
+
+
+<h4>Configuration Example</h4>
+
+<p>Consider the following simple sample document:</p>
+
+<blockquote><pre xml:space="preserve">
+&lt;?xml version="1.0"?&gt;
+&lt;h:hello xmlns:h="http://www.greeting.com/ns/"
+	id="a1" h:person="David"/&gt;
+</pre></blockquote>
+
+<p>If <var>namespaces</var> is true and <var>namespace-prefixes</var>
+is false (the default), then a SAX2 XML reader will report the
+following:</p>
+
+<ul>
+<li>an element with the Namespace URI "http://www.greeting.com/ns/" and
+the localName "hello";</li>
+<li>an attribute with no Namespace URI (empty string) and the
+qName (and usually localName) "id"; and</li>
+<li>an attribute with the Namespace URI "http://www.greeting.com/ns/"
+and the localName "person".</li>
+</ul>
+
+<p>If <var>namespaces</var> is true and <var>namespace-prefixes</var>
+is true, then a SAX2 XML reader will report the following:</p>
+
+<ul>
+<li>an element with the Namespace URI "http://www.greeting.com/ns/",
+the localName "hello", and the qName "h:hello";</li>
+<li>an attribute with no Namespace URI (empty string), no localName
+(empty string), and the qName "xmlns:h";</li>
+<li>an attribute with no Namespace URI (empty string),
+and the qName (and usually localName) "id"; and</li>
+<li>an attribute with the Namespace URI "http://www.greeting.com/ns/",
+the localName "person", and the qName "h:person".</li>
+</ul>
+
+<p>If <var>namespaces</var> is false and <var>namespace-prefixes</var>
+is true, then a SAX2 XML reader will report the following:</p>
+
+<ul>
+<li>an element with the qName "h:hello";</li>
+<li>an attribute with the qName "xmlns:h";</li>
+<li>an attribute with the qName "id"; and</li>
+<li>an attribute with the qName "h:person".</li>
+</ul>
+
+<p> Note that when SAX2 reports namespace declaration attributes,
+like "xmlns:h",
+it conforms to the <em>Namespaces in XML</em> recommendation
+from W3C:  they aren't in any namespace.  Some other W3C
+specifications violate that specification, and put  such
+declarations into a <code>http://www.w3.org/2000/xmlns/</code>
+namespace.
+If you're working with namespace declarations, you may need
+to be aware of that issue.
+</p>
+</div>
+    <br />
+
+    </td></tr></table>
+
+    </body></html>

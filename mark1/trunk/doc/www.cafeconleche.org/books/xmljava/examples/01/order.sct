@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<schema xmlns="http://www.ascc.net/xml/schematron">
+  <title>A Schematron Schema for Orders</title>
+  <pattern>
+    <rule context="Order">
+      <!-- Due to round-off error, floating point numbers 
+           should rarely be compared for direct equality. 
+           For this purpose, it's enough if they're accurate 
+           within one penny. -->
+      <assert test="(Shipping+Subtotal+Tax - Total)&lt;0.01 
+                and (Shipping+Subtotal+Tax - Total)&gt;-0.01">
+        The subtotal, tax, and shipping 
+        must add up to the total.
+      </assert>
+      
+      <assert test= 
+       "(Subtotal+Shipping)*((Tax/@rate) div 100.0) 
+         - Tax &lt; 0.01 and (Subtotal+Shipping)*((Tax/@rate) 
+         div 100.0)-Tax &gt; -0.01
+      ">
+        The tax was incorrectly calculated.
+      </assert>
+  
+    </rule>
+  </pattern>
+</schema>

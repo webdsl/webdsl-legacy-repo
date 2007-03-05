@@ -1,0 +1,449 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>11 Make structure explicit through markup</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.1.0  (Linux)">
+	<META NAME="AUTHOR" CONTENT="Elliotte Rusty Harold">
+	<META NAME="CREATED" CONTENT="20020121;16260000">
+	<META NAME="CHANGED" CONTENT="20031030;13583000">
+	<STYLE>
+	<!--
+		@page { size: 8.5in 11in; margin-right: 0.92in; margin-top: 1in; margin-bottom: 1in }
+		P { margin-bottom: 0.08in; direction: ltr; color: #000000; text-align: justify; widows: 2; orphans: 2 }
+		P.western { font-family: "Times New Roman", serif; font-size: 10pt; so-language: en-US }
+		P.cjk { font-family: "Times New Roman", serif; font-size: 10pt; so-language:  }
+		P.ctl { font-family: "Times New Roman", serif; font-size: 10pt; so-language:  }
+		H1 { margin-bottom: 0.04in; direction: ltr; color: #000000; text-align: justify; widows: 2; orphans: 2 }
+		H1.western { font-family: "Arial", sans-serif; font-size: 16pt; so-language: en-US }
+		H1.cjk { font-family: "Times New Roman", serif; font-size: 16pt; so-language:  }
+		H1.ctl { font-family: "Times New Roman", serif; font-size: 10pt; so-language: ; font-weight: medium }
+		PRE { margin-top: 0.01in; margin-bottom: 0.01in; direction: ltr; color: #000000; text-align: justify; widows: 2; orphans: 2 }
+		PRE.western { font-family: "Cumberland", "Courier New", monospace; so-language: en-US }
+		PRE.cjk { font-family: "Cumberland", "Courier New", monospace; so-language:  }
+		PRE.ctl { font-family: "Times New Roman", serif; so-language:  }
+		DD { margin-top: 0.08in; margin-bottom: 0.08in; direction: ltr; color: #000000; text-align: justify; widows: 2; orphans: 2 }
+		DD.western { font-family: "Times New Roman", serif; font-size: 10pt; so-language: en-US }
+		DD.cjk { font-family: "Times New Roman", serif; font-size: 10pt; so-language:  }
+		DD.ctl { font-family: "Times New Roman", serif; font-size: 10pt; so-language:  }
+		DT { margin-top: 0.08in; margin-bottom: 0.08in; direction: ltr; color: #000000; text-align: justify; widows: 2; orphans: 2 }
+		DT.western { font-family: "Times New Roman", serif; font-size: 10pt; so-language: en-US }
+		DT.cjk { font-family: "Times New Roman", serif; font-size: 10pt; so-language:  }
+		DT.ctl { font-family: "Times New Roman", serif; font-size: 10pt; so-language:  }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="de-DE" TEXT="#000000" DIR="LTR">
+<P LANG="en-US" ALIGN=CENTER STYLE="page-break-after: avoid"><FONT FACE="Albany, Arial, sans-serif"><FONT SIZE=5><B>11.
+Make structure explicit through markup</B></FONT></FONT></P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">All
+structure in an XML document should be indicated through XML tags,
+not through other means. XML parsers are designed to process tags.
+They do not see any other form of structure in the data, explicit or
+implicit. Using anything except tags and their attributes to
+delineate structure makes the data much harder to read. In essence,
+programmers who write software to process such documents must invent
+mini-parsers for the non-XML structures in the data. 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">For
+example, in the bank statement XML application, a transaction could
+theoretically be represented like this:</P>
+<PRE LANG="en-US" CLASS="western">&lt;Transaction&gt;Withdrawal 2003 12 15 200.00&lt;/Transaction&gt;</PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">
+This would require applications reading the data to know that the
+first field is the kind of transaction, the second field is the year,
+the third is the month, the fourth is the date, an the last is the
+amount. In most cases a client application would have to split this
+data along the white space to further process it. On the other hand,
+the client application has less work to do and can operate more
+smoothly if it's presented with data marked up like this:</P>
+<PRE LANG="en-US" CLASS="western">&lt;Transaction type=&quot;withdrawal&quot;&gt;
+  <SPAN LANG="en-US">&lt;Date&gt;2003-12-15&lt;/Date&gt;</SPAN>
+  <SPAN LANG="en-US">&lt;Amount&gt;200.00&lt;/Amount&gt;</SPAN>
+<SPAN LANG="en-US">&lt;/Transaction&gt;</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">
+Here each useful unit of information can be seen as the complete
+content of an element or an attribute. 
+</P>
+<OL>
+	<LI><H1 LANG="en-US" CLASS="western" STYLE="page-break-after: avoid">
+	Tag Each Unit of Information</H1>
+</OL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">The key
+idea is that what's between two tags should be the minimum unit of
+text that can usefully be processed as a whole. It should not need to
+be further subdivided for the common use-cases. An Amount element
+contains a complete amount, and nothing else. The amount is a single
+thing, a whole unit of information, in this case a number. It does
+not have internal structure that any application is likely to care
+about.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">Occasionally
+the question of what constitutes a unit may depend on where and how
+the data is used. For example, consider the Date element in the above
+Transaction. It contains implicit markup based on the hyphen. It
+could instead be written like this:</P>
+<PRE LANG="en-US" CLASS="western">&lt;Date&gt;
+  <SPAN LANG="en-US">&lt;Year&gt;2003&lt;Year&gt;</SPAN>
+  <SPAN LANG="en-US">&lt;Month&gt;12&lt;/Month&gt;</SPAN>
+  <SPAN LANG="en-US">&lt;Day&gt;15&lt;/Day&gt;</SPAN>
+<SPAN LANG="en-US">&lt;/Date&gt;</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">
+Whether this is useful or not depends on how the dates will be used.
+If they're merely formatted on a page as is, or passed to an API that
+knows how to create Date objects from strings like 2003-12-15 then
+you may not need to separate out the month, day, and year as separate
+elements. Generally, whether to further subdivide data depends on the
+use to which the information is put and the operations that will be
+performed on it. If dates are intended purely to notate a particular
+moment in history, then a format like &lt;Date&gt;2003-12-15&lt;/Date&gt;
+is appropriate. This would be useful for figuring out if it's time to
+drink a bottle of wine, determining whether a worker is eligible for
+retirement benefits, or calculating how much time remains on a car's
+warranty, for example. In none of these cases is the individual day
+of month, month, or even year very significant. Only the combination
+of these quantities matters. That dates are even divided into these
+quantities in the first place in mostly a fluke of astronomy and the
+planet we live on, not something intrinsic to the nature of time.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">On the
+other hand, consider weather data. Since weather varies with the
+seasons and has a roughly periodic structure tied to the years and
+the months, it does make sense to compare weather from one February
+to the next, without necessarily considering the year. Other real
+world data tied to annual and monthly cycles includes birthdays, pay
+periods, and financial results. If you're modeling this sort of data
+you will want to be able to separate months, days, and years from
+each other. In this case, more structured markup such as
+&lt;date&gt;&lt;year&gt;2003&lt;/year&gt;&lt;month&gt;12&lt;/month&gt;&lt;day&gt;15&lt;/day&gt;&lt;/date&gt;
+is appropriate. The question is really whether processes manipulating
+this data are likely to want to treat the text as a single unit of
+information or a composite of more fundamental data.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">On the
+other hand, just because you don't need to extract the individual
+components of a date does not mean that no one who works with the
+data will need to do that. Generally, I prefer to err on the side of
+too much markup rather than too little. Larger chunks of data can
+normally be formed by manipulating the parent or ancestor elements
+when necessary. It is easier to remove structure when processing than
+to add it.  
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">The
+classic example of what not to do is Scalable Vector Graphics (SVG).
+SVG uses huge amounts of non-XML based mark-up. For example, consider
+this polygon element:</P>
+<PRE LANG="en-US" CLASS="western">&lt;polygon points=&quot;350,75 379,161 469,161 397,215 423,301 
+                 <SPAN LANG="en-US">350,250 277,301 303,215 231,161 321,161&quot; /&gt;</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">
+In particular, look at the value of the points attribute. That's not
+just a string of characters. Instead it's a sequence of x, y
+coordinates. An SVG processor cannot simply work with the attribute
+value. Instead it first has to divide the attribute value into
+matching pairs and decide which are x's and which are y's. The proper
+approach would have been to define the coordinates as child elements,
+like this:</P>
+<PRE LANG="en-US" CLASS="western">&lt;polygon&gt;
+  <SPAN LANG="en-US">&lt;point x=&quot;350&quot; y=&quot;75&quot;/&gt; </SPAN>
+  <SPAN LANG="en-US">&lt;point x=&quot;379&quot; y=&quot;161&quot;/&gt; </SPAN>
+  <SPAN LANG="en-US">&lt;point x=&quot;469&quot; y=&quot;161&quot;/&gt; </SPAN>
+  <SPAN LANG="en-US">&lt;point x=&quot;397&quot; y=&quot;215&quot;/&gt; </SPAN>
+  <SPAN LANG="en-US">&lt;point x=&quot;423&quot; y=&quot;301&quot;/&gt; </SPAN>
+  <SPAN LANG="en-US">&lt;point x=&quot;350&quot; y=&quot;250&quot;/&gt; </SPAN>
+  <SPAN LANG="en-US">&lt;point x=&quot;277&quot; y=&quot;301&quot;/&gt; </SPAN>
+  <SPAN LANG="en-US">&lt;point x=&quot;303&quot; y=&quot;215&quot;/&gt; </SPAN>
+  <SPAN LANG="en-US">&lt;point x=&quot;231&quot; y=&quot;161&quot;/&gt; </SPAN>
+  <SPAN LANG="en-US">&lt;point x=&quot;321&quot; y=&quot;161&quot;/&gt; </SPAN>
+<SPAN LANG="en-US">&lt;/polygon&gt;</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">
+This way the XML processor would present the coordinates to the
+application already nicely parsed. This also demonstrates the
+important point that attributes don't support structure very well
+(See Item 12). Structured data normally needs to be stored in element
+hierarchies. Only the lowest, most unstructured pieces should be put
+in attributes. 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">The
+reasoning behind this bad decision was to avoid excessive file-size
+and verbosity. However, terseness of markup is an explicit non-goal
+of XML. If you really care that much about how many characters a user
+must type, you shouldn't be using XML in the first place. In this
+case, however, terseness truly has no benefits. Almost all practical
+SVG is either generated by a computer program or drawn in a WYSIWYG
+application such as Adobe Illustrator. Software can easily handle a
+more verbose, pure XML format. Indeed, it would be considerably
+easier to write such SVG-processing and generating software if all
+the structures were based on XML. File size is even less important.
+SVG documents are routinely gzipped in practice anyway, which rapidly
+eliminates any significant differences between the less and more
+verbose formats. (See Item 53, Compress if space is  a problem).</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">SVG goes
+even further in the wrong direction by incorporating the non-XML CSS
+format. For example, a polygon can be filled, stroked and colored
+like this:</P>
+<PRE LANG="en-US" CLASS="western">&lt;polygon style=&quot;fill: red; stroke: blue; stroke-width: 10&quot; 
+         <SPAN LANG="en-US">points=&quot;350,75 379,161 469,161 397,215 423,301 </SPAN>
+                 <SPAN LANG="en-US">350,250 277,301 303,215 231,161 321,161&quot; /&gt;</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">
+Fortunately for the most important and common styles, SVG also allows
+an attribute based alternative. For example, this is an equivalent
+polygon:</P>
+<PRE LANG="en-US" CLASS="western">&lt;polygon fill=&quot;red&quot; stroke=&quot;blue&quot; stroke-width=&quot;10&quot; 
+         <SPAN LANG="en-US">points=&quot;350,75 379,161 469,161 397,215 423,301 </SPAN>
+                 <SPAN LANG="en-US">350,250 277,301 303,215 231,161 321,161&quot; /&gt;</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">
+Nonetheless, because the CSS style attribute is allowed, an SVG
+renderer needs both an XML parser and a CSS parser. It's easier to
+write a CSS parser than an XML parser, but it's still a non-trivial
+amount of work. Furthermore, it's much harder to detect violations of
+CSS. Its less draconian error handling makes it easier to produce
+incorrect SVG documents that may not be noticed by authors. SVG is
+less interoperable and reliable than it would be if it were pure XML.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">XSL
+Formatting Objects (XSL-FO), by contrast, is an example of how to
+properly integrate XML formats with legacy formats such as CSS. It
+maintains the CSS property names, values, and meanings. However, it
+replaces CSS's native structure with an XML equivalent. XSL-FO
+doesn't have polygons, but here's a paragraph whose  color is blue,
+whose background color is red, and whose border is ten pixels wide:</P>
+<PRE LANG="en-US" CLASS="western">&lt;fo:block color=&quot;blue&quot; background-color=&quot;red&quot; border=&quot;10px&quot;&gt;
+  <SPAN LANG="en-US">The text of the paragraph goes here.</SPAN>
+<SPAN LANG="en-US">&lt;/fo:block&gt;</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">
+This has all the advantages of familiarity with CSS but none of the
+disadvantages of non-XML structure. The semantics of CSS are retained
+while the syntax is changed to more convenient XML.</P>
+<OL START=2>
+	<LI><H1 LANG="en-US" CLASS="western" STYLE="page-break-after: avoid">
+	Avoid Implicit Structure</H1>
+</OL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">You need
+to be especially wary of implicit markup, often indicated by white
+space. For example, consider the simple case of a name:</P>
+<PRE LANG="en-US" CLASS="western">&lt;Name&gt;Lenny Bruce&lt;/Name&gt;</PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">
+The name is sometimes treated as a single thing, but quite often you
+need to extract the first name and last name separately, most
+commonly to sort by last name. This seems easy enough to do: just
+split the string on the white space. The first name is everything
+before the space. The last name is everything after the space. Of
+course this algorithm falls apart as soon as you add middle names:</P>
+<PRE LANG="en-US" CLASS="western">&lt;Name&gt;Lenny Alfred Bruce&lt;/Name&gt;</PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">
+You may decide that you don't really care about middle names, that
+they can just be appended to the first name. You're just going to
+sort by last name anyway. However, now consider what happens when the
+last name contains white space:</P>
+<PRE LANG="en-US" CLASS="western">&lt;Name&gt;Stefania de Kennessey&lt;/Name&gt;</PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">
+The obvious algorithm assigns people the wrong last name. This can be
+quite offensive to the person whose name you've butchered, not that I
+haven't seen a lot of na&iuml;ve software that does exactly this. 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">What about
+titles? For example, consider these names:</P>
+<PRE LANG="en-US" CLASS="western">&lt;Name&gt;Mr. Lenny Bruce&lt;/Name&gt;
+<SPAN LANG="en-US">&lt;Name&gt;Dr. Benjamin Spock&lt;/Name&gt;</SPAN>
+<SPAN LANG="en-US">&lt;Name&gt;Timothy Leary, PhD&lt;/Name&gt;</SPAN>
+<SPAN LANG="en-US">&lt;Name&gt;William Kunstler, Esq.&lt;/Name&gt;</SPAN>
+<SPAN LANG="en-US">&lt;Name&gt;Ms. Anita Hoffman&lt;/Name&gt;</SPAN>
+<SPAN LANG="en-US">&lt;Name&gt;Prof. John H. Exton, M.D., PhD&lt;/Name&gt;</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">
+Given a large list of likely titles you can probably design an
+algorithm that accounts for these, but what seemed like a simple
+operation is rapidly complexifying in the face of real-world data. 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">Finally,
+let's recall that not all cultures put the family name last. For
+example, in Japan the family name normally comes first:</P>
+<PRE LANG="en-US" CLASS="western">&lt;Name&gt;Kawabata Yasunari&lt;/Name&gt;</PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">
+Thus when sorting Japanese names you sort by first name rather than
+last name. Do you really want to try to design a system that can
+guess whether a string is a Japanese name or an English one? To make
+matters worse, often, but not always, when Japanese names are
+translated into English the order of the names is reversed:</P>
+<PRE LANG="en-US" CLASS="western">&lt;Name&gt;Yasunari Kawabata&lt;/Name&gt;</PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">
+In fact, Japanese written in Kanji normally doesn't even use white
+space between the family and given name:</P>
+<PRE LANG="en-US" CLASS="western">&lt;Name&gt;<SPAN LANG=""><FONT FACE="MS Mincho, Times, serif"><FONT COLOR="#000080">川端康成</FONT></FONT></SPAN>&lt;/Name&gt;</PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">
+The problem is a lot messier than it looks at first glance.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">All of
+this goes away as soon as you use explicit markup to identify the
+different components of a name, instead of relying on software to
+sort it out:</P>
+<PRE LANG="en-US" CLASS="western">&lt;Name&gt;&lt;Given&gt;Lenny&lt;/Given&gt; &lt;Family&gt;Bruce&lt;/Family&gt;&lt;/Name&gt;
+<SPAN LANG="en-US">&lt;Name&gt;&lt;Given&gt;Lenny&lt;/Given&gt; &lt;Middle&gt;Alfred&lt;/Middle&gt; &lt;Family&gt;Bruce&lt;/Family&gt;&lt;/Name&gt;</SPAN>
+<SPAN LANG="en-US">&lt;Name&gt;&lt;Given&gt;Stefania&lt;/Given&gt; &lt;Family&gt;de Kennessey&lt;/Family&gt;&lt;/Name&gt;</SPAN>
+<SPAN LANG="en-US">&lt;Name&gt;&lt;Title&gt;Mr.&lt;/Title&gt; &lt;Given&gt;Lenny&lt;/Given&gt; &lt;Family&gt;Bruce&lt;/Family&gt;&lt;/Name&gt;</SPAN>
+<SPAN LANG="en-US">&lt;Name&gt;&lt;Title&gt;Dr.&lt;/Title&gt; &lt;Given&gt;Benjamin&lt;/Given&gt; &lt;Family&gt;Spock&lt;/Family&gt;&lt;/Name&gt;</SPAN>
+<SPAN LANG="en-US">&lt;Name&gt;&lt;Given&gt;Timothy&lt;/Given&gt; &lt;Family&gt;Leary&lt;/Family&gt;, &lt;Title&gt;Ph.D&lt;/Title&gt;&lt;/Name&gt;</SPAN>
+<SPAN LANG="en-US">&lt;Name&gt;</SPAN>
+  <SPAN LANG="en-US">&lt;Given&gt;William&lt;/Given&gt; &lt;Family&gt;Kunstler&lt;/Family&gt;, &lt;Title&gt;Esq.&lt;/Title&gt;</SPAN>
+<SPAN LANG="en-US">&lt;/Name&gt;</SPAN>
+<SPAN LANG="en-US">&lt;Name&gt;&lt;Title&gt;Ms.&lt;/Title&gt; &lt;Given&gt;Anita&lt;/Given&gt; &lt;Family&gt;Hoffman&lt;/Family&gt;&lt;/Name&gt;</SPAN>
+<SPAN LANG="en-US">&lt;Name&gt;</SPAN>
+  <SPAN LANG="en-US">&lt;Title&gt;Prof.&lt;/Title&gt; </SPAN>
+  <SPAN LANG="en-US">&lt;Given&gt;John&lt;/Given&gt; &lt;MiddleInitial&gt;H.&lt;/MiddleInitial&gt;</SPAN>
+  <SPAN LANG="en-US">&lt;Family&gt;Exton&lt;/Family&gt;, </SPAN>
+  <SPAN LANG="en-US">&lt;Title&gt;M.D.&lt;/Title&gt;, &lt;Title&gt;PhD&lt;/Title&gt;</SPAN>
+<SPAN LANG="en-US">&lt;/Name&gt;</SPAN>
+<SPAN LANG="en-US">&lt;Name&gt;&lt;Family&gt;</SPAN><SPAN LANG=""><FONT FACE="MS Mincho, Times, serif"><FONT COLOR="#000080">川端</FONT></FONT></SPAN><SPAN LANG="en-US">&lt;/Family&gt;&lt;Given&gt;</SPAN><SPAN LANG=""><FONT COLOR="#000080">康成</FONT></SPAN><SPAN LANG="en-US">&lt;/Given&gt;&lt;/Name&gt;</SPAN>
+<SPAN LANG="en-US">&lt;Name&gt;&lt;Family&gt;Kawabata&lt;/Family&gt; &lt;Given&gt;Yasunari&lt;/Given&gt;&lt;/Name&gt;</SPAN>
+<SPAN LANG="en-US">&lt;Name&gt;&lt;Given&gt;Yasunari&lt;/Given&gt; &lt;Family&gt;Kawabata&lt;/Family&gt;&lt;/Name&gt;</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">
+Another example of abuse of white space occurs in narrative documents
+that attempt to treat white space as significant, as in this poem:</P>
+<PRE LANG="en-US" CLASS="western">&lt;poem type=&quot;sonnet&quot; poet=&quot;Eleanor Alexander&quot;&gt;
+  <SPAN LANG="en-US">For me, my friend, no grave-side vigil keep</SPAN>
+  <SPAN LANG="en-US">With tears that memory and remorse might fill;</SPAN>
+  <SPAN LANG="en-US">Give me your tenderest laughter earth-bound still,</SPAN>
+  <SPAN LANG="en-US">And when I die you shall not want to weep.</SPAN>
+  <SPAN LANG="en-US">No epitaph for me with virtues deep</SPAN>
+  <SPAN LANG="en-US">Punctured in marble pitiless and chill:</SPAN>
+  <SPAN LANG="en-US">But when play time is over, if you will,</SPAN>
+  <SPAN LANG="en-US">The songs that soothe beloved babes to sleep.</SPAN>
+
+  <SPAN LANG="en-US">No lenten lilies on my breast and brow</SPAN>
+  <SPAN LANG="en-US">Be laid when I am silent; roses red,</SPAN>
+  <SPAN LANG="en-US">And golden roses bring me here instead,</SPAN>
+  <SPAN LANG="en-US">That if you love or bear me I may know;</SPAN>
+  <SPAN LANG="en-US">I may not know, nor care, when I am dead:</SPAN>
+  <SPAN LANG="en-US">Give me your songs, and flowers, and laughter now.</SPAN>
+<SPAN LANG="en-US">&lt;/poem&gt;</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">
+Here the line breaks indicate the end of a verse, and the blank lines
+indicate the end of a stanza. However, this can be problematic when
+the content is displayed in an environment where the lines are
+wrapped or the white space is otherwise adjusted for typographical
+reasons. Furthermore, these white space based constraints can't be
+validated, either with respect to XML (Every stanza contains one or
+more verses) or poetry (the first stanza of a sonnet has eight
+verses; the second has six). Authors are likely to make mistakes when
+the white space is too significant. It's much better to make the
+stanza and verse division explicit like this:</P>
+<PRE LANG="en-US" CLASS="western">&lt;poem type=&quot;sonnet&quot; poet=&quot;Eleanor Alexander&quot;&gt;
+  <SPAN LANG="en-US">&lt;stanza&gt;</SPAN>
+    <SPAN LANG="en-US">&lt;line&gt;For me, my friend, no grave-side vigil keep&lt;/line&gt;</SPAN>
+    <SPAN LANG="en-US">&lt;line&gt;With tears that memory and remorse might fill;&lt;/line&gt;</SPAN>
+    <SPAN LANG="en-US">&lt;line&gt;Give me your tenderest laughter earth-bound still,&lt;/line&gt;</SPAN>
+    <SPAN LANG="en-US">&lt;line&gt;And when I die you shall not want to weep.&lt;/line&gt;</SPAN>
+    <SPAN LANG="en-US">&lt;line&gt;No epitaph for me with virtues deep&lt;/line&gt;</SPAN>
+    <SPAN LANG="en-US">&lt;line&gt;Punctured in marble pitiless and chill:&lt;/line&gt;</SPAN>
+    <SPAN LANG="en-US">&lt;line&gt;But when play time is over, if you will,&lt;/line&gt;</SPAN>
+    <SPAN LANG="en-US">&lt;line&gt;The songs that soothe beloved babes to sleep.&lt;/line&gt;</SPAN>
+  <SPAN LANG="en-US">&lt;/stanza&gt;</SPAN>
+
+  <SPAN LANG="en-US">&lt;stanza&gt;</SPAN>
+    <SPAN LANG="en-US">&lt;line&gt;No lenten lilies on my breast and brow&lt;/line&gt;</SPAN>
+    <SPAN LANG="en-US">&lt;line&gt;Be laid when I am silent; roses red,&lt;/line&gt;</SPAN>
+    <SPAN LANG="en-US">&lt;line&gt;And golden roses bring me here instead,&lt;/line&gt;</SPAN>
+    <SPAN LANG="en-US">&lt;line&gt;That if you love or bear me I may know;&lt;/line&gt;</SPAN>
+    <SPAN LANG="en-US">&lt;line&gt;I may not know, nor care, when I am dead:&lt;/line&gt;</SPAN>
+    <SPAN LANG="en-US">&lt;line&gt;Give me your songs, and flowers, and laughter now.&lt;/line&gt;</SPAN>
+  <SPAN LANG="en-US">&lt;/stanza&gt;</SPAN>
+<SPAN LANG="en-US">&lt;/poem&gt;</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">
+I think the only time you should insist on exact white space
+preservation is when the white space is actually a significant
+component of the content, as in the poetry of e.e. cummings or Python
+source code. 
+</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">Computer
+source code, whether in Python or in other languages, is a special
+case. It has a huge amount of structure that just does not lend
+itself to expression in XML. Furthermore parsers for this structure
+exist and are as common and useful as parsers for XML. (They're
+generally bundled as parts of compilers.) Most importantly, there are
+only two normal uses for source code embedded in XML documents:</P>
+<UL>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">Passing
+	the code to a compiler</P>
+	<LI><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">Displaying
+	the complete, unformatted code to an end user, as in a programming
+	tutorial</P>
+</UL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">In neither
+of these cases is the process reading the XML likely to want to
+subdivide the data into smaller parts and treat them individually,
+even though these parts demonstrably exist. Thus it makes sense to
+leave the structure in source code implicit.</P>
+<OL START=3>
+	<LI><H1 LANG="en-US" CLASS="western" STYLE="page-break-after: avoid">
+	Where to Stop?</H1>
+</OL>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">At the
+absolute extreme I've even seen it suggested (facetiously) that an
+integer such as 6587 should be written like this:</P>
+<PRE LANG="en-US" CLASS="western">&lt;integer&gt;
+  <SPAN LANG="en-US">&lt;thousands&gt;6&lt;/thousands&gt;</SPAN>
+  <SPAN LANG="en-US">&lt;hundreds&gt;5&lt;/hundreds&gt;</SPAN>
+  <SPAN LANG="en-US">&lt;tens&gt;8&lt;/tens&gt;</SPAN>
+  <SPAN LANG="en-US">&lt;ones&gt;7&lt;/ones&gt;</SPAN>
+<SPAN LANG="en-US">&lt;/integer&gt;</SPAN></PRE><P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">
+Obviously, this is going too far. It would be far more troublesome to
+process than a simple, unmarked up number. After all, almost everyone
+who wants to use a number treats it as an atomic quantity rather than
+a composition of four single digits. However, this does suggest a
+good rule of thumb for where to stop inserting tags. Anything that
+will normally be treated as a single atomic value should not be
+further divided by mark up. However, if a value is composed of
+smaller parts that will need to be addressed individually, they
+should be marked up.</P>
+<P LANG="en-US" CLASS="western" STYLE="margin-top: 0.08in">Here are a
+few other common edge cases, and my thoughts on why I would or
+wouldn't further divide them:</P>
+<DL>
+	<DT LANG="en-US" CLASS="western">Numbers with units such as 7px,
+	8.5kg, or 108db</DT><DD LANG="en-US" CLASS="western">
+	Neither the unit nor the number means anything in isolation. It
+	doesn't help much to know that a mass is denoted in kilograms
+	without knowing how many kilograms. Similarly, there's not much
+	point to knowing that the mass is 3.2 if you don't know whether
+	that's 3.2 grams, 3.2 kilograms, or 3.2 metric tons. Thus I prefer
+	to write such quantities as &lt;mass&gt;7.5kg&lt;/mass&gt; and
+	&lt;speed&gt;32mph&lt;/speed&gt;.</DD><DT LANG="en-US" CLASS="western">
+	Time</DT><DD LANG="en-US" CLASS="western">
+	The division of time into hours, minutes, and seconds is very
+	similar to the date case. Indeed a date is just a somewhat more
+	coarsely grained measure of time, and times can be appended to dates
+	to more precisely identify a moment. However, <I>durations</I> of
+	time are a different story. These include quantities such as the
+	flight time from San Jose to New York<SPAN STYLE="font-style: normal">
+	or the number of minutes that can be recorded on a video tape in SP
+	mode</SPAN>. Here's it is the total time that matters, not the
+	beginning point and end point. The division of time into 24 hours
+	per day, 60 minutes per hour, and 60 seconds per minute is a
+	historical relic of Babylonian astronomy and their base-60 number
+	system, not anything fundamentally related to natural quantities, a
+	point which is proved by the fact that durations can be flattened to
+	a total number of minutes or seconds rather than using three
+	different units. Thus I tend to treat a duration as a single
+	quantity and write it using a form like &lt;FlightTime&gt;6h32m&lt;/
+	FlightTime&gt; instead of a more structured form such as
+	&lt;FlightTime&gt;&lt;hours&gt;6&lt;/hours&gt;&lt;minutes&gt;32&lt;/minutes&gt;&lt;/
+	FlightTime&gt;. 
+	</DD><DT LANG="en-US" CLASS="western">
+	Lists</DT><DD LANG="en-US" CLASS="western">
+	Both DTDs and schemas define list data types that can describe
+	content separated by white space. In DTDs, these include attributes
+	declared to have type IDREFS and ENTITIES. In schemas this includes
+	any element or attribute declared with a list type. I really don't
+	like this. This may be the only way to store plural quantities such
+	as a list of entities or numbers in attributes. However, when faced
+	with potentially plural things I prefer to use child elements.
+	Overuse of attributes leads to markup that's hard to manage.</DD><DT LANG="en-US" CLASS="western">
+	URLs</DT><DD LANG="en-US" CLASS="western">
+	A URL (or URI) has a lot of internal structure. For instance, the
+	URL
+	http://www.cafeconleche.org:80/books/xmljava/chapters/ch09s07.html#d0e15480
+	has a protocol, a host (which itself has a host name, a domain name,
+	and a top-level domain), a port, a file path, and a fragment
+	identifier. Theoretically, you could mark this up like so:</DD></DL>
+<PRE LANG="en-US" CLASS="western">&lt;url&gt;
+  <SPAN LANG="en-US">&lt;protocol&gt;http&lt;/protocol&gt;</SPAN>
+  <SPAN LANG="en-US">&lt;host&gt;www.cafeconleche.org&lt;/host&gt;</SPAN>
+  <SPAN LANG="en-US">&lt;port&gt;80&lt;/port&gt;</SPAN>
+  <SPAN LANG="en-US">&lt;file&gt;/books/xmljava/chapters/ch09s07.html&lt;/file&gt;</SPAN>
+  <SPAN LANG="en-US">&lt;fragment&gt;d0e15480&lt;/fragment&gt;</SPAN>
+<SPAN LANG="en-US">&lt;/url&gt;</SPAN></PRE>
+<DL>
+	<DD LANG="en-US" CLASS="western">
+	However, in practice this is almost never done, and with good
+	reason. Almost every use of a URL, from passing it to a method in a
+	programming API to copying it and pasting into the browser location
+	bar to painting it on the side of a building, expects to receive an
+	entire URL, not a piece of one. In those rare cases where you need
+	to divide a URL into its component parts, most APIs provide adequate
+	support. Thus it's best not to subdivide the URL beyond what
+	everyone expects.</DD><DT LANG="en-US" CLASS="western" STYLE="margin-bottom: 0in">
+	In general, however, if I suspect that an element might usefully be
+	further divided, I will divide it. XML has the opposite of the
+	Humpty-Dumpty problem: it's much easier to put the pieces back
+	together again when content is split by tags than it is to break it
+	apart when there aren't enough tags. Having too much markup in your
+	data is rarely a practical problem. Having too little markup is much
+	more cumbersome.</DT></DL>
+</BODY>
+</HTML>

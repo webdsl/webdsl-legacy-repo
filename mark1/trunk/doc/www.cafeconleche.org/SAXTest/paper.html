@@ -1,0 +1,1722 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>SAX Conformance Testing</title>
+<meta name="keywords" content="SAX, XML, test, conformance" />
+<meta name="author" content="Elliotte Rusty Harold" />
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+<meta content="text/css" http-equiv="Content-Style-Type" />
+<style type="text/css">
+ul.simple {list-style-type: none}
+ul.bulleted {list-style-type: disc}
+ul.dashed {list-style-type: square}
+ol.arabic {list-style-type: decimal}
+ol.ualpha {list-style-type: upper-alpha}
+ol.uroman {list-style-type: upper-roman}
+ol.lalpha {list-style-type: lower-alpha}
+ol.lroman {list-style-type: lower-roman}
+ol.ftnote {list-style-type: decimal}
+    </style>
+<link href="gcapaper.css" type="text/css" rel="stylesheet" />
+</head><body>
+<h1 class="title">SAX Conformance Testing</h1>
+<p class="keyword">
+<i class="keywordHeader">Keywords: </i>
+<a title="SAX" id="K1.SAX" />SAX, <a title="XML" id="K2.XML" />XML, <a title="test" id="K3.test" />test, <a title="conformance" id="K4.conformance" />conformance</p>
+<p class="author">
+<span class="authorName">Elliotte Rusty Harold</span>
+<br />Polytechnic University
+<br />Dept. of Computer Science
+<br />Brooklyn <br />NY <br />USA
+<br />
+<a href="mailto:elharo@metalab.unc.edu" class="email">elharo@metalab.unc.edu</a>
+<br />
+<a href="http://www.cafeconleche.org/" class="web">http://www.cafeconleche.org/</a>
+</p>
+<p class="bioHeader">
+<i>Biography</i>
+</p>
+<blockquote class="bio">
+<p>Elliotte Rusty Harold is an adjunct professor of computer science at Polytechnic University in Brooklyn.
+He's the author of numerous books on XML including the <cite>XML 1.1 Bible</cite>,
+<cite>XML in a Nutshell</cite>, <cite>Effective XML</cite>, and <cite>Processing XML with Java</cite>. 
+Most recently he has been working on XOM,
+the only tree-based API for XML that absolutely guarantees well-formedness.
+</p>
+</blockquote>
+<hr class="upperBorder" />
+<h2 class="abstractHeader">Abstract</h2>
+<hr class="lowerBorder" />
+<div class="abstract">
+<p>
+While SAX<a class="bibref" href="#SAX">
+<b>[SAX]</b>
+</a> , the simple API for XML, 
+is a broadly, almost universally implemented standard among Java parsers, 
+many SAX parsers have serious bugs. The lack of a complete SAX conformance test 
+suite has been a severe hindrance to interoperability.  For example, about half 
+of SAX parsers call <code>endDocument()</code> 
+even after reporting a fatal error, while 
+the other half don’t. Existing XML test suites mostly focus on whether the 
+parser correctly answers boolean questions of well-formedness or validity, 
+while ignoring the much more complex questions of whether the parser correctly 
+reports document content in the correct order. Indeed the XML specification 
+is mostly silent on exactly which parts of the document a parser is required to report. 
+Not surprisingly this has led to a number of inconsistencies between parsers as well 
+as outright bugs in more than a few implementations.
+</p>
+
+<p>
+This paper demonstrates a conformance suite written in Java that 
+tests parsers which claim to implement the SAX API. The framework asks 
+the parser to read a collection of input documents and then logs the 
+methods the parser invokes and their arguments. This log takes the 
+form of an XML document that can be compared against the expected results. 
+</p>
+
+<p>
+The documents in the test set are derived from the W3C XML conformance test 
+suite. The software includes a framework for 
+testing parsers against this document collection and measuring their conformance 
+to both the core and optional parts of both XML and SAX. Conformance results 
+for major parsers including Xerces, Crimson, and Piccolo are reported. 
+A number of areas in which deficiencies in the SAX specification have led to 
+varying parser behavior are identified. 
+</p>
+</div>
+
+<hr class="upperBorder" />
+<h2 class="tocHeader">Table of Contents</h2>
+<hr class="lowerBorder" />
+<p class="toc">
+<b>
+<a href="#S1.">Existing test suites</a>
+</b>
+<br />
+<b>
+<a href="#S2.">Comparing Output</a>
+</b>
+<br />
+<b>
+<a href="#S3.">Bootstrapping</a>
+</b>
+<br />
+<b>
+<a href="#S4.">Results for different parsers</a>
+</b>
+<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;
+  
+<a href="#S4.1">Common Errors</a>
+<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  
+<a href="#S4.1.1">Is endDocument invoked after a fatal error?</a>
+<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  
+<a href="#S4.1.2">What kinds of exceptions can parsers throw?</a>
+<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  
+<a href="#S4.1.3">How much data is passed after a fatal error?</a>
+<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  
+<a href="#S4.1.4">What is the type of enumerated attributes?</a>
+<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  
+<a href="#S4.1.5">XML 1.1 support</a>
+<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;
+  
+<a href="#S4.2">Problems with Specific Parsers</a>
+<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  
+<a href="#S4.2.1">Xerces-J 2.6.2</a>
+<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  
+<a href="#S4.2.2">Oracle 9.2.0.6.0</a>
+<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  
+<a href="#S4.2.3">Crimson</a>
+<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  
+<a href="#S4.2.4">Piccolo</a>
+<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  
+<a href="#S4.2.5">Saxon's Ælfred</a>
+<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  
+<a href="#S4.2.6">dom4j's Ælfred</a>
+<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  
+<a href="#S4.2.7">GNU JAXP</a>
+<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  
+<a href="#S4.2.8">XP</a>
+<br />
+<b>
+<a href="#S5.">SAX Issues</a>
+</b>
+<br />
+<b>
+<a href="#S6.">Future Directions for more research</a>
+</b>
+<br />
+<b>
+<a href="#S7.">Test Suite Availability</a>
+</b>
+<br />
+<b>
+<a href="#S.Footnotes">Footnotes</a>
+</b>
+<br />
+<b>
+<a href="#S.Bibliography">Bibliography</a>
+</b>
+<br />
+</p>
+<h2>
+<a id="S1.">Existing test suites</a>
+</h2>
+<p>
+There are several existing test suites for XML and SAX. However,
+they are of limited coverage, and failed to expose many bugs I noticed during
+the development of XOM.<a class="bibref" href="#XOM">
+<b>[XOM]</b>
+</a> 
+</p>
+<p>
+There is an embryonic, semi-official test suite for SAX<a class="bibref" href="#xmlconf">
+<b>[Arnold 2001]</b>
+</a> .
+ However, this includes only a few dozen JUnit based tests for the most basic features of SAX2.
+There are also a couple of thousand SAX 1 tests 
+based on a draft version of the OASIS/NIST XML test suite. However, these
+perform limited output testing, and leave many holes in 
+coverage. The latest version is 0.2 from November 12, 2001.
+Work appears to have been abandoned. 
+</p>
+<p>
+The most comprehensive XML test suite is the W3C's XML test suite<a class="bibref" href="#XMLTestSuite">
+<b>[W3C XML Group]</b>
+</a> ,
+which bundles tests gathered from a variety of sources including 
+James Clark, the OASIS/NIST XML test suite, Sun, IBM, 
+Henry S. Thompson, and others. 
+This offers the broadest coverage of a range of XML documents. However, 
+it focuses on testing binary decisions.
+Is the document well-formed or not? Is the document valid or not? 
+It provides a limited number of output tests, based on 
+the Second XML Canonical Form.<a class="bibref" href="#SecondForm">
+<b>[Sun]</b>
+</a> .
+</p>
+<p>
+To properly test a SAX parser, it is necessary to verify that it reports the 
+right events with the right content in the right order.
+This exceeds the scope of the XML Test Suite, which is API independent. 
+However, because the W3C test suite is so broad, it became the primary source of input data for
+this new test suite. In order to pass the tests, a parser must be able to correctly process 
+all the documents in the W3C XML test suite. The difference is not in the documents themselves.
+It is in the scope of the output. Passing the W3C test suite primarily requires correctly identifying 
+well-formed and malformed, valid and invalid documents. My test suite requires not only this, 
+but also the reporting of the right content in the right order at the right time using the
+right methods.
+</p>
+<p>
+The W3C test suite is divided into numerous test cases stored in several directories,
+mostly organized by the submitter. The test cases are further subdivided into 
+well-formed and malformed, valid and invalid, namespace aware and non-namespace aware,
+and external entity using and self-contained test cases. 
+The master file lists a typical case like this:
+</p>
+<table class="codeBlock">
+<tr>
+<td>
+<pre>&lt;TEST TYPE="invalid" URI="invalid/attr06.xml" ID="attr06" SECTIONS="3.3.1"&gt;
+    Tests the "Name Token" VC for the NMTOKENS attribute type.&lt;/TEST&gt;
+</pre>
+</td>
+</tr>
+</table>
+<p>
+This says that the test case document can be found at the relative URL
+"invalid/attr06.xml", that the document at that URL is invalid
+(but well-formed); that it tests section 3.3.1 of the XML specification, 
+and more specifically it tests the name token validity constraint 
+for the NMTOKENS attribute type. Here I'm not so interested in testing whether
+the document is valid or invalid as I am in testing that all the content from
+that document is properly reported through SAX. 
+</p>
+      <h2>
+<a id="S2.">Comparing Output</a>
+</h2>
+<p>
+In order to compare the the output of different parser,
+ it's necessary to place the output
+in a standard format that can be easily diffed. It seemed natural to use XML for this purpose.
+A single class that implemented <code>ContentHandler</code>, <code>ErrorHandler</code>, <code>EntityResolver</code>, 
+and <code>DTDHandler</code>--the four required SAX interfaces--was written that logged all its calls to an XML document. 
+(More specifically,
+it created a XOM <code>Document</code> object which was later serialized). 
+However, the problem is thornier than it may appear at first. 
+It is necessary to produce well-formed output
+even for malformed input. We must not assume that the SAX parser will detect such bugs
+because that would require assuming that the parser is non-buggy, 
+precisely what we're endeavoring to determine.
+For instance, we cannot assume element names will not contain white space or 
+PCDATA will not contain nulls.  
+For example,
+suppose we begin with this test document (Test case ibm-valid-P10-ibm10v02.xml)
+<a class="bibref" href="#ibm-valid-P10-ibm10v02.xml">
+<b>[ibm10v02]</b>
+</a> 
+</p>
+<table class="codeBlock">
+<tr>
+<td>
+<pre>
+&lt;?xml version="1.0"?&gt;
+&lt;!DOCTYPE student [
+	&lt;!ELEMENT student (#PCDATA)&gt;
+	&lt;!ATTLIST student
+		first CDATA #REQUIRED
+		middle CDATA #IMPLIED
+		last CDATA #REQUIRED &gt; 
+	&lt;!ENTITY myfirst "Snow"&gt;
+	&lt;!ENTITY mymiddle "Y"&gt;
+	&lt;!ENTITY mylast ''&gt;
+]&gt;
+&lt;!-- testing AttValue with empty char inside single quote --&gt;
+&lt;student first='' last=''&gt;My Name is Snow &amp;mylast; Man. &lt;/student&gt;
+</pre>
+</td>
+</tr>
+</table>
+<p>
+When parsed it produces this output:
+</p>
+<table class="codeBlock">
+<tr>
+<td>
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;ConformanceResults&gt;
+    &lt;startDocument/&gt;
+    &lt;startElement&gt;
+        &lt;namespaceURI/&gt;
+        &lt;qualifiedName&gt;student&lt;/qualifiedName&gt;
+        &lt;attributes&gt;
+            &lt;attribute&gt;
+                &lt;namespaceURI/&gt;
+                &lt;localName&gt;first&lt;/localName&gt;
+                &lt;qualifiedName&gt;first&lt;/qualifiedName&gt;
+                &lt;value/&gt;
+                &lt;type&gt;CDATA&lt;/type&gt;
+            &lt;/attribute&gt;
+            &lt;attribute&gt;
+                &lt;namespaceURI/&gt;
+                &lt;localName&gt;last&lt;/localName&gt;
+                &lt;qualifiedName&gt;last&lt;/qualifiedName&gt;
+                &lt;value/&gt;
+                &lt;type&gt;CDATA&lt;/type&gt;
+            &lt;/attribute&gt;
+        &lt;/attributes&gt;
+    &lt;/startElement&gt;
+    &lt;char&gt;M&lt;/char&gt;
+    &lt;char&gt;y&lt;/char&gt;
+    &lt;char&gt;\s&lt;/char&gt;
+    &lt;char&gt;N&lt;/char&gt;
+    &lt;char&gt;a&lt;/char&gt;
+    &lt;char&gt;m&lt;/char&gt;
+    &lt;char&gt;e&lt;/char&gt;
+    &lt;char&gt;\s&lt;/char&gt;
+    &lt;char&gt;i&lt;/char&gt;
+    &lt;char&gt;s&lt;/char&gt;
+    &lt;char&gt;\s&lt;/char&gt;
+    &lt;char&gt;S&lt;/char&gt;
+    &lt;char&gt;n&lt;/char&gt;
+    &lt;char&gt;o&lt;/char&gt;
+    &lt;char&gt;w&lt;/char&gt;
+    &lt;char&gt;\s&lt;/char&gt;
+    &lt;char&gt;\s&lt;/char&gt;
+    &lt;char&gt;M&lt;/char&gt;
+    &lt;char&gt;a&lt;/char&gt;
+    &lt;char&gt;n&lt;/char&gt;
+    &lt;char&gt;.&lt;/char&gt;
+    &lt;char&gt;\s&lt;/char&gt;
+    &lt;endElement&gt;
+        &lt;namespaceURI/&gt;
+        &lt;qualifiedName&gt;student&lt;/qualifiedName&gt;
+    &lt;/endElement&gt;
+    &lt;endDocument/&gt;
+&lt;/ConformanceResults&gt;
+</pre>
+</td>
+</tr>
+</table>
+<p>
+The general format could have the following DTD:
+</p>
+<table class="codeBlock">
+<tr>
+<td>
+<pre>
+    &lt;!ELEMENT locator EMPTY&gt;
+    &lt;!ELEMENT startDocument EMPTY&gt;
+    &lt;!ELEMENT endDocument EMPTY&gt;
+    &lt;!ELEMENT fatalError EMPTY&gt;
+    &lt;!ELEMENT char (#PCDATA)&gt;
+    &lt;!ELEMENT ignorable (#PCDATA)&gt;
+    &lt;!ELEMENT localName (#PCDATA)&gt;
+    &lt;!ELEMENT name (#PCDATA)&gt;
+    &lt;!ELEMENT systemID (#PCDATA)&gt;
+    &lt;!ELEMENT qualifiedName (#PCDATA)&gt;
+    &lt;!ELEMENT namespaceURI (#PCDATA)&gt;
+    &lt;!ELEMENT value (#PCDATA)&gt;
+    &lt;!ELEMENT type (#PCDATA)&gt;
+    
+    &lt;!ELEMENT ConformanceResults 
+      (startDocument | startElement | endElement | char | ignorable 
+      | notation | unparsedEntity | resolveEntity | endDocument | fatalError
+      | processingInstruction | locator
+      )*&gt;
+      
+    &lt;!ELEMENT attributes (attribute)*&gt;
+    &lt;!ELEMENT attribute  (namespaceURI?, localName?, qualifiedName?, value?, type?)&gt;
+    
+    &lt;!ELEMENT startElement  (namespaceURI?, localName?, qualifiedName?, attributes?)&gt;
+    &lt;!ELEMENT endElement  (namespaceURI?, localName?, qualifiedName?)&gt;
+    
+    &lt;!ELEMENT notation (name?, systemID?)&gt;
+    &lt;!ELEMENT unparsedEntity (name?, publicID?, systemID?, notation?)&gt;
+    
+    &lt;!ELEMENT bug (#PCDATA)&gt;
+    &lt;!ATTLIST bug reason (CDATA) #IMPLIED&gt;
+</pre>
+</td>
+</tr>
+</table>
+<p>
+This output format is designed to avoid some common problems:
+</p>
+<ol class="arabic">
+<li>Attributes are not used because 
+attribute value normalization 
+makes value comparison problematic.
+With attributes we could not test the proper reporting of line breaks.</li>
+<li>Indenting is used to make the code easier to read. The indenting is reproducible.
+Identical input and processing will produce byte-per-byte identical output.
+The output does not need to be fairly illegible canonical XML
+(contrast with the OASIS XSLT test suite <a class="bibref" href="#vanvleet">
+<b>[Van Vleet 2001]</b>
+</a> ) so long as it's reproducible.</li>
+<li>Arguments passed as null do not appear in the output. Arguments passed
+as empty strings become empty elements.</li>
+<li>
+
+For ease of visual comparison all white space characters are escaped using 
+backslash escapes as shown in <a class="xref" href="#table1">
+<b>Table 1</b>
+</a> .
+In addition since Java chars do not correspond to legal XML characters
+(especially in XML 1.0, but also in XML 1.1 when halves of surrogate pairs
+are received), XML illegal Java chars were escaped as \u + the hexadecimal code for the character.
+This was also used for unprintable characters like the C1 controls, purely for ease
+of manual comparison.
+
+
+<br />
+This also neatly avoids any potential issues with linefeed normalization
+when the document is parsed for comparison. Some parsers have known bugs with
+white space handling, and we don't want to sweep the problems under the rug.
+
+
+</li>
+<li>UTF-8 is used for the output.</li>
+<li>The output is pure XML 1.0.</li>
+<li>Namespaces are not used, so prefix scoping does not become an issue.</li>
+</ol>
+<table class="table" id="table1">
+<tr>
+<td rowspan="1" colspan="1">Carriage return</td>
+<td rowspan="1" colspan="1">\r</td>
+</tr>
+<tr>
+<td rowspan="1" colspan="1">Linefeed</td>
+<td rowspan="1" colspan="1">\n</td>
+</tr>
+<tr>
+<td rowspan="1" colspan="1">Space</td>
+<td rowspan="1" colspan="1">\s</td>
+</tr>
+<tr>
+<td rowspan="1" colspan="1">Tab</td>
+<td rowspan="1" colspan="1">\t</td>
+</tr>
+<tr>
+<td rowspan="1" colspan="1">Backslash</td>
+<td rowspan="1" colspan="1">\\</td>
+</tr>
+</table>
+<blockquote class="tableHeader">
+<p>
+<b>Table 1</b>
+</p>
+</blockquote>
+<p>The actual generation also introduces some issues:</p>
+<ol class="arabic">
+<li> 
+ 
+Different parsers may make different numbers of calls to 
+<code>characters</code>. Initially, I combined these into a single 
+element in the output using the well-known algorithm <a class="bibref" href="#charactersalgorithm">
+<b>[Harold 2002]</b>
+</a> . 
+However, that proved both difficult to compare by eyeball,
+and caused problems when different parsers identified ignorable white space 
+in different places. 
+Consequently I decided to report each char separately. 
+
+</li>
+<li>
+
+Attribute order needs to be normalized before the content is written. 
+Any reproducible sort order will do. 
+I chose lexical ordering by qualified name. 
+The simplest way to do this was to use a <code>java.util.SortedMap</code>
+<a class="bibref" href="#SortedMap">
+<b>[SortedMap]</b>
+</a> 
+where the keys were a concatenation of the local name, qualfiied name,
+and namespace URI. The null (\u0000) was used as a concatenation character
+because this would never show up in any legal data. 
+
+</li>
+<li>
+<code>startPrefixMapping()</code> and <code>endPrefixMapping()</code> order is also indeterminate in SAX.
+Once again an arbitrary but reproducible sorting was chosen using a <code>SortedMap</code>.
+However, this time the map had to be maintained across several method calls and only flushed when 
+a <code>startElement()</code> was seen or the next call after an <code>endElement()</code>.
+
+</li>
+<li>
+Notation and unparsedEntity order is also indeterminate,
+though they must all appear before the first call to <code>startElement()</code>.
+Again, I sorted by lexical order of the names.
+
+</li>
+<li>Optional features such as <code>Locator</code>, <code>LexicalHandler</code>
+and <code>DeclHandler</code> are ignored.</li>
+<li>Non-fatal errors and warning, which the parser is not required to report,
+are ignored.</li>
+<li>Default values are used for all features that have default values.
+Features with undefined default values are set as follows:
+<code>http://xml.org/sax/features/external-general-entities</code> is set to true.
+<code>http://xml.org/sax/features/external-parameter-entities</code> is set to true.
+Theoretically, a parser does not have to support these two features.
+In practice, all eight parsers tested did support them.<a class="fnref" href="#FT1">
+<b>[1]</b>
+</a>.
+
+
+
+</li>
+<li>Different parsers absolutize system IDs (used in NOTATION and unparsed ENTITY declarations)
+differently. For file URLs some use file:/// and some use only file:/.
+And of course the complete URL depends on the local file system.
+Thus the comparison needs to test only the relative parts of these absolute URLs.
+On the other hand it does have to notice if the URL has not been properly absolutized.
+</li>
+</ol>
+
+  <h2>
+<a id="S3.">Bootstrapping</a>
+</h2>
+<p>
+The canonical output a parser was supposed to report was generated via a bootstrap
+process. I began by runnings the parser experience had led me to expect
+was most often correct, Xerces2-J 2.6.1, <a class="bibref" href="#Xerces">
+<b>[Xerces J]</b>
+</a>  through the test harness.
+Then I compared its output to the output of seven other parsers. 
+Where a difference was found, I manually inspected the reason for the difference
+to determine, based on the XML 1.0 and SAX specifications, which parser was correct.
+If Xerces proved incorrect, then the expected result was modified to use the correct result.
+More than once, both parsers were arguably correct. In these cases the 
+comparison code  needed to be adjusted 
+to allow for the differences. 
+</p>
+<p>
+After repeating this process several times (and reducing the bugs in the test framework)
+it became apparent that while Xerces made many mistakes, it had one very nice property:
+almost all the mistakes were predictable and reproducible. Thus they could be fixed automatically.
+Specifically, the following changes needed to be made in Xerces' output:
+</p>
+<ol class="arabic">
+<li>Add missing <code>startDocument</code> elements</li>
+<li>Add missing <code>endDocument</code> elements, especially after fatal errors.</li>
+<li>Remove extraneous post-root characters that result from earlier failures to
+   flush the buffer</li>
+<li>Do not reuse the <code>XMLReader</code> when generating the expected results.
+  Xerces has several bugs that are only exposed when the parser is reused.
+  These have now been fixed in CVS as a result of this author's report. <a class="bibref" href="#xercesbug">
+<b>[Harold 2004]</b>
+</a> 
+  </li>
+<li>Replace <code>CharacterConversionException</code>s and 
+<code>UTFDataFormatException</code>s with <code>fatalError</code>s</li>
+</ol>
+<p>
+In some cases these fixes duplicate each other. For instance,
+not reusing the <code>XMLReader</code> avoids most problems with extraneous characters.
+However, that's not a problem since the fixes are all careful to check that the problem
+exists in a particular case before fixing it. 
+</p>
+<p>
+These could all be fixed automatically. However, two cases remained which needed to be
+fixed by hand:
+</p>
+<ul class="bulleted">
+<li>xmlconf/oasis/p02fail30.xml (needs to allow start-tag before fatal error).<a class="fnref" href="#FT2">
+<b>[2]</b>
+</a>.</li>
+<li>ibm/not-wf/P01/ibm01n01.xml (flips order of <code>fatalError</code> and <code>endDocument</code>)</li>
+</ul>
+
+         
+         
+      <h2>
+<a id="S4.">Results for different parsers</a>
+</h2>
+<p>
+Once the bootstrapping process was complete, it becomes possible to
+compare the results for different parsers. Eight currently available XML parsers were
+tested:
+</p>
+<ul class="bulleted">
+<li>Xerces-J 2.6.1<a class="bibref" href="#Xerces">
+<b>[Xerces J]</b>
+</a> </li>
+<li>Crimson as shipped in Sun's JDK 1.4.2_03<a class="bibref" href="#Crimson">
+<b>[Crimson]</b>
+</a> </li>
+<li>Oracle 9.2.0.6.0<a class="bibref" href="#Oracle">
+<b>[Oracle]</b>
+</a> </li>
+<li>GNU JAXP<a class="bibref" href="#gnujaxp">
+<b>[GNU JAXP]</b>
+</a> </li>
+<li>DOM4J<a class="bibref" href="#dom4j">
+<b>[DOM4J]</b>
+</a> </li>
+<li>Saxon<a class="bibref" href="#Saxon">
+<b>[Kay 2002]</b>
+</a> </li>
+<li>Piccolo<a class="bibref" href="#Piccolo">
+<b>[Piccolo]</b>
+</a> </li>
+<li>xp <a class="bibref" href="#xp">
+<b>[XP]</b>
+</a> </li>
+</ul>
+<p>
+IBM also produces XML4J. However, this is just a rebranded
+Xerces. 
+</p>
+<p>
+Three of these (Saxon, GNU JAXP, and DOM4J) are not independent.
+They are all descendants of David Megginson's Ælfred parser
+from Microstar<a class="bibref" href="#aelfred">
+<b>[Megginson 1998]</b>
+</a> .
+</p>
+<p>
+Currently only Xerces-J and the Oracle XML parser appear to be actively developed.
+The other six seem to have been  abandoned. 
+The lack of a competitive market for SAX parsers in Java 
+came as something of a surprise and is a cause for concern.
+To a large extent, most users seem satisfied with Xerces; and there does not appear
+to be a large demand for alternate parsers. 
+The C world has a much broader choice with at least four major parsers that implement the
+SAX API (libxml2<a class="bibref" href="#libxml2">
+<b>[Veillard]</b>
+</a> , expat<a class="bibref" href="#expat">
+<b>[expat]</b>
+</a> , Oracle XML Parser for C++<a class="bibref" href="#oraclec">
+<b>[Oracle C]</b>
+</a> , 
+and Xerces-C++<a class="bibref" href="#xercesc">
+<b>[Xerces C]</b>
+</a> .).
+</p>
+<h3>
+<a id="S4.1">Common Errors</a>
+</h3>
+<p>
+There were several particularly common errors that were exhibited many times by
+multiple parsers. These are definitely places anyone writing or contemplating writing
+a parser should watch carefully.
+</p>
+<h4>
+<a id="S4.1.1">Is endDocument invoked after a fatal error?</a>
+</h4>
+<p>
+The most common error, though perhaps an arguable one, was failing to invoke <code>endDocument()</code>
+for a malformed document. The API documentation for the
+<code>endDocument()</code> method states, "The SAX parser will invoke this method only once, and it 
+will be the last method invoked during the parse. The parser shall not invoke this method
+ until it has either abandoned parsing (because of an unrecoverable error) or reached 
+ the end of input." <a class="bibref" href="#ContentHandler">
+<b>[ContentHandler]</b>
+</a>  One could wish the language were slightly clearer
+ (I would prefer it to say "exactly once" rather than "only once") but it still 
+ implies that <code>endDocument()</code> should be called even in the event of a fatal error.
+ On the other hand, the API documentation for <code>ErrorHandler.fatalError()</code> states,
+ "The application must assume that the document is unusable after the parser 
+ has invoked this method, and should continue (if at all) only 
+ for the sake of collecting additional error messages: in fact, SAX parsers 
+ are free to stop reporting any other events once this method has been invoked." <a class="bibref" href="#ErrorHandler">
+<b>[ErrorHandler]</b>
+</a> 
+ This implies that it is acceptable not to call <code>fatalError()</code>.
+ </p>
+<p>
+ Given the apparent inconsistency in the spec, what do the authors have to say? 
+David Brownell, the second maintainer of the SAX specification and the probable author of this 
+ statement was explicit that <code>endDocument</code> must
+ always be called. According to Brownell, "If it's not, that's a SAX conformance bug.
+Sadly:  last I looked, it wasn't an uncommon bug to omit
+calling it in the 'abandoned parsing' case.  That makes
+it tough to use endDocument() to do things like clean up
+application state."<a class="bibref" href="#Brownell">
+<b>[Brownell 2002]</b>
+</a> 
+</p>
+<p>
+That seems clear enough. However, David Megginson, the original maintainer of the
+SAX specification, disagrees:
+</p>
+<blockquote class="lquote">
+<p>My original intention at the start of SAX development was that endDocument 
+would not necessarily be called once the parser was in an error state, but 
+the documentation might not have been clear and David Brownell might have 
+clarified things the other way after he took over.<a class="bibref" href="#Megginson">
+<b>[Megginson 2004]</b>
+</a> </p>
+</blockquote>
+<p>
+Furthermore, Megginson has recently announced plans to revise this 
+as part of the final release of SAX 2.0.1.<a class="bibref" href="#megginson2">
+<b>[Megginson 2004 2]</b>
+</a> , and as I write these
+words, it's being hashed out one more time on the sax-devel mailing list. 
+The situation is at best unclear. My opinion is that <code>endDocument</code> must called,
+and parsers certainly can and should do this.
+However, reasonable people may disagree with support from both the spec and the maintainers.
+</p>
+<h4>
+<a id="S4.1.2">What kinds of exceptions can parsers throw?</a>
+</h4>
+<p>
+The SAX documentation is clear that on encountering a well-formedness error,
+the <code>parse()</code> method must throw a <code>SAXException</code>.
+"If the application needs to pass through other types of exceptions, 
+it must wrap those exceptions in a SAXException or an exception derived from a SAXException."<a class="bibref" href="#SAXException">
+<b>[SAXException]</b>
+</a> 
+It is also explicitly allowed to throw <code>IOException</code>s for an I/O error.<a class="bibref" href="#ErrorHandler">
+<b>[ErrorHandler]</b>
+</a> 
+However, it is clearly wrong for the <code>parse()</code> method
+to throw a <code>RuntimeException</code>. Nonetheless many parsers threw 
+<code>NullPointerException</code>s, 
+<code>ArrayIndexOutOfBoundsException</code>s, <code>NegativeArraySizeExceptions</code>, 
+and more when encountering 
+malformed documents. Piccolo was the worst offender here, 
+but even the relatively well-behaved Xerces had a few problems in this area.
+</p>
+<h4>
+<a id="S4.1.3">How much data is passed after a fatal error?</a>
+</h4>
+<p>
+Another common source of errors is reporting too much data after a fatal error.
+the XML spec says, "After encountering a fatal error, 
+the processor MAY continue processing the data to search for further errors and
+ MAY report such errors to the application. In order to support correction of 
+ errors, the processor MAY make unprocessed data from the document (with 
+ intermingled character data and markup) available to the application. 
+ Once a fatal error is detected, however, the processor MUST NOT continue 
+ normal processing (i.e., it MUST NOT continue to pass character data and 
+ information about the document's logical structure to the application in the normal way)."<a class="bibref" href="#XMLSpec">
+<b>[Bray 2004]</b>
+</a> 
+However, parsers often mismark the bounds of a fatal error for example, 
+consider James Clark's test not-wf-sa-027.xml<a class="bibref" href="#not-wf-sa-027.xml">
+<b>[Clark27]</b>
+</a> :
+</p>
+<table class="codeBlock">
+<tr>
+<td>
+<pre>&lt;doc&gt;
+&lt;!-- abc
+&lt;/doc&gt;</pre>
+</td>
+</tr>
+</table>
+<p>
+Under some circumstances, 
+Xerces 2.6.1 passes "abc
+&lt;/doc&gt;" to the characters() method before reporting a fatal error.
+<a class="bibref" href="#xercesbug">
+<b>[Harold 2004]</b>
+</a> . This bug has been fixed in CVS.
+</p>
+<p>
+Or consider 
+James Clark's test not-wf/sa/045.xml<a class="bibref" href="#not-wf-sa-045.xml">
+<b>[Clark45]</b>
+</a> :
+</p>
+<table class="codeBlock">
+<tr>
+<td>
+<pre>&lt;doc&gt;
+&lt;a/
+&lt;/doc&gt;</pre>
+</td>
+</tr>
+</table>
+<p>
+Crimson calls <code>startElement()</code> for <code>a</code> 
+before it realizes the closing greater than sign is missing.
+</p>
+<h4>
+<a id="S4.1.4">What is the type of enumerated attributes?</a>
+</h4>
+<p>
+Another common, though minor, error was reporting the wrong type for 
+attributes declared with enumerations. The SAX spec requires these to be reported with the type
+NMTOKEN, However, several parsers use the non-standard ENUMERATION type instead.
+</p>
+<h4>
+<a id="S4.1.5">XML 1.1 support</a>
+</h4>
+<p>
+About 5% of the test cases cover XML 1.1.
+Except for Xerces none of the parsers explicitly support this.
+(Some of the parsers almost accidentally pass some of the 1.1 tests though.)
+</p>
+<h3>
+<a id="S4.2">Problems with Specific Parsers</a>
+</h3>
+<p>
+What follows are bugs uncovered in individual parsers.
+Most of these were exposed in multiple tests. Conformance ranged from 
+a low of about 18% to a high just over 90%. Most products could radically improve their scores just
+by fixing one or two key problems that account for most of their failures.
+There's quite a bit of low hanging fruit here waiting to be picked off.  
+</p>
+<h4>
+<a id="S4.2.1">Xerces-J 2.6.2</a>
+</h4>
+<p>
+    Xerces is the most popular and broadly used parser I tested.
+    It will become the default parser in Java 1.5. 
+    Xerces 2.6.2 achieves a conformance score of only 91%, surprisingly low,
+    especially given that it served as the base for testing other parsers.
+    (The score's even worse, an abysmal 26%, if you require that it call 
+    <code>endDocument()</code> following a well-formedness error.)
+    However, almost all of the Xerces problems related to a few easily worked around bugs.
+    In order of frequency, these were:
+  </p>
+<ul class="bulleted">
+<li>Never calls <code>endDocument</code> after a fatal error.</li>
+<li>Occasionally reports the text following  fatal error 
+          by passing it to <code>characters</code> (xmltest/not-wf/sa/027.xml ) <a class="bibref" href="#xercesbug">
+<b>[Harold 2004]</b>
+</a>  </li>
+<li>Occasionally passes data from comments into <code>characters</code>(ibm-valid-P09-ibm09v05.xml). </li>
+<li>Treats encoding errors (mismatched byte order mark, bad UTF-8 data) as I/O errors
+            rather than well-formedness errors.</li>
+</ul>
+<p>
+  Although Xerces posts very low scores, most of these are for problems that can
+  be worked around if you know you're using Xerces. Several of the bugs in
+  Xerces have now been fixed in CVS, and should no longer be problems 
+  as of version 2.7.0. It is probably the parser of choice for most applications.
+  </p>
+<h4>
+<a id="S4.2.2">Oracle 9.2.0.6.0</a>
+</h4>
+<p>
+    Besides Xerces, the Oracle XML Parser for Java, is the only SAX parser written in Java 
+    currently maintained. Thus it's disappointing that it doesn't do a better job. 
+    It passed only 42% (19% when requiring <code>endDocument()</code>) of the tests. 
+    Furthermore, unlike Xerces, many of the errors 
+    were  XML conformance errors rather than less serious SAX conformance errors.
+    Notable problems included:
+  </p>
+<ul class="bulleted">
+<li>Does not normalize white space in NMTOKENS attributes when not validating (/xmltest/valid/sa/037.xml, 096.xml /sa/111.xml)</li>
+<li>Does not always allow non-ASCII characters in names (/xmltest/valid/sa/063.xml)</li>
+<li>Does not handle character references for characters outside Unicode's Basic
+      Multilingual Plane properly (xmltest/valid/sa/064.xml  /xmltest/valid/sa/089.xml)</li>
+<li>Reads &amp;#13; as \n rather than \r (xmltest/valid/sa/067.xml, /xmltest/valid/sa/107.xml)</li>
+<li>Does not report NOTATION declarations (xmltest/valid/sa/069.xml.html xmltest/valid/sa/091.xml.html sun/valid/notation01.xml)</li>
+<li>Does not use DTD to determine ignorable white space (xmltest/valid/sa/093.xml sun/valid/element.xml sun/invalid/el01.xml)
+      This is not just reporting ignorable white space as characters, which is legal.
+      It reports non-ignorable whitespace as ignorable.</li>
+<li>Doesn't read attribute types from the external DTD subset (sun/valid/pe01.xml)</li>
+<li>Does not always call <code>endDocument()</code>, even in well-formed documents, with an empty root
+      element tag (sun/invalid/dtd01.xml sun/invalid/el05.xml)</li>
+<li>Does not apply default attributes from external DTD subset in an invalid document (ibm/invalid/P32/ibm32i01.xml=)</li>
+<li>Reports too much content from malformed document (ibm/not-wf/P10/ibm10n01.xml)</li>
+<li>Has trouble with unusual Unicode chars in processing instruction names (ibm-valid-P85-ibm85v01.xml 
+      through ibm-valid-P85-ibm87v01.xml ibm89v01.xml)</li>
+<li>No 1.1 support, but does not call <code>fatalError()</code> until it's passed most of the content in,
+      including 1.0 illegal characters (see all the IBM 1.1 test cases)</li>
+<li>Reports <code>xmlns</code> attributes even when it isn't supposed to</li>
+<li>Reports a namespace URI for <code>xmlns</code> attributes, in contrast to SAX spec.</li>
+</ul>
+<p>
+      In fairness, I must note that shortly before the deadline for the submission of conference papers,
+      Oracle released version 10 of their parser, which 
+      shows signs of being significantly improved.
+      I hope to have updated results covering this new version of the Oracle parser
+      at the conference.
+      However, version 9 is clearly too nonconformant to both
+      SAX and XML to rely on.
+    </p>
+<h4>
+<a id="S4.2.3">Crimson</a>
+</h4>
+<p>
+    Sun has abandoned their home-grown Crimson parser
+    in favor of the IBM developed Xerces for the next 1.5 release of the Java Development Kit (JDK). 
+    However, Crimson is the parser
+    bundled with the JDK through version 1.4.2_03 and is still used
+    by many Java programmers by default. 
+  It passes 88% of the tests (but only 29% if you require endDocument on well-formedness errors). 
+  Failures are mostly similar to Xerces'.
+  In particular, it also does not call <code>endDocument</code>
+  following a fatal error. However, it has a few unique problems as well:
+  </p>
+<ul class="bulleted">
+<li>Does not resolve external entities, even when 
+http://xml.org/sax/features/external-general-entities and http://xml.org/sax/features/external-parameter-entities are turned on,
+unless the parser is validating </li>
+<li>Not XML 1.1 aware</li>
+<li>Uses the non-standard "ENUMERATION" attribute type</li>
+<li>Reports white space inside an element declared EMPTY as ignorable,
+rather than characters</li>
+<li>Treats namespace errors as errors rather than fatal errors</li>
+</ul>
+<p>
+Sun is moving to Xerces; and, given these problems, I see little
+reason why other programmers shouldn't make the switch as well.
+</p>
+<h4>
+<a id="S4.2.4">Piccolo</a>
+</h4>
+<p>
+  When Yuval Oren first released Piccolo two years ago, I had very high hopes for it.
+  It was a very small, very fast parser that filled an important niche of 
+  non-validating but entity resolving parser. 
+  It was notable for being built using a  formal grammar and the
+  parser generator tools JFlex and BYACC/J rather than a handrolled parser,
+  as most implementers working in Java had done up to that point. 
+  However, the initial releases had numerous
+  bugs, and no progress has been made on fixing these since July, 2002. 
+  My tests uncovered many more problems I had not previously noticed.
+  These include:
+  </p>
+<ul class="bulleted">
+<li>For two-tag empty elements like <code>&lt;mixed1&gt;&lt;/mixed1&gt;</code>
+ calls characters with no text to report,
+while it does not do so for empty-element tags such as <code>&lt;mixed1/&gt;</code>.
+    It's not 100% obvious that this is illegal, but it's certainly strange.</li>
+<li>Uses ENUMERATION type instead of NMTOKEN</li>
+<li>Reports namespace prefixes as attributes by default (/sun/invalid/attr08.xml)</li>
+<li>Sometimes doesn't call fatalError when encountering a Malformed Document (e.g. not-wf/attlist11.xml)</li>
+<li>Sometimes reports attributes that aren't there (e.g. sun/not-wf/element00.xml, xmltest/not-wf/sa/017.xml)</li>
+<li>Does not detect namespace well-formedness errors by default; (oasis/p04pass1.xml)</li>
+<li>Sometimes fails to report complete attribute local name (la instead of lang, ibm/valid/P33/ibm33v01.xml)</li>
+<li>Changes tabs into spaces (eduni/errata-2e/E20.xml)</li>
+<li>Doesn't check XML version declaration (eduni/xml-1.1/008.xml)</li>
+<li>Doesn't notice when two attributes with different prefixes and same local names have the same namespace URI (eduni/namespaces/1.0/009.xml)</li>
+<li>Allows multiple colons in names (eduni/namespaces/1.0/013.xml)</li>
+<li>Allows prefix unbinding in 1.0 (eduni/namespaces/1.0/023.xml)</li>
+<li>Overall namespace handling is very flaky, see all the rmt cases</li>
+<li>Doesn't always call startDocument (xmltest/not-wf/sa/030.xml)</li>
+<li>Sometimes reports content from after first well-formedness error (xmltest/not-wf/sa/036.xml through 41.xml, 43.xml, 44.xml)</li>
+</ul>
+<p>
+    The overall conformance rate was only 57%.
+    I cannot at this time recommend Piccolo for serious work, though it might make an interesting 
+    "fixer-upper" project if someone wished to begin plugging its holes.
+    </p>
+<h4>
+<a id="S4.2.5">Saxon's Ælfred</a>
+</h4>
+<p>
+ Michael Kay's Ælfred derivative posted the highest overall conformance scores in the tests (over 90%), 
+ until I turned on checking for entity resolution at which point the scores dropped to 
+ 0.05%!<a class="fnref" href="#FT3">
+<b>[3]</b>
+</a> 
+ Such an unbelievably low score makes one question the validity of the tests.
+ However, on investigation the test proved correct. Saxon's Ælfred calls <code>resolveEntity()</code>
+ for the document entity as well as for all external entities. However, the SAX specification specifically
+ prohibits this, "The parser will call this method before opening any 
+ external entity <i>except the top-level document entity</i>." (emphasis added) <a class="bibref" href="#EntityResolver">
+<b>[EntityResolver]</b>
+</a> 
+ Besides this, it had two other significant failure modes:
+  </p>
+<ul class="bulleted">
+<li>Does not require entity replacement text to be well-balanced,
+as long as the final document is well-formed. </li>
+<li>Does not detect or complain of unpaired surrogates  or a lot of other illegal chars
+  (A quick check of the source code shows it is using Java's rules for name characters rather than
+  the similar but not identical XML rules.) </li>
+<li>Allows colon as attribute name</li>
+<li>Does not absolutize system IDs of NOTATIONs (ibm/not-wf/P41/ibm41n12.xml.html)</li>
+<li>Flunks a lot of the namespace tests such as no colons in PI names</li>
+</ul>
+<p>
+   Kay has halted further work on this parser now that
+   an XML parser is bundled with the JDK. <a class="bibref" href="#Saxon">
+<b>[Kay 2002]</b>
+</a> 
+   If anyone is interested in picking this product up again, it would be straight-forward to 
+   fix the bugs in character class detection and prevent it from calling <code>resolveEntity()</code>
+   for the document entity. The problems with well-formedness of entity
+   replacement text may run deeper in the code base though. 
+  </p>
+<h4>
+<a id="S4.2.6">dom4j's Ælfred</a>
+</h4>
+<p>
+ dom4j's Ælfred derivative has the same bug in entity resolution that Saxon's
+ Ælfred exhibited, and consequently scores identically at 0%.
+ However, even when this bug is ignored, this parser performs noticeably worse than
+ Saxon's Ælfred  with only 60%.
+ It shared all of Saxon's problems
+including failure to detect malformed entities used in a well-formed way and 
+allowing unpaired surrogates.
+ However, it also had several new problems:</p>
+<ul class="bulleted">
+<li>Passes an empty string for an element's local name (/not-wf/sa/036.xml and 037.xml, 40 through 44, not-wf-sa-151, valid-sa-002) in 
+  <code>endElement()</code>.
+  <a class="fnref" href="#FT4">
+<b>[4]</b>
+</a>
+</li>
+<li>Does not always call <code>fatalError()</code> 
+  for a malformed document (xmltest/not-wf/sa/050.xml)</li>
+<li>Does not absolutize unparsed entity URLs (not-wf-sa-083, ibm-invalid-P76-ibm76i01.xml, ibm-not-wf-P11-ibm11n01.xml)</li>
+<li>Allows tabs in notation public IDs (o-p12fail7) </li>
+</ul>
+<p>
+   I can't see any particular reason to choose this parser over Saxon's Ælfred derivative.
+  </p>
+<h4>
+<a id="S4.2.7">GNU JAXP</a>
+</h4>
+<p>
+ At only 46% conformance, GNU JAXP scored significantly worse than the
+ other two Ælfred derivatives.
+ Its problems included most of those of the other two Ælfred derivatives, 
+ with one very important exception: it does not call <code>resolveEntity()</code> 
+ for the document entity.
+ these tended to be masked by other bugs in GNU JAXP. In addition, it had these
+unique problems:
+  </p>
+<ul class="bulleted">
+<li>Throws various runtime exceptions such as <code>ArrayIndexOutOfBoundsException</code>,
+  rather than <code>SAXException</code> (not-wf-sa-017 through 019, 024-33)</li>
+<li>Does not always call <code>startDocument()</code> (not-wf-sa-099, not-wf-sa-152, o-p24fail2, o-p39fail5, ibm-not-wf-P02-ibm02n30.xml, ibm-not-wf-P24-ibm24n03.xml)</li>
+<li>Rejects many well-formed and even valid documents. (invalid--002 through empty, and uri01 through o-e2).
+ That it reports a bug in hundreds of consecutive well-formed test cases suggests this may 
+ be a problem with parser reuse.
+ However, even if it is, parsers are supposed to be reusable. This is a <b>major</b> failure.
+ </li>
+</ul>
+<p>
+   GNU JAXP has some features the other Ælfred derivatives don't,
+   such as validation and DOM support. However, its low conformance level makes it a very poor
+   choice for basic SAX work. Its rejection of many well-formed documents is particularly
+   horrendous. I really can't recommend this to anyone.
+  </p>
+<h4>
+<a id="S4.2.8">XP</a>
+</h4>
+<p>
+ James Clark's XP is the oldest parser tested.
+ The parser code itself dates to 1998, prior to the advent of SAX2.
+ However, Hussein Shafie made a few minor fixes and improvements to Clark's original 
+ code, and wrote a SAX 2 interface for the parser. 
+ It performs very well for such an old parser, scoring 87.25% 
+ (though requiring <code>endDocument()</code> events would reduce its score to 25%). 
+ Among others, problems included:
+  </p>
+<ul class="bulleted">
+<li>Allows attribute name consisting of a single colon (valid-sa-012)</li>
+<li>Reports attributes of type NMTOKENS as having type CDATA (valid-sa-058, valid-sa-096, valid-sa-111)</li>
+<li>Reports attributes of type ENTITY as having type CDATA (valid-sa-091)</li>
+<li>Reports attributes of type ID as having type CDATA (ibm-invalid-P56-ibm56i03.xml)</li>
+<li>Rejects some well-formed documents (ibm-invalid-P51-ibm51i01.xml)</li>
+</ul>
+<p>
+   There seems little reason to use this product in production today.
+  </p>
+      <h2>
+<a id="S5.">SAX Issues</a>
+</h2>
+<p>
+In many ways this experiment was a test of the SAX specification itself. 
+A good specification leaves little room for interpretation and carefully
+spells out those areas where different implementations may behave differently.
+How well does SAX meet this criterion? In other words, is it really a testable spec?
+</p>
+<p>
+With some reasonable assumptions, I think the answer is yes. There is
+much guaranteed behavior from any conformant SAX parser. However, there are 
+a few tricky areas. Specifically,
+</p>
+<ol class="arabic">
+<li>Must a parser report the maximum amount of content before
+reporting a fatal error?
+
+<br />I think here the answer is no.
+There is no requirement in the either the XML or SAX specification that any content
+from a malformed document be available. Indeed, it is only the streaming nature of SAX 
+that enables such content to be presented at all. Other tree-based APIs like DOM<a class="bibref" href="#DOM">
+<b>[Le Hors 2000]</b>
+</a> , and JDOM<a class="bibref" href="#JDOM">
+<b>[Hunter]</b>
+</a>  do
+not endeavor to provide any such content.
+
+
+<br />However, there is an explicit 
+requirement in the XML specification that content which follows the first well-formedness error not be made 
+available through normal channels,
+"After encountering a fatal error, the processor MAY continue processing the data to search for 
+further errors and MAY report such errors to the application. In order to support correction of errors, 
+the processor MAY make unprocessed data from the document (with intermingled character data and markup) 
+available to the application. Once a fatal error is detected, however, the processor MUST NOT continue normal processing 
+(i.e., it MUST NOT continue to pass character data and information about the document's
+ logical structure to the application in the normal way)."<a class="bibref" href="#XMLSpec">
+<b>[Bray 2004]</b>
+</a>  
+ Given this, it is important to verify that such content is not provided.
+
+
+
+</li>
+<li>Are qNames passed to <code>startElement()</code> by default,
+or can they be null? Here, pretty much everyone in the SAX community 
+except the maintainer of the SAX
+specification agrees. In fact, all parsers I tested always passed 
+the full name for the qName argument including Brownell's own
+Ælfred. However,
+after a significant discussion on the sax-devel mailing list in 2002 
+<a class="bibref" href="#saxdevel">
+<b>[sax-devel]</b>
+</a>  Brownell 
+unilaterally rewrote the SAX spec to reflect his view.
+(Previously it had been unclear.)
+Since I'm writing a test suite, I can unilaterally write it to reflect my view
+(and incidentally the behavior of all parsers).</li>
+<li>Is <code>endDocument()</code> always called? 
+Even if it's always called for a fatal error, what about these cases:
+
+
+  <ol class="arabic">
+<li>What if an intermediate method such as <code>startElement</code> or <code>characters()</code>
+  throws an unexpected <code>SAXException</code>? <a class="bibref" href="#clientexception">
+<b>[Wilson]</b>
+</a> 
+   </li>
+<li>What if an intermediate method throws a <code>RuntimeException</code>?</li>
+<li>What if an intermediate method throws an <code>Error</code> 
+   or other non-exception <code>Throwable</code>?</li>
+</ol>
+  
+  <br />
+  Should any or all of these result in a call to <code>fatalError</code>?
+   I suggest no, because in this case it's the client code that's throwing the exception. 
+   However, again both sides of the argument can point to different
+   sentences in the spec to buttress their position.
+  
+  
+</li>
+<li> Is <code>startDocument()</code> always called? Can a parser throw a fatal error
+before calling startDocument, and then call <code>endDocument()</code>?
+GNU JAXP does this when encountering a malformed encoding declaration; for instance, in 
+the  sun not-wf encoding tests  </li>
+<li>Is it possible for content to contain both ignorable and non-ignorable whitespace?
+To contain ignorable white space and now white space text? All parsers that do distinguish ignorable white space seem to agree that the
+answer is yes.
+</li>
+<li>How are notation system IDs handled when they contain 
+a non-URI as in oasis/p11pass1.xml?
+</li>
+<li>Should <code>IOException</code>s be reported to <code>fatalError()</code>? 
+Especially when it's really
+a character encoding error rather than an I/O error like a broken socket?
+or only for lower byte-level I/O error such as broken stream?
+</li>
+</ol>
+<p>
+ I also have one feature request for SAX. It would be very helpful to define
+standard read-only SAX properties analogous to Java's java.version and 
+java.vendor system properties that provide the vendor and version of the parser being used. 
+For example, http://xml.org/sax/properties/vendor
+and http://xml.org/sax/properties/version.
+</p>
+<p>
+Ultimately I hope the SAX community will come to consensus on these issues,
+and issue a revised version of SAX (2.0.2?) which nails down these inconsistencies. 
+</p>
+
+  <h2>
+<a id="S6.">Future Directions for more research</a>
+</h2>
+<p>
+The test suite is far from complete.
+It pretty thoroughly tests tests three the four required 
+SAX interfaces, <code>ContentHandler</code>, <code>EntityResolver</code>, and
+<code>DTDHandler</code>. <code>ErrorHandler</code> is tested to the extent possible
+given SAX's almost complete lack of requirements for what this interface actually does.
+However, much work remains to be done:
+</p>
+<ul class="bulleted">
+<li> It should be possible to identify the  types of errors,
+and quantify their severity. Not all errors are created equal.
+For instance, failing to detect a malformed document is much worse than
+failing to absolutize a notation's system identifier. 
+</li>
+<li> SAX is only formally defined for Java. However, it has been 
+unofficially ported to many other languages including 
+C++<a class="bibref" href="#xercesc">
+<b>[Xerces C]</b>
+</a> , Python<a class="bibref" href="#SAXPython">
+<b>[xml.sax]</b>
+</a> , 
+and Perl<a class="bibref" href="#SAXPerl">
+<b>[Perl XML]</b>
+</a> . 
+It would be possible to port the test framework to these environments as well.
+</li>
+<li>
+The output and comparison code is actually quite decoupled from the SAX test framework.
+It might be possible to use the same expected output to test other APIs such as 
+StAX.<a class="bibref" href="#StAX">
+<b>[Fry 2003]</b>
+</a> </li>
+<li>Currently SAX parsers are tested only with the default combination of features.
+Tests should also be performed with different combinations of features, at least those
+which SAX parsers are required to support.
+In particular, it would be useful to test with different settings for 
+the features that control namespaces, validation, and loading of the external DTD subset.
+In other work, I have noted that loading the external DTD subset when not validating is 
+a common source of non-conformance for many parsers. 
+</li>
+<li>It would be helpful to test the conformance of the optional parts of SAX,
+<code>LexicalHandler</code> and <code>DeclHandler</code> especially, for those parsers that
+implement them.
+</li>
+</ul>
+
+  <h2>
+<a id="S7.">Test Suite Availability</a>
+</h2>
+<p>
+If you'd like to run the test suite for yourself, you can download it from
+<a href="http://www.cafeconleche.org/SAXTest/">http://www.cafeconleche.org/SAXTest/</a>.
+An Ant build file is included that will produce both the expected data and the
+individual parser results from the W3C XML Test Suite.
+Because the license agreement for the test suite is unclear, you'll also need to download
+that from the W3C at <a href="http://www.w3.org/XML/Test">http://www.w3.org/XML/Test</a> and install it in the same directory.
+The results cited here were produced using the December 10, 2003 drop 
+of the XML test suite. Of course changes to both the test suite and the 
+parsers are likely to change the exact numbers. 
+</p>
+      
+      <h2 class="ftnoteHeader">
+<a id="S.Footnotes">Footnotes</a>
+</h2>
+<ol class="ftnote">
+<li>
+<p>
+<a id="FT1" />
+<a id="fn01" />I think this indicates that 
+the designers of XML made the wrong choice about where to cut the difference between validating and non-validating parsers.
+Since all parsers must support the internal DTD subset without exception, it's 
+really not very hard to also add support for the external DTD subset.
+Many parser writers have expressed a desire to be able to ignore the internal and external DTD subsets.
+However, a parser that did this would not be conformant to XML 1.0, much less to SAX.
+</p>
+</li>
+<li>
+<p>
+<a id="FT2" />
+<a id="fn02" />Xerces
+is not incorrect here, and indeed passes this test. However, it does not report the maximum possible amount of content
+before the well-formedness error which some other parsers do. To make the comparison work, this content 
+needs to be added by hand.</p>
+</li>
+<li>
+<p>
+<a id="FT3" />
+<a id="f4" />To add insult to injury, on further
+ analysis the single test Saxon passed proved to be a false positive
+ due to a bug in the comparison code. It really failed all tests.</p>
+</li>
+<li>
+<p>
+<a id="FT4" />
+<a id="f3" />Local names must always be passed. Even according to David Brownell's rules, only qualified names 
+  are sometimes optional.</p>
+</li>
+</ol>
+
+  
+
+<h2 class="bibliogHeader">
+<a id="S.Bibliography">Bibliography</a>
+</h2>
+<dl class="bibliog">
+
+
+  <dt class="bib">
+<a id="xmlconf" />
+<b>[Arnold 2001]</b>
+</dt>
+  <dd class="pub">Arnold, Curt and David Brownell. November 12, 2001.
+       <a href="http://xmlconf.sourceforge.net/?selected=sax">http://xmlconf.sourceforge.net/?selected=sax</a>.</dd> 
+ 
+
+
+  <dt class="bib">
+<a id="XMLSpec" />
+<b>[Bray 2004]</b>
+</dt>
+  <dd class="pub">Bray, Tim and
+Jean Paoli,  C. M. Sperberg-McQueen, Eve Maler,  and 
+François Yergeau, eds.,   
+  Extensible Markup Language (XML) 1.0 (Third Edition), February 4, 2004, 
+    <a href="http://www.w3.org/TR/2004/REC-xml-20040204/">http://www.w3.org/TR/2004/REC-xml-20040204/</a>
+</dd> 
+ 
+
+
+  <dt class="bib">
+<a id="SAX" />
+<b>[SAX]</b>
+</dt>
+  <dd class="pub">Brownell, David and David Megginson. 
+       <a href="http://sax.sourceforge.net/">http://sax.sourceforge.net/</a>.</dd> 
+ 
+
+
+
+  <dt class="bib">
+<a id="Brownell" />
+<b>[Brownell 2002]</b>
+</dt>
+  <dd class="pub">Brownell, David. May 2, 2002. "[Sax-devel] endDocument throwing an exception".
+  <a href="http://www.geocrawler.com/archives/3/13179/2002/5/50/8558085/">http://www.geocrawler.com/archives/3/13179/2002/5/50/8558085/</a>
+</dd> 
+ 
+
+
+
+  <dt class="bib">
+<a id="not-wf-sa-027.xml" />
+<b>[Clark27]</b>
+</dt>
+  <dd class="pub">Clark, James. <a href="http://dev.w3.org/cvsweb/~checkout~/2001/XML-Test-Suite/xmlconf/xmltest/not-wf/sa/027.xml?content-type=text/plain">http://dev.w3.org/cvsweb/~checkout~/2001/XML-Test-Suite/xmlconf/xmltest/not-wf/sa/027.xml?content-type=text/plain</a>
+</dd>  
+
+
+
+  <dt class="bib">
+<a id="not-wf-sa-045.xml" />
+<b>[Clark45]</b>
+</dt>
+  <dd class="pub">Clark, James. <a href="http://dev.w3.org/cvsweb/~checkout~/2001/XML-Test-Suite/xmlconf/xmltest/not-wf/sa/045.xml?content-type=text/plain">http://dev.w3.org/cvsweb/~checkout~/2001/XML-Test-Suite/xmlconf/xmltest/not-wf/sa/045.xml?content-type=text/plain</a>
+</dd>  
+
+
+
+
+  <dt class="bib">
+<a id="Crimson" />
+<b>[Crimson]</b>
+</dt>
+  <dd class="pub">Crimson 1.1 Release, <a href="http://xml.apache.org/crimson/">http://xml.apache.org/crimson/</a>
+</dd> 
+ 
+
+
+
+  <dt class="bib">
+<a id="expat" />
+<b>[expat]</b>
+</dt>
+  <dd class="pub">Clark, James, et al. "The Expat XML Parser". <a href="http://expat.sourceforge.net">http://expat.sourceforge.net</a>
+</dd>  
+
+
+
+  <dt class="bib">
+<a id="xp" />
+<b>[XP]</b>
+</dt>
+  <dd class="pub">Clark, James and Hussein Shafie, <a href="http://www.xmlmind.com/_xpforjaxp/docs/">http://www.xmlmind.com/_xpforjaxp/docs/</a>
+</dd> 
+ 
+
+
+  <dt class="bib">
+<a id="ContentHandler" />
+<b>[ContentHandler]</b>
+</dt>
+  <dd class="pub">
+<a href="http://www.saxproject.org/apidoc/org/xml/sax/ContentHandler.html">http://www.saxproject.org/apidoc/org/xml/sax/ContentHandler.html</a>
+</dd> 
+ 
+
+
+  <dt class="bib">
+<a id="EntityResolver" />
+<b>[EntityResolver]</b>
+</dt>
+  <dd class="pub">
+<a href="http://www.saxproject.org/apidoc/org/xml/sax/EntityResolver.html">http://www.saxproject.org/apidoc/org/xml/sax/EntityResolver.html</a>
+</dd> 
+ 
+
+
+  <dt class="bib">
+<a id="ErrorHandler" />
+<b>[ErrorHandler]</b>
+</dt>
+  <dd class="pub">
+<a href="http://www.saxproject.org/apidoc/org/xml/sax/ErrorHandler.html">http://www.saxproject.org/apidoc/org/xml/sax/ErrorHandler.html</a>
+</dd> 
+ 
+
+
+  <dt class="bib">
+<a id="StAX" />
+<b>[Fry 2003]</b>
+</dt>
+  <dd class="pub">Fry, Christopher, et al. Novemver 3, 2003. JSR 173: Streaming API for XML,
+   <a href="http://jcp.org/en/jsr/detail?id=173">http://jcp.org/en/jsr/detail?id=173</a>
+</dd> 
+ 
+
+
+  <dt class="bib">
+<a id="gnujaxp" />
+<b>[GNU JAXP]</b>
+</dt>
+  <dd class="pub">The Gnu JAXP Project. GNU JAXP. <a href="http://www.gnu.org/software/classpathx/jaxp/">http://www.gnu.org/software/classpathx/jaxp/</a>
+</dd> 
+ 
+
+
+  <dt class="bib">
+<a id="charactersalgorithm" />
+<b>[Harold 2002]</b>
+</dt>
+  <dd class="pub">Harold, Elliotte Rusty. "Receiving Characters" in Processing XML with Java, 2002
+  Boston: Addison-Wesley, 2002, pp. 284-288
+   <a href="http://www.cafeconleche.org/books/xmljava/chapters/ch06s07.html">http://www.cafeconleche.org/books/xmljava/chapters/ch06s07.html</a>
+</dd> 
+ 
+
+
+
+  <dt class="bib">
+<a id="xercesbug" />
+<b>[Harold 2004]</b>
+</dt>
+  <dd class="pub">Elliotte Rusty Harold, "Too much malformed data is reported", Fenruary 19, 2004.
+  <a href="http://nagoya.apache.org/bugzilla/show_bug.cgi?id=27081">http://nagoya.apache.org/bugzilla/show_bug.cgi?id=27081</a>
+</dd>  
+
+
+
+  <dt class="bib">
+<a id="XOM" />
+<b>[XOM]</b>
+</dt>
+  <dd class="pub">Harold, Elliotte Rusty. <a href="http://www.cafeconleche.org/XOM/">http://www.cafeconleche.org/XOM/</a>.</dd> 
+ 
+
+
+
+  <dt class="bib">
+<a id="JDOM" />
+<b>[Hunter]</b>
+</dt>
+  <dd class="pub">Hunter, Jason. <a href="http://www.jdom.org">http://www.jdom.org</a>
+</dd> 
+ 
+
+
+
+
+  <dt class="bib">
+<a id="ibm-valid-P10-ibm10v02.xml" />
+<b>[ibm10v02]</b>
+</dt>
+  <dd class="pub">IBM. <a href="http://dev.w3.org/cvsweb/~checkout~/2001/XML-Test-Suite/xmlconf/ibm/valid/P10/ibm10v02.xml?rev=1.1.1.1&amp;content-type=text/plain">http://dev.w3.org/cvsweb/~checkout~/2001/XML-Test-Suite/xmlconf/ibm/valid/P10/ibm10v02.xml?rev=1.1.1.1&amp;content-type=text/plain</a>
+</dd> 
+ 
+
+
+  <dt class="bib">
+<a id="Saxon" />
+<b>[Kay 2002]</b>
+</dt>
+  <dd class="pub">Kay, Michael. "The Ælfred XML Parser", November 28, 2002. <a href="http://saxon.sourceforge.net/aelfred.html">http://saxon.sourceforge.net/aelfred.html</a>
+</dd>  
+
+
+
+
+
+  <dt class="bib">
+<a id="DOM" />
+<b>[Le Hors 2000]</b>
+</dt>
+  <dd class="pub">Le Hors, Arnaud, Philippe Le Hégaret, Lauren Wood, Gavin Nicol, Jonathan Robie, Mike Champion, and Steve Byrne.
+  Document Object Model (DOM) Level 2 Core Specification,
+   November 13 2000, 
+    <a href="http://www.w3.org/TR/2000/REC-DOM-Level-2-Core-20001113">http://www.w3.org/TR/2000/REC-DOM-Level-2-Core-20001113</a>
+</dd> 
+ 
+
+
+  <dt class="bib">
+<a id="aelfred" />
+<b>[Megginson 1998]</b>
+</dt>
+  <dd class="pub">Megginson, David. June 4, 1998. "Announcement: change in AElfred maintainer". 
+  <a href="http://listserv.heanet.ie/cgi-bin/wa?A2=ind9806&amp;L=xml-l&amp;T=0&amp;F=&amp;S=&amp;P=9737">http://listserv.heanet.ie/cgi-bin/wa?A2=ind9806&amp;L=xml-l&amp;T=0&amp;F=&amp;S=&amp;P=9737</a>
+</dd>  
+
+
+
+  <dt class="bib">
+<a id="Megginson" />
+<b>[Megginson 2004]</b>
+</dt>
+  <dd class="pub">Megginson, David. March 3, 2004. "Re: [xml-dev] SAX - endDocument() confusion again". 
+  <a href="http://lists.xml.org/archives/xml-dev/200403/msg00048.html">http://lists.xml.org/archives/xml-dev/200403/msg00048.html</a>
+</dd> 
+ 
+
+
+
+  <dt class="bib">
+<a id="megginson2" />
+<b>[Megginson 2004 2]</b>
+</dt>
+  <dd class="pub">Megginson, David. March 5, 2004. "SAX/Java Proposed Changes".
+  <a href="http://lists.xml.org/archives/xml-dev/200403/msg00122.html">http://lists.xml.org/archives/xml-dev/200403/msg00122.html</a>
+</dd>  
+
+
+
+
+  <dt class="bib">
+<a id="Oracle" />
+<b>[Oracle]</b>
+</dt>
+  <dd class="pub">Oracle XML Developer's Kit for Java 9.2.0.6.0, <a href="http://otn.oracle.com/tech/xml/xdk/xdk_java.html">http://otn.oracle.com/tech/xml/xdk/xdk_java.html</a>
+</dd> 
+ 
+
+
+
+  <dt class="bib">
+<a id="oraclec" />
+<b>[Oracle C]</b>
+</dt>
+   <dd class="pub">Oracle XML Developer's Kit for C,
+ <a href="http://otn.oracle.com/tech/xml/xdk/xdk_c.html">http://otn.oracle.com/tech/xml/xdk/xdk_c.html</a>
+</dd>  
+
+
+
+
+  <dt class="bib">
+<a id="Piccolo" />
+<b>[Piccolo]</b>
+</dt>
+  <dd class="pub">Oren, Yuval. "Piccolo XML Parser for Java". <a href="http://piccolo.sourceforge.net">http://piccolo.sourceforge.net</a>
+</dd> 
+ 
+
+
+  <dt class="bib">
+<a id="SAXPerl" />
+<b>[Perl XML]</b>
+</dt>
+  <dd class="pub">The  Perl XML Project. Perl::SAX. <a href="http://sax.perl.org/">http://sax.perl.org/</a>
+</dd> 
+ 
+
+
+
+  <dt class="bib">
+<a id="saxdevel" />
+<b>[sax-devel]</b>
+</dt>
+  <dd class="pub">
+<a href="http://sourceforge.net/mailarchive/forum.php?forum_id=1472&amp;max_rows=25&amp;style=ultimate&amp;viewmonth=200205">http://sourceforge.net/mailarchive/forum.php?forum_id=1472&amp;max_rows=25&amp;style=ultimate&amp;viewmonth=200205</a>
+</dd> 
+ 
+
+
+  <dt class="bib">
+<a id="SAXException" />
+<b>[SAXException]</b>
+</dt>
+  <dd class="pub">
+<a href="http://www.saxproject.org/apidoc/org/xml/sax/SAXException.html">http://www.saxproject.org/apidoc/org/xml/sax/SAXException.html</a>
+</dd> 
+ 
+
+
+  <dt class="bib">
+<a id="SortedMap" />
+<b>[SortedMap]</b>
+</dt>
+  <dd class="pub">
+<a href="http://java.sun.com/j2se/1.4.2/docs/api/java/util/SortedMap.html">http://java.sun.com/j2se/1.4.2/docs/api/java/util/SortedMap.html</a>
+</dd> 
+ 
+
+
+
+  <dt class="bib">
+<a id="dom4j" />
+<b>[DOM4J]</b>
+</dt>
+  <dd class="pub">Strachan, James. <a href="http://dom4j.org/">http://dom4j.org/</a>
+</dd> 
+ 
+
+
+
+  <dt class="bib">
+<a id="SecondForm" />
+<b>[Sun]</b>
+</dt>
+  <dd class="pub">Sun Microsystems. 
+       <a href="http://dev.w3.org/cvsweb/2001/XML-Test-Suite/xmlconf/sun/cxml.html?rev=1.3">http://dev.w3.org/cvsweb/2001/XML-Test-Suite/xmlconf/sun/cxml.html?rev=1.3</a>
+</dd> 
+
+
+
+  <dt class="bib">
+<a id="vanvleet" />
+<b>[Van Vleet 2001]</b>
+</dt>
+  <dd class="pub">VanVleet, Lynda, G. Ken Holman, and David Marston. March 3, 2001.
+   "OASIS XSLT/XPath Conformance Committee Procedures and Deliverables". 
+   <a href="http://www.w3.org/2001/01/qa-ws/pp/ken-holman-oasis/xsltconf.htm">http://www.w3.org/2001/01/qa-ws/pp/ken-holman-oasis/xsltconf.htm</a>
+</dd> 
+ 
+
+
+
+  <dt class="bib">
+<a id="libxml2" />
+<b>[Veillard]</b>
+</dt>
+  <dd class="pub">Veillard, Daniel. "The XML C parser and toolkit of Gnome" <a href="http://xmlsoft.org">http://xmlsoft.org</a>
+</dd>  
+
+
+
+
+  <dt class="bib">
+<a id="XMLTestSuite" />
+<b>[W3C XML Group]</b>
+</dt>
+  <dd class="pub">W3C XML Group
+       <a href="http://www.w3.org/XML/Test">http://www.w3.org/XML/Test</a>.</dd> 
+ 
+
+
+
+  <dt class="bib">
+<a id="clientexception" />
+<b>[Wilson]</b>
+</dt>
+  <dd class="pub">Wilson, John.  May 2, 2002. "[Sax-devel] endDocument throwing an exception".
+  <a href="http://www.geocrawler.com/mail/msg.php3?msg_id=8558085&amp;list=13179">http://www.geocrawler.com/mail/msg.php3?msg_id=8558085&amp;list=13179</a>
+</dd>  
+
+
+
+  <dt class="bib">
+<a id="xercesc" />
+<b>[Xerces C]</b>
+</dt>
+  <dd class="pub">XML Apache Project, Xerces C++ Parser,
+  <a href="http://xml.apache.org/xerces-c/">http://xml.apache.org/xerces-c/</a>
+</dd>  
+
+
+
+  <dt class="bib">
+<a id="Xerces" />
+<b>[Xerces J]</b>
+</dt>
+  <dd class="pub">XML Apache Project, Xerces 2.6.1,
+   <a href="http://xml.apache.org/xerces2-j/">http://xml.apache.org/xerces2-j/</a>
+</dd> 
+ 
+
+
+  <dt class="bib">
+<a id="SAXPython" />
+<b>[xml.sax]</b>
+</dt>
+  <dd class="pub">xml.sax. <a href="http://xpipe.sourceforge.net/cgi-bin/doc.py?module=xml.sax">http://xpipe.sourceforge.net/cgi-bin/doc.py?module=xml.sax</a>
+</dd> 
+ 
+
+
+</dl>
+
+<p class="credits">
+<small>XHTML rendition created by
+      <a href="http://www.schemasoft.com/gcatools/">gcapaper Web Publisher v2.1</a>,
+      &copy;
+      2001-3 <a href="http://www.schemasoft.com">Schema Software Inc.</a>
+</small>
+</p></body></html>

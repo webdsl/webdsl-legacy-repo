@@ -1,0 +1,232 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Customizing the Request</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="previous" href="ch02s03.html" title="RSS"><link rel="next" href="ch02s05.html" title="XML-RPC"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"><link rel="subsection" href="ch02s04.html#d0e3123" title="Query Strings"><link rel="subsection" href="ch02s04.html#d0e3170" title="How POST Works"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Customizing the Request</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch02s03.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch02s05.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e3115"></a>Customizing the Request</h2></div></div><p>
+    Services like Backslash and RSS work because not a lot
+   of input is needed. The same document is requested 
+   repeatedly. This is acceptable for retrieving documents from a file
+   system on a remote server, but sometimes a little more
+   customization is required. The client not only wants to request an
+   XML document. It wants to parameterize that document.
+   For instance, it might want to ask for headlines that include
+   certain keywords or articles posted between two dates. 
+   The standard HTTP means of accomplishing this is to place the
+   request parameters in 
+   a query string that is either attached to the end of the URL 
+   or included
+   as the body of the HTTP request.
+  </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Note</h3><p>
+There are other ways to encode request parameters.
+For instance, Amazon let&#8217;s you query their database by 
+putting the ISBN number in the path of the URL.
+However, this requires a relatively specialized HTTP server.
+The two methods I discuss here are the standard approaches supported
+by most servers. 
+</p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e3123"></a>Query Strings</h3></div></div><p>
+  A query string is just a list of name=value pairs, much like 
+  attributes in an XML document except that the values aren&#8217;t quoted and 
+  names can be repeated. In a query string, the fields are separated from 
+  each other by ampersands. For example, this is a query string with 
+  four fields: one named page with the value xml, one named mode with 
+  the value stock, one named symbol with the value IBM, and another 
+  named symbol with the value SUNW:
+</p><div class="informalexample"><pre class="programlisting">page=xml&amp;mode=stock&amp;symbol=IBM&amp;symbol=SUNW</pre></div><p>
+The characters allowed in URLs, including their
+ query string parts, are the ASCII letters A to Z
+in both upper and lower case, the digits 0 through 9
+and the punctuation characters - _, ., !, ~, *, ', (, and ).
+
+ Except for these 71 characters, all other characters used in query string
+ names and values
+  must be
+ x-www-form-urlencoded. ( :, /, &amp;, ?, #, and = can also be used but only 
+in specific roles within the URL. When used as parts of file names 
+or query string
+values, they have to be encoded too.) In x-www-form-urlencoding, 
+each  character is
+first converted to UTF-8, and then 
+each byte in the UTF-8 representation of that character is
+replaced by a percent sign and the two-hexadecimal digits
+that represent that byte.
+</p><p>
+For example, the dollar sign has Unicode code point 36 or
+0x24 in hexadecimal. Its UTF-8 representation is the single byte
+with that value. Thus it is escaped in URLs as %24.
+The Greek letter &#968; has Unicode code point 968, 
+3C8 in hexadecimal. It is encoded in UTF-8 as two bytes,
+207 and 136. Thus, after converting these bytes to hexadecimal,
+&#968; is encoded as %CF%88.
+As a special case, the space character can be replaced by the plus
+sign. Java includes a 
+<tt>java.net.URLEncoder</tt>
+class that can encode any string in this format.
+ Java 1.2 and later also includes a <tt>java.net.URLDecoder</tt>
+class that can decode a string in this format.
+</p><p>
+The simplest way to attach a query string to an HTTP request is to append it to 
+a URL, separated from the rest of the URL by a question mark. For example, the
+NASDAQ makes quotes available in XML from their server at 
+<tt>quotes.nasdaq.com</tt>. 
+To request a quote for a stock,
+you ask the server <tt>quotes.nasdaq.com</tt>
+for the file <tt>quotes.dll</tt>; 
+and you pass it a query string with three
+fields: page, mode, and symbol. 
+Set the page field to xml, the mode field to stock,
+and the symbol field to the stock symbol for the
+company you&#8217;re interested in.
+For example, to get a quote for Red Hat, you would load the URL
+ <tt>http://quotes.nasdaq.com/quote.dll?page=xml&amp;mode=stock&amp;symbol=RHAT</tt>
+into your browser as shown in <a href="ch02s04.html#rhat-quote.jpg" title="Figure&nbsp;2.2.&nbsp;NASDAQ Stock Data Retrieved via a Query String">Figure&nbsp;2.2</a>.
+If you&#8217;re connecting to the server manually,
+you would request the document
+/quote.dll?page=xml&amp;mode=stock&amp;symbol=RHAT
+like this:
+</p><pre class="screen">GET /quote.dll?page=xml&amp;mode=stock&amp;symbol=RHAT HTTP/1.0
+Host: quotes.nasdaq.com
+Accept: text/xml, application/xml
+Accept-Language: en, fr;q=0.50
+Accept-Charset: ISO-8859-1, utf-8;q=0.66, *;q=0.66
+
+HTTP/1.1 200 OK
+Server: Microsoft-IIS/5.0
+Date: Mon, 16 Jul 2001 21:51:32 GMT
+Content-Length: 2057
+Content-Type: text/xml
+
+&lt;?xml version="1.0" ?&gt;
+&lt;!DOCTYPE nasdaqamex-dot-com 
+  SYSTEM "http://nasdaq.com/reference/NasdaqDotCom.dtd"&gt;
+&lt;nasdaqamex-dot-com&gt;
+&lt;equity-quote symbol="RHAT" ilx-symbol="RHAT" 
+    hyperfeed-symbol="RHAT" telesphere-symbol="RHAT"&gt;
+&lt;issue-name&gt;Red Hat, Inc.&lt;/issue-name&gt;
+&lt;market-status&gt;C&lt;/market-status&gt;
+&lt;market-center-code&gt;Nasdaq-NM&lt;/market-center-code&gt;
+&lt;issue-type-code&gt;Common Stock&lt;/issue-type-code&gt;
+&lt;todays-high-price&gt;3.94&lt;/todays-high-price&gt;
+&lt;todays-low-price&gt;3.74&lt;/todays-low-price&gt;
+&lt;fifty-two-wk-high-price&gt;28.875&lt;/fifty-two-wk-high-price&gt;
+&lt;fifty-two-wk-low-price&gt;3.65&lt;/fifty-two-wk-low-price&gt;
+&lt;last-sale-price&gt;3.78&lt;/last-sale-price&gt;
+&lt;net-change-price&gt;-0.14&lt;/net-change-price&gt;
+&lt;net-change-pct&gt;-3.57%&lt;/net-change-pct&gt;
+&lt;share-volume-qty&gt;932800&lt;/share-volume-qty&gt;
+&lt;previous-close-price&gt;3.92&lt;/previous-close-price&gt;
+&lt;best-bid-price&gt;3.76&lt;/best-bid-price&gt;
+&lt;best-ask-price&gt;3.86&lt;/best-ask-price&gt;
+&lt;best-bid-price session-type="AfterHours"&gt;3.76&lt;/best-bid-price&gt;
+&lt;best-ask-price session-type="AfterHours"&gt;3.86&lt;/best-ask-price&gt;
+&lt;current-pe-ratio&gt;NE&lt;/current-pe-ratio&gt;
+&lt;total-outstanding-shares-qty&gt;
+  168486000&lt;/total-outstanding-shares-qty&gt;
+&lt;current-yield-pct&gt;0&lt;/current-yield-pct&gt;
+&lt;earnings-actual-eps-amt&gt;-0.53&lt;/earnings-actual-eps-amt&gt;
+&lt;cash-dividend-amt&gt;0&lt;/cash-dividend-amt&gt;
+&lt;cash-dividend-ex-date&gt;19691231&lt;/cash-dividend-ex-date&gt;
+&lt;sp500-beta-num&gt;2.02&lt;/sp500-beta-num&gt;
+&lt;trade-datetime&gt;20010716 16:00:00&lt;/trade-datetime&gt;
+&lt;issuer-address-line1-txt&gt;
+ 2600 Meridian Parkway&lt;/issuer-address-line1-txt&gt;
+&lt;issuer-city-state-zip-txt&gt;
+  Durham NC 27713 USA&lt;/issuer-city-state-zip-txt&gt;
+&lt;issuer-phone-num&gt; 919-547-0012&lt;/issuer-phone-num&gt;
+&lt;issuer-web-site-url&gt;http://www.redhat.com&lt;/issuer-web-site-url&gt;
+&lt;issuer-logo-url&gt;
+http://a676.g.akamaitech.net/f/676/838/1h/nasdaq.com/logos/RHAT.GIF
+&lt;/issuer-logo-url&gt;
+&lt;trading-status&gt;ACTIVE&lt;/trading-status&gt;
+&lt;market-capitalization-amt&gt;636877080&lt;/market-capitalization-amt&gt;
+&lt;option-root-symbol symbol=""/&gt;
+&lt;tick-code tick-type="last-sale"&gt;&lt;/tick-code&gt;
+&lt;tick-code tick-type="best-bid"&gt;&lt;/tick-code&gt;
+&lt;tick-code tick-type="best-ask"&gt;&lt;/tick-code&gt;
+&lt;/equity-quote&gt;
+&lt;/nasdaqamex-dot-com&gt;
+</pre><div class="figure"><a name="rhat-quote.jpg"></a><p class="title"><b>Figure&nbsp;2.2.&nbsp;NASDAQ Stock Data Retrieved via a Query String</b></p><div class="screenshot"><div class="mediaobject"><img src="rhat-quote.jpg"></div></div></div><p>
+Most of the hard work here is on the server side.
+From a client perspective, you just appear to be requesting 
+a file with a slightly different name.
+This approach to sending a query string to a server
+is sometimes known as CGI GET, though it&#8217;s not necessarily a CGI
+program that responds to the request.
+It could be a servlet, a PHP page, an ASP page, or something else.
+</p><p>
+    When the response needs to be customized for different users
+    but the information the client sends to the server isn&#8217;t too
+    large, then don&#8217;t underestimate the power of
+    CGI GET.
+    It can be simpler to send a query string
+    than a full XML document because
+    you can take advantage of the many client and server side 
+    CGI libraries already available to you.
+    The JDK includes standard classes for encoding and decoding data in
+    the x-www-form-urlencoded format. 
+    However, limitations in much software does mean that query strings
+    embedded in URLs are limited to about 200 characters.
+    Furthermore,  the data they can encode is pretty flat. 
+    A query string cannot represent complex, hierarchical structures
+    very well. XML, of course, is ideal for such structures.
+    To encode the request in XML as well as the response, 
+    we need to explore an alternative to the GET method called POST. 
+  </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e3170"></a>How POST Works</h3></div></div><p>
+  HTTP GET accounts for 90%+ of normal web browsing. The browser sends a
+  small request for a document and the server sends an HTTP header
+  followed by the requested document, or perhaps an error message. 
+  However, when you
+  fill out a form and click the submit button, the process is a little
+  different. In particular if the form uses the POST method, then the
+  browser not only sends the request line and the HTTP header. It also
+  sends the form data as the request body, separated from the header
+  with a blank line. Customarily browsers send 
+  an x-www-form-urlencoded query string as the body of the request. A
+  typical POST form submission looks something like this:
+</p><pre class="screen">POST /cartmgr.cgi HTTP/1.1
+Host: www.irs.gov
+User-Agent: Mozilla/5.0 (Windows; U; WinNT4.0; en-US; rv:0.9.2) 
+Accept: application/xml, text/html;q=0.9, image/png, */*;q=0.1
+Accept-Language: en, fr;q=0.50
+Accept-Encoding: gzip,deflate,compress,identity
+Accept-Charset: ISO-8859-1, utf-8;q=0.66, *;q=0.66
+Keep-Alive: 300
+Connection: keep-alive
+Content-type: application/x-www-form-urlencoded
+Content-Length: 264
+
+action=DISPLAY_CART&amp;template=cartmgr.cart_display.html.txt
+&amp;error_template=default_error.html.txt
+&amp;Show+me+my+cart=Show+me+my+cart&amp;action=DISPLAY_DOC
+&amp;CreditCard=1234567898769876&amp;CardHolder=Elliotte+Harold
+&amp;expiresMonth=07&amp;expiresYear=2003&amp;type=Visa
+&amp;template=cartmgr.redirect.html.txt</pre><p>
+  Normally you have to send an x-www-form-urlencoded data query string
+  in the body of a POST request because that&#8217;s what the server expects,
+  and the CGI program on the server has to be prepared to read 
+  x-www-form-url-encoded query strings because that&#8217;s what browsers will send.
+  However, <span class="emphasis"><em>if you control both the server and the client, then you 
+  aren&#8217;t limited to this format.</em></span> 
+  You can send any kind of data you like in the 
+  HTTP request body, including a complete XML document! And indeed this is 
+  exactly what
+  both XML-RPC and SOAP do.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Note</h3><p>
+    The <tt>java.net.URL</tt> class,
+    query strings, x-www-form-urlencoding, the GET and POST methods,
+    HTTP headers, HTTP response codes,  
+    and many other aspects of working with HTTP in Java 
+    are covered in much more detail in my book
+    [<i><a href="http://www.cafeaulait.org/books/jnp2e/" target="_top">Java
+     
+    Network Programming</a></i>, 
+O&#8217;Reilly &amp; Associates, 2000, ISBN 0-13-089468-0]
+  </p></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch02s03.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch02.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch02s05.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">RSS&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;XML-RPC</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+July 26,
+2001</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

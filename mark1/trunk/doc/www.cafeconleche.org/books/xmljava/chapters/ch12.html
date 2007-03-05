@@ -1,0 +1,383 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;12.&nbsp;The DOM Traversal Module</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="index.html" title="Processing XML with Java"><link rel="previous" href="ch11s13.html" title="Summary"><link rel="next" href="ch12s02.html" title="NodeFilter"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"><link rel="section" href="ch12.html#d0e19801" title="NodeIterator"><link rel="section" href="ch12s02.html" title="NodeFilter"><link rel="section" href="ch12s03.html" title="TreeWalker"><link rel="section" href="ch12s04.html" title="Summary"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter&nbsp;12.&nbsp;The DOM Traversal Module</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch11s13.html">Prev</a>&nbsp;</td><th width="60%" align="center">&nbsp;</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch12s02.html">Next</a></td></tr></table><hr></div><div class="chapter"><div class="titlepage"><div><h2 class="title"><a name="ch_traversal"></a>Chapter&nbsp;12.&nbsp;The DOM Traversal Module</h2></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><a href="ch12.html#d0e19801">NodeIterator</a></dt><dd><dl><dt><a href="ch12.html#d0e19876">Constructing NodeIterators with DocumentTraversal</a></dt><dt><a href="ch12.html#d0e20059">Liveness</a></dt><dt><a href="ch12.html#d0e20086">Filtering by Node Type</a></dt></dl></dd><dt><a href="ch12s02.html">NodeFilter</a></dt><dt><a href="ch12s03.html">TreeWalker</a></dt><dt><a href="ch12s04.html">Summary</a></dt></dl></div><p>
+  The examples in the last few chapters 
+  have duplicated quite a bit of tree walking code. 
+  Some of them searched for particular
+  information. Others modified documents in memory. What they all
+  had in common was that they navigated a tree from the root to
+  the deepest leaf element in document order. This is an
+  extremely common pattern in DOM programs.
+</p><p>
+   The <tt>org.w3c.dom.traversal</tt> package is a
+   collection of utility interfaces
+   that implement most of the logic needed to 
+   traverse a DOM tree. 
+   These include  <tt>NodeIterator</tt>,
+   <tt>NodeFilter</tt>,
+    <tt>TreeWalker</tt> and
+    <tt>DocumentTraversal</tt>.
+   DOM implementations are not required to support these
+   interfaces, but many do including Oracle and Xerces.
+   (Crimson does not. GNU JAXP supports  <tt>NodeIterator</tt>
+   but not <tt>TreeWalker</tt>.)
+   By reusing these classes you can simplify your
+   programs a great deal and save yourself a significant amount of
+   work. 
+ </p><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e19801"></a>NodeIterator</h2></div></div><p>
+      The <tt>NodeIterator</tt> utility
+      interface extracts  a subset of the nodes in a DOM
+      document and presents them as a list
+      arranged in document order.
+      In other words, the nodes appear in 
+      the order you&#8217;d find them  in a depth-first, pre-order traversal
+      of the tree.
+      That is,
+    </p><div class="itemizedlist"><ul type="disc"><li><p>
+          The document node comes first. 
+        </p></li><li><p>
+          Parents come before their children. Ancestors come before their descendants.
+        </p></li><li><p>
+          Sibling nodes appear in the same order as their start-tags 
+          appear in the text representation of the 
+          document.
+        </p></li></ul></div><p>
+       In other words, this is pretty much the order you&#8217;d expect by
+       just reading an XML document from beginning to end.
+       As soon as you see the first character of text from a
+       node, that node is counted. 
+    </p><p>
+      You can iterate through this list without concerning
+      yourself with the tree structure of the XML document.
+      For many operations this flatter view is more convenient 
+      than the hierarchical tree view. For example, a spell
+      checker can check all text nodes one at a time.
+      An outline program can extract the headings in an XHTML
+      document while ignoring everything else. You can do all
+      this by iterating though a list without having to write
+      recursive methods.
+    </p><p>
+      <a href="ch12.html#CompactNodeIterator.java" title="Example&nbsp;12.1.&nbsp;The NodeIterator interface">Example&nbsp;12.1</a> summarizes the 
+      <tt>NodeIterator</tt> interface.
+      The first four getter methods simply tell you how the
+      iterator is choosing from all the available nodes in the
+      document.
+      The <tt>nextNode()</tt> 
+      and <tt>previousNode()</tt> methods move
+      forwards and backwards in the list and return the
+      requested node.
+      Finally, the <tt>detach()</tt> method
+      cleans up after the iterator when you&#8217;re done with it.
+      It&#8217;s analogous to closing a stream. 
+    </p><div class="example"><a name="CompactNodeIterator.java"></a><p class="title"><b>Example&nbsp;12.1.&nbsp;The NodeIterator interface</b></p><pre class="programlisting">package org.w3c.dom.traversal;
+
+public interface NodeIterator {
+  
+    public Node       getRoot();
+    public int        getWhatToShow();
+    public NodeFilter getFilter();
+    public boolean    getExpandEntityReferences();
+    
+    public Node       nextNode() throws DOMException;
+    public Node       previousNode() throws DOMException;
+    
+    public void       detach();
+
+}
+</pre></div><p>
+     As you see, the <tt>NodeIterator</tt> 
+     interface provides only the most basic methods for 
+     an iterator. 
+     Each iterator can be thought of as having a cursor which is
+     initially positioned before the first node in the list.
+     The <tt>nextNode()</tt> method
+     returns the node immediately following the cursor and 
+     advances the cursor one space. 
+     The <tt>previousNode()</tt> method returns the 
+     node immediately before the cursor and backs the cursor up one space.
+     If the iterator is positioned at the end of the list,
+     <tt>nextNode()</tt> returns null.
+     If the iterator is positioned at the beginning of the list,
+     <tt>previousNode()</tt> returns null.
+     For example, given a <tt>NodeIterator</tt>
+     variable named <tt>iterator</tt> positioned at the beginning
+     of its list, this code
+     fragment prints the names of all the nodes:
+   </p><div class="informalexample"><pre class="programlisting">Node node;
+while ((node = iterator.nextNode()) != null) {
+  System.out.println(node.getNodeName());
+}</pre></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Note</h3><p>
+       Design pattern aficionados will have recognized this as
+       instance of the iterator pattern (as if the name didn&#8217;t
+       already give it away). More precisely, it&#8217;s a robust,
+       external iterator. Robust means that the iterator still
+       works even if its backing data structure (the 
+       <tt>Document</tt> object) changes
+       underneath it. External means that client code is
+       responsible for moving the iterator from one node to the
+       next, rather than having the iterator move itself. 
+     </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e19876"></a>Constructing NodeIterators with DocumentTraversal</h3></div></div><p>
+     Not all DOM implementations are guaranteed to support the traversal module,
+     though most do. You can check this with
+     <tt>hasFeature("traversal", "2.0")</tt> in
+     the <tt>DOMImplementation</tt> class.
+     For example,
+   </p><div class="informalexample"><pre class="programlisting">if (!impl.hasFeature("traversal", "2.0")) {
+  System.err.println( 
+   "A DOM implementation that supports traversal is required.");  
+  return;
+}</pre></div><p>
+        Assuming the implementation does support traversal,
+        the  <tt>Document</tt>
+        implementation class also implements the 
+         <tt>DocumentTraversal</tt> interface. 
+        This factory interface, shown in <a href="ch12.html#CompactDocumentTraversal.java" title="Example&nbsp;12.2.&nbsp;The DocumentTraversal factory interface">Example&nbsp;12.2</a>,
+        allows you to create new <tt>NodeIterator</tt> 
+        and <tt>TreeWalker</tt> 
+         objects which traverse 
+       the nodes in that document.  
+      </p><div class="example"><a name="CompactDocumentTraversal.java"></a><p class="title"><b>Example&nbsp;12.2.&nbsp;The DocumentTraversal factory interface</b></p><pre class="programlisting">package org.w3c.dom.traversal;
+
+public interface DocumentTraversal {
+  
+  public NodeIterator createNodeIterator(Node root, 
+   int whatToShow, NodeFilter filter, 
+   boolean entityReferenceExpansion) throws DOMException;
+
+  public TreeWalker createTreeWalker(Node root,
+   int whatToShow, NodeFilter filter,
+   boolean entityReferenceExpansion) throws DOMException;
+
+}
+</pre></div><p>
+    Thus, to create a <tt>NodeIterator</tt>
+    you cast the <tt>Document</tt>
+    object you want to iterate over to 
+         <tt>DocumentTraversal</tt>,
+         and then invoke its 
+<tt>createNodeIterator()</tt> method.
+This method takes four 
+   arguments:
+ </p><div class="variablelist"><dl><dt><span class="term"><tt>root</tt></span></dt><dd><p>
+          The <tt>Node</tt> in the document 
+          which the iterator starts from. Only this node and 
+          its descendants are traversed by the iterator. This
+          means you can easily design iterators that iterate over
+          a subtree of the entire document. For instance, by
+          passing in the root element, you could skip everything
+          in the document&#8217;s prolog and epilog. 
+        </p></dd><dt><span class="term"><tt>whatToShow</tt></span></dt><dd><p>
+          An int bitfield constant specifying the node types the iterator will include.
+          These constants are:
+        </p><div class="itemizedlist"><ul type="disc"><li><p><tt>NodeFilter.SHOW_ELEMENT = 1</tt></p></li><li><p><tt>NodeFilter.SHOW_ATTRIBUTE = 2</tt></p></li><li><p><tt>NodeFilter.SHOW_TEXT = 4</tt></p></li><li><p><tt>NodeFilter.SHOW_CDATA_SECTION = 8</tt></p></li><li><p><tt>NodeFilter.SHOW_ENTITY_REFERENCE = 16</tt></p></li><li><p><tt>NodeFilter.SHOW_ENTITY = 32</tt></p></li><li><p><tt>NodeFilter.SHOW_PROCESSING_INSTRUCTION = 64</tt></p></li><li><p><tt>NodeFilter.SHOW_DOCUMENT = 128</tt></p></li><li><p><tt>NodeFilter.SHOW_DOCUMENT_TYPE = 256</tt></p></li><li><p><tt>NodeFilter.SHOW_DOCUMENT_FRAGMENT = 512</tt></p></li><li><p><tt>NodeFilter.SHOW_NOTATION = 1024</tt></p></li><li><p><tt>NodeFilter.SHOW_ALL = 0xFFFFFFFF</tt></p></li></ul></div><p>
+        These are all powers of two so that they can be combined
+        with the bitwise operators. For example, if you wanted to
+        iterate over text nodes and CDATA section nodes, you
+        would pass 
+        <tt>NodeFilter.SHOW_TEXT | NodeFilter.SHOW_CDATA_SECTION</tt> 
+        as <tt>whatToShow</tt>.
+      </p></dd><dt><span class="term"><tt>filter</tt></span></dt><dd><p>
+          A <tt>NodeFilter</tt> against which all nodes in
+          the subtree
+          will be compared. Only nodes that pass the filter will
+          be let through. By implementing this interface, you can
+          define more specific filters such as 
+          &#8220;all elements that have
+          <tt>xlink:type="simple"</tt> attributes&#8221;
+          or &#8220;all text nodes that contain the word 
+          <i>fnord</i>&#8221;. You can pass null to 
+          indicate no custom filtering.
+        </p></dd><dt><span class="term"><tt>entityReferenceExpansion</tt></span></dt><dd><p>
+          Pass true if you want the iterator to descend through the children of 
+          entity reference nodes, false otherwise. Generally,
+          this should be set to true.
+        </p></dd></dl></div><p>
+     For example, the last chapter demonstrated a comment reader
+     program that recursively descended an XML tree, printing out
+     all the comment nodes that were found.
+     A <tt>NodeIterator</tt>
+     makes it possible to write the program non-recursively.
+     When creating the iterator, the <tt>root</tt> argument is the
+     document node, <tt>whatToShow</tt> is
+     <tt>NodeFilter.SHOW_COMMENT</tt>, the node filter is null,
+     and <tt>entityReferenceExpansion</tt> is true.
+     <a href="ch12.html#CommentIterator.java" title="Example&nbsp;12.3.&nbsp;Using a NodeIterator to extract all the comments from a document">Example&nbsp;12.3</a> demonstrates.
+   </p><div class="example"><a name="CommentIterator.java"></a><p class="title"><b>Example&nbsp;12.3.&nbsp;Using a NodeIterator to extract all the comments from a document</b></p><pre class="programlisting">import javax.xml.parsers.*;
+import org.w3c.dom.*;
+import org.w3c.dom.traversal.*;
+import org.xml.sax.SAXException;
+import java.io.IOException;
+
+
+public class CommentIterator {
+
+  public static void main(String[] args) {
+
+    if (args.length &lt;= 0) {
+      System.out.println("Usage: java DOMCommentReader URL");
+      return;
+    }
+    
+    String url = args[0];
+    
+    try {
+      DocumentBuilderFactory factory 
+       = DocumentBuilderFactory.newInstance();
+      DocumentBuilder parser = factory.newDocumentBuilder();
+      
+      // Check for the traversal module
+      DOMImplementation impl = parser.getDOMImplementation();
+      if (!impl.hasFeature("traversal", "2.0")) {
+        System.out.println(
+         "A DOM implementation that supports traversal is required."
+        );  
+        return;
+      }
+      
+      // Read the document
+      Document doc = parser.parse(url); 
+      
+      // Create the NodeIterator
+      DocumentTraversal traversable = (DocumentTraversal) doc;
+      NodeIterator iterator = traversable.createNodeIterator(
+       doc, NodeFilter.SHOW_COMMENT, null, true);
+
+      // Iterate over the comments
+      Node node;
+      while ((node = iterator.nextNode()) != null) {
+        System.out.println(node.getNodeValue());
+      }
+       
+    }
+    catch (SAXException e) {
+      System.out.println(e);
+      System.out.println(url + " is not well-formed.");
+    }
+    catch (IOException e) { 
+      System.out.println(
+       "Due to an IOException, the parser could not check " + url
+      ); 
+    }
+    catch (FactoryConfigurationError e) { 
+      System.out.println("Could not locate a factory class"); 
+    }
+    catch (ParserConfigurationException e) { 
+      System.out.println("Could not locate a JAXP parser"); 
+    }
+     
+  } // end main  
+  
+}
+</pre></div><p>
+      You can decide for yourself whether or not you prefer the
+      explicit recursion and tree-walking of <a href="ch11s09.html#DOMCommentReader.java" title="Example&nbsp;11.20.&nbsp;Printing comments">Example&nbsp;11.20</a>
+      in the last chapter or the hidden recursion
+      of <tt>CommentIterator</tt>
+      here. With a decent implementation, there really shouldn&#8217;t
+      be any noticeable performance penalty, so feel free to
+      use whichever feels more natural to you. 
+    </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e20059"></a>Liveness</h3></div></div><p>
+      Node iterators are live. That is, if the document 
+      changes while the program is walking the tree, the
+      iterator retains its state. For instance, let&#8217;s suppose
+      the program is at node C of a node iterator that&#8217;s walking through 
+      nodes A, B, C, D, and E in that order. If you delete node
+      D, and then call <tt>nextNode()</tt>,
+      you&#8217;ll get node E. If you add node Z in between B and C
+      and then call <tt>previousNode()</tt>,
+      you&#8217;ll get node Z. The iterator&#8217;s current position is
+      always between two nodes (or before the first node or after
+      the last node) but never on a node. Thus it is not
+      invalidated by deleting the current node. 
+     </p><p>
+      For example, this method  deletes all the
+      comments in its <tt>Document</tt> argument.
+      When the method returns all the comments have been removed.
+    </p><div class="informalexample"><pre class="programlisting">  public static void deleteComments(Document doc) {
+  
+    // Create the NodeIterator
+    DocumentTraversal traversable = (DocumentTraversal) doc;
+    NodeIterator iterator = traversable.createNodeIterator(
+     doc, NodeFilter.SHOW_COMMENT, null, true);
+
+    // Iterate over the comments
+    Node comment;
+    while ((comment = iterator.nextNode()) != null) {
+      Node parent = comment.getParentNode();
+      parent.removeChild(comment);
+    }
+    
+  }</pre></div><p>
+      This method changes the original <tt>Document</tt>
+      object. It does not change the 
+      XML file 
+      from which the  <tt>Document</tt>
+      object was created unless you specifically write the
+      changed document back out into the original file after the
+      comments have been deleted.
+    </p></div><div class="sect2"><div class="titlepage"><div><h3 class="title"><a name="d0e20086"></a>Filtering by Node Type</h3></div></div><p>
+      You can combine the various
+      flags for <tt>whatToShow</tt> with 
+      the bitwise or operator. For example, the
+      previous chapter used a rather convoluted recursive 
+      <tt>getText()</tt> method in the 
+      <tt>ExampleExtractor</tt> program to
+      accumulate all the text from both text and CDATA section
+      nodes within an element. <a href="ch12.html#TextExtractionUtility" title="Example&nbsp;12.4.&nbsp;Using a NodeIterator to retrieve the complete text content of an element">Example&nbsp;12.4</a>
+      shows how <tt>NodeIterator</tt> can
+      be used to accomplish this task in 
+      a much more straightforward fashion.
+    </p><div class="example"><a name="TextExtractionUtility"></a><p class="title"><b>Example&nbsp;12.4.&nbsp;Using a NodeIterator to retrieve the complete text content of an element</b></p><pre class="programlisting">import org.w3c.dom.*;
+import org.w3c.dom.traversal.*;
+
+
+public class TextExtractor {
+
+  public static String getText(Node node) {
+    
+    if (node == null) return "";
+    
+    // Set up the iterator
+    Document doc = node.getOwnerDocument();
+    DocumentTraversal traversable = (DocumentTraversal) doc;
+    int whatToShow 
+     = NodeFilter.SHOW_TEXT | NodeFilter.SHOW_CDATA_SECTION;
+    NodeIterator iterator = traversable.createNodeIterator(node, 
+     whatToShow, null, true);
+     
+    // Extract the text
+    StringBuffer result = new StringBuffer();
+    Node current;
+    while ((current = iterator.nextNode()) != null) {
+      result.append(current.getNodeValue());
+    }
+    return result.toString();
+    
+  }
+
+}
+</pre></div><p>
+      I&#8217;ll be reusing this class a little later on.
+      Something like this should definitely be in your toolbox
+      for whenever you need to extract the text content of an
+      element.
+    </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in; font-family: Helvetica, Arial, sans"><h3 class="title">Note</h3><p>
+        DOM Level 3 is going to add an almost equivalent
+        <tt>getTextContent()</tt> method to the
+        <tt>Node</tt> interface:
+      </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">String&nbsp;</span><span class="methodname"><b>getTextContent</b></span>()<br>&nbsp;&nbsp;&nbsp;&nbsp;throws&nbsp;<span class="exceptionname">DOMException</span>;</code><p>
+        The only difference is that this method will not operate
+        on <tt>Document</tt> objects whereas
+        <tt>TextExtractor.getText()</tt> will.
+      </p></div></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch11s13.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="index.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch12s02.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Summary&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;NodeFilter</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+January 19,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>

@@ -1,0 +1,3628 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+
+ 
+      <title>
+         XSL Formatting Objects
+         
+      </title>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+	<TITLE>XSL-FO</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0  (Linux)">
+	<META NAME="AUTHOR" CONTENT="Elliotte Rusty Harold">
+	<META NAME="CREATED" CONTENT="20010412;18150000">
+	<META NAME="CHANGEDBY" CONTENT="Elliotte Harold">
+	<META NAME="CHANGED" CONTENT="20020702;18582900">
+	<META NAME="DESCRIPTION" CONTENT="Bible 3rd edition">
+	
+</HEAD>
+<BODY LANG="en-US">
+
+ 
+      <h1>Chapter 
+         18
+         
+         of the <cite>
+
+            XML Bible, Second Edition
+            </cite>: 
+         
+         XSL Formatting Objects
+         
+      </h1>
+  <h2>In This Chapter</h2>
+      <ul>
+         <li><a href="#d1e495">Formatting Objects and Their Properties</a></li>
+         <li><a href="#d1e2250">Page Layout</a></li>
+         <li><a href="#d1e3699">Content</a></li>
+
+         <li><a href="#d1e4023">Leaders and Rules</a></li>
+         <li><a href="#d1e4318">Graphics</a></li>
+         <li><a href="#d1e4822">Links</a></li>
+         <li><a href="#d1e4979">Lists</a></li>
+         <li><a href="#d1e5381">Tables</a></li>
+         <li><a href="#d1e6289">Inlines</a></li>
+
+         <li><a href="#d1e6354">Footnotes</a></li>
+         <li><a href="#d1e6435">Floats</a></li>
+         <li><a href="#d1e6582">Formatting Properties</a></li>
+      </ul>
+      
+<P STYLE="margin-top: 0.21cm; line-height: 0.56cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">Formatting properties</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">XSL
+Formatting Objects (XSL-FO) are the second half of the Extensible
+Stylesheet Language (XSL). XSL-FO is an XML application that
+describes how pages will look when presented to a reader. A style
+sheet uses the XSL transformation language to transform an XML
+document in a semantic vocabulary into a new XML document that uses
+the XSL-FO presentational vocabulary. While one can hope that Web
+browsers will one day know how to directly display data marked up
+with XSL formatting objects, for now an additional step is necessary
+in which the output document is further transformed into some other
+format, such as Adobe&rsquo;s PDF.</FONT></P>
+
+
+<H1 id="d1e495">Formatting Objects and Their Properties</H1>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">XSL-FO
+provides a more sophisticated visual layout model than HTML+CSS.
+Formatting supported by XSL-FO, but not supported by HTML+CSS,
+includes right-to-left and top-to-bottom text, footnotes, margin
+notes, page numbers in cross-references, and more. In particular,
+while CSS (Cascading Style Sheets) is primarily intended for use on
+the Web, XSL-FO is designed for broader use. You should, for
+instance, be able to write an XSL style sheet that uses formatting
+objects to lay out an entire printed book. A different style sheet
+should be able to transform the same XML document into a Web site.</FONT></P>
+<P ALIGN=CENTER STYLE="margin-top: 0.42cm; margin-bottom: 0cm; page-break-inside: avoid; widows: 2; orphans: 2; page-break-after: avoid">
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><FONT SIZE=4><B>A
+Word of Caution about XSL Formatting Objects</B></FONT></FONT></FONT></P>
+<P STYLE="margin-top: 0.21cm;  margin-left: 0.5in; margin-right: 0.5in; `widows: 2; orphans: 2"><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">This
+chapter is based on the October 15, 2001 Recommendation of the XSL
+specification. However, most software does not implement all of the
+the final recommendation for XSL. In fact, so far there are only a
+few standalone programs that convert XSL-FO documents into PDF files.
+There are no Web browsers that can display a document written with
+XSL formatting objects. Eventually, of course, this should be
+straightened out as more vendors implement XSL formatting objects.</FONT></FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">There
+are exactly 56 XSL formatting object elements. These are placed in
+the <CODE>http://www.w3.org/1999/XSL/Format</CODE> namespace. At
+least 99 percent of the time, the chosen prefix is <CODE>fo</CODE>.
+In this chapter, I use the <CODE>fo</CODE> prefix to indicate
+this namespace without further comment.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">Of
+the 56 elements, most signify various kinds of rectangular areas.
+Most of the rest are containers for rectangular areas and spaces. In
+alphabetical order, these formatting objects are:</FONT></P>
+<MULTICOL ID="Section2" COLS=2 GUTTER=0>
+  <ul>
+	<li><CODE>fo:basic-link</CODE></li>
+	<li><CODE>fo:bidi-override</CODE></li>
+	<li><CODE>fo:block</CODE></li>
+	<li><CODE>fo:block-container</CODE></li>
+	<li><CODE>fo:character</CODE></li>
+	<li><CODE>fo:color-profile</CODE></li>
+	<li><CODE>fo:conditional-page-master-reference</CODE></li>
+	<li><CODE>fo:declarations</CODE></li>
+	<li><CODE>fo:external-graphic</CODE></li>
+	<li><CODE>fo:float</CODE></li>
+	<li><CODE>fo:flow</CODE></li>
+	<li><CODE>fo:footnote</CODE></li>
+	<li><CODE>fo:footnote-body</CODE></li>
+	<li><CODE>fo:initial-property-set</CODE></li>
+	<li><CODE>fo:inline</CODE></li>
+	<li><CODE>fo:inline-container</CODE></li>
+	<li><CODE>fo:instream-foreign-object</CODE></li>
+	<li><CODE>fo:layout-master-set</CODE></li>
+	<li><CODE>fo:leader</CODE></li>
+	<li><CODE>fo:list-block</CODE></li>
+	<li><CODE>fo:list-item</CODE></li>
+	<li><CODE>fo:list-item-body</CODE></li>
+	<li><CODE>fo:list-item-label</CODE></li>
+	<li><CODE>fo:marker</CODE></li>
+	<li><CODE>fo:multi-case</CODE></li>
+	<li><CODE>fo:multi-properties</CODE></li>
+	<li><CODE>fo:multi-property-set</CODE></li>
+	<li><CODE>fo:multi-switch</CODE></li>
+	<li><CODE>fo:multi-toggle</CODE></li>
+	<li><CODE>fo:page-number</CODE></li>
+	<li><CODE>fo:page-number-citation</CODE></li>
+	<li><CODE>fo:page-sequence</CODE></li>
+	<li><CODE>fo:page-sequence-master</CODE></li>
+	<li><CODE>fo:region-after</CODE></li>
+	<li><CODE>fo:region-before</CODE></li>
+	<li><CODE>fo:region-body</CODE></li>
+	<li><CODE>fo:region-end</CODE></li>
+	<li><CODE>fo:region-start</CODE></li>
+	<li><CODE>fo:repeatable-page-master-alternatives</CODE></li>
+	<li><CODE>fo:repeatable-page-master-reference</CODE></li>
+	<li><CODE>fo:retrieve-marker</CODE></li>
+	<li><CODE>fo:root</CODE></li>
+	<li><CODE>fo:simple-page-master</CODE></li>
+	<li><CODE>fo:single-page-master-reference</CODE></li>
+	<li><CODE>fo:static-content</CODE></li>
+	<li><CODE>fo:table</CODE></li>
+	<li><CODE>fo:table-and-caption</CODE></li>
+	<li><CODE>fo:table-body</CODE></li>
+	<li><CODE>fo:table-caption</CODE></li>
+	<li><CODE>fo:table-cell</CODE></li>
+	<li><CODE>fo:table-column</CODE></li>
+	<li><CODE>fo:table-footer</CODE></li>
+	<li><CODE>fo:table-header</CODE></li>
+	<li><CODE>fo:table-row</CODE></li>
+	<li><CODE>fo:title</CODE></li>
+	<li><CODE>fo:wrapper</CODE></li>
+    </ul>
+</MULTICOL>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+XSL formatting model is based on rectangular boxes called <I>areas</I>
+that can contain text, empty space, images, or other formatting
+objects. As with CSS boxes, an area has borders and padding on each
+of its sides, although CSS's margins are replaced by XSL's
+space-before and space-after. An XSL formatter reads the formatting
+objects to determine which areas to place where on the page. Many
+formatting objects produce single areas (at least most of the time);`
+but because of page breaks, word wrapping, hyphenation, and other
+details that must be taken into account when fitting a potentially
+infinite amount of text into a finite amount of space, some
+formatting objects do occasionally generate more than one area.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+formatting objects differ primarily in what they represent. For
+example, the <CODE>fo:list-item-label</CODE> formatting object is
+a box that contains a bullet, a number, or another indicator placed
+in front of a list item. A <CODE>fo:list-item-body</CODE>
+formatting object is a box that contains the text, sans label, of the
+list item. And a <CODE>fo:list-item</CODE> formatting object is a
+box that contains both the <CODE>fo:list-item-label</CODE> and
+<CODE>fo:list-item-body</CODE> formatting objects.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">When
+processed, the formatting objects document is broken up into pages. A
+Web browser window will normally be treated as one very long page. A
+print format will often contain many individual pages. Each page
+contains a number of areas. There are four primary kinds of areas:</FONT></P>
+<P STYLE="margin-left: 1.27cm; text-indent: -1.27cm; margin-top: 0.21cm; page-break-inside: avoid; widows: 2; orphans: 2">
+<FONT COLOR="#000000">	1.	regions</FONT></P>
+<P STYLE="margin-left: 1.27cm; text-indent: -1.27cm; margin-top: 0.21cm; page-break-inside: avoid; widows: 2; orphans: 2">
+<FONT COLOR="#000000">	2.	block areas</FONT></P>
+<P STYLE="margin-left: 1.27cm; text-indent: -1.27cm; margin-top: 0.21cm; page-break-inside: avoid; widows: 2; orphans: 2">
+<FONT COLOR="#000000">	3.	line areas</FONT></P>
+<P STYLE="margin-left: 1.27cm; text-indent: -1.27cm; margin-top: 0.21cm; page-break-inside: avoid; widows: 2; orphans: 2">
+<FONT COLOR="#000000">	4.	inline areas</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">These
+form a rough hierarchy. Regions contain block areas. Block areas
+contain other block areas, line areas, and content. Line areas
+contain inline areas. <SPAN LANG="en-US">Inline</SPAN> areas contain
+other inline areas and content. More specifically:</FONT></P>
+<ul>
+<li><p>A region is the highest-level container in
+XSL-FO. You can think of a page of this book as containing three
+regions: the header, the main body of the page, and the footer.
+Formatting objects that produce regions include <CODE>fo:region-body</CODE>,
+<CODE>fo:region-before</CODE>, <CODE>fo:region-after</CODE>,
+<CODE>fo:region-start</CODE>, and <CODE>fo:region-end</CODE>.</p></li>
+<li><p>A block area represents a block-level
+element, such as a paragraph or a list item. Although block areas may
+contain other block areas, there should always be a line break before
+the start and after the end of each block area. A block area, rather
+than being precisely positioned by coordinates, is placed
+sequentially in the area that contains it. As other block areas are
+added and deleted before it or within it, the block area&rsquo;s
+position shifts as necessary to make room. A block area may contain
+parsed character data, inline areas, line areas, and other block
+areas that are sequentially arranged in the containing block area.
+Formatting objects that produce block areas include <CODE>fo:block</CODE>,
+<CODE>fo:table-and-caption</CODE>, and <CODE>fo:list-block</CODE>.</p></li>
+<li><p>A line area represents a line of text inside
+a block. For example, each of the lines in this list item is a line
+area. Line areas can contain inline areas and inline spaces. There
+are no formatting objects that correspond to line areas. Instead, the
+formatting engine calculates the line areas as it decides how to wrap
+lines inside block areas.</p></li>
+<li><p>Inline areas are parts of a line such as a
+single character, a footnote reference, or a mathematical equation.
+Inline areas can contain other inline areas and raw text. Formatting
+objects that produce inline areas include <CODE>fo:character</CODE>,
+<CODE>fo:external-graphic</CODE>, <CODE>fo:inline</CODE>,
+<CODE>fo:instream-foreign-object</CODE>, <CODE>fo:leader</CODE>,
+and <CODE>fo:page-number</CODE>.</p></li>
+</ul>
+
+<H2>Formatting properties</H2>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">When
+taken as a whole, the various formatting objects in an XSL-FO
+document specify the order in which content is to be placed on pages.
+However, <I>formatting properties</I> specify the details of
+formatting such as size, position, font, color, and a lot more.
+Formatting properties are represented as attributes on the individual
+formatting object elements.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+details of many of these properties should be familiar from CSS. Work
+is ongoing to ensure that CSS and XSL-FO use the same names to mean
+the same things. For example, the CSS <CODE>font-family</CODE>
+property means the same thing as the XSL <CODE>font-family</CODE>
+property; and although the syntax for assigning values to properties
+is different in CSS and XSL-FO, the meaning of the values themselves
+is the same. To indicate that the <CODE>fo:block</CODE> element
+is formatted in some approximation of Times, you might use this CSS
+rule:</FONT></P>
+<PRE>fo:block {font-family: 'New York', 'Times New Roman', serif}</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">The XSL-FO equivalent is to include a
+<CODE>font-family</CODE> attribute in the <CODE>fo:block</CODE>
+start tag in this way:</FONT></P>
+<PRE>&lt;fo:block font-family=&quot;'New York', 'Times New Roman', serif&quot;&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">Although this is superficially different, the
+style name (<CODE>font-family</CODE>) and the style value (<CODE>'New</CODE>
+<CODE>York'</CODE>, <CODE>'Times</CODE> <CODE>New</CODE>
+<CODE>Roman'</CODE>, <CODE>serif</CODE>) are the same. CSS's
+<CODE>font-family</CODE> property is specified as a list of font
+names, separated by commas, in order from first choice to last
+choice. XSL-FO&rsquo;s <CODE>font-family</CODE> property is
+specified as a list of font names, separated by commas, in order from
+first choice to last choice. Both CSS and XSL-FO quote font names
+that contain white space. Both CSS and XSL-FO understand the keyword
+<CODE>serif</CODE> to mean an arbitrary serif font.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">Of
+course, XSL formatting objects support many properties that have no
+CSS equivalent, such as <CODE>destination-placement-offset</CODE>,
+<CODE>block-progression-dimension</CODE>, <CODE>character</CODE>,
+and <CODE>hyphenation-keep</CODE>. You need to learn these to
+take full advantage of XSL. The standard XSL-FO properties follow:</FONT></P>
+<MULTICOL ID="Section1" COLS=2 GUTTER=0>
+<ul>
+	<li><CODE>absolute-position</CODE></li>
+	<li><CODE>active-state</CODE></li>
+	<li><CODE>alignment-adjust</CODE></li>
+	<li><CODE>alignment-baseline</CODE></li>
+	<li><CODE>auto-restore</CODE></li>
+	<li><CODE>azimuth</CODE></li>
+	<li><CODE>background</CODE></li>
+	<li><CODE>background-attachment</CODE></li>
+	<li><CODE>background-color</CODE></li>
+	<li><CODE>background-image</CODE></li>
+	<li><CODE>background-position</CODE></li>
+	<li><CODE>background-position-horizontal</CODE></li>
+	<li><CODE>background-position-vertical</CODE></li>
+	<li><CODE>background-repeat</CODE></li>
+	<li><CODE>baseline-shift</CODE></li>
+	<li><CODE>blank-or-not-blank</CODE></li>
+	<li><CODE>block-progression-dimension</CODE></li>
+	<li><CODE>border</CODE></li>
+	<li><CODE>border-after-color</CODE></li>
+	<li><CODE>border-after-precedence</CODE></li>
+	<li><CODE>border-after-style</CODE></li>
+	<li><CODE>border-after-width</CODE></li>
+	<li><CODE>border-before-color</CODE></li>
+	<li><CODE>border-before-precedence</CODE></li>
+	<li><CODE>border-before-style</CODE></li>
+	<li><CODE>border-before-width</CODE></li>
+	<li><CODE>border-bottom</CODE></li>
+	<li><CODE>border-bottom-color</CODE></li>
+	<li><CODE>border-bottom-style</CODE></li>
+	<li><CODE>border-bottom-width</CODE></li>
+	<li><CODE>border-collapse</CODE></li>
+	<li><CODE>border-color</CODE></li>
+	<li><CODE>border-end-color</CODE></li>
+	<li><CODE>border-end-precedence</CODE></li>
+	<li><CODE>border-end-style</CODE></li>
+	<li><CODE>border-end-width</CODE></li>
+	<li><CODE>border-left</CODE></li>
+	<li><CODE>border-left-color</CODE></li>
+	<li><CODE>border-left-style</CODE></li>
+	<li><CODE>border-left-width</CODE></li>
+	<li><CODE>border-right</CODE></li>
+	<li><CODE>border-right-color</CODE></li>
+	<li><CODE>border-right-style</CODE></li>
+	<li><CODE>border-right-width</CODE></li>
+	<li><CODE>border-separation</CODE></li>
+	<li><CODE>border-spacing</CODE></li>
+	<li><CODE>border-start-color</CODE></li>
+	<li><CODE>border-start-precedence</CODE></li>
+	<li><CODE>border-start-style</CODE></li>
+	<li><CODE>border-start-width</CODE></li>
+	<li><CODE>border-style</CODE></li>
+	<li><CODE>border-top</CODE></li>
+	<li><CODE>border-top-color</CODE></li>
+	<li><CODE>border-top-style</CODE></li>
+	<li><CODE>border-top-width</CODE></li>
+	<li><CODE>border-width</CODE></li>
+	<li><CODE>bottom</CODE></li>
+	<li><CODE>break-after</CODE></li>
+	<li><CODE>break-before</CODE></li>
+	<li><CODE>caption-side</CODE></li>
+	<li><CODE>case-name</CODE></li>
+	<li><CODE>case-title</CODE></li>
+	<li><CODE>character</CODE></li>
+	<li><CODE>clear</CODE></li>
+	<li><CODE>clip</CODE></li>
+	<li><CODE>color</CODE></li>
+	<li><CODE>color-profile-name</CODE></li>
+	<li><CODE>column-count</CODE></li>
+	<li><CODE>column-gap</CODE></li>
+	<li><CODE>column-number</CODE></li>
+	<li><CODE>column-width</CODE></li>
+	<li><CODE>content-height</CODE></li>
+	<li><CODE>content-type</CODE></li>
+	<li><CODE>content-width</CODE></li>
+	<li><CODE>country</CODE></li>
+	<li><CODE>cue</CODE></li>
+	<li><CODE>cue-after</CODE></li>
+	<li><CODE>cue-before</CODE></li>
+	<li><CODE>destination-placement-offset</CODE></li>
+	<li><CODE>direction</CODE></li>
+	<li><CODE>display-align</CODE></li>
+	<li><CODE>dominant-baseline</CODE></li>
+	<li><CODE>elevation</CODE></li>
+	<li><CODE>empty-cells</CODE></li>
+	<li><CODE>end-indent</CODE></li>
+	<li><CODE>ends-row</CODE></li>
+	<li><CODE>extent</CODE></li>
+	<li><CODE>external-destination</CODE></li>
+	<li><CODE>float</CODE></li>
+	<li><CODE>flow-name</CODE></li>
+	<li><CODE>font</CODE></li>
+	<li><CODE>font-family</CODE></li>
+	<li><CODE>font-selection-strategy</CODE></li>
+	<li><CODE>font-size</CODE></li>
+	<li><CODE>font-size-adjust</CODE></li>
+	<li><CODE>font-stretch</CODE></li>
+	<li><CODE>font-style</CODE></li>
+	<li><CODE>font-variant</CODE></li>
+	<li><CODE>font-weight</CODE></li>
+	<li><CODE>force-page-count</CODE></li>
+	<li><CODE>format</CODE></li>
+	<li><CODE>glyph-orientation-horizontal</CODE></li>
+	<li><CODE>glyph-orientation-vertical</CODE></li>
+	<li><CODE>grouping-separator</CODE></li>
+	<li><CODE>grouping-size</CODE></li>
+	<li><CODE>height</CODE></li>
+	<li><CODE>hyphenate</CODE></li>
+	<li><CODE>hyphenation-character</CODE></li>
+	<li><CODE>hyphenation-keep</CODE></li>
+	<li><CODE>hyphenation-ladder-count</CODE></li>
+	<li><CODE>hyphenation-push-character-count</CODE></li>
+	<li><CODE>hyphenation-remain-character-count</CODE></li>
+	<li><CODE>id</CODE></li>
+	<li><CODE>indicate-destination</CODE></li>
+	<li><CODE>initial-page-number</CODE></li>
+	<li><CODE>inline-progression-dimension</CODE></li>
+	<li><CODE>internal-destination</CODE></li>
+	<li><CODE>keep-together</CODE></li>
+	<li><CODE>keep-with-next</CODE></li>
+	<li><CODE>keep-with-previous</CODE></li>
+	<li><CODE>language</CODE></li>
+	<li><CODE>last-line-end-indent</CODE></li>
+	<li><CODE>leader-alignment</CODE></li>
+	<li><CODE>leader-length</CODE></li>
+	<li><CODE>leader-pattern</CODE></li>
+	<li><CODE>leader-pattern-width</CODE></li>
+	<li><CODE>left</CODE></li>
+	<li><CODE>letter-spacing</CODE></li>
+	<li><CODE>letter-value</CODE></li>
+	<li><CODE>linefeed-treatment</CODE></li>
+	<li><CODE>line-height</CODE></li>
+	<li><CODE>line-height-shift-adjustment</CODE></li>
+	<li><CODE>line-stacking-strategy</CODE></li>
+	<li><CODE>margin</CODE></li>
+	<li><CODE>margin-bottom</CODE></li>
+	<li><CODE>margin-left</CODE></li>
+	<li><CODE>margin-right</CODE></li>
+	<li><CODE>margin-top</CODE></li>
+	<li><CODE>marker-class-name</CODE></li>
+	<li><CODE>master-name</CODE></li>
+	<li><CODE>master-reference</CODE></li>
+	<li><CODE>max-height</CODE></li>
+	<li><CODE>maximum-repeats</CODE></li>
+	<li><CODE>max-width</CODE></li>
+	<li><CODE>media-usage</CODE></li>
+	<li><CODE>min-height</CODE></li>
+	<li><CODE>min-width</CODE></li>
+	<li><CODE>number-columns-repeated</CODE></li>
+	<li><CODE>number-columns-spanned</CODE></li>
+	<li><CODE>number-rows-spanned</CODE></li>
+	<li><CODE>odd-or-even</CODE></li>
+	<li><CODE>orphans</CODE></li>
+	<li><CODE>overflow</CODE></li>
+	<li><CODE>padding</CODE></li>
+	<li><CODE>padding-after</CODE></li>
+	<li><CODE>padding-before</CODE></li>
+	<li><CODE>padding-bottom</CODE></li>
+	<li><CODE>padding-end</CODE></li>
+	<li><CODE>padding-left</CODE></li>
+	<li><CODE>padding-right</CODE></li>
+	<li><CODE>padding-start</CODE></li>
+	<li><CODE>padding-top</CODE></li>
+	<li><CODE>page-break-after</CODE></li>
+	<li><CODE>page-break-before</CODE></li>
+	<li><CODE>page-break-inside</CODE></li>
+	<li><CODE>page-height</CODE></li>
+	<li><CODE>page-position</CODE></li>
+	<li><CODE>page-width</CODE></li>
+	<li><CODE>pause</CODE></li>
+	<li><CODE>pause-after</CODE></li>
+	<li><CODE>pause-before</CODE></li>
+	<li><CODE>pitch</CODE></li>
+	<li><CODE>pitch-range</CODE></li>
+	<li><CODE>play-during</CODE></li>
+	<li><CODE>position</CODE></li>
+	<li><CODE>precedence</CODE></li>
+	<li><CODE>provisional-distance-between-starts</CODE></li>
+	<li><CODE>provisional-label-separation</CODE></li>
+	<li><CODE>reference-orientation</CODE></li>
+	<li><CODE>ref-id</CODE></li>
+	<li><CODE>region-name</CODE></li>
+	<li><CODE>relative-align</CODE></li>
+	<li><CODE>relative-position</CODE></li>
+	<li><CODE>rendering-intent</CODE></li>
+	<li><CODE>retrieve-boundary</CODE></li>
+	<li><CODE>retrieve-class-name</CODE></li>
+	<li><CODE>retrieve-position</CODE></li>
+	<li><CODE>richness</CODE></li>
+	<li><CODE>right</CODE></li>
+	<li><CODE>role</CODE></li>
+	<li><CODE>rule-style</CODE></li>
+	<li><CODE>rule-thickness</CODE></li>
+	<li><CODE>scaling</CODE></li>
+	<li><CODE>scaling-method</CODE></li>
+	<li><CODE>score-spaces</CODE></li>
+	<li><CODE>script</CODE></li>
+	<li><CODE>show-destination</CODE></li>
+	<li><CODE>size</CODE></li>
+	<li><CODE>source-document</CODE></li>
+	<li><CODE>space-after</CODE></li>
+	<li><CODE>space-before</CODE></li>
+	<li><CODE>space-end</CODE></li>
+	<li><CODE>space-start</CODE></li>
+	<li><CODE>space-treatment</CODE></li>
+	<li><CODE>span</CODE></li>
+	<li><CODE>speak</CODE></li>
+	<li><CODE>speak-header</CODE></li>
+	<li><CODE>speak-numeral</CODE></li>
+	<li><CODE>speak-punctuation</CODE></li>
+	<li><CODE>speech-rate</CODE></li>
+	<li><CODE>src</CODE></li>
+	<li><CODE>start-indent</CODE></li>
+	<li><CODE>starting-state</CODE></li>
+	<li><CODE>starts-row</CODE></li>
+	<li><CODE>stress</CODE></li>
+	<li><CODE>suppress-at-line-break</CODE></li>
+	<li><CODE>switch-to</CODE></li>
+	<li><CODE>table-layout</CODE></li>
+	<li><CODE>table-omit-footer-at-break</CODE></li>
+	<li><CODE>table-omit-header-at-break</CODE></li>
+	<li><CODE>target-presentation-context</CODE></li>
+	<li><CODE>target-processing-context</CODE></li>
+	<li><CODE>target-stylesheet</CODE></li>
+	<li><CODE>text-align</CODE></li>
+	<li><CODE>text-align-last</CODE></li>
+	<li><CODE>text-altitude</CODE></li>
+	<li><CODE>text-decoration</CODE></li>
+	<li><CODE>text-depth</CODE></li>
+	<li><CODE>text-indent</CODE></li>
+	<li><CODE>text-shadow</CODE></li>
+	<li><CODE>text-transform</CODE></li>
+	<li><CODE>top</CODE></li>
+	<li><CODE>treat-as-word-space</CODE></li>
+	<li><CODE>unicode-bidi</CODE></li>
+	<li><CODE>vertical-align</CODE></li>
+	<li><CODE>visibility</CODE></li>
+	<li><CODE>voice-family</CODE></li>
+	<li><CODE>volume</CODE></li>
+	<li><CODE>white-space</CODE></li>
+	<li><CODE>white-space-collapse</CODE></li>
+	<li><CODE>widows</CODE></li>
+	<li><CODE>width</CODE></li>
+	<li><CODE>word-spacing</CODE></li>
+	<li><CODE>wrap-option</CODE></li>
+	<li><CODE>writing-mode</CODE></li>
+	<li><CODE>xml:lang</CODE></li>
+	<li><CODE>z-index</CODE></li>
+    </ul>
+</MULTICOL>
+<H2>Transforming to formatting objects</H2>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">XSL-FO
+is a complete XML vocabulary for laying out text on a page. An XSL-FO
+document is simply a well-formed XML document that uses this
+vocabulary. That means it has an XML declaration, a root element,
+child elements, and so forth. It must adhere to all the
+well-formedness rules of any XML document, or formatters will not
+accept it. By convention, a file that contains XSL formatting objects
+has the three-letter extension .fob or the two-letter extension .fo.
+However, it might have the suffix .xml because it also is a
+well-formed XML file.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">Listing
+19-1 is a simple document marked up using XSL formatting objects. The
+root of the document is <CODE>fo:root</CODE>. This element
+contains a <CODE>fo:layout-master-set</CODE> and a
+<CODE>fo:page-sequence</CODE>. The <CODE>fo:layout-master-set</CODE>
+element contains <CODE>fo:simple-page-master</CODE> child
+elements. Each <CODE>fo:simple-page-master</CODE> describes a
+kind of page on which content will be placed. Here there's only one
+very simple page, but more complex documents can have different
+master pages for first, right, and left, body pages, front matter,
+back matter, and more, each with a potentially different set of
+margins, page numbering, and other features. The name bu which the
+page master will be referred to is given in the <SPAN STYLE="font-weight: medium"><CODE>master-name</CODE></SPAN>
+attribute.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">Content
+is placed on copies of the master page using a <CODE>fo:page-sequence</CODE>.
+The <CODE>fo:page-sequence</CODE> has a <CODE>master-reference</CODE>
+attribute naming the master page to be used. Its <CODE>fo:flow</CODE>
+child element holds the actual content to be placed on the pages. The
+content here is given as two <CODE>fo:block</CODE> children, each
+with a <CODE>font-size</CODE> property of 20 points, a
+<CODE>font-family</CODE> property of <CODE>serif</CODE>, and
+a line-height of 30 points.</FONT></P>
+<P STYLE="margin-left: 0.64cm; margin-right: 11.75cm; text-indent: 0cm; margin-top: 0.21cm; margin-bottom: 0cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><B>Listing 19-1</B></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><B>A simple
+XSL-FO document</B></FONT></FONT></P>
+<PRE>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;fo:root xmlns:fo=&quot;http://www.w3.org/1999/XSL/Format&quot;&gt;
+
+  &lt;fo:layout-master-set&gt;
+    &lt;fo:simple-page-master master-name=&quot;only&quot;&gt;
+      &lt;fo:region-body/&gt;
+    &lt;/fo:simple-page-master&gt;
+  &lt;/fo:layout-master-set&gt;
+
+  &lt;fo:page-sequence master-reference=&quot;only&quot;&gt;
+
+    &lt;fo:flow flow-name=&quot;xsl-region-body&quot;&gt;
+      &lt;fo:block font-size=&quot;20pt&quot; font-family=&quot;serif&quot;
+                line-height=&quot;30pt&quot;&gt;
+        Hydrogen
+      &lt;/fo:block&gt;
+      &lt;fo:block font-size=&quot;20pt&quot; font-family=&quot;serif&quot;
+                line-height=&quot;30pt&quot; &gt;
+        Helium
+      &lt;/fo:block&gt;
+    &lt;/fo:flow&gt;
+
+  &lt;/fo:page-sequence&gt;
+
+&lt;/fo:root&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">Although you could write a document such as
+Listing 19-1 by hand, doing so would lose all the benefits of
+content-format independence achieved by XML. Normally, you write an
+XSLT style sheet that transforms an XML source document into XSL-FO.
+Listing 19-2 is the XSLT style sheet that produced Listing 19-1 by
+transforming the previous chapter&rsquo;s Listing 17-1.</FONT></P>
+<P STYLE="margin-left: 0.64cm; margin-right: 11.75cm; text-indent: 0cm; margin-top: 0.21cm; margin-bottom: 0cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><B>Listing 19-2</B></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><B>A
+transformation from a source vocabulary to XSL formatting objects</B></FONT></FONT></P>
+<PRE>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;xsl:stylesheet version=&quot;1.0&quot;
+  xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;
+  xmlns:fo=&quot;http://www.w3.org/1999/XSL/Format&quot;&gt;
+
+  &lt;xsl:output indent=&quot;yes&quot;/&gt;
+
+  &lt;xsl:template match=&quot;/&quot;&gt;
+    &lt;fo:root xmlns:fo=&quot;http://www.w3.org/1999/XSL/Format&quot;&gt;
+
+      &lt;fo:layout-master-set&gt;
+        &lt;fo:simple-page-master master-name=&quot;only&quot;&gt;
+          &lt;fo:region-body/&gt;
+        &lt;/fo:simple-page-master&gt;
+      &lt;/fo:layout-master-set&gt;
+
+      &lt;fo:page-sequence master-reference=&quot;only&quot;&gt;
+
+        &lt;fo:flow flow-name=&quot;xsl-region-body&quot;&gt;
+          &lt;xsl:apply-templates select=&quot;//ATOM&quot;/&gt;
+        &lt;/fo:flow&gt;
+
+      &lt;/fo:page-sequence&gt;
+
+    &lt;/fo:root&gt;
+  &lt;/xsl:template&gt;
+
+  &lt;xsl:template match=&quot;ATOM&quot;&gt;
+    &lt;fo:block font-size=&quot;20pt&quot; font-family=&quot;serif&quot;
+              line-height=&quot;30pt&quot;&gt;
+      &lt;xsl:value-of select=&quot;NAME&quot;/&gt;
+    &lt;/fo:block&gt;
+  &lt;/xsl:template&gt;
+
+&lt;/xsl:stylesheet&gt;</PRE><H2>
+Using FOP</H2>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">At
+the time of this writing, no browser can directly display XML
+documents transformed into XSL formatting objects. However, there are
+several applications that can convert an XSL-FO document into a
+viewable format such as PDF or TeX. The one used here is the XML
+Apache project's open source FOP. FOP is a command-line Java program
+that converts FO (formatting object) documents to Adobe Acrobat PDF
+files. At the time of this writing, the most recent version of FOP is
+0.20.4, which incompletely supports a subset of the formatting
+objects and properties in the XSL 1.0 Recommendation. You can
+download the latest version of FOP from <CODE>http://xml.apache.org/fop/</CODE>.</FONT></P>
+<P STYLE="margin-left: 1.27cm; text-indent: 0cm; margin-top: 0.21cm; margin-bottom: 0cm; page-break-inside: avoid; widows: 2; orphans: 2; page-break-after: avoid">
+<FONT COLOR="#0000ff"><FONT FACE="Arial, sans-serif"><B>On the CD-ROM</B></FONT></FONT></P>
+<P STYLE="margin-left: 1.27cm; text-indent: 0cm; margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">FOP is included
+on the CD-ROM in the directory utilities/fop. However, chances are
+good that a version that supports XSL-FO more completely will have
+been released by the time you're reading this, so you should try to
+get it from the Web if you can.</FONT></FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">FOP
+is a Java program that should run on any platform with a reasonably
+compatible Java 1.2 virtual machine. To install it, just unpack the
+distribution and add the directory where you put it (I use
+/usr/local/xml/fop) to your path.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+directory where you installed it contains, among other files, fop.bat
+and fop.sh.   Use fop.bat for Windows and fop.sh for Unix. other
+platforms can run the Java program directly by adding its JAR
+archives to your CLASSPATH and invoking the <CODE>org.apache.fop.apps.Fop</CODE>
+class. Run it from the command line with arguments specifying the
+input and output files. For example,</FONT></P>
+<PRE>C:\&gt; fop.bat -fo 19-1.fo -pdf 19-1.pdf</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">The output will look something like this:</FONT></P>
+<PRE>[INFO] FOP 0.20.4
+[INFO] building formatting object tree
+[INFO] [1]
+[INFO] Parsing of document complete, stopping renderer</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">Here 19-1.fo is the input XML file that uses
+the formatting object vocabulary. 19-1.pdf is the output PDF file
+that can be displayed and printed by Adobe Acrobat or other programs
+that read PDF files.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">Although
+PDF files are themselves ASCII text, this isn&rsquo;t a book about
+PostScript, so there&rsquo;s nothing to be gained by showing you the
+exact output of the above command. If you&rsquo;re curious, open the
+PDF file in any text editor. Instead, Figure 19-1 shows the rendered
+file displayed in Netscape Navigator using the Acrobat plug-in.</FONT></P>
+<P><FONT COLOR="#000000">This figure has been updated for the
+gold edition</FONT></P>
+<P><FONT COLOR="#000000"><IMG SRC="xslfo_htmlized_html_m75fd41bd.jpg" NAME="Graphic1" ALIGN=BOTTOM WIDTH=493 HEIGHT=379 BORDER=0></FONT></P>
+<P STYLE="page-break-inside: avoid; widows: 2; orphans: 2"><FONT COLOR="#008000"><FONT FACE="Arial, sans-serif">Figure
+19-1: The PDF file displayed in Netscape Navigator</FONT></FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">PDF
+files are not the only or even the primary eventual destination
+format for XML documents styled with XSL formatting objects.
+Certainly, one would hope that Web browsers will directly support XSL
+formatting objects in the not too distant future. For now, PDF files
+are the only convenient format, so that&rsquo;s what I show in this
+chapter. Eventually, more software will be able to read and display
+these files.</FONT></P>
+
+
+         
+<H1 id="d1e2250">Page Layout</H1>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+root element of a formatting objects document is <CODE>fo:root</CODE>.
+This element contains one <CODE>fo:layout-master-set</CODE>
+element and one or more <CODE>fo:page-sequence</CODE> elements.
+The <CODE>fo:page-sequence</CODE> elements contain content; that
+is, text and images to be placed on the pages. The
+<CODE>fo:layout-master-set</CODE> contains templates for the
+pages that will be created. When the formatter reads an XSL-FO
+document, it creates a page based on the first template in the
+<CODE>fo:layout-master-set</CODE>. Then it fills it with content
+from the <CODE>fo:page-sequence</CODE>. When it's filled the
+first page, it instantiates a second page based on a template, and
+fills it with content. The process continues until the formatter runs
+out of content.</FONT></P>
+<H2>The root element</H2>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>fo:root</CODE> element generally has an <CODE>xmlns:fo</CODE>
+attribute with the value <CODE>http://www.w3.org/1999/XSL/Format</CODE>
+and may (though it generally does not) have an <CODE>id</CODE>
+attribute. The <CODE>fo:root</CODE> element exists just to
+declare the namespace and be the document root. It has no direct
+effect on page layout or formatting.</FONT></P>
+<H2>Simple page masters</H2>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+page templates are called <I>page masters</I>. Page masters are
+similar in purpose to QuarkXPress master pages or PowerPoint slide
+masters. Each defines a general layout for a page including its
+margins, the sizes of the header, footer, and body area of the page,
+and so forth. Each actual page in the rendered document is based on
+one master page, and inherits certain properties like margins, page
+numbering, and layout from that master page. XSL-FO 1.0 defines
+exactly one kind of page master, the <CODE>fo:simple-page-master</CODE>,
+which represents a rectangular page. The <CODE>fo:layout-master-set</CODE>
+contains one or more <CODE>fo:simple-page-master</CODE> elements
+that define master pages.</FONT></P>
+<P STYLE="margin-left: 1.27cm; text-indent: 0cm; margin-top: 0.21cm; margin-bottom: 0cm; page-break-inside: avoid; widows: 2; orphans: 2; page-break-after: avoid">
+<FONT COLOR="#0000ff"><FONT FACE="Arial, sans-serif"><B>Note</B></FONT></FONT></P>
+<P STYLE="margin-left: 1.27cm; text-indent: 0cm; margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">Future versions
+of XSL-FO will add other kinds of page masters, possibly including<SPAN LANG="en-US">
+non-rectangular </SPAN>pages.</FONT></FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">Each
+master page is represented by a <CODE>fo:simple-page-master</CODE>
+element. A <CODE>fo:simple-page-master</CODE> element defines a
+page layout, including the size of its before region, body region,
+after region, end region, and start region. Figure 19-2 shows the
+typical layout of these parts. One thing that may not be obvious from
+this picture is that the body region overlaps the other four regions
+(though not the page margins); that is, the body is everything inside
+the thick black line including the start, end, before, and after
+regions.</FONT></P>
+<P><FONT COLOR="#000000"><IMG SRC="xslfo_htmlized_html_m50ed625c.jpg" NAME="Graphic2" ALIGN=BOTTOM WIDTH=319 HEIGHT=465 BORDER=0></FONT></P>
+<P STYLE="page-break-inside: avoid; widows: 2; orphans: 2"><FONT COLOR="#008000"><FONT FACE="Arial, sans-serif">Figure
+19-2: The layout of the parts of a simple page of English text</FONT></FONT></P>
+<P STYLE="margin-left: 1.27cm; text-indent: 0cm; margin-top: 0.21cm; margin-bottom: 0cm; page-break-inside: avoid; widows: 2; orphans: 2; page-break-after: avoid">
+<FONT COLOR="#0000ff"><FONT FACE="Arial, sans-serif"><B>Note</B></FONT></FONT></P>
+<P STYLE="margin-left: 1.27cm; text-indent: 0cm; margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">In normal
+English text, the end region is the right side of the page and the
+start region is the left side of the page. This is reversed in Hebrew
+or Arabic text, because these languages are written from right to
+left. In almost all modern languages, the before region is the header
+and the after region is the footer, but this could be reversed in a
+language that wrote from bottom to top.</FONT></FONT></P>
+<H3>Simple page master properties</H3>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>fo:simple-page-master</CODE> element has three main
+attributes:</FONT></P>
+<ul>
+<li><p><CODE>master-name</CODE>: the name by
+which page sequences will reference this master page</p></li>
+<li><p><CODE>page-height</CODE>: the height of
+the page</p></li>
+<li><p><CODE>page-width</CODE>: the width of the
+page</p></li>
+</ul>
+
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">If
+the <CODE>page-height</CODE> and <CODE>page-width</CODE> are
+not provided, then the formatter chooses a reasonable default based
+on the media in use (for example, 8.5&quot; &times; 11&quot;).</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">Other
+attributes commonly applied to page masters include:</FONT></P>
+<ul>
+
+<li><p>The <CODE>margin-bottom</CODE>,
+<CODE>margin-left</CODE>, <CODE>margin-right</CODE>, and
+<CODE>margin-top</CODE> attributes, or the shorthand <CODE>margin</CODE>
+attribute</p></li>
+<li><p>The <CODE>writing-mode</CODE> attribute
+that determines which direction text flows on the page, for example,
+left-to-right or right-to-left or top-to-bottom</p></li>
+<li><p>The <CODE>reference-orientation</CODE>
+attribute that specifies in 90-degree increments whether and how much
+the content is rotated</p></li>
+</ul>
+
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">For
+example, here is a <CODE>fo:layout-master-set</CODE> containing
+one <CODE>fo:simple-page-master</CODE> named <CODE>US-Letter</CODE>.
+It specifies an 8.5 &times; 11-inch page with half-inch margins on
+each side. It contains a single region, the body, into which all
+content will be placed.</FONT></P>
+<PRE>&lt;fo:layout-master-set&gt;
+  &lt;fo:simple-page-master  master-name=&quot;US-Letter&quot;
+     page-height=&quot;11in&quot;   page-width=&quot;8.5in&quot;
+     margin-top=&quot;0.5in&quot;   margin-bottom=&quot;0.5in&quot;
+     margin-left=&quot;0.5in&quot;  margin-right=&quot;0.5in&quot;&gt;
+    &lt;fo:region-body/&gt;
+  &lt;/fo:simple-page-master&gt;
+&lt;/fo:layout-master-set&gt;</PRE><H3>
+Regions</H3>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+designer sets the size of the body (center) region, header, footer,
+end region, and start region, as well as the distances between them,
+by adding region child elements to the <CODE>fo:simple-page-master</CODE>.
+These are:</font></p><ul><li><p><CODE>fo:region-before</CODE></p></li>
+<li><p><CODE>fo:region-after</CODE></p></li>
+<li><p><CODE>fo:region-body</CODE></p></li>
+<li><p><CODE>fo:region-start</CODE></p></li>
+<li><p><CODE>fo:region-end</CODE></p></li>
+</ul><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>fo:region-before</CODE> and <CODE>fo:region-after</CODE>
+elements each have an <CODE>extent</CODE> attribute that gives
+the height of these regions. Their width extends from the left side
+of the page to the right side. The <CODE>fo:region-start</CODE>
+and <CODE>fo:region-end</CODE> elements each have an <CODE>extent</CODE>
+attribute that specifies their widths. Their height extends from the
+bottom of the start region to the top of the end region. (This
+assumes normal Western text. Details would be rotated in Chinese or
+Hebrew or some other non-right-to<SPAN LANG="en-US">-left-top-</SPAN>to-bottom
+script.)</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>fo:region-body</CODE> does not have an <CODE>extent</CODE>
+attribute. Instead, the size of the body is everything inside the
+page margins. Thus, the region body overlaps the other four regions
+on the page. If you place text into the body and the other four
+regions, text will be drawn on top of other content. To avoid this,
+you must set the left margin of the body to be as large or larger
+than the extent of the start region, the top margin of the body to be
+as large or larger than the extent of the before region, and so on.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">Each
+of the five regions of a simple page master may be filled with
+content from a <CODE>fo:flow</CODE> or <CODE>fo:static-content</CODE>
+element when the document is processed. However, these elements do
+not contain that content. Instead, they simply give the dimensions of
+the boxes the formatter will build to put content in. They are
+blueprints for the boxes, not the boxes themselves.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">For
+example, this <CODE>fo:simple-page-master</CODE> creates pages
+with one-inch before and after regions. The region body will extend
+vertically from the bottom of the before region to the top of the
+after region. It will extend horizontally from the left side of the
+page to the right side of the page because there is no start or end
+region.</FONT></P>
+<PRE>  &lt;fo:simple-page-master master-name=&quot;table_page&quot;&gt;
+    &lt;fo:region-before extent=&quot;1.0in&quot;/&gt;
+    &lt;fo:region-body margin-top=&quot;1.0in&quot; margin-bottom=&quot;1.0in&quot;/&gt;
+    &lt;fo:region-after extent=&quot;1.0in&quot;/&gt;
+  &lt;/fo:simple-page-master&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">For another example, here is a
+<CODE>fo:layout-master-set</CODE> that makes all outer regions
+one inch. Furthermore, the page itself has a half-inch margin on all
+sides.</FONT></P>
+<PRE>&lt;fo:layout-master-set&gt;
+  &lt;fo:simple-page-master    master-name=&quot;only&quot;
+       page-width=&quot;8.5in&quot;   page-height=&quot;11in&quot;
+       margin-top=&quot;0.5in&quot;   margin-bottom=&quot;0.5in&quot;
+       margin-left=&quot;0.5in&quot;  margin-right=&quot;0.5in&quot;&gt;
+    &lt;fo:region-start  extent=&quot;1.0in&quot;/&gt;
+    &lt;fo:region-before extent=&quot;1.0in&quot;/&gt;
+    &lt;fo:region-body   margin=&quot;1.0in&quot;/&gt;
+    &lt;fo:region-end    extent=&quot;1.0in&quot;/&gt;
+    &lt;fo:region-after  extent=&quot;1.0in&quot;/&gt;
+  &lt;/fo:simple-page-master&gt;
+&lt;/fo:layout-master-set&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">The body regions from pages based on this page
+master will be 5.5 inches wide and 8 inches high. That's calculated
+by subtracting the sum of the body region's margins and the page
+margins from the size of the page.</FONT></P>
+<H2>Page sequences</H2>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">In
+addition to a <CODE>fo:layout-master-set</CODE>, each formatting
+object document contains one or more <CODE>fo:page-sequence</CODE>
+elements. Each page in the sequence has an associated page master
+that defines how the page will look. Which page master this is, is
+determined by the <CODE>master-reference</CODE> attribute of the
+<CODE>fo:page-sequence</CODE> element. This must match the name
+of a page master in the <CODE>fo:layout-master-set</CODE>.
+Listing 19-1 used a <CODE>fo:simple-master-page</CODE> named <CODE>only</CODE>
+to fill this role, but it is not uncommon to have more than one
+master page. In this case, the master pages might be grouped as part
+of a <CODE>fo:page-sequence-master</CODE> instead. For instance,
+you could have one master page for the first page of each chapter, a
+different one for all the subsequent left-hand pages, and a third for
+all the subsequent right-hand pages. Or, there could be one simple
+page master for a table of contents, another for body text, and a
+third for the index. In this case, you use one page sequence each for
+the table of contents, the body text, and the index.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">Each
+page sequence contains three child elements in this order:</FONT></P>
+<P STYLE="margin-left: 1.27cm; text-indent: -1.27cm; margin-top: 0.21cm; page-break-inside: avoid; widows: 2; orphans: 2">
+<FONT COLOR="#000000">	1.	An optional <CODE>fo:title</CODE>
+element containing inline content that can be used as the title of
+the document. This would normally be placed in the title bar of the
+browser window like the <CODE>TITLE</CODE> element in HTML</FONT></P>
+<P STYLE="margin-left: 1.27cm; text-indent: -1.27cm; margin-top: 0.21cm; page-break-inside: avoid; widows: 2; orphans: 2">
+<FONT COLOR="#000000">	2.	Zero or more <CODE>fo:static-content</CODE>
+elements containing text to be placed on every page</FONT></P>
+<P STYLE="margin-left: 1.27cm; text-indent: -1.27cm; margin-top: 0.21cm; page-break-inside: avoid; widows: 2; orphans: 2">
+<FONT COLOR="#000000">	3.	One <CODE>fo:flow</CODE> element
+containing data to be placed on each page in turn</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+main difference between a <CODE>fo:flow</CODE> and a
+<CODE>fo:static-content</CODE> is that text from the flow isn't
+placed on more than one page, whereas the static content is. For
+example, the words you're reading now are flow content that only
+appear on this page, whereas the part and chapter titles at the top
+of the page are static content that is repeated from page to page.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>fo:flow</CODE> element contains, in order, the elements to
+be placed on the page. As each page fills with elements from the
+flow, a new page is created with the next master page in the page
+sequence master for the elements that remain in the flow. With a
+simple page master, the same page will be instantiated repeatedly, as
+many times as necessary to hold all the content.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>fo:static-content</CODE> element contains information to be
+placed on each page. For instance, it may place the title of a book
+in the header of each page. Static content can be adjusted depending
+on the master page. For instance, the part title may be placed on
+left-hand pages, and the chapter title on right-hand pages. The
+<CODE>fo:static-content</CODE> element can also be used for items
+such as page numbers that have to be calculated from page to page. In
+other words, what's static is not the text, but the calculation that
+produces the text.</FONT></P>
+<H3>Flows</H3>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>fo:flow</CODE> object holds the actual content, which will
+be placed on the instances of the master pages. This content is
+composed of a sequence of <CODE>fo:block</CODE>,
+<CODE>fo:block-container</CODE>, <CODE>fo:table-and-caption</CODE>,
+<CODE>fo:table</CODE>, and <CODE>fo:list-block</CODE>
+elements. This section sticks to basic <CODE>fo:block</CODE>
+elements, which are roughly equivalent HTML's <CODE>DIV</CODE>
+elements. Later in this chapter, you learn more block-level elements
+that a flow can contain.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">For
+example, here is a basic flow containing the names of several atoms,
+each in its own block:</FONT></P>
+<PRE>&lt;fo:flow flow-name=&quot;xsl-region-body&quot;&gt;
+  &lt;fo:block&gt;Actinium&lt;/fo:block&gt;
+  &lt;fo:block&gt;Aluminum&lt;/fo:block&gt;
+  &lt;fo:block&gt;Americium&lt;/fo:block&gt;
+&lt;/fo:flow&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">The <CODE>flow-name</CODE> attribute of the
+<CODE>fo:flow</CODE>, here with the value <CODE>xsl-region-body</CODE>,
+specifies which of the five regions of the page this flow's content
+will be placed in. The allowed values are:</font></p><ul><li><p><CODE>xsl-region-body</CODE></p></li>
+<li><p><CODE>xsl-region-before</CODE></p></li>
+<li><p><CODE>xsl-region-after</CODE></p></li>
+<li><p><CODE>xsl-region-start</CODE></p></li>
+<li><p><CODE>xsl-region-end</CODE></p></li>
+</ul><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">For
+example, a <CODE>flow</CODE> for the header has a <CODE>flow-name</CODE>
+value of <CODE>xsl-region-before</CODE>. A flow for the body
+would have a <CODE>flow-nam</CODE>e of <CODE>xsl-region-body</CODE>.
+There can&rsquo;t be two flows with the same name in the same page
+sequence. Thus, each <CODE>fo:page-sequence</CODE> can contain at
+most five <CODE>fo:flow</CODE> children, one for each of the five
+regions on the page.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">You
+can now put together a complete style sheet that lays out the entire
+periodic table. Listing 19-3 demonstrates this with an XSLT style
+sheet that converts the periodic table into XSL formatting objects.
+The flow grabs all the atoms and places each one in its own block. A
+simple page master named <CODE>only</CODE> defines an A4-sized
+master page in landscape mode with half-inch margins on each side.</FONT></P>
+<P STYLE="margin-left: 0.64cm; margin-right: 11.75cm; text-indent: 0cm; margin-top: 0.21cm; margin-bottom: 0cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><B>Listing 19-3</B></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><B>A basic style
+sheet for the periodic table</B></FONT></FONT></P>
+<PRE>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;xsl:stylesheet version=&quot;1.0&quot;
+  xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;
+  xmlns:fo=&quot;http://www.w3.org/1999/XSL/Format&quot;&gt;
+
+  &lt;xsl:template match=&quot;/&quot;&gt;
+    &lt;fo:root xmlns:fo=&quot;http://www.w3.org/1999/XSL/Format&quot;&gt;
+
+      &lt;fo:layout-master-set&gt;
+
+        &lt;fo:simple-page-master master-name=&quot;A4&quot;
+           page-width=&quot;297mm&quot;  page-height=&quot;210mm&quot;
+           margin-top=&quot;0.5in&quot;  margin-bottom=&quot;0.5in&quot;
+           margin-left=&quot;0.5in&quot; margin-right=&quot;0.5in&quot;&gt;
+          &lt;fo:region-body/&gt;
+        &lt;/fo:simple-page-master&gt;
+
+      &lt;/fo:layout-master-set&gt;
+
+      &lt;fo:page-sequence master-reference=&quot;A4&quot;&gt;
+
+        &lt;fo:flow flow-name=&quot;xsl-region-body&quot;&gt;
+          &lt;xsl:apply-templates select=&quot;//ATOM&quot;/&gt;
+        &lt;/fo:flow&gt;
+
+      &lt;/fo:page-sequence&gt;
+
+    &lt;/fo:root&gt;
+  &lt;/xsl:template&gt;
+
+  &lt;xsl:template match=&quot;ATOM&quot;&gt;
+    &lt;fo:block&gt;&lt;xsl:value-of select=&quot;NAME&quot;/&gt;&lt;/fo:block&gt;
+  &lt;/xsl:template&gt;
+
+&lt;/xsl:stylesheet&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">Figure 19-3 shows the resulting document after
+Listing 19-3 has been run through an XSLT processor to produce an
+XSL-FO document, and that document has been run through FOP to
+produce a PDF file.</FONT></P>
+<P><FONT COLOR="#000000"><IMG SRC="xslfo_htmlized_html_m7bf1547.jpg" NAME="Graphic3" ALIGN=BOTTOM WIDTH=477 HEIGHT=367 BORDER=0></FONT></P>
+<P STYLE="page-break-inside: avoid; widows: 2; orphans: 2"><FONT COLOR="#008000"><FONT FACE="Arial, sans-serif">Figure
+19-3: The output of Listing 19-3</FONT></FONT></P>
+<H3>Static Content</H3>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">Whereas
+each piece of the content of a <CODE>fo:flow</CODE> element
+appears on one page, each piece of the content of a <CODE>fo:static-content</CODE>
+element appears on every page. For instance, if this book were laid
+out in XSL-FO, then both the header at the top of the page and the
+footer at the bottom of the page would have been produced by
+<CODE>fo:static-content</CODE> elements. You do not have to use
+<CODE>fo:static-content</CODE> elements, but if you do use them
+they must appear before all the <CODE>fo:flow</CODE> elements in
+the page sequence.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000"><CODE>fo:static-content</CODE>
+elements have the same attributes and contents as a <CODE>fo:flow</CODE>.
+However, because a <CODE>fo:static-content</CODE> cannot break
+its contents across multiple pages if necessary, it generally has
+less content than a <CODE>fo:flow</CODE>. For example, Listing
+19-4 uses a <CODE>fo:static-content</CODE> to place the words
+&quot;The Periodic Table&quot; in the header of each page.</FONT></P>
+<P STYLE="margin-left: 0.64cm; margin-right: 11.75cm; text-indent: 0cm; margin-top: 0.21cm; margin-bottom: 0cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><B>Listing 19-4</B></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><B>Using
+fo:static-content to generate a header</B></FONT></FONT></P>
+<PRE>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;xsl:stylesheet version=&quot;1.0&quot;
+  xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;
+  xmlns:fo=&quot;http://www.w3.org/1999/XSL/Format&quot;&gt;
+
+  &lt;xsl:template match=&quot;/&quot;&gt;
+    &lt;fo:root xmlns:fo=&quot;http://www.w3.org/1999/XSL/Format&quot;&gt;
+
+      &lt;fo:layout-master-set&gt;
+
+        &lt;fo:simple-page-master master-name=&quot;A4&quot;
+           page-width=&quot;297mm&quot;   page-height=&quot;210mm&quot;
+           margin-top=&quot;0.5in&quot;  margin-bottom=&quot;0.5in&quot;
+           margin-left=&quot;0.5in&quot; margin-right=&quot;0.5in&quot;&gt;
+          &lt;fo:region-before extent=&quot;1.0in&quot;/&gt;
+          &lt;fo:region-body margin-top=&quot;1.0in&quot;/&gt;
+        &lt;/fo:simple-page-master&gt;
+
+      &lt;/fo:layout-master-set&gt;
+
+      &lt;fo:page-sequence master-reference=&quot;A4&quot;&gt;
+
+        &lt;fo:static-content flow-name=&quot;xsl-region-before&quot;&gt;
+          &lt;fo:block&gt;The Periodic Table&lt;/fo:block&gt;
+        &lt;/fo:static-content&gt;
+
+        &lt;fo:flow flow-name=&quot;xsl-region-body&quot;&gt;
+          &lt;xsl:apply-templates select=&quot;//ATOM&quot;/&gt;
+        &lt;/fo:flow&gt;
+
+      &lt;/fo:page-sequence&gt;
+
+    &lt;/fo:root&gt;
+  &lt;/xsl:template&gt;
+
+  &lt;xsl:template match=&quot;ATOM&quot;&gt;
+    &lt;fo:block&gt;&lt;xsl:value-of select=&quot;NAME&quot;/&gt;&lt;/fo:block&gt;
+  &lt;/xsl:template&gt;
+
+&lt;/xsl:stylesheet&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">Figure 19-4 shows the last page of the PDF file
+ultimately produced by Listing 19-4. The same text, &quot;The
+Periodic Table&quot;, appears on all four pages of the document.</FONT></P>
+<P><FONT COLOR="#000000"><IMG SRC="xslfo_htmlized_html_m254941b6.jpg" NAME="Graphic4" ALIGN=BOTTOM WIDTH=485 HEIGHT=199 BORDER=0></FONT></P>
+<P STYLE="page-break-inside: avoid; widows: 2; orphans: 2"><FONT COLOR="#008000"><FONT FACE="Arial, sans-serif">Figure
+19-4: Static content in the header</FONT></FONT></P>
+<H3>Page numbering</H3>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>fo:page-sequence</CODE> element has eight optional
+attributes that define page numbers for the sequence. These are:</font></p><ul><li><p><CODE>initial-page-number</CODE></p></li>
+<li><p><CODE>force-page-count</CODE></p></li>
+<li><p><CODE>format</CODE></p></li>
+<li><p><CODE>letter-value</CODE></p></li>
+<li><p><CODE>country</CODE></p></li>
+<li><p><CODE>language</CODE></p></li>
+<li><p><CODE>grouping-separator</CODE></p></li>
+<li><p><CODE>grouping-size</CODE></p></li>
+</ul><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>initial-page-number</CODE> attribute gives the number of
+the first page in this sequence. The most likely value for this
+attribute is 1, but it could be a larger number if the previous pages
+are in a different <CODE>fo:page-sequence</CODE> or even a
+different document. It can also be set to one of these three key
+words:</FONT></P>
+<ul>
+<li><p><CODE>auto</CODE>: 1 unless pages from a
+preceding <CODE>fo:page-sequence</CODE> have pushed that up. This
+is the default.</p></li>
+<li><p><CODE>auto-odd</CODE>: Same as <CODE>auto</CODE>,
+but add 1 if that value is an even number; that is, start on an odd
+page.</p></li>
+<li><p><CODE>auto-even</CODE>: Same as <CODE>auto</CODE>,
+but add 1 if that value is an odd number; that is, start on an even
+page.</p></li>
+</ul>
+
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>force-page-count</CODE> attribute is used to require the
+document to have an even or odd number of pages or to end on an even
+or odd page. This is sometimes necessary for printed books. The
+<CODE>force-page-count</CODE> attribute can have one of these six
+keyword values:</FONT></P>
+<ul>
+
+<li><p><CODE>auto</CODE>: Make the last page an
+odd page if the <CODE>initial-page-number</CODE> of the next
+<CODE>fo:page-sequence</CODE> is even. Make the last page an
+even-page if the initial-page-number of the next page-sequence is
+odd. If there is no next <CODE>fo:page-sequence</CODE> or if the
+next <CODE>fo:page-sequence</CODE> does not specify an
+<CODE>initial-page-number</CODE>, then let the last page fall
+where it may.</p></li>
+<li><p><CODE>even</CODE>: Require an even number
+of pages, inserting an extra blank page if necessary to make it so.</p></li>
+<li><p><CODE>odd</CODE>: Require an odd number
+of pages, inserting an extra blank page if necessary to make it so.</p></li>
+<li><p><CODE>end-on-even</CODE>: Require the
+last page to have an even page number, inserting an extra blank page
+if necessary to make it so.</p></li>
+<li><p><CODE>end-on-odd</CODE>: Require the last
+page to have an odd page number, inserting an extra blank page if
+necessary to make it so.</p></li>
+<li><p><CODE>no-force</CODE>: Do not require
+either an even or odd number of pages.</p></li>
+</ul>
+
+
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>country</CODE> attribute should be set to an RFC 1766
+country code. The <CODE>language</CODE> attribute should be set
+to an RFC 1766 language code (<CODE>http://www.ietf.org/rfc/rfc1766.txt</CODE>).
+For instance, you would use <CODE>en</CODE> to indicate English
+and <CODE>us</CODE> to indicate the United States.</FONT></P>
+<P STYLE="margin-left: 1.27cm; text-indent: 0cm; margin-top: 0.21cm; margin-bottom: 0cm; page-break-inside: avoid; widows: 2; orphans: 2; page-break-after: avoid">
+<FONT COLOR="#0000ff"><FONT FACE="Arial, sans-serif"><B>Cross-Reference</B></FONT></FONT></P>
+<P STYLE="margin-left: 1.27cm; text-indent: 0cm; margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">These are
+essentially the same as the legal values for <CODE>xml:lang</CODE>
+that were discussed in Chapter 11, except that the country code and
+language codes are placed in two separate attributes rather than in
+one attribute.</FONT></FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+remaining four attributes have exactly the same syntax and meaning as
+when used as attributes of the <CODE>xsl:number</CODE> element
+from XSLT, so I won't repeat that discussion here.</FONT></P>
+<P STYLE="margin-left: 1.27cm; text-indent: 0cm; margin-top: 0.21cm; margin-bottom: 0cm; page-break-inside: avoid; widows: 2; orphans: 2; page-break-after: avoid">
+<FONT COLOR="#0000ff"><FONT FACE="Arial, sans-serif"><B>Cross-Reference</B></FONT></FONT></P>
+<P STYLE="margin-left: 1.27cm; text-indent: 0cm; margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">The <CODE>xsl:number</CODE>
+element and the <CODE>format</CODE>, <CODE>letter-value</CODE>,
+<CODE>grouping-separator</CODE>, and <CODE>grouping-size</CODE>
+attributes are discussed in the &quot;Number to String Conversion&quot;
+section in Chapter 18.</FONT></FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>fo:page-number</CODE> formatting object is an empty inline
+element that inserts the number of the current page. The formatter is
+responsible for determining what that number is. This element can
+have a variety of formatting attributes common to inline elements
+such as <CODE>font-family</CODE> and <CODE>text-decoration</CODE>.
+For example, Listing 19-5 uses <CODE>fo:static-content</CODE> and
+<CODE>fo:page-number</CODE> to put the page number at the bottom
+of every page:</FONT></P>
+<P STYLE="margin-left: 0.64cm; margin-right: 11.75cm; text-indent: 0cm; margin-top: 0.21cm; margin-bottom: 0cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><B>Listing 19-5</B></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><B>Using
+fo:page-number to place the page number in the footer</B></FONT></FONT></P>
+<PRE>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;xsl:stylesheet version=&quot;1.0&quot;
+  xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;
+  xmlns:fo=&quot;http://www.w3.org/1999/XSL/Format&quot;&gt;
+
+  &lt;xsl:template match=&quot;/&quot;&gt;
+    &lt;fo:root xmlns:fo=&quot;http://www.w3.org/1999/XSL/Format&quot;&gt;
+
+      &lt;fo:layout-master-set&gt;
+
+        &lt;fo:simple-page-master master-name=&quot;A4&quot;
+           page-width=&quot;297mm&quot;  page-height=&quot;210mm&quot;
+           margin-top=&quot;0.5in&quot;  margin-bottom=&quot;0.5in&quot;
+           margin-left=&quot;0.5in&quot; margin-right=&quot;0.5in&quot;&gt;
+          &lt;fo:region-before extent=&quot;1.0in&quot;/&gt;
+          &lt;fo:region-body margin-top=&quot;1.0in&quot;
+                          margin-bottom=&quot;1.0in&quot;/&gt;
+          &lt;fo:region-after  extent=&quot;1.0in&quot;/&gt;
+        &lt;/fo:simple-page-master&gt;
+
+      &lt;/fo:layout-master-set&gt;
+
+      &lt;fo:page-sequence master-reference=&quot;A4&quot;
+        initial-page-number=&quot;1&quot; language=&quot;en&quot; country=&quot;us&quot;&gt;
+
+        &lt;fo:static-content flow-name=&quot;xsl-region-before&quot;&gt;
+          &lt;fo:block&gt;The Periodic Table&lt;/fo:block&gt;
+        &lt;/fo:static-content&gt;
+
+        &lt;fo:static-content flow-name=&quot;xsl-region-after&quot;&gt;
+          &lt;fo:block&gt;p. &lt;fo:page-number/&gt;&lt;/fo:block&gt;
+        &lt;/fo:static-content&gt;
+
+        &lt;fo:flow flow-name=&quot;xsl-region-body&quot;&gt;
+          &lt;xsl:apply-templates select=&quot;//ATOM&quot;/&gt;
+        &lt;/fo:flow&gt;
+
+      &lt;/fo:page-sequence&gt;
+
+    &lt;/fo:root&gt;
+  &lt;/xsl:template&gt;
+
+  &lt;xsl:template match=&quot;ATOM&quot;&gt;
+    &lt;fo:block&gt;&lt;xsl:value-of select=&quot;NAME&quot;/&gt;&lt;/fo:block&gt;
+  &lt;/xsl:template&gt;
+
+&lt;/xsl:stylesheet&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">Figure 19-5 shows the second page of the PDF
+file generated from Listing 19-5. The page number appears at the
+bottom of this and every other page in the document.</FONT></P>
+<P><FONT COLOR="#000000"><IMG SRC="xslfo_htmlized_html_333d0c00.jpg" NAME="Graphic5" ALIGN=BOTTOM WIDTH=481 HEIGHT=367 BORDER=0></FONT></P>
+<P STYLE="page-break-inside: avoid; widows: 2; orphans: 2"><FONT COLOR="#008000"><FONT FACE="Arial, sans-serif">Figure
+19-5: Automatically generated page numbers in the footer</FONT></FONT></P>
+<H2>Page sequence masters</H2>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">Each
+page the formatter creates is associated with a master page from the
+<CODE>fo:layout-master-set</CODE> that defines how the page will
+look. Which master page this is, is determined by the
+<CODE>master-reference</CODE> attribute of the <CODE>fo:page-sequence</CODE>
+element. Listing 19-3 through 19-5 used a single
+<CODE>fo:simple-master-page</CODE> named <CODE>A4</CODE> to
+fill this role, but it is not uncommon to have more than one master
+page. For instance, you could use one master page for the first page
+of each chapter, a different one for all the subsequent left-hand
+pages, and a third for all the subsequent right-hand pages. In this
+case, the master pages might be grouped as part of a
+<CODE>fo:page-sequence-master</CODE> instead.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>fo:page-sequence-master</CODE> element is a child of the
+<CODE>fo:layout-master-set</CODE> that lists the order in which
+particular master pages will be instantiated using one or more of
+these three child elements:</font></p><ul><li><p><CODE>fo:single-page-master-reference</CODE></p></li>
+<li><p><CODE>fo:repeatable-page-master-reference</CODE></p></li>
+<li><p><CODE>fo:repeatable-page-master-alternatives</CODE></p></li>
+</ul><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>fo:single-page-master-reference</CODE><SPAN STYLE="text-decoration: none">
+and </SPAN><CODE>fo:repeatable-page-master-reference </CODE><SPAN STYLE="text-decoration: none">elements
+each have a </SPAN><CODE>master-reference</CODE> attribute that
+specifies which <CODE>fo:simple-master-page</CODE> their pages
+are based on. The <CODE>fo:repeatable-page-master-alternatives</CODE>
+has child <CODE>fo:conditional-page-master-reference</CODE><SPAN STYLE="text-decoration: none">
+elements that are instantiated based on various conditions.  Each of
+these child  </SPAN><CODE>fo:conditional-page-master-reference</CODE><SPAN STYLE="text-decoration: none">
+elements has a </SPAN><CODE>master-reference</CODE><SPAN STYLE="text-decoration: none">
+attribute that specifies which </SPAN><CODE>fo:simple-master-page</CODE><SPAN STYLE="text-decoration: none">
+to use if its condition is satisfied.</SPAN></FONT></P>
+<H3>fo:single-page-master-reference</H3>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+simplest is <CODE>fo:single-page-master-reference</CODE> whose
+<CODE>master-reference</CODE> attribute identifies one master
+page to be instantiated. For example, this <CODE>fo:layout-master-set</CODE>
+contains a <CODE>fo:page-sequence-master</CODE> element named
+<CODE>contents</CODE> that says that all text should be placed on
+a single instance of the master page named <CODE>A4</CODE>:</FONT></P>
+<PRE>&lt;fo:layout-master-set&gt;
+
+  &lt;fo:simple-page-master master-name=&quot;A4&quot;
+      page-width=&quot;297mm&quot;  page-height=&quot;210mm&quot;
+      margin-top=&quot;0.5in&quot;  margin-bottom=&quot;0.5in&quot;
+      margin-left=&quot;0.5in&quot; margin-right=&quot;0.5in&quot;&gt;
+    &lt;fo:region-body/&gt;
+  &lt;/fo:simple-page-master&gt;
+
+  &lt;fo:page-sequence-master master-name=&quot;contents&quot;&gt;
+    &lt;fo:single-page-master-reference master-reference=&quot;A4&quot;/&gt;
+  &lt;/fo:page-sequence-master&gt;
+
+&lt;/fo:layout-master-set&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">This page sequence master only allows the
+creation of a single page. Technically, it's an error if there's more
+content than can fit on this one page. However, in practice most
+formatters simply repeat the last page used until they have enough
+pages to hold all the content.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">Now
+consider this page sequence master:</FONT></P>
+<PRE>&lt;fo:page-sequence-master master-name=&quot;contents&quot;&gt;
+  &lt;fo:single-page-master-reference master-name=&quot;A4&quot;/&gt;
+  &lt;fo:single-page-master-reference master-name=&quot;A4&quot;/&gt;
+&lt;/fo:page-sequence-master&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">This provides for up to two pages, each based
+on the master page named <CODE>A4</CODE>. If the first page fills
+up, a second is created. If that page fills up, then the formatter
+may throw an error, or it may create extra pages.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+same technique can be used to apply different master pages. For
+example, this sequence specification bases the first page on the
+master page named <CODE>front</CODE> and the second on the master
+page named <CODE>back</CODE>:</FONT></P>
+<PRE>&lt;fo:page-sequence-master master-name=&quot;contents&quot;&gt;
+  &lt;fo:single-page-master-reference master-reference=&quot;front&quot;/&gt;
+  &lt;fo:single-page-master-reference master-reference=&quot;back&quot;/&gt;
+&lt;/fo:page-sequence-master&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">The first page the formatter creates will be
+based on the master page named front. The second page created will be
+based on the master page named back. If the second page fills up, the
+formatter may throw an error; or it may create extra pages based on
+back, the last master page instantiated.</FONT></P>
+<H3>fo:repeatable-page-master-reference</H3>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">Of
+course, you usually don't know in advance exactly how many pages
+there will be. The <CODE>fo:repeatable-page-master-reference</CODE>
+element lets you specify that as many pages as necessary will be used
+to hold the content, all based on a single master page. The
+<CODE>master-reference</CODE> attribute identifies which master
+page will be repeated. For example, this page sequence master will
+use as many copies of the master page named <CODE>A4</CODE> as
+necessary to hold all the content:</FONT></P>
+<PRE>&lt;fo:page-sequence-master master-name=&quot;contents&quot;&gt;
+  &lt;fo:repeatable-page-master-reference master-reference=&quot;A4&quot;/&gt;
+&lt;/fo:page-sequence-master&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">Alternately, you can set the <CODE>maximum-repeats</CODE>
+attribute of the <CODE>fo:repeatable-page-master-reference</CODE>
+element to limit the number of pages that will be created. For
+instance, this <CODE>fo:page-sequence-master</CODE> generates at
+most 10 pages per document:</FONT></P>
+<PRE>&lt;fo:page-sequence-master master-name=&quot;contents&quot;&gt;
+  &lt;fo:repeatable-page-master-reference master-reference=&quot;A4&quot;
+                                       maximum-repeats=&quot;10&quot;/&gt;
+&lt;/fo:page-sequence-master&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">This also lets you do things like using one
+master for the first two pages, another for the next three pages, and
+a third master for the next 10 pages.</FONT></P>
+<H3> fo:repeatable-page-master-alternatives</H3>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>fo:repeatable-page-master-alternatives</CODE> element
+specifies different master pages for the first page, even pages, odd
+pages, blank pages, last even page, and last odd page. This is more
+designed for a chapter of a printed book where the first and last
+pages, as well the even and odd pages, traditionally have different
+margins, headers, and footers.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">Because
+a <CODE>fo:repeatable-page-master-alternatives</CODE> element
+needs to refer to more than one master page, it can't use a
+<CODE>master-reference</CODE> attribute such as
+<CODE>fo:single-page-master-reference</CODE> and
+<CODE>fo:repeatable-page-master-reference</CODE>. Instead, it has
+<CODE>fo:conditional-page-master-reference</CODE> child elements.
+Each of these has a <CODE>master-reference</CODE> attribute that
+identifies the master page to instantiate given that condition. The
+conditions themselves are determined by three attributes:</FONT></P>
+
+<ul>
+<li><p><CODE>page-position</CODE>: This
+attribute can be set to <CODE>first</CODE>, <CODE>last</CODE>,
+<CODE>rest</CODE>, or <CODE>any</CODE> to identify it as
+applying only to the first page, last page, any page except the
+first, or any page respectively.</p></li>
+<li><p><CODE>odd-or-even</CODE>: This attribute
+can be set to <CODE>odd</CODE>, <CODE>even</CODE>, or <CODE>any</CODE>
+to identify it as applying only to odd pages, only to even pages, or
+to all pages respectively.</p></li>
+<li><p><CODE>blank-or-not-blank</CODE>: This
+attribute can be set to <CODE>blank</CODE>, <CODE>not-blank</CODE>,
+or <CODE>any</CODE> to identify it as applying only to blank
+pages, only to pages that contain content, or to all pages
+respectively.</p></li>
+</ul>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">For
+example, this page sequence master says that the first page should be
+based on the master page named <CODE>letter_first</CODE> but that
+all subsequent pages should use the master page named <CODE>letter</CODE>:</FONT></P>
+<PRE>&lt;fo:page-sequence-master master-name=&quot;contents&quot;&gt;
+  &lt;fo:repeatable-page-master-alternatives&gt;
+    &lt;fo:conditional-page-master-reference 
+      page-position=&quot;first&quot; master-reference=&quot;letter_first&quot;/&gt;
+    &lt;fo:conditional-page-master-reference 
+      page-position=&quot;rest&quot;  master-reference=&quot;letter&quot;/&gt;
+  &lt;/fo:repeatable-page-master-alternatives&gt;
+&lt;/fo:page-sequence-master master-reference=&quot;contents&quot;&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">If the content overflows the first page, the
+remainder will be placed on a second page. If it overflows the second
+page, a third page will be created. As many pages as needed to hold
+all the content will be constructed.</FONT></P>
+
+    
+<H1 id="d1e3699">Content</H1>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+content (as opposed to markup) of an XSL-FO document is mostly text.
+Non-XML content such as GIF and JPEG images can be included in a
+fashion similar to the <CODE>IMG</CODE> element of HTML. Other
+forms of XML content, such as MathML and SVG, can be embedded
+directly inside the XSL-FO document. This content is stored in
+several kinds of elements including:</font></p><ul><li><p>Block-level formatting objects</p></li>
+<li><p>Inline formatting objects</p></li>
+<li><p>Table formatting objects</p></li>
+<li><p>Out-of-line formatting objects</p></li>
+</ul><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">All
+of these different kinds of elements are descendants of either a
+<CODE>fo:flow</CODE> or a <CODE>fo:static-content</CODE>
+element. They are never placed directly on page masters or page
+sequences.</FONT></P>
+<H2>Block-level formatting objects</H2>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">A
+block-level formatting object is drawn as a rectangular area
+separated by a line break and possibly extra white space from any
+content that precedes or follows it. Blocks may contain other blocks,
+in which case the contained blocks are also separated from the
+containing block by a line break and perhaps extra white space.
+Block-level formatting objects include:</font></p><ul><li><p><CODE>fo:block</CODE></p></li>
+<li><p><CODE>fo:block-container</CODE></p></li>
+<li><p><CODE>fo:table-and-caption</CODE></p></li>
+<li><p><CODE>fo:table</CODE></p></li>
+<li><p><CODE>fo:list-block</CODE></p></li>
+</ul>
+
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>fo:block</CODE> element is the XSL-FO equivalent of
+<CODE>display: block</CODE> in CSS or <CODE>DIV</CODE> in
+HTML. Blocks may be contained in <CODE>fo:flow</CODE> elements,
+other <CODE>fo:block</CODE> elements, and <CODE>fo:static-content</CODE>
+elements. <CODE>fo:block</CODE> elements may contain other
+<CODE>fo:block</CODE> elements, other block-level elements such
+as <CODE>fo:table</CODE> and <CODE>fo:list-block</CODE>, and
+inline elements such as <CODE>fo:inline</CODE> and
+<CODE>fo:page-number</CODE>. Block-level elements may also
+contain raw text. For example:</FONT></P>
+<PRE>&lt;fo:block&gt;The Periodic Table, Page &lt;fo:page-number/&gt;&lt;/fo:block&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">The block-level elements generally have
+attributes for both area properties and text-formatting properties.
+The text-formatting properties are inherited by any child elements of
+the block unless overridden.</FONT></P>
+<P STYLE="margin-left: 1.27cm; text-indent: 0cm; margin-top: 0.21cm; margin-bottom: 0cm; page-break-inside: avoid; widows: 2; orphans: 2; page-break-after: avoid">
+<FONT COLOR="#0000ff"><FONT FACE="Arial, sans-serif"><B>Caution</B></FONT></FONT></P>
+<P STYLE="margin-left: 1.27cm; text-indent: 0cm; margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">As of version
+0.20.4, FOP does not support <CODE>fo:block-container</CODE> or
+<CODE>fo:table-and-caption</CODE>.</FONT></FONT></P>
+<H2>Inline formatting objects</H2>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">An
+inline formatting object is also drawn as a rectangular area that may
+contain text or other inline areas. However, inline areas are most
+commonly arranged in lines running from left to right. When a line
+fills up, a new line is started below the previous one. The exact
+order in which inline elements are placed depends on the writing
+mode. For example, when working in Hebrew or Arabic, inline elements
+are first placed on the right and then fill to the left. Inline
+formatting objects include:</font></p>
+
+<ul><li><p><CODE>fo:bidi-override</CODE></p></li>
+<li><p><CODE>fo:character</CODE></p></li>
+<li><p><CODE>fo:external-graphic</CODE></p></li>
+<li><p><CODE>fo:initial-property-set</CODE></p></li>
+<li><p><CODE>fo:instream-foreign-object</CODE></p></li>
+<li><p><CODE>fo:inline</CODE></p></li>
+<li><p><CODE>fo:inline-container</CODE></p></li>
+<li><p><CODE>fo:leader</CODE></p></li>
+<li><p><CODE>fo:page-number</CODE></p></li>
+<li><p><CODE>fo:page-number-citation</CODE></p></li>
+</ul>
+
+<P STYLE="margin-left: 1.27cm; text-indent: 0cm; margin-top: 0.21cm; margin-bottom: 0cm; page-break-inside: avoid; widows: 2; orphans: 2; page-break-after: avoid">
+<FONT COLOR="#0000ff"><FONT FACE="Arial, sans-serif"><B>Caution</B></FONT></FONT></P>
+<P STYLE="margin-left: 1.27cm; text-indent: 0cm; margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">As of version
+0.20.4, FOP does not support <CODE>fo:bidi-override</CODE>,
+<CODE>fo:initial-property-set</CODE>, or <CODE>fo:inline-container</CODE>.</FONT></FONT></P>
+<H2>Table formatting objects</H2>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+table formatting objects are the XSL-FO equivalents of CSS2 table
+properties. However, tables do work somewhat more naturally in XSL-FO
+than in CSS. For the most part, an individual table is a block-level
+object, while the parts of the table aren't really either inline or
+block level. However, an entire table can be turned into an inline
+object by wrapping it in a <CODE>fo:inline-container</CODE>.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">There
+are nine XSL table formatting objects:</font></p><ul><li><p><CODE>fo:table-and-caption</CODE></p></li>
+<li><p><CODE>fo:table</CODE></p></li>
+<li><p><CODE>fo:table-caption</CODE></p></li>
+<li><p><CODE>fo:table-column</CODE></p></li>
+<li><p><CODE>fo:table-header</CODE></p></li>
+<li><p><CODE>fo:table-footer</CODE></p></li>
+<li><p><CODE>fo:table-body</CODE></p></li>
+<li><p><CODE>fo:table-row</CODE></p></li>
+<li><p><CODE>fo:table-cell</CODE></p></li>
+</ul><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+root of a table is either a <CODE>fo:table</CODE> or a
+<CODE>fo:table-and-caption</CODE> that contains a <CODE>fo:table</CODE>
+and a <CODE>fo:caption</CODE>. The <CODE>fo:table</CODE>
+contains a <CODE>fo:table-header</CODE>, <CODE>fo:table-body</CODE>,
+and <CODE>fo:table-footer</CODE>. The table body contains
+<CODE>fo:table-row</CODE> elements that are divided up into
+<CODE>fo:table-cell</CODE> elements.</FONT></P>
+<P STYLE="margin-left: 1.27cm; text-indent: 0cm; margin-top: 0.21cm; margin-bottom: 0cm; page-break-inside: avoid; widows: 2; orphans: 2; page-break-after: avoid">
+<FONT COLOR="#0000ff"><FONT FACE="Arial, sans-serif"><B>Caution</B></FONT></FONT></P>
+<P STYLE="margin-left: 1.27cm; text-indent: 0cm; margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">FOP 0.20.4 has
+limited support for the table formatting objects, and none at all for
+<CODE>fo:table-and-caption</CODE> and <CODE>fo:table-caption</CODE>.</FONT></FONT></P>
+<H2>Out-of-line formatting objects</H2>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">There
+are three &quot;out-of-line&quot; formatting objects:</font></p><ul><li><p><CODE>fo:float</CODE></p></li>
+<li><p><CODE>fo:footnote</CODE></p></li>
+<li><p><CODE>fo:footnote-body</CODE></p></li>
+</ul><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">Out-of-line
+formatting objects &quot;borrow&quot; space from existing inline or
+block objects. On the page, they do not necessarily appear between
+the same elements that they appeared between in the input formatting
+object XML tree.</FONT></P>
+<P STYLE="margin-left: 1.27cm; text-indent: 0cm; margin-top: 0.21cm; margin-bottom: 0cm; page-break-inside: avoid; widows: 2; orphans: 2; page-break-after: avoid">
+<FONT COLOR="#0000ff"><FONT FACE="Arial, sans-serif"><B>Caution</B></FONT></FONT></P>
+<P STYLE="margin-left: 1.27cm; text-indent: 0cm; margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">FOP 0.20.4 does
+not support <CODE>fo:float</CODE>.</FONT></FONT></P>
+
+    
+<H1 id="d1e4023">Leaders and Rules</H1>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">A
+rule is a block-level horizontal line inserted into text similar to
+the line below the chapter title on the first page of this chapter.
+The <CODE>HR</CODE> element in HTML produces a rule. A leader is
+a line that extends from the right side of left-aligned text in the
+middle of a line to the left side of some right-aligned text on the
+same line. It's most commonly made up of dots, although other
+characters can be used. Leaders are commonly seen in menus and tables
+of contents. In fact, if you flip back to the table of contents at
+the beginning of this book, you'll see leaders between chapter and
+section titles and the page numbers.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">In
+XSL-FO both leaders and rules are produced by the <CODE>fo:leader</CODE>
+element. This is an inline element that represents a leader, although
+it can easily serve as a rule by placing it inside a <CODE>fo:block</CODE>.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">Six
+attributes describe the appearance of a leader:</FONT></P>
+
+<ul>
+<li><p><CODE>leader-alignment</CODE>: This can
+be set to <CODE>reference-area</CODE> or <CODE>page</CODE> to
+indicate that the start edge of the leader should be aligned with the
+start edge of the named item. It can also be set to <CODE>none</CODE>
+or <CODE>inherit</CODE>.</p></li>
+<li><p><CODE>leader-length</CODE>: The length of
+the leader, such as <CODE>12pc</CODE> or <CODE>5in</CODE>.</FONT></P>
+<li><p><CODE>leader-pattern</CODE>: This can be
+set to <CODE>space</CODE>, <CODE>rule</CODE>, <CODE>dots</CODE>,
+<CODE>use-content</CODE>, or <CODE>inherit</CODE>. The
+<CODE>use-content</CODE> value means that the leader characters
+should be read from the content of the <CODE>fo:leader</CODE>
+element.</p></li>
+<li><p><CODE>leader-pattern-width</CODE>: This
+property can be set to a specific length such as <CODE>2mm</CODE>
+or to <CODE>use-font-metrics</CODE>, which indicates that the
+leader should simply be as big as it would naturally be. This is not
+the length of the entire leader (which is set by <CODE>leader-length</CODE>);
+it is the length of each repeating pattern in the leader. If
+necessary, white space will be added to stretch each pattern out to
+the requested length.</FONT></P>
+<li><p><CODE>rule-style</CODE>: This property
+has the same values as the CSS <CODE>border-style</CODE>
+properties; that is, <CODE>none</CODE>, <CODE>dotted</CODE>,
+<CODE>dashed</CODE>, <CODE>solid</CODE>, <CODE>double</CODE>,
+<CODE>groove</CODE>, <CODE>ridge</CODE>, and <CODE>inherit</CODE>.</FONT></P>
+<li><p><CODE>rule-thickness</CODE>: This
+property is the thickness (width) of the rule; 1pt by default.</p></li>
+</ul>
+
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">In
+addition, a number of other common properties apply to leaders. For
+instance, you can use the <CODE>font-family</CODE> property to
+change the font in which a leader is drawn or the <CODE>color</CODE>
+property to change the color in which a leader is drawn. For example,
+this is a green horizontal line that&rsquo;s 7.5 inches long and 2
+points thick:</FONT></P>
+
+<PRE>&lt;fo:block&gt;
+  &lt;fo:leader leader-length=&quot;7.5in&quot; leader-pattern=&quot;rule&quot;
+             rule-thickness=&quot;2pt&quot; color=&quot;green&quot;/&gt;
+&lt;/fo:block&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">Listing 19-6 uses <CODE>fo:leader</CODE> to
+place a rule at the top of each page footer.</FONT></P>
+<P STYLE="margin-left: 0.64cm; margin-right: 11.75cm; text-indent: 0cm; margin-top: 0.21cm; margin-bottom: 0cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><B> Listing 19-6</B></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><B>Using
+fo:leader to separate the footer from the body with a horizontal line</B></FONT></FONT></P>
+<PRE>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;xsl:stylesheet version=&quot;1.0&quot;
+  xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;
+  xmlns:fo=&quot;http://www.w3.org/1999/XSL/Format&quot;&gt;
+
+  &lt;xsl:template match=&quot;/&quot;&gt;
+    &lt;fo:root xmlns:fo=&quot;http://www.w3.org/1999/XSL/Format&quot;&gt;
+
+      &lt;fo:layout-master-set&gt;
+
+        &lt;fo:simple-page-master master-name=&quot;A4&quot;
+           page-width=&quot;297mm&quot;  page-height=&quot;210mm&quot;
+           margin-top=&quot;0.5in&quot;  margin-bottom=&quot;0.5in&quot;
+           margin-left=&quot;0.5in&quot; margin-right=&quot;0.5in&quot;&gt;
+          &lt;fo:region-before extent=&quot;1.0in&quot;/&gt;
+          &lt;fo:region-body margin-top=&quot;1.0in&quot;
+                          margin-bottom=&quot;1.0in&quot;/&gt;
+          &lt;fo:region-after  extent=&quot;1.0in&quot;/&gt;
+        &lt;/fo:simple-page-master&gt;
+
+      &lt;/fo:layout-master-set&gt;
+
+      &lt;fo:page-sequence master-reference`=&quot;A4&quot;
+        initial-page-number=&quot;1&quot; language=&quot;en&quot; country=&quot;us&quot;&gt;
+
+        &lt;fo:static-content flow-name=&quot;xsl-region-before&quot;&gt;
+          &lt;fo:block&gt;The Periodic Table&lt;/fo:block&gt;
+        &lt;/fo:static-content&gt;
+
+        &lt;fo:static-content flow-name=&quot;xsl-region-after&quot;&gt;
+          &lt;fo:block&gt;&lt;fo:leader leader-pattern=&quot;rule&quot;
+                               leader-length=&quot;18cm&quot; /&gt;
+          &lt;/fo:block&gt;
+          &lt;fo:block&gt;p. &lt;fo:page-number/&gt;&lt;/fo:block&gt;
+        &lt;/fo:static-content&gt;
+
+        &lt;fo:flow flow-name=&quot;xsl-region-body&quot;&gt;
+          &lt;xsl:apply-templates select=&quot;//ATOM&quot;/&gt;
+        &lt;/fo:flow&gt;
+
+      &lt;/fo:page-sequence&gt;
+
+    &lt;/fo:root&gt;
+  &lt;/xsl:template&gt;
+
+  &lt;xsl:template match=&quot;ATOM&quot;&gt;
+    &lt;fo:block&gt;&lt;xsl:value-of select=&quot;NAME&quot;/&gt;&lt;/fo:block&gt;
+  &lt;/xsl:template&gt;
+
+&lt;/xsl:stylesheet&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">Figure 19-6 shows the third page of the PDF
+file generated from Listing 19-6. The rule appears at the bottom of
+this and every other page in the document.</FONT></P>
+<P><FONT COLOR="#000000"><IMG SRC="xslfo_htmlized_html_m39724b7d.jpg" NAME="Graphic6" ALIGN=BOTTOM WIDTH=485 HEIGHT=366 BORDER=0></FONT></P>
+<P STYLE="page-break-inside: avoid; widows: 2; orphans: 2"><FONT COLOR="#008000"><FONT FACE="Arial, sans-serif">Figure
+19-6: Automatically generated rules in the footer</FONT></FONT></P>
+
+<H1  id="d1e4318">Graphics</H1>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">XSL-FO
+provides two elements for embedding pictures in a rendered document.
+The <CODE>fo:external-graphic</CODE> element inserts a non-XML
+graphic, such as a JPEG image. The <CODE>fo:instream-foreign-object</CODE>
+element inserts an XML document that is not an XSL-FO document, such
+as an SVG picture or a MathML equation.</FONT></P>
+<H2>fo:external-graphic</H2>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>fo:external-graphic</CODE> element provides the equivalent
+of an HTML <CODE>IMG</CODE> element. That is, it loads an image,
+probably in a non-XML format, from a URL. <CODE>fo:external-graphic</CODE>
+is always an empty element with no children. The <CODE>src</CODE>
+attribute contains a URI identifying the location of the image to be
+embedded. For example, consider this standard HTML <CODE>IMG</CODE>
+element:</FONT></P>
+<PRE>&lt;IMG SRC=&quot;cup.gif&quot;&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">The <CODE>fo:external-graphic</CODE>
+equivalent looks like this:</FONT></P>
+<PRE>&lt;fo:external-graphic src=&quot;cup.gif&quot;/&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">Of course, you can use an absolute URL if you
+like:</FONT></P>
+<PRE>&lt;fo:external-graphic 
+     src=&quot;http://www.cafeconleche.org/cup.gif&quot;/&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">Just as with Web browsers and HTML, there's no
+guarantee that any particular formatting engine recognizes and
+supports any particular graphic format. Currently, FOP supports GIF,
+JPEG, and SVG  images. PNG is supported if you have Sun's JIMI
+library installed. More formats may be added in the future.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000"><CODE>fo:external-graphic</CODE>
+is an inline element. You can make it a block-level picture simply by
+wrapping it in a <CODE>fo:block</CODE> element like this:</FONT></P>
+<PRE>&lt;fo:block&gt;&lt;fo:external-graphic src=&quot;cup.gif&quot;/&gt;&lt;/fo:block&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">Listing 19-7 shows a style sheet that loads the
+image at <CODE>http://www.cafeconleche.org/images/atom.jpg</CODE>
+and puts it in the header of all the pages. In this case, the URI of
+the image is hard coded in the style sheet. In general, however, it
+would be read from the input document.</FONT></P>
+<P STYLE="margin-left: 0.64cm; margin-right: 11.75cm; text-indent: 0cm; margin-top: 0.21cm; margin-bottom: 0cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><B>Listing 19-7</B></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><B>An XSL style
+sheet that references an external graphic</B></FONT></FONT></P>
+<PRE>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;xsl:stylesheet version=&quot;1.0&quot;
+  xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;
+  xmlns:fo=&quot;http://www.w3.org/1999/XSL/Format&quot;&gt;
+
+  &lt;xsl:template match=&quot;/&quot;&gt;
+    &lt;fo:root xmlns:fo=&quot;http://www.w3.org/1999/XSL/Format&quot;&gt;
+
+      &lt;fo:layout-master-set&gt;
+
+        &lt;fo:simple-page-master master-name=&quot;A4&quot;
+           page-width=&quot;297mm&quot;  page-height=&quot;210mm&quot;
+           margin-top=&quot;0.5in&quot;  margin-bottom=&quot;0.5in&quot;
+           margin-left=&quot;0.5in&quot; margin-right=&quot;0.5in&quot;&gt;
+          &lt;fo:region-before extent=&quot;1.0in&quot;/&gt;
+          &lt;fo:region-body margin-top=&quot;1.0in&quot;
+                          margin-bottom=&quot;1.0in&quot;/&gt;
+          &lt;fo:region-after  extent=&quot;1.0in&quot;/&gt;
+        &lt;/fo:simple-page-master&gt;
+
+      &lt;/fo:layout-master-set&gt;
+
+      &lt;fo:page-sequence master-reference=&quot;A4&quot;
+        initial-page-number=&quot;1&quot; language=&quot;en&quot; country=&quot;us&quot;&gt;
+
+        &lt;fo:static-content flow-name=&quot;xsl-region-before&quot;&gt;
+          &lt;fo:block&gt;
+            &lt;fo:external-graphic
+              src=&quot;http://www.cafeconleche.org/images/atom.jpg&quot;
+             /&gt;
+            The Periodic Table
+          &lt;/fo:block&gt;
+        &lt;/fo:static-content&gt;
+
+        &lt;fo:static-content flow-name=&quot;xsl-region-after&quot;&gt;
+          &lt;fo:block&gt;
+            &lt;fo:leader leader-pattern=&quot;rule&quot;
+                       leader-length=&quot;18cm&quot;/&gt;
+          &lt;/fo:block&gt;
+          &lt;fo:block&gt;p. &lt;fo:page-number/&gt;&lt;/fo:block&gt;
+        &lt;/fo:static-content&gt;
+
+        &lt;fo:flow flow-name=&quot;xsl-region-body&quot;&gt;
+          &lt;xsl:apply-templates select=&quot;//ATOM&quot;/&gt;
+        &lt;/fo:flow&gt;
+
+      &lt;/fo:page-sequence&gt;
+
+    &lt;/fo:root&gt;
+  &lt;/xsl:template&gt;
+
+  &lt;xsl:template match=&quot;ATOM&quot;&gt;
+    &lt;fo:block&gt;&lt;xsl:value-of select=&quot;NAME&quot;/&gt;&lt;/fo:block&gt;
+  &lt;/xsl:template&gt;
+
+&lt;/xsl:stylesheet&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">Figure 19-7 shows the first page of the PDF
+file generated from Listing 19-7. The picture appears at the top of
+this and every other page in the document.</FONT></P>
+<P><FONT COLOR="#000000"><IMG SRC="xslfo_htmlized_html_m4fb3befe.jpg" NAME="Graphic7" ALIGN=BOTTOM WIDTH=485 HEIGHT=366 BORDER=0></FONT></P>
+<P STYLE="page-break-inside: avoid; widows: 2; orphans: 2"><FONT COLOR="#008000"><FONT FACE="Arial, sans-serif">Figure
+19-7: Inserting an external graphic in the header</FONT></FONT></P>
+<H2>fo:instream-foreign-object</H2>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>fo:instream-foreign-object</CODE> inserts a graphic element
+that is described in XML and that is included directly in the XSL-FO
+document. For example, a <CODE>fo:instream-foreign-object</CODE>
+element might contain an SVG picture. The formatter would render the
+picture in the finished document. Listing 19-8 is an XSL-FO document
+that places the pink triangle SVG example from Chapter 2 on the
+header of each page:</FONT></P>
+<P STYLE="margin-left: 0.64cm; margin-right: 11.75cm; text-indent: 0cm; margin-top: 0.21cm; margin-bottom: 0cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><B>Listing 19-8</B></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><B>An XSL style
+sheet that contains an instream SVG picture</B></FONT></FONT></P>
+<PRE>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;xsl:stylesheet version=&quot;1.0&quot;
+  xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;
+  xmlns:fo=&quot;http://www.w3.org/1999/XSL/Format&quot;&gt;
+
+  &lt;xsl:template match=&quot;/&quot;&gt;
+    &lt;fo:root xmlns:fo=&quot;http://www.w3.org/1999/XSL/Format&quot;&gt;
+
+      &lt;fo:layout-master-set&gt;
+
+        &lt;fo:simple-page-master master-name=&quot;A4&quot;
+           page-width=&quot;297mm&quot;  page-height=&quot;210mm&quot;
+           margin-top=&quot;0.5in&quot;  margin-bottom=&quot;0.5in&quot;
+           margin-left=&quot;0.5in&quot; margin-right=&quot;0.5in&quot;&gt;
+          &lt;fo:region-before extent=&quot;1.0in&quot;/&gt;
+          &lt;fo:region-body   margin-top=&quot;1.0in&quot;/&gt;
+        &lt;/fo:simple-page-master&gt;
+
+      &lt;/fo:layout-master-set&gt;
+
+      &lt;fo:page-sequence master-reference=&quot;A4&quot;
+        initial-page-number=&quot;1&quot; language=&quot;en&quot; country=&quot;us&quot;&gt;
+
+        &lt;fo:static-content flow-name=&quot;xsl-region-before&quot;&gt;
+          &lt;fo:block&gt; The Periodic Table
+            &lt;fo:instream-foreign-object&gt;
+              &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot;
+                 width=&quot;1.5cm&quot; height=&quot;1cm&quot;&gt;
+       &lt;polygon style=&quot;fill:#FFCCCC&quot; points=&quot;0,31 18,0 36,31&quot;/&gt;
+              &lt;/svg&gt;
+            &lt;/fo:instream-foreign-object&gt;
+          &lt;/fo:block&gt;
+        &lt;/fo:static-content&gt;
+
+        &lt;fo:flow flow-name=&quot;xsl-region-body&quot;&gt;
+          &lt;xsl:apply-templates select=&quot;//ATOM&quot;/&gt;
+        &lt;/fo:flow&gt;
+
+      &lt;/fo:page-sequence&gt;
+
+    &lt;/fo:root&gt;
+  &lt;/xsl:template&gt;
+
+  &lt;xsl:template match=&quot;ATOM&quot;&gt;
+    &lt;fo:block&gt;&lt;xsl:value-of select=&quot;NAME&quot;/&gt;&lt;/fo:block&gt;
+  &lt;/xsl:template&gt;
+
+&lt;/xsl:stylesheet&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">Figure 19-8 shows the first page of the PDF
+file generated from Listing 19-8. The triangle appears at the top of
+this and every other page in the document.</FONT></P>
+<P><FONT COLOR="#000000"><IMG SRC="xslfo_htmlized_html_1cb162d8.jpg" NAME="Graphic8" ALIGN=BOTTOM WIDTH=493 HEIGHT=394 BORDER=0></FONT></P>
+<P STYLE="page-break-inside: avoid; widows: 2; orphans: 2"><FONT COLOR="#008000"><FONT FACE="Arial, sans-serif">Figure
+19-8: Embedding an instream graphic in the header</FONT></FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">Not
+all formatters support all possible XML graphics formats. For
+instance, FOP does not support MathML at all, and only supports a
+subset of SVG. Still this is a useful technique, especially when you
+want XSLT to generate pictures at runtime. For instance, you could
+write an XSLT style sheet that produced nicely formatted annual
+reports, including all the charts and graphics, simply by
+transforming some of the input document into XSL-FO and other parts
+of the input document into SVG.</FONT></P>
+<H2>Graphic properties</H2>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000"><CODE>fo:external-graphic</CODE>
+and <CODE>fo:instream-foreign-object</CODE> share a number of
+properties designed to scale, position, crop, align, and otherwise
+adjust the appearance of the image on the page.</FONT></P>
+<H3>Content type</H3>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>content-type</CODE> attribute specifies the type of the
+graphic. You can give this as a MIME media type, such as image/jpg or
+image/svg+xml, by prefixing the actual type with <CODE>content-type:</CODE>.
+For example, to specify that the <CODE>fo:external-graphic</CODE>
+element refers to a GIF image you would write it as</FONT></P>
+<PRE>&lt;fo:external-graphic content-type=&quot;content-type:image/gif&quot;
+                     src=&quot;cup.gif&quot; /&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">This can also be given in terms of a namespace
+prefix by using a value in the form <CODE>namespace-prefix:<I>prefix</I></CODE>.
+For example, to specify that the <CODE>fo:instream-foreign-object</CODE>
+includes an SVG picture you write it as</FONT></P>
+<PRE>&lt;fo:instream-foreign-object
+   xmlns:svg=&quot;http://www.w3.org/2000/svg&quot;
+   content-type=&quot;namespace-prefix:svg&quot;&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">The namespace prefix does not have to be
+declared on the <CODE>fo:instream-foreign-object</CODE> element.
+It simply needs to be declared somewhere in the ancestors of the
+element.</FONT></P>
+<H3>Size</H3>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>height</CODE> and <CODE>width</CODE> attributes specify
+the vertical and horizontal size of the rectangle set aside on the
+page for the image. Either or both of these can be set to the keyword
+<CODE>auto</CODE>, rather than to an absolute length, to indicate
+that the size of the image itself should be used.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>content-height</CODE> and <CODE>content-width</CODE>
+attributes specify the vertical and horizontal size of the image
+itself. If either or both of these is not the same as <CODE>height</CODE>
+and <CODE>width</CODE>, respectively, then the image has to be
+scaled.</FONT></P>
+<H3>Scaling</H3>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>scaling</CODE> attribute can be set to either <CODE>uniform</CODE>
+or <CODE>non-uniform</CODE>. Uniform scaling maintains the
+height-to-width ratio of the image as it's scaled. This is the
+default. Non-uniform scaling may scale the height and width
+differently, so that the image is distorted.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">You
+can also choose the algorithm by which scaling occurs by using the
+<CODE>scaling-method</CODE> attribute. This can be set to <CODE>auto</CODE>,
+<CODE>integer-pixels</CODE>, or <CODE>resample-any-method</CODE>.
+Integer scaling maintains an integral ratio between original and
+scaled images such as 2:1 or 3:1, but not 1.5:1. In most cases,
+integer-scaled images are smaller than images scaled by
+<CODE>resample-any-method</CODE>, but won&rsquo;t require
+dithering. The value <CODE>auto</CODE> lets the formatter decide
+what to do.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">In
+addition, you can set a variety of common properties for inline
+elements. These include the common accessibility, aural, background,
+border, padding, and margin properties. Because graphics shouldn't be
+split across multiple pages, they don&rsquo;t support the usual break
+properties, but they do support <CODE>keep-with-next</CODE> and
+<CODE>keep-with-previous</CODE>.</FONT></P>
+
+      
+<H1 id="d1e4822">Links</H1>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>fo:basic-link</CODE> element encodes HTML-style <SPAN LANG="en-US">hyperlinks</SPAN>
+in XSL-FO documents. This is an inline formatting object that the
+user can click on to move to a different document, or to a different
+place in the same document. This doesn&rsquo;t offer much for print,
+but it might be useful when and if Web browsers support XSL-FO
+directly. The link behavior is controlled by these eight attributes:</font></p><ul><li><p><CODE>external-destination</CODE></p></li>
+<li><p><CODE>internal-destination</CODE></p></li>
+<li><p><CODE>indicate-destination</CODE></p></li>
+<li><p><CODE>show-destination</CODE></p></li>
+<li><p><CODE>destination-placement-offset</CODE></p></li>
+<li><p><CODE>target-presentation-context</CODE></p></li>
+<li><p><CODE>target-processing-context</CODE></p></li>
+<li><p><CODE>target-stylesheet</CODE></p></li>
+</ul><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">A
+link to a remote document target specifies the URI through the value
+of the <CODE>external-destination</CODE> attribute. The browser
+should replace the current document with the document at this URI
+when the reader activates the link. In most GUI environments, the
+user activates the link by clicking on its contents. For example:</FONT></P>
+<PRE>&lt;fo:block&gt; Be sure to visit the
+   &lt;fo:basic-link
+     external-destination=&quot;http://www.cafeconleche.org/&quot;&gt;
+      Cafe con <SPAN LANG="en-US">Leche</SPAN> Web site!
+   &lt;/fo:basic-link&gt;
+&lt;/fo:block&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">You can also link to another node in the same
+document by using the <CODE>internal-destination</CODE>
+attribute. The value of this attribute is not a URI, but rather the
+ID of the element you're linking to. You can often use the
+<CODE>generate-id()</CODE> function of XSLT to produce both the
+IDs on the output elements and the links to those elements inside the
+XSL-FO output. You should not specify both the internal and external
+destination for one link.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+three other destination attributes affect the appearance and behavior
+of the link. The <CODE>indicate-destination</CODE> attribute has
+a boolean value (<CODE>true</CODE> or <CODE>false</CODE>;
+<CODE>false</CODE> by default) that specifies whether, when the
+linked item is loaded, it should somehow be distinguished from<SPAN LANG="en-US">
+non-linked </SPAN>parts of the same document. For example, if you
+follow a link to one <CODE>ATOM</CODE> element in a table of 100
+atoms, the specific atom you were connecting to might be in boldface
+while the other atoms are in normal type. The exact details are
+system dependent.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>show-destination</CODE> attribute has two possible values:
+<CODE>replace</CODE> (the default) and <CODE>new</CODE>. With
+a value of <CODE>replace</CODE>, when a link is followed, the
+target document replaces the existing document in the same window.
+With a value of <CODE>new</CODE>, when the user activates a link,
+the browser opens a new window in which to display the target
+document.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">When
+a browser follows an HTML link into the middle of a document,
+generally the specific linked element is positioned at the tip-top of
+the window. The <CODE>destination-placement-offset</CODE>
+attribute specifies how far down the browser should scroll the linked
+element in the window. It's given as a length such as <CODE>3in</CODE>
+or <CODE>156px</CODE>.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+three target properties describe how the document at the other end of
+the link will be displayed. The <CODE>target-presentation-context</CODE>
+attribute contains a URI that generally indicates some subset of the
+external destination that should actually be presented to the user.
+For instance, an XPointer could be used here to say that although an
+entire book is loaded only the seventh chapter will be shown.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>target-processing-context</CODE> attribute contains a URI
+that serves as a base URI in the event that the external destination
+contains a relative URI. Otherwise, that would be considered relative
+to the current document.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">Finally,
+the <CODE>target-stylesheet</CODE> attribute contains a URI that
+points to a style sheet that should be used when the targeted
+document is rendered. This overrides any style sheet that the
+targeted document itself specifies, whether through an <CODE>xml-stylesheet</CODE>
+processing instruction, a <CODE>LINK</CODE> element in HTML, or
+an HTTP header.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">In
+addition, the link may have the usual accessibility, margin,
+background, border, padding, and aural properties.</FONT></P>
+
+<H1 id="d1e4979">Lists</H1>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>fo:list-block</CODE> formatting object element describes a
+block-level list element. (There are no inline lists.) A list may or
+may not be bulleted, numbered, indented, or otherwise formatted. Each
+<CODE>fo:list-block</CODE> element contains either a series of
+<CODE>fo:list-item</CODE> elements or <CODE>fo:list-item-label</CODE>
+<CODE>fo:list-item-body</CODE> pairs. (It cannot contain both.) A
+<CODE>fo:list-item</CODE> must contain a <CODE>fo:list-item-label</CODE>
+and a <CODE>fo:list-item-body</CODE>. The <CODE>fo:list-item-label</CODE>
+contains the bullet, number, or other label for the list item as a
+block level element. The <CODE>fo:list-item-body</CODE> contains
+block-level elements holding the actual content of the list item. To
+summarize, a <CODE>fo:list-block</CODE> contains <CODE>fo:list-item</CODE>
+elements. Each <CODE>fo:list-item</CODE> contains a
+<CODE>fo:list-item-label</CODE> and <CODE>fo:list-item-body</CODE>.
+However, the <CODE>fo:list-item</CODE> elements can be omitted.
+For example:</FONT></P>
+<PRE>&lt;fo:list-block&gt;
+  &lt;fo:list-item&gt;
+     &lt;fo:list-item-label&gt;&lt;fo:block&gt;*&lt;/fo:block&gt;
+     &lt;/fo:list-item-label&gt;
+    &lt;fo:list-item-body&gt;
+      &lt;fo:block&gt;Actinium&lt;/fo:block&gt;
+    &lt;/fo:list-item-body&gt;
+  &lt;/fo:list-item&gt;
+  &lt;fo:list-item&gt;
+     &lt;fo:list-item-label&gt;&lt;fo:block&gt;*&lt;/fo:block&gt;
+     &lt;/fo:list-item-label&gt;
+    &lt;fo:list-item-body&gt;
+      &lt;fo:block&gt;Aluminum&lt;/fo:block&gt;
+    &lt;/fo:list-item-body&gt;
+  &lt;/fo:list-item&gt;
+&lt;/fo:list-block&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">Or, with the <CODE>fo:list-item</CODE> tags
+removed:</FONT></P>
+<PRE>&lt;fo:list-block&gt;
+   &lt;fo:list-item-label&gt;
+     &lt;fo:block&gt;*&lt;/fo:block&gt;
+   &lt;/fo:list-item-label&gt;
+   &lt;fo:list-item-body&gt;
+     &lt;fo:block&gt;Actinium&lt;/fo:block&gt;
+   &lt;/fo:list-item-body&gt;
+   &lt;fo:list-item-label&gt;
+     &lt;fo:block&gt;*&lt;/fo:block&gt;
+   &lt;/fo:list-item-label&gt;
+   &lt;fo:list-item-body&gt;
+    &lt;fo:block&gt;Aluminum&lt;/fo:block&gt;
+   &lt;/fo:list-item-body&gt;
+&lt;/fo:list-block&gt;</PRE>
+
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>fo:list-block</CODE> element has two special attributes
+that control list formatting:</FONT></P>
+<ul>
+<li><p><CODE>provisional-label-separation</CODE>:
+The distance between the list item label and the list item body,
+given as a triplet of <I>maximum;minimum;optimum</I>, such as
+<CODE>2mm;0.5mm;1mm</CODE>.</p></li>
+<li><p><CODE>provisional-distance-between-starts</CODE>:
+The distance between the start edge of the list item label and the
+start edge of the list item body.</p></li>
+</ul>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000"><CODE>fo:list-block</CODE>
+also has the usual accessibility, aural, border, padding, background,
+margin, and keeps and breaks properties. The <CODE>fo:list-item</CODE>
+element has the standard block-level properties for backgrounds,
+position, aural rendering, borders, padding, margins, line and page
+breaking. The <CODE>fo:list-item-label</CODE> and
+<CODE>fo:list-item-body</CODE> elements only have the
+accessibility properties: <CODE>id</CODE> and <CODE>keep-together</CODE>.
+The rest of their formatting is controlled either by the parent
+elements (<CODE>fo:list-item</CODE> and <CODE>fo:list-item-block</CODE>)
+or the child elements they contain.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">Listing
+19-9 formats the periodic table as a list in which the atomic numbers
+are the list labels and the names of the elements are the list
+bodies. Figure 19-9 shows the second page of output produced by this
+style sheet.</FONT></P>
+<P STYLE="margin-left: 0.64cm; margin-right: 11.75cm; text-indent: 0cm; margin-top: 0.21cm; margin-bottom: 0cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><B>Listing 19-9</B></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><B>An XSL style
+sheet that formats the periodic table as a list</B></FONT></FONT></P>
+<PRE>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;xsl:stylesheet version=&quot;1.0&quot;
+  xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;
+  xmlns:fo=&quot;http://www.w3.org/1999/XSL/Format&quot;&gt;
+
+  &lt;xsl:template match=&quot;/&quot;&gt;
+    &lt;fo:root xmlns:fo=&quot;http://www.w3.org/1999/XSL/Format&quot;&gt;
+
+      &lt;fo:layout-master-set&gt;
+
+        &lt;fo:simple-page-master master-name=&quot;A4&quot;
+           page-width=&quot;297mm&quot;  page-height=&quot;210mm&quot;
+           margin-top=&quot;0.5in&quot;  margin-bottom=&quot;0.5in&quot;
+           margin-left=&quot;0.5in&quot; margin-right=&quot;0.5in&quot;&gt;
+          &lt;fo:region-body/&gt;
+        &lt;/fo:simple-page-master&gt;
+
+      &lt;/fo:layout-master-set&gt;
+
+      &lt;fo:page-sequence master-reference=&quot;A4&quot;&gt;
+
+        &lt;fo:flow flow-name=&quot;xsl-region-body&quot;&gt;
+          &lt;fo:list-block&gt;
+            &lt;xsl:apply-templates select=&quot;//ATOM&quot;&gt;
+              &lt;xsl:sort data-type=&quot;number&quot;
+                        select=&quot;ATOMIC_NUMBER&quot;/&gt;
+            &lt;/xsl:apply-templates&gt;
+          &lt;/fo:list-block&gt;
+        &lt;/fo:flow&gt;
+
+      &lt;/fo:page-sequence&gt;
+
+    &lt;/fo:root&gt;
+  &lt;/xsl:template&gt;
+
+  &lt;xsl:template match=&quot;ATOM&quot;&gt;
+    &lt;fo:list-item&gt;
+      &lt;fo:list-item-label&gt;&lt;fo:block&gt;
+         &lt;xsl:value-of select=&quot;ATOMIC_NUMBER&quot;/&gt;
+      &lt;/fo:block&gt;&lt;/fo:list-item-label&gt;
+      &lt;fo:list-item-body&gt;&lt;fo:block&gt;
+        &lt;xsl:value-of select=&quot;NAME&quot;/&gt;
+      &lt;/fo:block&gt;&lt;/fo:list-item-body&gt;
+    &lt;/fo:list-item&gt;
+  &lt;/xsl:template&gt;
+
+&lt;/xsl:stylesheet&gt;</PRE><P>
+<FONT COLOR="#000000"><IMG SRC="xslfo_htmlized_html_m59470408.jpg" NAME="Graphic9" ALIGN=BOTTOM WIDTH=493 HEIGHT=394 BORDER=0></FONT></P>
+<P STYLE="page-break-inside: avoid; widows: 2; orphans: 2"><FONT COLOR="#008000"><FONT FACE="Arial, sans-serif">Figure
+19-9: The periodic table formatted as a list</FONT></FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">In
+HTML a list item implies a certain level of indenting. However, as
+you can see in Figure 19-9, no such indenting is implied by any of
+the XSL-FO list elements. If you want list items to be indented, you
+can use the <CODE>start-indent</CODE> and <CODE>end-indent</CODE>
+attributes on the <CODE>fo:list-item-label</CODE> and
+<CODE>fo:list-item-body</CODE> elements. Each of these is set to
+a length. However, because the list item body normally starts on the
+same line as the list item label, its start indent is often given by
+the special XSL-FO <CODE>body-start()</CODE> function. This
+returns the combined length of the <CODE>start-indent</CODE> and
+the <CODE>provisional-distance-between-starts</CODE>. For
+example,</FONT></P>
+<PRE>&lt;xsl:template match=&quot;ATOM&quot;&gt;
+  &lt;fo:list-item&gt;
+    &lt;fo:list-item-label start-indent=&quot;1.0cm&quot; 
+                        end-indent=&quot;1.0cm&quot;&gt;
+      &lt;fo:block&gt;
+        &lt;xsl:value-of select=&quot;ATOMIC_NUMBER&quot;/&gt;
+       &lt;/fo:block&gt;
+    &lt;/fo:list-item-label&gt;
+    &lt;fo:list-item-body start-indent=&quot;body-start()&quot;&gt;
+      &lt;fo:block&gt;
+        &lt;xsl:value-of select=&quot;NAME&quot;/&gt;
+      &lt;/fo:block&gt;
+    &lt;/fo:list-item-body&gt;
+  &lt;/fo:list-item&gt;
+&lt;/xsl:template&gt;</PRE>
+
+
+<H1 id="d1e5381">
+Tables</H1>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+fundamental table element in XSL is <CODE>fo:table-and-caption</CODE>.
+This is a block-level object that contains a <CODE>fo:table</CODE>
+and a <CODE>fo:caption</CODE>. If your table doesn&rsquo;t need a
+caption, you can just use a raw <CODE>fo:table</CODE> instead.
+The XSL-FO table model is quite close to HTML's table model. Table
+19-1 shows the mapping between HTML 4.0 table elements and XSL
+formatting objects:</FONT></P>
+<P ALIGN=CENTER STYLE="margin-top: 0.21cm; margin-bottom: 0cm; page-break-inside: avoid; widows: 2; orphans: 2; page-break-after: avoid">
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><B>Table 19-1</B></FONT></FONT></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0.42cm; page-break-inside: avoid; widows: 2; orphans: 2; page-break-after: avoid">
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><B>HTML Tables
+vs. XSL Formatting Object Tables</B></FONT></FONT></P>
+<TABLE WIDTH=347 BORDER=1 BORDERCOLOR="#000000" CELLPADDING=8 CELLSPACING=0>
+	<COL WIDTH=144>
+	<COL WIDTH=169>
+	<TR VALIGN=TOP>
+		<TD WIDTH=144>
+			<P STYLE="page-break-inside: avoid; widows: 2; orphans: 2; page-break-after: avoid">
+			<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><FONT SIZE=2 STYLE="font-size: 11pt"><B>HTML
+			Element</B></FONT></FONT></FONT></P>
+		</TD>
+		<TD WIDTH=169>
+			<P STYLE="page-break-inside: avoid; widows: 2; orphans: 2; page-break-after: avoid">
+			<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><FONT SIZE=2 STYLE="font-size: 11pt"><B>XSL
+			FO Element</B></FONT></FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=144>
+			<P STYLE="page-break-inside: avoid; widows: 2; orphans: 2"><FONT COLOR="#000000"><CODE>TABLE</CODE></FONT></P>
+		</TD>
+		<TD WIDTH=169>
+			<P STYLE="page-break-inside: avoid; widows: 2; orphans: 2"><FONT COLOR="#000000"><CODE>fo:table-and-caption</CODE></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=144>
+			<P STYLE="page-break-inside: avoid; widows: 2; orphans: 2"><FONT COLOR="#000000">no
+			equivalent</FONT></P>
+		</TD>
+		<TD WIDTH=169>
+			<P STYLE="page-break-inside: avoid; widows: 2; orphans: 2"><FONT COLOR="#000000"><CODE>fo:table</CODE></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=144>
+			<P STYLE="page-break-inside: avoid; widows: 2; orphans: 2"><FONT COLOR="#000000"><CODE>CAPTION</CODE></FONT></P>
+		</TD>
+		<TD WIDTH=169>
+			<P STYLE="page-break-inside: avoid; widows: 2; orphans: 2"><FONT COLOR="#000000"><CODE>fo:table-caption</CODE></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=144>
+			<P STYLE="page-break-inside: avoid; widows: 2; orphans: 2"><FONT COLOR="#000000"><CODE>COL</CODE></FONT></P>
+		</TD>
+		<TD WIDTH=169>
+			<P STYLE="page-break-inside: avoid; widows: 2; orphans: 2"><FONT COLOR="#000000"><CODE>fo:table-column</CODE></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=144>
+			<P STYLE="page-break-inside: avoid; widows: 2; orphans: 2"><FONT COLOR="#000000"><CODE>COLGROUP</CODE></FONT></P>
+		</TD>
+		<TD WIDTH=169>
+			<P STYLE="page-break-inside: avoid; widows: 2; orphans: 2"><FONT COLOR="#000000">no
+			equivalent</FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=144>
+			<P STYLE="page-break-inside: avoid; widows: 2; orphans: 2"><FONT COLOR="#000000"><CODE>THEAD</CODE></FONT></P>
+		</TD>
+		<TD WIDTH=169>
+			<P STYLE="page-break-inside: avoid; widows: 2; orphans: 2"><FONT COLOR="#000000"><CODE>fo:table-header</CODE></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=144>
+			<P STYLE="page-break-inside: avoid; widows: 2; orphans: 2"><FONT COLOR="#000000"><CODE>TBODY</CODE></FONT></P>
+		</TD>
+		<TD WIDTH=169>
+			<P STYLE="page-break-inside: avoid; widows: 2; orphans: 2"><FONT COLOR="#000000"><CODE>fo:table-body</CODE></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=144>
+			<P STYLE="page-break-inside: avoid; widows: 2; orphans: 2"><FONT COLOR="#000000"><CODE>TFOOT</CODE></FONT></P>
+		</TD>
+		<TD WIDTH=169>
+			<P STYLE="page-break-inside: avoid; widows: 2; orphans: 2"><FONT COLOR="#000000"><CODE>fo:table-footer</CODE></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=144>
+			<P STYLE="page-break-inside: avoid; widows: 2; orphans: 2"><FONT COLOR="#000000"><CODE>TD</CODE></FONT></P>
+		</TD>
+		<TD WIDTH=169>
+			<P STYLE="page-break-inside: avoid; widows: 2; orphans: 2"><FONT COLOR="#000000"><CODE>fo:table-cell</CODE></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=144>
+			<P STYLE="page-break-inside: avoid; widows: 2; orphans: 2"><FONT COLOR="#000000"><CODE>TR</CODE></FONT></P>
+		</TD>
+		<TD WIDTH=169>
+			<P STYLE="page-break-inside: avoid; widows: 2; orphans: 2"><FONT COLOR="#000000"><CODE>fo:table-row</CODE></FONT></P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><A NAME="s"></A><FONT COLOR="#000000">Each
+<CODE>fo:table-and-caption</CODE> contains an optional
+<CODE>fo:table-caption</CODE> element and one <CODE>fo:table</CODE>
+element. The caption can contain any block-level elements you care to
+place in the caption. By default captions are placed before the
+table, but this can be adjusted by setting the <CODE>caption-side</CODE>
+property of the <CODE>table-and-caption</CODE> element to one of
+these eight values:</font></p><ul><li><p><CODE>before</CODE></p></li>
+<li><p><CODE>after</CODE></p></li>
+<li><p><CODE>start</CODE></p></li>
+<li><p><CODE>end</CODE></p></li>
+<li><p><CODE>top</CODE></p></li>
+<li><p><CODE>bottom</CODE></p></li>
+<li><p><CODE>left</CODE></p></li>
+<li><p><CODE>right</CODE></p></li>
+</ul><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">For
+example, here's a table with a caption on the bottom:</FONT></P>
+<PRE>&lt;fo:table-and-caption caption-side=&quot;bottom&quot;&gt;
+  &lt;fo:table-caption&gt;
+    &lt;fo:block font-weight=&quot;bold&quot;
+              font-family=&quot;<SPAN LANG="en-US">Helvetica</SPAN>, <SPAN LANG="en-US">Arial</SPAN>, sans&quot;
+              font-size=&quot;12pt&quot;&gt;
+      Table 19-1: HTML Tables vs. XSL Formatting Object Tables
+    &lt;/fo:block&gt;
+  &lt;/fo:table-caption&gt;
+  &lt;fo:table&gt;
+    &lt;!-- table contents go here --&gt;
+  &lt;/fo:table&gt;
+&lt;/fo:table-and-caption&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">The <CODE>fo:table</CODE> element contains
+<CODE>fo:table-column</CODE> elements, an optional
+<CODE>fo:table-header</CODE>, an optional <CODE>fo:table-footer</CODE>,
+and one or more <CODE>fo:table-body</CODE> elements. The
+<CODE>fo:table-body</CODE> is divided into <CODE>fo:table-row</CODE>
+elements. Each <CODE>fo:table-row</CODE> is divided into
+<CODE>fo:table-cell</CODE> elements. The <CODE>fo:table-header</CODE>
+and <CODE>fo:table-footer</CODE> can either be divided into
+<CODE>fo:table-cell</CODE> or <CODE>fo:table-row</CODE>
+elements. For example, here's a simple table that includes the first
+three rows of Table 19-1 above.</FONT></P>
+<PRE>&lt;fo:table&gt;
+  &lt;fo:table-header&gt;
+    &lt;fo:table-cell&gt;
+      &lt;fo:block font-family=&quot;Helvetica, Arial, sans&quot;
+                font-size=&quot;11pt&quot; font-weight=&quot;bold&quot;&gt;
+        HTML Element
+      &lt;/fo:block&gt;
+    &lt;/fo:table-cell&gt;
+    &lt;fo:table-cell&gt;
+      &lt;fo:block font-family=&quot;Helvetica, Arial, sans&quot;
+                font-size=&quot;11pt&quot; font-weight=&quot;bold&quot;&gt;
+        XSL FO Element
+      &lt;/fo:block&gt;
+    &lt;/fo:table-cell&gt;
+  &lt;/fo:table-header&gt;
+  &lt;fo:table-body&gt;
+    &lt;fo:table-row&gt;
+      &lt;fo:table-cell&gt;
+        &lt;fo:block font-family=&quot;Courier, <SPAN LANG="en-US">monospace</SPAN>&quot;&gt;
+          TABLE
+        &lt;/fo:block&gt;
+      &lt;/fo:table-cell&gt;
+      &lt;fo:table-cell&gt;
+        &lt;fo:block font-family=&quot;Courier, monospace&quot;&gt;
+          fo:table-and-caption
+        &lt;/fo:block&gt;
+      &lt;/fo:table-cell&gt;
+    &lt;/fo:table-row&gt;
+    &lt;fo:table-row&gt;
+      &lt;fo:table-cell&gt;
+        &lt;fo:block&gt;no equivalent&lt;/fo:block&gt;
+      &lt;/fo:table-cell&gt;
+      &lt;fo:table-cell&gt;
+        &lt;fo:block font-family=&quot;Courier, monospace&quot;&gt;
+          fo:table
+        &lt;/fo:block&gt;
+      &lt;/fo:table-cell&gt;
+    &lt;/fo:table-row&gt;
+  &lt;/fo:table-body&gt;
+&lt;/fo:table&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">You can make table cells span multiple rows and
+columns by setting the <CODE>number-columns-spanned</CODE> and/or
+<CODE>number-rows-spanned</CODE> attributes to an integer giving
+the number of rows or columns to span. The optional <CODE>column-number</CODE>
+attribute can change which column the spanning begins in. The default
+is the current column.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">Borders
+can be drawn around table parts using the normal border properties.
+The <CODE>empty-cells</CODE> attribute has the value <CODE>show</CODE>
+or <CODE>hide</CODE>; <CODE>show</CODE> if borders are to be
+drawn around cells with no content, <CODE>hide</CODE> if not. The
+default is <CODE>show</CODE>.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">When
+a long table extends across multiple pages, sometimes the header and
+footer are repeated on each page. You can alter this behavior with
+the <CODE>table-omit-header-at-break</CODE> and
+<CODE>table-omit-footer-at-break</CODE> attributes of the
+<CODE>fo:table</CODE> element. The value <CODE>false</CODE>
+indicates that the header or footer is to be repeated from page to
+page. The value <CODE>true</CODE> indicates that it is not. The
+default is <CODE>false</CODE>.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+optional <CODE>fo:table-column</CODE> element is an empty element
+that specifies properties for all cells in a particular column. The
+cells it applies to are identified by the <CODE>column-number</CODE>
+attribute or by the position of the <CODE>fo:table-column</CODE>
+element itself. <CODE>fo:table-column</CODE> does not actually
+contain any cells. A <CODE>fo:table-column</CODE> can apply
+properties to more than one consecutive column by setting the
+<CODE>number-columns-spanned</CODE> property to an integer
+greater than one. The most common property to set in a
+<CODE>fo:table-column</CODE> is <CODE>column-width</CODE> (a
+signed length) but the standard border, padding, and background
+properties (discussed below and mostly the same as in CSS) can also
+be set.</FONT></P>
+<P STYLE="margin-left: 1.27cm; text-indent: 0cm; margin-top: 0.21cm; margin-bottom: 0cm; page-break-inside: avoid; widows: 2; orphans: 2; page-break-after: avoid">
+<FONT COLOR="#0000ff"><FONT FACE="Arial, sans-serif"><B>Caution</B></FONT></FONT></P>
+<P STYLE="margin-left: 1.27cm; text-indent: 0cm; margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">FOP 0.20.4 has
+limited table support. In particular, it does not support
+<CODE>fo:table-caption</CODE> or <CODE>fo:table-and-caption</CODE>.
+Furthermore, FOP requires you to explicitly specify the column widths
+using a <CODE>fo:table-column</CODE> element. You can't let it
+choose suitable widths as you might let a Web browser do.</FONT></FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">For
+example, Listing 19-10 lays out all the properties of the elements in
+a table. Figure 19-10 shows the first page of output produced by this
+style sheet. </FONT>
+</P>
+<P STYLE="margin-left: 0.64cm; margin-right: 11.75cm; text-indent: 0cm; margin-top: 0.21cm; margin-bottom: 0cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><B>Listing 19-10</B></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><B>An XSL style
+sheet that formats the elements as a table</B></FONT></FONT></P>
+<PRE>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;xsl:stylesheet version=&quot;1.0&quot;
+  xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;
+  xmlns:fo=&quot;http://www.w3.org/1999/XSL/Format&quot;&gt;
+
+  &lt;xsl:template match=&quot;/&quot;&gt;
+    &lt;fo:root xmlns:fo=&quot;http://www.w3.org/1999/XSL/Format&quot;&gt;
+
+      &lt;fo:layout-master-set&gt;
+
+        &lt;fo:simple-page-master master-name=&quot;A4&quot;
+           page-width=&quot;297mm&quot;  page-height=&quot;210mm&quot;
+           margin-top=&quot;0.5in&quot;  margin-bottom=&quot;0.5in&quot;
+           margin-left=&quot;0.5in&quot; margin-right=&quot;0.5in&quot;&gt;
+          &lt;fo:region-body/&gt;
+        &lt;/fo:simple-page-master&gt;
+
+      &lt;/fo:layout-master-set&gt;
+
+      &lt;fo:page-sequence master-reference=&quot;A4&quot;&gt;
+
+        &lt;fo:flow flow-name=&quot;xsl-region-body&quot;&gt;
+          &lt;fo:table&gt;
+            &lt;fo:table-column column-width=&quot;30mm&quot;/&gt;
+            &lt;fo:table-column column-width=&quot;12mm&quot;/&gt;
+            &lt;fo:table-column column-width=&quot;12mm&quot;/&gt;
+            &lt;fo:table-column column-width=&quot;25mm&quot;/&gt;
+            &lt;fo:table-column column-width=&quot;27mm&quot;/&gt;
+            &lt;fo:table-column column-width=&quot;18mm&quot;/&gt;
+            &lt;fo:table-column column-width=&quot;49mm&quot;/&gt;
+            &lt;fo:table-column column-width=&quot;16mm&quot;/&gt;
+            &lt;fo:table-column column-width=&quot;16mm&quot;/&gt;
+            &lt;fo:table-column column-width=&quot;16mm&quot;/&gt;
+            &lt;fo:table-column column-width=&quot;21mm&quot;/&gt;
+            &lt;fo:table-column column-width=&quot;21mm&quot;/&gt;
+            &lt;fo:table-column column-width=&quot;21mm&quot;/&gt;
+            &lt;fo:table-body&gt;
+              &lt;xsl:apply-templates select=&quot;//ATOM&quot;&gt;
+                &lt;xsl:sort data-type=&quot;number&quot;
+                  select=&quot;ATOMIC_NUMBER&quot;/&gt;
+              &lt;/xsl:apply-templates&gt;
+            &lt;/fo:table-body&gt;
+          &lt;/fo:table&gt;
+        &lt;/fo:flow&gt;
+
+      &lt;/fo:page-sequence&gt;
+
+    &lt;/fo:root&gt;
+  &lt;/xsl:template&gt;
+
+  &lt;xsl:template match=&quot;ATOM&quot;&gt;
+    &lt;fo:table-row&gt;
+      &lt;fo:table-cell&gt;
+        &lt;fo:block&gt;&lt;xsl:value-of select=&quot;NAME&quot;/&gt;&lt;/fo:block&gt;
+      &lt;/fo:table-cell&gt;
+      &lt;fo:table-cell&gt;
+        &lt;fo:block&gt;&lt;xsl:value-of select=&quot;SYMBOL&quot;/&gt;&lt;/fo:block&gt;
+      &lt;/fo:table-cell&gt;
+      &lt;fo:table-cell&gt;
+        &lt;fo:block&gt;
+          &lt;xsl:value-of select=&quot;ATOMIC_NUMBER&quot;/&gt;
+        &lt;/fo:block&gt;
+      &lt;/fo:table-cell&gt;
+      &lt;fo:table-cell&gt;
+        &lt;fo:block&gt;
+          &lt;xsl:value-of select=&quot;ATOMIC_WEIGHT&quot;/&gt;
+        &lt;/fo:block&gt;
+      &lt;/fo:table-cell&gt;
+      &lt;fo:table-cell&gt;
+        &lt;fo:block&gt;
+          &lt;xsl:value-of select=&quot;OXIDATION_STATES&quot;/&gt;
+        &lt;/fo:block&gt;
+      &lt;/fo:table-cell&gt;
+      &lt;fo:table-cell&gt;
+        &lt;fo:block&gt;&lt;xsl:value-of select=&quot;DENSITY&quot;/&gt;&lt;/fo:block&gt;
+      &lt;/fo:table-cell&gt;
+      &lt;fo:table-cell&gt;
+        &lt;fo:block&gt;
+          &lt;xsl:value-of select=&quot;ELECTRON_CONFIGURATION&quot;/&gt;
+        &lt;/fo:block&gt;
+      &lt;/fo:table-cell&gt;
+      &lt;fo:table-cell&gt;
+        &lt;fo:block&gt;
+          &lt;xsl:value-of select=&quot;ELECTRONEGATIVITY&quot;/&gt;
+        &lt;/fo:block&gt;
+      &lt;/fo:table-cell&gt;
+      &lt;fo:table-cell&gt;
+        &lt;fo:block&gt;
+          &lt;xsl:value-of select=&quot;ATOMIC_RADIUS&quot;/&gt;
+        &lt;/fo:block&gt;
+      &lt;/fo:table-cell&gt;
+      &lt;fo:table-cell&gt;
+        &lt;fo:block&gt;
+          &lt;xsl:value-of select=&quot;ATOMIC_VOLUME&quot;/&gt;
+        &lt;/fo:block&gt;
+      &lt;/fo:table-cell&gt;
+      &lt;fo:table-cell&gt;
+        &lt;fo:block&gt;
+          &lt;xsl:value-of select=&quot;SPECIFIC_HEAT_CAPACITY&quot;/&gt;
+        &lt;/fo:block&gt;
+      &lt;/fo:table-cell&gt;
+      &lt;fo:table-cell&gt;
+        &lt;fo:block&gt;
+          &lt;xsl:value-of select=&quot;SPECIFIC_HEAT_CAPACITY&quot;/&gt;
+        &lt;/fo:block&gt;
+      &lt;/fo:table-cell&gt;
+      &lt;fo:table-cell&gt;
+        &lt;fo:block&gt;
+          &lt;xsl:value-of select=&quot;THERMAL_CONDUCTIVITY&quot;/&gt;
+        &lt;/fo:block&gt;
+      &lt;/fo:table-cell&gt;
+    &lt;/fo:table-row&gt;
+  &lt;/xsl:template&gt;
+
+&lt;/xsl:stylesheet&gt;</PRE><P>
+<FONT COLOR="#000000"><IMG SRC="xslfo_htmlized_html_m2a420ace.jpg" NAME="Graphic10" ALIGN=BOTTOM WIDTH=481 HEIGHT=365 BORDER=0></FONT></P>
+<P STYLE="page-break-inside: avoid; widows: 2; orphans: 2"><FONT COLOR="#008000"><FONT FACE="Arial, sans-serif">Figure
+19-10: The periodic table formatted as a table</FONT></FONT></P>
+
+
+
+<H1 id="d1e6289">Inlines</H1>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>fo:inline</CODE> element has no particular effect on the
+layout of the page. Rather it's an element on which you can hang
+formatting attributes such as <CODE>font-style</CODE> or <CODE>color</CODE>
+for application to the inline's contents. The <CODE>fo:inline</CODE>
+formatting object is a container that groups inline objects together.
+It cannot contain block-level elements. For example, you can use
+<CODE>fo:inline</CODE> elements to add style to various parts of
+the footer, like this:</FONT></P>
+<PRE>&lt;fo:static-content flow-name=&quot;xsl-region-after&quot;&gt;
+  &lt;fo:block font-weight=&quot;bold&quot; font-size=&quot;10pt&quot;
+            font-family=&quot;Arial, Helvetica, sans&quot;&gt;
+     &lt;fo:inline font-style=&quot;italic&quot; text-align=&quot;start&quot;&gt;
+       The XML Bible
+     &lt;/fo:inline&gt;
+     &lt;fo:inline text-align=&quot;centered&quot;&gt;
+       Page &lt;fo:page-number/&gt;
+     &lt;/fo:inline&gt;
+     &lt;fo:inline text-align=&quot;right&quot;&gt;
+       Chapter 19: XSL Formatting Objects
+     &lt;/fo:inline&gt;
+  &lt;/fo:block&gt;
+&lt;/fo:static-content&gt;</PRE>
+
+
+<H1 id="d1e6354">
+Footnotes</H1>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>fo:footnote</CODE> element creates a footnote. The author
+places the <CODE>fo:footnote</CODE> element in the flow exactly
+where the footnote reference such as <SUP>1</SUP> or <SUP>*</SUP>
+will occur. The <CODE>fo:footnote</CODE> element contains both
+the reference text and a <CODE>fo:footnote-body</CODE>
+block-level element containing the text of the footnote. However,
+only the footnote reference is inserted inline. The formatter places
+the note text in the after region (generally the footer) of the page.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">For
+example, this footnote uses an asterisk as a footnote marker and
+refers to &quot;<SPAN><I>JavaBeans</I>, Elliotte Rusty Harold
+(IDG Books, Foster City, 1998), p. 147&quot;</SPAN>. Standard
+properties such as <CODE>font-size</CODE>
+and <CODE>vertical-align</CODE> are used to
+format both the note marker and the text in the customary fashion.</FONT></P>
+<PRE>&lt;fo:footnote&gt;
+  &lt;fo:inline font-size=&quot;smaller&quot; vertical-align=&quot;super&quot;&gt;*
+  &lt;/fo:inline&gt;
+  &lt;fo:footnote-body font-size=&quot;smaller&quot;&gt;
+    &lt;fo:inline font-size=&quot;smaller&quot; vertical-align=&quot;super&quot;&gt;
+       *
+    &lt;/fo:inline&gt;
+    &lt;fo:inline font-style=&quot;italic&quot;&gt;JavaBeans&lt;/fo:inline&gt;,
+      Elliotte Rusty Harold
+      (IDG Books, Foster City, 1998), p. 147
+  &lt;/fo:footnote-body&gt;
+&lt;/fo:footnote&gt;</PRE><P STYLE="margin-left: 1.27cm; text-indent: 0cm; margin-top: 0.21cm; margin-bottom: 0cm; page-break-inside: avoid; widows: 2; orphans: 2; page-break-after: avoid">
+<FONT COLOR="#0000ff"><FONT FACE="Arial, sans-serif"><B>Tip</B></FONT></FONT></P>
+<P STYLE="margin-left: 1.27cm; text-indent: 0cm; margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">XSL-FO doesn't
+provide any means of automatically numbering and citing footnotes,
+but this can be done by judicious use of <CODE>xsl:number</CODE>
+in the transformation style sheet. XSL Transformations make end notes
+easy as well.</FONT></FONT></P>
+
+
+<H1 id="d1e6435">Floats</H1>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">A
+<CODE>fo:float</CODE> produces a floating box anchored to the top
+of the region where it occurs. A <CODE>fo:float</CODE> is most
+commonly used for graphics, charts, tables or other out-of-line
+content that needs to appear somewhere on the page, although
+precisely where it appears is not particularly important. For
+example, this <CODE>fo:block</CODE> includes a floating graphic
+with a caption:</FONT></P>
+<PRE>&lt;fo:block&gt;
+  Although PDF files are themselves ASCII text,
+  this isn't a book about PostScript, so there's
+  nothing to be gained by showing you the exact
+  output of the above command. If you're curious,
+  open the PDF file in any text editor.
+  Instead, Figure 19-1
+  &lt;fo:float float=&quot;before&quot;&gt;
+    &lt;fo:external-graphic src=&quot;4760-7fg1901.jpg&quot;
+                         height=&quot;485px&quot; width=&quot;623px&quot; /&gt;
+    &lt;fo:block font-family=&quot;Helvetica, sans&quot;&gt;
+      &lt;fo:inline font-weight=&quot;bold&quot;&gt;
+        Figure 19-1:
+      &lt;/fo:inline&gt;
+      The PDF file displayed in Netscape Navigator
+    &lt;/fo:block&gt;
+  &lt;/fo:float&gt;
+  shows the rendered file displayed in
+  Netscape Navigator using the Acrobat plug-in.
+&lt;/fo:block&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">The formatter tries to place the graphic
+somewhere on the same page where the content surrounding the <CODE>fo:float</CODE>
+appears. However, it may not always be able to find room on that
+page. If it can&rsquo;t, it moves the object to a subsequent page.
+Within those limits, it's free to place it anywhere on the page.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+value of the <CODE>float</CODE> attribute indicates on which side
+of the page the <CODE>fo:float</CODE> floats. It can be set to
+<CODE>before</CODE>, <CODE>start</CODE>, <CODE>end</CODE>,
+<CODE>left</CODE>, <CODE>right</CODE>, <CODE>none</CODE>,
+or <CODE>inherit</CODE>.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>clear</CODE> attribute can be set on elements near the
+floating object to indicate whether they'll flow around the side of
+the float or whether they'll move below the float. It can have the
+values <CODE>start</CODE> (the start edge of the object must not
+be adjacent to a floating object), <CODE>end</CODE> (the end edge
+of the object must not be adjacent to a floating object), <CODE>left</CODE>
+(the left edge of the object must not be adjacent to a floating
+object), <CODE>right</CODE> (the right edge of the object must
+not be adjacent to a floating object), <CODE>both</CODE> (neither
+the left nor the right edge of the object may be adjacent to a
+floating object), <CODE>none</CODE>, or <CODE>inherit</CODE>.</FONT></P>
+<P STYLE="margin-left: 1.27cm; text-indent: 0cm; margin-top: 0.21cm; margin-bottom: 0cm; page-break-inside: avoid; widows: 2; orphans: 2; page-break-after: avoid">
+<FONT COLOR="#0000ff"><FONT FACE="Arial, sans-serif"><B>Caution</B></FONT></FONT></P>
+<P STYLE="margin-left: 1.27cm; text-indent: 0cm; margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">FOP 0.20.4 does
+not support the <CODE>fo:float</CODE> formatting object.</FONT></FONT></P>
+
+<H1 id="d1e6582">Formatting Properties</H1>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">By
+themselves, formatting objects say relatively little about how
+content is formatted. They merely put content in abstract boxes,
+which are placed in particular parts of a page. Attributes on the
+various formatting objects determine how the content in those boxes
+is styled.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">As
+already mentioned, there are more than 200 different formatting
+properties. Not all properties can be attached to all elements. For
+instance, there isn&rsquo;t much point to specifying the <CODE>font-style</CODE>
+of a <CODE>fo:external-graphic</CODE>. Most properties, however,
+can be applied to more than one kind of formatting object element.
+(The few that can&rsquo;t, such as <CODE>src</CODE> and
+<CODE>provisional-label-separation</CODE>, were discussed above
+with the formatting objects they apply to.) When a property is common
+to multiple formatting objects, it shares the same syntax and meaning
+across the objects. For example, you use identical code to format a
+<CODE>fo:title</CODE> in 14-point Times bold as you do to format
+a <CODE>fo:block</CODE> in 14-point Times bold.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">Many
+of the XSL-FO properties are similar to CSS properties. The value of
+a CSS <CODE>font-family</CODE> property is the same as the value
+of an XSL-FO <CODE>font-family</CODE> attribute. If you&rsquo;ve
+read about CSS in Chapters 14 through 16, you&rsquo;re already more
+than half finished learning XSL-FO properties.</FONT></P>
+<H2>The id property</H2>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>id</CODE> property can be applied to any element. This is
+an XML ID-type attribute. The value of this property must, therefore,
+be an XML name that&rsquo;s unique within the style sheet and within
+the output formatting object document. The last requirement is a
+little tricky because it's possible that one template rule in the
+style sheet may generate several hundred elements in the output
+document. The <CODE>generate-id()</CODE> function of XSLT can be
+useful here.</FONT></P>
+<H2>The language property</H2>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>language</CODE> property specifies the language of the
+content contained in either a <CODE>fo:block</CODE> or a
+<CODE>fo:character</CODE> element. Generally, the value of this
+property is an ISO 639 language code such as <CODE>en</CODE>
+(English) or <CODE>la</CODE> (Latin). It may also be the keyword
+<CODE>none</CODE> or <CODE>use-document</CODE>. The latter
+means to simply use the language of the input as specified by the
+<CODE>xml:lang</CODE> attribute. For example, consider the first
+verse of Caesar&rsquo;s <I>Gallic Wars</I>:</FONT></P>
+<PRE>&lt;fo:block id=&quot;verse1.1.1&quot; language=&quot;la&quot;&gt;
+  Gallia est omnis divisa in partes tres,
+  quarum unam incolunt Belgae, aliam Aquitani,
+  tertiam qui ipsorum lingua Celtae, nostra Galli appellantur
+&lt;/fo:block&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">Although the <CODE>language</CODE> property
+has no direct effect on formatting, it may have an indirect effect if
+the formatter selects layout algorithms depending on the language.
+For instance, the formatter should use different default writing
+modes for Arabic and English text. This carries over into
+determination of the start and end regions and the inline and block
+progression directions.</FONT></P>
+<H2>Paragraph properties</H2>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">Paragraph
+properties are styles that normally are thought of as applying to an
+entire block of text in a traditional word processor, although
+perhaps <I>block-level text properties</I> is a more appropriate name
+here. For example, indentation is a paragraph property, because you
+can indent a paragraph, but you can&rsquo;t indent a single word.</FONT></P>
+<H3>Break properties</H3>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+break properties specify where page breaks are and are not allowed.
+There are seven loosely related break properties:</font></p><ul><li><p><CODE>keep-with-next</CODE></p></li>
+<li><p><CODE>keep-with-previous</CODE></p></li>
+<li><p><CODE>keep-together</CODE></p></li>
+<li><p><CODE>break-before</CODE></p></li>
+<li><p><CODE>break-after</CODE></p></li>
+</ul><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>keep-with-next</CODE> property determines how much effort
+the formatter will expend to keep this formatting object on the same
+page as the following formatting object. The <CODE>keep-with-previous</CODE>
+property determines how much effort the formatter will expend to keep
+this formatting object on the same page as the preceding formatting
+object. And the <CODE>keep-together</CODE> property determines
+how much effort the formatter will expend to keep the contents of
+this formatting object on one page. These are not hard and fast rules
+because it's always possible that a formatting object is just too big
+for one page. Each of these properties can be set to an integer
+giving the strength of the effort to keep the objects on the same
+page (larger integers are stronger) or to the keywords <CODE>always</CODE>
+or <CODE>auto</CODE>. <CODE>always</CODE> means maximum
+effort; <CODE>auto</CODE> means let the breaks fall where they
+may.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">By
+contrast, the <CODE>break-before</CODE> property and <CODE>break-after</CODE>
+properties mandate some kind of break. What exactly is broken is
+determined by the value of the property. This can be one of these
+five values:</FONT></P>
+<ul>
+<li><p><CODE>column</CODE>: Break the current
+column and move to the next column.</p></li>
+<li><p><CODE>page</CODE>: Break the current page
+and move to the next page.</p></li>
+<li><p><CODE>even-page</CODE>: Break the current
+page and move to the next even-numbered page, inserting a blank page
+if the current page is itself an even-numbered page.</p></li>
+<li><p><CODE>odd-page</CODE>: Break the current
+page and move to the next odd-numbered page, inserting a blank page
+if the current page is itself an odd-numbered page.</p></li>
+<li><p><CODE>auto</CODE>: Let the formatter
+decide where to break; the default.</p></li>
+</ul>
+
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">For
+example, this template rule ensures that each <CODE>ATOM</CODE>
+of sufficiently small size is printed on a page of its own:</FONT></P>
+<PRE>&lt;xsl:template match=&quot;ATOM&quot;&gt;
+  &lt;fo:block break-before=&quot;page&quot; break-after=&quot;page&quot;&gt;
+    &lt;xsl:apply-templates/&gt;
+  &lt;/fo:block&gt;
+&lt;/xsl:template&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">Finally, the <CODE>inhibit-line-breaks</CODE>
+property is a boolean that can be set to <CODE>true</CODE> to
+indicate that not even a line break is allowed, much less a page
+break.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">XSL-FO
+also defines three shorthand page-break properties: <CODE>page-break-after</CODE>,
+<CODE>page-break-before</CODE>, and <CODE>page-break-inside</CODE>.
+These are not absolutely necessary because their effects can be
+achieved by appropriate combinations of the keep and break
+properties. For example, to specify a page break after an element,
+you'd set <CODE>break-before</CODE> to <CODE>page</CODE> and
+<CODE>keep-with-previous</CODE> to <CODE>auto</CODE>.</FONT></P>
+<H3>Hyphenation properties</H3>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+hyphenation properties determine where hyphenation is allowed and how
+it should be used. These properties apply only to soft or &ldquo;optional&rdquo;
+hyphens such as the ones sometimes used to break long words at the
+end of a line. They do not apply to hard hyphens such as the ones in
+the word <I>mother-in-law</I>, although hard hyphens may affect where
+soft hyphens are allowed. There are six hyphenation properties. They
+are:</p></li>
+<ul>
+<li><p><CODE>hyphenate</CODE>: Automatic
+hyphenation is allowed only if this property has the value <CODE>true</CODE>.</FONT></P>
+<li><p><CODE>hyphenation-character</CODE>: The
+Unicode character used to hyphenate words, such as - in English.</p></li>
+<li><p><CODE>hyphenation-keep</CODE>: One of the
+four keywords (<CODE>column</CODE>, <CODE>none</CODE>, <CODE>page</CODE>,
+<CODE>inherit</CODE>) that specify where and whether hyphenation
+is allowed. The default is not to hyphenate.</p></li>
+<li><p><CODE>hyphenation-ladder-count</CODE>: A
+nonnegative integer that specifies the maximum number of hyphenated
+lines that may appear in a row.</p></li>
+<li><p><CODE>hyphenation-push-character-count</CODE>:
+A nonnegative integer that specifies the minimum number of characters
+that must follow an automatically inserted hyphen. (Short syllables
+look bad in isolation.)</p></li>
+<li><p><CODE>hyphenation-remain-character-count</CODE>:
+A nonnegative integer specifying the minimum number of characters
+that must precede an automatically inserted hyphen.</p></li>
+</ul>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">For
+example:</FONT></P>
+<PRE>&lt;fo:block hyphenate=&quot;true&quot;
+          hyphenation-character=&quot;-&quot;
+          hyphenation-keep=&quot;none&quot;
+          hyphenation-ladder-count=&quot;2&quot;
+          hyphenation-push-character-count=&quot;4&quot;
+          hyphenation-remain-character-count=&quot;4&quot; &gt;
+  some content...
+&lt;/fo:block&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">XSL-FO does not specify a word-breaking
+algorithm to determine where a soft hyphen may be applied. Even when
+these properties allow hyphenation, it&rsquo;s still completely up to
+the formatter to figure out how to hyphenate individual words.
+Indeed, basic formatters may not attempt to hyphenate words at all.</FONT></P>
+<H3>Indent properties</H3>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+indent properties specify how far lines are indented from the edge of
+the text. There are four of these:</font></p><ul><li><p><CODE>start-indent</CODE></p></li>
+<li><p><CODE>end-indent</CODE></p></li>
+<li><p><CODE>text-indent</CODE></p></li>
+<li><p><CODE>last-line-end-indent</CODE></p></li>
+</ul><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>start-indent</CODE> property offsets all lines from the
+start edge (left edge in English). The <CODE>end-indent</CODE>
+property offsets all lines from the end edge (right edge in English).
+The <CODE>text-indent</CODE> property offsets only the first line
+from the start edge. The <CODE>last-line-end-indent</CODE>
+property offsets only the last line from the start edge. Values are
+given as a signed length. For example, a standard paragraph with a
+half-inch, first-line indent might be formatted this way:</FONT></P>
+<PRE>&lt;fo:block text-indent=&quot;0.5in&quot;&gt;
+  The first line of this paragraph is indented
+&lt;/fo:block&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">A block quote with a one-inch indent on all
+lines on both sides is formatted like this:</FONT></P>
+<PRE>&lt;fo:block start-indent=&quot;1.0in&quot; end-indent=&quot;1.0in&quot;&gt;
+  This text is offset one inch from both edges.
+&lt;/fo:block&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">Because the <CODE>text-indent</CODE> is
+added to the <CODE>start-indent</CODE> to get the total
+indentation of the first line, using a positive value for
+<CODE>start-indent</CODE> and a negative value for <CODE>text-indent</CODE>
+creates hanging indents. For example, all lines except the first in
+this paragraph are indented by one inch. The first line is only
+indented half an inch:</FONT></P>
+<PRE>&lt;fo:block text-indent=&quot;-0.5in&quot; start-indent=&quot;1.0in&quot;&gt;
+  This paragraph uses a hanging indent.
+&lt;/fo:block&gt;</PRE><H2>
+Character properties</H2>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">Character
+properties describe the qualities of individual characters. They are
+applied to elements that contain characters such as <CODE>fo:block</CODE>
+and <CODE>fo:list-item-body</CODE> elements. These include color,
+font, style, weight, and similar properties.</FONT></P>
+<H3>The color property</H3>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>color</CODE> property sets the foreground color of the
+contents using the same syntax as the CSS <CODE>color</CODE>
+property. For example, this <CODE>fo:inline</CODE> colors the
+text &ldquo;Lions and tigers and bears, oh my!&rdquo; pink:</FONT></P>
+<PRE>&lt;fo:inline color=&quot;#FFCCCC&quot;&gt;
+  Lions and tigers and bears, oh my!
+&lt;/fo:inline&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">Colors are specified in much the same way as
+they are in CSS; that is, as hexadecimal triples in the form #RRGGBB
+or as one of the 16 named colors <CODE>aqua</CODE>, <CODE>black</CODE>,
+<CODE>blue</CODE>, <CODE>fuchsia</CODE>, <CODE>gray</CODE>,
+<CODE>green</CODE>, <CODE>lime</CODE>, <CODE>maroon</CODE>,
+<CODE>navy</CODE>, <CODE>olive</CODE>, <CODE>purple</CODE>,
+<CODE>red</CODE>, <CODE>silver</CODE>, <CODE>teal</CODE>,
+<CODE>white</CODE>, and <CODE>yellow</CODE>.</FONT></P>
+<H3>Font properties</H3>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">Any
+formatting object that holds text can have a wide range of font
+properties. Most of these are familiar from CSS, including:</FONT></P>
+
+<ul>
+<li><p><CODE>font-family</CODE>: A list of font
+names in order of preference</FONT></P>
+<P STYLE="margin-left: 1.27cm; text-indent: -0.64cm; margin-top: 0.21cm; page-break-inside: avoid; widows: 2; orphans: 2">
+<FONT COLOR="#000000"><CODE><SPAN LANG="en-US">*</SPAN>font-size</CODE>:
+A signed length</p></li>
+<li><p><CODE>font-size-adjust</CODE>: The
+preferred ratio between the x-height and size of a font, specified as
+an unsigned real number or as <CODE>none</CODE></FONT></P>
+<li><p><CODE>font-stretch</CODE>: The &ldquo;width&rdquo;
+of a font, given as one of the keywords <CODE>condensed</CODE>,
+<CODE>expanded</CODE>, <CODE>extra-condensed</CODE>,
+<CODE>extra-expanded</CODE>, <CODE>narrower</CODE>, <CODE>normal</CODE>,
+<CODE>semi-condensed</CODE>, <CODE>semi-expanded</CODE>,
+<CODE>ultra-condensed</CODE>, <CODE>ultra-expanded</CODE>, or
+<CODE>wider</CODE></p></li>
+<li><p><CODE>font-style</CODE>: The style of
+font specified as one of the keywords <CODE>italic</CODE>,
+<CODE>normal</CODE>, <CODE>oblique</CODE>, <CODE>reverse-normal</CODE>,
+or <CODE>reverse-oblique</CODE></p></li>
+<li><p><CODE>font-variant</CODE>: Either <CODE>normal</CODE>
+or <CODE>small-caps</CODE></p></li>
+<li><p><CODE>font-weight</CODE>: The thickness
+of the strokes that draw the font, given as one of the keywords <CODE>100</CODE>,
+<CODE>200</CODE>, <CODE>300</CODE>, <CODE>400</CODE>,
+<CODE>500</CODE>, <CODE>600</CODE>, <CODE>700</CODE>,
+<CODE>800</CODE>, <CODE>900</CODE>, <CODE>bold</CODE>,
+<CODE>bolder</CODE>, <CODE>lighter</CODE>, or <CODE>normal</CODE></p></li>
+</ul>
+
+<H3>Text properties</H3>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+text properties apply styles to text that are more or less
+independent of the font chosen. These include:</font></p>
+
+<ul><li><p><CODE>text-transform</CODE></p></li>
+<li><p><CODE>text-shadow</CODE></p></li>
+<li><p><CODE>text-decoration</CODE></p></li>
+<li><p><CODE>score-spaces</CODE></p></li>
+</ul><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>text-transform</CODE> property defines how text is
+capitalized, and is identical to the CSS property of the same name.
+The four possible values are:</FONT></P>
+
+<ul>
+<li><p><CODE>none</CODE>: Don&rsquo;t change the
+case (the default)</p></li>
+<li><p><CODE>capitalize</CODE>: Make the first
+letter of each word uppercase and all subsequent letters lowercase</p></li>
+<li><p><CODE>uppercase</CODE>: Make all
+characters uppercase</p></li>
+<li><p><CODE>lowercase</CODE>: Make all
+characters lowercase</p></li>
+</ul>
+
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">This
+property is somewhat language specific. (Chinese and Hebrew, for
+example, don't have separate upper and lower cases.) Formatters are
+free to ignore the case recommendations when they're applied to
+non-Roman text.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>text-shadow</CODE> property applies a shadow to text. This
+is similar to a background color, but differs in that the shadow is
+attached to the text itself rather than to the box containing the
+text. The value of <CODE>text-shadow</CODE> can be the keyword
+<CODE>none</CODE> or a named or RGB color. For example:</FONT></P>
+<PRE>&lt;fo:inline text-shadow=&quot;FFFF66&quot;&gt;
+  This sentence is yellow.
+&lt;/fo:inline&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">The <CODE>text-decoration</CODE> property
+is similar to the CSS <CODE>text-decoration</CODE> property. Like
+that property, it has these five possible values:</FONT></P>
+
+<ul>
+<li><p><CODE>none</CODE>: No decoration, the
+default</font></p>
+<li><p><CODE>underline</CODE>: <U>Underlining</U></p></li>
+<li><p><CODE>overline</CODE>: A line above the
+text</p></li>
+<li><p><CODE>line-through</CODE>: <CODE>Strike
+through</CODE></FONT></P>
+<li><p><CODE>blink</CODE>: The notorious
+blinking text introduced by Netscape</p></li>
+</ul>
+
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">In
+addition to the five values that are familiar from CSS, XSL-FO also
+adds four values that turn off decoration that is simply inherited
+from a parent element:</font></p>
+
+<ul><li><p><CODE>no-underline</CODE></p></li>
+<li><p><CODE>no-overline</CODE></p></li>
+<li><p><CODE>no-line-through</CODE></p></li>
+<li><p><CODE>no-blink</CODE></p></li>
+</ul>
+
+
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">Scoring
+is a catchall word for <U>underlining</U>, <strike>line-through</strike>,
+<strike>double strike-through</strike>, and so forth. The <CODE>score-space</CODE>
+property determines whether white space is scored. <U>For example, if
+<CODE>score-spaces</CODE> is <CODE>true</CODE>, an underlined
+sentence looks like this.</U> <U>If</U> <U><CODE>score-spaces</CODE></U>
+<U>is</U> <U><CODE>false</CODE></U>, <U>an</U> <U>underlined</U>
+<U>sentence</U> <U>looks</U> <U>like</U> <U>this</U>.</FONT></P>
+<H2>Sentence properties</H2>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">Sentence
+properties apply to groups of characters, that is, a property that
+makes sense only for more than one letter at a time, such as how much
+space to place between letters or words.</FONT></P>
+<H3>Letter spacing properties</H3>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">Kerning
+of text is a slippery measure of how much space separates two
+characters. It&rsquo;s not an absolute number. Most formatters adjust
+the space between letters based on local necessity, especially in
+justified text. Furthermore, high-quality fonts use different amounts
+of space between different glyphs. However, you can make text looser
+or tighter overall.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>letter-spacing</CODE> property adds additional space
+between each pair of glyphs, beyond that provided by the kerning.
+It&rsquo;s given as a signed length specifying the desired amount of
+extra space to add. For example:</FONT></P>
+<PRE>  &lt;fo:block letter-spacing=&quot;2px&quot;&gt;
+    This is fairly loose text
+  &lt;/fo:block&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">The length may be negative to tighten up the
+text. Formatters, however, generally impose limits on how much extra
+space they allow to be added to or removed from the space between
+letters.</FONT></P>
+<H3>Word spacing properties</H3>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>word-spacing</CODE> property adjusts the amount of space
+between words. Otherwise, it behaves much like the letter spacing
+properties. The value is a signed length giving the amount of extra
+space to add between two words. For example:</FONT></P>
+<PRE>  &lt;fo:block word-spacing=&quot;0.3cm&quot;&gt;
+    This is pretty loose text.
+  &lt;/fo:block&gt;</PRE><H3>
+Line spacing properties</H3>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">An
+XSL-FO formatting engine divides block areas into line areas. You
+cannot create line areas directly from XSL-FO. However, with these
+five properties you can affect how they&rsquo;re vertically spaced:</FONT></P>
+<ul>
+<li><p><CODE>line-height</CODE>: The minimum
+height of a line</p></li>
+<li><p><CODE>line-height-shift-adjustment</CODE>:
+<CODE>consider-shifts</CODE> if subscripts and superscripts
+should expand the height of a line; <CODE>disregard-shifts</CODE>
+if they shouldn&rsquo;t</p></li>
+<li><p><CODE>line-stacking-strategy</CODE>:
+<CODE>line-height</CODE> (the CSS model and the default);
+<CODE>font-height</CODE> (make the line as tall as the font
+height after addition of <CODE>text-altitude</CODE> and
+<CODE>text-depth</CODE>); or <CODE>max-height</CODE>
+(distance between the maximum ascender height and maximum descender
+depth)</p></li>
+<li><p><CODE>text-depth</CODE>: A signed length
+specifying additional vertical space added after each line; can also
+be the keyword <CODE>use-font-metrics</CODE> (the default) to
+indicate that this depends on the font</p></li>
+<li><p><CODE>text-altitude</CODE>: A signed
+length specifying the minimum additional vertical space added before
+each line; can also be the keyword <CODE>use-font-metrics</CODE>
+(the default) to indicate that this depends on the font</p></li>
+</ul>
+
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+line height also depends largely on the size of the font in which the
+line is drawn. Larger font sizes will naturally have taller lines.
+For example, the following opening paragraph from Mary
+Wollstonecraft&rsquo;s <I>A Vindication of the Rights of Woman</I> is
+effectively double-spaced:</FONT></P>
+<PRE>&lt;fo:block font-size=&quot;12pt&quot; line-height=&quot;24pt&quot;&gt;
+  In the present state of society it appears necessary to go
+  back to first principles in search of the most simple truths,
+  and to dispute with some prevailing prejudice every inch of
+  ground. To clear my way, I must be allowed to ask some plain
+  questions, and the answers will probably appear as
+  unequivocal as the axioms on which reasoning is built;
+  though, when entangled with various motives of action, they
+  are formally contradicted, either by the words or conduct
+  of men.
+&lt;/fo:block&gt;</PRE><H3>
+Text alignment properties</H3>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>text-align</CODE> and <CODE>text-align-last</CODE>
+properties specify how the inline content is horizontally aligned
+within its box. The eight possible values are:</FONT></P>
+<ul>
+<li><p><CODE>start</CODE>: Left-aligned in
+left-to-right languages like English</p></li>
+<li><p><CODE>center</CODE>: Centered</p></li>
+<li><p><CODE>end</CODE>: Right-aligned in
+left-to-right scripts</p></li>
+<li><p><CODE>justify</CODE>: Expanded with extra
+space as necessary to fill out the line</FONT></P>
+<li><p><CODE>left</CODE>: Align with the left
+side of the page regardless of the writing direction</p></li>
+<li><p><CODE>right</CODE>: Align with the right
+side of the page regardless of the writing direction</p></li>
+<li><p><CODE>inside</CODE>: Align with the
+inside edge of the page; that is, the right edge on the left page of
+two facing pages or the left edge on the right page of two facing
+pages</p></li>
+<li><p><CODE>outside</CODE>: Align with the
+outside edge of the page; that is, the left edge on the left page of
+two facing pages or the right edge on the right page of two facing
+pages</p></li>
+</ul>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>text-align-last</CODE> property enables you to specify a
+different value for the last line in a block. This is especially
+important for justified text, where the last line often doesn&rsquo;t
+have enough words to be attractively justified. The possible values
+are the same as for <CODE>text-align</CODE> plus <CODE>relative</CODE>.
+A relatively aligned last line will line up the same way as all other
+lines unless <CODE>text-align</CODE> is <CODE>justified</CODE>,
+in which case the last line will align with the start edge instead.</FONT></P>
+<H3>White space properties</H3>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>space-treatment</CODE> property specifies what the
+formatting engine should do with white space that&rsquo;s still
+present after the original source document is transformed into
+formatting objects. It can be set to either <CODE>preserve</CODE>
+(the default) or <CODE>ignore</CODE>. If you set it to ignore,
+leading and trailing white space will be thrown away.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>white-space-collapse</CODE> property can be set to <CODE>true</CODE>
+(the default) or <CODE>false</CODE>. When true, runs of white
+space are replaced by a single space. When false, they're left
+unchanged.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>wrap-option</CODE> property determines how text that&rsquo;s
+too long to fit on a line is handled. This property can be set to
+<CODE>wrap</CODE> (the default) or <CODE>no-wrap</CODE>. When
+set to <CODE>wrap</CODE>, this allows the formatter to insert
+line breaks as necessary to fit the text.</FONT></P>
+<H2>Area properties</H2>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">Area
+properties are applied to boxes. These may be either block-level or
+inline boxes. Each of these boxes has:</font></p>
+
+<ul><li><p>A background</p></li>
+<li><p>Margins</p></li>
+<li><p>Borders</p></li>
+<li><p>Padding</p></li>
+<li><p>A size</p></li>
+</ul>
+
+<H3>Background properties</H3>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+background properties are identical to the CSS background properties.
+There are five:</FONT></P>
+
+<ul>
+<li><p>The <CODE>background-color</CODE>	
+property specifies the color of the box&rsquo;s background. Its value
+is either a color such as <CODE>red</CODE> or <CODE>#FFCCCC</CODE>
+or the keyword <CODE>transparent</CODE>.</p></li>
+<li><p>The <CODE>background-image</CODE>
+property gives the URI of an image to be used as a background. The
+value can also be the keyword <CODE>none</CODE>.</p></li>
+<li><p>The <CODE>background-attachment</CODE>
+property specifies whether the background image is attached to the
+window or the document. Its value is one of the two keywords <CODE>fixed</CODE>
+or <CODE>scroll</CODE>.</p></li>
+<li><p>The <CODE>background-position</CODE>
+property specifies where the background image is placed in the box.
+Possible values include <CODE>center</CODE>, <CODE>left</CODE>,
+<CODE>right</CODE>, <CODE>bottom</CODE>, <CODE>middle</CODE>,
+<CODE>top</CODE>, or a coordinate.</p></li>
+<li><p>The <CODE>background-repeat</CODE>
+property specifies how and whether a background image is tiled if it
+is smaller than its box. Possible values include <CODE>repeat</CODE>,
+<CODE>no-repeat</CODE>, <CODE>repeat-x</CODE>, and <CODE>repeat-y</CODE>.	`</p></li>
+
+</ul>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+following block shows the use of the <CODE>background-image</CODE>,
+<CODE>background-position</CODE>, <CODE>background-repeat</CODE>,
+and <CODE>background-color</CODE> properties:</FONT></P>
+<PRE>&lt;fo:block background-image=&quot;/bg/paper.gif&quot;
+          background-position=&quot;0,0&quot;
+          background-repeat=&quot;repeat&quot;
+          background-color=&quot;white&quot;&gt;
+  Two strings walk into a bar...
+&lt;/fo:block&gt;</PRE><P STYLE="margin-left: 1.27cm; text-indent: 0cm; margin-top: 0.21cm; margin-bottom: 0cm; page-break-inside: avoid; widows: 2; orphans: 2; page-break-after: avoid">
+<FONT COLOR="#0000ff"><FONT FACE="Arial, sans-serif"><B>Caution</B></FONT></FONT></P>
+<P STYLE="margin-left: 1.27cm; text-indent: 0cm; margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">The only
+background property FOP 0.20.4 supports is <CODE>background-color</CODE>.
+The others will probably be added in future releases.</FONT></FONT></P>
+<H3>Border properties</H3>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+border properties describe the appearance of a border around the box.
+They are mostly the same as the CSS border properties. However, as
+well as <CODE>border-<I>XXX</I>-bottom</CODE>, <CODE>border-<I>XXX</I>-top</CODE>,
+<CODE>border-<I>XXX</I>-left</CODE>, and <CODE>border-<I>XXX</I>-right</CODE>
+properties, the XSL versions also have <CODE>border-<I>XXX</I>-before</CODE>,
+<CODE>border-<I>XXX</I>-after</CODE>, <CODE>border-<I>XXX</I>-start</CODE>,
+and <CODE>border-<I>XXX</I>-end</CODE> versions. There are 31
+border properties in all. These are:</FONT></P>
+
+<ul>
+<li><p>Color: <CODE>border-color</CODE>,
+<CODE>border-before-color</CODE>, <CODE>border-after-color</CODE>,
+<CODE>border-start-color</CODE>, <CODE>border-end-color</CODE>,
+<CODE>border-top-color</CODE>, <CODE>border-bottom-color</CODE>,<CODE>
+border-left-color</CODE>, and <CODE>border-right-color</CODE>.
+The default color is black.</p></li>
+<li><p>Width: <CODE>border-width</CODE>,
+<CODE>border-before-width</CODE>, <CODE>border-after-width</CODE>,
+<CODE>border-start-width</CODE>, <CODE>border-end-width</CODE>,
+<CODE>border-top-width</CODE>, <CODE>border-bottom-width</CODE>,<CODE>
+border-left-width</CODE>, and <CODE>border-right-width</CODE>.
+The default width is <CODE>medium</CODE>.</p></li>
+<li><p>Style: <CODE>border-style</CODE>,
+<CODE>border-before-style</CODE>, <CODE>border-after-style</CODE>,
+<CODE>border-start-style</CODE>, <CODE>border-end-style</CODE>,
+<CODE>border-top-style</CODE>, <CODE>border-bottom-style</CODE>,<CODE>
+border-left-style</CODE>, <CODE>border-right-style</CODE>. The
+default style is <CODE>none</CODE>.</p></li>
+<li><p>Shorthand properties: <CODE>border</CODE>,
+<CODE>border-top</CODE>, <CODE>border-bottom</CODE>,
+<CODE>border-left</CODE>, <CODE>border-right</CODE>,
+<CODE>border-color</CODE>, <CODE>border-style</CODE>,
+<CODE>border-width</CODE>.</p></li>
+</ul>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">For
+example, this block has a two-pixel-wide blue border:</FONT></P>
+<PRE>&lt;fo:block border-before-color=&quot;blue&quot; border-before-width=&quot;2px&quot;
+          border-after-color=&quot;blue&quot;  border-after-width=&quot;2px&quot;
+          border-start-color=&quot;blue&quot;  border-start-width=&quot;2px&quot;
+          border-end-color=&quot;blue&quot;    border-end-width=&quot;2px&quot;&gt;
+  You have been selected for Special High Intensity Training.
+&lt;/fo:block&gt;</PRE><H3>
+Padding properties</H3>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+padding properties specify the amount of space between the border of
+the box and the contents of the box. The border of the box, if shown,
+falls between the margin and the padding. The padding properties are
+mostly the same as the CSS padding properties. However, as well as
+<CODE>padding-bottom</CODE>, <CODE>padding-top</CODE>,
+<CODE>padding-left</CODE>, and <CODE>padding-right</CODE>,
+the XSL-FO versions also have <CODE>padding-before</CODE>,
+<CODE>padding-after</CODE>, <CODE>padding-start</CODE>, and
+<CODE>padding-end</CODE> versions. Thus in total there are eight
+padding properties, each of which has a signed length for a value.
+These are:</font></p><ul><li><p><CODE>padding-after</CODE></p></li>
+<li><p><CODE>padding-before</CODE></p></li>
+<li><p><CODE>padding-bottom</CODE></p></li>
+<li><p><CODE>padding-end</CODE></p></li>
+<li><p><CODE>padding-left</CODE></p></li>
+<li><p><CODE>padding-start</CODE></p></li>
+<li><p><CODE>padding-right</CODE></p></li>
+<li><p><CODE>padding-top</CODE></p></li>
+</ul><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">For
+example, this block has half a centimeter of padding on each side:</FONT></P>
+<PRE>&lt;fo:block padding-before=&quot;0.5cm&quot; padding-after=&quot;0.5cm&quot;
+          padding-start=&quot;0.5cm&quot;  padding-end=&quot;0.5cm&quot;&gt;
+  Did you hear the one about the dyslexic agnostic?
+&lt;/fo:block&gt;</PRE><H3>
+Margin properties for blocks</H3>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">There
+are five margin properties, each of whose values is given as an
+unsigned length. These are:</font></p><ul><li><p><CODE>margin-top</CODE></p></li>
+<li><p><CODE>margin-bottom</CODE></p></li>
+<li><p><CODE>margin-left</CODE></p></li>
+<li><p><CODE>margin-right</CODE></p></li>
+<li><p><CODE>margin</CODE></p></li>
+</ul><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">However,
+these properties are only here for compatibility with CSS. In
+general, it's recommended that you use these four properties instead
+because they fit better in the XSL-FO formatting model:</font></p><ul><li><p><CODE>space-before</CODE></p></li>
+<li><p><CODE>space-after</CODE></p></li>
+<li><p><CODE>start-indent</CODE></p></li>
+<li><p><CODE>end-indent</CODE></p></li>
+</ul><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>space-before</CODE> and <CODE>space-after</CODE>
+properties are equivalent to the <CODE>margin-top</CODE> and
+<CODE>margin-bottom</CODE> properties respectively. The
+<CODE>start-indent</CODE> property is equivalent to the sum of
+<CODE>padding-left</CODE>, <CODE>border-left-width</CODE>,
+and <CODE>margin-left</CODE>. The <CODE>end-indent</CODE>
+property is equivalent to the sum of <CODE>padding-right</CODE>,
+<CODE>border-right-width</CODE>, and <CODE>margin-right</CODE>.
+Figure 19-11 should make this clearer.</FONT></P>
+<P><FONT COLOR="#000000"><IMG SRC="xslfo_htmlized_html_m54f1bd72.jpg" NAME="Graphic11" ALIGN=BOTTOM WIDTH=493 HEIGHT=358 BORDER=0></FONT></P>
+<P STYLE="page-break-inside: avoid; widows: 2; orphans: 2"><FONT COLOR="#008000"><FONT FACE="Arial, sans-serif">Figure
+19-11: Padding, indents, borders, and space before and after for an
+XSL box</FONT></FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">For
+example, this block has a half centimeter margin at its start and end
+sides:</FONT></P>
+<PRE>&lt;fo:block start-indent=&quot;0.5cm&quot; end-indent=&quot;0.5cm&quot;&gt;
+  Two strings walk into a bar...
+&lt;/fo:block&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">However, unlike margins, space properties are
+given as space specifiers that contain more than one value. In
+particular, they contain a preferred value, a minimum value, a
+maximum value, a conditionality, and a precedence. This allows the
+formatter somewhat more freedom in laying out the page. The formatter
+is free to pick any amount of space between the minimum and maximum
+to fit the constraints of the page.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">Each
+of the space values is a length. The conditionality is one of the two
+keywords <CODE>discard</CODE> or <CODE>retain</CODE>. This
+determines what happens to extra space at the end of a line. The
+default is to discard it. The precedence can either be an integer or
+the keyword <CODE>force</CODE>. The precedence determines what
+happens when the <CODE>space-end</CODE> of one inline area
+conflicts with the <CODE>space-start</CODE> of the next. The area
+with higher precedence wins. The default precedence is 0. Semicolons
+separate all five values.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">For
+example, consider this <CODE>fo:block</CODE> element:</FONT></P>
+<PRE>&lt;fo:block space-before=&quot;0in;0.5in;0.166in;discard;force&quot;&gt;
+ It goes to 11.
+&lt;/fo:block&gt;</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">It says that ideally the formatter should add a
+sixth of an inch of space before this element. However, it can add as
+little as no space at all and as much as half an inch if necessary.
+Because the precedence is set to <CODE>force</CODE>, this will
+override any other space specifiers that conflict with it. Finally,
+if there's any extra space that's left over at the end, it will be
+discarded.</FONT></P>
+<H3>Margin properties for inline boxes</H3>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">Two
+margin properties apply only to inline elements:</font></p><ul><li><p><CODE>space-end</CODE></p></li>
+<li><p><CODE>space-start</CODE></p></li>
+</ul><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">Their
+values are space specifiers that give a range of extra space to be
+added before and after the element. The actual spaces may be smaller
+or larger. Because the space is not part of the box itself, one box&rsquo;s
+end space can be part of the next box&rsquo;s start space.</FONT></P>
+<H3>Size properties</H3>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">Six
+properties specify the height and width of the content area of a box.
+These are:</font></p><ul><li><p><CODE>height</CODE></p></li>
+<li><p><CODE>width</CODE></p></li>
+<li><p><CODE>max-height</CODE></p></li>
+<li><p><CODE>max-width</CODE></p></li>
+<li><p><CODE>min-height</CODE></p></li>
+<li><p><CODE>min-width</CODE></p></li>
+</ul><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">These
+properties do not specify the total width and height of the box,
+which also includes the margins, padding, and borders. This is only
+the width and height of the content area. As well as an unsigned
+length, the <CODE>height</CODE> and <CODE>width</CODE>
+properties may be set to the keyword <CODE>auto</CODE>, which
+chooses the height and width based on the amount of content in the
+box. However, in no case are the height and width larger than the
+values specified by the <CODE>max-height</CODE> and <CODE>max-width</CODE>
+or smaller than the <CODE>min-height</CODE> and <CODE>min-width</CODE>.
+For example:</FONT></P>
+<PRE>&lt;fo:block height=&quot;2in&quot; width=&quot;2in&quot;&gt;
+  Two strings walk into a bar...
+&lt;/fo:block&gt;</PRE><H3>
+The overflow properties</H3>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>overflow</CODE> property determines what happens when
+there&rsquo;s too much content to fit within a box of a specified
+size. This may be an explicit specification using the size properties
+or an implicit specification based on page size or other constraints.
+There are four possibilities, each of which is represented by a
+keyword:</FONT></P>
+<ul>
+<li><p><CODE>auto</CODE>: Use scrollbars if
+there is overflow; don&rsquo;t use them if there isn&rsquo;t. If
+scroll bars aren&rsquo;t available (for example, on a printed page)
+then add a new page for flow content and generate an error for static
+content. This is the default.</p></li>
+<li><p><CODE>hidden</CODE>: Don&rsquo;t show any
+content that runs outside the box.</p></li>
+<li><p><CODE>scroll</CODE>: Attach scroll bars
+to the box so the reader can scroll to the additional content.</p></li>
+<li><p><CODE>visible</CODE>: The complete
+contents are shown; if necessary, by overriding the size constraints
+on the box.</p></li>
+<li><p><CODE>error-if-overflow</CODE>: The
+formatter should give up and display an error message if content
+overflows its box.</p></li>
+<li><p><CODE>paginate</CODE>: If the object
+overflowed is a page, then create a new page to hold the excess
+content.</p></li>
+</ul>
+
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>clip</CODE> property specifies the shape of the clipping
+region if the <CODE>overflow</CODE> property does not have the
+value <CODE>visible</CODE>. The default clipping region is simply
+the box itself. However, you can change this by specifying a
+particular rectangle like this:</FONT></P>
+<PRE>clip=rect(<I>top_offset right_offset bottom_offset left_offset</I>)</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">Here <I><CODE>top_offset</CODE></I>,
+<I><CODE>right_offset</CODE></I>, <I><CODE>bottom_offset</CODE></I>,
+and <I><CODE>left_offset</CODE></I> are signed lengths giving the
+offsets of the clipping region from the top, right, bottom, and left
+sides of the box. This allows you to make the clipping region larger
+or smaller than the box itself.</FONT></P>
+<H3>The reference-orientation property</H3>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>reference-orientation</CODE> property allows you to specify
+that the content of a box is rotated relative to its normal
+orientation. The only valid values are 90-degree increments, which
+are measured counterclockwise, that is <CODE>0</CODE>, <CODE>90</CODE>,
+<CODE>180</CODE>, and <CODE>270</CODE>. You can also specify
+<CODE>-90</CODE>, <CODE>-180</CODE>, and <CODE>-270</CODE>.
+For example, here's a 90-degree rotation:</FONT></P>
+<PRE>&lt;fo:block reference-orientation=&quot;90&quot;&gt;
+  Bottom to Top
+&lt;/fo:block&gt;</PRE><H3>
+Writing mode properties</H3>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+writing mode specifies the direction of text in the box. This has
+important implications for the ordering of formatting objects in the
+box. Most of the time, speakers of English and other Western
+languages assume a left-to-right, top-to-bottom writing mode, such as
+this:</FONT></P>
+<PRE>A B C D E F G
+H I J K L M N
+O P Q R S T U
+V W X Y Z</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">However, in the Hebrew and Arabic-speaking
+worlds, a right-to-left, top-to-bottom ordering such as this one
+seems more natural:</FONT></P>
+<PRE>G F E D C B A
+N M L K J I H
+U T S R Q P O
+Z Y X W V</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">In Taiwan, a top-to-bottom, left-to-right order
+is conventional:</FONT></P>
+<PRE>A E I M Q U Y
+B F J N R V Z
+C G K O S W
+D H L P T X</PRE><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000">In XSL-FO, the writing mode doesn&rsquo;t just
+affect text. It also affects how objects in a flow or sequence are
+laid out, how wrapping is performed, and more. You&rsquo;ve already
+noticed that many properties are organized in start, end, before, and
+after variations instead of left, right, top, and bottom. Specifying
+style rules in terms of start, end, before, and after, instead of
+left, right, top, and bottom, produces more robust, localizable style
+sheets.</FONT></P>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">The
+<CODE>writing-mode</CODE> property specifies the writing mode for
+an area. This property can have 1 of 13 keyword values. These are:</FONT></P>
+<ul>
+<li><p><CODE>bt-lr</CODE>: Bottom-to-top,
+left-to-right</FONT></P>
+<li><p><CODE>bt-rl</CODE>: Bottom-to-top,
+right-to-left</FONT></P>
+<li><p><CODE>lr-alternating-rl-bt</CODE>:
+Left-to-right lines alternating with right-to-left lines,
+bottom-to-top</FONT></P>
+<li><p><CODE>lr-alternating-rl-tb</CODE>:
+Left-to-right lines alternating with right-to-left lines,
+top-to-bottom</FONT></P>
+<li><p><CODE>lr-bt</CODE>: Left-to-right,
+bottom-to-top</FONT></P>
+<li><p><CODE>lr-inverting-rl-bt</CODE>: Left to
+right, then move up to the next line and go right to left (that is,
+snake up the page like a backward S)</FONT></P>
+<li><p><CODE>lr-inverting-rl-tb</CODE>: Left to
+right, then move down to the next line and go right to left (that is,
+snake down the page like a backward S)</FONT></P>
+<li><p><CODE>lr-tb</CODE>: Left to right, top to
+bottom</FONT></P>
+<li><p><CODE>rl-bt</CODE>: Right to left, bottom
+to top</FONT></P>
+<li><p><CODE>rl-tb</CODE>: Right to left, top to
+bottom</FONT></P>
+<li><p><CODE>tb-lr</CODE>: Top to bottom, left
+to right</FONT></P>
+<li><p><CODE>tb-rl</CODE>: Top to bottom, right
+to left</FONT></P>
+<li><p><CODE>tb-rl-in-rl-pairs</CODE>: Text is
+written in two character, right-to-left pairs; the pairs are then
+laid out top-to-bottom to form a line; lines are laid out from
+right-to-left</p></li>
+</ul>
+
+<H3>Orphans and widows</H3>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">To
+a typesetter, an orphan is a single line of a paragraph at the bottom
+of a page. A widow is a single line of a paragraph at the top of a
+page. Good typesetters move an extra line from the previous page to
+the next page or from the next page to the previous page as necessary
+to avoid orphans and widows. You can adjust the number of lines
+considered an orphan by setting the <CODE>orphans</CODE> property
+to an unsigned integer. You can adjust the number of lines considered
+a widow by setting the <CODE>widows</CODE> property to an
+unsigned integer. For instance, if you want to make sure that every
+partial paragraph at the end of a page has at least three lines, set
+the <CODE>orphans</CODE> property to 3. For example:</FONT></P>
+<PRE>&lt;fo:simple-page-master master-name=&quot;even&quot;
+    orphans=&quot;3&quot; page-height=&quot;11in&quot; page-width=&quot;8.5in&quot;
+/&gt;</PRE><H2>
+Aural properties</H2>
+<P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">XSL-FO
+supports the full collection of CSS2 aural style properties
+including:</font></p><ul><li><p><CODE>azimuth</CODE></p></li>
+<li><p><CODE>cue</CODE></p></li>
+<li><p><CODE>cue-after</CODE></p></li>
+<li><p><CODE>cue-before</CODE></p></li>
+<li><p><CODE>elevation</CODE></p></li>
+<li><p><CODE>pause</CODE></p></li>
+<li><p><CODE>pause-after</CODE></p></li>
+<li><p><CODE>pause-before</CODE></p></li>
+<li><p><CODE>pitch</CODE></p></li>
+<li><p><CODE>pitch-range</CODE></p></li>
+<li><p><CODE>play-during</CODE></p></li>
+<li><p><CODE>richness</CODE></p></li>
+<li><p><CODE>speak</CODE></p></li>
+<li><p><CODE>speak-header</CODE></p></li>
+<li><p><CODE>speak-numeral</CODE></p></li>
+<li><p><CODE>speak-punctuation</CODE></p></li>
+<li><p><CODE>speech-rate</CODE></p></li>
+<li><p><CODE>stress</CODE></p></li>
+<li><p><CODE>voice-family</CODE></p></li>
+<li><p><CODE>volume</CODE></p></li>
+</ul><P STYLE="margin-top: 0.21cm; widows: 2; orphans: 2"><FONT COLOR="#000000">Of
+course, these probably won&rsquo;t be relevant in most of the output
+mediums that XSL-FO currently supports. When and if XSL-FO is
+implemented directly in Web browsers, these will become more
+important.</FONT></P>
+<P STYLE="margin-left: 1.27cm; text-indent: 0cm; margin-top: 0.21cm; margin-bottom: 0cm; page-break-inside: avoid; widows: 2; orphans: 2; page-break-after: avoid">
+<FONT COLOR="#0000ff"><FONT FACE="Arial, sans-serif"><B>Cross-reference</B></FONT></FONT></P>
+<P STYLE="margin-left: 1.27cm; text-indent: 0cm; margin-top: 0.21cm; widows: 2; orphans: 2">
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">The aural style
+properties are discussed in the last section of Chapter 16. They have
+the same semantics and syntax in XSL-FO as they do in CSS2.</FONT></FONT></P>
+<h1>Summary</h1>
+<P><FONT COLOR="#000000">In this
+chapter, you learned about XSL formatting objects. In particular, you
+learned that:</FONT></P>
+
+<ul>
+<li><p>An XSL processor follows the instructions in
+an XSLT style sheet to transform an XML source document into a new
+XML document marked up in the XSL formatting object vocabulary.</p></li>
+<li><p>Most XSL formatting objects generate one or
+more rectangular areas. Pages contain regions. Regions contain block
+areas. Block areas contain block areas and line areas. Line areas
+contain inline areas. Inline areas contain other inline areas and
+character areas.</p></li>
+<li><p>The root element of a formatting object
+document is <CODE>fo:root</CODE>. This contains
+<CODE>fo:layout-master-set</CODE> elements and <CODE>fo:page-sequence</CODE>
+elements.</p></li>
+<li><p>Each <CODE>fo:layout-master-set</CODE>
+element contains one or more <CODE>fo:simple-page-master elements</CODE>,
+each of which defines the layout of a particular kind of page by
+dividing it into five regions (before, after, start, end, and body)
+and assigning properties to each one. It may also contain one or more
+<CODE>fo:page-sequence-master</CODE> elements.</p></li>
+<li><p>Each <CODE>fo:page-sequence</CODE>
+element contains zero or one <CODE>fo:title</CODE> elements, zero
+or more <CODE>fo:static-content</CODE> elements, one or more
+<CODE>fo:flow</CODE> elements, and a <CODE>master-reference</CODE>
+attribute. The contents of the <CODE>fo:flow</CODE> are copied
+onto instances of the master pages in the order specified by the
+<CODE>fo:page-sequence-master</CODE> element identified by the
+<CODE>master-reference</CODE> attribute. The contents of the
+<CODE>fo:static-content</CODE> elements are copied onto every
+page that's created.</p></li>
+<li><p>The <CODE>fo:external-graphic</CODE>
+element loads an image from a URL and displays it inline.</FONT></P>
+<li><p>The <CODE>fo:instream-foreign-object</CODE>
+element displays an image encoded in a non-XSL-FO XML application
+such as SVG or MathML embedded in the XSL-FO document.</FONT></P>
+<li><p>The <CODE>fo:basic-link</CODE> element
+creates a hypertext link to a URL.</FONT></P>
+<li><p>A list is a block-level element created by a
+<CODE>fo:list-block</CODE> element. It contains block-level
+<CODE>fo:list-item</CODE> elements. Each <CODE>fo:list-item</CODE>
+contains a <CODE>fo:list-item-label</CODE> and <CODE>fo:list-item-body</CODE>,
+and each of these contains block-level elements.</p></li>
+<li><p>The <CODE>fo:page-number</CODE> element
+inserts the current page number.</p></li>
+<li><p>The <CODE>fo:inline</CODE> element is a
+container used to attach properties to the text and areas it
+contains.</p></li>
+<li><p>The <CODE>fo:footnote</CODE> element
+inserts an out-of-line footnote and an inline footnote reference into
+the page.</p></li>
+<li><p>The <CODE>fo:float</CODE> element inserts
+an out-of-line block-level element such as a figure or a pull quote
+onto the page. The <CODE>float</CODE> property determines which
+side of the page it floats on and the <CODE>clear</CODE> property
+determines whether and where other elements are allowed to float
+around it.</p></li>
+<li><p>There are more than 200 separate XSL
+formatting properties, many of which are identical to CSS properties
+of the same name. These are attached to XSL formatting object
+elements as attributes.</p></li>
+<li><p>The keeps and breaks properties describe
+where page breaks are and are not allowed. These include
+<CODE>keep-with-next</CODE>, <CODE>keep-with-previous</CODE>,
+<CODE>keep-together</CODE>, <CODE>break-before</CODE>,
+<CODE>break-after</CODE>, <CODE>widows</CODE>, and <CODE>orphans</CODE>.</p></li>
+<li><p>The hyphenation properties describe whether
+and how to insert soft hyphens. These include <CODE>hyphenate</CODE>,
+<CODE>hyphenation-character</CODE>, <CODE>hyphenation-keep</CODE>,
+<CODE>hyphenation-ladder-count</CODE>,
+<CODE>hyphenation-push-character-count</CODE>, and
+<CODE>hyphenation-remain-character-count</CODE>.</p></li>
+<li><p>The indent properties specify how far lines
+are indented from the edge of the text. There are four of these:
+<CODE>start-indent</CODE>, <CODE>end-indent</CODE>,
+<CODE>text-indent</CODE>, and <CODE>last-line-end-indent</CODE>.</p></li>
+<li><p>Character properties describe attributes of
+individual characters and include <CODE>color</CODE>,
+<CODE>font-family</CODE>, <CODE>font-size</CODE>,
+<CODE>font-size-adjust</CODE>, <CODE>font-stretch</CODE>,
+<CODE>font-style</CODE>, <CODE>font-variant</CODE>,
+<CODE>font-weight</CODE>, <CODE>text-transform</CODE>,
+<CODE>text-shadow</CODE>, <CODE>text-decoration</CODE>, and
+<CODE>score-space</CODE>.</p></li>
+<li><p>Sentence properties describe formatting that
+only makes sense for groups of letters and words and include
+<CODE>letter-spacing</CODE>, <CODE>word-spacing</CODE>,
+<CODE>line-height</CODE>, <CODE>line-height-shift-adjustment</CODE>,
+<CODE>line-stacking-strategy</CODE>, <CODE>text-depth</CODE>,
+<CODE>text-altitude</CODE>, <CODE>text-align</CODE>,
+<CODE>text-align-last</CODE>, <CODE>space-treatment</CODE>,
+<CODE>white-space-collapse</CODE>, and <CODE>wrap-option</CODE>.</p></li>
+<li><p>Area properties describe attributes of boxes
+produced by various formatting objects, and include the background,
+border, padding, and margin properties.</p></li>
+<li><p>XSL-FO supports the full complement of aural
+styles defined in CSS2 for reading documents aloud.</p></li>
+</ul>
+<P><FONT COLOR="#000000">The next
+chapter introduces XLinks, a more powerful linking syntax than the
+standard HTML <CODE>A</CODE> element hyperlinks and XSL&rsquo;s
+<CODE>fo:basic-link</CODE>.</FONT></P>
+
+   <hr>
+      <div style="text-align: center">
+         [ <a href="http://www.cafeconleche.org/">Cafe con Leche</a> 
+         | <a href="../index.html">XML Bible Home Page</a>
+         | Order from <a href="http://www.amazon.com/exec/obidos/ASIN/0764547607/ref=nosim/cafeaulaitA/">amazon.com</a> ]
+         
+      </div>
+
+      <hr>
+      Copyright 2001, 2002 <a href="http://www.elharo.com/">Elliotte Rusty Harold</a><br><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a><br>
+      Last Modified July 2, 2002 
+      
+   </body>
+</html>

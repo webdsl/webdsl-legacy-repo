@@ -1,0 +1,418 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>DTDHandler</title><meta name="generator" content="DocBook XSL Stylesheets V1.52.2"><meta name="description" content="The complete text of Elliotte Rusty Harold's book Processing XML with Java.         published by Addison-Wesley, November 2002"><script language="javascript"><!--
+/* Only sunsites are allowed to mirror this page and then
+only with explicit, prior permission. For details,
+send email to elharo@metalab.unc.edu */
+if (location.protocol.toLowerCase().indexOf("file") != 0 ) { 
+  if (0 > location.host.toLowerCase().indexOf("cafeconleche.org")
+      && 0 > location.host.toLowerCase().indexOf("ibiblio.org")) {
+    location.href="http://www.cafeconleche.org/books/xmljava/chapters/";
+  }
+} // --></script><link rel="home" href="index.html" title="Processing XML with Java"><link rel="up" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="previous" href="ch07s04.html" title="Features and Properties"><link rel="next" href="ch07s06.html" title="Summary"><link rel="preface" href="pr01.html" title="Preface"><link rel="preface" href="pr02.html" title="Acknowledgements"><link rel="chapter" href="ch01.html" title="Chapter&nbsp;1.&nbsp;XML for Data"><link rel="chapter" href="ch02.html" title="Chapter&nbsp;2.&nbsp;XML Protocols: XML-RPC and SOAP"><link rel="chapter" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Writing XML with Java"><link rel="chapter" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Converting Flat Files to XML"><link rel="chapter" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Reading XML"><link rel="chapter" href="ch06.html" title="Chapter&nbsp;6.&nbsp;SAX"><link rel="chapter" href="ch07.html" title="Chapter&nbsp;7.&nbsp;The XMLReader Interface"><link rel="chapter" href="ch08.html" title="Chapter&nbsp;8.&nbsp;SAX Filters"><link rel="chapter" href="ch09.html" title="Chapter&nbsp;9.&nbsp;The Document Object Model"><link rel="chapter" href="ch10.html" title="Chapter&nbsp;10.&nbsp;Creating XML Documents with DOM"><link rel="chapter" href="ch11.html" title="Chapter&nbsp;11.&nbsp;The Document Object Model Core"><link rel="chapter" href="ch12.html" title="Chapter&nbsp;12.&nbsp;The DOM Traversal Module"><link rel="chapter" href="ch13.html" title="Chapter&nbsp;13.&nbsp;Output from DOM"><link rel="chapter" href="ch14.html" title="Chapter&nbsp;14.&nbsp;JDOM"><link rel="chapter" href="ch15.html" title="Chapter&nbsp;15.&nbsp;The JDOM Model"><link rel="chapter" href="ch16.html" title="Chapter&nbsp;16.&nbsp;XPath"><link rel="chapter" href="ch17.html" title="Chapter&nbsp;17.&nbsp;XSLT"><link rel="appendix" href="apa.html" title="Appendix&nbsp;A.&nbsp;XML APIs Quick Reference"><link rel="appendix" href="apb.html" title="Appendix&nbsp;B.&nbsp;SOAP 1.1 Schemas"><link rel="index" href="ix01.html" title="Index"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">DTDHandler</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch07s04.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;7.&nbsp;The XMLReader Interface</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch07s06.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="d0e11849"></a>DTDHandler</h2></div></div><p>
+    SAX is mostly about the instance document, not the DTD or
+    schema. However, 
+    given a validating parser, or at least an internal DTD subset,
+    the DTD can affect the contents of the instance document in
+    six ways:
+  </p><div class="orderedlist"><ol type="1"><li><p>
+        It can provide default values for attributes.
+      </p></li><li><p>
+        It can assign types to attributes which affects their normalized value.
+      </p></li><li><p>
+        It can distinguish between ignorable and non-ignorable white space.
+      </p></li><li><p>
+        It can declare general entities.
+      </p></li><li><p>
+        It can declare unparsed entities.
+      </p></li><li><p>
+        It can declare notations.
+      </p></li></ol></div><p>
+    The first four are resolved silently. For instance, 
+    when applying a default value for an attribute
+    to an element, the parser simply adds that attribute to the
+    <tt>Attributes</tt> object it passes to
+    <tt>startElement()</tt>. It doesn&#8217;t tell you
+    that it&#8217;s done it. It just does it.
+   </p><p>
+    The <tt>DTDHandler</tt> interface
+    covers the last two.
+    Since notations and unparsed entities are so infrequently
+    used, they&#8217;re not made a part of the main
+    <tt>ContentHandler</tt> interface.
+    Instead they&#8217;re given their own 
+    callback interface that&#8217;s just for working with notations and
+    unparsed entities, <tt>DTDHandler</tt>. This is summarized in <a href="ch07s05.html#CompactDTDHandler.java" title="Example&nbsp;7.16.&nbsp;The DTDHandler interface">Example&nbsp;7.16</a> 
+    Those few programmers who need this functionality can use it.
+    Everyone else can ignore it. 
+   </p><div class="example"><a name="CompactDTDHandler.java"></a><p class="title"><b>Example&nbsp;7.16.&nbsp;The DTDHandler interface</b></p><pre class="programlisting">package org.xml.sax;
+
+public interface DTDHandler {
+
+  public void notationDecl(String name, String publicID, 
+   String systemID) throws SAXException;
+   
+  public void unparsedEntityDecl(String name, String publicID, 
+   String systemID, String notationName) throws SAXException;
+    
+}
+</pre></div><p>
+    Like other callback interfaces, programmers implement 
+    this interface in a class of their own choosing. That concrete 
+    instantiation is registered with the
+    <tt>XMLReader</tt> through its 
+    <tt>setDTDHandler()</tt> method. 
+    For parallelism, there&#8217;s also a <tt>getDTDHandler()</tt> method
+    though it isn&#8217;t much needed in practice:
+   </p><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="void">void&nbsp;</span><span class="methodname"><b>setDTDHandler</b></span>(<span class="methodparam"><span class="type">DTDHandler&nbsp;</span><span class="parameter"><i>handler</i></span></span>);</code><br><code class="methodsynopsis"><span class="modifier">public&nbsp;</span><span class="type">DTDHandler&nbsp;</span><span class="methodname"><b>getDTDHandler</b></span>();</code><p>
+    As with the other callback interfaces, you can uninstall
+    a  <tt>DTDHandler</tt> by passing null
+    to <tt>setDTDHandler()</tt>.
+  </p><p>
+    The most common thing to do with a <tt>DTDHandler</tt>
+    is simply store all the information provided about the
+    notations and unparsed entities. 
+    Then the 
+    <tt>ContentHandler</tt> can
+    refer back to this when it needs to resolve an unparsed
+    entity. For instance, <a href="ch07s05.html#UnparsedCache.java" title="Example&nbsp;7.17.&nbsp;A caching DTDHandler">Example&nbsp;7.17</a>
+    is a simple <tt>DTDHandler</tt> implementation
+    that stores the notations and unparsed entities declared in
+    the DTD in two hash tables. 
+   </p><div class="example"><a name="UnparsedCache.java"></a><p class="title"><b>Example&nbsp;7.17.&nbsp;A caching DTDHandler</b></p><pre class="programlisting">import org.xml.sax.*;
+import java.util.Hashtable;
+
+
+public class UnparsedCache implements DTDHandler {
+
+  private Hashtable notations = new Hashtable();
+  private Hashtable entities = new Hashtable();
+  
+  public void notationDecl(String name, String publicID, 
+   String systemID) {
+    
+    System.out.println(name);
+    notations.put(name, new Notation(name, publicID, systemID));
+   
+  }
+   
+  public void unparsedEntityDecl(String name, String publicID, 
+   String systemID, String notationName) {
+     
+    entities.put(name, new UnparsedEntity(name, publicID, 
+     systemID, notationName));
+    
+  }
+  
+  public UnparsedEntity getUnparsedEntity(String name) {
+    System.out.println("Getting " + name);
+    return (UnparsedEntity) entities.get(name); 
+  }
+  
+  public Notation getNotation(String name) {
+    System.out.println("Getting " + name);
+    return (Notation) notations.get(name); 
+  }
+    
+}
+</pre></div><p>
+     For the convenience of tracking the several strings
+     associated with each notation and unparsed entity, I wrap
+     each one in a very simple class that just has a constructor, some getter methods, the 
+     <tt>equals()</tt> and
+     <tt>hashCode()</tt> methods needed to store
+     these objects in hash tables, and a <tt>toString()</tt> method for
+     convenient output.
+     The
+     <tt>Notation</tt> class is shown in <a href="ch07s05.html#Notation.java" title="Example&nbsp;7.18.&nbsp;A Notation utility class">Example&nbsp;7.18</a>. The
+     <tt>UnparsedEntity</tt> class is shown in <a href="ch07s05.html#UnparsedEntity.java" title="Example&nbsp;7.19.&nbsp;An UnparsedEntity utility class">Example&nbsp;7.19</a>. Once you learn about DOM,
+     an alternative would be to use that API&#8217;s
+     <tt>Notation</tt> and <tt>Entity</tt>
+     classes instead. 
+   </p><div class="example"><a name="Notation.java"></a><p class="title"><b>Example&nbsp;7.18.&nbsp;A Notation utility class</b></p><pre class="programlisting">public class Notation {
+
+  private String name;
+  private String publicID;
+  private String systemID;
+  
+  public Notation(String name, String publicID, 
+   String systemID) {
+
+    this.name = name;
+    this.publicID = publicID;
+    this.systemID = systemID;
+    
+  }
+   
+  public String getName() {
+    return this.name;
+  }
+    
+  public String getSystemID() {
+    return this.systemID;
+  }
+    
+  public String getPublicID() {
+    return this.publicID;
+  }
+  
+  public boolean equals(Object o) {
+    
+    if (o instanceof Notation) {
+      Notation n = (Notation) o;
+      // Well-formedness requires every notation to have  
+      // at least a SYSTEM or a PUBLIC ID so both should not be
+      // simultaneously null as long as the UnparsedCache built
+      // this object
+      if (publicID == null) {
+        return name.equals(n.name) 
+         &amp;&amp; systemID.equals(n.systemID);
+      }
+      else if (systemID == null) {
+        return name.equals(n.name) 
+         &amp;&amp; publicID.equals(n.publicID);
+      }
+      else {
+        return name.equals(n.name) 
+         &amp;&amp; publicID.equals(n.publicID)
+         &amp;&amp; systemID.equals(n.systemID);
+      }
+    }
+    return false;
+    
+  }
+    
+  public int hashCode() {
+    
+    if (publicID == null) {
+      return name.hashCode() ^ systemID.hashCode();
+    }
+    else if (systemID == null) {
+      return name.hashCode() ^ publicID.hashCode();
+    }
+    else {
+      return name.hashCode() ^ publicID.hashCode() 
+       ^ systemID.hashCode();
+    }
+    
+  }
+
+  public String toString() {
+    
+    StringBuffer result = new StringBuffer(name);
+    if (publicID != null) {
+      result.append(" PUBLIC "); 
+      result.append(publicID);
+      if (systemID != null) {
+        result.append(" ");
+        result.append(systemID);
+      }
+    }
+    else {
+      result.append(" SYSTEM "); 
+      result.append(systemID);
+    }
+    return result.toString();
+    
+  }
+    
+}
+</pre></div><div class="example"><a name="UnparsedEntity.java"></a><p class="title"><b>Example&nbsp;7.19.&nbsp;An UnparsedEntity utility class</b></p><pre class="programlisting">public class UnparsedEntity {
+
+  private String name;
+  private String publicID;
+  private String systemID;
+  private String notationName;
+  
+  public UnparsedEntity(String name, String publicID, 
+   String systemID, String notationName) {
+
+    this.name = name;
+    this.publicID = publicID;
+    this.systemID = systemID;
+    this.notationName = notationName;
+    
+  }
+   
+  public String getName() {
+    return this.name;
+  }
+    
+  public String getSystemID() {
+    return this.systemID;
+  }
+    
+  public String getPublicID() {
+    return this.publicID;
+  }
+    
+  public String getNotationName() {
+    return this.notationName;
+  }
+
+  public boolean equals(Object o) {
+    
+    if (o instanceof UnparsedEntity) {
+      UnparsedEntity entity = (UnparsedEntity) o;
+      if (publicID == null) {
+        return name.equals(entity.name) 
+         &amp;&amp; systemID.equals(entity.systemID)
+         &amp;&amp; notationName.equals(entity.notationName);
+      }
+      else {
+        return name.equals(entity.name) 
+         &amp;&amp; systemID.equals(entity.systemID)
+         &amp;&amp; publicID.equals(entity.publicID)
+         &amp;&amp; notationName.equals(entity.notationName);
+      }
+    }
+    return false;
+    
+  }
+    
+  public int hashCode() {
+    
+    if (publicID == null) {
+      return name.hashCode() ^ systemID.hashCode() 
+       ^ notationName.hashCode();
+    }
+    else {
+      return name.hashCode() ^ publicID.hashCode() 
+       ^ systemID.hashCode() ^ notationName.hashCode();
+    }
+    
+  }
+
+  public String toString() {
+    
+    StringBuffer result = new StringBuffer(name);
+    if (publicID == null) {
+      result.append(" PUBLIC "); 
+      result.append(publicID);
+    }
+    else {
+      result.append(" SYSTEM "); 
+    }
+    result.append(" ");
+    result.append(systemID);
+
+    return result.toString();
+  }
+    
+}
+</pre></div><p>
+     When you later encounter an attribute of type ENTITY,
+     ENTITIES, or NOTATION in the
+     <tt>ContentHandler</tt>, you can use
+     the <tt>getEntity()</tt> and 
+     <tt>getNotation()</tt> methods to return the
+     relevant data for that item.
+     For example, 
+     <a href="ch07s05.html#EntityLister.java" title="Example&nbsp;7.20.&nbsp;A program that lists the unparsed entities and notations used in&#xA; an XML document">Example&nbsp;7.20</a> is a simple program to list
+     the unparsed entities and notations discovered in an XML
+     document.
+   </p><div class="example"><a name="EntityLister.java"></a><p class="title"><b>Example&nbsp;7.20.&nbsp;A program that lists the unparsed entities and notations used in
+ an XML document</b></p><pre class="programlisting">import org.xml.sax.*;
+import org.xml.sax.helpers.*;
+import java.util.StringTokenizer;
+
+
+public class EntityLister extends DefaultHandler {
+
+  private UnparsedCache cache;
+  
+  public EntityLister(UnparsedCache cache) {
+    this.cache = cache;
+  }
+  
+  public void startElement(String namespaceURI, String localName,
+   String qualifiedName, Attributes attributes) {
+     
+    for (int i = 0; i &lt; attributes.getLength(); i++) {
+      
+      if (attributes.getType(i).equals("NOTATION")) {  
+        Notation n = cache.getNotation(attributes.getValue(i));
+        System.out.println("Element " + qualifiedName 
+         + " has notation " + n);
+      }
+      else if (attributes.getType(i).equals("ENTITY")) {
+        UnparsedEntity e = cache.getUnparsedEntity(
+         attributes.getValue(i));
+        System.out.println("Entity: " + e);
+      }
+      else if (attributes.getType(i).equals("ENTITIES")) {
+        String entityNames = attributes.getValue(i);
+        StringTokenizer st 
+         = new StringTokenizer(entityNames);
+        while (st.hasMoreTokens()) {
+           String name = st.nextToken();
+           UnparsedEntity e = cache.getUnparsedEntity(name);
+           System.out.println("Entity: " + e);
+        }
+        
+      }
+
+    }
+    
+  }
+  
+  
+  public static void main(String[] args) {
+  
+    if (args.length &lt;= 0) {
+      System.out.println("Usage: java EntityLister URL");
+      return;
+    }
+    String document = args[0];
+    
+    try {
+      XMLReader parser = XMLReaderFactory.createXMLReader();
+      
+      // I want to use qualified names
+      parser.setFeature(
+       "http://xml.org/sax/features/namespace-prefixes", true);
+      
+      UnparsedCache cache = new UnparsedCache();
+      parser.setDTDHandler(cache);
+      parser.setContentHandler(new EntityLister(cache));
+      
+      parser.parse(document);
+    }
+    catch (Exception e) {
+      System.out.println("Could not read document because " 
+       + e.getMessage());
+    }
+  
+  }
+
+}
+</pre></div><p>
+     It took me a while to find an XML document in the wild that
+     actually used notations and unparsed entities.
+     However, David Carlisle
+     pointed out to me that DocBook uses notations to 
+     identify preformatted elements in which white space should be preserved, and since
+     this book is written in Docbook,
+     I ran <tt>EntityLister</tt> across
+     a rough draft of this chapter. Here&#8217;s what came out:
+   </p><pre class="screen"><tt>% </tt><b><tt>java EntityLister xmlreader.xml</tt></b>
+<tt>Element screen has notation linespecific SYSTEM linespecific
+Element programlisting has notation linespecific SYSTEM linespecific
+Element programlisting has notation linespecific SYSTEM linespecific
+Element programlisting has notation linespecific SYSTEM linespecific
+Element programlisting has notation linespecific SYSTEM linespecific
+Element programlisting has notation linespecific SYSTEM linespecific
+Element programlisting has notation linespecific SYSTEM linespecific
+Element programlisting has notation linespecific SYSTEM linespecific
+Element programlisting has notation linespecific SYSTEM linespecific
+Element programlisting has notation linespecific SYSTEM linespecific
+Element programlisting has notation linespecific SYSTEM linespecific
+Element programlisting has notation linespecific SYSTEM linespecific
+Element programlisting has notation linespecific SYSTEM linespecific
+Element programlisting has notation linespecific SYSTEM linespecific
+Element programlisting has notation linespecific SYSTEM linespecific
+Element screen has notation linespecific SYSTEM linespecific
+Element programlisting has notation linespecific SYSTEM linespecific
+&#8230;</tt></pre></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch07s04.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch07.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch07s06.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Features and Properties&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Summary</td></tr></table></div><hr xmlns:dt="http://xsltsl.org/date-time"><table xmlns:dt="http://xsltsl.org/date-time" width="100%" summary="Cafe con Leche footer"><tr><td width="34%" align="left">Copyright 2001, 2002 Elliotte Rusty Harold</td><td width="32%" align="center"><a href="mailto:elharo@metalab.unc.edu">elharo@metalab.unc.edu</a></td><td width="34%" align="right">Last Modified 
+July 26,
+2002</td></tr><tr><td width="34%" align="left"></td><td width="32%" align="center"><a href="http://www.cafeconleche.org/">Up To Cafe con Leche</a></td><td width="34%" align="right"></td></tr></table></body></html>
