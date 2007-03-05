@@ -1,0 +1,71 @@
+<project name="wiki1" default="dist">
+
+    <description>
+        build file for wiki1
+    </description>
+
+    <property name="src" value="${basedir}/src"/>
+    <property name="build" value="${basedir}/build"/>
+    <property name="libdir" value="${basedir}/lib"/>
+    <property name="dist"  location="dist"/>
+    <property name="tomcatlibdir" value="${basedir}/../../tomcat1/common/lib"/>
+
+    <path id="libraries">
+        <fileset dir="${libdir}">
+            <include name="*.jar"/>
+        </fileset>
+        <fileset dir="${tomcatlibdir}">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="init">
+      <!-- Create the time stamp -->
+      <tstamp/>
+      <!-- Create the build directory structure used by compile -->
+      <mkdir dir="${build}"/>
+      <mkdir dir="${build}/WEB-INF/classes/"/>
+    </target>
+
+    <target name="clean">
+        <delete dir="${build}"/>
+        <delete dir="${dist}"/>
+    </target>
+
+    <target name="compile" depends="init, clean, copy-resources">
+      <javac srcdir="${src}"
+             destdir="${build}"
+             classpathref="libraries"/>
+    </target>
+
+    <target name="copy-resources">
+        <copy todir="${build}">
+            <fileset dir="${src}">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="dist" depends="compile"
+        description="generate the distribution" >
+      <!-- Create the distribution directory -->
+      <mkdir dir="${dist}"/>
+
+      <war warfile="${dist}/wiki1.war" webxml="${src}/web.xml">
+         <fileset dir="${src}">
+            <include name="**/*.html"/>
+            <include name="**/*.jsp"/>
+         </fileset>
+         <lib dir="${libdir}"/>
+         <classes dir="${build}"/>
+      </war>
+    </target>
+
+    <target name="run" depends="compile">
+      <java fork="true" classname="topics.TopicManager" classpathref="libraries">
+        <classpath path="${build}"/>
+        <arg value="${action}"/>
+      </java>
+    </target>
+
+</project>

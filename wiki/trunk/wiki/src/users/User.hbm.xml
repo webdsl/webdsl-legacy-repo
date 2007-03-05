@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="users.User" table="USER">
+        <id name="id" column="USER_ID">
+            <generator class="native"/>
+        </id>
+        <natural-id mutable="false">
+           <property name="username"/>
+        </natural-id>
+        <property name="fullname"/>
+        <property name="password"/>
+        <property name="email"/>
+        <property name="url"/>
+
+        <set name="topics" table="AUTHORS">
+          <key column="USER_ID"/>
+          <many-to-many column="TOPIC_ID" class="topics.Topic"/>
+        </set>
+
+    </class>
+
+</hibernate-mapping>

@@ -1,0 +1,42 @@
+<wiki>
+
+ <users>
+
+   <user>
+     <username>EelcoVisser</username>
+     <fullname>Eelco Visser</fullname>
+     <email>E.Visser@tudelft.nl</email>
+     <url>http://www.eelcovisser.net</url>
+     <password>foo</password>
+   </user>
+
+ </users>
+
+ <topic>
+   <title>Root</title>
+   <mimetype>plain/html</mimetype>
+   <text>this is the root topic</text>
+   <authors><author>EelcoVisser</author></authors>
+
+   <subtopics>
+     <topic name="EelcoVisser">
+       <title>Eelco Visser</title>
+       <mimetype>plain/html</mimetype>
+       <text><![CDATA[bla bla and <em>very</em> bla]]></text>
+       <authors><author>EelcoVisser</author></authors>
+
+       <subtopics>
+         <topic name="Publications">
+           <title>Publications</title>
+           <text>one, two, three publications</text>
+           <mimetype>plain/text</mimetype>
+           <authors><author>EelcoVisser</author></authors>
+         </topic>
+       </subtopics>
+
+      </topic>
+    </subtopics>
+
+  </topic>
+
+</wiki>

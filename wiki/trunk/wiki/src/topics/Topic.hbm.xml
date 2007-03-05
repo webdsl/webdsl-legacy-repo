@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+ <class name="topics.Topic" table="TOPIC">
+
+    <id name="id" column="TOPIC_ID">
+       <generator class="native"/>
+    </id>
+
+    <property name="isroot"/>
+
+    <property name="title" type="text"/>
+
+    <property name="text" type="text"/>
+
+    <property name="mimetype" type="text"/>
+
+    <property name="created"  type="timestamp" />
+
+    <property name="modified" type="timestamp" />
+
+    <set name="authors" table="AUTHORS" cascade="save-update,merge">
+        <key column="TOPIC_ID"/>
+        <many-to-many column="USER_ID" class="users.User"/>
+    </set>
+
+    <map name="subtopics" table="SUBTOPICS" order-by="name asc" cascade="save-update,merge">
+        <key column="parent"/>
+        <map-key column="name" type="string" />
+        <many-to-many column="child" class="topics.Topic"/>
+    </map>
+
+ </class>
+
+</hibernate-mapping>
