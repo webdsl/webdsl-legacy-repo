@@ -28,7 +28,7 @@ public class DataBaseUtilities
 	try {
             connection = 
 		DriverManager
-		.getConnection("jdbc:mysql://127.0.0.1/users?user=visser&password=dsl");
+		.getConnection("jdbc:mysql://127.0.0.1/wiki1?user=visser&password=dsl");
 	    
             // Do something with the Connection
 	    
