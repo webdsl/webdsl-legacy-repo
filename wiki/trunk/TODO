@@ -1,0 +1,164 @@
+- topic view
+  - type-based dispatch to get renderer appropriate for a mimetype
+  - mimetypes
+    - text/plain
+    - text/css
+    - text/wiki : wiki parser should implement send output to a ContentHandler
+
+- page composition
+  - should be
+
+- topic management
+  - remove topic
+  - rename topic / move
+  - copy topic
+
+- more metadata for topics
+  - title (optional; in addition to topicname)
+  - modified by
+  - modified on
+  - mime type
+    should guide rendering
+
+- accept username and password with other operations
+  - e.g., /wiki1/import/Foo/Bar?username=EelcoVisser+password=foo
+  - to make import and export scriptable
+  - and possibly other operations as well
+
+- twiki rendering
+  - *bold*
+
+- links
+  - http:
+  - images
+  + character after path 
+  - escape /
+
+- user interface
+  - inclusion in header
+  - stylesheet
+  - action menus
+  - favicon / x-icon
+  - RSS
+
+- variables to define
+  - variables have syntax %...%
+
+  - HOMETOPIC -- home topic in each web
+  + INCLUDINGTOPIC -- name of topic that includes current topic
+  + INCLUDINGWEB -- web that includes current topic
+  - MAINWEB -- name of Main web
+  + BASETOPIC -- base topic where an INCLUDE started
+  + BASEWEB -- base web where an INCLUDE started
+  - SPACEDTOPIC -- topic name, spaced and encoded
+  + TOPIC -- name of current topic
+  - USERNAME -- your login username
+  + WEB -- name of current web
+  - NOTIFYTOPIC -- name of the notify topic
+
+  - %WEBBGCOLOR%
+  - %WEBCOPYRIGHT%
+  - %WEBTOPICLIST%
+  - %WIKIWEBLIST%
+  - %WIKIWEBMASTER%
+  - VAR{"NAME" web="Web"} -- get a preference value from another web
+
+  - URLPARAM{"name"} -- get value of a URL parameter
+    - Returns the value of a URL parameter. Note that there is a risk
+    that this variable could be misused for cross-scripting
+
+  - %ATTACHURL% -- full URL for attachments in the current topic
+  - %ATTACHURLPATH% -- path of the attachment URL of the current topic
+  + SCRIPTURL -- script URL of TWiki#
+    # Expands to: http://abaris.zoo.cs.uu.nl:8080/wiki 
+  - SCRIPTURLPATH -- script URL path of TWiki#
+    # Expands to: /wiki 
+  - PUBURL -- the base URL of attachments#
+    Expands to: http://abaris.zoo.cs.uu.nl:8080/wiki/pub 
+  - PUBURLPATH -- the base URL path of attachments
+    * Expands to: /wiki/pub 
+  - HTTP_HOST -- environment variable
+
+
+  - DISPLAYTIME -- display time
+  - DISPLAYTIME{"format"} -- formatted display time
+  - SERVERTIME -- server time
+  - SERVERTIME{"format"} -- formatted server time
+  - GMTIME -- GM time
+  - GMTIME{"format"} -- formatted GM time 
+
+  - FORMFIELD{"format"} -- renders a field in the form attached to some topic
+
+
+  - ICON{"type"} -- small icon of common attachment types
+
+  - INCLUDE{"page"} -- include other topics or web pages
+    - http
+    - revision
+    - STARTINCLUDE -- start position of topic text if included
+    - STOPINCLUDE -- end position of topic text if included
+
+  - METASEARCH -- special search of meta data 
+
+  - REVINFO -- revision information of current topic#
+    # Expands to: r1.1 - 14 Aug 2004 - 07:54 - PeterThoeny 
+
+  - SEARCH{"text"} -- search content
+
+  - %TOC%
+  - STATISTICSTOPIC -- name of statistics topic
+  - TOPICLIST{"format"} -- topic index of a web
+
+- versioning
+  - patch chain
+  - version number 
+    (how to implement versioning with a relational
+     database?)
+
+- access control
+  - who can view / edit which topics
+  - rules should apply to complete hierarchies
+  - groups
+
+------------------------------------------------------------------------
+FUTURE
+------------------------------------------------------------------------
+
+- prepared statements in JDBC turned off because of bug in mysql
+  - fixed by appending ?useServerPrepStmts=false to jdbc url
+  - is there a fix for the bug in more recent version of mysql?
+  - what are the consequences for performance if no caching by
+    means of prepared statements is done?
+
+- imported topics should have authors
+  - requires lookup of authors in the db
+
+------------------------------------------------------------------------
+DONE
+------------------------------------------------------------------------
+
+- equality between persistent objects
+  - in particular when adding objects to a set
+
+- initialization
+  - database should be created automatically on first use
+  - default topics (especially skins) should be added to the db when
+    not present
+
+- import topics from files into database
+  - import a single file
+  - import a directory hierarchy
+  - import a TWiki data directory
+  - may be this should be done using the single file
+    upload facility and a separate script that
+    talks to the web interface
+
+- export topics (a subtree) from database to xml file
+  - send the exported xml to the client
+    /export/Foo/Bar gives an xml file with the /Foo/Bar topic
+    and all its subtopics
+  - it should be possible to 'mount' such a file via the web
+    interface /import/Foo/Bar with in POST data the xml file
+
+- convert twiki data directory to xml
+
