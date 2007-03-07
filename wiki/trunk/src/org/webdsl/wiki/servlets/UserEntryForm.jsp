@@ -2,7 +2,7 @@
 <html>
 
   <jsp:useBean id="userinfo"
-    type="users.User"
+    type="org.webdsl.wiki.domain.User"
     scope="request" />
     
   <jsp:useBean id="next"

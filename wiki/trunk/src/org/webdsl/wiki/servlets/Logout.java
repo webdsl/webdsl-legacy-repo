@@ -1,10 +1,14 @@
-package view.users;
+package org.webdsl.wiki.servlets;
 
 import java.io.*;
 import java.lang.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.sql.*;
+
+import org.webdsl.wiki.domain.*;
+import org.webdsl.wiki.utilities.*;
+import org.webdsl.wiki.servlets.*;
 
 public class Logout extends HttpServlet 
 {

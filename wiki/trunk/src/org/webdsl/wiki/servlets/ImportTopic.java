@@ -1,4 +1,4 @@
-package view.topics;
+package org.webdsl.wiki.servlets;
 
 import java.io.*;
 import javax.servlet.*;
@@ -11,14 +11,11 @@ import org.apache.commons.fileupload.*;
 import org.apache.commons.fileupload.servlet.*;
 import org.apache.commons.fileupload.disk.*;
 
-import users.*;
-import topics.*;
-import xml.*;
-import view.users.*;
-import view.html.*;
-import util.HibernateUtil;
-import util.ServletUtilities;
-import util.BeanUtilities;
+import org.webdsl.wiki.domain.*;
+import org.webdsl.wiki.utilities.*;
+import org.webdsl.wiki.servlets.*;
+import org.webdsl.wiki.xml.*;
+
 
 public class ImportTopic extends HttpServlet 
 {

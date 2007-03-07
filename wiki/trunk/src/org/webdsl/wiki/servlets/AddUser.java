@@ -1,16 +1,11 @@
-package view.users;
+package org.webdsl.wiki.servlets;
 
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-import org.hibernate.*;
-
-import users.*;
-import view.users.*;
-import view.html.*;
-import util.HibernateUtil;
-import util.BeanUtilities;
+import org.webdsl.wiki.domain.*;
+import org.webdsl.wiki.utilities.*;
 
 public class AddUser extends HttpServlet 
 {

@@ -1,4 +1,4 @@
-package view.topics;
+package org.webdsl.wiki.servlets;
 
 import java.io.*;
 import javax.servlet.*;
@@ -7,14 +7,10 @@ import java.util.*;
 
 import org.hibernate.*;
 
-import users.*;
-import topics.*;
-import xml.*;
-import view.users.*;
-import view.html.*;
-import util.HibernateUtil;
-import util.ServletUtilities;
-import util.BeanUtilities;
+import org.webdsl.wiki.domain.*;
+import org.webdsl.wiki.utilities.*;
+import org.webdsl.wiki.servlets.*;
+import org.webdsl.wiki.xml.*;
 
 public class ExportTopics extends HttpServlet 
 {

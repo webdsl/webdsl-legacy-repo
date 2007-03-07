@@ -3,7 +3,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 
-  <jsp:useBean id="topic"     type="topics.Topic"     scope="request" />
+  <jsp:useBean id="topic"     type="org.webdsl.wiki.domain.Topic"     scope="request" />
   <jsp:useBean id="path"      type="java.lang.String" scope="request" />
   <jsp:useBean id="subtopics" type="java.util.Set"    scope="request" />
   <jsp:useBean id="authors"   type="java.util.Set"    scope="request" />
