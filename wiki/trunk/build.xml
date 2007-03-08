@@ -1,5 +1,5 @@
 <project name="wiki1" default="dist">
-
+ 
     <description>
         build file for wiki1
     </description>
@@ -8,7 +8,7 @@
     <property name="build" value="${basedir}/build"/>
     <property name="libdir" value="${basedir}/lib"/>
     <property name="dist"  location="dist"/>
-    <property name="tomcatlibdir" value="${basedir}/../../tomcat1/common/lib"/>
+    <property name="tomcatlibdir" value="${basedir}/../tomcat1/common/lib"/>
 
     <path id="libraries">
         <fileset dir="${libdir}">
@@ -31,13 +31,7 @@
         <delete dir="${build}"/>
         <delete dir="${dist}"/>
     </target>
-
-    <target name="compile" depends="init, clean, copy-resources">
-      <javac srcdir="${src}"
-             destdir="${build}"
-             classpathref="libraries"/>
-    </target>
-
+	
     <target name="copy-resources">
         <copy todir="${build}">
             <fileset dir="${src}">
@@ -46,16 +40,25 @@
         </copy>
     </target>
 
+    <target name="compile" depends="init, clean, copy-resources">
+      <javac srcdir="${src}"
+             destdir="${build}"
+             classpathref="libraries"/>
+    </target>
+
+
     <target name="dist" depends="compile"
         description="generate the distribution" >
       <!-- Create the distribution directory -->
       <mkdir dir="${dist}"/>
 
-      <war warfile="${dist}/wiki1.war" webxml="${src}/web.xml">
+      <war warfile="${dist}/wiki1.war" webxml="${build}/web.xml">
          <fileset dir="${src}">
             <include name="**/*.html"/>
             <include name="**/*.jsp"/>
+            <include name="**/*."/>
          </fileset>
+      	 <webinf dir="${build}" includes="hibernate.cfg.xml" excludes="web.xml, **/*.jar, **/*.class"/>
          <lib dir="${libdir}"/>
          <classes dir="${build}"/>
       </war>

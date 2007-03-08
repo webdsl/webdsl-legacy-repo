@@ -40,7 +40,7 @@ public class ShowUser extends HttpServlet
 	  request.setAttribute("userinfo", user);
 	  RequestDispatcher dispatcher =
 	      request.getRequestDispatcher(
-                "/WEB-INF/classes/view/users/UserView.jsp"
+                "/WEB-INF/classes/org/webdsl/wiki/servlets/UserView.jsp"
               );
 	  dispatcher.forward(request, response);
   	}

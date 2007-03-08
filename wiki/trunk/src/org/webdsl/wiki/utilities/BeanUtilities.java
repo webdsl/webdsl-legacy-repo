@@ -51,6 +51,7 @@ public class BeanUtilities {
     try {
       BeanUtils.populate(bean, propertyMap);
     } catch(Exception e) {
+    	throw new RuntimeException(e);
       // Empty catch. The two possible exceptions are
       // java.lang.IllegalAccessException and
       // java.lang.reflect.InvocationTargetException.

@@ -6,103 +6,103 @@
 
   <servlet>
     <servlet-name>Error1</servlet-name>
-    <servlet-class>view.errors.ShowError</servlet-class>
+    <servlet-class>org.webdsl.wiki.servlets.ShowError</servlet-class>
   </servlet>
 
   <servlet>
     <servlet-name>ShowUsers1</servlet-name>
-    <servlet-class>view.users.ShowUsers</servlet-class>
+    <servlet-class>org.webdsl.wiki.servlets.ShowUsers</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>ShowUser1</servlet-name>
-    <servlet-class>view.users.ShowUser</servlet-class>
+    <servlet-class>org.webdsl.wiki.servlets.ShowUser</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>AddUser1</servlet-name>
-    <servlet-class>view.users.AddUser</servlet-class>
+    <servlet-class>org.webdsl.wiki.servlets.AddUser</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>ChangeUser1</servlet-name>
-    <servlet-class>view.users.ChangeUser</servlet-class>
+    <servlet-class>org.webdsl.wiki.servlets.ChangeUser</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>EditUser1</servlet-name>
-    <servlet-class>view.users.EditUser</servlet-class>
+    <servlet-class>org.webdsl.wiki.servlets.EditUser</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>SaveUser1</servlet-name>
-    <servlet-class>view.users.SaveUser</servlet-class>
+    <servlet-class>org.webdsl.wiki.servlets.SaveUser</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>RemoveUser1</servlet-name>
-    <servlet-class>view.users.RemoveUser</servlet-class>
+    <servlet-class>org.webdsl.wiki.servlets.RemoveUser</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>Login1</servlet-name>
-    <servlet-class>view.users.Login</servlet-class>
+    <servlet-class>org.webdsl.wiki.servlets.Login</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>Logout1</servlet-name>
-    <servlet-class>view.users.Logout</servlet-class>
+    <servlet-class>org.webdsl.wiki.servlets.Logout</servlet-class>
   </servlet>
   
 
   <servlet>
     <servlet-name>CreateTopic1</servlet-name>
-    <servlet-class>view.topics.CreateTopic</servlet-class>
+    <servlet-class>org.webdsl.wiki.servlets.CreateTopic</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>ViewTopic1</servlet-name>
-    <servlet-class>view.topics.ViewTopic</servlet-class>
+    <servlet-class>org.webdsl.wiki.servlets.ViewTopic</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>RawTopic1</servlet-name>
-    <servlet-class>view.topics.RawTopic</servlet-class>
+    <servlet-class>org.webdsl.wiki.servlets.RawTopic</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>EditTopic1</servlet-name>
-    <servlet-class>view.topics.EditTopic</servlet-class>
+    <servlet-class>org.webdsl.wiki.servlets.EditTopic</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>ExportTopics1</servlet-name>
-    <servlet-class>view.topics.ExportTopics</servlet-class>
+    <servlet-class>org.webdsl.wiki.servlets.ExportTopics</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>ImportTopic1</servlet-name>
-    <servlet-class>view.topics.ImportTopic</servlet-class>
+    <servlet-class>org.webdsl.wiki.servlets.ImportTopic</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>PreviewTopic1</servlet-name>
-    <servlet-class>view.topics.PreviewTopic</servlet-class>
+    <servlet-class>org.webdsl.wiki.servlets.PreviewTopic</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>SaveTopic1</servlet-name>
-    <servlet-class>view.topics.SaveTopic</servlet-class>
+    <servlet-class>org.webdsl.wiki.servlets.SaveTopic</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>ViewTopics1</servlet-name>
-    <servlet-class>view.topics.ViewTopics</servlet-class>
+    <servlet-class>org.webdsl.wiki.servlets.ViewTopics</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>RawTopics1</servlet-name>
-    <servlet-class>view.topics.RawTopics</servlet-class>
+    <servlet-class>org.webdsl.wiki.servlets.RawTopics</servlet-class>
   </servlet>
 
 

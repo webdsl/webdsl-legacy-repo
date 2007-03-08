@@ -47,7 +47,7 @@ public class EditTopic extends HttpServlet
 	  hsession.close();
 
 	  RequestDispatcher dispatcher =
-	    request.getRequestDispatcher("/WEB-INF/classes/view/topics/EditTopicForm.jsp");
+	    request.getRequestDispatcher("/WEB-INF/classes/org/webdsl/wiki/servlets/EditTopicForm.jsp");
 	  dispatcher.forward(request, response);
 	}
 

@@ -37,7 +37,7 @@ public class ImportTopic extends HttpServlet
         else 
         {
 	  RequestDispatcher dispatcher =
-	    request.getRequestDispatcher("/WEB-INF/classes/view/topics/ImportTopicForm.jsp");
+	    request.getRequestDispatcher("/WEB-INF/classes/org/webdsl/wiki/servlets/ImportTopicForm.jsp");
 	  dispatcher.forward(request, response);
         }
     }

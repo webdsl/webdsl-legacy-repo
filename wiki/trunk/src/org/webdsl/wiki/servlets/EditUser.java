@@ -38,7 +38,7 @@ public class EditUser extends HttpServlet
 		request.setAttribute("button", "Save");
 
 		RequestDispatcher dispatcher =
-		    request.getRequestDispatcher("/WEB-INF/classes/view/users/UserEntryForm.jsp");
+		    request.getRequestDispatcher("/WEB-INF/classes/org/webdsl/wiki/servlets/UserEntryForm.jsp");
 		dispatcher.forward(request, response);
 	    }
 	else 

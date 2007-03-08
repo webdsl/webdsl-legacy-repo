@@ -1,6 +1,8 @@
 package org.webdsl.wiki.servlets;
 
 import java.io.*;
+
+import javax.persistence.GeneratedValue;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.util.*;
@@ -45,7 +47,7 @@ public class ViewTopic extends HttpServlet
 	    request.setAttribute("subtopics", topic.getSubtopics().keySet());
 	    request.setAttribute("authors", topic.getAuthorNames());
 	    RequestDispatcher dispatcher =
-	      request.getRequestDispatcher("/WEB-INF/classes/view/topics/TopicView.jsp");
+	      request.getRequestDispatcher("/WEB-INF/classes/org/webdsl/wiki/servlets/TopicView.jsp");
           //}
 	  dispatcher.forward(request, response);
           transaction.commit();
