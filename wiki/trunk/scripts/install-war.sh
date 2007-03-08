@@ -1,8 +1,8 @@
 #! /bin/sh
 
-webappdir=../../tomcat1/webapps
+webappdir=${TOMCAT}/webapps
 
-./shutdown.sh
+${TOMCAT}/bin/shutdown.sh
 
 ant dist
 
@@ -16,4 +16,4 @@ cp -f dist/wiki1.war ${webappdir}
 
 mysqld_safe --host=127.0.0.1 --datadir=/home/eelco/webdsl/db1/ &
 
-./startup.sh
+${TOMCAT}/bin/startup.sh

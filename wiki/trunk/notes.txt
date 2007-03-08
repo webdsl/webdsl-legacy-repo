@@ -38,6 +38,8 @@ Setting root password
 Starting mysql shell
 --------------------------------------------------------------------
 
+   mysql --host=127.0.0.1 -u visser -p
+
    mysql -u root -p
 
 mysql> grant all privileges on *.* to visser@localhost identified by 'dsl';
