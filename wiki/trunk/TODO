@@ -4,9 +4,23 @@
     - text/plain
     - text/css
     - text/wiki : wiki parser should implement send output to a ContentHandler
+    
+- technical/design issues
+  - performance of finding a topic 
+    now requires n selects, with n the length of the path
+    use an index for this? a view table?
+  - how to organize flow in conversations?
+    use Spring for this? or Seam?
+  - how to organize workflows / business processes?
+    look at what Seam provides for this
+  
+- domain model DSL
+  - generate POJOs with properties (getters, setters) 
+    and hibernate annotations from a simple DSL for 
+    definining the domain model
 
 - page composition
-  - should be
+  - should be modular
 
 - topic management
   - remove topic
@@ -161,4 +175,10 @@ DONE
     interface /import/Foo/Bar with in POST data the xml file
 
 - convert twiki data directory to xml
+
+- refactor source tree to use proper package prefix
+
+- use Eclipse
+
+- use Hibernate annotations instead of xml mapping files
 
