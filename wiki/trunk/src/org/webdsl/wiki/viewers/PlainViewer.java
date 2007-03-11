@@ -1,17 +1,20 @@
+
+
 package org.webdsl.wiki.viewers;
 
-import java.io.IOException;
+import org.webdsl.wiki.domain.Topic;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+public class PlainViewer implements Viewer
+{
 
-public class PlainViewer implements Viewer {
-
-	public void makeView(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-
-	}
+  public String makeView(Topic topic)
+  {
+    String text = topic.getText();
+    if (text == null)
+      text = "";
+    else
+      text = "<pre>" + org.webdsl.wiki.utilities.EscapeChars.escape(text) + "</pre>";
+    return text;
+  }
 
 }

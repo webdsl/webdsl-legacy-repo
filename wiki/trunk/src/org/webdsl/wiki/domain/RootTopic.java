@@ -27,7 +27,7 @@ public class RootTopic {
 				// (or using a script) using the web interface
 				// maybe should switch to this mode already during testing
 
-				FromXML h = FromXML.parse("/home/eelco/webdsl/mark1/wiki1/data/dbinit.xml");
+				FromXML h = FromXML.parse("/home/eelco/webdsl/tomcat1/webapps/wiki1/WEB-INF/dbinit.xml");
 				topic = h.getTopic();
 			} catch (Exception e) {
 				throw new RuntimeException(e);

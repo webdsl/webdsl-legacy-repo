@@ -15,7 +15,7 @@
     if (text == null)
       text = "";
     else
-      text = view.html.EscapeChars.escape(text);
+      text = org.webdsl.wiki.utilities.EscapeChars.escape(text);
     String mimetype = topic.getMimetype();
   %>
 

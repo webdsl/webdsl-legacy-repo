@@ -1,3 +1,5 @@
+
+
 package org.webdsl.wiki.servlets;
 
 import java.io.IOException;
@@ -18,102 +20,105 @@ import org.webdsl.wiki.domain.TopicPath;
 import org.webdsl.wiki.utilities.HibernateUtil;
 import org.webdsl.wiki.viewers.*;
 
-public class ViewTopic extends HttpServlet {
+public class ViewTopic extends HttpServlet
+{
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		String path = request.getPathInfo() == null ? "" : request
-				.getPathInfo();
+  public void doPost(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException
+  {
+    HttpSession session = request.getSession();
+    String path = request.getPathInfo() == null ? "" : request.getPathInfo();
 
-		Session hsession = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = hsession.beginTransaction();
+    Session hsession = HibernateUtil.getSessionFactory().openSession();
+    Transaction transaction = hsession.beginTransaction();
 
-		Topic root = RootTopic.getRootTopic(hsession);
+    Topic root = RootTopic.getRootTopic(hsession);
 
-		try {
-			TopicPath topicpath = new TopicPath(root, path);
-			Topic topic = (Topic) topicpath.get(topicpath.size() - 1);
+    try
+      {
+        TopicPath topicpath = new TopicPath(root, path);
+        Topic topic = (Topic) topicpath.get(topicpath.size() - 1);
 
-			request.setAttribute("path", path);
-			request.setAttribute("pathelements", topicpath.getElements());
-			request.setAttribute("topic", topic);
+        request.setAttribute("path", path);
+        request.setAttribute("pathelements", topicpath.getElements());
+        request.setAttribute("topic", topic);
 
-			String mimetype = topic.getMimetype();
-			
-			Viewer viewer = ViewerFactory.getViewer(mimetype);
+        String mimetype = topic.getMimetype();
 
-			// if ("text/css".equals(mimetype)) {
-			// copy text field to output
-			// set result type
-			// } else if ("text/wiki".equals(mimetype)) {
-			// call wiki parser
-			// } else if ("text/plain".equals(mimetype)) {
-			request.setAttribute("subtopics", topic.getSubtopics().keySet());
-			request.setAttribute("authors", topic.getAuthorNames());
-			RequestDispatcher dispatcher = request
-					.getRequestDispatcher("/WEB-INF/classes/org/webdsl/wiki/servlets/TopicView.jsp");
-			// }
-			dispatcher.forward(request, response);
-			transaction.commit();
-			hsession.close();
-		} catch (TopicDoesNotExistException e) {
-			transaction.rollback();
-			hsession.close();
-			response.sendRedirect("/wiki1/edit/" + path);
-		}
+        Viewer viewer = ViewerFactory.getViewer(mimetype);
 
-		// String topicweb = topic.getWebName();
+        request.setAttribute("text", viewer.makeView(topic));
 
-		// request.setAttribute("SCRIPTURL", request.getContextPath());
+        request.setAttribute("subtopics", topic.getSubtopics().keySet());
+        request.setAttribute("authors", topic.getAuthorNames());
+        
+        String viewerServlet = ViewerFactory.getViewerServlet(mimetype);
+        
+        RequestDispatcher dispatcher = request.getRequestDispatcher(viewerServlet);
+        dispatcher.forward(request, response);
 
-		// top-level including page
-		// request.setAttribute("BASETOPIC", topicname);
-		// request.setAttribute("BASEWEB", topicweb);
-		// request.setAttribute("BASEPARENTWEB", topic.getParentWeb());
+        transaction.commit();
+        hsession.close();
+      }
+    catch (TopicDoesNotExistException e)
+      {
+        transaction.rollback();
+        hsession.close();
+        response.sendRedirect("/wiki1/edit/" + path);
+      }
 
-		// page where current page is included in
-		// request.setAttribute("INCLUDINGTOPIC", topicname);
-		// request.setAttribute("INCLUDINGWEB", topicweb);
+    // String topicweb = topic.getWebName();
 
-		// referring to the page we're currently rendering
-		// request.setAttribute("TOPIC", topicname);
-		// request.setAttribute("WEB", topicweb);
-		// request.setAttribute("SPACEDTOPIC", topicname);
+    // request.setAttribute("SCRIPTURL", request.getContextPath());
 
-		// request.setAttribute("HOMETOPIC", topicweb + "WebHome");
-		// request.setAttribute("MAINWEB", "/");
+    // top-level including page
+    // request.setAttribute("BASETOPIC", topicname);
+    // request.setAttribute("BASEWEB", topicweb);
+    // request.setAttribute("BASEPARENTWEB", topic.getParentWeb());
 
-		// HttpSession session = request.getSession();
-		// request.setAttribute("USERNAME", session.getAttribute("USERNAME"));
+    // page where current page is included in
+    // request.setAttribute("INCLUDINGTOPIC", topicname);
+    // request.setAttribute("INCLUDINGWEB", topicweb);
 
-		// actual page is included from skin page
+    // referring to the page we're currently rendering
+    // request.setAttribute("TOPIC", topicname);
+    // request.setAttribute("WEB", topicweb);
+    // request.setAttribute("SPACEDTOPIC", topicname);
 
-		// String skin = request.getParameter("skin");
-		// if (skin == null)
-		// {
-		// skin = (String)session.getAttribute("SKIN");
-		// if (skin == null)
-		// {
-		// skin = "/Skins/FlexibleSkin";
-		// }
-		// }
+    // request.setAttribute("HOMETOPIC", topicweb + "WebHome");
+    // request.setAttribute("MAINWEB", "/");
 
-		// Topic skintopic = new Topic();
-		// skintopic.setTopicname(skin);
-		// skintopic.getFromDatabase();
-		// response.setContentType("text/html");
+    // HttpSession session = request.getSession();
+    // request.setAttribute("USERNAME", session.getAttribute("USERNAME"));
 
-		// HashSet includemap = new HashSet();
-		// includemap.add(skin);
-		// request.setAttribute("includemap", includemap);
+    // actual page is included from skin page
 
-		// skintopic.renderTopicText(request, response);
-	}
+    // String skin = request.getParameter("skin");
+    // if (skin == null)
+    // {
+    // skin = (String)session.getAttribute("SKIN");
+    // if (skin == null)
+    // {
+    // skin = "/Skins/FlexibleSkin";
+    // }
+    // }
 
-	public void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		doPost(request, response);
-	}
+    // Topic skintopic = new Topic();
+    // skintopic.setTopicname(skin);
+    // skintopic.getFromDatabase();
+    // response.setContentType("text/html");
+
+    // HashSet includemap = new HashSet();
+    // includemap.add(skin);
+    // request.setAttribute("includemap", includemap);
+
+    // skintopic.renderTopicText(request, response);
+  }
+
+  public void doGet(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException
+  {
+    doPost(request, response);
+  }
 
 }

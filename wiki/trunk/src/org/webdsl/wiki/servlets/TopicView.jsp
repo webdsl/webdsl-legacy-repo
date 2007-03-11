@@ -3,7 +3,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 
-  <jsp:useBean id="topic"     type="org.webdsl.wiki.domain.Topic"     scope="request" />
+  <jsp:useBean id="topic"     type="org.webdsl.wiki.domain.Topic" scope="request" />
+  <jsp:useBean id="text"      type="java.lang.String" scope="request" />
   <jsp:useBean id="path"      type="java.lang.String" scope="request" />
   <jsp:useBean id="subtopics" type="java.util.Set"    scope="request" />
   <jsp:useBean id="authors"   type="java.util.Set"    scope="request" />
@@ -11,11 +12,6 @@
 
   <%
     String title = topic.getTitle();
-    String text = topic.getText();
-    if (text == null)
-      text = "";
-    else
-      text = org.webdsl.wiki.utilities.EscapeChars.escape(text);
     String mimetype = topic.getMimetype();
   %>
 
@@ -34,7 +30,7 @@
            | <a href="/wiki1/view<%= prefix %>"><%= (String)elem %></a>
       <% } %>
       <hr>
-      <pre><%= text %></pre>
+      <%= text %>
       <hr>
       <a href="/wiki1/edit<%= path %>">Edit</a> | 
       <a href="/wiki1/export<%= path %>">Export</a> |
