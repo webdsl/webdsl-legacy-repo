@@ -33,6 +33,8 @@ public class ViewerFactory
   {
     return viewservlets.get(mimetype);
   }
+  
+  static private String path = "/WEB-INF/classes/org/webdsl/wiki/servlets/";
 
   static
     {
@@ -41,8 +43,11 @@ public class ViewerFactory
       viewertypes.put("text/css", CssViewer.class);
       viewertypes.put("text/twiki", TWikiViewer.class);
 
-      viewservlets.put("text/html",
-                       "/WEB-INF/classes/org/webdsl/wiki/servlets/TopicView.jsp");
+      viewservlets.put("text/plain", path + "TopicView.jsp");
+      viewservlets.put("text/html", path + "TopicView.jsp");
+      viewservlets.put("text/css", path + "TopicView.jsp");
+      viewservlets.put("text/twiki", path + "TopicView.jsp");
+      
       // TODO view servlets for other types
     }
 

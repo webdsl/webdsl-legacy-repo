@@ -45,10 +45,13 @@ public class ViewTopic extends HttpServlet
 
         String mimetype = topic.getMimetype();
 
+        log("getting viewer");
         Viewer viewer = ViewerFactory.getViewer(mimetype);
 
+        log("getting text");
         request.setAttribute("text", viewer.makeView(topic));
 
+        log("getting subtopics");
         request.setAttribute("subtopics", topic.getSubtopics().keySet());
         request.setAttribute("authors", topic.getAuthorNames());
         

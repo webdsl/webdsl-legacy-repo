@@ -9,7 +9,10 @@ public class TWikiViewer implements Viewer
 
   public String makeView(Topic topic)
   {
-    return topic.getText();
+    String text = topic.getText();
+    if (text == null)
+      text = "";
+    return text;
   }
 
 }
