@@ -50,7 +50,8 @@ public class ViewTopic extends HttpServlet
 
         log("getting text");
         request.setAttribute("text", viewer.makeView(topic));
-
+        request.setAttribute("viewer", viewer);
+        
         log("getting subtopics");
         request.setAttribute("subtopics", topic.getSubtopics().keySet());
         request.setAttribute("authors", topic.getAuthorNames());

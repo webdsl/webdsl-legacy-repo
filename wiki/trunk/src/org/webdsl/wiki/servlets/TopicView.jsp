@@ -5,6 +5,7 @@
 
   <jsp:useBean id="topic"     type="org.webdsl.wiki.domain.Topic" scope="request" />
   <jsp:useBean id="text"      type="java.lang.String" scope="request" />
+  <jsp:useBean id="viewer"    type="org.webdsl.wiki.viewers.Viewer" scope="request" />
   <jsp:useBean id="path"      type="java.lang.String" scope="request" />
   <jsp:useBean id="subtopics" type="java.util.Set"    scope="request" />
   <jsp:useBean id="authors"   type="java.util.Set"    scope="request" />
@@ -30,7 +31,7 @@
            | <a href="/wiki1/view<%= prefix %>"><%= (String)elem %></a>
       <% } %>
       <hr>
-      <%= text %>
+      <% viewer.writeView(request, topic, out); %>
       <hr>
       <a href="/wiki1/edit<%= path %>">Edit</a> | 
       <a href="/wiki1/export<%= path %>">Export</a> |
