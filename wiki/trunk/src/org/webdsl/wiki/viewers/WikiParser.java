@@ -1,4 +1,5 @@
 
+// TODO make sure that character content is flushed before starting a new element
 
 package org.webdsl.wiki.viewers;
 
