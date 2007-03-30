@@ -1,5 +1,5 @@
 #! /bin/sh
 
-../../tomcat1/bin/startup.sh
+../../tomcat6/bin/startup.sh
 
 

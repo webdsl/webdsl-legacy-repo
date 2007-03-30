@@ -58,7 +58,7 @@
             <include name="**/*.jsp"/>
             <include name="**/*."/>
          </fileset>
-      	 <webinf dir="${build}" includes="hibernate.cfg.xml, dbinit.xml" excludes="web.xml, **/*.jar, **/*.class"/>
+      	 <webinf dir="${build}" includes="hibernate.cfg.xml, dbinit.xml, faces-config.xml" excludes="web.xml, **/*.jar, **/*.class"/>
          <lib dir="${libdir}"/>
          <classes dir="${build}"/>
       </war>

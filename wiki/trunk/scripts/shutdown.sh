@@ -1,3 +1,3 @@
 #! /bin/sh
 
-../../tomcat1/bin/shutdown.sh
+../../tomcat6/bin/shutdown.sh
