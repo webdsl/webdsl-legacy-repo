@@ -1,4 +1,4 @@
-
+ 
 // TODO make sure that character content is flushed before starting a new element
 
 package org.webdsl.wiki.viewers;
@@ -201,6 +201,7 @@ public class WikiParser
   private boolean startNewLine() throws SAXException
   {
     line++;
+    flushChars();
     for (String tag:at_end_of_line)
       {
         handler.endElement("", tag, null);
@@ -246,6 +247,7 @@ public class WikiParser
 
   private void closeParagraph() throws SAXException
   {
+    flushChars();
     for (int i = list_level; i > 0; i--)
       {
         handler.endElement("", "ul", "");
@@ -313,6 +315,7 @@ public class WikiParser
       {
         skipWhiteSpace();
         pos--;
+        flushChars();
         handler.startElement("", "h" + level, "", null);
         at_end_of_line.add("h" + level);
         return true;
@@ -332,6 +335,11 @@ public class WikiParser
     int level = spaces / 3;
     if ((level * 3 == spaces) && (curchar == '*'))
       {
+        flushChars();
+        if (list_level > 0)
+          {
+            handler.endElement("", "li", "");
+          }
         if (level > list_level)
           for (int i = level - list_level; i > 0; i--)
             {
@@ -363,6 +371,7 @@ public class WikiParser
     if (count >= 3)
       {
         pos--;
+        flushChars();
         handler.startElement("", "hr", "", null);
         handler.endElement("", "hr", "");
         return true;
