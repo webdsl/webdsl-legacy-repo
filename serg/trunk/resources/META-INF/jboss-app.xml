@@ -1,0 +1,5 @@
+<jboss-app>
+   <loader-repository> 
+      seam.jboss.org:loader=serg
+   </loader-repository> 
+</jboss-app> 
