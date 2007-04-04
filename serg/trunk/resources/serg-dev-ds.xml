@@ -5,8 +5,8 @@
       <jndi-name>sergDatasource</jndi-name>
       <connection-url>jdbc:hsqldb:.</connection-url>
       <driver-class>org.hsqldb.jdbcDriver</driver-class>
-      <user-name>serg</user-name>
-      <password>dsl</password>
+      <user-name>sa</user-name>
+      <password></password>
 <!-- 
       <exception-sorter-class-name>
          org.jboss.resource.adapter.jdbc.vendor.MySQLExceptionSorter

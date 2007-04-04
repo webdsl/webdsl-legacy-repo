@@ -1,0 +1,40 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                             "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="layout/template.xhtml">
+                       
+<ui:define name="body">
+
+    <h1>Register New User</h1>
+
+    <f:view>
+      <h:form>
+        <table border="0">
+          <s:validateAll>
+            <tr>
+              <td>Username</td>
+              <td><h:inputText value="#{user.username}" required="true"/></td>
+            </tr>
+            <tr>
+              <td>Real Name</td>
+              <td><h:inputText value="#{user.name}" required="true"/></td>
+            </tr>
+            <tr>
+              <td>Password</td>
+              <td><h:inputSecret value="#{user.password}" required="true"/></td>
+            </tr>
+          </s:validateAll>
+        </table>
+        <h:messages/>
+        <h:commandButton value="Register" action="#{register.register}"/>
+      </h:form>
+    </f:view>
+    
+</ui:define>
+
+</ui:composition>
+
