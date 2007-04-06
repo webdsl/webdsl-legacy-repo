@@ -15,9 +15,9 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 
 @Entity
-@Name("user")
+@Name("seamuser")
 @Scope(SESSION)
-public class User implements Serializable
+public class SeamUser implements Serializable
 {
    private static final long serialVersionUID = 1881413500711441951L;
    
@@ -25,14 +25,14 @@ public class User implements Serializable
    private String password;
    private String name;
    
-   public User(String name, String password, String username)
+   public SeamUser(String name, String password, String username)
    {
       this.name = name;
       this.password = password;
       this.username = username;
    }
    
-   public User() {}
+   public SeamUser() {}
    
    @NotNull
    public String getName()
