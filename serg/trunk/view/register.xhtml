@@ -18,6 +18,33 @@
         <div class="dialog">
         <s:validateAll>
             <div class="prop">
+                <span class="username">Username</span>
+                <span class="value">
+                    <s:decorate>
+                        <h:inputText id="username" required="true"
+                            value="#{user.username}"/>
+                    </s:decorate>
+                </span>
+            </div>
+            <div class="prop">
+                <span class="name">Name</span>
+                <span class="value">
+                    <s:decorate>
+                        <h:inputText id="name" required="true"
+                            value="#{user.name}"/>
+                    </s:decorate>
+                </span>
+            </div>
+            <div class="prop">
+                <span class="name">Password</span>
+                <span class="value">
+                    <s:decorate>
+                        <h:inputSecret id="password" required="true"
+                            value="#{user.password}"/>
+                    </s:decorate>
+                </span>
+            </div>
+            <div class="prop">
                 <span class="name">Value</span>
                 <span class="value">
                     <s:decorate>
