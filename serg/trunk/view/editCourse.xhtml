@@ -1,0 +1,42 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="layout/template.xhtml"><ui:define name="body">
+        <h1>Edit Course</h1>
+        <h:messages globalOnly="true" styleClass="message"/>
+        <h:form id="editCourse">
+          <div class="dialog">
+            <s:validateAll><div class="prop">
+         <span class="unit">unit</span>
+         <span class="value">
+            <s:decorate>
+               <h:inputText id="unit" required="true" value="#{editCourse.unit}"/>
+            </s:decorate>
+         </span>
+      </div><div class="prop">
+         <span class="year">year</span>
+         <span class="value">
+            <s:decorate>
+               <h:inputText id="year" required="true" value="#{editCourse.year}"/>
+            </s:decorate>
+         </span>
+      </div><div class="prop">
+         <span class="period">period</span>
+         <span class="value">
+            <s:decorate>
+               <h:inputText id="period" required="true" value="#{editCourse.period}"/>
+            </s:decorate>
+         </span>
+      </div><div class="prop">
+         <span class="lecturer">lecturer</span>
+         <span class="value">
+            <s:decorate>
+               <h:inputText id="lecturer" required="true" value="#{editCourse.lecturer}"/>
+            </s:decorate>
+         </span>
+      </div></s:validateAll>
+          </div>
+          <div class="actionButtons">
+            <h:commandButton id="saveCourse" value="save" action="#{edit_Course.save}"/>     			  
+          </div>
+        </h:form>
+      </ui:define></ui:composition>
