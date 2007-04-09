@@ -24,6 +24,7 @@ import org.jboss.seam.core.FacesMessages;
 import org.jboss.seam.log.Log;
 import org.webdsl.serg.domain.User;
 
+
 @Stateful 
 @Name("users")
 public class UsersBean implements Users {

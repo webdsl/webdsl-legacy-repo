@@ -10,7 +10,7 @@ end
 section people.
 
   Address {
-    street : String
+    street : String 
   }
   
   URL {
