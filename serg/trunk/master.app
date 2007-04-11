@@ -195,3 +195,13 @@ section tracking students in a master program.
         show x.student.person.fullname, x.start, x.end, x.status;
       }
   }
+  
+section wiki.
+
+  Topic {
+    title    : String
+    text     : String // formatted text
+    subtopic : Map<String, Topic>
+    authors  : Set<User>
+  }
+
