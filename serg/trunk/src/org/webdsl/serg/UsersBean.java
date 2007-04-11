@@ -1,7 +1,6 @@
 package org.webdsl.serg;
 
 import static javax.persistence.PersistenceContextType.EXTENDED;
-import static org.jboss.seam.ScopeType.SESSION;
 
 import java.util.List;
 
@@ -10,24 +9,23 @@ import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.hibernate.validator.Length;
 import org.jboss.seam.annotations.Destroy;
 import org.jboss.seam.annotations.Factory;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
-import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.datamodel.DataModel;
 import org.jboss.seam.annotations.datamodel.DataModelSelection;
 import org.jboss.seam.core.FacesMessages;
 import org.jboss.seam.log.Log;
-import org.webdsl.serg.domain.User;
 
+import org.webdsl.serg.domain.*;
+import org.webdsl.serg.*;
 
 @Stateful 
 @Name("users")
-public class UsersBean implements Users {
+public class UsersBean implements org.webdsl.serg.Users {
 
     @Logger private Log log;
     

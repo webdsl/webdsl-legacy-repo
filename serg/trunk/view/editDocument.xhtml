@@ -1,0 +1,40 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="layout/template.xhtml"><ui:define name="body">
+        <h1>
+           <h:outputText rendered="#{!documentHome.managed}" value="Create Document"/>
+           <h:outputText rendered="#{documentHome.managed}" value="Edit Document"/>
+        </h1>
+        <h:messages globalOnly="true" styleClass="message"/>
+        <h:form id="editDocument">
+          <div class="dialog">
+            <s:validateAll><div class="prop">
+         <span class="doc">doc</span>
+         <span class="value">
+            <s:decorate>
+               <h:inputText id="doc" required="true" value="#{document.doc}"/>
+            </s:decorate>
+         </span>
+      </div><div class="prop">
+         <span class="date">date</span>
+         <span class="value">
+            <s:decorate>
+               <h:inputText id="date" required="true" value="#{document.date}"/>
+            </s:decorate>
+         </span>
+      </div><div class="prop">
+         <span class="comments">comments</span>
+         <span class="value">
+            <s:decorate>
+               <h:inputText id="comments" required="true" value="#{document.comments}"/>
+            </s:decorate>
+         </span>
+      </div></s:validateAll>
+          </div>
+          <div class="actionButtons">
+            <h:commandButton value="Create Document" action="#{documentHome.persist}" rendered="#{!documentHome.managed}"/>
+            <h:commandButton value="Update Document" action="#{documentHome.update}" rendered="#{documentHome.managed}"/>
+            <h:commandButton value="Delete Document" action="#{documentHome.delete}" rendered="#{documentHome.managed}"/>
+          </div>
+        </h:form>
+      </ui:define></ui:composition>

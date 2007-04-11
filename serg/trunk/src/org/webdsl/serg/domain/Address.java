@@ -2,6 +2,7 @@ package org.webdsl.serg.domain;
 
 import java.util.*;
 import javax.persistence.*;
+import org.webdsl.serg.domain.*;
 
 @Entity public class Address  
 { 
@@ -9,17 +10,17 @@ import javax.persistence.*;
   { }
 
   @Id @GeneratedValue private Long id;
-  
+
   public Long getId()
-  {
-	  return id;
+  { 
+    return id;
   }
 
   private void setId(Long id)
-  {
-     this.id = id;
+  { 
+    this.id = id;
   }
-  
+
   private String street;
 
   public String getStreet()

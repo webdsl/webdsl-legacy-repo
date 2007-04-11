@@ -1,0 +1,33 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="layout/template.xhtml"><ui:define name="body">
+        <h1>
+           <h:outputText rendered="#{!studentHome.managed}" value="Create Student"/>
+           <h:outputText rendered="#{studentHome.managed}" value="Edit Student"/>
+        </h1>
+        <h:messages globalOnly="true" styleClass="message"/>
+        <h:form id="editStudent">
+          <div class="dialog">
+            <s:validateAll><div class="prop">
+         <span class="number">number</span>
+         <span class="value">
+            <s:decorate>
+               <h:inputText id="number" required="true" value="#{student.number}"/>
+            </s:decorate>
+         </span>
+      </div><div class="prop">
+         <span class="year">year</span>
+         <span class="value">
+            <s:decorate>
+               <h:inputText id="year" required="true" value="#{student.year}"/>
+            </s:decorate>
+         </span>
+      </div></s:validateAll>
+          </div>
+          <div class="actionButtons">
+            <h:commandButton value="Create Student" action="#{studentHome.persist}" rendered="#{!studentHome.managed}"/>
+            <h:commandButton value="Update Student" action="#{studentHome.update}" rendered="#{studentHome.managed}"/>
+            <h:commandButton value="Delete Student" action="#{studentHome.delete}" rendered="#{studentHome.managed}"/>
+          </div>
+        </h:form>
+      </ui:define></ui:composition>

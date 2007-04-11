@@ -1,36 +1,28 @@
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-                             "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:s="http://jboss.com/products/seam/taglib"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html"
-                template="layout/template.xhtml">
-                       
-<ui:define name="body">
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
 
-    <h1>Addresses</h1>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="layout/template.xhtml"><ui:define name="body">%
     
-    <h:messages globalOnly="true" styleClass="message"/>
-    
-    <f:view>
-     <h:outputText value="No addresses" rendered="#{addressList.rowCount==0}"/>
-     <h:dataTable var="address" value="#{addressList}" rendered="#{addressList.rowCount>0}">
-        <h:column>
-           <f:facet name="header">
-              <h:outputText value="Address"/>
-           </f:facet>
-           <s:link view = "/Address.jsp" value="#{address.street}">
-              <f:param name="addressId" value="#{address.id}" />
-           </s:link>
-        </h:column>
-        <h:column>
-           <s:button value="Delete" action="#{addressQuery.delete}"/>
-        </h:column>
-     </h:dataTable>
-  </f:view>
-    
-</ui:define>
-
-</ui:composition>
-
+        <h1>
+           <h:outputText value="View Address"/>
+        </h1>
+        
+        <h:messages globalOnly="true" styleClass="message"/>
+        
+        <f:view>
+          <h:outputText value="No Address" rendered="#{addressList.rowCount==0}"/>
+          <h:dataTable var="address" value="#{addressList}" rendered="#{addressList.rowCount>0}">
+            <h:column>
+              <f:facet name="header">
+                <h:outputText value="Id"/>
+              </f:facet>
+              <s:link view="/viewAddress.jsp" value="#{address.id}">
+                <f:param name="addressId" value="#{address.id}"/>
+              </s:link>
+            </h:column>
+            <h:column>
+               <s:button value="Delete" action="#{addressList.delete}"/>
+            </h:column>
+         </h:dataTable>
+        </f:view>
+        
+      </ui:define></ui:composition>

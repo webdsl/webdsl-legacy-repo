@@ -1,75 +1,90 @@
-//$Id: User.java,v 1.10 2006/10/25 20:17:46 gavin Exp $
 package org.webdsl.serg.domain;
 
-import static org.jboss.seam.ScopeType.SESSION;
+import java.util.*;
+import javax.persistence.*;
+import org.webdsl.serg.domain.*;
 
-import java.io.Serializable;
+@Entity public class User  
+{ 
+  public User () 
+  { }
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+  @Id @GeneratedValue private Long id;
 
-import org.hibernate.validator.Length;
-import org.hibernate.validator.NotNull;
-import org.jboss.seam.annotations.Name;
-import org.jboss.seam.annotations.Scope;
+  public Long getId()
+  { 
+    return id;
+  }
 
-@Entity
-@Name("user")
-@Scope(SESSION)
-public class User implements Serializable
-{
-   private static final long serialVersionUID = 1881413500711441951L;
-   
-   private String username;
-   private String password;
-   private String name;
-   
-   public User(String name, String password, String username)
-   {
-      this.name = name;
-      this.password = password;
-      this.username = username;
-   }
-   
-   public User() {}
-   
-   @NotNull
-   public String getName()
-   {
-      return name;
-   }
+  private void setId(Long id)
+  { 
+    this.id = id;
+  }
 
-   public void setName(String name)
-   {
-      this.name = name;
-   }
-   
-   @NotNull @Length(min=5, max=15)
-   public String getPassword()
-   {
-      return password;
-   }
+  private String username;
 
-   public void setPassword(String password)
-   {
-      this.password = password;
-   }
-   
-   @Id @NotNull @Length(min=5, max=15)
-   public String getUsername()
-   {
-      return username;
-   }
+  public String getUsername()
+  { 
+    return username;
+  }
 
-   public void setUsername(String username)
-   {
-      this.username = username;
-   }
-   
-   @Override
-   public String toString() 
-   {
-      return "User(" + username + ")";
-   }
+  public void setUsername(String username)
+  { 
+    this.username = username;
+  }
+
+  private String email;
+
+  public String getEmail()
+  { 
+    return email;
+  }
+
+  public void setEmail(String email)
+  { 
+    this.email = email;
+  }
+
+  private String password;
+
+  public String getPassword()
+  { 
+    return password;
+  }
+
+  public void setPassword(String password)
+  { 
+    this.password = password;
+  }
+
+  /*
+  private Person person;
+
+  public Person getPerson()
+  { 
+    return person;
+  }
+
+  public void setPerson(Person person)
+  { 
+    this.person = person;
+  }
+*/
+  
+  @ManyToMany @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private Set<Role> role = new HashSet<Role>();
+
+  public Set<Role> getRole()
+  { 
+    return role;
+  }
+
+  public void setRole(Set<Role> role)
+  { 
+    this.role = role;
+  }
+
+  public void addRole(Role b_0)
+  { 
+    this.role.add(b_0);
+  }
 }

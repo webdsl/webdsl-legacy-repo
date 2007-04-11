@@ -1,0 +1,28 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="layout/template.xhtml"><ui:define name="body">%
+    
+        <h1>
+           <h:outputText value="View Lecturer"/>
+        </h1>
+        
+        <h:messages globalOnly="true" styleClass="message"/>
+        
+        <f:view>
+          <h:outputText value="No Lecturer" rendered="#{lecturerList.rowCount==0}"/>
+          <h:dataTable var="address" value="#{lecturerList}" rendered="#{lecturerList.rowCount>0}">
+            <h:column>
+              <f:facet name="header">
+                <h:outputText value="Id"/>
+              </f:facet>
+              <s:link view="/viewLecturer.jsp" value="#{lecturer.id}">
+                <f:param name="lecturerId" value="#{lecturer.id}"/>
+              </s:link>
+            </h:column>
+            <h:column>
+               <s:button value="Delete" action="#{lecturerList.delete}"/>
+            </h:column>
+         </h:dataTable>
+        </f:view>
+        
+      </ui:define></ui:composition>

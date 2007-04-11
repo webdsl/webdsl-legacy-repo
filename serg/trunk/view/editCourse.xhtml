@@ -1,0 +1,47 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="layout/template.xhtml"><ui:define name="body">
+        <h1>
+           <h:outputText rendered="#{!courseHome.managed}" value="Create Course"/>
+           <h:outputText rendered="#{courseHome.managed}" value="Edit Course"/>
+        </h1>
+        <h:messages globalOnly="true" styleClass="message"/>
+        <h:form id="editCourse">
+          <div class="dialog">
+            <s:validateAll><div class="prop">
+         <span class="unit">unit</span>
+         <span class="value">
+            <s:decorate>
+               <h:inputText id="unit" required="true" value="#{course.unit}"/>
+            </s:decorate>
+         </span>
+      </div><div class="prop">
+         <span class="year">year</span>
+         <span class="value">
+            <s:decorate>
+               <h:inputText id="year" required="true" value="#{course.year}"/>
+            </s:decorate>
+         </span>
+      </div><div class="prop">
+         <span class="period">period</span>
+         <span class="value">
+            <s:decorate>
+               <h:inputText id="period" required="true" value="#{course.period}"/>
+            </s:decorate>
+         </span>
+      </div><div class="prop">
+         <span class="lecturer">lecturer</span>
+         <span class="value">
+            <s:decorate>
+               <h:inputText id="lecturer" required="true" value="#{course.lecturer}"/>
+            </s:decorate>
+         </span>
+      </div></s:validateAll>
+          </div>
+          <div class="actionButtons">
+            <h:commandButton value="Create Course" action="#{courseHome.persist}" rendered="#{!courseHome.managed}"/>
+            <h:commandButton value="Update Course" action="#{courseHome.update}" rendered="#{courseHome.managed}"/>
+            <h:commandButton value="Delete Course" action="#{courseHome.delete}" rendered="#{courseHome.managed}"/>
+          </div>
+        </h:form>
+      </ui:define></ui:composition>

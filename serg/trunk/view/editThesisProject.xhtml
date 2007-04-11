@@ -1,0 +1,33 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="layout/template.xhtml"><ui:define name="body">
+        <h1>
+           <h:outputText rendered="#{!thesisProjectHome.managed}" value="Create ThesisProject"/>
+           <h:outputText rendered="#{thesisProjectHome.managed}" value="Edit ThesisProject"/>
+        </h1>
+        <h:messages globalOnly="true" styleClass="message"/>
+        <h:form id="editThesisProject">
+          <div class="dialog">
+            <s:validateAll><div class="prop">
+         <span class="website">website</span>
+         <span class="value">
+            <s:decorate>
+               <h:inputText id="website" required="true" value="#{thesisProject.website}"/>
+            </s:decorate>
+         </span>
+      </div><div class="prop">
+         <span class="subversion">subversion</span>
+         <span class="value">
+            <s:decorate>
+               <h:inputText id="subversion" required="true" value="#{thesisProject.subversion}"/>
+            </s:decorate>
+         </span>
+      </div></s:validateAll>
+          </div>
+          <div class="actionButtons">
+            <h:commandButton value="Create ThesisProject" action="#{thesisProjectHome.persist}" rendered="#{!thesisProjectHome.managed}"/>
+            <h:commandButton value="Update ThesisProject" action="#{thesisProjectHome.update}" rendered="#{thesisProjectHome.managed}"/>
+            <h:commandButton value="Delete ThesisProject" action="#{thesisProjectHome.delete}" rendered="#{thesisProjectHome.managed}"/>
+          </div>
+        </h:form>
+      </ui:define></ui:composition>
