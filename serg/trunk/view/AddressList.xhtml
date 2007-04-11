@@ -20,7 +20,9 @@
            <f:facet name="header">
               <h:outputText value="Address"/>
            </f:facet>
-           <s:link value="#{address.street}"/>
+           <s:link view = "/Address.jsp" value="#{address.street}">
+              <f:param name="addressId" value="#{address.id}" />
+           </s:link>
         </h:column>
         <h:column>
            <s:button value="Delete" action="#{addressQuery.delete}"/>

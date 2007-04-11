@@ -12,5 +12,11 @@
          <redirect />
       </navigation-case>
    </navigation-rule>
+   
+   <page>
+     <param name="addressId"
+          value="#{addressHome.id}"
+          converterId="javax.faces.Long"/>
+   </page>
 
 </faces-config>
