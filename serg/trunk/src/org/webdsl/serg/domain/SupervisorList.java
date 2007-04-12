@@ -21,7 +21,7 @@ import org.jboss.seam.core.FacesMessages;
 import org.jboss.seam.log.Log;
 import org.webdsl.serg.domain.Address;
 
-@Name("supervisorList") public class SupervisorList  implements ISupervisorList
+@Stateful @Scope(SESSION) @Name("supervisorListBean") public class SupervisorList  implements ISupervisorList
 { 
   @Logger private Log log;
 
@@ -37,6 +37,11 @@ import org.webdsl.serg.domain.Address;
   { 
     supervisorList = em.createQuery("from " + "Supervisor").getResultList();
     log.info("call to findEntries: list = " + supervisorList);
+  }
+
+  public void refresh()
+  { 
+    findEntries();
   }
 
   public void delete()

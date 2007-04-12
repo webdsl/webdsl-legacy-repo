@@ -8,30 +8,49 @@
         <h:messages globalOnly="true" styleClass="message"/>
         <h:form id="editDocument">
           <div class="dialog">
-            <s:validateAll><div class="prop">
+            <s:validateAll><table><div class="prop">
+      <tr>
+        <td>
          <span class="doc">doc</span>
+        </td>
+        <td>
          <span class="value">
             <s:decorate>
                <h:inputText id="doc" required="true" value="#{document.doc}"/>
             </s:decorate>
          </span>
+        </td>
+       </tr>
       </div><div class="prop">
+      <tr>
+        <td>
          <span class="date">date</span>
+        </td>
+        <td>
          <span class="value">
             <s:decorate>
                <h:inputText id="date" required="true" value="#{document.date}"/>
             </s:decorate>
          </span>
+        </td>
+       </tr>
       </div><div class="prop">
+      <tr>
+        <td>
          <span class="comments">comments</span>
+        </td>
+        <td>
          <span class="value">
             <s:decorate>
                <h:inputText id="comments" required="true" value="#{document.comments}"/>
             </s:decorate>
          </span>
-      </div></s:validateAll>
+        </td>
+       </tr>
+      </div></table></s:validateAll>
           </div>
           <div class="actionButtons">
+            <s:link view="/viewDocument.xhtml" value="View Document" rendered="#{documentHome.managed}"/>
             <h:commandButton value="Create Document" action="#{documentHome.persist}" rendered="#{!documentHome.managed}"/>
             <h:commandButton value="Update Document" action="#{documentHome.update}" rendered="#{documentHome.managed}"/>
             <h:commandButton value="Delete Document" action="#{documentHome.delete}" rendered="#{documentHome.managed}"/>

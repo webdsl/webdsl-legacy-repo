@@ -21,7 +21,7 @@ import org.jboss.seam.core.FacesMessages;
 import org.jboss.seam.log.Log;
 import org.webdsl.serg.domain.Address;
 
-@Name("roleList") public class RoleList  implements IRoleList
+@Stateful @Scope(SESSION) @Name("roleListBean") public class RoleList  implements IRoleList
 { 
   @Logger private Log log;
 
@@ -37,6 +37,11 @@ import org.webdsl.serg.domain.Address;
   { 
     roleList = em.createQuery("from " + "Role").getResultList();
     log.info("call to findEntries: list = " + roleList);
+  }
+
+  public void refresh()
+  { 
+    findEntries();
   }
 
   public void delete()

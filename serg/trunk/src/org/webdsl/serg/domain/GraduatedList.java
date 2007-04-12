@@ -21,7 +21,7 @@ import org.jboss.seam.core.FacesMessages;
 import org.jboss.seam.log.Log;
 import org.webdsl.serg.domain.Address;
 
-@Name("graduatedList") public class GraduatedList  implements IGraduatedList
+@Stateful @Scope(SESSION) @Name("graduatedListBean") public class GraduatedList  implements IGraduatedList
 { 
   @Logger private Log log;
 
@@ -37,6 +37,11 @@ import org.webdsl.serg.domain.Address;
   { 
     graduatedList = em.createQuery("from " + "Graduated").getResultList();
     log.info("call to findEntries: list = " + graduatedList);
+  }
+
+  public void refresh()
+  { 
+    findEntries();
   }
 
   public void delete()

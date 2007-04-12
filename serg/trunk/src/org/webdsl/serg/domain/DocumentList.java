@@ -21,7 +21,7 @@ import org.jboss.seam.core.FacesMessages;
 import org.jboss.seam.log.Log;
 import org.webdsl.serg.domain.Address;
 
-@Name("documentList") public class DocumentList  implements IDocumentList
+@Stateful @Scope(SESSION) @Name("documentListBean") public class DocumentList  implements IDocumentList
 { 
   @Logger private Log log;
 
@@ -37,6 +37,11 @@ import org.webdsl.serg.domain.Address;
   { 
     documentList = em.createQuery("from " + "Document").getResultList();
     log.info("call to findEntries: list = " + documentList);
+  }
+
+  public void refresh()
+  { 
+    findEntries();
   }
 
   public void delete()

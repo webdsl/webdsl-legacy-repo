@@ -6,5 +6,7 @@ public interface IGraduatedList
 
   public void delete();
 
+  public void refresh();
+
   public void destroy();
 }

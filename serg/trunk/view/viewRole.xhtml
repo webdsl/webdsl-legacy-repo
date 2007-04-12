@@ -1,1 +1,23 @@
-Document(Prologue(None,[],Some(DocTypePrologue(DocTypeDecl(QName(None,"composition"),PublicExternalID("-//W3C//DTD XHTML 1.0 Transitional//EN","http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd")),[]))),Element(QName(Some(Prefix("ui")),"composition"),[Attribute(QName(None,"xmlns"),DoubleQuoted([Literal("http://www.w3.org/1999/xhtml")])),Attribute(QName(Some(Prefix("xmlns")),"s"),DoubleQuoted([Literal("http://jboss.com/products/seam/taglib")])),Attribute(QName(Some(Prefix("xmlns")),"ui"),DoubleQuoted([Literal("http://java.sun.com/jsf/facelets")])),Attribute(QName(Some(Prefix("xmlns")),"f"),DoubleQuoted([Literal("http://java.sun.com/jsf/core")])),Attribute(QName(Some(Prefix("xmlns")),"h"),DoubleQuoted([Literal("http://java.sun.com/jsf/html")])),Attribute(QName(None,"template"),DoubleQuoted([Literal("layout/template.xhtml")]))],[Element(QName(Some(Prefix("ui")),"define"),[Attribute(QName(None,"name"),DoubleQuoted([Literal("body")]))],[Text([Literal("\n        ")]),Element(QName(None,"h1"),[],[Text([Literal("\n           ")]),EmptyElement(QName(Some(Prefix("h")),"outputText"),[Attribute(QName(None,"value"),DoubleQuoted([Literal("View "),Literal("Role")]))]),Text([Literal("\n        ")])],QName(None,"h1")),Text([Literal("\n        ")]),EmptyElement(QName(Some(Prefix("h")),"messages"),[Attribute(QName(None,"globalOnly"),DoubleQuoted([Literal("true")])),Attribute(QName(None,"styleClass"),DoubleQuoted([Literal("message")]))]),Text([Literal("\n        ")]),Element(QName(Some(Prefix("h")),"form"),[Attribute(QName(None,"id"),DoubleQuoted([Literal("edit"),Literal("Role")]))],[Text([Literal("\n          ")]),Element(QName(None,"div"),[Attribute(QName(None,"class"),DoubleQuoted([Literal("dialog")]))],[Text([Literal("\n            ")]),Element(QName(Some(Prefix("s")),"validateAll"),[],[Element(QName(None,"div"),[Attribute(QName(None,"class"),DoubleQuoted([Literal("prop")]))],[Text([Literal("\n        ")]),Element(QName(None,"tr"),[Attribute(QName(None,"class"),DoubleQuoted([Literal("prop")]))],[Text([Literal("\n           ")]),Element(QName(None,"td"),[Attribute(QName(None,"class"),DoubleQuoted([Literal("name")]))],[Text([Literal("user")]),Text([Literal(":")])],QName(None,"td")),Text([Literal("\n           ")]),Element(QName(None,"td"),[Attribute(QName(None,"class"),DoubleQuoted([Literal("value")]))],[Text([Literal("#{")]),"role",Text([Literal(".")]),"user",Text([Literal("}")])],QName(None,"td")),Text([Literal("\n        ")])],QName(None,"tr")),Text([Literal("\n      ")])],QName(None,"div"))],QName(Some(Prefix("s")),"validateAll")),Text([Literal("\n          ")])],QName(None,"div")),Text([Literal("\n          ")]),Element(QName(None,"div"),[Attribute(QName(None,"class"),DoubleQuoted([Literal("actionButtons")]))],[Text([Literal("\n             ")]),EmptyElement(QName(Some(Prefix("s")),"link"),[Attribute(QName(None,"view"),DoubleQuoted([Literal("/edit"),Literal("Role"),Literal(".xhtml")])),Attribute(QName(None,"value"),DoubleQuoted([Literal("Edit "),Literal("Role")]))]),Text([Literal("\n             ")]),EmptyElement(QName(Some(Prefix("s")),"link"),[Attribute(QName(None,"action"),DoubleQuoted([Literal("#{"),Literal("roleHome"),Literal(".remove}")])),Attribute(QName(None,"value"),DoubleQuoted([Literal("Delete "),Literal("Role")])),Attribute(QName(None,"rendered"),DoubleQuoted([Literal("#{"),Literal("roleHome"),Literal(".managed}")]))]),Text([Literal("\n          ")])],QName(None,"div")),Text([Literal("\n        ")])],QName(Some(Prefix("h")),"form")),Text([Literal("\n      ")])],QName(Some(Prefix("ui")),"define"))],QName(Some(Prefix("ui")),"composition")),Epilogue([]))
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="layout/template.xhtml"><ui:define name="body">
+        <h1>
+           <h:outputText value="View Role"/>
+        </h1>
+        <h:messages globalOnly="true" styleClass="message"/>
+        <h:form id="viewRole">
+          <div class="dialog">
+            <s:validateAll><div class="prop">
+        <tr class="prop">
+           <td class="name">user:</td>
+           <td class="value">#{role.user}</td>
+        </tr>
+      </div></s:validateAll>
+          </div>
+          <div class="actionButtons">
+             <s:link view="/editRole.xhtml" value="Edit Role"/>
+             <s:link action="#{roleHome.remove}" value="Delete Role" rendered="#{roleHome.managed}"/>
+             <s:link view="/RoleList.xhtml" value="All Roles"/>
+          </div>
+        </h:form>
+      </ui:define></ui:composition>

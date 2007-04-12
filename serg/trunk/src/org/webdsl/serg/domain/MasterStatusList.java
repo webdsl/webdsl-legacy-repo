@@ -21,7 +21,7 @@ import org.jboss.seam.core.FacesMessages;
 import org.jboss.seam.log.Log;
 import org.webdsl.serg.domain.Address;
 
-@Name("masterStatusList") public class MasterStatusList  implements IMasterStatusList
+@Stateful @Scope(SESSION) @Name("masterStatusListBean") public class MasterStatusList  implements IMasterStatusList
 { 
   @Logger private Log log;
 
@@ -37,6 +37,11 @@ import org.webdsl.serg.domain.Address;
   { 
     masterStatusList = em.createQuery("from " + "MasterStatus").getResultList();
     log.info("call to findEntries: list = " + masterStatusList);
+  }
+
+  public void refresh()
+  { 
+    findEntries();
   }
 
   public void delete()

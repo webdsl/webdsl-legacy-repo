@@ -21,7 +21,7 @@ import org.webdsl.serg.domain.*;
     this.id = id;
   }
 
-  private EduUnit unit;
+  @ManyToOne @JoinColumn(name = "CourseUnit") private EduUnit unit;
 
   public EduUnit getUnit()
   { 
@@ -57,7 +57,7 @@ import org.webdsl.serg.domain.*;
     this.period = period;
   }
 
-  private Person lecturer;
+  @ManyToOne @JoinColumn(name = "CourseLecturer") private Person lecturer;
 
   public Person getLecturer()
   { 

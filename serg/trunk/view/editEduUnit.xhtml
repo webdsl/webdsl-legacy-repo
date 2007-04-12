@@ -8,30 +8,49 @@
         <h:messages globalOnly="true" styleClass="message"/>
         <h:form id="editEduUnit">
           <div class="dialog">
-            <s:validateAll><div class="prop">
+            <s:validateAll><table><div class="prop">
+      <tr>
+        <td>
          <span class="title">title</span>
+        </td>
+        <td>
          <span class="value">
             <s:decorate>
                <h:inputText id="title" required="true" value="#{eduUnit.title}"/>
             </s:decorate>
          </span>
+        </td>
+       </tr>
       </div><div class="prop">
+      <tr>
+        <td>
          <span class="code">code</span>
+        </td>
+        <td>
          <span class="value">
             <s:decorate>
                <h:inputText id="code" required="true" value="#{eduUnit.code}"/>
             </s:decorate>
          </span>
+        </td>
+       </tr>
       </div><div class="prop">
+      <tr>
+        <td>
          <span class="credits">credits</span>
+        </td>
+        <td>
          <span class="value">
             <s:decorate>
                <h:inputText id="credits" required="true" value="#{eduUnit.credits}"/>
             </s:decorate>
          </span>
-      </div></s:validateAll>
+        </td>
+       </tr>
+      </div></table></s:validateAll>
           </div>
           <div class="actionButtons">
+            <s:link view="/viewEduUnit.xhtml" value="View EduUnit" rendered="#{eduUnitHome.managed}"/>
             <h:commandButton value="Create EduUnit" action="#{eduUnitHome.persist}" rendered="#{!eduUnitHome.managed}"/>
             <h:commandButton value="Update EduUnit" action="#{eduUnitHome.update}" rendered="#{eduUnitHome.managed}"/>
             <h:commandButton value="Delete EduUnit" action="#{eduUnitHome.delete}" rendered="#{eduUnitHome.managed}"/>

@@ -5,13 +5,14 @@
            <h:outputText value="View Graduated"/>
         </h1>
         <h:messages globalOnly="true" styleClass="message"/>
-        <h:form id="editGraduated">
+        <h:form id="viewGraduated">
           <div class="dialog">
             <s:validateAll></s:validateAll>
           </div>
           <div class="actionButtons">
              <s:link view="/editGraduated.xhtml" value="Edit Graduated"/>
              <s:link action="#{graduatedHome.remove}" value="Delete Graduated" rendered="#{graduatedHome.managed}"/>
+             <s:link view="/GraduatedList.xhtml" value="All Graduateds"/>
           </div>
         </h:form>
       </ui:define></ui:composition>

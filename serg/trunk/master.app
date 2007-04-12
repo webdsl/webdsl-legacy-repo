@@ -7,7 +7,7 @@ description
 
 end
 
-section people.
+section people. 
 
   Address {
     street : String 
@@ -172,7 +172,7 @@ section tracking students in a master program.
   Thesis : MasterStatus {}
   Graduated : MasterStatus {}
 
-  rules
+  rules  
 
     sum(Master.courses.credits) = 60
 

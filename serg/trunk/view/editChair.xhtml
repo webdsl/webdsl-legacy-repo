@@ -8,9 +8,10 @@
         <h:messages globalOnly="true" styleClass="message"/>
         <h:form id="editChair">
           <div class="dialog">
-            <s:validateAll></s:validateAll>
+            <s:validateAll><table></table></s:validateAll>
           </div>
           <div class="actionButtons">
+            <s:link view="/viewChair.xhtml" value="View Chair" rendered="#{chairHome.managed}"/>
             <h:commandButton value="Create Chair" action="#{chairHome.persist}" rendered="#{!chairHome.managed}"/>
             <h:commandButton value="Update Chair" action="#{chairHome.update}" rendered="#{chairHome.managed}"/>
             <h:commandButton value="Delete Chair" action="#{chairHome.delete}" rendered="#{chairHome.managed}"/>

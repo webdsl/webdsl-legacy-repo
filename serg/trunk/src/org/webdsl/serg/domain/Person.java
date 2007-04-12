@@ -67,7 +67,7 @@ import org.webdsl.serg.domain.*;
     this.homepages.add(a_0);
   }
 
-  private User user;
+  @ManyToOne @JoinColumn(name = "PersonUser") private User user;
 
   public User getUser()
   { 

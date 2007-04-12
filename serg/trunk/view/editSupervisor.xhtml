@@ -8,9 +8,10 @@
         <h:messages globalOnly="true" styleClass="message"/>
         <h:form id="editSupervisor">
           <div class="dialog">
-            <s:validateAll></s:validateAll>
+            <s:validateAll><table></table></s:validateAll>
           </div>
           <div class="actionButtons">
+            <s:link view="/viewSupervisor.xhtml" value="View Supervisor" rendered="#{supervisorHome.managed}"/>
             <h:commandButton value="Create Supervisor" action="#{supervisorHome.persist}" rendered="#{!supervisorHome.managed}"/>
             <h:commandButton value="Update Supervisor" action="#{supervisorHome.update}" rendered="#{supervisorHome.managed}"/>
             <h:commandButton value="Delete Supervisor" action="#{supervisorHome.delete}" rendered="#{supervisorHome.managed}"/>

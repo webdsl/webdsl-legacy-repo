@@ -8,9 +8,10 @@
         <h:messages globalOnly="true" styleClass="message"/>
         <h:form id="editCoordinator">
           <div class="dialog">
-            <s:validateAll></s:validateAll>
+            <s:validateAll><table></table></s:validateAll>
           </div>
           <div class="actionButtons">
+            <s:link view="/viewCoordinator.xhtml" value="View Coordinator" rendered="#{coordinatorHome.managed}"/>
             <h:commandButton value="Create Coordinator" action="#{coordinatorHome.persist}" rendered="#{!coordinatorHome.managed}"/>
             <h:commandButton value="Update Coordinator" action="#{coordinatorHome.update}" rendered="#{coordinatorHome.managed}"/>
             <h:commandButton value="Delete Coordinator" action="#{coordinatorHome.delete}" rendered="#{coordinatorHome.managed}"/>

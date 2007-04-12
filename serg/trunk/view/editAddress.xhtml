@@ -8,16 +8,23 @@
         <h:messages globalOnly="true" styleClass="message"/>
         <h:form id="editAddress">
           <div class="dialog">
-            <s:validateAll><div class="prop">
+            <s:validateAll><table><div class="prop">
+      <tr>
+        <td>
          <span class="street">street</span>
+        </td>
+        <td>
          <span class="value">
             <s:decorate>
                <h:inputText id="street" required="true" value="#{address.street}"/>
             </s:decorate>
          </span>
-      </div></s:validateAll>
+        </td>
+       </tr>
+      </div></table></s:validateAll>
           </div>
           <div class="actionButtons">
+            <s:link view="/viewAddress.xhtml" value="View Address" rendered="#{addressHome.managed}"/>
             <h:commandButton value="Create Address" action="#{addressHome.persist}" rendered="#{!addressHome.managed}"/>
             <h:commandButton value="Update Address" action="#{addressHome.update}" rendered="#{addressHome.managed}"/>
             <h:commandButton value="Delete Address" action="#{addressHome.delete}" rendered="#{addressHome.managed}"/>

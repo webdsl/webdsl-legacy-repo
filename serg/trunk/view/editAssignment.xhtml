@@ -8,9 +8,10 @@
         <h:messages globalOnly="true" styleClass="message"/>
         <h:form id="editAssignment">
           <div class="dialog">
-            <s:validateAll></s:validateAll>
+            <s:validateAll><table></table></s:validateAll>
           </div>
           <div class="actionButtons">
+            <s:link view="/viewAssignment.xhtml" value="View Assignment" rendered="#{assignmentHome.managed}"/>
             <h:commandButton value="Create Assignment" action="#{assignmentHome.persist}" rendered="#{!assignmentHome.managed}"/>
             <h:commandButton value="Update Assignment" action="#{assignmentHome.update}" rendered="#{assignmentHome.managed}"/>
             <h:commandButton value="Delete Assignment" action="#{assignmentHome.delete}" rendered="#{assignmentHome.managed}"/>

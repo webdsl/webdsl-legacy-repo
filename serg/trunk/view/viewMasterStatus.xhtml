@@ -5,13 +5,14 @@
            <h:outputText value="View MasterStatus"/>
         </h1>
         <h:messages globalOnly="true" styleClass="message"/>
-        <h:form id="editMasterStatus">
+        <h:form id="viewMasterStatus">
           <div class="dialog">
             <s:validateAll></s:validateAll>
           </div>
           <div class="actionButtons">
              <s:link view="/editMasterStatus.xhtml" value="Edit MasterStatus"/>
              <s:link action="#{masterStatusHome.remove}" value="Delete MasterStatus" rendered="#{masterStatusHome.managed}"/>
+             <s:link view="/MasterStatusList.xhtml" value="All MasterStatuss"/>
           </div>
         </h:form>
       </ui:define></ui:composition>

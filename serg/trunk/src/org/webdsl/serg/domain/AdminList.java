@@ -21,7 +21,7 @@ import org.jboss.seam.core.FacesMessages;
 import org.jboss.seam.log.Log;
 import org.webdsl.serg.domain.Address;
 
-@Name("adminList") public class AdminList  implements IAdminList
+@Stateful @Scope(SESSION) @Name("adminListBean") public class AdminList  implements IAdminList
 { 
   @Logger private Log log;
 
@@ -37,6 +37,11 @@ import org.webdsl.serg.domain.Address;
   { 
     adminList = em.createQuery("from " + "Admin").getResultList();
     log.info("call to findEntries: list = " + adminList);
+  }
+
+  public void refresh()
+  { 
+    findEntries();
   }
 
   public void delete()

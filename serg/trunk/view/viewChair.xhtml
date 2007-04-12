@@ -5,13 +5,14 @@
            <h:outputText value="View Chair"/>
         </h1>
         <h:messages globalOnly="true" styleClass="message"/>
-        <h:form id="editChair">
+        <h:form id="viewChair">
           <div class="dialog">
             <s:validateAll></s:validateAll>
           </div>
           <div class="actionButtons">
              <s:link view="/editChair.xhtml" value="Edit Chair"/>
              <s:link action="#{chairHome.remove}" value="Delete Chair" rendered="#{chairHome.managed}"/>
+             <s:link view="/ChairList.xhtml" value="All Chairs"/>
           </div>
         </h:form>
       </ui:define></ui:composition>

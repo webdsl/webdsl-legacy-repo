@@ -6,5 +6,7 @@ public interface ISupervisorList
 
   public void delete();
 
+  public void refresh();
+
   public void destroy();
 }

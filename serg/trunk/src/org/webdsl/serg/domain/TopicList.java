@@ -21,7 +21,7 @@ import org.jboss.seam.core.FacesMessages;
 import org.jboss.seam.log.Log;
 import org.webdsl.serg.domain.Address;
 
-@Name("topicList") public class TopicList  implements ITopicList
+@Stateful @Scope(SESSION) @Name("topicListBean") public class TopicList  implements ITopicList
 { 
   @Logger private Log log;
 
@@ -37,6 +37,11 @@ import org.webdsl.serg.domain.Address;
   { 
     topicList = em.createQuery("from " + "Topic").getResultList();
     log.info("call to findEntries: list = " + topicList);
+  }
+
+  public void refresh()
+  { 
+    findEntries();
   }
 
   public void delete()

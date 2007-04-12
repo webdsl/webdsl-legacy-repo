@@ -5,13 +5,14 @@
            <h:outputText value="View Admin"/>
         </h1>
         <h:messages globalOnly="true" styleClass="message"/>
-        <h:form id="editAdmin">
+        <h:form id="viewAdmin">
           <div class="dialog">
             <s:validateAll></s:validateAll>
           </div>
           <div class="actionButtons">
              <s:link view="/editAdmin.xhtml" value="Edit Admin"/>
              <s:link action="#{adminHome.remove}" value="Delete Admin" rendered="#{adminHome.managed}"/>
+             <s:link view="/AdminList.xhtml" value="All Admins"/>
           </div>
         </h:form>
       </ui:define></ui:composition>

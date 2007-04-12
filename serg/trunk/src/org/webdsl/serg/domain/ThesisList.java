@@ -21,7 +21,7 @@ import org.jboss.seam.core.FacesMessages;
 import org.jboss.seam.log.Log;
 import org.webdsl.serg.domain.Address;
 
-@Name("thesisList") public class ThesisList  implements IThesisList
+@Stateful @Scope(SESSION) @Name("thesisListBean") public class ThesisList  implements IThesisList
 { 
   @Logger private Log log;
 
@@ -37,6 +37,11 @@ import org.webdsl.serg.domain.Address;
   { 
     thesisList = em.createQuery("from " + "Thesis").getResultList();
     log.info("call to findEntries: list = " + thesisList);
+  }
+
+  public void refresh()
+  { 
+    findEntries();
   }
 
   public void delete()

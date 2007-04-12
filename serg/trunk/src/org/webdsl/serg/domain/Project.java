@@ -21,7 +21,7 @@ import org.webdsl.serg.domain.*;
     this.id = id;
   }
 
-  private EduUnit unit;
+  @ManyToOne @JoinColumn(name = "ProjectUnit") private EduUnit unit;
 
   public EduUnit getUnit()
   { 

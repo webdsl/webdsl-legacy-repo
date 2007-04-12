@@ -5,13 +5,14 @@
            <h:outputText value="View Supervisor"/>
         </h1>
         <h:messages globalOnly="true" styleClass="message"/>
-        <h:form id="editSupervisor">
+        <h:form id="viewSupervisor">
           <div class="dialog">
             <s:validateAll></s:validateAll>
           </div>
           <div class="actionButtons">
              <s:link view="/editSupervisor.xhtml" value="Edit Supervisor"/>
              <s:link action="#{supervisorHome.remove}" value="Delete Supervisor" rendered="#{supervisorHome.managed}"/>
+             <s:link view="/SupervisorList.xhtml" value="All Supervisors"/>
           </div>
         </h:form>
       </ui:define></ui:composition>

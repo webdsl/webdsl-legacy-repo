@@ -5,13 +5,14 @@
            <h:outputText value="View ResearchAssignment"/>
         </h1>
         <h:messages globalOnly="true" styleClass="message"/>
-        <h:form id="editResearchAssignment">
+        <h:form id="viewResearchAssignment">
           <div class="dialog">
             <s:validateAll></s:validateAll>
           </div>
           <div class="actionButtons">
              <s:link view="/editResearchAssignment.xhtml" value="Edit ResearchAssignment"/>
              <s:link action="#{researchAssignmentHome.remove}" value="Delete ResearchAssignment" rendered="#{researchAssignmentHome.managed}"/>
+             <s:link view="/ResearchAssignmentList.xhtml" value="All ResearchAssignments"/>
           </div>
         </h:form>
       </ui:define></ui:composition>

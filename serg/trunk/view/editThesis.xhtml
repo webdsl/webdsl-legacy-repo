@@ -8,9 +8,10 @@
         <h:messages globalOnly="true" styleClass="message"/>
         <h:form id="editThesis">
           <div class="dialog">
-            <s:validateAll></s:validateAll>
+            <s:validateAll><table></table></s:validateAll>
           </div>
           <div class="actionButtons">
+            <s:link view="/viewThesis.xhtml" value="View Thesis" rendered="#{thesisHome.managed}"/>
             <h:commandButton value="Create Thesis" action="#{thesisHome.persist}" rendered="#{!thesisHome.managed}"/>
             <h:commandButton value="Update Thesis" action="#{thesisHome.update}" rendered="#{thesisHome.managed}"/>
             <h:commandButton value="Delete Thesis" action="#{thesisHome.delete}" rendered="#{thesisHome.managed}"/>

@@ -21,7 +21,7 @@ import org.jboss.seam.core.FacesMessages;
 import org.jboss.seam.log.Log;
 import org.webdsl.serg.domain.Address;
 
-@Name("startedList") public class StartedList  implements IStartedList
+@Stateful @Scope(SESSION) @Name("startedListBean") public class StartedList  implements IStartedList
 { 
   @Logger private Log log;
 
@@ -37,6 +37,11 @@ import org.webdsl.serg.domain.Address;
   { 
     startedList = em.createQuery("from " + "Started").getResultList();
     log.info("call to findEntries: list = " + startedList);
+  }
+
+  public void refresh()
+  { 
+    findEntries();
   }
 
   public void delete()

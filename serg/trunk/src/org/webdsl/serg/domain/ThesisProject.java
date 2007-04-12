@@ -26,7 +26,7 @@ import org.webdsl.serg.domain.*;
     this.milestones.add(g_0);
   }
 
-  private URL website;
+  @ManyToOne @JoinColumn(name = "ThesisProjectWebsite") private URL website;
 
   public URL getWebsite()
   { 
@@ -38,7 +38,7 @@ import org.webdsl.serg.domain.*;
     this.website = website;
   }
 
-  private URL subversion;
+  @ManyToOne @JoinColumn(name = "ThesisProjectSubversion") private URL subversion;
 
   public URL getSubversion()
   { 

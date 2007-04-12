@@ -5,13 +5,14 @@
            <h:outputText value="View Started"/>
         </h1>
         <h:messages globalOnly="true" styleClass="message"/>
-        <h:form id="editStarted">
+        <h:form id="viewStarted">
           <div class="dialog">
             <s:validateAll></s:validateAll>
           </div>
           <div class="actionButtons">
              <s:link view="/editStarted.xhtml" value="Edit Started"/>
              <s:link action="#{startedHome.remove}" value="Delete Started" rendered="#{startedHome.managed}"/>
+             <s:link view="/StartedList.xhtml" value="All Starteds"/>
           </div>
         </h:form>
       </ui:define></ui:composition>

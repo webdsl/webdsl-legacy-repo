@@ -8,9 +8,10 @@
         <h:messages globalOnly="true" styleClass="message"/>
         <h:form id="editAdmin">
           <div class="dialog">
-            <s:validateAll></s:validateAll>
+            <s:validateAll><table></table></s:validateAll>
           </div>
           <div class="actionButtons">
+            <s:link view="/viewAdmin.xhtml" value="View Admin" rendered="#{adminHome.managed}"/>
             <h:commandButton value="Create Admin" action="#{adminHome.persist}" rendered="#{!adminHome.managed}"/>
             <h:commandButton value="Update Admin" action="#{adminHome.update}" rendered="#{adminHome.managed}"/>
             <h:commandButton value="Delete Admin" action="#{adminHome.delete}" rendered="#{adminHome.managed}"/>

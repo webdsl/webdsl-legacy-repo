@@ -21,7 +21,7 @@ import org.jboss.seam.core.FacesMessages;
 import org.jboss.seam.log.Log;
 import org.webdsl.serg.domain.Address;
 
-@Name("userList") public class UserList  implements IUserList
+@Stateful @Scope(SESSION) @Name("userListBean") public class UserList  implements IUserList
 { 
   @Logger private Log log;
 
@@ -37,6 +37,11 @@ import org.webdsl.serg.domain.Address;
   { 
     userList = em.createQuery("from " + "User").getResultList();
     log.info("call to findEntries: list = " + userList);
+  }
+
+  public void refresh()
+  { 
+    findEntries();
   }
 
   public void delete()

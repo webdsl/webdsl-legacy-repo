@@ -8,16 +8,23 @@
         <h:messages globalOnly="true" styleClass="message"/>
         <h:form id="editRole">
           <div class="dialog">
-            <s:validateAll><div class="prop">
+            <s:validateAll><table><div class="prop">
+      <tr>
+        <td>
          <span class="user">user</span>
+        </td>
+        <td>
          <span class="value">
             <s:decorate>
                <h:inputText id="user" required="true" value="#{role.user}"/>
             </s:decorate>
          </span>
-      </div></s:validateAll>
+        </td>
+       </tr>
+      </div></table></s:validateAll>
           </div>
           <div class="actionButtons">
+            <s:link view="/viewRole.xhtml" value="View Role" rendered="#{roleHome.managed}"/>
             <h:commandButton value="Create Role" action="#{roleHome.persist}" rendered="#{!roleHome.managed}"/>
             <h:commandButton value="Update Role" action="#{roleHome.update}" rendered="#{roleHome.managed}"/>
             <h:commandButton value="Delete Role" action="#{roleHome.delete}" rendered="#{roleHome.managed}"/>

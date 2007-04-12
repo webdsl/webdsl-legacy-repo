@@ -21,7 +21,7 @@ import org.webdsl.serg.domain.*;
     this.id = id;
   }
 
-  private User user;
+  @ManyToOne @JoinColumn(name = "RoleUser") private User user;
 
   public User getUser()
   { 

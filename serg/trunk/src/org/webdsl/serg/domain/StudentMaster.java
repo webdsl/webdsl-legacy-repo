@@ -21,7 +21,7 @@ import org.webdsl.serg.domain.*;
     this.id = id;
   }
 
-  private User student;
+  @ManyToOne @JoinColumn(name = "StudentMasterStudent") private User student;
 
   public User getStudent()
   { 
@@ -62,7 +62,7 @@ import org.webdsl.serg.domain.*;
     this.courses.add(h_0);
   }
 
-  private ResearchAssignment research;
+  @ManyToOne @JoinColumn(name = "StudentMasterResearch") private ResearchAssignment research;
 
   public ResearchAssignment getResearch()
   { 
@@ -74,7 +74,7 @@ import org.webdsl.serg.domain.*;
     this.research = research;
   }
 
-  private ThesisProject thesis;
+  @ManyToOne @JoinColumn(name = "StudentMasterThesis") private ThesisProject thesis;
 
   public ThesisProject getThesis()
   { 
@@ -110,7 +110,7 @@ import org.webdsl.serg.domain.*;
     this.ending = ending;
   }
 
-  private MasterStatus status;
+  @ManyToOne @JoinColumn(name = "StudentMasterStatus") private MasterStatus status;
 
   public MasterStatus getStatus()
   { 

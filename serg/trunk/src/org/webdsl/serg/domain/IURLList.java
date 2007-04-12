@@ -6,5 +6,7 @@ public interface IURLList
 
   public void delete();
 
+  public void refresh();
+
   public void destroy();
 }

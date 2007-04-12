@@ -21,7 +21,7 @@ import org.jboss.seam.core.FacesMessages;
 import org.jboss.seam.log.Log;
 import org.webdsl.serg.domain.Address;
 
-@Name("coordinatorList") public class CoordinatorList  implements ICoordinatorList
+@Stateful @Scope(SESSION) @Name("coordinatorListBean") public class CoordinatorList  implements ICoordinatorList
 { 
   @Logger private Log log;
 
@@ -37,6 +37,11 @@ import org.webdsl.serg.domain.Address;
   { 
     coordinatorList = em.createQuery("from " + "Coordinator").getResultList();
     log.info("call to findEntries: list = " + coordinatorList);
+  }
+
+  public void refresh()
+  { 
+    findEntries();
   }
 
   public void delete()

@@ -57,8 +57,7 @@ import org.webdsl.serg.domain.*;
     this.password = password;
   }
 
-  /*
-  private Person person;
+  @ManyToOne @JoinColumn(name = "UserPerson") private Person person;
 
   public Person getPerson()
   { 
@@ -69,8 +68,7 @@ import org.webdsl.serg.domain.*;
   { 
     this.person = person;
   }
-*/
-  
+
   @ManyToMany @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private Set<Role> role = new HashSet<Role>();
 
   public Set<Role> getRole()

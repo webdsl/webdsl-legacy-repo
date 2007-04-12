@@ -21,7 +21,7 @@ import org.jboss.seam.core.FacesMessages;
 import org.jboss.seam.log.Log;
 import org.webdsl.serg.domain.Address;
 
-@Name("chairList") public class ChairList  implements IChairList
+@Stateful @Scope(SESSION) @Name("chairListBean") public class ChairList  implements IChairList
 { 
   @Logger private Log log;
 
@@ -37,6 +37,11 @@ import org.webdsl.serg.domain.Address;
   { 
     chairList = em.createQuery("from " + "Chair").getResultList();
     log.info("call to findEntries: list = " + chairList);
+  }
+
+  public void refresh()
+  { 
+    findEntries();
   }
 
   public void delete()

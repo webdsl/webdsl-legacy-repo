@@ -1,6 +1,6 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
 
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="layout/template.xhtml"><ui:define name="body">%
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="layout/template.xhtml"><ui:define name="body">
     
         <h1>
            <h:outputText value="View Thesis"/>
@@ -10,19 +10,23 @@
         
         <f:view>
           <h:outputText value="No Thesis" rendered="#{thesisList.rowCount==0}"/>
-          <h:dataTable var="address" value="#{thesisList}" rendered="#{thesisList.rowCount>0}">
+          <h:dataTable var="entry" value="#{thesisList}" rendered="#{thesisList.rowCount>0}">
             <h:column>
               <f:facet name="header">
                 <h:outputText value="Id"/>
               </f:facet>
-              <s:link view="/viewThesis.jsp" value="#{thesis.id}">
-                <f:param name="thesisId" value="#{thesis.id}"/>
+              <s:link view="/viewThesis.jsp" value="#{entry.id}">
+                <f:param name="thesisId" value="#{entry.id}"/>
               </s:link>
             </h:column>
             <h:column>
-               <s:button value="Delete" action="#{thesisList.delete}"/>
+               <s:button value="Delete" action="#{thesisListBean.delete}"/>
             </h:column>
          </h:dataTable>
+         <div class="actionButtons">
+         <s:link action="#{thesisListBean.refresh}" value="Refresh"/>
+         <s:link view="/editThesis.xhtml" value="Create new Thesis"/>
+         </div>
         </f:view>
         
       </ui:define></ui:composition>

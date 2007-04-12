@@ -8,9 +8,10 @@
         <h:messages globalOnly="true" styleClass="message"/>
         <h:form id="editGraduated">
           <div class="dialog">
-            <s:validateAll></s:validateAll>
+            <s:validateAll><table></table></s:validateAll>
           </div>
           <div class="actionButtons">
+            <s:link view="/viewGraduated.xhtml" value="View Graduated" rendered="#{graduatedHome.managed}"/>
             <h:commandButton value="Create Graduated" action="#{graduatedHome.persist}" rendered="#{!graduatedHome.managed}"/>
             <h:commandButton value="Update Graduated" action="#{graduatedHome.update}" rendered="#{graduatedHome.managed}"/>
             <h:commandButton value="Delete Graduated" action="#{graduatedHome.delete}" rendered="#{graduatedHome.managed}"/>

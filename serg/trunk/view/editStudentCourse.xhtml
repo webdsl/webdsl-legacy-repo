@@ -8,37 +8,62 @@
         <h:messages globalOnly="true" styleClass="message"/>
         <h:form id="editStudentCourse">
           <div class="dialog">
-            <s:validateAll><div class="prop">
+            <s:validateAll><table><div class="prop">
+      <tr>
+        <td>
          <span class="course">course</span>
+        </td>
+        <td>
          <span class="value">
             <s:decorate>
                <h:inputText id="course" required="true" value="#{studentCourse.course}"/>
             </s:decorate>
          </span>
+        </td>
+       </tr>
       </div><div class="prop">
+      <tr>
+        <td>
          <span class="student">student</span>
+        </td>
+        <td>
          <span class="value">
             <s:decorate>
                <h:inputText id="student" required="true" value="#{studentCourse.student}"/>
             </s:decorate>
          </span>
+        </td>
+       </tr>
       </div><div class="prop">
+      <tr>
+        <td>
          <span class="exam">exam</span>
+        </td>
+        <td>
          <span class="value">
             <s:decorate>
                <h:inputText id="exam" required="true" value="#{studentCourse.exam}"/>
             </s:decorate>
          </span>
+        </td>
+       </tr>
       </div><div class="prop">
+      <tr>
+        <td>
          <span class="grade">grade</span>
+        </td>
+        <td>
          <span class="value">
             <s:decorate>
                <h:inputText id="grade" required="true" value="#{studentCourse.grade}"/>
             </s:decorate>
          </span>
-      </div></s:validateAll>
+        </td>
+       </tr>
+      </div></table></s:validateAll>
           </div>
           <div class="actionButtons">
+            <s:link view="/viewStudentCourse.xhtml" value="View StudentCourse" rendered="#{studentCourseHome.managed}"/>
             <h:commandButton value="Create StudentCourse" action="#{studentCourseHome.persist}" rendered="#{!studentCourseHome.managed}"/>
             <h:commandButton value="Update StudentCourse" action="#{studentCourseHome.update}" rendered="#{studentCourseHome.managed}"/>
             <h:commandButton value="Delete StudentCourse" action="#{studentCourseHome.delete}" rendered="#{studentCourseHome.managed}"/>

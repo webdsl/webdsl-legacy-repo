@@ -5,13 +5,14 @@
            <h:outputText value="View Coordinator"/>
         </h1>
         <h:messages globalOnly="true" styleClass="message"/>
-        <h:form id="editCoordinator">
+        <h:form id="viewCoordinator">
           <div class="dialog">
             <s:validateAll></s:validateAll>
           </div>
           <div class="actionButtons">
              <s:link view="/editCoordinator.xhtml" value="Edit Coordinator"/>
              <s:link action="#{coordinatorHome.remove}" value="Delete Coordinator" rendered="#{coordinatorHome.managed}"/>
+             <s:link view="/CoordinatorList.xhtml" value="All Coordinators"/>
           </div>
         </h:form>
       </ui:define></ui:composition>

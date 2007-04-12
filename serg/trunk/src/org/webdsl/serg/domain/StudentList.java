@@ -21,7 +21,7 @@ import org.jboss.seam.core.FacesMessages;
 import org.jboss.seam.log.Log;
 import org.webdsl.serg.domain.Address;
 
-@Name("studentList") public class StudentList  implements IStudentList
+@Stateful @Scope(SESSION) @Name("studentListBean") public class StudentList  implements IStudentList
 { 
   @Logger private Log log;
 
@@ -37,6 +37,11 @@ import org.webdsl.serg.domain.Address;
   { 
     studentList = em.createQuery("from " + "Student").getResultList();
     log.info("call to findEntries: list = " + studentList);
+  }
+
+  public void refresh()
+  { 
+    findEntries();
   }
 
   public void delete()

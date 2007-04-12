@@ -8,44 +8,75 @@
         <h:messages globalOnly="true" styleClass="message"/>
         <h:form id="editProject">
           <div class="dialog">
-            <s:validateAll><div class="prop">
+            <s:validateAll><table><div class="prop">
+      <tr>
+        <td>
          <span class="unit">unit</span>
+        </td>
+        <td>
          <span class="value">
             <s:decorate>
                <h:inputText id="unit" required="true" value="#{project.unit}"/>
             </s:decorate>
          </span>
+        </td>
+       </tr>
       </div><div class="prop">
+      <tr>
+        <td>
          <span class="topic">topic</span>
+        </td>
+        <td>
          <span class="value">
             <s:decorate>
                <h:inputText id="topic" required="true" value="#{project.topic}"/>
             </s:decorate>
          </span>
+        </td>
+       </tr>
       </div><div class="prop">
+      <tr>
+        <td>
          <span class="description">description</span>
+        </td>
+        <td>
          <span class="value">
             <s:decorate>
                <h:inputText id="description" required="true" value="#{project.description}"/>
             </s:decorate>
          </span>
+        </td>
+       </tr>
       </div><div class="prop">
+      <tr>
+        <td>
          <span class="start">start</span>
+        </td>
+        <td>
          <span class="value">
             <s:decorate>
                <h:inputText id="start" required="true" value="#{project.start}"/>
             </s:decorate>
          </span>
+        </td>
+       </tr>
       </div><div class="prop">
+      <tr>
+        <td>
          <span class="finish">finish</span>
+        </td>
+        <td>
          <span class="value">
             <s:decorate>
                <h:inputText id="finish" required="true" value="#{project.finish}"/>
             </s:decorate>
          </span>
-      </div></s:validateAll>
+        </td>
+       </tr>
+      </div></table></s:validateAll>
           </div>
           <div class="actionButtons">
+            <s:link view="/viewProject.xhtml" value="View Project" rendered="#{projectHome.managed}"/>
             <h:commandButton value="Create Project" action="#{projectHome.persist}" rendered="#{!projectHome.managed}"/>
             <h:commandButton value="Update Project" action="#{projectHome.update}" rendered="#{projectHome.managed}"/>
             <h:commandButton value="Delete Project" action="#{projectHome.delete}" rendered="#{projectHome.managed}"/>

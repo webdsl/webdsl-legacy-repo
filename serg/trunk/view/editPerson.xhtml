@@ -8,23 +8,36 @@
         <h:messages globalOnly="true" styleClass="message"/>
         <h:form id="editPerson">
           <div class="dialog">
-            <s:validateAll><div class="prop">
+            <s:validateAll><table><div class="prop">
+      <tr>
+        <td>
          <span class="fullname">fullname</span>
+        </td>
+        <td>
          <span class="value">
             <s:decorate>
                <h:inputText id="fullname" required="true" value="#{person.fullname}"/>
             </s:decorate>
          </span>
+        </td>
+       </tr>
       </div><div class="prop">
+      <tr>
+        <td>
          <span class="user">user</span>
+        </td>
+        <td>
          <span class="value">
             <s:decorate>
                <h:inputText id="user" required="true" value="#{person.user}"/>
             </s:decorate>
          </span>
-      </div></s:validateAll>
+        </td>
+       </tr>
+      </div></table></s:validateAll>
           </div>
           <div class="actionButtons">
+            <s:link view="/viewPerson.xhtml" value="View Person" rendered="#{personHome.managed}"/>
             <h:commandButton value="Create Person" action="#{personHome.persist}" rendered="#{!personHome.managed}"/>
             <h:commandButton value="Update Person" action="#{personHome.update}" rendered="#{personHome.managed}"/>
             <h:commandButton value="Delete Person" action="#{personHome.delete}" rendered="#{personHome.managed}"/>

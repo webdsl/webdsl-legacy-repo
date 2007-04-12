@@ -5,13 +5,14 @@
            <h:outputText value="View Thesis"/>
         </h1>
         <h:messages globalOnly="true" styleClass="message"/>
-        <h:form id="editThesis">
+        <h:form id="viewThesis">
           <div class="dialog">
             <s:validateAll></s:validateAll>
           </div>
           <div class="actionButtons">
              <s:link view="/editThesis.xhtml" value="Edit Thesis"/>
              <s:link action="#{thesisHome.remove}" value="Delete Thesis" rendered="#{thesisHome.managed}"/>
+             <s:link view="/ThesisList.xhtml" value="All Thesiss"/>
           </div>
         </h:form>
       </ui:define></ui:composition>

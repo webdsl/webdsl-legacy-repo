@@ -8,23 +8,36 @@
         <h:messages globalOnly="true" styleClass="message"/>
         <h:form id="editTopic">
           <div class="dialog">
-            <s:validateAll><div class="prop">
+            <s:validateAll><table><div class="prop">
+      <tr>
+        <td>
          <span class="title">title</span>
+        </td>
+        <td>
          <span class="value">
             <s:decorate>
                <h:inputText id="title" required="true" value="#{topic.title}"/>
             </s:decorate>
          </span>
+        </td>
+       </tr>
       </div><div class="prop">
+      <tr>
+        <td>
          <span class="text">text</span>
+        </td>
+        <td>
          <span class="value">
             <s:decorate>
                <h:inputText id="text" required="true" value="#{topic.text}"/>
             </s:decorate>
          </span>
-      </div></s:validateAll>
+        </td>
+       </tr>
+      </div></table></s:validateAll>
           </div>
           <div class="actionButtons">
+            <s:link view="/viewTopic.xhtml" value="View Topic" rendered="#{topicHome.managed}"/>
             <h:commandButton value="Create Topic" action="#{topicHome.persist}" rendered="#{!topicHome.managed}"/>
             <h:commandButton value="Update Topic" action="#{topicHome.update}" rendered="#{topicHome.managed}"/>
             <h:commandButton value="Delete Topic" action="#{topicHome.delete}" rendered="#{topicHome.managed}"/>

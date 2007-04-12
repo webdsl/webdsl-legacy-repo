@@ -21,8 +21,7 @@ import org.webdsl.serg.domain.*;
     this.id = id;
   }
 
-  /*
-  private Course course;
+  @ManyToOne @JoinColumn(name = "StudentCourseCourse") private Course course;
 
   public Course getCourse()
   { 
@@ -33,9 +32,8 @@ import org.webdsl.serg.domain.*;
   { 
     this.course = course;
   }
-*/
-  
-  private Person student;
+
+  @ManyToOne @JoinColumn(name = "StudentCourseStudent") private Person student;
 
   public Person getStudent()
   { 

@@ -21,7 +21,7 @@ import org.jboss.seam.core.FacesMessages;
 import org.jboss.seam.log.Log;
 import org.webdsl.serg.domain.Address;
 
-@Name("researchAssignmentList") public class ResearchAssignmentList  implements IResearchAssignmentList
+@Stateful @Scope(SESSION) @Name("researchAssignmentListBean") public class ResearchAssignmentList  implements IResearchAssignmentList
 { 
   @Logger private Log log;
 
@@ -37,6 +37,11 @@ import org.webdsl.serg.domain.Address;
   { 
     researchAssignmentList = em.createQuery("from " + "ResearchAssignment").getResultList();
     log.info("call to findEntries: list = " + researchAssignmentList);
+  }
+
+  public void refresh()
+  { 
+    findEntries();
   }
 
   public void delete()
