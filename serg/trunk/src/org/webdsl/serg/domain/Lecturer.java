@@ -25,4 +25,9 @@ import org.webdsl.serg.domain.*;
   { 
     this.courses.add(c_0);
   }
+
+  public String getName()
+  { 
+    return getId().toString();
+  }
 }

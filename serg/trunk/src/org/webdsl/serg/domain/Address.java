@@ -32,4 +32,33 @@ import org.webdsl.serg.domain.*;
   { 
     this.street = street;
   }
+
+  private String number;
+
+  public String getNumber()
+  { 
+    return number;
+  }
+
+  public void setNumber(String number)
+  { 
+    this.number = number;
+  }
+
+  private String city;
+
+  public String getCity()
+  { 
+    return city;
+  }
+
+  public void setCity(String city)
+  { 
+    this.city = city;
+  }
+
+  public String getName()
+  { 
+    return getId().toString();
+  }
 }

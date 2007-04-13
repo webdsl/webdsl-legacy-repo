@@ -56,4 +56,9 @@ import org.webdsl.serg.domain.*;
   { 
     this.comments = comments;
   }
+
+  public String getName()
+  { 
+    return getId().toString();
+  }
 }

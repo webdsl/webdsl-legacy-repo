@@ -25,4 +25,9 @@ import org.webdsl.serg.domain.*;
   { 
     this.students.add(d_0);
   }
+
+  public String getName()
+  { 
+    return getId().toString();
+  }
 }

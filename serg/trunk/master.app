@@ -10,25 +10,29 @@ end
 section people. 
 
   Address {
-    street : String 
+    street : String
+    number : String
+    city   : String
   }
+  // should phone numbers be part of address or separate?
   
   URL {
     url : String
   }
 
   Person {
-    fullname  : String
+    fullname  : String (name)
     addresses : Map<String,Address>
+                // home, work, family, ...
     homepages : Set<URL>
     user      : User
   }
 
   User {
-    username : String //(unique)
-    email    : String //(unique)
+    username : String (name, unique)
+    email    : String (unique)
     password : String
-    person   : Person
+    person   : Person // (secret)
     role     : Set<Role>
   }
 
@@ -98,12 +102,13 @@ section people.
 section courses or educational units.
 
   EduUnit {
-    title   : String
+    title   : String (name)
     code    : String
     credits : Int
   }
 
   Course {
+    // name  := unit.name
     unit     : EduUnit
     year     : Int
     period   : Int
@@ -199,7 +204,7 @@ section tracking students in a master program.
 section wiki.
 
   Topic {
-    title    : String
+    title    : String (name)
     text     : String // formatted text
     subtopic : Map<String, Topic>
     authors  : Set<User>

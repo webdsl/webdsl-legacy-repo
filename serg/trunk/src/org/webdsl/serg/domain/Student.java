@@ -32,4 +32,9 @@ import org.webdsl.serg.domain.*;
   { 
     this.year = year;
   }
+
+  public String getName()
+  { 
+    return getId().toString();
+  }
 }

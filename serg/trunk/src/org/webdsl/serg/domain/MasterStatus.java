@@ -20,4 +20,9 @@ import org.webdsl.serg.domain.*;
   { 
     this.id = id;
   }
+
+  public String getName()
+  { 
+    return getId().toString();
+  }
 }

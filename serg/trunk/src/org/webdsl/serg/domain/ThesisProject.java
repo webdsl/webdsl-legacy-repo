@@ -49,4 +49,9 @@ import org.webdsl.serg.domain.*;
   { 
     this.subversion = subversion;
   }
+
+  public String getName()
+  { 
+    return getId().toString();
+  }
 }

@@ -78,4 +78,9 @@ import org.webdsl.serg.domain.*;
   { 
     this.user = user;
   }
+
+  public String getName()
+  { 
+    return getFullname().toString();
+  }
 }

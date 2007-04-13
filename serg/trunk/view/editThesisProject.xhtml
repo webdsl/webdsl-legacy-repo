@@ -8,33 +8,7 @@
         <h:messages globalOnly="true" styleClass="message"/>
         <h:form id="editThesisProject">
           <div class="dialog">
-            <s:validateAll><table><div class="prop">
-      <tr>
-        <td>
-         <span class="website">website</span>
-        </td>
-        <td>
-         <span class="value">
-            <s:decorate>
-               <h:inputText id="website" required="true" value="#{thesisProject.website}"/>
-            </s:decorate>
-         </span>
-        </td>
-       </tr>
-      </div><div class="prop">
-      <tr>
-        <td>
-         <span class="subversion">subversion</span>
-        </td>
-        <td>
-         <span class="value">
-            <s:decorate>
-               <h:inputText id="subversion" required="true" value="#{thesisProject.subversion}"/>
-            </s:decorate>
-         </span>
-        </td>
-       </tr>
-      </div></table></s:validateAll>
+            <s:validateAll><table></table></s:validateAll>
           </div>
           <div class="actionButtons">
             <s:link view="/viewThesisProject.xhtml" value="View ThesisProject" rendered="#{thesisProjectHome.managed}"/>

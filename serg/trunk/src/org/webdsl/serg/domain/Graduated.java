@@ -8,4 +8,9 @@ import org.webdsl.serg.domain.*;
 { 
   public Graduated () 
   { }
+
+  public String getName()
+  { 
+    return getId().toString();
+  }
 }

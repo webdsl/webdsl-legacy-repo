@@ -8,4 +8,9 @@ import org.webdsl.serg.domain.*;
 { 
   public Chair () 
   { }
+
+  public String getName()
+  { 
+    return getId().toString();
+  }
 }

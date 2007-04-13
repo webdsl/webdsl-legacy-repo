@@ -56,4 +56,9 @@ import org.webdsl.serg.domain.*;
   { 
     this.credits = credits;
   }
+
+  public String getName()
+  { 
+    return getTitle().toString();
+  }
 }

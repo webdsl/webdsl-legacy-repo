@@ -85,4 +85,9 @@ import org.webdsl.serg.domain.*;
   { 
     this.role.add(b_0);
   }
+
+  public String getName()
+  { 
+    return getUsername().toString();
+  }
 }

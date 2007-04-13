@@ -8,4 +8,9 @@ import org.webdsl.serg.domain.*;
 { 
   public Started () 
   { }
+
+  public String getName()
+  { 
+    return getId().toString();
+  }
 }

@@ -7,17 +7,7 @@
         <h:messages globalOnly="true" styleClass="message"/>
         <h:form id="viewThesisProject">
           <div class="dialog">
-            <s:validateAll><div class="prop">
-        <tr class="prop">
-           <td class="name">website:</td>
-           <td class="value">#{thesisProject.website}</td>
-        </tr>
-      </div><div class="prop">
-        <tr class="prop">
-           <td class="name">subversion:</td>
-           <td class="value">#{thesisProject.subversion}</td>
-        </tr>
-      </div></s:validateAll>
+            <s:validateAll></s:validateAll>
           </div>
           <div class="actionButtons">
              <s:link view="/editThesisProject.xhtml" value="Edit ThesisProject"/>

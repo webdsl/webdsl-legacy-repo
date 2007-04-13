@@ -78,4 +78,9 @@ import org.webdsl.serg.domain.*;
   { 
     this.authors.add(i_0);
   }
+
+  public String getName()
+  { 
+    return getTitle().toString();
+  }
 }
