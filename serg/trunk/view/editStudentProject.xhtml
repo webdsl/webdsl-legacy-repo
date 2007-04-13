@@ -1,0 +1,72 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="layout/template.xhtml"><ui:define name="body">
+        <h1>
+           <h:outputText rendered="#{!studentProjectHome.managed}" value="Create StudentProject"/>
+           <h:outputText rendered="#{studentProjectHome.managed}" value="Edit StudentProject"/>
+        </h1>
+        <h:messages globalOnly="true" styleClass="message"/>
+        <h:form id="editStudentProject">
+          <div class="dialog">
+            <s:validateAll><table><div class="prop">
+      <tr>
+        <td>
+         <span class="topic">topic</span>
+        </td>
+        <td>
+         <span class="value">
+            <s:decorate>
+               <h:inputText id="topic" required="true" value="#{studentProject.topic}"/>
+            </s:decorate>
+         </span>
+        </td>
+       </tr>
+      </div><div class="prop">
+      <tr>
+        <td>
+         <span class="description">description</span>
+        </td>
+        <td>
+         <span class="value">
+            <s:decorate>
+               <h:inputText id="description" required="true" value="#{studentProject.description}"/>
+            </s:decorate>
+         </span>
+        </td>
+       </tr>
+      </div><div class="prop">
+      <tr>
+        <td>
+         <span class="start">start</span>
+        </td>
+        <td>
+         <span class="value">
+            <s:decorate>
+               <h:inputText id="start" required="true" value="#{studentProject.start}"/>
+            </s:decorate>
+         </span>
+        </td>
+       </tr>
+      </div><div class="prop">
+      <tr>
+        <td>
+         <span class="finish">finish</span>
+        </td>
+        <td>
+         <span class="value">
+            <s:decorate>
+               <h:inputText id="finish" required="true" value="#{studentProject.finish}"/>
+            </s:decorate>
+         </span>
+        </td>
+       </tr>
+      </div></table></s:validateAll>
+          </div>
+          <div class="actionButtons">
+            <s:link view="/viewStudentProject.xhtml" value="View StudentProject" rendered="#{studentProjectHome.managed}"/>
+            <h:commandButton value="Create StudentProject" action="#{studentProjectHome.persist}" rendered="#{!studentProjectHome.managed}"/>
+            <h:commandButton value="Update StudentProject" action="#{studentProjectHome.update}" rendered="#{studentProjectHome.managed}"/>
+            <h:commandButton value="Delete StudentProject" action="#{studentProjectHome.delete}" rendered="#{studentProjectHome.managed}"/>
+          </div>
+        </h:form>
+      </ui:define></ui:composition>

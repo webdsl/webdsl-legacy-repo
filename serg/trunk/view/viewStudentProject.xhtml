@@ -1,0 +1,38 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="layout/template.xhtml"><ui:define name="body">
+        <h1>
+           <h:outputText value="View StudentProject"/>
+        </h1>
+        <h:messages globalOnly="true" styleClass="message"/>
+        <h:form id="viewStudentProject">
+          <div class="dialog">
+            <s:validateAll><div class="prop">
+        <tr class="prop">
+           <td class="name">topic:</td>
+           <td class="value">#{studentProject.topic}</td>
+        </tr>
+      </div><div class="prop">
+        <tr class="prop">
+           <td class="name">description:</td>
+           <td class="value">#{studentProject.description}</td>
+        </tr>
+      </div><div class="prop">
+        <tr class="prop">
+           <td class="name">start:</td>
+           <td class="value">#{studentProject.start}</td>
+        </tr>
+      </div><div class="prop">
+        <tr class="prop">
+           <td class="name">finish:</td>
+           <td class="value">#{studentProject.finish}</td>
+        </tr>
+      </div></s:validateAll>
+          </div>
+          <div class="actionButtons">
+             <s:link view="/editStudentProject.xhtml" value="Edit StudentProject"/>
+             <s:link action="#{studentProjectHome.remove}" value="Delete StudentProject" rendered="#{studentProjectHome.managed}"/>
+             <s:link view="/StudentProjectList.xhtml" value="All StudentProjects"/>
+          </div>
+        </h:form>
+      </ui:define></ui:composition>

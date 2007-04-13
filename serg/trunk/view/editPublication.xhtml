@@ -1,0 +1,59 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="layout/template.xhtml"><ui:define name="body">
+        <h1>
+           <h:outputText rendered="#{!publicationHome.managed}" value="Create Publication"/>
+           <h:outputText rendered="#{publicationHome.managed}" value="Edit Publication"/>
+        </h1>
+        <h:messages globalOnly="true" styleClass="message"/>
+        <h:form id="editPublication">
+          <div class="dialog">
+            <s:validateAll><table><div class="prop">
+      <tr>
+        <td>
+         <span class="title">title</span>
+        </td>
+        <td>
+         <span class="value">
+            <s:decorate>
+               <h:inputText id="title" required="true" value="#{publication.title}"/>
+            </s:decorate>
+         </span>
+        </td>
+       </tr>
+      </div><div class="prop">
+      <tr>
+        <td>
+         <span class="year">year</span>
+        </td>
+        <td>
+         <span class="value">
+            <s:decorate>
+               <h:inputText id="year" required="true" value="#{publication.year}"/>
+            </s:decorate>
+         </span>
+        </td>
+       </tr>
+      </div><div class="prop">
+      <tr>
+        <td>
+         <span class="pubabstract">pubabstract</span>
+        </td>
+        <td>
+         <span class="value">
+            <s:decorate>
+               <h:inputText id="pubabstract" required="true" value="#{publication.pubabstract}"/>
+            </s:decorate>
+         </span>
+        </td>
+       </tr>
+      </div></table></s:validateAll>
+          </div>
+          <div class="actionButtons">
+            <s:link view="/viewPublication.xhtml" value="View Publication" rendered="#{publicationHome.managed}"/>
+            <h:commandButton value="Create Publication" action="#{publicationHome.persist}" rendered="#{!publicationHome.managed}"/>
+            <h:commandButton value="Update Publication" action="#{publicationHome.update}" rendered="#{publicationHome.managed}"/>
+            <h:commandButton value="Delete Publication" action="#{publicationHome.delete}" rendered="#{publicationHome.managed}"/>
+          </div>
+        </h:form>
+      </ui:define></ui:composition>

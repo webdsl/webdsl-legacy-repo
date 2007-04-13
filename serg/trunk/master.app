@@ -122,7 +122,7 @@ section courses or educational units.
     grade   : Int   // (0 .. 10)
   }
 
-  Project {
+  StudentProject {
     unit        : EduUnit
     topic       : String
     description : Text
@@ -132,10 +132,10 @@ section courses or educational units.
     finish      : Date
   }
 
-  ResearchAssignment : Project {
+  ResearchAssignment : StudentProject {
   }
 
-  ThesisProject : Project {
+  ThesisProject : StudentProject {
     milestones : List<Document>
     website    : URL
     subversion : URL
@@ -208,5 +208,35 @@ section wiki.
     text     : String // formatted text
     subtopic : Map<String, Topic>
     authors  : Set<User>
+  }
+  
+section publications.
+
+  TechnicalReport {
+    title      : String (name)
+    authors    : List<Person>
+    year       : Int // use Year defined type
+    number     : Int
+ // code       : String := "TUD-SERG-" + year + "-" + number
+    document   : Text // should be Document or PDF or similar
+    trabstract : Text // note: abstract is a reserved word in java!
+    project    : Set<ResearchProject>
+    preprintof : Publication
+  }
+  
+  Publication {
+    title       : String (name)
+    authors     : List<Person>
+    year        : Int // use Year defined type
+    pubabstract : Text
+    // ehm encode variability of bibtex here
+  }
+  
+section research.
+
+  ResearchProject {
+    name         : String
+    members      : Map<String, Person>
+    publications : Set<TechnicalReport>
   }
 

@@ -1,0 +1,85 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="layout/template.xhtml"><ui:define name="body">
+        <h1>
+           <h:outputText rendered="#{!technicalReportHome.managed}" value="Create TechnicalReport"/>
+           <h:outputText rendered="#{technicalReportHome.managed}" value="Edit TechnicalReport"/>
+        </h1>
+        <h:messages globalOnly="true" styleClass="message"/>
+        <h:form id="editTechnicalReport">
+          <div class="dialog">
+            <s:validateAll><table><div class="prop">
+      <tr>
+        <td>
+         <span class="title">title</span>
+        </td>
+        <td>
+         <span class="value">
+            <s:decorate>
+               <h:inputText id="title" required="true" value="#{technicalReport.title}"/>
+            </s:decorate>
+         </span>
+        </td>
+       </tr>
+      </div><div class="prop">
+      <tr>
+        <td>
+         <span class="year">year</span>
+        </td>
+        <td>
+         <span class="value">
+            <s:decorate>
+               <h:inputText id="year" required="true" value="#{technicalReport.year}"/>
+            </s:decorate>
+         </span>
+        </td>
+       </tr>
+      </div><div class="prop">
+      <tr>
+        <td>
+         <span class="number">number</span>
+        </td>
+        <td>
+         <span class="value">
+            <s:decorate>
+               <h:inputText id="number" required="true" value="#{technicalReport.number}"/>
+            </s:decorate>
+         </span>
+        </td>
+       </tr>
+      </div><div class="prop">
+      <tr>
+        <td>
+         <span class="document">document</span>
+        </td>
+        <td>
+         <span class="value">
+            <s:decorate>
+               <h:inputText id="document" required="true" value="#{technicalReport.document}"/>
+            </s:decorate>
+         </span>
+        </td>
+       </tr>
+      </div><div class="prop">
+      <tr>
+        <td>
+         <span class="trabstract">trabstract</span>
+        </td>
+        <td>
+         <span class="value">
+            <s:decorate>
+               <h:inputText id="trabstract" required="true" value="#{technicalReport.trabstract}"/>
+            </s:decorate>
+         </span>
+        </td>
+       </tr>
+      </div></table></s:validateAll>
+          </div>
+          <div class="actionButtons">
+            <s:link view="/viewTechnicalReport.xhtml" value="View TechnicalReport" rendered="#{technicalReportHome.managed}"/>
+            <h:commandButton value="Create TechnicalReport" action="#{technicalReportHome.persist}" rendered="#{!technicalReportHome.managed}"/>
+            <h:commandButton value="Update TechnicalReport" action="#{technicalReportHome.update}" rendered="#{technicalReportHome.managed}"/>
+            <h:commandButton value="Delete TechnicalReport" action="#{technicalReportHome.delete}" rendered="#{technicalReportHome.managed}"/>
+          </div>
+        </h:form>
+      </ui:define></ui:composition>
