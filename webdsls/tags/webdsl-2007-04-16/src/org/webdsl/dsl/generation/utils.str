@@ -1,0 +1,90 @@
+module org/webdsl/dsl/generation/utils
+
+imports 
+  libstrategolib 
+  Java-15 
+  libjava-front
+  libstratego-gpp
+
+imports
+  org/webdsl/dsl/generation/xml-doc2abox
+  
+strategies
+
+  get-namefield =
+    oncetd(\ Property(name, type, annos) -> name where <fetch(?SimpleAnno("name"))> annos \; ?name ); !name
+    <+ !"id"
+
+strategies
+
+  /* Create a nested directory structure. Works on a
+     list containing the directories to be created,
+     returns the path to the last (innermost) directory
+     Current working directory remains unchanged.
+
+     @type List(String) -> String
+  */
+  
+  create-dirs = 
+    where(root := <getcwd>) 
+	; map((file-exists <+ mkdir(|"w")) ; chdir) 
+	; getcwd // return path to innermost created dir.
+    ; where (<chdir> root) // restore old cwd'
+    
+  capitalize-string =
+    explode-string
+    ; [to-upper | id]
+    ; implode-string
+    
+  decapitalize-string =
+    explode-string
+    ; [to-lower | id]
+    ; implode-string
+        
+signature
+  constructors
+    TextFile : String * CompilationUnit -> File
+
+strategies
+
+  text-file-to-file =
+    ?TextFile(name, text) 
+    ; where(
+	    file := <fopen> (name, "w")
+	    ; <fputs> (text, file)
+	  )
+    
+signature
+  constructors
+    JavaFile : List(String) * String * String * CompilationUnit -> File
+
+strategies
+
+  java-file-to-file = 
+    java-file-to-text-file
+    ; text-file-to-file
+
+  java-file-to-text-file :
+    JavaFile(prefix, pkg, name, cu) -> TextFile(filename, text)
+    where path := <conc; create-dirs> (prefix, <string-tokenize(|['.'])> pkg)
+	    ; filename := <concat-strings> [path, "/", name, ".java"]
+	    ; text := <pp-java5-to-string> cu
+	  
+signature
+  constructors
+    XmlFile : String * String * Document -> File
+
+strategies
+
+  xml-file-to-file =
+    xml-file-to-text-file
+    ; try(text-file-to-file)
+    
+  xml-file-to-text-file : 
+    XmlFile(pkg, name, doc) -> TextFile(filename, text)
+    where path := <string-tokenize(|['.']); create-dirs> pkg
+	    ; filename := <concat-strings> [path, "/", name]
+	    ; text := <xml-doc2abox; box2text-string(|80) <+ write-to-string> doc
+	    
+	    
+	    
