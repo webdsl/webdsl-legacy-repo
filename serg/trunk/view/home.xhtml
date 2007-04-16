@@ -5,6 +5,8 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a4j="https://ajax4jsf.dev.java.net/ajax"
+                xmlns:rich="http://richfaces.ajax4jsf.org/rich"
                 template="layout/template.xhtml">
 
 <ui:define name="body">
@@ -14,6 +16,23 @@
 <a href="http://www.flickr.com/photos/eelcovisser/367433201/" title="Photo Sharing">
 <img src="http://farm1.static.flickr.com/185/367433201_9ee5ad0986_m.jpg" width="160" height="240" alt="buildfarm wires" />
 </a>
+     <h:selectOneMenu value="Research">
+       <f:selectItem itemValue="Publications"/>
+       <f:selectItem itemValue="Projects"/>
+       <f:selectItem itemValue="Techical Reports"/>
+     </h:selectOneMenu>
+     
+     <rich:tabPanel width="40%" headerAlignment="right">
 
+        <rich:tab label="Publications">
+            publications go here
+        </rich:tab>
+
+        <rich:tab label="Projects">
+           projects go here
+        </rich:tab>
+
+      </rich:tabPanel> 
+     
 </ui:define> 
 </ui:composition>

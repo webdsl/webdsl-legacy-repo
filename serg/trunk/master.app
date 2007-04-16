@@ -24,7 +24,8 @@ section people.
     fullname  : String (name)
     addresses : Map<String,Address>
                 // home, work, family, ...
-    homepages : Set<URL>
+    homepages : Set<String> // should be URLs
+    photo     : Image
     user      : User
   }
 
@@ -33,7 +34,7 @@ section people.
     email    : String (unique)
     password : String
     person   : Person // (secret)
-    role     : Set<Role>
+    roles     : Set<Role>
   }
 
   // probably attach additional information to (some) roles
@@ -201,7 +202,7 @@ section tracking students in a master program.
       }
   }
   
-section wiki.
+section online documents . // wiki pages
 
   Topic {
     title    : String (name)
@@ -209,6 +210,10 @@ section wiki.
     subtopic : Map<String, Topic>
     authors  : Set<User>
   }
+  
+section images .
+
+  // @todo model images stored in application and external images (flickr, url)
   
 section publications.
 
@@ -240,3 +245,29 @@ section research.
     publications : Set<TechnicalReport>
   }
 
+section init database .
+
+  action initDB {
+  
+    Mekelweg4 := 
+      Address {
+        street := "Mekelweg"
+        number := "4"
+        city   := "Delft"
+      }
+  
+    EelcoVisser := 
+      Person {
+        fullname := "Eelco Visser"
+        addresses := ["work" -> Mekelweg4]
+        homepages := ["http://www.eelcovisser.net"]
+        photo := "http://static.flickr.com/56/141569082_372ea07ea9_m.jpg"
+        user := User {
+                  username := "Eelco Visser"
+                  email := "visser@acm.org"
+                  password := "foo"
+                  person := EelcoVisser
+                }
+      }
+
+  }
