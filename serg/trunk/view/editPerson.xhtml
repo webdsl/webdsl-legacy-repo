@@ -9,10 +9,12 @@
         <h:form id="editPerson">
           <div class="dialog">
             <s:validateAll><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3"><h:outputText value="fullname"/>
-      <s:decorate><h:inputText for="fullname" id="fullname" required="true" value="#{person.fullname}"/></s:decorate><h:outputText value="address"/><h:panelGroup/><h:outputText value="street"/>
-      <s:decorate><h:inputText for="street" id="street" required="true" value="#{person.address.street}"/></s:decorate><h:outputText value="number"/>
-      <s:decorate><h:inputText for="number" id="number" required="true" value="#{person.address.number}"/></s:decorate><h:outputText value="city"/>
-      <s:decorate><h:inputText for="city" id="city" required="true" value="#{person.address.city}"/></s:decorate></h:panelGrid></s:validateAll>
+      <s:decorate><h:inputText id="person_fullname" required="true" value="#{person.fullname}"/></s:decorate><h:outputText value="address"/><h:panelGroup/><h:outputText value="street"/>
+      <s:decorate><h:inputText id="person_address_street" required="true" value="#{person.address.street}"/></s:decorate><h:outputText value="number"/>
+      <s:decorate><h:inputText id="person_address_number" required="true" value="#{person.address.number}"/></s:decorate><h:outputText value="city"/>
+      <s:decorate><h:inputText id="person_address_city" required="true" value="#{person.address.city}"/></s:decorate><h:outputText value="homepage"/><h:panelGroup/><h:outputText value="url"/>
+      <s:decorate><h:inputText id="person_homepage_url" required="true" value="#{person.homepage.url}"/></s:decorate><h:outputText value="photo"/><h:panelGroup/><h:outputText value="url"/>
+      <s:decorate><h:inputText id="person_photo_url" required="true" value="#{person.photo.url}"/></s:decorate></h:panelGrid></s:validateAll>
           </div>
           <div class="actionButtons">
             <s:link view="/viewPerson.xhtml" value="View Person" rendered="#{personHome.managed}"/>

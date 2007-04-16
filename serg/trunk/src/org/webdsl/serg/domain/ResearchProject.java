@@ -62,8 +62,8 @@ import org.webdsl.serg.domain.*;
     this.publications = publications;
   }
 
-  public void addPublications(TechnicalReport u_2)
+  public void addPublications(TechnicalReport i_0)
   { 
-    this.publications.add(u_2);
+    this.publications.add(i_0);
   }
 }

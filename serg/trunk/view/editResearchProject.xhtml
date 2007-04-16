@@ -9,7 +9,7 @@
         <h:form id="editResearchProject">
           <div class="dialog">
             <s:validateAll><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3"><h:outputText value="name"/>
-      <s:decorate><h:inputText for="name" id="name" required="true" value="#{researchProject.name}"/></s:decorate></h:panelGrid></s:validateAll>
+      <s:decorate><h:inputText id="researchProject_name" required="true" value="#{researchProject.name}"/></s:decorate></h:panelGrid></s:validateAll>
           </div>
           <div class="actionButtons">
             <s:link view="/viewResearchProject.xhtml" value="View ResearchProject" rendered="#{researchProjectHome.managed}"/>

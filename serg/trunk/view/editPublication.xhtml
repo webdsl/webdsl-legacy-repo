@@ -9,9 +9,9 @@
         <h:form id="editPublication">
           <div class="dialog">
             <s:validateAll><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3"><h:outputText value="title"/>
-      <s:decorate><h:inputText for="title" id="title" required="true" value="#{publication.title}"/></s:decorate><h:outputText value="pubabstract"/>
-      <s:decorate><h:inputTextArea for="pubabstract" id="pubabstract" required="true" value="#{publication.pubabstract}"/></s:decorate><h:outputText value="pdf"/><h:panelGroup/><h:outputText value="url"/>
-      <s:decorate><h:inputText for="url" id="url" required="true" value="#{publication.pdf.url}"/></s:decorate></h:panelGrid></s:validateAll>
+      <s:decorate><h:inputText id="publication_title" required="true" value="#{publication.title}"/></s:decorate><h:outputText value="pubabstract"/>
+      <s:decorate><h:inputTextArea id="publication_pubabstract" required="true" value="#{publication.pubabstract}"/></s:decorate><h:outputText value="pdf"/><h:panelGroup/><h:outputText value="url"/>
+      <s:decorate><h:inputText id="publication_pdf_url" required="true" value="#{publication.pdf.url}"/></s:decorate></h:panelGrid></s:validateAll>
           </div>
           <div class="actionButtons">
             <s:link view="/viewPublication.xhtml" value="View Publication" rendered="#{publicationHome.managed}"/>

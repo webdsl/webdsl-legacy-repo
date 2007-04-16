@@ -9,8 +9,8 @@
         <h:form id="editDocument">
           <div class="dialog">
             <s:validateAll><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3"><h:outputText value="doc"/>
-      <s:decorate><h:inputTextArea for="doc" id="doc" required="true" value="#{document.doc}"/></s:decorate><h:outputText value="comments"/>
-      <s:decorate><h:inputTextArea for="comments" id="comments" required="true" value="#{document.comments}"/></s:decorate></h:panelGrid></s:validateAll>
+      <s:decorate><h:inputTextArea id="document_doc" required="true" value="#{document.doc}"/></s:decorate><h:outputText value="comments"/>
+      <s:decorate><h:inputTextArea id="document_comments" required="true" value="#{document.comments}"/></s:decorate></h:panelGrid></s:validateAll>
           </div>
           <div class="actionButtons">
             <s:link view="/viewDocument.xhtml" value="View Document" rendered="#{documentHome.managed}"/>

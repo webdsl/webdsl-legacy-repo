@@ -9,8 +9,8 @@
         <h:form id="editEduUnit">
           <div class="dialog">
             <s:validateAll><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3"><h:outputText value="title"/>
-      <s:decorate><h:inputText for="title" id="title" required="true" value="#{eduUnit.title}"/></s:decorate><h:outputText value="code"/>
-      <s:decorate><h:inputText for="code" id="code" required="true" value="#{eduUnit.code}"/></s:decorate></h:panelGrid></s:validateAll>
+      <s:decorate><h:inputText id="eduUnit_title" required="true" value="#{eduUnit.title}"/></s:decorate><h:outputText value="code"/>
+      <s:decorate><h:inputText id="eduUnit_code" required="true" value="#{eduUnit.code}"/></s:decorate></h:panelGrid></s:validateAll>
           </div>
           <div class="actionButtons">
             <s:link view="/viewEduUnit.xhtml" value="View EduUnit" rendered="#{eduUnitHome.managed}"/>

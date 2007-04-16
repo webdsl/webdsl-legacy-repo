@@ -23,10 +23,13 @@ section people.
   Person {
     fullname  :: String (name)
     address   <> Address
+    homepage  <> URL
+    
     addresses <> Map<String,Address>
                  // home, work, family, ...
     homepages <> Set<String> // should be URLs
     photo     <> Image
+    
     user      -> User
   }
 
@@ -215,6 +218,10 @@ section online documents . // wiki pages
 section images .
 
   // @todo model images stored in application and external images (flickr, url)
+  
+  Image {
+    url :: String
+  }
   
 section publications.
 

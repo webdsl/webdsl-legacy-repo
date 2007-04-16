@@ -9,7 +9,7 @@
         <h:form id="editTechnicalReport">
           <div class="dialog">
             <s:validateAll><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3"><h:outputText value="document"/>
-      <s:decorate><h:inputTextArea for="document" id="document" required="true" value="#{technicalReport.document}"/></s:decorate></h:panelGrid></s:validateAll>
+      <s:decorate><h:inputTextArea id="technicalReport_document" required="true" value="#{technicalReport.document}"/></s:decorate></h:panelGrid></s:validateAll>
           </div>
           <div class="actionButtons">
             <s:link view="/viewTechnicalReport.xhtml" value="View TechnicalReport" rendered="#{technicalReportHome.managed}"/>

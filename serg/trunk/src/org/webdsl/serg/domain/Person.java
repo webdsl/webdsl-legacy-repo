@@ -4,95 +4,123 @@ import java.util.*;
 import javax.persistence.*;
 import org.webdsl.serg.domain.*;
 
-@Entity public class Person  
-{ 
-  public Person () 
-  { }
+@Entity
+public class Person {
+	public Person() {
+	}
 
-  @Id @GeneratedValue private Long id;
+	@Id
+	@GeneratedValue
+	private Long id;
 
-  public Long getId()
-  { 
-    return id;
-  }
+	public Long getId() {
+		return id;
+	}
 
-  private void setId(Long id)
-  { 
-    this.id = id;
-  }
+	private void setId(Long id) {
+		this.id = id;
+	}
 
-  private String fullname;
+	private String fullname;
 
-  public String getFullname()
-  { 
-    return fullname;
-  }
+	public String getFullname() {
+		return fullname;
+	}
 
-  public void setFullname(String fullname)
-  { 
-    this.fullname = fullname;
-  }
+	public void setFullname(String fullname) {
+		this.fullname = fullname;
+	}
 
-  @ManyToOne @JoinColumn(name = "PersonAddress") @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.ALL}) private Address address = new Address();
+	@ManyToOne
+	@JoinColumn(name = "PersonAddress")
+	@org.hibernate.annotations.Cascade( { org.hibernate.annotations.CascadeType.ALL })
+	private Address address = new Address();
 
-  public Address getAddress()
-  { 
-    return address;
-  }
+	public Address getAddress() {
+		return address;
+	}
 
-  public void setAddress(Address address)
-  { 
-    this.address = address;
-  }
+	public void setAddress(Address address) {
+		this.address = address;
+	}
 
-  @ManyToMany() @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private Map<String, Address> addresses = new HashMap<String, Address>();
+	@ManyToOne
+	@JoinColumn(name = "PersonHomepage")
+	@org.hibernate.annotations.Cascade( { org.hibernate.annotations.CascadeType.ALL })
+	private URL homepage = new URL();
 
-  public Map<String, Address> getAddresses()
-  { 
-    return addresses;
-  }
+	public URL getHomepage() {
+		return homepage;
+	}
 
-  public void setAddresses(Map<String, Address> addresses)
-  { 
-    this.addresses = addresses;
-  }
+	public void setHomepage(URL homepage) {
+		this.homepage = homepage;
+	}
 
-  public void putAddresses(String key, Address value)
-  { 
-    this.addresses.put(key, value);
-  }
+	@ManyToMany()
+	@org.hibernate.annotations.Cascade( {
+			org.hibernate.annotations.CascadeType.SAVE_UPDATE,
+			org.hibernate.annotations.CascadeType.MERGE })
+	private Map<String, Address> addresses = new HashMap<String, Address>();
 
-  @org.hibernate.annotations.CollectionOfElements(targetElement = String.class) @JoinTable(name = "Person_Homepages") @Column(name = "homepages", nullable = false) @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.ALL}) private Set<String> homepages = new HashSet<String>();
+	public Map<String, Address> getAddresses() {
+		return addresses;
+	}
 
-  public Set<String> getHomepages()
-  { 
-    return homepages;
-  }
+	public void setAddresses(Map<String, Address> addresses) {
+		this.addresses = addresses;
+	}
 
-  public void setHomepages(Set<String> homepages)
-  { 
-    this.homepages = homepages;
-  }
+	public void putAddresses(String key, Address value) {
+		this.addresses.put(key, value);
+	}
 
-  public void addHomepages(String a_0)
-  { 
-    this.homepages.add(a_0);
-  }
+	@org.hibernate.annotations.CollectionOfElements(targetElement = String.class)
+	@JoinTable(name = "Person_Homepages")
+	@Column(name = "homepages", nullable = false)
+	@org.hibernate.annotations.Cascade( { org.hibernate.annotations.CascadeType.ALL })
+	private Set<String> homepages = new HashSet<String>();
 
-  @ManyToOne @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private User user;
+	public Set<String> getHomepages() {
+		return homepages;
+	}
 
-  public User getUser()
-  { 
-    return user;
-  }
+	public void setHomepages(Set<String> homepages) {
+		this.homepages = homepages;
+	}
 
-  public void setUser(User user)
-  { 
-    this.user = user;
-  }
+	public void addHomepages(String a_0) {
+		this.homepages.add(a_0);
+	}
 
-  public String getName()
-  { 
-    return getFullname().toString();
-  }
+	@ManyToOne
+	@JoinColumn(name = "PersonPhoto")
+	@org.hibernate.annotations.Cascade( { org.hibernate.annotations.CascadeType.ALL })
+	private Image photo = new Image();
+
+	public Image getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(Image photo) {
+		this.photo = photo;
+	}
+
+	@ManyToOne
+	@org.hibernate.annotations.Cascade( {
+			org.hibernate.annotations.CascadeType.SAVE_UPDATE,
+			org.hibernate.annotations.CascadeType.MERGE })
+	private User user;
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public String getName() {
+		return getFullname().toString();
+	}
 }

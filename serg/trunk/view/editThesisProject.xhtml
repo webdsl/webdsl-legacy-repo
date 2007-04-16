@@ -9,8 +9,8 @@
         <h:form id="editThesisProject">
           <div class="dialog">
             <s:validateAll><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3"><h:outputText value="website"/><h:panelGroup/><h:outputText value="url"/>
-      <s:decorate><h:inputText for="url" id="url" required="true" value="#{thesisProject.website.url}"/></s:decorate><h:outputText value="subversion"/><h:panelGroup/><h:outputText value="url"/>
-      <s:decorate><h:inputText for="url" id="url" required="true" value="#{thesisProject.subversion.url}"/></s:decorate></h:panelGrid></s:validateAll>
+      <s:decorate><h:inputText id="thesisProject_website_url" required="true" value="#{thesisProject.website.url}"/></s:decorate><h:outputText value="subversion"/><h:panelGroup/><h:outputText value="url"/>
+      <s:decorate><h:inputText id="thesisProject_subversion_url" required="true" value="#{thesisProject.subversion.url}"/></s:decorate></h:panelGrid></s:validateAll>
           </div>
           <div class="actionButtons">
             <s:link view="/viewThesisProject.xhtml" value="View ThesisProject" rendered="#{thesisProjectHome.managed}"/>

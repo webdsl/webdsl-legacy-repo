@@ -9,8 +9,8 @@
         <h:form id="editTopic">
           <div class="dialog">
             <s:validateAll><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3"><h:outputText value="title"/>
-      <s:decorate><h:inputText for="title" id="title" required="true" value="#{topic.title}"/></s:decorate><h:outputText value="text"/>
-      <s:decorate><h:inputTextArea for="text" id="text" required="true" value="#{topic.text}"/></s:decorate></h:panelGrid></s:validateAll>
+      <s:decorate><h:inputText id="topic_title" required="true" value="#{topic.title}"/></s:decorate><h:outputText value="text"/>
+      <s:decorate><h:inputTextArea id="topic_text" required="true" value="#{topic.text}"/></s:decorate></h:panelGrid></s:validateAll>
           </div>
           <div class="actionButtons">
             <s:link view="/viewTopic.xhtml" value="View Topic" rendered="#{topicHome.managed}"/>

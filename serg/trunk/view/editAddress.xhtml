@@ -9,9 +9,9 @@
         <h:form id="editAddress">
           <div class="dialog">
             <s:validateAll><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3"><h:outputText value="street"/>
-      <s:decorate><h:inputText for="street" id="street" required="true" value="#{address.street}"/></s:decorate><h:outputText value="number"/>
-      <s:decorate><h:inputText for="number" id="number" required="true" value="#{address.number}"/></s:decorate><h:outputText value="city"/>
-      <s:decorate><h:inputText for="city" id="city" required="true" value="#{address.city}"/></s:decorate></h:panelGrid></s:validateAll>
+      <s:decorate><h:inputText id="address_street" required="true" value="#{address.street}"/></s:decorate><h:outputText value="number"/>
+      <s:decorate><h:inputText id="address_number" required="true" value="#{address.number}"/></s:decorate><h:outputText value="city"/>
+      <s:decorate><h:inputText id="address_city" required="true" value="#{address.city}"/></s:decorate></h:panelGrid></s:validateAll>
           </div>
           <div class="actionButtons">
             <s:link view="/viewAddress.xhtml" value="View Address" rendered="#{addressHome.managed}"/>

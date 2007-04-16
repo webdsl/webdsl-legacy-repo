@@ -9,7 +9,7 @@
         <h:form id="editURL">
           <div class="dialog">
             <s:validateAll><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3"><h:outputText value="url"/>
-      <s:decorate><h:inputText for="url" id="url" required="true" value="#{uRL.url}"/></s:decorate></h:panelGrid></s:validateAll>
+      <s:decorate><h:inputText id="uRL_url" required="true" value="#{uRL.url}"/></s:decorate></h:panelGrid></s:validateAll>
           </div>
           <div class="actionButtons">
             <s:link view="/viewURL.xhtml" value="View URL" rendered="#{uRLHome.managed}"/>
