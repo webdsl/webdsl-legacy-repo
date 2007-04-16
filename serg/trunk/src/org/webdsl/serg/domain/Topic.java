@@ -74,9 +74,9 @@ import org.webdsl.serg.domain.*;
     this.authors = authors;
   }
 
-  public void addAuthors(User i_0)
+  public void addAuthors(User f_0)
   { 
-    this.authors.add(i_0);
+    this.authors.add(f_0);
   }
 
   public String getName()

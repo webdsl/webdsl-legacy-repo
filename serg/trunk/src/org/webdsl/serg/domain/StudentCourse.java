@@ -21,7 +21,7 @@ import org.webdsl.serg.domain.*;
     this.id = id;
   }
 
-  @ManyToOne @JoinColumn(name = "StudentCourseCourse") private Course course;
+  @ManyToOne @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private Course course;
 
   public Course getCourse()
   { 
@@ -33,7 +33,7 @@ import org.webdsl.serg.domain.*;
     this.course = course;
   }
 
-  @ManyToOne @JoinColumn(name = "StudentCourseStudent") private Person student;
+  @ManyToOne @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private Person student;
 
   public Person getStudent()
   { 

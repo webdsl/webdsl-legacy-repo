@@ -45,9 +45,9 @@ import org.webdsl.serg.domain.*;
     this.authors = authors;
   }
 
-  public void addAuthors(Person l_0)
+  public void addAuthors(Person g_0)
   { 
-    this.authors.add(l_0);
+    this.authors.add(g_0);
   }
 
   private int year;
@@ -72,6 +72,18 @@ import org.webdsl.serg.domain.*;
   public void setPubabstract(String pubabstract)
   { 
     this.pubabstract = pubabstract;
+  }
+
+  @ManyToOne @JoinColumn(name = "PublicationPdf") @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.ALL}) private URL pdf = new URL();
+
+  public URL getPdf()
+  { 
+    return pdf;
+  }
+
+  public void setPdf(URL pdf)
+  { 
+    this.pdf = pdf;
   }
 
   public String getName()

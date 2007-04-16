@@ -21,7 +21,7 @@ import org.webdsl.serg.domain.*;
     this.id = id;
   }
 
-  @ManyToOne @JoinColumn(name = "StudentMasterStudent") private User student;
+  @ManyToOne @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private User student;
 
   public User getStudent()
   { 
@@ -57,12 +57,12 @@ import org.webdsl.serg.domain.*;
     this.courses = courses;
   }
 
-  public void addCourses(Course h_0)
+  public void addCourses(Course e_0)
   { 
-    this.courses.add(h_0);
+    this.courses.add(e_0);
   }
 
-  @ManyToOne @JoinColumn(name = "StudentMasterResearch") private ResearchAssignment research;
+  @ManyToOne @JoinColumn(name = "StudentMasterResearch") @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.ALL}) private ResearchAssignment research = new ResearchAssignment();
 
   public ResearchAssignment getResearch()
   { 
@@ -74,7 +74,7 @@ import org.webdsl.serg.domain.*;
     this.research = research;
   }
 
-  @ManyToOne @JoinColumn(name = "StudentMasterThesis") private ThesisProject thesis;
+  @ManyToOne @JoinColumn(name = "StudentMasterThesis") @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.ALL}) private ThesisProject thesis = new ThesisProject();
 
   public ThesisProject getThesis()
   { 
@@ -108,18 +108,6 @@ import org.webdsl.serg.domain.*;
   public void setEnding(Date ending)
   { 
     this.ending = ending;
-  }
-
-  @ManyToOne @JoinColumn(name = "StudentMasterStatus") private MasterStatus status;
-
-  public MasterStatus getStatus()
-  { 
-    return status;
-  }
-
-  public void setStatus(MasterStatus status)
-  { 
-    this.status = status;
   }
 
   public String getName()

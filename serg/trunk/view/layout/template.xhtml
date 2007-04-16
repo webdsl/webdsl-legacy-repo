@@ -4,7 +4,9 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:s="http://jboss.com/products/seam/taglib">
+      xmlns:s="http://jboss.com/products/seam/taglib"
+      xmlns:a4j="https://ajax4jsf.dev.java.net/ajax"
+      xmlns:rich="http://richfaces.ajax4jsf.org/rich">
 <head>    
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>serg</title>
@@ -15,9 +17,10 @@
 <body>
 
     <ui:include src="menu.xhtml"/>
-    <ui:include src="loginout.xhtml"/>
 
 	<div class="body">
+	
+	    <!-- todo: create a standardized layout for the body with room for error messages -->
   
         <f:facet name="aroundInvalidField">
             <s:span styleClass="errors"/>

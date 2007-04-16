@@ -21,7 +21,7 @@ import org.webdsl.serg.domain.*;
     this.id = id;
   }
 
-  @ManyToOne @JoinColumn(name = "CourseUnit") private EduUnit unit;
+  @ManyToOne @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private EduUnit unit;
 
   public EduUnit getUnit()
   { 
@@ -55,18 +55,6 @@ import org.webdsl.serg.domain.*;
   public void setPeriod(int period)
   { 
     this.period = period;
-  }
-
-  @ManyToOne @JoinColumn(name = "CourseLecturer") private Person lecturer;
-
-  public Person getLecturer()
-  { 
-    return lecturer;
-  }
-
-  public void setLecturer(Person lecturer)
-  { 
-    this.lecturer = lecturer;
   }
 
   public String getName()

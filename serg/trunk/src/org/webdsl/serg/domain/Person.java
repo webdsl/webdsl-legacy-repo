@@ -33,6 +33,18 @@ import org.webdsl.serg.domain.*;
     this.fullname = fullname;
   }
 
+  @ManyToOne @JoinColumn(name = "PersonAddress") @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.ALL}) private Address address = new Address();
+
+  public Address getAddress()
+  { 
+    return address;
+  }
+
+  public void setAddress(Address address)
+  { 
+    this.address = address;
+  }
+
   @ManyToMany() @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private Map<String, Address> addresses = new HashMap<String, Address>();
 
   public Map<String, Address> getAddresses()
@@ -50,24 +62,24 @@ import org.webdsl.serg.domain.*;
     this.addresses.put(key, value);
   }
 
-  @ManyToMany @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private Set<URL> homepages = new HashSet<URL>();
+  @org.hibernate.annotations.CollectionOfElements(targetElement = String.class) @JoinTable(name = "Person_Homepages") @Column(name = "homepages", nullable = false) @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.ALL}) private Set<String> homepages = new HashSet<String>();
 
-  public Set<URL> getHomepages()
+  public Set<String> getHomepages()
   { 
     return homepages;
   }
 
-  public void setHomepages(Set<URL> homepages)
+  public void setHomepages(Set<String> homepages)
   { 
     this.homepages = homepages;
   }
 
-  public void addHomepages(URL a_0)
+  public void addHomepages(String a_0)
   { 
     this.homepages.add(a_0);
   }
 
-  @ManyToOne @JoinColumn(name = "PersonUser") private User user;
+  @ManyToOne @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private User user;
 
   public User getUser()
   { 

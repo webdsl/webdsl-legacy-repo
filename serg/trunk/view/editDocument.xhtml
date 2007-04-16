@@ -1,6 +1,6 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
 
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="layout/template.xhtml"><ui:define name="body">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich" template="layout/template.xhtml"><ui:define name="body">
         <h1>
            <h:outputText rendered="#{!documentHome.managed}" value="Create Document"/>
            <h:outputText rendered="#{documentHome.managed}" value="Edit Document"/>
@@ -8,46 +8,9 @@
         <h:messages globalOnly="true" styleClass="message"/>
         <h:form id="editDocument">
           <div class="dialog">
-            <s:validateAll><table><div class="prop">
-      <tr>
-        <td>
-         <span class="doc">doc</span>
-        </td>
-        <td>
-         <span class="value">
-            <s:decorate>
-               <h:inputText id="doc" required="true" value="#{document.doc}"/>
-            </s:decorate>
-         </span>
-        </td>
-       </tr>
-      </div><div class="prop">
-      <tr>
-        <td>
-         <span class="date">date</span>
-        </td>
-        <td>
-         <span class="value">
-            <s:decorate>
-               <h:inputText id="date" required="true" value="#{document.date}"/>
-            </s:decorate>
-         </span>
-        </td>
-       </tr>
-      </div><div class="prop">
-      <tr>
-        <td>
-         <span class="comments">comments</span>
-        </td>
-        <td>
-         <span class="value">
-            <s:decorate>
-               <h:inputText id="comments" required="true" value="#{document.comments}"/>
-            </s:decorate>
-         </span>
-        </td>
-       </tr>
-      </div></table></s:validateAll>
+            <s:validateAll><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3"><h:outputText value="doc"/>
+      <s:decorate><h:inputTextArea for="doc" id="doc" required="true" value="#{document.doc}"/></s:decorate><h:outputText value="comments"/>
+      <s:decorate><h:inputTextArea for="comments" id="comments" required="true" value="#{document.comments}"/></s:decorate></h:panelGrid></s:validateAll>
           </div>
           <div class="actionButtons">
             <s:link view="/viewDocument.xhtml" value="View Document" rendered="#{documentHome.managed}"/>

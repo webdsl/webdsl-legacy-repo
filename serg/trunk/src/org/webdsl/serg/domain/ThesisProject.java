@@ -21,12 +21,12 @@ import org.webdsl.serg.domain.*;
     this.milestones = milestones;
   }
 
-  public void addMilestones(Document g_0)
+  public void addMilestones(Document d_0)
   { 
-    this.milestones.add(g_0);
+    this.milestones.add(d_0);
   }
 
-  @ManyToOne @JoinColumn(name = "ThesisProjectWebsite") private URL website;
+  @ManyToOne @JoinColumn(name = "ThesisProjectWebsite") @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.ALL}) private URL website = new URL();
 
   public URL getWebsite()
   { 
@@ -38,7 +38,7 @@ import org.webdsl.serg.domain.*;
     this.website = website;
   }
 
-  @ManyToOne @JoinColumn(name = "ThesisProjectSubversion") private URL subversion;
+  @ManyToOne @JoinColumn(name = "ThesisProjectSubversion") @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.ALL}) private URL subversion = new URL();
 
   public URL getSubversion()
   { 

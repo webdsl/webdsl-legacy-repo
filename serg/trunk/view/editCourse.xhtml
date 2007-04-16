@@ -1,6 +1,6 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
 
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="layout/template.xhtml"><ui:define name="body">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich" template="layout/template.xhtml"><ui:define name="body">
         <h1>
            <h:outputText rendered="#{!courseHome.managed}" value="Create Course"/>
            <h:outputText rendered="#{courseHome.managed}" value="Edit Course"/>
@@ -8,33 +8,7 @@
         <h:messages globalOnly="true" styleClass="message"/>
         <h:form id="editCourse">
           <div class="dialog">
-            <s:validateAll><table><div class="prop">
-      <tr>
-        <td>
-         <span class="year">year</span>
-        </td>
-        <td>
-         <span class="value">
-            <s:decorate>
-               <h:inputText id="year" required="true" value="#{course.year}"/>
-            </s:decorate>
-         </span>
-        </td>
-       </tr>
-      </div><div class="prop">
-      <tr>
-        <td>
-         <span class="period">period</span>
-        </td>
-        <td>
-         <span class="value">
-            <s:decorate>
-               <h:inputText id="period" required="true" value="#{course.period}"/>
-            </s:decorate>
-         </span>
-        </td>
-       </tr>
-      </div></table></s:validateAll>
+            <s:validateAll><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3"></h:panelGrid></s:validateAll>
           </div>
           <div class="actionButtons">
             <s:link view="/viewCourse.xhtml" value="View Course" rendered="#{courseHome.managed}"/>

@@ -1,6 +1,6 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
 
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="layout/template.xhtml"><ui:define name="body">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich" template="layout/template.xhtml"><ui:define name="body">
         <h1>
            <h:outputText rendered="#{!personHome.managed}" value="Create Person"/>
            <h:outputText rendered="#{personHome.managed}" value="Edit Person"/>
@@ -8,20 +8,11 @@
         <h:messages globalOnly="true" styleClass="message"/>
         <h:form id="editPerson">
           <div class="dialog">
-            <s:validateAll><table><div class="prop">
-      <tr>
-        <td>
-         <span class="fullname">fullname</span>
-        </td>
-        <td>
-         <span class="value">
-            <s:decorate>
-               <h:inputText id="fullname" required="true" value="#{person.fullname}"/>
-            </s:decorate>
-         </span>
-        </td>
-       </tr>
-      </div></table></s:validateAll>
+            <s:validateAll><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3"><h:outputText value="fullname"/>
+      <s:decorate><h:inputText for="fullname" id="fullname" required="true" value="#{person.fullname}"/></s:decorate><h:outputText value="address"/><h:panelGroup/><h:outputText value="street"/>
+      <s:decorate><h:inputText for="street" id="street" required="true" value="#{person.address.street}"/></s:decorate><h:outputText value="number"/>
+      <s:decorate><h:inputText for="number" id="number" required="true" value="#{person.address.number}"/></s:decorate><h:outputText value="city"/>
+      <s:decorate><h:inputText for="city" id="city" required="true" value="#{person.address.city}"/></s:decorate></h:panelGrid></s:validateAll>
           </div>
           <div class="actionButtons">
             <s:link view="/viewPerson.xhtml" value="View Person" rendered="#{personHome.managed}"/>

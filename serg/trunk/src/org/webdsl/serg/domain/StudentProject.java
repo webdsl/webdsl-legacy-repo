@@ -21,7 +21,7 @@ import org.webdsl.serg.domain.*;
     this.id = id;
   }
 
-  @ManyToOne @JoinColumn(name = "StudentProjectUnit") private EduUnit unit;
+  @ManyToOne @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private EduUnit unit;
 
   public EduUnit getUnit()
   { 
@@ -69,9 +69,9 @@ import org.webdsl.serg.domain.*;
     this.student = student;
   }
 
-  public void addStudent(Person e_0)
+  public void addStudent(Person b_0)
   { 
-    this.student.add(e_0);
+    this.student.add(b_0);
   }
 
   @ManyToMany @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private Set<Person> supervisor = new HashSet<Person>();
@@ -86,9 +86,9 @@ import org.webdsl.serg.domain.*;
     this.supervisor = supervisor;
   }
 
-  public void addSupervisor(Person f_0)
+  public void addSupervisor(Person c_0)
   { 
-    this.supervisor.add(f_0);
+    this.supervisor.add(c_0);
   }
 
   private Date start;

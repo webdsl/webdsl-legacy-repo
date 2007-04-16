@@ -1,6 +1,6 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
 
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="layout/template.xhtml"><ui:define name="body">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich" template="layout/template.xhtml"><ui:define name="body">
         <h1>
            <h:outputText value="View TechnicalReport"/>
         </h1>
@@ -9,16 +9,6 @@
           <div class="dialog">
             <s:validateAll><div class="prop">
         <tr class="prop">
-           <td class="name">title:</td>
-           <td class="value">#{technicalReport.title}</td>
-        </tr>
-      </div><div class="prop">
-        <tr class="prop">
-           <td class="name">year:</td>
-           <td class="value">#{technicalReport.year}</td>
-        </tr>
-      </div><div class="prop">
-        <tr class="prop">
            <td class="name">number:</td>
            <td class="value">#{technicalReport.number}</td>
         </tr>
@@ -26,11 +16,6 @@
         <tr class="prop">
            <td class="name">document:</td>
            <td class="value">#{technicalReport.document}</td>
-        </tr>
-      </div><div class="prop">
-        <tr class="prop">
-           <td class="name">trabstract:</td>
-           <td class="value">#{technicalReport.trabstract}</td>
         </tr>
       </div></s:validateAll>
           </div>

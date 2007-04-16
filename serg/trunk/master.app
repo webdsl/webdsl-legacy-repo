@@ -10,31 +10,32 @@ end
 section people. 
 
   Address {
-    street : String
-    number : String
-    city   : String
+    street :: String
+    number :: String
+    city   :: String
   }
   // should phone numbers be part of address or separate?
   
   URL {
-    url : String
+    url :: String
   }
 
   Person {
-    fullname  : String (name)
-    addresses : Map<String,Address>
-                // home, work, family, ...
-    homepages : Set<String> // should be URLs
-    photo     : Image
-    user      : User
+    fullname  :: String (name)
+    address   <> Address
+    addresses <> Map<String,Address>
+                 // home, work, family, ...
+    homepages <> Set<String> // should be URLs
+    photo     <> Image
+    user      -> User
   }
 
   User {
-    username : String (name, unique)
-    email    : String (unique)
-    password : String
-    person   : Person // (secret)
-    roles     : Set<Role>
+    username :: String (name, unique)
+    email    :: String (unique)
+    password :: Secret
+    person   <> Person // (secret)
+    //roles    <> Set<Role>
   }
 
   // probably attach additional information to (some) roles
@@ -53,28 +54,28 @@ section people.
   // when creating UI, infer names for roles from names for subclasses
   // of role
 
-  Role {
-    user : User
-  }
+  //Role {
+  //  user : User
+  //}
 
-  Admin : Role {}
+  //Admin : Role {}
 
-  Chair : Role {}
+  //Chair : Role {}
 
-  Coordinator : Role {}
+  //Coordinator : Role {}
 
-  Student : Role {
-    number : String
-    year   : Int
-  }
+  //Student : Role {
+  //  number : String
+  //  year   : Int
+  //}
 
-  Lecturer : Role {
-    courses : Set<Course>
-  }
+  //Lecturer : Role {
+   // courses : Set<Course>
+  //}
 
-  Supervisor : Role {
-    students : Set<Student>
-  }
+  //Supervisor : Role {
+  //  students : Set<Student>
+  //}
   
   // Session {}
   
@@ -103,64 +104,64 @@ section people.
 section courses or educational units.
 
   EduUnit {
-    title   : String (name)
-    code    : String
-    credits : Int
+    title   :: String (name)
+    code    :: String
+    credits :: Int
   }
 
   Course {
     // name  := unit.name
-    unit     : EduUnit
-    year     : Int
-    period   : Int
-    lecturer : Person
+    unit     -> EduUnit
+    year     :: Int
+    period   :: Int
+    lecturer :: Person
   }
 
   StudentCourse {
-    course  : Course
-    student : Person // (.user.role has student)
-    exam    : Date
-    grade   : Int   // (0 .. 10)
+    course  -> Course // select from list
+    student -> Person // select from list, .user.role has student
+    exam    :: Date
+    grade   :: Int   // (0 .. 10)
   }
 
   StudentProject {
-    unit        : EduUnit
-    topic       : String
-    description : Text
-    student     : Set<Person>
-    supervisor  : Set<Person>
-    start       : Date
-    finish      : Date
+    unit        -> EduUnit
+    topic       :: String
+    description :: Text
+    student     -> Set<Person>
+    supervisor  -> Set<Person>
+    start       :: Date
+    finish      :: Date
   }
 
   ResearchAssignment : StudentProject {
   }
 
   ThesisProject : StudentProject {
-    milestones : List<Document>
-    website    : URL
-    subversion : URL
+    milestones <> List<Document>
+    website    <> URL
+    subversion <> URL
     // include a pointer to the research projects a thesis project
     // is affiliated with
   }
 
   Document {
-    doc      : Text // PDF?
-    date     : Date
-    comments : Text
+    doc      <> Text // PDF?
+    date     :: Date
+    comments <> Text
   }
 
 section tracking students in a master program.
 
   StudentMaster {
-    student        : User
-    specialization : String
-    courses        : Set<Course>
-    research       : ResearchAssignment
-    thesis         : ThesisProject
-    start          : Date
-    ending         : Date 
-    status         : MasterStatus
+    student        -> User
+    specialization :: String
+    courses        -> Set<Course>
+    research       <> ResearchAssignment
+    thesis         <> ThesisProject
+    start          :: Date
+    ending         :: Date 
+    //status         :: MasterStatus
   }
 
   //Specialization : String {}
@@ -172,11 +173,11 @@ section tracking students in a master program.
   //  graduated
   //}
 
-  MasterStatus {}
-  Started : MasterStatus {}
-  Assignment : MasterStatus {}
-  Thesis : MasterStatus {}
-  Graduated : MasterStatus {}
+  //MasterStatus {}
+  //Started : MasterStatus {}
+  //Assignment : MasterStatus {}
+  //Thesis : MasterStatus {}
+  //Graduated : MasterStatus {}
 
   rules  
 
@@ -205,10 +206,10 @@ section tracking students in a master program.
 section online documents . // wiki pages
 
   Topic {
-    title    : String (name)
-    text     : String // formatted text
-    subtopic : Map<String, Topic>
-    authors  : Set<User>
+    title    :: String (name)
+    text     :: Text // formatted text
+    subtopic <> Map<String, Topic>
+    authors  -> Set<User>
   }
   
 section images .
@@ -217,32 +218,30 @@ section images .
   
 section publications.
 
-  TechnicalReport {
-    title      : String (name)
-    authors    : List<Person>
-    year       : Int // use Year defined type
-    number     : Int
- // code       : String := "TUD-SERG-" + year + "-" + number
-    document   : Text // should be Document or PDF or similar
-    trabstract : Text // note: abstract is a reserved word in java!
-    project    : Set<ResearchProject>
-    preprintof : Publication
-  }
-  
+  // ehm encode variability of bibtex here ?!
+    
   Publication {
-    title       : String (name)
-    authors     : List<Person>
-    year        : Int // use Year defined type
-    pubabstract : Text
-    // ehm encode variability of bibtex here
+    title       :: String (name)
+    authors     -> List<Person>
+    year        :: Int // use Year defined type
+    pubabstract :: Text // note: abstract is a reserved word in java!
+    pdf         <> URL
+  }
+    
+  TechnicalReport : Publication {
+    number     :: Int
+ // code       :: String := "TUD-SERG-" + year + "-" + number
+    document   :: Text // should be Document or PDF or similar
+    project    -> Set<ResearchProject>
+    preprintof -> Publication
   }
   
 section research.
 
   ResearchProject {
-    name         : String
-    members      : Map<String, Person>
-    publications : Set<TechnicalReport>
+    name         :: String
+    members      -> Map<String, Person>
+    publications -> Set<TechnicalReport>
   }
 
 section init database .
@@ -254,7 +253,7 @@ section init database .
         street := "Mekelweg"
         number := "4"
         city   := "Delft"
-      }
+      };
   
     EelcoVisser := 
       Person {
@@ -268,6 +267,6 @@ section init database .
                   password := "foo"
                   person := EelcoVisser
                 }
-      }
+      };
 
   }

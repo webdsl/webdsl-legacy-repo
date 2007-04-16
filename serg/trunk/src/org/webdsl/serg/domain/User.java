@@ -57,7 +57,7 @@ import org.webdsl.serg.domain.*;
     this.password = password;
   }
 
-  @ManyToOne @JoinColumn(name = "UserPerson") private Person person;
+  @ManyToOne @JoinColumn(name = "UserPerson") @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.ALL}) private Person person = new Person();
 
   public Person getPerson()
   { 
@@ -67,23 +67,6 @@ import org.webdsl.serg.domain.*;
   public void setPerson(Person person)
   { 
     this.person = person;
-  }
-
-  @ManyToMany @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private Set<Role> role = new HashSet<Role>();
-
-  public Set<Role> getRole()
-  { 
-    return role;
-  }
-
-  public void setRole(Set<Role> role)
-  { 
-    this.role = role;
-  }
-
-  public void addRole(Role b_0)
-  { 
-    this.role.add(b_0);
   }
 
   public String getName()

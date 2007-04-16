@@ -1,6 +1,6 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
 
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="layout/template.xhtml"><ui:define name="body">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich" template="layout/template.xhtml"><ui:define name="body">
         <h1>
            <h:outputText rendered="#{!topicHome.managed}" value="Create Topic"/>
            <h:outputText rendered="#{topicHome.managed}" value="Edit Topic"/>
@@ -8,33 +8,9 @@
         <h:messages globalOnly="true" styleClass="message"/>
         <h:form id="editTopic">
           <div class="dialog">
-            <s:validateAll><table><div class="prop">
-      <tr>
-        <td>
-         <span class="title">title</span>
-        </td>
-        <td>
-         <span class="value">
-            <s:decorate>
-               <h:inputText id="title" required="true" value="#{topic.title}"/>
-            </s:decorate>
-         </span>
-        </td>
-       </tr>
-      </div><div class="prop">
-      <tr>
-        <td>
-         <span class="text">text</span>
-        </td>
-        <td>
-         <span class="value">
-            <s:decorate>
-               <h:inputText id="text" required="true" value="#{topic.text}"/>
-            </s:decorate>
-         </span>
-        </td>
-       </tr>
-      </div></table></s:validateAll>
+            <s:validateAll><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3"><h:outputText value="title"/>
+      <s:decorate><h:inputText for="title" id="title" required="true" value="#{topic.title}"/></s:decorate><h:outputText value="text"/>
+      <s:decorate><h:inputTextArea for="text" id="text" required="true" value="#{topic.text}"/></s:decorate></h:panelGrid></s:validateAll>
           </div>
           <div class="actionButtons">
             <s:link view="/viewTopic.xhtml" value="View Topic" rendered="#{topicHome.managed}"/>
