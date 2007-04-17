@@ -6,6 +6,7 @@
            <h:outputText rendered="#{personHome.managed}" value="Edit Person"/>
         </h1>
         <h:messages globalOnly="true" styleClass="message"/>
+        
         <h:form id="editPerson">
           <div class="dialog">
             <s:validateAll><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3"><h:outputText value="fullname"/>
@@ -13,8 +14,10 @@
       <s:decorate><h:inputText id="person_address_street" required="true" value="#{person.address.street}"/></s:decorate><h:outputText value="number"/>
       <s:decorate><h:inputText id="person_address_number" required="true" value="#{person.address.number}"/></s:decorate><h:outputText value="city"/>
       <s:decorate><h:inputText id="person_address_city" required="true" value="#{person.address.city}"/></s:decorate><h:outputText value="homepage"/><h:panelGroup/><h:outputText value="url"/>
-      <s:decorate><h:inputText id="person_homepage_url" required="true" value="#{person.homepage.url}"/></s:decorate><h:outputText value="photo"/><h:panelGroup/><h:outputText value="url"/>
-      <s:decorate><h:inputText id="person_photo_url" required="true" value="#{person.photo.url}"/></s:decorate></h:panelGrid></s:validateAll>
+      <s:decorate><h:inputText id="person_homepage_url" required="true" value="#{person.homepage.url}"/></s:decorate>
+     
+      </h:panelGrid></s:validateAll>
+      
           </div>
           <div class="actionButtons">
             <s:link view="/viewPerson.xhtml" value="View Person" rendered="#{personHome.managed}"/>
@@ -22,5 +25,20 @@
             <h:commandButton value="Update Person" action="#{personHome.update}" rendered="#{personHome.managed}"/>
             <h:commandButton value="Delete Person" action="#{personHome.delete}" rendered="#{personHome.managed}"/>
           </div>
-        </h:form>
-      </ui:define></ui:composition>
+          
+      <h:outputText value="homepages"/>
+      <br />
+      <h:dataTable var="entry" value="#{person.homepages}">
+         <h:column>
+            <h:outputText value="#{entry}"/>
+         </h:column>
+      </h:dataTable>
+      <br />
+      <h:commandButton value="Add Homepage" actionListener="#{personHome.addHomepage}" />
+      <s:decorate><h:inputText id="person_newhomepage" required="false" value="#{personHome.newHomepage}"/></s:decorate>
+      
+     </h:form>
+        
+      </ui:define>
+      
+      </ui:composition>

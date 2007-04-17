@@ -6,7 +6,11 @@ import org.webdsl.serg.domain.*;
 
 @Entity
 public class Person {
+	
 	public Person() {
+		this.addHomepages("http://foo.bar");
+		this.addHomepages("http://foo.baz");
+		this.addHomepages("http://foo.boo");
 	}
 
 	@Id
@@ -79,31 +83,18 @@ public class Person {
 	@JoinTable(name = "Person_Homepages")
 	@Column(name = "homepages", nullable = false)
 	@org.hibernate.annotations.Cascade( { org.hibernate.annotations.CascadeType.ALL })
-	private Set<String> homepages = new HashSet<String>();
+	private List<String> homepages = new LinkedList<String>();
 
-	public Set<String> getHomepages() {
+	public List<String> getHomepages() {
 		return homepages;
 	}
 
-	public void setHomepages(Set<String> homepages) {
+	public void setHomepages(List<String> homepages) {
 		this.homepages = homepages;
 	}
 
 	public void addHomepages(String a_0) {
 		this.homepages.add(a_0);
-	}
-
-	@ManyToOne
-	@JoinColumn(name = "PersonPhoto")
-	@org.hibernate.annotations.Cascade( { org.hibernate.annotations.CascadeType.ALL })
-	private Image photo = new Image();
-
-	public Image getPhoto() {
-		return photo;
-	}
-
-	public void setPhoto(Image photo) {
-		this.photo = photo;
 	}
 
 	@ManyToOne
