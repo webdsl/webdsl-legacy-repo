@@ -16,9 +16,24 @@
       <s:decorate><h:inputText id="person_address_city" required="true" value="#{person.address.city}"/></s:decorate><h:outputText value="homepage"/><h:panelGroup/><h:outputText value="url"/>
       <s:decorate><h:inputText id="person_homepage_url" required="true" value="#{person.homepage.url}"/></s:decorate>
      
-      </h:panelGrid></s:validateAll>
+      <h:outputText value="homepages" rendered="#{personHome.managed}"/>
+      <h:dataTable var="currentHomepage" value="#{person.homepages}" rendered="#{personHome.managed}">
+         <h:column>
+            <h:inputText value="#{currentHomepage}" 
+                         valueChangeListener="#{personHome.homepageChanged}"/>
+         </h:column>
+         <h:column>
+            <s:button value="Delete" 
+                      action="#{personHome.deleteHomepage}"/>
+         </h:column>
+      </h:dataTable>
       
-          </div>
+      <h:commandButton value="Add Homepage" actionListener="#{personHome.addHomepage}"  rendered="#{personHome.managed}"/>
+      <s:decorate><h:inputText id="person_newhomepage" required="false" value="#{personHome.newHomepage}" rendered="#{personHome.managed}"/></s:decorate>
+
+            </h:panelGrid></s:validateAll>
+         </div>
+                
           <div class="actionButtons">
             <s:link view="/viewPerson.xhtml" value="View Person" rendered="#{personHome.managed}"/>
             <h:commandButton value="Create Person" action="#{personHome.persist}" rendered="#{!personHome.managed}"/>
@@ -26,17 +41,6 @@
             <h:commandButton value="Delete Person" action="#{personHome.delete}" rendered="#{personHome.managed}"/>
           </div>
           
-      <h:outputText value="homepages"/>
-      <br />
-      <h:dataTable var="entry" value="#{person.homepages}">
-         <h:column>
-            <h:outputText value="#{entry}"/>
-         </h:column>
-      </h:dataTable>
-      <br />
-      <h:commandButton value="Add Homepage" actionListener="#{personHome.addHomepage}" />
-      <s:decorate><h:inputText id="person_newhomepage" required="false" value="#{personHome.newHomepage}"/></s:decorate>
-      
      </h:form>
         
       </ui:define>

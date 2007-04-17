@@ -96,7 +96,7 @@ public class Person {
 	public void addHomepages(String a_0) {
 		this.homepages.add(a_0);
 	}
-
+	
 	@ManyToOne
 	@org.hibernate.annotations.Cascade( {
 			org.hibernate.annotations.CascadeType.SAVE_UPDATE,

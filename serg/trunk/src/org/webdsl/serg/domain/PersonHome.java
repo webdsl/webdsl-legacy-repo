@@ -1,16 +1,13 @@
 package org.webdsl.serg.domain;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.jboss.seam.annotations.Factory;
-import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
-import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.datamodel.DataModel;
 import org.jboss.seam.annotations.datamodel.DataModelSelection;
+import org.jboss.seam.annotations.datamodel.DataModelSelectionIndex;
 import org.jboss.seam.framework.EntityHome;
-import org.jboss.seam.log.Log;
 
 @Name("personHome")
 public class PersonHome extends EntityHome<Person> {
@@ -20,20 +17,6 @@ public class PersonHome extends EntityHome<Person> {
 		return getInstance();
 	}
 
-//	@DataModel
-//	private Set<String> homepageList = new HashSet<String>();
-//
-//	@DataModelSelection
-//	@Out(required = false)
-//	private String selectedHomepage;
-//
-//	
-//	@Factory("homepageList")
-//	public void findHomepages() {
-//		homepageList = getInstance().getHomepages();
-//	    log.info("call to findHomepages: list = " + homepageList);
-//	}
-//	
 	private String newHomepage = "";
 
 	public String getNewHomepage() {
@@ -43,12 +26,30 @@ public class PersonHome extends EntityHome<Person> {
 	public void setNewHomepage(String newHomepage) {
 		this.newHomepage = newHomepage;
 	}
-
-	public String addHomepage()
-	{
-		getInstance().addHomepages(newHomepage);
-	    return null;
+	
+	public void deleteHomepage() {
+		homepages.remove(currentHomepageIndex);
 	}
+	
+	//public void homepageChanged() {
+	//	homepages.remove(currentHomepageIndex);
+	//	homepages.add(currentHomepageIndex, currentHomepage);
+	//}
+	
+	@DataModel("homepages")
+	List<String> homepages;
+	
+	@Factory("homepages")
+	public void findHomepages() {
+		initPerson().getHomepages();
+	}
+	
+	//@DataModelSelection(value="homepages")
+	//String currentHomepage;
+
+	@DataModelSelectionIndex(value="homepages")
+	int currentHomepageIndex;
+	
 //	
 //	public void addHomepages(String homepage)
 //	{
