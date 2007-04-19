@@ -16,77 +16,76 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.core.FacesMessages;
 import org.jboss.seam.log.Log;
 
-@Stateful
-@Name("personEditor")
-public class PersonEditorBean implements PersonEditor {
-	@Logger
-	private Log log;
+@Stateful @Name("personEditor") public class PersonEditorBean  implements PersonEditor
+{ 
+  @Logger private Log log;
 
-	@In
-	private FacesMessages facesMessages;
+  @In private FacesMessages facesMessages;
 
-	@PersistenceContext(type = EXTENDED)
-	private EntityManager em;
+  @PersistenceContext(type = EXTENDED) private EntityManager em;
 
-	private Person person;
+  private Person person;
 
-	public Person getPerson() {
-		return person;
-	}
+  public Person getPerson()
+  { 
+    return person;
+  }
 
-	public void setPerson(Person person) {
-		this.person = person;
-	}
+  public void setPerson(Person person)
+  { 
+    this.person = person;
+  }
 
-	@Create
-	public void initialize() {
-		person = new Person();
-	}
+  @Create public void initialize()
+  { 
+    person = new Person();
+  }
 
-	private boolean isNew = true;
+  private boolean isNew = true;
 
-	public boolean isNew() {
-		return isNew;
-	}
+  public boolean isNew()
+  { 
+    return isNew;
+  }
 
-	@Begin(join = true)
-	public String create() {
-		em.persist(person);
-		isNew = false;
-		log.info("creating new x_class");
-		return null;
-	}
+  @Begin(join = true) public String create()
+  { 
+    em.persist(person);
+    isNew = false;
+    log.info("creating new x_class");
+    return null;
+  }
 
-	public String update() {
-		em.joinTransaction();
-		em.flush();
-		log.info("updating x_class");
-		return null;
-	}
+  public String update()
+  { 
+    em.joinTransaction();
+    em.flush();
+    log.info("updating x_class");
+    return null;
+  }
 
-	@End
-	public String delete() {
-		em.remove(person);
-		person = null;
-		log.info("deleting x_Class and going to PersonList");
-		return "/find" + "Person" + ".xhtml";
-	}
+  @End public String delete()
+  { 
+    em.remove(person);
+    person = null;
+    log.info("deleting x_Class and going to PersonList");
+    return "/find" + "Person" + ".xhtml";
+  }
 
-	@End
-	public String done() {
-		if (!isNew)
-			em.refresh(person);
-		return "/find" + "Person" + ".seam";
-	}
+  @End public String done()
+  { 
+    if(!isNew)
+      em.refresh(person);
+    return "/find" + "Person" + ".xhtml";
+  }
 
-	public String view() {
-		if (!isNew)
-			em.refresh(person);
-		return "view";
-	}
+  @End public String view()
+  { 
+    if(!isNew)
+      em.refresh(person);
+    return "/view" + "Person" + ".xhtml";
+  }
 
-	@Remove
-	@Destroy
-	public void destroy() {
-	}
+  @Remove @Destroy public void destroy()
+  { }
 }

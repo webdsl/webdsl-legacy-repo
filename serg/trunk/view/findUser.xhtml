@@ -19,15 +19,8 @@
                 <f:param name="userId" value="#{entry.id}"/>
               </s:link>
             </h:column>
-            
-            // why  not delete the entity itself
-            //<h:column>
-            //   <s:button value="Delete" action="#{userListBean.delete}"/>
-            //</h:column>
-            
          </h:dataTable>
          <div class="actionButtons">
-         //<s:link action="#{userListBean.refresh}" value="Refresh"/>
          <s:link view="/editUser.xhtml" value="Create new User"/>
          </div>
         </f:view>
