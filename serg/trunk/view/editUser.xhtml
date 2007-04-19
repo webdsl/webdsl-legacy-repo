@@ -1,0 +1,34 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich" template="layout/template.xhtml"><ui:define name="body">
+        <h1>
+           <h:outputText rendered="#{userEditor.new}" value="Create User"/>
+           <h:outputText rendered="#{!userEditor.new}" value="Edit User userEditor.user.name"/>
+        </h1>
+        <h:messages globalOnly="true" styleClass="message"/>
+        <h:form id="editUser">
+          <div class="dialog">
+            <s:validateAll><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3"><h:outputText value="username"/>
+      <s:decorate><h:inputText id="user_username" required="true" value="#{user.username}"/></s:decorate><h:outputText value="email"/>
+      <s:decorate><h:inputText id="user_email" required="true" value="#{user.email}"/></s:decorate><h:outputText value="password"/>
+      <s:decorate><h:inputSecret id="user_password" required="true" value="#{user.password}"/></s:decorate><h:outputText value="person"/><h:panelGroup/><h:outputText value="fullname"/>
+      <s:decorate><h:inputText id="user_person_fullname" required="true" value="#{user.person.fullname}"/></s:decorate><h:outputText value="homepage"/>
+      <s:decorate><h:inputText id="user_person_homepage" required="true" value="#{user.person.homepage}"/></s:decorate><h:outputText value="photo"/>
+      <s:decorate><h:inputText id="user_person_photo" required="true" value="#{user.person.photo}"/></s:decorate><h:outputText value="birthdate"/>
+      <s:decorate><div><h:inputText id="user_person_birthdate" required="true" value="#{user.person.birthdate}">
+               <s:convertDateTime pattern="dd/mm/yyyy"/>
+           </h:inputText>
+           <s:selectDate for="user_person_birthdate"/>
+      </div></s:decorate><h:outputText value="address"/><h:panelGroup/><h:outputText value="street"/>
+      <s:decorate><h:inputText id="user_person_address_street" required="true" value="#{user.person.address.street}"/></s:decorate><h:outputText value="city"/>
+      <s:decorate><h:inputText id="user_person_address_city" required="true" value="#{user.person.address.city}"/></s:decorate><h:outputText value="phone"/>
+      <s:decorate><h:inputText id="user_person_address_phone" required="true" value="#{user.person.address.phone}"/></s:decorate></h:panelGrid></s:validateAll>
+          </div>
+          <div class="actionButtons">
+            <h:commandButton view="/viewUser.xhtml" value="View User" rendered="#{userEditor.new}"/>
+            <h:commandButton value="Create" action="#{userEditor.create}" rendered="#{userEditor.new}"/>
+            <h:commandButton value="Update" action="#{userEditor.update}" rendered="!#{userEditor.new}"/>
+            <h:commandButton value="Delete" action="#{userEditor.delete}" rendered="!#{userEditor.new}"/>
+          </div>
+        </h:form>
+      </ui:define></ui:composition>

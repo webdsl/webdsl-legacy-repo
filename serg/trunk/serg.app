@@ -26,7 +26,8 @@ section people.
   Person {
     fullname  :: String (name)
     homepage  :: URL
-    photo     :: URL
+    photo     :: Image
+    birthdate :: Date
     address   <> Address
     user      -> User
   }
