@@ -1,0 +1,21 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich" template="layout/template.xhtml"><ui:define name="body">
+        <h1>
+           <h:outputText rendered="#{!uRLHome.managed}" value="Create URL"/>
+           <h:outputText rendered="#{uRLHome.managed}" value="Edit URL"/>
+        </h1>
+        <h:messages globalOnly="true" styleClass="message"/>
+        <h:form id="editURL">
+          <div class="dialog">
+            <s:validateAll><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3"><h:outputText value="url"/>
+      <s:decorate><h:inputText id="uRL_url" required="true" value="#{uRL.url}"/></s:decorate></h:panelGrid></s:validateAll>
+          </div>
+          <div class="actionButtons">
+            <s:link view="/viewURL.xhtml" value="View URL" rendered="#{uRLHome.managed}"/>
+            <h:commandButton value="Create URL" action="#{uRLHome.persist}" rendered="#{!uRLHome.managed}"/>
+            <h:commandButton value="Update URL" action="#{uRLHome.update}" rendered="#{uRLHome.managed}"/>
+            <h:commandButton value="Delete URL" action="#{uRLHome.delete}" rendered="#{uRLHome.managed}"/>
+          </div>
+        </h:form>
+      </ui:define></ui:composition>

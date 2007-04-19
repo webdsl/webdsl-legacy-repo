@@ -1,0 +1,47 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                             "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="layout/template.xhtml">
+                       
+<ui:define name="body">
+
+    <h1>users</h1>
+    
+    <h:messages globalOnly="true" styleClass="message"/>
+    
+    <f:view>
+     <h:outputText value="No users" rendered="#{userList.rowCount==0}"/>
+     <h:dataTable var="u" value="#{userList}" rendered="#{userList.rowCount>0}">
+        <h:column>
+           <f:facet name="header">
+              <h:outputText value="Selected"/>
+           </f:facet>
+           <h:selectBooleanCheckbox value="#{u == selectedUser}" disabled="true"/>
+        </h:column>
+        <h:column>
+           <f:facet name="header">
+              <h:outputText value="Username"/>
+           </f:facet>
+           <s:link value="#{u.username}" action="#{users.select()}"/>
+        </h:column>
+        <h:column>
+           <f:facet name="header">
+              <h:outputText value="Real name"/>
+           </f:facet>
+           <h:outputText value="#{u.name}"/>
+        </h:column>
+        <h:column>
+           <s:button value="Delete" action="#{users.delete}"/>
+        </h:column>
+     </h:dataTable>
+     <div>selected: <h:outputText value="#{selectedUser.username}"/></div>
+  </f:view>
+    
+</ui:define>
+
+</ui:composition>
+

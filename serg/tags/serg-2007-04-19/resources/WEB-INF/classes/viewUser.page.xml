@@ -1,0 +1,5 @@
+<!DOCTYPE page PUBLIC "-//JBoss/Seam Pages Configuration DTD 1.1//EN" "http://jboss.com/products/seam/pages-1.1.dtd" >
+
+<page>
+         <param name="userId" value="#{userHome.id}" converterId="javax.faces.Long"/>
+       </page>

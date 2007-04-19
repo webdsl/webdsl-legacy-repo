@@ -1,0 +1,22 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich" template="layout/template.xhtml"><ui:define name="body">
+        <h1>
+           <h:outputText rendered="#{!thesisProjectHome.managed}" value="Create ThesisProject"/>
+           <h:outputText rendered="#{thesisProjectHome.managed}" value="Edit ThesisProject"/>
+        </h1>
+        <h:messages globalOnly="true" styleClass="message"/>
+        <h:form id="editThesisProject">
+          <div class="dialog">
+            <s:validateAll><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3"><h:outputText value="website"/><h:panelGroup/><h:outputText value="url"/>
+      <s:decorate><h:inputText id="thesisProject_website_url" required="true" value="#{thesisProject.website.url}"/></s:decorate><h:outputText value="subversion"/><h:panelGroup/><h:outputText value="url"/>
+      <s:decorate><h:inputText id="thesisProject_subversion_url" required="true" value="#{thesisProject.subversion.url}"/></s:decorate></h:panelGrid></s:validateAll>
+          </div>
+          <div class="actionButtons">
+            <s:link view="/viewThesisProject.xhtml" value="View ThesisProject" rendered="#{thesisProjectHome.managed}"/>
+            <h:commandButton value="Create ThesisProject" action="#{thesisProjectHome.persist}" rendered="#{!thesisProjectHome.managed}"/>
+            <h:commandButton value="Update ThesisProject" action="#{thesisProjectHome.update}" rendered="#{thesisProjectHome.managed}"/>
+            <h:commandButton value="Delete ThesisProject" action="#{thesisProjectHome.delete}" rendered="#{thesisProjectHome.managed}"/>
+          </div>
+        </h:form>
+      </ui:define></ui:composition>

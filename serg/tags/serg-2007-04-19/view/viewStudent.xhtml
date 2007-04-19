@@ -1,0 +1,28 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="layout/template.xhtml"><ui:define name="body">
+        <h1>
+           <h:outputText value="View Student"/>
+        </h1>
+        <h:messages globalOnly="true" styleClass="message"/>
+        <h:form id="viewStudent">
+          <div class="dialog">
+            <s:validateAll><div class="prop">
+        <tr class="prop">
+           <td class="name">number:</td>
+           <td class="value">#{student.number}</td>
+        </tr>
+      </div><div class="prop">
+        <tr class="prop">
+           <td class="name">year:</td>
+           <td class="value">#{student.year}</td>
+        </tr>
+      </div></s:validateAll>
+          </div>
+          <div class="actionButtons">
+             <s:link view="/editStudent.xhtml" value="Edit Student"/>
+             <s:link action="#{studentHome.remove}" value="Delete Student" rendered="#{studentHome.managed}"/>
+             <s:link view="/StudentList.xhtml" value="All Students"/>
+          </div>
+        </h:form>
+      </ui:define></ui:composition>

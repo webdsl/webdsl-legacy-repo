@@ -1,0 +1,71 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich" template="layout/template.xhtml"><ui:define name="body">
+        <h1>
+           <h:outputText rendered="#{editPerson.new}" value="Create Person"/>
+           <h:outputText rendered="#{!editPerson.new}" value="Edit Person"/>
+        </h1>
+        <h:messages globalOnly="true" styleClass="message"/>
+        
+        <h:form id="editPerson">
+          <div class="dialog">
+            <s:validateAll>
+            <h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3">
+            
+            <h:outputText value="fullname"/>
+      <s:decorate>
+        <h:inputText id="person_fullname" required="true" value="#{editPerson.person.fullname}"/>
+      </s:decorate>
+      
+      <h:outputText value="address"/><h:panelGroup/>
+      
+      <h:outputText value="street"/>
+      <s:decorate><h:inputText id="person_address_street" required="true" value="#{editPerson.person.address.street}"/>
+      </s:decorate><h:outputText value="number"/>
+      <s:decorate><h:inputText id="person_address_number" required="true" value="#{editPerson.person.address.number}"/>
+      </s:decorate>
+      
+      <h:outputText value="city"/>
+      <s:decorate><h:inputText id="person_address_city" required="true" value="#{editPerson.person.address.city}"/>
+      </s:decorate>
+      
+      <h:outputText value="homepage"/><h:panelGroup/>
+      
+      <h:outputText value="url"/>
+      <s:decorate><h:inputText id="person_homepage_url" required="true" value="#{editPerson.person.homepage.url}"/></s:decorate>
+          
+      <h:outputText value="homepages" />
+      <h:dataTable var="currentHomepage" value="#{person.homepages}">
+         <h:column>
+            <h:outputText value="#{currentHomepage}" />
+         </h:column>
+         <h:column>
+            <h:commandButton value="Delete" action="#{editPerson.deleteHomepage}"/>
+         </h:column>
+      </h:dataTable>
+      
+      <h:commandButton value="Add Homepage" action="#{editPerson.addHomepage}"  rendered="#{!editPerson.new}"/>
+      <s:decorate>
+        <h:inputText id="person_newhomepage" required="false" value="#{editPerson.newHomepage}"
+                   rendered="#{!editPerson.new}"/>
+      </s:decorate>
+
+            </h:panelGrid></s:validateAll>
+            
+                  <h:panelGroup/>
+      
+          <div class="actionButtons">
+            <h:commandButton value="Create Person" action="#{editPerson.create}" rendered="#{editPerson.new}"/>
+            <h:commandButton value="View Person"   action="#{editPerson.view}"   rendered="#{!editPerson.new}"/>
+            <h:commandButton value="Update Person" action="#{editPerson.update}" rendered="#{!editPerson.new}"/>
+            <h:commandButton value="Delete Person" action="#{editPerson.delete}" rendered="#{!editPerson.new}"/>
+            <h:commandButton value="Done" action="#{editPerson.done}"/>
+          </div>
+          
+         </div>
+             
+     </h:form>
+        
+      </ui:define>
+      
+      </ui:composition>

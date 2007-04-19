@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+                      
+<div xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:s="http://jboss.com/products/seam/taglib"
+      xmlns:a4j="https://ajax4jsf.dev.java.net/ajax"
+      xmlns:rich="http://richfaces.ajax4jsf.org/rich">
+      
+<rich:toolBar itemSeparator = "disc">
+
+  <s:link view="/home.xhtml"><h:graphicImage url="layout/serg-logo-color-smaller.png" border="0"/></s:link>
+      
+  <rich:toolBarGroup itemSeparator = "disc">
+     <s:link view="/PersonList.xhtml" value="People"/>
+     <s:link view="/UserList.xhtml" value="Users"/>
+     <s:link view="/TopicList.xhtml" value="Topics"/>
+     <s:link view="/ResearchProjectList.xhtml" value="Projects"/></rich:toolBarGroup>
+        
+  <rich:toolBarGroup location="right" itemSeparator = "disc"><h:outputText value="Welcome, #{identity.username}" rendered="#{identity.loggedIn}"/><s:link view="/login.xhtml" value="Login" rendered="#{not identity.loggedIn}"/><s:link view="/home.xhtml" action="#{identity.logout}" value="Logout" rendered="#{identity.loggedIn}"/></rich:toolBarGroup>
+
+</rich:toolBar>
+
+</div>

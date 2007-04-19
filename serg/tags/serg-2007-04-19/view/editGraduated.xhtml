@@ -1,0 +1,20 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="layout/template.xhtml"><ui:define name="body">
+        <h1>
+           <h:outputText rendered="#{!graduatedHome.managed}" value="Create Graduated"/>
+           <h:outputText rendered="#{graduatedHome.managed}" value="Edit Graduated"/>
+        </h1>
+        <h:messages globalOnly="true" styleClass="message"/>
+        <h:form id="editGraduated">
+          <div class="dialog">
+            <s:validateAll><table></table></s:validateAll>
+          </div>
+          <div class="actionButtons">
+            <s:link view="/viewGraduated.xhtml" value="View Graduated" rendered="#{graduatedHome.managed}"/>
+            <h:commandButton value="Create Graduated" action="#{graduatedHome.persist}" rendered="#{!graduatedHome.managed}"/>
+            <h:commandButton value="Update Graduated" action="#{graduatedHome.update}" rendered="#{graduatedHome.managed}"/>
+            <h:commandButton value="Delete Graduated" action="#{graduatedHome.delete}" rendered="#{graduatedHome.managed}"/>
+          </div>
+        </h:form>
+      </ui:define></ui:composition>

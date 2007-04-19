@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "http://beust.com/testng/testng-1.0.dtd" >
+
+<suite name="Users Tests" verbose="2" parallel="false">
+   <test name="Users Test">
+     <classes>
+       <class name="org.webdsl.serg.test.UsersTest"/>       
+     </classes>
+   </test>	
+</suite>
