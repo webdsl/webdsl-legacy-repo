@@ -8,6 +8,8 @@ import org.webdsl.serg.domain.*;
 public class Person {
 	
 	public Person() {
+		this.setFullname("Eelco Visser");
+		this.setAddress(new Address());
 		this.addHomepages("http://foo.bar");
 		this.addHomepages("http://foo.baz");
 		this.addHomepages("http://foo.boo");

@@ -1,10 +1,7 @@
 package org.webdsl.serg.domain;
 
-public interface IPersonList 
+public interface IImageList 
 { 
-
-  public void initialize();
-	
   public void findEntries();
 
   public void delete();

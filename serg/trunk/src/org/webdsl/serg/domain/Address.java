@@ -7,7 +7,11 @@ import org.webdsl.serg.domain.*;
 @Entity public class Address  
 { 
   public Address () 
-  { }
+  { 
+	  this.setCity("Delft");
+	  this.setStreet("Mekelweg");
+	  this.setNumber("4");
+  }
 
   @Id @GeneratedValue private Long id;
 
