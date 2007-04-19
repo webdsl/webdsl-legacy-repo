@@ -2,7 +2,7 @@
 # should eventually be integrated in ant build.xml file
 # and be invocable from Eclipse
 
-all : master.appb
+all : serg.appb
 
 %.appa : %.app
 	$(dsltoseam) -i $< -o $@
@@ -11,7 +11,7 @@ all : master.appb
 
 GENDIR = $(HOME)/webdsl/webdsls/src/org/webdsl/dsl
 
-all : master.appb
+all : serg.appb
 
 %.appa : %.app
 	sglri -p $(GENDIR)/syntax/WebDSL.tbl -i $< | pp-aterm -o $@
@@ -23,5 +23,5 @@ all : master.appb
 clean :
 	rm $(wildcard *.appa) $(wildcard *.appb)
 
-cleanmaster :
-	rm -rf org.webdsl.master.domain
+cleanserg :
+	rm -rf org.webdsl.serg.domain
