@@ -6,17 +6,17 @@
         </h1>
         <h:messages globalOnly="true" styleClass="message"/>
         <h:form id="viewUser">
-          <div class="dialog"><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3"><h:outputText value="username"/><h:outputText id="user_username" value="#{user.username}"/><h:outputText value="email"/><h:outputLink id="user_email" value="mailto:#{user.email}">
+          <div class="dialog"><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3"><h:outputText value="username"/><h:outputText id="user_username" value="#{user.username}"/><h:outputText value="email"/><h:outputLink id="user_email_link" value="mailto:#{user.email}">
              <h:outputText id="user_email" value="#{user.email}"/>
       </h:outputLink><h:outputText value="password"/><h:outputText id="user_password" value="#{user.password}"/><h:outputText value="person"/><h:panelGroup/>
-      <h:outputText value="fullname"/><h:outputText id="user_person_fullname" value="#{user.person.fullname}"/><h:outputText value="homepage"/><h:outputLink id="user_person_homepage" value="#{user.person.homepage}">
+      <h:outputText value="fullname"/><h:outputText id="user_person_fullname" value="#{user.person.fullname}"/><h:outputText value="homepage"/><h:outputLink id="user_person_homepage_link" value="#{user.person.homepage}">
              <h:outputText id="user_person_homepage" value="#{user.person.homepage}"/>
       </h:outputLink><h:outputText value="photo"/><h:graphicImage id="user_person_photo" value="#{user.person.photo}"/><h:outputText value="address"/><h:panelGroup/>
       <h:outputText value="street"/><h:outputText id="user_person_address_street" value="#{user.person.address.street}"/><h:outputText value="city"/><h:outputText id="user_person_address_city" value="#{user.person.address.city}"/><h:outputText value="phone"/><h:outputText id="user_person_address_phone" value="#{user.person.address.phone}"/></h:panelGrid></div>
           <div class="actionButtons">
              <s:button action="#{userEditor.edit}" value="Edit"/>
              <s:button action="#{userHome.remove}" value="Delete"/>
-             <s:button view="findUser.xhtml" value="Find user"/>
+             <s:button view="/findUser.xhtml" value="Find user"/>
           </div>
         </h:form>
       </ui:define></ui:composition>

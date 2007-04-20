@@ -6,14 +6,14 @@
         </h1>
         <h:messages globalOnly="true" styleClass="message"/>
         <h:form id="viewPerson">
-          <div class="dialog"><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3"><h:outputText value="fullname"/><h:outputText id="person_fullname" value="#{person.fullname}"/><h:outputText value="homepage"/><h:outputLink id="person_homepage" value="#{person.homepage}">
+          <div class="dialog"><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3"><h:outputText value="fullname"/><h:outputText id="person_fullname" value="#{person.fullname}"/><h:outputText value="homepage"/><h:outputLink id="person_homepage_link" value="#{person.homepage}">
              <h:outputText id="person_homepage" value="#{person.homepage}"/>
       </h:outputLink><h:outputText value="photo"/><h:graphicImage id="person_photo" value="#{person.photo}"/><h:outputText value="address"/><h:panelGroup/>
       <h:outputText value="street"/><h:outputText id="person_address_street" value="#{person.address.street}"/><h:outputText value="city"/><h:outputText id="person_address_city" value="#{person.address.city}"/><h:outputText value="phone"/><h:outputText id="person_address_phone" value="#{person.address.phone}"/></h:panelGrid></div>
           <div class="actionButtons">
              <s:button action="#{personEditor.edit}" value="Edit"/>
              <s:button action="#{personHome.remove}" value="Delete"/>
-             <s:button view="findPerson.xhtml" value="Find person"/>
+             <s:button view="/findPerson.xhtml" value="Find person"/>
           </div>
         </h:form>
       </ui:define></ui:composition>

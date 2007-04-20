@@ -2,4 +2,15 @@
 
 <page>
          <param name="userId" value="#{userHome.id}" converterId="javax.faces.Long"/>
-       </page>
+         <navigation>
+           <rule if-outcome="removed">
+             <end-conversation before-redirect="true"/>
+             <redirect view-id="/findUser.xhtml"/>
+           </rule>
+           <rule if-outcome="editAddress">
+             <redirect view-id="/editUser.xhtml">
+                <param name="userId" value="#{userHome.id}"/>
+             </redirect>
+           </rule>
+         </navigation>
+      </page>

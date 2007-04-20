@@ -10,15 +10,15 @@
           <div class="dialog">
             <s:validateAll><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3"><h:outputText value="title"/>
       <s:decorate><h:inputText id="publicationEditor_publication_title" required="true" value="#{publicationEditor.publication.title}"/></s:decorate><h:outputText value="pubabstract"/>
-      <s:decorate><h:inputTextArea id="publicationEditor_publication_pubabstract" required="true" value="#{publicationEditor.publication.pubabstract}"/></s:decorate><h:outputText value="pdf"/>
+      <s:decorate><h:inputTextarea id="publicationEditor_publication_pubabstract" required="true" value="#{publicationEditor.publication.pubabstract}"/></s:decorate><h:outputText value="pdf"/>
       <s:decorate><h:inputText id="publicationEditor_publication_pdf" required="true" value="#{publicationEditor.publication.pdf}"/></s:decorate></h:panelGrid></s:validateAll>
           </div>
           <div class="actionButtons">
             <h:commandButton value="Create" action="#{publicationEditor.create}" rendered="#{publicationEditor.new}"/>
-            <h:commandButton value="View" view="/viewPublication.xhtml" rendered="#{!publicationEditor.new}">
+            <s:link value="View" view="/viewPublication.xhtml" rendered="#{!publicationEditor.new}">
                  <f:param name="publicationId" value="#{publicationEditor.publication.id}"/>
-            </h:commandButton>
-            <h:commandButton value="Update" action="#{publicationEditor.update}" rendered="#{!publicationEditor.new}"/>
+            </s:link>             
+            <h:commandButton value="Save" action="#{publicationEditor.save}" rendered="#{!publicationEditor.new}"/>
             <h:commandButton value="Delete" action="#{publicationEditor.delete}" rendered="#{!publicationEditor.new}"/>
           </div>
         </h:form>

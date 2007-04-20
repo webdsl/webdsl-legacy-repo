@@ -4,7 +4,11 @@ import org.jboss.annotation.ejb.Local;
 
 @Local public interface PersonFinder 
 { 
+  public void initialize();
+
   public void findEntries();
+
+  public void refresh();
 
   public void delete();
 

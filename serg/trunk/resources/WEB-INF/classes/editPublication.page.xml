@@ -2,4 +2,10 @@
 
 <page>
          <param name="publicationId" value="#{publicationHome.id}" converterId="javax.faces.Long"/>
+         <navigation>
+           <rule if-outcome="findPublication">
+             <end-conversation before-redirect="true"/>
+             <redirect view-id="/findPublication.xhtml"/>
+           </rule>
+         </navigation> 
        </page>

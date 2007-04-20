@@ -6,13 +6,13 @@
         </h1>
         <h:messages globalOnly="true" styleClass="message"/>
         <h:form id="viewPublication">
-          <div class="dialog"><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3"><h:outputText value="title"/><h:outputText id="publication_title" value="#{publication.title}"/><h:outputText value="pubabstract"/><s:formattedText id="publication_pubabstract" value="#{publication.pubabstract}"/><h:outputText value="pdf"/><h:outputLink id="publication_pdf" value="#{publication.pdf}">
+          <div class="dialog"><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3"><h:outputText value="title"/><h:outputText id="publication_title" value="#{publication.title}"/><h:outputText value="pubabstract"/><s:formattedText id="publication_pubabstract" value="#{publication.pubabstract}"/><h:outputText value="pdf"/><h:outputLink id="publication_pdf_link" value="#{publication.pdf}">
              <h:outputText id="publication_pdf" value="#{publication.pdf}"/>
       </h:outputLink></h:panelGrid></div>
           <div class="actionButtons">
              <s:button action="#{publicationEditor.edit}" value="Edit"/>
              <s:button action="#{publicationHome.remove}" value="Delete"/>
-             <s:button view="findPublication.xhtml" value="Find publication"/>
+             <s:button view="/findPublication.xhtml" value="Find publication"/>
           </div>
         </h:form>
       </ui:define></ui:composition>

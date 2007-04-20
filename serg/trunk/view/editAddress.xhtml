@@ -15,10 +15,10 @@
           </div>
           <div class="actionButtons">
             <h:commandButton value="Create" action="#{addressEditor.create}" rendered="#{addressEditor.new}"/>
-            <h:commandButton value="View" view="/viewAddress.xhtml" rendered="#{!addressEditor.new}">
+            <s:link value="View" view="/viewAddress.xhtml" rendered="#{!addressEditor.new}">
                  <f:param name="addressId" value="#{addressEditor.address.id}"/>
-            </h:commandButton>
-            <h:commandButton value="Update" action="#{addressEditor.update}" rendered="#{!addressEditor.new}"/>
+            </s:link>             
+            <h:commandButton value="Save" action="#{addressEditor.save}" rendered="#{!addressEditor.new}"/>
             <h:commandButton value="Delete" action="#{addressEditor.delete}" rendered="#{!addressEditor.new}"/>
           </div>
         </h:form>

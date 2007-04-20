@@ -13,6 +13,7 @@ import org.jboss.seam.annotations.End;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.RequestParameter;
 import org.jboss.seam.core.FacesMessages;
 import org.jboss.seam.log.Log;
 
@@ -52,15 +53,25 @@ import org.jboss.seam.log.Log;
   { 
     em.persist(address);
     isNew = false;
-    log.info("creating new x_class");
+    log.info("creating new " + "address");
     return null;
   }
 
-  public String update()
+  @RequestParameter("addressId") private Long addressId;
+
+  @Begin(join = true) public String edit()
+  { 
+    address = em.find(Address.class, addressId);
+    isNew = false;
+    log.info("loaded new " + "address" + " for editing " + address);
+    return "editAddress";
+  }
+
+  public String save()
   { 
     em.joinTransaction();
     em.flush();
-    log.info("updating x_class");
+    log.info("saving " + "address");
     return null;
   }
 
@@ -68,22 +79,22 @@ import org.jboss.seam.log.Log;
   { 
     em.remove(address);
     address = null;
-    log.info("deleting x_Class and going to PersonList");
-    return "/find" + "Address" + ".xhtml";
+    log.info("deleting " + "Address");
+    return "find" + "Address";
   }
 
   @End public String done()
   { 
     if(!isNew)
       em.refresh(address);
-    return "/find" + "Address" + ".xhtml";
+    return "find" + "Address";
   }
 
   @End public String view()
   { 
     if(!isNew)
       em.refresh(address);
-    return "/view" + "Address" + ".xhtml";
+    return "view" + "Address";
   }
 
   @Remove @Destroy public void destroy()

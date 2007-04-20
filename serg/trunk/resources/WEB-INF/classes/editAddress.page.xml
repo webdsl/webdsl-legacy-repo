@@ -2,4 +2,10 @@
 
 <page>
          <param name="addressId" value="#{addressHome.id}" converterId="javax.faces.Long"/>
+         <navigation>
+           <rule if-outcome="findAddress">
+             <end-conversation before-redirect="true"/>
+             <redirect view-id="/findAddress.xhtml"/>
+           </rule>
+         </navigation> 
        </page>

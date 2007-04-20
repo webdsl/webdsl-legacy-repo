@@ -26,10 +26,10 @@
           </div>
           <div class="actionButtons">
             <h:commandButton value="Create" action="#{userEditor.create}" rendered="#{userEditor.new}"/>
-            <h:commandButton value="View" view="/viewUser.xhtml" rendered="#{!userEditor.new}">
+            <s:link value="View" view="/viewUser.xhtml" rendered="#{!userEditor.new}">
                  <f:param name="userId" value="#{userEditor.user.id}"/>
-            </h:commandButton>
-            <h:commandButton value="Update" action="#{userEditor.update}" rendered="#{!userEditor.new}"/>
+            </s:link>             
+            <h:commandButton value="Save" action="#{userEditor.save}" rendered="#{!userEditor.new}"/>
             <h:commandButton value="Delete" action="#{userEditor.delete}" rendered="#{!userEditor.new}"/>
           </div>
         </h:form>

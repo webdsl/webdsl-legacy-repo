@@ -2,4 +2,10 @@
 
 <page>
          <param name="userId" value="#{userHome.id}" converterId="javax.faces.Long"/>
+         <navigation>
+           <rule if-outcome="findUser">
+             <end-conversation before-redirect="true"/>
+             <redirect view-id="/findUser.xhtml"/>
+           </rule>
+         </navigation> 
        </page>

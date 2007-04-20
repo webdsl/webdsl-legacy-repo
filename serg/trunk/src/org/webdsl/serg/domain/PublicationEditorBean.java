@@ -13,6 +13,7 @@ import org.jboss.seam.annotations.End;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.RequestParameter;
 import org.jboss.seam.core.FacesMessages;
 import org.jboss.seam.log.Log;
 
@@ -52,15 +53,25 @@ import org.jboss.seam.log.Log;
   { 
     em.persist(publication);
     isNew = false;
-    log.info("creating new x_class");
+    log.info("creating new " + "publication");
     return null;
   }
 
-  public String update()
+  @RequestParameter("publicationId") private Long publicationId;
+
+  @Begin(join = true) public String edit()
+  { 
+    publication = em.find(Publication.class, publicationId);
+    isNew = false;
+    log.info("loaded new " + "publication" + " for editing " + publication);
+    return "editAddress";
+  }
+
+  public String save()
   { 
     em.joinTransaction();
     em.flush();
-    log.info("updating x_class");
+    log.info("saving " + "publication");
     return null;
   }
 
@@ -68,22 +79,22 @@ import org.jboss.seam.log.Log;
   { 
     em.remove(publication);
     publication = null;
-    log.info("deleting x_Class and going to PersonList");
-    return "/find" + "Publication" + ".xhtml";
+    log.info("deleting " + "Publication");
+    return "find" + "Publication";
   }
 
   @End public String done()
   { 
     if(!isNew)
       em.refresh(publication);
-    return "/find" + "Publication" + ".xhtml";
+    return "find" + "Publication";
   }
 
   @End public String view()
   { 
     if(!isNew)
       em.refresh(publication);
-    return "/view" + "Publication" + ".xhtml";
+    return "view" + "Publication";
   }
 
   @Remove @Destroy public void destroy()

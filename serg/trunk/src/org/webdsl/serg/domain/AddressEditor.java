@@ -14,7 +14,9 @@ import org.jboss.annotation.ejb.Local;
 
   public String create();
 
-  public String update();
+  public String edit();
+
+  public String save();
 
   public String delete();
 
