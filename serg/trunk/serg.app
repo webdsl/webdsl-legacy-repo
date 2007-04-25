@@ -54,25 +54,29 @@ section init database .
 
   action initDB {
   
-    Mekelweg4 := 
+    Address Mekelweg4 := 
       Address {
         street := "Mekelweg"
-        number := "4"
         city   := "Delft"
+        phone  := "015"
       };
   
-    EelcoVisser := 
+    Person EelcoVisser :=
       Person {
-        fullname := "Eelco Visser"
+        fullname := "Eelco Visser" 
         address  := Mekelweg4
         homepage := "http://www.eelcovisser.net"
         photo    := "http://static.flickr.com/56/141569082_372ea07ea9_m.jpg"
-        user     := User {
-                      username := "Eelco Visser"
-                      email    := "visser@acm.org"
-                      password := "foo"
-                      person   := EelcoVisser
-                    }
+      }; 
+      
+    EelcoVisser.user :=
+      User {
+        username := "Eelco Visser"
+        email    := "visser@acm.org"
+        password := "foo"
+        person   := EelcoVisser
       };
+     
+    EelcoVisser.persist();
 
   }

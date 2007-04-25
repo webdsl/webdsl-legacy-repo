@@ -1,0 +1,23 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich" template="layout/template.xhtml"><ui:define name="body">
+        <h1>
+           <h:outputText rendered="#{technicalReportEditor.new}" value="Create TechnicalReport"/>
+           <h:outputText rendered="#{!technicalReportEditor.new}" value="Edit TechnicalReport #{technicalReportEditor.technicalReport.name}"/>
+        </h1>
+        <h:messages globalOnly="true" styleClass="message"/>
+        <h:form id="editTechnicalReport">
+          <div class="dialog">
+            <s:validateAll><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3"><h:outputText value="document"/>
+      <s:decorate><h:inputTextarea id="technicalReportEditor_technicalReport_document" required="true" value="#{technicalReportEditor.technicalReport.document}"/></s:decorate></h:panelGrid></s:validateAll>
+          </div>
+          <div class="actionButtons">
+            <h:commandButton value="Create" action="#{technicalReportEditor.create}" rendered="#{technicalReportEditor.new}"/>
+            <s:link value="View" view="/viewTechnicalReport.xhtml" rendered="#{!technicalReportEditor.new}">
+                 <f:param name="technicalReportId" value="#{technicalReportEditor.technicalReport.id}"/>
+            </s:link>             
+            <h:commandButton value="Save" action="#{technicalReportEditor.save}" rendered="#{!technicalReportEditor.new}"/>
+            <h:commandButton value="Delete" action="#{technicalReportEditor.delete}" rendered="#{!technicalReportEditor.new}"/>
+          </div>
+        </h:form>
+      </ui:define></ui:composition>
