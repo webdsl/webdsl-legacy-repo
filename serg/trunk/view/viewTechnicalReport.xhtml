@@ -6,7 +6,18 @@
         </h1>
         <h:messages globalOnly="true" styleClass="message"/>
         <h:form id="viewTechnicalReport">
-          <div class="dialog"><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3"><h:outputText value="document"/><s:formattedText id="technicalReport_document" value="#{technicalReport.document}"/></h:panelGrid></div>
+          <div class="dialog"><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3">
+      <h:outputText value="number"/>
+      <h:outputText id="technicalReport_number" value="#{technicalReport.number}"/>
+    
+      <h:outputText value="document"/>
+      <s:formattedText id="technicalReport_document" value="#{technicalReport.document}"/>
+    
+      <h:outputText value="preprintof"/>
+      <s:link view="/viewPublication.xhtml" value="#{technicalReport.preprintof.name}">
+                <f:param name="publicationId" value="#{technicalReport.preprintof.id}"/>
+      </s:link>
+    </h:panelGrid></div>
           <div class="actionButtons">
              <s:button action="#{technicalReportEditor.edit}" value="Edit"/>
              <s:button action="#{technicalReportHome.remove}" value="Delete"/>

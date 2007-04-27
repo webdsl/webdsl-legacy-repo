@@ -6,7 +6,16 @@
         </h1>
         <h:messages globalOnly="true" styleClass="message"/>
         <h:form id="viewAddress">
-          <div class="dialog"><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3"><h:outputText value="street"/><h:outputText id="address_street" value="#{address.street}"/><h:outputText value="city"/><h:outputText id="address_city" value="#{address.city}"/><h:outputText value="phone"/><h:outputText id="address_phone" value="#{address.phone}"/></h:panelGrid></div>
+          <div class="dialog"><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3">
+      <h:outputText value="street"/>
+      <h:outputText id="address_street" value="#{address.street}"/>
+    
+      <h:outputText value="city"/>
+      <h:outputText id="address_city" value="#{address.city}"/>
+    
+      <h:outputText value="phone"/>
+      <h:outputText id="address_phone" value="#{address.phone}"/>
+    </h:panelGrid></div>
           <div class="actionButtons">
              <s:button action="#{addressEditor.edit}" value="Edit"/>
              <s:button action="#{addressHome.remove}" value="Delete"/>
