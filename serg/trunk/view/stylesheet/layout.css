@@ -1,0 +1,118 @@
+
+/*	-----------------------------------------------------------
+	LAYOUT
+	positioning of page elements
+	-----------------------------------------------------------	*/
+
+.fullPage {
+}
+
+.twikiLeft {
+  float:left;
+  position:relative;
+}
+
+.twikiRight {
+  position:relative;
+  float:right;
+  display:inline;
+  margin:0;
+  text-align:right;
+}
+
+/**
+ * to clean up floats
+ */
+.twikiClear {
+  margin  : 0;
+  padding : 0;
+  height  : 1px;
+  clear   : both;
+  display : block;
+  line-height:1%;
+}
+.twikiHidden {
+	display:none;
+}
+
+/**
+ * -----------------------------------------------------------
+ * Positioning of layout blocks
+ * -----------------------------------------------------------	
+ */
+.twikiMiddleContainer {
+  margin-top     : 1.5em;
+  margin-right   : 1.5em;
+  padding-bottom : 1.5em;
+}
+
+.twikiLeftBar {
+  position: absolute;
+}
+
+.twikiLeftBar,
+.twikiLeftBarContents /* needed for Explorer 5.0 */ {
+  margin-left  : 1.5em;
+  margin-right : 1em;
+  width        : 10em;
+}
+
+.twikiViewPage .twikiMain {
+  position : absolute;
+  left  : 15.5em;
+  right : 1.5em;
+  margin-bottom: 1.5em;
+}
+
+.twikiPrintPage .twikiMain {
+  left : 1em;
+}
+
+.twikiTopic {
+  margin: 2em 2.5em;
+}
+
+.twikiBottomBar {
+}
+.twikiBottomBarContents {
+}
+
+/*	-----------------------------------------------------------
+	Pages that are not view
+	-----------------------------------------------------------	*/
+	
+.twikiNoViewPage .twikiMain {
+  margin-left:8em;
+  margin-right:8em;
+  /* padding in style.css */
+}
+.twikiEditPage .twikiMain {
+  margin-left:6em;
+  margin-right:6em;
+}
+
+/* Print */
+
+.twikiPrintPage .twikiMain {
+  margin-left:0;
+  margin-right:0;
+  padding:0 0 0 2em;
+  border-width:1px;
+  border-color:#ddd #fff #ddd #ddd;
+}
+.twikiPrintPage .twikiBottomBar {
+  margin-left:1em;
+  margin-right:0;
+  padding:0;
+}
+.twikiPrintPage .twikiBottomBarContents {
+  padding-left:1em;
+}
+
+/* Plain */
+
+.twikiPlainPage .twikiMain {
+  margin-left:0px;
+  margin-right:0px;
+  /* padding in style.css */
+}

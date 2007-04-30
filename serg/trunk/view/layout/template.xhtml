@@ -17,8 +17,10 @@
 <body>
 
     <ui:include src="menu.xhtml"/>
-
-	<div class="body">
+    
+    <div class="sidebar">
+		<ui:insert name="sidebar"/>
+    </div><div class="body">
 	
 	    <!-- todo: create a standardized layout for the body with room for error messages -->
   
@@ -33,9 +35,11 @@
     
 	</div>
 
+    <!--
 	<div class="footer">
 		Generated with <a href="http://www.strategoxt.org">Stratego/XT</a>
 	</div>
+	-->
 
 </body>
 </html>
