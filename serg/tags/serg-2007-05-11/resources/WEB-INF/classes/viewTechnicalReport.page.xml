@@ -1,0 +1,16 @@
+<!DOCTYPE page PUBLIC "-//JBoss/Seam Pages Configuration DTD 1.1//EN" "http://jboss.com/products/seam/pages-1.1.dtd" >
+
+<page>
+         <param name="technicalReportId" value="#{technicalReportHome.id}" converterId="javax.faces.Long"/>
+         <navigation>
+           <rule if-outcome="removed">
+             <end-conversation before-redirect="true"/>
+             <redirect view-id="/findTechnicalReport.xhtml"/>
+           </rule>
+           <rule if-outcome="editAddress">
+             <redirect view-id="/editTechnicalReport.xhtml">
+                <param name="technicalReportId" value="#{technicalReportHome.id}"/>
+             </redirect>
+           </rule>
+         </navigation>
+      </page>

@@ -1,0 +1,45 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich" template="layout/template.xhtml"><ui:define name="sidebar">
+        this is the sidebar
+      </ui:define>
+      <ui:define name="body">
+        <h1>
+           <h:outputText value="Person #{person.name}"/>
+        </h1>
+        <h:messages globalOnly="true" styleClass="message"/>
+        <h:form id="viewPerson">
+          <div class="dialog"><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3">
+      <h:outputText value="fullname"/>
+      <h:outputText id="person_fullname" value="#{person.fullname}"/>
+    
+      <h:outputText value="homepage"/>
+      <h:outputLink id="person_homepage_link" value="#{person.homepage}">
+             <h:outputText id="person_homepage" value="#{person.homepage}"/>
+      </h:outputLink>
+    
+      <h:outputText value="photo"/>
+      <h:graphicImage id="person_photo" value="#{person.photo}"/>
+    <h:outputText value="address"/><h:panelGroup/>
+      
+      <h:outputText value="street"/>
+      <h:outputText id="person_address_street" value="#{person.address.street}"/>
+    
+      <h:outputText value="city"/>
+      <h:outputText id="person_address_city" value="#{person.address.city}"/>
+    
+      <h:outputText value="phone"/>
+      <h:outputText id="person_address_phone" value="#{person.address.phone}"/>
+    
+      <h:outputText value="user"/>
+      <s:link view="/viewUser.xhtml" value="#{person.user.name}">
+                <f:param name="userId" value="#{person.user.id}"/>
+      </s:link>
+    </h:panelGrid></div>
+          <div class="actionButtons">
+             <s:button action="#{personEditor.edit}" value="Edit"/>
+             <s:button action="#{personHome.remove}" value="Delete"/>
+             <s:button view="/findPerson.xhtml" value="Find person"/>
+          </div>
+        </h:form>
+      </ui:define></ui:composition>

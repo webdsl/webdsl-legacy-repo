@@ -1,0 +1,11 @@
+<!DOCTYPE page PUBLIC "-//JBoss/Seam Pages Configuration DTD 1.1//EN" "http://jboss.com/products/seam/pages-1.1.dtd" >
+
+<page>
+         <param name="personId" value="#{personHome.id}" converterId="javax.faces.Long"/>
+         <navigation>
+           <rule if-outcome="findPerson">
+             <end-conversation before-redirect="true"/>
+             <redirect view-id="/findPerson.xhtml"/>
+           </rule>
+         </navigation> 
+       </page>

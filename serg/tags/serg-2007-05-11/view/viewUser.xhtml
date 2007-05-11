@@ -1,0 +1,57 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich" template="layout/template.xhtml"><ui:define name="sidebar">
+        this is the sidebar
+      </ui:define>
+      <ui:define name="body">
+        <h1>
+           <h:outputText value="User #{user.name}"/>
+        </h1>
+        <h:messages globalOnly="true" styleClass="message"/>
+        <h:form id="viewUser">
+          <div class="dialog"><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3">
+      <h:outputText value="username"/>
+      <h:outputText id="user_username" value="#{user.username}"/>
+    
+      <h:outputText value="email"/>
+      <h:outputLink id="user_email_link" value="mailto:#{user.email}">
+             <h:outputText id="user_email" value="#{user.email}"/>
+      </h:outputLink>
+    
+      <h:outputText value="password"/>
+      <h:outputText id="user_password" value="#{user.password}"/>
+    <h:outputText value="person"/><h:panelGroup/>
+      
+      <h:outputText value="fullname"/>
+      <h:outputText id="user_person_fullname" value="#{user.person.fullname}"/>
+    
+      <h:outputText value="homepage"/>
+      <h:outputLink id="user_person_homepage_link" value="#{user.person.homepage}">
+             <h:outputText id="user_person_homepage" value="#{user.person.homepage}"/>
+      </h:outputLink>
+    
+      <h:outputText value="photo"/>
+      <h:graphicImage id="user_person_photo" value="#{user.person.photo}"/>
+    <h:outputText value="address"/><h:panelGroup/>
+      
+      <h:outputText value="street"/>
+      <h:outputText id="user_person_address_street" value="#{user.person.address.street}"/>
+    
+      <h:outputText value="city"/>
+      <h:outputText id="user_person_address_city" value="#{user.person.address.city}"/>
+    
+      <h:outputText value="phone"/>
+      <h:outputText id="user_person_address_phone" value="#{user.person.address.phone}"/>
+    
+      <h:outputText value="user"/>
+      <s:link view="/viewUser.xhtml" value="#{user.person.user.name}">
+                <f:param name="userId" value="#{user.person.user.id}"/>
+      </s:link>
+    </h:panelGrid></div>
+          <div class="actionButtons">
+             <s:button action="#{userEditor.edit}" value="Edit"/>
+             <s:button action="#{userHome.remove}" value="Delete"/>
+             <s:button view="/findUser.xhtml" value="Find user"/>
+          </div>
+        </h:form>
+      </ui:define></ui:composition>

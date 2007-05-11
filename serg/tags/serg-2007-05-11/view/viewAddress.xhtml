@@ -1,0 +1,28 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich" template="layout/template.xhtml"><ui:define name="sidebar">
+        this is the sidebar
+      </ui:define>
+      <ui:define name="body">
+        <h1>
+           <h:outputText value="Address #{address.name}"/>
+        </h1>
+        <h:messages globalOnly="true" styleClass="message"/>
+        <h:form id="viewAddress">
+          <div class="dialog"><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3">
+      <h:outputText value="street"/>
+      <h:outputText id="address_street" value="#{address.street}"/>
+    
+      <h:outputText value="city"/>
+      <h:outputText id="address_city" value="#{address.city}"/>
+    
+      <h:outputText value="phone"/>
+      <h:outputText id="address_phone" value="#{address.phone}"/>
+    </h:panelGrid></div>
+          <div class="actionButtons">
+             <s:button action="#{addressEditor.edit}" value="Edit"/>
+             <s:button action="#{addressHome.remove}" value="Delete"/>
+             <s:button view="/findAddress.xhtml" value="Find address"/>
+          </div>
+        </h:form>
+      </ui:define></ui:composition>
