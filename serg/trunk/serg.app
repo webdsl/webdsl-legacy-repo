@@ -12,7 +12,6 @@ section people.
 
   User {
     username :: String (name, unique)
-    email    :: Email  (unique)
     password :: Secret
     person   <> Person
   }
@@ -25,13 +24,106 @@ section people.
 
   Person {
     fullname  :: String (name)
+    email     :: Email
     homepage  :: URL
     photo     :: Image
     birthdate :: Date
     address   <> Address
     user      -> User
   }
+  
+  query Person p {
+    publications := Publication pub where pub.authors.has(p)
+    projects := ResearchProject proj where proj.members.has(p)
+  }
+  
+section people pages.
 
+  template menu() {
+    image("/serg/layout/serg-logo-color-smaller.png")
+  }
+  
+  template footer() {
+    text("generated with Stratego/XT")
+  }
+
+  template mainTemplate(sidebar, body) {
+    include menu()
+    include sidebar()
+    include body()
+    include footer()
+  }
+  
+  // overrides the default view page
+  
+  page personSidebar(Person p)
+  {
+    list {
+      listitem(navigate(p.name, viewPerson(p)))
+      listitem(navigate("Publications", publications(p)))
+      listitem(
+        "Projects"
+           list(ResearchProject pr : p.projects) {
+             listitem(navigate(pr.name, viewResearchProject(pr)))
+           }
+      listitem(navigate("Edit", editPerson(p)))
+    }
+  }
+  
+  page viewPerson(Person p) instantiating mainTemplate
+  {
+    sidebar { personSidebar(p) }
+    
+    body {
+      header("Homepage of " p.name)
+      // how should level be indicated? or should headers be associated
+      // with the content they are heading?
+    
+      image(p.photo, width=180)
+      // photo should be right-aligned; leave this to CSS?
+      // variable number of properties
+    
+      header("Coordinates")
+    
+      table(
+        row("homepage", p.homepage) // this is an implicit navigate; i.e., view of URL is a link (?)
+        row("email",    p.email) // same here
+        row("address",  table(
+                          row(p.address.street)
+                          row(p.address.city)
+                        )
+        row("phone", p.address.phone)
+      )
+    
+      header("Recent Publications")
+    
+      publicationsForYear(p, 2007)
+    }
+  }
+
+  page personPublications(Person p) instantiating mainTemplate
+  {
+    sidebar { personSidebar(p) }
+    body {
+      header("Publications by " + p.name)
+      publicationsPage(pers.publications)
+    }
+  }
+  
+  page publicationsForYear(Person pers, Int year) {
+    publicationsPage(pers.publications where p.year == year)
+  }
+  
+  page publicationsPage(List<Publication> ps) {
+    list(Publication p : ps) {
+      listitem(
+         for(Person a : pub.authors) {text(a.name) text(", ")}
+         text(".")
+         navigate(viewPublication(pub, text(pub.title))
+      )
+    }
+  }
+  
 section publications.
     
   Publication {
