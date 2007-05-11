@@ -1,0 +1,25 @@
+/**
+
+ Desugaring rules for WebDSL
+ 
+*/
+
+module org/webdsl/dsl/transformation/desugar
+
+imports 
+  libstrategolib 
+  Java-15 
+  libjava-front 
+  
+imports 
+  org/webdsl/dsl/syntax/WebDSL
+
+strategies
+
+  desugar = 
+    topdown(try(Desugar))
+
+rules
+
+  Desugar : 
+    PropertyNoAnno(x, k, s) -> Property(x, k, s, [])

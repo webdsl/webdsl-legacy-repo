@@ -1,0 +1,175 @@
+--------------------------------------------------------------------
+TODO
+--------------------------------------------------------------------
+
+* initialize the database via statements in the DSL
+
+  - import and export of data to/from XML (?)
+
+* support viewing and editing of associations
+
+  - start with viewing of reference types, collections of
+    value, composite, and reference types
+
+  - when editing an object provide choice box for selecting
+    objects for reference types; for example, to add
+    authors to a publication, choose from existing Persons
+    in the database; also provide an option to create a new
+    object for the association, returning to the original
+    edit afterwards (or at least making the association with
+    the original object)
+
+  - code for inline editing of value lists; generate a matrix
+    with inputText fields; update the elements from this matrix
+    (in first experiments it wasn't clear to me how to get this
+    done using dataTable; the JSF book provides an example, but
+    that requires actually programming the components in Java;
+    it would seem that the DataModel(Selection) constructs of
+    Seam should provide a solution for this (using 
+    valueChangedListener on the input fields); one issue I
+    encountered here is that it seems not possible to provide
+    both a DataModelSelection and a DataModelSelectionIndex
+    for the same DataModel)
+
+* embed composite associations?
+
+  - perform an analysis of entity declarations and find out
+    which entities are always used in composites
+    does hibernate support selective embedded entities?
+    (that would mean that some objects for the type are in
+     separate table and others are embedded in the rows
+     of the parent objects)
+
+* consider special syntax for special value types such
+  as URLs and dates
+  
+  - but how important are constant values in application
+    definitions?
+
+* SQL queries in the DSL
+
+  - developer-defined queries in the DSL
+
+  - user-defined queries in the webapp (e.g., in a wiki page)
+
+  - StringBorg in DSL and in generated code?
+
+* wiki links 
+
+  - in wiki text (FormattedText) it should be possible to link to
+    other objects/pages in the application, there are several
+    options for doing this
+
+  - [[Person:fullname:Eelco Visser][Eelco Visser]] would be a link to the
+    Person object with fullname 'Eelco Visser', this would work if fullname
+    is a primary key (which it might not be in this particular case). Still
+    it would be ambiguous to what view of this object we want to link.
+
+  - [[Person:id:1][Eelco Visser]] use the entity identifier. This might be
+    fragile, but maybe not (how stable are db identifiers?). But at least,
+    such keys are difficult to come up with (what is the identifier of an
+    object?). This relates to the problem of bookmarking pages.
+
+  - [[Person:id:1:view][Eelco Visser]] explicitly indicates to what page
+    to link, i.e., the view page in this case.
+
+* how to configure the user interface?
+
+  - have edit page of an object as a tab of its view?
+
+    --------------------------------------
+    | View | Discuss | Edit | Properties |
+    ---------------------------------------------
+    |                                           |
+
+    View provides the presentation of the object, Discuss is the page for
+    discussions of the content of the page, in Edit the object
+    data can be modified, and Properties gives meta-data about the
+    object (e.g., history, authors, permissions, etc. (This is probably
+    inspired by mediawiki.)
+
+    Of course, these tabs should only be enabled for those with the
+    right permissions. 
+
+  - table based presentations are ok for edit forms, but too limited
+    for view pages
+
+  - choosing good default values for sizes of form elements (e.g.,
+    textarea)
+
+  - what is a good style for CSS
+
+  - figure out skinnability features of ajax4jsf (?)
+
+  - It would be attractive to compose the userinterface from
+    components that represent a particular object view or edit.
+    Then it would be straightforward to compose more complex
+    UI windows from such components.
+
+* access control and authorization
+
+--------------------------------------------------------------------
+DONE
+--------------------------------------------------------------------
+
+* make URL and Email builtin types
+
+* refactor generator modules to a module per generated file
+
+--------------------------------------------------------------------
+
+	// new homepage
+
+	private String newHomepage = "";
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.webdsl.serg.domain.EditPerson#getNewHomepage()
+	 */
+	public String getNewHomepage() {
+		return newHomepage;
+	}
+
+	public void setNewHomepage(String newHomepage) {
+		this.newHomepage = newHomepage;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.webdsl.serg.domain.EditPerson#addHomepage()
+	 */
+	public void addHomepage() {
+		x_class.addHomepages(getNewHomepage());
+	}
+
+	// delete existing homepage
+
+	public void deleteHomepage() {
+		if (getHomepages() == null)
+			log.info("deleting homepage " + currentHomepage
+					+ " but homepages list is empty");
+		else
+			getHomepages().remove(currentHomepage);
+	}
+
+	// change a homepage
+
+	public void homepageChanged() {
+		int i = getHomepages().indexOf(currentHomepage);
+		getHomepages().remove(currentHomepage);
+		getHomepages().add(i, currentHomepage);
+	}
+
+	@DataModel("homepages")
+	public List<String> getHomepages() {
+		return x_class == null || x_class.getHomepages() == null ? null
+				: new ArrayList<String>(x_class.getHomepages());
+	}
+
+	@DataModelSelection(value = "homepages")
+	String currentHomepage;
+
+	// @DataModelSelectionIndex(value="homepages")
+	// int currentHomepageIndex;

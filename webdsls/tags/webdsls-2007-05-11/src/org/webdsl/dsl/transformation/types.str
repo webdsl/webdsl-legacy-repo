@@ -1,0 +1,82 @@
+/**
+
+  Type rules for WebDSL
+  
+*/
+
+module org/webdsl/dsl/transformation/types
+
+imports 
+  libstrategolib 
+  Java-15 
+  libjava-front 
+  
+imports 
+  org/webdsl/dsl/syntax/WebDSL
+
+strategies // register all declared entities
+
+  inherit-object :
+    EntityNoSuper(x_class, props) -> Entity(x_class, SimpleSort("Object"), props)
+        
+  declare-entity = where(
+    try(inherit-object)
+    ; ?Entity(x_class, x_super, props)
+    ; rules(
+        properties :
+          x_class -> props
+               
+        extends :
+          x_class -> x_super
+          
+        defined-java-type : 
+          SimpleSort(x_class) -> type|[ x_class ]|
+      )
+  )
+
+strategies
+
+  java-type =
+    defined-java-type <+ builtin-java-type <+ err(|"undefined entity: "); fail
+
+rules
+
+  builtin-java-type : 
+    SimpleSort("Int") -> type|[ int ]|
+   
+  builtin-java-type : 
+    SimpleSort("Bool") -> type|[ boolean ]|
+
+  builtin-java-type : 
+    SimpleSort("String") -> type|[ String ]|
+
+  builtin-java-type : 
+    SimpleSort("Secret") -> type|[ String ]|
+
+  builtin-java-type : 
+    SimpleSort("Text") -> type|[ String ]|
+
+  builtin-java-type : 
+    SimpleSort("Date") -> type|[ Date ]|
+    
+  builtin-java-type : 
+    SimpleSort("URL") -> type|[ String  ]|
+    
+  builtin-java-type : 
+    SimpleSort("Image") -> type|[ String ]|
+    
+  builtin-java-type : 
+    SimpleSort("Email") -> type|[ String ]|
+            
+  builtin-java-type :
+    GenericSort("List", [s]) -> type|[ List<t> ]|
+    where t := <java-type> s
+    
+  builtin-java-type :
+    GenericSort("Set", [s]) -> type|[ Set<t> ]|
+    where t := <java-type> s
+
+  builtin-java-type :
+    GenericSort("Map", [s1, s2]) -> type|[ List<t1, t2> ]|
+    where t1 := <java-type> s1
+        ; t2 := <java-type> s2

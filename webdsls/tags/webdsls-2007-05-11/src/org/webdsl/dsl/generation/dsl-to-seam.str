@@ -1,0 +1,82 @@
+/*
+
+  @todo input-wrap or xtc-input-wrap
+
+  @todo use sglr library
+
+  @todo derive filename from compilation unit
+   
+  @todo check consistency of entity declarations
+
+  @todo derive filename from compilation unit
+  
+  @todo each entity should have a name (to refer to objects);
+  this might be a derived property, e.g., 
+  
+     name : String = firstname + lastname
+  
+  such a property would only have a getter, not a setter
+  and thus shows up only in views and references to views
+  
+  @todo refactor this file; one stratego module per type of generated
+  class?
+  
+  // @todo how should references to non primitive types be handled?
+  // @todo deal with collection types
+  // @todo generate code for the backing bean
+  // @todo properties should refer to fields of persistent entity through backing bean
+  
+*/ 
+
+module org/webdsl/dsl/generation/dsl-to-seam
+ 
+imports 
+  libstrategolib 
+  Java-15 
+  libjava-front 
+  
+imports 
+  org/webdsl/dsl/syntax/WebDSL
+  org/webdsl/dsl/utils/-
+  org/webdsl/dsl/transformation/-
+  org/webdsl/dsl/generation/-
+  
+strategies 
+
+  main = 
+   io-wrap(
+     desugar
+     ; where(alltd(declare-entity))
+     ; entities-to-code
+     ; topdown(try(java-file-to-file <+ xml-file-to-file))
+   )
+   
+strategies
+
+  entities-to-code :
+    Application(qid, sections) -> <collect(entity-to-code <+ action-to-java)> sections
+    where rules( 
+            Package := <qid-to-package-name> qid
+            DomainPackage := <qid-to-package-name> Qualified(qid, "domain")
+          )
+                    
+   // @todo it would be interesting to have some form of reflection
+   // to get all code generator strategies automatically
+   
+   entity-to-code =
+     !(<entity-to-java-EntityFinder>
+      ,<entity-to-java-EntityEditor>
+      ,<entity-to-java-Entity>
+      ,<entity-to-java-EntityHome>
+      ,<entity-to-xhtml-editEntity>
+      ,<entity-to-xhtml-findEntities>
+      ,<entity-to-xhtml-viewEntity>
+      ,<entity-to-xml-pages>)
+   
+   entity-to-code-failed =
+     (?Entity(x_Class, _, _) <+ ?EntityNoSuper(x_Class, _))
+     ; debug(!"entity-to-code failed: ")
+      
+      
+      
+ 
