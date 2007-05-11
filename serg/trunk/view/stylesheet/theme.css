@@ -4,9 +4,9 @@
   background-color : white;
   border           : 1px solid #999;
   overflow         : hidden;
-  left             : 0em;
-  margin-top       : 1.5em;
-  margin-left      : 1.5em;
+  left             : 10px;
+  margin-top       : 20px;
+  margin-left      : 0em;
   margin-right     : 1.5em;
   width            : 10em;
   padding          : 1em 1em 1em 1em;
@@ -20,15 +20,15 @@
   border        : 1px solid #999;
   overflow      : hidden;
   left          : 12.5em;
-  right         : 1.5em;
-  margin-top    : 1.5em;
+  right         : 10px;
+  margin-top    : 20px;
   margin-bottom : 1.5em;
   padding       : 2em 2em 2em 2em;
   /* padding: 30px; */
 }
 
 body {
-	/* margin: 0px; */
+	margin: 10px; 
 	font-family: Arial,sans-serif;
 	color: #616161;
 }
@@ -125,7 +125,7 @@ th {
 	padding: 5px;
 }
 td {
-	background-color: #F0F0F0;
+	background-color:  white; /* #F0F0F0; */
 	text-align: left;
 }
 .narrow {
@@ -135,7 +135,7 @@ td {
 	width: 80%;
 }
 .first td {
-	background-color: #F0F0F0;
+	background-color: white ; /* #F0F0F0; */
 }
 .second td {
 	background-color: white;
@@ -143,9 +143,9 @@ td {
 
 .dialog 
 {
-	padding: 15px;
-	background-color: #F0F0F0;
-	margin: 10px;	
+	padding: 0px;
+	background-color: white; /* #F0F0F0; */
+	margin: 0px;	
 }
 .dialog table
 {
