@@ -39,25 +39,25 @@ section people.
   
 section people pages.
 
-  template menu() {
+  template main {
+    include menu
+    include sidebar
+    include body
+    include footer
+  }
+  
+  template menu {
     image("/serg/layout/serg-logo-color-smaller.png")
   }
   
-  template footer() {
-    text("generated with Stratego/XT")
+  template footer {
+    text("generated with")
+    navigate("Stratego/XT", http://www.strategoxt.org)
   }
 
-  template mainTemplate(sidebar, body) {
-    include menu()
-    include sidebar()
-    include body()
-    include footer()
-  }
-  
   // overrides the default view page
   
-  page personSidebar(Person p)
-  {
+  template personSidebar(Person p) {
     list {
       listitem(navigate(p.name, viewPerson(p)))
       listitem(navigate("Publications", publications(p)))
@@ -70,11 +70,13 @@ section people pages.
     }
   }
   
-  page viewPerson(Person p) instantiating mainTemplate
-  {
-    sidebar { personSidebar(p) }
+  page viewPerson(Person p) { 
+  
+    include main
     
-    body {
+    template sidebar { include personSidebar(p) }
+    
+    template body {
       header("Homepage of " p.name)
       // how should level be indicated? or should headers be associated
       // with the content they are heading?
@@ -99,6 +101,7 @@ section people pages.
     
       publicationsForYear(p, 2007)
     }
+
   }
 
   page personPublications(Person p) instantiating mainTemplate
