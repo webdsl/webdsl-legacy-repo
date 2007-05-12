@@ -39,94 +39,77 @@ section people.
   
 section people pages.
 
-  template main {
-    include menu
-    include sidebar
+  define main {
+    menu()
+    sidebar()
     include body
     include footer
   }
   
-  template menu {
+  define menu {
     image("/serg/layout/serg-logo-color-smaller.png")
   }
   
-  template footer {
-    text("generated with")
+  define footer {
+    text{"generated with"}
     navigate("Stratego/XT", http://www.strategoxt.org)
   }
 
   // overrides the default view page
   
-  template personSidebar(Person p) {
+  define personSidebar(Person p) {
     list {
-      listitem(navigate(p.name, viewPerson(p)))
-      listitem(navigate("Publications", publications(p)))
-      listitem(
+      listitem{navigate(p.name, viewPerson(p))}
+      
+      listitem{navigate("Publications", publications(p))}
+      
+      listitem {
         "Projects"
-           list(ResearchProject pr : p.projects) {
+           list { for(ResearchProject pr : p.projects) {
              listitem(navigate(pr.name, viewResearchProject(pr)))
-           }
-      listitem(navigate("Edit", editPerson(p)))
+           }}
+      }
+
+      listitem{navigate("Edit", editPerson(p))}
     }
   }
   
-  page viewPerson(Person p) { 
+  page viewPerson(Person p) {
   
     include main
     
-    template sidebar { include personSidebar(p) }
+    title{"Homepage of " p.name}
     
-    template body {
-      header("Homepage of " p.name)
+    define sidebar { include personSidebar(p) }
+    
+    define body {
+      header{"Homepage of " p.name}
       // how should level be indicated? or should headers be associated
       // with the content they are heading?
     
-      image(p.photo, width=180)
+      image(p.photo){width=180}
       // photo should be right-aligned; leave this to CSS?
       // variable number of properties
     
-      header("Coordinates")
+      header{"Coordinates"}
     
-      table(
-        row("homepage", p.homepage) // this is an implicit navigate; i.e., view of URL is a link (?)
-        row("email",    p.email) // same here
-        row("address",  table(
-                          row(p.address.street)
-                          row(p.address.city)
-                        )
-        row("phone", p.address.phone)
-      )
+      table {
+        row{"homepage", p.homepage} // this is an implicit navigate; i.e., view of URL is a link (?)
+        row{"email",    p.email} // same here
+        row{"address",  table{
+                          row{p.address.street}
+                          row{p.address.city}
+                        }
+        row{"phone", p.address.phone}
+      }
     
-      header("Recent Publications")
+      header{"Recent Publications"}
     
       publicationsForYear(p, 2007)
     }
 
   }
 
-  page personPublications(Person p) instantiating mainTemplate
-  {
-    sidebar { personSidebar(p) }
-    body {
-      header("Publications by " + p.name)
-      publicationsPage(pers.publications)
-    }
-  }
-  
-  page publicationsForYear(Person pers, Int year) {
-    publicationsPage(pers.publications where p.year == year)
-  }
-  
-  page publicationsPage(List<Publication> ps) {
-    list(Publication p : ps) {
-      listitem(
-         for(Person a : pub.authors) {text(a.name) text(", ")}
-         text(".")
-         navigate(viewPublication(pub, text(pub.title))
-      )
-    }
-  }
-  
 section publications.
     
   Publication {
@@ -144,6 +127,103 @@ section publications.
     document   :: Text // should be Document or PDF or similar
     preprintof -> Publication
   }
+  
+section publication pages.
+
+  page personPublications(Person p)
+  {
+    main
+    
+    title{"Publications by " + p.name}
+    
+    define sidebar { personSidebar(p) }
+    
+    define body {
+      header("Publications by " + p.name)
+      publicationsPage(pers.publications)
+    }
+  }
+  
+  define publicationsForYear(Person pers, Int year) {
+    publicationsPage(pers.publications where p.year == year)
+  }
+
+  define publicationsPage(List<Publication> ps) {
+    list{ for(Publication p : ps) {
+      listitem(
+         for(Person a : pub.authors) {text(a.name) text(", ")}
+         text(".")
+         navigate(text(pub.title), viewPublication(pub))
+      )
+    }
+  }
+  
+  page viewPublication(Publication pub) {
+  
+    include main
+    
+    define sidebar {}
+    
+    define body {
+      table {
+        row("title",       input(pub.title))
+        row("year",        input(pub.year))
+        row("pubabstract", input(pub.pubabstract))
+        row("pdf",         input(pub.pdf))
+        
+        row("authors",     list(pub.authors))
+        
+        row("add author",  select(Person p where not pub.authors.has(p), pub.authors))
+        
+        row("projects      list(pub.projects))
+        
+        row("add project", select(ResearchProject rp where not pub.projects.has(rp))
+
+      }
+      action("Delete", pub.delete, viewPublication(pub))
+      action("Cancel", nop, viewPublication(pub)) 
+    }
+    
+  }
+  
+  page editPublication(Publication pub) {
+  
+    include main
+    
+    define sidebar {}
+    
+    define body {
+      table {
+        row("title",       input(pub.title))
+        row("year",        input(pub.year))
+        row("pubabstract", input(pub.pubabstract))
+        row("pdf",         input(pub.pdf))
+        
+        row("authors",     list(pub.authors))
+        
+        row("add author",  select(Person p where not pub.authors.has(p), pub.authors))
+        
+        row("projects      list(pub.projects))
+        
+        row("add project", select(ResearchProject rp where not pub.projects.has(rp))
+
+      }
+      action("Save", pub.save, viewPublication(pub))
+      action("Cancel", nop, viewPublication(pub)) 
+    }
+    
+  }
+  
+  // note:
+  // view(p) (where p is a Publication)
+  // expands to a navigation(p.name, viewPublication(p))
+  // and 
+  // view(expand(p)) (or something similar) expands to
+  // table { row("title", view(p.title)) ... }
+  // does we can define the effort (recursive expansion) currently
+  // defined in both view and edit for CRUD as a model-to-model 
+  // transformation
+  
   
 section projects.
 
