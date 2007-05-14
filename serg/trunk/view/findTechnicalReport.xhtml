@@ -14,9 +14,9 @@
           <h:outputText value="No TechnicalReport" rendered="#{technicalReportEntries.rowCount==0}"/>
           <h:dataTable var="entry" value="#{technicalReportEntries}" rendered="#{technicalReportEntries.rowCount>0}">
             <h:column>
-              <f:facet name="header">
-                <h:outputText value="Id"/>
-              </f:facet>
+              //<f:facet name="header">
+              //  <h:outputText value="Id"/>
+              //</f:facet>
               <s:link view="/viewTechnicalReport.xhtml" value="#{entry.name}">
                 <f:param name="technicalReportId" value="#{entry.id}"/>
               </s:link>

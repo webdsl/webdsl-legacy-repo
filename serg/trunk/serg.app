@@ -32,32 +32,43 @@ section people.
     user      -> User
   }
   
-  query Person p {
-    publications := Publication pub where pub.authors.has(p)
-    projects := ResearchProject proj where proj.members.has(p)
-  }
+//  query Person p {
+//    publications := Publication pub where pub.authors.has(p)
+//    projects := ResearchProject proj where proj.members.has(p)
+//  }
   
 section people pages.
 
-  define main {
+  define page home() {
+  
+    define sidebar() {
+    }
+    
+    define body () {
+    }
+    
+    main()
+  }
+
+  define main() {
     menu()
     sidebar()
-    include body
-    include footer
+    body()
+    footer()
   }
   
-  define menu {
+  define menu() {
     image("/serg/layout/serg-logo-color-smaller.png")
   }
   
-  define footer {
+  define footer() {
     text{"generated with"}
-    navigate("Stratego/XT", http://www.strategoxt.org)
+    navigate("Stratego/XT", url("http://www.strategoxt.org"))
   }
 
   // overrides the default view page
   
-  define personSidebar(Person p) {
+  define personSidebar(p : Person) {
     list {
       listitem{navigate(p.name, viewPerson(p))}
       
@@ -65,7 +76,7 @@ section people pages.
       
       listitem {
         "Projects"
-           list { for(ResearchProject pr : p.projects) {
+           list { for(pr : ResearchProject in p.projects) {
              listitem(navigate(pr.name, viewResearchProject(pr)))
            }}
       }
@@ -74,40 +85,46 @@ section people pages.
     }
   }
   
-  page viewPerson(Person p) {
+//  define list() {
+//    ul{ for(e : Element in *) { e } }
+//    define listitem() { li{ for(e : Element in *) { e } } }
+//  }
   
-    include main
+  define page viewPerson(p : Person) 
+  {
+    title{"Homepage of " text(p.name)}
     
-    title{"Homepage of " p.name}
+    define sidebar() { personSidebar(p) }
     
-    define sidebar { include personSidebar(p) }
-    
-    define body {
-      header{"Homepage of " p.name}
+    define body() {
+      header{"Homepage of " text(p.name)}
       // how should level be indicated? or should headers be associated
       // with the content they are heading?
     
-      image(p.photo){width=180}
+      image(p.photo)
       // photo should be right-aligned; leave this to CSS?
       // variable number of properties
     
       header{"Coordinates"}
     
       table {
-        row{"homepage", p.homepage} // this is an implicit navigate; i.e., view of URL is a link (?)
-        row{"email",    p.email} // same here
-        row{"address",  table{
-                          row{p.address.street}
-                          row{p.address.city}
+        row{"homepage" navigate(p.homepage)} 
+        row{"email"    navigate(p.email)}
+        row{"address"  table{
+                          row{text(p.address.street)}
+                          row{text(p.address.city)}
                         }
-        row{"phone", p.address.phone}
+        row{"phone" text(p.address.phone)}
       }
     
       header{"Recent Publications"}
     
       publicationsForYear(p, 2007)
     }
-
+  
+    main()
+  }
+  
   }
 
 section publications.
@@ -130,88 +147,87 @@ section publications.
   
 section publication pages.
 
-  page personPublications(Person p)
-  {
-    main
+  define page personPublications(p : Person) {
+    title{"Publications by " text(p.name)}
     
-    title{"Publications by " + p.name}
+    define sidebar() { personSidebar(p) }
     
-    define sidebar { personSidebar(p) }
-    
-    define body {
-      header("Publications by " + p.name)
+    define body() {
+      header{"Publications by " text(p.name)}
       publicationsPage(pers.publications)
     }
+    main()
   }
   
-  define publicationsForYear(Person pers, Int year) {
-    publicationsPage(pers.publications where p.year == year)
+  define publicationsForYear(pers : Person, year : Int) {
   }
+  
+     //    publicationsPage(pers.publications where p.year == year)
 
-  define publicationsPage(List<Publication> ps) {
-    list{ for(Publication p : ps) {
-      listitem(
-         for(Person a : pub.authors) {text(a.name) text(", ")}
-         text(".")
-         navigate(text(pub.title), viewPublication(pub))
-      )
+  define publicationsPage(ps : List<Publication>) {
+    list{ 
+      for(p : Publication in ps) {
+        listitem{
+          for(a : Person in pub.authors) {navigate(a) ","}
+          navigate(pub)
+        }
+     }
     }
   }
   
-  page viewPublication(Publication pub) {
-  
-    include main
+  define page viewPublication(pub : Publication) {
+    title{"Publication " text(pub.title)}
     
-    define sidebar {}
+    define sidebar() {}
     
-    define body {
+    define body() {
+      header{text(pub.title)}
       table {
-        row("title",       input(pub.title))
-        row("year",        input(pub.year))
-        row("pubabstract", input(pub.pubabstract))
-        row("pdf",         input(pub.pdf))
-        
-        row("authors",     list(pub.authors))
-        
-        row("add author",  select(Person p where not pub.authors.has(p), pub.authors))
-        
-        row("projects      list(pub.projects))
-        
-        row("add project", select(ResearchProject rp where not pub.projects.has(rp))
-
+        row{"title"       text(pub.title)}
+        row{"year"        text(pub.year)}
+        row{"pubabstract" text(pub.pubabstract)}
+        row{"pdf"         text(pub.pdf)}
+        row{"authors"     textlist(Person, pub.authors)}
+        row{"projects"    textlist(ResearchProject, pub.projects)}
       }
-      action("Delete", pub.delete, viewPublication(pub))
-      action("Cancel", nop, viewPublication(pub)) 
+      form {
+        action("Delete", pub.delete, home())
+        action("Cancel", nop, viewPublication(pub))
+      }
     }
     
+    main()
   }
   
-  page editPublication(Publication pub) {
-  
-    include main
-    
-    define sidebar {}
-    
-    define body {
-      table {
-        row("title",       input(pub.title))
-        row("year",        input(pub.year))
-        row("pubabstract", input(pub.pubabstract))
-        row("pdf",         input(pub.pdf))
-        
-        row("authors",     list(pub.authors))
-        
-        row("add author",  select(Person p where not pub.authors.has(p), pub.authors))
-        
-        row("projects      list(pub.projects))
-        
-        row("add project", select(ResearchProject rp where not pub.projects.has(rp))
-
-      }
-      action("Save", pub.save, viewPublication(pub))
-      action("Cancel", nop, viewPublication(pub)) 
+  define textlist(t : Type, l : List<t>) {
+    for(o : t in l) {
+      navigate(o)
     }
-    
+  }
+  
+  define page editPublication(pub : Publication) {
+    title{"Edit " text(pub.title)}
+    define sidebar() {}
+    define body() {
+       header{"Edit " text(pub.title)}
+       form { 
+          table {
+             row{"title"       input(pub.title)}
+             row{"year"        input(pub.year)}
+             row{"pubabstract" input(pub.pubabstract)}
+             row{"pdf"         input(pub.pdf)}
+          
+             row{"authors"     textlist(pub.authors)}
+             // row("add author"  select(Person p where not pub.authors.has(p), pub.authors)}
+        
+             row{"projects"     textlist(pub.projects)}
+             // row("add project" select(ResearchProject rp where not pub.projects.has(rp)}
+          }
+          action("Save", pub.save, viewPublication(pub))
+          action("Cancel", nop, viewPublication(pub))
+       }
+    }
+    main()
   }
   
   // note:

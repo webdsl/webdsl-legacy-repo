@@ -13,17 +13,17 @@
       <h:outputText value="username"/>
       <h:outputText id="user_username" value="#{user.username}"/>
     
-      <h:outputText value="email"/>
-      <h:outputLink id="user_email_link" value="mailto:#{user.email}">
-             <h:outputText id="user_email" value="#{user.email}"/>
-      </h:outputLink>
-    
       <h:outputText value="password"/>
       <h:outputText id="user_password" value="#{user.password}"/>
     <h:outputText value="person"/><h:panelGroup/>
       
       <h:outputText value="fullname"/>
       <h:outputText id="user_person_fullname" value="#{user.person.fullname}"/>
+    
+      <h:outputText value="email"/>
+      <h:outputLink id="user_person_email_link" value="mailto:#{user.person.email}">
+             <h:outputText id="user_person_email" value="#{user.person.email}"/>
+      </h:outputLink>
     
       <h:outputText value="homepage"/>
       <h:outputLink id="user_person_homepage_link" value="#{user.person.homepage}">

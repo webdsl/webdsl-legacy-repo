@@ -14,9 +14,9 @@
           <h:outputText value="No ResearchProject" rendered="#{researchProjectEntries.rowCount==0}"/>
           <h:dataTable var="entry" value="#{researchProjectEntries}" rendered="#{researchProjectEntries.rowCount>0}">
             <h:column>
-              <f:facet name="header">
-                <h:outputText value="Id"/>
-              </f:facet>
+              //<f:facet name="header">
+              //  <h:outputText value="Id"/>
+              //</f:facet>
               <s:link view="/viewResearchProject.xhtml" value="#{entry.name}">
                 <f:param name="researchProjectId" value="#{entry.id}"/>
               </s:link>

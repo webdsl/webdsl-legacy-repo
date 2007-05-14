@@ -13,6 +13,11 @@
       <h:outputText value="fullname"/>
       <h:outputText id="person_fullname" value="#{person.fullname}"/>
     
+      <h:outputText value="email"/>
+      <h:outputLink id="person_email_link" value="mailto:#{person.email}">
+             <h:outputText id="person_email" value="#{person.email}"/>
+      </h:outputLink>
+    
       <h:outputText value="homepage"/>
       <h:outputLink id="person_homepage_link" value="#{person.homepage}">
              <h:outputText id="person_homepage" value="#{person.homepage}"/>

@@ -10,10 +10,16 @@
         <h:messages globalOnly="true" styleClass="message"/>
         <h:form id="editPublication">
           <div class="dialog">
-            <s:validateAll><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3"><h:outputText value="title"/>
-      <s:decorate><h:inputText id="publicationEditor_publication_title" required="true" value="#{publicationEditor.publication.title}"/></s:decorate><h:outputText value="pubabstract"/>
-      <s:decorate><h:inputTextarea id="publicationEditor_publication_pubabstract" required="true" value="#{publicationEditor.publication.pubabstract}"/></s:decorate><h:outputText value="pdf"/>
-      <s:decorate><h:inputText id="publicationEditor_publication_pdf" required="true" value="#{publicationEditor.publication.pdf}"/></s:decorate></h:panelGrid></s:validateAll>
+            <s:validateAll><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3">
+      <h:outputText value="title"/>
+      <s:decorate><h:inputText id="publicationEditor_publication_title" required="true" value="#{publicationEditor.publication.title}"/></s:decorate>
+    
+      <h:outputText value="pubabstract"/>
+      <s:decorate><h:inputTextarea id="publicationEditor_publication_pubabstract" required="true" value="#{publicationEditor.publication.pubabstract}"/></s:decorate>
+    
+      <h:outputText value="pdf"/>
+      <s:decorate><h:inputText id="publicationEditor_publication_pdf" required="true" value="#{publicationEditor.publication.pdf}"/></s:decorate>
+    </h:panelGrid></s:validateAll>
           </div>
           <div class="actionButtons">
             <h:commandButton value="Create" action="#{publicationEditor.create}" rendered="#{publicationEditor.new}"/>

@@ -10,10 +10,16 @@
         <h:messages globalOnly="true" styleClass="message"/>
         <h:form id="editAddress">
           <div class="dialog">
-            <s:validateAll><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3"><h:outputText value="street"/>
-      <s:decorate><h:inputText id="addressEditor_address_street" required="true" value="#{addressEditor.address.street}"/></s:decorate><h:outputText value="city"/>
-      <s:decorate><h:inputText id="addressEditor_address_city" required="true" value="#{addressEditor.address.city}"/></s:decorate><h:outputText value="phone"/>
-      <s:decorate><h:inputText id="addressEditor_address_phone" required="true" value="#{addressEditor.address.phone}"/></s:decorate></h:panelGrid></s:validateAll>
+            <s:validateAll><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3">
+      <h:outputText value="street"/>
+      <s:decorate><h:inputText id="addressEditor_address_street" required="true" value="#{addressEditor.address.street}"/></s:decorate>
+    
+      <h:outputText value="city"/>
+      <s:decorate><h:inputText id="addressEditor_address_city" required="true" value="#{addressEditor.address.city}"/></s:decorate>
+    
+      <h:outputText value="phone"/>
+      <s:decorate><h:inputText id="addressEditor_address_phone" required="true" value="#{addressEditor.address.phone}"/></s:decorate>
+    </h:panelGrid></s:validateAll>
           </div>
           <div class="actionButtons">
             <h:commandButton value="Create" action="#{addressEditor.create}" rendered="#{addressEditor.new}"/>

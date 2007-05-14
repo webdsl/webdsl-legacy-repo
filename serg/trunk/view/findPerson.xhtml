@@ -14,9 +14,9 @@
           <h:outputText value="No Person" rendered="#{personEntries.rowCount==0}"/>
           <h:dataTable var="entry" value="#{personEntries}" rendered="#{personEntries.rowCount>0}">
             <h:column>
-              <f:facet name="header">
-                <h:outputText value="Id"/>
-              </f:facet>
+              //<f:facet name="header">
+              //  <h:outputText value="Id"/>
+              //</f:facet>
               <s:link view="/viewPerson.xhtml" value="#{entry.name}">
                 <f:param name="personId" value="#{entry.id}"/>
               </s:link>

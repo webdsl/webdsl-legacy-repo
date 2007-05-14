@@ -33,6 +33,18 @@ import org.webdsl.serg.domain.*;
     this.fullname = fullname;
   }
 
+  private String email;
+
+  public String getEmail()
+  { 
+    return email;
+  }
+
+  public void setEmail(String email)
+  { 
+    this.email = email;
+  }
+
   private String homepage;
 
   public String getHomepage()

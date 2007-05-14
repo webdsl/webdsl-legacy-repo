@@ -10,18 +10,35 @@
         <h:messages globalOnly="true" styleClass="message"/>
         <h:form id="editPerson">
           <div class="dialog">
-            <s:validateAll><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3"><h:outputText value="fullname"/>
-      <s:decorate><h:inputText id="personEditor_person_fullname" required="true" value="#{personEditor.person.fullname}"/></s:decorate><h:outputText value="homepage"/>
-      <s:decorate><h:inputText id="personEditor_person_homepage" required="true" value="#{personEditor.person.homepage}"/></s:decorate><h:outputText value="photo"/>
-      <s:decorate><h:inputText id="personEditor_person_photo" required="true" value="#{personEditor.person.photo}"/></s:decorate><h:outputText value="birthdate"/>
+            <s:validateAll><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3">
+      <h:outputText value="fullname"/>
+      <s:decorate><h:inputText id="personEditor_person_fullname" required="true" value="#{personEditor.person.fullname}"/></s:decorate>
+    
+      <h:outputText value="email"/>
+      <s:decorate><h:inputText id="personEditor_person_email" required="true" value="#{personEditor.person.email}"/></s:decorate>
+    
+      <h:outputText value="homepage"/>
+      <s:decorate><h:inputText id="personEditor_person_homepage" required="true" value="#{personEditor.person.homepage}"/></s:decorate>
+    
+      <h:outputText value="photo"/>
+      <s:decorate><h:inputText id="personEditor_person_photo" required="true" value="#{personEditor.person.photo}"/></s:decorate>
+    
+      <h:outputText value="birthdate"/>
       <s:decorate><div><h:inputText id="personEditor_person_birthdate" required="true" value="#{personEditor.person.birthdate}">
                <s:convertDateTime pattern="dd/mm/yyyy"/>
            </h:inputText>
            <s:selectDate for="personEditor_person_birthdate"/>
-      </div></s:decorate><h:outputText value="address"/><h:panelGroup/><h:outputText value="street"/>
-      <s:decorate><h:inputText id="personEditor_person_address_street" required="true" value="#{personEditor.person.address.street}"/></s:decorate><h:outputText value="city"/>
-      <s:decorate><h:inputText id="personEditor_person_address_city" required="true" value="#{personEditor.person.address.city}"/></s:decorate><h:outputText value="phone"/>
-      <s:decorate><h:inputText id="personEditor_person_address_phone" required="true" value="#{personEditor.person.address.phone}"/></s:decorate></h:panelGrid></s:validateAll>
+      </div></s:decorate>
+    <h:outputText value="address"/><h:panelGroup/>
+      <h:outputText value="street"/>
+      <s:decorate><h:inputText id="personEditor_person_address_street" required="true" value="#{personEditor.person.address.street}"/></s:decorate>
+    
+      <h:outputText value="city"/>
+      <s:decorate><h:inputText id="personEditor_person_address_city" required="true" value="#{personEditor.person.address.city}"/></s:decorate>
+    
+      <h:outputText value="phone"/>
+      <s:decorate><h:inputText id="personEditor_person_address_phone" required="true" value="#{personEditor.person.address.phone}"/></s:decorate>
+    </h:panelGrid></s:validateAll>
           </div>
           <div class="actionButtons">
             <h:commandButton value="Create" action="#{personEditor.create}" rendered="#{personEditor.new}"/>

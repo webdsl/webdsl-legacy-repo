@@ -10,9 +10,13 @@
         <h:messages globalOnly="true" styleClass="message"/>
         <h:form id="editResearchProject">
           <div class="dialog">
-            <s:validateAll><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3"><h:outputText value="fullname"/>
-      <s:decorate><h:inputText id="researchProjectEditor_researchProject_fullname" required="true" value="#{researchProjectEditor.researchProject.fullname}"/></s:decorate><h:outputText value="acronym"/>
-      <s:decorate><h:inputText id="researchProjectEditor_researchProject_acronym" required="true" value="#{researchProjectEditor.researchProject.acronym}"/></s:decorate></h:panelGrid></s:validateAll>
+            <s:validateAll><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3">
+      <h:outputText value="fullname"/>
+      <s:decorate><h:inputText id="researchProjectEditor_researchProject_fullname" required="true" value="#{researchProjectEditor.researchProject.fullname}"/></s:decorate>
+    
+      <h:outputText value="acronym"/>
+      <s:decorate><h:inputText id="researchProjectEditor_researchProject_acronym" required="true" value="#{researchProjectEditor.researchProject.acronym}"/></s:decorate>
+    </h:panelGrid></s:validateAll>
           </div>
           <div class="actionButtons">
             <h:commandButton value="Create" action="#{researchProjectEditor.create}" rendered="#{researchProjectEditor.new}"/>

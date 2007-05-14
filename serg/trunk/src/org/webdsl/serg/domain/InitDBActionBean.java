@@ -105,6 +105,7 @@ import org.webdsl.serg.domain.Address;
     var14.add(GTTSE07);
     MoDSE.setPublications(var14);
     em.persist(MoDSE);
+    MoDSE;
     return null;
   }
 

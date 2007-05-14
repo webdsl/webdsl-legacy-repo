@@ -10,8 +10,10 @@
         <h:messages globalOnly="true" styleClass="message"/>
         <h:form id="editTechnicalReport">
           <div class="dialog">
-            <s:validateAll><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3"><h:outputText value="document"/>
-      <s:decorate><h:inputTextarea id="technicalReportEditor_technicalReport_document" required="true" value="#{technicalReportEditor.technicalReport.document}"/></s:decorate></h:panelGrid></s:validateAll>
+            <s:validateAll><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3">
+      <h:outputText value="document"/>
+      <s:decorate><h:inputTextarea id="technicalReportEditor_technicalReport_document" required="true" value="#{technicalReportEditor.technicalReport.document}"/></s:decorate>
+    </h:panelGrid></s:validateAll>
           </div>
           <div class="actionButtons">
             <h:commandButton value="Create" action="#{technicalReportEditor.create}" rendered="#{technicalReportEditor.new}"/>
