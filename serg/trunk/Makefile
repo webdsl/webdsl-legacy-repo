@@ -2,7 +2,7 @@
 # should eventually be integrated in ant build.xml file
 # and be invocable from Eclipse
 
-all : serg.appb
+all : serg.appb serg.appc
 
 %.appa : %.app
 	$(dsltoseam) -i $< -o $@
@@ -15,8 +15,12 @@ all : serg.appb
 
 %.appa : %.app
 	sglri -p $(GENDIR)/syntax/WebDSL.tbl -i $< | pp-aterm -o $@
-	
+
 %.appb : %.appa
+	$(GENDIR)/generation/dsl-desugar -i $< | \
+	pp-aterm -o $@
+	
+%.appc : %.appa
 	$(GENDIR)/generation/dsl-to-seam -i $< | \
 	pp-aterm -o $@
 

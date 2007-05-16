@@ -40,13 +40,8 @@ section people.
 section people pages.
 
   define page home() {
-  
-    define sidebar() {
-    }
-    
-    define body () {
-    }
-    
+    define sidebar() {}
+    define body () {}
     main()
   }
 
@@ -62,22 +57,20 @@ section people pages.
   }
   
   define footer() {
-    text{"generated with"}
+    "generated with"
     navigate("Stratego/XT", url("http://www.strategoxt.org"))
   }
 
-  // overrides the default view page
-  
   define personSidebar(p : Person) {
     list {
       listitem{navigate(p.name, viewPerson(p))}
       
-      listitem{navigate("Publications", publications(p))}
+      listitem{navigate("Publications", personPublications(p))}
       
       listitem {
         "Projects"
            list { for(pr : ResearchProject in p.projects) {
-             listitem(navigate(pr.name, viewResearchProject(pr)))
+             listitem{navigate(pr.name, viewResearchProject(pr))}
            }}
       }
 
@@ -90,41 +83,50 @@ section people pages.
 //    define listitem() { li{ for(e : Element in *) { e } } }
 //  }
   
-  define page viewPerson(p : Person) 
+  define page editPerson(p : Person) 
   {
+  }
+  
+  define page viewPerson(p : Person) 
+  {    
+    main()
+    
     title{"Homepage of " text(p.name)}
     
     define sidebar() { personSidebar(p) }
     
     define body() {
-      header{"Homepage of " text(p.name)}
-      // how should level be indicated? or should headers be associated
-      // with the content they are heading?
+      section{
+        header{"Homepage of " text(p.name)} 
+
+      	// how should level be indicated? or should headers be associated
+      	// with the content they are heading?
     
-      image(p.photo)
-      // photo should be right-aligned; leave this to CSS?
-      // variable number of properties
+      	image(p.photo)
+      	// photo should be right-aligned; leave this to CSS?
+      	// variable number of properties
     
-      header{"Coordinates"}
+      	section{
+          header{"Coordinates"}
     
-      table {
-        row{"homepage" navigate(p.homepage)} 
-        row{"email"    navigate(p.email)}
-        row{"address"  table{
-                          row{text(p.address.street)}
-                          row{text(p.address.city)}
-                        }
-        row{"phone" text(p.address.phone)}
+          table {
+            row{"homepage" navigate(url(p.homepage))}
+            row{"email"    navigate(url(p.email))}
+            row{"address"  table{
+                             row{text(p.address.street)}
+                             row{text(p.address.city)}
+                           }}
+            row{"phone" text(p.address.phone)}
+          }
+        }
+    
+        section{
+          header{"Recent Publications"}
+          publicationsForYear(p, 2007)
+           // better: 10 most recent publications
+        }
       }
-    
-      header{"Recent Publications"}
-    
-      publicationsForYear(p, 2007)
     }
-  
-    main()
-  }
-  
   }
 
 section publications.
@@ -154,7 +156,7 @@ section publication pages.
     
     define body() {
       header{"Publications by " text(p.name)}
-      publicationsPage(pers.publications)
+      publicationsPage(p.publications)
     }
     main()
   }
@@ -165,11 +167,11 @@ section publication pages.
      //    publicationsPage(pers.publications where p.year == year)
 
   define publicationsPage(ps : List<Publication>) {
-    list{ 
-      for(p : Publication in ps) {
+    list{
+      for(pub : Publication in ps) { 
         listitem{
-          for(a : Person in pub.authors) {navigate(a) ","}
-          navigate(pub)
+          for(a : Person in pub.authors) {navigate(a.name, viewPerson(a)) ","}
+          navigate(pub.name, viewPublication(pub))
         }
      }
     }
@@ -217,11 +219,11 @@ section publication pages.
              row{"pubabstract" input(pub.pubabstract)}
              row{"pdf"         input(pub.pdf)}
           
-             row{"authors"     textlist(pub.authors)}
+             row{"authors"     textlist(Person, pub.authors)}
              // row("add author"  select(Person p where not pub.authors.has(p), pub.authors)}
         
              row{"projects"     textlist(pub.projects)}
-             // row("add project" select(ResearchProject rp where not pub.projects.has(rp)}
+             // row{"add project" select(ResearchProject rp where not pub.projects.has(rp))}
           }
           action("Save", pub.save, viewPublication(pub))
           action("Cancel", nop, viewPublication(pub))
@@ -249,6 +251,16 @@ section projects.
     members      -> Set<Person>
     proposal     -> Publication
     publications -> Set<Publication>
+  }
+  
+  define page viewResearchProject(pr : ResearchProject) {
+    title{text(pr.fullname)}
+    define sidebar() {}
+    define body() {
+      header{text(pr.fullname)}
+      publicationsPage(pr.publications)
+    }
+    main()
   }
 
 section init database .
