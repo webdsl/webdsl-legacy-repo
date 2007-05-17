@@ -284,6 +284,7 @@ section init database .
     Person EelcoVisser :=
       Person {
         fullname := "Eelco Visser" 
+        email    := "visser@acm.org"
         address  := Mekelweg4
         homepage := "http://www.eelcovisser.net"
         photo    := "http://static.flickr.com/56/141569082_372ea07ea9_m.jpg"
@@ -292,14 +293,14 @@ section init database .
     EelcoVisser.user :=
       User {
         username := "EelcoVisser"
-        email    := "visser@acm.org"
         password := "foo"
         person   := EelcoVisser
       };
       
     Person ArieVanDeursen :=
       Person {
-        fullname := "Arie van Deursen" 
+        fullname := "Arie van Deursen"
+        email    := "A.vanDeursen@tudelft.nl"
         address  := Mekelweg4
         homepage := "http://www.st.ewi.tudelft.nl/~arie/"
         photo    := "http://www.st.ewi.tudelft.nl/~arie/pictures/arie-in-delft-klein.jpg"
@@ -307,7 +308,8 @@ section init database .
       
     Person JosWarmer :=
       Person {
-        fullname := "Jos Warmer" 
+        fullname := "Jos Warmer"
+        email    := "jos@ordina.nl"
         address  := Ordina
         homepage := "http://www.klasse.nl/who/cv-jos.html"
         photo    := "http://www.klasse.nl/who/images/jos.gif"

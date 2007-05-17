@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
+<head>    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title> <h:outputText value="Publications by "/>  <h:outputText value="#{p.name}"/> </title>
+    <link href="stylesheet/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="stylesheet/date.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <div class="main">
+    <div class="menu"> <h:graphicImage value="/serg/layout/serg-logo-color-smaller.png"/> </div>
+    
+    <div class="sidebar">
+    <div class="personSidebar">
+      <ul>
+        
+      <li>
+        
+      <s:link view="/viewPerson.xhtml" value="#{p.name}"><f:param name="personId" value="#{p.id}"/></s:link>
+    
+      </li>
+    
+      <li>
+        
+      <s:link view="/personPublications.xhtml" value="Publications"><f:param name="personId" value="#{p.id}"/></s:link>
+    
+      </li>
+    
+      <li>
+         <h:outputText value="Projects"/> 
+      <ul>
+        
+      <h:dataTable var="pr" value="#{p.projects}"> 
+      <h:column>
+      <li>
+        
+      <s:link view="/viewResearchProject.xhtml" value="#{pr.name}"><f:param name="researchProjectId" value="#{pr.id}"/></s:link>
+    
+      </li>
+    </h:column> 
+    </h:dataTable>
+    
+      </ul>
+    
+      </li>
+    
+      <li>
+        
+      <s:link view="/editPerson.xhtml" value="Edit"><f:param name="personId" value="#{p.id}"/></s:link>
+    
+      </li>
+    
+      </ul>
+    </div>
+    </div>
+    
+    <div class="body">
+      <h1> <h:outputText value="Publications by "/>  <h:outputText value="#{p.name}"/> </h1>
+    
+    <div class="publicationsPage">
+      <ul>
+        
+      <h:dataTable var="pub" value="#{p.publications}"> 
+      <h:column>
+      <li>
+        
+      <h:dataTable var="a" value="#{pub.authors}"> 
+      <h:column>
+      <s:link view="/viewPerson.xhtml" value="#{a.name}"><f:param name="personId" value="#{a.id}"/></s:link>
+    </h:column> 
+     
+      <h:column> <h:outputText value=","/> </h:column> 
+    </h:dataTable>
+    
+      <s:link view="/viewPublication.xhtml" value="#{pub.name}"><f:param name="publicationId" value="#{pub.id}"/></s:link>
+    
+      </li>
+    </h:column> 
+    </h:dataTable>
+    
+      </ul>
+    </div>
+    </div>
+    
+    <div class="footer"> <h:outputText value="generated with "/> 
+      <h:outputLink value="http://www.strategoxt.org">
+          <h:outputText value="Stratego/XT"/>
+      </h:outputLink>
+    </div>
+    </div>
+    </body>
+</html>

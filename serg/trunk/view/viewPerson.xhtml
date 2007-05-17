@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
+<head>    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title> <h:outputText value="Homepage of "/>  <h:outputText value="#{p.name}"/> </title>
+    <link href="stylesheet/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="stylesheet/date.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <div class="main">
+    <div class="menu"> <h:graphicImage value="/serg/layout/serg-logo-color-smaller.png"/> </div>
+    
+    <div class="sidebar">
+    <div class="personSidebar">
+      <ul>
+        
+      <li>
+        
+      <s:link view="/viewPerson.xhtml" value="#{p.name}"><f:param name="personId" value="#{p.id}"/></s:link>
+    
+      </li>
+    
+      <li>
+        
+      <s:link view="/personPublications.xhtml" value="Publications"><f:param name="personId" value="#{p.id}"/></s:link>
+    
+      </li>
+    
+      <li>
+         <h:outputText value="Projects"/> 
+      <ul>
+        
+      <h:dataTable var="pr" value="#{p.projects}"> 
+      <h:column>
+      <li>
+        
+      <s:link view="/viewResearchProject.xhtml" value="#{pr.name}"><f:param name="researchProjectId" value="#{pr.id}"/></s:link>
+    
+      </li>
+    </h:column> 
+    </h:dataTable>
+    
+      </ul>
+    
+      </li>
+    
+      <li>
+        
+      <s:link view="/editPerson.xhtml" value="Edit"><f:param name="personId" value="#{p.id}"/></s:link>
+    
+      </li>
+    
+      </ul>
+    </div>
+    </div>
+    
+    <div class="body">
+      <div class="section1">
+      <h1> <h:outputText value="Homepage of "/>  <h:outputText value="#{p.name}"/> </h1>
+     <h:graphicImage value="#{p.photo}"/> 
+      <div class="section2">
+      <h2> <h:outputText value="Coordinates"/> </h2>
+    
+      <table>
+      <tr> <td> <h:outputText value="homepage"/> </td>  <td>
+      <h:outputLink value="#{p.homepage}">
+          <h:outputText value="#{p.homepage}"/>
+      </h:outputLink>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="email"/> </td>  <td>
+      <h:outputLink value="#{p.email}">
+          <h:outputText value="#{p.email}"/>
+      </h:outputLink>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="address"/> </td>  <td>
+      <table>
+      <tr> <td> <h:outputText value="#{p.address.street}"/> </td> </tr>
+    
+      <tr> <td> <h:outputText value="#{p.address.city}"/> </td> </tr>
+    </table>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="phone"/> </td>  <td> <h:outputText value="#{p.address.phone}"/> </td> </tr>
+    </table>
+    </div>
+    
+      <div class="section2">
+      <h2> <h:outputText value="Recent Publications"/> </h2>
+    
+    <div class="publicationsForYear"></div>
+    </div>
+    </div>
+    </div>
+    
+    <div class="footer"> <h:outputText value="generated with "/> 
+      <h:outputLink value="http://www.strategoxt.org">
+          <h:outputText value="Stratego/XT"/>
+      </h:outputLink>
+    </div>
+    </div>
+    </body>
+</html>

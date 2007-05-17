@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
 <head>    
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title></title>
+    <title> <h:outputText value="#{pr.fullname}"/> </title>
     <link href="stylesheet/theme.css" rel="stylesheet" type="text/css"/>
     <link href="stylesheet/date.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -13,7 +13,33 @@
     
     <div class="sidebar"></div>
     
-    <div class="body"></div>
+    <div class="body">
+      <h1> <h:outputText value="#{pr.fullname}"/> </h1>
+    
+    <div class="publicationsPage">
+      <ul>
+        
+      <h:dataTable var="pub" value="#{pr.publications}"> 
+      <h:column>
+      <li>
+        
+      <h:dataTable var="a" value="#{pub.authors}"> 
+      <h:column>
+      <s:link view="/viewPerson.xhtml" value="#{a.name}"><f:param name="personId" value="#{a.id}"/></s:link>
+    </h:column> 
+     
+      <h:column> <h:outputText value=","/> </h:column> 
+    </h:dataTable>
+    
+      <s:link view="/viewPublication.xhtml" value="#{pub.name}"><f:param name="publicationId" value="#{pub.id}"/></s:link>
+    
+      </li>
+    </h:column> 
+    </h:dataTable>
+    
+      </ul>
+    </div>
+    </div>
     
     <div class="footer"> <h:outputText value="generated with "/> 
       <h:outputLink value="http://www.strategoxt.org">

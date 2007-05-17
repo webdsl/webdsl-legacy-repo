@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
+<head>    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title> <h:outputText value="Publication "/>  <h:outputText value="#{pub.title}"/> </title>
+    <link href="stylesheet/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="stylesheet/date.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <div class="main">
+    <div class="menu"> <h:graphicImage value="/serg/layout/serg-logo-color-smaller.png"/> </div>
+    
+    <div class="sidebar"></div>
+    
+    <div class="body">
+      <h1> <h:outputText value="#{pub.title}"/> </h1>
+    
+      <table>
+      <tr> <td> <h:outputText value="title"/> </td>  <td> <h:outputText value="#{viewPublication.pub.title}"/> </td> </tr>
+    
+      <tr> <td> <h:outputText value="year"/> </td>  <td> <h:outputText value="#{viewPublication.pub.year}"/> </td> </tr>
+    
+      <tr> <td> <h:outputText value="pubabstract"/> </td>  <td> <h:outputText value="#{viewPublication.pub.pubabstract}"/> </td> </tr>
+    
+      <tr> <td> <h:outputText value="pdf"/> </td>  <td> <h:outputText value="#{viewPublication.pub.pdf}"/> </td> </tr>
+    
+      <tr> <td> <h:outputText value="authors"/> </td>  <td>
+    <div class="textlist">
+      <h:dataTable var="o" value="#{viewPublication.pub.authors}">
+        <h:column><h:outputText value="#{o.name}"/> </h:column>
+      </h:dataTable>
+    </div>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="projects"/> </td>  <td>
+    <div class="textlist">
+      <h:dataTable var="o" value="#{pub.projects}">
+        <h:column><h:outputText value="#{o.name}"/> </h:column>
+      </h:dataTable>
+    </div>
+    </td> </tr>
+    </table>
+    
+      <h:form> 
+       <h:commandButton value="Delete" action="#{viewPublication.pub.delete}"/>
+     
+       <h:commandButton value="Cancel" action="#{viewPublication.nop}"/>
+    </h:form>
+    </div>
+    
+    <div class="footer"> <h:outputText value="generated with "/> 
+      <h:outputLink value="http://www.strategoxt.org">
+          <h:outputText value="Stratego/XT"/>
+      </h:outputLink>
+    </div>
+    </div>
+    </body>
+</html>
