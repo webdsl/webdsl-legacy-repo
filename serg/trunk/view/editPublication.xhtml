@@ -1,33 +1,63 @@
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
 
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich" template="layout/template.xhtml"><ui:define name="sidebar">
-      </ui:define>
-      <ui:define name="body">
-        <h1>
-           <h:outputText rendered="#{publicationEditor.new}" value="Create Publication"/>
-           <h:outputText rendered="#{!publicationEditor.new}" value="Edit Publication #{publicationEditor.publication.name}"/>
-        </h1>
-        <h:messages globalOnly="true" styleClass="message"/>
-        <h:form id="editPublication">
-          <div class="dialog">
-            <s:validateAll><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3">
-      <h:outputText value="title"/>
-      <s:decorate><h:inputText id="publicationEditor_publication_title" required="true" value="#{publicationEditor.publication.title}"/></s:decorate>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
+<head>    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title> <h:outputText value="Edit "/>  <h:outputText value="#{pub.title}"/> </title>
+    <link href="stylesheet/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="stylesheet/date.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <div class="main">
+    <div class="menu"> <h:graphicImage value="/serg/layout/serg-logo-color-smaller.png"/> </div>
     
-      <h:outputText value="pubabstract"/>
-      <s:decorate><h:inputTextarea id="publicationEditor_publication_pubabstract" required="true" value="#{publicationEditor.publication.pubabstract}"/></s:decorate>
+    <div class="sidebar"></div>
     
-      <h:outputText value="pdf"/>
-      <s:decorate><h:inputText id="publicationEditor_publication_pdf" required="true" value="#{publicationEditor.publication.pdf}"/></s:decorate>
-    </h:panelGrid></s:validateAll>
-          </div>
-          <div class="actionButtons">
-            <h:commandButton value="Create" action="#{publicationEditor.create}" rendered="#{publicationEditor.new}"/>
-            <s:link value="View" view="/viewPublication.xhtml" rendered="#{!publicationEditor.new}">
-                 <f:param name="publicationId" value="#{publicationEditor.publication.id}"/>
-            </s:link>             
-            <h:commandButton value="Save" action="#{publicationEditor.save}" rendered="#{!publicationEditor.new}"/>
-            <h:commandButton value="Delete" action="#{publicationEditor.delete}" rendered="#{!publicationEditor.new}"/>
-          </div>
-        </h:form>
-      </ui:define></ui:composition>
+    <div class="body">
+      <h1> <h:outputText value="Edit "/>  <h:outputText value="#{pub.title}"/> </h1>
+    
+      <h:form>
+      <table>
+      <tr> <td> <h:outputText value="title"/> </td>  <td>
+      <h:inputText required="true" value="#{pub.title}"/>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="year"/> </td>  <td>
+      <h:inputText required="true" value="#{pub.year}"/>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="pubabstract"/> </td>  <td>
+      <h:inputText required="true" value="#{pub.pubabstract}"/>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="pdf"/> </td>  <td>
+      <h:inputText required="true" value="#{pub.pdf}"/>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="authors"/> </td>  <td>
+    <div class="textlist">
+      <h:dataTable var="o" value="#{pub.authors}"></h:dataTable>
+    </div>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="projects"/> </td>  <td>
+    <div class="textlist">
+      <h:dataTable var="o" value="#{pub.projects}"></h:dataTable>
+    </div>
+    </td> </tr>
+    </table>
+     
+       <h:commandButton value="Save" action="#{pub.save}"/>
+     
+       <h:commandButton value="Cancel" action="#{nop}"/>
+    </h:form>
+    </div>
+    
+    <div class="footer"> <h:outputText value="generated with"/> 
+      <h:outputLink value="Stratego/XT">
+          <h:outputText value="http://www.strategoxt.org"/>
+      </h:outputLink>
+    </div>
+    </div>
+    </body>
+</html>

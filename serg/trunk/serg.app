@@ -57,7 +57,7 @@ section people pages.
   }
   
   define footer() {
-    "generated with"
+    "generated with "
     navigate("Stratego/XT", url("http://www.strategoxt.org"))
   }
 
@@ -333,7 +333,7 @@ section init database .
       Publication {
         title       := "Model-Driven Software Evolution: A Research Agenda"
         authors     := [ArieVanDeursen, JosWarmer, EelcoVisser]
-        year        := 2007
+        year        := 2006
         pubabstract := ""
         projects    := {MoDSE}
       };

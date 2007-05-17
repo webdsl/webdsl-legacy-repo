@@ -1,48 +1,51 @@
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
 
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich" template="layout/template.xhtml"><ui:define name="sidebar">
-        this is the sidebar
-      </ui:define>
-      <ui:define name="body">
-        <h1>
-           <h:outputText value="ResearchProject #{researchProject.name}"/>
-        </h1>
-        <h:messages globalOnly="true" styleClass="message"/>
-        <h:form id="viewResearchProject">
-          <div class="dialog"><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3">
-      <h:outputText value="fullname"/>
-      <h:outputText id="researchProject_fullname" value="#{researchProject.fullname}"/>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
+<head>    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title> <h:outputText value="#{pr.fullname}"/> </title>
+    <link href="stylesheet/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="stylesheet/date.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <div class="main">
+    <div class="menu"> <h:graphicImage value="/serg/layout/serg-logo-color-smaller.png"/> </div>
     
-      <h:outputText value="acronym"/>
-      <h:outputText id="researchProject_acronym" value="#{researchProject.acronym}"/>
+    <div class="sidebar"></div>
     
-      <h:outputText value="members"/>
-      <h:dataTable var="entry" value="#{researchProject.membersList}">
-            <h:column>
-              <s:link view="/viewPerson.xhtml" value="#{entry.name}">
-                <f:param name="personId" value="#{entry.id}"/>
-              </s:link>
-            </h:column>
-         </h:dataTable>
+    <div class="body">
+      <h1> <h:outputText value="#{pr.fullname}"/> </h1>
     
-      <h:outputText value="proposal"/>
-      <s:link view="/viewPublication.xhtml" value="#{researchProject.proposal.name}">
-                <f:param name="publicationId" value="#{researchProject.proposal.id}"/>
-      </s:link>
+    <div class="publicationsPage">
+      <ul>
+        
+      <h:dataTable var="pub" value="#{pr.publications}"> 
+      <h:column>
+      <li>
+        
+      <h:dataTable var="a" value="#{pub.authors}"> 
+      <h:column>
+      <s:link view="/viewPerson.xhtml" value="#{a.name}"><f:param name="personId" value="#{a.id}"/></s:link>
+    </h:column> 
+     
+      <h:column> <h:outputText value=","/> </h:column> 
+    </h:dataTable>
     
-      <h:outputText value="publications"/>
-      <h:dataTable var="entry" value="#{researchProject.publicationsList}">
-            <h:column>
-              <s:link view="/viewPublication.xhtml" value="#{entry.name}">
-                <f:param name="publicationId" value="#{entry.id}"/>
-              </s:link>
-            </h:column>
-         </h:dataTable>
-    </h:panelGrid></div>
-          <div class="actionButtons">
-             <s:button action="#{researchProjectEditor.edit}" value="Edit"/>
-             <s:button action="#{researchProjectHome.remove}" value="Delete"/>
-             <s:button view="/findResearchProject.xhtml" value="Find researchProject"/>
-          </div>
-        </h:form>
-      </ui:define></ui:composition>
+      <s:link view="/viewPublication.xhtml" value="#{pub.name}"><f:param name="publicationId" value="#{pub.id}"/></s:link>
+    
+      </li>
+    </h:column> 
+    </h:dataTable>
+    
+      </ul>
+    </div>
+    </div>
+    
+    <div class="footer"> <h:outputText value="generated with"/> 
+      <h:outputLink value="Stratego/XT">
+          <h:outputText value="http://www.strategoxt.org"/>
+      </h:outputLink>
+    </div>
+    </div>
+    </body>
+</html>

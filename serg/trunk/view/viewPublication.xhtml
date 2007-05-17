@@ -1,51 +1,46 @@
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
 
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich" template="layout/template.xhtml"><ui:define name="sidebar">
-        this is the sidebar
-      </ui:define>
-      <ui:define name="body">
-        <h1>
-           <h:outputText value="Publication #{publication.name}"/>
-        </h1>
-        <h:messages globalOnly="true" styleClass="message"/>
-        <h:form id="viewPublication">
-          <div class="dialog"><h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3">
-      <h:outputText value="title"/>
-      <h:outputText id="publication_title" value="#{publication.title}"/>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
+<head>    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title> <h:outputText value="Publication "/>  <h:outputText value="#{viewPublication.pub.title}"/> </title>
+    <link href="stylesheet/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="stylesheet/date.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <div class="main">
+    <div class="menu"> <h:graphicImage value="/serg/layout/serg-logo-color-smaller.png"/> </div>
     
-      <h:outputText value="authors"/>
-      <h:dataTable var="entry" value="#{publication.authorsList}">
-            <h:column>
-              <s:link view="/viewPerson.xhtml" value="#{entry.name}">
-                <f:param name="personId" value="#{entry.id}"/>
-              </s:link>
-            </h:column>
-         </h:dataTable>
+    <div class="sidebar"></div>
     
-      <h:outputText value="year"/>
-      <h:outputText id="publication_year" value="#{publication.year}"/>
+    <div class="body">
+      <h1> <h:outputText value="#{viewPublication.pub.title}"/> </h1>
     
-      <h:outputText value="pubabstract"/>
-      <s:formattedText id="publication_pubabstract" value="#{publication.pubabstract}"/>
+      <table>
+      <tr> <td> <h:outputText value="title"/> </td>  <td> <h:outputText value="#{viewPublication.pub.title}"/> </td> </tr>
     
-      <h:outputText value="projects"/>
-      <h:dataTable var="entry" value="#{publication.projectsList}">
-            <h:column>
-              <s:link view="/viewResearchProject.xhtml" value="#{entry.name}">
-                <f:param name="researchProjectId" value="#{entry.id}"/>
-              </s:link>
-            </h:column>
-         </h:dataTable>
+      <tr> <td> <h:outputText value="year"/> </td>  <td> <h:outputText value="#{viewPublication.pub.year}"/> </td> </tr>
     
-      <h:outputText value="pdf"/>
-      <h:outputLink id="publication_pdf_link" value="#{publication.pdf}">
-             <h:outputText id="publication_pdf" value="#{publication.pdf}"/>
+      <tr> <td> <h:outputText value="pubabstract"/> </td>  <td> <h:outputText value="#{viewPublication.pub.pubabstract}"/> </td> </tr>
+    
+      <tr> <td> <h:outputText value="pdf"/> </td>  <td> <h:outputText value="#{viewPublication.pub.pdf}"/> </td> </tr>
+    
+      <tr> <td> <h:outputText value="authors"/> </td>  <td>
+    </td> </tr>
+    </table>
+    
+      <h:form> 
+       <h:commandButton value="Delete" action="#{pub.delete}"/>
+     
+       <h:commandButton value="Cancel" action="#{nop}"/>
+    </h:form>
+    </div>
+    
+    <div class="footer"> <h:outputText value="generated with"/> 
+      <h:outputLink value="Stratego/XT">
+          <h:outputText value="http://www.strategoxt.org"/>
       </h:outputLink>
-    </h:panelGrid></div>
-          <div class="actionButtons">
-             <s:button action="#{publicationEditor.edit}" value="Edit"/>
-             <s:button action="#{publicationHome.remove}" value="Delete"/>
-             <s:button view="/findPublication.xhtml" value="Find publication"/>
-          </div>
-        </h:form>
-      </ui:define></ui:composition>
+    </div>
+    </div>
+    </body>
+</html>
