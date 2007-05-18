@@ -33,19 +33,7 @@
       <tr> <td> <h:outputText value="pdf"/> </td>  <td>
       <h:inputText required="true" value="#{editPublication.pub.pdf}"/>
     </td> </tr>
-    
-      <tr> <td> <h:outputText value="authors"/> </td>  <td>
-    <div class="textlist">
-      <h:dataTable var="o" value="#{editPublication.pub.authors}"></h:dataTable>
-    </div>
-    </td> </tr>
-    
-      <tr> <td> <h:outputText value="projects"/> </td> </tr>
     </table>
-     
-       <h:commandButton value="Save" action="#{editPublication.pub.save}"/>
-     
-       <h:commandButton value="Cancel" action="#{nop}"/>
     </h:form>
     </div>
     

@@ -69,9 +69,9 @@ section people pages.
       
       listitem {
         "Projects"
-           list { for(pr : ResearchProject in p.projects) {
-             listitem{navigate(pr.name, viewResearchProject(pr))}
-           }}
+           //list { for(pr : ResearchProject in p.projects) {
+           //  listitem{navigate(pr.name, viewResearchProject(pr))}
+           //}}
       }
 
       listitem{navigate("Edit", editPerson(p))}
@@ -87,22 +87,22 @@ section people pages.
   {
   }
   
-  define page viewPerson(p : Person) 
+  define page viewPerson(person : Person) 
   {    
     main()
     
-    title{"Homepage of " text(p.name)}
+    title{"Homepage of " text(person.name)}
     
-    define sidebar() { personSidebar(p) }
+    define sidebar() { personSidebar(person) }
     
     define body() {
       section{
-        header{"Homepage of " text(p.name)} 
+        header{"Homepage of " text(person.name)} 
 
       	// how should level be indicated? or should headers be associated
       	// with the content they are heading?
     
-      	image(p.photo)
+      	image(person.photo)
       	// photo should be right-aligned; leave this to CSS?
       	// variable number of properties
     
@@ -110,19 +110,19 @@ section people pages.
           header{"Coordinates"}
     
           table {
-            row{"homepage" navigate(url(p.homepage))}
-            row{"email"    navigate(url(p.email))}
+            row{"homepage" navigate(url(person.homepage))}
+            row{"email"    navigate(url(person.email))}
             row{"address"  table{
-                             row{text(p.address.street)}
-                             row{text(p.address.city)}
+                             row{text(person.address.street)}
+                             row{text(person.address.city)}
                            }}
-            row{"phone" text(p.address.phone)}
+            row{"phone" text(person.address.phone)}
           }
         }
     
         section{
           header{"Recent Publications"}
-          publicationsForYear(p, 2007)
+          publicationsForYear(person, 2007)
            // better: 10 most recent publications
         }
       }
@@ -156,7 +156,7 @@ section publication pages.
     
     define body() {
       header{"Publications by " text(p.name)}
-      publicationsPage(p.publications)
+      //publicationsPage(p.publications)
     }
     main()
   }
@@ -195,8 +195,9 @@ section publication pages.
                           }}
       }
       form {
-        action("Delete", pub.delete, home())
-        action("Cancel", nop, viewPublication(pub))
+        "foo"
+        //action("Delete", pub.delete, home())
+        //action("Cancel", nop, viewPublication(pub))
       }
     }
     
@@ -205,11 +206,11 @@ section publication pages.
   
   // textlist(Person, pub.authors)}
   // textlist(ResearchProject, pub.projects)}
-  define textlist(t : Type, l : List<t>) {
-    for(o : t in l) {
-      navigate(o)
-    }
-  }
+  //define textlist(t : Type, l : List<t>) {
+  //  for(o : t in l) {
+ //     navigate(o)
+  //  }
+ // }
   
   define page editPublication(pub : Publication) {
     title{"Edit " text(pub.title)}
@@ -223,14 +224,14 @@ section publication pages.
              row{"pubabstract" input(pub.pubabstract)}
              row{"pdf"         input(pub.pdf)}
           
-             row{"authors"     textlist(Person, pub.authors)}
+             //row{"authors"     textlist(Person, pub.authors)}
              // row("add author"  select(Person p where not pub.authors.has(p), pub.authors)}
         
-             row{"projects"     textlist(pub.projects)}
+             //row{"projects"     textlist(pub.projects)}
              // row{"add project" select(ResearchProject rp where not pub.projects.has(rp))}
           }
-          action("Save", pub.save, viewPublication(pub))
-          action("Cancel", nop, viewPublication(pub))
+          //action("Save", pub.save, viewPublication(pub))
+          //action("Cancel", nop, viewPublication(pub))
        }
     }
     main()
@@ -265,16 +266,16 @@ section projects.
       section{
         header{text(project.fullname)}
         
-        text(a.description)
+        text(project.description)
       
         section{header{"Members"}
-          list{for(member : Person in project.members) {
+          list{for(member : Person in project.membersList) {
             listitem{ navigate(member.name, viewPerson(member)) }
           }}
         }
         
         section{header{"Publications"}
-          publicationsPage(project.publications)
+          publicationsPage(project.publicationsList)
         }
       }
     }

@@ -33,29 +33,29 @@ import org.webdsl.serg.domain.*;
 
   @In private FacesMessages facesMessages;
 
-  @RequestParameter("p") private Long pId;
+  @RequestParameter("person") private Long personId;
 
-  private Person p;
+  private Person person;
 
-  public void setP(Person p)
+  public void setPerson(Person person)
   { 
-    this.p = p;
+    this.person = person;
   }
 
-  public Person getP()
+  public Person getPerson()
   { 
-    return p;
+    return person;
   }
 
   public @Create void initialize()
   { 
-    if(pId == null)
+    if(personId == null)
     { 
-      log.debug("No " + "pId" + " defined, couldn't start conversation");
+      log.debug("No " + "personId" + " defined, couldn't start conversation");
     }
     else
     { 
-      p = em.find(Person.class, pId);
+      person = em.find(Person.class, personId);
     }
   }
 

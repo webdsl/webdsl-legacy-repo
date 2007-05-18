@@ -17,7 +17,7 @@
         
       <li>
         
-      <s:link view="/viewPerson.xhtml" value="#{personPublications.p.name}"><f:param name="p" value="#{personPublications.p.id}"/></s:link>
+      <s:link view="/viewPerson.xhtml" value="#{personPublications.p.name}"><f:param name="person" value="#{personPublications.p.id}"/></s:link>
     
       </li>
     
@@ -29,20 +29,6 @@
     
       <li>
          <h:outputText value="Projects"/> 
-      <ul>
-        
-      <h:dataTable var="pr" value="#{personPublications.p.projects}"> 
-      <h:column>
-      <li>
-        
-      <s:link view="/viewResearchProject.xhtml" value="#{pr.name}"><f:param name="project" value="#{pr.id}"/></s:link>
-    
-      </li>
-    </h:column> 
-    </h:dataTable>
-    
-      </ul>
-    
       </li>
     
       <li>
@@ -57,30 +43,6 @@
     
     <div class="body">
       <h1> <h:outputText value="Publications by "/>  <h:outputText value="#{personPublications.p.name}"/> </h1>
-    
-    <div class="publicationsPage">
-      <ul>
-        
-      <h:dataTable var="publication" value="#{personPublications.p.publications}"> 
-      <h:column>
-      <li>
-        
-      <h:dataTable var="author" value="#{publication.authors}"> 
-      <h:column>
-      <s:link view="/viewPerson.xhtml" value="#{author.name}"><f:param name="p" value="#{author.id}"/></s:link>
-    </h:column> 
-     
-      <h:column> <h:outputText value=","/> </h:column> 
-    </h:dataTable>
-    
-      <s:link view="/viewPublication.xhtml" value="#{publication.name}"><f:param name="pub" value="#{publication.id}"/></s:link>
-    
-      </li>
-    </h:column> 
-    </h:dataTable>
-    
-      </ul>
-    </div>
     </div>
     
     <div class="footer"> <h:outputText value="generated with "/> 

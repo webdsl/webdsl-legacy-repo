@@ -5,9 +5,9 @@ import org.webdsl.serg.domain.*;
 
 @Local public interface ViewPersonBeanInterface 
 { 
-  public void setP(Person p);
+  public void setPerson(Person person);
 
-  public Person getP();
+  public Person getPerson();
 
   public void initialize();
 

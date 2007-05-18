@@ -28,7 +28,7 @@
       <tr> <td> <h:outputText value="authors"/> </td>  <td>
       <h:dataTable var="author" value="#{viewPublication.pub.authors}"> 
       <h:column>
-      <s:link view="/viewPerson.xhtml" value="#{author.name}"><f:param name="p" value="#{author.id}"/></s:link>
+      <s:link view="/viewPerson.xhtml" value="#{author.name}"><f:param name="person" value="#{author.id}"/></s:link>
     </h:column> 
     </h:dataTable>
     </td> </tr>
@@ -42,11 +42,7 @@
     </td> </tr>
     </table>
     
-      <h:form> 
-       <h:commandButton value="Delete" action="#{viewPublication.pub.delete}"/>
-     
-       <h:commandButton value="Cancel" action="#{nop}"/>
-    </h:form>
+      <h:form> <h:outputText value="foo"/> </h:form>
     </div>
     
     <div class="footer"> <h:outputText value="generated with "/> 

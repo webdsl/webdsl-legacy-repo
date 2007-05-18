@@ -16,17 +16,17 @@
     <div class="body">
       <div class="section1">
       <h1> <h:outputText value="#{viewResearchProject.project.fullname}"/> </h1>
-     <h:outputText value="#{a.description}"/> 
+     <h:outputText value="#{viewResearchProject.project.description}"/> 
       <div class="section2">
       <h2> <h:outputText value="Members"/> </h2>
     
       <ul>
         
-      <h:dataTable var="member" value="#{viewResearchProject.project.members}"> 
+      <h:dataTable var="member" value="#{viewResearchProject.project.membersList}"> 
       <h:column>
       <li>
         
-      <s:link view="/viewPerson.xhtml" value="#{member.name}"><f:param name="p" value="#{member.id}"/></s:link>
+      <s:link view="/viewPerson.xhtml" value="#{member.name}"><f:param name="person" value="#{member.id}"/></s:link>
     
       </li>
     </h:column> 
@@ -41,13 +41,13 @@
     <div class="publicationsPage">
       <ul>
         
-      <h:dataTable var="publication" value="#{viewResearchProject.project.publications}"> 
+      <h:dataTable var="publication" value="#{viewResearchProject.project.publicationsList}"> 
       <h:column>
       <li>
         
       <h:dataTable var="author" value="#{publication.authors}"> 
       <h:column>
-      <s:link view="/viewPerson.xhtml" value="#{author.name}"><f:param name="p" value="#{author.id}"/></s:link>
+      <s:link view="/viewPerson.xhtml" value="#{author.name}"><f:param name="person" value="#{author.id}"/></s:link>
     </h:column> 
      
       <h:column> <h:outputText value=","/> </h:column> 
