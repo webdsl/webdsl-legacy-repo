@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
 <head>    
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title> <h:outputText value="#{pr.fullname}"/> </title>
+    <title> <h:outputText value="#{viewResearchProject.project.fullname}"/> </title>
     <link href="stylesheet/theme.css" rel="stylesheet" type="text/css"/>
     <link href="stylesheet/date.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,30 +14,54 @@
     <div class="sidebar"></div>
     
     <div class="body">
-      <h1> <h:outputText value="#{pr.fullname}"/> </h1>
+      <div class="section1">
+      <h1> <h:outputText value="#{viewResearchProject.project.fullname}"/> </h1>
+     <h:outputText value="#{a.description}"/> 
+      <div class="section2">
+      <h2> <h:outputText value="Members"/> </h2>
     
-    <div class="publicationsPage">
       <ul>
         
-      <h:dataTable var="pub" value="#{pr.publications}"> 
+      <h:dataTable var="member" value="#{viewResearchProject.project.members}"> 
       <h:column>
       <li>
         
-      <h:dataTable var="a" value="#{pub.authors}"> 
-      <h:column>
-      <s:link view="/viewPerson.xhtml" value="#{a.name}"><f:param name="personId" value="#{a.id}"/></s:link>
-    </h:column> 
-     
-      <h:column> <h:outputText value=","/> </h:column> 
-    </h:dataTable>
-    
-      <s:link view="/viewPublication.xhtml" value="#{pub.name}"><f:param name="publicationId" value="#{pub.id}"/></s:link>
+      <s:link view="/viewPerson.xhtml" value="#{member.name}"><f:param name="p" value="#{member.id}"/></s:link>
     
       </li>
     </h:column> 
     </h:dataTable>
     
       </ul>
+    </div>
+    
+      <div class="section2">
+      <h2> <h:outputText value="Publications"/> </h2>
+    
+    <div class="publicationsPage">
+      <ul>
+        
+      <h:dataTable var="publication" value="#{viewResearchProject.project.publications}"> 
+      <h:column>
+      <li>
+        
+      <h:dataTable var="author" value="#{publication.authors}"> 
+      <h:column>
+      <s:link view="/viewPerson.xhtml" value="#{author.name}"><f:param name="p" value="#{author.id}"/></s:link>
+    </h:column> 
+     
+      <h:column> <h:outputText value=","/> </h:column> 
+    </h:dataTable>
+    
+      <s:link view="/viewPublication.xhtml" value="#{publication.name}"><f:param name="pub" value="#{publication.id}"/></s:link>
+    
+      </li>
+    </h:column> 
+    </h:dataTable>
+    
+      </ul>
+    </div>
+    </div>
     </div>
     </div>
     

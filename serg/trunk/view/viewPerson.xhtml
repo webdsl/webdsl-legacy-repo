@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
 <head>    
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title> <h:outputText value="Homepage of "/>  <h:outputText value="#{p.name}"/> </title>
+    <title> <h:outputText value="Homepage of "/>  <h:outputText value="#{viewPerson.p.name}"/> </title>
     <link href="stylesheet/theme.css" rel="stylesheet" type="text/css"/>
     <link href="stylesheet/date.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -17,13 +17,13 @@
         
       <li>
         
-      <s:link view="/viewPerson.xhtml" value="#{p.name}"><f:param name="personId" value="#{p.id}"/></s:link>
+      <s:link view="/viewPerson.xhtml" value="#{viewPerson.p.name}"><f:param name="p" value="#{viewPerson.p.id}"/></s:link>
     
       </li>
     
       <li>
         
-      <s:link view="/personPublications.xhtml" value="Publications"><f:param name="personId" value="#{p.id}"/></s:link>
+      <s:link view="/personPublications.xhtml" value="Publications"><f:param name="p" value="#{viewPerson.p.id}"/></s:link>
     
       </li>
     
@@ -31,11 +31,11 @@
          <h:outputText value="Projects"/> 
       <ul>
         
-      <h:dataTable var="pr" value="#{p.projects}"> 
+      <h:dataTable var="pr" value="#{viewPerson.p.projects}"> 
       <h:column>
       <li>
         
-      <s:link view="/viewResearchProject.xhtml" value="#{pr.name}"><f:param name="researchProjectId" value="#{pr.id}"/></s:link>
+      <s:link view="/viewResearchProject.xhtml" value="#{pr.name}"><f:param name="project" value="#{pr.id}"/></s:link>
     
       </li>
     </h:column> 
@@ -47,7 +47,7 @@
     
       <li>
         
-      <s:link view="/editPerson.xhtml" value="Edit"><f:param name="personId" value="#{p.id}"/></s:link>
+      <s:link view="/editPerson.xhtml" value="Edit"><f:param name="p" value="#{viewPerson.p.id}"/></s:link>
     
       </li>
     
@@ -57,33 +57,33 @@
     
     <div class="body">
       <div class="section1">
-      <h1> <h:outputText value="Homepage of "/>  <h:outputText value="#{p.name}"/> </h1>
-     <h:graphicImage value="#{p.photo}"/> 
+      <h1> <h:outputText value="Homepage of "/>  <h:outputText value="#{viewPerson.p.name}"/> </h1>
+     <h:graphicImage value="#{viewPerson.p.photo}"/> 
       <div class="section2">
       <h2> <h:outputText value="Coordinates"/> </h2>
     
       <table>
       <tr> <td> <h:outputText value="homepage"/> </td>  <td>
-      <h:outputLink value="#{p.homepage}">
-          <h:outputText value="#{p.homepage}"/>
+      <h:outputLink value="#{viewPerson.p.homepage}">
+          <h:outputText value="#{viewPerson.p.homepage}"/>
       </h:outputLink>
     </td> </tr>
     
       <tr> <td> <h:outputText value="email"/> </td>  <td>
-      <h:outputLink value="#{p.email}">
-          <h:outputText value="#{p.email}"/>
+      <h:outputLink value="#{viewPerson.p.email}">
+          <h:outputText value="#{viewPerson.p.email}"/>
       </h:outputLink>
     </td> </tr>
     
       <tr> <td> <h:outputText value="address"/> </td>  <td>
       <table>
-      <tr> <td> <h:outputText value="#{p.address.street}"/> </td> </tr>
+      <tr></tr>
     
-      <tr> <td> <h:outputText value="#{p.address.city}"/> </td> </tr>
+      <tr></tr>
     </table>
     </td> </tr>
     
-      <tr> <td> <h:outputText value="phone"/> </td>  <td> <h:outputText value="#{p.address.phone}"/> </td> </tr>
+      <tr> <td> <h:outputText value="phone"/> </td> </tr>
     </table>
     </div>
     

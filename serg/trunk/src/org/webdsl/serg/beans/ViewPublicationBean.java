@@ -55,9 +55,7 @@ import org.webdsl.serg.domain.*;
     }
     else
     { 
-      log.debug("loading Publication " + pubId);
       pub = em.find(Publication.class, pubId);
-      log.debug("Publication " + pub.getName() + " loaded");
     }
   }
 

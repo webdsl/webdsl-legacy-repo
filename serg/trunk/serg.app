@@ -166,12 +166,12 @@ section publication pages.
   
      //    publicationsPage(pers.publications where p.year == year)
 
-  define publicationsPage(ps : List<Publication>) {
+  define publicationsPage(publications : List<Publication>) {
     list{
-      for(pub : Publication in ps) { 
+      for(publication : Publication in publications) { 
         listitem{
-          for(a : Person in pub.authors) {navigate(a.name, viewPerson(a)) ","}
-          navigate(pub.name, viewPublication(pub))
+          for(author : Person in publication.authors) {navigate(author.name, viewPerson(author)) ","}
+          navigate(publication.name, viewPublication(publication))
         }
      }
     }
@@ -189,8 +189,10 @@ section publication pages.
         row{"year"        text(pub.year)}
         row{"pubabstract" text(pub.pubabstract)}
         row{"pdf"         text(pub.pdf)}
-        row{"authors"     textlist(Person, pub.authors)}
-        row{"projects"    textlist(ResearchProject, pub.projects)}
+        row{"authors"     for(author : Person in pub.authors) { navigate(author.name, viewPerson(author)) } }
+        row{"projects"    for(project : ResearchProject in pub.projectsList) { 
+                            navigate(project.name, viewResearchProject(project)) 
+                          }}
       }
       form {
         action("Delete", pub.delete, home())
@@ -201,6 +203,8 @@ section publication pages.
     main()
   }
   
+  // textlist(Person, pub.authors)}
+  // textlist(ResearchProject, pub.projects)}
   define textlist(t : Type, l : List<t>) {
     for(o : t in l) {
       navigate(o)
@@ -248,17 +252,31 @@ section projects.
   ResearchProject {
     fullname     :: String
     acronym      :: String (name)
+    description  :: Text
     members      -> Set<Person>
     proposal     -> Publication
     publications -> Set<Publication>
   }
   
-  define page viewResearchProject(pr : ResearchProject) {
-    title{text(pr.fullname)}
+  define page viewResearchProject(project : ResearchProject) {
+    title{text(project.fullname)}
     define sidebar() {}
     define body() {
-      header{text(pr.fullname)}
-      publicationsPage(pr.publications)
+      section{
+        header{text(project.fullname)}
+        
+        text(a.description)
+      
+        section{header{"Members"}
+          list{for(member : Person in project.members) {
+            listitem{ navigate(member.name, viewPerson(member)) }
+          }}
+        }
+        
+        section{header{"Publications"}
+          publicationsPage(project.publications)
+        }
+      }
     }
     main()
   }
@@ -320,6 +338,7 @@ section init database .
         fullname := "Model-Driven Software Evolution"
         acronym  := "MoDSE"
         members  := {EelcoVisser, ArieVanDeursen, JosWarmer}
+        description := "The promise of model-driven engineering (MDE) is that the development and maintenance effort can be reduced by working at the model instead of the code level. Models define what is variable in a system, and code generators produce the functionality that is common in the application domain. The problem with model-driven engineering is that it can lead to a lock-in in the abstractions and generator technology adopted at project initiation. Software systems need to evolve, and systems built using model-driven approaches are no exception. What complicates model-driven engineering is that it requires multiple dimensions of evolution. In regular evolution, the modeling language is used to make the changes. In meta-model evolution, changes are required to the modeling notation. In platform evolution, the code generators and application framework change to reflect new requirements on the target platform. Finally, in abstraction evolution, new modeling languages are added to the set of (modeling) languages to reflect increased understanding of a technical or business domain. While MDE has been optimized for regular evolution, presently little or no support exists for metamodel, platform and abstraction evolution. It is this gap that this project proposes to address. The first fundamental premise of this proposal is that evolution should be a continuous process. Software development is a continuous search for recurring patterns, which can be captured using domain-specific modeling languages. After developing a number of systems using a particular meta-model, new patterns may be recognized that can be captured in a higher-level or richer meta-model. The second premise is that reengineering of legacy systems to the model-driven paradigm should be a special case of this continuous evolution, and should be performed incrementally. The goal of this project is to develop a systematic approach to model-driven software evolution. This approach includes methods, techniques, and underlying tool support. We will develop a prototype programming environment that assists software engineers with the introduction, development, and maintenance of models and domain-specific languages."
       };
       
     Publication GTTSE07 := 
@@ -336,7 +355,7 @@ section init database .
         title       := "Model-Driven Software Evolution: A Research Agenda"
         authors     := [ArieVanDeursen, JosWarmer, EelcoVisser]
         year        := 2006
-        pubabstract := ""
+        pubabstract := "Software systems need to evolve, and systems built using model-driven approaches are no exception.  What complicates model-driven engineering is that it requires multiple dimensions of evolution. In regular evolution, the modeling language is used to make the changes. In meta-model evolution, changes are required to the modeling notation.  In platform evolution, the code generators and application framework change to reflect new requirements on the target platform. Finally, in abstraction evolution, new modeling languages are added to the set of (modeling) languages to reflect increased understanding of a technical or business domain.  While MDE has been optimized for regular evolution, presently little or no support exists for metamodel, platform and abstraction evolution. In this paper, we analyze the problems raised by the evolution of model-based software systems and identify challenges to be addressed by research in this area."
         projects    := {MoDSE}
       };
     

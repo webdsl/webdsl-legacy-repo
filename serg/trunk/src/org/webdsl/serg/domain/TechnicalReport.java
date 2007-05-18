@@ -21,7 +21,7 @@ import org.webdsl.serg.domain.*;
     this.number = number;
   }
 
-  private String document;
+  private @Column(length = 1000000) String document;
 
   public String getDocument()
   { 

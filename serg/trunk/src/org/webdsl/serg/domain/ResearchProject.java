@@ -45,6 +45,18 @@ import org.webdsl.serg.domain.*;
     this.acronym = acronym;
   }
 
+  private @Column(length = 1000000) String description;
+
+  public String getDescription()
+  { 
+    return description;
+  }
+
+  public void setDescription(String description)
+  { 
+    this.description = description;
+  }
+
   @ManyToMany @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private Set<Person> members = new HashSet<Person>();
 
   public Set<Person> getMembers()

@@ -5,9 +5,9 @@ import org.webdsl.serg.domain.*;
 
 @Local public interface ViewResearchProjectBeanInterface 
 { 
-  public void setPr(ResearchProject pr);
+  public void setProject(ResearchProject project);
 
-  public ResearchProject getPr();
+  public ResearchProject getProject();
 
   public void initialize();
 
