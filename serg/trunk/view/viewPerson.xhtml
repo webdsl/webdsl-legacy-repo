@@ -4,6 +4,8 @@
 <head>    
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title> <h:outputText value="Homepage of "/>  <h:outputText value="#{viewPerson.person.name}"/> </title>
+    <link href="stylesheet/layout.css" rel="stylesheet" type="text/css"/>
+    <link href="stylesheet/style.css" rel="stylesheet" type="text/css"/>
     <link href="stylesheet/theme.css" rel="stylesheet" type="text/css"/>
     <link href="stylesheet/date.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -63,13 +65,13 @@
     
       <tr> <td> <h:outputText value="address"/> </td>  <td>
       <table>
-      <tr></tr>
+      <tr> <td> <h:outputText value="#{viewPerson.person.address.street}"/> </td> </tr>
     
-      <tr></tr>
+      <tr> <td> <h:outputText value="#{viewPerson.person.address.city}"/> </td> </tr>
     </table>
     </td> </tr>
     
-      <tr> <td> <h:outputText value="phone"/> </td> </tr>
+      <tr> <td> <h:outputText value="phone"/> </td>  <td> <h:outputText value="#{viewPerson.person.address.phone}"/> </td> </tr>
     </table>
     </div>
     

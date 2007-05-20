@@ -4,6 +4,8 @@
 <head>    
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title> <h:outputText value="Publication "/>  <h:outputText value="#{viewPublication.pub.title}"/> </title>
+    <link href="stylesheet/layout.css" rel="stylesheet" type="text/css"/>
+    <link href="stylesheet/style.css" rel="stylesheet" type="text/css"/>
     <link href="stylesheet/theme.css" rel="stylesheet" type="text/css"/>
     <link href="stylesheet/date.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -11,7 +13,9 @@
     <div class="main">
     <div class="menu"> <h:graphicImage value="/serg/layout/serg-logo-color-smaller.png"/> </div>
     
-    <div class="sidebar"></div>
+    <div class="sidebar">
+      <s:link view="/editPublication.xhtml" value="Edit"><f:param name="pub" value="#{viewPublication.pub.id}"/></s:link>
+    </div>
     
     <div class="body">
       <h1> <h:outputText value="#{viewPublication.pub.title}"/> </h1>
@@ -42,7 +46,9 @@
     </td> </tr>
     </table>
     
-      <h:form> <h:outputText value="foo"/> </h:form>
+      <h:form> 
+       <h:commandButton value="Delete" action="#{viewPublication.pub.delete()}"/>
+    </h:form>
     </div>
     
     <div class="footer"> <h:outputText value="generated with "/> 

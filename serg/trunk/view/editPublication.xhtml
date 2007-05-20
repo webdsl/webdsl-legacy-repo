@@ -4,6 +4,8 @@
 <head>    
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title> <h:outputText value="Edit "/>  <h:outputText value="#{editPublication.pub.title}"/> </title>
+    <link href="stylesheet/layout.css" rel="stylesheet" type="text/css"/>
+    <link href="stylesheet/style.css" rel="stylesheet" type="text/css"/>
     <link href="stylesheet/theme.css" rel="stylesheet" type="text/css"/>
     <link href="stylesheet/date.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -34,6 +36,9 @@
       <h:inputText required="true" value="#{editPublication.pub.pdf}"/>
     </td> </tr>
     </table>
+     
+       <h:commandButton type="submit" value="Save" action="#{editPublication.save}"/>
+       <s:button type="submit" value="Cancel" action="#{editPublication.cancel}"/>
     </h:form>
     </div>
     

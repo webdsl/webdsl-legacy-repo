@@ -180,7 +180,9 @@ section publication pages.
   define page viewPublication(pub : Publication) {
     title{"Publication " text(pub.title)}
     
-    define sidebar() {}
+    define sidebar() {
+        navigate("Edit", editPublication(pub))
+    }
     
     define body() {
       header{text(pub.title)}
@@ -195,8 +197,7 @@ section publication pages.
                           }}
       }
       form {
-        "foo"
-        //action("Delete", pub.delete, home())
+        action("Delete", pub.delete(), home())
         //action("Cancel", nop, viewPublication(pub))
       }
     }
@@ -230,7 +231,7 @@ section publication pages.
              //row{"projects"     textlist(pub.projects)}
              // row{"add project" select(ResearchProject rp where not pub.projects.has(rp))}
           }
-          //action("Save", pub.save, viewPublication(pub))
+          action("Save", pub.save(), viewPublication(pub))
           //action("Cancel", nop, viewPublication(pub))
        }
     }
