@@ -28,7 +28,7 @@
       <h:column>
       <li>
         
-      <s:link view="/viewPerson.xhtml" value="#{member.name}"><f:param name="person" value="#{member.id}"/></s:link>
+      <s:link view="/viewPerson.xhtml" value="#{member.name}" propagation="none"><f:param name="person" value="#{member.id}"/></s:link>
     
       </li>
     </h:column> 
@@ -49,13 +49,13 @@
         
       <h:dataTable var="author" value="#{publication.authors}"> 
       <h:column>
-      <s:link view="/viewPerson.xhtml" value="#{author.name}"><f:param name="person" value="#{author.id}"/></s:link>
+      <s:link view="/viewPerson.xhtml" value="#{author.name}" propagation="none"><f:param name="person" value="#{author.id}"/></s:link>
     </h:column> 
      
       <h:column> <h:outputText value=","/> </h:column> 
     </h:dataTable>
     
-      <s:link view="/viewPublication.xhtml" value="#{publication.name}"><f:param name="pub" value="#{publication.id}"/></s:link>
+      <s:link view="/viewPublication.xhtml" value="#{publication.name}" propagation="none"><f:param name="pub" value="#{publication.id}"/></s:link>
     
       </li>
     </h:column> 

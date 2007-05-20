@@ -198,7 +198,6 @@ section publication pages.
       }
       form {
         action("Delete", pub.delete(), home())
-        //action("Cancel", nop, viewPublication(pub))
       }
     }
     
@@ -231,8 +230,8 @@ section publication pages.
              //row{"projects"     textlist(pub.projects)}
              // row{"add project" select(ResearchProject rp where not pub.projects.has(rp))}
           }
-          action("Save", pub.save(), viewPublication(pub))
-          //action("Cancel", nop, viewPublication(pub))
+          action("Save",   save(), viewPublication(pub))
+          action("Cancel", cancel(), viewPublication(pub))
        }
     }
     main()

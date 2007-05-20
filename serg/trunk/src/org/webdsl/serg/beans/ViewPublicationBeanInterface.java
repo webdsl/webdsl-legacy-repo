@@ -5,11 +5,11 @@ import org.webdsl.serg.domain.*;
 
 @Local public interface ViewPublicationBeanInterface 
 { 
-  public void setPub(Publication pub);
-
-  public Publication getPub();
-
   public void initialize();
 
   public void destroy();
+
+  public void setPub(Publication pub);
+
+  public Publication getPub();
 }

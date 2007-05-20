@@ -10,6 +10,7 @@ import javax.ejb.Stateful;
 import javax.ejb.Remove;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Begin;
+import org.jboss.seam.annotations.End;
 import org.jboss.seam.annotations.Destroy;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
@@ -33,21 +34,7 @@ import org.webdsl.serg.domain.*;
 
   @In private FacesMessages facesMessages;
 
-  @RequestParameter("pub") private Long pubId;
-
-  private Publication pub;
-
-  public void setPub(Publication pub)
-  { 
-    this.pub = pub;
-  }
-
-  public Publication getPub()
-  { 
-    return pub;
-  }
-
-  public @Create void initialize()
+  @Create @Begin public void initialize()
   { 
     if(pubId == null)
     { 
@@ -61,4 +48,18 @@ import org.webdsl.serg.domain.*;
 
   @Destroy @Remove public void destroy()
   { }
+
+  @RequestParameter("pub") private Long pubId;
+
+  private Publication pub;
+
+  public void setPub(Publication pub)
+  { 
+    this.pub = pub;
+  }
+
+  public Publication getPub()
+  { 
+    return pub;
+  }
 }

@@ -19,13 +19,13 @@
         
       <li>
         
-      <s:link view="/viewPerson.xhtml" value="#{viewPerson.person.name}"><f:param name="person" value="#{viewPerson.person.id}"/></s:link>
+      <s:link view="/viewPerson.xhtml" value="#{viewPerson.person.name}" propagation="none"><f:param name="person" value="#{viewPerson.person.id}"/></s:link>
     
       </li>
     
       <li>
         
-      <s:link view="/personPublications.xhtml" value="Publications"><f:param name="p" value="#{viewPerson.person.id}"/></s:link>
+      <s:link view="/personPublications.xhtml" value="Publications" propagation="none"><f:param name="p" value="#{viewPerson.person.id}"/></s:link>
     
       </li>
     
@@ -35,7 +35,7 @@
     
       <li>
         
-      <s:link view="/editPerson.xhtml" value="Edit"><f:param name="p" value="#{viewPerson.person.id}"/></s:link>
+      <s:link view="/editPerson.xhtml" value="Edit" propagation="none"><f:param name="p" value="#{viewPerson.person.id}"/></s:link>
     
       </li>
     

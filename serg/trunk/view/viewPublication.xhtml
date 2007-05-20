@@ -14,7 +14,7 @@
     <div class="menu"> <h:graphicImage value="/serg/layout/serg-logo-color-smaller.png"/> </div>
     
     <div class="sidebar">
-      <s:link view="/editPublication.xhtml" value="Edit"><f:param name="pub" value="#{viewPublication.pub.id}"/></s:link>
+      <s:link view="/editPublication.xhtml" value="Edit" propagation="none"><f:param name="pub" value="#{viewPublication.pub.id}"/></s:link>
     </div>
     
     <div class="body">
@@ -32,7 +32,7 @@
       <tr> <td> <h:outputText value="authors"/> </td>  <td>
       <h:dataTable var="author" value="#{viewPublication.pub.authors}"> 
       <h:column>
-      <s:link view="/viewPerson.xhtml" value="#{author.name}"><f:param name="person" value="#{author.id}"/></s:link>
+      <s:link view="/viewPerson.xhtml" value="#{author.name}" propagation="none"><f:param name="person" value="#{author.id}"/></s:link>
     </h:column> 
     </h:dataTable>
     </td> </tr>
@@ -40,14 +40,14 @@
       <tr> <td> <h:outputText value="projects"/> </td>  <td>
       <h:dataTable var="project" value="#{viewPublication.pub.projectsList}"> 
       <h:column>
-      <s:link view="/viewResearchProject.xhtml" value="#{project.name}"><f:param name="project" value="#{project.id}"/></s:link>
+      <s:link view="/viewResearchProject.xhtml" value="#{project.name}" propagation="none"><f:param name="project" value="#{project.id}"/></s:link>
     </h:column> 
     </h:dataTable>
     </td> </tr>
     </table>
     
       <h:form> 
-       <h:commandButton value="Delete" action="#{viewPublication.pub.delete()}"/>
+       <h:commandButton type="submit" value="Delete" action="#{viewPublication.pub.delete()}"/>
     </h:form>
     </div>
     

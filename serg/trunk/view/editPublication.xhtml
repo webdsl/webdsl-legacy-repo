@@ -37,8 +37,9 @@
     </td> </tr>
     </table>
      
-       <h:commandButton type="submit" value="Save" action="#{editPublication.save}"/>
-       <s:button type="submit" value="Cancel" action="#{editPublication.cancel}"/>
+       <h:commandButton type="submit" value="Save" action="#{editPublication.save()}"/>
+     
+       <s:button type="submit" value="Cancel" action="#{editPublication.cancel()}"/>
     </h:form>
     </div>
     
