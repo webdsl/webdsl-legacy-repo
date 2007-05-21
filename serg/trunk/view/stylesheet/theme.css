@@ -1,3 +1,38 @@
+
+.sidebar {
+  position         : absolute;
+  background-color : white;
+  border           : 1px solid #999;
+  overflow         : hidden;
+  left             : 10px;
+  margin-top       : 20px;
+  margin-left      : 0em;
+  margin-right     : 1.5em;
+  width            : 10em;
+  padding          : 1em 1em 1em 1em;
+  color            : #005aa0;
+  font-size        : small;
+  /* line-height:1.3em; */
+}
+
+.body {
+  position      : absolute;
+  border        : 1px solid #999;
+  overflow      : hidden;
+  left          : 12.5em;
+  right         : 10px;
+  margin-top    : 20px;
+  margin-bottom : 1.5em;
+  padding       : 2em 2em 2em 2em;
+  /* padding: 30px; */
+}
+
+body {
+	margin: 10px; 
+	font-family: Arial,sans-serif;
+	color: #616161;
+}
+
 a:active, a:link, a:visited {
 	color: #0D5798;    
 }
@@ -6,7 +41,7 @@ a:hover {
 }
 
 .menuButtons {
-	background-color: #FF6600; /*#8CAFCD*/
+	background-color: #578BB8; /* #FF6600; */ /*#8CAFCD*/
 	padding-top: 10px;
 	padding-bottom: 10px;
 }
@@ -18,14 +53,14 @@ a:hover {
 }
 .menuButtons a:active, .menuButtons a:link, .menuButtons a:visited {
 	font-family: Arial,sans-serif;
-	background-color: #FF6600; /*#8CAFCD*/
-	color: white;
+	background-color: #578BB8; /* #FF6600; */ /*#8CAFCD*/
+	color: white; 
 	border-right: 1px solid white;
 }
 .menuButtons a:hover {
 	font-family: Arial,sans-serif;
     background-color: white;
-    color: #FF6600; /*#8CAFCD*/
+    color: #578BB8; / *#FF6600; */ /*#8CAFCD*/
 }
 
 .loginout {
@@ -42,6 +77,7 @@ a:hover {
 .footer {
 	text-align: center;
 	font-size: 0.8em;
+    position : absolute;
 }
 
 .actionButtons {
@@ -76,15 +112,7 @@ h1 {
 	margin-top: 0;
 }
 
-body {
-	margin: 0px;
-	font-family: Arial,sans-serif;
-	color: #616161;
-}
 
-.body {
-	padding: 30px;
-}
 
 
 table {
@@ -95,11 +123,10 @@ th {
 	color: white;
 	font-family: Arial,sans-serif;
 	padding: 5px;
-	
 }
 td {
-	background-color: #F0F0F0;
-	text-align: center;
+	background-color:  white; /* #F0F0F0; */
+	text-align: left;
 }
 .narrow {
 	width: 20%;
@@ -108,7 +135,7 @@ td {
 	width: 80%;
 }
 .first td {
-	background-color: #F0F0F0;
+	background-color: white ; /* #F0F0F0; */
 }
 .second td {
 	background-color: white;
@@ -116,9 +143,9 @@ td {
 
 .dialog 
 {
-	padding: 15px;
-	background-color: #F0F0F0;
-	margin: 10px;	
+	padding: 0px;
+	background-color: white; /* #F0F0F0; */
+	margin: 0px;	
 }
 .dialog table
 {

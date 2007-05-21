@@ -13,7 +13,7 @@
 html body {
   font-family: verdana, lucida, helvetica, sans-serif;
   font-size: medium;
-  background-image: url("http://losser.labs.cs.uu.nl/~mbravenb/cgn4.jpg");
+  /* background-image: url("http://losser.labs.cs.uu.nl/~mbravenb/cgn4.jpg"); */
   background-repeat: no-repeat;
   background-color: rgb(246, 246, 246);
   margin:0;

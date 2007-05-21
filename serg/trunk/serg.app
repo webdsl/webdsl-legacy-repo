@@ -40,9 +40,34 @@ section people.
 section people pages.
 
   define page home() {
-    define sidebar() {}
-    define body () {}
+  
+    define sidebar() {
+      action("Init Database", initDB())
+    }
+    
+    define body () {
+    
+      "Software engineering is concerned with methods and techniques for building high quality software systems. This not only includes software construction, but also requirements analysis, design, system integration, testing, deployment, and making changes to software systems after their first release."
+
+      "The mission of the Delft Software Engineering Research Group is"
+
+      list {
+        listitem { "to develop a deep understanding of how people build and evolve software systems;" }
+        listitem { "to develop novel methods, techniques and tools that advance the way in which software is built and adjusted; and" }
+        listitem { "to offer students an education that prepares them to take a leading role in complex software development projects." }
+      }
+      
+      "Research at the Delft Software Engineering Research Group is centered around two themes, software evolution and embedded software, which are studied seperately as well as in combination in two laboratories:"
+
+      list {
+        listitem { "The Software Evolution Research Laboratory (SWERL), and" }
+        listitem { "The Embedded Software Laboratory (ESL)" }
+      }
+
+    }
+    
     main()
+
   }
 
   define main() {
@@ -53,7 +78,7 @@ section people pages.
   }
   
   define menu() {
-    image("/serg/layout/serg-logo-color-smaller.png")
+    image("/serg/img/serg-logo-color-smaller.png")
   }
   
   define footer() {
