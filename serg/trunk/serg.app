@@ -221,10 +221,20 @@ section publication pages.
           table {
              row{"title"       input(pub.title)}
              
-             row{"authors"     for(author : Person in pub.authors) { navigate(author.name, viewPerson(author)) } }
+             row{"authors"     for(author : Person in pub.authors) {
+                                 navigate(author.name, viewPerson(author))
+                                 action("X", pub.authors.remove(author))
+                               } }
              
-             row{"add author" ""}
-                 //select(Person p where not pub.authors.has(p), pub.authors)}
+             row {
+               "" 
+               select(newAuthor : Person) {
+                 action("Add Author", pub.authors.add(newAuthor))
+               }
+             }
+               
+               // p where not pub.authors.has(p), pub.authors)
+                 
                    
              row{"year"        input(pub.year)}
              row{"pubabstract" input(pub.pubabstract)}
