@@ -1,11 +1,10 @@
 package org.webdsl.serg.beans;
 
-import java.util.List;
+import java.util.Map;
 
 import javax.faces.event.ValueChangeEvent;
 
 import org.jboss.annotation.ejb.Local;
-import org.webdsl.serg.domain.Person;
 import org.webdsl.serg.domain.Publication;
 
 @Local
@@ -22,16 +21,16 @@ public interface EditPublicationBeanInterface {
 
 	public String cancel();
 
-	public void setNewAuthor(Person p);
+	public void setNewAuthor(String p);
 	
-	public Person getNewAuthor();
+	public String getNewAuthor();
 	
 	public String addAuthor();
 	
 	//public void addAuthor(ValueChangeEvent event);
 	
-	public List<Person> getAuthors();
+	//public List<Person> getAuthors();
 	
-	//public Map<String, Integer> getAuthors();
+	public Map<String, String> getAuthors();
 
 }

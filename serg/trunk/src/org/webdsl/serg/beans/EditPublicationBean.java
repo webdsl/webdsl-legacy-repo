@@ -2,11 +2,13 @@ package org.webdsl.serg.beans;
 
 import static javax.persistence.PersistenceContextType.EXTENDED;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
+import javax.faces.convert.Converter;
+import javax.faces.convert.NumberConverter;
 import javax.faces.event.ValueChangeEvent;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -44,6 +46,7 @@ public class EditPublicationBean implements EditPublicationBeanInterface {
 			log
 					.debug("No " + "pubId"
 							+ " defined, couldn't start conversation");
+			pub = new Publication();
 		} else {
 			pub = em.find(Publication.class, pubId);
 		}
@@ -71,6 +74,8 @@ public class EditPublicationBean implements EditPublicationBeanInterface {
 	@End
 	public String save() {
 		log.info("save");
+		if (pub.getId() == null)
+			em.persist(pub);
 		em.flush();
 		return "/" + "viewPublication" + ".seam?"
 				+ ("pub" + "=" + pub.getId() + "");
@@ -89,68 +94,73 @@ public class EditPublicationBean implements EditPublicationBeanInterface {
 		pub.getAuthors().add(author);
 		return null;
 	}
-	
-	private Person newAuthor;
-	
-	public void setNewAuthor(Person p) {
+
+	private String newAuthor;
+
+	public void setNewAuthor(String p) {
 		newAuthor = p;
 	}
-	
-	public Person getNewAuthor() {
+
+	public String getNewAuthor() {
 		return newAuthor;
 	}
-	
+
 	public String addAuthor() {
-		log.info("addAuthor " + newAuthor);
-		pub.addAuthors(newAuthor);
-		authors.remove(newAuthor);
+		log.info("addAuthor " + newAuthor);		
+		Person author = em.find(Person.class, new Long(newAuthor));
+		pub.addAuthors(author);
 		return null;
 	}
-	
-//	public void addAuthor(ValueChangeEvent event) {
-//		log.info("addAuthor : " + event);
-//		Long newAuthorId = (Long) event.getNewValue();
-//		Person author = em.find(Person.class, newAuthorId);
-//		pub.addAuthors(author);
-//		authors.remove(author);
-//		// setAuthors(pub.getAuthors().add(author));
-//	}
+
+	// @DataModel("authors")
+	// private List<Person> authors;
+	//
+	// public List<Person> getAuthors() {
+	// return authors;
+	// }
+	//
+	// public void initAuthors() {
+	// log.info("EditPublicationBean.getAuthors");
+	// authors = new ArrayList<Person>();
+	// log.info("EditPublicationBean.getAuthors initializing");
+	// for (Object o : em.createQuery("from Person").getResultList()) {
+	// Person p = (Person) o;
+	// if (!pub.getAuthors().contains(p)) {
+	// authors.add(p);
+	// }
+	// }
+	// }
+
+	public void addAuthor(ValueChangeEvent event) {
+		log.info("addAuthor : " + event);
+		Long newAuthorId = new Long((String) event.getNewValue());
+		Person author = em.find(Person.class, newAuthorId);
+		pub.addAuthors(author);
+		// setAuthors(pub.getAuthors().add(author));
+	}
 
 	@DataModel("authors")
-	private List<Person> authors;
+	private Map<String, String> authors;
 
-	public List<Person> getAuthors() {
+	public Map<String, String> getAuthors() {
 		return authors;
 	}
 
 	public void initAuthors() {
 		log.info("EditPublicationBean.getAuthors");
-		authors = new ArrayList<Person>();
+		authors = new HashMap<String, String>();
 		log.info("EditPublicationBean.getAuthors initializing");
 		for (Object o : em.createQuery("from Person").getResultList()) {
 			Person p = (Person) o;
 			if (!pub.getAuthors().contains(p)) {
-				authors.add(p);
+				authors.put(p.getName(), p.getId().toString());
 			}
 		}
-	}	
+	}
 	
-//	@DataModel("authors")
-//	private Map<String, Integer> authors;
-//
-//	public Map<String, Integer> getAuthors() {
-//		return authors;
-//	}
-//
-//	public void initAuthors() {
-//		log.info("EditPublicationBean.getAuthors");
-//		authors = new HashMap<String, Integer>();
-//		log.info("EditPublicationBean.getAuthors initializing");
-//		for (Object o : em.createQuery("from Person").getResultList()) {
-//			Person p = (Person) o;
-//			if (!pub.getAuthors().contains(p)) {
-//				authors.put(p.getName(), new Integer(p.getId().intValue()));
-//			}
-//		}
-//	}
+	private Converter numberConverter = new NumberConverter();
+	
+	public Converter getNumberConverter() {
+		return numberConverter;
+	}
 }

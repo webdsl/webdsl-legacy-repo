@@ -36,10 +36,9 @@
       <td>
         
         <h:selectOneMenu value="#{editPublication.newAuthor}">
-          <s:selectItems value="#{editPublication.authors}" 
-                         var="author" label="#{author.name}"
-                         noSelectionLabel="Add Author" />
-          <s:convertEntity />
+          <f:selectItem itemLabel="Add Author" itemDisable="true" itemValue="0" />
+          <f:selectItems value="#{editPublication.authors}" 
+                         var="author" label="#{author.label}"/>
         </h:selectOneMenu>
         
         <h:commandButton type="submit" value="Add Author" action="#{editPublication.addAuthor()}"/>
