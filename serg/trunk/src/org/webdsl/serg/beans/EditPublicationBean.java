@@ -163,4 +163,9 @@ public class EditPublicationBean implements EditPublicationBeanInterface {
 	public Converter getNumberConverter() {
 		return numberConverter;
 	}
+	
+	public String removeAuthor(Long authorId) {
+		pub.getAuthors().remove(em.find(Person.class, authorId));
+		return null;
+	}
 }

@@ -32,5 +32,6 @@ public interface EditPublicationBeanInterface {
 	//public List<Person> getAuthors();
 	
 	public Map<String, String> getAuthors();
-
+	
+	public String removeAuthor(Long authorId);
 }

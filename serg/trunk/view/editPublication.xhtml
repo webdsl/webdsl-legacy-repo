@@ -27,8 +27,10 @@
       <tr> <td> <h:outputText value="authors"/> </td>  <td>
       <h:dataTable var="author" value="#{editPublication.pub.authors}"> 
       <h:column>
-      <s:link view="/viewPerson.xhtml" value="#{author.name}" propagation="none"><f:param name="person" value="#{author.id}"/></s:link>
-    </h:column> 
+      <s:link view="/viewPerson.xhtml" value="#{author.name}" propagation="none">
+        <f:param name="person" value="#{author.id}"/></s:link>
+      <h:commandLink value="X" action="#{editPublication.removeAuthor(author.id)}" />
+      </h:column> 
     </h:dataTable>
     </td> </tr>
     
