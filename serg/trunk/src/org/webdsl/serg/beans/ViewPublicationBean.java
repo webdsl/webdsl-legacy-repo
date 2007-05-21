@@ -26,47 +26,47 @@ import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Factory;
 import org.webdsl.serg.domain.*;
 
-@Stateful
-@Name("viewPublication")
-public class ViewPublicationBean implements ViewPublicationBeanInterface {
-	@Logger
-	private Log log;
+@Stateful @Name("viewPublication") public class ViewPublicationBean  implements ViewPublicationBeanInterface
+{ 
+  @Logger private Log log;
 
-	@PersistenceContext(type = EXTENDED)
-	private EntityManager em;
+  @PersistenceContext(type = EXTENDED) private EntityManager em;
 
-	@In
-	private FacesMessages facesMessages;
+  @In private FacesMessages facesMessages;
 
-	@Create
-	@Begin
-	public void initialize() {
-		if (pubId == null) {
-			log
-					.debug("No " + "pubId"
-							+ " defined, couldn't start conversation");
-		} else {
-			pub = em.find(Publication.class, pubId);
-		}
-	}
+  @Create @Begin public void initialize()
+  { 
+    if(pubId == null)
+    { 
+      log.debug("No " + "pubId" + " defined, creating new " + "Publication");
+      pub = new Publication();
+    }
+    else
+    { 
+      pub = em.find(Publication.class, pubId);
+    }
+  }
 
-	@Destroy
-	@Remove
-	public void destroy() {
-	}
+  @Destroy @Remove public void destroy()
+  { }
 
-	@RequestParameter("pub")
-	private Long pubId;
+  @RequestParameter("pub") private Long pubId;
 
-	private Publication pub;
+  private Publication pub;
 
-	public void setPub(Publication pub) {
-		this.pub = pub;
-	}
+  public void setPub(Publication pub)
+  { 
+    this.pub = pub;
+  }
 
-	public Publication getPub() {
-		return pub;
-	}
+  public Publication getPub()
+  { 
+    return pub;
+  }
 
-
+  @End public String deletePublication(Publication pub)
+  { 
+    em.remove(this.getPub());
+    return "/" + "home" + ".seam?" + "";
+  }
 }

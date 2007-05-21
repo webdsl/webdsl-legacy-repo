@@ -197,8 +197,13 @@ section publication pages.
                           }}
       }
       form {
-        action("Delete", pub.delete(), home())
+        action("Delete", deletePublication(pub))
       }
+    }
+    
+    action deletePublication(pub : Publication) {
+      pub.delete();
+      return home();
     }
     
     main()
@@ -211,46 +216,63 @@ section publication pages.
  //     navigate(o)
   //  }
  // }
+
   
   define page editPublication(pub : Publication) {
     title{"Edit " text(pub.title)}
+    
     define sidebar() {}
+    
     define body() {
        header{"Edit " text(pub.title)}
        form { 
           table {
-             row{"title"       input(pub.title)}
+             row { "title" input(pub.title) }
              
-             row{"authors"     for(author : Person in pub.authors) {
-                                 navigate(author.name, viewPerson(author))
-                                 action("X", pub.authors.remove(author))
-                               } }
-             
-             row {
-               "" 
-               select(newAuthor : Person) {
-                 action("Add Author", pub.authors.add(newAuthor))
+             row { "authors"     
+               for(author : Person in pub.authors) {
+                 navigate(author.name, viewPerson(author))
+                 actionLink("[X]", removeAuthor(author))
                }
              }
-               
-               // p where not pub.authors.has(p), pub.authors)
-                 
-                   
+             row { "" 
+               select(author1 : Person, "Add Author", addAuthor(author1))
+             }
+
+             action addAuthor(author : Person) { pub.authors.add(author); }
+             action removeAuthor(author : Person) { pub.authors.remove(author); }
+           
              row{"year"        input(pub.year)}
              row{"pubabstract" input(pub.pubabstract)}
              row{"pdf"         input(pub.pdf)}
              
-             row{"projects"    for(project : ResearchProject in pub.projectsList) { 
-                            navigate(project.name, viewResearchProject(project)) 
-                          }}
-                                    
-             row{"add project" ""}
-             //select(ResearchProject rp where not pub.projects.has(rp))}
+             // edit projects
+             
+             row { "projects"    
+               for(project : ResearchProject in pub.projectsList) { 
+                 navigate(project.name, viewResearchProject(project))
+                 actionLink("[X]", removeProject(project))
+               }
+             }
+             row { "" 
+               select(project1 : ResearchProject, "Add Project", addProject(project1))
+             }
+             
+             action removeProject(project : ResearchProject) { pub.projects.remove(project); }
+             action addProject(project : ResearchProject) { pub.projects.add(project); } 
           }
-          action("Save",   save(), viewPublication(pub))
-          action("Cancel", cancel(), viewPublication(pub))
+          action("Save",   save())
+          action("Cancel", cancel())
        }
     }
+    
+    action cancel() { return viewPublication(pub); }
+    
+    action save() {
+      pub.save();
+      return viewPublication(pub);
+    }
+    
     main()
   }
   
@@ -301,23 +323,23 @@ section projects.
 
 section init database .
 
-  action initDB {
+  action initDB() {
   
-    Address Mekelweg4 := 
+    Mekelweg4 : Address := 
       Address {
         street := "Mekelweg"
         city   := "Delft"
         phone  := "015"
       };
       
-    Address Ordina := 
+    Ordina : Address := 
       Address {
         street := "Ringwade 1"
         city   := "Nieuwegein"
         phone  := "030"
       };
       
-    Person EelcoVisser :=
+    EelcoVisser : Person  :=
       Person {
         fullname := "Eelco Visser" 
         email    := "visser@acm.org"
@@ -333,7 +355,7 @@ section init database .
         person   := EelcoVisser
       };
       
-    Person ArieVanDeursen :=
+    ArieVanDeursen : Person :=
       Person {
         fullname := "Arie van Deursen"
         email    := "A.vanDeursen@tudelft.nl"
@@ -342,7 +364,7 @@ section init database .
         photo    := "http://www.st.ewi.tudelft.nl/~arie/pictures/arie-in-delft-klein.jpg"
       };
       
-    Person JosWarmer :=
+    JosWarmer : Person :=
       Person {
         fullname := "Jos Warmer"
         email    := "jos@ordina.nl"
@@ -351,7 +373,7 @@ section init database .
         photo    := "http://www.klasse.nl/who/images/jos.gif"
       };
            
-    ResearchProject MoDSE :=
+    MoDSE : ResearchProject :=
       ResearchProject {
         fullname := "Model-Driven Software Evolution"
         acronym  := "MoDSE"
@@ -359,7 +381,7 @@ section init database .
         description := "The promise of model-driven engineering (MDE) is that the development and maintenance effort can be reduced by working at the model instead of the code level. Models define what is variable in a system, and code generators produce the functionality that is common in the application domain. The problem with model-driven engineering is that it can lead to a lock-in in the abstractions and generator technology adopted at project initiation. Software systems need to evolve, and systems built using model-driven approaches are no exception. What complicates model-driven engineering is that it requires multiple dimensions of evolution. In regular evolution, the modeling language is used to make the changes. In meta-model evolution, changes are required to the modeling notation. In platform evolution, the code generators and application framework change to reflect new requirements on the target platform. Finally, in abstraction evolution, new modeling languages are added to the set of (modeling) languages to reflect increased understanding of a technical or business domain. While MDE has been optimized for regular evolution, presently little or no support exists for metamodel, platform and abstraction evolution. It is this gap that this project proposes to address. The first fundamental premise of this proposal is that evolution should be a continuous process. Software development is a continuous search for recurring patterns, which can be captured using domain-specific modeling languages. After developing a number of systems using a particular meta-model, new patterns may be recognized that can be captured in a higher-level or richer meta-model. The second premise is that reengineering of legacy systems to the model-driven paradigm should be a special case of this continuous evolution, and should be performed incrementally. The goal of this project is to develop a systematic approach to model-driven software evolution. This approach includes methods, techniques, and underlying tool support. We will develop a prototype programming environment that assists software engineers with the introduction, development, and maintenance of models and domain-specific languages."
       };
       
-    Publication GTTSE07 := 
+    GTTSE07 : Publication := 
       Publication {
         title := "Domain-Specific Language Engineering"
         authors := [EelcoVisser]
@@ -368,7 +390,7 @@ section init database .
         projects := {MoDSE}
       };
       
-    Publication MoDSE07 := 
+    MoDSE07 : Publication := 
       Publication {
         title       := "Model-Driven Software Evolution: A Research Agenda"
         authors     := [ArieVanDeursen, JosWarmer, EelcoVisser]

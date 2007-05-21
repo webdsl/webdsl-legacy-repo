@@ -1,37 +1,48 @@
 package org.webdsl.serg.beans;
 
-import java.util.Map;
-
-import javax.faces.event.ValueChangeEvent;
-
 import org.jboss.annotation.ejb.Local;
-import org.webdsl.serg.domain.Publication;
+import java.util.*;
+import org.webdsl.serg.domain.*;
 
-@Local
-public interface EditPublicationBeanInterface {
-	public void initialize();
+@Local public interface EditPublicationBeanInterface 
+{ 
+  public void initialize();
 
-	public void destroy();
+  public void destroy();
 
-	public void setPub(Publication pub);
+  public void setPub(Publication pub);
 
-	public Publication getPub();
+  public Publication getPub();
 
-	public String save();
+  public String cancel();
 
-	public String cancel();
+  public String save();
 
-	public void setNewAuthor(String p);
-	
-	public String getNewAuthor();
-	
-	public String addAuthor();
-	
-	//public void addAuthor(ValueChangeEvent event);
-	
-	//public List<Person> getAuthors();
-	
-	public Map<String, String> getAuthors();
-	
-	public String removeAuthor(Long authorId);
+  public void addAuthor(Person author);
+
+  public void removeAuthor(Person author);
+
+  public void removeProject(ResearchProject project);
+
+  public void addProject(ResearchProject project);
+
+  public void setNewAuthor1(String p);
+
+  public String getNewAuthor1();
+
+  public String selectAuthor1();
+
+  public Map<String, String> getAuthor1List();
+
+  public void initAuthor1List();
+
+  public void setNewProject1(String p);
+
+  public String getNewProject1();
+
+  public String selectProject1();
+
+  public Map<String, String> getProject1List();
+
+  public void initProject1List();
 }

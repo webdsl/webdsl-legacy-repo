@@ -38,7 +38,8 @@ import org.webdsl.serg.domain.*;
   { 
     if(pId == null)
     { 
-      log.debug("No " + "pId" + " defined, couldn't start conversation");
+      log.debug("No " + "pId" + " defined, creating new " + "Person");
+      p = new Person();
     }
     else
     { 

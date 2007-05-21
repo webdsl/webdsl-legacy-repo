@@ -38,7 +38,8 @@ import org.webdsl.serg.domain.*;
   { 
     if(projectId == null)
     { 
-      log.debug("No " + "projectId" + " defined, couldn't start conversation");
+      log.debug("No " + "projectId" + " defined, creating new " + "ResearchProject");
+      project = new ResearchProject();
     }
     else
     { 

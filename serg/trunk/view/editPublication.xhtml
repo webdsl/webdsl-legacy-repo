@@ -27,26 +27,22 @@
       <tr> <td> <h:outputText value="authors"/> </td>  <td>
       <h:dataTable var="author" value="#{editPublication.pub.authors}"> 
       <h:column>
-      <s:link view="/viewPerson.xhtml" value="#{author.name}" propagation="none">
-        <f:param name="person" value="#{author.id}"/></s:link>
-      <h:commandLink value="X" action="#{editPublication.removeAuthor(author.id)}" />
-      </h:column> 
+      <s:link view="/viewPerson.xhtml" value="#{author.name}" propagation="none"><f:param name="person" value="#{author.id}"/></s:link>
+    </h:column> 
+     
+      <h:column> 
+       <h:commandLink type="submit" value="[X]" action="#{editPublication.removeAuthor(author)}"/>
+    </h:column> 
     </h:dataTable>
     </td> </tr>
     
-      <tr> <td> </td>  
-      <td>
-        
-        <h:selectOneMenu value="#{editPublication.newAuthor}">
-          <f:selectItem itemLabel="Add Author" itemDisable="true" itemValue="0" />
-          <f:selectItems value="#{editPublication.authors}" 
-                         var="author" label="#{author.label}"/>
+      <tr> <td> <h:outputText value=""/> </td>  <td>
+       <h:selectOneMenu value="#{editPublication.newAuthor1}">
+          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
+          <f:selectItems value="#{editPublication.author1List}" var="author1" label="#{author1.label}"/>
         </h:selectOneMenu>
-        
-        <h:commandButton type="submit" value="Add Author" action="#{editPublication.addAuthor()}"/>
-        
-      </td> 
-      </tr>
+        <h:commandButton type="submit" value="Add Author" action="#{editPublication.selectAuthor1()}"/>
+    </td> </tr>
     
       <tr> <td> <h:outputText value="year"/> </td>  <td>
       <h:inputText required="true" value="#{editPublication.pub.year}"/>
@@ -65,15 +61,25 @@
       <h:column>
       <s:link view="/viewResearchProject.xhtml" value="#{project.name}" propagation="none"><f:param name="project" value="#{project.id}"/></s:link>
     </h:column> 
+     
+      <h:column> 
+       <h:commandLink type="submit" value="[X]" action="#{editPublication.removeProject(project)}"/>
+    </h:column> 
     </h:dataTable>
     </td> </tr>
     
-      <tr> <td> <h:outputText value="add project"/> </td>  <td> <h:outputText value=""/> </td> </tr>
+      <tr> <td> <h:outputText value=""/> </td>  <td>
+       <h:selectOneMenu value="#{editPublication.newProject1}">
+          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
+          <f:selectItems value="#{editPublication.project1List}" var="project1" label="#{project1.label}"/>
+        </h:selectOneMenu>
+        <h:commandButton type="submit" value="Add Project" action="#{editPublication.selectProject1()}"/>
+    </td> </tr>
     </table>
      
        <h:commandButton type="submit" value="Save" action="#{editPublication.save()}"/>
      
-       <s:button type="submit" value="Cancel" action="#{editPublication.cancel()}"/>
+       <h:commandButton value="Cancel" action="#{editPublication.cancel()}"/>
     </h:form>
     </div>
     
