@@ -220,15 +220,22 @@ section publication pages.
        form { 
           table {
              row{"title"       input(pub.title)}
+             
+             row{"authors"     for(author : Person in pub.authors) { navigate(author.name, viewPerson(author)) } }
+             
+             row{"add author" ""}
+                 //select(Person p where not pub.authors.has(p), pub.authors)}
+                   
              row{"year"        input(pub.year)}
              row{"pubabstract" input(pub.pubabstract)}
              row{"pdf"         input(pub.pdf)}
-          
-             //row{"authors"     textlist(Person, pub.authors)}
-             // row("add author"  select(Person p where not pub.authors.has(p), pub.authors)}
-        
-             //row{"projects"     textlist(pub.projects)}
-             // row{"add project" select(ResearchProject rp where not pub.projects.has(rp))}
+             
+             row{"projects"    for(project : ResearchProject in pub.projectsList) { 
+                            navigate(project.name, viewResearchProject(project)) 
+                          }}
+                                    
+             row{"add project" ""}
+             //select(ResearchProject rp where not pub.projects.has(rp))}
           }
           action("Save",   save(), viewPublication(pub))
           action("Cancel", cancel(), viewPublication(pub))

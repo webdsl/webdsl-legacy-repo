@@ -27,7 +27,7 @@
    <drools:rule-base name="securityRules">
        <drools:rule-files><value>/security.drl</value></drools:rule-files>
    </drools:rule-base>
-
+    
    <security:identity authenticate-method="#{authenticator.authenticate}"/>
         
    <!-- For use with jBPM pageflow or process management -->
