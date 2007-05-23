@@ -13,12 +13,19 @@
     <div class="main">
     <div class="menu"> <h:graphicImage value="/img/serg-logo-color-smaller.png"/> </div>
     
-    <div class="sidebar"></div>
+    <div class="outersidebar">
+      <s:link view="/home.xhtml" value="Home" propagation="none"></s:link>
     
+    <div class="sidebar"></div>
+    </div>
+    
+    <div class="outerbody">
     <div class="body">
       <div class="section1">
+      <h1> <h:outputText value="Software Engineering Research Group"/> </h1>
     
       <div class="section2">
+      <h2> <h:outputText value="Mission"/> </h2>
      <h:outputText value="Software engineering is concerned with methods and techniques for building high quality software systems. This not only includes software construction, but also requirements analysis, design, system integration, testing, deployment, and making changes to software systems after their first release."/>  <h:outputText value="The mission of the Delft Software Engineering Research Group is"/> 
       <ul>
         
@@ -50,15 +57,17 @@
     </div>
     
       <div class="section2">
+      <h2> <h:outputText value="Publications"/> </h2>
     
       <h:dataTable var="pub" value="#{home.pubList}"> 
       <h:column>
-      <s:link view="/viewPublication.xhtml" value="#{pub.name}" propagation="none"><f:param name="pub" value="#{pub.id}"/></s:link>
+      <s:link view="/viewPublication.xhtml" value="#{pub.name}" propagation="none"><f:param name="publication" value="#{pub.id}"/></s:link>
     </h:column> 
     </h:dataTable>
     </div>
     
       <div class="section2">
+      <h2> <h:outputText value="People"/> </h2>
     
       <h:dataTable var="pers" value="#{home.persList}"> 
       <h:column>
@@ -73,6 +82,7 @@
       <h:outputLink value="http://www.strategoxt.org">
           <h:outputText value="Stratego/XT"/>
       </h:outputLink>
+    </div>
     </div>
     </div>
     </body>

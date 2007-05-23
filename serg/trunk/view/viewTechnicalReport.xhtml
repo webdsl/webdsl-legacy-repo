@@ -17,35 +17,23 @@
       <s:link view="/home.xhtml" value="Home" propagation="none"></s:link>
     
     <div class="sidebar">
-      <s:link view="/editPerson.xhtml" value="Edit" propagation="none"><f:param name="person" value="#{viewPerson.person.id}"/></s:link>
+      <s:link view="/editTechnicalReport.xhtml" value="Edit" propagation="none"><f:param name="technicalReport" value="#{viewTechnicalReport.technicalReport.id}"/></s:link>
     </div>
     </div>
     
     <div class="outerbody">
     <div class="body">
       <div class="section1">
-      <h1> <h:outputText value="#{viewPerson.person.name}"/> </h1>
+      <h1> <h:outputText value="#{viewTechnicalReport.technicalReport.name}"/> </h1>
     
       <table>
-    <div class="viewRowsPerson">
-      <tr> <td> <h:outputText value="Fullname"/> </td>  <td> <h:outputText value="#{viewPerson.person.fullname}"/> </td> </tr>
+    <div class="viewRowsTechnicalReport">
+      <tr> <td> <h:outputText value="Number"/> </td>  <td> <h:outputText value="#{viewTechnicalReport.technicalReport.number}"/> </td> </tr>
     
-      <tr> <td> <h:outputText value="Email"/> </td>  <td> <h:outputText value="#{viewPerson.person.email}"/> </td> </tr>
+      <tr> <td> <h:outputText value="Document"/> </td>  <td> <h:outputText value="#{viewTechnicalReport.technicalReport.document}"/> </td> </tr>
     
-      <tr> <td> <h:outputText value="Homepage"/> </td>  <td> <h:outputText value="#{viewPerson.person.homepage}"/> </td> </tr>
-    
-      <tr> <td> <h:outputText value="Photo"/> </td>  <td> <h:outputText value="#{viewPerson.person.photo}"/> </td> </tr>
-    
-      <tr> <td> <h:outputText value="Address"/> </td>  <td> <h:outputText value=""/> </td> </tr>
-    
-      <tr> <td> <h:outputText value="Street"/> </td>  <td> <h:outputText value="#{viewPerson.person.address.street}"/> </td> </tr>
-    
-      <tr> <td> <h:outputText value="City"/> </td>  <td> <h:outputText value="#{viewPerson.person.address.city}"/> </td> </tr>
-    
-      <tr> <td> <h:outputText value="Phone"/> </td>  <td> <h:outputText value="#{viewPerson.person.address.phone}"/> </td> </tr>
-    
-      <tr> <td> <h:outputText value="User"/> </td>  <td>
-      <s:link view="/viewUser.xhtml" value="#{viewPerson.person.user.name}" propagation="none"><f:param name="user" value="#{viewPerson.person.user.id}"/></s:link>
+      <tr> <td> <h:outputText value="Preprintof"/> </td>  <td>
+      <s:link view="/viewPublication.xhtml" value="#{viewTechnicalReport.technicalReport.preprintof.name}" propagation="none"><f:param name="publication" value="#{viewTechnicalReport.technicalReport.preprintof.id}"/></s:link>
     </td> </tr>
     </div>
     </table>

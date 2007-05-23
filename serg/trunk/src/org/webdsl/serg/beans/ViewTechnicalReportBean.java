@@ -26,7 +26,7 @@ import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Factory;
 import org.webdsl.serg.domain.*;
 
-@Stateful @Name("viewPublication") public class ViewPublicationBean  implements ViewPublicationBeanInterface
+@Stateful @Name("viewTechnicalReport") public class ViewTechnicalReportBean  implements ViewTechnicalReportBeanInterface
 { 
   @Logger private Log log;
 
@@ -36,31 +36,31 @@ import org.webdsl.serg.domain.*;
 
   @Create @Begin public void initialize()
   { 
-    if(publicationId == null)
+    if(technicalReportId == null)
     { 
-      log.debug("No " + "publicationId" + " defined, creating new " + "Publication");
-      publication = new Publication();
+      log.debug("No " + "technicalReportId" + " defined, creating new " + "TechnicalReport");
+      technicalReport = new TechnicalReport();
     }
     else
     { 
-      publication = em.find(Publication.class, publicationId);
+      technicalReport = em.find(TechnicalReport.class, technicalReportId);
     }
   }
 
   @Destroy @Remove public void destroy()
   { }
 
-  @RequestParameter("publication") private Long publicationId;
+  @RequestParameter("technicalReport") private Long technicalReportId;
 
-  private Publication publication;
+  private TechnicalReport technicalReport;
 
-  public void setPublication(Publication publication)
+  public void setTechnicalReport(TechnicalReport technicalReport)
   { 
-    this.publication = publication;
+    this.technicalReport = technicalReport;
   }
 
-  public Publication getPublication()
+  public TechnicalReport getTechnicalReport()
   { 
-    return publication;
+    return technicalReport;
   }
 }

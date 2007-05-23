@@ -12,11 +12,17 @@ section setup.
 
   define main() {
     menu()
-    sidebar()
-    body()
-    footer()
+    outersidebar()
+    div("outerbody") {
+      body()
+      footer()
+    }
   }
   
+  define outersidebar() {
+    navigate("Home", home())
+    sidebar()
+  }
   define menu() {
     image("/img/serg-logo-color-smaller.png")
   }
@@ -99,7 +105,7 @@ section people.
     email     :: Email
     homepage  :: URL
     photo     :: Image
-    birthdate :: Date
+    // birthdate :: Date
     address   <> Address
     user      -> User
   }
@@ -124,12 +130,8 @@ section people pages.
       listitem{navigate("Edit", editPerson(p))}
     }
   }
-  
-  define page editPerson(p : Person) 
-  {
-  }
-  
-  define page viewPerson(person : Person) 
+    
+  define page viewPersonMy(person : Person) 
   {    
     main()
     
@@ -227,7 +229,7 @@ section publication pages.
     }
   }
   
-  define page viewPublication(pub : Publication) {
+  define page viewPublicationMy(pub : Publication) {
     title{"Publication " text(pub.title)}
     
     define sidebar() {
@@ -268,7 +270,7 @@ section publication pages.
  // }  
 
    
-  define page editPublication(pub : Publication) {
+  define page editPublicationMy(pub : Publication) {
     title{"Edit " text(pub.title)}
     
     define sidebar() {}
@@ -350,7 +352,7 @@ section projects.
     publications -> Set<Publication>
   }
   
-  define page viewResearchProject(project : ResearchProject) {
+  define page viewResearchProjectMy(project : ResearchProject) {
     title{text(project.fullname)}
     define sidebar() {}
     define body() {
@@ -374,7 +376,7 @@ section projects.
   }
 
 section init database .
-
+ 
   action initDB() {
   
     Mekelweg4 : Address := 

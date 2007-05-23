@@ -17,36 +17,22 @@
       <s:link view="/home.xhtml" value="Home" propagation="none"></s:link>
     
     <div class="sidebar">
-      <s:link view="/editPerson.xhtml" value="Edit" propagation="none"><f:param name="person" value="#{viewPerson.person.id}"/></s:link>
+      <s:link view="/editAddress.xhtml" value="Edit" propagation="none"><f:param name="address" value="#{viewAddress.address.id}"/></s:link>
     </div>
     </div>
     
     <div class="outerbody">
     <div class="body">
       <div class="section1">
-      <h1> <h:outputText value="#{viewPerson.person.name}"/> </h1>
+      <h1> <h:outputText value="#{viewAddress.address.name}"/> </h1>
     
       <table>
-    <div class="viewRowsPerson">
-      <tr> <td> <h:outputText value="Fullname"/> </td>  <td> <h:outputText value="#{viewPerson.person.fullname}"/> </td> </tr>
+    <div class="viewRowsAddress">
+      <tr> <td> <h:outputText value="Street"/> </td>  <td> <h:outputText value="#{viewAddress.address.street}"/> </td> </tr>
     
-      <tr> <td> <h:outputText value="Email"/> </td>  <td> <h:outputText value="#{viewPerson.person.email}"/> </td> </tr>
+      <tr> <td> <h:outputText value="City"/> </td>  <td> <h:outputText value="#{viewAddress.address.city}"/> </td> </tr>
     
-      <tr> <td> <h:outputText value="Homepage"/> </td>  <td> <h:outputText value="#{viewPerson.person.homepage}"/> </td> </tr>
-    
-      <tr> <td> <h:outputText value="Photo"/> </td>  <td> <h:outputText value="#{viewPerson.person.photo}"/> </td> </tr>
-    
-      <tr> <td> <h:outputText value="Address"/> </td>  <td> <h:outputText value=""/> </td> </tr>
-    
-      <tr> <td> <h:outputText value="Street"/> </td>  <td> <h:outputText value="#{viewPerson.person.address.street}"/> </td> </tr>
-    
-      <tr> <td> <h:outputText value="City"/> </td>  <td> <h:outputText value="#{viewPerson.person.address.city}"/> </td> </tr>
-    
-      <tr> <td> <h:outputText value="Phone"/> </td>  <td> <h:outputText value="#{viewPerson.person.address.phone}"/> </td> </tr>
-    
-      <tr> <td> <h:outputText value="User"/> </td>  <td>
-      <s:link view="/viewUser.xhtml" value="#{viewPerson.person.user.name}" propagation="none"><f:param name="user" value="#{viewPerson.person.user.id}"/></s:link>
-    </td> </tr>
+      <tr> <td> <h:outputText value="Phone"/> </td>  <td> <h:outputText value="#{viewAddress.address.phone}"/> </td> </tr>
     </div>
     </table>
     </div>

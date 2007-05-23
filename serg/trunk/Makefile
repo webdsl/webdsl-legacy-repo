@@ -19,6 +19,9 @@ all : serg.appb
 %.appb : %.appa
 	$(GENDIR)/generation/dsl-desugar -i $< | \
 	pp-aterm -o $@
+
+%.appbpp : %.appb
+	ast2text -p $(GENDIR)/syntax/WebDSL-pretty.pp -i $< -o $@
 	
 %.appc : %.appa
 	$(GENDIR)/generation/dsl-to-seam -i $< | \

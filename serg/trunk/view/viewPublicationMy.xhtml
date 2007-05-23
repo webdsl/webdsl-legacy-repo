@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
 <head>    
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title></title>
+    <title> <h:outputText value="Publication "/>  <h:outputText value="#{viewPublicationMy.pub.title}"/> </title>
     <link href="stylesheet/layout.css" rel="stylesheet" type="text/css"/>
     <link href="stylesheet/style.css" rel="stylesheet" type="text/css"/>
     <link href="stylesheet/theme.css" rel="stylesheet" type="text/css"/>
@@ -17,43 +17,43 @@
       <s:link view="/home.xhtml" value="Home" propagation="none"></s:link>
     
     <div class="sidebar">
-      <s:link view="/editPublication.xhtml" value="Edit" propagation="none"><f:param name="publication" value="#{viewPublication.publication.id}"/></s:link>
+      <s:link view="/editPublication.xhtml" value="Edit" propagation="none"><f:param name="publication" value="#{viewPublicationMy.pub.id}"/></s:link>
     </div>
     </div>
     
     <div class="outerbody">
     <div class="body">
-      <div class="section1">
-      <h1> <h:outputText value="#{viewPublication.publication.name}"/> </h1>
+      <h1> <h:outputText value="#{viewPublicationMy.pub.title}"/> </h1>
     
       <table>
-    <div class="viewRowsPublication">
-      <tr> <td> <h:outputText value="Title"/> </td>  <td> <h:outputText value="#{viewPublication.publication.title}"/> </td> </tr>
+      <tr> <td> <h:outputText value="title"/> </td>  <td> <h:outputText value="#{viewPublicationMy.pub.title}"/> </td> </tr>
     
-      <tr> <td> <h:outputText value="Authors"/> </td>  <td>
-      <h:dataTable var="authors0" value="#{viewPublication.publication.authorsList}"> 
+      <tr> <td> <h:outputText value="year"/> </td>  <td> <h:outputText value="#{viewPublicationMy.pub.year}"/> </td> </tr>
+    
+      <tr> <td> <h:outputText value="pubabstract"/> </td>  <td> <h:outputText value="#{viewPublicationMy.pub.pubabstract}"/> </td> </tr>
+    
+      <tr> <td> <h:outputText value="pdf"/> </td>  <td> <h:outputText value="#{viewPublicationMy.pub.pdf}"/> </td> </tr>
+    
+      <tr> <td> <h:outputText value="authors"/> </td>  <td>
+      <h:dataTable var="author" value="#{viewPublicationMy.pub.authors}"> 
       <h:column>
-      <s:link view="/viewPerson.xhtml" value="#{authors0.name}" propagation="none"><f:param name="person" value="#{authors0.id}"/></s:link>
+      <s:link view="/viewPerson.xhtml" value="#{author.name}" propagation="none"><f:param name="person" value="#{author.id}"/></s:link>
     </h:column> 
     </h:dataTable>
     </td> </tr>
     
-      <tr> <td> <h:outputText value="Year"/> </td>  <td> <h:outputText value="#{viewPublication.publication.year}"/> </td> </tr>
-    
-      <tr> <td> <h:outputText value="Pubabstract"/> </td>  <td> <h:outputText value="#{viewPublication.publication.pubabstract}"/> </td> </tr>
-    
-      <tr> <td> <h:outputText value="Projects"/> </td>  <td>
-      <h:dataTable var="projects0" value="#{viewPublication.publication.projectsList}"> 
+      <tr> <td> <h:outputText value="projects"/> </td>  <td>
+      <h:dataTable var="project" value="#{viewPublicationMy.pub.projectsList}"> 
       <h:column>
-      <s:link view="/viewResearchProject.xhtml" value="#{projects0.name}" propagation="none"><f:param name="researchProject" value="#{projects0.id}"/></s:link>
+      <s:link view="/viewResearchProject.xhtml" value="#{project.name}" propagation="none"><f:param name="researchProject" value="#{project.id}"/></s:link>
     </h:column> 
     </h:dataTable>
     </td> </tr>
-    
-      <tr> <td> <h:outputText value="Pdf"/> </td>  <td> <h:outputText value="#{viewPublication.publication.pdf}"/> </td> </tr>
-    </div>
     </table>
-    </div>
+    
+      <h:form> 
+       <h:commandButton type="submit" value="Delete" action="#{viewPublicationMy.deletePublication(pub)}"/>
+    </h:form>
     </div>
     
     <div class="footer"> <h:outputText value="generated with "/> 

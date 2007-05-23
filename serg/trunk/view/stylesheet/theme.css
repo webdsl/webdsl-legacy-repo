@@ -1,10 +1,14 @@
 
+// see http://www.w3schools.com/css/css_positioning.asp
+
+
 .main {
-  position         : absolute;
-  top : 0px;
-  left : 0px;
-  width : 100%;
+  position  : absolute;
+  top       : 0px;
+  left      : 0px;
+  width     : 100%;
 }
+
 .menu {
   position         : absolute;
   background-color : white;
@@ -21,7 +25,7 @@
   font-size        : small;
 }
 
-.sidebar {
+.outersidebar {
   position         : absolute;
   background-color : white;
   border           : 1px solid #999;
@@ -38,14 +42,19 @@
   /* line-height:1.3em; */
 }
 
-.body {
+.outerbody {
   position      : absolute;
-  background-color : white;
-  border        : 1px solid #999;
-  overflow      : hidden;
   top           : 110px;
   left          : 12.5em;
   right         : 20px;
+  padding       : 0px;
+  margin        : 0px;
+}
+.body {
+  //position      : relative;
+  background-color : white;
+  border        : 1px solid #999;
+  overflow      : hidden;
   margin-top    : 20px;
   margin-bottom : 1.5em;
   padding       : 2em 2em 2em 2em;
@@ -54,11 +63,11 @@
 }
 
 .footer {
-  position  : absolute;
-  width     : 100%;
-  bottom    : 10 px;
-  text-align: center;
-  font-size: 0.8em;
+  //position   : absolute;
+  width      : 100%;
+  //top     : 99%;
+  text-align : center;
+  font-size : 0.8em;
 }
 
 body {

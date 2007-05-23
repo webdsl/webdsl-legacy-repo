@@ -69,18 +69,6 @@ import org.webdsl.serg.domain.*;
     this.photo = photo;
   }
 
-  private Date birthdate;
-
-  public Date getBirthdate()
-  { 
-    return birthdate;
-  }
-
-  public void setBirthdate(Date birthdate)
-  { 
-    this.birthdate = birthdate;
-  }
-
   @ManyToOne @JoinColumn(name = "PersonAddress") @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.ALL}) private Address address = new Address();
 
   public Address getAddress()

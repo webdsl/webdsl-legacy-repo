@@ -26,7 +26,7 @@ import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Factory;
 import org.webdsl.serg.domain.*;
 
-@Stateful @Name("viewPublication") public class ViewPublicationBean  implements ViewPublicationBeanInterface
+@Stateful @Name("viewResearchProjectMy") public class ViewResearchProjectMyBean  implements ViewResearchProjectMyBeanInterface
 { 
   @Logger private Log log;
 
@@ -36,31 +36,31 @@ import org.webdsl.serg.domain.*;
 
   @Create @Begin public void initialize()
   { 
-    if(publicationId == null)
+    if(projectId == null)
     { 
-      log.debug("No " + "publicationId" + " defined, creating new " + "Publication");
-      publication = new Publication();
+      log.debug("No " + "projectId" + " defined, creating new " + "ResearchProject");
+      project = new ResearchProject();
     }
     else
     { 
-      publication = em.find(Publication.class, publicationId);
+      project = em.find(ResearchProject.class, projectId);
     }
   }
 
   @Destroy @Remove public void destroy()
   { }
 
-  @RequestParameter("publication") private Long publicationId;
+  @RequestParameter("project") private Long projectId;
 
-  private Publication publication;
+  private ResearchProject project;
 
-  public void setPublication(Publication publication)
+  public void setProject(ResearchProject project)
   { 
-    this.publication = publication;
+    this.project = project;
   }
 
-  public Publication getPublication()
+  public ResearchProject getProject()
   { 
-    return publication;
+    return project;
   }
 }

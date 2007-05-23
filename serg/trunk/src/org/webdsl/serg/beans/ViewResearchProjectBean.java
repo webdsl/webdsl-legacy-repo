@@ -36,31 +36,31 @@ import org.webdsl.serg.domain.*;
 
   @Create @Begin public void initialize()
   { 
-    if(projectId == null)
+    if(researchProjectId == null)
     { 
-      log.debug("No " + "projectId" + " defined, creating new " + "ResearchProject");
-      project = new ResearchProject();
+      log.debug("No " + "researchProjectId" + " defined, creating new " + "ResearchProject");
+      researchProject = new ResearchProject();
     }
     else
     { 
-      project = em.find(ResearchProject.class, projectId);
+      researchProject = em.find(ResearchProject.class, researchProjectId);
     }
   }
 
   @Destroy @Remove public void destroy()
   { }
 
-  @RequestParameter("project") private Long projectId;
+  @RequestParameter("researchProject") private Long researchProjectId;
 
-  private ResearchProject project;
+  private ResearchProject researchProject;
 
-  public void setProject(ResearchProject project)
+  public void setResearchProject(ResearchProject researchProject)
   { 
-    this.project = project;
+    this.researchProject = researchProject;
   }
 
-  public ResearchProject getProject()
+  public ResearchProject getResearchProject()
   { 
-    return project;
+    return researchProject;
   }
 }

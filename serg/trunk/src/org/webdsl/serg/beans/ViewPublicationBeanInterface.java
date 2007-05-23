@@ -10,9 +10,7 @@ import org.webdsl.serg.domain.*;
 
   public void destroy();
 
-  public void setPub(Publication pub);
+  public void setPublication(Publication publication);
 
-  public Publication getPub();
-
-  public String deletePublication(Publication pub);
+  public Publication getPublication();
 }

@@ -26,7 +26,7 @@ import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Factory;
 import org.webdsl.serg.domain.*;
 
-@Stateful @Name("viewPublication") public class ViewPublicationBean  implements ViewPublicationBeanInterface
+@Stateful @Name("editAddress") public class EditAddressBean  implements EditAddressBeanInterface
 { 
   @Logger private Log log;
 
@@ -36,31 +36,42 @@ import org.webdsl.serg.domain.*;
 
   @Create @Begin public void initialize()
   { 
-    if(publicationId == null)
+    if(addressId == null)
     { 
-      log.debug("No " + "publicationId" + " defined, creating new " + "Publication");
-      publication = new Publication();
+      log.debug("No " + "addressId" + " defined, creating new " + "Address");
+      address = new Address();
     }
     else
     { 
-      publication = em.find(Publication.class, publicationId);
+      address = em.find(Address.class, addressId);
     }
   }
 
   @Destroy @Remove public void destroy()
   { }
 
-  @RequestParameter("publication") private Long publicationId;
+  @RequestParameter("address") private Long addressId;
 
-  private Publication publication;
+  private Address address;
 
-  public void setPublication(Publication publication)
+  public void setAddress(Address address)
   { 
-    this.publication = publication;
+    this.address = address;
   }
 
-  public Publication getPublication()
+  public Address getAddress()
   { 
-    return publication;
+    return address;
+  }
+
+  @End public String cancel()
+  { 
+    return "/" + "viewAddress" + ".seam?" + ("address" + "=" + address.getId() + "");
+  }
+
+  @End public String save()
+  { 
+    em.persist(this.getAddress());
+    return "/" + "viewAddress" + ".seam?" + ("address" + "=" + address.getId() + "");
   }
 }

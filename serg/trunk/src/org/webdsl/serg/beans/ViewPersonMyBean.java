@@ -26,7 +26,7 @@ import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Factory;
 import org.webdsl.serg.domain.*;
 
-@Stateful @Name("viewPublication") public class ViewPublicationBean  implements ViewPublicationBeanInterface
+@Stateful @Name("viewPersonMy") public class ViewPersonMyBean  implements ViewPersonMyBeanInterface
 { 
   @Logger private Log log;
 
@@ -36,31 +36,59 @@ import org.webdsl.serg.domain.*;
 
   @Create @Begin public void initialize()
   { 
-    if(publicationId == null)
+    if(personId == null)
     { 
-      log.debug("No " + "publicationId" + " defined, creating new " + "Publication");
-      publication = new Publication();
+      log.debug("No " + "personId" + " defined, creating new " + "Person");
+      person = new Person();
     }
     else
     { 
-      publication = em.find(Publication.class, publicationId);
+      person = em.find(Person.class, personId);
     }
+    initPrList();
+    initPubList();
   }
 
   @Destroy @Remove public void destroy()
   { }
 
-  @RequestParameter("publication") private Long publicationId;
+  @RequestParameter("person") private Long personId;
 
-  private Publication publication;
+  private Person person;
 
-  public void setPublication(Publication publication)
+  public void setPerson(Person person)
   { 
-    this.publication = publication;
+    this.person = person;
   }
 
-  public Publication getPublication()
+  public Person getPerson()
   { 
-    return publication;
+    return person;
+  }
+
+  @DataModel("prList") private List<ResearchProject> prList;
+
+  public List<ResearchProject> getPrList()
+  { 
+    return prList;
+  }
+
+  @Factory("prList") public void initPrList()
+  { 
+    log.info("initPrList");
+    prList = em.createQuery("from " + "ResearchProject").getResultList();
+  }
+
+  @DataModel("pubList") private List<Publication> pubList;
+
+  public List<Publication> getPubList()
+  { 
+    return pubList;
+  }
+
+  @Factory("pubList") public void initPubList()
+  { 
+    log.info("initPubList");
+    pubList = em.createQuery("from " + "Publication").getResultList();
   }
 }

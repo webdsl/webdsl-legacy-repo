@@ -26,7 +26,7 @@ import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Factory;
 import org.webdsl.serg.domain.*;
 
-@Stateful @Name("editPerson") public class EditPersonBean  implements EditPersonBeanInterface
+@Stateful @Name("editUser") public class EditUserBean  implements EditUserBeanInterface
 { 
   @Logger private Log log;
 
@@ -36,86 +36,86 @@ import org.webdsl.serg.domain.*;
 
   @Create @Begin public void initialize()
   { 
-    if(personId == null)
+    if(userId == null)
     { 
-      log.debug("No " + "personId" + " defined, creating new " + "Person");
-      person = new Person();
+      log.debug("No " + "userId" + " defined, creating new " + "User");
+      user = new User();
     }
     else
     { 
-      person = em.find(Person.class, personId);
+      user = em.find(User.class, userId);
     }
-    initUser0List();
+    initPerson0List();
   }
 
   @Destroy @Remove public void destroy()
   { }
 
-  @RequestParameter("person") private Long personId;
+  @RequestParameter("user") private Long userId;
 
-  private Person person;
+  private User user;
 
-  public void setPerson(Person person)
+  public void setUser(User user)
   { 
-    this.person = person;
+    this.user = user;
   }
 
-  public Person getPerson()
+  public User getUser()
   { 
-    return person;
+    return user;
   }
 
-  public void setUser0(User user1)
+  public void setPerson0(Person person1)
   { 
-    person.setUser(user1);
+    user.setPerson(person1);
   }
 
   @End public String cancel()
   { 
-    return "/" + "viewPerson" + ".seam?" + ("person" + "=" + person.getId() + "");
+    return "/" + "viewUser" + ".seam?" + ("user" + "=" + user.getId() + "");
   }
 
   @End public String save()
   { 
-    em.persist(this.getPerson());
-    return "/" + "viewPerson" + ".seam?" + ("person" + "=" + person.getId() + "");
+    em.persist(this.getUser());
+    return "/" + "viewUser" + ".seam?" + ("user" + "=" + user.getId() + "");
   }
 
-  private String newUser0;
+  private String newPerson0;
 
-  public void setNewUser0(String p)
+  public void setNewPerson0(String p)
   { 
-    newUser0 = p;
+    newPerson0 = p;
   }
 
-  public String getNewUser0()
+  public String getNewPerson0()
   { 
-    return newUser0;
+    return newPerson0;
   }
 
-  public String selectUser0()
+  public String selectPerson0()
   { 
-    log.info("selectUser0" + " " + newUser0);
-    User user0 = em.find(User.class, new Long(newUser0));
-    setUser0(user0);
+    log.info("selectPerson0" + " " + newPerson0);
+    Person person0 = em.find(Person.class, new Long(newPerson0));
+    setPerson0(person0);
     return null;
   }
 
-  @DataModel("user0List") private Map<String, String> user0List;
+  @DataModel("person0List") private Map<String, String> person0List;
 
-  public Map<String, String> getUser0List()
+  public Map<String, String> getPerson0List()
   { 
-    return user0List;
+    return person0List;
   }
 
-  @Factory("user0List") public void initUser0List()
+  @Factory("person0List") public void initPerson0List()
   { 
-    log.info("initUser0List");
-    user0List = new HashMap<String, String>();
-    for(Object o : em.createQuery("from " + "User").getResultList())
+    log.info("initPerson0List");
+    person0List = new HashMap<String, String>();
+    for(Object o : em.createQuery("from " + "Person").getResultList())
     { 
-      User p = (User)o;
-      user0List.put(p.getName(), p.getId().toString());
+      Person p = (Person)o;
+      person0List.put(p.getName(), p.getId().toString());
     }
   }
 }

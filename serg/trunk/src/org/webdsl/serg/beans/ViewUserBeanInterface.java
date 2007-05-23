@@ -4,13 +4,13 @@ import org.jboss.annotation.ejb.Local;
 import java.util.*;
 import org.webdsl.serg.domain.*;
 
-@Local public interface ViewResearchProjectBeanInterface 
+@Local public interface ViewUserBeanInterface 
 { 
   public void initialize();
 
   public void destroy();
 
-  public void setResearchProject(ResearchProject researchProject);
+  public void setUser(User user);
 
-  public ResearchProject getResearchProject();
+  public User getUser();
 }

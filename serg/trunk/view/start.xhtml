@@ -11,41 +11,6 @@
 
 <ui:define name="body">
 
-    <h:messages globalOnly="true" styleClass="message"/>
-        
-    <rich:tabPanel width="100%" headerAlignment="right">
-
-        <rich:tab label="Mission">
-        Software engineering is concerned with methods and techniques for building high quality software systems. This not only includes software construction, but also requirements analysis, design, system integration, testing, deployment, and making changes to software systems after their first release.
-
-The mission of the Delft Software Engineering Research Group is
-
-   1. to develop a deep understanding of how people build and evolve software systems;
-   2. to develop novel methods, techniques and tools that advance the way in which software is built and adjusted; and
-   3. to offer students an education that prepares them to take a leading role in complex software development projects.
-
-Research at the Delft Software Engineering Research Group is centered around two themes, software evolution and embedded software, which are studied seperately as well as in combination in two laboratories:
-
-    * The Software Evolution Research Laboratory (SWERL), and
-    * The Embedded Software Laboratory (ESL)
-        </rich:tab>
-        
-        <rich:tab label="Publications">
-            publications go here
-        </rich:tab>
-
-        <rich:tab label="Projects">
-           projects go here
-        </rich:tab>
-
-        <rich:tab label="Pictures">
-<a href="http://www.flickr.com/photos/eelcovisser/367433201/" title="Photo Sharing">
-<img src="http://farm1.static.flickr.com/185/367433201_9ee5ad0986_m.jpg" width="160" height="240" alt="buildfarm wires" />
-</a>
-        </rich:tab>
-
-      </rich:tabPanel> 
-      
         <h:form>
            <div class="actionButtons">
             <h:commandButton value="Init Database" action="#{initDBBean.initDB}"/>
@@ -59,5 +24,6 @@ Research at the Delft Software Engineering Research Group is centered around two
  		<s:link view = "/viewPublication.xhtml" value="viewPublication(2)">
 		  <f:param name="pub" value="2" />
 		</s:link>
+		
 </ui:define> 
 </ui:composition>

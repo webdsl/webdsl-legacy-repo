@@ -264,14 +264,14 @@ label {
 
 /* Left bar */
 
-.sidebar {
+.OLDsidebar {
   background-color: white;
   border:1px solid #999;
   overflow:hidden;
   /* line-height:1.3em; */
 }
 
-.sidebar {
+.OLDsidebar {
   margin  : 0;
   padding : 1em 0 1.7em 1em;
   width   : auto;

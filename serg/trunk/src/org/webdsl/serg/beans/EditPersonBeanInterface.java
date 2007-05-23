@@ -10,7 +10,23 @@ import org.webdsl.serg.domain.*;
 
   public void destroy();
 
-  public void setP(Person p);
+  public void setPerson(Person person);
 
-  public Person getP();
+  public Person getPerson();
+
+  public void setUser0(User user1);
+
+  public String cancel();
+
+  public String save();
+
+  public void setNewUser0(String p);
+
+  public String getNewUser0();
+
+  public String selectUser0();
+
+  public Map<String, String> getUser0List();
+
+  public void initUser0List();
 }

@@ -16,39 +16,35 @@
     <div class="outersidebar">
       <s:link view="/home.xhtml" value="Home" propagation="none"></s:link>
     
-    <div class="sidebar">
-      <s:link view="/editPerson.xhtml" value="Edit" propagation="none"><f:param name="person" value="#{viewPerson.person.id}"/></s:link>
-    </div>
+    <div class="sidebar"></div>
     </div>
     
     <div class="outerbody">
     <div class="body">
       <div class="section1">
-      <h1> <h:outputText value="#{viewPerson.person.name}"/> </h1>
+      <h1> <h:outputText value="Edit "/>  <h:outputText value="Address"/>  <h:outputText value=" "/>  <h:outputText value="#{editAddress.address.name}"/> </h1>
     
+      <h:form>
       <table>
-    <div class="viewRowsPerson">
-      <tr> <td> <h:outputText value="Fullname"/> </td>  <td> <h:outputText value="#{viewPerson.person.fullname}"/> </td> </tr>
+    <div class="editRowsAddress">
+      <tr> <td> <h:outputText value="Street"/> </td>  <td>
+      <h:inputText required="true" value="#{editAddress.address.street}"/>
+    </td> </tr>
     
-      <tr> <td> <h:outputText value="Email"/> </td>  <td> <h:outputText value="#{viewPerson.person.email}"/> </td> </tr>
+      <tr> <td> <h:outputText value="City"/> </td>  <td>
+      <h:inputText required="true" value="#{editAddress.address.city}"/>
+    </td> </tr>
     
-      <tr> <td> <h:outputText value="Homepage"/> </td>  <td> <h:outputText value="#{viewPerson.person.homepage}"/> </td> </tr>
-    
-      <tr> <td> <h:outputText value="Photo"/> </td>  <td> <h:outputText value="#{viewPerson.person.photo}"/> </td> </tr>
-    
-      <tr> <td> <h:outputText value="Address"/> </td>  <td> <h:outputText value=""/> </td> </tr>
-    
-      <tr> <td> <h:outputText value="Street"/> </td>  <td> <h:outputText value="#{viewPerson.person.address.street}"/> </td> </tr>
-    
-      <tr> <td> <h:outputText value="City"/> </td>  <td> <h:outputText value="#{viewPerson.person.address.city}"/> </td> </tr>
-    
-      <tr> <td> <h:outputText value="Phone"/> </td>  <td> <h:outputText value="#{viewPerson.person.address.phone}"/> </td> </tr>
-    
-      <tr> <td> <h:outputText value="User"/> </td>  <td>
-      <s:link view="/viewUser.xhtml" value="#{viewPerson.person.user.name}" propagation="none"><f:param name="user" value="#{viewPerson.person.user.id}"/></s:link>
+      <tr> <td> <h:outputText value="Phone"/> </td>  <td>
+      <h:inputText required="true" value="#{editAddress.address.phone}"/>
     </td> </tr>
     </div>
     </table>
+     
+       <h:commandButton type="submit" value="Save" action="#{editAddress.save()}"/>
+     
+       <h:commandButton value="Cancel" action="#{editAddress.cancel()}"/>
+    </h:form>
     </div>
     </div>
     

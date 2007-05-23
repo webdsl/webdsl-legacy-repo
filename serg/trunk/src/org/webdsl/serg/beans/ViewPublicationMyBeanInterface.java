@@ -4,13 +4,15 @@ import org.jboss.annotation.ejb.Local;
 import java.util.*;
 import org.webdsl.serg.domain.*;
 
-@Local public interface ViewResearchProjectBeanInterface 
+@Local public interface ViewPublicationMyBeanInterface 
 { 
   public void initialize();
 
   public void destroy();
 
-  public void setResearchProject(ResearchProject researchProject);
+  public void setPub(Publication pub);
 
-  public ResearchProject getResearchProject();
+  public Publication getPub();
+
+  public String deletePublication(Publication pub);
 }

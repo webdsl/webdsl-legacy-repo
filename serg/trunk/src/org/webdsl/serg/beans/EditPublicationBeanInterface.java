@@ -10,39 +10,39 @@ import org.webdsl.serg.domain.*;
 
   public void destroy();
 
-  public void setPub(Publication pub);
+  public void setPublication(Publication publication);
 
-  public Publication getPub();
+  public Publication getPublication();
+
+  public void removePerson0(Person person2);
+
+  public void addPerson0(Person person2);
+
+  public void removeResearchProject0(ResearchProject researchProject0);
+
+  public void addResearchProject0(ResearchProject researchProject0);
 
   public String cancel();
 
   public String save();
 
-  public void addAuthor(Person author);
+  public void setNewPerson3(String p);
 
-  public void removeAuthor(Person author);
+  public String getNewPerson3();
 
-  public void removeProject(ResearchProject project);
+  public String selectPerson3();
 
-  public void addProject(ResearchProject project);
+  public Map<String, String> getPerson3List();
 
-  public void setNewAuthor1(String p);
+  public void initPerson3List();
 
-  public String getNewAuthor1();
+  public void setNewResearchProject1(String p);
 
-  public String selectAuthor1();
+  public String getNewResearchProject1();
 
-  public Map<String, String> getAuthor1List();
+  public String selectResearchProject1();
 
-  public void initAuthor1List();
+  public Map<String, String> getResearchProject1List();
 
-  public void setNewProject1(String p);
-
-  public String getNewProject1();
-
-  public String selectProject1();
-
-  public Map<String, String> getProject1List();
-
-  public void initProject1List();
+  public void initResearchProject1List();
 }

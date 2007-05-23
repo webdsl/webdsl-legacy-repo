@@ -45,8 +45,6 @@ import org.webdsl.serg.domain.*;
     { 
       person = em.find(Person.class, personId);
     }
-    initPrList();
-    initPubList();
   }
 
   @Destroy @Remove public void destroy()
@@ -64,31 +62,5 @@ import org.webdsl.serg.domain.*;
   public Person getPerson()
   { 
     return person;
-  }
-
-  @DataModel("prList") private List<ResearchProject> prList;
-
-  public List<ResearchProject> getPrList()
-  { 
-    return prList;
-  }
-
-  @Factory("prList") public void initPrList()
-  { 
-    log.info("initPrList");
-    prList = em.createQuery("from " + "ResearchProject").getResultList();
-  }
-
-  @DataModel("pubList") private List<Publication> pubList;
-
-  public List<Publication> getPubList()
-  { 
-    return pubList;
-  }
-
-  @Factory("pubList") public void initPubList()
-  { 
-    log.info("initPubList");
-    pubList = em.createQuery("from " + "Publication").getResultList();
   }
 }

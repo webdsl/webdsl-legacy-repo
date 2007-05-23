@@ -36,140 +36,140 @@ import org.webdsl.serg.domain.*;
 
   @Create @Begin public void initialize()
   { 
-    if(pubId == null)
+    if(publicationId == null)
     { 
-      log.debug("No " + "pubId" + " defined, creating new " + "Publication");
-      pub = new Publication();
+      log.debug("No " + "publicationId" + " defined, creating new " + "Publication");
+      publication = new Publication();
     }
     else
     { 
-      pub = em.find(Publication.class, pubId);
+      publication = em.find(Publication.class, publicationId);
     }
-    initAuthor1List();
-    initProject1List();
+    initPerson3List();
+    initResearchProject1List();
   }
 
   @Destroy @Remove public void destroy()
   { }
 
-  @RequestParameter("pub") private Long pubId;
+  @RequestParameter("publication") private Long publicationId;
 
-  private Publication pub;
+  private Publication publication;
 
-  public void setPub(Publication pub)
+  public void setPublication(Publication publication)
   { 
-    this.pub = pub;
+    this.publication = publication;
   }
 
-  public Publication getPub()
+  public Publication getPublication()
   { 
-    return pub;
+    return publication;
+  }
+
+  public void removePerson0(Person person2)
+  { 
+    this.getPublication().getAuthors().remove(person2);
+  }
+
+  public void addPerson0(Person person2)
+  { 
+    this.getPublication().getAuthors().add(person2);
+  }
+
+  public void removeResearchProject0(ResearchProject researchProject0)
+  { 
+    this.getPublication().getProjectsList().remove(researchProject0);
+  }
+
+  public void addResearchProject0(ResearchProject researchProject0)
+  { 
+    this.getPublication().getProjectsList().add(researchProject0);
   }
 
   @End public String cancel()
   { 
-    return "/" + "viewPublication" + ".seam?" + ("pub" + "=" + pub.getId() + "");
+    return "/" + "viewPublication" + ".seam?" + ("publication" + "=" + publication.getId() + "");
   }
 
   @End public String save()
   { 
-    em.persist(this.getPub());
-    return "/" + "viewPublication" + ".seam?" + ("pub" + "=" + pub.getId() + "");
+    em.persist(this.getPublication());
+    return "/" + "viewPublication" + ".seam?" + ("publication" + "=" + publication.getId() + "");
   }
 
-  public void addAuthor(Person author)
+  private String newPerson3;
+
+  public void setNewPerson3(String p)
   { 
-    this.getPub().getAuthors().add(author);
+    newPerson3 = p;
   }
 
-  public void removeAuthor(Person author)
+  public String getNewPerson3()
   { 
-    this.getPub().getAuthors().remove(author);
+    return newPerson3;
   }
 
-  public void removeProject(ResearchProject project)
+  public String selectPerson3()
   { 
-    this.getPub().getProjects().remove(project);
-  }
-
-  public void addProject(ResearchProject project)
-  { 
-    this.getPub().getProjects().add(project);
-  }
-
-  private String newAuthor1;
-
-  public void setNewAuthor1(String p)
-  { 
-    newAuthor1 = p;
-  }
-
-  public String getNewAuthor1()
-  { 
-    return newAuthor1;
-  }
-
-  public String selectAuthor1()
-  { 
-    log.info("selectAuthor1" + " " + newAuthor1);
-    Person author1 = em.find(Person.class, new Long(newAuthor1));
-    addAuthor(author1);
+    log.info("selectPerson3" + " " + newPerson3);
+    Person person3 = em.find(Person.class, new Long(newPerson3));
+    addPerson0(person3);
     return null;
   }
 
-  @DataModel("author1List") private Map<String, String> author1List;
+  @DataModel("person3List") private Map<String, String> person3List;
 
-  public Map<String, String> getAuthor1List()
+  public Map<String, String> getPerson3List()
   { 
-    return author1List;
+    return person3List;
   }
 
-  @Factory("author1List") public void initAuthor1List()
+  @Factory("person3List") public void initPerson3List()
   { 
-    log.info("initAuthor1List");
-    author1List = new HashMap<String, String>();
+    log.info("initPerson3List");
+    person3List = new HashMap<String, String>();
     for(Object o : em.createQuery("from " + "Person").getResultList())
     { 
       Person p = (Person)o;
-      author1List.put(p.getName(), p.getId().toString());
+      person3List.put(p.getName(), p.getId().toString());
     }
   }
 
-  private String newProject1;
+  private String newResearchProject1;
 
-  public void setNewProject1(String p)
+  public void setNewResearchProject1(String p)
   { 
-    newProject1 = p;
+    newResearchProject1 = p;
   }
 
-  public String getNewProject1()
+  public String getNewResearchProject1()
   { 
-    return newProject1;
+    return newResearchProject1;
   }
 
-  public String selectProject1()
+  public String selectResearchProject1()
   { 
-    log.info("selectProject1" + " " + newProject1);
-    ResearchProject project1 = em.find(ResearchProject.class, new Long(newProject1));
-    addProject(project1);
+    log.info("selectResearchProject1" + " " + newResearchProject1);
+    ResearchProject researchProject1 = em.find(ResearchProject.class, new Long(newResearchProject1));
+    addResearchProject0(researchProject1);
     return null;
   }
 
-  @DataModel("project1List") private Map<String, String> project1List;
+  @DataModel("researchProject1List") private Map<String, String> researchProject1List;
 
-  public Map<String, String> getProject1List()
+  public Map<String, String> getResearchProject1List()
   { 
-    return project1List;
+    return researchProject1List;
   }
 
-  @Factory("project1List") public void initProject1List()
+  @Factory("researchProject1List") public void initResearchProject1List()
   { 
-    log.info("initProject1List");
-    project1List = new HashMap<String, String>();
+    log.info("initResearchProject1List");
+    researchProject1List = new HashMap<String, String>();
     for(Object o : em.createQuery("from " + "ResearchProject").getResultList())
     { 
       ResearchProject p = (ResearchProject)o;
-      project1List.put(p.getName(), p.getId().toString());
+      researchProject1List.put(p.getName(), p.getId().toString());
     }
   }
 }
