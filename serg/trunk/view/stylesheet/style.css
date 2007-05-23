@@ -264,14 +264,14 @@ label {
 
 /* Left bar */
 
-.twikiLeftBar {
+.sidebar {
   background-color: white;
   border:1px solid #999;
   overflow:hidden;
   /* line-height:1.3em; */
 }
 
-.twikiLeftBarContents {
+.sidebar {
   margin  : 0;
   padding : 1em 0 1.7em 1em;
   width   : auto;
@@ -279,37 +279,37 @@ label {
   font-size : small;
 }
 
-.twikiLeftBarContents a {
+.sidebar a {
   color: black;
 }
 
-.twikiLeftBarContents strong a,
-.twikiLeftBarContents strong {
+.sidebar strong a,
+.sidebar strong {
   color: #005aa0;
 }
 
-.twikiLeftBar ul {
+.sidebar ul {
 	padding:0;
 	margin:0;
 }
-.twikiLeftBar strong a:link,
-.twikiLeftBar strong a:visited {
+.sidebar strong a:link,
+.sidebar strong a:visited {
 	font-weight:bold;
 }
-.twikiLeftBar li {
+.sidebar li {
 	display:block;
 	list-style:none;
 	width:100%;
 }
-.twikiLeftBar li a {
+.sidebar li a {
 	display:block;
 	width:98%;
 	padding-right:2%;
 }
-html>body .twikiLeftBar li a {
+html>body .sidebar li a {
 	width:auto;
 }
-.twikiLeftBar hr {
+.sidebar hr {
 	color:#ccc;
 	background-color:#ccc;
 	height:1px;
@@ -330,7 +330,7 @@ html>body .twikiLeftBar li a {
 	color:#666;
 }
 
-.twikiLeftBar > a {
+.sidebar > a {
   color: #666666;
 }
 

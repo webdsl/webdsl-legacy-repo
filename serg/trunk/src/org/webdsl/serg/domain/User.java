@@ -45,7 +45,7 @@ import org.webdsl.serg.domain.*;
     this.password = password;
   }
 
-  @ManyToOne @JoinColumn(name = "UserPerson") @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.ALL}) private Person person = new Person();
+  @ManyToOne @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private Person person;
 
   public Person getPerson()
   { 

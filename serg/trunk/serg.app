@@ -8,12 +8,84 @@ description
 
 end
 
+section setup.
+
+  define main() {
+    menu()
+    sidebar()
+    body()
+    footer()
+  }
+  
+  define menu() {
+    image("/img/serg-logo-color-smaller.png")
+  }
+  
+  define footer() {
+    "generated with "
+    navigate("Stratego/XT", url("http://www.strategoxt.org"))
+  }
+
+section serg home page.
+
+  define page home() {
+  
+    title{"Software Engineering Research Group"}
+  
+    define sidebar() {
+      action("Init Database", initDB())
+    }
+    
+    define body () {
+    
+      section { header{"Software Engineering Research Group"}
+        
+      section { header{"Mission"}
+
+        "Software engineering is concerned with methods and techniques for building high quality software systems. This not only includes software construction, but also requirements analysis, design, system integration, testing, deployment, and making changes to software systems after their first release."
+
+        "The mission of the Delft Software Engineering Research Group is"
+
+        list {
+          listitem { "to develop a deep understanding of how people build and evolve software systems;" }
+          listitem { "to develop novel methods, techniques and tools that advance the way in which software is built and adjusted; and" }
+          listitem { "to offer students an education that prepares them to take a leading role in complex software development projects." }
+        }
+      
+        "Research at the Delft Software Engineering Research Group is centered around two themes, software evolution and embedded software, which are studied seperately as well as in combination in two laboratories:"
+
+        list {
+          listitem { "The Software Evolution Research Laboratory (SWERL), and" }
+          listitem { "The Embedded Software Laboratory (ESL)" }
+        }
+      }
+      
+      section { header{"Publications"}
+        for(pub : Publication) {
+            navigate(pub.name, viewPublication(pub))
+        }
+      }
+      
+      section { header{"People"}
+        for(pers : Person) {
+          navigate(pers.name, viewPerson(pers))
+        }
+      }
+      
+      }
+
+    }
+    
+    main()
+
+  }
+
 section people. 
 
   User {
     username :: String (name, unique)
     password :: Secret
-    person   <> Person
+    person   -> Person (notnull)
   }
   
   Address {
@@ -39,74 +111,19 @@ section people.
   
 section people pages.
 
-  define page home() {
-  
-    define sidebar() {
-      action("Init Database", initDB())
-    }
-    
-    define body () {
-    
-      "Software engineering is concerned with methods and techniques for building high quality software systems. This not only includes software construction, but also requirements analysis, design, system integration, testing, deployment, and making changes to software systems after their first release."
-
-      "The mission of the Delft Software Engineering Research Group is"
-
-      list {
-        listitem { "to develop a deep understanding of how people build and evolve software systems;" }
-        listitem { "to develop novel methods, techniques and tools that advance the way in which software is built and adjusted; and" }
-        listitem { "to offer students an education that prepares them to take a leading role in complex software development projects." }
-      }
-      
-      "Research at the Delft Software Engineering Research Group is centered around two themes, software evolution and embedded software, which are studied seperately as well as in combination in two laboratories:"
-
-      list {
-        listitem { "The Software Evolution Research Laboratory (SWERL), and" }
-        listitem { "The Embedded Software Laboratory (ESL)" }
-      }
-
-    }
-    
-    main()
-
-  }
-
-  define main() {
-    menu()
-    sidebar()
-    body()
-    footer()
-  }
-  
-  define menu() {
-    image("/serg/img/serg-logo-color-smaller.png")
-  }
-  
-  define footer() {
-    "generated with "
-    navigate("Stratego/XT", url("http://www.strategoxt.org"))
-  }
-
   define personSidebar(p : Person) {
     list {
       listitem{navigate(p.name, viewPerson(p))}
-      
       listitem{navigate("Publications", personPublications(p))}
-      
       listitem {
         "Projects"
-           //list { for(pr : ResearchProject in p.projects) {
-           //  listitem{navigate(pr.name, viewResearchProject(pr))}
-           //}}
+          for(pr : ResearchProject) {
+            navigate(pr.name, viewResearchProject(pr))
+          }
       }
-
       listitem{navigate("Edit", editPerson(p))}
     }
   }
-  
-//  define list() {
-//    ul{ for(e : Element in *) { e } }
-//    define listitem() { li{ for(e : Element in *) { e } } }
-//  }
   
   define page editPerson(p : Person) 
   {
@@ -118,7 +135,9 @@ section people pages.
     
     title{"Homepage of " text(person.name)}
     
-    define sidebar() { personSidebar(person) }
+    define sidebar() { 
+      personSidebar(person) 
+    }
     
     define body() {
       section{
@@ -145,10 +164,16 @@ section people pages.
           }
         }
     
-        section{
-          header{"Recent Publications"}
-          publicationsForYear(person, 2007)
+        //section{
+          //header{"Recent Publications"}
+          //publicationsForYear(person, 2007)
            // better: 10 most recent publications
+        //}
+        
+        section { header{"Publications"}
+          for(pub : Publication) {
+            navigate(pub.name, viewPublication(pub))
+          }
         }
       }
     }
@@ -240,9 +265,9 @@ section publication pages.
   //  for(o : t in l) {
  //     navigate(o)
   //  }
- // }
+ // }  
 
-  
+   
   define page editPublication(pub : Publication) {
     title{"Edit " text(pub.title)}
     
@@ -254,11 +279,13 @@ section publication pages.
           table {
              row { "title" input(pub.title) }
              
+             //row { "authors" input(pub.authors) }
+             
              row { "authors"     
                for(author : Person in pub.authors) {
                  navigate(author.name, viewPerson(author))
                  actionLink("[X]", removeAuthor(author))
-               }
+               } 
              }
              row { "" 
                select(author1 : Person, "Add Author", addAuthor(author1))
@@ -370,7 +397,8 @@ section init database .
         email    := "visser@acm.org"
         address  := Mekelweg4
         homepage := "http://www.eelcovisser.net"
-        photo    := "http://static.flickr.com/56/141569082_372ea07ea9_m.jpg"
+        photo    := "/img/eelcovisser.jpg"
+        //photo    := "http://static.flickr.com/56/141569082_372ea07ea9_m.jpg"
       }; 
       
     EelcoVisser.user :=

@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
 <head>    
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title></title>
+    <title> <h:outputText value="Software Engineering Research Group"/> </title>
     <link href="stylesheet/layout.css" rel="stylesheet" type="text/css"/>
     <link href="stylesheet/style.css" rel="stylesheet" type="text/css"/>
     <link href="stylesheet/theme.css" rel="stylesheet" type="text/css"/>
@@ -11,11 +11,15 @@
 </head>
 <body>
     <div class="main">
-    <div class="menu"> <h:graphicImage value="/serg/img/serg-logo-color-smaller.png"/> </div>
+    <div class="menu"> <h:graphicImage value="/img/serg-logo-color-smaller.png"/> </div>
     
     <div class="sidebar"></div>
     
-    <div class="body"> <h:outputText value="Software engineering is concerned with methods and techniques for building high quality software systems. This not only includes software construction, but also requirements analysis, design, system integration, testing, deployment, and making changes to software systems after their first release."/>  <h:outputText value="The mission of the Delft Software Engineering Research Group is"/> 
+    <div class="body">
+      <div class="section1">
+    
+      <div class="section2">
+     <h:outputText value="Software engineering is concerned with methods and techniques for building high quality software systems. This not only includes software construction, but also requirements analysis, design, system integration, testing, deployment, and making changes to software systems after their first release."/>  <h:outputText value="The mission of the Delft Software Engineering Research Group is"/> 
       <ul>
         
       <li>
@@ -43,6 +47,26 @@
       </li>
     
       </ul>
+    </div>
+    
+      <div class="section2">
+    
+      <h:dataTable var="pub" value="#{home.pubList}"> 
+      <h:column>
+      <s:link view="/viewPublication.xhtml" value="#{pub.name}" propagation="none"><f:param name="pub" value="#{pub.id}"/></s:link>
+    </h:column> 
+    </h:dataTable>
+    </div>
+    
+      <div class="section2">
+    
+      <h:dataTable var="pers" value="#{home.persList}"> 
+      <h:column>
+      <s:link view="/viewPerson.xhtml" value="#{pers.name}" propagation="none"><f:param name="person" value="#{pers.id}"/></s:link>
+    </h:column> 
+    </h:dataTable>
+    </div>
+    </div>
     </div>
     
     <div class="footer"> <h:outputText value="generated with "/> 

@@ -45,6 +45,7 @@ import org.webdsl.serg.domain.*;
     { 
       p = em.find(Person.class, pId);
     }
+    initPrList();
   }
 
   @Destroy @Remove public void destroy()
@@ -62,5 +63,18 @@ import org.webdsl.serg.domain.*;
   public Person getP()
   { 
     return p;
+  }
+
+  @DataModel("prList") private List<ResearchProject> prList;
+
+  public List<ResearchProject> getPrList()
+  { 
+    return prList;
+  }
+
+  @Factory("prList") public void initPrList()
+  { 
+    log.info("initPrList");
+    prList = em.createQuery("from " + "ResearchProject").getResultList();
   }
 }

@@ -35,8 +35,37 @@ import org.webdsl.serg.domain.*;
   @In private FacesMessages facesMessages;
 
   @Create @Begin public void initialize()
-  { }
+  { 
+    initPubList();
+    initPersList();
+  }
 
   @Destroy @Remove public void destroy()
   { }
+
+  @DataModel("pubList") private List<Publication> pubList;
+
+  public List<Publication> getPubList()
+  { 
+    return pubList;
+  }
+
+  @Factory("pubList") public void initPubList()
+  { 
+    log.info("initPubList");
+    pubList = em.createQuery("from " + "Publication").getResultList();
+  }
+
+  @DataModel("persList") private List<Person> persList;
+
+  public List<Person> getPersList()
+  { 
+    return persList;
+  }
+
+  @Factory("persList") public void initPersList()
+  { 
+    log.info("initPersList");
+    persList = em.createQuery("from " + "Person").getResultList();
+  }
 }

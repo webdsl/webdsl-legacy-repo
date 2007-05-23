@@ -47,7 +47,7 @@ import org.webdsl.serg.domain.*;
     var2.setEmail("visser@acm.org");
     var2.setAddress(Mekelweg4);
     var2.setHomepage("http://www.eelcovisser.net");
-    var2.setPhoto("http://static.flickr.com/56/141569082_372ea07ea9_m.jpg");
+    var2.setPhoto("/img/eelcovisser.jpg");
     Person EelcoVisser = var2;
     User var3 = new User();
     var3.setUsername("EelcoVisser");

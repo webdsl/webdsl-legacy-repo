@@ -9,4 +9,12 @@ import org.webdsl.serg.domain.*;
   public void initialize();
 
   public void destroy();
+
+  public List<Publication> getPubList();
+
+  public void initPubList();
+
+  public List<Person> getPersList();
+
+  public void initPersList();
 }

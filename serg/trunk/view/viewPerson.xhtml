@@ -11,7 +11,7 @@
 </head>
 <body>
     <div class="main">
-    <div class="menu"> <h:graphicImage value="/serg/img/serg-logo-color-smaller.png"/> </div>
+    <div class="menu"> <h:graphicImage value="/img/serg-logo-color-smaller.png"/> </div>
     
     <div class="sidebar">
     <div class="personSidebar">
@@ -31,6 +31,12 @@
     
       <li>
          <h:outputText value="Projects"/> 
+      <h:dataTable var="pr" value="#{viewPerson.prList}"> 
+      <h:column>
+      <s:link view="/viewResearchProject.xhtml" value="#{pr.name}" propagation="none"><f:param name="project" value="#{pr.id}"/></s:link>
+    </h:column> 
+    </h:dataTable>
+    
       </li>
     
       <li>
@@ -76,9 +82,13 @@
     </div>
     
       <div class="section2">
-      <h2> <h:outputText value="Recent Publications"/> </h2>
+      <h2> <h:outputText value="Publications"/> </h2>
     
-    <div class="publicationsForYear"></div>
+      <h:dataTable var="pub" value="#{viewPerson.pubList}"> 
+      <h:column>
+      <s:link view="/viewPublication.xhtml" value="#{pub.name}" propagation="none"><f:param name="pub" value="#{pub.id}"/></s:link>
+    </h:column> 
+    </h:dataTable>
     </div>
     </div>
     </div>
