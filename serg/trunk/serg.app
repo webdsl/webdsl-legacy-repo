@@ -8,6 +8,41 @@ description
 
 end
 
+section login.
+ 
+  define page login() {
+    main()
+    define sidebar{}
+    
+    define body {
+      
+      user : User;
+      username : String;
+    
+      form {
+        table 
+        {
+          row{"username" input(user.username)}
+          row{"password" input(user.password)}
+        }
+        action("Login", login())
+        
+        action login() { 
+          users : List<User> := user.search()
+          if users.size() == 1 then
+            session.user := user;
+            return home();
+          else
+            return errorPage();
+          end
+        
+        }
+      }
+      
+    }
+  
+  }
+
 section setup.
 
   define main() {
@@ -23,6 +58,7 @@ section setup.
     navigate("Home", home())
     sidebar()
   }
+  
   define menu() {
     image("/img/serg-logo-color-smaller.png")
   }
@@ -324,7 +360,10 @@ section publication pages.
     
     action save() {
       pub.save();
-      return viewPublication(pub);
+      if then
+        return viewPublication(pub);
+      else
+        return errorPage(msg);
     }
     
     main()

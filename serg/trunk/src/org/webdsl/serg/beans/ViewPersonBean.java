@@ -26,41 +26,46 @@ import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Factory;
 import org.webdsl.serg.domain.*;
 
-@Stateful @Name("viewPerson") public class ViewPersonBean  implements ViewPersonBeanInterface
-{ 
-  @Logger private Log log;
+@Stateful
+@Name("viewPerson")
+public class ViewPersonBean implements ViewPersonBeanInterface {
+	@Logger
+	private Log log;
 
-  @PersistenceContext(type = EXTENDED) private EntityManager em;
+	@PersistenceContext(type = EXTENDED)
+	private EntityManager em;
 
-  @In private FacesMessages facesMessages;
+	@In
+	private FacesMessages facesMessages;
 
-  @Create @Begin public void initialize()
-  { 
-    if(personId == null)
-    { 
-      log.debug("No " + "personId" + " defined, creating new " + "Person");
-      person = new Person();
-    }
-    else
-    { 
-      person = em.find(Person.class, personId);
-    }
-  }
+	@Create
+	@Begin
+	public void initialize() {
+		if (personId == null) {
+			log
+					.debug("No " + "personId" + " defined, creating new "
+							+ "Person");
+			person = new Person();
+		} else {
+			person = em.find(Person.class, personId);
+		}
+	}
 
-  @Destroy @Remove public void destroy()
-  { }
+	@Destroy
+	@Remove
+	public void destroy() {
+	}
 
-  @RequestParameter("person") private Long personId;
+	@RequestParameter("person")
+	private Long personId;
 
-  private Person person;
+	private Person person;
 
-  public void setPerson(Person person)
-  { 
-    this.person = person;
-  }
+	public void setPerson(Person person) {
+		this.person = person;
+	}
 
-  public Person getPerson()
-  { 
-    return person;
-  }
+	public Person getPerson() {
+		return person;
+	}
 }
