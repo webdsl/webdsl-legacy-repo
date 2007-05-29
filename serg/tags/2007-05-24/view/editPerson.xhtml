@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
+<head>    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title></title>
+    <link href="stylesheet/layout.css" rel="stylesheet" type="text/css"/>
+    <link href="stylesheet/style.css" rel="stylesheet" type="text/css"/>
+    <link href="stylesheet/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="stylesheet/date.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <div class="main">
+    <div class="menu"> <h:graphicImage value="/img/serg-logo-color-smaller.png"/> </div>
+    
+    <div class="outersidebar">
+      <s:link view="/home.xhtml" value="Home" propagation="none"></s:link>
+    
+    <div class="sidebar"></div>
+    </div>
+    
+    <div class="outerbody">
+    <div class="body">
+      <div class="section1">
+      <h1> <h:outputText value="Edit "/>  <h:outputText value="Person"/>  <h:outputText value=" "/>  <h:outputText value="#{editPerson.person.name}"/> </h1>
+    
+      <h:form>
+      <table>
+    <div class="editRowsPerson">
+      <tr> <td> <h:outputText value="Fullname"/> </td>  <td>
+      <h:inputText required="true" value="#{editPerson.person.fullname}"/>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Email"/> </td>  <td>
+      <h:inputText required="true" value="#{editPerson.person.email}"/>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Homepage"/> </td>  <td>
+      <h:inputText required="true" value="#{editPerson.person.homepage}"/>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Photo"/> </td>  <td>
+      <h:inputText required="true" value="#{editPerson.person.photo}"/>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Address"/> </td>  <td> <h:outputText value=""/> </td> </tr>
+    
+      <tr> <td> <h:outputText value="Street"/> </td>  <td>
+      <h:inputText required="true" value="#{editPerson.person.address.street}"/>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="City"/> </td>  <td>
+      <h:inputText required="true" value="#{editPerson.person.address.city}"/>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Phone"/> </td>  <td>
+      <h:inputText required="true" value="#{editPerson.person.address.phone}"/>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="User"/> </td>  <td>
+       <h:selectOneMenu value="#{editPerson.newUser0}">
+          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
+          <f:selectItems value="#{editPerson.user0List}" var="user0" label="#{user0.label}"/>
+        </h:selectOneMenu>
+        <h:commandButton type="submit" value="Select" action="#{editPerson.selectUser0()}"/>
+    </td> </tr>
+    </div>
+    </table>
+     
+       <h:commandButton type="submit" value="Save" action="#{editPerson.save()}"/>
+     
+       <h:commandButton value="Cancel" action="#{editPerson.cancel()}"/>
+    </h:form>
+    </div>
+    </div>
+    
+    <div class="footer"> <h:outputText value="generated with "/> 
+      <h:outputLink value="http://www.strategoxt.org">
+          <h:outputText value="Stratego/XT"/>
+      </h:outputLink>
+    </div>
+    </div>
+    </div>
+    </body>
+</html>

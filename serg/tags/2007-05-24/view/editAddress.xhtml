@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
+<head>    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title></title>
+    <link href="stylesheet/layout.css" rel="stylesheet" type="text/css"/>
+    <link href="stylesheet/style.css" rel="stylesheet" type="text/css"/>
+    <link href="stylesheet/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="stylesheet/date.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <div class="main">
+    <div class="menu"> <h:graphicImage value="/img/serg-logo-color-smaller.png"/> </div>
+    
+    <div class="outersidebar">
+      <s:link view="/home.xhtml" value="Home" propagation="none"></s:link>
+    
+    <div class="sidebar"></div>
+    </div>
+    
+    <div class="outerbody">
+    <div class="body">
+      <div class="section1">
+      <h1> <h:outputText value="Edit "/>  <h:outputText value="Address"/>  <h:outputText value=" "/>  <h:outputText value="#{editAddress.address.name}"/> </h1>
+    
+      <h:form>
+      <table>
+    <div class="editRowsAddress">
+      <tr> <td> <h:outputText value="Street"/> </td>  <td>
+      <h:inputText required="true" value="#{editAddress.address.street}"/>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="City"/> </td>  <td>
+      <h:inputText required="true" value="#{editAddress.address.city}"/>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Phone"/> </td>  <td>
+      <h:inputText required="true" value="#{editAddress.address.phone}"/>
+    </td> </tr>
+    </div>
+    </table>
+     
+       <h:commandButton type="submit" value="Save" action="#{editAddress.save()}"/>
+     
+       <h:commandButton value="Cancel" action="#{editAddress.cancel()}"/>
+    </h:form>
+    </div>
+    </div>
+    
+    <div class="footer"> <h:outputText value="generated with "/> 
+      <h:outputLink value="http://www.strategoxt.org">
+          <h:outputText value="Stratego/XT"/>
+      </h:outputLink>
+    </div>
+    </div>
+    </div>
+    </body>
+</html>

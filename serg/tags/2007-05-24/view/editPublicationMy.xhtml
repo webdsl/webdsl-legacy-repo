@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
+<head>    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title> <h:outputText value="Edit "/>  <h:outputText value="#{editPublicationMy.pub.title}"/> </title>
+    <link href="stylesheet/layout.css" rel="stylesheet" type="text/css"/>
+    <link href="stylesheet/style.css" rel="stylesheet" type="text/css"/>
+    <link href="stylesheet/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="stylesheet/date.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <div class="main">
+    <div class="menu"> <h:graphicImage value="/img/serg-logo-color-smaller.png"/> </div>
+    
+    <div class="outersidebar">
+      <s:link view="/home.xhtml" value="Home" propagation="none"></s:link>
+    
+    <div class="sidebar"></div>
+    </div>
+    
+    <div class="outerbody">
+    <div class="body">
+      <h1> <h:outputText value="Edit "/>  <h:outputText value="#{editPublicationMy.pub.title}"/> </h1>
+    
+      <h:form>
+      <table>
+      <tr> <td> <h:outputText value="title"/> </td>  <td>
+      <h:inputText required="true" value="#{editPublicationMy.pub.title}"/>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="authors"/> </td>  <td>
+      <h:dataTable var="author" value="#{editPublicationMy.pub.authors}"> 
+      <h:column>
+      <s:link view="/viewPerson.xhtml" value="#{author.name}" propagation="none"><f:param name="person" value="#{author.id}"/></s:link>
+    </h:column> 
+     
+      <h:column> 
+       <h:commandLink type="submit" value="[X]" action="#{editPublicationMy.removeAuthor(author)}"/>
+    </h:column> 
+    </h:dataTable>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value=""/> </td>  <td>
+       <h:selectOneMenu value="#{editPublicationMy.newAuthor1}">
+          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
+          <f:selectItems value="#{editPublicationMy.author1List}" var="author1" label="#{author1.label}"/>
+        </h:selectOneMenu>
+        <h:commandButton type="submit" value="Add Author" action="#{editPublicationMy.selectAuthor1()}"/>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="year"/> </td>  <td>
+      <h:inputText required="true" value="#{editPublicationMy.pub.year}"/>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="pubabstract"/> </td>  <td>
+      <h:inputText required="true" value="#{editPublicationMy.pub.pubabstract}"/>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="pdf"/> </td>  <td>
+      <h:inputText required="true" value="#{editPublicationMy.pub.pdf}"/>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="projects"/> </td>  <td>
+      <h:dataTable var="project" value="#{editPublicationMy.pub.projectsList}"> 
+      <h:column>
+      <s:link view="/viewResearchProject.xhtml" value="#{project.name}" propagation="none"><f:param name="researchProject" value="#{project.id}"/></s:link>
+    </h:column> 
+     
+      <h:column> 
+       <h:commandLink type="submit" value="[X]" action="#{editPublicationMy.removeProject(project)}"/>
+    </h:column> 
+    </h:dataTable>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value=""/> </td>  <td>
+       <h:selectOneMenu value="#{editPublicationMy.newProject1}">
+          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
+          <f:selectItems value="#{editPublicationMy.project1List}" var="project1" label="#{project1.label}"/>
+        </h:selectOneMenu>
+        <h:commandButton type="submit" value="Add Project" action="#{editPublicationMy.selectProject1()}"/>
+    </td> </tr>
+    </table>
+     
+       <h:commandButton type="submit" value="Save" action="#{editPublicationMy.save()}"/>
+     
+       <h:commandButton value="Cancel" action="#{editPublicationMy.cancel()}"/>
+    </h:form>
+    </div>
+    
+    <div class="footer"> <h:outputText value="generated with "/> 
+      <h:outputLink value="http://www.strategoxt.org">
+          <h:outputText value="Stratego/XT"/>
+      </h:outputLink>
+    </div>
+    </div>
+    </div>
+    </body>
+</html>

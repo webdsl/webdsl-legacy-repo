@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
+<head>    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title> <h:outputText value="#{viewResearchProjectMy.project.fullname}"/> </title>
+    <link href="stylesheet/layout.css" rel="stylesheet" type="text/css"/>
+    <link href="stylesheet/style.css" rel="stylesheet" type="text/css"/>
+    <link href="stylesheet/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="stylesheet/date.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <div class="main">
+    <div class="menu"> <h:graphicImage value="/img/serg-logo-color-smaller.png"/> </div>
+    
+    <div class="outersidebar">
+      <s:link view="/home.xhtml" value="Home" propagation="none"></s:link>
+    
+    <div class="sidebar"></div>
+    </div>
+    
+    <div class="outerbody">
+    <div class="body">
+      <div class="section1">
+      <h1> <h:outputText value="#{viewResearchProjectMy.project.fullname}"/> </h1>
+     <h:outputText value="#{viewResearchProjectMy.project.description}"/> 
+      <div class="section2">
+      <h2> <h:outputText value="Members"/> </h2>
+    
+      <ul>
+        
+      <h:dataTable var="member" value="#{viewResearchProjectMy.project.membersList}"> 
+      <h:column>
+      <li>
+        
+      <s:link view="/viewPerson.xhtml" value="#{member.name}" propagation="none"><f:param name="person" value="#{member.id}"/></s:link>
+    
+      </li>
+    </h:column> 
+    </h:dataTable>
+    
+      </ul>
+    </div>
+    
+      <div class="section2">
+      <h2> <h:outputText value="Publications"/> </h2>
+    
+    <div class="publicationsPage">
+      <ul>
+        
+      <h:dataTable var="publication" value="#{viewResearchProjectMy.project.publicationsList}"> 
+      <h:column>
+      <li>
+        
+      <h:dataTable var="author" value="#{publication.authors}"> 
+      <h:column>
+      <s:link view="/viewPerson.xhtml" value="#{author.name}" propagation="none"><f:param name="person" value="#{author.id}"/></s:link>
+    </h:column> 
+     
+      <h:column> <h:outputText value=","/> </h:column> 
+    </h:dataTable>
+    
+      <s:link view="/viewPublication.xhtml" value="#{publication.name}" propagation="none"><f:param name="publication" value="#{publication.id}"/></s:link>
+    
+      </li>
+    </h:column> 
+    </h:dataTable>
+    
+      </ul>
+    </div>
+    </div>
+    </div>
+    </div>
+    
+    <div class="footer"> <h:outputText value="generated with "/> 
+      <h:outputLink value="http://www.strategoxt.org">
+          <h:outputText value="Stratego/XT"/>
+      </h:outputLink>
+    </div>
+    </div>
+    </div>
+    </body>
+</html>
