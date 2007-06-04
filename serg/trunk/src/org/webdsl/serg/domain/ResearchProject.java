@@ -21,96 +21,86 @@ import org.webdsl.serg.domain.*;
     this.id = id;
   }
 
-  private String fullname = "";
+  private String _fullname = "";
 
   public String getFullname()
   { 
-    return fullname;
+    return _fullname;
   }
 
-  public void setFullname(String fullname)
+  public void setFullname(String _fullname)
   { 
-    this.fullname = fullname;
+    this._fullname = _fullname;
   }
 
-  private String acronym = "";
+  private String _acronym = "";
 
   public String getAcronym()
   { 
-    return acronym;
+    return _acronym;
   }
 
-  public void setAcronym(String acronym)
+  public void setAcronym(String _acronym)
   { 
-    this.acronym = acronym;
+    this._acronym = _acronym;
   }
 
-  private @Column(length = 1000000) String description = "";
+  @Column(length = 1000000) private String _description = "";
 
   public String getDescription()
   { 
-    return description;
+    return _description;
   }
 
-  public void setDescription(String description)
+  public void setDescription(String _description)
   { 
-    this.description = description;
+    this._description = _description;
   }
 
-  @ManyToMany @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private Set<Person> members = new HashSet<Person>();
+  @ManyToMany @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private java.util.Set<Person> _members = new java.util.HashSet<Person>();
 
-  public Set<Person> getMembers()
+  public java.util.Set<Person> getMembers()
   { 
-    return members = new java.util.HashSet<Person>();
+    return _members;
   }
 
-  public List<Person> getMembersList()
+  public void setMembers(java.util.Set<Person> _members)
   { 
-    return new ArrayList(members);
+    this._members = _members;
   }
 
-  public void setMembers(Set<Person> members)
+  public java.util.List<Person> getMembersList()
   { 
-    this.members = members;
+    return new ArrayList(getMembers());
   }
 
-  public void addMembers(Person c_0)
-  { 
-    this.members.add(c_0);
-  }
-
-  @ManyToOne @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private Publication proposal;
+  @ManyToOne @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private Publication _proposal = null;
 
   public Publication getProposal()
   { 
-    return proposal;
+    return _proposal;
   }
 
-  public void setProposal(Publication proposal)
+  public void setProposal(Publication _proposal)
   { 
-    this.proposal = proposal;
+    this._proposal = _proposal;
   }
 
-  @ManyToMany @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private Set<Publication> publications = new HashSet<Publication>();
+  @ManyToMany @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private java.util.Set<Publication> _publications = new java.util.HashSet<Publication>();
 
-  public Set<Publication> getPublications()
+  public java.util.Set<Publication> getPublications()
   { 
-    return publications = new java.util.HashSet<Publication>();
+    return _publications;
   }
 
-  public List<Publication> getPublicationsList()
+  public void setPublications(java.util.Set<Publication> _publications)
   { 
-    return new ArrayList(publications);
+    this._publications = _publications;
   }
 
-  public void setPublications(Set<Publication> publications)
+  public java.util.List<Publication> getPublicationsList()
   { 
-    this.publications = publications;
-  }
-
-  public void addPublications(Publication d_0)
-  { 
-    this.publications.add(d_0);
+    return new ArrayList(getPublications());
   }
 
   public String getName()

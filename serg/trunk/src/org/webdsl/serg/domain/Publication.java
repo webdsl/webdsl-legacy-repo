@@ -21,96 +21,86 @@ import org.webdsl.serg.domain.*;
     this.id = id;
   }
 
-  private String title = "";
+  private String _title = "";
 
   public String getTitle()
   { 
-    return title;
+    return _title;
   }
 
-  public void setTitle(String title)
+  public void setTitle(String _title)
   { 
-    this.title = title;
+    this._title = _title;
   }
 
-  @ManyToMany @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private List<Person> authors = new java.util.ArrayList<Person>();
+  @ManyToMany @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private java.util.List<Person> _authors = new java.util.ArrayList<Person>();
 
-  public List<Person> getAuthors()
+  public java.util.List<Person> getAuthors()
   { 
-    return authors;
+    return _authors;
   }
 
-  public List<Person> getAuthorsList()
+  public void setAuthors(java.util.List<Person> _authors)
   { 
-    return authors;
+    this._authors = _authors;
   }
 
-  public void setAuthors(List<Person> authors)
+  public java.util.List<Person> getAuthorsList()
   { 
-    this.authors = authors;
+    return new ArrayList(getAuthors());
   }
 
-  public void addAuthors(Person a_0)
-  { 
-    this.authors.add(a_0);
-  }
-
-  private int year = 0;
+  private int _year = 0;
 
   public int getYear()
   { 
-    return year;
+    return _year;
   }
 
-  public void setYear(int year)
+  public void setYear(int _year)
   { 
-    this.year = year;
+    this._year = _year;
   }
 
-  private @Column(length = 1000000) String pubabstract = "";
+  @Column(length = 1000000) private String _abstract = "";
 
-  public String getPubabstract()
+  public String getAbstract()
   { 
-    return pubabstract;
+    return _abstract;
   }
 
-  public void setPubabstract(String pubabstract)
+  public void setAbstract(String _abstract)
   { 
-    this.pubabstract = pubabstract;
+    this._abstract = _abstract;
   }
 
-  @ManyToMany @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private Set<ResearchProject> projects = new HashSet<ResearchProject>();
+  @ManyToMany @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private java.util.Set<ResearchProject> _projects = new java.util.HashSet<ResearchProject>();
 
-  public Set<ResearchProject> getProjects()
+  public java.util.Set<ResearchProject> getProjects()
   { 
-    return projects = new java.util.HashSet<ResearchProject>();
+    return _projects;
   }
 
-  public List<ResearchProject> getProjectsList()
+  public void setProjects(java.util.Set<ResearchProject> _projects)
   { 
-    return new ArrayList(projects);
+    this._projects = _projects;
   }
 
-  public void setProjects(Set<ResearchProject> projects)
+  public java.util.List<ResearchProject> getProjectsList()
   { 
-    this.projects = projects;
+    return new ArrayList(getProjects());
   }
 
-  public void addProjects(ResearchProject b_0)
-  { 
-    this.projects.add(b_0);
-  }
-
-  private String pdf = "";
+  private String _pdf = "";
 
   public String getPdf()
   { 
-    return pdf;
+    return _pdf;
   }
 
-  public void setPdf(String pdf)
+  public void setPdf(String _pdf)
   { 
-    this.pdf = pdf;
+    this._pdf = _pdf;
   }
 
   public String getName()

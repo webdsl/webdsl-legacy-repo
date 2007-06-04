@@ -9,40 +9,40 @@ import org.webdsl.serg.domain.*;
   public TechnicalReport () 
   { }
 
-  private int number = 0;
+  private int _number = 0;
 
   public int getNumber()
   { 
-    return number;
+    return _number;
   }
 
-  public void setNumber(int number)
+  public void setNumber(int _number)
   { 
-    this.number = number;
+    this._number = _number;
   }
 
-  private @Column(length = 1000000) String document = "";
+  @Column(length = 1000000) private String _document = "";
 
   public String getDocument()
   { 
-    return document;
+    return _document;
   }
 
-  public void setDocument(String document)
+  public void setDocument(String _document)
   { 
-    this.document = document;
+    this._document = _document;
   }
 
-  @ManyToOne @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private Publication preprintof;
+  @ManyToOne @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private Publication _preprintof = null;
 
   public Publication getPreprintof()
   { 
-    return preprintof;
+    return _preprintof;
   }
 
-  public void setPreprintof(Publication preprintof)
+  public void setPreprintof(Publication _preprintof)
   { 
-    this.preprintof = preprintof;
+    this._preprintof = _preprintof;
   }
 
   public String getName()

@@ -21,40 +21,40 @@ import org.webdsl.serg.domain.*;
     this.id = id;
   }
 
-  private String username = "";
+  private String _username = "";
 
   public String getUsername()
   { 
-    return username;
+    return _username;
   }
 
-  public void setUsername(String username)
+  public void setUsername(String _username)
   { 
-    this.username = username;
+    this._username = _username;
   }
 
-  private String password = "";
+  private String _password = "";
 
   public String getPassword()
   { 
-    return password;
+    return _password;
   }
 
-  public void setPassword(String password)
+  public void setPassword(String _password)
   { 
-    this.password = password;
+    this._password = _password;
   }
 
-  @ManyToOne @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private Person person;
+  @ManyToOne @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private Person _person = null;
 
   public Person getPerson()
   { 
-    return person;
+    return _person;
   }
 
-  public void setPerson(Person person)
+  public void setPerson(Person _person)
   { 
-    this.person = person;
+    this._person = _person;
   }
 
   public String getName()

@@ -265,12 +265,12 @@ section people pages.
 section publications.
     
   Publication {
-    title       :: String (name)
-    authors     -> List<Person>
-    year        :: Int // use Year defined type
-    pubabstract :: Text // note: abstract is a reserved word in java!
-    projects    -> Set<ResearchProject>
-    pdf         :: URL
+    title    :: String (name)
+    authors  -> List<Person>
+    year     :: Int // use Year defined type
+    abstract :: Text // note: abstract is a reserved word in java!
+    projects -> Set<ResearchProject>
+    pdf      :: URL
   }
     
   TechnicalReport : Publication {
@@ -322,7 +322,7 @@ section publication pages.
       table {
         row{"title"       text(pub.title)}
         row{"year"        text(pub.year)}
-        row{"pubabstract" text(pub.pubabstract)}
+        row{"abstract" text(pub.abstract)}
         row{"pdf"         text(pub.pdf)}
         row{"authors"     for(author : Person in pub.authors) { navigate(author.name, viewPerson(author)) } }
         row{"projects"    for(project : ResearchProject in pub.projectsList) { 
@@ -379,7 +379,7 @@ section publication pages.
              action removeAuthor(author : Person) { pub.authors.remove(author); }
            
              row{"year"        input(pub.year)}
-             row{"pubabstract" input(pub.pubabstract)}
+             row{"abstract" input(pub.abstract)}
              row{"pdf"         input(pub.pdf)}
              
              // edit projects
@@ -532,7 +532,7 @@ section init database .
         title := "Domain-Specific Language Engineering"
         authors := [EelcoVisser]
         year := 2007
-        pubabstract := "The goal of domain-specific languages (DSLs) is to increase the productivity of software engineers by abstracting from low-level boilerplate code. Introduction of DSLs in the software development process requires a smooth workflow for the production of DSLs themselves. This tutorial gives an overview of all aspects of DSL engineering: domain analysis, language design, syntax definition, code generation, deployment, and evolution, discussing research challenges on the way. The concepts are illustrated with DSLs for web applications built using several DSLs for DSL engineering: SDF for syntax definition, Stratego/XT for code generation, and Nix for software deployment."
+        abstract := "The goal of domain-specific languages (DSLs) is to increase the productivity of software engineers by abstracting from low-level boilerplate code. Introduction of DSLs in the software development process requires a smooth workflow for the production of DSLs themselves. This tutorial gives an overview of all aspects of DSL engineering: domain analysis, language design, syntax definition, code generation, deployment, and evolution, discussing research challenges on the way. The concepts are illustrated with DSLs for web applications built using several DSLs for DSL engineering: SDF for syntax definition, Stratego/XT for code generation, and Nix for software deployment."
         projects := {MoDSE}
       };
       
@@ -541,7 +541,7 @@ section init database .
         title       := "Model-Driven Software Evolution: A Research Agenda"
         authors     := [ArieVanDeursen, JosWarmer, EelcoVisser]
         year        := 2006
-        pubabstract := "Software systems need to evolve, and systems built using model-driven approaches are no exception.  What complicates model-driven engineering is that it requires multiple dimensions of evolution. In regular evolution, the modeling language is used to make the changes. In meta-model evolution, changes are required to the modeling notation.  In platform evolution, the code generators and application framework change to reflect new requirements on the target platform. Finally, in abstraction evolution, new modeling languages are added to the set of (modeling) languages to reflect increased understanding of a technical or business domain.  While MDE has been optimized for regular evolution, presently little or no support exists for metamodel, platform and abstraction evolution. In this paper, we analyze the problems raised by the evolution of model-based software systems and identify challenges to be addressed by research in this area."
+        abstract := "Software systems need to evolve, and systems built using model-driven approaches are no exception.  What complicates model-driven engineering is that it requires multiple dimensions of evolution. In regular evolution, the modeling language is used to make the changes. In meta-model evolution, changes are required to the modeling notation.  In platform evolution, the code generators and application framework change to reflect new requirements on the target platform. Finally, in abstraction evolution, new modeling languages are added to the set of (modeling) languages to reflect increased understanding of a technical or business domain.  While MDE has been optimized for regular evolution, presently little or no support exists for metamodel, platform and abstraction evolution. In this paper, we analyze the problems raised by the evolution of model-based software systems and identify challenges to be addressed by research in this area."
         projects    := {MoDSE}
       };
     

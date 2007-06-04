@@ -21,40 +21,40 @@ import org.webdsl.serg.domain.*;
     this.id = id;
   }
 
-  private String street = "";
+  private String _street = "";
 
   public String getStreet()
   { 
-    return street;
+    return _street;
   }
 
-  public void setStreet(String street)
+  public void setStreet(String _street)
   { 
-    this.street = street;
+    this._street = _street;
   }
 
-  private String city = "";
+  private String _city = "";
 
   public String getCity()
   { 
-    return city;
+    return _city;
   }
 
-  public void setCity(String city)
+  public void setCity(String _city)
   { 
-    this.city = city;
+    this._city = _city;
   }
 
-  private String phone = "";
+  private String _phone = "";
 
   public String getPhone()
   { 
-    return phone;
+    return _phone;
   }
 
-  public void setPhone(String phone)
+  public void setPhone(String _phone)
   { 
-    this.phone = phone;
+    this._phone = _phone;
   }
 
   public String getName()

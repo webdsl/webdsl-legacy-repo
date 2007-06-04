@@ -4,97 +4,91 @@ import java.util.*;
 import javax.persistence.*;
 import org.webdsl.serg.domain.*;
 
-@Entity public class Person  
-{ 
-  public Person () 
-  { }
+@Entity
+public class Person {
+	public Person() {
+	}
 
-  @Id @GeneratedValue private Long id;
+	@Id
+	@GeneratedValue
+	private Long id;
 
-  public Long getId()
-  { 
-    return id;
-  }
+	public Long getId() {
+		return id;
+	}
 
-  private void setId(Long id)
-  { 
-    this.id = id;
-  }
+	private void setId(Long id) {
+		this.id = id;
+	}
 
-  private String fullname = "";
+	private String _fullname = "";
 
-  public String getFullname()
-  { 
-    return fullname;
-  }
+	public String getFullname() {
+		return _fullname;
+	}
 
-  public void setFullname(String fullname)
-  { 
-    this.fullname = fullname;
-  }
+	public void setFullname(String _fullname) {
+		this._fullname = _fullname;
+	}
 
-  private String email = "";
+	private String _email = "";
 
-  public String getEmail()
-  { 
-    return email;
-  }
+	public String getEmail() {
+		return _email;
+	}
 
-  public void setEmail(String email)
-  { 
-    this.email = email;
-  }
+	public void setEmail(String _email) {
+		this._email = _email;
+	}
 
-  private String homepage = "";
+	private String _homepage = "";
 
-  public String getHomepage()
-  { 
-    return homepage;
-  }
+	public String getHomepage() {
+		return _homepage;
+	}
 
-  public void setHomepage(String homepage)
-  { 
-    this.homepage = homepage;
-  }
+	public void setHomepage(String _homepage) {
+		this._homepage = _homepage;
+	}
 
-  private String photo = "";
+	private String _photo = "";
 
-  public String getPhoto()
-  { 
-    return photo;
-  }
+	public String getPhoto() {
+		return _photo;
+	}
 
-  public void setPhoto(String photo)
-  { 
-    this.photo = photo;
-  }
+	public void setPhoto(String _photo) {
+		this._photo = _photo;
+	}
 
-  @ManyToOne @JoinColumn(name = "PersonAddress") @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.ALL}) private Address address = new Address();
+	@ManyToOne
+	@org.hibernate.annotations.Cascade( { org.hibernate.annotations.CascadeType.ALL })
+	private Address _address = new Address();
 
-  public Address getAddress()
-  { 
-    return address;
-  }
+	public Address getAddress() {
+		return _address;
+	}
 
-  public void setAddress(Address address)
-  { 
-    this.address = address;
-  }
+	public void setAddress(Address _address) {
+		this._address = _address;
+	}
 
-  @ManyToOne @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private User user;
+	@ManyToOne
+	@org.hibernate.annotations.Cascade( {
+			org.hibernate.annotations.CascadeType.PERSIST,
+			org.hibernate.annotations.CascadeType.SAVE_UPDATE,
+			org.hibernate.annotations.CascadeType.MERGE })
+	private User _user = null;
 
-  public User getUser()
-  { 
-    return user;
-  }
+	public User getUser() {
+		return _user;
+	}
 
-  public void setUser(User user)
-  { 
-    this.user = user;
-  }
+	public void setUser(User _user) {
+		this._user = _user;
+	}
 
-  public String getName()
-  { 
-    return getFullname().toString();
-  }
+	public String getName() {
+		return getFullname().toString();
+	}
 }
