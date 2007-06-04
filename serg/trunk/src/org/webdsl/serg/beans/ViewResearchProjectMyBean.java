@@ -36,15 +36,17 @@ import org.webdsl.serg.domain.*;
 
   @Create @Begin public void initialize()
   { 
+    log.info("viewResearchProjectMy" + ".initalize()");
     if(projectId == null)
     { 
-      log.debug("No " + "projectId" + " defined, creating new " + "ResearchProject");
+      log.info("No " + "projectId" + " defined, creating new " + "ResearchProject");
       project = new ResearchProject();
     }
     else
     { 
       project = em.find(ResearchProject.class, projectId);
     }
+    initPerson10List();
   }
 
   @Destroy @Remove public void destroy()
@@ -56,11 +58,27 @@ import org.webdsl.serg.domain.*;
 
   public void setProject(ResearchProject project)
   { 
+    log.info("setProject");
     this.project = project;
   }
 
   public ResearchProject getProject()
   { 
+    log.info("getProject");
     return project;
+  }
+
+  @DataModel("person10List") private List<Person> person10List;
+
+  public List<Person> getPerson10List()
+  { 
+    log.info("getPerson10List");
+    return person10List;
+  }
+
+  @Factory("person10List") public void initPerson10List()
+  { 
+    log.info("initPerson10List");
+    person10List = em.createQuery("from " + "Person").getResultList();
   }
 }

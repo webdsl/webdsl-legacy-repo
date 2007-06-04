@@ -36,9 +36,10 @@ import org.webdsl.serg.domain.*;
 
   @Create @Begin public void initialize()
   { 
+    log.info("editTechnicalReport" + ".initalize()");
     if(technicalReportId == null)
     { 
-      log.debug("No " + "technicalReportId" + " defined, creating new " + "TechnicalReport");
+      log.info("No " + "technicalReportId" + " defined, creating new " + "TechnicalReport");
       technicalReport = new TechnicalReport();
     }
     else
@@ -46,6 +47,7 @@ import org.webdsl.serg.domain.*;
       technicalReport = em.find(TechnicalReport.class, technicalReportId);
     }
     initPreprintof0List();
+    initPerson10List();
   }
 
   @Destroy @Remove public void destroy()
@@ -57,11 +59,13 @@ import org.webdsl.serg.domain.*;
 
   public void setTechnicalReport(TechnicalReport technicalReport)
   { 
+    log.info("setTechnicalReport");
     this.technicalReport = technicalReport;
   }
 
   public TechnicalReport getTechnicalReport()
   { 
+    log.info("getTechnicalReport");
     return technicalReport;
   }
 
@@ -117,5 +121,19 @@ import org.webdsl.serg.domain.*;
       Publication p = (Publication)o;
       preprintof0List.put(p.getName(), p.getId().toString());
     }
+  }
+
+  @DataModel("person10List") private List<Person> person10List;
+
+  public List<Person> getPerson10List()
+  { 
+    log.info("getPerson10List");
+    return person10List;
+  }
+
+  @Factory("person10List") public void initPerson10List()
+  { 
+    log.info("initPerson10List");
+    person10List = em.createQuery("from " + "Person").getResultList();
   }
 }

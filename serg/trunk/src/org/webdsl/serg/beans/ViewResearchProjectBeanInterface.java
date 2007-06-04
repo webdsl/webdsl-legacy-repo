@@ -13,4 +13,8 @@ import org.webdsl.serg.domain.*;
   public void setResearchProject(ResearchProject researchProject);
 
   public ResearchProject getResearchProject();
+
+  public List<Person> getPerson10List();
+
+  public void initPerson10List();
 }

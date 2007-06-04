@@ -9,7 +9,7 @@ import org.webdsl.serg.domain.*;
   public TechnicalReport () 
   { }
 
-  private int number;
+  private int number = 0;
 
   public int getNumber()
   { 
@@ -21,7 +21,7 @@ import org.webdsl.serg.domain.*;
     this.number = number;
   }
 
-  private @Column(length = 1000000) String document;
+  private @Column(length = 1000000) String document = "";
 
   public String getDocument()
   { 

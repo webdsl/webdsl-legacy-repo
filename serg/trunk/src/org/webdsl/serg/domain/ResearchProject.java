@@ -21,7 +21,7 @@ import org.webdsl.serg.domain.*;
     this.id = id;
   }
 
-  private String fullname;
+  private String fullname = "";
 
   public String getFullname()
   { 
@@ -33,7 +33,7 @@ import org.webdsl.serg.domain.*;
     this.fullname = fullname;
   }
 
-  private String acronym;
+  private String acronym = "";
 
   public String getAcronym()
   { 
@@ -45,7 +45,7 @@ import org.webdsl.serg.domain.*;
     this.acronym = acronym;
   }
 
-  private @Column(length = 1000000) String description;
+  private @Column(length = 1000000) String description = "";
 
   public String getDescription()
   { 
@@ -61,7 +61,7 @@ import org.webdsl.serg.domain.*;
 
   public Set<Person> getMembers()
   { 
-    return members;
+    return members = new java.util.HashSet<Person>();
   }
 
   public List<Person> getMembersList()
@@ -95,7 +95,7 @@ import org.webdsl.serg.domain.*;
 
   public Set<Publication> getPublications()
   { 
-    return publications;
+    return publications = new java.util.HashSet<Publication>();
   }
 
   public List<Publication> getPublicationsList()

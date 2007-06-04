@@ -36,15 +36,17 @@ import org.webdsl.serg.domain.*;
 
   @Create @Begin public void initialize()
   { 
+    log.info("viewUser" + ".initalize()");
     if(userId == null)
     { 
-      log.debug("No " + "userId" + " defined, creating new " + "User");
+      log.info("No " + "userId" + " defined, creating new " + "User");
       user = new User();
     }
     else
     { 
       user = em.find(User.class, userId);
     }
+    initPerson10List();
   }
 
   @Destroy @Remove public void destroy()
@@ -56,11 +58,27 @@ import org.webdsl.serg.domain.*;
 
   public void setUser(User user)
   { 
+    log.info("setUser");
     this.user = user;
   }
 
   public User getUser()
   { 
+    log.info("getUser");
     return user;
+  }
+
+  @DataModel("person10List") private List<Person> person10List;
+
+  public List<Person> getPerson10List()
+  { 
+    log.info("getPerson10List");
+    return person10List;
+  }
+
+  @Factory("person10List") public void initPerson10List()
+  { 
+    log.info("initPerson10List");
+    person10List = em.createQuery("from " + "Person").getResultList();
   }
 }

@@ -36,18 +36,20 @@ import org.webdsl.serg.domain.*;
 
   @Create @Begin public void initialize()
   { 
+    log.info("editResearchProject" + ".initalize()");
     if(researchProjectId == null)
     { 
-      log.debug("No " + "researchProjectId" + " defined, creating new " + "ResearchProject");
+      log.info("No " + "researchProjectId" + " defined, creating new " + "ResearchProject");
       researchProject = new ResearchProject();
     }
     else
     { 
       researchProject = em.find(ResearchProject.class, researchProjectId);
     }
-    initPerson7List();
+    initPerson9List();
     initProposal0List();
     initPublication1List();
+    initPerson10List();
   }
 
   @Destroy @Remove public void destroy()
@@ -59,22 +61,24 @@ import org.webdsl.serg.domain.*;
 
   public void setResearchProject(ResearchProject researchProject)
   { 
+    log.info("setResearchProject");
     this.researchProject = researchProject;
   }
 
   public ResearchProject getResearchProject()
   { 
+    log.info("getResearchProject");
     return researchProject;
   }
 
-  public void removePerson2(Person person6)
+  public void removePerson3(Person person8)
   { 
-    this.getResearchProject().getMembersList().remove(person6);
+    this.getResearchProject().getMembersList().remove(person8);
   }
 
-  public void addPerson2(Person person6)
+  public void addPerson3(Person person8)
   { 
-    this.getResearchProject().getMembersList().add(person6);
+    this.getResearchProject().getMembersList().add(person8);
   }
 
   public void setPublication1(Publication proposal1)
@@ -103,41 +107,41 @@ import org.webdsl.serg.domain.*;
     return "/" + "viewResearchProject" + ".seam?" + ("researchProject" + "=" + researchProject.getId() + "");
   }
 
-  private String newPerson7;
+  private String newPerson9;
 
-  public void setNewPerson7(String p)
+  public void setNewPerson9(String p)
   { 
-    newPerson7 = p;
+    newPerson9 = p;
   }
 
-  public String getNewPerson7()
+  public String getNewPerson9()
   { 
-    return newPerson7;
+    return newPerson9;
   }
 
-  public String selectPerson7()
+  public String selectPerson9()
   { 
-    log.info("selectPerson7" + " " + newPerson7);
-    Person person7 = em.find(Person.class, new Long(newPerson7));
-    addPerson2(person7);
+    log.info("selectPerson9" + " " + newPerson9);
+    Person person9 = em.find(Person.class, new Long(newPerson9));
+    addPerson3(person9);
     return null;
   }
 
-  @DataModel("person7List") private Map<String, String> person7List;
+  @DataModel("person9List") private Map<String, String> person9List;
 
-  public Map<String, String> getPerson7List()
+  public Map<String, String> getPerson9List()
   { 
-    return person7List;
+    return person9List;
   }
 
-  @Factory("person7List") public void initPerson7List()
+  @Factory("person9List") public void initPerson9List()
   { 
-    log.info("initPerson7List");
-    person7List = new HashMap<String, String>();
+    log.info("initPerson9List");
+    person9List = new HashMap<String, String>();
     for(Object o : em.createQuery("from " + "Person").getResultList())
     { 
       Person p = (Person)o;
-      person7List.put(p.getName(), p.getId().toString());
+      person9List.put(p.getName(), p.getId().toString());
     }
   }
 
@@ -215,5 +219,19 @@ import org.webdsl.serg.domain.*;
       Publication p = (Publication)o;
       publication1List.put(p.getName(), p.getId().toString());
     }
+  }
+
+  @DataModel("person10List") private List<Person> person10List;
+
+  public List<Person> getPerson10List()
+  { 
+    log.info("getPerson10List");
+    return person10List;
+  }
+
+  @Factory("person10List") public void initPerson10List()
+  { 
+    log.info("initPerson10List");
+    person10List = em.createQuery("from " + "Person").getResultList();
   }
 }

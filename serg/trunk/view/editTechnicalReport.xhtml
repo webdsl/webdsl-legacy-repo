@@ -4,22 +4,71 @@
 <head>    
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title></title>
-    <link href="stylesheet/layout.css" rel="stylesheet" type="text/css"/>
-    <link href="stylesheet/style.css" rel="stylesheet" type="text/css"/>
-    <link href="stylesheet/theme.css" rel="stylesheet" type="text/css"/>
-    <link href="stylesheet/date.css" rel="stylesheet" type="text/css"/>
+    <link href="stylesheet/webdsl.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
     <div class="main">
-    <div class="menu"> <h:graphicImage value="/img/serg-logo-color-smaller.png"/> </div>
-    
     <div class="outersidebar">
-      <s:link view="/home.xhtml" value="Home" propagation="none"></s:link>
+    <div class="logo"> <s:link view="/home.xhtml" propagation="none"> <h:graphicImage value="/img/serg-logo-color-smaller.png"/> </s:link> </div>
     
     <div class="sidebar"></div>
     </div>
     
     <div class="outerbody">
+    <div class="menubar">
+    <div class="menu">
+      <ul>
+        
+      <li>
+         <h:outputText value="New"/> 
+      <ul>
+        
+      <li>
+         <s:link view="/createUser.xhtml" propagation="none"> <h:outputText value="New User"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createPerson.xhtml" propagation="none"> <h:outputText value="New Person"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createPublication.xhtml" propagation="none"> <h:outputText value="New Publication"/> </s:link> 
+      </li>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <h:outputText value="Manage"/> 
+      <ul>
+        
+    <div class="manageMenu"></div>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <h:outputText value="People"/> 
+      <h:dataTable var="person10" value="#{editTechnicalReport.person10List}"> 
+      <h:column> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person10.id}"/> <h:outputText value="#{person10.name}"/> </s:link> </h:column> 
+    </h:dataTable>
+    
+      </li>
+    
+      </ul>
+    </div>
+    </div>
+    
     <div class="body">
       <div class="section1">
       <h1> <h:outputText value="Edit "/>  <h:outputText value="TechnicalReport"/>  <h:outputText value=" "/>  <h:outputText value="#{editTechnicalReport.technicalReport.name}"/> </h1>
@@ -52,11 +101,7 @@
     </div>
     </div>
     
-    <div class="footer"> <h:outputText value="generated with "/> 
-      <h:outputLink value="http://www.strategoxt.org">
-          <h:outputText value="Stratego/XT"/>
-      </h:outputLink>
-    </div>
+    <div class="footer"> <h:outputText value="generated with "/>  <h:outputLink value="http://www.strategoxt.org"> <h:outputText value="Stratego/XT"/> </h:outputLink> </div>
     </div>
     </div>
     </body>

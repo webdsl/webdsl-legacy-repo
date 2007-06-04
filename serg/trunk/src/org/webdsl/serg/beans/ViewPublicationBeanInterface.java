@@ -13,4 +13,8 @@ import org.webdsl.serg.domain.*;
   public void setPublication(Publication publication);
 
   public Publication getPublication();
+
+  public List<Person> getPerson10List();
+
+  public void initPerson10List();
 }

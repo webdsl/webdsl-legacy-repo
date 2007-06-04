@@ -1,0 +1,246 @@
+
+/********************************************************
+
+ POSITIONING
+ 
+ ********************************************************/
+ 
+/* see http://www.w3schools.com/css/css_positioning.asp */
+
+/*
+.main {
+  position  : absolute;
+  top       : 0px;
+  left      : 0px;
+  right : 0px;
+  bottom : 0px;
+  width     : 100%;
+  height : 100%;
+  border           : 1px solid black;
+  padding          : 1px;
+  margin : 1px;
+  background-color : grey;
+}
+*/
+
+/* divide page into two columns, outersidebar and outerbody */
+
+.outersidebar {
+  position         : absolute;
+  overflow         : hidden;
+  top              : 0px;
+  left             : 10px;
+  margin-top       : 10px;
+  width            : 10em;
+  /* for testing */
+  // background-color : white; 
+  //border           : 1px solid black;
+  //padding          : 1px;
+}
+
+.outerbody {
+  position      : absolute;
+  top           : 10px;
+  left          : 12.5em;
+  right         : 20px;
+  overflow      : hidden;
+  /* for testing */
+  //border        : 1px solid black;
+  //padding       : 1px;
+}
+
+/* sidebar stacks logo and the proper sidebar */
+
+.logo {
+  text-align : left;
+  /* for testing */
+  //background-color : white;
+  //border     : 1px solid black;
+  //padding    : 1px;
+}
+
+.sidebar {
+  //position         : relative;
+  top                : 0px;
+  margin-top         : 20px;
+  /* for testing */
+  //background-color : white;
+  //border           : 1px solid #999;
+  //padding          : 1px;
+  
+  border-right : 1px dotted lightgrey;
+}
+
+.menubar {
+  height             : 62px;
+  border-bottom      : 1px dotted lightgrey;
+  /* for testing */
+  //background-color : white;
+  //border           : 1px solid #999;
+  //padding          : 1px;
+}
+
+.body {
+  position      : relative;
+  top           : 20px;
+  margin-bottom : 2.5em;
+  /* for testing */
+  //background-color : white;
+  //border        : 1px solid #999;
+  //padding       : 1px;
+}
+
+.footer {
+  border-top : 1px dotted lightgrey;
+  //position      : relative;
+  /* for testing */
+  //background-color : white;
+  //border        : 1px solid #999;
+  //padding       : 1px;
+}
+
+/********************************************************
+
+ FONTS and COLORS
+ 
+*********************************************************/
+ 
+body {
+  //background-color : #eeeeee;
+  background-color : white;
+  color            : darkblue;
+  font-family : sans-serif;
+  font-size : 12pt;
+}
+
+.footer{
+  text-align    : center;
+  font-size     : 0.8em;
+}
+
+img {
+  border : 0px;
+}
+
+a {
+  color: blue;    
+  text-decoration : none;
+}
+
+a:active, a:link, a:visited {
+}
+
+a:hover {
+  text-decoration:underline;
+}
+
+/********************************************************
+
+ SIDEBAR
+ 
+*********************************************************/
+
+.sidebar {
+  font-size : 0.95em;
+}
+
+.sidebar ul {
+  list-style    : none;
+  margin        : 0;
+  padding       : 0;
+}
+
+.sidebar ul ul {
+  font-size   : 10ptem;
+  margin-left : 0em;
+  margin-bottom : 0em;
+}
+
+.sidebar ul li {
+  margin-bottom : 1em;
+}
+
+.sidebar ul ul li {
+  margin-bottom : 0.2em;
+}
+
+.sidebar ul ul ul li {
+  margin-bottom : 0em;
+}
+/********************************************************
+
+ DROPDOWN MENUS
+ 
+*********************************************************/
+
+.menu {
+  background  : white;
+  //float       : left;
+  position    : relative;
+  top         : 37px;
+}
+
+.menu ul {
+  list-style : none;
+  margin     : 0em;
+  padding    : 0px;
+  //width      : 6em;
+  float      : left;
+}
+
+.menu li {
+  position : relative;
+  padding  : 2px;
+}
+
+.menu ul ul, 
+.menu ul li table {
+  position : absolute;
+  z-index  : 500;
+  border   : 1px;
+  top      : 24px;
+  left     : -1px;
+  font-size : 10pt;
+}
+
+.menu ul ul ul {
+  top  : 0;
+  left : 100%;
+}
+
+.menu li:hover {
+  background-color : white;
+  border-left      : solid 1px lightgrey;
+  border-top       : solid 1px lightgrey;
+  border-right     : solid 2px grey;
+  border-bottom    : solid 2px grey;
+}
+
+.menu ul ul li:hover {
+  background-color : white;
+  border           : 0px;
+}
+
+div.menu ul ul,
+div.menu ul li:hover ul ul,
+div.menu ul ul li:hover ul ul,
+div.menu ul li table 
+{
+  display: none;
+}
+
+div.menu ul li:hover ul,
+div.menu ul ul li:hover ul,
+div.menu ul ul ul li:hover ul,
+div.menu ul li:hover table 
+{
+  display          : block;
+  width            : 9em;
+  border-left      : solid 1px lightgrey;
+  border-top       : dotted 1px grey;
+  border-right     : solid 2px grey;
+  border-bottom    : solid 2px grey;
+  background-color : white;
+}
+
+

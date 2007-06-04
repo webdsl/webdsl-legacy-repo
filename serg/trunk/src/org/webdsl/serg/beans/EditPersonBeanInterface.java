@@ -29,4 +29,8 @@ import org.webdsl.serg.domain.*;
   public Map<String, String> getUser0List();
 
   public void initUser0List();
+
+  public List<Person> getPerson10List();
+
+  public void initPerson10List();
 }

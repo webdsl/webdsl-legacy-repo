@@ -21,7 +21,7 @@ import org.webdsl.serg.domain.*;
     this.id = id;
   }
 
-  private String fullname;
+  private String fullname = "";
 
   public String getFullname()
   { 
@@ -33,7 +33,7 @@ import org.webdsl.serg.domain.*;
     this.fullname = fullname;
   }
 
-  private String email;
+  private String email = "";
 
   public String getEmail()
   { 
@@ -45,7 +45,7 @@ import org.webdsl.serg.domain.*;
     this.email = email;
   }
 
-  private String homepage;
+  private String homepage = "";
 
   public String getHomepage()
   { 
@@ -57,7 +57,7 @@ import org.webdsl.serg.domain.*;
     this.homepage = homepage;
   }
 
-  private String photo;
+  private String photo = "";
 
   public String getPhoto()
   { 

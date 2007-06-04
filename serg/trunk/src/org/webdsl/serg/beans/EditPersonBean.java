@@ -36,9 +36,10 @@ import org.webdsl.serg.domain.*;
 
   @Create @Begin public void initialize()
   { 
+    log.info("editPerson" + ".initalize()");
     if(personId == null)
     { 
-      log.debug("No " + "personId" + " defined, creating new " + "Person");
+      log.info("No " + "personId" + " defined, creating new " + "Person");
       person = new Person();
     }
     else
@@ -46,6 +47,7 @@ import org.webdsl.serg.domain.*;
       person = em.find(Person.class, personId);
     }
     initUser0List();
+    initPerson10List();
   }
 
   @Destroy @Remove public void destroy()
@@ -57,11 +59,13 @@ import org.webdsl.serg.domain.*;
 
   public void setPerson(Person person)
   { 
+    log.info("setPerson");
     this.person = person;
   }
 
   public Person getPerson()
   { 
+    log.info("getPerson");
     return person;
   }
 
@@ -117,5 +121,19 @@ import org.webdsl.serg.domain.*;
       User p = (User)o;
       user0List.put(p.getName(), p.getId().toString());
     }
+  }
+
+  @DataModel("person10List") private List<Person> person10List;
+
+  public List<Person> getPerson10List()
+  { 
+    log.info("getPerson10List");
+    return person10List;
+  }
+
+  @Factory("person10List") public void initPerson10List()
+  { 
+    log.info("initPerson10List");
+    person10List = em.createQuery("from " + "Person").getResultList();
   }
 }

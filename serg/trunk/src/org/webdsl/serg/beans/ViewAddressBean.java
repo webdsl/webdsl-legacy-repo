@@ -36,15 +36,17 @@ import org.webdsl.serg.domain.*;
 
   @Create @Begin public void initialize()
   { 
+    log.info("viewAddress" + ".initalize()");
     if(addressId == null)
     { 
-      log.debug("No " + "addressId" + " defined, creating new " + "Address");
+      log.info("No " + "addressId" + " defined, creating new " + "Address");
       address = new Address();
     }
     else
     { 
       address = em.find(Address.class, addressId);
     }
+    initPerson10List();
   }
 
   @Destroy @Remove public void destroy()
@@ -56,11 +58,27 @@ import org.webdsl.serg.domain.*;
 
   public void setAddress(Address address)
   { 
+    log.info("setAddress");
     this.address = address;
   }
 
   public Address getAddress()
   { 
+    log.info("getAddress");
     return address;
+  }
+
+  @DataModel("person10List") private List<Person> person10List;
+
+  public List<Person> getPerson10List()
+  { 
+    log.info("getPerson10List");
+    return person10List;
+  }
+
+  @Factory("person10List") public void initPerson10List()
+  { 
+    log.info("initPerson10List");
+    person10List = em.createQuery("from " + "Person").getResultList();
   }
 }

@@ -13,4 +13,8 @@ import org.webdsl.serg.domain.*;
   public void setUser(User user);
 
   public User getUser();
+
+  public List<Person> getPerson10List();
+
+  public void initPerson10List();
 }

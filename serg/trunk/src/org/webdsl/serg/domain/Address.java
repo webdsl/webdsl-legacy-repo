@@ -21,7 +21,7 @@ import org.webdsl.serg.domain.*;
     this.id = id;
   }
 
-  private String street;
+  private String street = "";
 
   public String getStreet()
   { 
@@ -33,7 +33,7 @@ import org.webdsl.serg.domain.*;
     this.street = street;
   }
 
-  private String city;
+  private String city = "";
 
   public String getCity()
   { 
@@ -45,7 +45,7 @@ import org.webdsl.serg.domain.*;
     this.city = city;
   }
 
-  private String phone;
+  private String phone = "";
 
   public String getPhone()
   { 

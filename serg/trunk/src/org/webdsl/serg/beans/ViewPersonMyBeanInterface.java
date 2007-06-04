@@ -18,6 +18,10 @@ import org.webdsl.serg.domain.*;
 
   public void initPrList();
 
+  public List<Person> getPerson10List();
+
+  public void initPerson10List();
+
   public List<Publication> getPubList();
 
   public void initPubList();

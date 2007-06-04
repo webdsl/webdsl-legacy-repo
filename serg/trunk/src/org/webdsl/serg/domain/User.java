@@ -21,7 +21,7 @@ import org.webdsl.serg.domain.*;
     this.id = id;
   }
 
-  private String username;
+  private String username = "";
 
   public String getUsername()
   { 
@@ -33,7 +33,7 @@ import org.webdsl.serg.domain.*;
     this.username = username;
   }
 
-  private String password;
+  private String password = "";
 
   public String getPassword()
   { 

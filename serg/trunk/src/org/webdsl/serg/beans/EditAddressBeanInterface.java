@@ -17,4 +17,8 @@ import org.webdsl.serg.domain.*;
   public String cancel();
 
   public String save();
+
+  public List<Person> getPerson10List();
+
+  public void initPerson10List();
 }

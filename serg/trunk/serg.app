@@ -1,6 +1,6 @@
 application org.webdsl.serg
 
-description
+description 
 
   This application organizes information relevant for a 
   research group, including people, publications, students,
@@ -9,36 +9,33 @@ description
 end
 
 section login.
- 
-  define page login() {
+
+  define page login() { 
     main()
-    define sidebar{}
     
-    define body {
-      
-      user : User;
-      username : String;
+    define sidebar(){}
     
+    define body() { 
       form {
-        table 
-        {
+        table {
           row{"username" input(user.username)}
           row{"password" input(user.password)}
         }
         action("Login", login())
-        
-        action login() { 
-          users : List<User> := user.search()
-          if users.size() == 1 then
-            session.user := user;
-            return home();
-          else
-            return errorPage();
-          end
-        
-        }
       }
-      
+    }
+    
+    var user : User;
+          
+    action login() { 
+      var users : List<User>; // := user.search();
+      if true then // users.size() == 1 then
+        session.user := user;
+        return home();
+      else
+        errorMessage("Wrong username/password combination");
+      end
+      return home();
     }
   
   }
@@ -46,22 +43,66 @@ section login.
 section setup.
 
   define main() {
-    menu()
-    outersidebar()
+    div("outersidebar") {
+      logo()
+      sidebar()
+    }
     div("outerbody") {
+      div("menubar") {
+        menu()
+      }
       body()
       footer()
     }
   }
   
-  define outersidebar() {
-    navigate("Home", home())
-    sidebar()
+  define logo() {
+    navigate(home()){image("/img/serg-logo-color-smaller.png")}
+  }
+  
+  define homesidebar() {
+    list { listitem{ navigate("Home", home()) } }
   }
   
   define menu() {
-    image("/img/serg-logo-color-smaller.png")
+    //if session.user.hasRole() then
+    
+      //selectMenu {
+      // menuitem{"New"}
+      //  menuitem{navigate("New Publication", editPublication())}
+      //}
+      
+    //end
+    list {
+      listitem {
+        "New"
+        list {
+          listitem { navigate("New User", createUser()) }
+          listitem { navigate("New Person", createPerson()) }
+          listitem { navigate("New Publication", createPublication()) }
+        }
+      }
+    }
+    list {
+      listitem {
+        "Manage"
+        list {
+          manageMenu() // depends on context
+        }
+      }
+    }
+    
+    // menu with all people
+    
+    list {
+      listitem {
+        "People"
+          for(person10 : Person) { navigate(person10.name, viewPerson(person10)) }
+      }
+    }
   }
+  
+  define manageMenu() {}
   
   define footer() {
     "generated with "
@@ -73,9 +114,9 @@ section serg home page.
   define page home() {
   
     title{"Software Engineering Research Group"}
-  
+    
     define sidebar() {
-      action("Init Database", initDB())
+      initDatabase()
     }
     
     define body () {
@@ -169,12 +210,16 @@ section people pages.
     
   define page viewPersonMy(person : Person) 
   {    
-    main()
+    main() 
     
     title{"Homepage of " text(person.name)}
     
     define sidebar() { 
       personSidebar(person) 
+    }
+    
+    define manageMenu() {
+      navigate("Edit", editPerson(person))
     }
     
     define body() {
@@ -319,11 +364,12 @@ section publication pages.
              
              //row { "authors" input(pub.authors) }
              
+             
              row { "authors"     
                for(author : Person in pub.authors) {
                  navigate(author.name, viewPerson(author))
                  actionLink("[X]", removeAuthor(author))
-               } 
+               }
              }
              row { "" 
                select(author1 : Person, "Add Author", addAuthor(author1))
@@ -360,10 +406,12 @@ section publication pages.
     
     action save() {
       pub.save();
-      if then
-        return viewPublication(pub);
-      else
-        return errorPage(msg);
+      return viewPublication(pub);
+      
+      //if pub.save() then
+      //  return viewPublication(pub);
+      //else
+      //  return errorPage(msg);
     }
     
     main()
@@ -416,23 +464,27 @@ section projects.
 
 section init database .
  
+ define page initDatabase() {
+ 
+  form { action("Init Database", initDB()) }
+ 
   action initDB() {
   
-    Mekelweg4 : Address := 
+    var Mekelweg4 : Address := 
       Address {
         street := "Mekelweg"
         city   := "Delft"
         phone  := "015"
       };
       
-    Ordina : Address := 
+    var Ordina : Address := 
       Address {
         street := "Ringwade 1"
         city   := "Nieuwegein"
         phone  := "030"
       };
       
-    EelcoVisser : Person  :=
+    var EelcoVisser : Person  :=
       Person {
         fullname := "Eelco Visser" 
         email    := "visser@acm.org"
@@ -449,7 +501,7 @@ section init database .
         person   := EelcoVisser
       };
       
-    ArieVanDeursen : Person :=
+    var ArieVanDeursen : Person :=
       Person {
         fullname := "Arie van Deursen"
         email    := "A.vanDeursen@tudelft.nl"
@@ -458,7 +510,7 @@ section init database .
         photo    := "http://www.st.ewi.tudelft.nl/~arie/pictures/arie-in-delft-klein.jpg"
       };
       
-    JosWarmer : Person :=
+    var JosWarmer : Person :=
       Person {
         fullname := "Jos Warmer"
         email    := "jos@ordina.nl"
@@ -467,7 +519,7 @@ section init database .
         photo    := "http://www.klasse.nl/who/images/jos.gif"
       };
            
-    MoDSE : ResearchProject :=
+    var MoDSE : ResearchProject :=
       ResearchProject {
         fullname := "Model-Driven Software Evolution"
         acronym  := "MoDSE"
@@ -475,7 +527,7 @@ section init database .
         description := "The promise of model-driven engineering (MDE) is that the development and maintenance effort can be reduced by working at the model instead of the code level. Models define what is variable in a system, and code generators produce the functionality that is common in the application domain. The problem with model-driven engineering is that it can lead to a lock-in in the abstractions and generator technology adopted at project initiation. Software systems need to evolve, and systems built using model-driven approaches are no exception. What complicates model-driven engineering is that it requires multiple dimensions of evolution. In regular evolution, the modeling language is used to make the changes. In meta-model evolution, changes are required to the modeling notation. In platform evolution, the code generators and application framework change to reflect new requirements on the target platform. Finally, in abstraction evolution, new modeling languages are added to the set of (modeling) languages to reflect increased understanding of a technical or business domain. While MDE has been optimized for regular evolution, presently little or no support exists for metamodel, platform and abstraction evolution. It is this gap that this project proposes to address. The first fundamental premise of this proposal is that evolution should be a continuous process. Software development is a continuous search for recurring patterns, which can be captured using domain-specific modeling languages. After developing a number of systems using a particular meta-model, new patterns may be recognized that can be captured in a higher-level or richer meta-model. The second premise is that reengineering of legacy systems to the model-driven paradigm should be a special case of this continuous evolution, and should be performed incrementally. The goal of this project is to develop a systematic approach to model-driven software evolution. This approach includes methods, techniques, and underlying tool support. We will develop a prototype programming environment that assists software engineers with the introduction, development, and maintenance of models and domain-specific languages."
       };
       
-    GTTSE07 : Publication := 
+    var GTTSE07 : Publication := 
       Publication {
         title := "Domain-Specific Language Engineering"
         authors := [EelcoVisser]
@@ -484,7 +536,7 @@ section init database .
         projects := {MoDSE}
       };
       
-    MoDSE07 : Publication := 
+    var MoDSE07 : Publication := 
       Publication {
         title       := "Model-Driven Software Evolution: A Research Agenda"
         authors     := [ArieVanDeursen, JosWarmer, EelcoVisser]
@@ -499,3 +551,5 @@ section init database .
     MoDSE.persist();
 
   }
+ }
+ 

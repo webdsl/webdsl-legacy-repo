@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
+<head>    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title></title>
+    <link href="stylesheet/webdsl.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <div class="main">
+    <div class="outersidebar">
+    <div class="logo"> <s:link view="/home.xhtml" propagation="none"> <h:graphicImage value="/img/serg-logo-color-smaller.png"/> </s:link> </div>
+    
+    <div class="sidebar"></div>
+    </div>
+    
+    <div class="outerbody">
+    <div class="menubar">
+    <div class="menu">
+      <ul>
+        
+      <li>
+         <h:outputText value="New"/> 
+      <ul>
+        
+      <li>
+         <s:link view="/createUser.xhtml" propagation="none"> <h:outputText value="New User"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createPerson.xhtml" propagation="none"> <h:outputText value="New Person"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createPublication.xhtml" propagation="none"> <h:outputText value="New Publication"/> </s:link> 
+      </li>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <h:outputText value="Manage"/> 
+      <ul>
+        
+    <div class="manageMenu"></div>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <h:outputText value="People"/> 
+      <h:dataTable var="person10" value="#{createTechnicalReport.person10List}"> 
+      <h:column> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person10.id}"/> <h:outputText value="#{person10.name}"/> </s:link> </h:column> 
+    </h:dataTable>
+    
+      </li>
+    
+      </ul>
+    </div>
+    </div>
+    
+    <div class="body">
+      <div class="section1">
+      <h1> <h:outputText value="Create new "/>  <h:outputText value="TechnicalReport"/> </h1>
+    
+      <h:form>
+      <table>
+    <div class="editRowsTechnicalReport">
+      <tr> <td> <h:outputText value="Number"/> </td>  <td>
+      <h:inputText required="true" value="#{createTechnicalReport.technicalReport.number}"/>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Document"/> </td>  <td>
+      <h:inputText required="true" value="#{createTechnicalReport.technicalReport.document}"/>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Preprintof"/> </td>  <td>
+       <h:selectOneMenu value="#{createTechnicalReport.newPreprintof0}">
+          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
+          <f:selectItems value="#{createTechnicalReport.preprintof0List}" var="preprintof0" label="#{preprintof0.label}"/>
+        </h:selectOneMenu>
+        <h:commandButton type="submit" value="Select" action="#{createTechnicalReport.selectPreprintof0()}"/>
+    </td> </tr>
+    </div>
+    </table>
+     
+       <h:commandButton type="submit" value="Save" action="#{createTechnicalReport.save()}"/>
+     
+       <h:commandButton value="Cancel" action="#{createTechnicalReport.cancel()}"/>
+    </h:form>
+    </div>
+    </div>
+    
+    <div class="footer"> <h:outputText value="generated with "/>  <h:outputLink value="http://www.strategoxt.org"> <h:outputText value="Stratego/XT"/> </h:outputLink> </div>
+    </div>
+    </div>
+    </body>
+</html>

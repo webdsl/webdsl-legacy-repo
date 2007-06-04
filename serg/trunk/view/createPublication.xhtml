@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
+<head>    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title></title>
+    <link href="stylesheet/webdsl.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <div class="main">
+    <div class="outersidebar">
+    <div class="logo"> <s:link view="/home.xhtml" propagation="none"> <h:graphicImage value="/img/serg-logo-color-smaller.png"/> </s:link> </div>
+    
+    <div class="sidebar"></div>
+    </div>
+    
+    <div class="outerbody">
+    <div class="menubar">
+    <div class="menu">
+      <ul>
+        
+      <li>
+         <h:outputText value="New"/> 
+      <ul>
+        
+      <li>
+         <s:link view="/createUser.xhtml" propagation="none"> <h:outputText value="New User"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createPerson.xhtml" propagation="none"> <h:outputText value="New Person"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createPublication.xhtml" propagation="none"> <h:outputText value="New Publication"/> </s:link> 
+      </li>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <h:outputText value="Manage"/> 
+      <ul>
+        
+    <div class="manageMenu"></div>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <h:outputText value="People"/> 
+      <h:dataTable var="person10" value="#{createPublication.person10List}"> 
+      <h:column> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person10.id}"/> <h:outputText value="#{person10.name}"/> </s:link> </h:column> 
+    </h:dataTable>
+    
+      </li>
+    
+      </ul>
+    </div>
+    </div>
+    
+    <div class="body">
+      <div class="section1">
+      <h1> <h:outputText value="Create new "/>  <h:outputText value="Publication"/> </h1>
+    
+      <h:form>
+      <table>
+    <div class="editRowsPublication">
+      <tr> <td> <h:outputText value="Title"/> </td>  <td>
+      <h:inputText required="true" value="#{createPublication.publication.title}"/>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Authors"/> </td>  <td>
+    <div class="inputAssociation">
+      <h:dataTable var="person4" value="#{createPublication.publication.authors}"> 
+      <h:column>
+    <div class="listAssociation"> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person4.id}"/> <h:outputText value="#{person4.name}"/> </s:link>  
+       <h:commandLink type="submit" value="[X]" action="#{createPublication.removePerson1(person4)}"/>
+    </div>
+    </h:column> 
+    </h:dataTable>
+    
+       <h:selectOneMenu value="#{createPublication.newPerson5}">
+          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
+          <f:selectItems value="#{createPublication.person5List}" var="person5" label="#{person5.label}"/>
+        </h:selectOneMenu>
+        <h:commandButton type="submit" value="Add Person" action="#{createPublication.selectPerson5()}"/>
+    </div>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Year"/> </td>  <td>
+      <h:inputText required="true" value="#{createPublication.publication.year}"/>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Pubabstract"/> </td>  <td>
+      <h:inputText required="true" value="#{createPublication.publication.pubabstract}"/>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Projects"/> </td>  <td>
+    <div class="inputAssociation">
+      <h:dataTable var="researchProject2" value="#{createPublication.publication.projectsList}"> 
+      <h:column>
+    <div class="listAssociation"> <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{researchProject2.id}"/> <h:outputText value="#{researchProject2.name}"/> </s:link>  
+       <h:commandLink type="submit" value="[X]" action="#{createPublication.removeResearchProject1(researchProject2)}"/>
+    </div>
+    </h:column> 
+    </h:dataTable>
+    
+       <h:selectOneMenu value="#{createPublication.newResearchProject3}">
+          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
+          <f:selectItems value="#{createPublication.researchProject3List}" var="researchProject3" label="#{researchProject3.label}"/>
+        </h:selectOneMenu>
+        <h:commandButton type="submit" value="Add ResearchProject" action="#{createPublication.selectResearchProject3()}"/>
+    </div>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Pdf"/> </td>  <td>
+      <h:inputText required="true" value="#{createPublication.publication.pdf}"/>
+    </td> </tr>
+    </div>
+    </table>
+     
+       <h:commandButton type="submit" value="Save" action="#{createPublication.save()}"/>
+     
+       <h:commandButton value="Cancel" action="#{createPublication.cancel()}"/>
+    </h:form>
+    </div>
+    </div>
+    
+    <div class="footer"> <h:outputText value="generated with "/>  <h:outputLink value="http://www.strategoxt.org"> <h:outputText value="Stratego/XT"/> </h:outputLink> </div>
+    </div>
+    </div>
+    </body>
+</html>

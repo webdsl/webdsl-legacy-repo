@@ -29,4 +29,8 @@ import org.webdsl.serg.domain.*;
   public Map<String, String> getPreprintof0List();
 
   public void initPreprintof0List();
+
+  public List<Person> getPerson10List();
+
+  public void initPerson10List();
 }

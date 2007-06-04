@@ -45,4 +45,8 @@ import org.webdsl.serg.domain.*;
   public Map<String, String> getProject1List();
 
   public void initProject1List();
+
+  public List<Person> getPerson10List();
+
+  public void initPerson10List();
 }

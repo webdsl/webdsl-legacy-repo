@@ -13,4 +13,8 @@ import org.webdsl.serg.domain.*;
   public void setTechnicalReport(TechnicalReport technicalReport);
 
   public TechnicalReport getTechnicalReport();
+
+  public List<Person> getPerson10List();
+
+  public void initPerson10List();
 }

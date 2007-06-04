@@ -21,7 +21,7 @@ import org.webdsl.serg.domain.*;
     this.id = id;
   }
 
-  private String title;
+  private String title = "";
 
   public String getTitle()
   { 
@@ -33,7 +33,7 @@ import org.webdsl.serg.domain.*;
     this.title = title;
   }
 
-  @ManyToMany @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private List<Person> authors = new LinkedList<Person>();
+  @ManyToMany @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private List<Person> authors = new java.util.ArrayList<Person>();
 
   public List<Person> getAuthors()
   { 
@@ -55,7 +55,7 @@ import org.webdsl.serg.domain.*;
     this.authors.add(a_0);
   }
 
-  private int year;
+  private int year = 0;
 
   public int getYear()
   { 
@@ -67,7 +67,7 @@ import org.webdsl.serg.domain.*;
     this.year = year;
   }
 
-  private @Column(length = 1000000) String pubabstract;
+  private @Column(length = 1000000) String pubabstract = "";
 
   public String getPubabstract()
   { 
@@ -83,7 +83,7 @@ import org.webdsl.serg.domain.*;
 
   public Set<ResearchProject> getProjects()
   { 
-    return projects;
+    return projects = new java.util.HashSet<ResearchProject>();
   }
 
   public List<ResearchProject> getProjectsList()
@@ -101,7 +101,7 @@ import org.webdsl.serg.domain.*;
     this.projects.add(b_0);
   }
 
-  private String pdf;
+  private String pdf = "";
 
   public String getPdf()
   { 

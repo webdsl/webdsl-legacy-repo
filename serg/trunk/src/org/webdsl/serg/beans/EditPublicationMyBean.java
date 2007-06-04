@@ -36,9 +36,10 @@ import org.webdsl.serg.domain.*;
 
   @Create @Begin public void initialize()
   { 
+    log.info("editPublicationMy" + ".initalize()");
     if(pubId == null)
     { 
-      log.debug("No " + "pubId" + " defined, creating new " + "Publication");
+      log.info("No " + "pubId" + " defined, creating new " + "Publication");
       pub = new Publication();
     }
     else
@@ -47,6 +48,7 @@ import org.webdsl.serg.domain.*;
     }
     initAuthor1List();
     initProject1List();
+    initPerson10List();
   }
 
   @Destroy @Remove public void destroy()
@@ -58,11 +60,13 @@ import org.webdsl.serg.domain.*;
 
   public void setPub(Publication pub)
   { 
+    log.info("setPub");
     this.pub = pub;
   }
 
   public Publication getPub()
   { 
+    log.info("getPub");
     return pub;
   }
 
@@ -171,5 +175,19 @@ import org.webdsl.serg.domain.*;
       ResearchProject p = (ResearchProject)o;
       project1List.put(p.getName(), p.getId().toString());
     }
+  }
+
+  @DataModel("person10List") private List<Person> person10List;
+
+  public List<Person> getPerson10List()
+  { 
+    log.info("getPerson10List");
+    return person10List;
+  }
+
+  @Factory("person10List") public void initPerson10List()
+  { 
+    log.info("initPerson10List");
+    person10List = em.createQuery("from " + "Person").getResultList();
   }
 }

@@ -26,46 +26,59 @@ import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Factory;
 import org.webdsl.serg.domain.*;
 
-@Stateful
-@Name("viewPerson")
-public class ViewPersonBean implements ViewPersonBeanInterface {
-	@Logger
-	private Log log;
+@Stateful @Name("viewPerson") public class ViewPersonBean  implements ViewPersonBeanInterface
+{ 
+  @Logger private Log log;
 
-	@PersistenceContext(type = EXTENDED)
-	private EntityManager em;
+  @PersistenceContext(type = EXTENDED) private EntityManager em;
 
-	@In
-	private FacesMessages facesMessages;
+  @In private FacesMessages facesMessages;
 
-	@Create
-	@Begin
-	public void initialize() {
-		if (personId == null) {
-			log
-					.debug("No " + "personId" + " defined, creating new "
-							+ "Person");
-			person = new Person();
-		} else {
-			person = em.find(Person.class, personId);
-		}
-	}
+  @Create @Begin public void initialize()
+  { 
+    log.info("viewPerson" + ".initalize()");
+    if(personId == null)
+    { 
+      log.info("No " + "personId" + " defined, creating new " + "Person");
+      person = new Person();
+    }
+    else
+    { 
+      person = em.find(Person.class, personId);
+    }
+    initPerson10List();
+  }
 
-	@Destroy
-	@Remove
-	public void destroy() {
-	}
+  @Destroy @Remove public void destroy()
+  { }
 
-	@RequestParameter("person")
-	private Long personId;
+  @RequestParameter("person") private Long personId;
 
-	private Person person;
+  private Person person;
 
-	public void setPerson(Person person) {
-		this.person = person;
-	}
+  public void setPerson(Person person)
+  { 
+    log.info("setPerson");
+    this.person = person;
+  }
 
-	public Person getPerson() {
-		return person;
-	}
+  public Person getPerson()
+  { 
+    log.info("getPerson");
+    return person;
+  }
+
+  @DataModel("person10List") private List<Person> person10List;
+
+  public List<Person> getPerson10List()
+  { 
+    log.info("getPerson10List");
+    return person10List;
+  }
+
+  @Factory("person10List") public void initPerson10List()
+  { 
+    log.info("initPerson10List");
+    person10List = em.createQuery("from " + "Person").getResultList();
+  }
 }

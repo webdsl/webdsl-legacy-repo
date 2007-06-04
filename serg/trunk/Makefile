@@ -2,30 +2,25 @@
 # should eventually be integrated in ant build.xml file
 # and be invocable from Eclipse
 
-all : serg.appb serg.appc
-
-%.appa : %.app
-	$(dsltoseam) -i $< -o $@
-	
-	JAVAFRONT = ${HOME}/.nix-profile
+JAVAFRONT = ${HOME}/.nix-profile
 
 GENDIR = $(HOME)/webdsl/webdsls/src/org/webdsl/dsl
 
-all : serg.appb
+dsltoseam = $(GENDIR)/generation/dsl-to-seam
+
+all : serg.appb serg.appc
 
 %.appa : %.app
-	sglri -p $(GENDIR)/syntax/WebDSL.tbl -i $< | pp-aterm -o $@
+	$(dsltoseam) -i $< --no-desugaring --no-pp | pp-aterm -o $@
 
-%.appb : %.appa
-	$(GENDIR)/generation/dsl-desugar -i $< | \
-	pp-aterm -o $@
+%.appb : %.app
+	$(dsltoseam) -i $< --desugar --no-pp | pp-aterm -o $@
 
-%.appbpp : %.appb
-	ast2text -p $(GENDIR)/syntax/WebDSL-pretty.pp -i $< -o $@
+%.appbpp : %.app
+	$(dsltoseam) -i $< --desugar -i $< -o $@
 	
-%.appc : %.appa
-	$(GENDIR)/generation/dsl-to-seam -i $< | \
-	pp-aterm -o $@
+%.appc : %.app
+	$(dsltoseam) -i $< 
 
 clean :
 	rm $(wildcard *.appa) $(wildcard *.appb)

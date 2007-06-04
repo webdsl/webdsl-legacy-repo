@@ -36,15 +36,17 @@ import org.webdsl.serg.domain.*;
 
   @Create @Begin public void initialize()
   { 
+    log.info("viewPublicationMy" + ".initalize()");
     if(pubId == null)
     { 
-      log.debug("No " + "pubId" + " defined, creating new " + "Publication");
+      log.info("No " + "pubId" + " defined, creating new " + "Publication");
       pub = new Publication();
     }
     else
     { 
       pub = em.find(Publication.class, pubId);
     }
+    initPerson10List();
   }
 
   @Destroy @Remove public void destroy()
@@ -56,11 +58,13 @@ import org.webdsl.serg.domain.*;
 
   public void setPub(Publication pub)
   { 
+    log.info("setPub");
     this.pub = pub;
   }
 
   public Publication getPub()
   { 
+    log.info("getPub");
     return pub;
   }
 
@@ -68,5 +72,19 @@ import org.webdsl.serg.domain.*;
   { 
     em.remove(this.getPub());
     return "/" + "home" + ".seam?" + "";
+  }
+
+  @DataModel("person10List") private List<Person> person10List;
+
+  public List<Person> getPerson10List()
+  { 
+    log.info("getPerson10List");
+    return person10List;
+  }
+
+  @Factory("person10List") public void initPerson10List()
+  { 
+    log.info("initPerson10List");
+    person10List = em.createQuery("from " + "Person").getResultList();
   }
 }
