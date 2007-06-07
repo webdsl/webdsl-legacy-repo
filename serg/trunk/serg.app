@@ -8,37 +8,7 @@ description
 
 end
 
-section login.
 
-  define page login() { 
-    main()
-    
-    define sidebar(){}
-    
-    define body() { 
-      form {
-        table {
-          row{"username" input(user.username)}
-          row{"password" input(user.password)}
-        }
-        action("Login", login())
-      }
-    }
-    
-    var user : User;
-          
-    action login() { 
-      var users : List<User>; // := user.search();
-      if true then // users.size() == 1 then
-        session.user := user;
-        return home();
-      else
-        errorMessage("Wrong username/password combination");
-      end
-      return home();
-    }
-  
-  }
 
 section setup.
 
@@ -65,41 +35,52 @@ section setup.
   }
   
   define menu() {
-    //if session.user.hasRole() then
-    
-      //selectMenu {
-      // menuitem{"New"}
-      //  menuitem{navigate("New Publication", editPublication())}
-      //}
-      
-    //end
-    list {
-      listitem {
-        "New"
-        list {
-          listitem { navigate("New User", createUser()) }
-          listitem { navigate("New Person", createPerson()) }
-          listitem { navigate("New Publication", createPublication()) }
-        }
-      }
-    }
-    list {
-      listitem {
-        "Manage"
-        list {
-          manageMenu() // depends on context
-        }
-      }
-    }
-    
-    // menu with all people
-    
+
     list {
       listitem {
         "People"
           for(person10 : Person) { navigate(person10.name, viewPerson(person10)) }
       }
     }
+    
+    list {
+      listitem {
+        "Projects"
+          for(project11 : ResearchProject) { 
+            navigate(project11.acronym, viewResearchProject(project11))
+          }
+      }
+    }
+        
+    // make manage menu conditional on role of user
+    list {
+      listitem {
+        "Manage"
+        list {
+          manageMenu() // depends on context
+          listitem {
+            "New"
+            list {
+              listitem { navigate("User",             createUser()) }
+              listitem { navigate("Person",           createPerson()) }
+              listitem { navigate("Publication",      createPublication()) }
+              listitem { navigate("Technical Report", createTechnicalReport()) }
+              listitem { navigate("Project",          createResearchProject()) }
+              listitem { navigate("Blog",             createBlog()) }
+              listitem { navigate("Blog Entry",       createBlogEntry()) }
+            }
+          }
+        }
+      }
+    }
+    
+    list {
+      listitem {
+        navigate(login()){"Login"}
+      }
+    }
+    // if user is logged in show name instead
+
   }
   
   define manageMenu() {}
@@ -108,7 +89,39 @@ section setup.
     "generated with "
     navigate("Stratego/XT", url("http://www.strategoxt.org"))
   }
+  
+section login.
 
+  define page login() { 
+    main()
+    
+    define sidebar(){}
+    
+    define body() { 
+      form {
+        table {
+          row{"username" input(user.username)}
+          row{"password" input(user.password)}
+        }
+        action("Login", login())
+      }
+    }
+    
+    var user : User;
+          
+    action login() { 
+      //var users : List<User>; // := user.search();
+      //if true then // users.size() == 1 then
+      //  session.user := user;
+      //  return home();
+      //else
+      //  errorMessage("Wrong username/password combination");
+      //end
+      return home();
+    }
+  
+  }
+  
 section serg home page.
 
   define page home() {
@@ -185,34 +198,127 @@ section people.
     // birthdate :: Date
     address   <> Address
     user      -> User
+    blog      -> Blog
   }
+  
+ //   publications := select pub from Publication as pub where ~this member of pub.authors
+    
+ //   rececentPublications :=
+ // }
   
 //  query Person p {
 //    publications := Publication pub where pub.authors.has(p)
 //    projects := ResearchProject proj where proj.members.has(p)
 //  }
+
+  Blog {
+    title      :: String (name)
+    author     -> Person
+    entries    <> List<BlogEntry>
+    categories -> List<Category> // share categories between blogs?
+  }
+  
+  BlogEntry {
+    blog     -> Blog
+    title    :: String (name)
+    created  :: Date
+    category -> Category // select from categories defined in blog
+    intro    :: Text
+    body     :: Text
+    comments <> List<BlogComment>
+  }
+  
+  Category {
+    name :: String
+  }
+  
+  BlogComment {
+    author -> Person
+    text :: Text
+  }
   
 section people pages.
 
+  define blogSidebar(blog : Blog) {
+    personSidebar(blog.author)
+    list{
+      listitem{
+        navigate("Blog", viewBlog(blog))
+        for(entry : BlogEntry in blog.entries) {
+          navigate(entry.name, viewBlogEntry(entry))
+        }
+      }
+    }
+  }
+    
+  define page viewBlog(blog : Blog) {
+    main()
+    define sidebar(){ blogSidebar(blog) }
+    
+    define manageMenu() { 
+       navigate("Edit", editBlog(blog))
+       form{actionLink("New Blog", createNewBlogEntry())} 
+       action createNewBlogEntry() {
+         var entry : BlogEntry := 
+           BlogEntry{
+             blog := blog
+             title := "title here"
+           };
+         blog.entries.add(entry);
+         blog.persist();
+         return editBlogEntry(entry);
+       }
+    }
+    
+    define body() {
+      title{text(blog.title)}
+      section{ 
+        header{ text(blog.title) }
+        for(entry : BlogEntry in blog.entries) {
+          section{ 
+            header{ text(entry.title) }
+            div("blogIntro"){text(entry.intro)} " "
+            navigate("read more ...", viewBlogEntry(entry))
+          }
+        }
+      }
+    }
+  }
+
+  define page viewBlogEntry(entry : BlogEntry) {
+    main()
+    define sidebar(){ blogSidebar(entry.blog) }
+    define manageMenu() { navigate("Edit", editBlogEntry(entry)) }
+    define body() {
+      title{text(entry.title)}
+      section{header{text(entry.title)}
+        div("blogDate"){text(entry.created)}
+        div("blogIntro"){text(entry.intro)}
+        div("blogBody"){text(entry.body)}
+      }
+    }
+  
+  }
+  
   define personSidebar(p : Person) {
     list {
       listitem{navigate(p.name, viewPerson(p))}
       listitem{navigate("Publications", personPublications(p))}
+      listitem{navigate("Blog", viewBlog(p.blog))}
       listitem {
         "Projects"
           for(pr : ResearchProject) {
             navigate(pr.name, viewResearchProject(pr))
           }
       }
-      listitem{navigate("Edit", editPerson(p))}
     }
   }
     
-  define page viewPersonMy(person : Person) 
+  define page viewPerson(person : Person) 
   {    
     main() 
     
-    title{"Homepage of " text(person.name)}
+    title{text(person.name)}
     
     define sidebar() { 
       personSidebar(person) 
@@ -224,14 +330,9 @@ section people pages.
     
     define body() {
       section{
-        header{"Homepage of " text(person.name)} 
-
-      	// how should level be indicated? or should headers be associated
-      	// with the content they are heading?
-    
-      	image(person.photo)
-      	// photo should be right-aligned; leave this to CSS?
-      	// variable number of properties
+      	div("photo"){image(person.photo)}
+      	
+        header{text(person.name)}
     
       	section{
           header{"Coordinates"}
@@ -253,11 +354,39 @@ section people pages.
            // better: 10 most recent publications
         //}
         
+        var publications : List<Publication> :=
+          select pub from Publication as pub, Person as pers 
+           where (pers.id = ~person.id) and (pers member of pub._authors); 
+           
+        var orderedPublications : List<Publication> :=
+          select pub from Publication as pub, Person as pers 
+           where (pers.id = ~person.id) and (pers member of pub._authors)
+           order by pub._year descending; 
+                 
         section { header{"Publications"}
-          for(pub : Publication) {
-            navigate(pub.name, viewPublication(pub))
+          for(pub : Publication in orderedPublications)
+          {
+            div("line"){
+              navigate(pub.name, viewPublication(pub))
+              " "
+              text(pub.year)
+            }
           }
         }
+        
+        var projects : List<ResearchProject> :=
+          select pr from ResearchProject as pr, Person as pers 
+           where (pers.id = ~person.id) and (pers member of pr._members); 
+        
+        section { 
+          header{"Projects"}
+          for(project : ResearchProject in projects) {
+            navigate(viewResearchProject(project)){
+              text(project.fullname) " (" text(project.acronym) ")"
+            }
+          }
+        }
+        
       }
     }
   }
