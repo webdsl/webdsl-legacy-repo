@@ -1,0 +1,1124 @@
+<html><head><title>Manuscript Central</title>
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; CHARSET=">
+
+<link rel="STYLESHEET" type="text/css" href="compj_files/scholarone.css">
+
+<script language="JavaScript" src="compj_files/scholarone.html"></script>
+<link type="text/css" rel="StyleSheet" href="compj_files/helptip.css">
+<script language="JavaScript" src="compj_files/helptip.html"></script>
+<script language="JavaScript" type="text/javascript">
+function getSiteURL()
+{
+   return '/compj';
+}
+function getLongRequestSiteURL()
+{
+   return '/LongRequest/compj';
+}
+var gSessionWarningTimer = window.setInterval('SessionWarningTimer()', 60000);
+var gTimerCount = 0;function restartTimer()
+{
+   window.clearInterval(gSessionWarningTimer);
+   gSessionWarningTimer = window.setInterval('SessionWarningTimer()', 60000);
+}
+function SessionWarningTimer()
+{
+   gTimerCount++;
+   if ( gTimerCount == 63)
+       showSessionWarning(true);
+}
+var gSessionSaveTimer = window.setTimeout('SessionSave()', 4320000);
+function SessionSave()
+{
+ setField('EMAIL_POPUP_CLOSE_WIN_FL','Y');
+ setField('CLOSE_WINDOW_FL','Y');
+	setDataAndNextPage('NATURAL_TIMEOUT', 'true', 'ADMIN_VIEW_AUTHORS_RESPONSE_POPUP');
+   setDataAndNextPage('NATURAL_TIMEOUT', 'true', 'LOGIN');
+}
+function popWindow(url,winname,width,height)
+{
+  winX=Math.round(screen.width/2)-(width/2);
+  winY=Math.round(screen.height/2)-(height/2);
+  winStats='toolbar=no,location=no,directories=no,menubar=no,resizable=yes,'
+  winStats+='scrollbars=yes,width='+width+',height='+height
+  if (navigator.appName.indexOf('Microsoft')>=0) {
+    winStats+=',left='+winX+',top='+winY+''
+  }else{ 
+    winStats+=',screenX='+winX+',screenY='+winY+''
+  }
+  restartTimer();
+  handle = window.open(url,winname,winStats) 
+  if(handle != null)
+  {
+   if (winname != 'add_person_to_pick_pop' && winname != 'mssearch_issue_popup' && winname != 'progress_pop_report' && winname != 'progress_pop_large' && winname != 'transfer_pop' && winname != 'email_popup_stay' && winname != 'forms_instructions_popup') 
+   {
+     addHandleToArray(handle);  
+   }
+   handle.focus();  
+  }
+  if (winname == 'progress_pop_delayed' || winname == 'author_affil_details' || winname == 'sp_char_palette') 
+    return handle;  
+}
+function popWindowSecure(url,winname,width,height)
+{
+  winX=Math.round(screen.width/2)-(width/2);
+  winY=Math.round(screen.height/2)-(height/2);
+  winStats='toolbar=no,location=no,directories=no,menubar=no,status=yes,resizable=yes,'
+  winStats+='scrollbars=yes,width='+width+',height='+height
+  if (navigator.appName.indexOf('Microsoft')>=0) {
+    winStats+=',left='+winX+',top='+winY+''
+  }else{ 
+    winStats+=',screenX='+winX+',screenY='+winY+''
+  }
+  restartTimer();
+  handle = window.open(url,winname,winStats) 
+  if (winname != 'add_person_to_pick_pop' && winname != 'mssearch_issue_popup' && winname != 'progress_pop_report' && winname != 'progress_pop_large' && winname != 'transfer_pop' && winname != 'email_popup_stay') 
+    addHandleToArray(handle);  
+  handle.focus();  
+}
+function popWindowSecureForPortal(url,winname,width,height)
+{
+  winX=Math.round(screen.width/2)-(width/2);
+  winY=Math.round(screen.height/2)-(height/2);
+  winStats='toolbar=yes,location=yes,directories=yes,menubar=yes,status=yes,resizable=yes,'
+  winStats+='scrollbars=yes,width='+width+',height='+height
+  if (navigator.appName.indexOf('Microsoft')>=0) {
+    winStats+=',left='+winX+',top='+winY+''
+  }else{ 
+    winStats+=',screenX='+winX+',screenY='+winY+''
+  }
+  restartTimer();
+  handle = window.open(url,winname,winStats) 
+  if (winname != 'add_person_to_pick_pop' && winname != 'mssearch_issue_popup' && winname != 'progress_pop_report' && winname != 'progress_pop_large' && winname != 'transfer_pop' && winname != 'email_popup_stay') 
+    addHandleToArray(handle);  
+  handle.focus();  
+}
+function showProgressWindow() { 
+  javascript: popWindow('/compj?NEXT_PAGE=UPLOAD_PROGRESS_POPUP&SHOW_UPLOADING_FL=Y&FIRST_TIME_FL=Y&CURRENT_ROLE_ID=20149&CURRENT_USER_ID=7080692&DOCUMENT_HASHCODE=&SANITY_CHECK_DOCUMENT_ID=&CONFIG_ID=3450','progress_pop', 400, 300); 
+}function showProgressWindowLarge(vPageName) { 
+  javascript: popWindow('/compj?NEXT_PAGE=UPLOAD_PROGRESS_POPUP&SHOW_UPLOADING_FL=Y&FIRST_TIME_FL=Y&PAGE_NAME='+vPageName+'&CURRENT_ROLE_ID=20149&CURRENT_USER_ID=7080692&DOCUMENT_HASHCODE=&SANITY_CHECK_DOCUMENT_ID=&CONFIG_ID=3450','progress_pop_large', 800, 600); 
+}function showProgressWindowForReport() {  javascript: popWindow('/compj?NEXT_PAGE=UPLOAD_PROGRESS_POPUP&SHOW_CREATING_REPORT_FL=Y&FIRST_TIME_FL=Y&CURRENT_ROLE_ID=20149&CURRENT_USER_ID=7080692&DOCUMENT_HASHCODE=&SANITY_CHECK_DOCUMENT_ID=&CONFIG_ID=3450','progress_pop_report', 600, 500); 
+} 
+function showProgressWindowForReportSwitchConfig(configId) {  javascript: popWindow('/compj?NEXT_PAGE=UPLOAD_PROGRESS_POPUP&SHOW_CREATING_REPORT_FL=Y&FIRST_TIME_FL=Y&SWITCH_CONFIG_ID_UNDER_POPUP='+configId+'&CURRENT_ROLE_ID=20149&CURRENT_USER_ID=7080692&DOCUMENT_HASHCODE=&SANITY_CHECK_DOCUMENT_ID=&CONFIG_ID=3450','progress_pop_report', 600, 500); 
+} 
+function showProgressWindowRoleChange() {  javascript: popWindow('/LongRequest/compj?NEXT_PAGE=UPLOAD_PROGRESS_POPUP&PAGE_NAME=ADMIN_VIEW_AUTHORS_RESPONSE_POPUP&SHOW_ROLE_CHANGE_TASK=Y&FIRST_TIME_FL=Y&CURRENT_ROLE_ID=20149&CURRENT_USER_ID=7080692&DOCUMENT_HASHCODE=&SANITY_CHECK_DOCUMENT_ID=&CONFIG_ID=3450','progress_pop_report', 800, 600); 
+} 
+function showProgressWindowMSListExport() {  javascript: popWindow('/LongRequest/compj?NEXT_PAGE=UPLOAD_PROGRESS_POPUP&PAGE_NAME=ADMIN_VIEW_AUTHORS_RESPONSE_POPUP&SPAWN_EXPORT_MS_LIST_THREAD=Y&FIRST_TIME_FL=Y&CURRENT_ROLE_ID=20149&CURRENT_USER_ID=7080692&DOCUMENT_HASHCODE=&SANITY_CHECK_DOCUMENT_ID=&CONFIG_ID=3450','progress_pop_report', 400, 300); 
+} 
+function showProgressWindowMSAddTasks() {  javascript: popWindow('/LongRequest/compj?NEXT_PAGE=UPLOAD_PROGRESS_POPUP&SPAWN_MS_ADD_TASK=Y&FIRST_TIME_FL=Y&CURRENT_ROLE_ID=20149&CURRENT_USER_ID=7080692&DOCUMENT_HASHCODE=&SANITY_CHECK_DOCUMENT_ID=&CONFIG_ID=3450','progress_pop_report', 400, 300); 
+} 
+function showProgressWindowForIssueLineup(vRadioGroupName, vIssueId) {selVal = GetRadioValue(vRadioGroupName);if(selVal == '3') {javascript:setField('TAG_ACTION', 'EXPORT_ISSUE');  javascript: popWindow('/compj?NEXT_PAGE=UPLOAD_PROGRESS_POPUP&EDIT_ISSUE_ID='+vIssueId+'&EXPORT_ISSUE_LINEUP_SELECTED=Y&FIRST_TIME_FL=Y&CURRENT_ROLE_ID=20149&CURRENT_USER_ID=7080692&DOCUMENT_HASHCODE=&SANITY_CHECK_DOCUMENT_ID=&CONFIG_ID=3450','progress_pop_report', 400, 300); 
+} else {  javascript: showProgressWindowForReport();}} 
+function showProgressWindowGeneric(vProgressTypeId) {  javascript: popWindow('/compj?NEXT_PAGE=UPLOAD_PROGRESS_POPUP&PROGRESS_TYPE_ID='+vProgressTypeId+'&FIRST_TIME_FL=Y&CURRENT_ROLE_ID=20149&CURRENT_USER_ID=7080692&DOCUMENT_HASHCODE=&SANITY_CHECK_DOCUMENT_ID=&CONFIG_ID=3450','progress_pop_report', 400, 300); 
+} 
+function showProgressWindowForTransfer() {  javascript: popWindow('/compj?NEXT_PAGE=UPLOAD_PROGRESS_POPUP&SHOW_TRANSFERING_TEXT=Y&FIRST_TIME_FL=Y&CURRENT_ROLE_ID=20149&CURRENT_USER_ID=7080692&DOCUMENT_HASHCODE=&SANITY_CHECK_DOCUMENT_ID=&CONFIG_ID=3450','transfer_pop', 400, 300); 
+} 
+function showProgressWindowForImport() {  javascript: popWindow('/compj?NEXT_PAGE=UPLOAD_PROGRESS_POPUP&SHOW_CREATING_IMPORT_FL=Y&FIRST_TIME_FL=Y&CURRENT_ROLE_ID=20149&CURRENT_USER_ID=7080692&DOCUMENT_HASHCODE=&SANITY_CHECK_DOCUMENT_ID=&CONFIG_ID=3450','progress_pop_report', 400, 300); 
+} 
+function checkForSomethingToUpload()
+{ 
+  var i=0; 
+  var existsFl = 0; 
+  for (i=0;i<20;i++) { 
+    var metaArray = document.getElementsByName('FILE_TO_UPLOAD'+i); 
+    if (metaArray.length == 1) { 
+     var filename = document.forms[0]['FILE_TO_UPLOAD'+i].value; 
+     if (filename.length > 0) 
+       existsFl = 1; 
+   } 
+  } 
+  if (existsFl == 1) { return true; }  
+  return false; 
+}
+function checkUploadFields()
+{ 
+  return true; 
+}
+function showProgressWindowUserListExport() {  javascript: popWindow('/LongRequest/compj?NEXT_PAGE=UPLOAD_PROGRESS_POPUP&PAGE_NAME=ADMIN_VIEW_AUTHORS_RESPONSE_POPUP&SPAWN_EXPORT_USER_LIST_THREAD=Y&FIRST_TIME_FL=Y&CURRENT_ROLE_ID=20149&CURRENT_USER_ID=7080692&DOCUMENT_HASHCODE=&SANITY_CHECK_DOCUMENT_ID=&CONFIG_ID=3450','progress_pop_report', 400, 300); 
+} 
+</script></head><body bgcolor="#d1d5d7"> 
+<form name="default_form" method="post" target="" action="/compj">
+<input name="PORTAL" value="0" type="hidden">
+<input name="NEXT_PAGE" value="" type="hidden">
+<input name="CURRENT_PAGE" value="ADMIN_VIEW_AUTHORS_RESPONSE_POPUP" type="hidden">
+<input name="PRE_ACTION" value="" type="hidden">
+<input name="POST_ACTION" value="" type="hidden">
+<input name="CURRENT_ROLE_ID" value="20149" type="hidden">
+<input name="SWITCH_CONFIG_ID" value="" type="hidden">
+<input name="CHANGE_PORTAL_CONFIG_ID_FOR_LOGIN_PAGE" value="" type="hidden">
+<input name="SWITCH_CONFIG_ID_PREV" value="" type="hidden">
+<input name="NEW_USER_CONFIG_ID" value="" type="hidden">
+<input name="PROXY_TO_PAGE_NAME" value="" type="hidden">
+<input name="PROXY_TO_ROLE_ID" value="" type="hidden">
+<input name="PROXY_TO_DOCUMENT_ID" value="" type="hidden">
+<input name="PROXY_TO_DOCUMENT_TASK_ID" value="" type="hidden">
+<input name="PAGE_DIRTY_FL" value="" type="hidden">
+<input name="DISPLAY" value="" type="hidden">
+<input name="SANITY_CHECK_DOCUMENT_ID" value="" type="hidden">
+<input name="DOCUMENT_HASHCODE" value="" type="hidden">
+<input name="CONFIG_ID" value="3450" type="hidden">
+<input name="SAVE_MS_DETAILS_FL" value="" type="hidden"><input name="CURRENT_USER_ID" value="7080692" type="hidden">
+<input name="NATURAL_TIMEOUT" value="false" type="hidden">
+<input name="CURRENT_USER_ID" value="7080692" type="hidden">
+
+
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+	<tbody><tr>
+		<td colspan="2">
+			
+<div id="warning" name="warning" style="position: absolute; visibility: hidden;" width="20%">    
+
+<table border="0" cellpadding="0" cellspacing="0" width="350">
+   <tbody><tr>
+       <td><p class="footer">&nbsp;</p></td>
+   </tr>
+   <tr>    
+       <td class="secondarymenubg">
+           <table border="0" cellpadding="5" cellspacing="10" width="100%">
+               <tbody><tr>
+                   <td class="dataentry">
+                       <table border="0" cellpadding="0" cellspacing="0">
+                           <tbody><tr>
+                               <td><p class="pagecontents"><br>For security reasons, your session will time out in 10 minutes (at <span id="tP"><script language="javascript">showTime()</script>5:49 pm EST, 2:49 pm GMT</span>).
+Please save your work to avoid potential loss. To refresh your session,
+close this message and save your work or return to your main menu. You
+may then continue working as normal.<br>&nbsp;</p></td>
+                           </tr>
+                           <tr>
+                               <td align="center"><a href="#" onclick="showSessionWarning(false)"><img src="compj_files/close_message.gif" border="0"></a></td>
+                           </tr>
+                       </tbody></table>
+                   </td>
+               </tr>
+           </tbody></table>
+       </td>
+   </tr>
+</tbody></table>   
+</div>	
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			
+
+
+
+
+
+
+	
+		</td>
+	</tr>
+	<tr>
+    <td>
+      <table align="center" border="0" cellpadding="5" cellspacing="5" width="100%">
+      <tbody><tr>    
+		    
+
+
+
+
+
+
+
+
+
+
+
+
+  						
+  				
+        
+          
+
+
+          
+          
+          
+          
+          
+      </tr>
+      </tbody></table>
+    </td>            
+	</tr>
+</tbody></table>
+<br clear="all">
+
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+	<tbody><tr>
+		<td colspan="2">
+			<table border="0" cellpadding="0" cellspacing="0" width="100%">
+				<tbody><tr>
+					<td><img src="compj_files/details_header_left.gif" border="0"></td>
+					<td class="detailsheaderbg" width="100%">&nbsp;</td>
+					<td><img src="compj_files/details_header_right.gif" border="0"></td>
+				</tr>
+			</tbody></table>
+		</td>
+	</tr>
+	<tr>
+		<td class="tablelines" colspan="2">
+			<table border="0" cellpadding="5" cellspacing="1" width="100%">
+				<tbody><tr>	
+					<td colspan="2" class="dataentry">
+					
+	        			
+
+<!-- Tag: com.scholarone.tags.adminViewAuthorsResponsePopupTag -->
+
+<input name="TAG_ACTION" value="" type="hidden">
+<input name="DOCUMENT_TASK_ID" value="14168239" type="hidden">
+<table align="left" border="0" cellpadding="0" cellspacing="5" width="100%"> 
+	<tbody><tr> 
+		<td colspan="2"> 
+			<table border="0" cellpadding="0" cellspacing="5" width="100%"> 
+				<tbody><tr> 
+					<td class="tablelines"> 
+						<table border="0" cellpadding="5" cellspacing="1" width="100%"> 
+							<tbody><tr>	 
+								<td class="headercells"> 
+									<p class="pagecontents"><b>Comments to  Decision Letter</b></p> 
+								</td> 
+							</tr> 
+							<tr> 
+								<td class="tablelightcolor"> 
+									<p class="pagecontents">Dear Prof Murtagh and Florence Leroy,
+<br>
+<br>
+<br>Elizabeth Scott and I are very grateful for the extremely careful
+<br>reviewing job done by your referees. We have, in almost all cases,
+<br>incorporated their suggestions in this revised version. Below, I go
+<br>through the aggregated referees' reports noting in detail what we have
+<br>done.
+<br>
+<br>
+<br>Reviewer: 1
+<br>
+<br>Excellent paper with substantial and useful information, scooping up
+<br>and condensing long-term experience and presenting it in usable form. 
+<br>Might benefit from some minor editorial grooming; see below.
+<br>
+<br>
+<br>Comments
+<br>
+<br>col 2left: "underspecified" is one word (or under-specified?)
+<br>********** 
+<br>changed 
+<br>*********
+<br>
+<br>col 2left: lit. references [Ear70],[You67] preceed the actual names
+<br>Earley and CYK; looks funny.
+<br>********** 
+<br>reworded 
+<br>********
+<br>
+<br>col3right, paragraph about GRDP: I didn't understand it upon first reading 
+<br>because the dichotomy made (subprogram1/subprogram2) is quite different 
+<br>from those in the surrounding paragraphs (parsing technique1/parsing 
+<br>technique2)
+<br>********* 
+<br>paragraph reworded 
+<br>********
+<br>
+<br>par 5.1: S-&gt;a|ab does *not* work with first match on a$
+<br>********* 
+<br>example expanded to make the point more clearly 
+<br>******
+<br>
+<br>col 6 left, middle: a supra-linear ..search spaces ??
+<br>******
+<br>corrected
+<br>******
+<br>
+<br>col 6 left, sentence "A search-until-success parser...": sentence so long and
+<br>complicated as to be hard to decypher.
+<br>******
+<br>sentence shortened
+<br>******
+<br>
+<br>col6 right: G_3 has *right* recursion
+<br>*********
+<br>Should say G_2, corrected
+<br>********
+<br>
+<br>pages 8, 9, and 10: figures are quite large for the information they
+<br>contain (mostly air) Reducing and putting them 2 on a line might 
+<br>eliminate the ungainly page 13.
+<br>******
+<br>We agree! The figures are now smaller, yet the font is larger... The
+<br>paper is reduced in length by almost a page.
+<br>******
+<br>
+<br>col 9 right: "cannot" is one word.
+<br>********
+<br>corrected
+<br>*******
+<br>
+<br>section 7: I fail to see what the proof contributes. It is well known
+<br>that only infinitely ambiguous grammars have infinitely many parse
+<br>trees, and that a grammar can only be infinitely ambiguous if it has 
+<br>loops.  A grammar like S-&gt;SS|x suffices to show that a string of n
+<br>token can have n! parse trees.
+<br>******
+<br>We are not quite sure what the issue is here. The theorem is providing
+<br>a tight bound on the depth of a derivation tree, in terms of the length
+<br>of the string, for a grammar without cycles. It could potentially be
+<br>used to terminate a speculative derivation of a string which is
+<br>actually not in the language. (This can be a problem when the grammar
+<br>has hidden left recursion, c.f. Section 5.4.) The second paragraph of
+<br>the section has been modified to emphasise this, and the last few
+<br>lines of the section, on exponential derivations, have been deleted.
+<br>******
+<br>
+<br>
+<br>section 8: The source of the Stroustrup quote is not identified, which 
+<br>is not as it should be.  Also, I'd really like to know where he wrote that.
+<br>******
+<br>Reference added with page and section numbers (since the cited
+<br>document is a book, and the quote is well buried).
+<br>******
+<br>
+<br>
+<br>==================
+<br>
+<br>Reviewer: 2
+<br> 
+<br>The authors examine a wide variety of backtracking parser implementations 
+<br>and find problems with all of them. The paper would be useful in a very 
+<br>practical sense to software developers who work in compilers and in 
+<br>building tools for analyzing software. In my opinion, the paper is 
+<br>acceptable with some minor revisions. These are detailed below. 
+<br>
+<br>Comments/Requested Revisions 
+<br>
+<br>Section 6 contains much detail which is specific to BtYacc. Although
+<br>the section begins by saying that BtYacc is being used as an exemplar,
+<br>it is still the case that BtYaccs timing behaviour may not be
+<br>representative of other parsers in this class. Figures 1, 2 and 3
+<br>therefore seem to be too much on a very specifc implementation. Unless
+<br>the authors can argue that other parsers in the same class are likely
+<br>to show similar behaviour, I recommend that section 6 be pruned
+<br>considerably. A few sentences to say that unless the implementers are
+<br>extremely careful, the costs of memory management can dominate the
+<br>runtime costs and induce quadratic timings would suffice.  
+<br>
+<br>****** 
+<br>
+<br>It is our position that the grammar-driven effects described in
+<br>sections 6.2 and 6.3 are inherent to backtracking although different
+<br>grammars may cause different effects with different backtracking
+<br>strategies. We give these examples so as to encourage the authors of
+<br>backtracking tools to fully characterise them: if the manual doesn't
+<br>describe these effects with examples then the users will get nasty
+<br>surprises. We do think it is worthwhile explaining them in detail even
+<br>though it is only in the context of BtYACC.
+<br>
+<br>The memory management issues discussed in section 6.1 are
+<br>compiler/run-time specific, and not even directly algorithm
+<br>related. The specificity detracts from the general applicability of
+<br>our observations but again indicates that users (and implementers)
+<br>should fully characterise tools. As such we think it is useful to have
+<br>these observations in a journal of record, rather than just relying on
+<br>folk wisdom.
+<br>
+<br>
+<br>******
+<br>
+<br>
+<br>The Conclusions section is too strong in its assertion (near the end)
+<br>that GLR should be the method of choice. While this paper has amply
+<br>demonstrated that backtracking parsers have their pitfalls (and many
+<br>implementations of them have worse problems which I would think of as
+<br>being bugs), a similar analysis of GLR parsing implementations has not
+<br>been performed. It is therefore premature to tell everyone to switch
+<br>to GLR. In particular, if we have an ambiguous grammar, how is the GLR
+<br>method augmented with rules for selecting the desired parse?  I also
+<br>suspect that the non-linear parsing times observed for BtYacc would
+<br>apply even more strongly to a GLR implementation.  
+<br>
+<br>****** 
+<br>
+<br>We do not feel we have made a strong statement, we simply state that
+<br>this is our belief, but clearly an experienced parser writer will make
+<br>their own choice and we have modified the statement slightly to
+<br>reflect this.  We are keen to leave in our push for GLR because we
+<br>believe that it is a better choice for general user tools such as
+<br>Bison. It is safe, and copes easily with cycles and hidden left
+<br>recursion (backtracking techniques do not). Elsewhere, we have been
+<br>asked to propose solutions instead of only raising concerns about
+<br>backtracking, and this is our response.
+<br>
+<br>A key point in this paper is that techniques that try to truncate the
+<br>parse with selection rules in the face of non-determinism can cause
+<br>unexpected outcomes, so although they could be introduced to GLR this
+<br>is not desirable until further research establishes safe
+<br>techniques. We acknowledge that there is still research to be done on
+<br>ambiguity resolution, but this applies to any technique that returns
+<br>all derivations. 
+<br>
+<br>******
+<br>
+<br>
+<br>Section 2 (the LALR grammar for C): I don't know why the if-then-else 
+<br>ambiguity is even mentioned. The ANSI-C grammar contains the ambiguity 
+<br>only because Yacc (and related parser generators) resolve the
+<br>ambiguity at parser-generation time in exactly the manner 
+<br>which is desired. If the ambiguity were a problem, a well-known 
+<br>grammar transformation can remove it. (It is not an inherent ambiguity 
+<br>as some of the ambiguities in C++ are; it is purely one of convenience 
+<br>because it makes the grammar simpler.) It is unreasonable to give that 
+<br>example and then lead into a paragraph about being unable to generalise 
+<br>the approach and being unable to prove in general whether a grammar is 
+<br>unambiguous. The ANSI-C example is quite irrelevant to that formal 
+<br>language theory result. 
+<br>
+<br>******
+<br>
+<br>We are referring to the ambiguity of the ANSI-standard grammar here,
+<br>not the language, and the longest match (ignore the reduction)
+<br>strategy is often preferred to changing the grammar. The wording has
+<br>been modified to make it clear we are talking about the grammar not
+<br>the language.
+<br>
+<br>The paragraph on generalising the approach is meant to follow the
+<br>wider discussion on search-until-success, not just ambiguity
+<br>resolution in ANSI-C. The first sentence has been modified to reflect
+<br>this.
+<br>******
+<br>
+<br>
+<br>Minor Corrections and/or Suggestions 
+<br>
+<br>Section 3 might include Coco/R alongside PCCTS and ANTLR. As a generator 
+<br>of recursive descent parsers which do not require backtracking at parse 
+<br>time, it is similar in nature to them and has a respectable user base. 
+<br>See this URL for an initial pointer to papers and other 
+<br>resources: http://www.ssw.uni-linz.ac.at/Research/Projects/#Coco 
+<br>******
+<br>Added a citation to the JMLC03 paper on conflict resolution in Coco/R
+<br>******
+<br>
+<br>
+<br>Section 4, sentence beginning "A derivation step" should end with X ::= a. 
+<br>******
+<br>don't understand this, we think that it is correct as X ::= \alpha
+<br>******
+<br>
+<br>
+<br>Section 4, "listing shift action before" =&gt;  "listing the shift action before"
+<br>******
+<br>corrected
+<br>******
+<br>
+<br>Section 5.2, "the grammar in to" =&gt; "the grammar into" 
+<br>******
+<br>corrected
+<br>******
+<br>
+<br>Section 5.4, the final sentence which says that the BtYacc parser goes
+<br>into an infinite loop: surely this behaviour is a bug in the BtYacc 
+<br>implementation? (If anyone is maintaining BtYacc, I would report 
+<br>that example to them as a bug.) 
+<br>******
+<br>This is not exactly a bug in BtYACC, it is a problem with the
+<br>shift/reduce parse technique in the case of hidden left
+<br>recursion. In the given example, although the string aab is not in the
+<br>language there is always an action, reduce by  B::=\epsilon , that
+<br>can be performed so the parser never terminates. 
+<br>Paragraph expanded to make this point.
+<br>******
+<br>
+<br>Section 6, "strings comprised of some number of" =&gt; "strings composed 
+<br>of some number of"
+<br>******
+<br>changed
+<br>******
+<br>
+<br>
+<br>
+<br>
+<br>================
+<br>
+<br>Reviewer: 3
+<br>
+<br>Comments
+<br>
+<br>cons
+<br>
+<br>- The paper only illustrates the problems of backtracking parsers with
+<br>  artificial examples. This does not convince the reader that there are
+<br>  not only theoretical problems with backtracking parsers, but also problems
+<br>  that could easily occur in practice. The absence of such problems may
+<br>  indicate (1) the authors didn't think it was necessary to provide such
+<br>  examples, or (2) there aren't any. Whatever the cause, the absence of
+<br>  convincing examples is an important weakness.
+<br>
+<br>- Packrat parsing is recently popular backtracking parsing algorithm. It
+<br>  shouldn't miss in this catalog.
+<br>
+<br>- The presentation is too terse. Also for the understanding of the reader
+<br>  more examples should be used, including examples of how derivations with
+<br>  various parsing techniques proceed.
+<br>
+<br>
+<br>-----------------------
+<br>DISCUSSION
+<br>-----------------------
+<br>
+<br>General:
+<br>
+<br>* The approach and results of the paper are rather straightforward.
+<br>The results of the analysis of backtracking parsers are not really
+<br>surprising to someone who is somewhat familiar with this domain. Yet,
+<br>I like this down to earth discussion. It is necessary to write and
+<br>publish such papers.
+<br>
+<br>* This paper is an excellent opportunity to discuss Packrat parsing,
+<br>which has recently received quite a bit of attention (e.g. Robert
+<br>Grimm at PLDI'06). It would be good to discuss Packrat parsing and the
+<br>effect of your results on its extensibility features in detail. In
+<br>fact, it is a bit strange to discuss bracktracking parsers these days
+<br>without discussing Packrat parsing.
+<br>******
+<br>
+<br>We agree that Packrat parsers should be included and we have added
+<br>some material accordingly.
+<br>We think that Packrat parsers are good implementations of the TDPL
+<br>approach, with memoisation to yield a cubic parser. However, as
+<br>originally observed by Aho and Ulman, the problem with a TDPL approach
+<br>is determining precisely what the language defined by the parser
+<br>is. This is our main concern about limited backtracking parsers and as
+<br>Packrat parsing does not address this we have not featured
+<br>it more prominently.
+<br>
+<br>
+<br>******
+<br>
+<br>
+<br>* The paper focuses on non-deterministic parsing techniques
+<br>(backtracking and generalized), but for a balanced discussion it would
+<br>still be good to briefly mention the merits of deterministic grammars
+<br>and parsing techniques (besides the obvious performance advantages).
+<br>For example, the construction of an LR grammar is widely considered to
+<br>be useful as a proof of having a non-ambiguous language. The
+<br>occurrence of unexpected ambiguities are a big challenge for the
+<br>acceptance of generalized parsing techniques.
+<br>******
+<br>
+<br>It is of course true that building a conflict-free LR(1) parse table
+<br>guarantees that a grammar is not ambiguous, but YACC is an LALR-parser
+<br>generator which is more restrictive than is necessary for ambiguity
+<br>elimination.
+<br>
+<br>******
+<br>
+<br>
+<br>* The paper would be even more convincing if the debunk of
+<br>bracktracking parsers would also be based on some practical problems.
+<br>Backtracking (in particular limited-backtracking, order-based parsers)
+<br>are usually regarded to be a useful, practical solution. A theoretical
+<br>discussion of the problems of backtracking parsers is useful, but the
+<br>artificial grammars used in the paper are unlikely to convince people
+<br>that mostly appreciate the practical applicability of backtracking
+<br>parsers. In other words, examples from issues in real grammars for
+<br>backtracking parser generators would strengthen the arguments against
+<br>the use of backtracking parsers.
+<br>******
+<br>
+<br>The goal of this paper is to present simple grammar constructs that
+<br>can cause the failure of techniques that are purported to be general.
+<br>We do not dispute the utility of backtracking, and say so explicitly.
+<br>We do not wish to debunk it, when done properly it works, but it
+<br>should be used with caution. The issue is
+<br>that over strong claims are made for generality and we want to give
+<br>simple counterexamples so that the limitations can be easily
+<br>understood.
+<br>
+<br>******
+<br>
+<br>
+<br>Introduction:
+<br>
+<br>* Section 1, page 1: 'Partly as a result of the widespread need for C++
+<br>parsers, a plethora of parser generators have appeared ...' 
+<br>Interesting; are C++ parsers really the motivation? Are C++ parsers
+<br>written using generators? Do you have some references to back this up?
+<br>******
+<br>
+<br>Our primary basis for this comment is this is the existence of this
+<br>paragraph in the C++ ARM:
+<br> 
+<br>"There is an ambiguity in the grammar involving expression-statements
+<br>and declarations The general cases cannot be resolved without
+<br>backtracking, In particular, the lookahead needed to disambiguate this
+<br>case is not limited."
+<br>
+<br>Several authors, in particular Terence Parr repeatedly invoke this
+<br>paragraph when explaining or justifying their backtracking extensions:
+<br>see the description of predicates on page 795 of Parr's 1995 ANTLR
+<br>paper in Software Practice and Experience, for instance.
+<br>
+<br>More specifically, Scott McPeak notes on the Elkhound web pages that
+<br>he wrote Elkhound (a GLR parser generator) because he needed to write
+<br>a C++ parser.
+<br>
+<br>Chris Dodd (original author of BtYACC) says in the documentation:
+<br>"BTYACC was originally written to make it easy to write a C++ parser
+<br>(my goal was to be able to use the grammar out of the back of the ARM
+<br>with as few modifications as possible)."
+<br>
+<br>******
+<br>
+<br>Section 1, page 2: 'Because backtracking parsers ... often have
+<br>straightforward semantic capabilities': This is an important advantage
+<br>over generalized parsing techniques
+<br>
+<br>******
+<br>
+<br>We agree, inasmuch as we like the use of RD attribute evaluators
+<br>driven by derivations produced by general parsers.
+<br>
+<br>******
+<br>
+<br>*  Section 1, page 2: The choice for the term "under specified"
+<br>parsing technique is a bit confusing. I have not seen this term used
+<br>before. If a parsing technique specifies a certain choice from
+<br>multiple actions at some point during a parse, then using the term
+<br>"under specified" is a bit strange.
+<br>******
+<br>
+<br>We have deliberately introduced a new term to characterise
+<br>techniques that are normally assumed to have restricted input but
+<br>which can be applied to a wider input class if further specification
+<br>is made. For example table based LR parsers are usually assumed to be given
+<br>tables with singleton entries, but can be extended to cope with
+<br>shift/reduce conflicts by specifying that the shift will be chosen.
+<br>We want to be able to discuss these issues so it is useful to name them.
+<br>
+<br>******
+<br>
+<br>
+<br>* Section 1, page 2: Check consistent use of "under-specified" versus
+<br>"under specified"
+<br>******
+<br>corrected
+<br>******
+<br>
+<br>* Section 1, page 2: "the most commonly used practical general
+<br>algorithms [Earley and CYK]". Do you have any statistics to
+<br>substantiate the claim that Earley and CYK are most commonly used
+<br>generalized algorithms? Actually, I have the impression that GLR
+<br>parsers are quite popular these days.  
+<br>
+<br>****** 
+<br>
+<br>In programming language applications, general parsing is
+<br>rare. Interactive Software Engineering use Earley parsing in their
+<br>Eiffel tools to handle the 'missing semicolon' feature. 
+<br>
+<br>We're really referring to the natural language parsing area where
+<br>chart parsing (essentially CYK) predominates. Discussions with Ted
+<br>Briscoe and others indicate that GLR has not really taken root in NLP,
+<br>perhaps because linguists find CYK easier to understand. In
+<br>re-engineering, GLR has been successful (Stratego, ASF+SDF, and the
+<br>DMS software reengineering toolkit). We favour GLR as we've noted elsewhere.
+<br>
+<br>******
+<br>
+<br>
+<br>* Section 1, page 2: "One tool claims full generality on
+<br>left-recursive grammars provided that ... " -- would be good to
+<br>explicitly refer to these claims.
+<br>******
+<br>
+<br>We were being a little coy because we didn't want to attack
+<br>individuals. The tool concerned is PRECCX by Peter Breuer and Jonathan
+<br>Bowen. In the related papers they attack LALR parsers (well, YACC at
+<br>least) for being non-referentially transparent and thus implementing a
+<br>subset of BNF, but then note without fanfare that "the potentially longest
+<br>matches must come first in PRECCX definition scripts, to force the
+<br>longest matches to be sought first." Our irritation with the gap
+<br>between tone and achievement was the original inspiration for this
+<br>paper and the key example in section 5.3 which shows that an ordered
+<br>parser can never be general was constructed as a counter-example to
+<br>PRECCX's claims.
+<br>
+<br>Nevertheless, we're trying to make alert and sceptical users,
+<br>not take individual toolmakers to task so we wouldn't want to cite
+<br>them directly. We could leave this sentence out if the referee would
+<br>prefer that.
+<br>
+<br>******
+<br>
+<br>
+<br>* Section 3, page 3: 'BtYACC will not backtrack through an already
+<br>visited valid production'. Illustrate this with an example.
+<br>******
+<br>
+<br>The reason for mentioning the VALID construct in BtYACC was to point
+<br>out to readers that have come across it (or might do so in the future)
+<br>that this turns BtYACC into a limited search parser, with all the
+<br>associated drawbacks. We don't want to get into the details of
+<br>BtYACC's implementation of VALID, so we have reworded this sentence
+<br>slightly.
+<br>
+<br>******
+<br>
+<br>
+<br>* Section 4, page 5: "For the first match to be an effective strategy,
+<br>the grammar must be longest first". This depends on the language that
+<br>the grammar is supposed to define. Maybe, in some cases a shortest
+<br>first is the desired derivation.
+<br>******
+<br>
+<br>For a first-match parser a shortest-first strategy would result in the
+<br>first alternate always being selected and thus the other alternates
+<br>may just as well be deleted. For example, assuming no lookahead, a
+<br>shortest match recursive descent parser for the grammar
+<br>
+<br>S ::= Bc | bcc     B ::= a | aa | aaa
+<br>
+<br>would accept ac but reject aac and aaac. A longest match parser would
+<br>accept all three strings.  We have changed 'must' to 'should' to
+<br>reinforce the earlier use of 'effective'.
+<br>
+<br>******
+<br>
+<br>
+<br>Section 5, page 5: In these and later examples, it would be helpful if
+<br>the derivations would be shown so that the user understand immediately
+<br>where the problem lies. For instance, it is not clear to me why the
+<br>first example in 5.1 'incorrectly rejects the string cab'. While this
+<br>may be obvious to the authors, I think one of the functions of a paper
+<br>like this is to educate the reader in parsing, which includes making
+<br>clear (using illustrations) why a derivation that is correct according
+<br>to the grammar is not according to a parsing algorithm.
+<br>******
+<br>We appreciate that derivations would be more visual but the problem is
+<br>that the derivation will depend of the parsing technique being
+<br>used. The examples are designed to work for any derivation order, and
+<br>depend only on the rules for alternate choice.
+<br>We have expanded Example 5.1 to illustrate the issue more clearly.
+<br>******
+<br>
+<br>
+<br>* Section 6, page 6: 'The forming of a grammar by combining two existing
+<br>grammars is perhaps uncommon' It is not. Here are some pointers to work
+<br>where combination of grammars is a key technique and made possible by the
+<br>use of (scannerless) generalized-LR parsing:
+<br>
+<br>- In meta-programming with concrete object syntax a program in a host
+<br>language quotes fragments of a guest language, for example for the
+<br>purpose of program analysis or transformation. See for example Visser
+<br>(GPCE 2002) and Bravenboer, Vermaas, Vinju &amp; Visser (GPCE 2005). The
+<br>MetaAspectJ language of Huang, Zook &amp; Smaragdakis (GPCE 2004) is an
+<br>example of an embedding of AspectJ in Java done with ANTLR, which is a
+<br>much more complex operation, requiring the recursive invocation of a
+<br>parser within the main parser.
+<br>
+<br>- In domain-specific language embedding a general purpose language is
+<br>extended with syntax that provides convenient expressivity in a
+<br>particular application or technical domain. Bravenboer &amp; Visser
+<br>(OOPSLA 2004)
+<br>
+<br>- Language conglomerates are programming languages that really consist
+<br>of a combination of different languages. Bravenboer, Tanter &amp; Visser
+<br>(OOPSLA 2006) study the syntax of AspectJ as an example of a language
+<br>conglomerate, i.e., the composition of the syntax of Java, aspects,
+<br>and pointcut expressions.
+<br>
+<br>******
+<br>
+<br>We're familiar with these kinds of language merge but believe (as we
+<br>suspect the reviewer does) that character level (scannerless) parsing
+<br>is highly desirable in such cases, so we've treated it as a niche
+<br>area. That might be unfair - it's a matter of judgement.  It's a nice
+<br>question whether language merging would be less rare if scannerless
+<br>parsers were more common! In some of our other papers (eg at LDTA04
+<br>and in our 2005 Computer Journal paper) we've looked at RIGLR parsing
+<br>which we think is a good candidate for scannerless parsers and
+<br>addressed this issue more fully. We wanted to focus on backtracking at
+<br>token level here, though.
+<br>
+<br>******
+<br>
+<br>* Section 6: Doing a benchmark where GCC on Cygwin is compared to a
+<br>Borland C compiler is a bit unfair: the executable produced by GCC
+<br>basically runs in an emulator, which can have a major impact on the
+<br>constant factor for the GCC benchmark. Probably, doing a benchmark
+<br>with native executables produced by GCC will only affect the constant
+<br>factor, however, the major difference between the constant factors of
+<br>Borland and GCC is one of the points of discussion, so it is still
+<br>important to make a fair comparison. I would suggest to do the GCC
+<br>benchmark on a platform that is supported natively (e.g. Linux) or at
+<br>least use MinGW if a comparison on Microsoft Windows is preferred.
+<br>
+<br>******
+<br>
+<br>It's true that gcc under cygwin is runs an emulated kernel which can
+<br>show very significant performance hits anywhere where Posix signals
+<br>and by extension I/O are in play. We don't think this is significant
+<br>here. However, it is certainly true that the Cygwin and Linux gcc
+<br>memory managers work differently: on Linux the realloc() function
+<br>works hard to keep the block base address the same whereas Cygwin just
+<br>tends to make a new block and copy it over. This all goes to show that
+<br>people need to characterise their memory manager! For completeness, we
+<br>have rerun the experiments as a native Linux binary running on a
+<br>1.8GHz dual core AMD Opteron 265 with 4G of physical core. We found
+<br>the same piecewise linear behaviour, but the linear region based at
+<br>the origin extended far further and the overall performance was
+<br>better, probably as a result of having eight times more physical core.
+<br>
+<br>The problem here is where to draw the line between highlighting
+<br>potential idiosyncrasies and attempting to exhaustively characterise
+<br>current systems. Since characterisation would quickly go out of date,
+<br>we wanted to just flag up the issue by explaining the unexpected
+<br>nonlinearities in Figure 1, and hope that 'caveat emptor' would encourage
+<br>users of tools to try out their own experiments.
+<br>
+<br>******
+<br>
+<br>* Section 6.1, page 7: shouldn't the n in for (n = 1; ... be an i?
+<br>******
+<br>corrected
+<br>******
+<br>
+<br>
+<br>* Section 6.2, page 7: check consistent use of BtYACC and BTYACC
+<br>******
+<br>corrected
+<br>******
+<br>
+<br>
+<br>Section 6.2, page 7: 'Thus changing the name of a non-terminal can
+<br>change the performance of the parser.' I don't understand the
+<br>underlying mechanism in BtYACC.
+<br>******
+<br>
+<br>The mechanism is that BtYACC orders the rules lexically, and chooses
+<br>the first one. We've now noted the lexical nature of the ordering in
+<br>the text.
+<br>
+<br>******
+<br>
+<br>
+<br>* Section 7: The discussion about the size of the output for ambiguous
+<br>grammars is a bit unbalanced. It would be good the emphasize that the
+<br>exponential number of derivations is an inherent problem, not specific
+<br>to a certain parsing technology. Even if the resulting set of
+<br>derivations is represented in a efficient way, the further processing
+<br>of this representation will likely perform exponentially. It would be
+<br>good to explain in this section why you criticize this aspect of
+<br>exhaustive backtracking parsers and briefly mention how other parsing
+<br>techniques improve/avoid this.
+<br>******
+<br>
+<br>The exponential number of derivations is not really the point of this
+<br>section: rather we're looking at the bound in tree depth. The section
+<br>has been adjusted slightly to emphasize this, and the final sentence on
+<br>exponential derivations has been removed.
+<br>
+<br>******
+<br>
+<br>
+<br>* Section 8, page 11: "choice of action will correct" -&gt; will be
+<br>******
+<br>corrected
+<br>******
+<br>
+<br>
+<br>Section 8, page 11: regarding grammar specifications which are not the
+<br>same as the parser implementation; the java-front syntax definition of
+<br>Java in SDF, see
+<br>
+<br>   http://www.stratego-language.org/Stratego/JavaFront
+<br>
+<br>closely follows the official language definition. Its construction
+<br>unearthed several problems (ambiguities) in that definition; a result
+<br>of the fact that the definition is not used to generate an
+<br>implementation.
+<br>******
+<br>Well, absolutely. We've recounted our own experience in this section
+<br>and made essentially that point.
+<br>******
+<br>
+<br>
+<br>* Section 8, page 12: 'There are several available implementations of
+<br>GLR-style algorithms [vdBHKO02,...]' This paper is about the ASF+SDF
+<br>compiler, not about the SGLR/SDF.  
+<br>
+<br>****** 
+<br>
+<br>We agree, but we're trying to list accessible implementations here not
+<br>algorithms and we think the ToPLaS paper on ASF+SDF is the canonical
+<br>implementation.
+<br> 
+<br>******
+<br>
+<br>
+<br>* Section 9: "limited backtracking parsers which we believe are in
+<br>practice unsafe unless [...]". Though I sympathize with this believe,
+<br>the claim is rather strong: this paper has given little or no evidence
+<br>that this is the case *in practice*. See the earlier general comments.
+<br>******
+<br>We believe that if something is unsafe, it will be unsafe in
+<br>practice. It is conceivable that if the insecurities are well known,
+<br>and nobody make a careless assumption, then unsafe tools can be used
+<br>safely, but we don't think that is the case for backtracking.
+<br>******
+<br>
+<br>
+<br>* References: JAV00: JavaCC is no longer host at Metamata and the URL
+<br>is dead. JavaCC is hosted at https://javacc.dev.java.net/ these days.
+<br>******
+<br>updated
+<br>******
+<br>
+<br>
+<br>* References: JSE04b: van Wick -&gt; Van Wyk
+<br>******
+<br>corrected
+<br>******
+<br>
+<br>
+<br>* References: Wasn't the original parsing algorithm of PCCTS (ANTLR)
+<br>published in CC'94? That would make a better reference.
+<br>******
+<br>Added references to CC94 and to Parr's thesis.
+<br>******
+<br>---------------------------------------------
+<br>
+<br>REFERENCES:
+<br>
+<br>Additionally, I have noticed that there are some details missing from
+<br>the reference section.  Please could you incorporate these missing
+<br>details to your new version?. 
+<br>
+<br>Queries:
+<br>
+<br>General. Please construct references in the following style:
+<br>
+<br>1. The references should appear in the text in numerical order, as should the
+<br>reference list.
+<br>2. Where there are more than 10 contributing authors please list only the first
+<br>author and use et al.
+<br>3. The following format for references should be followed:
+<br>
+<br>Journal article:
+<br>Galton, A. (1992) Logic as a formal method. Comp. J., 35, 431-440.
+<br>(author name, year, title of paper, title of journal, volume number, page numbers)
+<br>
+<br>
+<br>Book:
+<br>Hogger, C. (1990) Essentials of Logic Programming. Clarendon Press, Oxford.
+<br>(author name, year, title of book, publisher, publisher location)
+<br>
+<br>
+<br>Chapter:
+<br>Harel, D. (1984) Dynamic logic. In Gabbay, D. and Guenther, F. (eds), Handbook of
+<br>Philosophical Logic. D. Reidel, Dordrecht.
+<br>(author name, year, title of chapter, editors names, title of book, publisher,
+<br>publisher location)
+<br>
+<br>
+<br>Conference:
+<br>Crochemore, M. and Verin, R. (1997) Direct construction of compact directed acyclic
+<br>word graphs. Proceedings of CPM 97, Cambridge, MA, 12-14 August, pp.~192-211.
+<br>Springer-Verlag, Berlin.
+<br>(author name, year, title of conference, place of conference, date of conference,
+<br>page numbers in proceedings, publisher, publisher location)
+<br>
+<br>
+<br>Technical documents:
+<br>ITU-T. Z.500 (1997) Framework on formal methods in conformance testing.
+<br>International Telecommunications Union, Geneva, Switzerland.
+<br>(document number, year, document title, publisher, publisher location)
+<br>
+<br>
+<br>Could you please check your references carefully (in particular, proceedings:
+<br>location of conference, date of conference, publisher name and location...) and make
+<br>sure that they comply with the above format?
+<br>
+<br>I look forward to hearing from you.
+<br>
+<br>Regards,
+<br>
+<br>Florence Leroy.
+<br>
+<br>------------
+<br>
+<br>Finally, many thanks once again for all the helpful comments.
+<br>
+<br>                   Adrian Johnstone and Elizabeth Scott
+<br></p> 
+								</td> 
+							</tr> 
+<tr>
+<td class="tablelightcolor" colspan="2">
+<table border="0" cellpadding="5" cellspacing="0">
+</table>
+</td>    
+</tr>							 
+						</tbody></table> 
+					</td> 
+				</tr> 
+				<tr> 
+					<td colspan="2">&nbsp;</td> 
+				</tr> 
+				<tr> 
+					<td class="tablelines" colspan="2"> 
+						<table border="0" cellpadding="5" cellspacing="1" width="100%"> 
+							<tbody><tr>	 
+								<td class="tablelightcolor" align="right"> 
+									<table border="0" cellpadding="2" cellspacing="0"> 
+										<tbody><tr> 
+											<td><a href="javascript:window.close();"><img src="compj_files/close_window.gif" border="0"></a></td> 
+										</tr> 
+									</tbody></table> 
+								</td> 
+							</tr> 
+						</tbody></table> 
+					</td> 
+				</tr> 
+			</tbody></table> 
+		</td> 
+	</tr> 
+</tbody></table> 
+
+	        		
+					</td>
+					
+				</tr>
+			</tbody></table>
+		</td>
+	</tr>
+</tbody></table>
+
+<script language="JavaScript" type="text/javascript">  setField('SANITY_CHECK_DOCUMENT_ID','');   setField('DOCUMENT_HASHCODE','');   setField('CONFIG_ID','3450'); </script></form>
+<table align="center" border="0" cellpadding="10" cellspacing="0" width="100%">
+<tbody><tr>
+  <td align="center" bgcolor="#ffffff">
+    <p class="footer">
+
+
+
+
+
+
+
+
+
+
+
+
+		&nbsp; &nbsp;
+
+</p>
+  </td>
+</tr> 
+</tbody></table>
+</body></html>

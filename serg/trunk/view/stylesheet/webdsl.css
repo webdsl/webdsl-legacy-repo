@@ -42,7 +42,7 @@
   position      : absolute;
   top           : 10px;
   left          : 12.5em;
-  right         : 20px;
+  right         : 40px;
   overflow      : hidden;
   /* for testing */
   //border        : 1px solid black;
@@ -97,6 +97,20 @@
   //background-color : white;
   //border        : 1px solid #999;
   //padding       : 1px;
+}
+
+/********************************************************
+
+ CUSTOM ELEMENTS
+ 
+*********************************************************/
+ 
+div.photo {
+  float : right;
+}
+
+.photo img {
+  width : 240px;
 }
 
 /********************************************************
@@ -167,6 +181,7 @@ a:hover {
 .sidebar ul ul ul li {
   margin-bottom : 0em;
 }
+
 /********************************************************
 
  DROPDOWN MENUS
@@ -177,20 +192,25 @@ a:hover {
   background  : white;
   //float       : left;
   position    : relative;
-  top         : 37px;
+  top         : 38px;
 }
 
 .menu ul {
-  list-style : none;
-  margin     : 0em;
-  padding    : 0px;
+  list-style   : none;
+  margin       : 0em;
+  margin-right : 1em;
+  padding      : 0px;
   //width      : 6em;
-  float      : left;
+  float        : left;
 }
 
 .menu li {
   position : relative;
-  padding  : 2px;
+  padding  : 1px;
+  background-color : white;
+  border-left      : solid 1px white;
+  border-top       : solid 1px white;
+  border-right     : solid 2px white;
 }
 
 .menu ul ul, 
@@ -198,7 +218,7 @@ a:hover {
   position : absolute;
   z-index  : 500;
   border   : 1px;
-  top      : 24px;
+  top      : 23px;
   left     : -1px;
   font-size : 10pt;
 }
@@ -213,7 +233,7 @@ a:hover {
   border-left      : solid 1px lightgrey;
   border-top       : solid 1px lightgrey;
   border-right     : solid 2px grey;
-  border-bottom    : solid 2px grey;
+  border-bottom    : dotted 1px grey;
 }
 
 .menu ul ul li:hover {
@@ -244,3 +264,49 @@ div.menu ul li:hover table
 }
 
 
+/********************************************************
+
+ INPUT ELEMENTS
+ 
+*********************************************************/
+
+.inputString {
+  width : 40em;
+}
+
+.inputDate {
+  width : 20em;
+}
+
+.inputInt {
+  width : 20em;
+}
+
+/* for IE */
+textarea .inputText {
+  height : 20em;
+  width  : 100%;
+}
+/* for other browsers */
+textarea,[nul] .inputText {
+   height : 20em;
+   width  : 40em;
+   /* border : solid 1px black;
+   border-right : 0px;
+   padding-left : 3px; */
+   
+   border : inset 2px lightgrey;
+   
+}
+
+table {
+  width : 100%;
+}
+
+tr {
+}
+
+td {
+  vertical-align : top;
+  padding-bottom : 10px;
+}
