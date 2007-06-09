@@ -38,11 +38,11 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("createTechnicalReport" + ".initalize()");
-    TechnicalReport var46 = new TechnicalReport();
-    technicalReport = var46;
+    TechnicalReport var30 = new TechnicalReport();
+    technicalReport = var30;
     initPublication6List();
-    initPerson1038List();
-    initProject1138List();
+    initPerson1037List();
+    initProject1137List();
   }
 
   @Destroy @Remove public void destroy()
@@ -105,32 +105,32 @@ import org.webdsl.serg.domain.*;
     }
   }
 
-  @DataModel("person1038List") private List<Person> person1038List;
+  @DataModel("person1037List") private List<Person> person1037List;
 
-  public List<Person> getPerson1038List()
+  public List<Person> getPerson1037List()
   { 
-    log.info("getPerson1038List");
-    return person1038List;
+    log.info("getPerson1037List");
+    return person1037List;
   }
 
-  @Factory("person1038List") public void initPerson1038List()
+  @Factory("person1037List") public void initPerson1037List()
   { 
-    log.info("initPerson1038List");
-    person1038List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson1037List");
+    person1037List = em.createQuery("from " + "Person").getResultList();
   }
 
-  @DataModel("project1138List") private List<ResearchProject> project1138List;
+  @DataModel("project1137List") private List<ResearchProject> project1137List;
 
-  public List<ResearchProject> getProject1138List()
+  public List<ResearchProject> getProject1137List()
   { 
-    log.info("getProject1138List");
-    return project1138List;
+    log.info("getProject1137List");
+    return project1137List;
   }
 
-  @Factory("project1138List") public void initProject1138List()
+  @Factory("project1137List") public void initProject1137List()
   { 
-    log.info("initProject1138List");
-    project1138List = em.createQuery("from " + "ResearchProject").getResultList();
+    log.info("initProject1137List");
+    project1137List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 
   private TechnicalReport technicalReport;

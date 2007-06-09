@@ -21,8 +21,8 @@
         
       <li>
          <h:outputText value="People"/> 
-      <h:dataTable var="person1041" value="#{createResearchProject.person1041List}"> 
-      <h:column> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person1041.id}"/> <h:outputText value="#{person1041.name}"/> </s:link> </h:column> 
+      <h:dataTable var="person1040" value="#{createResearchProject.person1040List}"> 
+      <h:column> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person1040.id}"/> <h:outputText value="#{person1040.name}"/> </s:link> </h:column> 
     </h:dataTable>
     
       </li>
@@ -33,8 +33,8 @@
         
       <li>
          <h:outputText value="Projects"/> 
-      <h:dataTable var="project1141" value="#{createResearchProject.project1141List}"> 
-      <h:column> <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project1141.id}"/> <h:outputText value="#{project1141.acronym}"/> </s:link> </h:column> 
+      <h:dataTable var="project1140" value="#{createResearchProject.project1140List}"> 
+      <h:column> <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project1140.id}"/> <h:outputText value="#{project1140.acronym}"/> </s:link> </h:column> 
     </h:dataTable>
     
       </li>
@@ -49,16 +49,25 @@
         
     <div class="manageMenu"></div>
     
+    <div class="createMenu">
       <li>
          <h:outputText value="New"/> 
       <ul>
         
       <li>
-         <s:link view="/createUser.xhtml" propagation="none"> <h:outputText value="User"/> </s:link> 
+         <s:link view="/createNews.xhtml" propagation="none"> <h:outputText value="News"/> </s:link> 
       </li>
     
       <li>
-         <s:link view="/createPerson.xhtml" propagation="none"> <h:outputText value="Person"/> </s:link> 
+         <s:link view="/createResearchGroup.xhtml" propagation="none"> <h:outputText value="ResearchGroup"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createResearchProject.xhtml" propagation="none"> <h:outputText value="ResearchProject"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createTechnicalReport.xhtml" propagation="none"> <h:outputText value="TechnicalReport"/> </s:link> 
       </li>
     
       <li>
@@ -66,11 +75,23 @@
       </li>
     
       <li>
-         <s:link view="/createTechnicalReport.xhtml" propagation="none"> <h:outputText value="Technical Report"/> </s:link> 
+         <s:link view="/createPresentation.xhtml" propagation="none"> <h:outputText value="Presentation"/> </s:link> 
       </li>
     
       <li>
-         <s:link view="/createResearchProject.xhtml" propagation="none"> <h:outputText value="Project"/> </s:link> 
+         <s:link view="/createColloquium.xhtml" propagation="none"> <h:outputText value="Colloquium"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createBlogComment.xhtml" propagation="none"> <h:outputText value="BlogComment"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createCategory.xhtml" propagation="none"> <h:outputText value="Category"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createBlogEntry.xhtml" propagation="none"> <h:outputText value="BlogEntry"/> </s:link> 
       </li>
     
       <li>
@@ -78,16 +99,21 @@
       </li>
     
       <li>
-         <s:link view="/createBlogEntry.xhtml" propagation="none"> <h:outputText value="Blog Entry"/> </s:link> 
+         <s:link view="/createPerson.xhtml" propagation="none"> <h:outputText value="Person"/> </s:link> 
       </li>
     
       <li>
-         <s:link view="/createResearchProject.xhtml" propagation="none"> <h:outputText value="Research Project"/> </s:link> 
+         <s:link view="/createAddress.xhtml" propagation="none"> <h:outputText value="Address"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createUser.xhtml" propagation="none"> <h:outputText value="User"/> </s:link> 
       </li>
     
       </ul>
     
       </li>
+    </div>
     
       </ul>
     

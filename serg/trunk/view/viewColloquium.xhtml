@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
+<head>    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title></title>
+    <link href="stylesheet/webdsl.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <div class="main">
+    <div class="outersidebar">
+    <div class="logo"> <s:link view="/home.xhtml" propagation="none"> <h:graphicImage value="/img/serg-logo-color-smaller.png"/> </s:link> </div>
+    
+    <div class="sidebar"></div>
+    </div>
+    
+    <div class="outerbody">
+    <div class="menubar">
+    <div class="menu">
+      <ul>
+        
+      <li>
+         <h:outputText value="People"/> 
+      <h:dataTable var="person1029" value="#{viewColloquium.person1029List}"> 
+      <h:column> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person1029.id}"/> <h:outputText value="#{person1029.name}"/> </s:link> </h:column> 
+    </h:dataTable>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <h:outputText value="Projects"/> 
+      <h:dataTable var="project1129" value="#{viewColloquium.project1129List}"> 
+      <h:column> <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project1129.id}"/> <h:outputText value="#{project1129.acronym}"/> </s:link> </h:column> 
+    </h:dataTable>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <h:outputText value="Manage"/> 
+      <ul>
+        
+    <div class="manageMenu">
+      <li>
+         <s:link view="/editColloquium.xhtml" propagation="none"><f:param name="colloquium" value="#{viewColloquium.colloquium.id}"/> <h:outputText value="Edit"/> </s:link> 
+      </li>
+    </div>
+    
+    <div class="createMenu">
+      <li>
+         <h:outputText value="New"/> 
+      <ul>
+        
+      <li>
+         <s:link view="/createNews.xhtml" propagation="none"> <h:outputText value="News"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createResearchGroup.xhtml" propagation="none"> <h:outputText value="ResearchGroup"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createResearchProject.xhtml" propagation="none"> <h:outputText value="ResearchProject"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createTechnicalReport.xhtml" propagation="none"> <h:outputText value="TechnicalReport"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createPublication.xhtml" propagation="none"> <h:outputText value="Publication"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createPresentation.xhtml" propagation="none"> <h:outputText value="Presentation"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createColloquium.xhtml" propagation="none"> <h:outputText value="Colloquium"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createBlogComment.xhtml" propagation="none"> <h:outputText value="BlogComment"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createCategory.xhtml" propagation="none"> <h:outputText value="Category"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createBlogEntry.xhtml" propagation="none"> <h:outputText value="BlogEntry"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createBlog.xhtml" propagation="none"> <h:outputText value="Blog"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createPerson.xhtml" propagation="none"> <h:outputText value="Person"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createAddress.xhtml" propagation="none"> <h:outputText value="Address"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createUser.xhtml" propagation="none"> <h:outputText value="User"/> </s:link> 
+      </li>
+    
+      </ul>
+    
+      </li>
+    </div>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <s:link view="/login.xhtml" propagation="none"> <h:outputText value="Login"/> </s:link> 
+      </li>
+    
+      </ul>
+    </div>
+    </div>
+    
+    <div class="body">
+      <div class="section1">
+      <h1> <h:outputText value="#{viewColloquium.colloquium.name}"/> </h1>
+    
+      <table>
+    <div class="viewRowsColloquium">
+      <tr> <td> <h:outputText value="Name"/> </td>  <td> <h:outputText value="#{viewColloquium.colloquium.name}"/> </td> </tr>
+    
+      <tr> <td> <h:outputText value="Talks"/> </td>  <td>
+      <h:dataTable var="presentation9" value="#{viewColloquium.colloquium.talks}"> 
+      <h:column> <s:link view="/viewPresentation.xhtml" propagation="none"><f:param name="presentation" value="#{presentation9.id}"/> <h:outputText value="#{presentation9.name}"/> </s:link> </h:column> 
+    </h:dataTable>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Contact"/> </td>  <td> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{viewColloquium.colloquium.contact.id}"/> <h:outputText value="#{viewColloquium.colloquium.contact.name}"/> </s:link> </td> </tr>
+    
+      <tr> <td> <h:outputText value="Mailinglist"/> </td>  <td> <h:outputLink value="#{viewColloquium.colloquium.mailinglist}"> <h:outputText value="#{viewColloquium.colloquium.mailinglist}"/> </h:outputLink> </td> </tr>
+    </div>
+    </table>
+    </div>
+    </div>
+    
+    <div class="footer"> <h:outputText value="generated with "/>  <h:outputLink value="http://www.strategoxt.org"> <h:outputText value="Stratego/XT"/> </h:outputLink> </div>
+    </div>
+    </div>
+    </body>
+</html>

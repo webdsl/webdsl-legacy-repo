@@ -45,13 +45,13 @@ import org.webdsl.serg.domain.*;
 
   public void initResearchProject8List();
 
-  public List<Person> getPerson1035List();
+  public List<Person> getPerson1034List();
 
-  public void initPerson1035List();
+  public void initPerson1034List();
 
-  public List<ResearchProject> getProject1135List();
+  public List<ResearchProject> getProject1134List();
 
-  public void initProject1135List();
+  public void initProject1134List();
 
   public Publication getPublication();
 

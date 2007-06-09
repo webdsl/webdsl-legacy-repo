@@ -49,13 +49,13 @@ import org.webdsl.serg.domain.*;
 
   public void initResearchProject6List();
 
-  public List<Person> getPerson1034List();
+  public List<Person> getPerson1033List();
 
-  public void initPerson1034List();
+  public void initPerson1033List();
 
-  public List<ResearchProject> getProject1134List();
+  public List<ResearchProject> getProject1133List();
 
-  public void initProject1134List();
+  public void initProject1133List();
 
   public Person getNewAuthor0();
 

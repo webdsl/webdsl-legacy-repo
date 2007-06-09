@@ -27,13 +27,13 @@ import org.webdsl.serg.domain.*;
 
   public void initPublication6List();
 
-  public List<Person> getPerson1038List();
+  public List<Person> getPerson1037List();
 
-  public void initPerson1038List();
+  public void initPerson1037List();
 
-  public List<ResearchProject> getProject1138List();
+  public List<ResearchProject> getProject1137List();
 
-  public void initProject1138List();
+  public void initProject1137List();
 
   public TechnicalReport getTechnicalReport();
 

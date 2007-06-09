@@ -47,12 +47,12 @@ import org.webdsl.serg.domain.*;
     { 
       publication = em.find(Publication.class, publicationId);
     }
-    Person var42 = new Person();
-    newAuthor0 = var42;
+    Person var26 = new Person();
+    newAuthor0 = var26;
     initPerson37List();
     initResearchProject6List();
-    initPerson1034List();
-    initProject1134List();
+    initPerson1033List();
+    initProject1133List();
   }
 
   @Destroy @Remove public void destroy()
@@ -87,8 +87,8 @@ import org.webdsl.serg.domain.*;
   public void addNewAuthor()
   { 
     this.getPublication().getAuthors().add(this.getNewAuthor0());
-    Person var41 = new Person();
-    newAuthor0 = var41;
+    Person var25 = new Person();
+    newAuthor0 = var25;
   }
 
   public void removeResearchProject1(ResearchProject researchProject5)
@@ -194,32 +194,32 @@ import org.webdsl.serg.domain.*;
     }
   }
 
-  @DataModel("person1034List") private List<Person> person1034List;
+  @DataModel("person1033List") private List<Person> person1033List;
 
-  public List<Person> getPerson1034List()
+  public List<Person> getPerson1033List()
   { 
-    log.info("getPerson1034List");
-    return person1034List;
+    log.info("getPerson1033List");
+    return person1033List;
   }
 
-  @Factory("person1034List") public void initPerson1034List()
+  @Factory("person1033List") public void initPerson1033List()
   { 
-    log.info("initPerson1034List");
-    person1034List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson1033List");
+    person1033List = em.createQuery("from " + "Person").getResultList();
   }
 
-  @DataModel("project1134List") private List<ResearchProject> project1134List;
+  @DataModel("project1133List") private List<ResearchProject> project1133List;
 
-  public List<ResearchProject> getProject1134List()
+  public List<ResearchProject> getProject1133List()
   { 
-    log.info("getProject1134List");
-    return project1134List;
+    log.info("getProject1133List");
+    return project1133List;
   }
 
-  @Factory("project1134List") public void initProject1134List()
+  @Factory("project1133List") public void initProject1133List()
   { 
-    log.info("initProject1134List");
-    project1134List = em.createQuery("from " + "ResearchProject").getResultList();
+    log.info("initProject1133List");
+    project1133List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 
   private Person newAuthor0;

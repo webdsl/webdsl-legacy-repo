@@ -19,11 +19,11 @@ import org.webdsl.serg.domain.*;
 
   public String save();
 
-  public List<Person> getPerson1010List();
+  public List<Person> getPerson1012List();
 
-  public void initPerson1010List();
+  public void initPerson1012List();
 
-  public List<ResearchProject> getProject1110List();
+  public List<ResearchProject> getProject1112List();
 
-  public void initProject1110List();
+  public void initProject1112List();
 }

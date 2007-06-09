@@ -31,11 +31,11 @@ import org.webdsl.serg.domain.*;
 
   public void initPublication4List();
 
-  public List<Person> getPerson1037List();
+  public List<Person> getPerson1036List();
 
-  public void initPerson1037List();
+  public void initPerson1036List();
 
-  public List<ResearchProject> getProject1137List();
+  public List<ResearchProject> getProject1136List();
 
-  public void initProject1137List();
+  public void initProject1136List();
 }

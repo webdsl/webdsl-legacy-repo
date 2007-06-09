@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
+<head>    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title></title>
+    <link href="stylesheet/webdsl.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <div class="main">
+    <div class="outersidebar">
+    <div class="logo"> <s:link view="/home.xhtml" propagation="none"> <h:graphicImage value="/img/serg-logo-color-smaller.png"/> </s:link> </div>
+    
+    <div class="sidebar"></div>
+    </div>
+    
+    <div class="outerbody">
+    <div class="menubar">
+    <div class="menu">
+      <ul>
+        
+      <li>
+         <h:outputText value="People"/> 
+      <h:dataTable var="person1032" value="#{viewPresentation.person1032List}"> 
+      <h:column> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person1032.id}"/> <h:outputText value="#{person1032.name}"/> </s:link> </h:column> 
+    </h:dataTable>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <h:outputText value="Projects"/> 
+      <h:dataTable var="project1132" value="#{viewPresentation.project1132List}"> 
+      <h:column> <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project1132.id}"/> <h:outputText value="#{project1132.acronym}"/> </s:link> </h:column> 
+    </h:dataTable>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <h:outputText value="Manage"/> 
+      <ul>
+        
+    <div class="manageMenu">
+      <li>
+         <s:link view="/editPresentation.xhtml" propagation="none"><f:param name="presentation" value="#{viewPresentation.presentation.id}"/> <h:outputText value="Edit"/> </s:link> 
+      </li>
+    </div>
+    
+    <div class="createMenu">
+      <li>
+         <h:outputText value="New"/> 
+      <ul>
+        
+      <li>
+         <s:link view="/createNews.xhtml" propagation="none"> <h:outputText value="News"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createResearchGroup.xhtml" propagation="none"> <h:outputText value="ResearchGroup"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createResearchProject.xhtml" propagation="none"> <h:outputText value="ResearchProject"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createTechnicalReport.xhtml" propagation="none"> <h:outputText value="TechnicalReport"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createPublication.xhtml" propagation="none"> <h:outputText value="Publication"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createPresentation.xhtml" propagation="none"> <h:outputText value="Presentation"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createColloquium.xhtml" propagation="none"> <h:outputText value="Colloquium"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createBlogComment.xhtml" propagation="none"> <h:outputText value="BlogComment"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createCategory.xhtml" propagation="none"> <h:outputText value="Category"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createBlogEntry.xhtml" propagation="none"> <h:outputText value="BlogEntry"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createBlog.xhtml" propagation="none"> <h:outputText value="Blog"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createPerson.xhtml" propagation="none"> <h:outputText value="Person"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createAddress.xhtml" propagation="none"> <h:outputText value="Address"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createUser.xhtml" propagation="none"> <h:outputText value="User"/> </s:link> 
+      </li>
+    
+      </ul>
+    
+      </li>
+    </div>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <s:link view="/login.xhtml" propagation="none"> <h:outputText value="Login"/> </s:link> 
+      </li>
+    
+      </ul>
+    </div>
+    </div>
+    
+    <div class="body">
+      <div class="section1">
+      <h1> <h:outputText value="#{viewPresentation.presentation.name}"/> </h1>
+    
+      <table>
+    <div class="viewRowsPresentation">
+      <tr> <td> <h:outputText value="Title"/> </td>  <td> <h:outputText value="#{viewPresentation.presentation.title}"/> </td> </tr>
+    
+      <tr> <td> <h:outputText value="Speaker"/> </td>  <td> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{viewPresentation.presentation.speaker.id}"/> <h:outputText value="#{viewPresentation.presentation.speaker.name}"/> </s:link> </td> </tr>
+    
+      <tr> <td> <h:outputText value="Date"/> </td>  <td>
+       <h:outputText id="outputDateId1" styleClass="outputDate" value="#{viewPresentation.presentation.date}">
+         <s:convertDateTime pattern="dd/mm/yyyy"/>
+       </h:outputText>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Time"/> </td>  <td>
+       <h:outputText id="outputDateId2" styleClass="outputDate" value="#{viewPresentation.presentation.time}">
+         <s:convertDateTime pattern="dd/mm/yyyy"/>
+       </h:outputText>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="End"/> </td>  <td>
+       <h:outputText id="outputDateId3" styleClass="outputDate" value="#{viewPresentation.presentation.end}">
+         <s:convertDateTime pattern="dd/mm/yyyy"/>
+       </h:outputText>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Venue"/> </td>  <td> <h:outputText value="#{viewPresentation.presentation.Venue}"/> </td> </tr>
+    
+      <tr> <td> <h:outputText value="Abstract"/> </td>  <td>
+      <s:formattedText styleClass="outputTextarea" value="#{viewPresentation.presentation.abstract}"/>
+    </td> </tr>
+    </div>
+    </table>
+    </div>
+    </div>
+    
+    <div class="footer"> <h:outputText value="generated with "/>  <h:outputLink value="http://www.strategoxt.org"> <h:outputText value="Stratego/XT"/> </h:outputLink> </div>
+    </div>
+    </div>
+    </body>
+</html>

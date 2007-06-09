@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
+<head>    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title></title>
+    <link href="stylesheet/webdsl.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <div class="main">
+    <div class="outersidebar">
+    <div class="logo"> <s:link view="/home.xhtml" propagation="none"> <h:graphicImage value="/img/serg-logo-color-smaller.png"/> </s:link> </div>
+    
+    <div class="sidebar"></div>
+    </div>
+    
+    <div class="outerbody">
+    <div class="menubar">
+    <div class="menu">
+      <ul>
+        
+      <li>
+         <h:outputText value="People"/> 
+      <h:dataTable var="person1019" value="#{editBlogEntry.person1019List}"> 
+      <h:column> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person1019.id}"/> <h:outputText value="#{person1019.name}"/> </s:link> </h:column> 
+    </h:dataTable>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <h:outputText value="Projects"/> 
+      <h:dataTable var="project1119" value="#{editBlogEntry.project1119List}"> 
+      <h:column> <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project1119.id}"/> <h:outputText value="#{project1119.acronym}"/> </s:link> </h:column> 
+    </h:dataTable>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <h:outputText value="Manage"/> 
+      <ul>
+        
+    <div class="manageMenu"></div>
+    
+    <div class="createMenu">
+      <li>
+         <h:outputText value="New"/> 
+      <ul>
+        
+      <li>
+         <s:link view="/createNews.xhtml" propagation="none"> <h:outputText value="News"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createResearchGroup.xhtml" propagation="none"> <h:outputText value="ResearchGroup"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createResearchProject.xhtml" propagation="none"> <h:outputText value="ResearchProject"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createTechnicalReport.xhtml" propagation="none"> <h:outputText value="TechnicalReport"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createPublication.xhtml" propagation="none"> <h:outputText value="Publication"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createPresentation.xhtml" propagation="none"> <h:outputText value="Presentation"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createColloquium.xhtml" propagation="none"> <h:outputText value="Colloquium"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createBlogComment.xhtml" propagation="none"> <h:outputText value="BlogComment"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createCategory.xhtml" propagation="none"> <h:outputText value="Category"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createBlogEntry.xhtml" propagation="none"> <h:outputText value="BlogEntry"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createBlog.xhtml" propagation="none"> <h:outputText value="Blog"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createPerson.xhtml" propagation="none"> <h:outputText value="Person"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createAddress.xhtml" propagation="none"> <h:outputText value="Address"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createUser.xhtml" propagation="none"> <h:outputText value="User"/> </s:link> 
+      </li>
+    
+      </ul>
+    
+      </li>
+    </div>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <s:link view="/login.xhtml" propagation="none"> <h:outputText value="Login"/> </s:link> 
+      </li>
+    
+      </ul>
+    </div>
+    </div>
+    
+    <div class="body">
+      <div class="section1">
+      <h1> <h:outputText value="Edit "/>  <h:outputText value="BlogEntry"/>  <h:outputText value=" "/>  <h:outputText value="#{editBlogEntry.blogEntry.name}"/> </h1>
+    
+      <h:form>
+        <s:validateAll>
+      <table>
+    <div class="editRowsBlogEntry">
+      <tr> <td> <h:outputText value="Blog"/> </td>  <td>
+    <div class="inputSimpleRefAssociation"> <h:outputText value="#{editBlogEntry.blogEntry.blog.name}"/>  <h:outputText value=" "/> 
+       <h:selectOneMenu value="#{editBlogEntry.newBlog10}" onchange="submit()" valueChangeListener="#{editBlogEntry.selectBlog10}">
+          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
+          <f:selectItems value="#{editBlogEntry.blog10List}" var="blog10" label="#{blog10.label}"/>
+        </h:selectOneMenu>
+    </div>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Title"/> </td>  <td>
+      <s:decorate>
+        <h:inputText styleClass="inputString" value="#{editBlogEntry.blogEntry.title}"/>
+      </s:decorate>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Created"/> </td>  <td>
+      <s:decorate>
+        <div>
+          <h:inputText id="inputDateId0" styleClass="inputDate" value="#{editBlogEntry.blogEntry.created}">
+             <s:convertDateTime pattern="dd/mm/yyyy"/>
+          </h:inputText>
+          <s:selectDate for="inputDateId0"/>
+        </div>
+      </s:decorate>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Category"/> </td>  <td>
+    <div class="inputSimpleRefAssociation"> <h:outputText value="#{editBlogEntry.blogEntry.category.name}"/>  <h:outputText value=" "/> 
+       <h:selectOneMenu value="#{editBlogEntry.newCategory10}" onchange="submit()" valueChangeListener="#{editBlogEntry.selectCategory10}">
+          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
+          <f:selectItems value="#{editBlogEntry.category10List}" var="category10" label="#{category10.label}"/>
+        </h:selectOneMenu>
+    </div>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Intro"/> </td>  <td>
+      <s:decorate>
+        <h:inputTextarea styleClass="inputTextarea" value="#{editBlogEntry.blogEntry.intro}"/>
+      </s:decorate>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Body"/> </td>  <td>
+      <s:decorate>
+        <h:inputTextarea styleClass="inputTextarea" value="#{editBlogEntry.blogEntry.body}"/>
+      </s:decorate>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Comments"/> </td>  <td>
+    <div class="inputAssociationList">
+      <h:dataTable var="blogComment3" value="#{editBlogEntry.blogEntry.comments}"> 
+      <h:column>
+    <div class="listAssociation"> <h:outputText value="#{blogComment3.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{editBlogEntry.removeBlogComment0(blogComment3)}"/>
+    </div>
+    </h:column> 
+    </h:dataTable>
+    
+       <h:selectOneMenu value="#{editBlogEntry.newBlogComment4}" onchange="submit()" valueChangeListener="#{editBlogEntry.selectBlogComment4}">
+          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
+          <f:selectItems value="#{editBlogEntry.blogComment4List}" var="blogComment4" label="#{blogComment4.label}"/>
+        </h:selectOneMenu>
+    </div>
+    </td> </tr>
+    </div>
+    </table>
+     
+       <h:commandButton type="submit" value="Save" action="#{editBlogEntry.save()}"/>
+     
+       <h:commandButton value="Cancel" action="#{editBlogEntry.cancel()}"/>
+    </s:validateAll>
+      </h:form>
+    </div>
+    </div>
+    
+    <div class="footer"> <h:outputText value="generated with "/>  <h:outputLink value="http://www.strategoxt.org"> <h:outputText value="Stratego/XT"/> </h:outputLink> </div>
+    </div>
+    </div>
+    </body>
+</html>

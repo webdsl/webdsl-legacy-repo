@@ -38,10 +38,10 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("createAddress" + ".initalize()");
-    Address var32 = new Address();
-    address = var32;
-    initPerson1011List();
-    initProject1111List();
+    Address var17 = new Address();
+    address = var17;
+    initPerson1013List();
+    initProject1113List();
   }
 
   @Destroy @Remove public void destroy()
@@ -58,32 +58,32 @@ import org.webdsl.serg.domain.*;
     return "/" + "viewAddress" + ".seam?" + ("address" + "=" + address.getId() + "");
   }
 
-  @DataModel("person1011List") private List<Person> person1011List;
+  @DataModel("person1013List") private List<Person> person1013List;
 
-  public List<Person> getPerson1011List()
+  public List<Person> getPerson1013List()
   { 
-    log.info("getPerson1011List");
-    return person1011List;
+    log.info("getPerson1013List");
+    return person1013List;
   }
 
-  @Factory("person1011List") public void initPerson1011List()
+  @Factory("person1013List") public void initPerson1013List()
   { 
-    log.info("initPerson1011List");
-    person1011List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson1013List");
+    person1013List = em.createQuery("from " + "Person").getResultList();
   }
 
-  @DataModel("project1111List") private List<ResearchProject> project1111List;
+  @DataModel("project1113List") private List<ResearchProject> project1113List;
 
-  public List<ResearchProject> getProject1111List()
+  public List<ResearchProject> getProject1113List()
   { 
-    log.info("getProject1111List");
-    return project1111List;
+    log.info("getProject1113List");
+    return project1113List;
   }
 
-  @Factory("project1111List") public void initProject1111List()
+  @Factory("project1113List") public void initProject1113List()
   { 
-    log.info("initProject1111List");
-    project1111List = em.createQuery("from " + "ResearchProject").getResultList();
+    log.info("initProject1113List");
+    project1113List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 
   private Address address;
