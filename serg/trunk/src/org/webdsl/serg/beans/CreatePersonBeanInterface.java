@@ -39,13 +39,13 @@ import org.webdsl.serg.domain.*;
 
   public void initBlog6List();
 
-  public List<Person> getPerson1016List();
+  public List<Person> getPerson1018List();
 
-  public void initPerson1016List();
+  public void initPerson1018List();
 
-  public List<ResearchProject> getProject1116List();
+  public List<ResearchProject> getProject1118List();
 
-  public void initProject1116List();
+  public void initProject1118List();
 
   public Person getPerson();
 

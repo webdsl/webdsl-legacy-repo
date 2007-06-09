@@ -47,9 +47,9 @@ import org.webdsl.serg.domain.*;
     { 
       user = em.find(User.class, userId);
     }
-    initPerson5List();
-    initPerson109List();
-    initProject119List();
+    initPerson6List();
+    initPerson1011List();
+    initProject1111List();
   }
 
   @Destroy @Remove public void destroy()
@@ -71,9 +71,9 @@ import org.webdsl.serg.domain.*;
     return user;
   }
 
-  public void setPerson0(Person person6)
+  public void setPerson0(Person person7)
   { 
-    user.setPerson(person6);
+    user.setPerson(person7);
   }
 
   @End public String cancel()
@@ -87,72 +87,72 @@ import org.webdsl.serg.domain.*;
     return "/" + "viewUser" + ".seam?" + ("user" + "=" + user.getId() + "");
   }
 
-  private String newPerson5;
+  private String newPerson6;
 
-  public void setNewPerson5(String p)
+  public void setNewPerson6(String p)
   { 
-    newPerson5 = p;
+    newPerson6 = p;
   }
 
-  public String getNewPerson5()
+  public String getNewPerson6()
   { 
-    return newPerson5;
+    return newPerson6;
   }
 
-  public void selectPerson5(ValueChangeEvent event)
+  public void selectPerson6(ValueChangeEvent event)
   { 
-    log.info("selectPerson5" + ": new value = " + " " + event.getNewValue());
+    log.info("selectPerson6" + ": new value = " + " " + event.getNewValue());
     Long id = new Long((String)event.getNewValue());
     if(id > 0)
     { 
-      Person person5 = em.find(Person.class, id);
-      setPerson0(person5);
+      Person person6 = em.find(Person.class, id);
+      setPerson0(person6);
     }
   }
 
-  @DataModel("person5List") private Map<String, String> person5List;
+  @DataModel("person6List") private Map<String, String> person6List;
 
-  public Map<String, String> getPerson5List()
+  public Map<String, String> getPerson6List()
   { 
-    return person5List;
+    return person6List;
   }
 
-  @Factory("person5List") public void initPerson5List()
+  @Factory("person6List") public void initPerson6List()
   { 
-    log.info("initPerson5List");
-    person5List = new HashMap<String, String>();
+    log.info("initPerson6List");
+    person6List = new HashMap<String, String>();
     for(Object o : em.createQuery("from " + "Person").getResultList())
     { 
       Person p = (Person)o;
-      person5List.put(p.getName(), p.getId().toString());
+      person6List.put(p.getName(), p.getId().toString());
     }
   }
 
-  @DataModel("person109List") private List<Person> person109List;
+  @DataModel("person1011List") private List<Person> person1011List;
 
-  public List<Person> getPerson109List()
+  public List<Person> getPerson1011List()
   { 
-    log.info("getPerson109List");
-    return person109List;
+    log.info("getPerson1011List");
+    return person1011List;
   }
 
-  @Factory("person109List") public void initPerson109List()
+  @Factory("person1011List") public void initPerson1011List()
   { 
-    log.info("initPerson109List");
-    person109List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson1011List");
+    person1011List = em.createQuery("from " + "Person").getResultList();
   }
 
-  @DataModel("project119List") private List<ResearchProject> project119List;
+  @DataModel("project1111List") private List<ResearchProject> project1111List;
 
-  public List<ResearchProject> getProject119List()
+  public List<ResearchProject> getProject1111List()
   { 
-    log.info("getProject119List");
-    return project119List;
+    log.info("getProject1111List");
+    return project1111List;
   }
 
-  @Factory("project119List") public void initProject119List()
+  @Factory("project1111List") public void initProject1111List()
   { 
-    log.info("initProject119List");
-    project119List = em.createQuery("from " + "ResearchProject").getResultList();
+    log.info("initProject1111List");
+    project1111List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 }

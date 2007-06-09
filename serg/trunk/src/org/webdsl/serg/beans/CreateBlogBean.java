@@ -40,19 +40,19 @@ import org.webdsl.serg.domain.*;
     log.info("createBlog" + ".initalize()");
     Blog var19 = new Blog();
     blog = var19;
-    initPerson14List();
+    initPerson15List();
     initBlogEntry5List();
     initCategory6List();
-    initPerson1018List();
-    initProject1118List();
+    initPerson1020List();
+    initProject1120List();
   }
 
   @Destroy @Remove public void destroy()
   { }
 
-  public void setPerson4(Person person15)
+  public void setPerson4(Person person16)
   { 
-    blog.setAuthor(person15);
+    blog.setAuthor(person16);
   }
 
   public void removeBlogEntry1(BlogEntry blogEntry4)
@@ -86,44 +86,44 @@ import org.webdsl.serg.domain.*;
     return "/" + "viewBlog" + ".seam?" + ("blog" + "=" + blog.getId() + "");
   }
 
-  private String newPerson14;
+  private String newPerson15;
 
-  public void setNewPerson14(String p)
+  public void setNewPerson15(String p)
   { 
-    newPerson14 = p;
+    newPerson15 = p;
   }
 
-  public String getNewPerson14()
+  public String getNewPerson15()
   { 
-    return newPerson14;
+    return newPerson15;
   }
 
-  public void selectPerson14(ValueChangeEvent event)
+  public void selectPerson15(ValueChangeEvent event)
   { 
-    log.info("selectPerson14" + ": new value = " + " " + event.getNewValue());
+    log.info("selectPerson15" + ": new value = " + " " + event.getNewValue());
     Long id = new Long((String)event.getNewValue());
     if(id > 0)
     { 
-      Person person14 = em.find(Person.class, id);
-      setPerson4(person14);
+      Person person15 = em.find(Person.class, id);
+      setPerson4(person15);
     }
   }
 
-  @DataModel("person14List") private Map<String, String> person14List;
+  @DataModel("person15List") private Map<String, String> person15List;
 
-  public Map<String, String> getPerson14List()
+  public Map<String, String> getPerson15List()
   { 
-    return person14List;
+    return person15List;
   }
 
-  @Factory("person14List") public void initPerson14List()
+  @Factory("person15List") public void initPerson15List()
   { 
-    log.info("initPerson14List");
-    person14List = new HashMap<String, String>();
+    log.info("initPerson15List");
+    person15List = new HashMap<String, String>();
     for(Object o : em.createQuery("from " + "Person").getResultList())
     { 
       Person p = (Person)o;
-      person14List.put(p.getName(), p.getId().toString());
+      person15List.put(p.getName(), p.getId().toString());
     }
   }
 
@@ -209,32 +209,32 @@ import org.webdsl.serg.domain.*;
     }
   }
 
-  @DataModel("person1018List") private List<Person> person1018List;
+  @DataModel("person1020List") private List<Person> person1020List;
 
-  public List<Person> getPerson1018List()
+  public List<Person> getPerson1020List()
   { 
-    log.info("getPerson1018List");
-    return person1018List;
+    log.info("getPerson1020List");
+    return person1020List;
   }
 
-  @Factory("person1018List") public void initPerson1018List()
+  @Factory("person1020List") public void initPerson1020List()
   { 
-    log.info("initPerson1018List");
-    person1018List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson1020List");
+    person1020List = em.createQuery("from " + "Person").getResultList();
   }
 
-  @DataModel("project1118List") private List<ResearchProject> project1118List;
+  @DataModel("project1120List") private List<ResearchProject> project1120List;
 
-  public List<ResearchProject> getProject1118List()
+  public List<ResearchProject> getProject1120List()
   { 
-    log.info("getProject1118List");
-    return project1118List;
+    log.info("getProject1120List");
+    return project1120List;
   }
 
-  @Factory("project1118List") public void initProject1118List()
+  @Factory("project1120List") public void initProject1120List()
   { 
-    log.info("initProject1118List");
-    project1118List = em.createQuery("from " + "ResearchProject").getResultList();
+    log.info("initProject1120List");
+    project1120List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 
   private Blog blog;

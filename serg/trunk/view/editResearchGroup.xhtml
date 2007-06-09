@@ -21,8 +21,8 @@
         
       <li>
          <h:outputText value="People"/> 
-      <h:dataTable var="person1042" value="#{editResearchGroup.person1042List}"> 
-      <h:column> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person1042.id}"/> <h:outputText value="#{person1042.name}"/> </s:link> </h:column> 
+      <h:dataTable var="person1043" value="#{editResearchGroup.person1043List}"> 
+      <h:column> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person1043.id}"/> <h:outputText value="#{person1043.name}"/> </s:link> </h:column> 
     </h:dataTable>
     
       </li>
@@ -33,8 +33,8 @@
         
       <li>
          <h:outputText value="Projects"/> 
-      <h:dataTable var="project1142" value="#{editResearchGroup.project1142List}"> 
-      <h:column> <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project1142.id}"/> <h:outputText value="#{project1142.acronym}"/> </s:link> </h:column> 
+      <h:dataTable var="project1143" value="#{editResearchGroup.project1143List}"> 
+      <h:column> <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project1143.id}"/> <h:outputText value="#{project1143.acronym}"/> </s:link> </h:column> 
     </h:dataTable>
     
       </li>
@@ -165,34 +165,51 @@
     
       <tr> <td> <h:outputText value="Members"/> </td>  <td>
     <div class="inputAssociationSet">
-      <h:dataTable var="person50" value="#{editResearchGroup.researchGroup.membersList}"> 
+      <h:dataTable var="person51" value="#{editResearchGroup.researchGroup.membersList}"> 
       <h:column>
-    <div class="listAssociation"> <h:outputText value="#{person50.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{editResearchGroup.removePerson6(person50)}"/>
+    <div class="listAssociation"> <h:outputText value="#{person51.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{editResearchGroup.removePerson6(person51)}"/>
     </div>
     </h:column> 
     </h:dataTable>
     
-       <h:selectOneMenu value="#{editResearchGroup.newPerson51}" onchange="submit()" valueChangeListener="#{editResearchGroup.selectPerson51}">
+       <h:selectOneMenu value="#{editResearchGroup.newPerson52}" onchange="submit()" valueChangeListener="#{editResearchGroup.selectPerson52}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{editResearchGroup.person51List}" var="person51" label="#{person51.label}"/>
+          <f:selectItems value="#{editResearchGroup.person52List}" var="person52" label="#{person52.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
     
       <tr> <td> <h:outputText value="Projects"/> </td>  <td>
     <div class="inputAssociationSet">
-      <h:dataTable var="researchProject11" value="#{editResearchGroup.researchGroup.projectsList}"> 
+      <h:dataTable var="researchProject26" value="#{editResearchGroup.researchGroup.projectsList}"> 
       <h:column>
-    <div class="listAssociation"> <h:outputText value="#{researchProject11.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{editResearchGroup.removeResearchProject3(researchProject11)}"/>
+    <div class="listAssociation"> <h:outputText value="#{researchProject26.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{editResearchGroup.removeResearchProject9(researchProject26)}"/>
     </div>
     </h:column> 
     </h:dataTable>
     
-       <h:selectOneMenu value="#{editResearchGroup.newResearchProject12}" onchange="submit()" valueChangeListener="#{editResearchGroup.selectResearchProject12}">
+       <h:selectOneMenu value="#{editResearchGroup.newResearchProject27}" onchange="submit()" valueChangeListener="#{editResearchGroup.selectResearchProject27}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{editResearchGroup.researchProject12List}" var="researchProject12" label="#{researchProject12.label}"/>
+          <f:selectItems value="#{editResearchGroup.researchProject27List}" var="researchProject27" label="#{researchProject27.label}"/>
+        </h:selectOneMenu>
+    </div>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Colloquia"/> </td>  <td>
+    <div class="inputAssociationSet">
+      <h:dataTable var="colloquium2" value="#{editResearchGroup.researchGroup.colloquiaList}"> 
+      <h:column>
+    <div class="listAssociation"> <h:outputText value="#{colloquium2.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{editResearchGroup.removeColloquium0(colloquium2)}"/>
+    </div>
+    </h:column> 
+    </h:dataTable>
+    
+       <h:selectOneMenu value="#{editResearchGroup.newColloquium3}" onchange="submit()" valueChangeListener="#{editResearchGroup.selectColloquium3}">
+          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
+          <f:selectItems value="#{editResearchGroup.colloquium3List}" var="colloquium3" label="#{colloquium3.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

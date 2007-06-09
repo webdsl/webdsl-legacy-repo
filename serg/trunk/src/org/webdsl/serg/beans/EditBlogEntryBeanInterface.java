@@ -57,11 +57,11 @@ import org.webdsl.serg.domain.*;
 
   public void initBlogComment4List();
 
-  public List<Person> getPerson1019List();
+  public List<Person> getPerson1021List();
 
-  public void initPerson1019List();
+  public void initPerson1021List();
 
-  public List<ResearchProject> getProject1119List();
+  public List<ResearchProject> getProject1121List();
 
-  public void initProject1119List();
+  public void initProject1121List();
 }

@@ -53,13 +53,13 @@ import org.webdsl.serg.domain.*;
 
   public void initBlogComment6List();
 
-  public List<Person> getPerson1020List();
+  public List<Person> getPerson1022List();
 
-  public void initPerson1020List();
+  public void initPerson1022List();
 
-  public List<ResearchProject> getProject1120List();
+  public List<ResearchProject> getProject1122List();
 
-  public void initProject1120List();
+  public void initProject1122List();
 
   public BlogEntry getBlogEntry();
 

@@ -3,13 +3,14 @@ module groups
 section domain.
 
   ResearchGroup {
-    acronym  :: String (name)
-    fullname :: String
-    mission  :: Text
-    logo     :: Image
-    members  -> Set<Person>
-    projects -> Set<ResearchProject>
-    news     -> List<News>
+    acronym   :: String (name)
+    fullname  :: String
+    mission   :: Text
+    logo      :: Image
+    members   -> Set<Person>
+    projects  -> Set<ResearchProject>
+    colloquia -> Set<Colloquium>
+    news      -> List<News>
   }
   
   // model roles of people
@@ -25,6 +26,16 @@ section group page.
       listitem{ navigate(viewResearchGroup(group)){text(group.acronym)} }
       listitem{ navigate("People", groupMembers(group)) }
       listitem{ navigate("Publications", groupPublications(group)) }
+      list { navigate("Projects", groupProjects(group))
+        for(project : ResearchProject in group.projectsList) {
+          navigate(project.name, viewResearchProject(project))
+        }
+      }
+      list { "Colloquia"
+        for(coll : Colloquium in group.colloquiaList) {
+          navigate(coll.name, viewColloquium(coll))
+        }
+      }
     }
   }
   
@@ -34,7 +45,9 @@ section group page.
   }
       
   define page viewResearchGroup(group : ResearchGroup) {
-    groupTemplate(group)
+    //groupTemplate(group)
+    main()
+    define sidebar() { groupSidebar(group) }
     title{text(group.acronym)}
     
     define manageMenu() {
@@ -68,12 +81,42 @@ section group page.
   }
   
   define page groupMembers(group : ResearchGroup) {
-    groupTemplate(group)
+    main()
+    define sidebar() { groupSidebar(group) }
+    define body() {
+      section{
+        header{"Group Members"}
+        for(person : Person) { 
+          image(person.photo) output(person)
+        }
+      }
+    }
   }
   
+  define page groupProjects(group : ResearchGroup) {
+    main()
+    define sidebar() { groupSidebar(group) }
+    define body() { 
+      section{
+        header{"Projects"}
+        for(project : ResearchProject in group.projectsList) {
+          navigate(viewResearchProject(project)){
+            text(project.fullname) " (" text(project.acronym) ")"
+          }
+        }
+      }
+    }
+  }
+   
   define page groupPublications(group : ResearchGroup) {
-    groupTemplate(group)
-    allGroupPublications(group)
+    main()
+    define sidebar() { groupSidebar(group) }
+    define body() { 
+      section{
+        header{"Publications by " text(group.acronym) " Members"}
+        allGroupPublications(group)
+      }
+    }
   }
   
   define recentGroupPublications(group : ResearchGroup) {

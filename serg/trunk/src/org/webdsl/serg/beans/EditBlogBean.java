@@ -47,11 +47,11 @@ import org.webdsl.serg.domain.*;
     { 
       blog = em.find(Blog.class, blogId);
     }
-    initPerson12List();
+    initPerson13List();
     initBlogEntry3List();
     initCategory4List();
-    initPerson1017List();
-    initProject1117List();
+    initPerson1019List();
+    initProject1119List();
   }
 
   @Destroy @Remove public void destroy()
@@ -73,9 +73,9 @@ import org.webdsl.serg.domain.*;
     return blog;
   }
 
-  public void setPerson3(Person person13)
+  public void setPerson3(Person person14)
   { 
-    blog.setAuthor(person13);
+    blog.setAuthor(person14);
   }
 
   public void removeBlogEntry0(BlogEntry blogEntry2)
@@ -109,44 +109,44 @@ import org.webdsl.serg.domain.*;
     return "/" + "viewBlog" + ".seam?" + ("blog" + "=" + blog.getId() + "");
   }
 
-  private String newPerson12;
+  private String newPerson13;
 
-  public void setNewPerson12(String p)
+  public void setNewPerson13(String p)
   { 
-    newPerson12 = p;
+    newPerson13 = p;
   }
 
-  public String getNewPerson12()
+  public String getNewPerson13()
   { 
-    return newPerson12;
+    return newPerson13;
   }
 
-  public void selectPerson12(ValueChangeEvent event)
+  public void selectPerson13(ValueChangeEvent event)
   { 
-    log.info("selectPerson12" + ": new value = " + " " + event.getNewValue());
+    log.info("selectPerson13" + ": new value = " + " " + event.getNewValue());
     Long id = new Long((String)event.getNewValue());
     if(id > 0)
     { 
-      Person person12 = em.find(Person.class, id);
-      setPerson3(person12);
+      Person person13 = em.find(Person.class, id);
+      setPerson3(person13);
     }
   }
 
-  @DataModel("person12List") private Map<String, String> person12List;
+  @DataModel("person13List") private Map<String, String> person13List;
 
-  public Map<String, String> getPerson12List()
+  public Map<String, String> getPerson13List()
   { 
-    return person12List;
+    return person13List;
   }
 
-  @Factory("person12List") public void initPerson12List()
+  @Factory("person13List") public void initPerson13List()
   { 
-    log.info("initPerson12List");
-    person12List = new HashMap<String, String>();
+    log.info("initPerson13List");
+    person13List = new HashMap<String, String>();
     for(Object o : em.createQuery("from " + "Person").getResultList())
     { 
       Person p = (Person)o;
-      person12List.put(p.getName(), p.getId().toString());
+      person13List.put(p.getName(), p.getId().toString());
     }
   }
 
@@ -232,31 +232,31 @@ import org.webdsl.serg.domain.*;
     }
   }
 
-  @DataModel("person1017List") private List<Person> person1017List;
+  @DataModel("person1019List") private List<Person> person1019List;
 
-  public List<Person> getPerson1017List()
+  public List<Person> getPerson1019List()
   { 
-    log.info("getPerson1017List");
-    return person1017List;
+    log.info("getPerson1019List");
+    return person1019List;
   }
 
-  @Factory("person1017List") public void initPerson1017List()
+  @Factory("person1019List") public void initPerson1019List()
   { 
-    log.info("initPerson1017List");
-    person1017List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson1019List");
+    person1019List = em.createQuery("from " + "Person").getResultList();
   }
 
-  @DataModel("project1117List") private List<ResearchProject> project1117List;
+  @DataModel("project1119List") private List<ResearchProject> project1119List;
 
-  public List<ResearchProject> getProject1117List()
+  public List<ResearchProject> getProject1119List()
   { 
-    log.info("getProject1117List");
-    return project1117List;
+    log.info("getProject1119List");
+    return project1119List;
   }
 
-  @Factory("project1117List") public void initProject1117List()
+  @Factory("project1119List") public void initProject1119List()
   { 
-    log.info("initProject1117List");
-    project1117List = em.createQuery("from " + "ResearchProject").getResultList();
+    log.info("initProject1119List");
+    project1119List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 }

@@ -81,16 +81,16 @@ import org.webdsl.serg.domain.*;
     this._end = _end;
   }
 
-  private String _Venue = "";
+  private String _venue = "";
 
   public String getVenue()
   { 
-    return _Venue;
+    return _venue;
   }
 
-  public void setVenue(String _Venue)
+  public void setVenue(String _venue)
   { 
-    this._Venue = _Venue;
+    this._venue = _venue;
   }
 
   @Column(length = 1000000) private String _abstract = "";
@@ -103,6 +103,23 @@ import org.webdsl.serg.domain.*;
   public void setAbstract(String _abstract)
   { 
     this._abstract = _abstract;
+  }
+
+  @ManyToMany private java.util.List<ResearchProject> _projects = new java.util.ArrayList<ResearchProject>();
+
+  public java.util.List<ResearchProject> getProjects()
+  { 
+    return _projects;
+  }
+
+  public void setProjects(java.util.List<ResearchProject> _projects)
+  { 
+    this._projects = _projects;
+  }
+
+  public java.util.List<ResearchProject> getProjectsList()
+  { 
+    return new ArrayList(getProjects());
   }
 
   public String getName()

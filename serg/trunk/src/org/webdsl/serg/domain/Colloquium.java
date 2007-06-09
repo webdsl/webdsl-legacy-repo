@@ -33,21 +33,16 @@ import org.webdsl.serg.domain.*;
     this._name = _name;
   }
 
-  @ManyToMany @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.ALL}) private java.util.List<Presentation> _talks = new java.util.ArrayList<Presentation>();
+  @Column(length = 1000000) private String _description = "";
 
-  public java.util.List<Presentation> getTalks()
+  public String getDescription()
   { 
-    return _talks;
+    return _description;
   }
 
-  public void setTalks(java.util.List<Presentation> _talks)
+  public void setDescription(String _description)
   { 
-    this._talks = _talks;
-  }
-
-  public java.util.List<Presentation> getTalksList()
-  { 
-    return new ArrayList(getTalks());
+    this._description = _description;
   }
 
   @ManyToOne @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private Person _contact = null;
@@ -72,5 +67,51 @@ import org.webdsl.serg.domain.*;
   public void setMailinglist(String _mailinglist)
   { 
     this._mailinglist = _mailinglist;
+  }
+
+  @ManyToOne @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private ResearchGroup _group = null;
+
+  public ResearchGroup getGroup()
+  { 
+    return _group;
+  }
+
+  public void setGroup(ResearchGroup _group)
+  { 
+    this._group = _group;
+  }
+
+  @ManyToMany @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private java.util.List<ResearchProject> _projects = new java.util.ArrayList<ResearchProject>();
+
+  public java.util.List<ResearchProject> getProjects()
+  { 
+    return _projects;
+  }
+
+  public void setProjects(java.util.List<ResearchProject> _projects)
+  { 
+    this._projects = _projects;
+  }
+
+  public java.util.List<ResearchProject> getProjectsList()
+  { 
+    return new ArrayList(getProjects());
+  }
+
+  @ManyToMany @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.ALL}) private java.util.List<Presentation> _presentations = new java.util.ArrayList<Presentation>();
+
+  public java.util.List<Presentation> getPresentations()
+  { 
+    return _presentations;
+  }
+
+  public void setPresentations(java.util.List<Presentation> _presentations)
+  { 
+    this._presentations = _presentations;
+  }
+
+  public java.util.List<Presentation> getPresentationsList()
+  { 
+    return new ArrayList(getPresentations());
   }
 }

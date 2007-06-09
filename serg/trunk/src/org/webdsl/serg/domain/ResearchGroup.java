@@ -103,6 +103,23 @@ import org.webdsl.serg.domain.*;
     return new ArrayList(getProjects());
   }
 
+  @ManyToMany @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private java.util.Set<Colloquium> _colloquia = new java.util.HashSet<Colloquium>();
+
+  public java.util.Set<Colloquium> getColloquia()
+  { 
+    return _colloquia;
+  }
+
+  public void setColloquia(java.util.Set<Colloquium> _colloquia)
+  { 
+    this._colloquia = _colloquia;
+  }
+
+  public java.util.List<Colloquium> getColloquiaList()
+  { 
+    return new ArrayList(getColloquia());
+  }
+
   @ManyToMany @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private java.util.List<News> _news = new java.util.ArrayList<News>();
 
   public java.util.List<News> getNews()

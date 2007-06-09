@@ -11,13 +11,17 @@ import org.webdsl.serg.domain.*;
 
   public void destroy();
 
-  public void removePerson7(Person person52);
+  public void removePerson7(Person person53);
 
-  public void addPerson7(Person person52);
+  public void addPerson7(Person person53);
 
-  public void removeResearchProject4(ResearchProject researchProject13);
+  public void removeResearchProject10(ResearchProject researchProject28);
 
-  public void addResearchProject4(ResearchProject researchProject13);
+  public void addResearchProject10(ResearchProject researchProject28);
+
+  public void removeColloquium1(Colloquium colloquium4);
+
+  public void addColloquium1(Colloquium colloquium4);
 
   public void removeNews1(News news5);
 
@@ -27,25 +31,35 @@ import org.webdsl.serg.domain.*;
 
   public String save();
 
-  public void setNewPerson53(String p);
+  public void setNewPerson54(String p);
 
-  public String getNewPerson53();
+  public String getNewPerson54();
 
-  public void selectPerson53(ValueChangeEvent event);
+  public void selectPerson54(ValueChangeEvent event);
 
-  public Map<String, String> getPerson53List();
+  public Map<String, String> getPerson54List();
 
-  public void initPerson53List();
+  public void initPerson54List();
 
-  public void setNewResearchProject14(String p);
+  public void setNewResearchProject29(String p);
 
-  public String getNewResearchProject14();
+  public String getNewResearchProject29();
 
-  public void selectResearchProject14(ValueChangeEvent event);
+  public void selectResearchProject29(ValueChangeEvent event);
 
-  public Map<String, String> getResearchProject14List();
+  public Map<String, String> getResearchProject29List();
 
-  public void initResearchProject14List();
+  public void initResearchProject29List();
+
+  public void setNewColloquium5(String p);
+
+  public String getNewColloquium5();
+
+  public void selectColloquium5(ValueChangeEvent event);
+
+  public Map<String, String> getColloquium5List();
+
+  public void initColloquium5List();
 
   public void setNewNews6(String p);
 
@@ -57,13 +71,13 @@ import org.webdsl.serg.domain.*;
 
   public void initNews6List();
 
-  public List<Person> getPerson1043List();
+  public List<Person> getPerson1044List();
 
-  public void initPerson1043List();
+  public void initPerson1044List();
 
-  public List<ResearchProject> getProject1143List();
+  public List<ResearchProject> getProject1144List();
 
-  public void initProject1143List();
+  public void initProject1144List();
 
   public ResearchGroup getResearchGroup();
 
