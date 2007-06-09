@@ -5,6 +5,7 @@ import java.io.Serializable;
 import static javax.persistence.PersistenceContextType.EXTENDED;
 import javax.persistence.PersistenceContext;
 import javax.persistence.EntityManager;
+import javax.faces.event.ValueChangeEvent;
 import javax.ejb.Stateless;
 import javax.ejb.Stateful;
 import javax.ejb.Remove;
@@ -46,9 +47,12 @@ import org.webdsl.serg.domain.*;
     { 
       publication = em.find(Publication.class, publicationId);
     }
-    initPerson3List();
-    initResearchProject1List();
-    initPerson10List();
+    Person var42 = new Person();
+    newAuthor0 = var42;
+    initPerson37List();
+    initResearchProject6List();
+    initPerson1034List();
+    initProject1134List();
   }
 
   @Destroy @Remove public void destroy()
@@ -70,24 +74,31 @@ import org.webdsl.serg.domain.*;
     return publication;
   }
 
-  public void removePerson0(Person person2)
+  public void removePerson1(Person person36)
   { 
-    this.getPublication().getAuthors().remove(person2);
+    this.getPublication().getAuthors().remove(person36);
   }
 
-  public void addPerson0(Person person2)
+  public void addPerson1(Person person36)
   { 
-    this.getPublication().getAuthors().add(person2);
+    this.getPublication().getAuthors().add(person36);
   }
 
-  public void removeResearchProject0(ResearchProject researchProject0)
+  public void addNewAuthor()
   { 
-    this.getPublication().getProjectsList().remove(researchProject0);
+    this.getPublication().getAuthors().add(this.getNewAuthor0());
+    Person var41 = new Person();
+    newAuthor0 = var41;
   }
 
-  public void addResearchProject0(ResearchProject researchProject0)
+  public void removeResearchProject1(ResearchProject researchProject5)
   { 
-    this.getPublication().getProjectsList().add(researchProject0);
+    this.getPublication().getProjects().remove(researchProject5);
+  }
+
+  public void addResearchProject1(ResearchProject researchProject5)
+  { 
+    this.getPublication().getProjects().add(researchProject5);
   }
 
   @End public String cancel()
@@ -101,93 +112,127 @@ import org.webdsl.serg.domain.*;
     return "/" + "viewPublication" + ".seam?" + ("publication" + "=" + publication.getId() + "");
   }
 
-  private String newPerson3;
+  private String newPerson37;
 
-  public void setNewPerson3(String p)
+  public void setNewPerson37(String p)
   { 
-    newPerson3 = p;
+    newPerson37 = p;
   }
 
-  public String getNewPerson3()
+  public String getNewPerson37()
   { 
-    return newPerson3;
+    return newPerson37;
   }
 
-  public String selectPerson3()
+  public void selectPerson37(ValueChangeEvent event)
   { 
-    log.info("selectPerson3" + " " + newPerson3);
-    Person person3 = em.find(Person.class, new Long(newPerson3));
-    addPerson0(person3);
-    return null;
+    log.info("selectPerson37" + ": new value = " + " " + event.getNewValue());
+    Long id = new Long((String)event.getNewValue());
+    if(id > 0)
+    { 
+      Person person37 = em.find(Person.class, id);
+      addPerson1(person37);
+    }
   }
 
-  @DataModel("person3List") private Map<String, String> person3List;
+  @DataModel("person37List") private Map<String, String> person37List;
 
-  public Map<String, String> getPerson3List()
+  public Map<String, String> getPerson37List()
   { 
-    return person3List;
+    return person37List;
   }
 
-  @Factory("person3List") public void initPerson3List()
+  @Factory("person37List") public void initPerson37List()
   { 
-    log.info("initPerson3List");
-    person3List = new HashMap<String, String>();
+    log.info("initPerson37List");
+    person37List = new HashMap<String, String>();
     for(Object o : em.createQuery("from " + "Person").getResultList())
     { 
       Person p = (Person)o;
-      person3List.put(p.getName(), p.getId().toString());
+      person37List.put(p.getName(), p.getId().toString());
     }
   }
 
-  private String newResearchProject1;
+  private String newResearchProject6;
 
-  public void setNewResearchProject1(String p)
+  public void setNewResearchProject6(String p)
   { 
-    newResearchProject1 = p;
+    newResearchProject6 = p;
   }
 
-  public String getNewResearchProject1()
+  public String getNewResearchProject6()
   { 
-    return newResearchProject1;
+    return newResearchProject6;
   }
 
-  public String selectResearchProject1()
+  public void selectResearchProject6(ValueChangeEvent event)
   { 
-    log.info("selectResearchProject1" + " " + newResearchProject1);
-    ResearchProject researchProject1 = em.find(ResearchProject.class, new Long(newResearchProject1));
-    addResearchProject0(researchProject1);
-    return null;
+    log.info("selectResearchProject6" + ": new value = " + " " + event.getNewValue());
+    Long id = new Long((String)event.getNewValue());
+    if(id > 0)
+    { 
+      ResearchProject researchProject6 = em.find(ResearchProject.class, id);
+      addResearchProject1(researchProject6);
+    }
   }
 
-  @DataModel("researchProject1List") private Map<String, String> researchProject1List;
+  @DataModel("researchProject6List") private Map<String, String> researchProject6List;
 
-  public Map<String, String> getResearchProject1List()
+  public Map<String, String> getResearchProject6List()
   { 
-    return researchProject1List;
+    return researchProject6List;
   }
 
-  @Factory("researchProject1List") public void initResearchProject1List()
+  @Factory("researchProject6List") public void initResearchProject6List()
   { 
-    log.info("initResearchProject1List");
-    researchProject1List = new HashMap<String, String>();
+    log.info("initResearchProject6List");
+    researchProject6List = new HashMap<String, String>();
     for(Object o : em.createQuery("from " + "ResearchProject").getResultList())
     { 
       ResearchProject p = (ResearchProject)o;
-      researchProject1List.put(p.getName(), p.getId().toString());
+      researchProject6List.put(p.getName(), p.getId().toString());
     }
   }
 
-  @DataModel("person10List") private List<Person> person10List;
+  @DataModel("person1034List") private List<Person> person1034List;
 
-  public List<Person> getPerson10List()
+  public List<Person> getPerson1034List()
   { 
-    log.info("getPerson10List");
-    return person10List;
+    log.info("getPerson1034List");
+    return person1034List;
   }
 
-  @Factory("person10List") public void initPerson10List()
+  @Factory("person1034List") public void initPerson1034List()
   { 
-    log.info("initPerson10List");
-    person10List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson1034List");
+    person1034List = em.createQuery("from " + "Person").getResultList();
+  }
+
+  @DataModel("project1134List") private List<ResearchProject> project1134List;
+
+  public List<ResearchProject> getProject1134List()
+  { 
+    log.info("getProject1134List");
+    return project1134List;
+  }
+
+  @Factory("project1134List") public void initProject1134List()
+  { 
+    log.info("initProject1134List");
+    project1134List = em.createQuery("from " + "ResearchProject").getResultList();
+  }
+
+  private Person newAuthor0;
+
+  public Person getNewAuthor0()
+  { 
+    log.info("getNewAuthor0");
+    return newAuthor0;
+  }
+
+  public void setNewAuthor0(Person newAuthor0)
+  { 
+    log.info("setNewAuthor0");
+    this.newAuthor0 = newAuthor0;
   }
 }

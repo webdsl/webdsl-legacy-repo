@@ -1,6 +1,7 @@
 package org.webdsl.serg.beans;
 
 import org.jboss.annotation.ejb.Local;
+import javax.faces.event.ValueChangeEvent;
 import java.util.*;
 import org.webdsl.serg.domain.*;
 
@@ -10,43 +11,53 @@ import org.webdsl.serg.domain.*;
 
   public void destroy();
 
-  public void removePerson1(Person person4);
+  public void removePerson2(Person person38);
 
-  public void addPerson1(Person person4);
+  public void addPerson2(Person person38);
 
-  public void removeResearchProject1(ResearchProject researchProject2);
+  public void addNewAuthor();
 
-  public void addResearchProject1(ResearchProject researchProject2);
+  public void removeResearchProject2(ResearchProject researchProject7);
+
+  public void addResearchProject2(ResearchProject researchProject7);
 
   public String cancel();
 
   public String save();
 
-  public void setNewPerson5(String p);
+  public void setNewPerson39(String p);
 
-  public String getNewPerson5();
+  public String getNewPerson39();
 
-  public String selectPerson5();
+  public void selectPerson39(ValueChangeEvent event);
 
-  public Map<String, String> getPerson5List();
+  public Map<String, String> getPerson39List();
 
-  public void initPerson5List();
+  public void initPerson39List();
 
-  public void setNewResearchProject3(String p);
+  public void setNewResearchProject8(String p);
 
-  public String getNewResearchProject3();
+  public String getNewResearchProject8();
 
-  public String selectResearchProject3();
+  public void selectResearchProject8(ValueChangeEvent event);
 
-  public Map<String, String> getResearchProject3List();
+  public Map<String, String> getResearchProject8List();
 
-  public void initResearchProject3List();
+  public void initResearchProject8List();
 
-  public List<Person> getPerson10List();
+  public List<Person> getPerson1035List();
 
-  public void initPerson10List();
+  public void initPerson1035List();
+
+  public List<ResearchProject> getProject1135List();
+
+  public void initProject1135List();
 
   public Publication getPublication();
 
   public void setPublication(Publication publication);
+
+  public Person getNewAuthor1();
+
+  public void setNewAuthor1(Person newAuthor1);
 }

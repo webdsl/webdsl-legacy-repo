@@ -1,6 +1,7 @@
 package org.webdsl.serg.beans;
 
 import org.jboss.annotation.ejb.Local;
+import javax.faces.event.ValueChangeEvent;
 import java.util.*;
 import org.webdsl.serg.domain.*;
 
@@ -14,23 +15,27 @@ import org.webdsl.serg.domain.*;
 
   public User getUser();
 
-  public void setPerson0(Person person1);
+  public void setPerson0(Person person6);
 
   public String cancel();
 
   public String save();
 
-  public void setNewPerson0(String p);
+  public void setNewPerson5(String p);
 
-  public String getNewPerson0();
+  public String getNewPerson5();
 
-  public String selectPerson0();
+  public void selectPerson5(ValueChangeEvent event);
 
-  public Map<String, String> getPerson0List();
+  public Map<String, String> getPerson5List();
 
-  public void initPerson0List();
+  public void initPerson5List();
 
-  public List<Person> getPerson10List();
+  public List<Person> getPerson107List();
 
-  public void initPerson10List();
+  public void initPerson107List();
+
+  public List<ResearchProject> getProject117List();
+
+  public void initProject117List();
 }

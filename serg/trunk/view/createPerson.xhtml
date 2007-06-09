@@ -20,22 +20,22 @@
       <ul>
         
       <li>
-         <h:outputText value="New"/> 
-      <ul>
-        
-      <li>
-         <s:link view="/createUser.xhtml" propagation="none"> <h:outputText value="New User"/> </s:link> 
-      </li>
+         <h:outputText value="People"/> 
+      <h:dataTable var="person1014" value="#{createPerson.person1014List}"> 
+      <h:column> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person1014.id}"/> <h:outputText value="#{person1014.name}"/> </s:link> </h:column> 
+    </h:dataTable>
     
-      <li>
-         <s:link view="/createPerson.xhtml" propagation="none"> <h:outputText value="New Person"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/createPublication.xhtml" propagation="none"> <h:outputText value="New Publication"/> </s:link> 
       </li>
     
       </ul>
+    
+      <ul>
+        
+      <li>
+         <h:outputText value="Projects"/> 
+      <h:dataTable var="project1114" value="#{createPerson.project1114List}"> 
+      <h:column> <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project1114.id}"/> <h:outputText value="#{project1114.acronym}"/> </s:link> </h:column> 
+    </h:dataTable>
     
       </li>
     
@@ -49,6 +49,46 @@
         
     <div class="manageMenu"></div>
     
+      <li>
+         <h:outputText value="New"/> 
+      <ul>
+        
+      <li>
+         <s:link view="/createUser.xhtml" propagation="none"> <h:outputText value="User"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createPerson.xhtml" propagation="none"> <h:outputText value="Person"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createPublication.xhtml" propagation="none"> <h:outputText value="Publication"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createTechnicalReport.xhtml" propagation="none"> <h:outputText value="Technical Report"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createResearchProject.xhtml" propagation="none"> <h:outputText value="Project"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createBlog.xhtml" propagation="none"> <h:outputText value="Blog"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createBlogEntry.xhtml" propagation="none"> <h:outputText value="Blog Entry"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createResearchProject.xhtml" propagation="none"> <h:outputText value="Research Project"/> </s:link> 
+      </li>
+    
+      </ul>
+    
+      </li>
+    
       </ul>
     
       </li>
@@ -58,11 +98,7 @@
       <ul>
         
       <li>
-         <h:outputText value="People"/> 
-      <h:dataTable var="person10" value="#{createPerson.person10List}"> 
-      <h:column> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person10.id}"/> <h:outputText value="#{person10.name}"/> </s:link> </h:column> 
-    </h:dataTable>
-    
+         <s:link view="/login.xhtml" propagation="none"> <h:outputText value="Login"/> </s:link> 
       </li>
     
       </ul>
@@ -74,44 +110,69 @@
       <h1> <h:outputText value="Create new "/>  <h:outputText value="Person"/> </h1>
     
       <h:form>
+        <s:validateAll>
       <table>
     <div class="editRowsPerson">
       <tr> <td> <h:outputText value="Fullname"/> </td>  <td>
-      <h:inputText required="true" value="#{createPerson.person.fullname}"/>
+      <s:decorate>
+        <h:inputText styleClass="inputString" value="#{createPerson.person.fullname}"/>
+      </s:decorate>
     </td> </tr>
     
       <tr> <td> <h:outputText value="Email"/> </td>  <td>
-      <h:inputText required="true" value="#{createPerson.person.email}"/>
+      <s:decorate>
+        <h:inputText styleClass="inputEmail" value="#{createPerson.person.email}"/>
+      </s:decorate>
     </td> </tr>
     
       <tr> <td> <h:outputText value="Homepage"/> </td>  <td>
-      <h:inputText required="true" value="#{createPerson.person.homepage}"/>
+      <s:decorate>
+        <h:inputText styleClass="inputURL" value="#{createPerson.person.homepage}"/>
+      </s:decorate>
     </td> </tr>
     
       <tr> <td> <h:outputText value="Photo"/> </td>  <td>
-      <h:inputText required="true" value="#{createPerson.person.photo}"/>
+      <s:decorate>
+        <h:inputText styleClass="inputString" value="#{createPerson.person.photo}"/>
+      </s:decorate>
     </td> </tr>
     
       <tr> <td> <h:outputText value="Address"/> </td>  <td> <h:outputText value=""/> </td> </tr>
     
       <tr> <td> <h:outputText value="Street"/> </td>  <td>
-      <h:inputText required="true" value="#{createPerson.person.address.street}"/>
+      <s:decorate>
+        <h:inputText styleClass="inputString" value="#{createPerson.person.address.street}"/>
+      </s:decorate>
     </td> </tr>
     
       <tr> <td> <h:outputText value="City"/> </td>  <td>
-      <h:inputText required="true" value="#{createPerson.person.address.city}"/>
+      <s:decorate>
+        <h:inputText styleClass="inputString" value="#{createPerson.person.address.city}"/>
+      </s:decorate>
     </td> </tr>
     
       <tr> <td> <h:outputText value="Phone"/> </td>  <td>
-      <h:inputText required="true" value="#{createPerson.person.address.phone}"/>
+      <s:decorate>
+        <h:inputText styleClass="inputString" value="#{createPerson.person.address.phone}"/>
+      </s:decorate>
     </td> </tr>
     
       <tr> <td> <h:outputText value="User"/> </td>  <td>
-       <h:selectOneMenu value="#{createPerson.newUser0}">
+    <div class="inputSimpleRefAssociation"> <h:outputText value="#{createPerson.person.user.name}"/>  <h:outputText value=" "/> 
+       <h:selectOneMenu value="#{createPerson.newUser5}" onchange="submit()" valueChangeListener="#{createPerson.selectUser5}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createPerson.user0List}" var="user0" label="#{user0.label}"/>
+          <f:selectItems value="#{createPerson.user5List}" var="user5" label="#{user5.label}"/>
         </h:selectOneMenu>
-        <h:commandButton type="submit" value="Select" action="#{createPerson.selectUser0()}"/>
+    </div>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Blog"/> </td>  <td>
+    <div class="inputSimpleRefAssociation"> <h:outputText value="#{createPerson.person.blog.name}"/>  <h:outputText value=" "/> 
+       <h:selectOneMenu value="#{createPerson.newBlog6}" onchange="submit()" valueChangeListener="#{createPerson.selectBlog6}">
+          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
+          <f:selectItems value="#{createPerson.blog6List}" var="blog6" label="#{blog6.label}"/>
+        </h:selectOneMenu>
+    </div>
     </td> </tr>
     </div>
     </table>
@@ -119,7 +180,8 @@
        <h:commandButton type="submit" value="Save" action="#{createPerson.save()}"/>
      
        <h:commandButton value="Cancel" action="#{createPerson.cancel()}"/>
-    </h:form>
+    </s:validateAll>
+      </h:form>
     </div>
     </div>
     

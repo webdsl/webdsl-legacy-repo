@@ -9,7 +9,7 @@
       <provider>org.hibernate.ejb.HibernatePersistence</provider>
       <jta-data-source>java:/sergDatasource</jta-data-source>
       <properties>
-         <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+         <property name="hibernate.hbm2ddl.auto" value="update"/>
          <property name="hibernate.cache.use_query_cache" value="true"/>
          <property name="hibernate.show_sql" value="true"/>
          <property name="jboss.entity.manager.factory.jndi.name" value="java:/sergEntityManagerFactory"/>

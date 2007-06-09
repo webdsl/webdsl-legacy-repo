@@ -1,6 +1,7 @@
 package org.webdsl.serg.beans;
 
 import org.jboss.annotation.ejb.Local;
+import javax.faces.event.ValueChangeEvent;
 import java.util.*;
 import org.webdsl.serg.domain.*;
 
@@ -10,25 +11,41 @@ import org.webdsl.serg.domain.*;
 
   public void destroy();
 
-  public void setUser0(User user1);
+  public void setUser1(User user6);
+
+  public void setBlog1(Blog blog7);
 
   public String cancel();
 
   public String save();
 
-  public void setNewUser0(String p);
+  public void setNewUser5(String p);
 
-  public String getNewUser0();
+  public String getNewUser5();
 
-  public String selectUser0();
+  public void selectUser5(ValueChangeEvent event);
 
-  public Map<String, String> getUser0List();
+  public Map<String, String> getUser5List();
 
-  public void initUser0List();
+  public void initUser5List();
 
-  public List<Person> getPerson10List();
+  public void setNewBlog6(String p);
 
-  public void initPerson10List();
+  public String getNewBlog6();
+
+  public void selectBlog6(ValueChangeEvent event);
+
+  public Map<String, String> getBlog6List();
+
+  public void initBlog6List();
+
+  public List<Person> getPerson1014List();
+
+  public void initPerson1014List();
+
+  public List<ResearchProject> getProject1114List();
+
+  public void initProject1114List();
 
   public Person getPerson();
 

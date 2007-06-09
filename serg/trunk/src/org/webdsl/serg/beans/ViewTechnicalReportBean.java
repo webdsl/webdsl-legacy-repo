@@ -5,6 +5,7 @@ import java.io.Serializable;
 import static javax.persistence.PersistenceContextType.EXTENDED;
 import javax.persistence.PersistenceContext;
 import javax.persistence.EntityManager;
+import javax.faces.event.ValueChangeEvent;
 import javax.ejb.Stateless;
 import javax.ejb.Stateful;
 import javax.ejb.Remove;
@@ -46,7 +47,8 @@ import org.webdsl.serg.domain.*;
     { 
       technicalReport = em.find(TechnicalReport.class, technicalReportId);
     }
-    initPerson10List();
+    initPerson1039List();
+    initProject1139List();
   }
 
   @Destroy @Remove public void destroy()
@@ -68,17 +70,31 @@ import org.webdsl.serg.domain.*;
     return technicalReport;
   }
 
-  @DataModel("person10List") private List<Person> person10List;
+  @DataModel("person1039List") private List<Person> person1039List;
 
-  public List<Person> getPerson10List()
+  public List<Person> getPerson1039List()
   { 
-    log.info("getPerson10List");
-    return person10List;
+    log.info("getPerson1039List");
+    return person1039List;
   }
 
-  @Factory("person10List") public void initPerson10List()
+  @Factory("person1039List") public void initPerson1039List()
   { 
-    log.info("initPerson10List");
-    person10List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson1039List");
+    person1039List = em.createQuery("from " + "Person").getResultList();
+  }
+
+  @DataModel("project1139List") private List<ResearchProject> project1139List;
+
+  public List<ResearchProject> getProject1139List()
+  { 
+    log.info("getProject1139List");
+    return project1139List;
+  }
+
+  @Factory("project1139List") public void initProject1139List()
+  { 
+    log.info("initProject1139List");
+    project1139List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 }

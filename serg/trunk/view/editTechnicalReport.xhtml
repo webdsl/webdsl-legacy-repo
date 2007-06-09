@@ -20,22 +20,22 @@
       <ul>
         
       <li>
-         <h:outputText value="New"/> 
-      <ul>
-        
-      <li>
-         <s:link view="/createUser.xhtml" propagation="none"> <h:outputText value="New User"/> </s:link> 
-      </li>
+         <h:outputText value="People"/> 
+      <h:dataTable var="person1037" value="#{editTechnicalReport.person1037List}"> 
+      <h:column> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person1037.id}"/> <h:outputText value="#{person1037.name}"/> </s:link> </h:column> 
+    </h:dataTable>
     
-      <li>
-         <s:link view="/createPerson.xhtml" propagation="none"> <h:outputText value="New Person"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/createPublication.xhtml" propagation="none"> <h:outputText value="New Publication"/> </s:link> 
       </li>
     
       </ul>
+    
+      <ul>
+        
+      <li>
+         <h:outputText value="Projects"/> 
+      <h:dataTable var="project1137" value="#{editTechnicalReport.project1137List}"> 
+      <h:column> <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project1137.id}"/> <h:outputText value="#{project1137.acronym}"/> </s:link> </h:column> 
+    </h:dataTable>
     
       </li>
     
@@ -49,6 +49,46 @@
         
     <div class="manageMenu"></div>
     
+      <li>
+         <h:outputText value="New"/> 
+      <ul>
+        
+      <li>
+         <s:link view="/createUser.xhtml" propagation="none"> <h:outputText value="User"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createPerson.xhtml" propagation="none"> <h:outputText value="Person"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createPublication.xhtml" propagation="none"> <h:outputText value="Publication"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createTechnicalReport.xhtml" propagation="none"> <h:outputText value="Technical Report"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createResearchProject.xhtml" propagation="none"> <h:outputText value="Project"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createBlog.xhtml" propagation="none"> <h:outputText value="Blog"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createBlogEntry.xhtml" propagation="none"> <h:outputText value="Blog Entry"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createResearchProject.xhtml" propagation="none"> <h:outputText value="Research Project"/> </s:link> 
+      </li>
+    
+      </ul>
+    
+      </li>
+    
       </ul>
     
       </li>
@@ -58,11 +98,7 @@
       <ul>
         
       <li>
-         <h:outputText value="People"/> 
-      <h:dataTable var="person10" value="#{editTechnicalReport.person10List}"> 
-      <h:column> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person10.id}"/> <h:outputText value="#{person10.name}"/> </s:link> </h:column> 
-    </h:dataTable>
-    
+         <s:link view="/login.xhtml" propagation="none"> <h:outputText value="Login"/> </s:link> 
       </li>
     
       </ul>
@@ -74,22 +110,28 @@
       <h1> <h:outputText value="Edit "/>  <h:outputText value="TechnicalReport"/>  <h:outputText value=" "/>  <h:outputText value="#{editTechnicalReport.technicalReport.name}"/> </h1>
     
       <h:form>
+        <s:validateAll>
       <table>
     <div class="editRowsTechnicalReport">
       <tr> <td> <h:outputText value="Number"/> </td>  <td>
-      <h:inputText required="true" value="#{editTechnicalReport.technicalReport.number}"/>
+      <s:decorate>
+        <h:inputText styleClass="inputInt" value="#{editTechnicalReport.technicalReport.number}"/>
+      </s:decorate>
     </td> </tr>
     
       <tr> <td> <h:outputText value="Document"/> </td>  <td>
-      <h:inputText required="true" value="#{editTechnicalReport.technicalReport.document}"/>
+      <s:decorate>
+        <h:inputTextarea styleClass="inputTextarea" value="#{editTechnicalReport.technicalReport.document}"/>
+      </s:decorate>
     </td> </tr>
     
       <tr> <td> <h:outputText value="Preprintof"/> </td>  <td>
-       <h:selectOneMenu value="#{editTechnicalReport.newPreprintof0}">
+    <div class="inputSimpleRefAssociation"> <h:outputText value="#{editTechnicalReport.technicalReport.preprintof.name}"/>  <h:outputText value=" "/> 
+       <h:selectOneMenu value="#{editTechnicalReport.newPublication4}" onchange="submit()" valueChangeListener="#{editTechnicalReport.selectPublication4}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{editTechnicalReport.preprintof0List}" var="preprintof0" label="#{preprintof0.label}"/>
+          <f:selectItems value="#{editTechnicalReport.publication4List}" var="publication4" label="#{publication4.label}"/>
         </h:selectOneMenu>
-        <h:commandButton type="submit" value="Select" action="#{editTechnicalReport.selectPreprintof0()}"/>
+    </div>
     </td> </tr>
     </div>
     </table>
@@ -97,7 +139,8 @@
        <h:commandButton type="submit" value="Save" action="#{editTechnicalReport.save()}"/>
      
        <h:commandButton value="Cancel" action="#{editTechnicalReport.cancel()}"/>
-    </h:form>
+    </s:validateAll>
+      </h:form>
     </div>
     </div>
     

@@ -20,22 +20,22 @@
       <ul>
         
       <li>
-         <h:outputText value="New"/> 
-      <ul>
-        
-      <li>
-         <s:link view="/createUser.xhtml" propagation="none"> <h:outputText value="New User"/> </s:link> 
-      </li>
+         <h:outputText value="People"/> 
+      <h:dataTable var="person1040" value="#{editResearchProject.person1040List}"> 
+      <h:column> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person1040.id}"/> <h:outputText value="#{person1040.name}"/> </s:link> </h:column> 
+    </h:dataTable>
     
-      <li>
-         <s:link view="/createPerson.xhtml" propagation="none"> <h:outputText value="New Person"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/createPublication.xhtml" propagation="none"> <h:outputText value="New Publication"/> </s:link> 
       </li>
     
       </ul>
+    
+      <ul>
+        
+      <li>
+         <h:outputText value="Projects"/> 
+      <h:dataTable var="project1140" value="#{editResearchProject.project1140List}"> 
+      <h:column> <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project1140.id}"/> <h:outputText value="#{project1140.acronym}"/> </s:link> </h:column> 
+    </h:dataTable>
     
       </li>
     
@@ -49,6 +49,46 @@
         
     <div class="manageMenu"></div>
     
+      <li>
+         <h:outputText value="New"/> 
+      <ul>
+        
+      <li>
+         <s:link view="/createUser.xhtml" propagation="none"> <h:outputText value="User"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createPerson.xhtml" propagation="none"> <h:outputText value="Person"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createPublication.xhtml" propagation="none"> <h:outputText value="Publication"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createTechnicalReport.xhtml" propagation="none"> <h:outputText value="Technical Report"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createResearchProject.xhtml" propagation="none"> <h:outputText value="Project"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createBlog.xhtml" propagation="none"> <h:outputText value="Blog"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createBlogEntry.xhtml" propagation="none"> <h:outputText value="Blog Entry"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createResearchProject.xhtml" propagation="none"> <h:outputText value="Research Project"/> </s:link> 
+      </li>
+    
+      </ul>
+    
+      </li>
+    
       </ul>
     
       </li>
@@ -58,11 +98,7 @@
       <ul>
         
       <li>
-         <h:outputText value="People"/> 
-      <h:dataTable var="person10" value="#{editResearchProject.person10List}"> 
-      <h:column> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person10.id}"/> <h:outputText value="#{person10.name}"/> </s:link> </h:column> 
-    </h:dataTable>
-    
+         <s:link view="/login.xhtml" propagation="none"> <h:outputText value="Login"/> </s:link> 
       </li>
     
       </ul>
@@ -74,61 +110,67 @@
       <h1> <h:outputText value="Edit "/>  <h:outputText value="ResearchProject"/>  <h:outputText value=" "/>  <h:outputText value="#{editResearchProject.researchProject.name}"/> </h1>
     
       <h:form>
+        <s:validateAll>
       <table>
     <div class="editRowsResearchProject">
       <tr> <td> <h:outputText value="Fullname"/> </td>  <td>
-      <h:inputText required="true" value="#{editResearchProject.researchProject.fullname}"/>
+      <s:decorate>
+        <h:inputText styleClass="inputString" value="#{editResearchProject.researchProject.fullname}"/>
+      </s:decorate>
     </td> </tr>
     
       <tr> <td> <h:outputText value="Acronym"/> </td>  <td>
-      <h:inputText required="true" value="#{editResearchProject.researchProject.acronym}"/>
+      <s:decorate>
+        <h:inputText styleClass="inputString" value="#{editResearchProject.researchProject.acronym}"/>
+      </s:decorate>
     </td> </tr>
     
       <tr> <td> <h:outputText value="Description"/> </td>  <td>
-      <h:inputText required="true" value="#{editResearchProject.researchProject.description}"/>
+      <s:decorate>
+        <h:inputTextarea styleClass="inputTextarea" value="#{editResearchProject.researchProject.description}"/>
+      </s:decorate>
     </td> </tr>
     
       <tr> <td> <h:outputText value="Members"/> </td>  <td>
-    <div class="inputAssociation">
-      <h:dataTable var="person8" value="#{editResearchProject.researchProject.membersList}"> 
+    <div class="inputAssociationSet">
+      <h:dataTable var="person42" value="#{editResearchProject.researchProject.membersList}"> 
       <h:column>
-    <div class="listAssociation"> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person8.id}"/> <h:outputText value="#{person8.name}"/> </s:link>  
-       <h:commandLink type="submit" value="[X]" action="#{editResearchProject.removePerson3(person8)}"/>
+    <div class="listAssociation"> <h:outputText value="#{person42.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{editResearchProject.removePerson3(person42)}"/>
     </div>
     </h:column> 
     </h:dataTable>
     
-       <h:selectOneMenu value="#{editResearchProject.newPerson9}">
+       <h:selectOneMenu value="#{editResearchProject.newPerson43}" onchange="submit()" valueChangeListener="#{editResearchProject.selectPerson43}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{editResearchProject.person9List}" var="person9" label="#{person9.label}"/>
+          <f:selectItems value="#{editResearchProject.person43List}" var="person43" label="#{person43.label}"/>
         </h:selectOneMenu>
-        <h:commandButton type="submit" value="Add Person" action="#{editResearchProject.selectPerson9()}"/>
     </div>
     </td> </tr>
     
       <tr> <td> <h:outputText value="Proposal"/> </td>  <td>
-       <h:selectOneMenu value="#{editResearchProject.newProposal0}">
+    <div class="inputSimpleRefAssociation"> <h:outputText value="#{editResearchProject.researchProject.proposal.name}"/>  <h:outputText value=" "/> 
+       <h:selectOneMenu value="#{editResearchProject.newPublication10}" onchange="submit()" valueChangeListener="#{editResearchProject.selectPublication10}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{editResearchProject.proposal0List}" var="proposal0" label="#{proposal0.label}"/>
+          <f:selectItems value="#{editResearchProject.publication10List}" var="publication10" label="#{publication10.label}"/>
         </h:selectOneMenu>
-        <h:commandButton type="submit" value="Select" action="#{editResearchProject.selectProposal0()}"/>
+    </div>
     </td> </tr>
     
       <tr> <td> <h:outputText value="Publications"/> </td>  <td>
-    <div class="inputAssociation">
-      <h:dataTable var="publication0" value="#{editResearchProject.researchProject.publicationsList}"> 
+    <div class="inputAssociationSet">
+      <h:dataTable var="publication12" value="#{editResearchProject.researchProject.publicationsList}"> 
       <h:column>
-    <div class="listAssociation"> <s:link view="/viewPublication.xhtml" propagation="none"><f:param name="publication" value="#{publication0.id}"/> <h:outputText value="#{publication0.name}"/> </s:link>  
-       <h:commandLink type="submit" value="[X]" action="#{editResearchProject.removePublication0(publication0)}"/>
+    <div class="listAssociation"> <h:outputText value="#{publication12.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{editResearchProject.removePublication0(publication12)}"/>
     </div>
     </h:column> 
     </h:dataTable>
     
-       <h:selectOneMenu value="#{editResearchProject.newPublication1}">
+       <h:selectOneMenu value="#{editResearchProject.newPublication13}" onchange="submit()" valueChangeListener="#{editResearchProject.selectPublication13}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{editResearchProject.publication1List}" var="publication1" label="#{publication1.label}"/>
+          <f:selectItems value="#{editResearchProject.publication13List}" var="publication13" label="#{publication13.label}"/>
         </h:selectOneMenu>
-        <h:commandButton type="submit" value="Add Publication" action="#{editResearchProject.selectPublication1()}"/>
     </div>
     </td> </tr>
     </div>
@@ -137,7 +179,8 @@
        <h:commandButton type="submit" value="Save" action="#{editResearchProject.save()}"/>
      
        <h:commandButton value="Cancel" action="#{editResearchProject.cancel()}"/>
-    </h:form>
+    </s:validateAll>
+      </h:form>
     </div>
     </div>
     

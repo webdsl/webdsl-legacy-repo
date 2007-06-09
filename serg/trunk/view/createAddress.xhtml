@@ -20,22 +20,22 @@
       <ul>
         
       <li>
-         <h:outputText value="New"/> 
-      <ul>
-        
-      <li>
-         <s:link view="/createUser.xhtml" propagation="none"> <h:outputText value="New User"/> </s:link> 
-      </li>
+         <h:outputText value="People"/> 
+      <h:dataTable var="person1011" value="#{createAddress.person1011List}"> 
+      <h:column> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person1011.id}"/> <h:outputText value="#{person1011.name}"/> </s:link> </h:column> 
+    </h:dataTable>
     
-      <li>
-         <s:link view="/createPerson.xhtml" propagation="none"> <h:outputText value="New Person"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/createPublication.xhtml" propagation="none"> <h:outputText value="New Publication"/> </s:link> 
       </li>
     
       </ul>
+    
+      <ul>
+        
+      <li>
+         <h:outputText value="Projects"/> 
+      <h:dataTable var="project1111" value="#{createAddress.project1111List}"> 
+      <h:column> <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project1111.id}"/> <h:outputText value="#{project1111.acronym}"/> </s:link> </h:column> 
+    </h:dataTable>
     
       </li>
     
@@ -49,6 +49,46 @@
         
     <div class="manageMenu"></div>
     
+      <li>
+         <h:outputText value="New"/> 
+      <ul>
+        
+      <li>
+         <s:link view="/createUser.xhtml" propagation="none"> <h:outputText value="User"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createPerson.xhtml" propagation="none"> <h:outputText value="Person"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createPublication.xhtml" propagation="none"> <h:outputText value="Publication"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createTechnicalReport.xhtml" propagation="none"> <h:outputText value="Technical Report"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createResearchProject.xhtml" propagation="none"> <h:outputText value="Project"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createBlog.xhtml" propagation="none"> <h:outputText value="Blog"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createBlogEntry.xhtml" propagation="none"> <h:outputText value="Blog Entry"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createResearchProject.xhtml" propagation="none"> <h:outputText value="Research Project"/> </s:link> 
+      </li>
+    
+      </ul>
+    
+      </li>
+    
       </ul>
     
       </li>
@@ -58,11 +98,7 @@
       <ul>
         
       <li>
-         <h:outputText value="People"/> 
-      <h:dataTable var="person10" value="#{createAddress.person10List}"> 
-      <h:column> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person10.id}"/> <h:outputText value="#{person10.name}"/> </s:link> </h:column> 
-    </h:dataTable>
-    
+         <s:link view="/login.xhtml" propagation="none"> <h:outputText value="Login"/> </s:link> 
       </li>
     
       </ul>
@@ -74,18 +110,25 @@
       <h1> <h:outputText value="Create new "/>  <h:outputText value="Address"/> </h1>
     
       <h:form>
+        <s:validateAll>
       <table>
     <div class="editRowsAddress">
       <tr> <td> <h:outputText value="Street"/> </td>  <td>
-      <h:inputText required="true" value="#{createAddress.address.street}"/>
+      <s:decorate>
+        <h:inputText styleClass="inputString" value="#{createAddress.address.street}"/>
+      </s:decorate>
     </td> </tr>
     
       <tr> <td> <h:outputText value="City"/> </td>  <td>
-      <h:inputText required="true" value="#{createAddress.address.city}"/>
+      <s:decorate>
+        <h:inputText styleClass="inputString" value="#{createAddress.address.city}"/>
+      </s:decorate>
     </td> </tr>
     
       <tr> <td> <h:outputText value="Phone"/> </td>  <td>
-      <h:inputText required="true" value="#{createAddress.address.phone}"/>
+      <s:decorate>
+        <h:inputText styleClass="inputString" value="#{createAddress.address.phone}"/>
+      </s:decorate>
     </td> </tr>
     </div>
     </table>
@@ -93,7 +136,8 @@
        <h:commandButton type="submit" value="Save" action="#{createAddress.save()}"/>
      
        <h:commandButton value="Cancel" action="#{createAddress.cancel()}"/>
-    </h:form>
+    </s:validateAll>
+      </h:form>
     </div>
     </div>
     

@@ -22,6 +22,9 @@ all : serg.appb serg.appc
 %.appc : %.app
 	$(dsltoseam) -i $< 
 
+%-full.app : %.app
+	$(dsltoseam) -i $< -o $@ --no-expansion
+
 clean :
 	rm $(wildcard *.appa) $(wildcard *.appb)
 

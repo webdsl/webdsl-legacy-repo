@@ -5,6 +5,7 @@ import java.io.Serializable;
 import static javax.persistence.PersistenceContextType.EXTENDED;
 import javax.persistence.PersistenceContext;
 import javax.persistence.EntityManager;
+import javax.faces.event.ValueChangeEvent;
 import javax.ejb.Stateless;
 import javax.ejb.Stateful;
 import javax.ejb.Remove;
@@ -46,8 +47,9 @@ import org.webdsl.serg.domain.*;
     { 
       p = em.find(Person.class, pId);
     }
-    initPrList();
-    initPerson10List();
+    initPr3List();
+    initPerson105List();
+    initProject115List();
   }
 
   @Destroy @Remove public void destroy()
@@ -69,31 +71,45 @@ import org.webdsl.serg.domain.*;
     return p;
   }
 
-  @DataModel("prList") private List<ResearchProject> prList;
+  @DataModel("pr3List") private List<ResearchProject> pr3List;
 
-  public List<ResearchProject> getPrList()
+  public List<ResearchProject> getPr3List()
   { 
-    log.info("getPrList");
-    return prList;
+    log.info("getPr3List");
+    return pr3List;
   }
 
-  @Factory("prList") public void initPrList()
+  @Factory("pr3List") public void initPr3List()
   { 
-    log.info("initPrList");
-    prList = em.createQuery("from " + "ResearchProject").getResultList();
+    log.info("initPr3List");
+    pr3List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 
-  @DataModel("person10List") private List<Person> person10List;
+  @DataModel("person105List") private List<Person> person105List;
 
-  public List<Person> getPerson10List()
+  public List<Person> getPerson105List()
   { 
-    log.info("getPerson10List");
-    return person10List;
+    log.info("getPerson105List");
+    return person105List;
   }
 
-  @Factory("person10List") public void initPerson10List()
+  @Factory("person105List") public void initPerson105List()
   { 
-    log.info("initPerson10List");
-    person10List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson105List");
+    person105List = em.createQuery("from " + "Person").getResultList();
+  }
+
+  @DataModel("project115List") private List<ResearchProject> project115List;
+
+  public List<ResearchProject> getProject115List()
+  { 
+    log.info("getProject115List");
+    return project115List;
+  }
+
+  @Factory("project115List") public void initProject115List()
+  { 
+    log.info("initProject115List");
+    project115List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 }

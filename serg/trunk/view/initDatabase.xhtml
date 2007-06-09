@@ -7,8 +7,10 @@
     <link href="stylesheet/webdsl.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-      <h:form> 
+      <h:form>
+        <s:validateAll> 
        <h:commandButton type="submit" value="Init Database" action="#{initDatabase.initDB()}"/>
-    </h:form>
+    </s:validateAll>
+      </h:form>
     </body>
 </html>

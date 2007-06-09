@@ -1,6 +1,7 @@
 package org.webdsl.serg.beans;
 
 import org.jboss.annotation.ejb.Local;
+import javax.faces.event.ValueChangeEvent;
 import java.util.*;
 import org.webdsl.serg.domain.*;
 
@@ -14,7 +15,11 @@ import org.webdsl.serg.domain.*;
 
   public ResearchProject getResearchProject();
 
-  public List<Person> getPerson10List();
+  public List<Person> getPerson1042List();
 
-  public void initPerson10List();
+  public void initPerson1042List();
+
+  public List<ResearchProject> getProject1142List();
+
+  public void initProject1142List();
 }

@@ -5,6 +5,7 @@ import java.io.Serializable;
 import static javax.persistence.PersistenceContextType.EXTENDED;
 import javax.persistence.PersistenceContext;
 import javax.persistence.EntityManager;
+import javax.faces.event.ValueChangeEvent;
 import javax.ejb.Stateless;
 import javax.ejb.Stateful;
 import javax.ejb.Remove;
@@ -46,8 +47,9 @@ import org.webdsl.serg.domain.*;
     { 
       technicalReport = em.find(TechnicalReport.class, technicalReportId);
     }
-    initPreprintof0List();
-    initPerson10List();
+    initPublication4List();
+    initPerson1037List();
+    initProject1137List();
   }
 
   @Destroy @Remove public void destroy()
@@ -69,9 +71,9 @@ import org.webdsl.serg.domain.*;
     return technicalReport;
   }
 
-  public void setPublication0(Publication preprintof1)
+  public void setPublication0(Publication publication5)
   { 
-    technicalReport.setPreprintof(preprintof1);
+    technicalReport.setPreprintof(publication5);
   }
 
   @End public String cancel()
@@ -85,55 +87,72 @@ import org.webdsl.serg.domain.*;
     return "/" + "viewTechnicalReport" + ".seam?" + ("technicalReport" + "=" + technicalReport.getId() + "");
   }
 
-  private String newPreprintof0;
+  private String newPublication4;
 
-  public void setNewPreprintof0(String p)
+  public void setNewPublication4(String p)
   { 
-    newPreprintof0 = p;
+    newPublication4 = p;
   }
 
-  public String getNewPreprintof0()
+  public String getNewPublication4()
   { 
-    return newPreprintof0;
+    return newPublication4;
   }
 
-  public String selectPreprintof0()
+  public void selectPublication4(ValueChangeEvent event)
   { 
-    log.info("selectPreprintof0" + " " + newPreprintof0);
-    Publication preprintof0 = em.find(Publication.class, new Long(newPreprintof0));
-    setPublication0(preprintof0);
-    return null;
-  }
-
-  @DataModel("preprintof0List") private Map<String, String> preprintof0List;
-
-  public Map<String, String> getPreprintof0List()
-  { 
-    return preprintof0List;
-  }
-
-  @Factory("preprintof0List") public void initPreprintof0List()
-  { 
-    log.info("initPreprintof0List");
-    preprintof0List = new HashMap<String, String>();
-    for(Object o : em.createQuery("from " + "Publication").getResultList())
+    log.info("selectPublication4" + ": new value = " + " " + event.getNewValue());
+    Long id = new Long((String)event.getNewValue());
+    if(id > 0)
     { 
-      Publication p = (Publication)o;
-      preprintof0List.put(p.getName(), p.getId().toString());
+      Publication publication4 = em.find(Publication.class, id);
+      setPublication0(publication4);
     }
   }
 
-  @DataModel("person10List") private List<Person> person10List;
+  @DataModel("publication4List") private Map<String, String> publication4List;
 
-  public List<Person> getPerson10List()
+  public Map<String, String> getPublication4List()
   { 
-    log.info("getPerson10List");
-    return person10List;
+    return publication4List;
   }
 
-  @Factory("person10List") public void initPerson10List()
+  @Factory("publication4List") public void initPublication4List()
   { 
-    log.info("initPerson10List");
-    person10List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPublication4List");
+    publication4List = new HashMap<String, String>();
+    for(Object o : em.createQuery("from " + "Publication").getResultList())
+    { 
+      Publication p = (Publication)o;
+      publication4List.put(p.getName(), p.getId().toString());
+    }
+  }
+
+  @DataModel("person1037List") private List<Person> person1037List;
+
+  public List<Person> getPerson1037List()
+  { 
+    log.info("getPerson1037List");
+    return person1037List;
+  }
+
+  @Factory("person1037List") public void initPerson1037List()
+  { 
+    log.info("initPerson1037List");
+    person1037List = em.createQuery("from " + "Person").getResultList();
+  }
+
+  @DataModel("project1137List") private List<ResearchProject> project1137List;
+
+  public List<ResearchProject> getProject1137List()
+  { 
+    log.info("getProject1137List");
+    return project1137List;
+  }
+
+  @Factory("project1137List") public void initProject1137List()
+  { 
+    log.info("initProject1137List");
+    project1137List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 }

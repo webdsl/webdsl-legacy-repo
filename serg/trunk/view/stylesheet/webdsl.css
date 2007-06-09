@@ -7,22 +7,6 @@
  
 /* see http://www.w3schools.com/css/css_positioning.asp */
 
-/*
-.main {
-  position  : absolute;
-  top       : 0px;
-  left      : 0px;
-  right : 0px;
-  bottom : 0px;
-  width     : 100%;
-  height : 100%;
-  border           : 1px solid black;
-  padding          : 1px;
-  margin : 1px;
-  background-color : grey;
-}
-*/
-
 /* divide page into two columns, outersidebar and outerbody */
 
 .outersidebar {
@@ -63,6 +47,7 @@
   //position         : relative;
   top                : 0px;
   margin-top         : 20px;
+  color              : darkblue;
   /* for testing */
   //background-color : white;
   //border           : 1px solid #999;
@@ -74,6 +59,7 @@
 .menubar {
   height             : 62px;
   border-bottom      : 1px dotted lightgrey;
+  color              : darkblue;
   /* for testing */
   //background-color : white;
   //border           : 1px solid #999;
@@ -123,8 +109,21 @@ body {
   //background-color : #eeeeee;
   background-color : white;
   color            : darkblue;
-  font-family : sans-serif;
-  font-size : 12pt;
+  font-family      : sans-serif;
+  font-size        : 11pt;
+}
+
+h1 {
+  font-size : 150%;
+}
+h2 {
+  font-size : 130%;
+}
+h3 {
+  font-size : 115%;
+}
+h4 {
+  font-size : 100%;
 }
 
 .footer{
@@ -192,7 +191,7 @@ a:hover {
   background  : white;
   //float       : left;
   position    : relative;
-  top         : 38px;
+  top         : 2.6em;
 }
 
 .menu ul {
@@ -205,8 +204,8 @@ a:hover {
 }
 
 .menu li {
-  position : relative;
-  padding  : 1px;
+  position         : relative;
+  padding          : 2px;
   background-color : white;
   border-left      : solid 1px white;
   border-top       : solid 1px white;
@@ -299,14 +298,15 @@ textarea,[nul] .inputText {
    
 }
 
-table {
+.editRows table {
   width : 100%;
 }
 
-tr {
+.editRows tr {
+  margin-top : 10px;
 }
 
 td {
   vertical-align : top;
-  padding-bottom : 10px;
+  /* padding-bottom : 10px; */
 }

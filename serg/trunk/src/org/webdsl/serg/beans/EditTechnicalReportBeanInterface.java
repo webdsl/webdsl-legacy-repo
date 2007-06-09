@@ -1,6 +1,7 @@
 package org.webdsl.serg.beans;
 
 import org.jboss.annotation.ejb.Local;
+import javax.faces.event.ValueChangeEvent;
 import java.util.*;
 import org.webdsl.serg.domain.*;
 
@@ -14,23 +15,27 @@ import org.webdsl.serg.domain.*;
 
   public TechnicalReport getTechnicalReport();
 
-  public void setPublication0(Publication preprintof1);
+  public void setPublication0(Publication publication5);
 
   public String cancel();
 
   public String save();
 
-  public void setNewPreprintof0(String p);
+  public void setNewPublication4(String p);
 
-  public String getNewPreprintof0();
+  public String getNewPublication4();
 
-  public String selectPreprintof0();
+  public void selectPublication4(ValueChangeEvent event);
 
-  public Map<String, String> getPreprintof0List();
+  public Map<String, String> getPublication4List();
 
-  public void initPreprintof0List();
+  public void initPublication4List();
 
-  public List<Person> getPerson10List();
+  public List<Person> getPerson1037List();
 
-  public void initPerson10List();
+  public void initPerson1037List();
+
+  public List<ResearchProject> getProject1137List();
+
+  public void initProject1137List();
 }

@@ -8,8 +8,6 @@ description
 
 end
 
-
-
 section setup.
 
   define main() {
@@ -68,6 +66,7 @@ section setup.
               listitem { navigate("Project",          createResearchProject()) }
               listitem { navigate("Blog",             createBlog()) }
               listitem { navigate("Blog Entry",       createBlogEntry()) }
+              listitem { navigate("Research Project", createResearchProject()) }
             }
           }
         }
@@ -237,7 +236,43 @@ section people.
     text :: Text
   }
   
-section people pages.
+  FlickrImage {
+    photoid   :: String (primary)
+    title     :: String (name)
+    username  :: String
+    photourl  :: URL
+    square    :: URL
+    thumbnail :: Image 
+    small     :: URL
+    medium    :: URL
+    large     :: URL
+    original  :: URL
+    
+    // http://farm2.static.flickr.com/1316/533515146_faa91c3e41_s.jpg
+    // http://farm2.static.flickr.com/1316/533515146_faa91c3e41_t.jpg
+    // http://farm2.static.flickr.com/1316/533515146_faa91c3e41_m.jpg
+    // http://farm2.static.flickr.com/1316/533515146_faa91c3e41.jpg
+    // http://farm2.static.flickr.com/1316/533515146_faa91c3e41_b.jpg
+    // http://farm2.static.flickr.com/1316/533515146_faa91c3e41_o.jpg
+  }
+  
+  Colloquium {
+    talks       <> List<Presentation>
+    contact     -> Person
+    mailinglist :: Email
+  } 
+  
+  Presentation {
+    title    :: String (name)
+    speaker  -> Person
+    date     :: Date
+    time     :: Date
+    end      :: Date
+    Venue    :: String
+    abstract :: Text
+  }
+  
+section blog.
 
   define blogSidebar(blog : Blog) {
     personSidebar(blog.author)
@@ -277,7 +312,7 @@ section people pages.
         for(entry : BlogEntry in blog.entries) {
           section{ 
             header{ text(entry.title) }
-            div("blogIntro"){text(entry.intro)} " "
+            div("blogIntro"){outputText(entry.intro)} " "
             navigate("read more ...", viewBlogEntry(entry))
           }
         }
@@ -292,14 +327,16 @@ section people pages.
     define body() {
       title{text(entry.title)}
       section{header{text(entry.title)}
-        div("blogDate"){text(entry.created)}
-        div("blogIntro"){text(entry.intro)}
-        div("blogBody"){text(entry.body)}
+        div("blogDate"){outputDate(entry.created)}
+        div("blogIntro"){outputText(entry.intro)}
+        div("blogBody"){outputText(entry.body)}
       }
     }
   
   }
   
+section persons.
+
   define personSidebar(p : Person) {
     list {
       listitem{navigate(p.name, viewPerson(p))}
@@ -336,7 +373,6 @@ section people pages.
     
       	section{
           header{"Coordinates"}
-    
           table {
             row{"homepage" navigate(url(person.homepage))}
             row{"email"    navigate(url(person.email))}
@@ -354,24 +390,9 @@ section people pages.
            // better: 10 most recent publications
         //}
         
-        var publications : List<Publication> :=
-          select pub from Publication as pub, Person as pers 
-           where (pers.id = ~person.id) and (pers member of pub._authors); 
-           
-        var orderedPublications : List<Publication> :=
-          select pub from Publication as pub, Person as pers 
-           where (pers.id = ~person.id) and (pers member of pub._authors)
-           order by pub._year descending; 
-                 
-        section { header{"Publications"}
-          for(pub : Publication in orderedPublications)
-          {
-            div("line"){
-              navigate(pub.name, viewPublication(pub))
-              " "
-              text(pub.year)
-            }
-          }
+        section{ 
+          header{"Publications"}
+          publicationsBy(person)
         }
         
         var projects : List<ResearchProject> :=
@@ -395,6 +416,7 @@ section publications.
     
   Publication {
     title    :: String (name)
+    subtitle :: String
     authors  -> List<Person>
     year     :: Int // use Year defined type
     abstract :: Text // note: abstract is a reserved word in java!
@@ -421,6 +443,26 @@ section publication pages.
       //publicationsPage(p.publications)
     }
     main()
+    
+  }
+  
+  define publicationsBy(person : Person) {
+  
+    var publications : List<Publication> :=
+      select pub from Publication as pub, Person as pers 
+       where (pers.id = ~person.id) and (pers member of pub._authors); 
+           
+    var orderedPublications : List<Publication> :=
+      select pub from Publication as pub, Person as pers 
+       where (pers.id = ~person.id) and (pers member of pub._authors)
+       order by pub._year descending; 
+                 
+    for(pub : Publication in orderedPublications) {
+      div("line") {
+        navigate(pub.name, viewPublication(pub))
+        " (" text(pub.year) ")"
+      }
+    }
   }
   
   define publicationsForYear(pers : Person, year : Int) {
@@ -439,123 +481,55 @@ section publication pages.
     }
   }
   
-  define page viewPublicationMy(pub : Publication) {
-    title{"Publication " text(pub.title)}
-    
-    define sidebar() {
-        navigate("Edit", editPublication(pub))
+  define editRowsPublication (publication : Publication) {
+    row(){
+      "Title"
+        input(publication.title){
+      }
     }
-    
-    define body() {
-      header{text(pub.title)}
+    row(){
+      "Subtitle"
+        input(publication.subtitle){
+      }
+    }
+    row(){
+      "Authors"
+      input(publication.authors)
+    }
+    row {
+      ""
       table {
-        row{"title"       text(pub.title)}
-        row{"year"        text(pub.year)}
-        row{"abstract" text(pub.abstract)}
-        row{"pdf"         text(pub.pdf)}
-        row{"authors"     for(author : Person in pub.authors) { navigate(author.name, viewPerson(author)) } }
-        row{"projects"    for(project : ResearchProject in pub.projectsList) { 
-                            navigate(project.name, viewResearchProject(project)) 
-                          }}
-      }
-      form {
-        action("Delete", deletePublication(pub))
+        var newAuthor : Person := Person{};
+        row { "Fullname" input(newAuthor.fullname) }
+        row { "Email"    input(newAuthor.email) }
+        row { "" action("Add new author", addNewAuthor()) }
+        action addNewAuthor() { 
+          publication.authors.add(newAuthor);
+          newAuthor := Person{};
+        }
       }
     }
-    
-    action deletePublication(pub : Publication) {
-      pub.delete();
-      return home();
+    row(){
+      "Year"
+      input(publication.year){
+      }
     }
-    
-    main()
+    row(){
+      "Abstract"
+      input(publication.abstract){
+      }
+    }
+    row(){
+      "Projects"
+      input(publication.projects){
+      }
+    }
+    row(){
+      "Pdf"
+      input(publication.pdf){
+      }
+    }
   }
-  
-  // textlist(Person, pub.authors)}
-  // textlist(ResearchProject, pub.projects)}
-  //define textlist(t : Type, l : List<t>) {
-  //  for(o : t in l) {
- //     navigate(o)
-  //  }
- // }  
-
-   
-  define page editPublicationMy(pub : Publication) {
-    title{"Edit " text(pub.title)}
-    
-    define sidebar() {}
-    
-    define body() {
-       header{"Edit " text(pub.title)}
-       form { 
-          table {
-             row { "title" input(pub.title) }
-             
-             //row { "authors" input(pub.authors) }
-             
-             
-             row { "authors"     
-               for(author : Person in pub.authors) {
-                 navigate(author.name, viewPerson(author))
-                 actionLink("[X]", removeAuthor(author))
-               }
-             }
-             row { "" 
-               select(author1 : Person, "Add Author", addAuthor(author1))
-             }
-
-             action addAuthor(author : Person) { pub.authors.add(author); }
-             action removeAuthor(author : Person) { pub.authors.remove(author); }
-           
-             row{"year"        input(pub.year)}
-             row{"abstract" input(pub.abstract)}
-             row{"pdf"         input(pub.pdf)}
-             
-             // edit projects
-             
-             row { "projects"    
-               for(project : ResearchProject in pub.projectsList) { 
-                 navigate(project.name, viewResearchProject(project))
-                 actionLink("[X]", removeProject(project))
-               }
-             }
-             row { "" 
-               select(project1 : ResearchProject, "Add Project", addProject(project1))
-             }
-             
-             action removeProject(project : ResearchProject) { pub.projects.remove(project); }
-             action addProject(project : ResearchProject) { pub.projects.add(project); } 
-          }
-          action("Save",   save())
-          action("Cancel", cancel())
-       }
-    }
-    
-    action cancel() { return viewPublication(pub); }
-    
-    action save() {
-      pub.save();
-      return viewPublication(pub);
-      
-      //if pub.save() then
-      //  return viewPublication(pub);
-      //else
-      //  return errorPage(msg);
-    }
-    
-    main()
-  }
-  
-  // note:
-  // view(p) (where p is a Publication)
-  // expands to a navigation(p.name, viewPublication(p))
-  // and 
-  // view(expand(p)) (or something similar) expands to
-  // table { row("title", view(p.title)) ... }
-  // does we can define the effort (recursive expansion) currently
-  // defined in both view and edit for CRUD as a model-to-model 
-  // transformation
-  
   
 section projects.
 

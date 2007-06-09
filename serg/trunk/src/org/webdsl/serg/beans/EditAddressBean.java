@@ -5,6 +5,7 @@ import java.io.Serializable;
 import static javax.persistence.PersistenceContextType.EXTENDED;
 import javax.persistence.PersistenceContext;
 import javax.persistence.EntityManager;
+import javax.faces.event.ValueChangeEvent;
 import javax.ejb.Stateless;
 import javax.ejb.Stateful;
 import javax.ejb.Remove;
@@ -46,7 +47,8 @@ import org.webdsl.serg.domain.*;
     { 
       address = em.find(Address.class, addressId);
     }
-    initPerson10List();
+    initPerson1010List();
+    initProject1110List();
   }
 
   @Destroy @Remove public void destroy()
@@ -79,17 +81,31 @@ import org.webdsl.serg.domain.*;
     return "/" + "viewAddress" + ".seam?" + ("address" + "=" + address.getId() + "");
   }
 
-  @DataModel("person10List") private List<Person> person10List;
+  @DataModel("person1010List") private List<Person> person1010List;
 
-  public List<Person> getPerson10List()
+  public List<Person> getPerson1010List()
   { 
-    log.info("getPerson10List");
-    return person10List;
+    log.info("getPerson1010List");
+    return person1010List;
   }
 
-  @Factory("person10List") public void initPerson10List()
+  @Factory("person1010List") public void initPerson1010List()
   { 
-    log.info("initPerson10List");
-    person10List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson1010List");
+    person1010List = em.createQuery("from " + "Person").getResultList();
+  }
+
+  @DataModel("project1110List") private List<ResearchProject> project1110List;
+
+  public List<ResearchProject> getProject1110List()
+  { 
+    log.info("getProject1110List");
+    return project1110List;
+  }
+
+  @Factory("project1110List") public void initProject1110List()
+  { 
+    log.info("initProject1110List");
+    project1110List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 }

@@ -33,6 +33,18 @@ import org.webdsl.serg.domain.*;
     this._title = _title;
   }
 
+  private String _subtitle = "";
+
+  public String getSubtitle()
+  { 
+    return _subtitle;
+  }
+
+  public void setSubtitle(String _subtitle)
+  { 
+    this._subtitle = _subtitle;
+  }
+
   @ManyToMany @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private java.util.List<Person> _authors = new java.util.ArrayList<Person>();
 
   public java.util.List<Person> getAuthors()

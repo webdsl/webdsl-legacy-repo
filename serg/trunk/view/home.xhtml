@@ -13,9 +13,11 @@
     
     <div class="sidebar">
     <div class="initDatabase">
-      <h:form> 
+      <h:form>
+        <s:validateAll> 
        <h:commandButton type="submit" value="Init Database" action="#{home.initDB()}"/>
-    </h:form>
+    </s:validateAll>
+      </h:form>
     </div>
     </div>
     </div>
@@ -26,22 +28,22 @@
       <ul>
         
       <li>
-         <h:outputText value="New"/> 
-      <ul>
-        
-      <li>
-         <s:link view="/createUser.xhtml" propagation="none"> <h:outputText value="New User"/> </s:link> 
-      </li>
+         <h:outputText value="People"/> 
+      <h:dataTable var="person101" value="#{home.person101List}"> 
+      <h:column> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person101.id}"/> <h:outputText value="#{person101.name}"/> </s:link> </h:column> 
+    </h:dataTable>
     
-      <li>
-         <s:link view="/createPerson.xhtml" propagation="none"> <h:outputText value="New Person"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/createPublication.xhtml" propagation="none"> <h:outputText value="New Publication"/> </s:link> 
       </li>
     
       </ul>
+    
+      <ul>
+        
+      <li>
+         <h:outputText value="Projects"/> 
+      <h:dataTable var="project111" value="#{home.project111List}"> 
+      <h:column> <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project111.id}"/> <h:outputText value="#{project111.acronym}"/> </s:link> </h:column> 
+    </h:dataTable>
     
       </li>
     
@@ -55,6 +57,46 @@
         
     <div class="manageMenu"></div>
     
+      <li>
+         <h:outputText value="New"/> 
+      <ul>
+        
+      <li>
+         <s:link view="/createUser.xhtml" propagation="none"> <h:outputText value="User"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createPerson.xhtml" propagation="none"> <h:outputText value="Person"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createPublication.xhtml" propagation="none"> <h:outputText value="Publication"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createTechnicalReport.xhtml" propagation="none"> <h:outputText value="Technical Report"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createResearchProject.xhtml" propagation="none"> <h:outputText value="Project"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createBlog.xhtml" propagation="none"> <h:outputText value="Blog"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createBlogEntry.xhtml" propagation="none"> <h:outputText value="Blog Entry"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createResearchProject.xhtml" propagation="none"> <h:outputText value="Research Project"/> </s:link> 
+      </li>
+    
+      </ul>
+    
+      </li>
+    
       </ul>
     
       </li>
@@ -64,11 +106,7 @@
       <ul>
         
       <li>
-         <h:outputText value="People"/> 
-      <h:dataTable var="person10" value="#{home.person10List}"> 
-      <h:column> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person10.id}"/> <h:outputText value="#{person10.name}"/> </s:link> </h:column> 
-    </h:dataTable>
-    
+         <s:link view="/login.xhtml" propagation="none"> <h:outputText value="Login"/> </s:link> 
       </li>
     
       </ul>
@@ -114,16 +152,16 @@
       <div class="section2">
       <h2> <h:outputText value="Publications"/> </h2>
     
-      <h:dataTable var="pub" value="#{home.pubList}"> 
-      <h:column> <s:link view="/viewPublication.xhtml" propagation="none"><f:param name="publication" value="#{pub.id}"/> <h:outputText value="#{pub.name}"/> </s:link> </h:column> 
+      <h:dataTable var="pub0" value="#{home.pub0List}"> 
+      <h:column> <s:link view="/viewPublication.xhtml" propagation="none"><f:param name="publication" value="#{pub0.id}"/> <h:outputText value="#{pub0.name}"/> </s:link> </h:column> 
     </h:dataTable>
     </div>
     
       <div class="section2">
       <h2> <h:outputText value="People"/> </h2>
     
-      <h:dataTable var="pers" value="#{home.persList}"> 
-      <h:column> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{pers.id}"/> <h:outputText value="#{pers.name}"/> </s:link> </h:column> 
+      <h:dataTable var="pers0" value="#{home.pers0List}"> 
+      <h:column> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{pers0.id}"/> <h:outputText value="#{pers0.name}"/> </s:link> </h:column> 
     </h:dataTable>
     </div>
     </div>

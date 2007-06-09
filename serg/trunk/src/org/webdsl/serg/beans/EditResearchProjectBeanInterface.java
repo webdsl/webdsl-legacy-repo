@@ -1,6 +1,7 @@
 package org.webdsl.serg.beans;
 
 import org.jboss.annotation.ejb.Local;
+import javax.faces.event.ValueChangeEvent;
 import java.util.*;
 import org.webdsl.serg.domain.*;
 
@@ -14,51 +15,55 @@ import org.webdsl.serg.domain.*;
 
   public ResearchProject getResearchProject();
 
-  public void removePerson3(Person person8);
+  public void removePerson3(Person person42);
 
-  public void addPerson3(Person person8);
+  public void addPerson3(Person person42);
 
-  public void setPublication1(Publication proposal1);
+  public void setPublication3(Publication publication11);
 
-  public void removePublication0(Publication publication0);
+  public void removePublication0(Publication publication12);
 
-  public void addPublication0(Publication publication0);
+  public void addPublication0(Publication publication12);
 
   public String cancel();
 
   public String save();
 
-  public void setNewPerson9(String p);
+  public void setNewPerson43(String p);
 
-  public String getNewPerson9();
+  public String getNewPerson43();
 
-  public String selectPerson9();
+  public void selectPerson43(ValueChangeEvent event);
 
-  public Map<String, String> getPerson9List();
+  public Map<String, String> getPerson43List();
 
-  public void initPerson9List();
+  public void initPerson43List();
 
-  public void setNewProposal0(String p);
+  public void setNewPublication10(String p);
 
-  public String getNewProposal0();
+  public String getNewPublication10();
 
-  public String selectProposal0();
+  public void selectPublication10(ValueChangeEvent event);
 
-  public Map<String, String> getProposal0List();
+  public Map<String, String> getPublication10List();
 
-  public void initProposal0List();
+  public void initPublication10List();
 
-  public void setNewPublication1(String p);
+  public void setNewPublication13(String p);
 
-  public String getNewPublication1();
+  public String getNewPublication13();
 
-  public String selectPublication1();
+  public void selectPublication13(ValueChangeEvent event);
 
-  public Map<String, String> getPublication1List();
+  public Map<String, String> getPublication13List();
 
-  public void initPublication1List();
+  public void initPublication13List();
 
-  public List<Person> getPerson10List();
+  public List<Person> getPerson1040List();
 
-  public void initPerson10List();
+  public void initPerson1040List();
+
+  public List<ResearchProject> getProject1140List();
+
+  public void initProject1140List();
 }

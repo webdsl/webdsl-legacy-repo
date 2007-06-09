@@ -20,22 +20,22 @@
       <ul>
         
       <li>
-         <h:outputText value="New"/> 
-      <ul>
-        
-      <li>
-         <s:link view="/createUser.xhtml" propagation="none"> <h:outputText value="New User"/> </s:link> 
-      </li>
+         <h:outputText value="People"/> 
+      <h:dataTable var="person106" value="#{viewResearchProjectMy.person106List}"> 
+      <h:column> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person106.id}"/> <h:outputText value="#{person106.name}"/> </s:link> </h:column> 
+    </h:dataTable>
     
-      <li>
-         <s:link view="/createPerson.xhtml" propagation="none"> <h:outputText value="New Person"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/createPublication.xhtml" propagation="none"> <h:outputText value="New Publication"/> </s:link> 
       </li>
     
       </ul>
+    
+      <ul>
+        
+      <li>
+         <h:outputText value="Projects"/> 
+      <h:dataTable var="project116" value="#{viewResearchProjectMy.project116List}"> 
+      <h:column> <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project116.id}"/> <h:outputText value="#{project116.acronym}"/> </s:link> </h:column> 
+    </h:dataTable>
     
       </li>
     
@@ -49,6 +49,46 @@
         
     <div class="manageMenu"></div>
     
+      <li>
+         <h:outputText value="New"/> 
+      <ul>
+        
+      <li>
+         <s:link view="/createUser.xhtml" propagation="none"> <h:outputText value="User"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createPerson.xhtml" propagation="none"> <h:outputText value="Person"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createPublication.xhtml" propagation="none"> <h:outputText value="Publication"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createTechnicalReport.xhtml" propagation="none"> <h:outputText value="Technical Report"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createResearchProject.xhtml" propagation="none"> <h:outputText value="Project"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createBlog.xhtml" propagation="none"> <h:outputText value="Blog"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createBlogEntry.xhtml" propagation="none"> <h:outputText value="Blog Entry"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createResearchProject.xhtml" propagation="none"> <h:outputText value="Research Project"/> </s:link> 
+      </li>
+    
+      </ul>
+    
+      </li>
+    
       </ul>
     
       </li>
@@ -58,11 +98,7 @@
       <ul>
         
       <li>
-         <h:outputText value="People"/> 
-      <h:dataTable var="person10" value="#{viewResearchProjectMy.person10List}"> 
-      <h:column> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person10.id}"/> <h:outputText value="#{person10.name}"/> </s:link> </h:column> 
-    </h:dataTable>
-    
+         <s:link view="/login.xhtml" propagation="none"> <h:outputText value="Login"/> </s:link> 
       </li>
     
       </ul>
@@ -78,10 +114,10 @@
     
       <ul>
         
-      <h:dataTable var="member" value="#{viewResearchProjectMy.project.membersList}"> 
+      <h:dataTable var="member0" value="#{viewResearchProjectMy.project.membersList}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{member.id}"/> <h:outputText value="#{member.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{member0.id}"/> <h:outputText value="#{member0.name}"/> </s:link> 
       </li>
     </h:column> 
     </h:dataTable>
@@ -95,16 +131,16 @@
     <div class="publicationsPage">
       <ul>
         
-      <h:dataTable var="publication" value="#{viewResearchProjectMy.project.publicationsList}"> 
+      <h:dataTable var="publication0" value="#{viewResearchProjectMy.project.publicationsList}"> 
       <h:column>
       <li>
         
-      <h:dataTable var="author" value="#{publication.authors}"> 
-      <h:column> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{author.id}"/> <h:outputText value="#{author.name}"/> </s:link> </h:column> 
+      <h:dataTable var="author0" value="#{publication0.authors}"> 
+      <h:column> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{author0.id}"/> <h:outputText value="#{author0.name}"/> </s:link> </h:column> 
      
       <h:column> <h:outputText value=","/> </h:column> 
     </h:dataTable>
-     <s:link view="/viewPublication.xhtml" propagation="none"><f:param name="publication" value="#{publication.id}"/> <h:outputText value="#{publication.name}"/> </s:link> 
+     <s:link view="/viewPublication.xhtml" propagation="none"><f:param name="publication" value="#{publication0.id}"/> <h:outputText value="#{publication0.name}"/> </s:link> 
       </li>
     </h:column> 
     </h:dataTable>
