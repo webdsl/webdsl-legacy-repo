@@ -15,10 +15,6 @@ import org.webdsl.serg.domain.*;
 
   public BlogEntry getEntry();
 
-  public List<ResearchProject> getPr2List();
-
-  public void initPr2List();
-
   public List<Person> getPerson103List();
 
   public void initPerson103List();
@@ -26,4 +22,10 @@ import org.webdsl.serg.domain.*;
   public List<ResearchProject> getProject113List();
 
   public void initProject113List();
+
+  public java.util.List<ResearchProject> getProjects3();
+
+  public void setProjects3(java.util.List<ResearchProject> projects3);
+
+  public void initProjects3();
 }

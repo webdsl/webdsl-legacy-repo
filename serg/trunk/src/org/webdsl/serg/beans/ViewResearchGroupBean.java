@@ -49,7 +49,7 @@ import org.webdsl.serg.domain.*;
     }
     initPerson107List();
     initProject117List();
-    initPub1List();
+    initPub4List();
   }
 
   @Destroy @Remove public void destroy()
@@ -99,17 +99,17 @@ import org.webdsl.serg.domain.*;
     project117List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 
-  @DataModel("pub1List") private List<Publication> pub1List;
+  @DataModel("pub4List") private List<Publication> pub4List;
 
-  public List<Publication> getPub1List()
+  public List<Publication> getPub4List()
   { 
-    log.info("getPub1List");
-    return pub1List;
+    log.info("getPub4List");
+    return pub4List;
   }
 
-  @Factory("pub1List") public void initPub1List()
+  @Factory("pub4List") public void initPub4List()
   { 
-    log.info("initPub1List");
-    pub1List = em.createQuery("from " + "Publication").getResultList();
+    log.info("initPub4List");
+    pub4List = em.createQuery("from " + "Publication").getResultList();
   }
 }

@@ -47,7 +47,11 @@ import org.webdsl.serg.domain.*;
     { 
       technicalReport = em.find(TechnicalReport.class, technicalReportId);
     }
-    initPublication4List();
+    Person var31 = new Person();
+    newAuthor2 = var31;
+    initPerson50List();
+    initResearchProject27List();
+    initPublication7List();
     initPerson1037List();
     initProject1137List();
   }
@@ -71,9 +75,36 @@ import org.webdsl.serg.domain.*;
     return technicalReport;
   }
 
-  public void setPublication0(Publication publication5)
+  public void removePerson3(Person person49)
   { 
-    technicalReport.setPreprintof(publication5);
+    this.getTechnicalReport().getAuthors().remove(person49);
+  }
+
+  public void addPerson3(Person person49)
+  { 
+    this.getTechnicalReport().getAuthors().add(person49);
+  }
+
+  public void addNewAuthor()
+  { 
+    this.getTechnicalReport().getAuthors().add(this.getNewAuthor2());
+    Person var30 = new Person();
+    newAuthor2 = var30;
+  }
+
+  public void removeResearchProject9(ResearchProject researchProject26)
+  { 
+    this.getTechnicalReport().getProjects().remove(researchProject26);
+  }
+
+  public void addResearchProject9(ResearchProject researchProject26)
+  { 
+    this.getTechnicalReport().getProjects().add(researchProject26);
+  }
+
+  public void setPublication0(Publication publication8)
+  { 
+    technicalReport.setPreprintof(publication8);
   }
 
   @End public String cancel()
@@ -87,44 +118,126 @@ import org.webdsl.serg.domain.*;
     return "/" + "viewTechnicalReport" + ".seam?" + ("technicalReport" + "=" + technicalReport.getId() + "");
   }
 
-  private String newPublication4;
+  private String newPerson50;
 
-  public void setNewPublication4(String p)
+  public void setNewPerson50(String p)
   { 
-    newPublication4 = p;
+    newPerson50 = p;
   }
 
-  public String getNewPublication4()
+  public String getNewPerson50()
   { 
-    return newPublication4;
+    return newPerson50;
   }
 
-  public void selectPublication4(ValueChangeEvent event)
+  public void selectPerson50(ValueChangeEvent event)
   { 
-    log.info("selectPublication4" + ": new value = " + " " + event.getNewValue());
+    log.info("selectPerson50" + ": new value = " + " " + event.getNewValue());
     Long id = new Long((String)event.getNewValue());
     if(id > 0)
     { 
-      Publication publication4 = em.find(Publication.class, id);
-      setPublication0(publication4);
+      Person person50 = em.find(Person.class, id);
+      addPerson3(person50);
     }
   }
 
-  @DataModel("publication4List") private Map<String, String> publication4List;
+  @DataModel("person50List") private Map<String, String> person50List;
 
-  public Map<String, String> getPublication4List()
+  public Map<String, String> getPerson50List()
   { 
-    return publication4List;
+    return person50List;
   }
 
-  @Factory("publication4List") public void initPublication4List()
+  @Factory("person50List") public void initPerson50List()
   { 
-    log.info("initPublication4List");
-    publication4List = new HashMap<String, String>();
+    log.info("initPerson50List");
+    person50List = new HashMap<String, String>();
+    for(Object o : em.createQuery("from " + "Person").getResultList())
+    { 
+      Person p = (Person)o;
+      person50List.put(p.getName(), p.getId().toString());
+    }
+  }
+
+  private String newResearchProject27;
+
+  public void setNewResearchProject27(String p)
+  { 
+    newResearchProject27 = p;
+  }
+
+  public String getNewResearchProject27()
+  { 
+    return newResearchProject27;
+  }
+
+  public void selectResearchProject27(ValueChangeEvent event)
+  { 
+    log.info("selectResearchProject27" + ": new value = " + " " + event.getNewValue());
+    Long id = new Long((String)event.getNewValue());
+    if(id > 0)
+    { 
+      ResearchProject researchProject27 = em.find(ResearchProject.class, id);
+      addResearchProject9(researchProject27);
+    }
+  }
+
+  @DataModel("researchProject27List") private Map<String, String> researchProject27List;
+
+  public Map<String, String> getResearchProject27List()
+  { 
+    return researchProject27List;
+  }
+
+  @Factory("researchProject27List") public void initResearchProject27List()
+  { 
+    log.info("initResearchProject27List");
+    researchProject27List = new HashMap<String, String>();
+    for(Object o : em.createQuery("from " + "ResearchProject").getResultList())
+    { 
+      ResearchProject p = (ResearchProject)o;
+      researchProject27List.put(p.getName(), p.getId().toString());
+    }
+  }
+
+  private String newPublication7;
+
+  public void setNewPublication7(String p)
+  { 
+    newPublication7 = p;
+  }
+
+  public String getNewPublication7()
+  { 
+    return newPublication7;
+  }
+
+  public void selectPublication7(ValueChangeEvent event)
+  { 
+    log.info("selectPublication7" + ": new value = " + " " + event.getNewValue());
+    Long id = new Long((String)event.getNewValue());
+    if(id > 0)
+    { 
+      Publication publication7 = em.find(Publication.class, id);
+      setPublication0(publication7);
+    }
+  }
+
+  @DataModel("publication7List") private Map<String, String> publication7List;
+
+  public Map<String, String> getPublication7List()
+  { 
+    return publication7List;
+  }
+
+  @Factory("publication7List") public void initPublication7List()
+  { 
+    log.info("initPublication7List");
+    publication7List = new HashMap<String, String>();
     for(Object o : em.createQuery("from " + "Publication").getResultList())
     { 
       Publication p = (Publication)o;
-      publication4List.put(p.getName(), p.getId().toString());
+      publication7List.put(p.getName(), p.getId().toString());
     }
   }
 
@@ -154,5 +267,19 @@ import org.webdsl.serg.domain.*;
   { 
     log.info("initProject1137List");
     project1137List = em.createQuery("from " + "ResearchProject").getResultList();
+  }
+
+  private Person newAuthor2;
+
+  public Person getNewAuthor2()
+  { 
+    log.info("getNewAuthor2");
+    return newAuthor2;
+  }
+
+  public void setNewAuthor2(Person newAuthor2)
+  { 
+    log.info("setNewAuthor2");
+    this.newAuthor2 = newAuthor2;
   }
 }

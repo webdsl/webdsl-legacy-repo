@@ -11,13 +11,9 @@ import org.webdsl.serg.domain.*;
 
   public void destroy();
 
-  public void setP(Person p);
+  public void setPerson(Person person);
 
-  public Person getP();
-
-  public List<ResearchProject> getPr3List();
-
-  public void initPr3List();
+  public Person getPerson();
 
   public List<Person> getPerson105List();
 
@@ -26,4 +22,16 @@ import org.webdsl.serg.domain.*;
   public List<ResearchProject> getProject115List();
 
   public void initProject115List();
+
+  public java.util.List<ResearchProject> getProjects4();
+
+  public void setProjects4(java.util.List<ResearchProject> projects4);
+
+  public void initProjects4();
+
+  public java.util.List<Publication> getOrderedPublications1();
+
+  public void setOrderedPublications1(java.util.List<Publication> orderedPublications1);
+
+  public void initOrderedPublications1();
 }

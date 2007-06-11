@@ -18,6 +18,7 @@ imports app/projects
 imports app/initdb
 imports app/groups
 imports app/news
+imports app/issues
 
 section home.
 

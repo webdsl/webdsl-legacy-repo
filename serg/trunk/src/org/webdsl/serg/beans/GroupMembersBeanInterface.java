@@ -23,7 +23,7 @@ import org.webdsl.serg.domain.*;
 
   public void initProject118List();
 
-  public List<Person> getPerson1List();
+  public List<Person> getPerson7List();
 
-  public void initPerson1List();
+  public void initPerson7List();
 }

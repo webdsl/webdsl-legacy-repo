@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
 
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:t="http://myfaces.apache.org/tomahawk" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
 <head>    
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title> <h:outputText value="Publications by "/>  <h:outputText value="#{personPublications.p.name}"/> </title>
+    <title> <h:outputText value="Publications by "/>  <h:outputText value="#{personPublications.person.name}"/> </title>
     <link href="stylesheet/webdsl.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
@@ -16,22 +16,32 @@
       <ul>
         
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{personPublications.p.id}"/> <h:outputText value="#{personPublications.p.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{personPublications.person.id}"/> <h:outputText value="#{personPublications.person.name}"/> </s:link> 
       </li>
     
       <li>
-         <s:link view="/personPublications.xhtml" propagation="none"><f:param name="p" value="#{personPublications.p.id}"/> <h:outputText value="Publications"/> </s:link> 
+         <s:link view="/personPublications.xhtml" propagation="none"><f:param name="person" value="#{personPublications.person.id}"/> <h:outputText value="Publications"/> </s:link> 
       </li>
     
       <li>
-         <s:link view="/viewBlog.xhtml" propagation="none"><f:param name="blog" value="#{personPublications.p.blog.id}"/> <h:outputText value="Blog"/> </s:link> 
+         <s:link view="/viewBlog.xhtml" propagation="none"><f:param name="blog" value="#{personPublications.person.blog.id}"/> <h:outputText value="Blog"/> </s:link> 
       </li>
     
       <li>
          <h:outputText value="Projects"/> 
-      <h:dataTable var="pr3" value="#{personPublications.pr3List}"> 
-      <h:column> <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{pr3.id}"/> <h:outputText value="#{pr3.name}"/> </s:link> </h:column> 
-    </h:dataTable>
+    <div class="listProjectAcronyms">
+      <ul>
+        
+      <ui:repeat var="pr3" value="#{personPublications.projects4}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{pr3.id}"/> <h:outputText value="#{pr3.name}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
+    </div>
     
       </li>
     
@@ -47,9 +57,17 @@
         
       <li>
          <h:outputText value="People"/> 
-      <h:dataTable var="person105" value="#{personPublications.person105List}"> 
-      <h:column> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person105.id}"/> <h:outputText value="#{person105.name}"/> </s:link> </h:column> 
-    </h:dataTable>
+      <ul>
+        
+      <ui:repeat var="person105" value="#{personPublications.person105List}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person105.id}"/> <h:outputText value="#{person105.name}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
     
       </li>
     
@@ -59,9 +77,17 @@
         
       <li>
          <h:outputText value="Projects"/> 
-      <h:dataTable var="project115" value="#{personPublications.project115List}"> 
-      <h:column> <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project115.id}"/> <h:outputText value="#{project115.acronym}"/> </s:link> </h:column> 
-    </h:dataTable>
+      <ul>
+        
+      <ui:repeat var="project115" value="#{personPublications.project115List}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project115.id}"/> <h:outputText value="#{project115.acronym}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
     
       </li>
     
@@ -80,6 +106,22 @@
          <h:outputText value="New"/> 
       <ul>
         
+      <li>
+         <s:link view="/createTask.xhtml" propagation="none"> <h:outputText value="Task"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createBug.xhtml" propagation="none"> <h:outputText value="Bug"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createProject.xhtml" propagation="none"> <h:outputText value="Project"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createIssue.xhtml" propagation="none"> <h:outputText value="Issue"/> </s:link> 
+      </li>
+    
       <li>
          <s:link view="/createNews.xhtml" propagation="none"> <h:outputText value="News"/> </s:link> 
       </li>
@@ -158,7 +200,29 @@
     </div>
     
     <div class="body">
-      <h1> <h:outputText value="Publications by "/>  <h:outputText value="#{personPublications.p.name}"/> </h1>
+      <h1> <h:outputText value="Publications by "/>  <h:outputText value="#{personPublications.person.name}"/> </h1>
+    
+    <div class="publicationsBy">
+      <ul>
+        
+      <ui:repeat var="pub1" value="#{personPublications.orderedPublications1}"> 
+      <h:column>
+      <li>
+        
+    <div class="showPublication">
+      <ui:repeat var="author0" value="#{pub1.authors}"> 
+      <h:column> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{author0.id}"/> <h:outputText value="#{author0.name}"/> </s:link> </h:column> 
+     
+      <h:column> <h:outputText value=", "/> </h:column> 
+    </ui:repeat>
+     <s:link view="/viewPublication.xhtml" propagation="none"><f:param name="publication" value="#{pub1.id}"/> <h:outputText value="#{pub1.name}"/> </s:link>  <h:outputText value=", "/>  <h:outputText value="#{pub1.year}"/>  <h:outputText value="."/> </div>
+    
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
+    </div>
     </div>
     
     <div class="footer"> <h:outputText value="generated with "/>  <h:outputLink value="http://www.strategoxt.org"> <h:outputText value="Stratego/XT"/> </h:outputLink> </div>

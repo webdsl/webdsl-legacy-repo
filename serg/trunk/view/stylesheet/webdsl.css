@@ -153,31 +153,34 @@ a:hover {
  
 *********************************************************/
 
+/* see http://www.css3.com/property/list-style/ */
+
 .sidebar {
-  font-size : 0.95em;
+  font-size : 1em;
 }
 
-.sidebar ul {
-  list-style    : none;
-  margin        : 0;
-  padding       : 0;
+.sidebar  ul {
+  list-style : none;
+  margin     : 0em;
+  padding    : 0px;
 }
 
-.sidebar ul ul {
-  font-size   : 10ptem;
-  margin-left : 0em;
-  margin-bottom : 0em;
+.sidebar  ul ul {
+  list-style-type : square;
+  font-size       : .8em;
+  padding         : .2em;
+  margin-left     : 1em;
 }
 
-.sidebar ul li {
+.sidebar  ul li {
   margin-bottom : 1em;
 }
 
-.sidebar ul ul li {
+.sidebar  ul ul li {
   margin-bottom : 0.2em;
 }
 
-.sidebar ul ul ul li {
+.sidebar ul ul ul li  {
   margin-bottom : 0em;
 }
 

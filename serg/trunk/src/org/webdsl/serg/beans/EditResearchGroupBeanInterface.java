@@ -15,13 +15,13 @@ import org.webdsl.serg.domain.*;
 
   public ResearchGroup getResearchGroup();
 
-  public void removePerson6(Person person51);
+  public void removePerson8(Person person62);
 
-  public void addPerson6(Person person51);
+  public void addPerson8(Person person62);
 
-  public void removeResearchProject9(ResearchProject researchProject26);
+  public void removeResearchProject11(ResearchProject researchProject31);
 
-  public void addResearchProject9(ResearchProject researchProject26);
+  public void addResearchProject11(ResearchProject researchProject31);
 
   public void removeColloquium0(Colloquium colloquium2);
 
@@ -35,25 +35,25 @@ import org.webdsl.serg.domain.*;
 
   public String save();
 
-  public void setNewPerson52(String p);
+  public void setNewPerson63(String p);
 
-  public String getNewPerson52();
+  public String getNewPerson63();
 
-  public void selectPerson52(ValueChangeEvent event);
+  public void selectPerson63(ValueChangeEvent event);
 
-  public Map<String, String> getPerson52List();
+  public Map<String, String> getPerson63List();
 
-  public void initPerson52List();
+  public void initPerson63List();
 
-  public void setNewResearchProject27(String p);
+  public void setNewResearchProject32(String p);
 
-  public String getNewResearchProject27();
+  public String getNewResearchProject32();
 
-  public void selectResearchProject27(ValueChangeEvent event);
+  public void selectResearchProject32(ValueChangeEvent event);
 
-  public Map<String, String> getResearchProject27List();
+  public Map<String, String> getResearchProject32List();
 
-  public void initResearchProject27List();
+  public void initResearchProject32List();
 
   public void setNewColloquium3(String p);
 

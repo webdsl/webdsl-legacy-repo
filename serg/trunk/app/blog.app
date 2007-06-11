@@ -40,18 +40,19 @@ section pages.
 
   define blogSidebar(blog : Blog) {
     personSidebar(blog.author)
-    list{
-      listitem{
-        navigate("Blog", viewBlog(blog))
-        for(entry : BlogEntry in blog.entries) {
-          navigate(entry.name, viewBlogEntry(entry))
-        }
-      }
-    }
   }
     
   define page viewBlog(blog : Blog) {
     main()
+    
+    define blogEntries() {
+      list{
+        for(entry : BlogEntry in blog.entries) {
+          listitem { navigate(entry.name, viewBlogEntry(entry)) }
+        }
+      }
+    }
+    
     define sidebar(){ blogSidebar(blog) }
     
     define manageMenu() { 

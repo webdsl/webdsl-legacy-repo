@@ -29,16 +29,16 @@ section setup.
     list {
       listitem {
         "People"
-          for(person10 : Person) { navigate(person10.name, viewPerson(person10)) }
+          list{ for(person10 : Person) { listitem { navigate(person10.name, viewPerson(person10)) } } }
       }
     }
     
     list {
       listitem {
         "Projects"
-          for(project11 : ResearchProject) { 
-            navigate(project11.acronym, viewResearchProject(project11))
-          }
+          list { for(project11 : ResearchProject) { 
+            listitem { navigate(project11.acronym, viewResearchProject(project11)) }
+          } }
       }
     }
         

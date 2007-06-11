@@ -47,10 +47,9 @@ import org.webdsl.serg.domain.*;
     { 
       person = em.find(Person.class, personId);
     }
-    initPublications0();
-    initOrderedPublications0();
     initProjects0();
-    initPr0List();
+    initOrderedPublications0();
+    initProjects1();
     initPerson100List();
     initProject110List();
   }
@@ -72,20 +71,6 @@ import org.webdsl.serg.domain.*;
   { 
     log.info("getPerson");
     return person;
-  }
-
-  @DataModel("pr0List") private List<ResearchProject> pr0List;
-
-  public List<ResearchProject> getPr0List()
-  { 
-    log.info("getPr0List");
-    return pr0List;
-  }
-
-  @Factory("pr0List") public void initPr0List()
-  { 
-    log.info("initPr0List");
-    pr0List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 
   @DataModel("person100List") private List<Person> person100List;
@@ -116,24 +101,24 @@ import org.webdsl.serg.domain.*;
     project110List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 
-  @DataModel("publications0") private java.util.List<Publication> publications0;
+  @DataModel("projects0") private java.util.List<ResearchProject> projects0;
 
-  public java.util.List<Publication> getPublications0()
+  public java.util.List<ResearchProject> getProjects0()
   { 
-    log.info("getPublications0");
-    return publications0;
+    log.info("getProjects0");
+    return projects0;
   }
 
-  public void setPublications0(java.util.List<Publication> publications0)
+  public void setProjects0(java.util.List<ResearchProject> projects0)
   { 
-    log.info("setPublications0");
-    this.publications0 = publications0;
+    log.info("setProjects0");
+    this.projects0 = projects0;
   }
 
-  @Factory("publications0") public void initPublications0()
+  @Factory("projects0") public void initProjects0()
   { 
-    log.info("initPublications0");
-    publications0 = em.createQuery("select pub from Publication as pub , Person as pers where ( pers . id = :param0 ) and ( pers member of pub . _authors )").setParameter("param0", this.getPerson().getId()).getResultList();
+    log.info("initProjects0");
+    projects0 = em.createQuery("select pr from ResearchProject as pr , Person as pers where ( pers . id = :param0 ) and ( pers member of pr . _members )").setParameter("param0", this.getPerson().getId()).getResultList();
   }
 
   @DataModel("orderedPublications0") private java.util.List<Publication> orderedPublications0;
@@ -156,23 +141,23 @@ import org.webdsl.serg.domain.*;
     orderedPublications0 = em.createQuery("select pub from Publication as pub , Person as pers where ( pers . id = :param1 ) and ( pers member of pub . _authors ) order by pub . _year desc").setParameter("param1", this.getPerson().getId()).getResultList();
   }
 
-  @DataModel("projects0") private java.util.List<ResearchProject> projects0;
+  @DataModel("projects1") private java.util.List<ResearchProject> projects1;
 
-  public java.util.List<ResearchProject> getProjects0()
+  public java.util.List<ResearchProject> getProjects1()
   { 
-    log.info("getProjects0");
-    return projects0;
+    log.info("getProjects1");
+    return projects1;
   }
 
-  public void setProjects0(java.util.List<ResearchProject> projects0)
+  public void setProjects1(java.util.List<ResearchProject> projects1)
   { 
-    log.info("setProjects0");
-    this.projects0 = projects0;
+    log.info("setProjects1");
+    this.projects1 = projects1;
   }
 
-  @Factory("projects0") public void initProjects0()
+  @Factory("projects1") public void initProjects1()
   { 
-    log.info("initProjects0");
-    projects0 = em.createQuery("select pr from ResearchProject as pr , Person as pers where ( pers . id = :param2 ) and ( pers member of pr . _members )").setParameter("param2", this.getPerson().getId()).getResultList();
+    log.info("initProjects1");
+    projects1 = em.createQuery("select pr from ResearchProject as pr , Person as pers where ( pers . id = :param2 ) and ( pers member of pr . _members )").setParameter("param2", this.getPerson().getId()).getResultList();
   }
 }

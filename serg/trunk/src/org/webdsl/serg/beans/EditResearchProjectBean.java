@@ -47,9 +47,9 @@ import org.webdsl.serg.domain.*;
     { 
       researchProject = em.find(ResearchProject.class, researchProjectId);
     }
-    initPerson44List();
-    initPublication10List();
+    initPerson55List();
     initPublication13List();
+    initPublication16List();
     initPerson1040List();
     initProject1140List();
   }
@@ -73,29 +73,29 @@ import org.webdsl.serg.domain.*;
     return researchProject;
   }
 
-  public void removePerson3(Person person43)
+  public void removePerson5(Person person54)
   { 
-    this.getResearchProject().getMembers().remove(person43);
+    this.getResearchProject().getMembers().remove(person54);
   }
 
-  public void addPerson3(Person person43)
+  public void addPerson5(Person person54)
   { 
-    this.getResearchProject().getMembers().add(person43);
+    this.getResearchProject().getMembers().add(person54);
   }
 
-  public void setPublication3(Publication publication11)
+  public void setPublication3(Publication publication14)
   { 
-    researchProject.setProposal(publication11);
+    researchProject.setProposal(publication14);
   }
 
-  public void removePublication0(Publication publication12)
+  public void removePublication0(Publication publication15)
   { 
-    this.getResearchProject().getPublications().remove(publication12);
+    this.getResearchProject().getPublications().remove(publication15);
   }
 
-  public void addPublication0(Publication publication12)
+  public void addPublication0(Publication publication15)
   { 
-    this.getResearchProject().getPublications().add(publication12);
+    this.getResearchProject().getPublications().add(publication15);
   }
 
   @End public String cancel()
@@ -109,85 +109,44 @@ import org.webdsl.serg.domain.*;
     return "/" + "viewResearchProject" + ".seam?" + ("researchProject" + "=" + researchProject.getId() + "");
   }
 
-  private String newPerson44;
+  private String newPerson55;
 
-  public void setNewPerson44(String p)
+  public void setNewPerson55(String p)
   { 
-    newPerson44 = p;
+    newPerson55 = p;
   }
 
-  public String getNewPerson44()
+  public String getNewPerson55()
   { 
-    return newPerson44;
+    return newPerson55;
   }
 
-  public void selectPerson44(ValueChangeEvent event)
+  public void selectPerson55(ValueChangeEvent event)
   { 
-    log.info("selectPerson44" + ": new value = " + " " + event.getNewValue());
+    log.info("selectPerson55" + ": new value = " + " " + event.getNewValue());
     Long id = new Long((String)event.getNewValue());
     if(id > 0)
     { 
-      Person person44 = em.find(Person.class, id);
-      addPerson3(person44);
+      Person person55 = em.find(Person.class, id);
+      addPerson5(person55);
     }
   }
 
-  @DataModel("person44List") private Map<String, String> person44List;
+  @DataModel("person55List") private Map<String, String> person55List;
 
-  public Map<String, String> getPerson44List()
+  public Map<String, String> getPerson55List()
   { 
-    return person44List;
+    return person55List;
   }
 
-  @Factory("person44List") public void initPerson44List()
+  @Factory("person55List") public void initPerson55List()
   { 
-    log.info("initPerson44List");
-    person44List = new HashMap<String, String>();
+    log.info("initPerson55List");
+    person55List = new HashMap<String, String>();
     for(Object o : em.createQuery("from " + "Person").getResultList())
     { 
       Person p = (Person)o;
-      person44List.put(p.getName(), p.getId().toString());
-    }
-  }
-
-  private String newPublication10;
-
-  public void setNewPublication10(String p)
-  { 
-    newPublication10 = p;
-  }
-
-  public String getNewPublication10()
-  { 
-    return newPublication10;
-  }
-
-  public void selectPublication10(ValueChangeEvent event)
-  { 
-    log.info("selectPublication10" + ": new value = " + " " + event.getNewValue());
-    Long id = new Long((String)event.getNewValue());
-    if(id > 0)
-    { 
-      Publication publication10 = em.find(Publication.class, id);
-      setPublication3(publication10);
-    }
-  }
-
-  @DataModel("publication10List") private Map<String, String> publication10List;
-
-  public Map<String, String> getPublication10List()
-  { 
-    return publication10List;
-  }
-
-  @Factory("publication10List") public void initPublication10List()
-  { 
-    log.info("initPublication10List");
-    publication10List = new HashMap<String, String>();
-    for(Object o : em.createQuery("from " + "Publication").getResultList())
-    { 
-      Publication p = (Publication)o;
-      publication10List.put(p.getName(), p.getId().toString());
+      person55List.put(p.getName(), p.getId().toString());
     }
   }
 
@@ -210,7 +169,7 @@ import org.webdsl.serg.domain.*;
     if(id > 0)
     { 
       Publication publication13 = em.find(Publication.class, id);
-      addPublication0(publication13);
+      setPublication3(publication13);
     }
   }
 
@@ -229,6 +188,47 @@ import org.webdsl.serg.domain.*;
     { 
       Publication p = (Publication)o;
       publication13List.put(p.getName(), p.getId().toString());
+    }
+  }
+
+  private String newPublication16;
+
+  public void setNewPublication16(String p)
+  { 
+    newPublication16 = p;
+  }
+
+  public String getNewPublication16()
+  { 
+    return newPublication16;
+  }
+
+  public void selectPublication16(ValueChangeEvent event)
+  { 
+    log.info("selectPublication16" + ": new value = " + " " + event.getNewValue());
+    Long id = new Long((String)event.getNewValue());
+    if(id > 0)
+    { 
+      Publication publication16 = em.find(Publication.class, id);
+      addPublication0(publication16);
+    }
+  }
+
+  @DataModel("publication16List") private Map<String, String> publication16List;
+
+  public Map<String, String> getPublication16List()
+  { 
+    return publication16List;
+  }
+
+  @Factory("publication16List") public void initPublication16List()
+  { 
+    log.info("initPublication16List");
+    publication16List = new HashMap<String, String>();
+    for(Object o : em.createQuery("from " + "Publication").getResultList())
+    { 
+      Publication p = (Publication)o;
+      publication16List.put(p.getName(), p.getId().toString());
     }
   }
 

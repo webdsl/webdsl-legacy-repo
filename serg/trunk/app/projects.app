@@ -35,5 +35,34 @@ section view.
     }
     main()
   }
+  
+section looking up projects.
 
+  define listProjects(person : Person) {
+  
+    var projects : List<ResearchProject> :=
+      select pr from ResearchProject as pr, Person as pers 
+       where (pers.id = ~person.id) and (pers member of pr._members); 
+
+    list { 
+      for(project : ResearchProject in projects) {
+        listitem { 
+          navigate(viewResearchProject(project)){
+            text(project.fullname) " (" text(project.acronym) ")"
+          }
+        }
+      }
+    }
+  }
+
+  define listProjectAcronyms(person : Person) {
+  
+    var projects : List<ResearchProject> :=
+     select pr from ResearchProject as pr, Person as pers 
+      where (pers.id = ~person.id) and (pers member of pr._members); 
+  
+    list { 
+      for(pr : ResearchProject in projects) { listitem { output(pr) } }
+    }
+  }
  

@@ -40,7 +40,7 @@ import org.webdsl.serg.domain.*;
     log.info("createColloquium" + ".initalize()");
     Colloquium var23 = new Colloquium();
     colloquium = var23;
-    initPerson27List();
+    initPerson33List();
     initResearchGroup4List();
     initResearchProject8List();
     initPresentation7List();
@@ -51,9 +51,9 @@ import org.webdsl.serg.domain.*;
   @Destroy @Remove public void destroy()
   { }
 
-  public void setPerson10(Person person28)
+  public void setPerson10(Person person34)
   { 
-    colloquium.setContact(person28);
+    colloquium.setContact(person34);
   }
 
   public void setResearchGroup1(ResearchGroup researchGroup5)
@@ -92,44 +92,44 @@ import org.webdsl.serg.domain.*;
     return "/" + "viewColloquium" + ".seam?" + ("colloquium" + "=" + colloquium.getId() + "");
   }
 
-  private String newPerson27;
+  private String newPerson33;
 
-  public void setNewPerson27(String p)
+  public void setNewPerson33(String p)
   { 
-    newPerson27 = p;
+    newPerson33 = p;
   }
 
-  public String getNewPerson27()
+  public String getNewPerson33()
   { 
-    return newPerson27;
+    return newPerson33;
   }
 
-  public void selectPerson27(ValueChangeEvent event)
+  public void selectPerson33(ValueChangeEvent event)
   { 
-    log.info("selectPerson27" + ": new value = " + " " + event.getNewValue());
+    log.info("selectPerson33" + ": new value = " + " " + event.getNewValue());
     Long id = new Long((String)event.getNewValue());
     if(id > 0)
     { 
-      Person person27 = em.find(Person.class, id);
-      setPerson10(person27);
+      Person person33 = em.find(Person.class, id);
+      setPerson10(person33);
     }
   }
 
-  @DataModel("person27List") private Map<String, String> person27List;
+  @DataModel("person33List") private Map<String, String> person33List;
 
-  public Map<String, String> getPerson27List()
+  public Map<String, String> getPerson33List()
   { 
-    return person27List;
+    return person33List;
   }
 
-  @Factory("person27List") public void initPerson27List()
+  @Factory("person33List") public void initPerson33List()
   { 
-    log.info("initPerson27List");
-    person27List = new HashMap<String, String>();
+    log.info("initPerson33List");
+    person33List = new HashMap<String, String>();
     for(Object o : em.createQuery("from " + "Person").getResultList())
     { 
       Person p = (Person)o;
-      person27List.put(p.getName(), p.getId().toString());
+      person33List.put(p.getName(), p.getId().toString());
     }
   }
 

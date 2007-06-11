@@ -43,15 +43,12 @@ section person pages.
     list {
       listitem{navigate(p.name, viewPerson(p))}
       listitem{navigate("Publications", personPublications(p))}
-      listitem{navigate("Blog", viewBlog(p.blog))}
-      listitem {
-        "Projects"
-          for(pr : ResearchProject) {
-            navigate(pr.name, viewResearchProject(pr))
-          }
-      }
+      listitem{navigate("Blog", viewBlog(p.blog)) blogEntries()}
+      listitem { "Projects" listProjectAcronyms(p) }
     }
   }
+  
+  //define blogEntries() {}
     
   define page viewPerson(person : Person) 
   {    
@@ -86,30 +83,15 @@ section person pages.
           }
         }
     
-        //section{
-          //header{"Recent Publications"}
-          //publicationsForYear(person, 2007)
-           // better: 10 most recent publications
-        //}
-        
         section{ 
           header{"Publications"}
-          publicationsBy(person)
+          publicationTitlesBy(person)
         }
-        
-        var projects : List<ResearchProject> :=
-          select pr from ResearchProject as pr, Person as pers 
-           where (pers.id = ~person.id) and (pers member of pr._members); 
         
         section { 
           header{"Projects"}
-          for(project : ResearchProject in projects) {
-            navigate(viewResearchProject(project)){
-              text(project.fullname) " (" text(project.acronym) ")"
-            }
-          }
+          listProjects(person)
         }
-        
       }
     }
   }

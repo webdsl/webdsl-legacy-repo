@@ -47,6 +47,6 @@ import org.webdsl.serg.domain.*;
 
   public String getName()
   { 
-    return getId().toString();
+    return getTitle().toString();
   }
 }

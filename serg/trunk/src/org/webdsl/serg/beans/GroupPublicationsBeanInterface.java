@@ -23,7 +23,7 @@ import org.webdsl.serg.domain.*;
 
   public void initProject1110List();
 
-  public List<Publication> getPub2List();
+  public List<Publication> getPub5List();
 
-  public void initPub2List();
+  public void initPub5List();
 }

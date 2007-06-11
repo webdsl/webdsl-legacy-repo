@@ -11,7 +11,7 @@ import org.webdsl.serg.domain.*;
 
   public void destroy();
 
-  public void setPerson10(Person person28);
+  public void setPerson10(Person person34);
 
   public void setResearchGroup1(ResearchGroup researchGroup5);
 
@@ -27,15 +27,15 @@ import org.webdsl.serg.domain.*;
 
   public String save();
 
-  public void setNewPerson27(String p);
+  public void setNewPerson33(String p);
 
-  public String getNewPerson27();
+  public String getNewPerson33();
 
-  public void selectPerson27(ValueChangeEvent event);
+  public void selectPerson33(ValueChangeEvent event);
 
-  public Map<String, String> getPerson27List();
+  public Map<String, String> getPerson33List();
 
-  public void initPerson27List();
+  public void initPerson33List();
 
   public void setNewResearchGroup4(String p);
 

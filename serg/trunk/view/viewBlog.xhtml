@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
 
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:t="http://myfaces.apache.org/tomahawk" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
 <head>    
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title></title>
@@ -21,35 +21,47 @@
       </li>
     
       <li>
-         <s:link view="/personPublications.xhtml" propagation="none"><f:param name="p" value="#{viewBlog.blog.author.id}"/> <h:outputText value="Publications"/> </s:link> 
+         <s:link view="/personPublications.xhtml" propagation="none"><f:param name="person" value="#{viewBlog.blog.author.id}"/> <h:outputText value="Publications"/> </s:link> 
       </li>
     
       <li>
          <s:link view="/viewBlog.xhtml" propagation="none"><f:param name="blog" value="#{viewBlog.blog.author.blog.id}"/> <h:outputText value="Blog"/> </s:link> 
+    <div class="blogEntries">
+      <ul>
+        
+      <ui:repeat var="entry0" value="#{viewBlog.blog.entries}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewBlogEntry.xhtml" propagation="none"><f:param name="entry" value="#{entry0.id}"/> <h:outputText value="#{entry0.name}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
+    </div>
+    
       </li>
     
       <li>
          <h:outputText value="Projects"/> 
-      <h:dataTable var="pr1" value="#{viewBlog.pr1List}"> 
-      <h:column> <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{pr1.id}"/> <h:outputText value="#{pr1.name}"/> </s:link> </h:column> 
-    </h:dataTable>
+    <div class="listProjectAcronyms">
+      <ul>
+        
+      <ui:repeat var="pr1" value="#{viewBlog.projects2}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{pr1.id}"/> <h:outputText value="#{pr1.name}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
+    </div>
     
       </li>
     
       </ul>
     </div>
-    
-      <ul>
-        
-      <li>
-         <s:link view="/viewBlog.xhtml" propagation="none"><f:param name="blog" value="#{viewBlog.blog.id}"/> <h:outputText value="Blog"/> </s:link> 
-      <h:dataTable var="entry0" value="#{viewBlog.blog.entries}"> 
-      <h:column> <s:link view="/viewBlogEntry.xhtml" propagation="none"><f:param name="entry" value="#{entry0.id}"/> <h:outputText value="#{entry0.name}"/> </s:link> </h:column> 
-    </h:dataTable>
-    
-      </li>
-    
-      </ul>
     </div>
     </div>
     </div>
@@ -61,9 +73,17 @@
         
       <li>
          <h:outputText value="People"/> 
-      <h:dataTable var="person102" value="#{viewBlog.person102List}"> 
-      <h:column> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person102.id}"/> <h:outputText value="#{person102.name}"/> </s:link> </h:column> 
-    </h:dataTable>
+      <ul>
+        
+      <ui:repeat var="person102" value="#{viewBlog.person102List}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person102.id}"/> <h:outputText value="#{person102.name}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
     
       </li>
     
@@ -73,9 +93,17 @@
         
       <li>
          <h:outputText value="Projects"/> 
-      <h:dataTable var="project112" value="#{viewBlog.project112List}"> 
-      <h:column> <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project112.id}"/> <h:outputText value="#{project112.acronym}"/> </s:link> </h:column> 
-    </h:dataTable>
+      <ul>
+        
+      <ui:repeat var="project112" value="#{viewBlog.project112List}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project112.id}"/> <h:outputText value="#{project112.acronym}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
     
       </li>
     
@@ -100,6 +128,22 @@
          <h:outputText value="New"/> 
       <ul>
         
+      <li>
+         <s:link view="/createTask.xhtml" propagation="none"> <h:outputText value="Task"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createBug.xhtml" propagation="none"> <h:outputText value="Bug"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createProject.xhtml" propagation="none"> <h:outputText value="Project"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createIssue.xhtml" propagation="none"> <h:outputText value="Issue"/> </s:link> 
+      </li>
+    
       <li>
          <s:link view="/createNews.xhtml" propagation="none"> <h:outputText value="News"/> </s:link> 
       </li>
@@ -181,7 +225,7 @@
       <div class="section1">
       <h1> <h:outputText value="#{viewBlog.blog.title}"/> </h1>
     
-      <h:dataTable var="entry2" value="#{viewBlog.blog.entries}"> 
+      <ui:repeat var="entry2" value="#{viewBlog.blog.entries}"> 
       <h:column>
       <div class="section2">
       <h2> <h:outputText value="#{entry2.title}"/> </h2>
@@ -191,7 +235,7 @@
     </div>
      <h:outputText value=" "/>  <s:link view="/viewBlogEntry.xhtml" propagation="none"><f:param name="entry" value="#{entry2.id}"/> <h:outputText value="read more ..."/> </s:link> </div>
     </h:column> 
-    </h:dataTable>
+    </ui:repeat>
     </div>
     </div>
     

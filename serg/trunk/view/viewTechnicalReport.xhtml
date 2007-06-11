@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
 
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:t="http://myfaces.apache.org/tomahawk" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
 <head>    
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title></title>
@@ -21,9 +21,17 @@
         
       <li>
          <h:outputText value="People"/> 
-      <h:dataTable var="person1039" value="#{viewTechnicalReport.person1039List}"> 
-      <h:column> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person1039.id}"/> <h:outputText value="#{person1039.name}"/> </s:link> </h:column> 
-    </h:dataTable>
+      <ul>
+        
+      <ui:repeat var="person1039" value="#{viewTechnicalReport.person1039List}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person1039.id}"/> <h:outputText value="#{person1039.name}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
     
       </li>
     
@@ -33,9 +41,17 @@
         
       <li>
          <h:outputText value="Projects"/> 
-      <h:dataTable var="project1139" value="#{viewTechnicalReport.project1139List}"> 
-      <h:column> <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project1139.id}"/> <h:outputText value="#{project1139.acronym}"/> </s:link> </h:column> 
-    </h:dataTable>
+      <ul>
+        
+      <ui:repeat var="project1139" value="#{viewTechnicalReport.project1139List}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project1139.id}"/> <h:outputText value="#{project1139.acronym}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
     
       </li>
     
@@ -58,6 +74,22 @@
          <h:outputText value="New"/> 
       <ul>
         
+      <li>
+         <s:link view="/createTask.xhtml" propagation="none"> <h:outputText value="Task"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createBug.xhtml" propagation="none"> <h:outputText value="Bug"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createProject.xhtml" propagation="none"> <h:outputText value="Project"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createIssue.xhtml" propagation="none"> <h:outputText value="Issue"/> </s:link> 
+      </li>
+    
       <li>
          <s:link view="/createNews.xhtml" propagation="none"> <h:outputText value="News"/> </s:link> 
       </li>
@@ -141,6 +173,50 @@
     
       <table>
     <div class="viewRowsTechnicalReport">
+    <div class="viewRowsPublication">
+    <div class="viewRowsObject"></div>
+    
+      <tr> <td> <h:outputText value="Title"/> </td>  <td> <h:outputText value="#{viewTechnicalReport.technicalReport.title}"/> </td> </tr>
+    
+      <tr> <td> <h:outputText value="Subtitle"/> </td>  <td> <h:outputText value="#{viewTechnicalReport.technicalReport.subtitle}"/> </td> </tr>
+    
+      <tr> <td> <h:outputText value="Authors"/> </td>  <td>
+      <ul>
+        
+      <ui:repeat var="person53" value="#{viewTechnicalReport.technicalReport.authors}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person53.id}"/> <h:outputText value="#{person53.name}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Year"/> </td>  <td> <h:outputText value="#{viewTechnicalReport.technicalReport.year}"/> </td> </tr>
+    
+      <tr> <td> <h:outputText value="Abstract"/> </td>  <td>
+      <s:formattedText styleClass="outputTextarea" value="#{viewTechnicalReport.technicalReport.abstract}"/>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Projects"/> </td>  <td>
+      <ul>
+        
+      <ui:repeat var="researchProject30" value="#{viewTechnicalReport.technicalReport.projectsList}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{researchProject30.id}"/> <h:outputText value="#{researchProject30.name}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Pdf"/> </td>  <td> <h:outputLink value="#{viewTechnicalReport.technicalReport.pdf}"> <h:outputText value="#{viewTechnicalReport.technicalReport.pdf}"/> </h:outputLink> </td> </tr>
+    </div>
+    
       <tr> <td> <h:outputText value="Number"/> </td>  <td> <h:outputText value="#{viewTechnicalReport.technicalReport.number}"/> </td> </tr>
     
       <tr> <td> <h:outputText value="Document"/> </td>  <td>

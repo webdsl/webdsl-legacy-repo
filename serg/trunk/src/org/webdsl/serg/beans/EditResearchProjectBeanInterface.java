@@ -15,39 +15,29 @@ import org.webdsl.serg.domain.*;
 
   public ResearchProject getResearchProject();
 
-  public void removePerson3(Person person43);
+  public void removePerson5(Person person54);
 
-  public void addPerson3(Person person43);
+  public void addPerson5(Person person54);
 
-  public void setPublication3(Publication publication11);
+  public void setPublication3(Publication publication14);
 
-  public void removePublication0(Publication publication12);
+  public void removePublication0(Publication publication15);
 
-  public void addPublication0(Publication publication12);
+  public void addPublication0(Publication publication15);
 
   public String cancel();
 
   public String save();
 
-  public void setNewPerson44(String p);
+  public void setNewPerson55(String p);
 
-  public String getNewPerson44();
+  public String getNewPerson55();
 
-  public void selectPerson44(ValueChangeEvent event);
+  public void selectPerson55(ValueChangeEvent event);
 
-  public Map<String, String> getPerson44List();
+  public Map<String, String> getPerson55List();
 
-  public void initPerson44List();
-
-  public void setNewPublication10(String p);
-
-  public String getNewPublication10();
-
-  public void selectPublication10(ValueChangeEvent event);
-
-  public Map<String, String> getPublication10List();
-
-  public void initPublication10List();
+  public void initPerson55List();
 
   public void setNewPublication13(String p);
 
@@ -58,6 +48,16 @@ import org.webdsl.serg.domain.*;
   public Map<String, String> getPublication13List();
 
   public void initPublication13List();
+
+  public void setNewPublication16(String p);
+
+  public String getNewPublication16();
+
+  public void selectPublication16(ValueChangeEvent event);
+
+  public Map<String, String> getPublication16List();
+
+  public void initPublication16List();
 
   public List<Person> getPerson1040List();
 

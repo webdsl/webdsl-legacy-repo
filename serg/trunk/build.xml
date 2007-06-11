@@ -109,6 +109,7 @@
 				<include name="jsf-facelets.jar" />
 				<include name="jboss-seam-*.jar" />
 				<exclude name="jboss-seam-gen.jar" />
+				<include name="tomahawk-1.1.5.jar"/>
 			</fileset>
 		</copy>
 		<copy todir="${war.dir}/WEB-INF/classes">

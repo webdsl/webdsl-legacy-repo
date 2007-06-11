@@ -19,7 +19,7 @@ section publications.
     projects -> Set<ResearchProject>
     pdf      :: URL
   }
-    
+  
   TechnicalReport : Publication {
     number     :: Int
  // code       :: String := "TUD-SERG-" + year + "-" + number
@@ -27,55 +27,93 @@ section publications.
     preprintof -> Publication
   }
   
-section publication pages.
-
-  define page personPublications(p : Person) {
-    title{"Publications by " text(p.name)}
-    
-    define sidebar() { personSidebar(p) }
-    
-    define body() {
-      header{"Publications by " text(p.name)}
-      //publicationsPage(p.publications)
-    }
-    main()
-    
+  InProceedings : Publication {
+    conference -> Conference
+    pages      :: String
   }
   
-  define publicationsBy(person : Person) {
+  Conference {
+    fullname   :: String
+    acronym    :: String (name)
+    booktitle  :: String
+    editors    -> List<Person>
+    place      :: String
+    year       :: Int
+    month      :: String
+    url        :: URL
+    acceptance :: Int // 0 .. 100 percentage
+  }
+    
+  Article : Publication {
+    journal -> Journal
+    pages   :: String
+    impact  :: Int // average number of citations?
+  }
   
-    var publications : List<Publication> :=
-      select pub from Publication as pub, Person as pers 
-       where (pers.id = ~person.id) and (pers member of pub._authors); 
+  Journal {
+    fullname :: String
+    acronym  :: String (name)
+  }
+  
+section presenting publications.
+
+ define showPublication(pub : Publication) {
+    for(author : Person in pub.authors){ 
+      navigate(author.name, viewPerson(author)) ", "
+    }
+    navigate(pub.name, viewPublication(pub)) ", "
+    text(pub.year) "."
+  }
+
+  define publicationsPage(publications : List<Publication>) {
+    list {
+      for(publication : Publication in publications) { 
+        listitem{ showPublication(publication) }
+      }
+    }
+  }
+    
+section looking up publications.
+
+  define publicationsBy(person : Person) {
            
     var orderedPublications : List<Publication> :=
       select pub from Publication as pub, Person as pers 
        where (pers.id = ~person.id) and (pers member of pub._authors)
-       order by pub._year descending; 
-                 
-    for(pub : Publication in orderedPublications) {
-      div("line") {
-        navigate(pub.name, viewPublication(pub))
-        " (" text(pub.year) ")"
-      }
-    }
+       order by pub._year descending;   
+         
+    list { for(pub : Publication in orderedPublications) {
+      listitem { showPublication(pub) }
+    } }
+  }
+   
+  define publicationTitlesBy(person : Person) { 
+           
+    var orderedPublications : List<Publication> :=
+      select pub from Publication as pub, Person as pers 
+       where (pers.id = ~person.id) and (pers member of pub._authors)
+       order by pub._year descending;   
+         
+    list { for(pub : Publication in orderedPublications) {
+      listitem { output(pub) " (" text(pub.year) ")" }
+    } }
   }
   
-  define publicationsForYear(pers : Person, year : Int) {
-  }
-  
-     //    publicationsPage(pers.publications where p.year == year)
+section publication pages.
 
-  define publicationsPage(publications : List<Publication>) {
-    list{
-      for(publication : Publication in publications) { 
-        listitem{
-          for(author : Person in publication.authors) {navigate(author.name, viewPerson(author)) ","}
-          navigate(publication.name, viewPublication(publication))
-        }
-     }
+  define page personPublications(person : Person) {
+    main()
+    title{"Publications by " text(person.name)}
+    
+    define sidebar() { personSidebar(person) }
+    
+    define body() {
+      header{"Publications by " text(person.name)}
+      publicationsBy(person)
     }
   }
+  
+section editing publications.
   
   define editRowsPublication (publication : Publication) {
     row(){

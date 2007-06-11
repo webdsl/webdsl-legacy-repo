@@ -47,7 +47,7 @@ import org.webdsl.serg.domain.*;
     { 
       blog = em.find(Blog.class, blogId);
     }
-    initPr1List();
+    initProjects2();
     initPerson102List();
     initProject112List();
   }
@@ -82,20 +82,6 @@ import org.webdsl.serg.domain.*;
     return "/" + "editBlogEntry" + ".seam?" + ("blogEntry" + "=" + entry1.getId() + "");
   }
 
-  @DataModel("pr1List") private List<ResearchProject> pr1List;
-
-  public List<ResearchProject> getPr1List()
-  { 
-    log.info("getPr1List");
-    return pr1List;
-  }
-
-  @Factory("pr1List") public void initPr1List()
-  { 
-    log.info("initPr1List");
-    pr1List = em.createQuery("from " + "ResearchProject").getResultList();
-  }
-
   @DataModel("person102List") private List<Person> person102List;
 
   public List<Person> getPerson102List()
@@ -122,5 +108,25 @@ import org.webdsl.serg.domain.*;
   { 
     log.info("initProject112List");
     project112List = em.createQuery("from " + "ResearchProject").getResultList();
+  }
+
+  @DataModel("projects2") private java.util.List<ResearchProject> projects2;
+
+  public java.util.List<ResearchProject> getProjects2()
+  { 
+    log.info("getProjects2");
+    return projects2;
+  }
+
+  public void setProjects2(java.util.List<ResearchProject> projects2)
+  { 
+    log.info("setProjects2");
+    this.projects2 = projects2;
+  }
+
+  @Factory("projects2") public void initProjects2()
+  { 
+    log.info("initProjects2");
+    projects2 = em.createQuery("select pr from ResearchProject as pr , Person as pers where ( pers . id = :param3 ) and ( pers member of pr . _members )").setParameter("param3", this.getBlog().getAuthor().getId()).getResultList();
   }
 }

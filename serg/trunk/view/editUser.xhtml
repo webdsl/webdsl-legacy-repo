@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
 
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:t="http://myfaces.apache.org/tomahawk" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
 <head>    
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title></title>
@@ -21,9 +21,17 @@
         
       <li>
          <h:outputText value="People"/> 
-      <h:dataTable var="person1011" value="#{editUser.person1011List}"> 
-      <h:column> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person1011.id}"/> <h:outputText value="#{person1011.name}"/> </s:link> </h:column> 
-    </h:dataTable>
+      <ul>
+        
+      <ui:repeat var="person1011" value="#{editUser.person1011List}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person1011.id}"/> <h:outputText value="#{person1011.name}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
     
       </li>
     
@@ -33,9 +41,17 @@
         
       <li>
          <h:outputText value="Projects"/> 
-      <h:dataTable var="project1111" value="#{editUser.project1111List}"> 
-      <h:column> <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project1111.id}"/> <h:outputText value="#{project1111.acronym}"/> </s:link> </h:column> 
-    </h:dataTable>
+      <ul>
+        
+      <ui:repeat var="project1111" value="#{editUser.project1111List}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project1111.id}"/> <h:outputText value="#{project1111.acronym}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
     
       </li>
     
@@ -54,6 +70,22 @@
          <h:outputText value="New"/> 
       <ul>
         
+      <li>
+         <s:link view="/createTask.xhtml" propagation="none"> <h:outputText value="Task"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createBug.xhtml" propagation="none"> <h:outputText value="Bug"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createProject.xhtml" propagation="none"> <h:outputText value="Project"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createIssue.xhtml" propagation="none"> <h:outputText value="Issue"/> </s:link> 
+      </li>
+    
       <li>
          <s:link view="/createNews.xhtml" propagation="none"> <h:outputText value="News"/> </s:link> 
       </li>
@@ -139,6 +171,8 @@
         <s:validateAll>
       <table>
     <div class="editRowsUser">
+    <div class="editRowsObject"></div>
+    
       <tr> <td> <h:outputText value="Username"/> </td>  <td>
       <s:decorate>
         <h:inputText styleClass="inputString" value="#{editUser.user.username}"/>
@@ -153,9 +187,9 @@
     
       <tr> <td> <h:outputText value="Person"/> </td>  <td>
     <div class="inputSimpleRefAssociation"> <h:outputText value="#{editUser.user.person.name}"/>  <h:outputText value=" "/> 
-       <h:selectOneMenu value="#{editUser.newPerson6}" onchange="submit()" valueChangeListener="#{editUser.selectPerson6}">
+       <h:selectOneMenu value="#{editUser.newPerson13}" onchange="submit()" valueChangeListener="#{editUser.selectPerson13}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{editUser.person6List}" var="person6" label="#{person6.label}"/>
+          <f:selectItems value="#{editUser.person13List}" var="person13" label="#{person13.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

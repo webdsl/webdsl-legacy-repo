@@ -38,16 +38,17 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("personPublications" + ".initalize()");
-    if(pId == null)
+    if(personId == null)
     { 
-      log.info("No " + "pId" + " defined, creating new " + "Person");
-      p = new Person();
+      log.info("No " + "personId" + " defined, creating new " + "Person");
+      person = new Person();
     }
     else
     { 
-      p = em.find(Person.class, pId);
+      person = em.find(Person.class, personId);
     }
-    initPr3List();
+    initProjects4();
+    initOrderedPublications1();
     initPerson105List();
     initProject115List();
   }
@@ -55,34 +56,20 @@ import org.webdsl.serg.domain.*;
   @Destroy @Remove public void destroy()
   { }
 
-  @RequestParameter("p") private Long pId;
+  @RequestParameter("person") private Long personId;
 
-  private Person p;
+  private Person person;
 
-  public void setP(Person p)
+  public void setPerson(Person person)
   { 
-    log.info("setP");
-    this.p = p;
+    log.info("setPerson");
+    this.person = person;
   }
 
-  public Person getP()
+  public Person getPerson()
   { 
-    log.info("getP");
-    return p;
-  }
-
-  @DataModel("pr3List") private List<ResearchProject> pr3List;
-
-  public List<ResearchProject> getPr3List()
-  { 
-    log.info("getPr3List");
-    return pr3List;
-  }
-
-  @Factory("pr3List") public void initPr3List()
-  { 
-    log.info("initPr3List");
-    pr3List = em.createQuery("from " + "ResearchProject").getResultList();
+    log.info("getPerson");
+    return person;
   }
 
   @DataModel("person105List") private List<Person> person105List;
@@ -111,5 +98,45 @@ import org.webdsl.serg.domain.*;
   { 
     log.info("initProject115List");
     project115List = em.createQuery("from " + "ResearchProject").getResultList();
+  }
+
+  @DataModel("projects4") private java.util.List<ResearchProject> projects4;
+
+  public java.util.List<ResearchProject> getProjects4()
+  { 
+    log.info("getProjects4");
+    return projects4;
+  }
+
+  public void setProjects4(java.util.List<ResearchProject> projects4)
+  { 
+    log.info("setProjects4");
+    this.projects4 = projects4;
+  }
+
+  @Factory("projects4") public void initProjects4()
+  { 
+    log.info("initProjects4");
+    projects4 = em.createQuery("select pr from ResearchProject as pr , Person as pers where ( pers . id = :param5 ) and ( pers member of pr . _members )").setParameter("param5", this.getPerson().getId()).getResultList();
+  }
+
+  @DataModel("orderedPublications1") private java.util.List<Publication> orderedPublications1;
+
+  public java.util.List<Publication> getOrderedPublications1()
+  { 
+    log.info("getOrderedPublications1");
+    return orderedPublications1;
+  }
+
+  public void setOrderedPublications1(java.util.List<Publication> orderedPublications1)
+  { 
+    log.info("setOrderedPublications1");
+    this.orderedPublications1 = orderedPublications1;
+  }
+
+  @Factory("orderedPublications1") public void initOrderedPublications1()
+  { 
+    log.info("initOrderedPublications1");
+    orderedPublications1 = em.createQuery("select pub from Publication as pub , Person as pers where ( pers . id = :param6 ) and ( pers member of pub . _authors ) order by pub . _year desc").setParameter("param6", this.getPerson().getId()).getResultList();
   }
 }
