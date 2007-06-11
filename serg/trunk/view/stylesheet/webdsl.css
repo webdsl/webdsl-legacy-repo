@@ -27,7 +27,6 @@
   top           : 10px;
   left          : 12.5em;
   right         : 40px;
-  overflow      : hidden;
   /* for testing */
   //border        : 1px solid black;
   //padding       : 1px;
@@ -147,6 +146,16 @@ a:hover {
   text-decoration:underline;
 }
 
+ul {
+  margin     : 1em;
+  padding    : 0em;
+}
+
+li {
+  margin-bottom : 0.8em;
+  margin-left   : 1em;
+}
+
 /********************************************************
 
  SIDEBAR
@@ -159,13 +168,18 @@ a:hover {
   font-size : 1em;
 }
 
-.sidebar  ul {
+.sidebar ul {
   list-style : none;
   margin     : 0em;
   padding    : 0px;
 }
 
-.sidebar  ul ul {
+.sidebar ul li {
+  margin     : 0em;
+  padding    : 0px;
+}
+
+.sidebar ul ul {
   list-style-type : square;
   font-size       : .8em;
   padding         : .2em;
@@ -176,7 +190,7 @@ a:hover {
   margin-bottom : 1em;
 }
 
-.sidebar  ul ul li {
+.sidebar ul ul li {
   margin-bottom : 0.2em;
 }
 
@@ -209,6 +223,7 @@ a:hover {
 .menu li {
   position         : relative;
   padding          : 2px;
+  margin           : 0em;
   background-color : white;
   border-left      : solid 1px white;
   border-top       : solid 1px white;
