@@ -27,21 +27,37 @@
          <s:link view="/groupPublications.xhtml" propagation="none"><f:param name="group" value="#{groupPublications.group.id}"/> <h:outputText value="Publications"/> </s:link> 
       </li>
     
-      <ul>
+      <li>
          <s:link view="/groupProjects.xhtml" propagation="none"><f:param name="group" value="#{groupPublications.group.id}"/> <h:outputText value="Projects"/> </s:link> 
-      <ui:repeat var="project6" value="#{groupPublications.group.projectsList}"> 
-      <h:column> <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project6.id}"/> <h:outputText value="#{project6.name}"/> </s:link> </h:column> 
-    </ui:repeat>
-    
-      </ul>
-    
       <ul>
-         <h:outputText value="Colloquia"/> 
-      <ui:repeat var="coll4" value="#{groupPublications.group.colloquiaList}"> 
-      <h:column> <s:link view="/viewColloquium.xhtml" propagation="none"><f:param name="colloquium" value="#{coll4.id}"/> <h:outputText value="#{coll4.name}"/> </s:link> </h:column> 
+        
+      <ui:repeat var="project16" value="#{groupPublications.group.projectsList}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project16.id}"/> <h:outputText value="#{project16.name}"/> </s:link> 
+      </li>
+    </h:column> 
     </ui:repeat>
     
       </ul>
+    
+      </li>
+    
+      <li>
+         <h:outputText value="Colloquia"/> 
+      <ul>
+        
+      <ui:repeat var="coll4" value="#{groupPublications.group.colloquiaList}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewColloquium.xhtml" propagation="none"><f:param name="colloquium" value="#{coll4.id}"/> <h:outputText value="#{coll4.name}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
+    
+      </li>
     
       </ul>
     </div>
@@ -57,10 +73,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person1010" value="#{groupPublications.person1010List}"> 
+      <ui:repeat var="person18" value="#{groupPublications.person18List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person1010.id}"/> <h:outputText value="#{person1010.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person18.id}"/> <h:outputText value="#{person18.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -77,10 +93,10 @@
          <h:outputText value="Projects"/> 
       <ul>
         
-      <ui:repeat var="project1110" value="#{groupPublications.project1110List}"> 
+      <ui:repeat var="project17" value="#{groupPublications.project17List}"> 
       <h:column>
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project1110.id}"/> <h:outputText value="#{project1110.acronym}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project17.id}"/> <h:outputText value="#{project17.acronym}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -133,6 +149,22 @@
       </li>
     
       <li>
+         <s:link view="/createJournal.xhtml" propagation="none"> <h:outputText value="Journal"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createArticle.xhtml" propagation="none"> <h:outputText value="Article"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createConference.xhtml" propagation="none"> <h:outputText value="Conference"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createInProceedings.xhtml" propagation="none"> <h:outputText value="InProceedings"/> </s:link> 
+      </li>
+    
+      <li>
          <s:link view="/createTechnicalReport.xhtml" propagation="none"> <h:outputText value="TechnicalReport"/> </s:link> 
       </li>
     
@@ -181,6 +213,104 @@
       </li>
     </div>
     
+    <div class="allMenu">
+      <li>
+         <h:outputText value="All"/> 
+      <ul>
+        
+      <li>
+         <s:link view="/allTask.xhtml" propagation="none"> <h:outputText value="Task"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allBug.xhtml" propagation="none"> <h:outputText value="Bug"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allProject.xhtml" propagation="none"> <h:outputText value="Project"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allIssue.xhtml" propagation="none"> <h:outputText value="Issue"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allNews.xhtml" propagation="none"> <h:outputText value="News"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allResearchGroup.xhtml" propagation="none"> <h:outputText value="ResearchGroup"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allResearchProject.xhtml" propagation="none"> <h:outputText value="ResearchProject"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allJournal.xhtml" propagation="none"> <h:outputText value="Journal"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allArticle.xhtml" propagation="none"> <h:outputText value="Article"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allConference.xhtml" propagation="none"> <h:outputText value="Conference"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allInProceedings.xhtml" propagation="none"> <h:outputText value="InProceedings"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allTechnicalReport.xhtml" propagation="none"> <h:outputText value="TechnicalReport"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allPublication.xhtml" propagation="none"> <h:outputText value="Publication"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allPresentation.xhtml" propagation="none"> <h:outputText value="Presentation"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allColloquium.xhtml" propagation="none"> <h:outputText value="Colloquium"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allBlogComment.xhtml" propagation="none"> <h:outputText value="BlogComment"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allCategory.xhtml" propagation="none"> <h:outputText value="Category"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allBlogEntry.xhtml" propagation="none"> <h:outputText value="BlogEntry"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allBlog.xhtml" propagation="none"> <h:outputText value="Blog"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allPerson.xhtml" propagation="none"> <h:outputText value="Person"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allAddress.xhtml" propagation="none"> <h:outputText value="Address"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allUser.xhtml" propagation="none"> <h:outputText value="User"/> </s:link> 
+      </li>
+    
+      </ul>
+    
+      </li>
+    </div>
+    
       </ul>
     
       </li>
@@ -202,9 +332,17 @@
       <h1> <h:outputText value="Publications by "/>  <h:outputText value="#{groupPublications.group.acronym}"/>  <h:outputText value=" Members"/> </h1>
     
     <div class="allGroupPublications">
-      <ui:repeat var="pub5" value="#{groupPublications.pub5List}"> 
-      <h:column> <s:link view="/viewPublication.xhtml" propagation="none"><f:param name="publication" value="#{pub5.id}"/> <h:outputText value="#{pub5.name}"/> </s:link> </h:column> 
+      <ul>
+        
+      <ui:repeat var="pub6" value="#{groupPublications.pub6List}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewPublication.xhtml" propagation="none"><f:param name="publication" value="#{pub6.id}"/> <h:outputText value="#{pub6.name}"/> </s:link> 
+      </li>
+    </h:column> 
     </ui:repeat>
+    
+      </ul>
     </div>
     </div>
     </div>

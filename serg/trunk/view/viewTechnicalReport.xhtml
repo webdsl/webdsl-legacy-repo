@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person1039" value="#{viewTechnicalReport.person1039List}"> 
+      <ui:repeat var="person62" value="#{viewTechnicalReport.person62List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person1039.id}"/> <h:outputText value="#{person1039.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person62.id}"/> <h:outputText value="#{person62.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -43,10 +43,10 @@
          <h:outputText value="Projects"/> 
       <ul>
         
-      <ui:repeat var="project1139" value="#{viewTechnicalReport.project1139List}"> 
+      <ui:repeat var="project57" value="#{viewTechnicalReport.project57List}"> 
       <h:column>
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project1139.id}"/> <h:outputText value="#{project1139.acronym}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project57.id}"/> <h:outputText value="#{project57.acronym}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -103,6 +103,22 @@
       </li>
     
       <li>
+         <s:link view="/createJournal.xhtml" propagation="none"> <h:outputText value="Journal"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createArticle.xhtml" propagation="none"> <h:outputText value="Article"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createConference.xhtml" propagation="none"> <h:outputText value="Conference"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createInProceedings.xhtml" propagation="none"> <h:outputText value="InProceedings"/> </s:link> 
+      </li>
+    
+      <li>
          <s:link view="/createTechnicalReport.xhtml" propagation="none"> <h:outputText value="TechnicalReport"/> </s:link> 
       </li>
     
@@ -151,6 +167,104 @@
       </li>
     </div>
     
+    <div class="allMenu">
+      <li>
+         <h:outputText value="All"/> 
+      <ul>
+        
+      <li>
+         <s:link view="/allTask.xhtml" propagation="none"> <h:outputText value="Task"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allBug.xhtml" propagation="none"> <h:outputText value="Bug"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allProject.xhtml" propagation="none"> <h:outputText value="Project"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allIssue.xhtml" propagation="none"> <h:outputText value="Issue"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allNews.xhtml" propagation="none"> <h:outputText value="News"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allResearchGroup.xhtml" propagation="none"> <h:outputText value="ResearchGroup"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allResearchProject.xhtml" propagation="none"> <h:outputText value="ResearchProject"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allJournal.xhtml" propagation="none"> <h:outputText value="Journal"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allArticle.xhtml" propagation="none"> <h:outputText value="Article"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allConference.xhtml" propagation="none"> <h:outputText value="Conference"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allInProceedings.xhtml" propagation="none"> <h:outputText value="InProceedings"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allTechnicalReport.xhtml" propagation="none"> <h:outputText value="TechnicalReport"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allPublication.xhtml" propagation="none"> <h:outputText value="Publication"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allPresentation.xhtml" propagation="none"> <h:outputText value="Presentation"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allColloquium.xhtml" propagation="none"> <h:outputText value="Colloquium"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allBlogComment.xhtml" propagation="none"> <h:outputText value="BlogComment"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allCategory.xhtml" propagation="none"> <h:outputText value="Category"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allBlogEntry.xhtml" propagation="none"> <h:outputText value="BlogEntry"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allBlog.xhtml" propagation="none"> <h:outputText value="Blog"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allPerson.xhtml" propagation="none"> <h:outputText value="Person"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allAddress.xhtml" propagation="none"> <h:outputText value="Address"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allUser.xhtml" propagation="none"> <h:outputText value="User"/> </s:link> 
+      </li>
+    
+      </ul>
+    
+      </li>
+    </div>
+    
       </ul>
     
       </li>
@@ -171,61 +285,77 @@
       <div class="section1">
       <h1> <h:outputText value="#{viewTechnicalReport.technicalReport.name}"/> </h1>
     
-      <table>
     <div class="viewRowsTechnicalReport">
     <div class="viewRowsPublication">
     <div class="viewRowsObject"></div>
     
-      <tr> <td> <h:outputText value="Title"/> </td>  <td> <h:outputText value="#{viewTechnicalReport.technicalReport.title}"/> </td> </tr>
+      <p> <h:outputText value="Title"/>  <h:outputText value=" : "/>  <h:outputText value="#{viewTechnicalReport.technicalReport.title}"/> </p>
     
-      <tr> <td> <h:outputText value="Subtitle"/> </td>  <td> <h:outputText value="#{viewTechnicalReport.technicalReport.subtitle}"/> </td> </tr>
+      <p> <h:outputText value="Subtitle"/>  <h:outputText value=" : "/>  <h:outputText value="#{viewTechnicalReport.technicalReport.subtitle}"/> </p>
     
-      <tr> <td> <h:outputText value="Authors"/> </td>  <td>
+      <p> <h:outputText value="Year"/>  <h:outputText value=" : "/>  <h:outputText value="#{viewTechnicalReport.technicalReport.year}"/> </p>
+    
+      <p> <h:outputText value="Pdf"/>  <h:outputText value=" : "/>  <h:outputLink value="#{viewTechnicalReport.technicalReport.pdf}"> <h:outputText value="#{viewTechnicalReport.technicalReport.pdf}"/> </h:outputLink> </p>
+    
+      <div class="section2">
+      <h2> <h:outputText value="Authors"/> </h2>
+    
       <ul>
         
-      <ui:repeat var="person53" value="#{viewTechnicalReport.technicalReport.authors}"> 
+      <ui:repeat var="person151" value="#{viewTechnicalReport.technicalReport.authors}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person53.id}"/> <h:outputText value="#{person53.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person151.id}"/> <h:outputText value="#{person151.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
     
       </ul>
-    </td> </tr>
+    </div>
     
-      <tr> <td> <h:outputText value="Year"/> </td>  <td> <h:outputText value="#{viewTechnicalReport.technicalReport.year}"/> </td> </tr>
+      <div class="section2">
+      <h2> <h:outputText value="Abstract"/> </h2>
     
-      <tr> <td> <h:outputText value="Abstract"/> </td>  <td>
       <s:formattedText styleClass="outputTextarea" value="#{viewTechnicalReport.technicalReport.abstract}"/>
-    </td> </tr>
+    </div>
     
-      <tr> <td> <h:outputText value="Projects"/> </td>  <td>
+      <div class="section2">
+      <h2> <h:outputText value="Projects"/> </h2>
+    
       <ul>
         
-      <ui:repeat var="researchProject30" value="#{viewTechnicalReport.technicalReport.projectsList}"> 
+      <ui:repeat var="researchProject32" value="#{viewTechnicalReport.technicalReport.projectsList}"> 
       <h:column>
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{researchProject30.id}"/> <h:outputText value="#{researchProject30.name}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{researchProject32.id}"/> <h:outputText value="#{researchProject32.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
     
       </ul>
-    </td> </tr>
-    
-      <tr> <td> <h:outputText value="Pdf"/> </td>  <td> <h:outputLink value="#{viewTechnicalReport.technicalReport.pdf}"> <h:outputText value="#{viewTechnicalReport.technicalReport.pdf}"/> </h:outputLink> </td> </tr>
+    </div>
     </div>
     
-      <tr> <td> <h:outputText value="Number"/> </td>  <td> <h:outputText value="#{viewTechnicalReport.technicalReport.number}"/> </td> </tr>
+      <p> <h:outputText value="Number"/>  <h:outputText value=" : "/>  <h:outputText value="#{viewTechnicalReport.technicalReport.number}"/> </p>
     
-      <tr> <td> <h:outputText value="Document"/> </td>  <td>
+      <div class="section2">
+      <h2> <h:outputText value="Document"/> </h2>
+    
       <s:formattedText styleClass="outputTextarea" value="#{viewTechnicalReport.technicalReport.document}"/>
-    </td> </tr>
-    
-      <tr> <td> <h:outputText value="Preprintof"/> </td>  <td> <s:link view="/viewPublication.xhtml" propagation="none"><f:param name="publication" value="#{viewTechnicalReport.technicalReport.preprintof.id}"/> <h:outputText value="#{viewTechnicalReport.technicalReport.preprintof.name}"/> </s:link> </td> </tr>
     </div>
-    </table>
+    
+      <div class="section2">
+      <h2> <h:outputText value="Preprintof"/> </h2>
+    
+      <ul>
+        
+      <li>
+         <s:link view="/viewPublication.xhtml" propagation="none"><f:param name="publication" value="#{viewTechnicalReport.technicalReport.preprintof.id}"/> <h:outputText value="#{viewTechnicalReport.technicalReport.preprintof.name}"/> </s:link> 
+      </li>
+    
+      </ul>
+    </div>
+    </div>
     </div>
     </div>
     

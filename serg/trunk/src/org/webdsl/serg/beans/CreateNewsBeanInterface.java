@@ -15,13 +15,13 @@ import org.webdsl.serg.domain.*;
 
   public String save();
 
-  public List<Person> getPerson1046List();
+  public List<Person> getPerson88List();
 
-  public void initPerson1046List();
+  public void initPerson88List();
 
-  public List<ResearchProject> getProject1146List();
+  public List<ResearchProject> getProject83List();
 
-  public void initProject1146List();
+  public void initProject83List();
 
   public News getNews();
 

@@ -23,9 +23,11 @@ imports app/issues
 section home.
 
   define page home() {
-    for(group : ResearchGroup) {
-      navigate(group.name, viewResearchGroup(group))
-    }
+    main()
   }
 
-  
+  define sidebar() {
+    list { for(group : ResearchGroup) {
+      listitem{ navigate(group.name, viewResearchGroup(group)) }
+    }}
+  }

@@ -47,9 +47,9 @@ import org.webdsl.serg.domain.*;
     { 
       group = em.find(ResearchGroup.class, groupId);
     }
-    initPerson1010List();
-    initProject1110List();
-    initPub5List();
+    initPerson18List();
+    initProject17List();
+    initPub6List();
   }
 
   @Destroy @Remove public void destroy()
@@ -71,45 +71,45 @@ import org.webdsl.serg.domain.*;
     return group;
   }
 
-  @DataModel("person1010List") private List<Person> person1010List;
+  @DataModel("person18List") private List<Person> person18List;
 
-  public List<Person> getPerson1010List()
+  public List<Person> getPerson18List()
   { 
-    log.info("getPerson1010List");
-    return person1010List;
+    log.info("getPerson18List");
+    return person18List;
   }
 
-  @Factory("person1010List") public void initPerson1010List()
+  @Factory("person18List") public void initPerson18List()
   { 
-    log.info("initPerson1010List");
-    person1010List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson18List");
+    person18List = em.createQuery("from " + "Person").getResultList();
   }
 
-  @DataModel("project1110List") private List<ResearchProject> project1110List;
+  @DataModel("project17List") private List<ResearchProject> project17List;
 
-  public List<ResearchProject> getProject1110List()
+  public List<ResearchProject> getProject17List()
   { 
-    log.info("getProject1110List");
-    return project1110List;
+    log.info("getProject17List");
+    return project17List;
   }
 
-  @Factory("project1110List") public void initProject1110List()
+  @Factory("project17List") public void initProject17List()
   { 
-    log.info("initProject1110List");
-    project1110List = em.createQuery("from " + "ResearchProject").getResultList();
+    log.info("initProject17List");
+    project17List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 
-  @DataModel("pub5List") private List<Publication> pub5List;
+  @DataModel("pub6List") private List<Publication> pub6List;
 
-  public List<Publication> getPub5List()
+  public List<Publication> getPub6List()
   { 
-    log.info("getPub5List");
-    return pub5List;
+    log.info("getPub6List");
+    return pub6List;
   }
 
-  @Factory("pub5List") public void initPub5List()
+  @Factory("pub6List") public void initPub6List()
   { 
-    log.info("initPub5List");
-    pub5List = em.createQuery("from " + "Publication").getResultList();
+    log.info("initPub6List");
+    pub6List = em.createQuery("from " + "Publication").getResultList();
   }
 }

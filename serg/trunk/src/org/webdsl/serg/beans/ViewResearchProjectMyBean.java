@@ -47,8 +47,8 @@ import org.webdsl.serg.domain.*;
     { 
       project = em.find(ResearchProject.class, projectId);
     }
-    initPerson106List();
-    initProject116List();
+    initPerson13List();
+    initProject8List();
   }
 
   @Destroy @Remove public void destroy()
@@ -70,31 +70,31 @@ import org.webdsl.serg.domain.*;
     return project;
   }
 
-  @DataModel("person106List") private List<Person> person106List;
+  @DataModel("person13List") private List<Person> person13List;
 
-  public List<Person> getPerson106List()
+  public List<Person> getPerson13List()
   { 
-    log.info("getPerson106List");
-    return person106List;
+    log.info("getPerson13List");
+    return person13List;
   }
 
-  @Factory("person106List") public void initPerson106List()
+  @Factory("person13List") public void initPerson13List()
   { 
-    log.info("initPerson106List");
-    person106List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson13List");
+    person13List = em.createQuery("from " + "Person").getResultList();
   }
 
-  @DataModel("project116List") private List<ResearchProject> project116List;
+  @DataModel("project8List") private List<ResearchProject> project8List;
 
-  public List<ResearchProject> getProject116List()
+  public List<ResearchProject> getProject8List()
   { 
-    log.info("getProject116List");
-    return project116List;
+    log.info("getProject8List");
+    return project8List;
   }
 
-  @Factory("project116List") public void initProject116List()
+  @Factory("project8List") public void initProject8List()
   { 
-    log.info("initProject116List");
-    project116List = em.createQuery("from " + "ResearchProject").getResultList();
+    log.info("initProject8List");
+    project8List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 }

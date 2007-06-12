@@ -17,13 +17,13 @@ import org.webdsl.serg.domain.*;
 
   public String createNewBlogEntry();
 
-  public List<Person> getPerson102List();
+  public List<Person> getPerson6List();
 
-  public void initPerson102List();
+  public void initPerson6List();
 
-  public List<ResearchProject> getProject112List();
+  public List<ResearchProject> getProject3List();
 
-  public void initProject112List();
+  public void initProject3List();
 
   public java.util.List<ResearchProject> getProjects2();
 

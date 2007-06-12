@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person1043" value="#{editResearchGroup.person1043List}"> 
+      <ui:repeat var="person84" value="#{editResearchGroup.person84List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person1043.id}"/> <h:outputText value="#{person1043.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person84.id}"/> <h:outputText value="#{person84.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -43,10 +43,10 @@
          <h:outputText value="Projects"/> 
       <ul>
         
-      <ui:repeat var="project1143" value="#{editResearchGroup.project1143List}"> 
+      <ui:repeat var="project79" value="#{editResearchGroup.project79List}"> 
       <h:column>
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project1143.id}"/> <h:outputText value="#{project1143.acronym}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project79.id}"/> <h:outputText value="#{project79.acronym}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -99,6 +99,22 @@
       </li>
     
       <li>
+         <s:link view="/createJournal.xhtml" propagation="none"> <h:outputText value="Journal"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createArticle.xhtml" propagation="none"> <h:outputText value="Article"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createConference.xhtml" propagation="none"> <h:outputText value="Conference"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createInProceedings.xhtml" propagation="none"> <h:outputText value="InProceedings"/> </s:link> 
+      </li>
+    
+      <li>
          <s:link view="/createTechnicalReport.xhtml" propagation="none"> <h:outputText value="TechnicalReport"/> </s:link> 
       </li>
     
@@ -140,6 +156,104 @@
     
       <li>
          <s:link view="/createUser.xhtml" propagation="none"> <h:outputText value="User"/> </s:link> 
+      </li>
+    
+      </ul>
+    
+      </li>
+    </div>
+    
+    <div class="allMenu">
+      <li>
+         <h:outputText value="All"/> 
+      <ul>
+        
+      <li>
+         <s:link view="/allTask.xhtml" propagation="none"> <h:outputText value="Task"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allBug.xhtml" propagation="none"> <h:outputText value="Bug"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allProject.xhtml" propagation="none"> <h:outputText value="Project"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allIssue.xhtml" propagation="none"> <h:outputText value="Issue"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allNews.xhtml" propagation="none"> <h:outputText value="News"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allResearchGroup.xhtml" propagation="none"> <h:outputText value="ResearchGroup"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allResearchProject.xhtml" propagation="none"> <h:outputText value="ResearchProject"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allJournal.xhtml" propagation="none"> <h:outputText value="Journal"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allArticle.xhtml" propagation="none"> <h:outputText value="Article"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allConference.xhtml" propagation="none"> <h:outputText value="Conference"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allInProceedings.xhtml" propagation="none"> <h:outputText value="InProceedings"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allTechnicalReport.xhtml" propagation="none"> <h:outputText value="TechnicalReport"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allPublication.xhtml" propagation="none"> <h:outputText value="Publication"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allPresentation.xhtml" propagation="none"> <h:outputText value="Presentation"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allColloquium.xhtml" propagation="none"> <h:outputText value="Colloquium"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allBlogComment.xhtml" propagation="none"> <h:outputText value="BlogComment"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allCategory.xhtml" propagation="none"> <h:outputText value="Category"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allBlogEntry.xhtml" propagation="none"> <h:outputText value="BlogEntry"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allBlog.xhtml" propagation="none"> <h:outputText value="Blog"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allPerson.xhtml" propagation="none"> <h:outputText value="Person"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allAddress.xhtml" propagation="none"> <h:outputText value="Address"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allUser.xhtml" propagation="none"> <h:outputText value="User"/> </s:link> 
       </li>
     
       </ul>
@@ -201,12 +315,12 @@
     <div class="inputAssociationSet">
       <ul>
         
-      <ui:repeat var="person62" value="#{editResearchGroup.researchGroup.membersList}"> 
+      <ui:repeat var="person178" value="#{editResearchGroup.researchGroup.membersList}"> 
       <h:column>
     <div class="listAssociation">
       <li>
-         <h:outputText value="#{person62.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{editResearchGroup.removePerson8(person62)}"/>
+         <h:outputText value="#{person178.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{editResearchGroup.removePerson15(person178)}"/>
     
       </li>
     </div>
@@ -215,9 +329,9 @@
     
       </ul>
     
-       <h:selectOneMenu value="#{editResearchGroup.newPerson63}" onchange="submit()" valueChangeListener="#{editResearchGroup.selectPerson63}">
+       <h:selectOneMenu value="#{editResearchGroup.newPerson179}" onchange="submit()" valueChangeListener="#{editResearchGroup.selectPerson179}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{editResearchGroup.person63List}" var="person63" label="#{person63.label}"/>
+          <f:selectItems value="#{editResearchGroup.person179List}" var="person179" label="#{person179.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -226,12 +340,12 @@
     <div class="inputAssociationSet">
       <ul>
         
-      <ui:repeat var="researchProject31" value="#{editResearchGroup.researchGroup.projectsList}"> 
+      <ui:repeat var="researchProject43" value="#{editResearchGroup.researchGroup.projectsList}"> 
       <h:column>
     <div class="listAssociation">
       <li>
-         <h:outputText value="#{researchProject31.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{editResearchGroup.removeResearchProject11(researchProject31)}"/>
+         <h:outputText value="#{researchProject43.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{editResearchGroup.removeResearchProject15(researchProject43)}"/>
     
       </li>
     </div>
@@ -240,9 +354,9 @@
     
       </ul>
     
-       <h:selectOneMenu value="#{editResearchGroup.newResearchProject32}" onchange="submit()" valueChangeListener="#{editResearchGroup.selectResearchProject32}">
+       <h:selectOneMenu value="#{editResearchGroup.newResearchProject44}" onchange="submit()" valueChangeListener="#{editResearchGroup.selectResearchProject44}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{editResearchGroup.researchProject32List}" var="researchProject32" label="#{researchProject32.label}"/>
+          <f:selectItems value="#{editResearchGroup.researchProject44List}" var="researchProject44" label="#{researchProject44.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -251,12 +365,12 @@
     <div class="inputAssociationSet">
       <ul>
         
-      <ui:repeat var="colloquium2" value="#{editResearchGroup.researchGroup.colloquiaList}"> 
+      <ui:repeat var="colloquium4" value="#{editResearchGroup.researchGroup.colloquiaList}"> 
       <h:column>
     <div class="listAssociation">
       <li>
-         <h:outputText value="#{colloquium2.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{editResearchGroup.removeColloquium0(colloquium2)}"/>
+         <h:outputText value="#{colloquium4.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{editResearchGroup.removeColloquium0(colloquium4)}"/>
     
       </li>
     </div>
@@ -265,9 +379,9 @@
     
       </ul>
     
-       <h:selectOneMenu value="#{editResearchGroup.newColloquium3}" onchange="submit()" valueChangeListener="#{editResearchGroup.selectColloquium3}">
+       <h:selectOneMenu value="#{editResearchGroup.newColloquium5}" onchange="submit()" valueChangeListener="#{editResearchGroup.selectColloquium5}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{editResearchGroup.colloquium3List}" var="colloquium3" label="#{colloquium3.label}"/>
+          <f:selectItems value="#{editResearchGroup.colloquium5List}" var="colloquium5" label="#{colloquium5.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -276,11 +390,11 @@
     <div class="inputAssociationList">
       <ul>
         
-      <ui:repeat var="news3" value="#{editResearchGroup.researchGroup.news}"> 
+      <ui:repeat var="news5" value="#{editResearchGroup.researchGroup.news}"> 
       <h:column>
       <li>
-         <h:outputText value="#{news3.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{editResearchGroup.removeNews0(news3)}"/>
+         <h:outputText value="#{news5.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{editResearchGroup.removeNews0(news5)}"/>
     
       </li>
     </h:column> 
@@ -288,9 +402,9 @@
     
       </ul>
     
-       <h:selectOneMenu value="#{editResearchGroup.newNews4}" onchange="submit()" valueChangeListener="#{editResearchGroup.selectNews4}">
+       <h:selectOneMenu value="#{editResearchGroup.newNews6}" onchange="submit()" valueChangeListener="#{editResearchGroup.selectNews6}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{editResearchGroup.news4List}" var="news4" label="#{news4.label}"/>
+          <f:selectItems value="#{editResearchGroup.news6List}" var="news6" label="#{news6.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

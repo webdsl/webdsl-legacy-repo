@@ -26,15 +26,15 @@ section group page.
       listitem{ navigate(viewResearchGroup(group)){text(group.acronym)} }
       listitem{ navigate("People", groupMembers(group)) }
       listitem{ navigate("Publications", groupPublications(group)) }
-      list { navigate("Projects", groupProjects(group))
-        for(project : ResearchProject in group.projectsList) {
-          navigate(project.name, viewResearchProject(project))
-        }
+      listitem { navigate("Projects", groupProjects(group))
+        list { for(project : ResearchProject in group.projectsList) {
+          listitem { navigate(project.name, viewResearchProject(project)) }
+        } }
       }
-      list { "Colloquia"
-        for(coll : Colloquium in group.colloquiaList) {
-          navigate(coll.name, viewColloquium(coll))
-        }
+      listitem { "Colloquia"
+        list { for(coll : Colloquium in group.colloquiaList) {
+          listitem { navigate(coll.name, viewColloquium(coll)) }
+        } }
       }
     }
   }
@@ -69,45 +69,74 @@ section group page.
           header{"Recent Publications"}
           recentGroupPublications(group)
         }
-      
+        
         section { 
           header{"People"}
-          for(pers : Person in group.membersList) {
-            navigate(pers.name, viewPerson(pers))
-          }
+          output(group.members)
         }
+              
+        //section { 
+        //  header{"People"}
+        //  list { for(pers : Person in group.membersList) {
+        //    listitem { navigate(pers.name, viewPerson(pers)) }
+        //  } }
+        //}
+      }
+    }
+  }
+
+  define page viewResearchGroupPlain(group : ResearchGroup) {
+    section { 
+      header{text(group.fullname)}
+      section { 
+        header{"Mission"}
+        outputText(group.mission)
+      }
+      section { 
+        header{"Recent Publications"}
+        recentGroupPublications(group)
+      }       
+      section { 
+        header{"People"}
+        output(group.members)
       }
     }
   }
   
+section members.
+
   define page groupMembers(group : ResearchGroup) {
     main()
     define sidebar() { groupSidebar(group) }
     define body() {
       section{
         header{"Group Members"}
-        for(person : Person) { 
-          image(person.photo) output(person)
-        }
+        table{ for(person : Person in group.membersList) { 
+          row{ div("smallphoto"){image(person.photo)} output(person) }
+        } }
       }
     }
   }
   
+section projects.
+
   define page groupProjects(group : ResearchGroup) {
     main()
     define sidebar() { groupSidebar(group) }
     define body() { 
       section{
         header{"Projects"}
-        for(project : ResearchProject in group.projectsList) {
-          navigate(viewResearchProject(project)){
+        list { for(project : ResearchProject in group.projectsList) {
+          listitem { navigate(viewResearchProject(project)){
             text(project.fullname) " (" text(project.acronym) ")"
-          }
-        }
+          } }
+        } }
       }
     }
   }
-   
+
+section publications.
+
   define page groupPublications(group : ResearchGroup) {
     main()
     define sidebar() { groupSidebar(group) }
@@ -120,14 +149,23 @@ section group page.
   }
   
   define recentGroupPublications(group : ResearchGroup) {
-    for(pub : Publication) {
-      navigate(pub.name, viewPublication(pub))
-    }
+  
+   var publications : List<Publication> :=
+      select distinct pub from Publication as pub, Person as pers, ResearchGroup as g
+       where (g.id = ~group.id)
+         and ((pers member of g._members)
+         and (pers member of pub._authors))
+       order by pub._year descending;   
+       
+    list { for(pub : Publication in publications) {
+      listitem { navigate(pub.name, viewPublication(pub)) }
+    } }
+    
   }  
   
   define allGroupPublications(group : ResearchGroup) {
-    for(pub : Publication) {
-      navigate(pub.name, viewPublication(pub))
-    }
+    list { for(pub : Publication) {
+      listitem { navigate(pub.name, viewPublication(pub)) }
+    } }
   }
   

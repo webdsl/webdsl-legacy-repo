@@ -38,23 +38,53 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("home" + ".initalize()");
-    initGroupList();
+    initGroup8List();
+    initPerson19List();
+    initProject18List();
   }
 
   @Destroy @Remove public void destroy()
   { }
 
-  @DataModel("groupList") private List<ResearchGroup> groupList;
+  @DataModel("group8List") private List<ResearchGroup> group8List;
 
-  public List<ResearchGroup> getGroupList()
+  public List<ResearchGroup> getGroup8List()
   { 
-    log.info("getGroupList");
-    return groupList;
+    log.info("getGroup8List");
+    return group8List;
   }
 
-  @Factory("groupList") public void initGroupList()
+  @Factory("group8List") public void initGroup8List()
   { 
-    log.info("initGroupList");
-    groupList = em.createQuery("from " + "ResearchGroup").getResultList();
+    log.info("initGroup8List");
+    group8List = em.createQuery("from " + "ResearchGroup").getResultList();
+  }
+
+  @DataModel("person19List") private List<Person> person19List;
+
+  public List<Person> getPerson19List()
+  { 
+    log.info("getPerson19List");
+    return person19List;
+  }
+
+  @Factory("person19List") public void initPerson19List()
+  { 
+    log.info("initPerson19List");
+    person19List = em.createQuery("from " + "Person").getResultList();
+  }
+
+  @DataModel("project18List") private List<ResearchProject> project18List;
+
+  public List<ResearchProject> getProject18List()
+  { 
+    log.info("getProject18List");
+    return project18List;
+  }
+
+  @Factory("project18List") public void initProject18List()
+  { 
+    log.info("initProject18List");
+    project18List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 }

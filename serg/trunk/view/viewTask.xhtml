@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person1059" value="#{viewTask.person1059List}"> 
+      <ui:repeat var="person105" value="#{viewTask.person105List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person1059.id}"/> <h:outputText value="#{person1059.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person105.id}"/> <h:outputText value="#{person105.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -43,10 +43,10 @@
          <h:outputText value="Projects"/> 
       <ul>
         
-      <ui:repeat var="project1159" value="#{viewTask.project1159List}"> 
+      <ui:repeat var="project105" value="#{viewTask.project105List}"> 
       <h:column>
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project1159.id}"/> <h:outputText value="#{project1159.acronym}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project105.id}"/> <h:outputText value="#{project105.acronym}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -103,6 +103,22 @@
       </li>
     
       <li>
+         <s:link view="/createJournal.xhtml" propagation="none"> <h:outputText value="Journal"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createArticle.xhtml" propagation="none"> <h:outputText value="Article"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createConference.xhtml" propagation="none"> <h:outputText value="Conference"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createInProceedings.xhtml" propagation="none"> <h:outputText value="InProceedings"/> </s:link> 
+      </li>
+    
+      <li>
          <s:link view="/createTechnicalReport.xhtml" propagation="none"> <h:outputText value="TechnicalReport"/> </s:link> 
       </li>
     
@@ -151,6 +167,104 @@
       </li>
     </div>
     
+    <div class="allMenu">
+      <li>
+         <h:outputText value="All"/> 
+      <ul>
+        
+      <li>
+         <s:link view="/allTask.xhtml" propagation="none"> <h:outputText value="Task"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allBug.xhtml" propagation="none"> <h:outputText value="Bug"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allProject.xhtml" propagation="none"> <h:outputText value="Project"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allIssue.xhtml" propagation="none"> <h:outputText value="Issue"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allNews.xhtml" propagation="none"> <h:outputText value="News"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allResearchGroup.xhtml" propagation="none"> <h:outputText value="ResearchGroup"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allResearchProject.xhtml" propagation="none"> <h:outputText value="ResearchProject"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allJournal.xhtml" propagation="none"> <h:outputText value="Journal"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allArticle.xhtml" propagation="none"> <h:outputText value="Article"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allConference.xhtml" propagation="none"> <h:outputText value="Conference"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allInProceedings.xhtml" propagation="none"> <h:outputText value="InProceedings"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allTechnicalReport.xhtml" propagation="none"> <h:outputText value="TechnicalReport"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allPublication.xhtml" propagation="none"> <h:outputText value="Publication"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allPresentation.xhtml" propagation="none"> <h:outputText value="Presentation"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allColloquium.xhtml" propagation="none"> <h:outputText value="Colloquium"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allBlogComment.xhtml" propagation="none"> <h:outputText value="BlogComment"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allCategory.xhtml" propagation="none"> <h:outputText value="Category"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allBlogEntry.xhtml" propagation="none"> <h:outputText value="BlogEntry"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allBlog.xhtml" propagation="none"> <h:outputText value="Blog"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allPerson.xhtml" propagation="none"> <h:outputText value="Person"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allAddress.xhtml" propagation="none"> <h:outputText value="Address"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allUser.xhtml" propagation="none"> <h:outputText value="User"/> </s:link> 
+      </li>
+    
+      </ul>
+    
+      </li>
+    </div>
+    
       </ul>
     
       </li>
@@ -171,57 +285,61 @@
       <div class="section1">
       <h1> <h:outputText value="#{viewTask.task.name}"/> </h1>
     
-      <table>
     <div class="viewRowsTask">
     <div class="viewRowsIssue">
     <div class="viewRowsObject"></div>
     
-      <tr> <td> <h:outputText value="Title"/> </td>  <td> <h:outputText value="#{viewTask.task.title}"/> </td> </tr>
+      <p> <h:outputText value="Title"/>  <h:outputText value=" : "/>  <h:outputText value="#{viewTask.task.title}"/> </p>
     
-      <tr> <td> <h:outputText value="Description"/> </td>  <td>
+      <div class="section2">
+      <h2> <h:outputText value="Description"/> </h2>
+    
       <s:formattedText styleClass="outputTextarea" value="#{viewTask.task.description}"/>
-    </td> </tr>
+    </div>
     
-      <tr> <td> <h:outputText value="Due"/> </td>  <td>
+      <p> <h:outputText value="Due"/>  <h:outputText value=" : "/> 
        <h:outputText id="outputDateId8" styleClass="outputDate" value="#{viewTask.task.due}">
          <s:convertDateTime pattern="dd/mm/yyyy"/>
        </h:outputText>
-    </td> </tr>
+    </p>
     
-      <tr> <td> <h:outputText value="Priority"/> </td>  <td> <h:outputText value="#{viewTask.task.priority}"/> </td> </tr>
+      <p> <h:outputText value="Priority"/>  <h:outputText value=" : "/>  <h:outputText value="#{viewTask.task.priority}"/> </p>
     
-      <tr> <td> <h:outputText value="Issues"/> </td>  <td>
+      <div class="section2">
+      <h2> <h:outputText value="Issues"/> </h2>
+    
       <ul>
         
-      <ui:repeat var="issue34" value="#{viewTask.task.issuesList}"> 
+      <ui:repeat var="issue36" value="#{viewTask.task.issuesList}"> 
       <h:column>
       <li>
-         <s:link view="/viewIssue.xhtml" propagation="none"><f:param name="issue" value="#{issue34.id}"/> <h:outputText value="#{issue34.name}"/> </s:link> 
+         <s:link view="/viewIssue.xhtml" propagation="none"><f:param name="issue" value="#{issue36.id}"/> <h:outputText value="#{issue36.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
     
       </ul>
-    </td> </tr>
+    </div>
     
-      <tr> <td> <h:outputText value="Assigned"/> </td>  <td>
+      <div class="section2">
+      <h2> <h:outputText value="Assigned"/> </h2>
+    
       <ul>
         
-      <ui:repeat var="person91" value="#{viewTask.task.assignedList}"> 
+      <ui:repeat var="person207" value="#{viewTask.task.assignedList}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person91.id}"/> <h:outputText value="#{person91.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person207.id}"/> <h:outputText value="#{person207.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
     
       </ul>
-    </td> </tr>
+    </div>
     
-      <tr> <td> <h:outputText value="Status"/> </td>  <td> <h:outputText value="#{viewTask.task.status}"/> </td> </tr>
+      <p> <h:outputText value="Status"/>  <h:outputText value=" : "/>  <h:outputText value="#{viewTask.task.status}"/> </p>
     </div>
     </div>
-    </table>
     </div>
     </div>
     

@@ -45,6 +45,30 @@ import org.webdsl.serg.domain.*;
     this._subtitle = _subtitle;
   }
 
+  private int _year = 0;
+
+  public int getYear()
+  { 
+    return _year;
+  }
+
+  public void setYear(int _year)
+  { 
+    this._year = _year;
+  }
+
+  private String _pdf = "";
+
+  public String getPdf()
+  { 
+    return _pdf;
+  }
+
+  public void setPdf(String _pdf)
+  { 
+    this._pdf = _pdf;
+  }
+
   @ManyToMany @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private java.util.List<Person> _authors = new java.util.ArrayList<Person>();
 
   public java.util.List<Person> getAuthors()
@@ -60,18 +84,6 @@ import org.webdsl.serg.domain.*;
   public java.util.List<Person> getAuthorsList()
   { 
     return new ArrayList(getAuthors());
-  }
-
-  private int _year = 0;
-
-  public int getYear()
-  { 
-    return _year;
-  }
-
-  public void setYear(int _year)
-  { 
-    this._year = _year;
   }
 
   @Column(length = 1000000) private String _abstract = "";
@@ -101,18 +113,6 @@ import org.webdsl.serg.domain.*;
   public java.util.List<ResearchProject> getProjectsList()
   { 
     return new ArrayList(getProjects());
-  }
-
-  private String _pdf = "";
-
-  public String getPdf()
-  { 
-    return _pdf;
-  }
-
-  public void setPdf(String _pdf)
-  { 
-    this._pdf = _pdf;
   }
 
   public String getName()

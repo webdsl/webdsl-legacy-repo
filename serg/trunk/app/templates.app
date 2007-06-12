@@ -29,15 +29,15 @@ section setup.
     list {
       listitem {
         "People"
-          list{ for(person10 : Person) { listitem { navigate(person10.name, viewPerson(person10)) } } }
+          list{ for(person : Person) { listitem { navigate(person.name, viewPerson(person)) } } }
       }
     }
     
     list {
       listitem {
         "Projects"
-          list { for(project11 : ResearchProject) { 
-            listitem { navigate(project11.acronym, viewResearchProject(project11)) }
+          list { for(project : ResearchProject) { 
+            listitem { navigate(project.acronym, viewResearchProject(project)) }
           } }
       }
     }
@@ -49,6 +49,7 @@ section setup.
         list {
           manageMenu() // depends on context
           createMenu()
+          allMenu()
         }
       }
     }

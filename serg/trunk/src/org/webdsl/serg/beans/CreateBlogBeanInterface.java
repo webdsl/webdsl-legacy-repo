@@ -11,57 +11,57 @@ import org.webdsl.serg.domain.*;
 
   public void destroy();
 
-  public void setPerson4(Person person22);
+  public void setPerson4(Person person120);
 
-  public void removeBlogEntry1(BlogEntry blogEntry4);
+  public void removeBlogEntry1(BlogEntry blogEntry6);
 
-  public void addBlogEntry1(BlogEntry blogEntry4);
+  public void addBlogEntry1(BlogEntry blogEntry6);
 
-  public void removeCategory1(Category category5);
+  public void removeCategory1(Category category7);
 
-  public void addCategory1(Category category5);
+  public void addCategory1(Category category7);
 
   public String cancel();
 
   public String save();
 
-  public void setNewPerson21(String p);
+  public void setNewPerson119(String p);
 
-  public String getNewPerson21();
+  public String getNewPerson119();
 
-  public void selectPerson21(ValueChangeEvent event);
+  public void selectPerson119(ValueChangeEvent event);
 
-  public Map<String, String> getPerson21List();
+  public Map<String, String> getPerson119List();
 
-  public void initPerson21List();
+  public void initPerson119List();
 
-  public void setNewBlogEntry5(String p);
+  public void setNewBlogEntry7(String p);
 
-  public String getNewBlogEntry5();
+  public String getNewBlogEntry7();
 
-  public void selectBlogEntry5(ValueChangeEvent event);
+  public void selectBlogEntry7(ValueChangeEvent event);
 
-  public Map<String, String> getBlogEntry5List();
+  public Map<String, String> getBlogEntry7List();
 
-  public void initBlogEntry5List();
+  public void initBlogEntry7List();
 
-  public void setNewCategory6(String p);
+  public void setNewCategory8(String p);
 
-  public String getNewCategory6();
+  public String getNewCategory8();
 
-  public void selectCategory6(ValueChangeEvent event);
+  public void selectCategory8(ValueChangeEvent event);
 
-  public Map<String, String> getCategory6List();
+  public Map<String, String> getCategory8List();
 
-  public void initCategory6List();
+  public void initCategory8List();
 
-  public List<Person> getPerson1020List();
+  public List<Person> getPerson36List();
 
-  public void initPerson1020List();
+  public void initPerson36List();
 
-  public List<ResearchProject> getProject1120List();
+  public List<ResearchProject> getProject31List();
 
-  public void initProject1120List();
+  public void initProject31List();
 
   public Blog getBlog();
 

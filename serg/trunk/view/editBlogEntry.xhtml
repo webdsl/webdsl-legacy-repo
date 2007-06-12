@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person1021" value="#{editBlogEntry.person1021List}"> 
+      <ui:repeat var="person38" value="#{editBlogEntry.person38List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person1021.id}"/> <h:outputText value="#{person1021.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person38.id}"/> <h:outputText value="#{person38.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -43,10 +43,10 @@
          <h:outputText value="Projects"/> 
       <ul>
         
-      <ui:repeat var="project1121" value="#{editBlogEntry.project1121List}"> 
+      <ui:repeat var="project33" value="#{editBlogEntry.project33List}"> 
       <h:column>
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project1121.id}"/> <h:outputText value="#{project1121.acronym}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project33.id}"/> <h:outputText value="#{project33.acronym}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -99,6 +99,22 @@
       </li>
     
       <li>
+         <s:link view="/createJournal.xhtml" propagation="none"> <h:outputText value="Journal"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createArticle.xhtml" propagation="none"> <h:outputText value="Article"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createConference.xhtml" propagation="none"> <h:outputText value="Conference"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createInProceedings.xhtml" propagation="none"> <h:outputText value="InProceedings"/> </s:link> 
+      </li>
+    
+      <li>
          <s:link view="/createTechnicalReport.xhtml" propagation="none"> <h:outputText value="TechnicalReport"/> </s:link> 
       </li>
     
@@ -147,6 +163,104 @@
       </li>
     </div>
     
+    <div class="allMenu">
+      <li>
+         <h:outputText value="All"/> 
+      <ul>
+        
+      <li>
+         <s:link view="/allTask.xhtml" propagation="none"> <h:outputText value="Task"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allBug.xhtml" propagation="none"> <h:outputText value="Bug"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allProject.xhtml" propagation="none"> <h:outputText value="Project"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allIssue.xhtml" propagation="none"> <h:outputText value="Issue"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allNews.xhtml" propagation="none"> <h:outputText value="News"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allResearchGroup.xhtml" propagation="none"> <h:outputText value="ResearchGroup"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allResearchProject.xhtml" propagation="none"> <h:outputText value="ResearchProject"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allJournal.xhtml" propagation="none"> <h:outputText value="Journal"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allArticle.xhtml" propagation="none"> <h:outputText value="Article"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allConference.xhtml" propagation="none"> <h:outputText value="Conference"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allInProceedings.xhtml" propagation="none"> <h:outputText value="InProceedings"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allTechnicalReport.xhtml" propagation="none"> <h:outputText value="TechnicalReport"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allPublication.xhtml" propagation="none"> <h:outputText value="Publication"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allPresentation.xhtml" propagation="none"> <h:outputText value="Presentation"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allColloquium.xhtml" propagation="none"> <h:outputText value="Colloquium"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allBlogComment.xhtml" propagation="none"> <h:outputText value="BlogComment"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allCategory.xhtml" propagation="none"> <h:outputText value="Category"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allBlogEntry.xhtml" propagation="none"> <h:outputText value="BlogEntry"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allBlog.xhtml" propagation="none"> <h:outputText value="Blog"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allPerson.xhtml" propagation="none"> <h:outputText value="Person"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allAddress.xhtml" propagation="none"> <h:outputText value="Address"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allUser.xhtml" propagation="none"> <h:outputText value="User"/> </s:link> 
+      </li>
+    
+      </ul>
+    
+      </li>
+    </div>
+    
       </ul>
     
       </li>
@@ -175,9 +289,9 @@
     
       <tr> <td> <h:outputText value="Blog"/> </td>  <td>
     <div class="inputSimpleRefAssociation"> <h:outputText value="#{editBlogEntry.blogEntry.blog.name}"/>  <h:outputText value=" "/> 
-       <h:selectOneMenu value="#{editBlogEntry.newBlog10}" onchange="submit()" valueChangeListener="#{editBlogEntry.selectBlog10}">
+       <h:selectOneMenu value="#{editBlogEntry.newBlog12}" onchange="submit()" valueChangeListener="#{editBlogEntry.selectBlog12}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{editBlogEntry.blog10List}" var="blog10" label="#{blog10.label}"/>
+          <f:selectItems value="#{editBlogEntry.blog12List}" var="blog12" label="#{blog12.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -201,9 +315,9 @@
     
       <tr> <td> <h:outputText value="Category"/> </td>  <td>
     <div class="inputSimpleRefAssociation"> <h:outputText value="#{editBlogEntry.blogEntry.category.name}"/>  <h:outputText value=" "/> 
-       <h:selectOneMenu value="#{editBlogEntry.newCategory10}" onchange="submit()" valueChangeListener="#{editBlogEntry.selectCategory10}">
+       <h:selectOneMenu value="#{editBlogEntry.newCategory12}" onchange="submit()" valueChangeListener="#{editBlogEntry.selectCategory12}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{editBlogEntry.category10List}" var="category10" label="#{category10.label}"/>
+          <f:selectItems value="#{editBlogEntry.category12List}" var="category12" label="#{category12.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -224,11 +338,11 @@
     <div class="inputAssociationList">
       <ul>
         
-      <ui:repeat var="blogComment3" value="#{editBlogEntry.blogEntry.comments}"> 
+      <ui:repeat var="blogComment5" value="#{editBlogEntry.blogEntry.comments}"> 
       <h:column>
       <li>
-         <h:outputText value="#{blogComment3.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{editBlogEntry.removeBlogComment0(blogComment3)}"/>
+         <h:outputText value="#{blogComment5.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{editBlogEntry.removeBlogComment0(blogComment5)}"/>
     
       </li>
     </h:column> 
@@ -236,9 +350,9 @@
     
       </ul>
     
-       <h:selectOneMenu value="#{editBlogEntry.newBlogComment4}" onchange="submit()" valueChangeListener="#{editBlogEntry.selectBlogComment4}">
+       <h:selectOneMenu value="#{editBlogEntry.newBlogComment6}" onchange="submit()" valueChangeListener="#{editBlogEntry.selectBlogComment6}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{editBlogEntry.blogComment4List}" var="blogComment4" label="#{blogComment4.label}"/>
+          <f:selectItems value="#{editBlogEntry.blogComment6List}" var="blogComment6" label="#{blogComment6.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

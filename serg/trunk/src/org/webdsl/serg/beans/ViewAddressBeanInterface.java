@@ -15,11 +15,11 @@ import org.webdsl.serg.domain.*;
 
   public Address getAddress();
 
-  public List<Person> getPerson1016List();
+  public List<Person> getPerson26List();
 
-  public void initPerson1016List();
+  public void initPerson26List();
 
-  public List<ResearchProject> getProject1116List();
+  public List<ResearchProject> getProject25List();
 
-  public void initProject1116List();
+  public void initProject25List();
 }

@@ -15,67 +15,67 @@ import org.webdsl.serg.domain.*;
 
   public Colloquium getColloquium();
 
-  public void setPerson9(Person person32);
+  public void setPerson9(Person person130);
 
-  public void setResearchGroup0(ResearchGroup researchGroup3);
+  public void setResearchGroup0(ResearchGroup researchGroup5);
 
-  public void removeResearchProject1(ResearchProject researchProject5);
+  public void removeResearchProject1(ResearchProject researchProject7);
 
-  public void addResearchProject1(ResearchProject researchProject5);
+  public void addResearchProject1(ResearchProject researchProject7);
 
-  public void removePresentation0(Presentation presentation4);
+  public void removePresentation0(Presentation presentation6);
 
-  public void addPresentation0(Presentation presentation4);
+  public void addPresentation0(Presentation presentation6);
 
   public String cancel();
 
   public String save();
 
-  public void setNewPerson31(String p);
+  public void setNewPerson129(String p);
 
-  public String getNewPerson31();
+  public String getNewPerson129();
 
-  public void selectPerson31(ValueChangeEvent event);
+  public void selectPerson129(ValueChangeEvent event);
 
-  public Map<String, String> getPerson31List();
+  public Map<String, String> getPerson129List();
 
-  public void initPerson31List();
+  public void initPerson129List();
 
-  public void setNewResearchGroup2(String p);
+  public void setNewResearchGroup4(String p);
 
-  public String getNewResearchGroup2();
+  public String getNewResearchGroup4();
 
-  public void selectResearchGroup2(ValueChangeEvent event);
+  public void selectResearchGroup4(ValueChangeEvent event);
 
-  public Map<String, String> getResearchGroup2List();
+  public Map<String, String> getResearchGroup4List();
 
-  public void initResearchGroup2List();
+  public void initResearchGroup4List();
 
-  public void setNewResearchProject6(String p);
+  public void setNewResearchProject8(String p);
 
-  public String getNewResearchProject6();
+  public String getNewResearchProject8();
 
-  public void selectResearchProject6(ValueChangeEvent event);
+  public void selectResearchProject8(ValueChangeEvent event);
 
-  public Map<String, String> getResearchProject6List();
+  public Map<String, String> getResearchProject8List();
 
-  public void initResearchProject6List();
+  public void initResearchProject8List();
 
-  public void setNewPresentation5(String p);
+  public void setNewPresentation7(String p);
 
-  public String getNewPresentation5();
+  public String getNewPresentation7();
 
-  public void selectPresentation5(ValueChangeEvent event);
+  public void selectPresentation7(ValueChangeEvent event);
 
-  public Map<String, String> getPresentation5List();
+  public Map<String, String> getPresentation7List();
 
-  public void initPresentation5List();
+  public void initPresentation7List();
 
-  public List<Person> getPerson1029List();
+  public List<Person> getPerson49List();
 
-  public void initPerson1029List();
+  public void initPerson49List();
 
-  public List<ResearchProject> getProject1129List();
+  public List<ResearchProject> getProject44List();
 
-  public void initProject1129List();
+  public void initProject44List();
 }

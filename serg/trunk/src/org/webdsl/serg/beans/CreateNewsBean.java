@@ -38,10 +38,10 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("createNews" + ".initalize()");
-    News var37 = new News();
-    news = var37;
-    initPerson1046List();
-    initProject1146List();
+    News var49 = new News();
+    news = var49;
+    initPerson88List();
+    initProject83List();
   }
 
   @Destroy @Remove public void destroy()
@@ -58,32 +58,32 @@ import org.webdsl.serg.domain.*;
     return "/" + "viewNews" + ".seam?" + ("news" + "=" + news.getId() + "");
   }
 
-  @DataModel("person1046List") private List<Person> person1046List;
+  @DataModel("person88List") private List<Person> person88List;
 
-  public List<Person> getPerson1046List()
+  public List<Person> getPerson88List()
   { 
-    log.info("getPerson1046List");
-    return person1046List;
+    log.info("getPerson88List");
+    return person88List;
   }
 
-  @Factory("person1046List") public void initPerson1046List()
+  @Factory("person88List") public void initPerson88List()
   { 
-    log.info("initPerson1046List");
-    person1046List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson88List");
+    person88List = em.createQuery("from " + "Person").getResultList();
   }
 
-  @DataModel("project1146List") private List<ResearchProject> project1146List;
+  @DataModel("project83List") private List<ResearchProject> project83List;
 
-  public List<ResearchProject> getProject1146List()
+  public List<ResearchProject> getProject83List()
   { 
-    log.info("getProject1146List");
-    return project1146List;
+    log.info("getProject83List");
+    return project83List;
   }
 
-  @Factory("project1146List") public void initProject1146List()
+  @Factory("project83List") public void initProject83List()
   { 
-    log.info("initProject1146List");
-    project1146List = em.createQuery("from " + "ResearchProject").getResultList();
+    log.info("initProject83List");
+    project83List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 
   private News news;

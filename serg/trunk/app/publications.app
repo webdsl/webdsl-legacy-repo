@@ -13,11 +13,11 @@ section publications.
   Publication {
     title    :: String (name)
     subtitle :: String
-    authors  -> List<Person>
     year     :: Int // use Year defined type
+    pdf      :: URL
+    authors  -> List<Person>
     abstract :: Text // note: abstract is a reserved word in java!
     projects -> Set<ResearchProject>
-    pdf      :: URL
   }
   
   TechnicalReport : Publication {
