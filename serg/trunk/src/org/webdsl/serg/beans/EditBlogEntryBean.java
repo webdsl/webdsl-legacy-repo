@@ -47,11 +47,11 @@ import org.webdsl.serg.domain.*;
     { 
       blogEntry = em.find(BlogEntry.class, blogEntryId);
     }
-    initBlog12List();
-    initCategory12List();
+    initBlog10List();
+    initCategory9List();
     initBlogComment6List();
-    initPerson38List();
-    initProject33List();
+    initPerson39List();
+    initProject34List();
   }
 
   @Destroy @Remove public void destroy()
@@ -73,14 +73,14 @@ import org.webdsl.serg.domain.*;
     return blogEntry;
   }
 
-  public void setBlog3(Blog blog13)
+  public void setBlog2(Blog blog11)
   { 
-    blogEntry.setBlog(blog13);
+    blogEntry.setBlog(blog11);
   }
 
-  public void setCategory0(Category category13)
+  public void setCategory0(Category category10)
   { 
-    blogEntry.setCategory(category13);
+    blogEntry.setCategory(category10);
   }
 
   public void removeBlogComment0(BlogComment blogComment5)
@@ -104,85 +104,85 @@ import org.webdsl.serg.domain.*;
     return "/" + "viewBlogEntry" + ".seam?" + ("entry" + "=" + blogEntry.getId() + "");
   }
 
-  private String newBlog12;
+  private String newBlog10;
 
-  public void setNewBlog12(String p)
+  public void setNewBlog10(String p)
   { 
-    newBlog12 = p;
+    newBlog10 = p;
   }
 
-  public String getNewBlog12()
+  public String getNewBlog10()
   { 
-    return newBlog12;
+    return newBlog10;
   }
 
-  public void selectBlog12(ValueChangeEvent event)
+  public void selectBlog10(ValueChangeEvent event)
   { 
-    log.info("selectBlog12" + ": new value = " + " " + event.getNewValue());
+    log.info("selectBlog10" + ": new value = " + " " + event.getNewValue());
     Long id = new Long((String)event.getNewValue());
     if(id > 0)
     { 
-      Blog blog12 = em.find(Blog.class, id);
-      setBlog3(blog12);
+      Blog blog10 = em.find(Blog.class, id);
+      setBlog2(blog10);
     }
   }
 
-  @DataModel("blog12List") private Map<String, String> blog12List;
+  @DataModel("blog10List") private Map<String, String> blog10List;
 
-  public Map<String, String> getBlog12List()
+  public Map<String, String> getBlog10List()
   { 
-    return blog12List;
+    return blog10List;
   }
 
-  @Factory("blog12List") public void initBlog12List()
+  @Factory("blog10List") public void initBlog10List()
   { 
-    log.info("initBlog12List");
-    blog12List = new HashMap<String, String>();
+    log.info("initBlog10List");
+    blog10List = new HashMap<String, String>();
     for(Object o : em.createQuery("from " + "Blog").getResultList())
     { 
       Blog p = (Blog)o;
-      blog12List.put(p.getName(), p.getId().toString());
+      blog10List.put(p.getName(), p.getId().toString());
     }
   }
 
-  private String newCategory12;
+  private String newCategory9;
 
-  public void setNewCategory12(String p)
+  public void setNewCategory9(String p)
   { 
-    newCategory12 = p;
+    newCategory9 = p;
   }
 
-  public String getNewCategory12()
+  public String getNewCategory9()
   { 
-    return newCategory12;
+    return newCategory9;
   }
 
-  public void selectCategory12(ValueChangeEvent event)
+  public void selectCategory9(ValueChangeEvent event)
   { 
-    log.info("selectCategory12" + ": new value = " + " " + event.getNewValue());
+    log.info("selectCategory9" + ": new value = " + " " + event.getNewValue());
     Long id = new Long((String)event.getNewValue());
     if(id > 0)
     { 
-      Category category12 = em.find(Category.class, id);
-      setCategory0(category12);
+      Category category9 = em.find(Category.class, id);
+      setCategory0(category9);
     }
   }
 
-  @DataModel("category12List") private Map<String, String> category12List;
+  @DataModel("category9List") private Map<String, String> category9List;
 
-  public Map<String, String> getCategory12List()
+  public Map<String, String> getCategory9List()
   { 
-    return category12List;
+    return category9List;
   }
 
-  @Factory("category12List") public void initCategory12List()
+  @Factory("category9List") public void initCategory9List()
   { 
-    log.info("initCategory12List");
-    category12List = new HashMap<String, String>();
+    log.info("initCategory9List");
+    category9List = new HashMap<String, String>();
     for(Object o : em.createQuery("from " + "Category").getResultList())
     { 
       Category p = (Category)o;
-      category12List.put(p.getName(), p.getId().toString());
+      category9List.put(p.getName(), p.getId().toString());
     }
   }
 
@@ -227,31 +227,31 @@ import org.webdsl.serg.domain.*;
     }
   }
 
-  @DataModel("person38List") private List<Person> person38List;
+  @DataModel("person39List") private List<Person> person39List;
 
-  public List<Person> getPerson38List()
+  public List<Person> getPerson39List()
   { 
-    log.info("getPerson38List");
-    return person38List;
+    log.info("getPerson39List");
+    return person39List;
   }
 
-  @Factory("person38List") public void initPerson38List()
+  @Factory("person39List") public void initPerson39List()
   { 
-    log.info("initPerson38List");
-    person38List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson39List");
+    person39List = em.createQuery("from " + "Person").getResultList();
   }
 
-  @DataModel("project33List") private List<ResearchProject> project33List;
+  @DataModel("project34List") private List<ResearchProject> project34List;
 
-  public List<ResearchProject> getProject33List()
+  public List<ResearchProject> getProject34List()
   { 
-    log.info("getProject33List");
-    return project33List;
+    log.info("getProject34List");
+    return project34List;
   }
 
-  @Factory("project33List") public void initProject33List()
+  @Factory("project34List") public void initProject34List()
   { 
-    log.info("initProject33List");
-    project33List = em.createQuery("from " + "ResearchProject").getResultList();
+    log.info("initProject34List");
+    project34List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 }

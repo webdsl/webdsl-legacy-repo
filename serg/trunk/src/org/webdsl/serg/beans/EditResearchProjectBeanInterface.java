@@ -15,55 +15,55 @@ import org.webdsl.serg.domain.*;
 
   public ResearchProject getResearchProject();
 
-  public void removePerson12(Person person170);
+  public void removePerson10(Person person155);
 
-  public void addPerson12(Person person170);
+  public void addPerson10(Person person155);
 
-  public void setPublication3(Publication publication22);
+  public void setPublication2(Publication publication20);
 
-  public void removePublication0(Publication publication23);
+  public void removePublication0(Publication publication21);
 
-  public void addPublication0(Publication publication23);
+  public void addPublication0(Publication publication21);
 
   public String cancel();
 
   public String save();
 
-  public void setNewPerson171(String p);
+  public void setNewPerson156(String p);
 
-  public String getNewPerson171();
+  public String getNewPerson156();
 
-  public void selectPerson171(ValueChangeEvent event);
+  public void selectPerson156(ValueChangeEvent event);
 
-  public Map<String, String> getPerson171List();
+  public Map<String, String> getPerson156List();
 
-  public void initPerson171List();
+  public void initPerson156List();
 
-  public void setNewPublication21(String p);
+  public void setNewPublication19(String p);
 
-  public String getNewPublication21();
+  public String getNewPublication19();
 
-  public void selectPublication21(ValueChangeEvent event);
+  public void selectPublication19(ValueChangeEvent event);
 
-  public Map<String, String> getPublication21List();
+  public Map<String, String> getPublication19List();
 
-  public void initPublication21List();
+  public void initPublication19List();
 
-  public void setNewPublication24(String p);
+  public void setNewPublication22(String p);
 
-  public String getNewPublication24();
+  public String getNewPublication22();
 
-  public void selectPublication24(ValueChangeEvent event);
+  public void selectPublication22(ValueChangeEvent event);
 
-  public Map<String, String> getPublication24List();
+  public Map<String, String> getPublication22List();
 
-  public void initPublication24List();
+  public void initPublication22List();
 
-  public List<Person> getPerson80List();
+  public List<Person> getPerson81List();
 
-  public void initPerson80List();
+  public void initPerson81List();
 
-  public List<ResearchProject> getProject75List();
+  public List<ResearchProject> getProject76List();
 
-  public void initProject75List();
+  public void initProject76List();
 }

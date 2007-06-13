@@ -1,4 +1,4 @@
-module publications
+module app/publications
 
 description
 

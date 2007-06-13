@@ -11,9 +11,9 @@ import org.webdsl.serg.domain.*;
 
   public void destroy();
 
-  public void setBlog4(Blog blog15);
+  public void setBlog3(Blog blog13);
 
-  public void setCategory1(Category category15);
+  public void setCategory1(Category category12);
 
   public void removeBlogComment1(BlogComment blogComment7);
 
@@ -23,25 +23,25 @@ import org.webdsl.serg.domain.*;
 
   public String save();
 
-  public void setNewBlog14(String p);
+  public void setNewBlog12(String p);
 
-  public String getNewBlog14();
+  public String getNewBlog12();
 
-  public void selectBlog14(ValueChangeEvent event);
+  public void selectBlog12(ValueChangeEvent event);
 
-  public Map<String, String> getBlog14List();
+  public Map<String, String> getBlog12List();
 
-  public void initBlog14List();
+  public void initBlog12List();
 
-  public void setNewCategory14(String p);
+  public void setNewCategory11(String p);
 
-  public String getNewCategory14();
+  public String getNewCategory11();
 
-  public void selectCategory14(ValueChangeEvent event);
+  public void selectCategory11(ValueChangeEvent event);
 
-  public Map<String, String> getCategory14List();
+  public Map<String, String> getCategory11List();
 
-  public void initCategory14List();
+  public void initCategory11List();
 
   public void setNewBlogComment8(String p);
 
@@ -53,13 +53,13 @@ import org.webdsl.serg.domain.*;
 
   public void initBlogComment8List();
 
-  public List<Person> getPerson39List();
+  public List<Person> getPerson40List();
 
-  public void initPerson39List();
+  public void initPerson40List();
 
-  public List<ResearchProject> getProject34List();
+  public List<ResearchProject> getProject35List();
 
-  public void initProject34List();
+  public void initProject35List();
 
   public BlogEntry getBlogEntry();
 

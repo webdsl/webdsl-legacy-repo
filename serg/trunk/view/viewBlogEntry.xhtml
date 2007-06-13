@@ -26,6 +26,18 @@
     
       <li>
          <s:link view="/viewBlog.xhtml" propagation="none"><f:param name="blog" value="#{viewBlogEntry.entry.blog.author.blog.id}"/> <h:outputText value="Blog"/> </s:link> 
+    <div class="blogEntries">
+      <ul>
+        
+      <ui:repeat var="entry3" value="#{viewBlogEntry.entry.blog.entries}">
+      <li>
+         <s:link view="/viewBlogEntry.xhtml" propagation="none"><f:param name="entry" value="#{entry3.id}"/> <h:outputText value="#{entry3.name}"/> </s:link> 
+      </li>
+    </ui:repeat>
+    
+      </ul>
+    </div>
+    
       </li>
     
       <li>
@@ -33,12 +45,10 @@
     <div class="listProjectAcronyms">
       <ul>
         
-      <ui:repeat var="pr2" value="#{viewBlogEntry.projects3}"> 
-      <h:column>
+      <ui:repeat var="pr2" value="#{viewBlogEntry.projects3}">
       <li>
          <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{pr2.id}"/> <h:outputText value="#{pr2.name}"/> </s:link> 
       </li>
-    </h:column> 
     </ui:repeat>
     
       </ul>
@@ -61,10 +71,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person8" value="#{viewBlogEntry.person8List}"> 
+      <ui:repeat var="person9" value="#{viewBlogEntry.person9List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person8.id}"/> <h:outputText value="#{person8.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person9.id}"/> <h:outputText value="#{person9.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -81,10 +91,10 @@
          <h:outputText value="Projects"/> 
       <ul>
         
-      <ui:repeat var="project4" value="#{viewBlogEntry.project4List}"> 
+      <ui:repeat var="project5" value="#{viewBlogEntry.project5List}"> 
       <h:column>
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project4.id}"/> <h:outputText value="#{project4.acronym}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project5.id}"/> <h:outputText value="#{project5.acronym}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -98,206 +108,10 @@
       <ul>
         
       <li>
-         <h:outputText value="Manage"/> 
+         <s:link view="/manage.xhtml" propagation="none"> <h:outputText value="Manage"/> </s:link> 
       <ul>
         
     <div class="manageMenu"> <s:link view="/editBlogEntry.xhtml" propagation="none"><f:param name="blogEntry" value="#{viewBlogEntry.entry.id}"/> <h:outputText value="Edit"/> </s:link> </div>
-    
-    <div class="createMenu">
-      <li>
-         <h:outputText value="New"/> 
-      <ul>
-        
-      <li>
-         <s:link view="/createTask.xhtml" propagation="none"> <h:outputText value="Task"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/createBug.xhtml" propagation="none"> <h:outputText value="Bug"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/createProject.xhtml" propagation="none"> <h:outputText value="Project"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/createIssue.xhtml" propagation="none"> <h:outputText value="Issue"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/createNews.xhtml" propagation="none"> <h:outputText value="News"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/createResearchGroup.xhtml" propagation="none"> <h:outputText value="ResearchGroup"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/createResearchProject.xhtml" propagation="none"> <h:outputText value="ResearchProject"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/createJournal.xhtml" propagation="none"> <h:outputText value="Journal"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/createArticle.xhtml" propagation="none"> <h:outputText value="Article"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/createConference.xhtml" propagation="none"> <h:outputText value="Conference"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/createInProceedings.xhtml" propagation="none"> <h:outputText value="InProceedings"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/createTechnicalReport.xhtml" propagation="none"> <h:outputText value="TechnicalReport"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/createPublication.xhtml" propagation="none"> <h:outputText value="Publication"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/createPresentation.xhtml" propagation="none"> <h:outputText value="Presentation"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/createColloquium.xhtml" propagation="none"> <h:outputText value="Colloquium"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/createBlogComment.xhtml" propagation="none"> <h:outputText value="BlogComment"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/createCategory.xhtml" propagation="none"> <h:outputText value="Category"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/createBlogEntry.xhtml" propagation="none"> <h:outputText value="BlogEntry"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/createBlog.xhtml" propagation="none"> <h:outputText value="Blog"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/createPerson.xhtml" propagation="none"> <h:outputText value="Person"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/createAddress.xhtml" propagation="none"> <h:outputText value="Address"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/createUser.xhtml" propagation="none"> <h:outputText value="User"/> </s:link> 
-      </li>
-    
-      </ul>
-    
-      </li>
-    </div>
-    
-    <div class="allMenu">
-      <li>
-         <h:outputText value="All"/> 
-      <ul>
-        
-      <li>
-         <s:link view="/allTask.xhtml" propagation="none"> <h:outputText value="Task"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/allBug.xhtml" propagation="none"> <h:outputText value="Bug"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/allProject.xhtml" propagation="none"> <h:outputText value="Project"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/allIssue.xhtml" propagation="none"> <h:outputText value="Issue"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/allNews.xhtml" propagation="none"> <h:outputText value="News"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/allResearchGroup.xhtml" propagation="none"> <h:outputText value="ResearchGroup"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/allResearchProject.xhtml" propagation="none"> <h:outputText value="ResearchProject"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/allJournal.xhtml" propagation="none"> <h:outputText value="Journal"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/allArticle.xhtml" propagation="none"> <h:outputText value="Article"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/allConference.xhtml" propagation="none"> <h:outputText value="Conference"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/allInProceedings.xhtml" propagation="none"> <h:outputText value="InProceedings"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/allTechnicalReport.xhtml" propagation="none"> <h:outputText value="TechnicalReport"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/allPublication.xhtml" propagation="none"> <h:outputText value="Publication"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/allPresentation.xhtml" propagation="none"> <h:outputText value="Presentation"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/allColloquium.xhtml" propagation="none"> <h:outputText value="Colloquium"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/allBlogComment.xhtml" propagation="none"> <h:outputText value="BlogComment"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/allCategory.xhtml" propagation="none"> <h:outputText value="Category"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/allBlogEntry.xhtml" propagation="none"> <h:outputText value="BlogEntry"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/allBlog.xhtml" propagation="none"> <h:outputText value="Blog"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/allPerson.xhtml" propagation="none"> <h:outputText value="Person"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/allAddress.xhtml" propagation="none"> <h:outputText value="Address"/> </s:link> 
-      </li>
-    
-      <li>
-         <s:link view="/allUser.xhtml" propagation="none"> <h:outputText value="User"/> </s:link> 
-      </li>
-    
-      </ul>
-    
-      </li>
-    </div>
     
       </ul>
     

@@ -45,11 +45,11 @@ section setup.
     // make manage menu conditional on role of user
     list {
       listitem {
-        "Manage"
+        navigate("Manage", manage())
         list {
           manageMenu() // depends on context
-          createMenu()
-          allMenu()
+          //createMenu()
+          //allMenu()
         }
       }
     }
@@ -68,4 +68,12 @@ section setup.
   define footer() {
     "generated with "
     navigate("Stratego/XT", url("http://www.strategoxt.org"))
+  }
+  
+  define page manage() {
+    main()
+    define body() {
+      createMenu()
+      allMenu()
+    }
   }

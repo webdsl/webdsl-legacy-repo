@@ -15,15 +15,15 @@ import org.webdsl.serg.domain.*;
 
   public TechnicalReport getTechnicalReport();
 
-  public void removePerson3(Person person147);
+  public void removePerson2(Person person135);
 
-  public void addPerson3(Person person147);
+  public void addPerson2(Person person135);
 
   public void addNewAuthor();
 
-  public void removeResearchProject9(ResearchProject researchProject28);
+  public void removeResearchProject6(ResearchProject researchProject19);
 
-  public void addResearchProject9(ResearchProject researchProject28);
+  public void addResearchProject6(ResearchProject researchProject19);
 
   public void setPublication0(Publication publication16);
 
@@ -31,25 +31,25 @@ import org.webdsl.serg.domain.*;
 
   public String save();
 
-  public void setNewPerson148(String p);
+  public void setNewPerson136(String p);
 
-  public String getNewPerson148();
+  public String getNewPerson136();
 
-  public void selectPerson148(ValueChangeEvent event);
+  public void selectPerson136(ValueChangeEvent event);
 
-  public Map<String, String> getPerson148List();
+  public Map<String, String> getPerson136List();
 
-  public void initPerson148List();
+  public void initPerson136List();
 
-  public void setNewResearchProject29(String p);
+  public void setNewResearchProject20(String p);
 
-  public String getNewResearchProject29();
+  public String getNewResearchProject20();
 
-  public void selectResearchProject29(ValueChangeEvent event);
+  public void selectResearchProject20(ValueChangeEvent event);
 
-  public Map<String, String> getResearchProject29List();
+  public Map<String, String> getResearchProject20List();
 
-  public void initResearchProject29List();
+  public void initResearchProject20List();
 
   public void setNewPublication15(String p);
 
@@ -61,13 +61,13 @@ import org.webdsl.serg.domain.*;
 
   public void initPublication15List();
 
-  public List<Person> getPerson60List();
+  public List<Person> getPerson61List();
 
-  public void initPerson60List();
+  public void initPerson61List();
 
-  public List<ResearchProject> getProject55List();
+  public List<ResearchProject> getProject56List();
 
-  public void initProject55List();
+  public void initProject56List();
 
   public Person getNewAuthor2();
 

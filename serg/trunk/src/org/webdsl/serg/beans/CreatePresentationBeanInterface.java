@@ -11,43 +11,43 @@ import org.webdsl.serg.domain.*;
 
   public void destroy();
 
-  public void setPerson13(Person person138);
+  public void setPerson9(Person person129);
 
-  public void removeResearchProject5(ResearchProject researchProject16);
+  public void removeResearchProject3(ResearchProject researchProject11);
 
-  public void addResearchProject5(ResearchProject researchProject16);
+  public void addResearchProject3(ResearchProject researchProject11);
 
   public String cancel();
 
   public String save();
 
-  public void setNewPerson137(String p);
+  public void setNewPerson128(String p);
 
-  public String getNewPerson137();
+  public String getNewPerson128();
 
-  public void selectPerson137(ValueChangeEvent event);
+  public void selectPerson128(ValueChangeEvent event);
 
-  public Map<String, String> getPerson137List();
+  public Map<String, String> getPerson128List();
 
-  public void initPerson137List();
+  public void initPerson128List();
 
-  public void setNewResearchProject17(String p);
+  public void setNewResearchProject12(String p);
 
-  public String getNewResearchProject17();
+  public String getNewResearchProject12();
 
-  public void selectResearchProject17(ValueChangeEvent event);
+  public void selectResearchProject12(ValueChangeEvent event);
 
-  public Map<String, String> getResearchProject17List();
+  public Map<String, String> getResearchProject12List();
 
-  public void initResearchProject17List();
+  public void initResearchProject12List();
 
-  public List<Person> getPerson53List();
+  public List<Person> getPerson54List();
 
-  public void initPerson53List();
+  public void initPerson54List();
 
-  public List<ResearchProject> getProject48List();
+  public List<ResearchProject> getProject49List();
 
-  public void initProject48List();
+  public void initProject49List();
 
   public Presentation getPresentation();
 

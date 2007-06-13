@@ -291,6 +291,14 @@ div.menu ul li:hover table
   width : 40em;
 }
 
+.inputEmail {
+  width : 40em;
+}
+
+.inputURL {
+  width : 40em;
+}
+
 .inputDate {
   width : 20em;
 }
@@ -313,7 +321,6 @@ textarea,[nul] .inputText {
    padding-left : 3px; */
    
    border : inset 2px lightgrey;
-   
 }
 
 .editRows table {

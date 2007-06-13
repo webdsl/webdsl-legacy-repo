@@ -97,5 +97,11 @@ section pages.
         div("blogBody"){outputText(entry.body)}
       }
     }
-  
+    define blogEntries() {
+      list{
+        for(entry : BlogEntry in entry.blog.entries) {
+          listitem { navigate(entry.name, viewBlogEntry(entry)) }
+        }
+      }
+    }
   }

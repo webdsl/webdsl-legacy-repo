@@ -15,11 +15,11 @@ import org.webdsl.serg.domain.*;
 
   public Colloquium getColloquium();
 
-  public List<Person> getPerson9List();
+  public List<Person> getPerson10List();
 
-  public void initPerson9List();
+  public void initPerson10List();
 
-  public List<ResearchProject> getProject6List();
+  public List<ResearchProject> getProject7List();
 
-  public void initProject6List();
+  public void initProject7List();
 }

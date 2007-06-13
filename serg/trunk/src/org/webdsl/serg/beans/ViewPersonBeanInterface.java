@@ -15,13 +15,13 @@ import org.webdsl.serg.domain.*;
 
   public Person getPerson();
 
-  public List<Person> getPerson1List();
+  public List<Person> getPerson2List();
 
-  public void initPerson1List();
+  public void initPerson2List();
 
-  public List<ResearchProject> getProject0List();
+  public List<ResearchProject> getProject1List();
 
-  public void initProject0List();
+  public void initProject1List();
 
   public java.util.List<ResearchProject> getProjects0();
 

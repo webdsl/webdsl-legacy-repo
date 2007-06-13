@@ -15,13 +15,13 @@ import org.webdsl.serg.domain.*;
 
   public ResearchGroup getResearchGroup();
 
-  public void removePerson15(Person person178);
+  public void removePerson12(Person person160);
 
-  public void addPerson15(Person person178);
+  public void addPerson12(Person person160);
 
-  public void removeResearchProject15(ResearchProject researchProject43);
+  public void removeResearchProject12(ResearchProject researchProject34);
 
-  public void addResearchProject15(ResearchProject researchProject43);
+  public void addResearchProject12(ResearchProject researchProject34);
 
   public void removeColloquium0(Colloquium colloquium4);
 
@@ -35,25 +35,25 @@ import org.webdsl.serg.domain.*;
 
   public String save();
 
-  public void setNewPerson179(String p);
+  public void setNewPerson161(String p);
 
-  public String getNewPerson179();
+  public String getNewPerson161();
 
-  public void selectPerson179(ValueChangeEvent event);
+  public void selectPerson161(ValueChangeEvent event);
 
-  public Map<String, String> getPerson179List();
+  public Map<String, String> getPerson161List();
 
-  public void initPerson179List();
+  public void initPerson161List();
 
-  public void setNewResearchProject44(String p);
+  public void setNewResearchProject35(String p);
 
-  public String getNewResearchProject44();
+  public String getNewResearchProject35();
 
-  public void selectResearchProject44(ValueChangeEvent event);
+  public void selectResearchProject35(ValueChangeEvent event);
 
-  public Map<String, String> getResearchProject44List();
+  public Map<String, String> getResearchProject35List();
 
-  public void initResearchProject44List();
+  public void initResearchProject35List();
 
   public void setNewColloquium5(String p);
 
@@ -75,11 +75,11 @@ import org.webdsl.serg.domain.*;
 
   public void initNews6List();
 
-  public List<Person> getPerson84List();
+  public List<Person> getPerson85List();
 
-  public void initPerson84List();
+  public void initPerson85List();
 
-  public List<ResearchProject> getProject79List();
+  public List<ResearchProject> getProject80List();
 
-  public void initProject79List();
+  public void initProject80List();
 }
