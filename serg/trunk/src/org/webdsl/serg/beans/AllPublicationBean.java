@@ -38,31 +38,31 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("allPublication" + ".initalize()");
-    initPerson61List();
+    initPerson66List();
     initProject56List();
-    initPublication4List();
+    initPublication7List();
   }
 
   @Destroy @Remove public void destroy()
   { }
 
-  public void removePublication(Publication publication5)
+  public void removePublication(Publication publication8)
   { 
-    em.remove(publication5);
+    em.remove(publication8);
   }
 
-  @DataModel("person61List") private List<Person> person61List;
+  @DataModel("person66List") private List<Person> person66List;
 
-  public List<Person> getPerson61List()
+  public List<Person> getPerson66List()
   { 
-    log.info("getPerson61List");
-    return person61List;
+    log.info("getPerson66List");
+    return person66List;
   }
 
-  @Factory("person61List") public void initPerson61List()
+  @Factory("person66List") public void initPerson66List()
   { 
-    log.info("initPerson61List");
-    person61List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson66List");
+    person66List = em.createQuery("from " + "Person").getResultList();
   }
 
   @DataModel("project56List") private List<ResearchProject> project56List;
@@ -79,17 +79,17 @@ import org.webdsl.serg.domain.*;
     project56List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 
-  @DataModel("publication4List") private List<Publication> publication4List;
+  @DataModel("publication7List") private List<Publication> publication7List;
 
-  public List<Publication> getPublication4List()
+  public List<Publication> getPublication7List()
   { 
-    log.info("getPublication4List");
-    return publication4List;
+    log.info("getPublication7List");
+    return publication7List;
   }
 
-  @Factory("publication4List") public void initPublication4List()
+  @Factory("publication7List") public void initPublication7List()
   { 
-    log.info("initPublication4List");
-    publication4List = em.createQuery("from " + "Publication").getResultList();
+    log.info("initPublication7List");
+    publication7List = em.createQuery("from " + "Publication").getResultList();
   }
 }

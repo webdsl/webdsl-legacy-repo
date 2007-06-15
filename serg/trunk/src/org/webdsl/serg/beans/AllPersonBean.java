@@ -38,31 +38,31 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("allPerson" + ".initalize()");
-    initPerson34List();
+    initPerson39List();
     initProject31List();
-    initPerson35List();
+    initPerson40List();
   }
 
   @Destroy @Remove public void destroy()
   { }
 
-  public void removePerson(Person person36)
+  public void removePerson(Person person41)
   { 
-    em.remove(person36);
+    em.remove(person41);
   }
 
-  @DataModel("person34List") private List<Person> person34List;
+  @DataModel("person39List") private List<Person> person39List;
 
-  public List<Person> getPerson34List()
+  public List<Person> getPerson39List()
   { 
-    log.info("getPerson34List");
-    return person34List;
+    log.info("getPerson39List");
+    return person39List;
   }
 
-  @Factory("person34List") public void initPerson34List()
+  @Factory("person39List") public void initPerson39List()
   { 
-    log.info("initPerson34List");
-    person34List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson39List");
+    person39List = em.createQuery("from " + "Person").getResultList();
   }
 
   @DataModel("project31List") private List<ResearchProject> project31List;
@@ -79,17 +79,17 @@ import org.webdsl.serg.domain.*;
     project31List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 
-  @DataModel("person35List") private List<Person> person35List;
+  @DataModel("person40List") private List<Person> person40List;
 
-  public List<Person> getPerson35List()
+  public List<Person> getPerson40List()
   { 
-    log.info("getPerson35List");
-    return person35List;
+    log.info("getPerson40List");
+    return person40List;
   }
 
-  @Factory("person35List") public void initPerson35List()
+  @Factory("person40List") public void initPerson40List()
   { 
-    log.info("initPerson35List");
-    person35List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson40List");
+    person40List = em.createQuery("from " + "Person").getResultList();
   }
 }

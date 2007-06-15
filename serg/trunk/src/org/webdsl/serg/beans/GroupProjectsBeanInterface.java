@@ -15,9 +15,9 @@ import org.webdsl.serg.domain.*;
 
   public ResearchGroup getGroup();
 
-  public List<Person> getPerson18List();
+  public List<Person> getPerson23List();
 
-  public void initPerson18List();
+  public void initPerson23List();
 
   public List<ResearchProject> getProject15List();
 

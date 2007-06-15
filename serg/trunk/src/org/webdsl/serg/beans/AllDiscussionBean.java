@@ -38,31 +38,31 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("allDiscussion" + ".initalize()");
-    initPerson115List();
+    initPerson120List();
     initProject115List();
-    initDiscussion3List();
+    initDiscussion4List();
   }
 
   @Destroy @Remove public void destroy()
   { }
 
-  public void removeDiscussion(Discussion discussion4)
+  public void removeDiscussion(Discussion discussion5)
   { 
-    em.remove(discussion4);
+    em.remove(discussion5);
   }
 
-  @DataModel("person115List") private List<Person> person115List;
+  @DataModel("person120List") private List<Person> person120List;
 
-  public List<Person> getPerson115List()
+  public List<Person> getPerson120List()
   { 
-    log.info("getPerson115List");
-    return person115List;
+    log.info("getPerson120List");
+    return person120List;
   }
 
-  @Factory("person115List") public void initPerson115List()
+  @Factory("person120List") public void initPerson120List()
   { 
-    log.info("initPerson115List");
-    person115List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson120List");
+    person120List = em.createQuery("from " + "Person").getResultList();
   }
 
   @DataModel("project115List") private List<ResearchProject> project115List;
@@ -79,17 +79,17 @@ import org.webdsl.serg.domain.*;
     project115List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 
-  @DataModel("discussion3List") private List<Discussion> discussion3List;
+  @DataModel("discussion4List") private List<Discussion> discussion4List;
 
-  public List<Discussion> getDiscussion3List()
+  public List<Discussion> getDiscussion4List()
   { 
-    log.info("getDiscussion3List");
-    return discussion3List;
+    log.info("getDiscussion4List");
+    return discussion4List;
   }
 
-  @Factory("discussion3List") public void initDiscussion3List()
+  @Factory("discussion4List") public void initDiscussion4List()
   { 
-    log.info("initDiscussion3List");
-    discussion3List = em.createQuery("from " + "Discussion").getResultList();
+    log.info("initDiscussion4List");
+    discussion4List = em.createQuery("from " + "Discussion").getResultList();
   }
 }

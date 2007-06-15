@@ -38,31 +38,31 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("allColloquium" + ".initalize()");
-    initPerson53List();
+    initPerson58List();
     initProject48List();
-    initColloquium3List();
+    initColloquium5List();
   }
 
   @Destroy @Remove public void destroy()
   { }
 
-  public void removeColloquium(Colloquium colloquium4)
+  public void removeColloquium(Colloquium colloquium6)
   { 
-    em.remove(colloquium4);
+    em.remove(colloquium6);
   }
 
-  @DataModel("person53List") private List<Person> person53List;
+  @DataModel("person58List") private List<Person> person58List;
 
-  public List<Person> getPerson53List()
+  public List<Person> getPerson58List()
   { 
-    log.info("getPerson53List");
-    return person53List;
+    log.info("getPerson58List");
+    return person58List;
   }
 
-  @Factory("person53List") public void initPerson53List()
+  @Factory("person58List") public void initPerson58List()
   { 
-    log.info("initPerson53List");
-    person53List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson58List");
+    person58List = em.createQuery("from " + "Person").getResultList();
   }
 
   @DataModel("project48List") private List<ResearchProject> project48List;
@@ -79,17 +79,17 @@ import org.webdsl.serg.domain.*;
     project48List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 
-  @DataModel("colloquium3List") private List<Colloquium> colloquium3List;
+  @DataModel("colloquium5List") private List<Colloquium> colloquium5List;
 
-  public List<Colloquium> getColloquium3List()
+  public List<Colloquium> getColloquium5List()
   { 
-    log.info("getColloquium3List");
-    return colloquium3List;
+    log.info("getColloquium5List");
+    return colloquium5List;
   }
 
-  @Factory("colloquium3List") public void initColloquium3List()
+  @Factory("colloquium5List") public void initColloquium5List()
   { 
-    log.info("initColloquium3List");
-    colloquium3List = em.createQuery("from " + "Colloquium").getResultList();
+    log.info("initColloquium5List");
+    colloquium5List = em.createQuery("from " + "Colloquium").getResultList();
   }
 }

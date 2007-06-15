@@ -13,9 +13,9 @@ import org.webdsl.serg.domain.*;
 
   public void removeInProceedings(InProceedings inProceedings4);
 
-  public List<Person> getPerson69List();
+  public List<Person> getPerson74List();
 
-  public void initPerson69List();
+  public void initPerson74List();
 
   public List<ResearchProject> getProject64List();
 

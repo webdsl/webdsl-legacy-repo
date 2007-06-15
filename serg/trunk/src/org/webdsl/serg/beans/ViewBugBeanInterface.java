@@ -15,9 +15,13 @@ import org.webdsl.serg.domain.*;
 
   public Bug getBug();
 
-  public List<Person> getPerson103List();
+  public String createNewIssue(Issue issue16, java.util.Set<Issue> issues2);
 
-  public void initPerson103List();
+  public String createNewPerson(Issue issue22, java.util.Set<Person> assigned2);
+
+  public List<Person> getPerson108List();
+
+  public void initPerson108List();
 
   public List<ResearchProject> getProject103List();
 

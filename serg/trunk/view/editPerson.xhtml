@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person30" value="#{editPerson.person30List}"> 
+      <ui:repeat var="person35" value="#{editPerson.person35List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person30.id}"/> <h:outputText value="#{person30.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person35.id}"/> <h:outputText value="#{person35.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -146,9 +146,9 @@
     
       <tr> <td> <h:outputText value="Blog"/> </td>  <td>
     <div class="inputSimpleRefAssociation"> <h:outputText value="#{editPerson.person.blog.name}"/>  <h:outputText value=" "/> 
-       <h:selectOneMenu value="#{editPerson.newBlog7}" onchange="submit()" valueChangeListener="#{editPerson.selectBlog7}">
+       <h:selectOneMenu value="#{editPerson.newBlog8}" onchange="submit()" valueChangeListener="#{editPerson.selectBlog8}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{editPerson.blog7List}" var="blog7" label="#{blog7.label}"/>
+          <f:selectItems value="#{editPerson.blog8List}" var="blog8" label="#{blog8.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

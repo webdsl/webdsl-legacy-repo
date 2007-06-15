@@ -15,9 +15,9 @@ import org.webdsl.serg.domain.*;
 
   public Presentation getPresentation();
 
-  public List<Person> getPerson56List();
+  public List<Person> getPerson61List();
 
-  public void initPerson56List();
+  public void initPerson61List();
 
   public List<ResearchProject> getProject51List();
 

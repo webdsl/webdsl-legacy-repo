@@ -15,9 +15,13 @@ import org.webdsl.serg.domain.*;
 
   public Task getTask();
 
-  public List<Person> getPerson107List();
+  public String createNewIssue(Issue issue110, java.util.Set<Issue> issues3);
 
-  public void initPerson107List();
+  public String createNewPerson(Issue issue23, java.util.Set<Person> assigned3);
+
+  public List<Person> getPerson112List();
+
+  public void initPerson112List();
 
   public List<ResearchProject> getProject107List();
 

@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person121" value="#{createPost.person121List}"> 
+      <ui:repeat var="person126" value="#{createPost.person126List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person121.id}"/> <h:outputText value="#{person121.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person126.id}"/> <h:outputText value="#{person126.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -99,9 +99,9 @@
     
       <tr> <td> <h:outputText value="Author"/> </td>  <td>
     <div class="inputSimpleRefAssociation"> <h:outputText value="#{createPost.post.author.name}"/>  <h:outputText value=" "/> 
-       <h:selectOneMenu value="#{createPost.newPerson212}" onchange="submit()" valueChangeListener="#{createPost.selectPerson212}">
+       <h:selectOneMenu value="#{createPost.newPerson218}" onchange="submit()" valueChangeListener="#{createPost.selectPerson218}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createPost.person212List}" var="person212" label="#{person212.label}"/>
+          <f:selectItems value="#{createPost.person218List}" var="person218" label="#{person218.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -110,7 +110,7 @@
       <s:decorate>
         <div>
           <h:inputText id="inputDateId23" styleClass="inputDate" value="#{createPost.post.posted}">
-             <s:convertDateTime pattern="dd/mm/yyyy"/>
+             <s:convertDateTime pattern="dd/MM/yyyy"/>
           </h:inputText>
           <s:selectDate for="inputDateId23"/>
         </div>
@@ -119,9 +119,9 @@
     
       <tr> <td> <h:outputText value="Discussion"/> </td>  <td>
     <div class="inputSimpleRefAssociation"> <h:outputText value="#{createPost.post.discussion.name}"/>  <h:outputText value=" "/> 
-       <h:selectOneMenu value="#{createPost.newDiscussion16}" onchange="submit()" valueChangeListener="#{createPost.selectDiscussion16}">
+       <h:selectOneMenu value="#{createPost.newDiscussion17}" onchange="submit()" valueChangeListener="#{createPost.selectDiscussion17}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createPost.discussion16List}" var="discussion16" label="#{discussion16.label}"/>
+          <f:selectItems value="#{createPost.discussion17List}" var="discussion17" label="#{discussion17.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

@@ -38,9 +38,9 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("createNews" + ".initalize()");
-    News var51 = new News();
-    news = var51;
-    initPerson90List();
+    News var62 = new News();
+    news = var62;
+    initPerson95List();
     initProject85List();
   }
 
@@ -58,18 +58,18 @@ import org.webdsl.serg.domain.*;
     return "/" + "viewNews" + ".seam?" + ("news" + "=" + news.getId() + "");
   }
 
-  @DataModel("person90List") private List<Person> person90List;
+  @DataModel("person95List") private List<Person> person95List;
 
-  public List<Person> getPerson90List()
+  public List<Person> getPerson95List()
   { 
-    log.info("getPerson90List");
-    return person90List;
+    log.info("getPerson95List");
+    return person95List;
   }
 
-  @Factory("person90List") public void initPerson90List()
+  @Factory("person95List") public void initPerson95List()
   { 
-    log.info("initPerson90List");
-    person90List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson95List");
+    person95List = em.createQuery("from " + "Person").getResultList();
   }
 
   @DataModel("project85List") private List<ResearchProject> project85List;

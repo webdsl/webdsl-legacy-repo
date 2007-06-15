@@ -11,15 +11,15 @@ import org.webdsl.serg.domain.*;
 
   public void destroy();
 
-  public void removePerson9(Person person170);
+  public void removePerson9(Person person175);
 
-  public void addPerson9(Person person170);
+  public void addPerson9(Person person175);
 
   public void addNewAuthor();
 
-  public void removeResearchProject11(ResearchProject researchProject31);
+  public void removeResearchProject11(ResearchProject researchProject42);
 
-  public void addResearchProject11(ResearchProject researchProject31);
+  public void addResearchProject11(ResearchProject researchProject42);
 
   public void setJournal1(Journal journal8);
 
@@ -27,25 +27,25 @@ import org.webdsl.serg.domain.*;
 
   public String save();
 
-  public void setNewPerson171(String p);
+  public void setNewPerson176(String p);
 
-  public String getNewPerson171();
+  public String getNewPerson176();
 
-  public void selectPerson171(ValueChangeEvent event);
+  public void selectPerson176(ValueChangeEvent event);
 
-  public Map<String, String> getPerson171List();
+  public Map<String, String> getPerson176List();
 
-  public void initPerson171List();
+  public void initPerson176List();
 
-  public void setNewResearchProject32(String p);
+  public void setNewResearchProject43(String p);
 
-  public String getNewResearchProject32();
+  public String getNewResearchProject43();
 
-  public void selectResearchProject32(ValueChangeEvent event);
+  public void selectResearchProject43(ValueChangeEvent event);
 
-  public Map<String, String> getResearchProject32List();
+  public Map<String, String> getResearchProject43List();
 
-  public void initResearchProject32List();
+  public void initResearchProject43List();
 
   public void setNewJournal7(String p);
 
@@ -57,9 +57,9 @@ import org.webdsl.serg.domain.*;
 
   public void initJournal7List();
 
-  public List<Person> getPerson75List();
+  public List<Person> getPerson80List();
 
-  public void initPerson75List();
+  public void initPerson80List();
 
   public List<ResearchProject> getProject70List();
 

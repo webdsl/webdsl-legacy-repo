@@ -38,31 +38,31 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("allNews" + ".initalize()");
-    initPerson92List();
+    initPerson97List();
     initProject87List();
-    initNews3List();
+    initNews4List();
   }
 
   @Destroy @Remove public void destroy()
   { }
 
-  public void removeNews(News news4)
+  public void removeNews(News news5)
   { 
-    em.remove(news4);
+    em.remove(news5);
   }
 
-  @DataModel("person92List") private List<Person> person92List;
+  @DataModel("person97List") private List<Person> person97List;
 
-  public List<Person> getPerson92List()
+  public List<Person> getPerson97List()
   { 
-    log.info("getPerson92List");
-    return person92List;
+    log.info("getPerson97List");
+    return person97List;
   }
 
-  @Factory("person92List") public void initPerson92List()
+  @Factory("person97List") public void initPerson97List()
   { 
-    log.info("initPerson92List");
-    person92List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson97List");
+    person97List = em.createQuery("from " + "Person").getResultList();
   }
 
   @DataModel("project87List") private List<ResearchProject> project87List;
@@ -79,17 +79,17 @@ import org.webdsl.serg.domain.*;
     project87List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 
-  @DataModel("news3List") private List<News> news3List;
+  @DataModel("news4List") private List<News> news4List;
 
-  public List<News> getNews3List()
+  public List<News> getNews4List()
   { 
-    log.info("getNews3List");
-    return news3List;
+    log.info("getNews4List");
+    return news4List;
   }
 
-  @Factory("news3List") public void initNews3List()
+  @Factory("news4List") public void initNews4List()
   { 
-    log.info("initNews3List");
-    news3List = em.createQuery("from " + "News").getResultList();
+    log.info("initNews4List");
+    news4List = em.createQuery("from " + "News").getResultList();
   }
 }

@@ -47,12 +47,12 @@ import org.webdsl.serg.domain.*;
     { 
       inProceedings = em.find(InProceedings.class, inProceedingsId);
     }
-    Person var38 = new Person();
-    newAuthor4 = var38;
-    initPerson159List();
-    initResearchProject25List();
-    initConference5List();
-    initPerson66List();
+    Person var42 = new Person();
+    newAuthor4 = var42;
+    initPerson164List();
+    initResearchProject36List();
+    initConference6List();
+    initPerson71List();
     initProject61List();
   }
 
@@ -75,36 +75,36 @@ import org.webdsl.serg.domain.*;
     return inProceedings;
   }
 
-  public void removePerson4(Person person158)
+  public void removePerson4(Person person163)
   { 
-    this.getInProceedings().getAuthors().remove(person158);
+    this.getInProceedings().getAuthors().remove(person163);
   }
 
-  public void addPerson4(Person person158)
+  public void addPerson4(Person person163)
   { 
-    this.getInProceedings().getAuthors().add(person158);
+    this.getInProceedings().getAuthors().add(person163);
   }
 
   public void addNewAuthor()
   { 
     this.getInProceedings().getAuthors().add(this.getNewAuthor4());
-    Person var37 = new Person();
-    newAuthor4 = var37;
+    Person var41 = new Person();
+    newAuthor4 = var41;
   }
 
-  public void removeResearchProject8(ResearchProject researchProject24)
+  public void removeResearchProject8(ResearchProject researchProject35)
   { 
-    this.getInProceedings().getProjects().remove(researchProject24);
+    this.getInProceedings().getProjects().remove(researchProject35);
   }
 
-  public void addResearchProject8(ResearchProject researchProject24)
+  public void addResearchProject8(ResearchProject researchProject35)
   { 
-    this.getInProceedings().getProjects().add(researchProject24);
+    this.getInProceedings().getProjects().add(researchProject35);
   }
 
-  public void setConference0(Conference conference6)
+  public void setConference0(Conference conference7)
   { 
-    inProceedings.setConference(conference6);
+    inProceedings.setConference(conference7);
   }
 
   @End public String cancel()
@@ -118,141 +118,141 @@ import org.webdsl.serg.domain.*;
     return "/" + "viewInProceedings" + ".seam?" + ("inProceedings" + "=" + inProceedings.getId() + "");
   }
 
-  private String newPerson159;
+  private String newPerson164;
 
-  public void setNewPerson159(String p)
+  public void setNewPerson164(String p)
   { 
-    newPerson159 = p;
+    newPerson164 = p;
   }
 
-  public String getNewPerson159()
+  public String getNewPerson164()
   { 
-    return newPerson159;
+    return newPerson164;
   }
 
-  public void selectPerson159(ValueChangeEvent event)
+  public void selectPerson164(ValueChangeEvent event)
   { 
-    log.info("selectPerson159" + ": new value = " + " " + event.getNewValue());
+    log.info("selectPerson164" + ": new value = " + " " + event.getNewValue());
     Long id = new Long((String)event.getNewValue());
     if(id > 0)
     { 
-      Person person159 = em.find(Person.class, id);
-      addPerson4(person159);
+      Person person164 = em.find(Person.class, id);
+      addPerson4(person164);
     }
   }
 
-  @DataModel("person159List") private Map<String, String> person159List;
+  @DataModel("person164List") private Map<String, String> person164List;
 
-  public Map<String, String> getPerson159List()
+  public Map<String, String> getPerson164List()
   { 
-    return person159List;
+    return person164List;
   }
 
-  @Factory("person159List") public void initPerson159List()
+  @Factory("person164List") public void initPerson164List()
   { 
-    log.info("initPerson159List");
-    person159List = new HashMap<String, String>();
+    log.info("initPerson164List");
+    person164List = new HashMap<String, String>();
     for(Object o : em.createQuery("from " + "Person").getResultList())
     { 
       Person p = (Person)o;
-      person159List.put(p.getName(), p.getId().toString());
+      person164List.put(p.getName(), p.getId().toString());
     }
   }
 
-  private String newResearchProject25;
+  private String newResearchProject36;
 
-  public void setNewResearchProject25(String p)
+  public void setNewResearchProject36(String p)
   { 
-    newResearchProject25 = p;
+    newResearchProject36 = p;
   }
 
-  public String getNewResearchProject25()
+  public String getNewResearchProject36()
   { 
-    return newResearchProject25;
+    return newResearchProject36;
   }
 
-  public void selectResearchProject25(ValueChangeEvent event)
+  public void selectResearchProject36(ValueChangeEvent event)
   { 
-    log.info("selectResearchProject25" + ": new value = " + " " + event.getNewValue());
+    log.info("selectResearchProject36" + ": new value = " + " " + event.getNewValue());
     Long id = new Long((String)event.getNewValue());
     if(id > 0)
     { 
-      ResearchProject researchProject25 = em.find(ResearchProject.class, id);
-      addResearchProject8(researchProject25);
+      ResearchProject researchProject36 = em.find(ResearchProject.class, id);
+      addResearchProject8(researchProject36);
     }
   }
 
-  @DataModel("researchProject25List") private Map<String, String> researchProject25List;
+  @DataModel("researchProject36List") private Map<String, String> researchProject36List;
 
-  public Map<String, String> getResearchProject25List()
+  public Map<String, String> getResearchProject36List()
   { 
-    return researchProject25List;
+    return researchProject36List;
   }
 
-  @Factory("researchProject25List") public void initResearchProject25List()
+  @Factory("researchProject36List") public void initResearchProject36List()
   { 
-    log.info("initResearchProject25List");
-    researchProject25List = new HashMap<String, String>();
+    log.info("initResearchProject36List");
+    researchProject36List = new HashMap<String, String>();
     for(Object o : em.createQuery("from " + "ResearchProject").getResultList())
     { 
       ResearchProject p = (ResearchProject)o;
-      researchProject25List.put(p.getName(), p.getId().toString());
+      researchProject36List.put(p.getName(), p.getId().toString());
     }
   }
 
-  private String newConference5;
+  private String newConference6;
 
-  public void setNewConference5(String p)
+  public void setNewConference6(String p)
   { 
-    newConference5 = p;
+    newConference6 = p;
   }
 
-  public String getNewConference5()
+  public String getNewConference6()
   { 
-    return newConference5;
+    return newConference6;
   }
 
-  public void selectConference5(ValueChangeEvent event)
+  public void selectConference6(ValueChangeEvent event)
   { 
-    log.info("selectConference5" + ": new value = " + " " + event.getNewValue());
+    log.info("selectConference6" + ": new value = " + " " + event.getNewValue());
     Long id = new Long((String)event.getNewValue());
     if(id > 0)
     { 
-      Conference conference5 = em.find(Conference.class, id);
-      setConference0(conference5);
+      Conference conference6 = em.find(Conference.class, id);
+      setConference0(conference6);
     }
   }
 
-  @DataModel("conference5List") private Map<String, String> conference5List;
+  @DataModel("conference6List") private Map<String, String> conference6List;
 
-  public Map<String, String> getConference5List()
+  public Map<String, String> getConference6List()
   { 
-    return conference5List;
+    return conference6List;
   }
 
-  @Factory("conference5List") public void initConference5List()
+  @Factory("conference6List") public void initConference6List()
   { 
-    log.info("initConference5List");
-    conference5List = new HashMap<String, String>();
+    log.info("initConference6List");
+    conference6List = new HashMap<String, String>();
     for(Object o : em.createQuery("from " + "Conference").getResultList())
     { 
       Conference p = (Conference)o;
-      conference5List.put(p.getName(), p.getId().toString());
+      conference6List.put(p.getName(), p.getId().toString());
     }
   }
 
-  @DataModel("person66List") private List<Person> person66List;
+  @DataModel("person71List") private List<Person> person71List;
 
-  public List<Person> getPerson66List()
+  public List<Person> getPerson71List()
   { 
-    log.info("getPerson66List");
-    return person66List;
+    log.info("getPerson71List");
+    return person71List;
   }
 
-  @Factory("person66List") public void initPerson66List()
+  @Factory("person71List") public void initPerson71List()
   { 
-    log.info("initPerson66List");
-    person66List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson71List");
+    person71List = em.createQuery("from " + "Person").getResultList();
   }
 
   @DataModel("project61List") private List<ResearchProject> project61List;

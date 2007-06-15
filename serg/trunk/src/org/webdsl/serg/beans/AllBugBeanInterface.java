@@ -13,9 +13,9 @@ import org.webdsl.serg.domain.*;
 
   public void removeBug(Bug bug4);
 
-  public List<Person> getPerson104List();
+  public List<Person> getPerson109List();
 
-  public void initPerson104List();
+  public void initPerson109List();
 
   public List<ResearchProject> getProject104List();
 

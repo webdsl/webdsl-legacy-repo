@@ -47,7 +47,7 @@ import org.webdsl.serg.domain.*;
     { 
       article = em.find(Article.class, articleId);
     }
-    initPerson76List();
+    initPerson81List();
     initProject71List();
   }
 
@@ -70,18 +70,36 @@ import org.webdsl.serg.domain.*;
     return article;
   }
 
-  @DataModel("person76List") private List<Person> person76List;
-
-  public List<Person> getPerson76List()
+  @End public String createNewPerson(Publication publication03, java.util.List<Person> authors3)
   { 
-    log.info("getPerson76List");
-    return person76List;
+    Person var55 = new Person();
+    Person person03 = var55;
+    authors3.add(person03);
+    em.persist(publication03);
+    return "/" + "editPerson" + ".seam?" + ("person" + "=" + person03.getId() + "");
   }
 
-  @Factory("person76List") public void initPerson76List()
+  @End public String createNewResearchProject(Publication publication110, java.util.Set<ResearchProject> projects8)
   { 
-    log.info("initPerson76List");
-    person76List = em.createQuery("from " + "Person").getResultList();
+    ResearchProject var56 = new ResearchProject();
+    ResearchProject researchProject13 = var56;
+    projects8.add(researchProject13);
+    em.persist(publication110);
+    return "/" + "editResearchProject" + ".seam?" + ("researchProject" + "=" + researchProject13.getId() + "");
+  }
+
+  @DataModel("person81List") private List<Person> person81List;
+
+  public List<Person> getPerson81List()
+  { 
+    log.info("getPerson81List");
+    return person81List;
+  }
+
+  @Factory("person81List") public void initPerson81List()
+  { 
+    log.info("initPerson81List");
+    person81List = em.createQuery("from " + "Person").getResultList();
   }
 
   @DataModel("project71List") private List<ResearchProject> project71List;

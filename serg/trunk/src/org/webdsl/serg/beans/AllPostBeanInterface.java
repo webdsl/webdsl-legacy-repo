@@ -13,9 +13,9 @@ import org.webdsl.serg.domain.*;
 
   public void removePost(Post post4);
 
-  public List<Person> getPerson123List();
+  public List<Person> getPerson128List();
 
-  public void initPerson123List();
+  public void initPerson128List();
 
   public List<ResearchProject> getProject123List();
 

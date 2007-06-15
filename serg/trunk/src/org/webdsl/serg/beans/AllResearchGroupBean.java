@@ -38,31 +38,31 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("allResearchGroup" + ".initalize()");
-    initPerson88List();
+    initPerson93List();
     initProject83List();
-    initResearchGroup2List();
+    initResearchGroup6List();
   }
 
   @Destroy @Remove public void destroy()
   { }
 
-  public void removeResearchGroup(ResearchGroup researchGroup3)
+  public void removeResearchGroup(ResearchGroup researchGroup7)
   { 
-    em.remove(researchGroup3);
+    em.remove(researchGroup7);
   }
 
-  @DataModel("person88List") private List<Person> person88List;
+  @DataModel("person93List") private List<Person> person93List;
 
-  public List<Person> getPerson88List()
+  public List<Person> getPerson93List()
   { 
-    log.info("getPerson88List");
-    return person88List;
+    log.info("getPerson93List");
+    return person93List;
   }
 
-  @Factory("person88List") public void initPerson88List()
+  @Factory("person93List") public void initPerson93List()
   { 
-    log.info("initPerson88List");
-    person88List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson93List");
+    person93List = em.createQuery("from " + "Person").getResultList();
   }
 
   @DataModel("project83List") private List<ResearchProject> project83List;
@@ -79,17 +79,17 @@ import org.webdsl.serg.domain.*;
     project83List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 
-  @DataModel("researchGroup2List") private List<ResearchGroup> researchGroup2List;
+  @DataModel("researchGroup6List") private List<ResearchGroup> researchGroup6List;
 
-  public List<ResearchGroup> getResearchGroup2List()
+  public List<ResearchGroup> getResearchGroup6List()
   { 
-    log.info("getResearchGroup2List");
-    return researchGroup2List;
+    log.info("getResearchGroup6List");
+    return researchGroup6List;
   }
 
-  @Factory("researchGroup2List") public void initResearchGroup2List()
+  @Factory("researchGroup6List") public void initResearchGroup6List()
   { 
-    log.info("initResearchGroup2List");
-    researchGroup2List = em.createQuery("from " + "ResearchGroup").getResultList();
+    log.info("initResearchGroup6List");
+    researchGroup6List = em.createQuery("from " + "ResearchGroup").getResultList();
   }
 }

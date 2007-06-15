@@ -40,7 +40,7 @@ import org.webdsl.serg.domain.*;
     log.info("createCategory" + ".initalize()");
     Category var23 = new Category();
     category = var23;
-    initPerson44List();
+    initPerson49List();
     initProject39List();
   }
 
@@ -58,18 +58,18 @@ import org.webdsl.serg.domain.*;
     return "/" + "viewCategory" + ".seam?" + ("category" + "=" + category.getId() + "");
   }
 
-  @DataModel("person44List") private List<Person> person44List;
+  @DataModel("person49List") private List<Person> person49List;
 
-  public List<Person> getPerson44List()
+  public List<Person> getPerson49List()
   { 
-    log.info("getPerson44List");
-    return person44List;
+    log.info("getPerson49List");
+    return person49List;
   }
 
-  @Factory("person44List") public void initPerson44List()
+  @Factory("person49List") public void initPerson49List()
   { 
-    log.info("initPerson44List");
-    person44List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson49List");
+    person49List = em.createQuery("from " + "Person").getResultList();
   }
 
   @DataModel("project39List") private List<ResearchProject> project39List;

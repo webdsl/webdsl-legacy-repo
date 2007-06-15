@@ -38,31 +38,31 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("allForum" + ".initalize()");
-    initPerson112List();
+    initPerson117List();
     initProject112List();
-    initForum3List();
+    initForum4List();
   }
 
   @Destroy @Remove public void destroy()
   { }
 
-  public void removeForum(Forum forum4)
+  public void removeForum(Forum forum5)
   { 
-    em.remove(forum4);
+    em.remove(forum5);
   }
 
-  @DataModel("person112List") private List<Person> person112List;
+  @DataModel("person117List") private List<Person> person117List;
 
-  public List<Person> getPerson112List()
+  public List<Person> getPerson117List()
   { 
-    log.info("getPerson112List");
-    return person112List;
+    log.info("getPerson117List");
+    return person117List;
   }
 
-  @Factory("person112List") public void initPerson112List()
+  @Factory("person117List") public void initPerson117List()
   { 
-    log.info("initPerson112List");
-    person112List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson117List");
+    person117List = em.createQuery("from " + "Person").getResultList();
   }
 
   @DataModel("project112List") private List<ResearchProject> project112List;
@@ -79,17 +79,17 @@ import org.webdsl.serg.domain.*;
     project112List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 
-  @DataModel("forum3List") private List<Forum> forum3List;
+  @DataModel("forum4List") private List<Forum> forum4List;
 
-  public List<Forum> getForum3List()
+  public List<Forum> getForum4List()
   { 
-    log.info("getForum3List");
-    return forum3List;
+    log.info("getForum4List");
+    return forum4List;
   }
 
-  @Factory("forum3List") public void initForum3List()
+  @Factory("forum4List") public void initForum4List()
   { 
-    log.info("initForum3List");
-    forum3List = em.createQuery("from " + "Forum").getResultList();
+    log.info("initForum4List");
+    forum4List = em.createQuery("from " + "Forum").getResultList();
   }
 }

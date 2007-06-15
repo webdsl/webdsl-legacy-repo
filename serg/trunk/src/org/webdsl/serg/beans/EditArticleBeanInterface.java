@@ -15,15 +15,15 @@ import org.webdsl.serg.domain.*;
 
   public Article getArticle();
 
-  public void removePerson8(Person person168);
+  public void removePerson8(Person person173);
 
-  public void addPerson8(Person person168);
+  public void addPerson8(Person person173);
 
   public void addNewAuthor();
 
-  public void removeResearchProject10(ResearchProject researchProject29);
+  public void removeResearchProject10(ResearchProject researchProject40);
 
-  public void addResearchProject10(ResearchProject researchProject29);
+  public void addResearchProject10(ResearchProject researchProject40);
 
   public void setJournal0(Journal journal6);
 
@@ -31,25 +31,25 @@ import org.webdsl.serg.domain.*;
 
   public String save();
 
-  public void setNewPerson169(String p);
+  public void setNewPerson174(String p);
 
-  public String getNewPerson169();
+  public String getNewPerson174();
 
-  public void selectPerson169(ValueChangeEvent event);
+  public void selectPerson174(ValueChangeEvent event);
 
-  public Map<String, String> getPerson169List();
+  public Map<String, String> getPerson174List();
 
-  public void initPerson169List();
+  public void initPerson174List();
 
-  public void setNewResearchProject30(String p);
+  public void setNewResearchProject41(String p);
 
-  public String getNewResearchProject30();
+  public String getNewResearchProject41();
 
-  public void selectResearchProject30(ValueChangeEvent event);
+  public void selectResearchProject41(ValueChangeEvent event);
 
-  public Map<String, String> getResearchProject30List();
+  public Map<String, String> getResearchProject41List();
 
-  public void initResearchProject30List();
+  public void initResearchProject41List();
 
   public void setNewJournal5(String p);
 
@@ -61,9 +61,9 @@ import org.webdsl.serg.domain.*;
 
   public void initJournal5List();
 
-  public List<Person> getPerson74List();
+  public List<Person> getPerson79List();
 
-  public void initPerson74List();
+  public void initPerson79List();
 
   public List<ResearchProject> getProject69List();
 

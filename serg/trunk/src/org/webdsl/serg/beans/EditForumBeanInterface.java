@@ -15,27 +15,27 @@ import org.webdsl.serg.domain.*;
 
   public Forum getForum();
 
-  public void removeDiscussion0(Discussion discussion5);
+  public void removeDiscussion0(Discussion discussion6);
 
-  public void addDiscussion0(Discussion discussion5);
+  public void addDiscussion0(Discussion discussion6);
 
   public String cancel();
 
   public String save();
 
-  public void setNewDiscussion6(String p);
+  public void setNewDiscussion7(String p);
 
-  public String getNewDiscussion6();
+  public String getNewDiscussion7();
 
-  public void selectDiscussion6(ValueChangeEvent event);
+  public void selectDiscussion7(ValueChangeEvent event);
 
-  public Map<String, String> getDiscussion6List();
+  public Map<String, String> getDiscussion7List();
 
-  public void initDiscussion6List();
+  public void initDiscussion7List();
 
-  public List<Person> getPerson109List();
+  public List<Person> getPerson114List();
 
-  public void initPerson109List();
+  public void initPerson114List();
 
   public List<ResearchProject> getProject109List();
 

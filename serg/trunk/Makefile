@@ -8,21 +8,23 @@ GENDIR = $(HOME)/webdsl/webdsls/src/org/webdsl/dsl
 
 dsltoseam = $(GENDIR)/generation/dsl-to-seam
 
-all : serg.appb serg.appc
+apps = $(wildcard app/*.app)
 
-%.appa : %.app
+all : serg.appc
+
+%.appa : %.app $(apps)
 	$(dsltoseam) -i $< --no-desugaring --no-pp | pp-aterm -o $@
 
-%.appb : %.app
+%.appb : %.app $(apps)
 	$(dsltoseam) -i $< --desugar --no-pp | pp-aterm -o $@
 
-%.appbpp : %.app
+%.appbpp : %.app $(apps)
 	$(dsltoseam) -i $< --desugar -i $< -o $@
 	
-%.appc : %.app
+%.appc : %.app $(apps)
 	$(dsltoseam) -i $< 
 
-%-full.app : %.app
+%-full.app : %.app $(apps)
 	$(dsltoseam) -i $< -o $@ --no-expansion
 
 dump :

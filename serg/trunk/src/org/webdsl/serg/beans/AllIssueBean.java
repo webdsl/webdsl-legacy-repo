@@ -38,31 +38,31 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("allIssue" + ".initalize()");
-    initPerson96List();
+    initPerson101List();
     initProject91List();
-    initIssue3List();
+    initIssue6List();
   }
 
   @Destroy @Remove public void destroy()
   { }
 
-  public void removeIssue(Issue issue4)
+  public void removeIssue(Issue issue7)
   { 
-    em.remove(issue4);
+    em.remove(issue7);
   }
 
-  @DataModel("person96List") private List<Person> person96List;
+  @DataModel("person101List") private List<Person> person101List;
 
-  public List<Person> getPerson96List()
+  public List<Person> getPerson101List()
   { 
-    log.info("getPerson96List");
-    return person96List;
+    log.info("getPerson101List");
+    return person101List;
   }
 
-  @Factory("person96List") public void initPerson96List()
+  @Factory("person101List") public void initPerson101List()
   { 
-    log.info("initPerson96List");
-    person96List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson101List");
+    person101List = em.createQuery("from " + "Person").getResultList();
   }
 
   @DataModel("project91List") private List<ResearchProject> project91List;
@@ -79,17 +79,17 @@ import org.webdsl.serg.domain.*;
     project91List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 
-  @DataModel("issue3List") private List<Issue> issue3List;
+  @DataModel("issue6List") private List<Issue> issue6List;
 
-  public List<Issue> getIssue3List()
+  public List<Issue> getIssue6List()
   { 
-    log.info("getIssue3List");
-    return issue3List;
+    log.info("getIssue6List");
+    return issue6List;
   }
 
-  @Factory("issue3List") public void initIssue3List()
+  @Factory("issue6List") public void initIssue6List()
   { 
-    log.info("initIssue3List");
-    issue3List = em.createQuery("from " + "Issue").getResultList();
+    log.info("initIssue6List");
+    issue6List = em.createQuery("from " + "Issue").getResultList();
   }
 }

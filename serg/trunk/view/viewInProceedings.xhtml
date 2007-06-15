@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person68" value="#{viewInProceedings.person68List}"> 
+      <ui:repeat var="person73" value="#{viewInProceedings.person73List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person68.id}"/> <h:outputText value="#{person68.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person73.id}"/> <h:outputText value="#{person73.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -99,17 +99,25 @@
     
       <p> <h:outputText value="Pdf"/>  <h:outputText value=" : "/>  <h:outputLink value="#{viewInProceedings.inProceedings.pdf}"> <h:outputText value="#{viewInProceedings.inProceedings.pdf}"/> </h:outputLink> </p>
     
-      <p> <h:outputText value="Authors"/>  <h:outputText value=" : "/> 
+      <div class="section2">
+      <h2> <h:outputText value="Authors"/> </h2>
+    
       <ul>
         
-      <ui:repeat var="person162" value="#{viewInProceedings.inProceedings.authors}">
+      <ui:repeat var="person167" value="#{viewInProceedings.inProceedings.authors}">
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person162.id}"/> <h:outputText value="#{person162.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person167.id}"/> <h:outputText value="#{person167.name}"/> </s:link> 
       </li>
     </ui:repeat>
     
       </ul>
-    </p>
+    
+      <h:form>
+        <s:validateAll> 
+       <h:commandLink type="submit" value="New Person" action="#{viewInProceedings.createNewPerson(viewInProceedings.inProceedings,viewInProceedings.inProceedings.authors)}"/>
+    </s:validateAll>
+      </h:form>
+    </div>
     
       <div class="section2">
       <h2> <h:outputText value="Abstract"/> </h2>
@@ -117,17 +125,25 @@
       <s:formattedText styleClass="outputTextarea" value="#{viewInProceedings.inProceedings.abstract}"/>
     </div>
     
-      <p> <h:outputText value="Projects"/>  <h:outputText value=" : "/> 
+      <div class="section2">
+      <h2> <h:outputText value="Projects"/> </h2>
+    
       <ul>
         
-      <ui:repeat var="researchProject28" value="#{viewInProceedings.inProceedings.projectsList}">
+      <ui:repeat var="researchProject39" value="#{viewInProceedings.inProceedings.projectsList}">
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{researchProject28.id}"/> <h:outputText value="#{researchProject28.name}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{researchProject39.id}"/> <h:outputText value="#{researchProject39.name}"/> </s:link> 
       </li>
     </ui:repeat>
     
       </ul>
-    </p>
+    
+      <h:form>
+        <s:validateAll> 
+       <h:commandLink type="submit" value="New ResearchProject" action="#{viewInProceedings.createNewResearchProject(viewInProceedings.inProceedings,viewInProceedings.inProceedings.projects)}"/>
+    </s:validateAll>
+      </h:form>
+    </div>
     </div>
     
       <div class="section2">

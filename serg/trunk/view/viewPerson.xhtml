@@ -25,6 +25,8 @@
     
       <li>
          <s:link view="/viewBlog.xhtml" propagation="none"><f:param name="blog" value="#{viewPerson.person.blog.id}"/> <h:outputText value="Blog"/> </s:link> 
+    <div class="blogEntries"></div>
+    
       </li>
     
       <li>
@@ -57,10 +59,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person2" value="#{viewPerson.person2List}"> 
+      <ui:repeat var="person7" value="#{viewPerson.person7List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person2.id}"/> <h:outputText value="#{person2.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person7.id}"/> <h:outputText value="#{person7.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>

@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person99" value="#{viewProject.person99List}"> 
+      <ui:repeat var="person104" value="#{viewProject.person104List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person99.id}"/> <h:outputText value="#{person99.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person104.id}"/> <h:outputText value="#{person104.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -107,29 +107,45 @@
     
       <p> <h:outputText value="Priority"/>  <h:outputText value=" : "/>  <h:outputText value="#{viewProject.project.priority}"/> </p>
     
-      <p> <h:outputText value="Issues"/>  <h:outputText value=" : "/> 
+      <div class="section2">
+      <h2> <h:outputText value="Issues"/> </h2>
+    
       <ul>
         
-      <ui:repeat var="issue23" value="#{viewProject.project.issuesList}">
+      <ui:repeat var="issue33" value="#{viewProject.project.issuesList}">
       <li>
-         <s:link view="/viewIssue.xhtml" propagation="none"><f:param name="issue" value="#{issue23.id}"/> <h:outputText value="#{issue23.name}"/> </s:link> 
+         <s:link view="/viewIssue.xhtml" propagation="none"><f:param name="issue" value="#{issue33.id}"/> <h:outputText value="#{issue33.name}"/> </s:link> 
       </li>
     </ui:repeat>
     
       </ul>
-    </p>
     
-      <p> <h:outputText value="Assigned"/>  <h:outputText value=" : "/> 
+      <h:form>
+        <s:validateAll> 
+       <h:commandLink type="submit" value="New Issue" action="#{viewProject.createNewIssue(viewProject.project,viewProject.project.issues)}"/>
+    </s:validateAll>
+      </h:form>
+    </div>
+    
+      <div class="section2">
+      <h2> <h:outputText value="Assigned"/> </h2>
+    
       <ul>
         
-      <ui:repeat var="person191" value="#{viewProject.project.assignedList}">
+      <ui:repeat var="person196" value="#{viewProject.project.assignedList}">
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person191.id}"/> <h:outputText value="#{person191.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person196.id}"/> <h:outputText value="#{person196.name}"/> </s:link> 
       </li>
     </ui:repeat>
     
       </ul>
-    </p>
+    
+      <h:form>
+        <s:validateAll> 
+       <h:commandLink type="submit" value="New Person" action="#{viewProject.createNewPerson(viewProject.project,viewProject.project.assigned)}"/>
+    </s:validateAll>
+      </h:form>
+    </div>
     
       <p> <h:outputText value="Status"/>  <h:outputText value=" : "/>  <h:outputText value="#{viewProject.project.status}"/> </p>
     </div>

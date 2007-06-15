@@ -38,31 +38,31 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("allBlog" + ".initalize()");
-    initPerson39List();
+    initPerson44List();
     initProject34List();
-    initBlog5List();
+    initBlog6List();
   }
 
   @Destroy @Remove public void destroy()
   { }
 
-  public void removeBlog(Blog blog6)
+  public void removeBlog(Blog blog7)
   { 
-    em.remove(blog6);
+    em.remove(blog7);
   }
 
-  @DataModel("person39List") private List<Person> person39List;
+  @DataModel("person44List") private List<Person> person44List;
 
-  public List<Person> getPerson39List()
+  public List<Person> getPerson44List()
   { 
-    log.info("getPerson39List");
-    return person39List;
+    log.info("getPerson44List");
+    return person44List;
   }
 
-  @Factory("person39List") public void initPerson39List()
+  @Factory("person44List") public void initPerson44List()
   { 
-    log.info("initPerson39List");
-    person39List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson44List");
+    person44List = em.createQuery("from " + "Person").getResultList();
   }
 
   @DataModel("project34List") private List<ResearchProject> project34List;
@@ -79,17 +79,17 @@ import org.webdsl.serg.domain.*;
     project34List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 
-  @DataModel("blog5List") private List<Blog> blog5List;
+  @DataModel("blog6List") private List<Blog> blog6List;
 
-  public List<Blog> getBlog5List()
+  public List<Blog> getBlog6List()
   { 
-    log.info("getBlog5List");
-    return blog5List;
+    log.info("getBlog6List");
+    return blog6List;
   }
 
-  @Factory("blog5List") public void initBlog5List()
+  @Factory("blog6List") public void initBlog6List()
   { 
-    log.info("initBlog5List");
-    blog5List = em.createQuery("from " + "Blog").getResultList();
+    log.info("initBlog6List");
+    blog6List = em.createQuery("from " + "Blog").getResultList();
   }
 }

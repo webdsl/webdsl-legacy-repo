@@ -11,55 +11,55 @@ import org.webdsl.serg.domain.*;
 
   public void destroy();
 
-  public void removePerson5(Person person160);
+  public void removePerson5(Person person165);
 
-  public void addPerson5(Person person160);
+  public void addPerson5(Person person165);
 
   public void addNewAuthor();
 
-  public void removeResearchProject9(ResearchProject researchProject26);
+  public void removeResearchProject9(ResearchProject researchProject37);
 
-  public void addResearchProject9(ResearchProject researchProject26);
+  public void addResearchProject9(ResearchProject researchProject37);
 
-  public void setConference1(Conference conference8);
+  public void setConference1(Conference conference9);
 
   public String cancel();
 
   public String save();
 
-  public void setNewPerson161(String p);
+  public void setNewPerson166(String p);
 
-  public String getNewPerson161();
+  public String getNewPerson166();
 
-  public void selectPerson161(ValueChangeEvent event);
+  public void selectPerson166(ValueChangeEvent event);
 
-  public Map<String, String> getPerson161List();
+  public Map<String, String> getPerson166List();
 
-  public void initPerson161List();
+  public void initPerson166List();
 
-  public void setNewResearchProject27(String p);
+  public void setNewResearchProject38(String p);
 
-  public String getNewResearchProject27();
+  public String getNewResearchProject38();
 
-  public void selectResearchProject27(ValueChangeEvent event);
+  public void selectResearchProject38(ValueChangeEvent event);
 
-  public Map<String, String> getResearchProject27List();
+  public Map<String, String> getResearchProject38List();
 
-  public void initResearchProject27List();
+  public void initResearchProject38List();
 
-  public void setNewConference7(String p);
+  public void setNewConference8(String p);
 
-  public String getNewConference7();
+  public String getNewConference8();
 
-  public void selectConference7(ValueChangeEvent event);
+  public void selectConference8(ValueChangeEvent event);
 
-  public Map<String, String> getConference7List();
+  public Map<String, String> getConference8List();
 
-  public void initConference7List();
+  public void initConference8List();
 
-  public List<Person> getPerson67List();
+  public List<Person> getPerson72List();
 
-  public void initPerson67List();
+  public void initPerson72List();
 
   public List<ResearchProject> getProject62List();
 

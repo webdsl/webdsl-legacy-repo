@@ -17,9 +17,9 @@ import org.webdsl.serg.domain.*;
 
   public String createNewBlogEntry();
 
-  public List<Person> getPerson7List();
+  public List<Person> getPerson12List();
 
-  public void initPerson7List();
+  public void initPerson12List();
 
   public List<ResearchProject> getProject4List();
 

@@ -11,9 +11,9 @@ import org.webdsl.serg.domain.*;
 
   public void destroy();
 
-  public List<Person> getPerson21List();
+  public List<Person> getPerson26List();
 
-  public void initPerson21List();
+  public void initPerson26List();
 
   public List<ResearchProject> getProject20List();
 

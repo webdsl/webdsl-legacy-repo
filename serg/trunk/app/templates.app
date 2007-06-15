@@ -1,6 +1,6 @@
 module app/templates
 
-section setup.
+section main template.
 
   define main() {
     div("outersidebar") {
@@ -15,7 +15,9 @@ section setup.
       footer()
     }
   }
-  
+
+section basic page elements.
+
   define logo() {
     navigate(home()){image("/img/serg-logo-color-smaller.png")}
   }
@@ -23,6 +25,21 @@ section setup.
   define homesidebar() {
     list { listitem{ navigate("Home", home()) } }
   }
+  
+  define sidebar() {
+    "default sidebar"
+  }
+  
+  define sidebar() {
+    "default body"
+  }
+  
+  define footer() {
+    "generated with "
+    navigate("Stratego/XT", url("http://www.strategoxt.org"))
+  }
+  
+section menus.
   
   define menu() {
 
@@ -42,38 +59,35 @@ section setup.
       }
     }
         
-    // make manage menu conditional on role of user
+    // @acl make manage menu conditional on role of user
     list {
       listitem {
         navigate("Manage", manage())
         list {
-          manageMenu() // depends on context
-          //createMenu()
-          //allMenu()
+          manageMenu()
         }
       }
     }
     
+    // @acl if user is logged in show name instead
     list {
       listitem {
         navigate(login()){"Login"}
       }
     }
-    // if user is logged in show name instead
 
   }
   
+section entity management.
+
   define manageMenu() {}
-  
-  define footer() {
-    "generated with "
-    navigate("Stratego/XT", url("http://www.strategoxt.org"))
-  }
   
   define page manage() {
     main()
+    define sidebar() {}
     define body() {
       createMenu()
       allMenu()
     }
   }
+

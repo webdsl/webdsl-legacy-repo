@@ -38,24 +38,24 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("createForum" + ".initalize()");
-    Forum var56 = new Forum();
-    forum = var56;
-    initDiscussion8List();
-    initPerson110List();
+    Forum var75 = new Forum();
+    forum = var75;
+    initDiscussion9List();
+    initPerson115List();
     initProject110List();
   }
 
   @Destroy @Remove public void destroy()
   { }
 
-  public void removeDiscussion1(Discussion discussion7)
+  public void removeDiscussion1(Discussion discussion8)
   { 
-    this.getForum().getDiscussions().remove(discussion7);
+    this.getForum().getDiscussions().remove(discussion8);
   }
 
-  public void addDiscussion1(Discussion discussion7)
+  public void addDiscussion1(Discussion discussion8)
   { 
-    this.getForum().getDiscussions().add(discussion7);
+    this.getForum().getDiscussions().add(discussion8);
   }
 
   @End public String cancel()
@@ -69,59 +69,59 @@ import org.webdsl.serg.domain.*;
     return "/" + "viewForum" + ".seam?" + ("forum" + "=" + forum.getId() + "");
   }
 
-  private String newDiscussion8;
+  private String newDiscussion9;
 
-  public void setNewDiscussion8(String p)
+  public void setNewDiscussion9(String p)
   { 
-    newDiscussion8 = p;
+    newDiscussion9 = p;
   }
 
-  public String getNewDiscussion8()
+  public String getNewDiscussion9()
   { 
-    return newDiscussion8;
+    return newDiscussion9;
   }
 
-  public void selectDiscussion8(ValueChangeEvent event)
+  public void selectDiscussion9(ValueChangeEvent event)
   { 
-    log.info("selectDiscussion8" + ": new value = " + " " + event.getNewValue());
+    log.info("selectDiscussion9" + ": new value = " + " " + event.getNewValue());
     Long id = new Long((String)event.getNewValue());
     if(id > 0)
     { 
-      Discussion discussion8 = em.find(Discussion.class, id);
-      addDiscussion1(discussion8);
+      Discussion discussion9 = em.find(Discussion.class, id);
+      addDiscussion1(discussion9);
     }
   }
 
-  @DataModel("discussion8List") private Map<String, String> discussion8List;
+  @DataModel("discussion9List") private Map<String, String> discussion9List;
 
-  public Map<String, String> getDiscussion8List()
+  public Map<String, String> getDiscussion9List()
   { 
-    return discussion8List;
+    return discussion9List;
   }
 
-  @Factory("discussion8List") public void initDiscussion8List()
+  @Factory("discussion9List") public void initDiscussion9List()
   { 
-    log.info("initDiscussion8List");
-    discussion8List = new HashMap<String, String>();
+    log.info("initDiscussion9List");
+    discussion9List = new HashMap<String, String>();
     for(Object o : em.createQuery("from " + "Discussion").getResultList())
     { 
       Discussion p = (Discussion)o;
-      discussion8List.put(p.getName(), p.getId().toString());
+      discussion9List.put(p.getName(), p.getId().toString());
     }
   }
 
-  @DataModel("person110List") private List<Person> person110List;
+  @DataModel("person115List") private List<Person> person115List;
 
-  public List<Person> getPerson110List()
+  public List<Person> getPerson115List()
   { 
-    log.info("getPerson110List");
-    return person110List;
+    log.info("getPerson115List");
+    return person115List;
   }
 
-  @Factory("person110List") public void initPerson110List()
+  @Factory("person115List") public void initPerson115List()
   { 
-    log.info("initPerson110List");
-    person110List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson115List");
+    person115List = em.createQuery("from " + "Person").getResultList();
   }
 
   @DataModel("project110List") private List<ResearchProject> project110List;

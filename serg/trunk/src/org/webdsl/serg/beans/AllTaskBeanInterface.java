@@ -13,9 +13,9 @@ import org.webdsl.serg.domain.*;
 
   public void removeTask(Task task4);
 
-  public List<Person> getPerson108List();
+  public List<Person> getPerson113List();
 
-  public void initPerson108List();
+  public void initPerson113List();
 
   public List<ResearchProject> getProject108List();
 

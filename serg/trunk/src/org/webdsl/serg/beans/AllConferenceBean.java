@@ -38,31 +38,31 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("allConference" + ".initalize()");
-    initPerson73List();
+    initPerson78List();
     initProject68List();
-    initConference3List();
+    initConference4List();
   }
 
   @Destroy @Remove public void destroy()
   { }
 
-  public void removeConference(Conference conference4)
+  public void removeConference(Conference conference5)
   { 
-    em.remove(conference4);
+    em.remove(conference5);
   }
 
-  @DataModel("person73List") private List<Person> person73List;
+  @DataModel("person78List") private List<Person> person78List;
 
-  public List<Person> getPerson73List()
+  public List<Person> getPerson78List()
   { 
-    log.info("getPerson73List");
-    return person73List;
+    log.info("getPerson78List");
+    return person78List;
   }
 
-  @Factory("person73List") public void initPerson73List()
+  @Factory("person78List") public void initPerson78List()
   { 
-    log.info("initPerson73List");
-    person73List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson78List");
+    person78List = em.createQuery("from " + "Person").getResultList();
   }
 
   @DataModel("project68List") private List<ResearchProject> project68List;
@@ -79,17 +79,17 @@ import org.webdsl.serg.domain.*;
     project68List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 
-  @DataModel("conference3List") private List<Conference> conference3List;
+  @DataModel("conference4List") private List<Conference> conference4List;
 
-  public List<Conference> getConference3List()
+  public List<Conference> getConference4List()
   { 
-    log.info("getConference3List");
-    return conference3List;
+    log.info("getConference4List");
+    return conference4List;
   }
 
-  @Factory("conference3List") public void initConference3List()
+  @Factory("conference4List") public void initConference4List()
   { 
-    log.info("initConference3List");
-    conference3List = em.createQuery("from " + "Conference").getResultList();
+    log.info("initConference4List");
+    conference4List = em.createQuery("from " + "Conference").getResultList();
   }
 }

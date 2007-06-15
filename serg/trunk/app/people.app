@@ -43,6 +43,7 @@ section person pages.
     list {
       listitem{navigate(p.name, viewPerson(p))}
       listitem{navigate("Publications", personPublications(p))}
+      // @todo don't show link if field has null value
       listitem{navigate("Blog", viewBlog(p.blog)) blogEntries()}
       listitem { "Projects" listProjectAcronyms(p) }
     }

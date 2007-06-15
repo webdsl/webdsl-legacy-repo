@@ -11,17 +11,17 @@ import org.webdsl.serg.domain.*;
 
   public void destroy();
 
-  public void removeDiscussion(Discussion discussion4);
+  public void removeDiscussion(Discussion discussion5);
 
-  public List<Person> getPerson115List();
+  public List<Person> getPerson120List();
 
-  public void initPerson115List();
+  public void initPerson120List();
 
   public List<ResearchProject> getProject115List();
 
   public void initProject115List();
 
-  public List<Discussion> getDiscussion3List();
+  public List<Discussion> getDiscussion4List();
 
-  public void initDiscussion3List();
+  public void initDiscussion4List();
 }

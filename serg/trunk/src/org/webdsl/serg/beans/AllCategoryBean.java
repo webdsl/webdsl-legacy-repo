@@ -38,31 +38,31 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("allCategory" + ".initalize()");
-    initPerson46List();
+    initPerson51List();
     initProject41List();
-    initCategory3List();
+    initCategory4List();
   }
 
   @Destroy @Remove public void destroy()
   { }
 
-  public void removeCategory(Category category4)
+  public void removeCategory(Category category5)
   { 
-    em.remove(category4);
+    em.remove(category5);
   }
 
-  @DataModel("person46List") private List<Person> person46List;
+  @DataModel("person51List") private List<Person> person51List;
 
-  public List<Person> getPerson46List()
+  public List<Person> getPerson51List()
   { 
-    log.info("getPerson46List");
-    return person46List;
+    log.info("getPerson51List");
+    return person51List;
   }
 
-  @Factory("person46List") public void initPerson46List()
+  @Factory("person51List") public void initPerson51List()
   { 
-    log.info("initPerson46List");
-    person46List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson51List");
+    person51List = em.createQuery("from " + "Person").getResultList();
   }
 
   @DataModel("project41List") private List<ResearchProject> project41List;
@@ -79,17 +79,17 @@ import org.webdsl.serg.domain.*;
     project41List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 
-  @DataModel("category3List") private List<Category> category3List;
+  @DataModel("category4List") private List<Category> category4List;
 
-  public List<Category> getCategory3List()
+  public List<Category> getCategory4List()
   { 
-    log.info("getCategory3List");
-    return category3List;
+    log.info("getCategory4List");
+    return category4List;
   }
 
-  @Factory("category3List") public void initCategory3List()
+  @Factory("category4List") public void initCategory4List()
   { 
-    log.info("initCategory3List");
-    category3List = em.createQuery("from " + "Category").getResultList();
+    log.info("initCategory4List");
+    category4List = em.createQuery("from " + "Category").getResultList();
   }
 }

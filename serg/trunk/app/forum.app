@@ -24,7 +24,7 @@ section domain.
   
   Reply {
     subject    :: String (name)
-    author     -> Person
+    author     -> Person  
     posted     :: Date
     discussion -> Discussion (back)
     text       :: Text
@@ -37,6 +37,23 @@ section domain.
     discussion -> Discussion (back)
     text       :: Text
   }
+  
+note
+
+  @acl Access control requirements: 
+  - the author of a reply is Person associated to the logged in User
+    this may only be changed by an admin
+  - a reply may only be edited by its author
+  - a reply may be deleted by its author or by the author of the discussion
+
+end
+
+note 
+
+  Some forums have a notion of nested threads, i.e., replies can be replies
+  to an earlier reply.
+
+end
   
 section pages.
   
@@ -65,7 +82,7 @@ section pages.
             par{ 
               form{
                 navigate("Edit", editReply(reply))
-                " "
+                " | "
                 actionLink("Delete", delete(reply))
                 action delete(reply : Reply) {
                   discussion.replies.remove(reply);

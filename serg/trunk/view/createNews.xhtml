@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person90" value="#{createNews.person90List}"> 
+      <ui:repeat var="person95" value="#{createNews.person95List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person90.id}"/> <h:outputText value="#{person90.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person95.id}"/> <h:outputText value="#{person95.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -107,7 +107,7 @@
       <s:decorate>
         <div>
           <h:inputText id="inputDateId9" styleClass="inputDate" value="#{createNews.news.date}">
-             <s:convertDateTime pattern="dd/mm/yyyy"/>
+             <s:convertDateTime pattern="dd/MM/yyyy"/>
           </h:inputText>
           <s:selectDate for="inputDateId9"/>
         </div>

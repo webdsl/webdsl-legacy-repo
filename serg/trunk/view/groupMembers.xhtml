@@ -69,10 +69,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person16" value="#{groupMembers.person16List}"> 
+      <ui:repeat var="person21" value="#{groupMembers.person21List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person16.id}"/> <h:outputText value="#{person16.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person21.id}"/> <h:outputText value="#{person21.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -132,10 +132,10 @@
       <h1> <h:outputText value="Group Members"/> </h1>
     
       <table>
-      <ui:repeat var="person17" value="#{groupMembers.group.membersList}">
+      <ui:repeat var="person22" value="#{groupMembers.group.membersList}">
       <tr> <td>
-    <div class="smallphoto"> <h:graphicImage value="#{person17.photo}"/> </div>
-    </td>  <td> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person17.id}"/> <h:outputText value="#{person17.name}"/> </s:link> </td> </tr>
+    <div class="smallphoto"> <h:graphicImage value="#{person22.photo}"/> </div>
+    </td>  <td> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person22.id}"/> <h:outputText value="#{person22.name}"/> </s:link> </td> </tr>
     </ui:repeat>
     </table>
     </div>

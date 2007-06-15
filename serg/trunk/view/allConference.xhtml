@@ -10,6 +10,8 @@
     <div class="main">
     <div class="outersidebar">
     <div class="logo"> <s:link view="/home.xhtml" propagation="none"> <h:graphicImage value="/img/serg-logo-color-smaller.png"/> </s:link> </div>
+    
+    <div class="sidebar"> <h:outputText value="default body"/> </div>
     </div>
     
     <div class="outerbody">
@@ -21,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person73" value="#{allConference.person73List}"> 
+      <ui:repeat var="person78" value="#{allConference.person78List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person73.id}"/> <h:outputText value="#{person73.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person78.id}"/> <h:outputText value="#{person78.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -87,11 +89,11 @@
         <s:validateAll>
       <ul>
         
-      <ui:repeat var="conference3" value="#{allConference.conference3List}"> 
+      <ui:repeat var="conference4" value="#{allConference.conference4List}"> 
       <h:column>
       <li>
-         <s:link view="/viewConference.xhtml" propagation="none"><f:param name="conference" value="#{conference3.id}"/> <h:outputText value="#{conference3.name}"/> </s:link>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{allConference.removeConference(conference3)}"/>
+         <s:link view="/viewConference.xhtml" propagation="none"><f:param name="conference" value="#{conference4.id}"/> <h:outputText value="#{conference4.name}"/> </s:link>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{allConference.removeConference(conference4)}"/>
     
       </li>
     </h:column> 

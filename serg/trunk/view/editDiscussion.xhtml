@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person113" value="#{editDiscussion.person113List}"> 
+      <ui:repeat var="person118" value="#{editDiscussion.person118List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person113.id}"/> <h:outputText value="#{person113.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person118.id}"/> <h:outputText value="#{person118.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -99,9 +99,9 @@
     
       <tr> <td> <h:outputText value="Author"/> </td>  <td>
     <div class="inputSimpleRefAssociation"> <h:outputText value="#{editDiscussion.discussion.author.name}"/>  <h:outputText value=" "/> 
-       <h:selectOneMenu value="#{editDiscussion.newPerson202}" onchange="submit()" valueChangeListener="#{editDiscussion.selectPerson202}">
+       <h:selectOneMenu value="#{editDiscussion.newPerson207}" onchange="submit()" valueChangeListener="#{editDiscussion.selectPerson207}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{editDiscussion.person202List}" var="person202" label="#{person202.label}"/>
+          <f:selectItems value="#{editDiscussion.person207List}" var="person207" label="#{person207.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -110,7 +110,7 @@
       <s:decorate>
         <div>
           <h:inputText id="inputDateId18" styleClass="inputDate" value="#{editDiscussion.discussion.posted}">
-             <s:convertDateTime pattern="dd/mm/yyyy"/>
+             <s:convertDateTime pattern="dd/MM/yyyy"/>
           </h:inputText>
           <s:selectDate for="inputDateId18"/>
         </div>
@@ -119,9 +119,9 @@
     
       <tr> <td> <h:outputText value="Forum"/> </td>  <td>
     <div class="inputSimpleRefAssociation"> <h:outputText value="#{editDiscussion.discussion.forum.name}"/>  <h:outputText value=" "/> 
-       <h:selectOneMenu value="#{editDiscussion.newForum5}" onchange="submit()" valueChangeListener="#{editDiscussion.selectForum5}">
+       <h:selectOneMenu value="#{editDiscussion.newForum6}" onchange="submit()" valueChangeListener="#{editDiscussion.selectForum6}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{editDiscussion.forum5List}" var="forum5" label="#{forum5.label}"/>
+          <f:selectItems value="#{editDiscussion.forum6List}" var="forum6" label="#{forum6.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

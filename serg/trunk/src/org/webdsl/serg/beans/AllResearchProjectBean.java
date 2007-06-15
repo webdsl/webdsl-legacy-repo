@@ -38,31 +38,31 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("allResearchProject" + ".initalize()");
-    initPerson85List();
+    initPerson90List();
     initProject80List();
-    initResearchProject3List();
+    initResearchProject8List();
   }
 
   @Destroy @Remove public void destroy()
   { }
 
-  public void removeResearchProject(ResearchProject researchProject4)
+  public void removeResearchProject(ResearchProject researchProject9)
   { 
-    em.remove(researchProject4);
+    em.remove(researchProject9);
   }
 
-  @DataModel("person85List") private List<Person> person85List;
+  @DataModel("person90List") private List<Person> person90List;
 
-  public List<Person> getPerson85List()
+  public List<Person> getPerson90List()
   { 
-    log.info("getPerson85List");
-    return person85List;
+    log.info("getPerson90List");
+    return person90List;
   }
 
-  @Factory("person85List") public void initPerson85List()
+  @Factory("person90List") public void initPerson90List()
   { 
-    log.info("initPerson85List");
-    person85List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson90List");
+    person90List = em.createQuery("from " + "Person").getResultList();
   }
 
   @DataModel("project80List") private List<ResearchProject> project80List;
@@ -79,17 +79,17 @@ import org.webdsl.serg.domain.*;
     project80List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 
-  @DataModel("researchProject3List") private List<ResearchProject> researchProject3List;
+  @DataModel("researchProject8List") private List<ResearchProject> researchProject8List;
 
-  public List<ResearchProject> getResearchProject3List()
+  public List<ResearchProject> getResearchProject8List()
   { 
-    log.info("getResearchProject3List");
-    return researchProject3List;
+    log.info("getResearchProject8List");
+    return researchProject8List;
   }
 
-  @Factory("researchProject3List") public void initResearchProject3List()
+  @Factory("researchProject8List") public void initResearchProject8List()
   { 
-    log.info("initResearchProject3List");
-    researchProject3List = em.createQuery("from " + "ResearchProject").getResultList();
+    log.info("initResearchProject8List");
+    researchProject8List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 }

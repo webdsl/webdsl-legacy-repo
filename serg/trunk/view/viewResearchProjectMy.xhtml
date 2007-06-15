@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person14" value="#{viewResearchProjectMy.person14List}"> 
+      <ui:repeat var="person19" value="#{viewResearchProjectMy.person19List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person14.id}"/> <h:outputText value="#{person14.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person19.id}"/> <h:outputText value="#{person19.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -105,12 +105,12 @@
     <div class="publicationsPage">
       <ul>
         
-      <ui:repeat var="publication0" value="#{viewResearchProjectMy.project.publicationsList}">
+      <ui:repeat var="publication3" value="#{viewResearchProjectMy.project.publicationsList}">
       <li>
         
     <div class="showPublication">
-      <ui:repeat var="author1" value="#{publication0.authors}"> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{author1.id}"/> <h:outputText value="#{author1.name}"/> </s:link>  <h:outputText value=", "/> </ui:repeat>
-     <s:link view="/viewPublication.xhtml" propagation="none"><f:param name="publication" value="#{publication0.id}"/> <h:outputText value="#{publication0.name}"/> </s:link>  <h:outputText value=", "/>  <h:outputText value="#{publication0.year}"/>  <h:outputText value="."/> </div>
+      <ui:repeat var="author1" value="#{publication3.authors}"> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{author1.id}"/> <h:outputText value="#{author1.name}"/> </s:link>  <h:outputText value=", "/> </ui:repeat>
+     <s:link view="/viewPublication.xhtml" propagation="none"><f:param name="publication" value="#{publication3.id}"/> <h:outputText value="#{publication3.name}"/> </s:link>  <h:outputText value=", "/>  <h:outputText value="#{publication3.year}"/>  <h:outputText value="."/> </div>
     
       </li>
     </ui:repeat>

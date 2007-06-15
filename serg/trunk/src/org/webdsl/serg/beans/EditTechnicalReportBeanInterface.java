@@ -15,55 +15,55 @@ import org.webdsl.serg.domain.*;
 
   public TechnicalReport getTechnicalReport();
 
-  public void removePerson2(Person person153);
+  public void removePerson2(Person person158);
 
-  public void addPerson2(Person person153);
+  public void addPerson2(Person person158);
 
   public void addNewAuthor();
 
-  public void removeResearchProject6(ResearchProject researchProject19);
+  public void removeResearchProject6(ResearchProject researchProject29);
 
-  public void addResearchProject6(ResearchProject researchProject19);
+  public void addResearchProject6(ResearchProject researchProject29);
 
-  public void setPublication0(Publication publication16);
+  public void setPublication0(Publication publication23);
 
   public String cancel();
 
   public String save();
 
-  public void setNewPerson154(String p);
+  public void setNewPerson159(String p);
 
-  public String getNewPerson154();
+  public String getNewPerson159();
 
-  public void selectPerson154(ValueChangeEvent event);
+  public void selectPerson159(ValueChangeEvent event);
 
-  public Map<String, String> getPerson154List();
+  public Map<String, String> getPerson159List();
 
-  public void initPerson154List();
+  public void initPerson159List();
 
-  public void setNewResearchProject20(String p);
+  public void setNewResearchProject31(String p);
 
-  public String getNewResearchProject20();
+  public String getNewResearchProject31();
 
-  public void selectResearchProject20(ValueChangeEvent event);
+  public void selectResearchProject31(ValueChangeEvent event);
 
-  public Map<String, String> getResearchProject20List();
+  public Map<String, String> getResearchProject31List();
 
-  public void initResearchProject20List();
+  public void initResearchProject31List();
 
-  public void setNewPublication15(String p);
+  public void setNewPublication22(String p);
 
-  public String getNewPublication15();
+  public String getNewPublication22();
 
-  public void selectPublication15(ValueChangeEvent event);
+  public void selectPublication22(ValueChangeEvent event);
 
-  public Map<String, String> getPublication15List();
+  public Map<String, String> getPublication22List();
 
-  public void initPublication15List();
+  public void initPublication22List();
 
-  public List<Person> getPerson62List();
+  public List<Person> getPerson67List();
 
-  public void initPerson62List();
+  public void initPerson67List();
 
   public List<ResearchProject> getProject57List();
 

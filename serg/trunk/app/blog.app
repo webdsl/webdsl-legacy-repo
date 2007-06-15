@@ -41,6 +41,8 @@ section pages.
   define blogSidebar(blog : Blog) {
     personSidebar(blog.author)
   }
+  
+  define blogEntries() {}
     
   define page viewBlog(blog : Blog) {
     main()

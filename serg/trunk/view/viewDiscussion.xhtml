@@ -10,6 +10,8 @@
     <div class="main">
     <div class="outersidebar">
     <div class="logo"> <s:link view="/home.xhtml" propagation="none"> <h:graphicImage value="/img/serg-logo-color-smaller.png"/> </s:link> </div>
+    
+    <div class="sidebar"> <h:outputText value="default body"/> </div>
     </div>
     
     <div class="outerbody">
@@ -21,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person20" value="#{viewDiscussion.person20List}"> 
+      <ui:repeat var="person25" value="#{viewDiscussion.person25List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person20.id}"/> <h:outputText value="#{person20.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person25.id}"/> <h:outputText value="#{person25.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -106,7 +108,7 @@
     
       <p>
       <h:form>
-        <s:validateAll> <s:link view="/editReply.xhtml" propagation="none"><f:param name="reply" value="#{reply1.id}"/> <h:outputText value="Edit"/> </s:link>  <h:outputText value=" "/>  
+        <s:validateAll> <s:link view="/editReply.xhtml" propagation="none"><f:param name="reply" value="#{reply1.id}"/> <h:outputText value="Edit"/> </s:link>  <h:outputText value=" | "/>  
        <h:commandLink type="submit" value="Delete" action="#{viewDiscussion.delete(reply1)}"/>
     </s:validateAll>
       </h:form>
@@ -129,9 +131,9 @@
     
       <tr> <td> <h:outputText value="Author: "/> </td>  <td>
     <div class="inputSimpleRefAssociation"> <h:outputText value="#{viewDiscussion.newReply0.author.name}"/>  <h:outputText value=" "/> 
-       <h:selectOneMenu value="#{viewDiscussion.newPerson126}" onchange="submit()" valueChangeListener="#{viewDiscussion.selectPerson126}">
+       <h:selectOneMenu value="#{viewDiscussion.newPerson131}" onchange="submit()" valueChangeListener="#{viewDiscussion.selectPerson131}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{viewDiscussion.person126List}" var="person126" label="#{person126.label}"/>
+          <f:selectItems value="#{viewDiscussion.person131List}" var="person131" label="#{person131.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
