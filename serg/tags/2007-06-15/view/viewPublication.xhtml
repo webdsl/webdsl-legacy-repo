@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:t="http://myfaces.apache.org/tomahawk" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
+<head>    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title></title>
+    <link href="stylesheet/webdsl.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <div class="main">
+    <div class="outersidebar">
+    <div class="logo"> <s:link view="/home.xhtml" propagation="none"> <h:graphicImage value="/img/serg-logo-color-smaller.png"/> </s:link> </div>
+    
+    <div class="sidebar"></div>
+    </div>
+    
+    <div class="outerbody">
+    <div class="menubar">
+    <div class="menu">
+      <ul>
+        
+      <li>
+         <h:outputText value="People"/> 
+      <ul>
+        
+      <ui:repeat var="person65" value="#{viewPublication.person65List}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person65.id}"/> <h:outputText value="#{person65.name}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <h:outputText value="Projects"/> 
+      <ul>
+        
+      <ui:repeat var="project55" value="#{viewPublication.project55List}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project55.id}"/> <h:outputText value="#{project55.acronym}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <s:link view="/manage.xhtml" propagation="none"> <h:outputText value="Manage"/> </s:link> 
+      <ul>
+        
+    <div class="manageMenu">
+      <li>
+         <s:link view="/editPublication.xhtml" propagation="none"><f:param name="publication" value="#{viewPublication.publication.id}"/> <h:outputText value="Edit"/> </s:link> 
+      </li>
+    </div>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <s:link view="/login.xhtml" propagation="none"> <h:outputText value="Login"/> </s:link> 
+      </li>
+    
+      </ul>
+    </div>
+    </div>
+    
+    <div class="body">
+      <div class="section1">
+      <h1> <h:outputText value="#{viewPublication.publication.name}"/> </h1>
+    
+    <div class="viewRowsPublication">
+    <div class="viewRowsObject"></div>
+    
+      <p> <h:outputText value="Subtitle"/>  <h:outputText value=" : "/>  <h:outputText value="#{viewPublication.publication.subtitle}"/> </p>
+    
+      <p> <h:outputText value="Year"/>  <h:outputText value=" : "/>  <h:outputText value="#{viewPublication.publication.year}"/> </p>
+    
+      <p> <h:outputText value="Pdf"/>  <h:outputText value=" : "/>  <h:outputLink value="#{viewPublication.publication.pdf}"> <h:outputText value="#{viewPublication.publication.pdf}"/> </h:outputLink> </p>
+    
+      <div class="section2">
+      <h2> <h:outputText value="Authors"/> </h2>
+    
+      <ul>
+        
+      <ui:repeat var="person157" value="#{viewPublication.publication.authors}">
+      <li>
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person157.id}"/> <h:outputText value="#{person157.name}"/> </s:link> 
+      </li>
+    </ui:repeat>
+    
+      </ul>
+    
+      <h:form>
+        <s:validateAll> 
+       <h:commandLink type="submit" value="New Person" action="#{viewPublication.createNewPerson(viewPublication.publication,viewPublication.publication.authors)}"/>
+    </s:validateAll>
+      </h:form>
+    </div>
+    
+      <div class="section2">
+      <h2> <h:outputText value="Abstract"/> </h2>
+    
+      <s:formattedText styleClass="outputTextarea" value="#{viewPublication.publication.abstract}"/>
+    </div>
+    
+      <div class="section2">
+      <h2> <h:outputText value="Projects"/> </h2>
+    
+      <ul>
+        
+      <ui:repeat var="researchProject28" value="#{viewPublication.publication.projectsList}">
+      <li>
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{researchProject28.id}"/> <h:outputText value="#{researchProject28.name}"/> </s:link> 
+      </li>
+    </ui:repeat>
+    
+      </ul>
+    
+      <h:form>
+        <s:validateAll> 
+       <h:commandLink type="submit" value="New ResearchProject" action="#{viewPublication.createNewResearchProject(viewPublication.publication,viewPublication.publication.projects)}"/>
+    </s:validateAll>
+      </h:form>
+    </div>
+    </div>
+    </div>
+    </div>
+    
+    <div class="footer"> <h:outputText value="generated with "/>  <h:outputLink value="http://www.strategoxt.org"> <h:outputText value="Stratego/XT"/> </h:outputLink> </div>
+    </div>
+    </div>
+    </body>
+</html>

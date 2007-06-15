@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:t="http://myfaces.apache.org/tomahawk" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
+<head>    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title></title>
+    <link href="stylesheet/webdsl.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <div class="main">
+    <div class="outersidebar">
+    <div class="logo"> <s:link view="/home.xhtml" propagation="none"> <h:graphicImage value="/img/serg-logo-color-smaller.png"/> </s:link> </div>
+    
+    <div class="sidebar">
+    <div class="groupSidebar">
+      <ul>
+        
+      <li>
+         <s:link view="/viewResearchGroup.xhtml" propagation="none"><f:param name="group" value="#{groupPublications.group.id}"/> <h:outputText value="#{groupPublications.group.acronym}"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/groupMembers.xhtml" propagation="none"><f:param name="group" value="#{groupPublications.group.id}"/> <h:outputText value="People"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/groupPublications.xhtml" propagation="none"><f:param name="group" value="#{groupPublications.group.id}"/> <h:outputText value="Publications"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/groupProjects.xhtml" propagation="none"><f:param name="group" value="#{groupPublications.group.id}"/> <h:outputText value="Projects"/> </s:link> 
+      <ul>
+        
+      <ui:repeat var="project17" value="#{groupPublications.group.projectsList}">
+      <li>
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project17.id}"/> <h:outputText value="#{project17.name}"/> </s:link> 
+      </li>
+    </ui:repeat>
+    
+      </ul>
+    
+      </li>
+    
+      <li>
+         <h:outputText value="Colloquia"/> 
+      <ul>
+        
+      <ui:repeat var="coll4" value="#{groupPublications.group.colloquiaList}">
+      <li>
+         <s:link view="/viewColloquium.xhtml" propagation="none"><f:param name="colloquium" value="#{coll4.id}"/> <h:outputText value="#{coll4.name}"/> </s:link> 
+      </li>
+    </ui:repeat>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    </div>
+    </div>
+    </div>
+    
+    <div class="outerbody">
+    <div class="menubar">
+    <div class="menu">
+      <ul>
+        
+      <li>
+         <h:outputText value="People"/> 
+      <ul>
+        
+      <ui:repeat var="person24" value="#{groupPublications.person24List}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person24.id}"/> <h:outputText value="#{person24.name}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <h:outputText value="Projects"/> 
+      <ul>
+        
+      <ui:repeat var="project18" value="#{groupPublications.project18List}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project18.id}"/> <h:outputText value="#{project18.acronym}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <s:link view="/manage.xhtml" propagation="none"> <h:outputText value="Manage"/> </s:link> 
+      <ul>
+        
+    <div class="manageMenu"></div>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <s:link view="/login.xhtml" propagation="none"> <h:outputText value="Login"/> </s:link> 
+      </li>
+    
+      </ul>
+    </div>
+    </div>
+    
+    <div class="body">
+      <div class="section1">
+      <h1> <h:outputText value="Publications by "/>  <h:outputText value="#{groupPublications.group.acronym}"/>  <h:outputText value=" Members"/> </h1>
+    
+    <div class="allGroupPublications">
+      <ul>
+        
+      <ui:repeat var="pub6" value="#{groupPublications.pub6List}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewPublication.xhtml" propagation="none"><f:param name="publication" value="#{pub6.id}"/> <h:outputText value="#{pub6.name}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
+    </div>
+    </div>
+    </div>
+    
+    <div class="footer"> <h:outputText value="generated with "/>  <h:outputLink value="http://www.strategoxt.org"> <h:outputText value="Stratego/XT"/> </h:outputLink> </div>
+    </div>
+    </div>
+    </body>
+</html>

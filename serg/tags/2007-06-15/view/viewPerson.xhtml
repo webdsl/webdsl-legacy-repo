@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:t="http://myfaces.apache.org/tomahawk" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
+<head>    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title> <h:outputText value="#{viewPerson.person.name}"/> </title>
+    <link href="stylesheet/webdsl.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <div class="main">
+    <div class="outersidebar">
+    <div class="logo"> <s:link view="/home.xhtml" propagation="none"> <h:graphicImage value="/img/serg-logo-color-smaller.png"/> </s:link> </div>
+    
+    <div class="sidebar">
+    <div class="personSidebar">
+      <ul>
+        
+      <li>
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{viewPerson.person.id}"/> <h:outputText value="#{viewPerson.person.name}"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/personPublications.xhtml" propagation="none"><f:param name="person" value="#{viewPerson.person.id}"/> <h:outputText value="Publications"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/viewBlog.xhtml" propagation="none"><f:param name="blog" value="#{viewPerson.person.blog.id}"/> <h:outputText value="Blog"/> </s:link> 
+    <div class="blogEntries"></div>
+    
+      </li>
+    
+      <li>
+         <h:outputText value="Projects"/> 
+    <div class="listProjectAcronyms">
+      <ul>
+        
+      <ui:repeat var="pr0" value="#{viewPerson.projects0}">
+      <li>
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{pr0.id}"/> <h:outputText value="#{pr0.name}"/> </s:link> 
+      </li>
+    </ui:repeat>
+    
+      </ul>
+    </div>
+    
+      </li>
+    
+      </ul>
+    </div>
+    </div>
+    </div>
+    
+    <div class="outerbody">
+    <div class="menubar">
+    <div class="menu">
+      <ul>
+        
+      <li>
+         <h:outputText value="People"/> 
+      <ul>
+        
+      <ui:repeat var="person7" value="#{viewPerson.person7List}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person7.id}"/> <h:outputText value="#{person7.name}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <h:outputText value="Projects"/> 
+      <ul>
+        
+      <ui:repeat var="project1" value="#{viewPerson.project1List}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project1.id}"/> <h:outputText value="#{project1.acronym}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <s:link view="/manage.xhtml" propagation="none"> <h:outputText value="Manage"/> </s:link> 
+      <ul>
+        
+    <div class="manageMenu"> <s:link view="/editPerson.xhtml" propagation="none"><f:param name="person" value="#{viewPerson.person.id}"/> <h:outputText value="Edit"/> </s:link> </div>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <s:link view="/login.xhtml" propagation="none"> <h:outputText value="Login"/> </s:link> 
+      </li>
+    
+      </ul>
+    </div>
+    </div>
+    
+    <div class="body">
+      <div class="section1">
+    <div class="photo"> <h:graphicImage value="#{viewPerson.person.photo}"/> </div>
+    
+      <h1> <h:outputText value="#{viewPerson.person.name}"/> </h1>
+    
+      <div class="section2">
+      <h2> <h:outputText value="Coordinates"/> </h2>
+    
+      <table>
+      <tr> <td> <h:outputText value="homepage"/> </td>  <td> <h:outputLink value="#{viewPerson.person.homepage}"> <h:outputText value="#{viewPerson.person.homepage}"/> </h:outputLink> </td> </tr>
+    
+      <tr> <td> <h:outputText value="email"/> </td>  <td> <h:outputLink value="#{viewPerson.person.email}"> <h:outputText value="#{viewPerson.person.email}"/> </h:outputLink> </td> </tr>
+    
+      <tr> <td> <h:outputText value="address"/> </td>  <td>
+      <table>
+      <tr> <td> <h:outputText value="#{viewPerson.person.address.street}"/> </td> </tr>
+    
+      <tr> <td> <h:outputText value="#{viewPerson.person.address.city}"/> </td> </tr>
+    </table>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="phone"/> </td>  <td> <h:outputText value="#{viewPerson.person.address.phone}"/> </td> </tr>
+    </table>
+    </div>
+    
+      <div class="section2">
+      <h2> <h:outputText value="Publications"/> </h2>
+    
+    <div class="publicationTitlesBy">
+      <ul>
+        
+      <ui:repeat var="pub0" value="#{viewPerson.orderedPublications0}">
+      <li>
+         <s:link view="/viewPublication.xhtml" propagation="none"><f:param name="publication" value="#{pub0.id}"/> <h:outputText value="#{pub0.name}"/> </s:link>  <h:outputText value=" ("/>  <h:outputText value="#{pub0.year}"/>  <h:outputText value=")"/> 
+      </li>
+    </ui:repeat>
+    
+      </ul>
+    </div>
+    </div>
+    
+      <div class="section2">
+      <h2> <h:outputText value="Projects"/> </h2>
+    
+    <div class="listProjects">
+      <ul>
+        
+      <ui:repeat var="project2" value="#{viewPerson.projects1}">
+      <li>
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project2.id}"/> <h:outputText value="#{project2.fullname}"/>  <h:outputText value=" ("/>  <h:outputText value="#{project2.acronym}"/>  <h:outputText value=")"/> </s:link> 
+      </li>
+    </ui:repeat>
+    
+      </ul>
+    </div>
+    </div>
+    </div>
+    </div>
+    
+    <div class="footer"> <h:outputText value="generated with "/>  <h:outputLink value="http://www.strategoxt.org"> <h:outputText value="Stratego/XT"/> </h:outputLink> </div>
+    </div>
+    </div>
+    </body>
+</html>

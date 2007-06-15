@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:t="http://myfaces.apache.org/tomahawk" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
+<head>    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title></title>
+    <link href="stylesheet/webdsl.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <div class="main">
+    <div class="outersidebar">
+    <div class="logo"> <s:link view="/home.xhtml" propagation="none"> <h:graphicImage value="/img/serg-logo-color-smaller.png"/> </s:link> </div>
+    
+    <div class="sidebar"></div>
+    </div>
+    
+    <div class="outerbody">
+    <div class="menubar">
+    <div class="menu">
+      <ul>
+        
+      <li>
+         <h:outputText value="People"/> 
+      <ul>
+        
+      <ui:repeat var="person26" value="#{home.person26List}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person26.id}"/> <h:outputText value="#{person26.name}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <h:outputText value="Projects"/> 
+      <ul>
+        
+      <ui:repeat var="project20" value="#{home.project20List}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project20.id}"/> <h:outputText value="#{project20.acronym}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <s:link view="/manage.xhtml" propagation="none"> <h:outputText value="Manage"/> </s:link> 
+      <ul>
+        
+    <div class="manageMenu"></div>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <s:link view="/login.xhtml" propagation="none"> <h:outputText value="Login"/> </s:link> 
+      </li>
+    
+      </ul>
+    </div>
+    </div>
+    
+    <div class="body">
+      <div class="section1">
+      <h1> <h:outputText value="Starting Points"/> </h1>
+    
+      <div class="section2">
+      <h2> <h:outputText value="Research Groups"/> </h2>
+    
+      <ul>
+        
+      <ui:repeat var="x0" value="#{home.x0List}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewResearchGroup.xhtml" propagation="none"><f:param name="group" value="#{x0.id}"/> <h:outputText value="#{x0.name}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
+    </div>
+    
+      <div class="section2">
+      <h2> <h:outputText value="Research Projects"/> </h2>
+    
+      <ul>
+        
+      <ui:repeat var="x1" value="#{home.x1List}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{x1.id}"/> <h:outputText value="#{x1.name}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
+    </div>
+    
+      <div class="section2">
+      <h2> <h:outputText value="Forums"/> </h2>
+    
+      <ul>
+        
+      <ui:repeat var="x2" value="#{home.x2List}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewForum.xhtml" propagation="none"><f:param name="forum" value="#{x2.id}"/> <h:outputText value="#{x2.name}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
+    </div>
+    
+      <div class="section2">
+      <h2> <h:outputText value="Blogs"/> </h2>
+    
+      <ul>
+        
+      <ui:repeat var="x3" value="#{home.x3List}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewBlog.xhtml" propagation="none"><f:param name="blog" value="#{x3.id}"/> <h:outputText value="#{x3.name}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
+    </div>
+    
+      <div class="section2">
+      <h2> <h:outputText value="Projects"/> </h2>
+    
+      <ul>
+        
+      <ui:repeat var="x4" value="#{home.x4List}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewProject.xhtml" propagation="none"><f:param name="project" value="#{x4.id}"/> <h:outputText value="#{x4.name}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
+    </div>
+    
+      <div class="section2">
+      <h2> <h:outputText value="People"/> </h2>
+    
+      <ul>
+        
+      <ui:repeat var="x5" value="#{home.x5List}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{x5.id}"/> <h:outputText value="#{x5.name}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
+    </div>
+    </div>
+    </div>
+    
+    <div class="footer"> <h:outputText value="generated with "/>  <h:outputLink value="http://www.strategoxt.org"> <h:outputText value="Stratego/XT"/> </h:outputLink> </div>
+    </div>
+    </div>
+    </body>
+</html>

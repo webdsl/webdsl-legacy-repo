@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:t="http://myfaces.apache.org/tomahawk" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
+<head>    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title></title>
+    <link href="stylesheet/webdsl.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <div class="main">
+    <div class="outersidebar">
+    <div class="logo"> <s:link view="/home.xhtml" propagation="none"> <h:graphicImage value="/img/serg-logo-color-smaller.png"/> </s:link> </div>
+    
+    <div class="sidebar">
+    <div class="blogSidebar">
+    <div class="personSidebar">
+      <ul>
+        
+      <li>
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{viewBlogEntry.entry.blog.author.id}"/> <h:outputText value="#{viewBlogEntry.entry.blog.author.name}"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/personPublications.xhtml" propagation="none"><f:param name="person" value="#{viewBlogEntry.entry.blog.author.id}"/> <h:outputText value="Publications"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/viewBlog.xhtml" propagation="none"><f:param name="blog" value="#{viewBlogEntry.entry.blog.author.blog.id}"/> <h:outputText value="Blog"/> </s:link> 
+    <div class="blogEntries">
+      <ul>
+        
+      <ui:repeat var="entry3" value="#{viewBlogEntry.entry.blog.entries}">
+      <li>
+         <s:link view="/viewBlogEntry.xhtml" propagation="none"><f:param name="entry" value="#{entry3.id}"/> <h:outputText value="#{entry3.name}"/> </s:link> 
+      </li>
+    </ui:repeat>
+    
+      </ul>
+    </div>
+    
+      </li>
+    
+      <li>
+         <h:outputText value="Projects"/> 
+    <div class="listProjectAcronyms">
+      <ul>
+        
+      <ui:repeat var="pr2" value="#{viewBlogEntry.projects3}">
+      <li>
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{pr2.id}"/> <h:outputText value="#{pr2.name}"/> </s:link> 
+      </li>
+    </ui:repeat>
+    
+      </ul>
+    </div>
+    
+      </li>
+    
+      </ul>
+    </div>
+    </div>
+    </div>
+    </div>
+    
+    <div class="outerbody">
+    <div class="menubar">
+    <div class="menu">
+      <ul>
+        
+      <li>
+         <h:outputText value="People"/> 
+      <ul>
+        
+      <ui:repeat var="person14" value="#{viewBlogEntry.person14List}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person14.id}"/> <h:outputText value="#{person14.name}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <h:outputText value="Projects"/> 
+      <ul>
+        
+      <ui:repeat var="project5" value="#{viewBlogEntry.project5List}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project5.id}"/> <h:outputText value="#{project5.acronym}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <s:link view="/manage.xhtml" propagation="none"> <h:outputText value="Manage"/> </s:link> 
+      <ul>
+        
+    <div class="manageMenu"> <s:link view="/editBlogEntry.xhtml" propagation="none"><f:param name="blogEntry" value="#{viewBlogEntry.entry.id}"/> <h:outputText value="Edit"/> </s:link> </div>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <s:link view="/login.xhtml" propagation="none"> <h:outputText value="Login"/> </s:link> 
+      </li>
+    
+      </ul>
+    </div>
+    </div>
+    
+    <div class="body">
+      <div class="section1">
+      <h1> <h:outputText value="#{viewBlogEntry.entry.title}"/> </h1>
+    
+    <div class="blogDate">
+       <h:outputText id="outputDateId0" styleClass="outputDate" value="#{viewBlogEntry.entry.created}">
+         <s:convertDateTime pattern="dd/mm/yyyy"/>
+       </h:outputText>
+    </div>
+    
+    <div class="blogIntro">
+      <s:formattedText styleClass="outputTextarea" value="#{viewBlogEntry.entry.intro}"/>
+    </div>
+    
+    <div class="blogBody">
+      <s:formattedText styleClass="outputTextarea" value="#{viewBlogEntry.entry.body}"/>
+    </div>
+    </div>
+    </div>
+    
+    <div class="footer"> <h:outputText value="generated with "/>  <h:outputLink value="http://www.strategoxt.org"> <h:outputText value="Stratego/XT"/> </h:outputLink> </div>
+    </div>
+    </div>
+    </body>
+</html>

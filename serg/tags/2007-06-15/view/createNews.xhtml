@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:t="http://myfaces.apache.org/tomahawk" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
+<head>    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title></title>
+    <link href="stylesheet/webdsl.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <div class="main">
+    <div class="outersidebar">
+    <div class="logo"> <s:link view="/home.xhtml" propagation="none"> <h:graphicImage value="/img/serg-logo-color-smaller.png"/> </s:link> </div>
+    
+    <div class="sidebar"></div>
+    </div>
+    
+    <div class="outerbody">
+    <div class="menubar">
+    <div class="menu">
+      <ul>
+        
+      <li>
+         <h:outputText value="People"/> 
+      <ul>
+        
+      <ui:repeat var="person95" value="#{createNews.person95List}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person95.id}"/> <h:outputText value="#{person95.name}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <h:outputText value="Projects"/> 
+      <ul>
+        
+      <ui:repeat var="project85" value="#{createNews.project85List}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project85.id}"/> <h:outputText value="#{project85.acronym}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <s:link view="/manage.xhtml" propagation="none"> <h:outputText value="Manage"/> </s:link> 
+      <ul>
+        
+    <div class="manageMenu"></div>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <s:link view="/login.xhtml" propagation="none"> <h:outputText value="Login"/> </s:link> 
+      </li>
+    
+      </ul>
+    </div>
+    </div>
+    
+    <div class="body">
+      <div class="section1">
+      <h1> <h:outputText value="Create new "/>  <h:outputText value="News"/> </h1>
+    
+      <h:form>
+        <s:validateAll>
+      <table>
+    <div class="editRowsNews">
+    <div class="editRowsObject"></div>
+    
+      <tr> <td> <h:outputText value="Title"/> </td>  <td>
+      <s:decorate>
+        <h:inputText styleClass="inputString" value="#{createNews.news.title}"/>
+      </s:decorate>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Text"/> </td>  <td>
+      <s:decorate>
+        <h:inputTextarea styleClass="inputTextarea" value="#{createNews.news.text}"/>
+      </s:decorate>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Date"/> </td>  <td>
+      <s:decorate>
+        <div>
+          <h:inputText id="inputDateId9" styleClass="inputDate" value="#{createNews.news.date}">
+             <s:convertDateTime pattern="dd/MM/yyyy"/>
+          </h:inputText>
+          <s:selectDate for="inputDateId9"/>
+        </div>
+      </s:decorate>
+    </td> </tr>
+    </div>
+    </table>
+     
+       <h:commandButton type="submit" value="Save" action="#{createNews.save()}"/>
+     
+       <h:commandButton value="Cancel" action="#{createNews.cancel()}"/>
+    </s:validateAll>
+      </h:form>
+    </div>
+    </div>
+    
+    <div class="footer"> <h:outputText value="generated with "/>  <h:outputLink value="http://www.strategoxt.org"> <h:outputText value="Stratego/XT"/> </h:outputLink> </div>
+    </div>
+    </div>
+    </body>
+</html>

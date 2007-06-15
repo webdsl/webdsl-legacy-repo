@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:t="http://myfaces.apache.org/tomahawk" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
+<head>    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title></title>
+    <link href="stylesheet/webdsl.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <div class="main">
+    <div class="outersidebar">
+    <div class="logo"> <s:link view="/home.xhtml" propagation="none"> <h:graphicImage value="/img/serg-logo-color-smaller.png"/> </s:link> </div>
+    
+    <div class="sidebar"></div>
+    </div>
+    
+    <div class="outerbody">
+    <div class="menubar">
+    <div class="menu">
+      <ul>
+        
+      <li>
+         <h:outputText value="People"/> 
+      <ul>
+        
+      <ui:repeat var="person42" value="#{editBlog.person42List}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person42.id}"/> <h:outputText value="#{person42.name}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <h:outputText value="Projects"/> 
+      <ul>
+        
+      <ui:repeat var="project32" value="#{editBlog.project32List}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project32.id}"/> <h:outputText value="#{project32.acronym}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <s:link view="/manage.xhtml" propagation="none"> <h:outputText value="Manage"/> </s:link> 
+      <ul>
+        
+    <div class="manageMenu"></div>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <s:link view="/login.xhtml" propagation="none"> <h:outputText value="Login"/> </s:link> 
+      </li>
+    
+      </ul>
+    </div>
+    </div>
+    
+    <div class="body">
+      <div class="section1">
+      <h1> <h:outputText value="Edit "/>  <h:outputText value="Blog"/>  <h:outputText value=" "/>  <h:outputText value="#{editBlog.blog.name}"/> </h1>
+    
+      <h:form>
+        <s:validateAll>
+      <table>
+    <div class="editRowsBlog">
+    <div class="editRowsObject"></div>
+    
+      <tr> <td> <h:outputText value="Title"/> </td>  <td>
+      <s:decorate>
+        <h:inputText styleClass="inputString" value="#{editBlog.blog.title}"/>
+      </s:decorate>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Author"/> </td>  <td>
+    <div class="inputSimpleRefAssociation"> <h:outputText value="#{editBlog.blog.author.name}"/>  <h:outputText value=" "/> 
+       <h:selectOneMenu value="#{editBlog.newPerson137}" onchange="submit()" valueChangeListener="#{editBlog.selectPerson137}">
+          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
+          <f:selectItems value="#{editBlog.person137List}" var="person137" label="#{person137.label}"/>
+        </h:selectOneMenu>
+    </div>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Entries"/> </td>  <td>
+    <div class="inputAssociationList">
+      <ul>
+        
+      <ui:repeat var="blogEntry6" value="#{editBlog.blog.entries}">
+      <li>
+         <h:outputText value="#{blogEntry6.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{editBlog.removeBlogEntry0(blogEntry6)}"/>
+    
+      </li>
+    </ui:repeat>
+    
+      </ul>
+    
+       <h:selectOneMenu value="#{editBlog.newBlogEntry7}" onchange="submit()" valueChangeListener="#{editBlog.selectBlogEntry7}">
+          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
+          <f:selectItems value="#{editBlog.blogEntry7List}" var="blogEntry7" label="#{blogEntry7.label}"/>
+        </h:selectOneMenu>
+    </div>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Categories"/> </td>  <td>
+    <div class="inputAssociationList">
+      <ul>
+        
+      <ui:repeat var="category6" value="#{editBlog.blog.categories}">
+      <li>
+         <h:outputText value="#{category6.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{editBlog.removeCategory0(category6)}"/>
+    
+      </li>
+    </ui:repeat>
+    
+      </ul>
+    
+       <h:selectOneMenu value="#{editBlog.newCategory7}" onchange="submit()" valueChangeListener="#{editBlog.selectCategory7}">
+          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
+          <f:selectItems value="#{editBlog.category7List}" var="category7" label="#{category7.label}"/>
+        </h:selectOneMenu>
+    </div>
+    </td> </tr>
+    </div>
+    </table>
+     
+       <h:commandButton type="submit" value="Save" action="#{editBlog.save()}"/>
+     
+       <h:commandButton value="Cancel" action="#{editBlog.cancel()}"/>
+    </s:validateAll>
+      </h:form>
+    </div>
+    </div>
+    
+    <div class="footer"> <h:outputText value="generated with "/>  <h:outputLink value="http://www.strategoxt.org"> <h:outputText value="Stratego/XT"/> </h:outputLink> </div>
+    </div>
+    </div>
+    </body>
+</html>
