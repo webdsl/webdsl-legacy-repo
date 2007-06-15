@@ -38,12 +38,12 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("createPerson" + ".initalize()");
-    Person var18 = new Person();
-    person = var18;
+    Person var20 = new Person();
+    person = var20;
     initUser7List();
     initBlog9List();
-    initPerson31List();
-    initProject29List();
+    initPerson32List();
+    initProject30List();
   }
 
   @Destroy @Remove public void destroy()
@@ -152,32 +152,32 @@ import org.webdsl.serg.domain.*;
     }
   }
 
-  @DataModel("person31List") private List<Person> person31List;
+  @DataModel("person32List") private List<Person> person32List;
 
-  public List<Person> getPerson31List()
+  public List<Person> getPerson32List()
   { 
-    log.info("getPerson31List");
-    return person31List;
+    log.info("getPerson32List");
+    return person32List;
   }
 
-  @Factory("person31List") public void initPerson31List()
+  @Factory("person32List") public void initPerson32List()
   { 
-    log.info("initPerson31List");
-    person31List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson32List");
+    person32List = em.createQuery("from " + "Person").getResultList();
   }
 
-  @DataModel("project29List") private List<ResearchProject> project29List;
+  @DataModel("project30List") private List<ResearchProject> project30List;
 
-  public List<ResearchProject> getProject29List()
+  public List<ResearchProject> getProject30List()
   { 
-    log.info("getProject29List");
-    return project29List;
+    log.info("getProject30List");
+    return project30List;
   }
 
-  @Factory("project29List") public void initProject29List()
+  @Factory("project30List") public void initProject30List()
   { 
-    log.info("initProject29List");
-    project29List = em.createQuery("from " + "ResearchProject").getResultList();
+    log.info("initProject30List");
+    project30List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 
   private Person person;

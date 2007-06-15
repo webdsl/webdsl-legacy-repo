@@ -38,19 +38,19 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("createBlogComment" + ".initalize()");
-    BlogComment var22 = new BlogComment();
-    blogComment = var22;
-    initPerson142List();
-    initPerson47List();
-    initProject42List();
+    BlogComment var24 = new BlogComment();
+    blogComment = var24;
+    initPerson138List();
+    initPerson48List();
+    initProject43List();
   }
 
   @Destroy @Remove public void destroy()
   { }
 
-  public void setPerson5(Person person143)
+  public void setPerson6(Person person139)
   { 
-    blogComment.setAuthor(person143);
+    blogComment.setAuthor(person139);
   }
 
   @End public String cancel()
@@ -64,73 +64,73 @@ import org.webdsl.serg.domain.*;
     return "/" + "viewBlogComment" + ".seam?" + ("blogComment" + "=" + blogComment.getId() + "");
   }
 
-  private String newPerson142;
+  private String newPerson138;
 
-  public void setNewPerson142(String p)
+  public void setNewPerson138(String p)
   { 
-    newPerson142 = p;
+    newPerson138 = p;
   }
 
-  public String getNewPerson142()
+  public String getNewPerson138()
   { 
-    return newPerson142;
+    return newPerson138;
   }
 
-  public void selectPerson142(ValueChangeEvent event)
+  public void selectPerson138(ValueChangeEvent event)
   { 
-    log.info("selectPerson142" + ": new value = " + " " + event.getNewValue());
+    log.info("selectPerson138" + ": new value = " + " " + event.getNewValue());
     Long id = new Long((String)event.getNewValue());
     if(id > 0)
     { 
-      Person person142 = em.find(Person.class, id);
-      setPerson5(person142);
+      Person person138 = em.find(Person.class, id);
+      setPerson6(person138);
     }
   }
 
-  @DataModel("person142List") private Map<String, String> person142List;
+  @DataModel("person138List") private Map<String, String> person138List;
 
-  public Map<String, String> getPerson142List()
+  public Map<String, String> getPerson138List()
   { 
-    return person142List;
+    return person138List;
   }
 
-  @Factory("person142List") public void initPerson142List()
+  @Factory("person138List") public void initPerson138List()
   { 
-    log.info("initPerson142List");
-    person142List = new HashMap<String, String>();
+    log.info("initPerson138List");
+    person138List = new HashMap<String, String>();
     for(Object o : em.createQuery("from " + "Person").getResultList())
     { 
       Person p = (Person)o;
-      person142List.put(p.getName(), p.getId().toString());
+      person138List.put(p.getName(), p.getId().toString());
     }
   }
 
-  @DataModel("person47List") private List<Person> person47List;
+  @DataModel("person48List") private List<Person> person48List;
 
-  public List<Person> getPerson47List()
+  public List<Person> getPerson48List()
   { 
-    log.info("getPerson47List");
-    return person47List;
+    log.info("getPerson48List");
+    return person48List;
   }
 
-  @Factory("person47List") public void initPerson47List()
+  @Factory("person48List") public void initPerson48List()
   { 
-    log.info("initPerson47List");
-    person47List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson48List");
+    person48List = em.createQuery("from " + "Person").getResultList();
   }
 
-  @DataModel("project42List") private List<ResearchProject> project42List;
+  @DataModel("project43List") private List<ResearchProject> project43List;
 
-  public List<ResearchProject> getProject42List()
+  public List<ResearchProject> getProject43List()
   { 
-    log.info("getProject42List");
-    return project42List;
+    log.info("getProject43List");
+    return project43List;
   }
 
-  @Factory("project42List") public void initProject42List()
+  @Factory("project43List") public void initProject43List()
   { 
-    log.info("initProject42List");
-    project42List = em.createQuery("from " + "ResearchProject").getResultList();
+    log.info("initProject43List");
+    project43List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 
   private BlogComment blogComment;

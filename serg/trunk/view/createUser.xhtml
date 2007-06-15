@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person22" value="#{createUser.person22List}"> 
+      <ui:repeat var="person23" value="#{createUser.person23List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person22.id}"/> <h:outputText value="#{person22.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person23.id}"/> <h:outputText value="#{person23.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -43,10 +43,10 @@
          <h:outputText value="Projects"/> 
       <ul>
         
-      <ui:repeat var="project21" value="#{createUser.project21List}"> 
+      <ui:repeat var="project22" value="#{createUser.project22List}"> 
       <h:column>
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project21.id}"/> <h:outputText value="#{project21.acronym}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project22.id}"/> <h:outputText value="#{project22.acronym}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -105,9 +105,9 @@
     
       <tr> <td> <h:outputText value="Person"/> </td>  <td>
     <div class="inputSimpleRefAssociation"> <h:outputText value="#{createUser.user.person.name}"/>  <h:outputText value=" "/> 
-       <h:selectOneMenu value="#{createUser.newPerson134}" onchange="submit()" valueChangeListener="#{createUser.selectPerson134}">
+       <h:selectOneMenu value="#{createUser.newPerson130}" onchange="submit()" valueChangeListener="#{createUser.selectPerson130}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createUser.person134List}" var="person134" label="#{person134.label}"/>
+          <f:selectItems value="#{createUser.person130List}" var="person130" label="#{person130.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

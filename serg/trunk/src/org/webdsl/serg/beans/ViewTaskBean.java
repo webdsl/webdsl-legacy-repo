@@ -47,8 +47,8 @@ import org.webdsl.serg.domain.*;
     { 
       task = em.find(Task.class, taskId);
     }
-    initPerson115List();
-    initProject106List();
+    initPerson107List();
+    initProject107List();
   }
 
   @Destroy @Remove public void destroy()
@@ -70,49 +70,31 @@ import org.webdsl.serg.domain.*;
     return task;
   }
 
-  @End public String createNewIssue()
+  @DataModel("person107List") private List<Person> person107List;
+
+  public List<Person> getPerson107List()
   { 
-    Issue var72 = new Issue();
-    Issue issue17 = var72;
-    issue17.getIssues().add(issue17);
-    em.persist(issue17);
-    return "/" + "editIssue" + ".seam?" + ("issue" + "=" + issue17.getId() + "");
+    log.info("getPerson107List");
+    return person107List;
   }
 
-  @End public String createNewPerson()
+  @Factory("person107List") public void initPerson107List()
   { 
-    Person var73 = new Person();
-    Person person116 = var73;
-    this.getTask().getAssigned().add(person116);
-    em.persist(this.getTask());
-    return "/" + "editPerson" + ".seam?" + ("person" + "=" + person116.getId() + "");
+    log.info("initPerson107List");
+    person107List = em.createQuery("from " + "Person").getResultList();
   }
 
-  @DataModel("person115List") private List<Person> person115List;
+  @DataModel("project107List") private List<ResearchProject> project107List;
 
-  public List<Person> getPerson115List()
+  public List<ResearchProject> getProject107List()
   { 
-    log.info("getPerson115List");
-    return person115List;
+    log.info("getProject107List");
+    return project107List;
   }
 
-  @Factory("person115List") public void initPerson115List()
+  @Factory("project107List") public void initProject107List()
   { 
-    log.info("initPerson115List");
-    person115List = em.createQuery("from " + "Person").getResultList();
-  }
-
-  @DataModel("project106List") private List<ResearchProject> project106List;
-
-  public List<ResearchProject> getProject106List()
-  { 
-    log.info("getProject106List");
-    return project106List;
-  }
-
-  @Factory("project106List") public void initProject106List()
-  { 
-    log.info("initProject106List");
-    project106List = em.createQuery("from " + "ResearchProject").getResultList();
+    log.info("initProject107List");
+    project107List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 }

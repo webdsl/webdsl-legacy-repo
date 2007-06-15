@@ -38,8 +38,8 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("home" + ".initalize()");
-    initPerson20List();
-    initProject19List();
+    initPerson21List();
+    initProject20List();
     initX0List();
     initX1List();
     initX2List();
@@ -51,32 +51,32 @@ import org.webdsl.serg.domain.*;
   @Destroy @Remove public void destroy()
   { }
 
-  @DataModel("person20List") private List<Person> person20List;
+  @DataModel("person21List") private List<Person> person21List;
 
-  public List<Person> getPerson20List()
+  public List<Person> getPerson21List()
   { 
-    log.info("getPerson20List");
-    return person20List;
+    log.info("getPerson21List");
+    return person21List;
   }
 
-  @Factory("person20List") public void initPerson20List()
+  @Factory("person21List") public void initPerson21List()
   { 
-    log.info("initPerson20List");
-    person20List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson21List");
+    person21List = em.createQuery("from " + "Person").getResultList();
   }
 
-  @DataModel("project19List") private List<ResearchProject> project19List;
+  @DataModel("project20List") private List<ResearchProject> project20List;
 
-  public List<ResearchProject> getProject19List()
+  public List<ResearchProject> getProject20List()
   { 
-    log.info("getProject19List");
-    return project19List;
+    log.info("getProject20List");
+    return project20List;
   }
 
-  @Factory("project19List") public void initProject19List()
+  @Factory("project20List") public void initProject20List()
   { 
-    log.info("initProject19List");
-    project19List = em.createQuery("from " + "ResearchProject").getResultList();
+    log.info("initProject20List");
+    project20List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 
   @DataModel("x0List") private List<ResearchGroup> x0List;

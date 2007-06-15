@@ -11,13 +11,13 @@ import org.webdsl.serg.domain.*;
 
   public void destroy();
 
-  public void removePerson13(Person person184);
+  public void removePerson13(Person person180);
 
-  public void addPerson13(Person person184);
+  public void addPerson13(Person person180);
 
-  public void removeResearchProject13(ResearchProject researchProject41);
+  public void removeResearchProject13(ResearchProject researchProject36);
 
-  public void addResearchProject13(ResearchProject researchProject41);
+  public void addResearchProject13(ResearchProject researchProject36);
 
   public void removeColloquium1(Colloquium colloquium7);
 
@@ -31,25 +31,25 @@ import org.webdsl.serg.domain.*;
 
   public String save();
 
-  public void setNewPerson185(String p);
+  public void setNewPerson181(String p);
 
-  public String getNewPerson185();
+  public String getNewPerson181();
 
-  public void selectPerson185(ValueChangeEvent event);
+  public void selectPerson181(ValueChangeEvent event);
 
-  public Map<String, String> getPerson185List();
+  public Map<String, String> getPerson181List();
 
-  public void initPerson185List();
+  public void initPerson181List();
 
-  public void setNewResearchProject42(String p);
+  public void setNewResearchProject37(String p);
 
-  public String getNewResearchProject42();
+  public String getNewResearchProject37();
 
-  public void selectResearchProject42(ValueChangeEvent event);
+  public void selectResearchProject37(ValueChangeEvent event);
 
-  public Map<String, String> getResearchProject42List();
+  public Map<String, String> getResearchProject37List();
 
-  public void initResearchProject42List();
+  public void initResearchProject37List();
 
   public void setNewColloquium8(String p);
 
@@ -71,13 +71,13 @@ import org.webdsl.serg.domain.*;
 
   public void initNews8List();
 
-  public List<Person> getPerson92List();
+  public List<Person> getPerson87List();
 
-  public void initPerson92List();
+  public void initPerson87List();
 
-  public List<ResearchProject> getProject81List();
+  public List<ResearchProject> getProject82List();
 
-  public void initProject81List();
+  public void initProject82List();
 
   public ResearchGroup getResearchGroup();
 

@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person59" value="#{viewPublication.person59List}"> 
+      <ui:repeat var="person60" value="#{viewPublication.person60List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person59.id}"/> <h:outputText value="#{person59.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person60.id}"/> <h:outputText value="#{person60.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -43,10 +43,10 @@
          <h:outputText value="Projects"/> 
       <ul>
         
-      <ui:repeat var="project54" value="#{viewPublication.project54List}"> 
+      <ui:repeat var="project55" value="#{viewPublication.project55List}"> 
       <h:column>
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project54.id}"/> <h:outputText value="#{project54.acronym}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project55.id}"/> <h:outputText value="#{project55.acronym}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -98,25 +98,17 @@
     
       <p> <h:outputText value="Pdf"/>  <h:outputText value=" : "/>  <h:outputLink value="#{viewPublication.publication.pdf}"> <h:outputText value="#{viewPublication.publication.pdf}"/> </h:outputLink> </p>
     
-      <div class="section2">
-      <h2> <h:outputText value="Authors"/> </h2>
-    
+      <p> <h:outputText value="Authors"/>  <h:outputText value=" : "/> 
       <ul>
         
-      <ui:repeat var="person156" value="#{viewPublication.publication.authors}">
+      <ui:repeat var="person152" value="#{viewPublication.publication.authors}">
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person156.id}"/> <h:outputText value="#{person156.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person152.id}"/> <h:outputText value="#{person152.name}"/> </s:link> 
       </li>
     </ui:repeat>
     
       </ul>
-    
-      <h:form>
-        <s:validateAll> 
-       <h:commandLink type="submit" value="New Person" action="#{viewPublication.createNewPerson()}"/>
-    </s:validateAll>
-      </h:form>
-    </div>
+    </p>
     
       <div class="section2">
       <h2> <h:outputText value="Abstract"/> </h2>
@@ -124,25 +116,17 @@
       <s:formattedText styleClass="outputTextarea" value="#{viewPublication.publication.abstract}"/>
     </div>
     
-      <div class="section2">
-      <h2> <h:outputText value="Projects"/> </h2>
-    
+      <p> <h:outputText value="Projects"/>  <h:outputText value=" : "/> 
       <ul>
         
-      <ui:repeat var="researchProject23" value="#{viewPublication.publication.projectsList}">
+      <ui:repeat var="researchProject18" value="#{viewPublication.publication.projectsList}">
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{researchProject23.id}"/> <h:outputText value="#{researchProject23.name}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{researchProject18.id}"/> <h:outputText value="#{researchProject18.name}"/> </s:link> 
       </li>
     </ui:repeat>
     
       </ul>
-    
-      <h:form>
-        <s:validateAll> 
-       <h:commandLink type="submit" value="New ResearchProject" action="#{viewPublication.createNewResearchProject()}"/>
-    </s:validateAll>
-      </h:form>
-    </div>
+    </p>
     </div>
     </div>
     </div>

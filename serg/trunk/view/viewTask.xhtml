@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person115" value="#{viewTask.person115List}"> 
+      <ui:repeat var="person107" value="#{viewTask.person107List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person115.id}"/> <h:outputText value="#{person115.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person107.id}"/> <h:outputText value="#{person107.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -43,10 +43,10 @@
          <h:outputText value="Projects"/> 
       <ul>
         
-      <ui:repeat var="project106" value="#{viewTask.project106List}"> 
+      <ui:repeat var="project107" value="#{viewTask.project107List}"> 
       <h:column>
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project106.id}"/> <h:outputText value="#{project106.acronym}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project107.id}"/> <h:outputText value="#{project107.acronym}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -100,52 +100,36 @@
     </div>
     
       <p> <h:outputText value="Due"/>  <h:outputText value=" : "/> 
-       <h:outputText id="outputDateId8" styleClass="outputDate" value="#{viewTask.task.due}">
+       <h:outputText id="outputDateId10" styleClass="outputDate" value="#{viewTask.task.due}">
          <s:convertDateTime pattern="dd/mm/yyyy"/>
        </h:outputText>
     </p>
     
       <p> <h:outputText value="Priority"/>  <h:outputText value=" : "/>  <h:outputText value="#{viewTask.task.priority}"/> </p>
     
-      <div class="section2">
-      <h2> <h:outputText value="Issues"/> </h2>
-    
+      <p> <h:outputText value="Issues"/>  <h:outputText value=" : "/> 
       <ul>
         
-      <ui:repeat var="issue37" value="#{viewTask.task.issuesList}">
+      <ui:repeat var="issue33" value="#{viewTask.task.issuesList}">
       <li>
-         <s:link view="/viewIssue.xhtml" propagation="none"><f:param name="issue" value="#{issue37.id}"/> <h:outputText value="#{issue37.name}"/> </s:link> 
+         <s:link view="/viewIssue.xhtml" propagation="none"><f:param name="issue" value="#{issue33.id}"/> <h:outputText value="#{issue33.name}"/> </s:link> 
       </li>
     </ui:repeat>
     
       </ul>
+    </p>
     
-      <h:form>
-        <s:validateAll> 
-       <h:commandLink type="submit" value="New Issue" action="#{viewTask.createNewIssue()}"/>
-    </s:validateAll>
-      </h:form>
-    </div>
-    
-      <div class="section2">
-      <h2> <h:outputText value="Assigned"/> </h2>
-    
+      <p> <h:outputText value="Assigned"/>  <h:outputText value=" : "/> 
       <ul>
         
-      <ui:repeat var="person205" value="#{viewTask.task.assignedList}">
+      <ui:repeat var="person201" value="#{viewTask.task.assignedList}">
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person205.id}"/> <h:outputText value="#{person205.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person201.id}"/> <h:outputText value="#{person201.name}"/> </s:link> 
       </li>
     </ui:repeat>
     
       </ul>
-    
-      <h:form>
-        <s:validateAll> 
-       <h:commandLink type="submit" value="New Person" action="#{viewTask.createNewPerson()}"/>
-    </s:validateAll>
-      </h:form>
-    </div>
+    </p>
     
       <p> <h:outputText value="Status"/>  <h:outputText value=" : "/>  <h:outputText value="#{viewTask.task.status}"/> </p>
     </div>

@@ -140,8 +140,8 @@
       <div class="section2">
       <h2> <h:outputText value="Upcoming Presentations"/> </h2>
     
-      <ui:repeat var="presentation0" value="#{viewColloquium.colloquium.presentations}">
-      <tr> <td> <h:outputText value="#{presentation0.date}"/> </td>  <td> <s:link view="/viewPresentation.xhtml" propagation="none"><f:param name="presentation" value="#{presentation0.id}"/> <h:outputText value="#{presentation0.name}"/> </s:link> </td>  <td> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{presentation0.speaker.id}"/> <h:outputText value="#{presentation0.speaker.name}"/> </s:link> </td> </tr>
+      <ui:repeat var="presentation1" value="#{viewColloquium.colloquium.presentations}">
+      <tr> <td> <h:outputText value="#{presentation1.date}"/> </td>  <td> <s:link view="/viewPresentation.xhtml" propagation="none"><f:param name="presentation" value="#{presentation1.id}"/> <h:outputText value="#{presentation1.name}"/> </s:link> </td>  <td> <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{presentation1.speaker.id}"/> <h:outputText value="#{presentation1.speaker.name}"/> </s:link> </td> </tr>
     </ui:repeat>
     </div>
     </div>

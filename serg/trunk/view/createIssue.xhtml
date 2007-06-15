@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person99" value="#{createIssue.person99List}"> 
+      <ui:repeat var="person94" value="#{createIssue.person94List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person99.id}"/> <h:outputText value="#{person99.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person94.id}"/> <h:outputText value="#{person94.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -43,10 +43,10 @@
          <h:outputText value="Projects"/> 
       <ul>
         
-      <ui:repeat var="project88" value="#{createIssue.project88List}"> 
+      <ui:repeat var="project89" value="#{createIssue.project89List}"> 
       <h:column>
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project88.id}"/> <h:outputText value="#{project88.acronym}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project89.id}"/> <h:outputText value="#{project89.acronym}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -124,11 +124,11 @@
     <div class="inputAssociationSet">
       <ul>
         
-      <ui:repeat var="issue20" value="#{createIssue.issue.issuesList}">
+      <ui:repeat var="issue16" value="#{createIssue.issue.issuesList}">
     <div class="listAssociation">
       <li>
-         <h:outputText value="#{issue20.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{createIssue.removeIssue1(issue20)}"/>
+         <h:outputText value="#{issue16.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{createIssue.removeIssue1(issue16)}"/>
     
       </li>
     </div>
@@ -136,9 +136,9 @@
     
       </ul>
     
-       <h:selectOneMenu value="#{createIssue.newIssue21}" onchange="submit()" valueChangeListener="#{createIssue.selectIssue21}">
+       <h:selectOneMenu value="#{createIssue.newIssue17}" onchange="submit()" valueChangeListener="#{createIssue.selectIssue17}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createIssue.issue21List}" var="issue21" label="#{issue21.label}"/>
+          <f:selectItems value="#{createIssue.issue17List}" var="issue17" label="#{issue17.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -147,11 +147,11 @@
     <div class="inputAssociationSet">
       <ul>
         
-      <ui:repeat var="person188" value="#{createIssue.issue.assignedList}">
+      <ui:repeat var="person184" value="#{createIssue.issue.assignedList}">
     <div class="listAssociation">
       <li>
-         <h:outputText value="#{person188.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{createIssue.removePerson15(person188)}"/>
+         <h:outputText value="#{person184.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{createIssue.removePerson15(person184)}"/>
     
       </li>
     </div>
@@ -159,9 +159,9 @@
     
       </ul>
     
-       <h:selectOneMenu value="#{createIssue.newPerson189}" onchange="submit()" valueChangeListener="#{createIssue.selectPerson189}">
+       <h:selectOneMenu value="#{createIssue.newPerson185}" onchange="submit()" valueChangeListener="#{createIssue.selectPerson185}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createIssue.person189List}" var="person189" label="#{person189.label}"/>
+          <f:selectItems value="#{createIssue.person185List}" var="person185" label="#{person185.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

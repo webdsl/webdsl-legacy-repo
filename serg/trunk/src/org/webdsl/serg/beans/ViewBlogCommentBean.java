@@ -47,8 +47,8 @@ import org.webdsl.serg.domain.*;
     { 
       blogComment = em.find(BlogComment.class, blogCommentId);
     }
-    initPerson48List();
-    initProject43List();
+    initPerson49List();
+    initProject44List();
   }
 
   @Destroy @Remove public void destroy()
@@ -70,31 +70,31 @@ import org.webdsl.serg.domain.*;
     return blogComment;
   }
 
-  @DataModel("person48List") private List<Person> person48List;
+  @DataModel("person49List") private List<Person> person49List;
 
-  public List<Person> getPerson48List()
+  public List<Person> getPerson49List()
   { 
-    log.info("getPerson48List");
-    return person48List;
+    log.info("getPerson49List");
+    return person49List;
   }
 
-  @Factory("person48List") public void initPerson48List()
+  @Factory("person49List") public void initPerson49List()
   { 
-    log.info("initPerson48List");
-    person48List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson49List");
+    person49List = em.createQuery("from " + "Person").getResultList();
   }
 
-  @DataModel("project43List") private List<ResearchProject> project43List;
+  @DataModel("project44List") private List<ResearchProject> project44List;
 
-  public List<ResearchProject> getProject43List()
+  public List<ResearchProject> getProject44List()
   { 
-    log.info("getProject43List");
-    return project43List;
+    log.info("getProject44List");
+    return project44List;
   }
 
-  @Factory("project43List") public void initProject43List()
+  @Factory("project44List") public void initProject44List()
   { 
-    log.info("initProject43List");
-    project43List = em.createQuery("from " + "ResearchProject").getResultList();
+    log.info("initProject44List");
+    project44List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 }

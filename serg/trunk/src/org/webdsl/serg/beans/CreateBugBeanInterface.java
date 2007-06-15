@@ -11,45 +11,45 @@ import org.webdsl.serg.domain.*;
 
   public void destroy();
 
-  public void removeIssue5(Issue issue30);
+  public void removeIssue5(Issue issue26);
 
-  public void addIssue5(Issue issue30);
+  public void addIssue5(Issue issue26);
 
-  public void removePerson19(Person person198);
+  public void removePerson19(Person person194);
 
-  public void addPerson19(Person person198);
+  public void addPerson19(Person person194);
 
   public String cancel();
 
   public String save();
 
-  public void setNewIssue31(String p);
+  public void setNewIssue27(String p);
 
-  public String getNewIssue31();
+  public String getNewIssue27();
 
-  public void selectIssue31(ValueChangeEvent event);
+  public void selectIssue27(ValueChangeEvent event);
 
-  public Map<String, String> getIssue31List();
+  public Map<String, String> getIssue27List();
 
-  public void initIssue31List();
+  public void initIssue27List();
 
-  public void setNewPerson199(String p);
+  public void setNewPerson195(String p);
 
-  public String getNewPerson199();
+  public String getNewPerson195();
 
-  public void selectPerson199(ValueChangeEvent event);
+  public void selectPerson195(ValueChangeEvent event);
 
-  public Map<String, String> getPerson199List();
+  public Map<String, String> getPerson195List();
 
-  public void initPerson199List();
+  public void initPerson195List();
 
-  public List<Person> getPerson109List();
+  public List<Person> getPerson102List();
 
-  public void initPerson109List();
+  public void initPerson102List();
 
-  public List<ResearchProject> getProject101List();
+  public List<ResearchProject> getProject102List();
 
-  public void initProject101List();
+  public void initProject102List();
 
   public Bug getBug();
 

@@ -25,6 +25,9 @@ all : serg.appb serg.appc
 %-full.app : %.app
 	$(dsltoseam) -i $< -o $@ --no-expansion
 
+dump :
+	mysqldump --user=visser --password=dsl serg > db.sql
+
 clean :
 	rm $(wildcard *.appa) $(wildcard *.appb)
 

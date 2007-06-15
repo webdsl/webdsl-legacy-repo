@@ -19,9 +19,9 @@ import org.webdsl.serg.domain.*;
 
   public void setCategory0(Category category10);
 
-  public void removeBlogComment0(BlogComment blogComment5);
+  public void removeBlogComment0(BlogComment blogComment6);
 
-  public void addBlogComment0(BlogComment blogComment5);
+  public void addBlogComment0(BlogComment blogComment6);
 
   public String cancel();
 
@@ -47,21 +47,21 @@ import org.webdsl.serg.domain.*;
 
   public void initCategory9List();
 
-  public void setNewBlogComment6(String p);
+  public void setNewBlogComment7(String p);
 
-  public String getNewBlogComment6();
+  public String getNewBlogComment7();
 
-  public void selectBlogComment6(ValueChangeEvent event);
+  public void selectBlogComment7(ValueChangeEvent event);
 
-  public Map<String, String> getBlogComment6List();
+  public Map<String, String> getBlogComment7List();
 
-  public void initBlogComment6List();
+  public void initBlogComment7List();
 
-  public List<Person> getPerson39List();
+  public List<Person> getPerson40List();
 
-  public void initPerson39List();
+  public void initPerson40List();
 
-  public List<ResearchProject> getProject34List();
+  public List<ResearchProject> getProject35List();
 
-  public void initProject34List();
+  public void initProject35List();
 }
