@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person63" value="#{viewTechnicalReport.person63List}"> 
+      <ui:repeat var="person64" value="#{viewTechnicalReport.person64List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person63.id}"/> <h:outputText value="#{person63.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person64.id}"/> <h:outputText value="#{person64.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -93,8 +93,6 @@
     <div class="viewRowsPublication">
     <div class="viewRowsObject"></div>
     
-      <p> <h:outputText value="Title"/>  <h:outputText value=" : "/>  <h:outputText value="#{viewTechnicalReport.technicalReport.title}"/> </p>
-    
       <p> <h:outputText value="Subtitle"/>  <h:outputText value=" : "/>  <h:outputText value="#{viewTechnicalReport.technicalReport.subtitle}"/> </p>
     
       <p> <h:outputText value="Year"/>  <h:outputText value=" : "/>  <h:outputText value="#{viewTechnicalReport.technicalReport.year}"/> </p>
@@ -106,13 +104,19 @@
     
       <ul>
         
-      <ui:repeat var="person139" value="#{viewTechnicalReport.technicalReport.authors}">
+      <ui:repeat var="person161" value="#{viewTechnicalReport.technicalReport.authors}">
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person139.id}"/> <h:outputText value="#{person139.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person161.id}"/> <h:outputText value="#{person161.name}"/> </s:link> 
       </li>
     </ui:repeat>
     
       </ul>
+    
+      <h:form>
+        <s:validateAll> 
+       <h:commandLink type="submit" value="New Person" action="#{viewTechnicalReport.createNewPerson()}"/>
+    </s:validateAll>
+      </h:form>
     </div>
     
       <div class="section2">
@@ -126,13 +130,19 @@
     
       <ul>
         
-      <ui:repeat var="researchProject23" value="#{viewTechnicalReport.technicalReport.projectsList}">
+      <ui:repeat var="researchProject28" value="#{viewTechnicalReport.technicalReport.projectsList}">
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{researchProject23.id}"/> <h:outputText value="#{researchProject23.name}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{researchProject28.id}"/> <h:outputText value="#{researchProject28.name}"/> </s:link> 
       </li>
     </ui:repeat>
     
       </ul>
+    
+      <h:form>
+        <s:validateAll> 
+       <h:commandLink type="submit" value="New ResearchProject" action="#{viewTechnicalReport.createNewResearchProject()}"/>
+    </s:validateAll>
+      </h:form>
     </div>
     </div>
     

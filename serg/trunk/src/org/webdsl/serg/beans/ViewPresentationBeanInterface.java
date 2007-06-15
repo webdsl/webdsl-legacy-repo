@@ -15,6 +15,8 @@ import org.webdsl.serg.domain.*;
 
   public Presentation getPresentation();
 
+  public String createNewResearchProject();
+
   public List<Person> getPerson55List();
 
   public void initPerson55List();

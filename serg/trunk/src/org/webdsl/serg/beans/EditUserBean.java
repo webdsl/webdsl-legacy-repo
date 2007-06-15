@@ -47,7 +47,7 @@ import org.webdsl.serg.domain.*;
     { 
       user = em.find(User.class, userId);
     }
-    initPerson110List();
+    initPerson132List();
     initPerson21List();
     initProject20List();
   }
@@ -71,9 +71,9 @@ import org.webdsl.serg.domain.*;
     return user;
   }
 
-  public void setPerson0(Person person111)
+  public void setPerson0(Person person133)
   { 
-    user.setPerson(person111);
+    user.setPerson(person133);
   }
 
   @End public String cancel()
@@ -87,44 +87,44 @@ import org.webdsl.serg.domain.*;
     return "/" + "viewUser" + ".seam?" + ("user" + "=" + user.getId() + "");
   }
 
-  private String newPerson110;
+  private String newPerson132;
 
-  public void setNewPerson110(String p)
+  public void setNewPerson132(String p)
   { 
-    newPerson110 = p;
+    newPerson132 = p;
   }
 
-  public String getNewPerson110()
+  public String getNewPerson132()
   { 
-    return newPerson110;
+    return newPerson132;
   }
 
-  public void selectPerson110(ValueChangeEvent event)
+  public void selectPerson132(ValueChangeEvent event)
   { 
-    log.info("selectPerson110" + ": new value = " + " " + event.getNewValue());
+    log.info("selectPerson132" + ": new value = " + " " + event.getNewValue());
     Long id = new Long((String)event.getNewValue());
     if(id > 0)
     { 
-      Person person110 = em.find(Person.class, id);
-      setPerson0(person110);
+      Person person132 = em.find(Person.class, id);
+      setPerson0(person132);
     }
   }
 
-  @DataModel("person110List") private Map<String, String> person110List;
+  @DataModel("person132List") private Map<String, String> person132List;
 
-  public Map<String, String> getPerson110List()
+  public Map<String, String> getPerson132List()
   { 
-    return person110List;
+    return person132List;
   }
 
-  @Factory("person110List") public void initPerson110List()
+  @Factory("person132List") public void initPerson132List()
   { 
-    log.info("initPerson110List");
-    person110List = new HashMap<String, String>();
+    log.info("initPerson132List");
+    person132List = new HashMap<String, String>();
     for(Object o : em.createQuery("from " + "Person").getResultList())
     { 
       Person p = (Person)o;
-      person110List.put(p.getName(), p.getId().toString());
+      person132List.put(p.getName(), p.getId().toString());
     }
   }
 

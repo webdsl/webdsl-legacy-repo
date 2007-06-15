@@ -99,9 +99,9 @@
     
       <tr> <td> <h:outputText value="Author"/> </td>  <td>
     <div class="inputSimpleRefAssociation"> <h:outputText value="#{createBlog.blog.author.name}"/>  <h:outputText value=" "/> 
-       <h:selectOneMenu value="#{createBlog.newPerson116}" onchange="submit()" valueChangeListener="#{createBlog.selectPerson116}">
+       <h:selectOneMenu value="#{createBlog.newPerson138}" onchange="submit()" valueChangeListener="#{createBlog.selectPerson138}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createBlog.person116List}" var="person116" label="#{person116.label}"/>
+          <f:selectItems value="#{createBlog.person138List}" var="person138" label="#{person138.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -110,19 +110,19 @@
     <div class="inputAssociationList">
       <ul>
         
-      <ui:repeat var="blogEntry6" value="#{createBlog.blog.entries}">
+      <ui:repeat var="blogEntry7" value="#{createBlog.blog.entries}">
       <li>
-         <h:outputText value="#{blogEntry6.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{createBlog.removeBlogEntry1(blogEntry6)}"/>
+         <h:outputText value="#{blogEntry7.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{createBlog.removeBlogEntry1(blogEntry7)}"/>
     
       </li>
     </ui:repeat>
     
       </ul>
     
-       <h:selectOneMenu value="#{createBlog.newBlogEntry7}" onchange="submit()" valueChangeListener="#{createBlog.selectBlogEntry7}">
+       <h:selectOneMenu value="#{createBlog.newBlogEntry8}" onchange="submit()" valueChangeListener="#{createBlog.selectBlogEntry8}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createBlog.blogEntry7List}" var="blogEntry7" label="#{blogEntry7.label}"/>
+          <f:selectItems value="#{createBlog.blogEntry8List}" var="blogEntry8" label="#{blogEntry8.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

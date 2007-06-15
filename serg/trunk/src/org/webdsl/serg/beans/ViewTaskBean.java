@@ -47,7 +47,7 @@ import org.webdsl.serg.domain.*;
     { 
       task = em.find(Task.class, taskId);
     }
-    initPerson106List();
+    initPerson115List();
     initProject106List();
   }
 
@@ -70,18 +70,36 @@ import org.webdsl.serg.domain.*;
     return task;
   }
 
-  @DataModel("person106List") private List<Person> person106List;
-
-  public List<Person> getPerson106List()
+  @End public String createNewIssue()
   { 
-    log.info("getPerson106List");
-    return person106List;
+    Issue var72 = new Issue();
+    Issue issue17 = var72;
+    issue17.getIssues().add(issue17);
+    em.persist(issue17);
+    return "/" + "editIssue" + ".seam?" + ("issue" + "=" + issue17.getId() + "");
   }
 
-  @Factory("person106List") public void initPerson106List()
+  @End public String createNewPerson()
   { 
-    log.info("initPerson106List");
-    person106List = em.createQuery("from " + "Person").getResultList();
+    Person var73 = new Person();
+    Person person116 = var73;
+    this.getTask().getAssigned().add(person116);
+    em.persist(this.getTask());
+    return "/" + "editPerson" + ".seam?" + ("person" + "=" + person116.getId() + "");
+  }
+
+  @DataModel("person115List") private List<Person> person115List;
+
+  public List<Person> getPerson115List()
+  { 
+    log.info("getPerson115List");
+    return person115List;
+  }
+
+  @Factory("person115List") public void initPerson115List()
+  { 
+    log.info("initPerson115List");
+    person115List = em.createQuery("from " + "Person").getResultList();
   }
 
   @DataModel("project106List") private List<ResearchProject> project106List;

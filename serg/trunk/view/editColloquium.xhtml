@@ -105,9 +105,9 @@
     
       <tr> <td> <h:outputText value="Contact"/> </td>  <td>
     <div class="inputSimpleRefAssociation"> <h:outputText value="#{editColloquium.colloquium.contact.name}"/>  <h:outputText value=" "/> 
-       <h:selectOneMenu value="#{editColloquium.newPerson122}" onchange="submit()" valueChangeListener="#{editColloquium.selectPerson122}">
+       <h:selectOneMenu value="#{editColloquium.newPerson144}" onchange="submit()" valueChangeListener="#{editColloquium.selectPerson144}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{editColloquium.person122List}" var="person122" label="#{person122.label}"/>
+          <f:selectItems value="#{editColloquium.person144List}" var="person144" label="#{person144.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -131,19 +131,19 @@
     <div class="inputAssociationList">
       <ul>
         
-      <ui:repeat var="researchProject5" value="#{editColloquium.colloquium.projects}">
+      <ui:repeat var="researchProject10" value="#{editColloquium.colloquium.projects}">
       <li>
-         <h:outputText value="#{researchProject5.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{editColloquium.removeResearchProject0(researchProject5)}"/>
+         <h:outputText value="#{researchProject10.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{editColloquium.removeResearchProject0(researchProject10)}"/>
     
       </li>
     </ui:repeat>
     
       </ul>
     
-       <h:selectOneMenu value="#{editColloquium.newResearchProject6}" onchange="submit()" valueChangeListener="#{editColloquium.selectResearchProject6}">
+       <h:selectOneMenu value="#{editColloquium.newResearchProject11}" onchange="submit()" valueChangeListener="#{editColloquium.selectResearchProject11}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{editColloquium.researchProject6List}" var="researchProject6" label="#{researchProject6.label}"/>
+          <f:selectItems value="#{editColloquium.researchProject11List}" var="researchProject11" label="#{researchProject11.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

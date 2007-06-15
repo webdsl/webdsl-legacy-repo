@@ -11,17 +11,17 @@ import org.webdsl.serg.domain.*;
 
   public void destroy();
 
-  public void removePerson13(Person person162);
+  public void removePerson13(Person person184);
 
-  public void addPerson13(Person person162);
+  public void addPerson13(Person person184);
 
-  public void removeResearchProject13(ResearchProject researchProject36);
+  public void removeResearchProject13(ResearchProject researchProject41);
 
-  public void addResearchProject13(ResearchProject researchProject36);
+  public void addResearchProject13(ResearchProject researchProject41);
 
-  public void removeColloquium1(Colloquium colloquium6);
+  public void removeColloquium1(Colloquium colloquium7);
 
-  public void addColloquium1(Colloquium colloquium6);
+  public void addColloquium1(Colloquium colloquium7);
 
   public void removeNews1(News news7);
 
@@ -31,35 +31,35 @@ import org.webdsl.serg.domain.*;
 
   public String save();
 
-  public void setNewPerson163(String p);
+  public void setNewPerson185(String p);
 
-  public String getNewPerson163();
+  public String getNewPerson185();
 
-  public void selectPerson163(ValueChangeEvent event);
+  public void selectPerson185(ValueChangeEvent event);
 
-  public Map<String, String> getPerson163List();
+  public Map<String, String> getPerson185List();
 
-  public void initPerson163List();
+  public void initPerson185List();
 
-  public void setNewResearchProject37(String p);
+  public void setNewResearchProject42(String p);
 
-  public String getNewResearchProject37();
+  public String getNewResearchProject42();
 
-  public void selectResearchProject37(ValueChangeEvent event);
+  public void selectResearchProject42(ValueChangeEvent event);
 
-  public Map<String, String> getResearchProject37List();
+  public Map<String, String> getResearchProject42List();
 
-  public void initResearchProject37List();
+  public void initResearchProject42List();
 
-  public void setNewColloquium7(String p);
+  public void setNewColloquium8(String p);
 
-  public String getNewColloquium7();
+  public String getNewColloquium8();
 
-  public void selectColloquium7(ValueChangeEvent event);
+  public void selectColloquium8(ValueChangeEvent event);
 
-  public Map<String, String> getColloquium7List();
+  public Map<String, String> getColloquium8List();
 
-  public void initColloquium7List();
+  public void initColloquium8List();
 
   public void setNewNews8(String p);
 
@@ -71,9 +71,9 @@ import org.webdsl.serg.domain.*;
 
   public void initNews8List();
 
-  public List<Person> getPerson86List();
+  public List<Person> getPerson92List();
 
-  public void initPerson86List();
+  public void initPerson92List();
 
   public List<ResearchProject> getProject81List();
 

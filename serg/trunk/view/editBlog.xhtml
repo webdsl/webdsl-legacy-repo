@@ -99,9 +99,9 @@
     
       <tr> <td> <h:outputText value="Author"/> </td>  <td>
     <div class="inputSimpleRefAssociation"> <h:outputText value="#{editBlog.blog.author.name}"/>  <h:outputText value=" "/> 
-       <h:selectOneMenu value="#{editBlog.newPerson114}" onchange="submit()" valueChangeListener="#{editBlog.selectPerson114}">
+       <h:selectOneMenu value="#{editBlog.newPerson136}" onchange="submit()" valueChangeListener="#{editBlog.selectPerson136}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{editBlog.person114List}" var="person114" label="#{person114.label}"/>
+          <f:selectItems value="#{editBlog.person136List}" var="person136" label="#{person136.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -110,19 +110,19 @@
     <div class="inputAssociationList">
       <ul>
         
-      <ui:repeat var="blogEntry4" value="#{editBlog.blog.entries}">
+      <ui:repeat var="blogEntry5" value="#{editBlog.blog.entries}">
       <li>
-         <h:outputText value="#{blogEntry4.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{editBlog.removeBlogEntry0(blogEntry4)}"/>
+         <h:outputText value="#{blogEntry5.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{editBlog.removeBlogEntry0(blogEntry5)}"/>
     
       </li>
     </ui:repeat>
     
       </ul>
     
-       <h:selectOneMenu value="#{editBlog.newBlogEntry5}" onchange="submit()" valueChangeListener="#{editBlog.selectBlogEntry5}">
+       <h:selectOneMenu value="#{editBlog.newBlogEntry6}" onchange="submit()" valueChangeListener="#{editBlog.selectBlogEntry6}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{editBlog.blogEntry5List}" var="blogEntry5" label="#{blogEntry5.label}"/>
+          <f:selectItems value="#{editBlog.blogEntry6List}" var="blogEntry6" label="#{blogEntry6.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

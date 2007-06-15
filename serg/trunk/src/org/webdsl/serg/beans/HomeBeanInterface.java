@@ -11,10 +11,6 @@ import org.webdsl.serg.domain.*;
 
   public void destroy();
 
-  public List<ResearchGroup> getGroup9List();
-
-  public void initGroup9List();
-
   public List<Person> getPerson20List();
 
   public void initPerson20List();
@@ -22,4 +18,28 @@ import org.webdsl.serg.domain.*;
   public List<ResearchProject> getProject19List();
 
   public void initProject19List();
+
+  public List<ResearchGroup> getX0List();
+
+  public void initX0List();
+
+  public List<ResearchProject> getX1List();
+
+  public void initX1List();
+
+  public List<Forum> getX2List();
+
+  public void initX2List();
+
+  public List<Blog> getX3List();
+
+  public void initX3List();
+
+  public List<Project> getX4List();
+
+  public void initX4List();
+
+  public List<Person> getX5List();
+
+  public void initX5List();
 }

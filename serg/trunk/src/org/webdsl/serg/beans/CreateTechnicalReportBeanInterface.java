@@ -11,55 +11,55 @@ import org.webdsl.serg.domain.*;
 
   public void destroy();
 
-  public void removePerson3(Person person137);
+  public void removePerson3(Person person159);
 
-  public void addPerson3(Person person137);
+  public void addPerson3(Person person159);
 
   public void addNewAuthor();
 
-  public void removeResearchProject7(ResearchProject researchProject21);
+  public void removeResearchProject7(ResearchProject researchProject26);
 
-  public void addResearchProject7(ResearchProject researchProject21);
+  public void addResearchProject7(ResearchProject researchProject26);
 
-  public void setPublication1(Publication publication18);
+  public void setPublication1(Publication publication19);
 
   public String cancel();
 
   public String save();
 
-  public void setNewPerson138(String p);
+  public void setNewPerson160(String p);
 
-  public String getNewPerson138();
+  public String getNewPerson160();
 
-  public void selectPerson138(ValueChangeEvent event);
+  public void selectPerson160(ValueChangeEvent event);
 
-  public Map<String, String> getPerson138List();
+  public Map<String, String> getPerson160List();
 
-  public void initPerson138List();
+  public void initPerson160List();
 
-  public void setNewResearchProject22(String p);
+  public void setNewResearchProject27(String p);
 
-  public String getNewResearchProject22();
+  public String getNewResearchProject27();
 
-  public void selectResearchProject22(ValueChangeEvent event);
+  public void selectResearchProject27(ValueChangeEvent event);
 
-  public Map<String, String> getResearchProject22List();
+  public Map<String, String> getResearchProject27List();
 
-  public void initResearchProject22List();
+  public void initResearchProject27List();
 
-  public void setNewPublication17(String p);
+  public void setNewPublication18(String p);
 
-  public String getNewPublication17();
+  public String getNewPublication18();
 
-  public void selectPublication17(ValueChangeEvent event);
+  public void selectPublication18(ValueChangeEvent event);
 
-  public Map<String, String> getPublication17List();
+  public Map<String, String> getPublication18List();
 
-  public void initPublication17List();
+  public void initPublication18List();
 
-  public List<Person> getPerson62List();
+  public List<Person> getPerson63List();
 
-  public void initPerson62List();
+  public void initPerson63List();
 
   public List<ResearchProject> getProject57List();
 

@@ -92,8 +92,6 @@
     <div class="viewRowsPresentation">
     <div class="viewRowsObject"></div>
     
-      <p> <h:outputText value="Title"/>  <h:outputText value=" : "/>  <h:outputText value="#{viewPresentation.presentation.title}"/> </p>
-    
       <div class="section2">
       <h2> <h:outputText value="Speaker"/> </h2>
     
@@ -137,13 +135,19 @@
     
       <ul>
         
-      <ui:repeat var="researchProject13" value="#{viewPresentation.presentation.projects}">
+      <ui:repeat var="researchProject18" value="#{viewPresentation.presentation.projects}">
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{researchProject13.id}"/> <h:outputText value="#{researchProject13.name}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{researchProject18.id}"/> <h:outputText value="#{researchProject18.name}"/> </s:link> 
       </li>
     </ui:repeat>
     
       </ul>
+    
+      <h:form>
+        <s:validateAll> 
+       <h:commandLink type="submit" value="New ResearchProject" action="#{viewPresentation.createNewResearchProject()}"/>
+    </s:validateAll>
+      </h:form>
     </div>
     </div>
     </div>

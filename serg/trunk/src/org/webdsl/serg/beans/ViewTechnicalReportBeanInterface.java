@@ -15,9 +15,13 @@ import org.webdsl.serg.domain.*;
 
   public TechnicalReport getTechnicalReport();
 
-  public List<Person> getPerson63List();
+  public String createNewPerson();
 
-  public void initPerson63List();
+  public String createNewResearchProject();
+
+  public List<Person> getPerson64List();
+
+  public void initPerson64List();
 
   public List<ResearchProject> getProject58List();
 

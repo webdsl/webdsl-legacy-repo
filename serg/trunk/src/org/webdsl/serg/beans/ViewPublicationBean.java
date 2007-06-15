@@ -70,6 +70,24 @@ import org.webdsl.serg.domain.*;
     return publication;
   }
 
+  @End public String createNewPerson()
+  { 
+    Person var31 = new Person();
+    Person person60 = var31;
+    this.getPublication().getAuthors().add(person60);
+    em.persist(this.getPublication());
+    return "/" + "editPerson" + ".seam?" + ("person" + "=" + person60.getId() + "");
+  }
+
+  @End public String createNewResearchProject()
+  { 
+    ResearchProject var32 = new ResearchProject();
+    ResearchProject researchProject1 = var32;
+    this.getPublication().getProjects().add(researchProject1);
+    em.persist(this.getPublication());
+    return "/" + "editResearchProject" + ".seam?" + ("researchProject" + "=" + researchProject1.getId() + "");
+  }
+
   @DataModel("person59List") private List<Person> person59List;
 
   public List<Person> getPerson59List()

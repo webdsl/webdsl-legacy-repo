@@ -13,7 +13,7 @@ section domain.
     description :: Text
     due         :: Date
     priority    :: Int
-    issues      <> Set<Issue>
+    issues      -> Set<Issue>
     assigned    -> Set<Person>
     status      :: String // enum of Open, Closed, ...
 //  type        :: String // corresponds to subclasses

@@ -15,9 +15,13 @@ import org.webdsl.serg.domain.*;
 
   public Task getTask();
 
-  public List<Person> getPerson106List();
+  public String createNewIssue();
 
-  public void initPerson106List();
+  public String createNewPerson();
+
+  public List<Person> getPerson115List();
+
+  public void initPerson115List();
 
   public List<ResearchProject> getProject106List();
 

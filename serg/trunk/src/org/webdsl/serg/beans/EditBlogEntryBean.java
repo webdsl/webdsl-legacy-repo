@@ -47,7 +47,7 @@ import org.webdsl.serg.domain.*;
     { 
       blogEntry = em.find(BlogEntry.class, blogEntryId);
     }
-    initBlog10List();
+    initBlog11List();
     initCategory9List();
     initBlogComment6List();
     initPerson39List();
@@ -73,9 +73,9 @@ import org.webdsl.serg.domain.*;
     return blogEntry;
   }
 
-  public void setBlog2(Blog blog11)
+  public void setBlog2(Blog blog12)
   { 
-    blogEntry.setBlog(blog11);
+    blogEntry.setBlog(blog12);
   }
 
   public void setCategory0(Category category10)
@@ -104,44 +104,44 @@ import org.webdsl.serg.domain.*;
     return "/" + "viewBlogEntry" + ".seam?" + ("entry" + "=" + blogEntry.getId() + "");
   }
 
-  private String newBlog10;
+  private String newBlog11;
 
-  public void setNewBlog10(String p)
+  public void setNewBlog11(String p)
   { 
-    newBlog10 = p;
+    newBlog11 = p;
   }
 
-  public String getNewBlog10()
+  public String getNewBlog11()
   { 
-    return newBlog10;
+    return newBlog11;
   }
 
-  public void selectBlog10(ValueChangeEvent event)
+  public void selectBlog11(ValueChangeEvent event)
   { 
-    log.info("selectBlog10" + ": new value = " + " " + event.getNewValue());
+    log.info("selectBlog11" + ": new value = " + " " + event.getNewValue());
     Long id = new Long((String)event.getNewValue());
     if(id > 0)
     { 
-      Blog blog10 = em.find(Blog.class, id);
-      setBlog2(blog10);
+      Blog blog11 = em.find(Blog.class, id);
+      setBlog2(blog11);
     }
   }
 
-  @DataModel("blog10List") private Map<String, String> blog10List;
+  @DataModel("blog11List") private Map<String, String> blog11List;
 
-  public Map<String, String> getBlog10List()
+  public Map<String, String> getBlog11List()
   { 
-    return blog10List;
+    return blog11List;
   }
 
-  @Factory("blog10List") public void initBlog10List()
+  @Factory("blog11List") public void initBlog11List()
   { 
-    log.info("initBlog10List");
-    blog10List = new HashMap<String, String>();
+    log.info("initBlog11List");
+    blog11List = new HashMap<String, String>();
     for(Object o : em.createQuery("from " + "Blog").getResultList())
     { 
       Blog p = (Blog)o;
-      blog10List.put(p.getName(), p.getId().toString());
+      blog11List.put(p.getName(), p.getId().toString());
     }
   }
 

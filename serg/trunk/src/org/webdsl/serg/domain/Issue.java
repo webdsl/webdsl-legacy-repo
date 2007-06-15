@@ -69,7 +69,7 @@ import org.webdsl.serg.domain.*;
     this._priority = _priority;
   }
 
-  @ManyToMany @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.ALL}) private java.util.Set<Issue> _issues = new java.util.HashSet<Issue>();
+  @ManyToMany @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private java.util.Set<Issue> _issues = new java.util.HashSet<Issue>();
 
   public java.util.Set<Issue> getIssues()
   { 

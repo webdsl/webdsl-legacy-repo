@@ -48,7 +48,7 @@ import org.webdsl.serg.domain.*;
       person = em.find(Person.class, personId);
     }
     initUser5List();
-    initBlog6List();
+    initBlog7List();
     initPerson29List();
     initProject28List();
   }
@@ -77,9 +77,9 @@ import org.webdsl.serg.domain.*;
     person.setUser(user6);
   }
 
-  public void setBlog0(Blog blog7)
+  public void setBlog0(Blog blog8)
   { 
-    person.setBlog(blog7);
+    person.setBlog(blog8);
   }
 
   @End public String cancel()
@@ -134,44 +134,44 @@ import org.webdsl.serg.domain.*;
     }
   }
 
-  private String newBlog6;
+  private String newBlog7;
 
-  public void setNewBlog6(String p)
+  public void setNewBlog7(String p)
   { 
-    newBlog6 = p;
+    newBlog7 = p;
   }
 
-  public String getNewBlog6()
+  public String getNewBlog7()
   { 
-    return newBlog6;
+    return newBlog7;
   }
 
-  public void selectBlog6(ValueChangeEvent event)
+  public void selectBlog7(ValueChangeEvent event)
   { 
-    log.info("selectBlog6" + ": new value = " + " " + event.getNewValue());
+    log.info("selectBlog7" + ": new value = " + " " + event.getNewValue());
     Long id = new Long((String)event.getNewValue());
     if(id > 0)
     { 
-      Blog blog6 = em.find(Blog.class, id);
-      setBlog0(blog6);
+      Blog blog7 = em.find(Blog.class, id);
+      setBlog0(blog7);
     }
   }
 
-  @DataModel("blog6List") private Map<String, String> blog6List;
+  @DataModel("blog7List") private Map<String, String> blog7List;
 
-  public Map<String, String> getBlog6List()
+  public Map<String, String> getBlog7List()
   { 
-    return blog6List;
+    return blog7List;
   }
 
-  @Factory("blog6List") public void initBlog6List()
+  @Factory("blog7List") public void initBlog7List()
   { 
-    log.info("initBlog6List");
-    blog6List = new HashMap<String, String>();
+    log.info("initBlog7List");
+    blog7List = new HashMap<String, String>();
     for(Object o : em.createQuery("from " + "Blog").getResultList())
     { 
       Blog p = (Blog)o;
-      blog6List.put(p.getName(), p.getId().toString());
+      blog7List.put(p.getName(), p.getId().toString());
     }
   }
 

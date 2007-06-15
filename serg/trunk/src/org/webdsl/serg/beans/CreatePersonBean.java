@@ -41,7 +41,7 @@ import org.webdsl.serg.domain.*;
     Person var18 = new Person();
     person = var18;
     initUser7List();
-    initBlog8List();
+    initBlog9List();
     initPerson31List();
     initProject29List();
   }
@@ -54,9 +54,9 @@ import org.webdsl.serg.domain.*;
     person.setUser(user8);
   }
 
-  public void setBlog1(Blog blog9)
+  public void setBlog1(Blog blog10)
   { 
-    person.setBlog(blog9);
+    person.setBlog(blog10);
   }
 
   @End public String cancel()
@@ -111,44 +111,44 @@ import org.webdsl.serg.domain.*;
     }
   }
 
-  private String newBlog8;
+  private String newBlog9;
 
-  public void setNewBlog8(String p)
+  public void setNewBlog9(String p)
   { 
-    newBlog8 = p;
+    newBlog9 = p;
   }
 
-  public String getNewBlog8()
+  public String getNewBlog9()
   { 
-    return newBlog8;
+    return newBlog9;
   }
 
-  public void selectBlog8(ValueChangeEvent event)
+  public void selectBlog9(ValueChangeEvent event)
   { 
-    log.info("selectBlog8" + ": new value = " + " " + event.getNewValue());
+    log.info("selectBlog9" + ": new value = " + " " + event.getNewValue());
     Long id = new Long((String)event.getNewValue());
     if(id > 0)
     { 
-      Blog blog8 = em.find(Blog.class, id);
-      setBlog1(blog8);
+      Blog blog9 = em.find(Blog.class, id);
+      setBlog1(blog9);
     }
   }
 
-  @DataModel("blog8List") private Map<String, String> blog8List;
+  @DataModel("blog9List") private Map<String, String> blog9List;
 
-  public Map<String, String> getBlog8List()
+  public Map<String, String> getBlog9List()
   { 
-    return blog8List;
+    return blog9List;
   }
 
-  @Factory("blog8List") public void initBlog8List()
+  @Factory("blog9List") public void initBlog9List()
   { 
-    log.info("initBlog8List");
-    blog8List = new HashMap<String, String>();
+    log.info("initBlog9List");
+    blog9List = new HashMap<String, String>();
     for(Object o : em.createQuery("from " + "Blog").getResultList())
     { 
       Blog p = (Blog)o;
-      blog8List.put(p.getName(), p.getId().toString());
+      blog9List.put(p.getName(), p.getId().toString());
     }
   }
 

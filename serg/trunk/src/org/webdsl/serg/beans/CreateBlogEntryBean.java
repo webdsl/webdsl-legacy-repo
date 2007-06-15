@@ -40,7 +40,7 @@ import org.webdsl.serg.domain.*;
     log.info("createBlogEntry" + ".initalize()");
     BlogEntry var20 = new BlogEntry();
     blogEntry = var20;
-    initBlog12List();
+    initBlog13List();
     initCategory11List();
     initBlogComment8List();
     initPerson40List();
@@ -50,9 +50,9 @@ import org.webdsl.serg.domain.*;
   @Destroy @Remove public void destroy()
   { }
 
-  public void setBlog3(Blog blog13)
+  public void setBlog3(Blog blog14)
   { 
-    blogEntry.setBlog(blog13);
+    blogEntry.setBlog(blog14);
   }
 
   public void setCategory1(Category category12)
@@ -81,44 +81,44 @@ import org.webdsl.serg.domain.*;
     return "/" + "viewBlogEntry" + ".seam?" + ("entry" + "=" + blogEntry.getId() + "");
   }
 
-  private String newBlog12;
+  private String newBlog13;
 
-  public void setNewBlog12(String p)
+  public void setNewBlog13(String p)
   { 
-    newBlog12 = p;
+    newBlog13 = p;
   }
 
-  public String getNewBlog12()
+  public String getNewBlog13()
   { 
-    return newBlog12;
+    return newBlog13;
   }
 
-  public void selectBlog12(ValueChangeEvent event)
+  public void selectBlog13(ValueChangeEvent event)
   { 
-    log.info("selectBlog12" + ": new value = " + " " + event.getNewValue());
+    log.info("selectBlog13" + ": new value = " + " " + event.getNewValue());
     Long id = new Long((String)event.getNewValue());
     if(id > 0)
     { 
-      Blog blog12 = em.find(Blog.class, id);
-      setBlog3(blog12);
+      Blog blog13 = em.find(Blog.class, id);
+      setBlog3(blog13);
     }
   }
 
-  @DataModel("blog12List") private Map<String, String> blog12List;
+  @DataModel("blog13List") private Map<String, String> blog13List;
 
-  public Map<String, String> getBlog12List()
+  public Map<String, String> getBlog13List()
   { 
-    return blog12List;
+    return blog13List;
   }
 
-  @Factory("blog12List") public void initBlog12List()
+  @Factory("blog13List") public void initBlog13List()
   { 
-    log.info("initBlog12List");
-    blog12List = new HashMap<String, String>();
+    log.info("initBlog13List");
+    blog13List = new HashMap<String, String>();
     for(Object o : em.createQuery("from " + "Blog").getResultList())
     { 
       Blog p = (Blog)o;
-      blog12List.put(p.getName(), p.getId().toString());
+      blog13List.put(p.getName(), p.getId().toString());
     }
   }
 

@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person102" value="#{viewBug.person102List}"> 
+      <ui:repeat var="person110" value="#{viewBug.person110List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person102.id}"/> <h:outputText value="#{person102.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person110.id}"/> <h:outputText value="#{person110.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -93,8 +93,6 @@
     <div class="viewRowsIssue">
     <div class="viewRowsObject"></div>
     
-      <p> <h:outputText value="Title"/>  <h:outputText value=" : "/>  <h:outputText value="#{viewBug.bug.title}"/> </p>
-    
       <div class="section2">
       <h2> <h:outputText value="Description"/> </h2>
     
@@ -114,13 +112,19 @@
     
       <ul>
         
-      <ui:repeat var="issue28" value="#{viewBug.bug.issuesList}">
+      <ui:repeat var="issue32" value="#{viewBug.bug.issuesList}">
       <li>
-         <s:link view="/viewIssue.xhtml" propagation="none"><f:param name="issue" value="#{issue28.id}"/> <h:outputText value="#{issue28.name}"/> </s:link> 
+         <s:link view="/viewIssue.xhtml" propagation="none"><f:param name="issue" value="#{issue32.id}"/> <h:outputText value="#{issue32.name}"/> </s:link> 
       </li>
     </ui:repeat>
     
       </ul>
+    
+      <h:form>
+        <s:validateAll> 
+       <h:commandLink type="submit" value="New Issue" action="#{viewBug.createNewIssue()}"/>
+    </s:validateAll>
+      </h:form>
     </div>
     
       <div class="section2">
@@ -128,13 +132,19 @@
     
       <ul>
         
-      <ui:repeat var="person178" value="#{viewBug.bug.assignedList}">
+      <ui:repeat var="person200" value="#{viewBug.bug.assignedList}">
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person178.id}"/> <h:outputText value="#{person178.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person200.id}"/> <h:outputText value="#{person200.name}"/> </s:link> 
       </li>
     </ui:repeat>
     
       </ul>
+    
+      <h:form>
+        <s:validateAll> 
+       <h:commandLink type="submit" value="New Person" action="#{viewBug.createNewPerson()}"/>
+    </s:validateAll>
+      </h:form>
     </div>
     
       <p> <h:outputText value="Status"/>  <h:outputText value=" : "/>  <h:outputText value="#{viewBug.bug.status}"/> </p>

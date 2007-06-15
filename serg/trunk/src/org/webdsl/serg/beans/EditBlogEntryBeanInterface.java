@@ -15,7 +15,7 @@ import org.webdsl.serg.domain.*;
 
   public BlogEntry getBlogEntry();
 
-  public void setBlog2(Blog blog11);
+  public void setBlog2(Blog blog12);
 
   public void setCategory0(Category category10);
 
@@ -27,15 +27,15 @@ import org.webdsl.serg.domain.*;
 
   public String save();
 
-  public void setNewBlog10(String p);
+  public void setNewBlog11(String p);
 
-  public String getNewBlog10();
+  public String getNewBlog11();
 
-  public void selectBlog10(ValueChangeEvent event);
+  public void selectBlog11(ValueChangeEvent event);
 
-  public Map<String, String> getBlog10List();
+  public Map<String, String> getBlog11List();
 
-  public void initBlog10List();
+  public void initBlog11List();
 
   public void setNewCategory9(String p);
 

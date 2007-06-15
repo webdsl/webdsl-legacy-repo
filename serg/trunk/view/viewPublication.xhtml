@@ -92,8 +92,6 @@
     <div class="viewRowsPublication">
     <div class="viewRowsObject"></div>
     
-      <p> <h:outputText value="Title"/>  <h:outputText value=" : "/>  <h:outputText value="#{viewPublication.publication.title}"/> </p>
-    
       <p> <h:outputText value="Subtitle"/>  <h:outputText value=" : "/>  <h:outputText value="#{viewPublication.publication.subtitle}"/> </p>
     
       <p> <h:outputText value="Year"/>  <h:outputText value=" : "/>  <h:outputText value="#{viewPublication.publication.year}"/> </p>
@@ -105,13 +103,19 @@
     
       <ul>
         
-      <ui:repeat var="person134" value="#{viewPublication.publication.authors}">
+      <ui:repeat var="person156" value="#{viewPublication.publication.authors}">
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person134.id}"/> <h:outputText value="#{person134.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person156.id}"/> <h:outputText value="#{person156.name}"/> </s:link> 
       </li>
     </ui:repeat>
     
       </ul>
+    
+      <h:form>
+        <s:validateAll> 
+       <h:commandLink type="submit" value="New Person" action="#{viewPublication.createNewPerson()}"/>
+    </s:validateAll>
+      </h:form>
     </div>
     
       <div class="section2">
@@ -125,13 +129,19 @@
     
       <ul>
         
-      <ui:repeat var="researchProject18" value="#{viewPublication.publication.projectsList}">
+      <ui:repeat var="researchProject23" value="#{viewPublication.publication.projectsList}">
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{researchProject18.id}"/> <h:outputText value="#{researchProject18.name}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{researchProject23.id}"/> <h:outputText value="#{researchProject23.name}"/> </s:link> 
       </li>
     </ui:repeat>
     
       </ul>
+    
+      <h:form>
+        <s:validateAll> 
+       <h:commandLink type="submit" value="New ResearchProject" action="#{viewPublication.createNewResearchProject()}"/>
+    </s:validateAll>
+      </h:form>
     </div>
     </div>
     </div>

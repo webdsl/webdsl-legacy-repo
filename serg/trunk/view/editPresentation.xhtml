@@ -99,9 +99,9 @@
     
       <tr> <td> <h:outputText value="Speaker"/> </td>  <td>
     <div class="inputSimpleRefAssociation"> <h:outputText value="#{editPresentation.presentation.speaker.name}"/>  <h:outputText value=" "/> 
-       <h:selectOneMenu value="#{editPresentation.newPerson126}" onchange="submit()" valueChangeListener="#{editPresentation.selectPerson126}">
+       <h:selectOneMenu value="#{editPresentation.newPerson148}" onchange="submit()" valueChangeListener="#{editPresentation.selectPerson148}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{editPresentation.person126List}" var="person126" label="#{person126.label}"/>
+          <f:selectItems value="#{editPresentation.person148List}" var="person148" label="#{person148.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -155,19 +155,19 @@
     <div class="inputAssociationList">
       <ul>
         
-      <ui:repeat var="researchProject9" value="#{editPresentation.presentation.projects}">
+      <ui:repeat var="researchProject14" value="#{editPresentation.presentation.projects}">
       <li>
-         <h:outputText value="#{researchProject9.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{editPresentation.removeResearchProject2(researchProject9)}"/>
+         <h:outputText value="#{researchProject14.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{editPresentation.removeResearchProject2(researchProject14)}"/>
     
       </li>
     </ui:repeat>
     
       </ul>
     
-       <h:selectOneMenu value="#{editPresentation.newResearchProject10}" onchange="submit()" valueChangeListener="#{editPresentation.selectResearchProject10}">
+       <h:selectOneMenu value="#{editPresentation.newResearchProject15}" onchange="submit()" valueChangeListener="#{editPresentation.selectResearchProject15}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{editPresentation.researchProject10List}" var="researchProject10" label="#{researchProject10.label}"/>
+          <f:selectItems value="#{editPresentation.researchProject15List}" var="researchProject15" label="#{researchProject15.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

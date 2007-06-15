@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person62" value="#{createTechnicalReport.person62List}"> 
+      <ui:repeat var="person63" value="#{createTechnicalReport.person63List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person62.id}"/> <h:outputText value="#{person62.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person63.id}"/> <h:outputText value="#{person63.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -106,19 +106,19 @@
     <div class="inputAssociationList">
       <ul>
         
-      <ui:repeat var="person137" value="#{createTechnicalReport.technicalReport.authors}">
+      <ui:repeat var="person159" value="#{createTechnicalReport.technicalReport.authors}">
       <li>
-         <h:outputText value="#{person137.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{createTechnicalReport.removePerson3(person137)}"/>
+         <h:outputText value="#{person159.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{createTechnicalReport.removePerson3(person159)}"/>
     
       </li>
     </ui:repeat>
     
       </ul>
     
-       <h:selectOneMenu value="#{createTechnicalReport.newPerson138}" onchange="submit()" valueChangeListener="#{createTechnicalReport.selectPerson138}">
+       <h:selectOneMenu value="#{createTechnicalReport.newPerson160}" onchange="submit()" valueChangeListener="#{createTechnicalReport.selectPerson160}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createTechnicalReport.person138List}" var="person138" label="#{person138.label}"/>
+          <f:selectItems value="#{createTechnicalReport.person160List}" var="person160" label="#{person160.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -159,11 +159,11 @@
     <div class="inputAssociationSet">
       <ul>
         
-      <ui:repeat var="researchProject21" value="#{createTechnicalReport.technicalReport.projectsList}">
+      <ui:repeat var="researchProject26" value="#{createTechnicalReport.technicalReport.projectsList}">
     <div class="listAssociation">
       <li>
-         <h:outputText value="#{researchProject21.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{createTechnicalReport.removeResearchProject7(researchProject21)}"/>
+         <h:outputText value="#{researchProject26.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{createTechnicalReport.removeResearchProject7(researchProject26)}"/>
     
       </li>
     </div>
@@ -171,9 +171,9 @@
     
       </ul>
     
-       <h:selectOneMenu value="#{createTechnicalReport.newResearchProject22}" onchange="submit()" valueChangeListener="#{createTechnicalReport.selectResearchProject22}">
+       <h:selectOneMenu value="#{createTechnicalReport.newResearchProject27}" onchange="submit()" valueChangeListener="#{createTechnicalReport.selectResearchProject27}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createTechnicalReport.researchProject22List}" var="researchProject22" label="#{researchProject22.label}"/>
+          <f:selectItems value="#{createTechnicalReport.researchProject27List}" var="researchProject27" label="#{researchProject27.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -199,9 +199,9 @@
     
       <tr> <td> <h:outputText value="Preprintof"/> </td>  <td>
     <div class="inputSimpleRefAssociation"> <h:outputText value="#{createTechnicalReport.technicalReport.preprintof.name}"/>  <h:outputText value=" "/> 
-       <h:selectOneMenu value="#{createTechnicalReport.newPublication17}" onchange="submit()" valueChangeListener="#{createTechnicalReport.selectPublication17}">
+       <h:selectOneMenu value="#{createTechnicalReport.newPublication18}" onchange="submit()" valueChangeListener="#{createTechnicalReport.selectPublication18}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createTechnicalReport.publication17List}" var="publication17" label="#{publication17.label}"/>
+          <f:selectItems value="#{createTechnicalReport.publication18List}" var="publication18" label="#{publication18.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

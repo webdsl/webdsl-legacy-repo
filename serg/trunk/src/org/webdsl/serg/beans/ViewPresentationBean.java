@@ -70,6 +70,15 @@ import org.webdsl.serg.domain.*;
     return presentation;
   }
 
+  @End public String createNewResearchProject()
+  { 
+    ResearchProject var25 = new ResearchProject();
+    ResearchProject researchProject0 = var25;
+    this.getPresentation().getProjects().add(researchProject0);
+    em.persist(this.getPresentation());
+    return "/" + "editResearchProject" + ".seam?" + ("researchProject" + "=" + researchProject0.getId() + "");
+  }
+
   @DataModel("person55List") private List<Person> person55List;
 
   public List<Person> getPerson55List()
