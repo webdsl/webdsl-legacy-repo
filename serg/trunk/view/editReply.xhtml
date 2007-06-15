@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:t="http://myfaces.apache.org/tomahawk" xmlns:rich="http://richfaces.ajax4jsf.org/rich">
+<head>    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title></title>
+    <link href="stylesheet/webdsl.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <div class="main">
+    <div class="outersidebar">
+    <div class="logo"> <s:link view="/home.xhtml" propagation="none"> <h:graphicImage value="/img/serg-logo-color-smaller.png"/> </s:link> </div>
+    
+    <div class="sidebar"></div>
+    </div>
+    
+    <div class="outerbody">
+    <div class="menubar">
+    <div class="menu">
+      <ul>
+        
+      <li>
+         <h:outputText value="People"/> 
+      <ul>
+        
+      <ui:repeat var="person116" value="#{editReply.person116List}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person116.id}"/> <h:outputText value="#{person116.name}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <h:outputText value="Projects"/> 
+      <ul>
+        
+      <ui:repeat var="project116" value="#{editReply.project116List}"> 
+      <h:column>
+      <li>
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project116.id}"/> <h:outputText value="#{project116.acronym}"/> </s:link> 
+      </li>
+    </h:column> 
+    </ui:repeat>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <s:link view="/manage.xhtml" propagation="none"> <h:outputText value="Manage"/> </s:link> 
+      <ul>
+        
+    <div class="manageMenu"></div>
+    
+      </ul>
+    
+      </li>
+    
+      </ul>
+    
+      <ul>
+        
+      <li>
+         <s:link view="/login.xhtml" propagation="none"> <h:outputText value="Login"/> </s:link> 
+      </li>
+    
+      </ul>
+    </div>
+    </div>
+    
+    <div class="body">
+      <div class="section1">
+      <h1> <h:outputText value="Edit "/>  <h:outputText value="Reply"/>  <h:outputText value=" "/>  <h:outputText value="#{editReply.reply.name}"/> </h1>
+    
+      <h:form>
+        <s:validateAll>
+      <table>
+    <div class="editRowsReply">
+    <div class="editRowsObject"></div>
+    
+      <tr> <td> <h:outputText value="Subject"/> </td>  <td>
+      <s:decorate>
+        <h:inputText styleClass="inputString" value="#{editReply.reply.subject}"/>
+      </s:decorate>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Author"/> </td>  <td>
+    <div class="inputSimpleRefAssociation"> <h:outputText value="#{editReply.reply.author.name}"/>  <h:outputText value=" "/> 
+       <h:selectOneMenu value="#{editReply.newPerson206}" onchange="submit()" valueChangeListener="#{editReply.selectPerson206}">
+          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
+          <f:selectItems value="#{editReply.person206List}" var="person206" label="#{person206.label}"/>
+        </h:selectOneMenu>
+    </div>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Posted"/> </td>  <td>
+      <s:decorate>
+        <div>
+          <h:inputText id="inputDateId20" styleClass="inputDate" value="#{editReply.reply.posted}">
+             <s:convertDateTime pattern="dd/mm/yyyy"/>
+          </h:inputText>
+          <s:selectDate for="inputDateId20"/>
+        </div>
+      </s:decorate>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Discussion"/> </td>  <td>
+    <div class="inputSimpleRefAssociation"> <h:outputText value="#{editReply.reply.discussion.name}"/>  <h:outputText value=" "/> 
+       <h:selectOneMenu value="#{editReply.newDiscussion10}" onchange="submit()" valueChangeListener="#{editReply.selectDiscussion10}">
+          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
+          <f:selectItems value="#{editReply.discussion10List}" var="discussion10" label="#{discussion10.label}"/>
+        </h:selectOneMenu>
+    </div>
+    </td> </tr>
+    
+      <tr> <td> <h:outputText value="Text"/> </td>  <td>
+      <s:decorate>
+        <h:inputTextarea styleClass="inputTextarea" value="#{editReply.reply.text}"/>
+      </s:decorate>
+    </td> </tr>
+    </div>
+    </table>
+     
+       <h:commandButton type="submit" value="Save" action="#{editReply.save()}"/>
+     
+       <h:commandButton value="Cancel" action="#{editReply.cancel()}"/>
+    </s:validateAll>
+      </h:form>
+    </div>
+    </div>
+    
+    <div class="footer"> <h:outputText value="generated with "/>  <h:outputLink value="http://www.strategoxt.org"> <h:outputText value="Stratego/XT"/> </h:outputLink> </div>
+    </div>
+    </div>
+    </body>
+</html>
