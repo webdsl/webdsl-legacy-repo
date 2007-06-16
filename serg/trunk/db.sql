@@ -33,7 +33,7 @@ CREATE TABLE `Address` (
 
 /*!40000 ALTER TABLE `Address` DISABLE KEYS */;
 LOCK TABLES `Address` WRITE;
-INSERT INTO `Address` VALUES (1,'Mekelweg 4','Delft','+31 (015) 27 87088'),(2,'Ringwade 1','Nieuwegein','030'),(3,'Mekelweg 4','Delft','015'),(4,'','',''),(5,'','',''),(6,'','',''),(7,'','',''),(10,'','',''),(13,'','',''),(12,'','','');
+INSERT INTO `Address` VALUES (1,'Mekelweg 4','Delft','+31 (015) 27 87088'),(2,'Ringwade 1','Nieuwegein','030'),(3,'Mekelweg 4','Delft','015'),(4,'','',''),(5,'','',''),(6,'','',''),(7,'','',''),(10,'','',''),(13,'','',''),(12,'','',''),(14,'','','');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `Address` ENABLE KEYS */;
 
@@ -110,7 +110,7 @@ CREATE TABLE `BlogEntry` (
 
 /*!40000 ALTER TABLE `BlogEntry` DISABLE KEYS */;
 LOCK TABLES `BlogEntry` WRITE;
-INSERT INTO `BlogEntry` VALUES (1,'WebDSL rocks!','2007-01-06 00:06:00','only the text areas should be larger','but textareas should be a tad larger ... and now they are! It is even possible to include /wiki style markup/ in text. For instance, if I include a text between asterixes, as in *foo*, it should end up as bold text. But why do I get these strike through texts?\r\n\r\nOk, I don\'t get them anymore. It is also possible to define lists\r\n\r\n# first item\r\n# second item','wow, I can write more in the body of a blog entry! cool!',1,NULL),(2,'Global Variables','2007-01-26 00:04:00','should I really explain that?!','During on of our chats on current affairs, Martin mentioned that Lennart Kats had proposed to introduce global variables in Stratego. My first reaction was of course outrage. My second reaction was to immediately add it to the compiler. The proposal was not to add some sort of C style global variables, but rather to provide better syntax for a programming pattern that was already well established (although considered somewhat improper, at least by me).','',1,NULL),(3,'Janine kan het ook','2007-06-06 00:00:00',NULL,'hopen we','moet dat nou',NULL,NULL),(4,'foo bars','2007-06-07 00:00:00',NULL,'foo foo','bars',NULL,NULL),(5,'title here','2007-06-07 00:00:00',NULL,'foo','bar',NULL,NULL),(6,'title here','2007-06-07 07:51:11',NULL,'','',NULL,NULL),(7,'demo for martin','2007-06-07 00:00:00',NULL,'adfa','asdfa',1,NULL),(8,'for jonathan','2007-01-07 00:47:00',NULL,'foo','bar',1,NULL),(9,'demo for lennart','2007-01-08 00:28:00',NULL,'this ','that',1,NULL),(10,'title here','2007-06-08 13:34:55',NULL,'','',1,NULL),(11,'demo for steffen','2007-01-08 00:32:00',NULL,'lsajdf','asdf',1,NULL),(12,'Model-Driven Software Evolution: A Research Agenda','2007-01-26 00:02:00',NULL,'Software systems need to evolve, and systems built using model driven approaches are no exception. What complicates model driven engineering is that it requires multiple dimensions of evolution. In regular evolution, the modeling language is used to make the changes. In meta model evolution, changes are required to the modeling notation. In platform evolution, the code generators and application framework change to reflect new requirements on the target platform. Finally, in abstraction evolution, new modeling languages are added to the set of (modeling) languages to reflect increased understanding of a technical or business domain. While MDE has been optimized for regular evolution, presently little or no support exists for metamodel, platform and abstraction evolution. In this paper, we analyze the problems raised by the evolution of model based software systems and identify challenges to be addressed by research in this area.\r\n\r\n','As reads the abstract of the paper that Arie van Deursen, Jos Warmer, and I just submitted as final version to the MoDSE\'07 workshop to be held 20 March in Amsterdam (affiliated with CSMR\'07). The paper is a slight rewrite of the research proposal that gave us the funding for the MoDSE project that we are starting up at Delft University of Technology. We believe the proposal provides a good analysis of the challenges that are raised by the introduction of model based engineering in software development.',1,NULL);
+INSERT INTO `BlogEntry` VALUES (1,'WebDSL rocks!','2007-01-06 00:00:00','only the text areas should be larger','but textareas should be a tad larger ... and now they are! It is even possible to include /wiki style markup/ in text. For instance, if I include a text between asterixes, as in *foo*, it should end up as bold text. But why do I get these strike through texts?\r\n\r\nOk, I don\'t get them anymore. It is also possible to define lists\r\n\r\n# first item\r\n# second item','wow, I can write more in the body of a blog entry! cool!',1,NULL),(2,'Global Variables','2007-01-26 00:04:00','should I really explain that?!','During on of our chats on current affairs, Martin mentioned that Lennart Kats had proposed to introduce global variables in Stratego. My first reaction was of course outrage. My second reaction was to immediately add it to the compiler. The proposal was not to add some sort of C style global variables, but rather to provide better syntax for a programming pattern that was already well established (although considered somewhat improper, at least by me).','',1,NULL),(3,'Janine kan het ook','2007-06-06 00:00:00',NULL,'hopen we','moet dat nou',NULL,NULL),(4,'foo bars','2007-06-07 00:00:00',NULL,'foo foo','bars',NULL,NULL),(5,'title here','2007-06-07 00:00:00',NULL,'foo','bar',NULL,NULL),(6,'title here','2007-06-07 07:51:11',NULL,'','',NULL,NULL),(7,'demo for martin','2007-06-07 00:00:00',NULL,'adfa','asdfa',1,NULL),(8,'for jonathan','2007-01-07 00:47:00',NULL,'foo','bar',1,NULL),(9,'demo for lennart','2007-01-08 00:28:00',NULL,'this ','that',1,NULL),(10,'title here','2007-06-08 13:34:55',NULL,'','',1,NULL),(11,'demo for steffen','2007-01-08 00:32:00',NULL,'lsajdf','asdf',1,NULL),(12,'Model-Driven Software Evolution: A Research Agenda','2007-01-26 00:02:00',NULL,'Software systems need to evolve, and systems built using model driven approaches are no exception. What complicates model driven engineering is that it requires multiple dimensions of evolution. In regular evolution, the modeling language is used to make the changes. In meta model evolution, changes are required to the modeling notation. In platform evolution, the code generators and application framework change to reflect new requirements on the target platform. Finally, in abstraction evolution, new modeling languages are added to the set of (modeling) languages to reflect increased understanding of a technical or business domain. While MDE has been optimized for regular evolution, presently little or no support exists for metamodel, platform and abstraction evolution. In this paper, we analyze the problems raised by the evolution of model based software systems and identify challenges to be addressed by research in this area.\r\n\r\n','As reads the abstract of the paper that Arie van Deursen, Jos Warmer, and I just submitted as final version to the MoDSE\'07 workshop to be held 20 March in Amsterdam (affiliated with CSMR\'07). The paper is a slight rewrite of the research proposal that gave us the funding for the MoDSE project that we are starting up at Delft University of Technology. We believe the proposal provides a good analysis of the challenges that are raised by the introduction of model based engineering in software development.',1,NULL);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `BlogEntry` ENABLE KEYS */;
 
@@ -180,6 +180,50 @@ CREATE TABLE `Blog_Category` (
 LOCK TABLES `Blog_Category` WRITE;
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `Blog_Category` ENABLE KEYS */;
+
+--
+-- Table structure for table `Cart`
+--
+
+DROP TABLE IF EXISTS `Cart`;
+CREATE TABLE `Cart` (
+  `id` bigint(20) NOT NULL auto_increment,
+  `_shopper_id` bigint(20) default NULL,
+  PRIMARY KEY  (`id`),
+  KEY `FK1FEF402AB92365` (`_shopper_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Cart`
+--
+
+
+/*!40000 ALTER TABLE `Cart` DISABLE KEYS */;
+LOCK TABLES `Cart` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `Cart` ENABLE KEYS */;
+
+--
+-- Table structure for table `Cart_Product`
+--
+
+DROP TABLE IF EXISTS `Cart_Product`;
+CREATE TABLE `Cart_Product` (
+  `Cart_id` bigint(20) NOT NULL default '0',
+  `_products_id` bigint(20) NOT NULL default '0',
+  KEY `FK4332BAD0ABCEBDB8` (`Cart_id`),
+  KEY `FK4332BAD035461848` (`_products_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Cart_Product`
+--
+
+
+/*!40000 ALTER TABLE `Cart_Product` DISABLE KEYS */;
+LOCK TABLES `Cart_Product` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `Cart_Product` ENABLE KEYS */;
 
 --
 -- Table structure for table `Category`
@@ -353,6 +397,80 @@ UNLOCK TABLES;
 /*!40000 ALTER TABLE `Conference_Person` ENABLE KEYS */;
 
 --
+-- Table structure for table `Discussion`
+--
+
+DROP TABLE IF EXISTS `Discussion`;
+CREATE TABLE `Discussion` (
+  `id` bigint(20) NOT NULL auto_increment,
+  `_topic` varchar(255) default NULL,
+  `_author_id` bigint(20) default NULL,
+  `_text` mediumtext,
+  `_posted` datetime default NULL,
+  `_forum_id` bigint(20) default NULL,
+  PRIMARY KEY  (`id`),
+  KEY `FKA0F51448FC050EA3` (`_author_id`),
+  KEY `FKA0F51448EFEDE33B` (`_forum_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Discussion`
+--
+
+
+/*!40000 ALTER TABLE `Discussion` DISABLE KEYS */;
+LOCK TABLES `Discussion` WRITE;
+INSERT INTO `Discussion` VALUES (1,'How to make links to pages from Text blocks?',14,'It is great that we can write wiki style markup in Text blocks, but it only becomes real wiki if I can make wiki links, or rather WikiLinks to other pages. This doesn\'t seem possible. Any reason for that?','2007-01-14 00:06:00',1),(2,'Dates are broken',3,'In another discussion it was noted that Date support is broken. I think this is due to the use of the format string dd/mm/yyyy in the default date converter. I guess, mm stands for minutes rather than for month! Fix this please!','2007-01-14 00:06:00',1);
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `Discussion` ENABLE KEYS */;
+
+--
+-- Table structure for table `Discussion_Post`
+--
+
+DROP TABLE IF EXISTS `Discussion_Post`;
+CREATE TABLE `Discussion_Post` (
+  `Discussion_id` bigint(20) NOT NULL default '0',
+  `_posts_id` bigint(20) NOT NULL default '0',
+  KEY `FK51551E578978CA38` (`Discussion_id`),
+  KEY `FK51551E57BD5B6B04` (`_posts_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Discussion_Post`
+--
+
+
+/*!40000 ALTER TABLE `Discussion_Post` DISABLE KEYS */;
+LOCK TABLES `Discussion_Post` WRITE;
+INSERT INTO `Discussion_Post` VALUES (1,7),(1,6),(1,2),(1,1),(1,5),(1,3),(1,8);
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `Discussion_Post` ENABLE KEYS */;
+
+--
+-- Table structure for table `Discussion_Reply`
+--
+
+DROP TABLE IF EXISTS `Discussion_Reply`;
+CREATE TABLE `Discussion_Reply` (
+  `Discussion_id` bigint(20) NOT NULL default '0',
+  `_replies_id` bigint(20) NOT NULL default '0',
+  KEY `FKD9664413D39E6BFD` (`_replies_id`),
+  KEY `FKD96644138978CA38` (`Discussion_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Discussion_Reply`
+--
+
+
+/*!40000 ALTER TABLE `Discussion_Reply` DISABLE KEYS */;
+LOCK TABLES `Discussion_Reply` WRITE;
+INSERT INTO `Discussion_Reply` VALUES (1,3),(1,2);
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `Discussion_Reply` ENABLE KEYS */;
+
+--
 -- Table structure for table `FlickrImage`
 --
 
@@ -382,6 +500,51 @@ LOCK TABLES `FlickrImage` WRITE;
 INSERT INTO `FlickrImage` VALUES (1,'533515146','shadowed','eelcovisser','http://www.flickr.com/photos/eelcovisser/533515146/','http://farm2.static.flickr.com/1316/533515146_faa91c3e41_s.jpg','http://farm2.static.flickr.com/1316/533515146_faa91c3e41_t.jpg','http://farm2.static.flickr.com/1316/533515146_faa91c3e41_m.jpg','http://farm2.static.flickr.com/1316/533515146_faa91c3e41.jpg','http://farm2.static.flickr.com/1316/533515146_faa91c3e41_b.jpg','http://farm2.static.flickr.com/1316/533515146_e88394902a_o.jpg');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `FlickrImage` ENABLE KEYS */;
+
+--
+-- Table structure for table `Forum`
+--
+
+DROP TABLE IF EXISTS `Forum`;
+CREATE TABLE `Forum` (
+  `id` bigint(20) NOT NULL auto_increment,
+  `_title` varchar(255) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Forum`
+--
+
+
+/*!40000 ALTER TABLE `Forum` DISABLE KEYS */;
+LOCK TABLES `Forum` WRITE;
+INSERT INTO `Forum` VALUES (1,'WebDSL');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `Forum` ENABLE KEYS */;
+
+--
+-- Table structure for table `Forum_Discussion`
+--
+
+DROP TABLE IF EXISTS `Forum_Discussion`;
+CREATE TABLE `Forum_Discussion` (
+  `Forum_id` bigint(20) NOT NULL default '0',
+  `_discussions_id` bigint(20) NOT NULL default '0',
+  KEY `FK63225246EA88B1DC` (`Forum_id`),
+  KEY `FK63225246C1906C54` (`_discussions_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Forum_Discussion`
+--
+
+
+/*!40000 ALTER TABLE `Forum_Discussion` DISABLE KEYS */;
+LOCK TABLES `Forum_Discussion` WRITE;
+INSERT INTO `Forum_Discussion` VALUES (1,1),(1,2);
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `Forum_Discussion` ENABLE KEYS */;
 
 --
 -- Table structure for table `Issue`
@@ -532,9 +695,37 @@ CREATE TABLE `Person` (
 
 /*!40000 ALTER TABLE `Person` DISABLE KEYS */;
 LOCK TABLES `Person` WRITE;
-INSERT INTO `Person` VALUES (1,'Arie van Deursen','A.vanDeursen@tudelft.nl','http://www.st.ewi.tudelft.nl/~arie/','/img/arie-in-delft-klein.jpg',1,1,NULL),(2,'Jos Warmer','jos@ordina.nl','http://www.klasse.nl/who/cv-jos.html','/img/jos.gif',NULL,2,NULL),(3,'Eelco Visser','visser@acm.org','http://www.eelcovisser.net','/img/eelcovisser.jpg',1,1,1),(4,'Martin Bravenboer','martin.bravenboer@gmail.com','http://martin.bravenboer.name','/img/bravenboer.jpg',NULL,3,NULL),(5,'Joost Visser','joost@sig.nl','','',NULL,4,NULL),(6,'Lennart Kats','lennart@cs.uu.nl','','',NULL,5,NULL),(7,'Eelco Dolstra','eelco@cs.uu.nl','','',NULL,6,NULL),(8,'Eric Bouwer','eric@cs.uu.nl','','',NULL,7,NULL),(11,'Gerardo Geest','gerardo@tudelft.nl','','',NULL,10,NULL),(14,'Sander Mak','sander@cs.uu.nl','','',NULL,13,NULL),(13,'Ali Mesbah','ali','','',NULL,12,NULL);
+INSERT INTO `Person` VALUES (1,'Arie van Deursen','A.vanDeursen@tudelft.nl','http://www.st.ewi.tudelft.nl/~arie/','/img/arie-in-delft-klein.jpg',1,1,NULL),(2,'Jos Warmer','jos@ordina.nl','http://www.klasse.nl/who/cv-jos.html','/img/jos.gif',NULL,2,NULL),(3,'Eelco Visser','visser@acm.org','http://www.eelcovisser.net','/img/eelcovisser.jpg',1,1,1),(4,'Martin Bravenboer','martin.bravenboer@gmail.com','http://martin.bravenboer.name','/img/bravenboer.jpg',NULL,3,NULL),(15,'Zef Hemel','zef@hemel.net','','',NULL,14,NULL),(5,'Joost Visser','joost@sig.nl','','',NULL,4,NULL),(6,'Lennart Kats','lennart@cs.uu.nl','','',NULL,5,NULL),(7,'Eelco Dolstra','eelco@cs.uu.nl','','',NULL,6,NULL),(8,'Eric Bouwer','eric@cs.uu.nl','','',NULL,7,NULL),(11,'Gerardo Geest','gerardo@tudelft.nl','','',NULL,10,NULL),(14,'Sander Mak','sander@cs.uu.nl','','',NULL,13,NULL),(13,'Ali Mesbah','ali','','',NULL,12,NULL);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `Person` ENABLE KEYS */;
+
+--
+-- Table structure for table `Post`
+--
+
+DROP TABLE IF EXISTS `Post`;
+CREATE TABLE `Post` (
+  `id` bigint(20) NOT NULL auto_increment,
+  `_subject` varchar(255) default NULL,
+  `_posted` datetime default NULL,
+  `_text` mediumtext,
+  `_author_id` bigint(20) default NULL,
+  `_discussion_id` bigint(20) default NULL,
+  PRIMARY KEY  (`id`),
+  KEY `FK260CC0FC050EA3` (`_author_id`),
+  KEY `FK260CC05AC69C39` (`_discussion_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Post`
+--
+
+
+/*!40000 ALTER TABLE `Post` DISABLE KEYS */;
+LOCK TABLES `Post` WRITE;
+INSERT INTO `Post` VALUES (1,'Seam Text sucks','2007-01-14 00:06:00','Well, the current implementation of WebDSL uses Seam\'s formatted text feature. This was clearly designed for demonstration purposes, since it is a rather retarded markup language. For instance, a hyphen, gives rise to -strike through- text. Can you imagine that?! Furthermore, there is no documentation about the markup language other than a fragment of an example. No idea whether it has a facility for links.\r\n\r\nBut anyway, this implementation sucks for all purpose other than demonstration, and should be replaced with a decent implementation, which should fairly easy to do, or so I understand.',3,1),(2,'Is this working or what?','2007-01-14 00:06:00','Where are the links to posts in the discussion? They should show up automatically, when new posts are added from a discussion.',3,1),(3,'Ok, I\'ll try again','2007-01-14 00:06:00','Hmm, the discussion link is not showing up. But that figures since it is never set in the first place. However, the post *should* be added to the discussion. Let\'s see if that happens. (By the way, the Date support is severely broken. should look into that.)',3,1),(4,'Now it seems to work','2007-01-14 00:06:00','That last post was indeed added to the discussion. Now it would be nice to get the back link set automatically as well. And to inline posts in the discussion page. (I guess this thread is digressing a bit.)',3,1),(5,'For demonstration','2007-01-14 00:06:00','foo bar',3,2),(6,'this one should be removed','2007-01-14 00:06:00','',4,1),(7,'This one should have been added to the discussion','2007-01-15 00:06:00','asdfd',3,2),(8,'','2007-06-15 12:47:29','',NULL,NULL);
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `Post` ENABLE KEYS */;
 
 --
 -- Table structure for table `Presentation`
@@ -589,6 +780,36 @@ UNLOCK TABLES;
 /*!40000 ALTER TABLE `Presentation_ResearchProject` ENABLE KEYS */;
 
 --
+-- Table structure for table `Product`
+--
+
+DROP TABLE IF EXISTS `Product`;
+CREATE TABLE `Product` (
+  `id` bigint(20) NOT NULL auto_increment,
+  `_name` varchar(255) default NULL,
+  `_price` int(11) NOT NULL default '0',
+  `_photo` varchar(255) default NULL,
+  `_shop_id` bigint(20) default NULL,
+  `_next_id` bigint(20) default NULL,
+  `_previous_id` bigint(20) default NULL,
+  PRIMARY KEY  (`id`),
+  KEY `FK50C664CF928F4CB9` (`_shop_id`),
+  KEY `FK50C664CF522C61D5` (`_previous_id`),
+  KEY `FK50C664CFADDC08D9` (`_next_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Product`
+--
+
+
+/*!40000 ALTER TABLE `Product` DISABLE KEYS */;
+LOCK TABLES `Product` WRITE;
+INSERT INTO `Product` VALUES (1,'dead tree at crater lake',10,'http://farm1.static.flickr.com/126/340810941_bc36438db2_m_d.jpg',1,2,2),(2,'out of the box',25,'http://farm1.static.flickr.com/152/331865743_c34b069061_m_d.jpg',1,3,1),(3,'château de jumilhac',30,'http://farm1.static.flickr.com/116/315118157_e892f20ddb_m_d.jpg',1,1,2);
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `Product` ENABLE KEYS */;
+
+--
 -- Table structure for table `Publication`
 --
 
@@ -621,7 +842,7 @@ CREATE TABLE `Publication` (
 
 /*!40000 ALTER TABLE `Publication` DISABLE KEYS */;
 LOCK TABLES `Publication` WRITE;
-INSERT INTO `Publication` VALUES ('Publication',1,'Model-Driven Software Evolution: A Research Agenda',2007,'Software systems need to evolve, and systems built using model driven approaches are no exception.  What complicates model driven engineering is that it requires multiple dimensions of evolution. In regular evolution, the modeling language is used to make the changes. In meta model evolution, changes are required to the modeling notation.  In platform evolution, the code generators and application framework change to reflect new requirements on the target platform. Finally, in abstraction evolution, new modeling languages are added to the set of (modeling) languages to reflect increased understanding of a technical or business domain.  While MDE has been optimized for regular evolution, presently little or no support exists for metamodel, platform and abstraction evolution. In this paper, we analyze the problems raised by the evolution of model based software systems and identify challenges to be addressed by research in this area.','foo.pdf',NULL,NULL,NULL,'',NULL,NULL,NULL,NULL),('Publication',2,'Domain-Specific Language Engineering',2007,'The goal of domain-specific languages (DSLs) is to increase the productivity of software engineers by abstracting from low-level boilerplate code. Introduction of DSLs in the software development process requires a smooth workflow for the production of DSLs themselves. This tutorial gives an overview of all aspects of DSL engineering: domain analysis, language design, syntax definition, code generation, deployment, and evolution, discussing research challenges on the way. The concepts are illustrated with DSLs for web applications built using several DSLs for DSL engineering: SDF for syntax definition, Stratego/XT for code generation, and Nix for software deployment.','',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),('Publication',3,'Grammar Engineering Support for Precedence Rule Recovery and Compatibility Checking',2007,'A wide range of parser generators are used to generate parsers for programming languages. The grammar formalisms\r\nthat come with parser generators provide different approaches for defining operator precedence. Some generators (e.g.\r\nYACC) support precedence declarations, others require the grammar to be unambiguous, thus encoding the precedence\r\nrules. Even if the grammar formalism provides precedence rules, a particular grammar might not use it. The result is\r\ngrammar variants implementing the same language. For the C language, the GNU Compiler uses YACC with precedence\r\nrules, the C Transformers uses SDF without priorities, while the SDF library does use priorities. For PHP, Zend uses YACC\r\nwith precedence rules, whereas PHP front uses SDF with priority and associativity declarations.\r\nThe variance between grammars raises the question if the precedence rules of one grammar are compatible with those of\r\nanother. This is usually not obvious, since some languages have complex precedence rules. Also, for some parser generators\r\nthe semantics of precedence rules is defined operationally, which makes it hard to reason about their effect on the defined\r\nlanguage. We present a method and tool for comparing the precedence rules of different grammars and parser generators.\r\nAlthough it is undecidable whether two grammars define the same language, this tool provides support for comparing and\r\nrecovering precedence rules, which is especially useful for reliable migration of a grammar from one grammar formalism to\r\nanother. We evaluate our method by the application to non trivial mainstream programming languages, such as PHP and C.','http://swerl.tudelft.nl/twiki/pub/Main/TechnicalReports/TUD-SERG-2007-004.pdf',NULL,NULL,NULL,'',NULL,NULL,NULL,NULL),('Publication',4,'Transformations for Abstractions',2005,'The transformation language Stratego provides highlevel\r\nabstractions for implementation of a wide range of\r\ntransformations. Our aim is to integrate transformation in\r\nthe software development process and make it available to\r\nprogrammers. This requires the transformations provided\r\nby the programming environment to be extensible. This paper\r\npresents a case study in the implementation of extensible\r\nprogramming environments using Stratego, by developing a\r\nsmall collection of language extensions and several typical\r\ntransformations for these languages.','http://www.cs.uu.nl/research/techreps/repo/CS-2005/2005-034.pdf',NULL,NULL,NULL,'',NULL,NULL,NULL,NULL),('Publication',5,'DSL Interaction',2008,'If you have more than one DSL, they need to interact!','notyet.pdf',NULL,NULL,NULL,'',NULL,NULL,NULL,NULL),('InProceedings',7,'Preventing Injection Attacks with Syntax Embeddings',2007,'Software written in one language often needs to construct sentences in another language, such as SQL queries, XML output, or shell command invocations. This is almost always done using unhygienic string manipulation, the concatenation of constants and client supplied strings. A client can then supply specially crafted input that causes the constructed sentence to be interpreted in an unintended way, leading to an injection attack. We describe a more natural style of programming that yields code that is impervious to injections by construction. Our approach embeds the grammars of the guest languages (e.g., SQL) into that of the host language (e.g., Java) and automatically generates code that maps the embedded language to constructs in the host language that reconstruct the embedded sentences, adding escaping functions where appropriate. This approach is generic, meaning that it can be applied with relative ease to any combination of host and guest languages.','',NULL,NULL,NULL,'A Host and Guest Language Independent Approach','',NULL,1,NULL);
+INSERT INTO `Publication` VALUES ('Publication',1,'Model-Driven Software Evolution: A Research Agenda',2007,'Software systems need to evolve, and systems built using model driven approaches are no exception.  What complicates model driven engineering is that it requires multiple dimensions of evolution. In regular evolution, the modeling language is used to make the changes. In meta model evolution, changes are required to the modeling notation.  In platform evolution, the code generators and application framework change to reflect new requirements on the target platform. Finally, in abstraction evolution, new modeling languages are added to the set of (modeling) languages to reflect increased understanding of a technical or business domain.  While MDE has been optimized for regular evolution, presently little or no support exists for metamodel, platform and abstraction evolution. In this paper, we analyze the problems raised by the evolution of model based software systems and identify challenges to be addressed by research in this area.','foo.pdf',NULL,NULL,NULL,'',NULL,NULL,NULL,NULL),('Publication',2,'Domain-Specific Language Engineering',2007,'The goal of domain specific languages (DSLs) is to increase the productivity of software engineers by abstracting from low level boilerplate code. Introduction of DSLs in the software development process requires a smooth workflow for the production of DSLs themselves. This tutorial gives an overview of all aspects of DSL engineering: domain analysis, language design, syntax definition, code generation, deployment, and evolution, discussing research challenges on the way. The concepts are illustrated with DSLs for web applications built using several DSLs for DSL engineering: SDF for syntax definition, Stratego/XT for code generation, and Nix for software deployment.','',NULL,NULL,NULL,'',NULL,NULL,NULL,NULL),('Publication',3,'Grammar Engineering Support for Precedence Rule Recovery and Compatibility Checking',2007,'A wide range of parser generators are used to generate parsers for programming languages. The grammar formalisms\r\nthat come with parser generators provide different approaches for defining operator precedence. Some generators (e.g.\r\nYACC) support precedence declarations, others require the grammar to be unambiguous, thus encoding the precedence\r\nrules. Even if the grammar formalism provides precedence rules, a particular grammar might not use it. The result is\r\ngrammar variants implementing the same language. For the C language, the GNU Compiler uses YACC with precedence\r\nrules, the C Transformers uses SDF without priorities, while the SDF library does use priorities. For PHP, Zend uses YACC\r\nwith precedence rules, whereas PHP front uses SDF with priority and associativity declarations.\r\nThe variance between grammars raises the question if the precedence rules of one grammar are compatible with those of\r\nanother. This is usually not obvious, since some languages have complex precedence rules. Also, for some parser generators\r\nthe semantics of precedence rules is defined operationally, which makes it hard to reason about their effect on the defined\r\nlanguage. We present a method and tool for comparing the precedence rules of different grammars and parser generators.\r\nAlthough it is undecidable whether two grammars define the same language, this tool provides support for comparing and\r\nrecovering precedence rules, which is especially useful for reliable migration of a grammar from one grammar formalism to\r\nanother. We evaluate our method by the application to non trivial mainstream programming languages, such as PHP and C.','http://swerl.tudelft.nl/twiki/pub/Main/TechnicalReports/TUD-SERG-2007-004.pdf',NULL,NULL,NULL,'',NULL,NULL,NULL,NULL),('Publication',4,'Transformations for Abstractions',2005,'The transformation language Stratego provides highlevel\r\nabstractions for implementation of a wide range of\r\ntransformations. Our aim is to integrate transformation in\r\nthe software development process and make it available to\r\nprogrammers. This requires the transformations provided\r\nby the programming environment to be extensible. This paper\r\npresents a case study in the implementation of extensible\r\nprogramming environments using Stratego, by developing a\r\nsmall collection of language extensions and several typical\r\ntransformations for these languages.','http://www.cs.uu.nl/research/techreps/repo/CS-2005/2005-034.pdf',NULL,NULL,NULL,'',NULL,NULL,NULL,NULL),('Publication',5,'DSL Interaction',2008,'If you have more than one DSL, they need to interact!','notyet.pdf',NULL,NULL,NULL,'',NULL,NULL,NULL,NULL),('InProceedings',7,'Preventing Injection Attacks with Syntax Embeddings',2007,'Software written in one language often needs to construct sentences in another language, such as SQL queries, XML output, or shell command invocations. This is almost always done using unhygienic string manipulation, the concatenation of constants and client supplied strings. A client can then supply specially crafted input that causes the constructed sentence to be interpreted in an unintended way, leading to an injection attack. We describe a more natural style of programming that yields code that is impervious to injections by construction. Our approach embeds the grammars of the guest languages (e.g., SQL) into that of the host language (e.g., Java) and automatically generates code that maps the embedded language to constructs in the host language that reconstruct the embedded sentences, adding escaping functions where appropriate. This approach is generic, meaning that it can be applied with relative ease to any combination of host and guest languages.','',NULL,NULL,NULL,'A Host and Guest Language Independent Approach','',NULL,1,NULL),('Publication',8,'Concrete Syntax for Objects',2004,'Application programmer\'s interfaces give access to domain knowledge encapsulated in class libraries without providing the appropriate notation for expressing domain composition. Since object oriented languages are designed for extensibility and reuse, the language constructs are often sufficient for expressing domain abstractions at the semantic level. However, they do not provide the right abstractions at the syntactic level. In this paper we describe MetaBorg, a method for providing concrete syntax for domain abstractions to application programmers. The method consists of embedding domain specific languages in a general purpose host language and assimilating the embedded domain code into the surrounding host code. Instead of extending the implementation of the host language, the assimilation phase implements domain abstractions in terms of existing APIs leaving the host language undisturbed. Indeed, MetaBorg can be considered a method for promoting APIs to the language level. The method is supported by proven and available technology, i.e., the syntax definition formalism SDF and the program transformation language and toolset Stratego XT. We illustrate the method with applications in three domains: code generation, XML generation, and user interface construction. ','http://www.cs.uu.nl/~visser/ftp/BV04.pdf',NULL,NULL,NULL,'Domain-Specific Language Embedding and Assimilation without Restrictions',NULL,NULL,NULL,NULL),('Publication',9,'FooBar',0,'','',NULL,NULL,NULL,'',NULL,NULL,NULL,NULL);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `Publication` ENABLE KEYS */;
 
@@ -646,7 +867,7 @@ CREATE TABLE `Publication_Person` (
 
 /*!40000 ALTER TABLE `Publication_Person` DISABLE KEYS */;
 LOCK TABLES `Publication_Person` WRITE;
-INSERT INTO `Publication_Person` VALUES (1,2,NULL),(1,3,NULL),(2,3,NULL),(7,4,NULL),(2,11,NULL),(1,1,NULL),(5,14,NULL),(4,3,NULL),(3,4,NULL),(3,3,NULL),(3,8,NULL),(7,7,NULL),(7,3,NULL);
+INSERT INTO `Publication_Person` VALUES (1,2,NULL),(1,3,NULL),(8,4,NULL),(7,4,NULL),(2,3,NULL),(1,1,NULL),(8,3,NULL),(5,14,NULL),(4,3,NULL),(3,4,NULL),(3,3,NULL),(3,8,NULL),(7,7,NULL),(7,3,NULL);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `Publication_Person` ENABLE KEYS */;
 
@@ -670,9 +891,37 @@ CREATE TABLE `Publication_ResearchProject` (
 
 /*!40000 ALTER TABLE `Publication_ResearchProject` DISABLE KEYS */;
 LOCK TABLES `Publication_ResearchProject` WRITE;
-INSERT INTO `Publication_ResearchProject` VALUES (1,1),(1,2),(2,1),(3,1),(3,2),(4,2),(5,1),(7,3);
+INSERT INTO `Publication_ResearchProject` VALUES (1,1),(1,2),(2,1),(3,1),(3,2),(4,2),(5,1),(7,3),(8,2),(8,3);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `Publication_ResearchProject` ENABLE KEYS */;
+
+--
+-- Table structure for table `Reply`
+--
+
+DROP TABLE IF EXISTS `Reply`;
+CREATE TABLE `Reply` (
+  `id` bigint(20) NOT NULL auto_increment,
+  `_subject` varchar(255) default NULL,
+  `_posted` datetime default NULL,
+  `_text` mediumtext,
+  `_author_id` bigint(20) default NULL,
+  `_discussion_id` bigint(20) default NULL,
+  PRIMARY KEY  (`id`),
+  KEY `FK4B322CAFC050EA3` (`_author_id`),
+  KEY `FK4B322CA5AC69C39` (`_discussion_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Reply`
+--
+
+
+/*!40000 ALTER TABLE `Reply` DISABLE KEYS */;
+LOCK TABLES `Reply` WRITE;
+INSERT INTO `Reply` VALUES (1,'Seam Text sucks','2007-06-15 13:02:28','Well, the current implementation of WebDSL uses Seam\'s formatted text feature. This was clearly designed for demonstration purposes, since it is a rather retarded markup language. For instance, a hyphen, gives rise to -strike through- text. Can you imagine that?! Furthermore, there is no documentation about the markup language other than a fragment of an example. No idea whether it has a facility for links.\r\n\r\nBut anyway, this implementation sucks for all purpose other than demonstration, and should be replaced with a decent implementation, which should fairly easy to do, or so I understand.',3,1),(2,'Seam FormattedText sucks','2007-01-15 00:08:00','Well, the current implementation of WebDSL uses Seam\'s formatted text feature. This was clearly designed for demonstration purposes, since it is a rather retarded markup language. For instance, a hyphen, gives rise to -strike through- text. Can you imagine that?! Furthermore, there is no documentation about the markup language other than a fragment of an example. No idea whether it has a facility for links.\r\n\r\nBut anyway, this implementation sucks for all purpose other than demonstration, and should be replaced with a decent implementation, which should fairly easy to do, or so I understand.',3,1),(3,'An evolution moment','2007-01-15 00:00:00','This is not really on topic, but I just had a real evolution moment. I decided that Reply would be a better name for elements of a discussion, so renamed the entity named Post to Reply. Everything worked fine, but my Post entries had vanished! One measure that already helps a bit is to keep at least the old definition around. Then the data in the database are still accessible. Next step would be to migrate these data automatically. ',3,1),(4,'Let\'s test that delete button','2007-06-15 13:18:26','This is an entry to be deleted.',15,1);
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `Reply` ENABLE KEYS */;
 
 --
 -- Table structure for table `ResearchGroup`
@@ -765,7 +1014,7 @@ CREATE TABLE `ResearchGroup_Person` (
 
 /*!40000 ALTER TABLE `ResearchGroup_Person` DISABLE KEYS */;
 LOCK TABLES `ResearchGroup_Person` WRITE;
-INSERT INTO `ResearchGroup_Person` VALUES (1,1),(1,3),(1,4),(2,3),(2,4);
+INSERT INTO `ResearchGroup_Person` VALUES (1,1),(1,3),(1,4),(1,13),(1,15),(2,3),(2,4);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `ResearchGroup_Person` ENABLE KEYS */;
 
@@ -839,7 +1088,7 @@ CREATE TABLE `ResearchProject_Person` (
 
 /*!40000 ALTER TABLE `ResearchProject_Person` DISABLE KEYS */;
 LOCK TABLES `ResearchProject_Person` WRITE;
-INSERT INTO `ResearchProject_Person` VALUES (1,1),(1,2),(1,3),(2,3),(2,4),(3,3),(3,4),(3,7);
+INSERT INTO `ResearchProject_Person` VALUES (1,1),(1,2),(1,3),(1,15),(2,3),(2,4),(3,3),(3,4),(3,7);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `ResearchProject_Person` ENABLE KEYS */;
 
@@ -863,9 +1112,80 @@ CREATE TABLE `ResearchProject_Publication` (
 
 /*!40000 ALTER TABLE `ResearchProject_Publication` DISABLE KEYS */;
 LOCK TABLES `ResearchProject_Publication` WRITE;
-INSERT INTO `ResearchProject_Publication` VALUES (1,1),(1,2);
+INSERT INTO `ResearchProject_Publication` VALUES (1,1),(1,2),(2,4),(2,8);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `ResearchProject_Publication` ENABLE KEYS */;
+
+--
+-- Table structure for table `Shop`
+--
+
+DROP TABLE IF EXISTS `Shop`;
+CREATE TABLE `Shop` (
+  `id` bigint(20) NOT NULL auto_increment,
+  `_name` varchar(255) default NULL,
+  `_last_id` bigint(20) default NULL,
+  `_first_id` bigint(20) default NULL,
+  PRIMARY KEY  (`id`),
+  KEY `FK274F163CF5BA56` (`_last_id`),
+  KEY `FK274F1697D2D69A` (`_first_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Shop`
+--
+
+
+/*!40000 ALTER TABLE `Shop` DISABLE KEYS */;
+LOCK TABLES `Shop` WRITE;
+INSERT INTO `Shop` VALUES (1,'Eelco\'s Photo Shop',3,1);
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `Shop` ENABLE KEYS */;
+
+--
+-- Table structure for table `Shop_Cart`
+--
+
+DROP TABLE IF EXISTS `Shop_Cart`;
+CREATE TABLE `Shop_Cart` (
+  `Shop_id` bigint(20) NOT NULL default '0',
+  `_carts_id` bigint(20) NOT NULL default '0',
+  KEY `FKF9F756C99099F004` (`_carts_id`),
+  KEY `FKF9F756C95FFA5F8` (`Shop_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Shop_Cart`
+--
+
+
+/*!40000 ALTER TABLE `Shop_Cart` DISABLE KEYS */;
+LOCK TABLES `Shop_Cart` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `Shop_Cart` ENABLE KEYS */;
+
+--
+-- Table structure for table `Shop_Product`
+--
+
+DROP TABLE IF EXISTS `Shop_Product`;
+CREATE TABLE `Shop_Product` (
+  `Shop_id` bigint(20) NOT NULL default '0',
+  `_products_id` bigint(20) NOT NULL default '0',
+  KEY `FKA29FE4A635461848` (`_products_id`),
+  KEY `FKA29FE4A65FFA5F8` (`Shop_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Shop_Product`
+--
+
+
+/*!40000 ALTER TABLE `Shop_Product` DISABLE KEYS */;
+LOCK TABLES `Shop_Product` WRITE;
+INSERT INTO `Shop_Product` VALUES (1,2),(1,1),(1,3);
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `Shop_Product` ENABLE KEYS */;
 
 --
 -- Table structure for table `User`

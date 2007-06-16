@@ -38,8 +38,8 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("createForum" + ".initalize()");
-    Forum var75 = new Forum();
-    forum = var75;
+    Forum var77 = new Forum();
+    forum = var77;
     initDiscussion9List();
     initPerson115List();
     initProject110List();

@@ -148,11 +148,11 @@
     <div class="inputAssociationSet">
       <ul>
         
-      <ui:repeat var="person202" value="#{editTask.task.assignedList}">
+      <ui:repeat var="person213" value="#{editTask.task.assignedList}">
     <div class="listAssociation">
       <li>
-         <h:outputText value="#{person202.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{editTask.removePerson20(person202)}"/>
+         <h:outputText value="#{person213.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{editTask.removePerson20(person213)}"/>
     
       </li>
     </div>
@@ -160,9 +160,9 @@
     
       </ul>
     
-       <h:selectOneMenu value="#{editTask.newPerson203}" onchange="submit()" valueChangeListener="#{editTask.selectPerson203}">
+       <h:selectOneMenu value="#{editTask.newPerson214}" onchange="submit()" valueChangeListener="#{editTask.selectPerson214}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{editTask.person203List}" var="person203" label="#{person203.label}"/>
+          <f:selectItems value="#{editTask.person214List}" var="person214" label="#{person214.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

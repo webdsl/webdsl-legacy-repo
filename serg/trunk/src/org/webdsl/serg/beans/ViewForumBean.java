@@ -72,8 +72,8 @@ import org.webdsl.serg.domain.*;
 
   @End public String createNewDiscussion(Forum forum00, java.util.List<Discussion> discussions0)
   { 
-    Discussion var76 = new Discussion();
-    Discussion discussion00 = var76;
+    Discussion var78 = new Discussion();
+    Discussion discussion00 = var78;
     discussions0.add(discussion00);
     em.persist(forum00);
     return "/" + "editDiscussion" + ".seam?" + ("discussion" + "=" + discussion00.getId() + "");

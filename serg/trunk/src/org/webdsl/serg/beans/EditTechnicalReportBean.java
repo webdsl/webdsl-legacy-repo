@@ -47,9 +47,9 @@ import org.webdsl.serg.domain.*;
     { 
       technicalReport = em.find(TechnicalReport.class, technicalReportId);
     }
-    Person var35 = new Person();
-    newAuthor2 = var35;
-    initPerson159List();
+    Person var37 = new Person();
+    newAuthor2 = var37;
+    initPerson169List();
     initResearchProject31List();
     initPublication22List();
     initPerson67List();
@@ -75,21 +75,21 @@ import org.webdsl.serg.domain.*;
     return technicalReport;
   }
 
-  public void removePerson2(Person person158)
+  public void removePerson2(Person person168)
   { 
-    this.getTechnicalReport().getAuthors().remove(person158);
+    this.getTechnicalReport().getAuthors().remove(person168);
   }
 
-  public void addPerson2(Person person158)
+  public void addPerson2(Person person168)
   { 
-    this.getTechnicalReport().getAuthors().add(person158);
+    this.getTechnicalReport().getAuthors().add(person168);
   }
 
   public void addNewAuthor()
   { 
     this.getTechnicalReport().getAuthors().add(this.getNewAuthor2());
-    Person var34 = new Person();
-    newAuthor2 = var34;
+    Person var36 = new Person();
+    newAuthor2 = var36;
   }
 
   public void removeResearchProject6(ResearchProject researchProject29)
@@ -118,44 +118,44 @@ import org.webdsl.serg.domain.*;
     return "/" + "viewTechnicalReport" + ".seam?" + ("technicalReport" + "=" + technicalReport.getId() + "");
   }
 
-  private String newPerson159;
+  private String newPerson169;
 
-  public void setNewPerson159(String p)
+  public void setNewPerson169(String p)
   { 
-    newPerson159 = p;
+    newPerson169 = p;
   }
 
-  public String getNewPerson159()
+  public String getNewPerson169()
   { 
-    return newPerson159;
+    return newPerson169;
   }
 
-  public void selectPerson159(ValueChangeEvent event)
+  public void selectPerson169(ValueChangeEvent event)
   { 
-    log.info("selectPerson159" + ": new value = " + " " + event.getNewValue());
+    log.info("selectPerson169" + ": new value = " + " " + event.getNewValue());
     Long id = new Long((String)event.getNewValue());
     if(id > 0)
     { 
-      Person person159 = em.find(Person.class, id);
-      addPerson2(person159);
+      Person person169 = em.find(Person.class, id);
+      addPerson2(person169);
     }
   }
 
-  @DataModel("person159List") private Map<String, String> person159List;
+  @DataModel("person169List") private Map<String, String> person169List;
 
-  public Map<String, String> getPerson159List()
+  public Map<String, String> getPerson169List()
   { 
-    return person159List;
+    return person169List;
   }
 
-  @Factory("person159List") public void initPerson159List()
+  @Factory("person169List") public void initPerson169List()
   { 
-    log.info("initPerson159List");
-    person159List = new HashMap<String, String>();
+    log.info("initPerson169List");
+    person169List = new HashMap<String, String>();
     for(Object o : em.createQuery("from " + "Person").getResultList())
     { 
       Person p = (Person)o;
-      person159List.put(p.getName(), p.getId().toString());
+      person169List.put(p.getName(), p.getId().toString());
     }
   }
 

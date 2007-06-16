@@ -72,8 +72,8 @@ import org.webdsl.serg.domain.*;
 
   @End public String createNewPerson(Conference conference00, java.util.List<Person> editors0)
   { 
-    Person var49 = new Person();
-    Person person11 = var49;
+    Person var51 = new Person();
+    Person person11 = var51;
     editors0.add(person11);
     em.persist(conference00);
     return "/" + "editPerson" + ".seam?" + ("person" + "=" + person11.getId() + "");

@@ -72,8 +72,8 @@ import org.webdsl.serg.domain.*;
 
   @End public String createNewIssue(Issue issue110, java.util.Set<Issue> issues3)
   { 
-    Issue var73 = new Issue();
-    Issue issue03 = var73;
+    Issue var75 = new Issue();
+    Issue issue03 = var75;
     issues3.add(issue03);
     em.persist(issue110);
     return "/" + "editIssue" + ".seam?" + ("issue" + "=" + issue03.getId() + "");
@@ -81,8 +81,8 @@ import org.webdsl.serg.domain.*;
 
   @End public String createNewPerson(Issue issue23, java.util.Set<Person> assigned3)
   { 
-    Person var74 = new Person();
-    Person person413 = var74;
+    Person var76 = new Person();
+    Person person413 = var76;
     assigned3.add(person413);
     em.persist(issue23);
     return "/" + "editPerson" + ".seam?" + ("person" + "=" + person413.getId() + "");

@@ -147,11 +147,11 @@
     <div class="inputAssociationSet">
       <ul>
         
-      <ui:repeat var="person189" value="#{createIssue.issue.assignedList}">
+      <ui:repeat var="person199" value="#{createIssue.issue.assignedList}">
     <div class="listAssociation">
       <li>
-         <h:outputText value="#{person189.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{createIssue.removePerson15(person189)}"/>
+         <h:outputText value="#{person199.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{createIssue.removePerson15(person199)}"/>
     
       </li>
     </div>
@@ -159,9 +159,9 @@
     
       </ul>
     
-       <h:selectOneMenu value="#{createIssue.newPerson190}" onchange="submit()" valueChangeListener="#{createIssue.selectPerson190}">
+       <h:selectOneMenu value="#{createIssue.newPerson200}" onchange="submit()" valueChangeListener="#{createIssue.selectPerson200}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createIssue.person190List}" var="person190" label="#{person190.label}"/>
+          <f:selectItems value="#{createIssue.person200List}" var="person200" label="#{person200.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

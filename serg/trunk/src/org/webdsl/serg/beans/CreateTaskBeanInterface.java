@@ -15,9 +15,9 @@ import org.webdsl.serg.domain.*;
 
   public void addIssue7(Issue issue41);
 
-  public void removePerson21(Person person204);
+  public void removePerson21(Person person215);
 
-  public void addPerson21(Person person204);
+  public void addPerson21(Person person215);
 
   public String cancel();
 
@@ -33,15 +33,15 @@ import org.webdsl.serg.domain.*;
 
   public void initIssue42List();
 
-  public void setNewPerson205(String p);
+  public void setNewPerson216(String p);
 
-  public String getNewPerson205();
+  public String getNewPerson216();
 
-  public void selectPerson205(ValueChangeEvent event);
+  public void selectPerson216(ValueChangeEvent event);
 
-  public Map<String, String> getPerson205List();
+  public Map<String, String> getPerson216List();
 
-  public void initPerson205List();
+  public void initPerson216List();
 
   public List<Person> getPerson111List();
 

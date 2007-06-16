@@ -148,11 +148,11 @@
     <div class="inputAssociationSet">
       <ul>
         
-      <ui:repeat var="person199" value="#{createBug.bug.assignedList}">
+      <ui:repeat var="person209" value="#{createBug.bug.assignedList}">
     <div class="listAssociation">
       <li>
-         <h:outputText value="#{person199.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{createBug.removePerson19(person199)}"/>
+         <h:outputText value="#{person209.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{createBug.removePerson19(person209)}"/>
     
       </li>
     </div>
@@ -160,9 +160,9 @@
     
       </ul>
     
-       <h:selectOneMenu value="#{createBug.newPerson200}" onchange="submit()" valueChangeListener="#{createBug.selectPerson200}">
+       <h:selectOneMenu value="#{createBug.newPerson211}" onchange="submit()" valueChangeListener="#{createBug.selectPerson211}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createBug.person200List}" var="person200" label="#{person200.label}"/>
+          <f:selectItems value="#{createBug.person211List}" var="person211" label="#{person211.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

@@ -17,19 +17,19 @@ import org.webdsl.serg.domain.*;
 
   public void delete(Reply reply2);
 
-  public void setPerson0(Person person132);
+  public void setPerson0(Person person142);
 
   public void post();
 
-  public void setNewPerson131(String p);
+  public void setNewPerson141(String p);
 
-  public String getNewPerson131();
+  public String getNewPerson141();
 
-  public void selectPerson131(ValueChangeEvent event);
+  public void selectPerson141(ValueChangeEvent event);
 
-  public Map<String, String> getPerson131List();
+  public Map<String, String> getPerson141List();
 
-  public void initPerson131List();
+  public void initPerson141List();
 
   public List<Person> getPerson25List();
 

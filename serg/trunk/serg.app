@@ -20,6 +20,7 @@ imports app/groups
 imports app/news
 imports app/issues
 imports app/forum
+imports app/shop
 
 section home.
 

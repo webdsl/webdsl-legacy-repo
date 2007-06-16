@@ -38,8 +38,8 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("createCategory" + ".initalize()");
-    Category var23 = new Category();
-    category = var23;
+    Category var25 = new Category();
+    category = var25;
     initPerson49List();
     initProject39List();
   }

@@ -38,11 +38,11 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("createTechnicalReport" + ".initalize()");
-    TechnicalReport var37 = new TechnicalReport();
-    technicalReport = var37;
-    Person var38 = new Person();
-    newAuthor3 = var38;
-    initPerson161List();
+    TechnicalReport var39 = new TechnicalReport();
+    technicalReport = var39;
+    Person var40 = new Person();
+    newAuthor3 = var40;
+    initPerson171List();
     initResearchProject33List();
     initPublication24List();
     initPerson68List();
@@ -52,21 +52,21 @@ import org.webdsl.serg.domain.*;
   @Destroy @Remove public void destroy()
   { }
 
-  public void removePerson3(Person person160)
+  public void removePerson3(Person person170)
   { 
-    this.getTechnicalReport().getAuthors().remove(person160);
+    this.getTechnicalReport().getAuthors().remove(person170);
   }
 
-  public void addPerson3(Person person160)
+  public void addPerson3(Person person170)
   { 
-    this.getTechnicalReport().getAuthors().add(person160);
+    this.getTechnicalReport().getAuthors().add(person170);
   }
 
   public void addNewAuthor()
   { 
     this.getTechnicalReport().getAuthors().add(this.getNewAuthor3());
-    Person var36 = new Person();
-    newAuthor3 = var36;
+    Person var38 = new Person();
+    newAuthor3 = var38;
   }
 
   public void removeResearchProject7(ResearchProject researchProject32)
@@ -95,44 +95,44 @@ import org.webdsl.serg.domain.*;
     return "/" + "viewTechnicalReport" + ".seam?" + ("technicalReport" + "=" + technicalReport.getId() + "");
   }
 
-  private String newPerson161;
+  private String newPerson171;
 
-  public void setNewPerson161(String p)
+  public void setNewPerson171(String p)
   { 
-    newPerson161 = p;
+    newPerson171 = p;
   }
 
-  public String getNewPerson161()
+  public String getNewPerson171()
   { 
-    return newPerson161;
+    return newPerson171;
   }
 
-  public void selectPerson161(ValueChangeEvent event)
+  public void selectPerson171(ValueChangeEvent event)
   { 
-    log.info("selectPerson161" + ": new value = " + " " + event.getNewValue());
+    log.info("selectPerson171" + ": new value = " + " " + event.getNewValue());
     Long id = new Long((String)event.getNewValue());
     if(id > 0)
     { 
-      Person person161 = em.find(Person.class, id);
-      addPerson3(person161);
+      Person person171 = em.find(Person.class, id);
+      addPerson3(person171);
     }
   }
 
-  @DataModel("person161List") private Map<String, String> person161List;
+  @DataModel("person171List") private Map<String, String> person171List;
 
-  public Map<String, String> getPerson161List()
+  public Map<String, String> getPerson171List()
   { 
-    return person161List;
+    return person171List;
   }
 
-  @Factory("person161List") public void initPerson161List()
+  @Factory("person171List") public void initPerson171List()
   { 
-    log.info("initPerson161List");
-    person161List = new HashMap<String, String>();
+    log.info("initPerson171List");
+    person171List = new HashMap<String, String>();
     for(Object o : em.createQuery("from " + "Person").getResultList())
     { 
       Person p = (Person)o;
-      person161List.put(p.getName(), p.getId().toString());
+      person171List.put(p.getName(), p.getId().toString());
     }
   }
 

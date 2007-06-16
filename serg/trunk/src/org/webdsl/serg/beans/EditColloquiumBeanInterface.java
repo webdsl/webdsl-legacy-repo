@@ -15,7 +15,7 @@ import org.webdsl.serg.domain.*;
 
   public Colloquium getColloquium();
 
-  public void setPerson7(Person person146);
+  public void setPerson7(Person person156);
 
   public void setResearchGroup0(ResearchGroup researchGroup9);
 
@@ -31,15 +31,15 @@ import org.webdsl.serg.domain.*;
 
   public String save();
 
-  public void setNewPerson145(String p);
+  public void setNewPerson155(String p);
 
-  public String getNewPerson145();
+  public String getNewPerson155();
 
-  public void selectPerson145(ValueChangeEvent event);
+  public void selectPerson155(ValueChangeEvent event);
 
-  public Map<String, String> getPerson145List();
+  public Map<String, String> getPerson155List();
 
-  public void initPerson145List();
+  public void initPerson155List();
 
   public void setNewResearchGroup8(String p);
 
