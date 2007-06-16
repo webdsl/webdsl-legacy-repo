@@ -15,7 +15,7 @@ import org.webdsl.serg.domain.*;
 
   public Blog getBlog();
 
-  public void setPerson3(Person person148);
+  public void setPerson3(Person person149);
 
   public void removeBlogEntry0(BlogEntry blogEntry6);
 
@@ -29,15 +29,15 @@ import org.webdsl.serg.domain.*;
 
   public String save();
 
-  public void setNewPerson147(String p);
+  public void setNewPerson148(String p);
 
-  public String getNewPerson147();
+  public String getNewPerson148();
 
-  public void selectPerson147(ValueChangeEvent event);
+  public void selectPerson148(ValueChangeEvent event);
 
-  public Map<String, String> getPerson147List();
+  public Map<String, String> getPerson148List();
 
-  public void initPerson147List();
+  public void initPerson148List();
 
   public void setNewBlogEntry7(String p);
 

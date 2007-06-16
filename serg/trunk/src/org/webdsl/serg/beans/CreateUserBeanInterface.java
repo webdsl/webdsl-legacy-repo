@@ -11,21 +11,21 @@ import org.webdsl.serg.domain.*;
 
   public void destroy();
 
-  public void setPerson2(Person person146);
+  public void setPerson2(Person person147);
 
   public String cancel();
 
   public String save();
 
-  public void setNewPerson145(String p);
+  public void setNewPerson146(String p);
 
-  public String getNewPerson145();
+  public String getNewPerson146();
 
-  public void selectPerson145(ValueChangeEvent event);
+  public void selectPerson146(ValueChangeEvent event);
 
-  public Map<String, String> getPerson145List();
+  public Map<String, String> getPerson146List();
 
-  public void initPerson145List();
+  public void initPerson146List();
 
   public List<Person> getPerson28List();
 

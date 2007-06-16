@@ -15,9 +15,9 @@ import org.webdsl.serg.domain.*;
 
   public Publication getPublication();
 
-  public void removePerson0(Person person163);
+  public void removePerson0(Person person164);
 
-  public void addPerson0(Person person163);
+  public void addPerson0(Person person164);
 
   public void addNewAuthor();
 
@@ -29,15 +29,15 @@ import org.webdsl.serg.domain.*;
 
   public String save();
 
-  public void setNewPerson164(String p);
+  public void setNewPerson165(String p);
 
-  public String getNewPerson164();
+  public String getNewPerson165();
 
-  public void selectPerson164(ValueChangeEvent event);
+  public void selectPerson165(ValueChangeEvent event);
 
-  public Map<String, String> getPerson164List();
+  public Map<String, String> getPerson165List();
 
-  public void initPerson164List();
+  public void initPerson165List();
 
   public void setNewResearchProject25(String p);
 

@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person122" value="#{createReply.person122List}"> 
+      <ui:repeat var="person123" value="#{createReply.person123List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person122.id}"/> <h:outputText value="#{person122.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person123.id}"/> <h:outputText value="#{person123.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -99,9 +99,9 @@
     
       <tr> <td> <h:outputText value="Author"/> </td>  <td>
     <div class="inputSimpleRefAssociation"> <h:outputText value="#{createReply.reply.author.name}"/>  <h:outputText value=" "/> 
-       <h:selectOneMenu value="#{createReply.newPerson224}" onchange="submit()" valueChangeListener="#{createReply.selectPerson224}">
+       <h:selectOneMenu value="#{createReply.newPerson225}" onchange="submit()" valueChangeListener="#{createReply.selectPerson225}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createReply.person224List}" var="person224" label="#{person224.label}"/>
+          <f:selectItems value="#{createReply.person225List}" var="person225" label="#{person225.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

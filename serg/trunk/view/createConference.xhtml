@@ -113,19 +113,19 @@
     <div class="inputAssociationList">
       <ul>
         
-      <ui:repeat var="person180" value="#{createConference.conference.editors}">
+      <ui:repeat var="person181" value="#{createConference.conference.editors}">
       <li>
-         <h:outputText value="#{person180.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{createConference.removePerson7(person180)}"/>
+         <h:outputText value="#{person181.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{createConference.removePerson7(person181)}"/>
     
       </li>
     </ui:repeat>
     
       </ul>
     
-       <h:selectOneMenu value="#{createConference.newPerson181}" onchange="submit()" valueChangeListener="#{createConference.selectPerson181}">
+       <h:selectOneMenu value="#{createConference.newPerson182}" onchange="submit()" valueChangeListener="#{createConference.selectPerson182}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createConference.person181List}" var="person181" label="#{person181.label}"/>
+          <f:selectItems value="#{createConference.person182List}" var="person182" label="#{person182.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

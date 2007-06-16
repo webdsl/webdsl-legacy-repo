@@ -38,10 +38,10 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("createIssue" + ".initalize()");
-    Issue var65 = new Issue();
-    issue = var65;
+    Issue var67 = new Issue();
+    issue = var67;
     initIssue27List();
-    initPerson200List();
+    initPerson201List();
     initPerson99List();
     initProject89List();
   }
@@ -59,14 +59,14 @@ import org.webdsl.serg.domain.*;
     this.getIssue().getIssues().add(issue26);
   }
 
-  public void removePerson15(Person person199)
+  public void removePerson15(Person person200)
   { 
-    this.getIssue().getAssigned().remove(person199);
+    this.getIssue().getAssigned().remove(person200);
   }
 
-  public void addPerson15(Person person199)
+  public void addPerson15(Person person200)
   { 
-    this.getIssue().getAssigned().add(person199);
+    this.getIssue().getAssigned().add(person200);
   }
 
   @End public String cancel()
@@ -121,44 +121,44 @@ import org.webdsl.serg.domain.*;
     }
   }
 
-  private String newPerson200;
+  private String newPerson201;
 
-  public void setNewPerson200(String p)
+  public void setNewPerson201(String p)
   { 
-    newPerson200 = p;
+    newPerson201 = p;
   }
 
-  public String getNewPerson200()
+  public String getNewPerson201()
   { 
-    return newPerson200;
+    return newPerson201;
   }
 
-  public void selectPerson200(ValueChangeEvent event)
+  public void selectPerson201(ValueChangeEvent event)
   { 
-    log.info("selectPerson200" + ": new value = " + " " + event.getNewValue());
+    log.info("selectPerson201" + ": new value = " + " " + event.getNewValue());
     Long id = new Long((String)event.getNewValue());
     if(id > 0)
     { 
-      Person person200 = em.find(Person.class, id);
-      addPerson15(person200);
+      Person person201 = em.find(Person.class, id);
+      addPerson15(person201);
     }
   }
 
-  @DataModel("person200List") private Map<String, String> person200List;
+  @DataModel("person201List") private Map<String, String> person201List;
 
-  public Map<String, String> getPerson200List()
+  public Map<String, String> getPerson201List()
   { 
-    return person200List;
+    return person201List;
   }
 
-  @Factory("person200List") public void initPerson200List()
+  @Factory("person201List") public void initPerson201List()
   { 
-    log.info("initPerson200List");
-    person200List = new HashMap<String, String>();
+    log.info("initPerson201List");
+    person201List = new HashMap<String, String>();
     for(Object o : em.createQuery("from " + "Person").getResultList())
     { 
       Person p = (Person)o;
-      person200List.put(p.getName(), p.getId().toString());
+      person201List.put(p.getName(), p.getId().toString());
     }
   }
 

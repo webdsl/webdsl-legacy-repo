@@ -48,7 +48,7 @@ import org.webdsl.serg.domain.*;
       issue = em.find(Issue.class, issueId);
     }
     initIssue25List();
-    initPerson198List();
+    initPerson199List();
     initPerson98List();
     initProject88List();
   }
@@ -82,14 +82,14 @@ import org.webdsl.serg.domain.*;
     this.getIssue().getIssues().add(issue24);
   }
 
-  public void removePerson14(Person person197)
+  public void removePerson14(Person person198)
   { 
-    this.getIssue().getAssigned().remove(person197);
+    this.getIssue().getAssigned().remove(person198);
   }
 
-  public void addPerson14(Person person197)
+  public void addPerson14(Person person198)
   { 
-    this.getIssue().getAssigned().add(person197);
+    this.getIssue().getAssigned().add(person198);
   }
 
   @End public String cancel()
@@ -144,44 +144,44 @@ import org.webdsl.serg.domain.*;
     }
   }
 
-  private String newPerson198;
+  private String newPerson199;
 
-  public void setNewPerson198(String p)
+  public void setNewPerson199(String p)
   { 
-    newPerson198 = p;
+    newPerson199 = p;
   }
 
-  public String getNewPerson198()
+  public String getNewPerson199()
   { 
-    return newPerson198;
+    return newPerson199;
   }
 
-  public void selectPerson198(ValueChangeEvent event)
+  public void selectPerson199(ValueChangeEvent event)
   { 
-    log.info("selectPerson198" + ": new value = " + " " + event.getNewValue());
+    log.info("selectPerson199" + ": new value = " + " " + event.getNewValue());
     Long id = new Long((String)event.getNewValue());
     if(id > 0)
     { 
-      Person person198 = em.find(Person.class, id);
-      addPerson14(person198);
+      Person person199 = em.find(Person.class, id);
+      addPerson14(person199);
     }
   }
 
-  @DataModel("person198List") private Map<String, String> person198List;
+  @DataModel("person199List") private Map<String, String> person199List;
 
-  public Map<String, String> getPerson198List()
+  public Map<String, String> getPerson199List()
   { 
-    return person198List;
+    return person199List;
   }
 
-  @Factory("person198List") public void initPerson198List()
+  @Factory("person199List") public void initPerson199List()
   { 
-    log.info("initPerson198List");
-    person198List = new HashMap<String, String>();
+    log.info("initPerson199List");
+    person199List = new HashMap<String, String>();
     for(Object o : em.createQuery("from " + "Person").getResultList())
     { 
       Person p = (Person)o;
-      person198List.put(p.getName(), p.getId().toString());
+      person199List.put(p.getName(), p.getId().toString());
     }
   }
 

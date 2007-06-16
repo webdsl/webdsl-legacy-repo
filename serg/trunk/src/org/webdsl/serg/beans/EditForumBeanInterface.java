@@ -33,9 +33,9 @@ import org.webdsl.serg.domain.*;
 
   public void initDiscussion7List();
 
-  public List<Person> getPerson114List();
+  public List<Person> getPerson115List();
 
-  public void initPerson114List();
+  public void initPerson115List();
 
   public List<ResearchProject> getProject109List();
 

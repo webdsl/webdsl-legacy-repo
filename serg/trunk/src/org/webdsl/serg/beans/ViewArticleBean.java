@@ -72,8 +72,8 @@ import org.webdsl.serg.domain.*;
 
   @End public String createNewPerson(Publication publication03, java.util.List<Person> authors3)
   { 
-    Person var57 = new Person();
-    Person person03 = var57;
+    Person var59 = new Person();
+    Person person03 = var59;
     authors3.add(person03);
     em.persist(publication03);
     return "/" + "editPerson" + ".seam?" + ("person" + "=" + person03.getId() + "");
@@ -81,8 +81,8 @@ import org.webdsl.serg.domain.*;
 
   @End public String createNewResearchProject(Publication publication110, java.util.Set<ResearchProject> projects8)
   { 
-    ResearchProject var58 = new ResearchProject();
-    ResearchProject researchProject13 = var58;
+    ResearchProject var60 = new ResearchProject();
+    ResearchProject researchProject13 = var60;
     projects8.add(researchProject13);
     em.persist(publication110);
     return "/" + "editResearchProject" + ".seam?" + ("researchProject" + "=" + researchProject13.getId() + "");

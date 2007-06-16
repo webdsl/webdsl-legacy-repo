@@ -38,10 +38,10 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("createBug" + ".initalize()");
-    Bug var71 = new Bug();
-    bug = var71;
+    Bug var73 = new Bug();
+    bug = var73;
     initIssue37List();
-    initPerson211List();
+    initPerson212List();
     initPerson107List();
     initProject102List();
   }
@@ -59,14 +59,14 @@ import org.webdsl.serg.domain.*;
     this.getBug().getIssues().add(issue36);
   }
 
-  public void removePerson19(Person person209)
+  public void removePerson19(Person person211)
   { 
-    this.getBug().getAssigned().remove(person209);
+    this.getBug().getAssigned().remove(person211);
   }
 
-  public void addPerson19(Person person209)
+  public void addPerson19(Person person211)
   { 
-    this.getBug().getAssigned().add(person209);
+    this.getBug().getAssigned().add(person211);
   }
 
   @End public String cancel()
@@ -121,44 +121,44 @@ import org.webdsl.serg.domain.*;
     }
   }
 
-  private String newPerson211;
+  private String newPerson212;
 
-  public void setNewPerson211(String p)
+  public void setNewPerson212(String p)
   { 
-    newPerson211 = p;
+    newPerson212 = p;
   }
 
-  public String getNewPerson211()
+  public String getNewPerson212()
   { 
-    return newPerson211;
+    return newPerson212;
   }
 
-  public void selectPerson211(ValueChangeEvent event)
+  public void selectPerson212(ValueChangeEvent event)
   { 
-    log.info("selectPerson211" + ": new value = " + " " + event.getNewValue());
+    log.info("selectPerson212" + ": new value = " + " " + event.getNewValue());
     Long id = new Long((String)event.getNewValue());
     if(id > 0)
     { 
-      Person person211 = em.find(Person.class, id);
-      addPerson19(person211);
+      Person person212 = em.find(Person.class, id);
+      addPerson19(person212);
     }
   }
 
-  @DataModel("person211List") private Map<String, String> person211List;
+  @DataModel("person212List") private Map<String, String> person212List;
 
-  public Map<String, String> getPerson211List()
+  public Map<String, String> getPerson212List()
   { 
-    return person211List;
+    return person212List;
   }
 
-  @Factory("person211List") public void initPerson211List()
+  @Factory("person212List") public void initPerson212List()
   { 
-    log.info("initPerson211List");
-    person211List = new HashMap<String, String>();
+    log.info("initPerson212List");
+    person212List = new HashMap<String, String>();
     for(Object o : em.createQuery("from " + "Person").getResultList())
     { 
       Person p = (Person)o;
-      person211List.put(p.getName(), p.getId().toString());
+      person212List.put(p.getName(), p.getId().toString());
     }
   }
 

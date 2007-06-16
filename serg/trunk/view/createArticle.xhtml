@@ -106,19 +106,19 @@
     <div class="inputAssociationList">
       <ul>
         
-      <ui:repeat var="person185" value="#{createArticle.article.authors}">
+      <ui:repeat var="person186" value="#{createArticle.article.authors}">
       <li>
-         <h:outputText value="#{person185.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{createArticle.removePerson9(person185)}"/>
+         <h:outputText value="#{person186.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{createArticle.removePerson9(person186)}"/>
     
       </li>
     </ui:repeat>
     
       </ul>
     
-       <h:selectOneMenu value="#{createArticle.newPerson186}" onchange="submit()" valueChangeListener="#{createArticle.selectPerson186}">
+       <h:selectOneMenu value="#{createArticle.newPerson187}" onchange="submit()" valueChangeListener="#{createArticle.selectPerson187}">
           <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createArticle.person186List}" var="person186" label="#{person186.label}"/>
+          <f:selectItems value="#{createArticle.person187List}" var="person187" label="#{person187.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

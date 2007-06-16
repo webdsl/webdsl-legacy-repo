@@ -38,8 +38,8 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("createPerson" + ".initalize()");
-    Person var22 = new Person();
-    person = var22;
+    Person var24 = new Person();
+    person = var24;
     initUser7List();
     initBlog10List();
     initPerson37List();

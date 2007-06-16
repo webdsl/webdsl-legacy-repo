@@ -38,8 +38,8 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("createAddress" + ".initalize()");
-    Address var21 = new Address();
-    address = var21;
+    Address var23 = new Address();
+    address = var23;
     initPerson32List();
     initProject26List();
   }

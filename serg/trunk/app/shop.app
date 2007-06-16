@@ -74,11 +74,18 @@ section template .
         list{ listitem{ "Photo" list {
           photoMenu()
         } } }
+        list{ listitem{ navigate("Login", shopLogin(shop)) list {
+          loginMenu()
+        } } }
+        extraMenus()
       } }
       body()
       footer()
     }
   }
+  
+  define extraMenus() {}
+  define loginMenu() {}
   
   define shopLogo() {
     //image("http://farm1.static.flickr.com/72/162651609_026c457b83_s.jpg")
@@ -136,10 +143,43 @@ section photopage.
         
         par{image(product.photo)}
         
-        par{navigate("previous", viewProduct(product.previous)) " "
-            navigate("next", viewProduct(product.next))}
+        par{navigate("&lt;&lt;", viewProduct(product.previous)) " "
+            navigate("&gt;&gt;", viewProduct(product.next))}
         
         par{"Buy this photo for " text(product.price)}
       }
     }
   }
+  
+section client.
+
+  define page shopLogin(shop : Shop) {
+    mainShop(shop)
+    
+    var user : User := User{};
+    
+    define body() {
+      form{ 
+        table {
+          row { "username" input(user.username) }
+          row { "password" input(user.password) }
+        }
+        action("Login", login())
+      }
+    }
+    
+    action login() { 
+      //var users : List<User> :=
+      //    select u from User as u 
+      //     where (u._username = ~user.username) and (u._password = ~user.password);
+          
+      //if users.size() == 1 then
+      //  session.loggedInUserId := users.get(1).id;
+      //  return viewShop(shop);
+      //else
+      //  errorMessage("Wrong username/password combination");
+      //end
+      return viewShop(shop);
+    }
+  }
+

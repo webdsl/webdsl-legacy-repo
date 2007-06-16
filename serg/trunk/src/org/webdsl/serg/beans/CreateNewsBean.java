@@ -38,8 +38,8 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("createNews" + ".initalize()");
-    News var64 = new News();
-    news = var64;
+    News var66 = new News();
+    news = var66;
     initPerson95List();
     initProject85List();
   }
