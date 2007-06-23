@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person37" value="#{createPerson.person37List}"> 
+      <ui:repeat var="person38" value="#{createPerson.person38List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person37.id}"/> <h:outputText value="#{person37.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person38.id}"/> <h:outputText value="#{person38.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -137,9 +137,9 @@
     
       <tr> <td> <h:outputText value="User"/> </td>  <td>
     <div class="inputSimpleRefAssociation"> <h:outputText value="#{createPerson.person.user.name}"/>  <h:outputText value=" "/> 
-       <h:selectOneMenu value="#{createPerson.newUser7}" onchange="submit()" valueChangeListener="#{createPerson.selectUser7}">
-          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createPerson.user7List}" var="user7" label="#{user7.label}"/>
+       <h:selectOneMenu value="#{createPerson.newUser9}" onchange="submit()" valueChangeListener="#{createPerson.selectUser9}">
+          <s:selectItems value="#{createPerson.user9List}" var="user9" label="#{user9.name}" noSelectionLabel="Select"/>
+          <s:convertEntity/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -147,8 +147,8 @@
       <tr> <td> <h:outputText value="Blog"/> </td>  <td>
     <div class="inputSimpleRefAssociation"> <h:outputText value="#{createPerson.person.blog.name}"/>  <h:outputText value=" "/> 
        <h:selectOneMenu value="#{createPerson.newBlog10}" onchange="submit()" valueChangeListener="#{createPerson.selectBlog10}">
-          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createPerson.blog10List}" var="blog10" label="#{blog10.label}"/>
+          <s:selectItems value="#{createPerson.blog10List}" var="blog10" label="#{blog10.name}" noSelectionLabel="Select"/>
+          <s:convertEntity/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

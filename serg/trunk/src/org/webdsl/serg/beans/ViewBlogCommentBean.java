@@ -47,7 +47,7 @@ import org.webdsl.serg.domain.*;
     { 
       blogComment = em.find(BlogComment.class, blogCommentId);
     }
-    initPerson54List();
+    initPerson55List();
     initProject44List();
   }
 
@@ -70,18 +70,18 @@ import org.webdsl.serg.domain.*;
     return blogComment;
   }
 
-  @DataModel("person54List") private List<Person> person54List;
+  @DataModel("person55List") private List<Person> person55List;
 
-  public List<Person> getPerson54List()
+  public List<Person> getPerson55List()
   { 
-    log.info("getPerson54List");
-    return person54List;
+    log.info("getPerson55List");
+    return person55List;
   }
 
-  @Factory("person54List") public void initPerson54List()
+  @Factory("person55List") public void initPerson55List()
   { 
-    log.info("initPerson54List");
-    person54List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson55List");
+    person55List = em.createQuery("from " + "Person").getResultList();
   }
 
   @DataModel("project44List") private List<ResearchProject> project44List;

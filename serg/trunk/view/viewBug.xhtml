@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person108" value="#{viewBug.person108List}"> 
+      <ui:repeat var="person114" value="#{viewBug.person114List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person108.id}"/> <h:outputText value="#{person108.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person114.id}"/> <h:outputText value="#{person114.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -43,10 +43,10 @@
          <h:outputText value="Projects"/> 
       <ul>
         
-      <ui:repeat var="project103" value="#{viewBug.project103List}"> 
+      <ui:repeat var="project107" value="#{viewBug.project107List}"> 
       <h:column>
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project103.id}"/> <h:outputText value="#{project103.acronym}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project107.id}"/> <h:outputText value="#{project107.acronym}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -100,8 +100,8 @@
     </div>
     
       <p> <h:outputText value="Due"/>  <h:outputText value=" : "/> 
-       <h:outputText id="outputDateId9" styleClass="outputDate" value="#{viewBug.bug.due}">
-         <s:convertDateTime pattern="dd/mm/yyyy"/>
+       <h:outputText id="outputDateId10" styleClass="outputDate" value="#{viewBug.bug.due}">
+         <s:convertDateTime pattern="dd/MM/yyyy"/>
        </h:outputText>
     </p>
     
@@ -132,9 +132,9 @@
     
       <ul>
         
-      <ui:repeat var="person213" value="#{viewBug.bug.assignedList}">
+      <ui:repeat var="person223" value="#{viewBug.bug.assignedList}">
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person213.id}"/> <h:outputText value="#{person213.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person223.id}"/> <h:outputText value="#{person223.name}"/> </s:link> 
       </li>
     </ui:repeat>
     

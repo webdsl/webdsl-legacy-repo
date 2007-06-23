@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person111" value="#{editTask.person111List}"> 
+      <ui:repeat var="person116" value="#{editTask.person116List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person111.id}"/> <h:outputText value="#{person111.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person116.id}"/> <h:outputText value="#{person116.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -43,10 +43,10 @@
          <h:outputText value="Projects"/> 
       <ul>
         
-      <ui:repeat var="project105" value="#{editTask.project105List}"> 
+      <ui:repeat var="project109" value="#{editTask.project109List}"> 
       <h:column>
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project105.id}"/> <h:outputText value="#{project105.acronym}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project109.id}"/> <h:outputText value="#{project109.acronym}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -110,7 +110,9 @@
           <h:inputText id="inputDateId16" styleClass="inputDate" value="#{editTask.task.due}">
              <s:convertDateTime pattern="dd/MM/yyyy"/>
           </h:inputText>
-          <s:selectDate for="inputDateId16"/>
+          <s:selectDate for="inputDateId16" pattern="dd/MM/yyyy">
+             <h:graphicImage url="img/dtpick.gif"/>
+          </s:selectDate>
         </div>
       </s:decorate>
     </td> </tr>
@@ -138,8 +140,8 @@
       </ul>
     
        <h:selectOneMenu value="#{editTask.newIssue40}" onchange="submit()" valueChangeListener="#{editTask.selectIssue40}">
-          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{editTask.issue40List}" var="issue40" label="#{issue40.label}"/>
+          <s:selectItems value="#{editTask.issue40List}" var="issue40" label="#{issue40.name}" noSelectionLabel="Select"/>
+          <s:convertEntity/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -148,11 +150,11 @@
     <div class="inputAssociationSet">
       <ul>
         
-      <ui:repeat var="person214" value="#{editTask.task.assignedList}">
+      <ui:repeat var="person224" value="#{editTask.task.assignedList}">
     <div class="listAssociation">
       <li>
-         <h:outputText value="#{person214.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{editTask.removePerson20(person214)}"/>
+         <h:outputText value="#{person224.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{editTask.removePerson22(person224)}"/>
     
       </li>
     </div>
@@ -160,9 +162,9 @@
     
       </ul>
     
-       <h:selectOneMenu value="#{editTask.newPerson215}" onchange="submit()" valueChangeListener="#{editTask.selectPerson215}">
-          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{editTask.person215List}" var="person215" label="#{person215.label}"/>
+       <h:selectOneMenu value="#{editTask.newPerson225}" onchange="submit()" valueChangeListener="#{editTask.selectPerson225}">
+          <s:selectItems value="#{editTask.person225List}" var="person225" label="#{person225.name}" noSelectionLabel="Select"/>
+          <s:convertEntity/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

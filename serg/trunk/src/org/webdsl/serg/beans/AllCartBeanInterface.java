@@ -13,13 +13,13 @@ import org.webdsl.serg.domain.*;
 
   public void removeCart(Cart cart6);
 
-  public List<Person> getPerson139List();
+  public List<Person> getPerson144List();
 
-  public void initPerson139List();
+  public void initPerson144List();
 
-  public List<ResearchProject> getProject133List();
+  public List<ResearchProject> getProject137List();
 
-  public void initProject133List();
+  public void initProject137List();
 
   public List<Cart> getCart5List();
 

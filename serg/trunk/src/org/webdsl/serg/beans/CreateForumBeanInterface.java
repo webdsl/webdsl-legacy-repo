@@ -29,13 +29,13 @@ import org.webdsl.serg.domain.*;
 
   public void initDiscussion9List();
 
-  public List<Person> getPerson116List();
+  public List<Person> getPerson121List();
 
-  public void initPerson116List();
+  public void initPerson121List();
 
-  public List<ResearchProject> getProject110List();
+  public List<ResearchProject> getProject114List();
 
-  public void initProject110List();
+  public void initProject114List();
 
   public Forum getForum();
 

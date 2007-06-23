@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person116" value="#{createForum.person116List}"> 
+      <ui:repeat var="person121" value="#{createForum.person121List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person116.id}"/> <h:outputText value="#{person116.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person121.id}"/> <h:outputText value="#{person121.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -43,10 +43,10 @@
          <h:outputText value="Projects"/> 
       <ul>
         
-      <ui:repeat var="project110" value="#{createForum.project110List}"> 
+      <ui:repeat var="project114" value="#{createForum.project114List}"> 
       <h:column>
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project110.id}"/> <h:outputText value="#{project110.acronym}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project114.id}"/> <h:outputText value="#{project114.acronym}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -112,8 +112,8 @@
       </ul>
     
        <h:selectOneMenu value="#{createForum.newDiscussion9}" onchange="submit()" valueChangeListener="#{createForum.selectDiscussion9}">
-          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createForum.discussion9List}" var="discussion9" label="#{discussion9.label}"/>
+          <s:selectItems value="#{createForum.discussion9List}" var="discussion9" label="#{discussion9.name}" noSelectionLabel="Select"/>
+          <s:convertEntity/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

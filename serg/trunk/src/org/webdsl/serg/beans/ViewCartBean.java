@@ -47,8 +47,8 @@ import org.webdsl.serg.domain.*;
     { 
       cart = em.find(Cart.class, cartId);
     }
-    initPerson138List();
-    initProject132List();
+    initPerson143List();
+    initProject136List();
   }
 
   @Destroy @Remove public void destroy()
@@ -72,38 +72,38 @@ import org.webdsl.serg.domain.*;
 
   @End public String createNewProduct(Cart cart10, java.util.List<Product> products0)
   { 
-    Product var87 = new Product();
-    Product product10 = var87;
+    Product var90 = new Product();
+    Product product10 = var90;
     products0.add(product10);
     em.persist(cart10);
     return "/" + "editProduct" + ".seam?" + ("product" + "=" + product10.getId() + "");
   }
 
-  @DataModel("person138List") private List<Person> person138List;
+  @DataModel("person143List") private List<Person> person143List;
 
-  public List<Person> getPerson138List()
+  public List<Person> getPerson143List()
   { 
-    log.info("getPerson138List");
-    return person138List;
+    log.info("getPerson143List");
+    return person143List;
   }
 
-  @Factory("person138List") public void initPerson138List()
+  @Factory("person143List") public void initPerson143List()
   { 
-    log.info("initPerson138List");
-    person138List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson143List");
+    person143List = em.createQuery("from " + "Person").getResultList();
   }
 
-  @DataModel("project132List") private List<ResearchProject> project132List;
+  @DataModel("project136List") private List<ResearchProject> project136List;
 
-  public List<ResearchProject> getProject132List()
+  public List<ResearchProject> getProject136List()
   { 
-    log.info("getProject132List");
-    return project132List;
+    log.info("getProject136List");
+    return project136List;
   }
 
-  @Factory("project132List") public void initProject132List()
+  @Factory("project136List") public void initProject136List()
   { 
-    log.info("initProject132List");
-    project132List = em.createQuery("from " + "ResearchProject").getResultList();
+    log.info("initProject136List");
+    project136List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 }

@@ -13,9 +13,9 @@ import org.webdsl.serg.domain.*;
 
   public void removeBlogComment(BlogComment blogComment5);
 
-  public List<Person> getPerson55List();
+  public List<Person> getPerson56List();
 
-  public void initPerson55List();
+  public void initPerson56List();
 
   public List<ResearchProject> getProject45List();
 

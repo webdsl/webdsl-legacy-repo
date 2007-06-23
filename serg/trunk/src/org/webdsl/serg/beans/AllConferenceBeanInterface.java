@@ -13,13 +13,13 @@ import org.webdsl.serg.domain.*;
 
   public void removeConference(Conference conference5);
 
-  public List<Person> getPerson78List();
+  public List<Person> getPerson83List();
 
-  public void initPerson78List();
+  public void initPerson83List();
 
-  public List<ResearchProject> getProject68List();
+  public List<ResearchProject> getProject72List();
 
-  public void initProject68List();
+  public void initProject72List();
 
   public List<Conference> getConference4List();
 

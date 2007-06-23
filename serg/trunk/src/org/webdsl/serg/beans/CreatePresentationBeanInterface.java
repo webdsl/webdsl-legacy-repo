@@ -11,39 +11,39 @@ import org.webdsl.serg.domain.*;
 
   public void destroy();
 
-  public void setPerson10(Person person163);
+  public void setPerson10(Person person168);
 
-  public void removeResearchProject3(ResearchProject researchProject21);
+  public void removeResearchProject3(ResearchProject researchProject22);
 
-  public void addResearchProject3(ResearchProject researchProject21);
+  public void addResearchProject3(ResearchProject researchProject22);
 
   public String cancel();
 
   public String save();
 
-  public void setNewPerson162(String p);
+  public void setNewPerson167(String p);
 
-  public String getNewPerson162();
+  public String getNewPerson167();
 
-  public void selectPerson162(ValueChangeEvent event);
+  public void selectPerson167(ValueChangeEvent event);
 
-  public Map<String, String> getPerson162List();
+  public Map<String, String> getPerson167List();
 
-  public void initPerson162List();
+  public void initPerson167List();
 
-  public void setNewResearchProject22(String p);
+  public void setNewResearchProject23(String p);
 
-  public String getNewResearchProject22();
+  public String getNewResearchProject23();
 
-  public void selectResearchProject22(ValueChangeEvent event);
+  public void selectResearchProject23(ValueChangeEvent event);
 
-  public Map<String, String> getResearchProject22List();
+  public Map<String, String> getResearchProject23List();
 
-  public void initResearchProject22List();
+  public void initResearchProject23List();
 
-  public List<Person> getPerson60List();
+  public List<Person> getPerson61List();
 
-  public void initPerson60List();
+  public void initPerson61List();
 
   public List<ResearchProject> getProject50List();
 

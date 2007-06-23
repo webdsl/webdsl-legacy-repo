@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person126" value="#{editPost.person126List}"> 
+      <ui:repeat var="person131" value="#{editPost.person131List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person126.id}"/> <h:outputText value="#{person126.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person131.id}"/> <h:outputText value="#{person131.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -43,10 +43,10 @@
          <h:outputText value="Projects"/> 
       <ul>
         
-      <ui:repeat var="project120" value="#{editPost.project120List}"> 
+      <ui:repeat var="project124" value="#{editPost.project124List}"> 
       <h:column>
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project120.id}"/> <h:outputText value="#{project120.acronym}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project124.id}"/> <h:outputText value="#{project124.acronym}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -99,9 +99,9 @@
     
       <tr> <td> <h:outputText value="Author"/> </td>  <td>
     <div class="inputSimpleRefAssociation"> <h:outputText value="#{editPost.post.author.name}"/>  <h:outputText value=" "/> 
-       <h:selectOneMenu value="#{editPost.newPerson227}" onchange="submit()" valueChangeListener="#{editPost.selectPerson227}">
-          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{editPost.person227List}" var="person227" label="#{person227.label}"/>
+       <h:selectOneMenu value="#{editPost.newPerson237}" onchange="submit()" valueChangeListener="#{editPost.selectPerson237}">
+          <s:selectItems value="#{editPost.person237List}" var="person237" label="#{person237.name}" noSelectionLabel="Select"/>
+          <s:convertEntity/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -112,7 +112,9 @@
           <h:inputText id="inputDateId22" styleClass="inputDate" value="#{editPost.post.posted}">
              <s:convertDateTime pattern="dd/MM/yyyy"/>
           </h:inputText>
-          <s:selectDate for="inputDateId22"/>
+          <s:selectDate for="inputDateId22" pattern="dd/MM/yyyy">
+             <h:graphicImage url="img/dtpick.gif"/>
+          </s:selectDate>
         </div>
       </s:decorate>
     </td> </tr>
@@ -120,8 +122,8 @@
       <tr> <td> <h:outputText value="Discussion"/> </td>  <td>
     <div class="inputSimpleRefAssociation"> <h:outputText value="#{editPost.post.discussion.name}"/>  <h:outputText value=" "/> 
        <h:selectOneMenu value="#{editPost.newDiscussion15}" onchange="submit()" valueChangeListener="#{editPost.selectDiscussion15}">
-          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{editPost.discussion15List}" var="discussion15" label="#{discussion15.label}"/>
+          <s:selectItems value="#{editPost.discussion15List}" var="discussion15" label="#{discussion15.name}" noSelectionLabel="Select"/>
+          <s:convertEntity/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

@@ -7,6 +7,8 @@ section login.
     
     define sidebar(){}
     
+    var user : User;
+        
     define body() { 
       form {
         table {
@@ -16,9 +18,7 @@ section login.
         action("Login", login())
       }
     }
-    
-    var user : User;
-          
+
     action login() { 
       //var users : List<User>; // := user.search();
       //if true then // users.size() == 1 then

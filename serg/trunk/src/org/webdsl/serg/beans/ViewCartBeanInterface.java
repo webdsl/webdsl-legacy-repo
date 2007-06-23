@@ -17,11 +17,11 @@ import org.webdsl.serg.domain.*;
 
   public String createNewProduct(Cart cart10, java.util.List<Product> products0);
 
-  public List<Person> getPerson138List();
+  public List<Person> getPerson143List();
 
-  public void initPerson138List();
+  public void initPerson143List();
 
-  public List<ResearchProject> getProject132List();
+  public List<ResearchProject> getProject136List();
 
-  public void initProject132List();
+  public void initProject136List();
 }

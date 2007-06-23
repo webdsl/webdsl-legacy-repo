@@ -38,14 +38,14 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("createShop" + ".initalize()");
-    Shop var84 = new Shop();
-    shop = var84;
+    Shop var87 = new Shop();
+    shop = var87;
     initProduct15List();
     initCart11List();
     initProduct16List();
     initProduct18List();
-    initPerson131List();
-    initProject125List();
+    initPerson136List();
+    initProject129List();
   }
 
   @Destroy @Remove public void destroy()
@@ -107,12 +107,7 @@ import org.webdsl.serg.domain.*;
   public void selectProduct15(ValueChangeEvent event)
   { 
     log.info("selectProduct15" + ": new value = " + " " + event.getNewValue());
-    Long id = new Long((String)event.getNewValue());
-    if(id > 0)
-    { 
-      Product product15 = em.find(Product.class, id);
-      addProduct1(product15);
-    }
+    Product product15 = (Product)event.getNewValue();
   }
 
   @DataModel("product15List") private Map<String, String> product15List;
@@ -148,12 +143,7 @@ import org.webdsl.serg.domain.*;
   public void selectCart11(ValueChangeEvent event)
   { 
     log.info("selectCart11" + ": new value = " + " " + event.getNewValue());
-    Long id = new Long((String)event.getNewValue());
-    if(id > 0)
-    { 
-      Cart cart11 = em.find(Cart.class, id);
-      addCart1(cart11);
-    }
+    Cart cart11 = (Cart)event.getNewValue();
   }
 
   @DataModel("cart11List") private Map<String, String> cart11List;
@@ -189,12 +179,7 @@ import org.webdsl.serg.domain.*;
   public void selectProduct16(ValueChangeEvent event)
   { 
     log.info("selectProduct16" + ": new value = " + " " + event.getNewValue());
-    Long id = new Long((String)event.getNewValue());
-    if(id > 0)
-    { 
-      Product product16 = em.find(Product.class, id);
-      setProduct2(product16);
-    }
+    Product product16 = (Product)event.getNewValue();
   }
 
   @DataModel("product16List") private Map<String, String> product16List;
@@ -230,12 +215,7 @@ import org.webdsl.serg.domain.*;
   public void selectProduct18(ValueChangeEvent event)
   { 
     log.info("selectProduct18" + ": new value = " + " " + event.getNewValue());
-    Long id = new Long((String)event.getNewValue());
-    if(id > 0)
-    { 
-      Product product18 = em.find(Product.class, id);
-      setProduct3(product18);
-    }
+    Product product18 = (Product)event.getNewValue();
   }
 
   @DataModel("product18List") private Map<String, String> product18List;
@@ -256,32 +236,32 @@ import org.webdsl.serg.domain.*;
     }
   }
 
-  @DataModel("person131List") private List<Person> person131List;
+  @DataModel("person136List") private List<Person> person136List;
 
-  public List<Person> getPerson131List()
+  public List<Person> getPerson136List()
   { 
-    log.info("getPerson131List");
-    return person131List;
+    log.info("getPerson136List");
+    return person136List;
   }
 
-  @Factory("person131List") public void initPerson131List()
+  @Factory("person136List") public void initPerson136List()
   { 
-    log.info("initPerson131List");
-    person131List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson136List");
+    person136List = em.createQuery("from " + "Person").getResultList();
   }
 
-  @DataModel("project125List") private List<ResearchProject> project125List;
+  @DataModel("project129List") private List<ResearchProject> project129List;
 
-  public List<ResearchProject> getProject125List()
+  public List<ResearchProject> getProject129List()
   { 
-    log.info("getProject125List");
-    return project125List;
+    log.info("getProject129List");
+    return project129List;
   }
 
-  @Factory("project125List") public void initProject125List()
+  @Factory("project129List") public void initProject129List()
   { 
-    log.info("initProject125List");
-    project125List = em.createQuery("from " + "ResearchProject").getResultList();
+    log.info("initProject129List");
+    project129List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 
   private Shop shop;

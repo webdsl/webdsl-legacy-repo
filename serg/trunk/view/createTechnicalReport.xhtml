@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person68" value="#{createTechnicalReport.person68List}"> 
+      <ui:repeat var="person73" value="#{createTechnicalReport.person73List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person68.id}"/> <h:outputText value="#{person68.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person73.id}"/> <h:outputText value="#{person73.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -43,10 +43,10 @@
          <h:outputText value="Projects"/> 
       <ul>
         
-      <ui:repeat var="project58" value="#{createTechnicalReport.project58List}"> 
+      <ui:repeat var="project62" value="#{createTechnicalReport.project62List}"> 
       <h:column>
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project58.id}"/> <h:outputText value="#{project58.acronym}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project62.id}"/> <h:outputText value="#{project62.acronym}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -106,19 +106,19 @@
     <div class="inputAssociationList">
       <ul>
         
-      <ui:repeat var="person171" value="#{createTechnicalReport.technicalReport.authors}">
+      <ui:repeat var="person181" value="#{createTechnicalReport.technicalReport.authors}">
       <li>
-         <h:outputText value="#{person171.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{createTechnicalReport.removePerson3(person171)}"/>
+         <h:outputText value="#{person181.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{createTechnicalReport.removePerson5(person181)}"/>
     
       </li>
     </ui:repeat>
     
       </ul>
     
-       <h:selectOneMenu value="#{createTechnicalReport.newPerson172}" onchange="submit()" valueChangeListener="#{createTechnicalReport.selectPerson172}">
-          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createTechnicalReport.person172List}" var="person172" label="#{person172.label}"/>
+       <h:selectOneMenu value="#{createTechnicalReport.newPerson182}" onchange="submit()" valueChangeListener="#{createTechnicalReport.selectPerson182}">
+          <s:selectItems value="#{createTechnicalReport.person182List}" var="person182" label="#{person182.name}" noSelectionLabel="Select"/>
+          <s:convertEntity/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -159,11 +159,11 @@
     <div class="inputAssociationSet">
       <ul>
         
-      <ui:repeat var="researchProject32" value="#{createTechnicalReport.technicalReport.projectsList}">
+      <ui:repeat var="researchProject38" value="#{createTechnicalReport.technicalReport.projectsList}">
     <div class="listAssociation">
       <li>
-         <h:outputText value="#{researchProject32.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{createTechnicalReport.removeResearchProject7(researchProject32)}"/>
+         <h:outputText value="#{researchProject38.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{createTechnicalReport.removeResearchProject9(researchProject38)}"/>
     
       </li>
     </div>
@@ -171,9 +171,9 @@
     
       </ul>
     
-       <h:selectOneMenu value="#{createTechnicalReport.newResearchProject33}" onchange="submit()" valueChangeListener="#{createTechnicalReport.selectResearchProject33}">
-          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createTechnicalReport.researchProject33List}" var="researchProject33" label="#{researchProject33.label}"/>
+       <h:selectOneMenu value="#{createTechnicalReport.newResearchProject39}" onchange="submit()" valueChangeListener="#{createTechnicalReport.selectResearchProject39}">
+          <s:selectItems value="#{createTechnicalReport.researchProject39List}" var="researchProject39" label="#{researchProject39.name}" noSelectionLabel="Select"/>
+          <s:convertEntity/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -200,8 +200,8 @@
       <tr> <td> <h:outputText value="Preprintof"/> </td>  <td>
     <div class="inputSimpleRefAssociation"> <h:outputText value="#{createTechnicalReport.technicalReport.preprintof.name}"/>  <h:outputText value=" "/> 
        <h:selectOneMenu value="#{createTechnicalReport.newPublication24}" onchange="submit()" valueChangeListener="#{createTechnicalReport.selectPublication24}">
-          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createTechnicalReport.publication24List}" var="publication24" label="#{publication24.label}"/>
+          <s:selectItems value="#{createTechnicalReport.publication24List}" var="publication24" label="#{publication24.name}" noSelectionLabel="Select"/>
+          <s:convertEntity/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

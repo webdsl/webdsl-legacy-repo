@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person106" value="#{editBug.person106List}"> 
+      <ui:repeat var="person112" value="#{editBug.person112List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person106.id}"/> <h:outputText value="#{person106.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person112.id}"/> <h:outputText value="#{person112.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -43,10 +43,10 @@
          <h:outputText value="Projects"/> 
       <ul>
         
-      <ui:repeat var="project101" value="#{editBug.project101List}"> 
+      <ui:repeat var="project105" value="#{editBug.project105List}"> 
       <h:column>
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project101.id}"/> <h:outputText value="#{project101.acronym}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project105.id}"/> <h:outputText value="#{project105.acronym}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -110,7 +110,9 @@
           <h:inputText id="inputDateId14" styleClass="inputDate" value="#{editBug.bug.due}">
              <s:convertDateTime pattern="dd/MM/yyyy"/>
           </h:inputText>
-          <s:selectDate for="inputDateId14"/>
+          <s:selectDate for="inputDateId14" pattern="dd/MM/yyyy">
+             <h:graphicImage url="img/dtpick.gif"/>
+          </s:selectDate>
         </div>
       </s:decorate>
     </td> </tr>
@@ -138,8 +140,8 @@
       </ul>
     
        <h:selectOneMenu value="#{editBug.newIssue35}" onchange="submit()" valueChangeListener="#{editBug.selectIssue35}">
-          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{editBug.issue35List}" var="issue35" label="#{issue35.label}"/>
+          <s:selectItems value="#{editBug.issue35List}" var="issue35" label="#{issue35.name}" noSelectionLabel="Select"/>
+          <s:convertEntity/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -148,11 +150,11 @@
     <div class="inputAssociationSet">
       <ul>
         
-      <ui:repeat var="person208" value="#{editBug.bug.assignedList}">
+      <ui:repeat var="person219" value="#{editBug.bug.assignedList}">
     <div class="listAssociation">
       <li>
-         <h:outputText value="#{person208.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{editBug.removePerson18(person208)}"/>
+         <h:outputText value="#{person219.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{editBug.removePerson20(person219)}"/>
     
       </li>
     </div>
@@ -160,9 +162,9 @@
     
       </ul>
     
-       <h:selectOneMenu value="#{editBug.newPerson209}" onchange="submit()" valueChangeListener="#{editBug.selectPerson209}">
-          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{editBug.person209List}" var="person209" label="#{person209.label}"/>
+       <h:selectOneMenu value="#{editBug.newPerson220}" onchange="submit()" valueChangeListener="#{editBug.selectPerson220}">
+          <s:selectItems value="#{editBug.person220List}" var="person220" label="#{person220.name}" noSelectionLabel="Select"/>
+          <s:convertEntity/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

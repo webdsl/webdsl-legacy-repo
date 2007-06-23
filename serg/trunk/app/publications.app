@@ -19,6 +19,16 @@ section publications.
     abstract :: Text // note: abstract is a reserved word in java!
     projects -> Set<ResearchProject>
   }
+    
+  PublicationFoo {
+    title    :: String (name)
+    subtitle :: String
+    year     :: Int // use Year defined type
+    pdf      :: URL
+    authors  -> List<Person>
+    abstract :: Text // note: abstract is a reserved word in java!
+    projects -> Set<ResearchProject>
+  }
   
   TechnicalReport : Publication {
     number     :: Int

@@ -11,13 +11,13 @@ import org.webdsl.serg.domain.*;
 
   public void destroy();
 
-  public void removePerson13(Person person196);
+  public void removePerson15(Person person206);
 
-  public void addPerson13(Person person196);
+  public void addPerson15(Person person206);
 
-  public void removeResearchProject13(ResearchProject researchProject47);
+  public void removeResearchProject15(ResearchProject researchProject54);
 
-  public void addResearchProject13(ResearchProject researchProject47);
+  public void addResearchProject15(ResearchProject researchProject54);
 
   public void removeColloquium1(Colloquium colloquium9);
 
@@ -31,25 +31,25 @@ import org.webdsl.serg.domain.*;
 
   public String save();
 
-  public void setNewPerson197(String p);
+  public void setNewPerson207(String p);
 
-  public String getNewPerson197();
+  public String getNewPerson207();
 
-  public void selectPerson197(ValueChangeEvent event);
+  public void selectPerson207(ValueChangeEvent event);
 
-  public Map<String, String> getPerson197List();
+  public Map<String, String> getPerson207List();
 
-  public void initPerson197List();
+  public void initPerson207List();
 
-  public void setNewResearchProject48(String p);
+  public void setNewResearchProject55(String p);
 
-  public String getNewResearchProject48();
+  public String getNewResearchProject55();
 
-  public void selectResearchProject48(ValueChangeEvent event);
+  public void selectResearchProject55(ValueChangeEvent event);
 
-  public Map<String, String> getResearchProject48List();
+  public Map<String, String> getResearchProject55List();
 
-  public void initResearchProject48List();
+  public void initResearchProject55List();
 
   public void setNewColloquium10(String p);
 
@@ -71,13 +71,13 @@ import org.webdsl.serg.domain.*;
 
   public void initNews9List();
 
-  public List<Person> getPerson92List();
+  public List<Person> getPerson97List();
 
-  public void initPerson92List();
+  public void initPerson97List();
 
-  public List<ResearchProject> getProject82List();
+  public List<ResearchProject> getProject86List();
 
-  public void initProject82List();
+  public void initProject86List();
 
   public ResearchGroup getResearchGroup();
 

@@ -19,11 +19,11 @@ import org.webdsl.serg.domain.*;
 
   public String createNewPerson(Issue issue22, java.util.Set<Person> assigned2);
 
-  public List<Person> getPerson108List();
+  public List<Person> getPerson114List();
 
-  public void initPerson108List();
+  public void initPerson114List();
 
-  public List<ResearchProject> getProject103List();
+  public List<ResearchProject> getProject107List();
 
-  public void initProject103List();
+  public void initProject107List();
 }

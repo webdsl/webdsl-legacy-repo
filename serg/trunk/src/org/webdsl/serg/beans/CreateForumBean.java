@@ -38,11 +38,11 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("createForum" + ".initalize()");
-    Forum var79 = new Forum();
-    forum = var79;
+    Forum var82 = new Forum();
+    forum = var82;
     initDiscussion9List();
-    initPerson116List();
-    initProject110List();
+    initPerson121List();
+    initProject114List();
   }
 
   @Destroy @Remove public void destroy()
@@ -84,12 +84,7 @@ import org.webdsl.serg.domain.*;
   public void selectDiscussion9(ValueChangeEvent event)
   { 
     log.info("selectDiscussion9" + ": new value = " + " " + event.getNewValue());
-    Long id = new Long((String)event.getNewValue());
-    if(id > 0)
-    { 
-      Discussion discussion9 = em.find(Discussion.class, id);
-      addDiscussion1(discussion9);
-    }
+    Discussion discussion9 = (Discussion)event.getNewValue();
   }
 
   @DataModel("discussion9List") private Map<String, String> discussion9List;
@@ -110,32 +105,32 @@ import org.webdsl.serg.domain.*;
     }
   }
 
-  @DataModel("person116List") private List<Person> person116List;
+  @DataModel("person121List") private List<Person> person121List;
 
-  public List<Person> getPerson116List()
+  public List<Person> getPerson121List()
   { 
-    log.info("getPerson116List");
-    return person116List;
+    log.info("getPerson121List");
+    return person121List;
   }
 
-  @Factory("person116List") public void initPerson116List()
+  @Factory("person121List") public void initPerson121List()
   { 
-    log.info("initPerson116List");
-    person116List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson121List");
+    person121List = em.createQuery("from " + "Person").getResultList();
   }
 
-  @DataModel("project110List") private List<ResearchProject> project110List;
+  @DataModel("project114List") private List<ResearchProject> project114List;
 
-  public List<ResearchProject> getProject110List()
+  public List<ResearchProject> getProject114List()
   { 
-    log.info("getProject110List");
-    return project110List;
+    log.info("getProject114List");
+    return project114List;
   }
 
-  @Factory("project110List") public void initProject110List()
+  @Factory("project114List") public void initProject114List()
   { 
-    log.info("initProject110List");
-    project110List = em.createQuery("from " + "ResearchProject").getResultList();
+    log.info("initProject114List");
+    project114List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 
   private Forum forum;

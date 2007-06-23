@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person61" value="#{viewPresentation.person61List}"> 
+      <ui:repeat var="person62" value="#{viewPresentation.person62List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person61.id}"/> <h:outputText value="#{person61.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person62.id}"/> <h:outputText value="#{person62.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -105,20 +105,20 @@
     </div>
     
       <p> <h:outputText value="Date"/>  <h:outputText value=" : "/> 
-       <h:outputText id="outputDateId3" styleClass="outputDate" value="#{viewPresentation.presentation.date}">
-         <s:convertDateTime pattern="dd/mm/yyyy"/>
+       <h:outputText id="outputDateId4" styleClass="outputDate" value="#{viewPresentation.presentation.date}">
+         <s:convertDateTime pattern="dd/MM/yyyy"/>
        </h:outputText>
     </p>
     
       <p> <h:outputText value="Time"/>  <h:outputText value=" : "/> 
-       <h:outputText id="outputDateId4" styleClass="outputDate" value="#{viewPresentation.presentation.time}">
-         <s:convertDateTime pattern="dd/mm/yyyy"/>
+       <h:outputText id="outputDateId5" styleClass="outputDate" value="#{viewPresentation.presentation.time}">
+         <s:convertDateTime pattern="dd/MM/yyyy"/>
        </h:outputText>
     </p>
     
       <p> <h:outputText value="End"/>  <h:outputText value=" : "/> 
-       <h:outputText id="outputDateId5" styleClass="outputDate" value="#{viewPresentation.presentation.end}">
-         <s:convertDateTime pattern="dd/mm/yyyy"/>
+       <h:outputText id="outputDateId6" styleClass="outputDate" value="#{viewPresentation.presentation.end}">
+         <s:convertDateTime pattern="dd/MM/yyyy"/>
        </h:outputText>
     </p>
     
@@ -133,9 +133,9 @@
       <p> <h:outputText value="Projects"/>  <h:outputText value=" : "/> 
       <ul>
         
-      <ui:repeat var="researchProject23" value="#{viewPresentation.presentation.projects}">
+      <ui:repeat var="researchProject24" value="#{viewPresentation.presentation.projects}">
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{researchProject23.id}"/> <h:outputText value="#{researchProject23.name}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{researchProject24.id}"/> <h:outputText value="#{researchProject24.name}"/> </s:link> 
       </li>
     </ui:repeat>
     

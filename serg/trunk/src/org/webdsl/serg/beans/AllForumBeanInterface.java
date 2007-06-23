@@ -13,13 +13,13 @@ import org.webdsl.serg.domain.*;
 
   public void removeForum(Forum forum5);
 
-  public List<Person> getPerson118List();
+  public List<Person> getPerson123List();
 
-  public void initPerson118List();
+  public void initPerson123List();
 
-  public List<ResearchProject> getProject112List();
+  public List<ResearchProject> getProject116List();
 
-  public void initProject112List();
+  public void initProject116List();
 
   public List<Forum> getForum4List();
 

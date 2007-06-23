@@ -15,13 +15,13 @@ import org.webdsl.serg.domain.*;
 
   public Colloquium getColloquium();
 
-  public void setPerson7(Person person157);
+  public void setPerson7(Person person162);
 
   public void setResearchGroup0(ResearchGroup researchGroup9);
 
-  public void removeResearchProject0(ResearchProject researchProject14);
+  public void removeResearchProject0(ResearchProject researchProject15);
 
-  public void addResearchProject0(ResearchProject researchProject14);
+  public void addResearchProject0(ResearchProject researchProject15);
 
   public void removePresentation0(Presentation presentation7);
 
@@ -31,15 +31,15 @@ import org.webdsl.serg.domain.*;
 
   public String save();
 
-  public void setNewPerson156(String p);
+  public void setNewPerson161(String p);
 
-  public String getNewPerson156();
+  public String getNewPerson161();
 
-  public void selectPerson156(ValueChangeEvent event);
+  public void selectPerson161(ValueChangeEvent event);
 
-  public Map<String, String> getPerson156List();
+  public Map<String, String> getPerson161List();
 
-  public void initPerson156List();
+  public void initPerson161List();
 
   public void setNewResearchGroup8(String p);
 
@@ -51,15 +51,15 @@ import org.webdsl.serg.domain.*;
 
   public void initResearchGroup8List();
 
-  public void setNewResearchProject15(String p);
+  public void setNewResearchProject16(String p);
 
-  public String getNewResearchProject15();
+  public String getNewResearchProject16();
 
-  public void selectResearchProject15(ValueChangeEvent event);
+  public void selectResearchProject16(ValueChangeEvent event);
 
-  public Map<String, String> getResearchProject15List();
+  public Map<String, String> getResearchProject16List();
 
-  public void initResearchProject15List();
+  public void initResearchProject16List();
 
   public void setNewPresentation8(String p);
 
@@ -71,9 +71,9 @@ import org.webdsl.serg.domain.*;
 
   public void initPresentation8List();
 
-  public List<Person> getPerson56List();
+  public List<Person> getPerson57List();
 
-  public void initPerson56List();
+  public void initPerson57List();
 
   public List<ResearchProject> getProject46List();
 

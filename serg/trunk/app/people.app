@@ -49,7 +49,7 @@ section person pages.
     }
   }
   
-  //define blogEntries() {}
+  define blogEntries() {}
     
   define page viewPerson(person : Person) 
   {    
@@ -96,3 +96,42 @@ section person pages.
       }
     }
   }
+  
+section basic crud pages.
+
+  define page viewPersonSimple(person : Person) {
+    div("crudTable"){
+    table { 
+      row { "Fullname" outputString(person.fullname) }
+      row { "Email"    outputString(person.email) }
+      row { "Homepage" outputString(person.homepage) }
+      row { "Photo"    outputString(person.photo) }
+      row { "Address"  "" }
+      row { "Street"   outputString(person.address.street) }
+      row { "City"     outputString(person.address.city) }
+      row { "Phone"    outputString(person.address.phone) }
+      row { "user"     output(person.user) }
+      row { navigate("Edit", editPersonSimple(person)) "" }
+    }
+    }
+  }
+
+  define page editPersonSimple(person : Person) {
+    div("crudTable"){ form { table { 
+      row { "Fullname" input(person.fullname) }
+      row { "Email"    input(person.email) }
+      row { "Homepage" input(person.homepage) }
+      row { "Photo"    input(person.photo) }
+      row { "Address"  "" }
+      row { "Street"   input(person.address.street) }
+      row { "City"     input(person.address.city) }
+      row { "Phone"    input(person.address.phone) }
+      row { "user"     input(person.user) }
+      row { action("Save", save()) "" }
+    } } }
+    action save() {
+      person.save();
+      return viewPersonSimple(person);
+    }
+  }
+  

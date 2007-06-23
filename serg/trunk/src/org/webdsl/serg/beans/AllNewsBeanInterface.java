@@ -13,13 +13,13 @@ import org.webdsl.serg.domain.*;
 
   public void removeNews(News news5);
 
-  public List<Person> getPerson97List();
+  public List<Person> getPerson102List();
 
-  public void initPerson97List();
+  public void initPerson102List();
 
-  public List<ResearchProject> getProject87List();
+  public List<ResearchProject> getProject91List();
 
-  public void initProject87List();
+  public void initProject91List();
 
   public List<News> getNews4List();
 

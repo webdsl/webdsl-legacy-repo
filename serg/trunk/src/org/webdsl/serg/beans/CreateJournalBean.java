@@ -38,10 +38,10 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("createJournal" + ".initalize()");
-    Journal var61 = new Journal();
-    journal = var61;
-    initPerson84List();
-    initProject74List();
+    Journal var64 = new Journal();
+    journal = var64;
+    initPerson89List();
+    initProject78List();
   }
 
   @Destroy @Remove public void destroy()
@@ -58,32 +58,32 @@ import org.webdsl.serg.domain.*;
     return "/" + "viewJournal" + ".seam?" + ("journal" + "=" + journal.getId() + "");
   }
 
-  @DataModel("person84List") private List<Person> person84List;
+  @DataModel("person89List") private List<Person> person89List;
 
-  public List<Person> getPerson84List()
+  public List<Person> getPerson89List()
   { 
-    log.info("getPerson84List");
-    return person84List;
+    log.info("getPerson89List");
+    return person89List;
   }
 
-  @Factory("person84List") public void initPerson84List()
+  @Factory("person89List") public void initPerson89List()
   { 
-    log.info("initPerson84List");
-    person84List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson89List");
+    person89List = em.createQuery("from " + "Person").getResultList();
   }
 
-  @DataModel("project74List") private List<ResearchProject> project74List;
+  @DataModel("project78List") private List<ResearchProject> project78List;
 
-  public List<ResearchProject> getProject74List()
+  public List<ResearchProject> getProject78List()
   { 
-    log.info("getProject74List");
-    return project74List;
+    log.info("getProject78List");
+    return project78List;
   }
 
-  @Factory("project74List") public void initProject74List()
+  @Factory("project78List") public void initProject78List()
   { 
-    log.info("initProject74List");
-    project74List = em.createQuery("from " + "ResearchProject").getResultList();
+    log.info("initProject78List");
+    project78List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 
   private Journal journal;

@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person65" value="#{viewPublication.person65List}"> 
+      <ui:repeat var="person66" value="#{viewPublication.person66List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person65.id}"/> <h:outputText value="#{person65.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person66.id}"/> <h:outputText value="#{person66.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -103,9 +103,9 @@
     
       <ul>
         
-      <ui:repeat var="person168" value="#{viewPublication.publication.authors}">
+      <ui:repeat var="person173" value="#{viewPublication.publication.authors}">
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person168.id}"/> <h:outputText value="#{person168.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person173.id}"/> <h:outputText value="#{person173.name}"/> </s:link> 
       </li>
     </ui:repeat>
     
@@ -129,9 +129,9 @@
     
       <ul>
         
-      <ui:repeat var="researchProject28" value="#{viewPublication.publication.projectsList}">
+      <ui:repeat var="researchProject29" value="#{viewPublication.publication.projectsList}">
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{researchProject28.id}"/> <h:outputText value="#{researchProject28.name}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{researchProject29.id}"/> <h:outputText value="#{researchProject29.name}"/> </s:link> 
       </li>
     </ui:repeat>
     

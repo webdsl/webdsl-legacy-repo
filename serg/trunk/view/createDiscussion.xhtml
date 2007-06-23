@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person120" value="#{createDiscussion.person120List}"> 
+      <ui:repeat var="person125" value="#{createDiscussion.person125List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person120.id}"/> <h:outputText value="#{person120.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person125.id}"/> <h:outputText value="#{person125.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -43,10 +43,10 @@
          <h:outputText value="Projects"/> 
       <ul>
         
-      <ui:repeat var="project114" value="#{createDiscussion.project114List}"> 
+      <ui:repeat var="project118" value="#{createDiscussion.project118List}"> 
       <h:column>
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project114.id}"/> <h:outputText value="#{project114.acronym}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project118.id}"/> <h:outputText value="#{project118.acronym}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -99,9 +99,9 @@
     
       <tr> <td> <h:outputText value="Author"/> </td>  <td>
     <div class="inputSimpleRefAssociation"> <h:outputText value="#{createDiscussion.discussion.author.name}"/>  <h:outputText value=" "/> 
-       <h:selectOneMenu value="#{createDiscussion.newPerson221}" onchange="submit()" valueChangeListener="#{createDiscussion.selectPerson221}">
-          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createDiscussion.person221List}" var="person221" label="#{person221.label}"/>
+       <h:selectOneMenu value="#{createDiscussion.newPerson231}" onchange="submit()" valueChangeListener="#{createDiscussion.selectPerson231}">
+          <s:selectItems value="#{createDiscussion.person231List}" var="person231" label="#{person231.name}" noSelectionLabel="Select"/>
+          <s:convertEntity/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -112,7 +112,9 @@
           <h:inputText id="inputDateId19" styleClass="inputDate" value="#{createDiscussion.discussion.posted}">
              <s:convertDateTime pattern="dd/MM/yyyy"/>
           </h:inputText>
-          <s:selectDate for="inputDateId19"/>
+          <s:selectDate for="inputDateId19" pattern="dd/MM/yyyy">
+             <h:graphicImage url="img/dtpick.gif"/>
+          </s:selectDate>
         </div>
       </s:decorate>
     </td> </tr>
@@ -120,8 +122,8 @@
       <tr> <td> <h:outputText value="Forum"/> </td>  <td>
     <div class="inputSimpleRefAssociation"> <h:outputText value="#{createDiscussion.discussion.forum.name}"/>  <h:outputText value=" "/> 
        <h:selectOneMenu value="#{createDiscussion.newForum8}" onchange="submit()" valueChangeListener="#{createDiscussion.selectForum8}">
-          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createDiscussion.forum8List}" var="forum8" label="#{forum8.label}"/>
+          <s:selectItems value="#{createDiscussion.forum8List}" var="forum8" label="#{forum8.name}" noSelectionLabel="Select"/>
+          <s:convertEntity/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -147,8 +149,8 @@
       </ul>
     
        <h:selectOneMenu value="#{createDiscussion.newReply11}" onchange="submit()" valueChangeListener="#{createDiscussion.selectReply11}">
-          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createDiscussion.reply11List}" var="reply11" label="#{reply11.label}"/>
+          <s:selectItems value="#{createDiscussion.reply11List}" var="reply11" label="#{reply11.name}" noSelectionLabel="Select"/>
+          <s:convertEntity/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

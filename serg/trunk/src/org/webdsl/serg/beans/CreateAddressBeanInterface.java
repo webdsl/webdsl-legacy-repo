@@ -15,9 +15,9 @@ import org.webdsl.serg.domain.*;
 
   public String save();
 
-  public List<Person> getPerson32List();
+  public List<Person> getPerson33List();
 
-  public void initPerson32List();
+  public void initPerson33List();
 
   public List<ResearchProject> getProject26List();
 

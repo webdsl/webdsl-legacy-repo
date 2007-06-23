@@ -40,7 +40,7 @@ import org.webdsl.serg.domain.*;
     log.info("createAddress" + ".initalize()");
     Address var23 = new Address();
     address = var23;
-    initPerson32List();
+    initPerson33List();
     initProject26List();
   }
 
@@ -58,18 +58,18 @@ import org.webdsl.serg.domain.*;
     return "/" + "viewAddress" + ".seam?" + ("address" + "=" + address.getId() + "");
   }
 
-  @DataModel("person32List") private List<Person> person32List;
+  @DataModel("person33List") private List<Person> person33List;
 
-  public List<Person> getPerson32List()
+  public List<Person> getPerson33List()
   { 
-    log.info("getPerson32List");
-    return person32List;
+    log.info("getPerson33List");
+    return person33List;
   }
 
-  @Factory("person32List") public void initPerson32List()
+  @Factory("person33List") public void initPerson33List()
   { 
-    log.info("initPerson32List");
-    person32List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson33List");
+    person33List = em.createQuery("from " + "Person").getResultList();
   }
 
   @DataModel("project26List") private List<ResearchProject> project26List;

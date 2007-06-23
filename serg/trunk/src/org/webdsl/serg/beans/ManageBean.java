@@ -38,25 +38,25 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("manage" + ".initalize()");
-    initPerson5List();
+    initPerson6List();
     initProject0List();
   }
 
   @Destroy @Remove public void destroy()
   { }
 
-  @DataModel("person5List") private List<Person> person5List;
+  @DataModel("person6List") private List<Person> person6List;
 
-  public List<Person> getPerson5List()
+  public List<Person> getPerson6List()
   { 
-    log.info("getPerson5List");
-    return person5List;
+    log.info("getPerson6List");
+    return person6List;
   }
 
-  @Factory("person5List") public void initPerson5List()
+  @Factory("person6List") public void initPerson6List()
   { 
-    log.info("initPerson5List");
-    person5List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson6List");
+    person6List = em.createQuery("from " + "Person").getResultList();
   }
 
   @DataModel("project0List") private List<ResearchProject> project0List;

@@ -15,7 +15,7 @@ import org.webdsl.serg.domain.*;
 
   public Person getPerson();
 
-  public void setUser0(User user6);
+  public void setUser1(User user8);
 
   public void setBlog0(Blog blog9);
 
@@ -23,15 +23,15 @@ import org.webdsl.serg.domain.*;
 
   public String save();
 
-  public void setNewUser5(String p);
+  public void setNewUser7(String p);
 
-  public String getNewUser5();
+  public String getNewUser7();
 
-  public void selectUser5(ValueChangeEvent event);
+  public void selectUser7(ValueChangeEvent event);
 
-  public Map<String, String> getUser5List();
+  public Map<String, String> getUser7List();
 
-  public void initUser5List();
+  public void initUser7List();
 
   public void setNewBlog8(String p);
 
@@ -43,9 +43,9 @@ import org.webdsl.serg.domain.*;
 
   public void initBlog8List();
 
-  public List<Person> getPerson35List();
+  public List<Person> getPerson36List();
 
-  public void initPerson35List();
+  public void initPerson36List();
 
   public List<ResearchProject> getProject29List();
 

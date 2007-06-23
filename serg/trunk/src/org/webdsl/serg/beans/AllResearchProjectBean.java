@@ -38,58 +38,58 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("allResearchProject" + ".initalize()");
-    initPerson90List();
-    initProject80List();
-    initResearchProject8List();
+    initPerson95List();
+    initProject84List();
+    initResearchProject9List();
   }
 
   @Destroy @Remove public void destroy()
   { }
 
-  public void removeResearchProject(ResearchProject researchProject9)
+  public void removeResearchProject(ResearchProject researchProject14)
   { 
-    em.remove(researchProject9);
+    em.remove(researchProject14);
   }
 
-  @DataModel("person90List") private List<Person> person90List;
+  @DataModel("person95List") private List<Person> person95List;
 
-  public List<Person> getPerson90List()
+  public List<Person> getPerson95List()
   { 
-    log.info("getPerson90List");
-    return person90List;
+    log.info("getPerson95List");
+    return person95List;
   }
 
-  @Factory("person90List") public void initPerson90List()
+  @Factory("person95List") public void initPerson95List()
   { 
-    log.info("initPerson90List");
-    person90List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson95List");
+    person95List = em.createQuery("from " + "Person").getResultList();
   }
 
-  @DataModel("project80List") private List<ResearchProject> project80List;
+  @DataModel("project84List") private List<ResearchProject> project84List;
 
-  public List<ResearchProject> getProject80List()
+  public List<ResearchProject> getProject84List()
   { 
-    log.info("getProject80List");
-    return project80List;
+    log.info("getProject84List");
+    return project84List;
   }
 
-  @Factory("project80List") public void initProject80List()
+  @Factory("project84List") public void initProject84List()
   { 
-    log.info("initProject80List");
-    project80List = em.createQuery("from " + "ResearchProject").getResultList();
+    log.info("initProject84List");
+    project84List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 
-  @DataModel("researchProject8List") private List<ResearchProject> researchProject8List;
+  @DataModel("researchProject9List") private List<ResearchProject> researchProject9List;
 
-  public List<ResearchProject> getResearchProject8List()
+  public List<ResearchProject> getResearchProject9List()
   { 
-    log.info("getResearchProject8List");
-    return researchProject8List;
+    log.info("getResearchProject9List");
+    return researchProject9List;
   }
 
-  @Factory("researchProject8List") public void initResearchProject8List()
+  @Factory("researchProject9List") public void initResearchProject9List()
   { 
-    log.info("initResearchProject8List");
-    researchProject8List = em.createQuery("from " + "ResearchProject").getResultList();
+    log.info("initResearchProject9List");
+    researchProject9List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 }

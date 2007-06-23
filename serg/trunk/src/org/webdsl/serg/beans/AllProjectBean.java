@@ -38,58 +38,58 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("allProject" + ".initalize()");
-    initPerson105List();
-    initProject98List();
-    initProject99List();
+    initPerson111List();
+    initProject102List();
+    initProject103List();
   }
 
   @Destroy @Remove public void destroy()
   { }
 
-  public void removeProject(Project project100)
+  public void removeProject(Project project104)
   { 
-    em.remove(project100);
+    em.remove(project104);
   }
 
-  @DataModel("person105List") private List<Person> person105List;
+  @DataModel("person111List") private List<Person> person111List;
 
-  public List<Person> getPerson105List()
+  public List<Person> getPerson111List()
   { 
-    log.info("getPerson105List");
-    return person105List;
+    log.info("getPerson111List");
+    return person111List;
   }
 
-  @Factory("person105List") public void initPerson105List()
+  @Factory("person111List") public void initPerson111List()
   { 
-    log.info("initPerson105List");
-    person105List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson111List");
+    person111List = em.createQuery("from " + "Person").getResultList();
   }
 
-  @DataModel("project98List") private List<ResearchProject> project98List;
+  @DataModel("project102List") private List<ResearchProject> project102List;
 
-  public List<ResearchProject> getProject98List()
+  public List<ResearchProject> getProject102List()
   { 
-    log.info("getProject98List");
-    return project98List;
+    log.info("getProject102List");
+    return project102List;
   }
 
-  @Factory("project98List") public void initProject98List()
+  @Factory("project102List") public void initProject102List()
   { 
-    log.info("initProject98List");
-    project98List = em.createQuery("from " + "ResearchProject").getResultList();
+    log.info("initProject102List");
+    project102List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 
-  @DataModel("project99List") private List<Project> project99List;
+  @DataModel("project103List") private List<Project> project103List;
 
-  public List<Project> getProject99List()
+  public List<Project> getProject103List()
   { 
-    log.info("getProject99List");
-    return project99List;
+    log.info("getProject103List");
+    return project103List;
   }
 
-  @Factory("project99List") public void initProject99List()
+  @Factory("project103List") public void initProject103List()
   { 
-    log.info("initProject99List");
-    project99List = em.createQuery("from " + "Project").getResultList();
+    log.info("initProject103List");
+    project103List = em.createQuery("from " + "Project").getResultList();
   }
 }

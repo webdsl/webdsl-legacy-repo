@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person64" value="#{createPublication.person64List}"> 
+      <ui:repeat var="person65" value="#{createPublication.person65List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person64.id}"/> <h:outputText value="#{person64.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person65.id}"/> <h:outputText value="#{person65.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -105,19 +105,19 @@
     <div class="inputAssociationList">
       <ul>
         
-      <ui:repeat var="person166" value="#{createPublication.publication.authors}">
+      <ui:repeat var="person171" value="#{createPublication.publication.authors}">
       <li>
-         <h:outputText value="#{person166.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{createPublication.removePerson1(person166)}"/>
+         <h:outputText value="#{person171.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{createPublication.removePerson1(person171)}"/>
     
       </li>
     </ui:repeat>
     
       </ul>
     
-       <h:selectOneMenu value="#{createPublication.newPerson167}" onchange="submit()" valueChangeListener="#{createPublication.selectPerson167}">
-          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createPublication.person167List}" var="person167" label="#{person167.label}"/>
+       <h:selectOneMenu value="#{createPublication.newPerson172}" onchange="submit()" valueChangeListener="#{createPublication.selectPerson172}">
+          <s:selectItems value="#{createPublication.person172List}" var="person172" label="#{person172.name}" noSelectionLabel="Select"/>
+          <s:convertEntity/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -158,11 +158,11 @@
     <div class="inputAssociationSet">
       <ul>
         
-      <ui:repeat var="researchProject26" value="#{createPublication.publication.projectsList}">
+      <ui:repeat var="researchProject27" value="#{createPublication.publication.projectsList}">
     <div class="listAssociation">
       <li>
-         <h:outputText value="#{researchProject26.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{createPublication.removeResearchProject5(researchProject26)}"/>
+         <h:outputText value="#{researchProject27.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{createPublication.removeResearchProject5(researchProject27)}"/>
     
       </li>
     </div>
@@ -170,9 +170,9 @@
     
       </ul>
     
-       <h:selectOneMenu value="#{createPublication.newResearchProject27}" onchange="submit()" valueChangeListener="#{createPublication.selectResearchProject27}">
-          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createPublication.researchProject27List}" var="researchProject27" label="#{researchProject27.label}"/>
+       <h:selectOneMenu value="#{createPublication.newResearchProject28}" onchange="submit()" valueChangeListener="#{createPublication.selectResearchProject28}">
+          <s:selectItems value="#{createPublication.researchProject28List}" var="researchProject28" label="#{researchProject28.name}" noSelectionLabel="Select"/>
+          <s:convertEntity/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

@@ -11,15 +11,15 @@ import org.webdsl.serg.domain.*;
 
   public void destroy();
 
-  public void removePerson9(Person person186);
+  public void removePerson11(Person person196);
 
-  public void addPerson9(Person person186);
+  public void addPerson11(Person person196);
 
   public void addNewAuthor();
 
-  public void removeResearchProject11(ResearchProject researchProject42);
+  public void removeResearchProject13(ResearchProject researchProject49);
 
-  public void addResearchProject11(ResearchProject researchProject42);
+  public void addResearchProject13(ResearchProject researchProject49);
 
   public void setJournal1(Journal journal8);
 
@@ -27,25 +27,25 @@ import org.webdsl.serg.domain.*;
 
   public String save();
 
-  public void setNewPerson187(String p);
+  public void setNewPerson197(String p);
 
-  public String getNewPerson187();
+  public String getNewPerson197();
 
-  public void selectPerson187(ValueChangeEvent event);
+  public void selectPerson197(ValueChangeEvent event);
 
-  public Map<String, String> getPerson187List();
+  public Map<String, String> getPerson197List();
 
-  public void initPerson187List();
+  public void initPerson197List();
 
-  public void setNewResearchProject43(String p);
+  public void setNewResearchProject50(String p);
 
-  public String getNewResearchProject43();
+  public String getNewResearchProject50();
 
-  public void selectResearchProject43(ValueChangeEvent event);
+  public void selectResearchProject50(ValueChangeEvent event);
 
-  public Map<String, String> getResearchProject43List();
+  public Map<String, String> getResearchProject50List();
 
-  public void initResearchProject43List();
+  public void initResearchProject50List();
 
   public void setNewJournal7(String p);
 
@@ -57,13 +57,13 @@ import org.webdsl.serg.domain.*;
 
   public void initJournal7List();
 
-  public List<Person> getPerson80List();
+  public List<Person> getPerson85List();
 
-  public void initPerson80List();
+  public void initPerson85List();
 
-  public List<ResearchProject> getProject70List();
+  public List<ResearchProject> getProject74List();
 
-  public void initProject70List();
+  public void initProject74List();
 
   public Article getArticle();
 

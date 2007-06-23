@@ -67,13 +67,13 @@ import org.webdsl.serg.domain.*;
 
   public void initProduct18List();
 
-  public List<Person> getPerson131List();
+  public List<Person> getPerson136List();
 
-  public void initPerson131List();
+  public void initPerson136List();
 
-  public List<ResearchProject> getProject125List();
+  public List<ResearchProject> getProject129List();
 
-  public void initProject125List();
+  public void initProject129List();
 
   public Shop getShop();
 

@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person105" value="#{allProject.person105List}"> 
+      <ui:repeat var="person111" value="#{allProject.person111List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person105.id}"/> <h:outputText value="#{person105.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person111.id}"/> <h:outputText value="#{person111.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -43,10 +43,10 @@
          <h:outputText value="Projects"/> 
       <ul>
         
-      <ui:repeat var="project98" value="#{allProject.project98List}"> 
+      <ui:repeat var="project102" value="#{allProject.project102List}"> 
       <h:column>
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project98.id}"/> <h:outputText value="#{project98.acronym}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project102.id}"/> <h:outputText value="#{project102.acronym}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -89,11 +89,11 @@
         <s:validateAll>
       <ul>
         
-      <ui:repeat var="project99" value="#{allProject.project99List}"> 
+      <ui:repeat var="project103" value="#{allProject.project103List}"> 
       <h:column>
       <li>
-         <s:link view="/viewProject.xhtml" propagation="none"><f:param name="project" value="#{project99.id}"/> <h:outputText value="#{project99.name}"/> </s:link>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{allProject.removeProject(project99)}"/>
+         <s:link view="/viewProject.xhtml" propagation="none"><f:param name="project" value="#{project103.id}"/> <h:outputText value="#{project103.name}"/> </s:link>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{allProject.removeProject(project103)}"/>
     
       </li>
     </h:column> 

@@ -11,15 +11,15 @@ import org.webdsl.serg.domain.*;
 
   public void destroy();
 
-  public void removePerson5(Person person176);
+  public void removePerson7(Person person186);
 
-  public void addPerson5(Person person176);
+  public void addPerson7(Person person186);
 
   public void addNewAuthor();
 
-  public void removeResearchProject9(ResearchProject researchProject37);
+  public void removeResearchProject11(ResearchProject researchProject44);
 
-  public void addResearchProject9(ResearchProject researchProject37);
+  public void addResearchProject11(ResearchProject researchProject44);
 
   public void setConference1(Conference conference9);
 
@@ -27,25 +27,25 @@ import org.webdsl.serg.domain.*;
 
   public String save();
 
-  public void setNewPerson177(String p);
+  public void setNewPerson187(String p);
 
-  public String getNewPerson177();
+  public String getNewPerson187();
 
-  public void selectPerson177(ValueChangeEvent event);
+  public void selectPerson187(ValueChangeEvent event);
 
-  public Map<String, String> getPerson177List();
+  public Map<String, String> getPerson187List();
 
-  public void initPerson177List();
+  public void initPerson187List();
 
-  public void setNewResearchProject38(String p);
+  public void setNewResearchProject45(String p);
 
-  public String getNewResearchProject38();
+  public String getNewResearchProject45();
 
-  public void selectResearchProject38(ValueChangeEvent event);
+  public void selectResearchProject45(ValueChangeEvent event);
 
-  public Map<String, String> getResearchProject38List();
+  public Map<String, String> getResearchProject45List();
 
-  public void initResearchProject38List();
+  public void initResearchProject45List();
 
   public void setNewConference8(String p);
 
@@ -57,13 +57,13 @@ import org.webdsl.serg.domain.*;
 
   public void initConference8List();
 
-  public List<Person> getPerson72List();
+  public List<Person> getPerson77List();
 
-  public void initPerson72List();
+  public void initPerson77List();
 
-  public List<ResearchProject> getProject62List();
+  public List<ResearchProject> getProject66List();
 
-  public void initProject62List();
+  public void initProject66List();
 
   public InProceedings getInProceedings();
 

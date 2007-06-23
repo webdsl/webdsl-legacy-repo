@@ -71,11 +71,11 @@ import org.webdsl.serg.domain.*;
 
   public void initProduct12List();
 
-  public List<Person> getPerson130List();
+  public List<Person> getPerson135List();
 
-  public void initPerson130List();
+  public void initPerson135List();
 
-  public List<ResearchProject> getProject124List();
+  public List<ResearchProject> getProject128List();
 
-  public void initProject124List();
+  public void initProject128List();
 }

@@ -29,9 +29,9 @@
     <div class="blogEntries">
       <ul>
         
-      <ui:repeat var="entry3" value="#{viewBlogEntry.entry.blog.entries}">
+      <ui:repeat var="entry4" value="#{viewBlogEntry.entry.blog.entries}">
       <li>
-         <s:link view="/viewBlogEntry.xhtml" propagation="none"><f:param name="entry" value="#{entry3.id}"/> <h:outputText value="#{entry3.name}"/> </s:link> 
+         <s:link view="/viewBlogEntry.xhtml" propagation="none"><f:param name="entry" value="#{entry4.id}"/> <h:outputText value="#{entry4.name}"/> </s:link> 
       </li>
     </ui:repeat>
     
@@ -71,10 +71,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person14" value="#{viewBlogEntry.person14List}"> 
+      <ui:repeat var="person15" value="#{viewBlogEntry.person15List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person14.id}"/> <h:outputText value="#{person14.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person15.id}"/> <h:outputText value="#{person15.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -134,8 +134,8 @@
       <h1> <h:outputText value="#{viewBlogEntry.entry.title}"/> </h1>
     
     <div class="blogDate">
-       <h:outputText id="outputDateId0" styleClass="outputDate" value="#{viewBlogEntry.entry.created}">
-         <s:convertDateTime pattern="dd/mm/yyyy"/>
+       <h:outputText id="outputDateId1" styleClass="outputDate" value="#{viewBlogEntry.entry.created}">
+         <s:convertDateTime pattern="dd/MM/yyyy"/>
        </h:outputText>
     </div>
     
@@ -145,6 +145,20 @@
     
     <div class="blogBody">
       <s:formattedText styleClass="outputTextarea" value="#{viewBlogEntry.entry.body}"/>
+    </div>
+    
+      <div class="section2">
+      <h2> <h:outputText value="Comments"/> </h2>
+    
+      <ul>
+        
+      <ui:repeat var="blogComment6" value="#{viewBlogEntry.entry.comments}">
+      <li>
+         <s:link view="/viewBlogComment.xhtml" propagation="none"><f:param name="blogComment" value="#{blogComment6.id}"/> <h:outputText value="#{blogComment6.name}"/> </s:link> 
+      </li>
+    </ui:repeat>
+    
+      </ul>
     </div>
     </div>
     </div>

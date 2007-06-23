@@ -47,8 +47,8 @@ import org.webdsl.serg.domain.*;
     { 
       forum = em.find(Forum.class, forumId);
     }
-    initPerson117List();
-    initProject111List();
+    initPerson122List();
+    initProject115List();
   }
 
   @Destroy @Remove public void destroy()
@@ -72,38 +72,38 @@ import org.webdsl.serg.domain.*;
 
   @End public String createNewDiscussion(Forum forum00, java.util.List<Discussion> discussions0)
   { 
-    Discussion var80 = new Discussion();
-    Discussion discussion00 = var80;
+    Discussion var83 = new Discussion();
+    Discussion discussion00 = var83;
     discussions0.add(discussion00);
     em.persist(forum00);
     return "/" + "editDiscussion" + ".seam?" + ("discussion" + "=" + discussion00.getId() + "");
   }
 
-  @DataModel("person117List") private List<Person> person117List;
+  @DataModel("person122List") private List<Person> person122List;
 
-  public List<Person> getPerson117List()
+  public List<Person> getPerson122List()
   { 
-    log.info("getPerson117List");
-    return person117List;
+    log.info("getPerson122List");
+    return person122List;
   }
 
-  @Factory("person117List") public void initPerson117List()
+  @Factory("person122List") public void initPerson122List()
   { 
-    log.info("initPerson117List");
-    person117List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson122List");
+    person122List = em.createQuery("from " + "Person").getResultList();
   }
 
-  @DataModel("project111List") private List<ResearchProject> project111List;
+  @DataModel("project115List") private List<ResearchProject> project115List;
 
-  public List<ResearchProject> getProject111List()
+  public List<ResearchProject> getProject115List()
   { 
-    log.info("getProject111List");
-    return project111List;
+    log.info("getProject115List");
+    return project115List;
   }
 
-  @Factory("project111List") public void initProject111List()
+  @Factory("project115List") public void initProject115List()
   { 
-    log.info("initProject111List");
-    project111List = em.createQuery("from " + "ResearchProject").getResultList();
+    log.info("initProject115List");
+    project115List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 }

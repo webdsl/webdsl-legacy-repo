@@ -47,9 +47,14 @@ section pages.
   define page viewBlog(blog : Blog) {
     main()
     
+    var entries : List<BlogEntry> := 
+        select distinct e from BlogEntry as e, Blog as b
+         where e member of b._entries
+         order by e._created descending;
+    
     define blogEntries() {
       list{
-        for(entry : BlogEntry in blog.entries) {
+        for(entry : BlogEntry in entries) {
           listitem { navigate(entry.name, viewBlogEntry(entry)) }
         }
       }
@@ -76,11 +81,27 @@ section pages.
       title{text(blog.title)}
       section{ 
         header{ text(blog.title) }
-        for(entry : BlogEntry in blog.entries) {
+        for(entry : BlogEntry in entries) {
           section{ 
             header{ text(entry.title) }
-            div("blogIntro"){outputText(entry.intro)} " "
-            navigate("read more ...", viewBlogEntry(entry))
+            output(entry.created)
+            
+            par{outputText(entry.intro)}
+            
+            par{ 
+              form{
+                navigate("Read more", viewBlogEntry(entry))
+                " | "
+                navigate("Edit", editBlogEntry(entry))
+                " | "
+                actionLink("Delete", delete(entry))
+                action delete(entry : BlogEntry) {
+                  blog.entries.remove(entry);
+                  blog.save();
+                  return viewBlog(blog);
+                }
+              }
+            }
           }
         }
       }
@@ -93,10 +114,16 @@ section pages.
     define manageMenu() { navigate("Edit", editBlogEntry(entry)) }
     define body() {
       title{text(entry.title)}
-      section{header{text(entry.title)}
-        div("blogDate"){outputDate(entry.created)}
-        div("blogIntro"){outputText(entry.intro)}
-        div("blogBody"){outputText(entry.body)}
+      section{
+        header{text(entry.title)}
+          div("blogDate"){outputDate(entry.created)}
+          div("blogIntro"){outputText(entry.intro)}
+          div("blogBody"){outputText(entry.body)}
+          
+        section{ 
+          header{"Comments"}
+          output(entry.comments)
+        }
       }
     }
     define blogEntries() {

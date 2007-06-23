@@ -10,7 +10,7 @@ dsltoseam = $(GENDIR)/generation/dsl-to-seam
 
 apps = $(wildcard app/*.app)
 
-all : serg.appc
+all : app/serg.appc
 
 %.appa : %.app $(apps)
 	$(dsltoseam) -i $< --no-desugaring --no-pp | pp-aterm -o $@

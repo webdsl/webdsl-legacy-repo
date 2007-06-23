@@ -48,7 +48,8 @@ import org.webdsl.serg.domain.*;
       blog = em.find(Blog.class, blogId);
     }
     initProjects2();
-    initPerson12List();
+    initEntries();
+    initPerson13List();
     initProject4List();
   }
 
@@ -82,18 +83,25 @@ import org.webdsl.serg.domain.*;
     return "/" + "editBlogEntry" + ".seam?" + ("blogEntry" + "=" + entry1.getId() + "");
   }
 
-  @DataModel("person12List") private List<Person> person12List;
-
-  public List<Person> getPerson12List()
+  @End public String delete(BlogEntry entry3)
   { 
-    log.info("getPerson12List");
-    return person12List;
+    this.getBlog().getEntries().remove(entry3);
+    em.persist(this.getBlog());
+    return "/" + "viewBlog" + ".seam?" + ("blog" + "=" + blog.getId() + "");
   }
 
-  @Factory("person12List") public void initPerson12List()
+  @DataModel("person13List") private List<Person> person13List;
+
+  public List<Person> getPerson13List()
   { 
-    log.info("initPerson12List");
-    person12List = em.createQuery("from " + "Person").getResultList();
+    log.info("getPerson13List");
+    return person13List;
+  }
+
+  @Factory("person13List") public void initPerson13List()
+  { 
+    log.info("initPerson13List");
+    person13List = em.createQuery("from " + "Person").getResultList();
   }
 
   @DataModel("project4List") private List<ResearchProject> project4List;
@@ -128,5 +136,25 @@ import org.webdsl.serg.domain.*;
   { 
     log.info("initProjects2");
     projects2 = em.createQuery("select pr from ResearchProject as pr , Person as pers where ( pers . id = :param3 ) and ( pers member of pr . _members )").setParameter("param3", this.getBlog().getAuthor().getId()).getResultList();
+  }
+
+  @DataModel("entries") private java.util.List<BlogEntry> entries;
+
+  public java.util.List<BlogEntry> getEntries()
+  { 
+    log.info("getEntries");
+    return entries;
+  }
+
+  public void setEntries(java.util.List<BlogEntry> entries)
+  { 
+    log.info("setEntries");
+    this.entries = entries;
+  }
+
+  @Factory("entries") public void initEntries()
+  { 
+    log.info("initEntries");
+    entries = em.createQuery("select distinct e from BlogEntry as e , Blog as b where e member of b . _entries order by e . _created desc").getResultList();
   }
 }

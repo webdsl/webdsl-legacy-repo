@@ -13,9 +13,9 @@ import org.webdsl.serg.domain.*;
 
   public void removePublication(Publication publication8);
 
-  public List<Person> getPerson66List();
+  public List<Person> getPerson67List();
 
-  public void initPerson66List();
+  public void initPerson67List();
 
   public List<ResearchProject> getProject56List();
 

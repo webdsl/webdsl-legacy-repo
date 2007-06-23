@@ -17,11 +17,11 @@ import org.webdsl.serg.domain.*;
 
   public String createNewDiscussion(Forum forum00, java.util.List<Discussion> discussions0);
 
-  public List<Person> getPerson117List();
+  public List<Person> getPerson122List();
 
-  public void initPerson117List();
+  public void initPerson122List();
 
-  public List<ResearchProject> getProject111List();
+  public List<ResearchProject> getProject115List();
 
-  public void initProject111List();
+  public void initProject115List();
 }

@@ -11,13 +11,13 @@ import org.webdsl.serg.domain.*;
 
   public void destroy();
 
-  public void setPerson8(Person person159);
+  public void setPerson8(Person person164);
 
   public void setResearchGroup1(ResearchGroup researchGroup11);
 
-  public void removeResearchProject1(ResearchProject researchProject16);
+  public void removeResearchProject1(ResearchProject researchProject17);
 
-  public void addResearchProject1(ResearchProject researchProject16);
+  public void addResearchProject1(ResearchProject researchProject17);
 
   public void removePresentation1(Presentation presentation9);
 
@@ -27,15 +27,15 @@ import org.webdsl.serg.domain.*;
 
   public String save();
 
-  public void setNewPerson158(String p);
+  public void setNewPerson163(String p);
 
-  public String getNewPerson158();
+  public String getNewPerson163();
 
-  public void selectPerson158(ValueChangeEvent event);
+  public void selectPerson163(ValueChangeEvent event);
 
-  public Map<String, String> getPerson158List();
+  public Map<String, String> getPerson163List();
 
-  public void initPerson158List();
+  public void initPerson163List();
 
   public void setNewResearchGroup10(String p);
 
@@ -47,15 +47,15 @@ import org.webdsl.serg.domain.*;
 
   public void initResearchGroup10List();
 
-  public void setNewResearchProject17(String p);
+  public void setNewResearchProject18(String p);
 
-  public String getNewResearchProject17();
+  public String getNewResearchProject18();
 
-  public void selectResearchProject17(ValueChangeEvent event);
+  public void selectResearchProject18(ValueChangeEvent event);
 
-  public Map<String, String> getResearchProject17List();
+  public Map<String, String> getResearchProject18List();
 
-  public void initResearchProject17List();
+  public void initResearchProject18List();
 
   public void setNewPresentation10(String p);
 
@@ -67,9 +67,9 @@ import org.webdsl.serg.domain.*;
 
   public void initPresentation10List();
 
-  public List<Person> getPerson57List();
+  public List<Person> getPerson58List();
 
-  public void initPerson57List();
+  public void initPerson58List();
 
   public List<ResearchProject> getProject47List();
 

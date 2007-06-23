@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person92" value="#{createResearchGroup.person92List}"> 
+      <ui:repeat var="person97" value="#{createResearchGroup.person97List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person92.id}"/> <h:outputText value="#{person92.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person97.id}"/> <h:outputText value="#{person97.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -43,10 +43,10 @@
          <h:outputText value="Projects"/> 
       <ul>
         
-      <ui:repeat var="project82" value="#{createResearchGroup.project82List}"> 
+      <ui:repeat var="project86" value="#{createResearchGroup.project86List}"> 
       <h:column>
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project82.id}"/> <h:outputText value="#{project82.acronym}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project86.id}"/> <h:outputText value="#{project86.acronym}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -119,11 +119,11 @@
     <div class="inputAssociationSet">
       <ul>
         
-      <ui:repeat var="person196" value="#{createResearchGroup.researchGroup.membersList}">
+      <ui:repeat var="person206" value="#{createResearchGroup.researchGroup.membersList}">
     <div class="listAssociation">
       <li>
-         <h:outputText value="#{person196.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{createResearchGroup.removePerson13(person196)}"/>
+         <h:outputText value="#{person206.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{createResearchGroup.removePerson15(person206)}"/>
     
       </li>
     </div>
@@ -131,9 +131,9 @@
     
       </ul>
     
-       <h:selectOneMenu value="#{createResearchGroup.newPerson197}" onchange="submit()" valueChangeListener="#{createResearchGroup.selectPerson197}">
-          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createResearchGroup.person197List}" var="person197" label="#{person197.label}"/>
+       <h:selectOneMenu value="#{createResearchGroup.newPerson207}" onchange="submit()" valueChangeListener="#{createResearchGroup.selectPerson207}">
+          <s:selectItems value="#{createResearchGroup.person207List}" var="person207" label="#{person207.name}" noSelectionLabel="Select"/>
+          <s:convertEntity/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -142,11 +142,11 @@
     <div class="inputAssociationSet">
       <ul>
         
-      <ui:repeat var="researchProject47" value="#{createResearchGroup.researchGroup.projectsList}">
+      <ui:repeat var="researchProject54" value="#{createResearchGroup.researchGroup.projectsList}">
     <div class="listAssociation">
       <li>
-         <h:outputText value="#{researchProject47.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{createResearchGroup.removeResearchProject13(researchProject47)}"/>
+         <h:outputText value="#{researchProject54.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{createResearchGroup.removeResearchProject15(researchProject54)}"/>
     
       </li>
     </div>
@@ -154,9 +154,9 @@
     
       </ul>
     
-       <h:selectOneMenu value="#{createResearchGroup.newResearchProject48}" onchange="submit()" valueChangeListener="#{createResearchGroup.selectResearchProject48}">
-          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createResearchGroup.researchProject48List}" var="researchProject48" label="#{researchProject48.label}"/>
+       <h:selectOneMenu value="#{createResearchGroup.newResearchProject55}" onchange="submit()" valueChangeListener="#{createResearchGroup.selectResearchProject55}">
+          <s:selectItems value="#{createResearchGroup.researchProject55List}" var="researchProject55" label="#{researchProject55.name}" noSelectionLabel="Select"/>
+          <s:convertEntity/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -178,8 +178,8 @@
       </ul>
     
        <h:selectOneMenu value="#{createResearchGroup.newColloquium10}" onchange="submit()" valueChangeListener="#{createResearchGroup.selectColloquium10}">
-          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createResearchGroup.colloquium10List}" var="colloquium10" label="#{colloquium10.label}"/>
+          <s:selectItems value="#{createResearchGroup.colloquium10List}" var="colloquium10" label="#{colloquium10.name}" noSelectionLabel="Select"/>
+          <s:convertEntity/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -199,8 +199,8 @@
       </ul>
     
        <h:selectOneMenu value="#{createResearchGroup.newNews9}" onchange="submit()" valueChangeListener="#{createResearchGroup.selectNews9}">
-          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createResearchGroup.news9List}" var="news9" label="#{news9.label}"/>
+          <s:selectItems value="#{createResearchGroup.news9List}" var="news9" label="#{news9.name}" noSelectionLabel="Select"/>
+          <s:convertEntity/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

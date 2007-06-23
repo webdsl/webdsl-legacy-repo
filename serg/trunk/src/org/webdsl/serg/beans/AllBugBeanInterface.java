@@ -13,13 +13,13 @@ import org.webdsl.serg.domain.*;
 
   public void removeBug(Bug bug4);
 
-  public List<Person> getPerson109List();
+  public List<Person> getPerson115List();
 
-  public void initPerson109List();
+  public void initPerson115List();
 
-  public List<ResearchProject> getProject104List();
+  public List<ResearchProject> getProject108List();
 
-  public void initProject104List();
+  public void initProject108List();
 
   public List<Bug> getBug3List();
 

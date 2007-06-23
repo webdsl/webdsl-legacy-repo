@@ -38,7 +38,7 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("home" + ".initalize()");
-    initPerson26List();
+    initPerson27List();
     initProject20List();
     initX0List();
     initX1List();
@@ -51,18 +51,18 @@ import org.webdsl.serg.domain.*;
   @Destroy @Remove public void destroy()
   { }
 
-  @DataModel("person26List") private List<Person> person26List;
+  @DataModel("person27List") private List<Person> person27List;
 
-  public List<Person> getPerson26List()
+  public List<Person> getPerson27List()
   { 
-    log.info("getPerson26List");
-    return person26List;
+    log.info("getPerson27List");
+    return person27List;
   }
 
-  @Factory("person26List") public void initPerson26List()
+  @Factory("person27List") public void initPerson27List()
   { 
-    log.info("initPerson26List");
-    person26List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson27List");
+    person27List = em.createQuery("from " + "Person").getResultList();
   }
 
   @DataModel("project20List") private List<ResearchProject> project20List;

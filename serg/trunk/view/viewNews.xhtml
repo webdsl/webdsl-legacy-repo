@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person96" value="#{viewNews.person96List}"> 
+      <ui:repeat var="person101" value="#{viewNews.person101List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person96.id}"/> <h:outputText value="#{person96.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person101.id}"/> <h:outputText value="#{person101.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -43,10 +43,10 @@
          <h:outputText value="Projects"/> 
       <ul>
         
-      <ui:repeat var="project86" value="#{viewNews.project86List}"> 
+      <ui:repeat var="project90" value="#{viewNews.project90List}"> 
       <h:column>
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project86.id}"/> <h:outputText value="#{project86.acronym}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project90.id}"/> <h:outputText value="#{project90.acronym}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -101,8 +101,8 @@
     </div>
     
       <p> <h:outputText value="Date"/>  <h:outputText value=" : "/> 
-       <h:outputText id="outputDateId6" styleClass="outputDate" value="#{viewNews.news.date}">
-         <s:convertDateTime pattern="dd/mm/yyyy"/>
+       <h:outputText id="outputDateId7" styleClass="outputDate" value="#{viewNews.news.date}">
+         <s:convertDateTime pattern="dd/MM/yyyy"/>
        </h:outputText>
     </p>
     </div>

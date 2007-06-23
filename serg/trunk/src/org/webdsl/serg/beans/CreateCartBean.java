@@ -38,20 +38,20 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("createCart" + ".initalize()");
-    Cart var86 = new Cart();
-    cart = var86;
-    initPerson233List();
+    Cart var89 = new Cart();
+    cart = var89;
+    initPerson243List();
     initProduct31List();
-    initPerson137List();
-    initProject131List();
+    initPerson142List();
+    initProject135List();
   }
 
   @Destroy @Remove public void destroy()
   { }
 
-  public void setPerson18(Person person234)
+  public void setPerson18(Person person244)
   { 
-    cart.setShopper(person234);
+    cart.setShopper(person244);
   }
 
   public void removeProduct3(Product product30)
@@ -75,44 +75,39 @@ import org.webdsl.serg.domain.*;
     return "/" + "viewCart" + ".seam?" + ("cart" + "=" + cart.getId() + "");
   }
 
-  private String newPerson233;
+  private String newPerson243;
 
-  public void setNewPerson233(String p)
+  public void setNewPerson243(String p)
   { 
-    newPerson233 = p;
+    newPerson243 = p;
   }
 
-  public String getNewPerson233()
+  public String getNewPerson243()
   { 
-    return newPerson233;
+    return newPerson243;
   }
 
-  public void selectPerson233(ValueChangeEvent event)
+  public void selectPerson243(ValueChangeEvent event)
   { 
-    log.info("selectPerson233" + ": new value = " + " " + event.getNewValue());
-    Long id = new Long((String)event.getNewValue());
-    if(id > 0)
-    { 
-      Person person233 = em.find(Person.class, id);
-      setPerson18(person233);
-    }
+    log.info("selectPerson243" + ": new value = " + " " + event.getNewValue());
+    Person person243 = (Person)event.getNewValue();
   }
 
-  @DataModel("person233List") private Map<String, String> person233List;
+  @DataModel("person243List") private Map<String, String> person243List;
 
-  public Map<String, String> getPerson233List()
+  public Map<String, String> getPerson243List()
   { 
-    return person233List;
+    return person243List;
   }
 
-  @Factory("person233List") public void initPerson233List()
+  @Factory("person243List") public void initPerson243List()
   { 
-    log.info("initPerson233List");
-    person233List = new HashMap<String, String>();
+    log.info("initPerson243List");
+    person243List = new HashMap<String, String>();
     for(Object o : em.createQuery("from " + "Person").getResultList())
     { 
       Person p = (Person)o;
-      person233List.put(p.getName(), p.getId().toString());
+      person243List.put(p.getName(), p.getId().toString());
     }
   }
 
@@ -131,12 +126,7 @@ import org.webdsl.serg.domain.*;
   public void selectProduct31(ValueChangeEvent event)
   { 
     log.info("selectProduct31" + ": new value = " + " " + event.getNewValue());
-    Long id = new Long((String)event.getNewValue());
-    if(id > 0)
-    { 
-      Product product31 = em.find(Product.class, id);
-      addProduct3(product31);
-    }
+    Product product31 = (Product)event.getNewValue();
   }
 
   @DataModel("product31List") private Map<String, String> product31List;
@@ -157,32 +147,32 @@ import org.webdsl.serg.domain.*;
     }
   }
 
-  @DataModel("person137List") private List<Person> person137List;
+  @DataModel("person142List") private List<Person> person142List;
 
-  public List<Person> getPerson137List()
+  public List<Person> getPerson142List()
   { 
-    log.info("getPerson137List");
-    return person137List;
+    log.info("getPerson142List");
+    return person142List;
   }
 
-  @Factory("person137List") public void initPerson137List()
+  @Factory("person142List") public void initPerson142List()
   { 
-    log.info("initPerson137List");
-    person137List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson142List");
+    person142List = em.createQuery("from " + "Person").getResultList();
   }
 
-  @DataModel("project131List") private List<ResearchProject> project131List;
+  @DataModel("project135List") private List<ResearchProject> project135List;
 
-  public List<ResearchProject> getProject131List()
+  public List<ResearchProject> getProject135List()
   { 
-    log.info("getProject131List");
-    return project131List;
+    log.info("getProject135List");
+    return project135List;
   }
 
-  @Factory("project131List") public void initProject131List()
+  @Factory("project135List") public void initProject135List()
   { 
-    log.info("initProject131List");
-    project131List = em.createQuery("from " + "ResearchProject").getResultList();
+    log.info("initProject135List");
+    project135List = em.createQuery("from " + "ResearchProject").getResultList();
   }
 
   private Cart cart;

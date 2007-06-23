@@ -13,13 +13,13 @@ import org.webdsl.serg.domain.*;
 
   public void removeJournal(Journal journal4);
 
-  public List<Person> getPerson86List();
+  public List<Person> getPerson91List();
 
-  public void initPerson86List();
+  public void initPerson91List();
 
-  public List<ResearchProject> getProject76List();
+  public List<ResearchProject> getProject80List();
 
-  public void initProject76List();
+  public void initProject80List();
 
   public List<Journal> getJournal3List();
 

@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person71" value="#{editInProceedings.person71List}"> 
+      <ui:repeat var="person76" value="#{editInProceedings.person76List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person71.id}"/> <h:outputText value="#{person71.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person76.id}"/> <h:outputText value="#{person76.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -43,10 +43,10 @@
          <h:outputText value="Projects"/> 
       <ul>
         
-      <ui:repeat var="project61" value="#{editInProceedings.project61List}"> 
+      <ui:repeat var="project65" value="#{editInProceedings.project65List}"> 
       <h:column>
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project61.id}"/> <h:outputText value="#{project61.acronym}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project65.id}"/> <h:outputText value="#{project65.acronym}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -106,19 +106,19 @@
     <div class="inputAssociationList">
       <ul>
         
-      <ui:repeat var="person174" value="#{editInProceedings.inProceedings.authors}">
+      <ui:repeat var="person184" value="#{editInProceedings.inProceedings.authors}">
       <li>
-         <h:outputText value="#{person174.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{editInProceedings.removePerson4(person174)}"/>
+         <h:outputText value="#{person184.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{editInProceedings.removePerson6(person184)}"/>
     
       </li>
     </ui:repeat>
     
       </ul>
     
-       <h:selectOneMenu value="#{editInProceedings.newPerson175}" onchange="submit()" valueChangeListener="#{editInProceedings.selectPerson175}">
-          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{editInProceedings.person175List}" var="person175" label="#{person175.label}"/>
+       <h:selectOneMenu value="#{editInProceedings.newPerson185}" onchange="submit()" valueChangeListener="#{editInProceedings.selectPerson185}">
+          <s:selectItems value="#{editInProceedings.person185List}" var="person185" label="#{person185.name}" noSelectionLabel="Select"/>
+          <s:convertEntity/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -159,11 +159,11 @@
     <div class="inputAssociationSet">
       <ul>
         
-      <ui:repeat var="researchProject35" value="#{editInProceedings.inProceedings.projectsList}">
+      <ui:repeat var="researchProject42" value="#{editInProceedings.inProceedings.projectsList}">
     <div class="listAssociation">
       <li>
-         <h:outputText value="#{researchProject35.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{editInProceedings.removeResearchProject8(researchProject35)}"/>
+         <h:outputText value="#{researchProject42.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{editInProceedings.removeResearchProject10(researchProject42)}"/>
     
       </li>
     </div>
@@ -171,9 +171,9 @@
     
       </ul>
     
-       <h:selectOneMenu value="#{editInProceedings.newResearchProject36}" onchange="submit()" valueChangeListener="#{editInProceedings.selectResearchProject36}">
-          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{editInProceedings.researchProject36List}" var="researchProject36" label="#{researchProject36.label}"/>
+       <h:selectOneMenu value="#{editInProceedings.newResearchProject43}" onchange="submit()" valueChangeListener="#{editInProceedings.selectResearchProject43}">
+          <s:selectItems value="#{editInProceedings.researchProject43List}" var="researchProject43" label="#{researchProject43.name}" noSelectionLabel="Select"/>
+          <s:convertEntity/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -188,8 +188,8 @@
       <tr> <td> <h:outputText value="Conference"/> </td>  <td>
     <div class="inputSimpleRefAssociation"> <h:outputText value="#{editInProceedings.inProceedings.conference.name}"/>  <h:outputText value=" "/> 
        <h:selectOneMenu value="#{editInProceedings.newConference6}" onchange="submit()" valueChangeListener="#{editInProceedings.selectConference6}">
-          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{editInProceedings.conference6List}" var="conference6" label="#{conference6.label}"/>
+          <s:selectItems value="#{editInProceedings.conference6List}" var="conference6" label="#{conference6.name}" noSelectionLabel="Select"/>
+          <s:convertEntity/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

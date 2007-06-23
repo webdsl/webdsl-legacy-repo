@@ -21,6 +21,7 @@ imports app/news
 imports app/issues
 imports app/forum
 imports app/shop
+imports app/software
 
 section home.
 

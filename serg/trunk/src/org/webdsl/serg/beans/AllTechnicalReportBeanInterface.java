@@ -13,13 +13,13 @@ import org.webdsl.serg.domain.*;
 
   public void removeTechnicalReport(TechnicalReport technicalReport4);
 
-  public List<Person> getPerson70List();
+  public List<Person> getPerson75List();
 
-  public void initPerson70List();
+  public void initPerson75List();
 
-  public List<ResearchProject> getProject60List();
+  public List<ResearchProject> getProject64List();
 
-  public void initProject60List();
+  public void initProject64List();
 
   public List<TechnicalReport> getTechnicalReport3List();
 

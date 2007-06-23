@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person128" value="#{viewPost.person128List}"> 
+      <ui:repeat var="person133" value="#{viewPost.person133List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person128.id}"/> <h:outputText value="#{person128.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person133.id}"/> <h:outputText value="#{person133.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -43,10 +43,10 @@
          <h:outputText value="Projects"/> 
       <ul>
         
-      <ui:repeat var="project122" value="#{viewPost.project122List}"> 
+      <ui:repeat var="project126" value="#{viewPost.project126List}"> 
       <h:column>
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project122.id}"/> <h:outputText value="#{project122.acronym}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project126.id}"/> <h:outputText value="#{project126.acronym}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -105,8 +105,8 @@
     </div>
     
       <p> <h:outputText value="Posted"/>  <h:outputText value=" : "/> 
-       <h:outputText id="outputDateId12" styleClass="outputDate" value="#{viewPost.post.posted}">
-         <s:convertDateTime pattern="dd/mm/yyyy"/>
+       <h:outputText id="outputDateId13" styleClass="outputDate" value="#{viewPost.post.posted}">
+         <s:convertDateTime pattern="dd/MM/yyyy"/>
        </h:outputText>
     </p>
     

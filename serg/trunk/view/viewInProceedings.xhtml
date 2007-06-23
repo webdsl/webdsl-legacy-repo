@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person73" value="#{viewInProceedings.person73List}"> 
+      <ui:repeat var="person78" value="#{viewInProceedings.person78List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person73.id}"/> <h:outputText value="#{person73.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person78.id}"/> <h:outputText value="#{person78.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -43,10 +43,10 @@
          <h:outputText value="Projects"/> 
       <ul>
         
-      <ui:repeat var="project63" value="#{viewInProceedings.project63List}"> 
+      <ui:repeat var="project67" value="#{viewInProceedings.project67List}"> 
       <h:column>
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project63.id}"/> <h:outputText value="#{project63.acronym}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project67.id}"/> <h:outputText value="#{project67.acronym}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -104,9 +104,9 @@
     
       <ul>
         
-      <ui:repeat var="person178" value="#{viewInProceedings.inProceedings.authors}">
+      <ui:repeat var="person188" value="#{viewInProceedings.inProceedings.authors}">
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person178.id}"/> <h:outputText value="#{person178.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person188.id}"/> <h:outputText value="#{person188.name}"/> </s:link> 
       </li>
     </ui:repeat>
     
@@ -130,9 +130,9 @@
     
       <ul>
         
-      <ui:repeat var="researchProject39" value="#{viewInProceedings.inProceedings.projectsList}">
+      <ui:repeat var="researchProject46" value="#{viewInProceedings.inProceedings.projectsList}">
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{researchProject39.id}"/> <h:outputText value="#{researchProject39.name}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{researchProject46.id}"/> <h:outputText value="#{researchProject46.name}"/> </s:link> 
       </li>
     </ui:repeat>
     

@@ -84,25 +84,8 @@ import org.webdsl.serg.domain.*;
     return "/" + "editProduct" + ".seam?" + ("product" + "=" + p6.getId() + "");
   }
 
-  @Out(scope = ScopeType.SESSION, required=false)
-  private User loggedInUser;
-  
   @End public String login()
   { 
-	List<User> users = 
-	  em.createQuery(
-	     "select u from User as u " +
-	     "where (u._username = :param1) and (u._password = :param2)")
-	  .setParameter("param1", user.getUsername())
-	  .setParameter("param2", user.getPassword())
-	  .getResultList();
-	
-	if (users.size() != 1) {
-	  facesMessages.add("invalid username / password combination");
-	} else {
-	  loggedInUser = users.get(0);
-	}
-	  
     return "/" + "viewShop" + ".seam?" + ("shop" + "=" + shop.getId() + "");
   }
 

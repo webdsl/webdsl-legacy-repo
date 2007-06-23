@@ -13,13 +13,13 @@ import org.webdsl.serg.domain.*;
 
   public void removeTask(Task task4);
 
-  public List<Person> getPerson114List();
+  public List<Person> getPerson119List();
 
-  public void initPerson114List();
+  public void initPerson119List();
 
-  public List<ResearchProject> getProject108List();
+  public List<ResearchProject> getProject112List();
 
-  public void initProject108List();
+  public void initProject112List();
 
   public List<Task> getTask3List();
 

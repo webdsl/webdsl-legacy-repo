@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person81" value="#{viewArticle.person81List}"> 
+      <ui:repeat var="person86" value="#{viewArticle.person86List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person81.id}"/> <h:outputText value="#{person81.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person86.id}"/> <h:outputText value="#{person86.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -43,10 +43,10 @@
          <h:outputText value="Projects"/> 
       <ul>
         
-      <ui:repeat var="project71" value="#{viewArticle.project71List}"> 
+      <ui:repeat var="project75" value="#{viewArticle.project75List}"> 
       <h:column>
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project71.id}"/> <h:outputText value="#{project71.acronym}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{project75.id}"/> <h:outputText value="#{project75.acronym}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -104,9 +104,9 @@
     
       <ul>
         
-      <ui:repeat var="person188" value="#{viewArticle.article.authors}">
+      <ui:repeat var="person198" value="#{viewArticle.article.authors}">
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person188.id}"/> <h:outputText value="#{person188.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person198.id}"/> <h:outputText value="#{person198.name}"/> </s:link> 
       </li>
     </ui:repeat>
     
@@ -130,9 +130,9 @@
     
       <ul>
         
-      <ui:repeat var="researchProject44" value="#{viewArticle.article.projectsList}">
+      <ui:repeat var="researchProject51" value="#{viewArticle.article.projectsList}">
       <li>
-         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{researchProject44.id}"/> <h:outputText value="#{researchProject44.name}"/> </s:link> 
+         <s:link view="/viewResearchProject.xhtml" propagation="none"><f:param name="researchProject" value="#{researchProject51.id}"/> <h:outputText value="#{researchProject51.name}"/> </s:link> 
       </li>
     </ui:repeat>
     

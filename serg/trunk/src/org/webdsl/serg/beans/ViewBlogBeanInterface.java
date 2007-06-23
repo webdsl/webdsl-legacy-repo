@@ -17,9 +17,11 @@ import org.webdsl.serg.domain.*;
 
   public String createNewBlogEntry();
 
-  public List<Person> getPerson12List();
+  public String delete(BlogEntry entry3);
 
-  public void initPerson12List();
+  public List<Person> getPerson13List();
+
+  public void initPerson13List();
 
   public List<ResearchProject> getProject4List();
 
@@ -30,4 +32,10 @@ import org.webdsl.serg.domain.*;
   public void setProjects2(java.util.List<ResearchProject> projects2);
 
   public void initProjects2();
+
+  public java.util.List<BlogEntry> getEntries();
+
+  public void setEntries(java.util.List<BlogEntry> entries);
+
+  public void initEntries();
 }

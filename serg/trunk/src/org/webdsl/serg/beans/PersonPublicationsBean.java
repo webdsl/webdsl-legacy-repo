@@ -49,7 +49,7 @@ import org.webdsl.serg.domain.*;
     }
     initProjects4();
     initOrderedPublications1();
-    initPerson17List();
+    initPerson18List();
     initProject8List();
   }
 
@@ -72,18 +72,18 @@ import org.webdsl.serg.domain.*;
     return person;
   }
 
-  @DataModel("person17List") private List<Person> person17List;
+  @DataModel("person18List") private List<Person> person18List;
 
-  public List<Person> getPerson17List()
+  public List<Person> getPerson18List()
   { 
-    log.info("getPerson17List");
-    return person17List;
+    log.info("getPerson18List");
+    return person18List;
   }
 
-  @Factory("person17List") public void initPerson17List()
+  @Factory("person18List") public void initPerson18List()
   { 
-    log.info("initPerson17List");
-    person17List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson18List");
+    person18List = em.createQuery("from " + "Person").getResultList();
   }
 
   @DataModel("project8List") private List<ResearchProject> project8List;

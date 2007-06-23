@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person57" value="#{createColloquium.person57List}"> 
+      <ui:repeat var="person58" value="#{createColloquium.person58List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person57.id}"/> <h:outputText value="#{person57.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person58.id}"/> <h:outputText value="#{person58.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -105,9 +105,9 @@
     
       <tr> <td> <h:outputText value="Contact"/> </td>  <td>
     <div class="inputSimpleRefAssociation"> <h:outputText value="#{createColloquium.colloquium.contact.name}"/>  <h:outputText value=" "/> 
-       <h:selectOneMenu value="#{createColloquium.newPerson158}" onchange="submit()" valueChangeListener="#{createColloquium.selectPerson158}">
-          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createColloquium.person158List}" var="person158" label="#{person158.label}"/>
+       <h:selectOneMenu value="#{createColloquium.newPerson163}" onchange="submit()" valueChangeListener="#{createColloquium.selectPerson163}">
+          <s:selectItems value="#{createColloquium.person163List}" var="person163" label="#{person163.name}" noSelectionLabel="Select"/>
+          <s:convertEntity/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -121,8 +121,8 @@
       <tr> <td> <h:outputText value="Group"/> </td>  <td>
     <div class="inputSimpleRefAssociation"> <h:outputText value="#{createColloquium.colloquium.group.name}"/>  <h:outputText value=" "/> 
        <h:selectOneMenu value="#{createColloquium.newResearchGroup10}" onchange="submit()" valueChangeListener="#{createColloquium.selectResearchGroup10}">
-          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createColloquium.researchGroup10List}" var="researchGroup10" label="#{researchGroup10.label}"/>
+          <s:selectItems value="#{createColloquium.researchGroup10List}" var="researchGroup10" label="#{researchGroup10.name}" noSelectionLabel="Select"/>
+          <s:convertEntity/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -131,19 +131,19 @@
     <div class="inputAssociationList">
       <ul>
         
-      <ui:repeat var="researchProject16" value="#{createColloquium.colloquium.projects}">
+      <ui:repeat var="researchProject17" value="#{createColloquium.colloquium.projects}">
       <li>
-         <h:outputText value="#{researchProject16.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{createColloquium.removeResearchProject1(researchProject16)}"/>
+         <h:outputText value="#{researchProject17.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{createColloquium.removeResearchProject1(researchProject17)}"/>
     
       </li>
     </ui:repeat>
     
       </ul>
     
-       <h:selectOneMenu value="#{createColloquium.newResearchProject17}" onchange="submit()" valueChangeListener="#{createColloquium.selectResearchProject17}">
-          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createColloquium.researchProject17List}" var="researchProject17" label="#{researchProject17.label}"/>
+       <h:selectOneMenu value="#{createColloquium.newResearchProject18}" onchange="submit()" valueChangeListener="#{createColloquium.selectResearchProject18}">
+          <s:selectItems value="#{createColloquium.researchProject18List}" var="researchProject18" label="#{researchProject18.name}" noSelectionLabel="Select"/>
+          <s:convertEntity/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -163,8 +163,8 @@
       </ul>
     
        <h:selectOneMenu value="#{createColloquium.newPresentation10}" onchange="submit()" valueChangeListener="#{createColloquium.selectPresentation10}">
-          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
-          <f:selectItems value="#{createColloquium.presentation10List}" var="presentation10" label="#{presentation10.label}"/>
+          <s:selectItems value="#{createColloquium.presentation10List}" var="presentation10" label="#{presentation10.name}" noSelectionLabel="Select"/>
+          <s:convertEntity/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
