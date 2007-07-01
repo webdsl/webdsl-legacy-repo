@@ -38,7 +38,7 @@ import org.webdsl.serg.domain.*;
   @Create @Begin public void initialize()
   { 
     log.info("allPublication" + ".initalize()");
-    initPerson67List();
+    initPerson69List();
     initProject56List();
     initPublication7List();
   }
@@ -51,18 +51,18 @@ import org.webdsl.serg.domain.*;
     em.remove(publication8);
   }
 
-  @DataModel("person67List") private List<Person> person67List;
+  @DataModel("person69List") private List<Person> person69List;
 
-  public List<Person> getPerson67List()
+  public List<Person> getPerson69List()
   { 
-    log.info("getPerson67List");
-    return person67List;
+    log.info("getPerson69List");
+    return person69List;
   }
 
-  @Factory("person67List") public void initPerson67List()
+  @Factory("person69List") public void initPerson69List()
   { 
-    log.info("initPerson67List");
-    person67List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson69List");
+    person69List = em.createQuery("from " + "Person").getResultList();
   }
 
   @DataModel("project56List") private List<ResearchProject> project56List;

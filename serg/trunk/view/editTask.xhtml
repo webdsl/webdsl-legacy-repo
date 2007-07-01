@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person116" value="#{editTask.person116List}"> 
+      <ui:repeat var="person118" value="#{editTask.person118List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person116.id}"/> <h:outputText value="#{person116.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person118.id}"/> <h:outputText value="#{person118.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -140,8 +140,8 @@
       </ul>
     
        <h:selectOneMenu value="#{editTask.newIssue40}" onchange="submit()" valueChangeListener="#{editTask.selectIssue40}">
-          <s:selectItems value="#{editTask.issue40List}" var="issue40" label="#{issue40.name}" noSelectionLabel="Select"/>
-          <s:convertEntity/>
+          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
+          <f:selectItems value="#{editTask.issue40List}" var="issue40" label="#{issue40.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -150,11 +150,11 @@
     <div class="inputAssociationSet">
       <ul>
         
-      <ui:repeat var="person224" value="#{editTask.task.assignedList}">
+      <ui:repeat var="person238" value="#{editTask.task.assignedList}">
     <div class="listAssociation">
       <li>
-         <h:outputText value="#{person224.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{editTask.removePerson22(person224)}"/>
+         <h:outputText value="#{person238.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{editTask.removePerson22(person238)}"/>
     
       </li>
     </div>
@@ -162,9 +162,9 @@
     
       </ul>
     
-       <h:selectOneMenu value="#{editTask.newPerson225}" onchange="submit()" valueChangeListener="#{editTask.selectPerson225}">
-          <s:selectItems value="#{editTask.person225List}" var="person225" label="#{person225.name}" noSelectionLabel="Select"/>
-          <s:convertEntity/>
+       <h:selectOneMenu value="#{editTask.newPerson239}" onchange="submit()" valueChangeListener="#{editTask.selectPerson239}">
+          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
+          <f:selectItems value="#{editTask.person239List}" var="person239" label="#{person239.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

@@ -39,9 +39,9 @@ import org.webdsl.serg.domain.*;
 
   public void initBlog10List();
 
-  public List<Person> getPerson38List();
+  public List<Person> getPerson40List();
 
-  public void initPerson38List();
+  public void initPerson40List();
 
   public List<ResearchProject> getProject30List();
 

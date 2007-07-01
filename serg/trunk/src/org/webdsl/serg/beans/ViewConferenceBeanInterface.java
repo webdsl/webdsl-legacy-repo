@@ -17,9 +17,9 @@ import org.webdsl.serg.domain.*;
 
   public String createNewPerson(Conference conference00, java.util.List<Person> editors0);
 
-  public List<Person> getPerson82List();
+  public List<Person> getPerson84List();
 
-  public void initPerson82List();
+  public void initPerson84List();
 
   public List<ResearchProject> getProject71List();
 

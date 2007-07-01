@@ -69,10 +69,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person21" value="#{viewResearchGroup.person21List}"> 
+      <ui:repeat var="person23" value="#{viewResearchGroup.person23List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person21.id}"/> <h:outputText value="#{person21.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person23.id}"/> <h:outputText value="#{person23.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -158,9 +158,9 @@
     
       <ul>
         
-      <ui:repeat var="person145" value="#{viewResearchGroup.group.membersList}">
+      <ui:repeat var="person159" value="#{viewResearchGroup.group.membersList}">
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person145.id}"/> <h:outputText value="#{person145.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person159.id}"/> <h:outputText value="#{person159.name}"/> </s:link> 
       </li>
     </ui:repeat>
     

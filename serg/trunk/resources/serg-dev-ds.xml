@@ -5,6 +5,7 @@
       <jndi-name>sergDatasource</jndi-name>
       <connection-url>jdbc:mysql://127.0.0.1/serg?useServerPrepStmts=false</connection-url>
       <driver-class>com.mysql.jdbc.Driver</driver-class>
+      <dialect>org.hibernate.dialect.MySQLDialect</dialect>
       <user-name>visser</user-name>
       <password>dsl</password>
 <!-- 

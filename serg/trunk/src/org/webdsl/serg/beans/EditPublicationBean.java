@@ -49,9 +49,9 @@ import org.webdsl.serg.domain.*;
     }
     Person var32 = new Person();
     newAuthor0 = var32;
-    initPerson170List();
+    initPerson184List();
     initResearchProject26List();
-    initPerson64List();
+    initPerson66List();
     initProject53List();
   }
 
@@ -74,14 +74,14 @@ import org.webdsl.serg.domain.*;
     return publication;
   }
 
-  public void removePerson0(Person person169)
+  public void removePerson0(Person person183)
   { 
-    this.getPublication().getAuthors().remove(person169);
+    this.getPublication().getAuthors().remove(person183);
   }
 
-  public void addPerson0(Person person169)
+  public void addPerson0(Person person183)
   { 
-    this.getPublication().getAuthors().add(person169);
+    this.getPublication().getAuthors().add(person183);
   }
 
   public void addNewAuthor()
@@ -112,39 +112,44 @@ import org.webdsl.serg.domain.*;
     return "/" + "viewPublication" + ".seam?" + ("publication" + "=" + publication.getId() + "");
   }
 
-  private String newPerson170;
+  private String newPerson184;
 
-  public void setNewPerson170(String p)
+  public void setNewPerson184(String p)
   { 
-    newPerson170 = p;
+    newPerson184 = p;
   }
 
-  public String getNewPerson170()
+  public String getNewPerson184()
   { 
-    return newPerson170;
+    return newPerson184;
   }
 
-  public void selectPerson170(ValueChangeEvent event)
+  public void selectPerson184(ValueChangeEvent event)
   { 
-    log.info("selectPerson170" + ": new value = " + " " + event.getNewValue());
-    Person person170 = (Person)event.getNewValue();
+    log.info("selectPerson184" + ": new value = " + " " + event.getNewValue());
+    Long id = new Long((String)event.getNewValue());
+    if(id > 0)
+    { 
+      Person person184 = em.find(Person.class, id);
+      addPerson0(person184);
+    }
   }
 
-  @DataModel("person170List") private Map<String, String> person170List;
+  @DataModel("person184List") private Map<String, String> person184List;
 
-  public Map<String, String> getPerson170List()
+  public Map<String, String> getPerson184List()
   { 
-    return person170List;
+    return person184List;
   }
 
-  @Factory("person170List") public void initPerson170List()
+  @Factory("person184List") public void initPerson184List()
   { 
-    log.info("initPerson170List");
-    person170List = new HashMap<String, String>();
+    log.info("initPerson184List");
+    person184List = new HashMap<String, String>();
     for(Object o : em.createQuery("from " + "Person").getResultList())
     { 
       Person p = (Person)o;
-      person170List.put(p.getName(), p.getId().toString());
+      person184List.put(p.getName(), p.getId().toString());
     }
   }
 
@@ -163,7 +168,12 @@ import org.webdsl.serg.domain.*;
   public void selectResearchProject26(ValueChangeEvent event)
   { 
     log.info("selectResearchProject26" + ": new value = " + " " + event.getNewValue());
-    ResearchProject researchProject26 = (ResearchProject)event.getNewValue();
+    Long id = new Long((String)event.getNewValue());
+    if(id > 0)
+    { 
+      ResearchProject researchProject26 = em.find(ResearchProject.class, id);
+      addResearchProject4(researchProject26);
+    }
   }
 
   @DataModel("researchProject26List") private Map<String, String> researchProject26List;
@@ -184,18 +194,18 @@ import org.webdsl.serg.domain.*;
     }
   }
 
-  @DataModel("person64List") private List<Person> person64List;
+  @DataModel("person66List") private List<Person> person66List;
 
-  public List<Person> getPerson64List()
+  public List<Person> getPerson66List()
   { 
-    log.info("getPerson64List");
-    return person64List;
+    log.info("getPerson66List");
+    return person66List;
   }
 
-  @Factory("person64List") public void initPerson64List()
+  @Factory("person66List") public void initPerson66List()
   { 
-    log.info("initPerson64List");
-    person64List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson66List");
+    person66List = em.createQuery("from " + "Person").getResultList();
   }
 
   @DataModel("project53List") private List<ResearchProject> project53List;

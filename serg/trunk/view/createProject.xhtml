@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person108" value="#{createProject.person108List}"> 
+      <ui:repeat var="person111" value="#{createProject.person111List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person108.id}"/> <h:outputText value="#{person108.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person111.id}"/> <h:outputText value="#{person111.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -140,8 +140,8 @@
       </ul>
     
        <h:selectOneMenu value="#{createProject.newIssue32}" onchange="submit()" valueChangeListener="#{createProject.selectIssue32}">
-          <s:selectItems value="#{createProject.issue32List}" var="issue32" label="#{issue32.name}" noSelectionLabel="Select"/>
-          <s:convertEntity/>
+          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
+          <f:selectItems value="#{createProject.issue32List}" var="issue32" label="#{issue32.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -150,11 +150,11 @@
     <div class="inputAssociationSet">
       <ul>
         
-      <ui:repeat var="person216" value="#{createProject.project.assignedList}">
+      <ui:repeat var="person230" value="#{createProject.project.assignedList}">
     <div class="listAssociation">
       <li>
-         <h:outputText value="#{person216.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{createProject.removePerson19(person216)}"/>
+         <h:outputText value="#{person230.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{createProject.removePerson19(person230)}"/>
     
       </li>
     </div>
@@ -162,9 +162,9 @@
     
       </ul>
     
-       <h:selectOneMenu value="#{createProject.newPerson217}" onchange="submit()" valueChangeListener="#{createProject.selectPerson217}">
-          <s:selectItems value="#{createProject.person217List}" var="person217" label="#{person217.name}" noSelectionLabel="Select"/>
-          <s:convertEntity/>
+       <h:selectOneMenu value="#{createProject.newPerson231}" onchange="submit()" valueChangeListener="#{createProject.selectPerson231}">
+          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
+          <f:selectItems value="#{createProject.person231List}" var="person231" label="#{person231.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

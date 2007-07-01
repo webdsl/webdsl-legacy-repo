@@ -13,9 +13,9 @@ import org.webdsl.serg.domain.*;
 
   public void removeColloquium(Colloquium colloquium6);
 
-  public List<Person> getPerson59List();
+  public List<Person> getPerson61List();
 
-  public void initPerson59List();
+  public void initPerson61List();
 
   public List<ResearchProject> getProject48List();
 

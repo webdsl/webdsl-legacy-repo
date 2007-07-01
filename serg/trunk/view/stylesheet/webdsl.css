@@ -17,7 +17,7 @@
   margin-top       : 10px;
   width            : 10em;
   /* for testing */
-  // background-color : white; 
+  //background-color : white; 
   //border           : 1px solid black;
   //padding          : 1px;
 }
@@ -60,14 +60,15 @@
   border-bottom      : 1px dotted lightgrey;
   color              : darkblue;
   /* for testing */
-  //background-color : white;
+  background-color : white;
   //border           : 1px solid #999;
-  //padding          : 1px;
+  //padding          : 2px;
+  //border-bottom    : dotted 1px lightgrey;
 }
 
 .body {
   position      : relative;
-  top           : 20px;
+  top           : 10px;
   margin-bottom : 2.5em;
   /* for testing */
   //background-color : white;
@@ -208,7 +209,7 @@ li {
   background  : white;
   //float       : left;
   position    : relative;
-  top         : 2.6em;
+  top         : 2.5em;
 }
 
 .menu ul {
@@ -222,7 +223,7 @@ li {
 
 .menu li {
   position         : relative;
-  padding          : 2px;
+  padding          : 0px;
   margin           : 0em;
   background-color : white;
   border-left      : solid 1px white;

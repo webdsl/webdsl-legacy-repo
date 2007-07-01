@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person44" value="#{createBlog.person44List}"> 
+      <ui:repeat var="person46" value="#{createBlog.person46List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person44.id}"/> <h:outputText value="#{person44.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person46.id}"/> <h:outputText value="#{person46.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -99,9 +99,9 @@
     
       <tr> <td> <h:outputText value="Author"/> </td>  <td>
     <div class="inputSimpleRefAssociation"> <h:outputText value="#{createBlog.blog.author.name}"/>  <h:outputText value=" "/> 
-       <h:selectOneMenu value="#{createBlog.newPerson155}" onchange="submit()" valueChangeListener="#{createBlog.selectPerson155}">
-          <s:selectItems value="#{createBlog.person155List}" var="person155" label="#{person155.name}" noSelectionLabel="Select"/>
-          <s:convertEntity/>
+       <h:selectOneMenu value="#{createBlog.newPerson169}" onchange="submit()" valueChangeListener="#{createBlog.selectPerson169}">
+          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
+          <f:selectItems value="#{createBlog.person169List}" var="person169" label="#{person169.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -121,8 +121,8 @@
       </ul>
     
        <h:selectOneMenu value="#{createBlog.newBlogEntry9}" onchange="submit()" valueChangeListener="#{createBlog.selectBlogEntry9}">
-          <s:selectItems value="#{createBlog.blogEntry9List}" var="blogEntry9" label="#{blogEntry9.name}" noSelectionLabel="Select"/>
-          <s:convertEntity/>
+          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
+          <f:selectItems value="#{createBlog.blogEntry9List}" var="blogEntry9" label="#{blogEntry9.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -142,8 +142,8 @@
       </ul>
     
        <h:selectOneMenu value="#{createBlog.newCategory9}" onchange="submit()" valueChangeListener="#{createBlog.selectCategory9}">
-          <s:selectItems value="#{createBlog.category9List}" var="category9" label="#{category9.name}" noSelectionLabel="Select"/>
-          <s:convertEntity/>
+          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
+          <f:selectItems value="#{createBlog.category9List}" var="category9" label="#{category9.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

@@ -13,9 +13,9 @@ import org.webdsl.serg.domain.*;
 
   public void removeTechnicalReport(TechnicalReport technicalReport4);
 
-  public List<Person> getPerson75List();
+  public List<Person> getPerson77List();
 
-  public void initPerson75List();
+  public void initPerson77List();
 
   public List<ResearchProject> getProject64List();
 

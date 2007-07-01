@@ -15,9 +15,9 @@ import org.webdsl.serg.domain.*;
 
   public Journal getJournal();
 
-  public List<Person> getPerson90List();
+  public List<Person> getPerson92List();
 
-  public void initPerson90List();
+  public void initPerson92List();
 
   public List<ResearchProject> getProject79List();
 

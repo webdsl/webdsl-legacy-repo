@@ -1761,6 +1761,36 @@ section client .
     }
   }
 
+module software
+description
+  Meta-data about software products and releases.
+end
+section domain .
+
+  SoftwareProduct {
+    name :: String ( )
+    description :: Text ( )
+    releases -> List<SoftwareRelease> ( )
+    lead -> Person ( )
+    developers -> List<Person> ( )
+    licence -> License ( )
+  }
+
+  SoftwareRelease {
+    product -> SoftwareProduct ( )
+    version :: String ( name )
+    url :: URL ( )
+    released :: Date ( )
+    changes :: Text ( )
+    contributors -> List<Person> ( )
+  }
+
+  License {
+    acronym :: String ( name )
+    text :: Text ( )
+  }
+section pages .
+
 section home .
 
   define page home () {
@@ -1858,26 +1888,27 @@ section home .
     }
   }
 
-  define page editUserFoo (user : User) {
-    form(){
-      inputString(user.name){
-      }
-      action("Save", save()){
-      }
-      action save ( )
-      {
-        user.save();
-        return viewUser(user);
-      }
-    }
-  }
-
 section generated pages .
 
   define createMenu () {
     listitem(){
       "New"
       list(){
+        listitem(){
+          navigate(createLicense()){
+            "License"
+          }
+        }
+        listitem(){
+          navigate(createSoftwareRelease()){
+            "SoftwareRelease"
+          }
+        }
+        listitem(){
+          navigate(createSoftwareProduct()){
+            "SoftwareProduct"
+          }
+        }
         listitem(){
           navigate(createCart()){
             "Cart"
@@ -2036,6 +2067,21 @@ section generated pages .
     listitem(){
       "All"
       list(){
+        listitem(){
+          navigate(allLicense()){
+            "License"
+          }
+        }
+        listitem(){
+          navigate(allSoftwareRelease()){
+            "SoftwareRelease"
+          }
+        }
+        listitem(){
+          navigate(allSoftwareProduct()){
+            "SoftwareProduct"
+          }
+        }
         listitem(){
           navigate(allCart()){
             "Cart"
@@ -7924,6 +7970,619 @@ section generated pages .
                 action removeCart ( cart : Cart )
                 {
                   cart.delete();
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  define page editSoftwareProduct (softwareProduct : SoftwareProduct) {
+    main(){
+    }
+    define sidebar () {
+    }
+    define body () {
+      section(){
+        header(){
+          "Edit "
+          "SoftwareProduct"
+          " "
+          text(softwareProduct.name){
+          }
+        }
+        form(){
+          table(){
+            editRowsSoftwareProduct(softwareProduct){
+            }
+          }
+          action("Save", save()){
+          }
+          action("Cancel", cancel()){
+          }
+        }
+      }
+      action cancel ( )
+      {
+        return viewSoftwareProduct(softwareProduct);
+      }
+      action save ( )
+      {
+        softwareProduct.save();
+        return viewSoftwareProduct(softwareProduct);
+      }
+    }
+  }
+
+  define page createSoftwareProduct () {
+    var softwareProduct : SoftwareProduct := SoftwareProduct{} ;
+    main(){
+    }
+    define sidebar () {
+    }
+    define body () {
+      section(){
+        header(){
+          "Create new "
+          "SoftwareProduct"
+        }
+        form(){
+          table(){
+            editRowsSoftwareProduct(softwareProduct){
+            }
+          }
+          action("Save", save()){
+          }
+          action("Cancel", cancel()){
+          }
+        }
+      }
+      action cancel ( )
+      {
+        return home();
+      }
+      action save ( )
+      {
+        softwareProduct.save();
+        return viewSoftwareProduct(softwareProduct);
+      }
+    }
+  }
+
+  define editRowsSoftwareProduct (softwareProduct : SoftwareProduct) {
+    editRowsObject(softwareProduct){
+    }
+    row(){
+      "Name"
+      input(softwareProduct.name){
+      }
+    }
+    row(){
+      "Description"
+      input(softwareProduct.description){
+      }
+    }
+    row(){
+      "Releases"
+      input(softwareProduct.releases){
+      }
+    }
+    row(){
+      "Lead"
+      input(softwareProduct.lead){
+      }
+    }
+    row(){
+      "Developers"
+      input(softwareProduct.developers){
+      }
+    }
+    row(){
+      "Licence"
+      input(softwareProduct.licence){
+      }
+    }
+  }
+
+  define page viewSoftwareProduct (softwareProduct : SoftwareProduct) {
+    main(){
+    }
+    define manageMenu () {
+      listitem(){
+        navigate(editSoftwareProduct(softwareProduct)){
+          text("Edit"){
+          }
+        }
+      }
+    }
+    define sidebar () {
+    }
+    define body () {
+      section(){
+        header(){
+          text(softwareProduct.name){
+          }
+        }
+        viewRowsSoftwareProduct(softwareProduct){
+        }
+      }
+    }
+  }
+
+  define viewRowsSoftwareProduct (softwareProduct : SoftwareProduct) {
+    viewRowsObject(softwareProduct){
+    }
+    par(){
+      "Name"
+      " : "
+      output(softwareProduct.name){
+      }
+    }
+    section(){
+      header(){
+        "Description"
+      }
+      output(softwareProduct.description){
+      }
+    }
+    section(){
+      header(){
+        "Releases"
+      }
+      output(softwareProduct.releases){
+      }
+      form(){
+        actionLink("New SoftwareRelease", createNewSoftwareRelease(softwareProduct, softwareProduct.releases)){
+        }
+      }
+      action createNewSoftwareRelease ( softwareProduct0 : SoftwareProduct, releases : List<SoftwareRelease> )
+      {
+        var softwareRelease0 : SoftwareRelease := SoftwareRelease{} ;
+        releases.add(softwareRelease0);
+        softwareProduct0.persist();
+        return editSoftwareRelease(softwareRelease0);
+      }
+    }
+    section(){
+      header(){
+        "Lead"
+      }
+      list(){
+        listitem(){
+          output(softwareProduct.lead){
+          }
+        }
+      }
+    }
+    section(){
+      header(){
+        "Developers"
+      }
+      output(softwareProduct.developers){
+      }
+      form(){
+        actionLink("New Person", createNewPerson(softwareProduct, softwareProduct.developers)){
+        }
+      }
+      action createNewPerson ( softwareProduct1 : SoftwareProduct, developers : List<Person> )
+      {
+        var person6 : Person := Person{} ;
+        developers.add(person6);
+        softwareProduct1.persist();
+        return editPerson(person6);
+      }
+    }
+    section(){
+      header(){
+        "Licence"
+      }
+      list(){
+        listitem(){
+          output(softwareProduct.licence){
+          }
+        }
+      }
+    }
+  }
+
+  define page allSoftwareProduct () {
+    main(){
+    }
+    define body () {
+      section(){
+        header(){
+          "All "
+          "SoftwareProduct"
+        }
+        form(){
+          list(){
+            for ( softwareProduct : SoftwareProduct ) {
+              listitem(){
+                navigate(viewSoftwareProduct(softwareProduct)){
+                  text(softwareProduct.name){
+                  }
+                }
+                " "
+                actionLink("[X]", removeSoftwareProduct(softwareProduct)){
+                }
+                action removeSoftwareProduct ( softwareProduct : SoftwareProduct )
+                {
+                  softwareProduct.delete();
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  define page editSoftwareRelease (softwareRelease : SoftwareRelease) {
+    main(){
+    }
+    define sidebar () {
+    }
+    define body () {
+      section(){
+        header(){
+          "Edit "
+          "SoftwareRelease"
+          " "
+          text(softwareRelease.name){
+          }
+        }
+        form(){
+          table(){
+            editRowsSoftwareRelease(softwareRelease){
+            }
+          }
+          action("Save", save()){
+          }
+          action("Cancel", cancel()){
+          }
+        }
+      }
+      action cancel ( )
+      {
+        return viewSoftwareRelease(softwareRelease);
+      }
+      action save ( )
+      {
+        softwareRelease.save();
+        return viewSoftwareRelease(softwareRelease);
+      }
+    }
+  }
+
+  define page createSoftwareRelease () {
+    var softwareRelease : SoftwareRelease := SoftwareRelease{} ;
+    main(){
+    }
+    define sidebar () {
+    }
+    define body () {
+      section(){
+        header(){
+          "Create new "
+          "SoftwareRelease"
+        }
+        form(){
+          table(){
+            editRowsSoftwareRelease(softwareRelease){
+            }
+          }
+          action("Save", save()){
+          }
+          action("Cancel", cancel()){
+          }
+        }
+      }
+      action cancel ( )
+      {
+        return home();
+      }
+      action save ( )
+      {
+        softwareRelease.save();
+        return viewSoftwareRelease(softwareRelease);
+      }
+    }
+  }
+
+  define editRowsSoftwareRelease (softwareRelease : SoftwareRelease) {
+    editRowsObject(softwareRelease){
+    }
+    row(){
+      "Product"
+      input(softwareRelease.product){
+      }
+    }
+    row(){
+      "Version"
+      input(softwareRelease.version){
+      }
+    }
+    row(){
+      "Url"
+      input(softwareRelease.url){
+      }
+    }
+    row(){
+      "Released"
+      input(softwareRelease.released){
+      }
+    }
+    row(){
+      "Changes"
+      input(softwareRelease.changes){
+      }
+    }
+    row(){
+      "Contributors"
+      input(softwareRelease.contributors){
+      }
+    }
+  }
+
+  define page viewSoftwareRelease (softwareRelease : SoftwareRelease) {
+    main(){
+    }
+    define manageMenu () {
+      listitem(){
+        navigate(editSoftwareRelease(softwareRelease)){
+          text("Edit"){
+          }
+        }
+      }
+    }
+    define sidebar () {
+    }
+    define body () {
+      section(){
+        header(){
+          text(softwareRelease.name){
+          }
+        }
+        viewRowsSoftwareRelease(softwareRelease){
+        }
+      }
+    }
+  }
+
+  define viewRowsSoftwareRelease (softwareRelease : SoftwareRelease) {
+    viewRowsObject(softwareRelease){
+    }
+    section(){
+      header(){
+        "Product"
+      }
+      list(){
+        listitem(){
+          output(softwareRelease.product){
+          }
+        }
+      }
+    }
+    par(){
+      "Url"
+      " : "
+      output(softwareRelease.url){
+      }
+    }
+    par(){
+      "Released"
+      " : "
+      output(softwareRelease.released){
+      }
+    }
+    section(){
+      header(){
+        "Changes"
+      }
+      output(softwareRelease.changes){
+      }
+    }
+    section(){
+      header(){
+        "Contributors"
+      }
+      output(softwareRelease.contributors){
+      }
+      form(){
+        actionLink("New Person", createNewPerson(softwareRelease, softwareRelease.contributors)){
+        }
+      }
+      action createNewPerson ( softwareRelease1 : SoftwareRelease, contributors : List<Person> )
+      {
+        var person7 : Person := Person{} ;
+        contributors.add(person7);
+        softwareRelease1.persist();
+        return editPerson(person7);
+      }
+    }
+  }
+
+  define page allSoftwareRelease () {
+    main(){
+    }
+    define body () {
+      section(){
+        header(){
+          "All "
+          "SoftwareRelease"
+        }
+        form(){
+          list(){
+            for ( softwareRelease : SoftwareRelease ) {
+              listitem(){
+                navigate(viewSoftwareRelease(softwareRelease)){
+                  text(softwareRelease.name){
+                  }
+                }
+                " "
+                actionLink("[X]", removeSoftwareRelease(softwareRelease)){
+                }
+                action removeSoftwareRelease ( softwareRelease : SoftwareRelease )
+                {
+                  softwareRelease.delete();
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  define page editLicense (license : License) {
+    main(){
+    }
+    define sidebar () {
+    }
+    define body () {
+      section(){
+        header(){
+          "Edit "
+          "License"
+          " "
+          text(license.name){
+          }
+        }
+        form(){
+          table(){
+            editRowsLicense(license){
+            }
+          }
+          action("Save", save()){
+          }
+          action("Cancel", cancel()){
+          }
+        }
+      }
+      action cancel ( )
+      {
+        return viewLicense(license);
+      }
+      action save ( )
+      {
+        license.save();
+        return viewLicense(license);
+      }
+    }
+  }
+
+  define page createLicense () {
+    var license : License := License{} ;
+    main(){
+    }
+    define sidebar () {
+    }
+    define body () {
+      section(){
+        header(){
+          "Create new "
+          "License"
+        }
+        form(){
+          table(){
+            editRowsLicense(license){
+            }
+          }
+          action("Save", save()){
+          }
+          action("Cancel", cancel()){
+          }
+        }
+      }
+      action cancel ( )
+      {
+        return home();
+      }
+      action save ( )
+      {
+        license.save();
+        return viewLicense(license);
+      }
+    }
+  }
+
+  define editRowsLicense (license : License) {
+    editRowsObject(license){
+    }
+    row(){
+      "Acronym"
+      input(license.acronym){
+      }
+    }
+    row(){
+      "Text"
+      input(license.text){
+      }
+    }
+  }
+
+  define page viewLicense (license : License) {
+    main(){
+    }
+    define manageMenu () {
+      listitem(){
+        navigate(editLicense(license)){
+          text("Edit"){
+          }
+        }
+      }
+    }
+    define sidebar () {
+    }
+    define body () {
+      section(){
+        header(){
+          text(license.name){
+          }
+        }
+        viewRowsLicense(license){
+        }
+      }
+    }
+  }
+
+  define viewRowsLicense (license : License) {
+    viewRowsObject(license){
+    }
+    section(){
+      header(){
+        "Text"
+      }
+      output(license.text){
+      }
+    }
+  }
+
+  define page allLicense () {
+    main(){
+    }
+    define body () {
+      section(){
+        header(){
+          "All "
+          "License"
+        }
+        form(){
+          list(){
+            for ( license : License ) {
+              listitem(){
+                navigate(viewLicense(license)){
+                  text(license.name){
+                  }
+                }
+                " "
+                actionLink("[X]", removeLicense(license)){
+                }
+                action removeLicense ( license : License )
+                {
+                  license.delete();
                 }
               }
             }

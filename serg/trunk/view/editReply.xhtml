@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person127" value="#{editReply.person127List}"> 
+      <ui:repeat var="person129" value="#{editReply.person129List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person127.id}"/> <h:outputText value="#{person127.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person129.id}"/> <h:outputText value="#{person129.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -99,9 +99,9 @@
     
       <tr> <td> <h:outputText value="Author"/> </td>  <td>
     <div class="inputSimpleRefAssociation"> <h:outputText value="#{editReply.reply.author.name}"/>  <h:outputText value=" "/> 
-       <h:selectOneMenu value="#{editReply.newPerson233}" onchange="submit()" valueChangeListener="#{editReply.selectPerson233}">
-          <s:selectItems value="#{editReply.person233List}" var="person233" label="#{person233.name}" noSelectionLabel="Select"/>
-          <s:convertEntity/>
+       <h:selectOneMenu value="#{editReply.newPerson247}" onchange="submit()" valueChangeListener="#{editReply.selectPerson247}">
+          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
+          <f:selectItems value="#{editReply.person247List}" var="person247" label="#{person247.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -122,8 +122,8 @@
       <tr> <td> <h:outputText value="Discussion"/> </td>  <td>
     <div class="inputSimpleRefAssociation"> <h:outputText value="#{editReply.reply.discussion.name}"/>  <h:outputText value=" "/> 
        <h:selectOneMenu value="#{editReply.newDiscussion11}" onchange="submit()" valueChangeListener="#{editReply.selectDiscussion11}">
-          <s:selectItems value="#{editReply.discussion11List}" var="discussion11" label="#{discussion11.name}" noSelectionLabel="Select"/>
-          <s:convertEntity/>
+          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
+          <f:selectItems value="#{editReply.discussion11List}" var="discussion11" label="#{discussion11.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

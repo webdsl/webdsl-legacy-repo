@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person36" value="#{editPerson.person36List}"> 
+      <ui:repeat var="person38" value="#{editPerson.person38List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person36.id}"/> <h:outputText value="#{person36.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person38.id}"/> <h:outputText value="#{person38.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -138,8 +138,8 @@
       <tr> <td> <h:outputText value="User"/> </td>  <td>
     <div class="inputSimpleRefAssociation"> <h:outputText value="#{editPerson.person.user.name}"/>  <h:outputText value=" "/> 
        <h:selectOneMenu value="#{editPerson.newUser7}" onchange="submit()" valueChangeListener="#{editPerson.selectUser7}">
-          <s:selectItems value="#{editPerson.user7List}" var="user7" label="#{user7.name}" noSelectionLabel="Select"/>
-          <s:convertEntity/>
+          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
+          <f:selectItems value="#{editPerson.user7List}" var="user7" label="#{user7.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -147,8 +147,8 @@
       <tr> <td> <h:outputText value="Blog"/> </td>  <td>
     <div class="inputSimpleRefAssociation"> <h:outputText value="#{editPerson.person.blog.name}"/>  <h:outputText value=" "/> 
        <h:selectOneMenu value="#{editPerson.newBlog8}" onchange="submit()" valueChangeListener="#{editPerson.selectBlog8}">
-          <s:selectItems value="#{editPerson.blog8List}" var="blog8" label="#{blog8.name}" noSelectionLabel="Select"/>
-          <s:convertEntity/>
+          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
+          <f:selectItems value="#{editPerson.blog8List}" var="blog8" label="#{blog8.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

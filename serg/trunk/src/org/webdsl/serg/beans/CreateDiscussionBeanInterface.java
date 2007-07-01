@@ -11,7 +11,7 @@ import org.webdsl.serg.domain.*;
 
   public void destroy();
 
-  public void setPerson12(Person person232);
+  public void setPerson12(Person person246);
 
   public void setForum1(Forum forum9);
 
@@ -23,15 +23,15 @@ import org.webdsl.serg.domain.*;
 
   public String save();
 
-  public void setNewPerson231(String p);
+  public void setNewPerson245(String p);
 
-  public String getNewPerson231();
+  public String getNewPerson245();
 
-  public void selectPerson231(ValueChangeEvent event);
+  public void selectPerson245(ValueChangeEvent event);
 
-  public Map<String, String> getPerson231List();
+  public Map<String, String> getPerson245List();
 
-  public void initPerson231List();
+  public void initPerson245List();
 
   public void setNewForum8(String p);
 
@@ -53,9 +53,9 @@ import org.webdsl.serg.domain.*;
 
   public void initReply11List();
 
-  public List<Person> getPerson125List();
+  public List<Person> getPerson127List();
 
-  public void initPerson125List();
+  public void initPerson127List();
 
   public List<ResearchProject> getProject118List();
 

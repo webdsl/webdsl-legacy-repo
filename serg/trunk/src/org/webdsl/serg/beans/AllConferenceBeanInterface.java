@@ -13,9 +13,9 @@ import org.webdsl.serg.domain.*;
 
   public void removeConference(Conference conference5);
 
-  public List<Person> getPerson83List();
+  public List<Person> getPerson85List();
 
-  public void initPerson83List();
+  public void initPerson85List();
 
   public List<ResearchProject> getProject72List();
 

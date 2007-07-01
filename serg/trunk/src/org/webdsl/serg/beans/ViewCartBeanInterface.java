@@ -17,9 +17,9 @@ import org.webdsl.serg.domain.*;
 
   public String createNewProduct(Cart cart10, java.util.List<Product> products0);
 
-  public List<Person> getPerson143List();
+  public List<Person> getPerson145List();
 
-  public void initPerson143List();
+  public void initPerson145List();
 
   public List<ResearchProject> getProject136List();
 

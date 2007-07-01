@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person113" value="#{createBug.person113List}"> 
+      <ui:repeat var="person115" value="#{createBug.person115List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person113.id}"/> <h:outputText value="#{person113.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person115.id}"/> <h:outputText value="#{person115.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -140,8 +140,8 @@
       </ul>
     
        <h:selectOneMenu value="#{createBug.newIssue37}" onchange="submit()" valueChangeListener="#{createBug.selectIssue37}">
-          <s:selectItems value="#{createBug.issue37List}" var="issue37" label="#{issue37.name}" noSelectionLabel="Select"/>
-          <s:convertEntity/>
+          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
+          <f:selectItems value="#{createBug.issue37List}" var="issue37" label="#{issue37.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -150,11 +150,11 @@
     <div class="inputAssociationSet">
       <ul>
         
-      <ui:repeat var="person221" value="#{createBug.bug.assignedList}">
+      <ui:repeat var="person235" value="#{createBug.bug.assignedList}">
     <div class="listAssociation">
       <li>
-         <h:outputText value="#{person221.name}"/>  <h:outputText value=" "/>  
-       <h:commandLink type="submit" value="[X]" action="#{createBug.removePerson21(person221)}"/>
+         <h:outputText value="#{person235.name}"/>  <h:outputText value=" "/>  
+       <h:commandLink type="submit" value="[X]" action="#{createBug.removePerson21(person235)}"/>
     
       </li>
     </div>
@@ -162,9 +162,9 @@
     
       </ul>
     
-       <h:selectOneMenu value="#{createBug.newPerson222}" onchange="submit()" valueChangeListener="#{createBug.selectPerson222}">
-          <s:selectItems value="#{createBug.person222List}" var="person222" label="#{person222.name}" noSelectionLabel="Select"/>
-          <s:convertEntity/>
+       <h:selectOneMenu value="#{createBug.newPerson236}" onchange="submit()" valueChangeListener="#{createBug.selectPerson236}">
+          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
+          <f:selectItems value="#{createBug.person236List}" var="person236" label="#{person236.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

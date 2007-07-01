@@ -13,9 +13,9 @@ import org.webdsl.serg.domain.*;
 
   public void removeAddress(Address address4);
 
-  public List<Person> getPerson35List();
+  public List<Person> getPerson37List();
 
-  public void initPerson35List();
+  public void initPerson37List();
 
   public List<ResearchProject> getProject28List();
 

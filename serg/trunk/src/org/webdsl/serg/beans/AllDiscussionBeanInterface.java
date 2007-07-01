@@ -13,9 +13,9 @@ import org.webdsl.serg.domain.*;
 
   public void removeDiscussion(Discussion discussion5);
 
-  public List<Person> getPerson126List();
+  public List<Person> getPerson128List();
 
-  public void initPerson126List();
+  public void initPerson128List();
 
   public List<ResearchProject> getProject119List();
 

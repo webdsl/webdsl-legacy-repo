@@ -17,9 +17,9 @@ import org.webdsl.serg.domain.*;
 
   public String createNewDiscussion(Forum forum00, java.util.List<Discussion> discussions0);
 
-  public List<Person> getPerson122List();
+  public List<Person> getPerson124List();
 
-  public void initPerson122List();
+  public void initPerson124List();
 
   public List<ResearchProject> getProject115List();
 

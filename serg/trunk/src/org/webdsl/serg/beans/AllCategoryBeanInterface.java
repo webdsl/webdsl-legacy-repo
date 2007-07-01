@@ -13,9 +13,9 @@ import org.webdsl.serg.domain.*;
 
   public void removeCategory(Category category5);
 
-  public List<Person> getPerson52List();
+  public List<Person> getPerson54List();
 
-  public void initPerson52List();
+  public void initPerson54List();
 
   public List<ResearchProject> getProject41List();
 

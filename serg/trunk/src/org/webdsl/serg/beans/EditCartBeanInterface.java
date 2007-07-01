@@ -15,7 +15,7 @@ import org.webdsl.serg.domain.*;
 
   public Cart getCart();
 
-  public void setPerson17(Person person242);
+  public void setPerson17(Person person256);
 
   public void removeProduct2(Product product28);
 
@@ -25,15 +25,15 @@ import org.webdsl.serg.domain.*;
 
   public String save();
 
-  public void setNewPerson241(String p);
+  public void setNewPerson255(String p);
 
-  public String getNewPerson241();
+  public String getNewPerson255();
 
-  public void selectPerson241(ValueChangeEvent event);
+  public void selectPerson255(ValueChangeEvent event);
 
-  public Map<String, String> getPerson241List();
+  public Map<String, String> getPerson255List();
 
-  public void initPerson241List();
+  public void initPerson255List();
 
   public void setNewProduct29(String p);
 
@@ -45,9 +45,9 @@ import org.webdsl.serg.domain.*;
 
   public void initProduct29List();
 
-  public List<Person> getPerson141List();
+  public List<Person> getPerson143List();
 
-  public void initPerson141List();
+  public void initPerson143List();
 
   public List<ResearchProject> getProject134List();
 

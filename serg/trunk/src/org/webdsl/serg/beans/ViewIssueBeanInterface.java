@@ -19,9 +19,9 @@ import org.webdsl.serg.domain.*;
 
   public String createNewPerson(Issue issue20, java.util.Set<Person> assigned0);
 
-  public List<Person> getPerson105List();
+  public List<Person> getPerson107List();
 
-  public void initPerson105List();
+  public void initPerson107List();
 
   public List<ResearchProject> getProject94List();
 

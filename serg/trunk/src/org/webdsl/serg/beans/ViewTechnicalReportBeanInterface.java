@@ -19,9 +19,9 @@ import org.webdsl.serg.domain.*;
 
   public String createNewResearchProject(Publication publication13, java.util.Set<ResearchProject> projects7);
 
-  public List<Person> getPerson74List();
+  public List<Person> getPerson76List();
 
-  public void initPerson74List();
+  public void initPerson76List();
 
   public List<ResearchProject> getProject63List();
 

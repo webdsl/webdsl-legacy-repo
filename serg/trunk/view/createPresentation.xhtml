@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person61" value="#{createPresentation.person61List}"> 
+      <ui:repeat var="person63" value="#{createPresentation.person63List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person61.id}"/> <h:outputText value="#{person61.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person63.id}"/> <h:outputText value="#{person63.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -99,9 +99,9 @@
     
       <tr> <td> <h:outputText value="Speaker"/> </td>  <td>
     <div class="inputSimpleRefAssociation"> <h:outputText value="#{createPresentation.presentation.speaker.name}"/>  <h:outputText value=" "/> 
-       <h:selectOneMenu value="#{createPresentation.newPerson167}" onchange="submit()" valueChangeListener="#{createPresentation.selectPerson167}">
-          <s:selectItems value="#{createPresentation.person167List}" var="person167" label="#{person167.name}" noSelectionLabel="Select"/>
-          <s:convertEntity/>
+       <h:selectOneMenu value="#{createPresentation.newPerson181}" onchange="submit()" valueChangeListener="#{createPresentation.selectPerson181}">
+          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
+          <f:selectItems value="#{createPresentation.person181List}" var="person181" label="#{person181.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>
@@ -172,8 +172,8 @@
       </ul>
     
        <h:selectOneMenu value="#{createPresentation.newResearchProject23}" onchange="submit()" valueChangeListener="#{createPresentation.selectResearchProject23}">
-          <s:selectItems value="#{createPresentation.researchProject23List}" var="researchProject23" label="#{researchProject23.name}" noSelectionLabel="Select"/>
-          <s:convertEntity/>
+          <f:selectItem itemLabel="" itemDisable="true" itemValue="0"/>
+          <f:selectItems value="#{createPresentation.researchProject23List}" var="researchProject23" label="#{researchProject23.label}"/>
         </h:selectOneMenu>
     </div>
     </td> </tr>

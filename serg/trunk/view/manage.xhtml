@@ -23,10 +23,10 @@
          <h:outputText value="People"/> 
       <ul>
         
-      <ui:repeat var="person6" value="#{manage.person6List}"> 
+      <ui:repeat var="person8" value="#{manage.person8List}"> 
       <h:column>
       <li>
-         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person6.id}"/> <h:outputText value="#{person6.name}"/> </s:link> 
+         <s:link view="/viewPerson.xhtml" propagation="none"><f:param name="person" value="#{person8.id}"/> <h:outputText value="#{person8.name}"/> </s:link> 
       </li>
     </h:column> 
     </ui:repeat>
@@ -87,6 +87,18 @@
          <h:outputText value="New"/> 
       <ul>
         
+      <li>
+         <s:link view="/createLicense.xhtml" propagation="none"> <h:outputText value="License"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createSoftwareRelease.xhtml" propagation="none"> <h:outputText value="SoftwareRelease"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/createSoftwareProduct.xhtml" propagation="none"> <h:outputText value="SoftwareProduct"/> </s:link> 
+      </li>
+    
       <li>
          <s:link view="/createCart.xhtml" propagation="none"> <h:outputText value="Cart"/> </s:link> 
       </li>
@@ -217,6 +229,18 @@
          <h:outputText value="All"/> 
       <ul>
         
+      <li>
+         <s:link view="/allLicense.xhtml" propagation="none"> <h:outputText value="License"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allSoftwareRelease.xhtml" propagation="none"> <h:outputText value="SoftwareRelease"/> </s:link> 
+      </li>
+    
+      <li>
+         <s:link view="/allSoftwareProduct.xhtml" propagation="none"> <h:outputText value="SoftwareProduct"/> </s:link> 
+      </li>
+    
       <li>
          <s:link view="/allCart.xhtml" propagation="none"> <h:outputText value="Cart"/> </s:link> 
       </li>

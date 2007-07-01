@@ -48,7 +48,7 @@ import org.webdsl.serg.domain.*;
       forum = em.find(Forum.class, forumId);
     }
     initDiscussion7List();
-    initPerson120List();
+    initPerson122List();
     initProject113List();
   }
 
@@ -107,7 +107,12 @@ import org.webdsl.serg.domain.*;
   public void selectDiscussion7(ValueChangeEvent event)
   { 
     log.info("selectDiscussion7" + ": new value = " + " " + event.getNewValue());
-    Discussion discussion7 = (Discussion)event.getNewValue();
+    Long id = new Long((String)event.getNewValue());
+    if(id > 0)
+    { 
+      Discussion discussion7 = em.find(Discussion.class, id);
+      addDiscussion0(discussion7);
+    }
   }
 
   @DataModel("discussion7List") private Map<String, String> discussion7List;
@@ -128,18 +133,18 @@ import org.webdsl.serg.domain.*;
     }
   }
 
-  @DataModel("person120List") private List<Person> person120List;
+  @DataModel("person122List") private List<Person> person122List;
 
-  public List<Person> getPerson120List()
+  public List<Person> getPerson122List()
   { 
-    log.info("getPerson120List");
-    return person120List;
+    log.info("getPerson122List");
+    return person122List;
   }
 
-  @Factory("person120List") public void initPerson120List()
+  @Factory("person122List") public void initPerson122List()
   { 
-    log.info("initPerson120List");
-    person120List = em.createQuery("from " + "Person").getResultList();
+    log.info("initPerson122List");
+    person122List = em.createQuery("from " + "Person").getResultList();
   }
 
   @DataModel("project113List") private List<ResearchProject> project113List;
