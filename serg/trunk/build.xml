@@ -93,6 +93,9 @@
 				<include name="classes/**/*.*"/>
 				<exclude name="classes/**/*.class"/>
 			</fileset>
+			<fileset dir="${basedir}/resources/WEB-INF">
+				<include name="*.taglib.xml"/>
+                        </fileset>
 			<filterset>
 				<filter token="jndiPattern" value="${project.name}/#{ejbName}/local" />
 				<filter token="embeddedEjb" value="false" />
@@ -136,6 +139,7 @@
 				<include name="antlr-*.jar"/>
 				<include name="commons-jci-*.jar"/>
 				<include name="stringtemplate-*.jar"/>
+				<include name="mysql-*.jar"/>
 			</fileset>
 		</copy>
 		<copy todir="${ear.dir}/META-INF">

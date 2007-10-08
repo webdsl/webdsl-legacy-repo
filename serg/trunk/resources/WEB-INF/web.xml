@@ -32,6 +32,10 @@
       <param-value>.xhtml</param-value>
    </context-param>
 
+   <context-param>
+     <param-name>facelets.LIBRARIES</param-name>
+     <param-value>/WEB-INF/generated.taglib.xml</param-value>
+   </context-param>
 <!-- filters for 1.2
     <filter>
         <filter-name>Seam Filter</filter-name>
