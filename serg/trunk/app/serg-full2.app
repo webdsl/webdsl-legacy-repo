@@ -1,15 +1,17 @@
 application org.webdsl.serg
 
-description
+description {
   This application organizes information relevant for a research group,
   including people, publications, students, projects, colloquia, etc.
-end
+}
 
 module app/templates
-section setup .
+
+section setup
 
 module app/people
-section users .
+
+section users
 
   User {
     username :: String ( name, unique )

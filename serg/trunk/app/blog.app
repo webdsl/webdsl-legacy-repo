@@ -1,14 +1,12 @@
 module app/blog
 
-description
-
+description {
   A blog is a journal-like sequence of time-stamped entries. The
   main page of a blog shows the n most recent entries. Entries also
   have their own page.
+}
 
-end
-
-section domain.
+section domain
 
   entity Blog {
     title      :: String (name)
@@ -36,7 +34,7 @@ section domain.
     text :: Text
   }
 
-section pages.
+section pages
 
   define blogSidebar(blog : Blog) {
     personSidebar(blog.author)

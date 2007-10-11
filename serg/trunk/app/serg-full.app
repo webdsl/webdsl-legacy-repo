@@ -1,9 +1,10 @@
 application org.webdsl.serg
 
 description
+  {
   This application organizes information relevant for a research group,
   including people, publications, students, projects, colloquia, etc.
-end
+}
 
 module app/templates
 section main template .
@@ -135,20 +136,20 @@ section entity management .
 module app/people
 section users .
 
-  User {
+  entity User {
     username :: String ( name, unique )
     password :: Secret ( )
     person -> Person ( notnull )
   }
 section persons .
 
-  Address {
+  entity Address {
     street :: String ( )
     city :: String ( )
     phone :: String ( )
   }
 
-  Person {
+  entity Person {
     fullname :: String ( name )
     email :: Email ( )
     homepage :: URL ( )
@@ -433,19 +434,20 @@ section login .
 
 module app/blog
 description
+  {
   A blog is a journal-like sequence of time-stamped entries. The main page of a
   blog shows the n most recent entries. Entries also have their own page.
-end
+}
 section domain .
 
-  Blog {
+  entity Blog {
     title :: String ( name )
     author -> Person ( )
     entries <> List<BlogEntry> ( )
     categories -> List<Category> ( )
   }
 
-  BlogEntry {
+  entity BlogEntry {
     blog -> Blog ( )
     title :: String ( name )
     created :: Date ( )
@@ -455,11 +457,11 @@ section domain .
     comments <> List<BlogComment> ( )
   }
 
-  Category {
+  entity Category {
     name :: String ( )
   }
 
-  BlogComment {
+  entity BlogComment {
     author -> Person ( )
     text :: Text ( )
   }
@@ -620,11 +622,12 @@ section pages .
 
 module colloquium
 description
+  {
   A colloquium is a series of presentations.
-end
+}
 section domain .
 
-  Colloquium {
+  entity Colloquium {
     name :: String ( )
     description :: Text ( )
     contact -> Person ( )
@@ -634,7 +637,7 @@ section domain .
     presentations <> List<Presentation> ( )
   }
 
-  Presentation {
+  entity Presentation {
     title :: String ( name )
     speaker -> Person ( )
     date :: Date ( )
@@ -701,13 +704,14 @@ section pages .
 
 module app/publications
 description
+  {
   Publications are published documents. There is a large variety of publication
   mediums, each of which is cited in different ways. BibTeX provides a good
   domain model, which should be modeled here.
-end
+}
 section publications .
 
-  Publication {
+  entity Publication {
     title :: String ( name )
     subtitle :: String ( )
     year :: Int ( )
@@ -717,7 +721,7 @@ section publications .
     projects -> Set<ResearchProject> ( )
   }
 
-  PublicationFoo {
+  entity PublicationFoo {
     title :: String ( name )
     subtitle :: String ( )
     year :: Int ( )
@@ -727,18 +731,18 @@ section publications .
     projects -> Set<ResearchProject> ( )
   }
 
-  TechnicalReport : Publication {
+  entity TechnicalReport : Publication {
     number :: Int ( )
     document :: Text ( )
     preprintof -> Publication ( )
   }
 
-  InProceedings : Publication {
+  entity InProceedings : Publication {
     conference -> Conference ( )
     pages :: String ( )
   }
 
-  Conference {
+  entity Conference {
     fullname :: String ( )
     acronym :: String ( name )
     booktitle :: String ( )
@@ -750,13 +754,13 @@ section publications .
     acceptance :: Int ( )
   }
 
-  Article : Publication {
+  entity Article : Publication {
     journal -> Journal ( )
     pages :: String ( )
     impact :: Int ( )
   }
 
-  Journal {
+  entity Journal {
     fullname :: String ( )
     acronym :: String ( name )
   }
@@ -912,7 +916,7 @@ section editing publications .
 module app/projects
 section domain .
 
-  ResearchProject {
+  entity ResearchProject {
     fullname :: String ( )
     acronym :: String ( name )
     description :: Text ( )
@@ -998,8 +1002,9 @@ section looking up projects .
 
 module app/initdb
 description
+  {
   This module defines an action to add some objects to the database.
-end
+}
 section init database .
 
   define page initDatabase () {
@@ -1027,7 +1032,7 @@ section init database .
 module groups
 section domain .
 
-  ResearchGroup {
+  entity ResearchGroup {
     acronym :: String ( name )
     fullname :: String ( )
     mission :: Text ( )
@@ -1206,7 +1211,7 @@ section members .
       }
     }
   }
-section projects .
+section projects. .
 
   define page groupProjects (group : ResearchGroup) {
     main(){
@@ -1290,7 +1295,7 @@ section publications .
 module news
 section domain .
 
-  News {
+  entity News {
     title :: String ( )
     text :: Text ( )
     date :: Date ( )
@@ -1298,11 +1303,12 @@ section domain .
 
 module issues
 description
+  {
   Issue descriptions and assignments to people.
-end
+}
 section domain .
 
-  Issue {
+  entity Issue {
     title :: String ( name )
     description :: Text ( )
     due :: Date ( )
@@ -1312,28 +1318,29 @@ section domain .
     status :: String ( )
   }
 
-  Project : Issue {
+  entity Project : Issue {
   }
 
-  Bug : Issue {
+  entity Bug : Issue {
   }
 
-  Task : Issue {
+  entity Task : Issue {
   }
 section pages .
 
 module app/forum
 description
+  {
   A forum is a collection of discussion threads.
-end
+}
 section domain .
 
-  Forum {
+  entity Forum {
     title :: String ( name )
     discussions -> List<Discussion> ( )
   }
 
-  Discussion {
+  entity Discussion {
     topic :: String ( name )
     author -> Person ( )
     posted :: Date ( )
@@ -1342,7 +1349,7 @@ section domain .
     replies <> List<Reply> ( inline )
   }
 
-  Reply {
+  entity Reply {
     subject :: String ( name )
     author -> Person ( )
     posted :: Date ( )
@@ -1350,7 +1357,7 @@ section domain .
     text :: Text ( )
   }
 
-  Post {
+  entity Post {
     subject :: String ( name )
     author -> Person ( )
     posted :: Date ( )
@@ -1473,7 +1480,7 @@ section pages .
 module app/shop
 section s domain .
 
-  Shop {
+  entity Shop {
     name :: String ( name )
     products -> List<Product> ( )
     carts -> List<Cart> ( )
@@ -1481,7 +1488,7 @@ section s domain .
     last -> Product ( )
   }
 
-  Product {
+  entity Product {
     name :: String ( )
     price :: Int ( )
     photo :: Image ( )
@@ -1490,7 +1497,7 @@ section s domain .
     next -> Product ( )
   }
 
-  Cart {
+  entity Cart {
     shopper -> Person ( )
     products -> List<Product> ( )
   }
@@ -1551,7 +1558,7 @@ section s ideal template .
       return editProduct(p);
     }
   }
-section template .
+section template . .
 
   define mainShop (shop : Shop) {
     div("outersidebar"){
@@ -1649,7 +1656,7 @@ section template .
 
   define photoMenu () {
   }
-section shop page .
+section shop page. .
 
   define page viewShop (shop : Shop) {
     mainShop(shop){
@@ -1763,11 +1770,12 @@ section client .
 
 module software
 description
+  {
   Meta-data about software products and releases.
-end
+}
 section domain .
 
-  SoftwareProduct {
+  entity SoftwareProduct {
     name :: String ( )
     description :: Text ( )
     releases -> List<SoftwareRelease> ( )
@@ -1776,7 +1784,7 @@ section domain .
     licence -> License ( )
   }
 
-  SoftwareRelease {
+  entity SoftwareRelease {
     product -> SoftwareProduct ( )
     version :: String ( name )
     url :: URL ( )
@@ -1785,7 +1793,7 @@ section domain .
     contributors -> List<Person> ( )
   }
 
-  License {
+  entity License {
     acronym :: String ( name )
     text :: Text ( )
   }
@@ -1888,7 +1896,7 @@ section home .
     }
   }
 
-section generated pages .
+section generated pages. .
 
   define createMenu () {
     listitem(){
@@ -2937,10 +2945,10 @@ section generated pages .
         }
       }
       form(){
-        actionLink("New BlogEntry", createNewBlogEntry(blog, blog.entries)){
+        actionLink("New BlogEntry", createNewEntriesBlogEntry(blog, blog.entries)){
         }
       }
-      action createNewBlogEntry ( blog0 : Blog, entries : List<BlogEntry> )
+      action createNewEntriesBlogEntry ( blog0 : Blog, entries : List<BlogEntry> )
       {
         var blogEntry0 : BlogEntry := BlogEntry{} ;
         entries.add(blogEntry0);
@@ -2955,10 +2963,10 @@ section generated pages .
       output(blog.categories){
       }
       form(){
-        actionLink("New Category", createNewCategory(blog, blog.categories)){
+        actionLink("New Category", createNewCategoriesCategory(blog, blog.categories)){
         }
       }
-      action createNewCategory ( blog1 : Blog, categories : List<Category> )
+      action createNewCategoriesCategory ( blog1 : Blog, categories : List<Category> )
       {
         var category0 : Category := Category{} ;
         categories.add(category0);
@@ -3172,10 +3180,10 @@ section generated pages .
         }
       }
       form(){
-        actionLink("New BlogComment", createNewBlogComment(blogEntry, blogEntry.comments)){
+        actionLink("New BlogComment", createNewCommentsBlogComment(blogEntry, blogEntry.comments)){
         }
       }
-      action createNewBlogComment ( blogEntry1 : BlogEntry, comments : List<BlogComment> )
+      action createNewCommentsBlogComment ( blogEntry1 : BlogEntry, comments : List<BlogComment> )
       {
         var blogComment0 : BlogComment := BlogComment{} ;
         comments.add(blogComment0);
@@ -3697,10 +3705,10 @@ section generated pages .
       output(colloquium.projects){
       }
       form(){
-        actionLink("New ResearchProject", createNewResearchProject(colloquium, colloquium.projects)){
+        actionLink("New ResearchProject", createNewProjectsResearchProject(colloquium, colloquium.projects)){
         }
       }
-      action createNewResearchProject ( colloquium0 : Colloquium, projects : List<ResearchProject> )
+      action createNewProjectsResearchProject ( colloquium0 : Colloquium, projects : List<ResearchProject> )
       {
         var researchProject0 : ResearchProject := ResearchProject{} ;
         projects.add(researchProject0);
@@ -3723,10 +3731,10 @@ section generated pages .
         }
       }
       form(){
-        actionLink("New Presentation", createNewPresentation(colloquium, colloquium.presentations)){
+        actionLink("New Presentation", createNewPresentationsPresentation(colloquium, colloquium.presentations)){
         }
       }
-      action createNewPresentation ( colloquium1 : Colloquium, presentations : List<Presentation> )
+      action createNewPresentationsPresentation ( colloquium1 : Colloquium, presentations : List<Presentation> )
       {
         var presentation0 : Presentation := Presentation{} ;
         presentations.add(presentation0);
@@ -4120,10 +4128,10 @@ section generated pages .
       output(publication.authors){
       }
       form(){
-        actionLink("New Person", createNewPerson(publication, publication.authors)){
+        actionLink("New Person", createNewAuthorsPerson(publication, publication.authors)){
         }
       }
-      action createNewPerson ( publication0 : Publication, authors : List<Person> )
+      action createNewAuthorsPerson ( publication0 : Publication, authors : List<Person> )
       {
         var person0 : Person := Person{} ;
         authors.add(person0);
@@ -4145,10 +4153,10 @@ section generated pages .
       output(publication.projects){
       }
       form(){
-        actionLink("New ResearchProject", createNewResearchProject(publication, publication.projects)){
+        actionLink("New ResearchProject", createNewProjectsResearchProject(publication, publication.projects)){
         }
       }
-      action createNewResearchProject ( publication1 : Publication, projects : Set<ResearchProject> )
+      action createNewProjectsResearchProject ( publication1 : Publication, projects : Set<ResearchProject> )
       {
         var researchProject1 : ResearchProject := ResearchProject{} ;
         projects.add(researchProject1);
@@ -4355,10 +4363,10 @@ section generated pages .
       output(publicationFoo.authors){
       }
       form(){
-        actionLink("New Person", createNewPerson(publicationFoo, publicationFoo.authors)){
+        actionLink("New Person", createNewAuthorsPerson(publicationFoo, publicationFoo.authors)){
         }
       }
-      action createNewPerson ( publicationFoo0 : PublicationFoo, authors : List<Person> )
+      action createNewAuthorsPerson ( publicationFoo0 : PublicationFoo, authors : List<Person> )
       {
         var person1 : Person := Person{} ;
         authors.add(person1);
@@ -4380,10 +4388,10 @@ section generated pages .
       output(publicationFoo.projects){
       }
       form(){
-        actionLink("New ResearchProject", createNewResearchProject(publicationFoo, publicationFoo.projects)){
+        actionLink("New ResearchProject", createNewProjectsResearchProject(publicationFoo, publicationFoo.projects)){
         }
       }
-      action createNewResearchProject ( publicationFoo1 : PublicationFoo, projects : Set<ResearchProject> )
+      action createNewProjectsResearchProject ( publicationFoo1 : PublicationFoo, projects : Set<ResearchProject> )
       {
         var researchProject2 : ResearchProject := ResearchProject{} ;
         projects.add(researchProject2);
@@ -4938,10 +4946,10 @@ section generated pages .
       output(conference.editors){
       }
       form(){
-        actionLink("New Person", createNewPerson(conference, conference.editors)){
+        actionLink("New Person", createNewEditorsPerson(conference, conference.editors)){
         }
       }
-      action createNewPerson ( conference0 : Conference, editors : List<Person> )
+      action createNewEditorsPerson ( conference0 : Conference, editors : List<Person> )
       {
         var person2 : Person := Person{} ;
         editors.add(person2);
@@ -5500,10 +5508,10 @@ section generated pages .
       output(researchProject.members){
       }
       form(){
-        actionLink("New Person", createNewPerson(researchProject, researchProject.members)){
+        actionLink("New Person", createNewMembersPerson(researchProject, researchProject.members)){
         }
       }
-      action createNewPerson ( researchProject3 : ResearchProject, members : Set<Person> )
+      action createNewMembersPerson ( researchProject3 : ResearchProject, members : Set<Person> )
       {
         var person3 : Person := Person{} ;
         members.add(person3);
@@ -5529,10 +5537,10 @@ section generated pages .
       output(researchProject.publications){
       }
       form(){
-        actionLink("New Publication", createNewPublication(researchProject, researchProject.publications)){
+        actionLink("New Publication", createNewPublicationsPublication(researchProject, researchProject.publications)){
         }
       }
-      action createNewPublication ( researchProject4 : ResearchProject, publications : Set<Publication> )
+      action createNewPublicationsPublication ( researchProject4 : ResearchProject, publications : Set<Publication> )
       {
         var publication2 : Publication := Publication{} ;
         publications.add(publication2);
@@ -5720,10 +5728,10 @@ section generated pages .
       output(researchGroup.members){
       }
       form(){
-        actionLink("New Person", createNewPerson(researchGroup, researchGroup.members)){
+        actionLink("New Person", createNewMembersPerson(researchGroup, researchGroup.members)){
         }
       }
-      action createNewPerson ( researchGroup0 : ResearchGroup, members : Set<Person> )
+      action createNewMembersPerson ( researchGroup0 : ResearchGroup, members : Set<Person> )
       {
         var person4 : Person := Person{} ;
         members.add(person4);
@@ -5738,10 +5746,10 @@ section generated pages .
       output(researchGroup.projects){
       }
       form(){
-        actionLink("New ResearchProject", createNewResearchProject(researchGroup, researchGroup.projects)){
+        actionLink("New ResearchProject", createNewProjectsResearchProject(researchGroup, researchGroup.projects)){
         }
       }
-      action createNewResearchProject ( researchGroup1 : ResearchGroup, projects : Set<ResearchProject> )
+      action createNewProjectsResearchProject ( researchGroup1 : ResearchGroup, projects : Set<ResearchProject> )
       {
         var researchProject5 : ResearchProject := ResearchProject{} ;
         projects.add(researchProject5);
@@ -5756,10 +5764,10 @@ section generated pages .
       output(researchGroup.colloquia){
       }
       form(){
-        actionLink("New Colloquium", createNewColloquium(researchGroup, researchGroup.colloquia)){
+        actionLink("New Colloquium", createNewColloquiaColloquium(researchGroup, researchGroup.colloquia)){
         }
       }
-      action createNewColloquium ( researchGroup2 : ResearchGroup, colloquia : Set<Colloquium> )
+      action createNewColloquiaColloquium ( researchGroup2 : ResearchGroup, colloquia : Set<Colloquium> )
       {
         var colloquium2 : Colloquium := Colloquium{} ;
         colloquia.add(colloquium2);
@@ -5774,10 +5782,10 @@ section generated pages .
       output(researchGroup.news){
       }
       form(){
-        actionLink("New News", createNewNews(researchGroup, researchGroup.news)){
+        actionLink("New News", createNewNewsNews(researchGroup, researchGroup.news)){
         }
       }
-      action createNewNews ( researchGroup3 : ResearchGroup, news : List<News> )
+      action createNewNewsNews ( researchGroup3 : ResearchGroup, news : List<News> )
       {
         var news0 : News := News{} ;
         news.add(news0);
@@ -6158,10 +6166,10 @@ section generated pages .
       output(issue.issues){
       }
       form(){
-        actionLink("New Issue", createNewIssue(issue, issue.issues)){
+        actionLink("New Issue", createNewIssuesIssue(issue, issue.issues)){
         }
       }
-      action createNewIssue ( issue1 : Issue, issues : Set<Issue> )
+      action createNewIssuesIssue ( issue1 : Issue, issues : Set<Issue> )
       {
         var issue0 : Issue := Issue{} ;
         issues.add(issue0);
@@ -6176,10 +6184,10 @@ section generated pages .
       output(issue.assigned){
       }
       form(){
-        actionLink("New Person", createNewPerson(issue, issue.assigned)){
+        actionLink("New Person", createNewAssignedPerson(issue, issue.assigned)){
         }
       }
-      action createNewPerson ( issue2 : Issue, assigned : Set<Person> )
+      action createNewAssignedPerson ( issue2 : Issue, assigned : Set<Person> )
       {
         var person5 : Person := Person{} ;
         assigned.add(person5);
@@ -6766,10 +6774,10 @@ section generated pages .
       output(forum.discussions){
       }
       form(){
-        actionLink("New Discussion", createNewDiscussion(forum, forum.discussions)){
+        actionLink("New Discussion", createNewDiscussionsDiscussion(forum, forum.discussions)){
         }
       }
-      action createNewDiscussion ( forum0 : Forum, discussions : List<Discussion> )
+      action createNewDiscussionsDiscussion ( forum0 : Forum, discussions : List<Discussion> )
       {
         var discussion0 : Discussion := Discussion{} ;
         discussions.add(discussion0);
@@ -6966,10 +6974,10 @@ section generated pages .
         }
       }
       form(){
-        actionLink("New Reply", createNewReply(discussion, discussion.replies)){
+        actionLink("New Reply", createNewRepliesReply(discussion, discussion.replies)){
         }
       }
-      action createNewReply ( discussion1 : Discussion, replies : List<Reply> )
+      action createNewRepliesReply ( discussion1 : Discussion, replies : List<Reply> )
       {
         var reply0 : Reply := Reply{} ;
         replies.add(reply0);
@@ -7521,10 +7529,10 @@ section generated pages .
       output(shop.products){
       }
       form(){
-        actionLink("New Product", createNewProduct(shop, shop.products)){
+        actionLink("New Product", createNewProductsProduct(shop, shop.products)){
         }
       }
-      action createNewProduct ( shop0 : Shop, products : List<Product> )
+      action createNewProductsProduct ( shop0 : Shop, products : List<Product> )
       {
         var product0 : Product := Product{} ;
         products.add(product0);
@@ -7539,10 +7547,10 @@ section generated pages .
       output(shop.carts){
       }
       form(){
-        actionLink("New Cart", createNewCart(shop, shop.carts)){
+        actionLink("New Cart", createNewCartsCart(shop, shop.carts)){
         }
       }
-      action createNewCart ( shop1 : Shop, carts : List<Cart> )
+      action createNewCartsCart ( shop1 : Shop, carts : List<Cart> )
       {
         var cart0 : Cart := Cart{} ;
         carts.add(cart0);
@@ -7934,10 +7942,10 @@ section generated pages .
       output(cart.products){
       }
       form(){
-        actionLink("New Product", createNewProduct(cart, cart.products)){
+        actionLink("New Product", createNewProductsProduct(cart, cart.products)){
         }
       }
-      action createNewProduct ( cart1 : Cart, products : List<Product> )
+      action createNewProductsProduct ( cart1 : Cart, products : List<Product> )
       {
         var product1 : Product := Product{} ;
         products.add(product1);
@@ -8134,10 +8142,10 @@ section generated pages .
       output(softwareProduct.releases){
       }
       form(){
-        actionLink("New SoftwareRelease", createNewSoftwareRelease(softwareProduct, softwareProduct.releases)){
+        actionLink("New SoftwareRelease", createNewReleasesSoftwareRelease(softwareProduct, softwareProduct.releases)){
         }
       }
-      action createNewSoftwareRelease ( softwareProduct0 : SoftwareProduct, releases : List<SoftwareRelease> )
+      action createNewReleasesSoftwareRelease ( softwareProduct0 : SoftwareProduct, releases : List<SoftwareRelease> )
       {
         var softwareRelease0 : SoftwareRelease := SoftwareRelease{} ;
         releases.add(softwareRelease0);
@@ -8163,10 +8171,10 @@ section generated pages .
       output(softwareProduct.developers){
       }
       form(){
-        actionLink("New Person", createNewPerson(softwareProduct, softwareProduct.developers)){
+        actionLink("New Person", createNewDevelopersPerson(softwareProduct, softwareProduct.developers)){
         }
       }
-      action createNewPerson ( softwareProduct1 : SoftwareProduct, developers : List<Person> )
+      action createNewDevelopersPerson ( softwareProduct1 : SoftwareProduct, developers : List<Person> )
       {
         var person6 : Person := Person{} ;
         developers.add(person6);
@@ -8391,10 +8399,10 @@ section generated pages .
       output(softwareRelease.contributors){
       }
       form(){
-        actionLink("New Person", createNewPerson(softwareRelease, softwareRelease.contributors)){
+        actionLink("New Person", createNewContributorsPerson(softwareRelease, softwareRelease.contributors)){
         }
       }
-      action createNewPerson ( softwareRelease1 : SoftwareRelease, contributors : List<Person> )
+      action createNewContributorsPerson ( softwareRelease1 : SoftwareRelease, contributors : List<Person> )
       {
         var person7 : Person := Person{} ;
         contributors.add(person7);

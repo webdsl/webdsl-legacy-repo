@@ -1,12 +1,12 @@
 application org.webdsl.test
 
-section users.
+section users
 
   entity User {
     name :: String 
   }
   
-section home.
+section home
 
   define page home() {
     var user : User := User{name := "foo"};

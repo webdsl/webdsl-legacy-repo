@@ -1,6 +1,6 @@
 application org.webdsl.test2
 
-section domain. 
+section domain
 
   entity User {
     username :: String (name, unique)

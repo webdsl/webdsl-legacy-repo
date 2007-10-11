@@ -1,12 +1,10 @@
 module app/initdb
 
-description
-  
+description {
   This module defines an action to add some objects to the database.
-  
-end
+}
 
-section init database .
+section init database
  
  define page initDatabase() {
  

@@ -1,6 +1,6 @@
 module app/wiki
 
-sections domain.
+sections domain
 
   entity Topic {
     title     :: String (name)

@@ -1,6 +1,6 @@
 module app/shop
 
-sections domain.
+sections domain
 
   entity Shop {
     name     :: String (name)
@@ -24,7 +24,7 @@ sections domain.
     products -> List<Product>
   }
   
-sections ideal template.
+sections ideal template
 
   define mainShopIdeal(shop : Shop) {
     main()
@@ -129,7 +129,7 @@ section shop page.
     }
   }
   
-section photopage.
+section photopage
 
   define page viewProduct(product : Product) {
     mainShop(product.shop)
@@ -151,7 +151,7 @@ section photopage.
     }
   }
   
-section client.
+section client
 
   define page shopLogin(shop : Shop) {
     mainShop(shop)

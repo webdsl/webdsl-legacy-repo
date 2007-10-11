@@ -1,6 +1,6 @@
 module app/templates
 
-section main template.
+section main template
 
   define main() {
     div("outersidebar") {
@@ -16,7 +16,7 @@ section main template.
     }
   }
 
-section basic page elements.
+section basic page elements
 
   define logo() {
     navigate(home()){image("/img/serg-logo-color-smaller.png")}
@@ -39,7 +39,7 @@ section basic page elements.
     navigate("Stratego/XT", url("http://www.strategoxt.org"))
   }
   
-section menus.
+section menus
   
   define menu() {
 
@@ -78,7 +78,7 @@ section menus.
 
   }
   
-section entity management.
+section entity management
 
   define manageMenu() {}
   

@@ -1,12 +1,10 @@
 module software
 
-description
-
+description {
   Meta-data about software products and releases.
+}
 
-end
-
-section domain.
+section domain
 
   entity SoftwareProduct {
     name        :: String
@@ -31,4 +29,4 @@ section domain.
     text    :: Text
   }
   
-section pages.
+section pages

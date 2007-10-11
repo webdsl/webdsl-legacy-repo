@@ -1,12 +1,10 @@
 module colloquium
 
-description
-
+description {
   A colloquium is a series of presentations.
-  
-end
+}
 
-section domain.
+section domain
 
   entity Colloquium {
     name          :: String
@@ -29,7 +27,7 @@ section domain.
     projects :: List<ResearchProject>
   }
   
-section pages.
+section pages
 
   define page viewColloquium(colloquium : Colloquium) {
     main()

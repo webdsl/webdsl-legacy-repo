@@ -1,12 +1,10 @@
 application org.webdsl.serg
 
-description 
-
+description {
   This application organizes information relevant for a 
   research group, including people, publications, students,
   projects, colloquia, etc.
-
-end
+}
 
 imports app/templates
 imports app/people
@@ -23,7 +21,7 @@ imports app/forum
 imports app/shop
 imports app/software
 
-section home.
+section home
 
   define page home() {
     main()

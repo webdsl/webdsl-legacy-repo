@@ -1,6 +1,6 @@
 module app/access
 
-section login.
+section login
 
   define page login() { 
     main()

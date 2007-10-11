@@ -1,12 +1,10 @@
 module app/flickr
 
-description
-
+description {
   Store references to flickr images and corresponding pages.
-  
-end
+}
 
-section images.
+section images
 
   entity FlickrImage {
     photoid   :: String (primary)

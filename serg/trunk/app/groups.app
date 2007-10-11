@@ -1,6 +1,6 @@
 module groups
 
-section domain.
+section domain
 
   entity ResearchGroup {
     acronym   :: String (name)
@@ -19,7 +19,7 @@ section domain.
   
   // publications of group = publications of members of group
 
-section group page.
+section group page
 
   define groupSidebar(group : ResearchGroup) {
     list{
@@ -103,7 +103,7 @@ section group page.
     }
   }
   
-section members.
+section members
 
   define page groupMembers(group : ResearchGroup) {
     main()
@@ -135,7 +135,7 @@ section projects.
     }
   }
 
-section publications.
+section publications
 
   define page groupPublications(group : ResearchGroup) {
     main()

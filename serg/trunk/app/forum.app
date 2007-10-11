@@ -1,12 +1,10 @@
 module app/forum
 
-description
-
+description {
   A forum is a collection of discussion threads.
-  
-end
+}
 
-section domain.
+section domain
 
   entity Forum { 
     title       :: String (name)
@@ -38,24 +36,20 @@ section domain.
     text       :: Text
   }
   
-note
-
+note {
   @acl Access control requirements: 
   - the author of a reply is Person associated to the logged in User
     this may only be changed by an admin
   - a reply may only be edited by its author
   - a reply may be deleted by its author or by the author of the discussion
+}
 
-end
-
-note 
-
+note {
   Some forums have a notion of nested threads, i.e., replies can be replies
   to an earlier reply.
-
-end
+}
   
-section pages.
+section pages
   
   define page viewDiscussion(discussion : Discussion) {
     main()

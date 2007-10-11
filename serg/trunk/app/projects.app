@@ -1,6 +1,6 @@
 module app/projects
 
-section domain.
+section domain
 
   entity ResearchProject {
     fullname     :: String
@@ -11,7 +11,7 @@ section domain.
     publications -> Set<Publication>
   }
 
-section view.
+section view
  
   define page viewResearchProjectMy(project : ResearchProject) {
     title{text(project.fullname)}
@@ -36,7 +36,7 @@ section view.
     main()
   }
   
-section looking up projects.
+section looking up projects
 
   define listProjects(person : Person) {
   

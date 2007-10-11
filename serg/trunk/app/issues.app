@@ -1,12 +1,10 @@
 module issues
 
-description
-
+description {
   Issue descriptions and assignments to people.
-  
-end
+}
 
-section domain.
+section domain
 
   entity Issue {
     title       :: String (name)
@@ -23,5 +21,5 @@ section domain.
   entity Bug     : Issue {}
   entity Task    : Issue {}
   
-section pages.
+section pages
 

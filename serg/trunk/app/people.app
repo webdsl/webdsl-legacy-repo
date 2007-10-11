@@ -1,6 +1,6 @@
 module app/people
 
-section users.
+section users
 
   entity User {
     username :: String (name, unique)
@@ -8,7 +8,7 @@ section users.
     person   -> Person (notnull)
   }
   
-section persons.
+section persons
   
   entity Address {
     street :: String
@@ -37,7 +37,7 @@ section persons.
   //    projects := ResearchProject proj where proj.members.has(p)
   //  }
 
-section person pages.
+section person pages
 
   define personSidebar(p : Person) {
     list {
@@ -97,7 +97,7 @@ section person pages.
     }
   }
   
-section basic crud pages.
+section basic crud pages
 
   define page viewPersonSimple(person : Person) {
     div("crudTable"){

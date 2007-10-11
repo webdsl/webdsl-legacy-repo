@@ -1,6 +1,6 @@
 module news
 
-section domain.
+section domain
 
   entity News {
     title :: String

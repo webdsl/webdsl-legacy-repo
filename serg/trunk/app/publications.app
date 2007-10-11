@@ -1,14 +1,12 @@
 module app/publications
 
-description
-
+description {
   Publications are published documents. There is a large variety of publication mediums,
   each of which is cited in different ways. BibTeX provides a good domain model, which 
   should be modeled here. 
-  
-end
+}
 
-section publications.
+section publications
     
   entity Publication {
     title    :: String (name)
@@ -65,7 +63,7 @@ section publications.
     acronym  :: String (name)
   }
   
-section presenting publications.
+section presenting publications
 
  define showPublication(pub : Publication) {
     for(author : Person in pub.authors){ 
@@ -83,7 +81,7 @@ section presenting publications.
     }
   }
     
-section looking up publications.
+section looking up publications
 
   define publicationsBy(person : Person) {
            
@@ -109,7 +107,7 @@ section looking up publications.
     } }
   }
   
-section publication pages.
+section publication pages
 
   define page personPublications(person : Person) {
     main()
@@ -123,7 +121,7 @@ section publication pages.
     }
   }
   
-section editing publications.
+section editing publications
   
   define editRowsPublication (publication : Publication) {
     row(){
