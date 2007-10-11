@@ -2,7 +2,7 @@ module groups
 
 section domain.
 
-  ResearchGroup {
+  entity ResearchGroup {
     acronym   :: String (name)
     fullname  :: String
     mission   :: Text

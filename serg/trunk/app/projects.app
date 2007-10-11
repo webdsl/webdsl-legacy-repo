@@ -2,7 +2,7 @@ module app/projects
 
 section domain.
 
-  ResearchProject {
+  entity ResearchProject {
     fullname     :: String
     acronym      :: String (name)
     description  :: Text

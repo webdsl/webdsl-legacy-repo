@@ -10,7 +10,7 @@ end
 
 section publications.
     
-  Publication {
+  entity Publication {
     title    :: String (name)
     subtitle :: String
     year     :: Int // use Year defined type
@@ -20,7 +20,7 @@ section publications.
     projects -> Set<ResearchProject>
   }
     
-  PublicationFoo {
+  entity PublicationFoo {
     title    :: String (name)
     subtitle :: String
     year     :: Int // use Year defined type
@@ -30,19 +30,19 @@ section publications.
     projects -> Set<ResearchProject>
   }
   
-  TechnicalReport : Publication {
+  entity TechnicalReport : Publication {
     number     :: Int
  // code       :: String := "TUD-SERG-" + year + "-" + number
     document   :: Text // should be Document or PDF or similar
     preprintof -> Publication
   }
   
-  InProceedings : Publication {
+  entity InProceedings : Publication {
     conference -> Conference
     pages      :: String
   }
   
-  Conference {
+  entity Conference {
     fullname   :: String
     acronym    :: String (name)
     booktitle  :: String
@@ -54,13 +54,13 @@ section publications.
     acceptance :: Int // 0 .. 100 percentage
   }
     
-  Article : Publication {
+  entity Article : Publication {
     journal -> Journal
     pages   :: String
     impact  :: Int // average number of citations?
   }
   
-  Journal {
+  entity Journal {
     fullname :: String
     acronym  :: String (name)
   }

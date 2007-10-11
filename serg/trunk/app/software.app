@@ -8,7 +8,7 @@ end
 
 section domain.
 
-  SoftwareProduct {
+  entity SoftwareProduct {
     name        :: String
     description :: Text
     releases    -> List<SoftwareRelease>
@@ -17,7 +17,7 @@ section domain.
     licence     -> License
   }
   
-  SoftwareRelease {
+  entity SoftwareRelease {
     product      -> SoftwareProduct
     version      :: String (name)
     url          :: URL
@@ -26,7 +26,7 @@ section domain.
     contributors -> List<Person>
   }
 
-  License {
+  entity License {
     acronym :: String (name)
     text    :: Text
   }

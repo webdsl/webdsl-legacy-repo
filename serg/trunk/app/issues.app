@@ -8,7 +8,7 @@ end
 
 section domain.
 
-  Issue {
+  entity Issue {
     title       :: String (name)
     description :: Text
     due         :: Date
@@ -19,9 +19,9 @@ section domain.
 //  type        :: String // corresponds to subclasses
   }
   
-  Project : Issue {}
-  Bug     : Issue {}
-  Task    : Issue {}
+  entity Project : Issue {}
+  entity Bug     : Issue {}
+  entity Task    : Issue {}
   
 section pages.
 

@@ -10,14 +10,14 @@ end
 
 section domain.
 
-  Blog {
+  entity Blog {
     title      :: String (name)
     author     -> Person
     entries    <> List<BlogEntry>
     categories -> List<Category> // share categories between blogs?
   }
   
-  BlogEntry {
+  entity BlogEntry {
     blog     -> Blog
     title    :: String (name)
     created  :: Date
@@ -27,11 +27,11 @@ section domain.
     comments <> List<BlogComment>
   }
   
-  Category {
+  entity Category {
     name :: String
   }
   
-  BlogComment {
+  entity BlogComment {
     author -> Person
     text :: Text
   }

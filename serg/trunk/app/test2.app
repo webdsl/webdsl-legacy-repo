@@ -2,19 +2,19 @@ application org.webdsl.test2
 
 section domain. 
 
-  User {
+  entity User {
     username :: String (name, unique)
     password :: Secret
     person   -> Person (notnull)
   }
   
-  Address {
+  entity Address {
     street :: String
     city   :: String
     phone  :: String
   }
 
-  Person {
+  entity Person {
     fullname  :: String (name)
     email     :: Email
     homepage  :: URL
@@ -25,13 +25,13 @@ section domain.
     blog      -> Blog
   }
   
-  Blog {
+  entity Blog {
     title   :: String (name)
     author  -> Person
     entries <> List<BlogEntry>
   }
   
-  BlogEntry {
+  entity BlogEntry {
     blog     -> Blog
     title    :: String (name)
     created  :: Date
@@ -40,7 +40,7 @@ section domain.
     comments <> List<BlogComment>
   }
   
-  BlogComment {
+  entity BlogComment {
     author -> Person
     text :: Text
   }

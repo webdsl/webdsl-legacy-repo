@@ -2,7 +2,7 @@ application org.webdsl.test3
 
 section domain. 
 
-  Person {
+  entity Person {
     fullname :: String (name)
   }
 

@@ -2,7 +2,7 @@ module app/wiki
 
 sections domain.
 
-  Topic {
+  entity Topic {
     title     :: String (name)
     body      :: Text
     authors   -> List<Person>

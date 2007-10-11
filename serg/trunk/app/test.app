@@ -2,7 +2,7 @@ application org.webdsl.test
 
 section users.
 
-  User {
+  entity User {
     name :: String 
   }
   

@@ -93,6 +93,6 @@ section init database .
     MoDSE.publications := {MoDSE07, GTTSE07};
      
     MoDSE.persist();
-
+    
   }
  }

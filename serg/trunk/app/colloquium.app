@@ -8,7 +8,7 @@ end
 
 section domain.
 
-  Colloquium {
+  entity Colloquium {
     name          :: String
     description   :: Text
     contact       -> Person
@@ -18,7 +18,7 @@ section domain.
     presentations <> List<Presentation>
   }
   
-  Presentation {
+  entity Presentation {
     title    :: String (name)
     speaker  -> Person
     date     :: Date

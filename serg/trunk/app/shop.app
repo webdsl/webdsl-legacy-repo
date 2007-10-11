@@ -2,7 +2,7 @@ module app/shop
 
 sections domain.
 
-  Shop {
+  entity Shop {
     name     :: String (name)
     products -> List<Product>
     carts    -> List<Cart>
@@ -10,7 +10,7 @@ sections domain.
     last     -> Product
   }
   
-  Product {
+  entity Product {
     name     :: String
     price    :: Int
     photo    :: Image
@@ -19,7 +19,7 @@ sections domain.
     next     -> Product
   }
   
-  Cart {
+  entity Cart {
     shopper  -> Person
     products -> List<Product>
   }

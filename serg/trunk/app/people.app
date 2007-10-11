@@ -2,7 +2,7 @@ module app/people
 
 section users.
 
-  User {
+  entity User {
     username :: String (name, unique)
     password :: Secret
     person   -> Person (notnull)
@@ -10,13 +10,13 @@ section users.
   
 section persons.
   
-  Address {
+  entity Address {
     street :: String
     city   :: String
     phone  :: String
   }
 
-  Person {
+  entity Person {
     fullname  :: String (name)
     email     :: Email
     homepage  :: URL

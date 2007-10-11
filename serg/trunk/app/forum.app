@@ -8,12 +8,12 @@ end
 
 section domain.
 
-  Forum { 
+  entity Forum { 
     title       :: String (name)
     discussions -> List<Discussion>  // note : test what happens if this is also composite (breaks inlining)
   }
   
-  Discussion {
+  entity Discussion {
     topic    :: String (name)
     author   -> Person
     posted   :: Date
@@ -22,7 +22,7 @@ section domain.
     replies  <> List<Reply> (inline)
   }
   
-  Reply {
+  entity Reply {
     subject    :: String (name)
     author     -> Person  
     posted     :: Date
@@ -30,7 +30,7 @@ section domain.
     text       :: Text
   }
     
-  Post { // legacy
+  entity Post { // legacy
     subject    :: String (name)
     author     -> Person
     posted     :: Date

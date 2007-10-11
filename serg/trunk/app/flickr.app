@@ -8,7 +8,7 @@ end
 
 section images.
 
-  FlickrImage {
+  entity FlickrImage {
     photoid   :: String (primary)
     title     :: String (name)
     username  :: String
