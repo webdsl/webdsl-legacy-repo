@@ -53,11 +53,6 @@ public class WebDSLOutliner extends OutlinerBase {
 			addSubItem(section.substring(0, section.length()-1), n);
 			return true;
 		}
-
-		public void endVisit(Section0 n) {
-			popSubItem();
-		}
-
 	}
 
 	protected void sendVisitorToAST(Object node) {

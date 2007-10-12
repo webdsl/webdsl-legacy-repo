@@ -94,7 +94,7 @@ public class WebDSLFoldingUpdater extends FolderBase {
 		// usual case is to call the version of makeAnnotation that creates a
 		// folding annotation corresponding to the extent of a particular AST node.
 		// The other possibility is to create an annotation with an extent that
-		// is explicitly provided.  An example is shown below ...
+		// is explicitly provided.  An example was shown below ...
 
 		// Create annotations for the folding of blocks (for example)
 		public boolean visit(Section0 n) {
