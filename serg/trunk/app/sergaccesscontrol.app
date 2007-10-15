@@ -1,12 +1,10 @@
-application org.webdsl.sergsecuritytest
+application org.webdsl.serg
 
-description 
-
+description {
   This application organizes information relevant for a 
   research group, including people, publications, students,
   projects, colloquia, etc.
-
-end
+}
 
 imports app/templates
 imports app/people
@@ -23,7 +21,8 @@ imports app/forum
 imports app/shop
 imports app/software
 
-section home.
+section home
+
 define page login()
 {
 		var user : User := User{};
@@ -40,60 +39,75 @@ define page login()
           var users : List<User> :=
           select u from User as u 
            where (u._username = ~user.username) and (u._password = ~user.password);
-
+          	
+          	for (usr : User in users )
+          	{
+          		securityContext.principal:=usr;
+            	securityContext.loggedIn:=true;
+            	return home();
+          	}
+          	return login();
             
           }
           
           action("logout", logout())
           action logout() {
             		securityContext.loggedIn:=false;
+            		return login();
           }
         }
 }
+
 access control rules {
 	principal is User with credentials username, password
-	//roles: admin normal special
 	
-	rules page viewPerson {
+	rules page viewPerson(*) {
 		securityContext.loggedIn
+		true
+		true
 	}
 	
-	rules page viewUser {
+	rules page viewUser(u: User) {
+		securityContext.loggedIn	
+	}
+	
+	rules page home() {
+		true
+		rules action fdfd() {
+			true
+		}
+	}
+	rules page viewPe*() {
 		securityContext.loggedIn
+		true
+	}
+	rules page viewP*(*) {
+		true
+		true
+		true
+	}
+	rules page login(){
+		true
 		
-	}
+		rules action *()
+		{
+			true
+		}
+	}	
 	
-	rules page viewP* {
-		securityContext.loggedIn
-		
-	}
-	
-	rules page home{
-	securityContext.loggedIn
-		rules action dgdfg{
-		securityContext.loggedIn
+	rules page initDatabase(*){
+		true
+		rules action * (*)
+		{
+			true
 		}
 	}
 }
 
-extend entity User {
-	nmff :: String
-	dfssgsdg :: String
-}
-
-extend entity User {
-	nmf55f :: String
-	dfs55sgsdg :: String
-	
-	function fdg() : Bool{
-		return true;
-	}
-}
-
   define page home() {
-  action dgdfg(){
-  true;
-  }
+  	action fdfd() {
+  	  true;
+  	}
     main()
     define sidebar() {}
     define body() {
