@@ -306,7 +306,7 @@
           $EndJava
         ./
         
-    Token ::= 's' 'e' 'c' 't' 'i' 'o' 'n' white notDots '.'
+    Token ::= s e c t i o n white notEOLs
         /.$BeginJava
                     makeToken($_SECTIONCOMMENT);
           $EndJava
@@ -352,58 +352,17 @@
     slc ::= '/' '/'
           | slc notEOL
     
+    notEOLs ::= notEOL
+              | notEOLs notEOL
+    
     notQuotes ::= notQuote
                 | notQuotes notQuote
-    
-    notDots ::= notDot
-              | notDots notDot
-    
-    --notEnd ::= notE notEnd
-    --         | e notN notEnd
-    --         | e n notD notEnd
-    
-    -- ... is wat we want, but we need to be left-recursive:
-
-    --notEnd ::= any -- HACK: This should say 'any'
-    --         | notEnd notD
-    --         | notEndD d
-    
-    --notEndD ::= any -- letter | digit | Space | HT | FF | LF | CR -- HACK: This should say 'any'
-    --          | notEnd notN
-    --          | notEndND n
-    
-    --notEndND ::= any -- letter | digit | Space | HT | FF | LF | CR -- HACK: This should say 'any'
-    --          | notEndEND e
-    --          | notEnd notE
-    
-    --notEndEND ::= notWhite
-    --            | notEnd notWhite
-                
-    --notEnd ::= (Word | Whitespace)* e n d
-    
-    --notEndWords ::= notEndWord
-    --              | notEndWords ' ' notEndWord
-    
-    --notEndWord ::= notWhites notD
-    --             | notEnWord d
-    --             | any
-
-    --notEnWord ::= notWhites notN
-    --            | notEWord n
-    --            | any
-
-    --notEWord ::= notWhites any
-    --           | any
-    
-    --notWhites ::= notWhite
-    --            | notWhites notWhite
     
     bracketComment ::= white '{' notBrackets '}'
                      | '{' notBrackets '}'
 
     notBrackets ::= notBracket
                   | notBrackets notBracket
-
 
     digit ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 
@@ -447,11 +406,6 @@
                 '[' | ']' | '?' | ',' | '<' | '>' | '=' | '#' | '*' | '_' |
                 '/' | '$'
     
-    specialNotDot ::=  '+' | '-' | '(' | ')' | '!' | '@' | '`' | '~' |
-                '%' | '&' | '^' | ':' | ';' | "'" | '\' | '|' | '{' | '}' |
-                '[' | ']' | '?' | ',' | '<' | '>' | '=' | '#' | '*' | '_' |
-                '/' | '$' | '"'
-    
     specialNotBracket ::=  '+' | '-' | '(' | ')' | '!' | '@' | '`' | '~' | '.' |
                 '%' | '&' | '^' | ':' | ';' | "'" | '\' | '|' | '{' |
                 '[' | ']' | '?' | ',' | '<' | '>' | '=' | '#' | '*' | '_' |
@@ -460,8 +414,6 @@
     special ::= specialNotQuote | '"'
 
     notEOL ::= letter | digit | special | Space | HT | FF
-    
-    notDot ::= letter | digit | specialNotDot | Space | HT | FF | LF | CR
     
     notQuote ::= letter | digit | specialNotQuote | Space | HT | FF | LF | CR
 

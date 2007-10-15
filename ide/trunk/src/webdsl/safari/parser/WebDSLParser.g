@@ -26,10 +26,6 @@
     -- example, consider the following definitions:
     --
     application
-    section
-    description
-    note
-    end
     module
     imports
     session
@@ -38,6 +34,7 @@
     inverse
     inverseSlave
     define
+    entity
     for
     page
     select
@@ -46,18 +43,15 @@
     return
     var
     if
-    then
     else
     in
-    do
     rules
     List
     Set
     true
     false 
          
-    IDENTIFIER 
-    SECTIONCOMMENT
+    IDENTIFIER
     DESCRIPTIONCOMMENT
     NOTECOMMENT
     NUMBER
@@ -135,11 +129,10 @@
     DefinitionList$$Definition ::= %Empty
                                  | DefinitionList Definition
     
-    
     Globals ::= globals '{' VarDeclList '}'
     
-    Entity ::= Id ':' Id '{' PropertyList FunctionList '}'
-             | Id '{' PropertyList FunctionList '}'
+    Entity ::= entity Id ':' Id '{' PropertyList FunctionList '}'
+             | entity Id '{' PropertyList FunctionList '}'
              | session Id ':' Entity
 
     Function ::= 'function' Id '(' FormalArgList ')' ':' Sort Block
@@ -175,7 +168,7 @@
     
     TemplateDefinition ::=
       define ModifierList Id '(' FormalArgList ')' 
-                               '{' TemplateElementList '}'
+                             '{' TemplateElementList '}'
      
     Modifier ::= page
     ModifierList$$Modifier ::= %Empty
@@ -213,10 +206,10 @@
     VarDeclList$$VarDecl ::= %Empty
                            | VarDeclList VarDecl
               
-    If ::= if Exp then StatementList else StatementList end
-         | if Exp then StatementList                    end
+    If ::= if Exp '{' StatementList else StatementList '}'
+         | if Exp '{' StatementList                    '}'
     
-    For ::= for '(' Id ':' Sort in Exp do StatementList end
+    For ::= for '(' Id ':' Sort in Exp ')' '{' StatementList '}'
     
     Rule ::= Exp '=' Exp
     RuleList$$Rule ::= %Empty

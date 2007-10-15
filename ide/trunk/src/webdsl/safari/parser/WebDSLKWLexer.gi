@@ -12,9 +12,6 @@
 
     -- List all the keywords the kwlexer will export to the lexer and parser
     application
-    section
-    --description
-    --note
     module
     imports
     session
@@ -23,6 +20,7 @@
     inverse
     inverseSlave
     define
+    entity
     for
     page
     select
@@ -31,10 +29,8 @@
     return
     var
     if
-    then
     else
     in
-    do
     rules
     List
     Set
@@ -79,24 +75,6 @@
           $EndAction
         ./
 
-    Keyword ::= s e c t i o n
-        /.$BeginAction
-            $setResult($_section);
-          $EndAction
-        ./
-
-    --Keyword ::= d e s c r i p t i o n
-    --    /.$BeginAction
-    --        $setResult($_description);
-    --      $EndAction
-    --    ./
-
-    --Keyword ::= n o t e
-    --    /.$BeginAction
-    --        $setResult($_note);
-    --      $EndAction
-    --    ./
-
     Keyword ::= m o d u l e
         /.$BeginAction
             $setResult($_module);
@@ -127,6 +105,12 @@
           $EndAction
         ./
 
+    Keyword ::= d e f i n e
+        /.$BeginAction
+            $setResult($_define);
+          $EndAction
+        ./
+
     Keyword ::= i n v e r s e
         /.$BeginAction
             $setResult($_inverse);
@@ -139,9 +123,9 @@
           $EndAction
         ./
 
-    Keyword ::= d e f i n e
+    Keyword ::= e n t i t y
         /.$BeginAction
-            $setResult($_define);
+            $setResult($_entity);
           $EndAction
         ./
 
@@ -181,21 +165,9 @@
           $EndAction
         ./
 
-    Keyword ::= t h e n
-        /.$BeginAction
-            $setResult($_then);
-          $EndAction
-        ./
-
     Keyword ::= i n
         /.$BeginAction
             $setResult($_in);
-          $EndAction
-        ./
-
-    Keyword ::= d o
-        /.$BeginAction
-            $setResult($_do);
           $EndAction
         ./
 
