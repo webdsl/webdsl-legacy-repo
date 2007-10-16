@@ -19,7 +19,6 @@
     function
     inverse
     inverseSlave
-    define
     entity
     for
     page
@@ -36,6 +35,7 @@
     Set
     true
     false
+    -- define is also a keyword, sort of, but defined in the regular lexer
 %End
 
 %Terminals
@@ -102,12 +102,6 @@
     Keyword ::= f u n c t i o n
         /.$BeginAction
             $setResult($_function);
-          $EndAction
-        ./
-
-    Keyword ::= d e f i n e
-        /.$BeginAction
-            $setResult($_define);
           $EndAction
         ./
 

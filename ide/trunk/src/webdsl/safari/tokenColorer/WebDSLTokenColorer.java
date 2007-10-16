@@ -33,10 +33,9 @@ public class WebDSLTokenColorer extends TokenColorerBase implements
 			return sectionAttribute;
 		case TK_DESCRIPTIONCOMMENT: case TK_NOTECOMMENT: case TK_SINGLE_LINE_COMMENT:
 			return commentAttribute;
+		case TK_define:
+			return keywordAttribute;
 		default:
-			// if (controller.isKeyword(token.getKind()))
-			// return keywordAttribute;
-			// else return null;
 			return super.getColoring(controller, token);
 		}
 	}

@@ -59,6 +59,7 @@
         SECTIONCOMMENT
         NOTECOMMENT
         DESCRIPTIONCOMMENT
+        define -- HACK: 'define' must be defined here, together with 'description'
 %End
 
 %Terminals
@@ -312,9 +313,15 @@
           $EndJava
         ./
         
-    Token ::= p e s c r i p t i o n white bracketComment -- FIXME: should be "description"...
+    Token ::= d e s c r i p t i o n white bracketComment -- FIXME: should be "description"...
         /.$BeginJava
                     makeToken($_DESCRIPTIONCOMMENT);
+          $EndJava
+        ./
+        
+    Token ::= d e f i n e
+        /.$BeginJava
+                    makeToken($_define);
           $EndJava
         ./
         
