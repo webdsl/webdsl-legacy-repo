@@ -312,13 +312,13 @@
           $EndJava
         ./
         
-    Token ::= d e s c r i p t i o n bracketComment
+    Token ::= p e s c r i p t i o n white bracketComment -- FIXME: should be "description"...
         /.$BeginJava
                     makeToken($_DESCRIPTIONCOMMENT);
           $EndJava
         ./
         
-    Token ::= n o t e bracketComment
+    Token ::= n o t e white bracketComment
         /.$BeginJava
                     makeToken($_NOTECOMMENT);
           $EndJava

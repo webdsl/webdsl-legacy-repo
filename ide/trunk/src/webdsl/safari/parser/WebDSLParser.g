@@ -1,5 +1,5 @@
 %options package=webdsl.safari.parser
-%options template=dtParserTemplate.gi
+%options template=btParserTemplate.gi
 %options import_terminals=WebDSLLexer.gi
 %options parent_saved,automatic_ast=toplevel,visitor=preorder,ast_directory=./Ast,ast_type=ASTNode
 
