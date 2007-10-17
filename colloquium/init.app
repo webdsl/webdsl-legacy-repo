@@ -7,10 +7,18 @@ section test setup for colloquium application
     var hb9130        : Room := Room { building := "HB" floor := "09" number := "130" };
     var bordewijkzaal : Room := Room { building := "HB" floor := "19" number := "130" };
     var bibliotheek   : Room := Room { building := "HB" floor := "08" number := "120" };
+  
+  }
+
+  globals {
 
     var proposed  : PresentationStatus := PresentationStatus { status := "proposed" };
     var tentative : PresentationStatus := PresentationStatus { status := "tentative" };
     var confirmed : PresentationStatus := PresentationStatus { status := "confirmed" };
+
+  }
+
+  globals {
 
     var eelco : Person := Person {
       firstname    := "Eelco"

@@ -29,17 +29,37 @@ section access control
     var audience   : Role := Role { role := "audience" };
   }
 
-  //access control rules {
+  access control rules {
 
-    //principal is Person with credentials username, password
+    principal is Person with credentials username, password
+
+    rules page home() {
+      true
+    }
+
+    rules page view*(*) {
+      true
+    }
+
+    rules page future(*) {
+      true
+    }
+
+    rules page past(*) {
+      true
+    }
  
-    //rules page editPresentation(p : Presentation) {
-    //  rules action saveSpeaker() {
-    //    securityContext.principal = p.speaker
-    //  }
-    //  rules action savePresentation() {
-    //    securityContext.principal = p.moderator
-    //  }
-    //}
+    rules page editPresentation(p : Presentation) {
+      true
+      rules action saveSpeaker() {
+        securityContext.principal = p.speaker
+      }
+      rules action savePresentation() {
+        securityContext.principal = p.moderator
+      }
+      rules action save() {
+        securityContext.principal = p.moderator
+      }
+    }
 
-  //}
+  }

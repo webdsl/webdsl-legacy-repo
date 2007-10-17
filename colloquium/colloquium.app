@@ -125,7 +125,7 @@ section presentations
   define showFullPresentation(p : Presentation) 
   {
     section{
-      header{output(p.title)}
+      header{output(p)}
       list {
         listitem{ "Speaker: " output(p.speaker) " (" output(p.speaker.affilliation) ")" } 
         listitem{ "Date: "    output(p.date) " at " output(p.time) } 
@@ -145,6 +145,7 @@ section presentations
     define body() {
       "The " output(p.colloquium) " Colloquium presents"
       showFullPresentation(p)
+      par{ navigate(editPresentation(p)){"Edit"} }
     }
   }
 
