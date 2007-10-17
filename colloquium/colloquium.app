@@ -26,7 +26,7 @@ description {
 imports app/templates
 imports app/datamodel
 imports app/init
-//imports app/accesscontrol
+imports app/accesscontrol
 
 section all colloquia
 
