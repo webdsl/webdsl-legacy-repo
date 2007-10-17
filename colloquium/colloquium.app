@@ -1,199 +1,209 @@
-application com.example.colloquium
+application org.webdsl.colloquium
 
 description {
-  This is an automatically generated description
+
+  An application for managing and presenting presentations in a colloquium series.
+
+  Creation
+
+  - creating and editing presentations (by moderator, with restricted subsets open to
+    others)
+
+  - setting up colloquium series with repeating time slots
+
+  - proposing presentations (by selected public)
+
+  Notifications
+
+  - inviting speakers
+
+  - sending notifications to speakers
+
+  - sending announcements to registered audience
+
 }
 
 imports app/templates
+imports app/datamodel
+imports app/init
+//imports app/accesscontrol
 
-section people
+section all colloquia
 
-  entity Person {
-    firstname :: String
-    lastname  :: String
-    fullname  :: String (name) := firstname + " " + lastname
-    email     :: Email
-    homepage  :: URL
-  }
-
-section colloquium
-
-  entity Presentation {
-    speaker  -> Person
-    title    :: String (name)
-    abstract :: Text
-    date     :: Date
-    time     :: String
-    room     :: String
-    status   :: PresentationStatus
-  }
-
-  entity PresentationStatus {
-    status :: String
-  }
-
-  globals {
-    var proposed  : PresentationStatus := PresentationStatus { status := "proposed" };
-    var tentative : PresentationStatus := PresentationStatus { status := "tentative" };
-    var confirmed : PresentationStatus := PresentationStatus { status := "confirmed" };
-  }
-
-section pages
-
-define page home() {
-  main()
-  define body() {
-
-    section { 
-      header{"Next"}
-      // all data of next presentation in time
-    }
-
-    section {
-      header{"Coming up "}
-      // presentations in the next 3 months
-      list { for(p : Presentation) {
-        listitem { output(p.date) ": " output(p.speaker) " : '" output(p) "'" }
+  define page home() 
+  { 
+    main()
+    define body() {
+      list{ for(c : Colloquium) {
+        listitem{ output(c) }
       } }
     }
+  }
 
-    section {
-      header{""}
-      list {
-        listitem { "Future presentations" }
-        listitem { "Past presentations" }
+section colloquium pages
+
+  define page viewColloquium(c : Colloquium)
+  {
+    main()
+    define body()
+    {
+      section { 
+        header{output(c.fullname)}
+
+	output(c.description)
+
+
+	// todo: select first scheduled presentation after today
+	// var next : Presentation := select p from Presentation as p where 
+
+	var next : Presentation := ac;
+      
+        section { 
+          header{"Next Up"}
+          showFullPresentation(next)
+        }
+
+        section {
+          header{"Near Future"}
+          // presentations in the next 3 months or first 10 future presentations
+          list { for(p : Presentation in c.presentationsList) {
+            listitem { output(p.date) ": " output(p.speaker) " : '" output(p) "'" }
+          } }
+        }
+
+        section {
+          header{"Future and Past"}
+          list {
+            listitem { navigate(future(c)){"Future presentations"} } 
+            listitem { navigate(past(c)){"Past presentations"} }
+	    // other indices of talks by speaker, by topic, by project, etc.
+          }
+        }
+
+	par{ "For questions or suggestions contact " output(c.moderator) }
+
+        par{ navigate(newPresentation(c)){"Schedule or propose a presentation"} }
       }
     }
-
-    navigate(createPresentation()){"new presentation"}
-  }
-}
-
-
-  define page presentation(p : Presentation) {
-    // show presentation
   }
 
-  define page future() {
+  define page future(c : Colloquium) {
     // show future presentations
+    main()
+    define body() { 
+      section{
+        header{output(c) " Colloquium: Future Presentations"}
+
+		// note: we need string and date comparisons
+		// note: this should be translated to a (more efficient) query
+		// note: the list should be ordered
+        for(p : Presentation in c.presentationsList 
+            // where p.date > today() 
+            // ordered by date
+           )
+        {
+          section{ 
+            header{output(p.date) " : " output(p)}
+            "Speaker: " output(p.speaker)
+	    par{ "Abstract: " output(p.abstract) }
+          }
+        }
+
+      }
+    }
   }
 
-  define page past() {
+  // note: past is the same as future, but for the predicate applied in the query
+  define page past(c : Colloquium) {
     // past presentations
+    main()
   }
 
-  define page editPresentation(p : Presentation) {
 
+section presentations
+
+  define showFullPresentation(p : Presentation) 
+  {
+    section{
+      header{output(p.title)}
+      list {
+        listitem{ "Speaker: " output(p.speaker) " (" output(p.speaker.affilliation) ")" } 
+        listitem{ "Date: "    output(p.date) " at " output(p.time) } 
+        listitem{ "Room: "    output(p.room) }
+      }
+      section{
+        header{"Abstract"}
+        output(p.abstract)
+      }
+    }
+  }
+
+  define page viewPresentation(p : Presentation) 
+  {
+    // show presentation
+    main()
+    define body() {
+      "The " output(p.colloquium) " Colloquium presents"
+      showFullPresentation(p)
+    }
+  }
+
+  define page newPresentation(c : Colloquium)
+  {
     // change data of a page, taking into account different levels of access
 
     main()
 
     define body() {
-      if(securityContext.principal = p.speaker) 
-      {
+      //if(securityContext.principal = p.speaker) 
+      //{
+      //  form {
+      //    table {
+      //      row{ "Title" input(p.title) }
+      //	    row{ "Abstract" input(p.abstract) }
+      //    }
+      //    action("Save", saveSpeaker())
+      //    action saveSpeaker() { p.save(); }
+      //  }
+      //}
+
+      //if(securityContext.principal.role = moderator) 
+
+      var p : Presentation := Presentation { colloquium := c };
+
+      //{
         form {
           table {
-            row{ "Title" input(p.title) }
+            row{ "Title"    input(p.title) }
     	    row{ "Abstract" input(p.abstract) }
-          }
-          action("Save", saveSpeaker())
-          action saveSpeaker() { p.save(); }
-        }
-     }
-
-      if(securityContext.principal.role = moderator) 
-      {
-        form { 
-          table {
-            row{ "Title" input(p.title) }
-    	    row{ "Abstract" input(p.abstract) }
-            row{ "Speaker" input(p.speaker) }
-            row{ "Date"    input(p.date) }
-            row{ "Time"    input(p.time) }
-            row{ "Room"    input(p.room) }
+            row{ "Speaker"  input(p.speaker) }
+	    row{ "" 
+              table {
+                var newSpeaker : Person := Person{};
+                row{ "First name"   input(newSpeaker.firstname) }
+                row{ "Last name"    input(newSpeaker.lastname) }
+                row{ "Affilliation" input(newSpeaker.affilliation) }
+                row{ "Email"        input(newSpeaker.email) }
+                row{ "Homepage"     input(newSpeaker.homepage) }
+		row{ ""             action("Add new speaker", addNewSpeaker()) }
+                action addNewSpeaker() {
+		  p.speaker := newSpeaker;
+                  newSpeaker := Person{};
+                }
+              }
+            }
+            row{ "Date"     input(p.date) }
+            row{ "Time"     input(p.time) }
+            row{ "Room"     input(p.room) }
           }
           action("Save", savePresentation())
-          action savePresentation() { p.save(); }
+          action savePresentation() { 
+            c.presentations.add(p);
+            p.save(); 
+            return viewColloquium(c); 
+          }
         }
-      }
+      //}
     }
   }
     
-  define page createPresentation() {
-    
-    // add new presentation
-    // take into account who makes it
-
-    table {
-      if(securityContext.principal.role = moderator 
-         || securityContext.principal.role = researcher 
-         || securityContext.principal = p.speaker) 
-      {
-         row{ "Title" input(p.title) }
-
-    	 row{ "Abstract" input(p.abstract) }
-      }
-
-    }
-
-  }
-
-section access control
-
-  // everyone can view colloquium pages
-
-  // speaker can edit his presentation title and abstract, but not time and room
-
-  // moderator can edit everything
-
-  // audience gets email announcements
-
-  // research group can propose new presentations
-
-  extend entity Person {
-    roles    -> Set<Role>
-    username :: String
-    password :: Secret
-  }
-
-  entity Role {
-    role :: String
-  }
-
-  globals {
-    var speaker    : Role := Role { role := "speaker" };
-    var moderator  : Role := Role { role := "moderator" };
-    var researcher : Role := Role { role := "researcher" };
-    var audience   : Role := Role { role := "audience" };
-  }
-
-  access control rules {
-
-    principal is Person with credentials username, password
- 
-    rules page editPresentation(p : Presentation) {
-      rules action saveSpeaker() {
-        securityContext.principal = p.speaker
-      }
-      rules action savePresentation() {
-        securityContext.principal = p.moderator
-      }
-    }
-
-  }
-
-section init
-
- globals {
-   var eelco : Person := Person {
-      firstname := "Eelco"
-      lastname := "Visser"
-      email := "e.visser@tudelft.nl"
-      homepage := "http://www.eelcovisser.net"
-    };
-   var pres : Presentation := Presentation {
-      speaker := eelco
-      title   := "Very abstract"
-      abstract := "Very abstract"
-    };
- }
