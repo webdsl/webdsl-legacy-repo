@@ -197,9 +197,9 @@ section presentations
             row{ "Room"     input(p.room) }
           }
           action("Save", savePresentation())
-          action savePresentation() { 
+          action savePresentation() {
             c.presentations.add(p);
-            p.save(); 
+	    c.save();
             return viewColloquium(c); 
           }
         }
