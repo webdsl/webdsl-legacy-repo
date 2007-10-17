@@ -31,6 +31,7 @@
     else
     in
     rules
+    task
     List
     Set
     true
@@ -180,6 +181,12 @@
     Keyword ::= r u l e s
         /.$BeginAction
             $setResult($_rules);
+          $EndAction
+        ./
+
+    Keyword ::= t a s k
+        /.$BeginAction
+            $setResult($_task);
           $EndAction
         ./
 

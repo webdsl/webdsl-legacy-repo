@@ -46,6 +46,7 @@
     else
     in
     rules
+    task
     List
     Set
     true
@@ -122,6 +123,7 @@
    
     Section ::= SECTIONCOMMENT DefinitionList
               | imports ModuleName
+              | Module
               | DESCRIPTIONCOMMENT
               | NOTECOMMENT
     
@@ -134,6 +136,7 @@
     Entity ::= entity Id ':' Id '{' PropertyList FunctionList '}'
              | entity Id '{' PropertyList FunctionList '}'
              | session Id ':' Entity
+             | task Id '(' STRING ')' '{' PropertyList FunctionList '}'
 
     Function ::= 'function' Id '(' FormalArgList ')' ':' Sort Block
     FunctionList$$Function ::= %Empty
