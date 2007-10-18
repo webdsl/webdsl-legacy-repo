@@ -50,15 +50,20 @@ section access control
     }
  
     rules page editPresentation(p : Presentation) {
+        securityContext.principal = p.colloquium.moderator
+        || securityContext.principal = p.speaker
+    }
+
+    rules page editPresentationFoo(p : Presentation) {
       true
       rules action saveSpeaker() {
         securityContext.principal = p.speaker
       }
       rules action savePresentation() {
-        securityContext.principal = p.moderator
+        securityContext.principal = p.colloquium.moderator
       }
       rules action save() {
-        securityContext.principal = p.moderator
+        securityContext.principal = p.colloquium.moderator
       }
     }
 

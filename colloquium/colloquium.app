@@ -126,7 +126,7 @@ section presentations
   {
     section{
       header{output(p)}
-      list {
+      list{
         listitem{ "Speaker: " output(p.speaker) " (" output(p.speaker.affilliation) ")" } 
         listitem{ "Date: "    output(p.date) " at " output(p.time) } 
         listitem{ "Room: "    output(p.room) }
