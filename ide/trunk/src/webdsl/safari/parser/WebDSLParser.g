@@ -109,6 +109,11 @@
     Module ::= module ModuleName SectionList
     
     Application ::= application QId SectionList
+    /.
+        $action_type.SymbolTable symbolTable;
+        public void setSymbolTable($action_type.SymbolTable symbolTable) { this.symbolTable = symbolTable; }
+        public $action_type.SymbolTable getSymbolTable() { return symbolTable; }
+    ./    
 
     Id         ::= IDENTIFIER
     --IdPlus$$Id ::= Id
@@ -219,7 +224,7 @@
                      | RuleList Rule
     Rules ::= rules RuleList
 
-    Exp ::= Int | FloatLiteral | STRING | Id
+    Exp ::= Int | FloatLiteral | STRING | Local
           | Exp '.' Id
           | Id '{' AssignmentList '}'
           | QId ':=' Exp
@@ -240,6 +245,8 @@
           | Exp '%' Exp
           | Exp '+' Exp
           | Exp '-' Exp
+
+    Local ::= Id
           
     ExpList$$Exp ::= %Empty
                     | ExpList Exp
@@ -260,7 +267,112 @@
 
 %Headers
     /.
-        public void resolve($ast_type root) {}
+        public class SymbolTable extends Hashtable {
+            SymbolTable parent;
+            SymbolTable(SymbolTable parent) { this.parent = parent; }
+            public IAst findDeclaration(String name) {
+                IAst decl = (IAst) get(name);
+                return (decl != null
+                              ? decl
+                              : parent != null ? parent.findDeclaration(name) : null);
+            }
+            public SymbolTable getParent() { return parent; }
+        }
+        
+        Stack symbolTableStack = null;
+        SymbolTable topLevelSymbolTable = null;
+        public SymbolTable getTopLevelSymbolTable() { return topLevelSymbolTable; }
+
+        public SymbolTable getEnclosingSymbolTable(IAst n) {
+            for ( ; n != null; n = n.getParent())
+                if (n instanceof Application)
+                     return ((Application) n).getSymbolTable();
+            return getTopLevelSymbolTable();
+        }
+
+        public void resolve($ast_type root) {
+            if (root != null) {
+                symbolTableStack = new Stack();
+                topLevelSymbolTable = new SymbolTable(null);
+                symbolTableStack.push(topLevelSymbolTable);
+                root.accept(new SymbolTableVisitor());
+            }
+        }
+        
+        /*
+         * A visitor for ASTs.  Its purpose is to build a symbol table
+         * for declared symbols and resolved identifier in expressions.
+         */
+        private final class SymbolTableVisitor extends AbstractVisitor {
+            public void unimplementedVisitor(String s) { /* Useful for debugging: System.out.println(s); */ }
+            
+            public void emitError(IToken id, String message) {
+                getMessageHandler().handleMessage(ParseErrorCodes.NO_MESSAGE_CODE,
+                                                  getLexStream().getLocation(id.getStartOffset(), id.getEndOffset()),
+                                                  getLexStream().getLocation(0, 0),
+                                                  getFileName(),
+                                                  new String [] { message });
+            }
+            
+            
+            public void emitError(ASTNode node, String message) {
+                getMessageHandler().handleMessage(
+                    ParseErrorCodes.NO_MESSAGE_CODE,
+                    getLexStream().getLocation(
+                        node.getLeftIToken().getStartOffset(), node.getRightIToken().getEndOffset()),
+                    getLexStream().getLocation(0, 0),
+                    getFileName(),
+                    new String [] { message });
+            }
+
+           public void emitError(int startOffset, int endOffset, String message) {
+                getMessageHandler().handleMessage(
+                    ParseErrorCodes.NO_MESSAGE_CODE,
+                    getLexStream().getLocation(startOffset, endOffset),
+                    getLexStream().getLocation(0, 0),
+                    getFileName(),
+                    new String [] { message });
+            }
+
+            public boolean visit(TemplateDefinition n) {
+                IToken id = n.getId().getIToken();
+                SymbolTable symbol_table = (SymbolTable) symbolTableStack.peek();
+                if (symbol_table.get(id.toString()) == null)
+             	     // SMS 11 Jun 2007; pursuant to fixing bug #190
+                     //symbol_table.put(id.toString(), fh);
+                     symbol_table.put(id.toString(), n);
+                else emitError(id, "Illegal redeclaration of " + id.toString());
+        
+                //
+                // UNDONE: Add a symbol table for the parameters
+                //
+                // n.setSymbolTable((SymbolTable) symbolTableStack.push(new SymbolTable((SymbolTable) symbolTableStack.peek())));
+    
+                return true;
+            }
+            
+            /*
+            public void endVisit(functionDeclaration n) { symbolTableStack.pop(); }
+
+            public boolean visit(declaration n) {
+                IToken id = n.getidentifier().getIToken();
+                SymbolTable symbol_table = (SymbolTable) symbolTableStack.peek();
+                if (symbol_table.get(id.toString()) == null)
+                     symbol_table.put(id.toString(), n);
+                else emitError(id, "Illegal redeclaration of " + id.toString());
+                return true;
+            }
+
+            public boolean visit(identifier n) {
+                IToken id = n.getIDENTIFIER();
+                IAst decl = ((SymbolTable) symbolTableStack.peek()).findDeclaration(id.toString());
+                if (decl == null)
+                     emitError(id, "Undeclared variable " + id.toString());
+                else n.setDeclaration(decl);
+                return true;
+            }
+            */
+        } // End SymbolTableVisitor
     ./
 %End
 -- Need a carriage return here
