@@ -21,6 +21,7 @@
     inverseSlave
     entity
     for
+    where
     page
     select
     init
@@ -36,6 +37,7 @@
     Set
     true
     false
+    null
     -- define is also a keyword, sort of, but defined in the regular lexer
 %End
 
@@ -130,6 +132,12 @@
           $EndAction
         ./
 
+    Keyword ::= w h e r e
+        /.$BeginAction
+            $setResult($_where);
+          $EndAction
+        ./
+
     Keyword ::= p a g e
         /.$BeginAction
             $setResult($_page);
@@ -175,6 +183,12 @@
     Keyword ::= f a l s e
         /.$BeginAction
             $setResult($_false);
+          $EndAction
+        ./
+
+    Keyword ::= n u l l
+        /.$BeginAction
+            $setResult($_null);
           $EndAction
         ./
 

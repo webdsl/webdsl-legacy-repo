@@ -40,12 +40,13 @@ public class WebDSLReferenceResolver implements IReferenceResolver,
 		// that is appropriate to the language and AST structure for
 		// which the service is being defined.
 
-		if (node instanceof ILocal && controller.getCurrentAst() != null) {
-			ILocal id = (ILocal) node;
+		System.out.println("Hit: " + node + (controller.getCurrentAst() != null));
+		
+		if (node instanceof GetId && controller.getCurrentAst() != null) {
+			GetId id = (GetId) node;
 			WebDSLParser parser = (WebDSLParser) controller.getParser();
-			//WebDSLParser.SymbolTable symtab = parser
-			//		.getEnclosingSymbolTable(id);
-			return null; // symtab.findDeclaration(id.toString());
+			WebDSLParser.SymbolTable symtab = parser.getEnclosingSymbolTable(id);
+			return symtab.findDeclaration(id.toString());
 		}
 
 		return null;

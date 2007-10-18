@@ -36,6 +36,7 @@
     define
     entity
     for
+    where
     page
     select
     init
@@ -50,7 +51,8 @@
     List
     Set
     true
-    false 
+    false
+    null
          
     IDENTIFIER
     DESCRIPTIONCOMMENT
@@ -116,8 +118,6 @@
     ./    
 
     Id         ::= IDENTIFIER
-    --IdPlus$$Id ::= Id
-    --             | IdPlus Id
     QId$$Id    ::= Id
                  | QId '.' Id
     ModuleName$$Id ::= Id
@@ -138,19 +138,19 @@
     
     Globals ::= globals '{' VarDeclList '}'
     
-    Entity ::= entity Id ':' Id '{' PropertyList FunctionList '}'
-             | entity Id '{' PropertyList FunctionList '}'
-             | session Id ':' Entity
-             | task Id '(' STRING ')' '{' PropertyList FunctionList '}'
+    Entity ::= entity PutId ':' Id '{' PropertyList FunctionList '}'
+             | entity PutId '{' PropertyList FunctionList '}'
+             | session PutId ':' Entity
+             | task PutId '(' STRING ')' '{' PropertyList FunctionList '}'
 
-    Function ::= 'function' Id '(' FormalArgList ')' ':' Sort Block
+    Function ::= 'function' PutId '(' FormalArgList ')' ':' Sort Block
     FunctionList$$Function ::= %Empty
                              | FunctionList Function
 
-    Property ::= Id PropKind Sort '(' AnnotationList ')'
-               | Id PropKind Sort
-               | Id PropKind Sort '(' AnnotationList ')' ':=' Exp
-               | Id PropKind Sort ':=' Exp
+    Property ::= PutId PropKind Sort '(' AnnotationList ')'
+               | PutId PropKind Sort
+               | PutId PropKind Sort '(' AnnotationList ')' ':=' Exp
+               | PutId PropKind Sort ':=' Exp
     PropertyList$$Property ::= %Empty
                              | PropertyList Property
              
@@ -169,14 +169,14 @@
                                  | AnnotationPlus ',' Annotation
     AnnotationList ::= AnnotationPlus | %Empty
     
-    FormalArg ::= Id ':' Sort
+    FormalArg ::= PutId ':' Sort
     FormalArgPlus$$FormalArg ::= FormalArg
                                | FormalArgPlus ',' FormalArg
     FormalArgList ::= FormalArgPlus | %Empty
     
     TemplateDefinition ::=
-      define ModifierList Id '(' FormalArgList ')' 
-                             '{' TemplateElementList '}'
+      define ModifierList PutId '(' FormalArgList ')' 
+                                '{' TemplateElementList '}'
      
     Modifier ::= page
     ModifierList$$Modifier ::= %Empty
@@ -188,19 +188,19 @@
     TemplateElementList$$TemplateElement ::= %Empty
                                           | TemplateElementList TemplateElement
     
-    ForTemplate ::= for '(' Id ':' Sort in Exp ')' '{' TemplateElementList '}'
-                  | for '(' Id ':' Sort        ')' '{' TemplateElementList '}'
+    ForTemplate ::= for '(' PutId ':' Sort in Exp ')' '{' TemplateElementList '}'
+                  | for '(' PutId ':' Sort        ')' '{' TemplateElementList '}'
     
     Select ::= select '(' Id ':' Sort ',' STRING ',' Exp ')'
     
-    TemplateCall ::= Id
-                   | Id '(' ExpList ')'
-                   | Id                 '{' TemplateElementList '}'
-                   | Id '(' ExpList ')' '{' TemplateElementList '}'
+    TemplateCall ::= GetId
+                   | GetId '(' ExpList ')'
+                   | GetId                 '{' TemplateElementList '}'
+                   | GetId '(' ExpList ')' '{' TemplateElementList '}'
     
     InitAction ::= init Block
     
-    Action ::= action Id '(' FormalArgList ')' Block
+    Action ::= action PutId '(' FormalArgList ')' Block
 
     Statement ::= Block | Assignment ';' | Exp ';' | return Exp ';' | VarDecl
                 | If | For
@@ -209,22 +209,24 @@
     
     Block ::= '{' StatementList '}'
     
-    VarDecl ::= var Id ':' Sort ';'
-              | var Id ':' Sort ':=' Exp ';'
+    VarDecl ::= var PutId ':' Sort ';'
+              | var PutId ':' Sort ':=' Exp ';'
     VarDeclList$$VarDecl ::= %Empty
                            | VarDeclList VarDecl
               
     If ::= if Exp '{' StatementList else StatementList '}'
          | if Exp '{' StatementList                    '}'
     
-    For ::= for '(' Id ':' Sort in Exp ')' '{' StatementList '}'
+    For ::= for '(' PutId ':' Sort in Exp ')' '{' StatementList '}'
+          | for '(' PutId ':' Sort in Exp ')' '{' StatementList '}' where Exp
     
     Rule ::= Exp '=' Exp
     RuleList$$Rule ::= %Empty
                      | RuleList Rule
     Rules ::= rules RuleList
 
-    Exp ::= Int | FloatLiteral | STRING | Local
+    Exp ::= Int | FloatLiteral | STRING
+          | GetId
           | Exp '.' Id
           | Id '{' AssignmentList '}'
           | QId ':=' Exp
@@ -239,14 +241,24 @@
           | Exp '!=' Exp
           | true
           | false
-          | for Id ':' Sort in Exp '(' Exp ')'
+          | null
+          | Exp '[' for PutId ':' Sort in Exp ']'
+          | Exp '[' for PutId ':' Sort in Exp where Exp ']'
+          | Exp in Exp
           | Exp '*' Exp
           | Exp '/' Exp
           | Exp '%' Exp
           | Exp '+' Exp
           | Exp '-' Exp
+    
+    PutId ::= IDENTIFIER -- declares an identifier
 
-    Local ::= Id
+    GetId ::= IDENTIFIER -- fetches an identifier
+    /.
+        IAst decl;
+        public void setDeclaration(IAst decl) { this.decl = decl; }
+        public IAst getDeclaration() { return decl; }
+    ./
           
     ExpList$$Exp ::= %Empty
                     | ExpList Exp
@@ -334,27 +346,25 @@
                     new String [] { message });
             }
 
+            /* UNDONE: Using GetId/PutId instead
             public boolean visit(TemplateDefinition n) {
                 IToken id = n.getId().getIToken();
                 SymbolTable symbol_table = (SymbolTable) symbolTableStack.peek();
                 if (symbol_table.get(id.toString()) == null)
-             	     // SMS 11 Jun 2007; pursuant to fixing bug #190
-                     //symbol_table.put(id.toString(), fh);
-                     symbol_table.put(id.toString(), n);
+             	     symbol_table.put(id.toString(), n);
                 else emitError(id, "Illegal redeclaration of " + id.toString());
         
                 //
-                // UNDONE: Add a symbol table for the parameters
+                // TODO: Add a symbol table for the parameters
                 //
                 // n.setSymbolTable((SymbolTable) symbolTableStack.push(new SymbolTable((SymbolTable) symbolTableStack.peek())));
     
                 return true;
             }
             
-            /*
-            public void endVisit(functionDeclaration n) { symbolTableStack.pop(); }
+            public void endVisit(TemplateDefinition n) { symbolTableStack.pop(); }
 
-            public boolean visit(declaration n) {
+            public boolean visit(VarDecl0 n) {
                 IToken id = n.getidentifier().getIToken();
                 SymbolTable symbol_table = (SymbolTable) symbolTableStack.peek();
                 if (symbol_table.get(id.toString()) == null)
@@ -362,8 +372,18 @@
                 else emitError(id, "Illegal redeclaration of " + id.toString());
                 return true;
             }
+            */
 
-            public boolean visit(identifier n) {
+            public boolean visit(PutId n) {
+                IToken id = n.getIDENTIFIER();
+                SymbolTable symbol_table = (SymbolTable) symbolTableStack.peek();
+                if (symbol_table.get(id.toString()) == null)
+                     symbol_table.put(id.toString(), n);
+                else emitError(id, "Illegal redeclaration of " + id.toString());
+                return true;
+            }
+
+            public boolean visit(GetId n) {
                 IToken id = n.getIDENTIFIER();
                 IAst decl = ((SymbolTable) symbolTableStack.peek()).findDeclaration(id.toString());
                 if (decl == null)
@@ -371,7 +391,6 @@
                 else n.setDeclaration(decl);
                 return true;
             }
-            */
         } // End SymbolTableVisitor
     ./
 %End
