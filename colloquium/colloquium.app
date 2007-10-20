@@ -127,8 +127,8 @@ section presentations
     section{
       header{output(p)}
       list{
-        listitem{ "Speaker: " output(p.speaker) " (" output(p.speaker.affilliation) ")" } 
-        listitem{ "Date: "    output(p.date) " at " output(p.time) } 
+        listitem{ "Speaker: " output(p.speaker) " (" output(p.speaker.affilliation) ")" }
+        listitem{ "Date: "    output(p.date) " at " output(p.time) }
         listitem{ "Room: "    output(p.room) }
       }
       section{
@@ -138,7 +138,7 @@ section presentations
     }
   }
 
-  define page viewPresentation(p : Presentation) 
+  define page viewPresentation(p : Presentation)
   {
     // show presentation
     main()
@@ -208,3 +208,33 @@ section presentations
     }
   }
     
+section speakers
+
+  define page viewPerson(p : Person)
+  {
+    main()
+    define body() {
+      section{
+        header{output(p.name)}
+
+	table {
+          row{ "Affilliation" output(p.affilliation) }
+          row{ "Email"        output(p.email) }
+          row{ "Homepage"     output(p.homepage) }
+        }
+
+	var presentations : List<Presentation> :=
+            select pres from Presentation as pres 
+            where pres._speaker = ~p 
+	    order by pres._date;
+
+        section{
+          header{"Presentations"}
+          list{ for(pres : Presentation in presentations) {
+            listitem { output(pres.date) ": " output(pres.colloquium) " : '" output(pres) "'" }
+          } }
+ 	}      
+
+      }
+    }
+  }

@@ -48,10 +48,15 @@ section access control
     rules page past(*) {
       true
     }
+
+    rules page newPresentation(*) {
+      true
+    }
  
     rules page editPresentation(p : Presentation) {
-        securityContext.principal = p.colloquium.moderator
-        || securityContext.principal = p.speaker
+      true
+      //  securityContext.principal = p.colloquium.moderator
+      //  || securityContext.principal = p.speaker
     }
 
     rules page editPresentationFoo(p : Presentation) {

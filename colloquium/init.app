@@ -4,22 +4,6 @@ section test setup for colloquium application
 
   globals {
 
-    var hb9130        : Room := Room { building := "HB" floor := "09" number := "130" };
-    var bordewijkzaal : Room := Room { building := "HB" floor := "19" number := "130" };
-    var bibliotheek   : Room := Room { building := "HB" floor := "08" number := "120" };
-  
-  }
-
-  globals {
-
-    var proposed  : PresentationStatus := PresentationStatus { status := "proposed" };
-    var tentative : PresentationStatus := PresentationStatus { status := "tentative" };
-    var confirmed : PresentationStatus := PresentationStatus { status := "confirmed" };
-
-  }
-
-  globals {
-
     var eelco : Person := Person {
       firstname    := "Eelco"
       lastname     := "Visser"
@@ -46,8 +30,8 @@ section test setup for colloquium application
       speaker  := eelco
       title    := "Domain-Specific Language Engineering: Part I"
       abstract := "In this presentation I give a tutorial on the construction of DSLs."
-      date     := "2007/05/22"
-      time     := "10:30"
+      //date     := "2007/05/22"
+      //time     := "10:30"
       duration := "2:00"
       room     := hb9130
       status   := confirmed
@@ -57,8 +41,8 @@ section test setup for colloquium application
       speaker  := danny
       title    := "A DSL for Access Control"
       abstract := "Talk about an extension of WebDSL with declarative access control rules"
-      date     := "2007/11/22"
-      time     := "11:00"
+      //date     := "2007/11/22"
+      //time     := "11:00"
       duration := "0:45"
       room     := hb9130
       status   := tentative
@@ -68,8 +52,8 @@ section test setup for colloquium application
       speaker  := martin
       title    := "Syntax Embedding"
       abstract := "concrete syntax and stuff"
-      date     := "2007/11/01"
-      time     := "10:30"
+      //date     := "2007/11/01"
+      //time     := "10:30"
       duration := "2:00"
       room     := hb9130
       status   := confirmed
