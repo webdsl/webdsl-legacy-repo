@@ -20,7 +20,7 @@ public class WebDSLReferenceResolver implements IReferenceResolver,
 	public String getLinkText(Object node) {
 		// TODO:  Replace the call to super.getLinkText(..) with an implementation
 		// suitable to you language and link types
-		return node.toString();
+		return "Link text - " + node.toString();
 	}
 
 	/**
@@ -39,16 +39,19 @@ public class WebDSLReferenceResolver implements IReferenceResolver,
 		// in general, and the user should provide an implementation
 		// that is appropriate to the language and AST structure for
 		// which the service is being defined.
-
-		System.out.println("Hit: " + node + (controller.getCurrentAst() != null));
+		
+		System.out.print("Hit->");
 		
 		if (node instanceof GetId && controller.getCurrentAst() != null) {
 			GetId id = (GetId) node;
 			WebDSLParser parser = (WebDSLParser) controller.getParser();
 			WebDSLParser.SymbolTable symtab = parser.getEnclosingSymbolTable(id);
+
+			System.out.println("Hit: " + node + (controller.getCurrentAst() != null) + "->" + id + "->" + symtab.findDeclaration(id.toString()));
 			return symtab.findDeclaration(id.toString());
 		}
 
+		System.out.println("Hit: " + node.getClass() + "-> null");
 		return null;
 	}
 }

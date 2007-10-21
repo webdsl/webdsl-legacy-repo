@@ -228,14 +228,14 @@
     Exp ::= Int | FloatLiteral | STRING
           | GetId
           | Exp '.' Id
-          | Id '{' AssignmentList '}'
-          | QId ':=' Exp
+          | GetId '{' AssignmentList '}'
+          | GetQId ':=' Exp
           | '[' MappingList ']'
           | '[' ExpList ']'
           | '{' ExpList '}'
           | List '<' Sort '>' '(' ')'
           | Set  '<' Sort '>' '(' ')'
-          | Id '(' ExpList ')'
+          | GetId '(' ExpList ')'
           | Exp '.' Id '(' ExpList ')'
           | Exp '==' Exp
           | Exp '!=' Exp
@@ -252,6 +252,9 @@
           | Exp '-' Exp
     
     PutId ::= IDENTIFIER -- declares an identifier
+    
+    GetQId ::= GetId -- HACK: GetQId
+             | QId '.' Id
 
     GetId ::= IDENTIFIER -- fetches an identifier
     /.
@@ -259,9 +262,11 @@
         public void setDeclaration(IAst decl) { this.decl = decl; }
         public IAst getDeclaration() { return decl; }
     ./
-          
-    ExpList$$Exp ::= %Empty
-                    | ExpList Exp
+
+    -- HACK: Empty comma-separated list requires work-around
+    ExpList ::= SomeExpList | %Empty              
+    SomeExpList$$Exp ::= Exp
+                       | ExpList ',' Exp
    
     -- TODO: Handle HQL
 
