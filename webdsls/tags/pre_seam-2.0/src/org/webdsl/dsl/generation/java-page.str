@@ -1,0 +1,485 @@
+/**
+ * Generate a Seam EntityHome class for a declared entity
+ */
+
+module org/webdsl/dsl/generation/java-page
+
+imports 
+  libstrategolib  
+  Java-15 
+  libjava-front 
+  
+imports 
+  org/webdsl/dsl/syntax/WebDSL
+  org/webdsl/dsl/syntax/HQL
+  org/webdsl/dsl/utils/utils
+
+rules // session bean from page definition
+
+  page-to-java : 
+    def@Define([Page()], x_page, args, elems1) -> 
+    <create-local-interface(|pkgname, pkgname2, x_PageBeanInterface)> JavaFile(["src"], 
+    compilation-unit|[
+      package pkgname;
+      import java.util.*;
+      import java.io.Serializable;
+
+      import static javax.persistence.PersistenceContextType.EXTENDED;
+      
+      import javax.persistence.PersistenceContext;
+      import javax.persistence.EntityManager;
+      
+      import javax.faces.event.ValueChangeEvent;
+      
+      import javax.ejb.Stateless;
+      import javax.ejb.Stateful;
+      import javax.ejb.Remove;
+
+      import org.jboss.seam.ScopeType;
+      import org.jboss.seam.annotations.Begin;
+      import org.jboss.seam.annotations.End;
+      import org.jboss.seam.annotations.Destroy;
+      import org.jboss.seam.annotations.Name;
+      import org.jboss.seam.annotations.Scope;
+      import org.jboss.seam.annotations.Create;
+      import org.jboss.seam.annotations.Logger;
+      import org.jboss.seam.annotations.RequestParameter;
+      import org.jboss.seam.annotations.datamodel.DataModel;
+      import org.jboss.seam.annotations.datamodel.DataModelSelection;
+      import org.jboss.seam.core.FacesMessages;
+      import org.jboss.seam.core.Redirect;
+      import org.jboss.seam.log.Log;
+
+      import org.jboss.seam.annotations.In;
+      import org.jboss.seam.annotations.Out;
+
+      import org.jboss.seam.annotations.Factory;
+
+      import pkgname2.*;
+  
+      @Stateful
+      @Name(~string:String([Chars(x_page)]))
+      public class x_PageBean implements x_PageBeanInterface {
+      
+        @Logger 
+        private Log log;
+      
+        @PersistenceContext(type = EXTENDED)
+        private EntityManager em;
+
+        @In 
+        private FacesMessages facesMessages;
+
+        @Create @Begin(join=true) 
+	    public void initialize() {
+	      log.info("~x_page" + ".initalize()");
+	      bstm0*
+		  bstm1*
+		  bstm5*
+		  bstm3*
+		  bstm4*
+		  bstm6*
+	    }
+	    
+        /* By calling forceInitialization the initialization of a bean is forced
+	     * This also enforces the execution of @Create annotated methods such as initialize()
+	     * When a bean is already active, nothing happens.
+	     */
+        public void forceInitialization() {}
+	    
+	    @Destroy @Remove
+	    public void destroy() {}
+	    
+	    ~*cbds1
+	    ~*cbds2
+	    ~*cbds3
+	    ~*cbds4
+	    ~*cbds5
+	    ~*cbds6
+	    ~*cbds7
+      }
+    ]|)
+    where {| Parameter
+           : pkgname    := <BeanPackage>
+           ; pkgname2   := <DomainPackage>
+           ; x_Page     := <capitalize-string> x_page
+	       ; x_PageBean := <concat-strings> [x_Page, "Bean"]
+	       ; x_PageBeanInterface := <concat-strings> [x_Page, "BeanInterface"]
+	       ; bstm0* := <map(session-entity-property-to-merge);concat> <SessionEntities>
+	       ; cbds1  := <filter-concat-warn(argument-to-bean-property | "cannot generate bean property for argument: ")> args
+	       ; bstm1* := <filter-concat-warn(argument-to-initialization | "cannot generate initialization code for argument: ")> args
+	       ; cbds2  := <collect(action-to-bean-method)> elems1
+	       ; cbds3  := <collect(select-to-declarations); concat> elems1
+	       ; bstm3* := <collect(select-to-initialization); concat> elems1
+	       ; cbds4  := <collect(collection-to-declarations); concat> elems1
+	       ; bstm4* := <collect(collection-to-initialization); concat> elems1
+	       ; vdc*   := <get-page-vardecls> elems1
+	       ; cbds5  := <map(vardecl-to-member-variable); concat> vdc*
+	       ; bstm5* := <map(vardecl-to-initialization); concat> vdc*
+	       ; cbds6  := <map(session-inouts);concat> <SessionEntities>
+	       ; bstm6* := <collect(initaction-to-initialization);concat> elems1
+	       ; cbds7  := <map(template-functions-to-code); concat> <repeat(once-TranIf)> []
+	       |}
+	    
+	// @todo not all beans need to declare initialize to @Begin a conversation
+
+rules //session variables
+  session-inouts :
+    SessionEntity(x_ident, _, _) -> 
+    	class-body-dec*
+    	|[ 
+	       @org.jboss.seam.annotations.In(create=true) @org.jboss.seam.annotations.Out private x_ent x_ident; 
+	    		
+	       public void x_set(x_ent x_ident) {
+	         this.x_ident = x_ident;
+	       }
+	      
+	       public x_ent x_get() {
+	         return x_ident;
+	       }
+   		]|
+    where x_get := <property-getter> x_ident
+        ; x_set := <property-setter> x_ident
+        ; x_ent := <capitalize-string> x_ident
+
+  //merge references inside session entities at page initialization
+  session-entity-property-to-merge:
+    SessionEntity(x_ident, _, _) -> bstm0*
+    where classofsession := <TypeOf> x_ident
+        ; SimpleSort(classname) := classofsession
+        ; props := <Properties> classname
+        ; bstm0* := <filter(session-entity-property-to-merge(|x_ident))> props
+
+  session-entity-property-to-merge(|x_ident):
+    Property(x, k, s, annos) -> |[
+	     if (x_ident.x_get()!=null){
+	       x_ident.x_set(em.merge(x_ident.x_get()));
+	     } 
+     ]|
+    where <defined-java-type> s 
+         ; x_get := <concat-strings>["get", <capitalize-string> x]
+         ; x_set := <concat-strings>["set", <capitalize-string> x]
+           
+
+rules // bean parameters
+	   
+  argument-to-bean-property :
+    Arg(x, SimpleSort(x_Class)) -> 
+    |[
+       @RequestParameter("~x")
+       private Long x_Id;
+      
+       private x_Class x;
+      
+       public void x_set(x_Class x) {
+         log.info("~x_set");
+         this.x = x;
+       }
+      
+       public x_Class x_get() {
+         log.info("~x_get");
+         return x;
+       }
+    ]|
+    where x_Id := <concat-strings>[x, "Id"]
+        ; x_get := <property-getter> x
+        ; x_set := <property-setter> x
+        
+  argument-to-initialization :
+    Arg(x, SimpleSort(x_Class)) -> 
+    bstm*|[
+	  if (x_Id == null)
+	    {
+		  log.info("No " + "~x_Id" + " defined, creating new " + "~x_Class");
+		  x = new x_Class();
+        }
+      else 
+        {
+		  x = em.find(x_Class.class, x_Id);
+	    }
+    ]|
+    where x_Id := <concat-strings>[x, "Id"]
+        ; rules( Parameter :+= x )
+
+rules // action methods
+
+  action-to-bean-method = 
+    action-to-java-method
+	
+  // @todo what does it mean to delete an object?
+  
+  initaction-to-initialization:
+	InitAction(Block(statements)) -> <statements-to-java> statements
+	
+rules // view transition
+
+  call-to-view-string :
+    ThisCall(p,args) -> |[ "/" + "~p" + ".seam?" + e ]|
+    where <IsPage> p
+        ; fargs := <TemplateArguments> p
+        ; params := <zip(view-string-bind-param)> (fargs, args)
+        ; e := <foldr(!|[ "" ]|, add-string-expressions)> params
+        
+  add-string-expressions :
+    (e1, e2) -> |[ e1 + e2 ]|
+   
+  view-string-bind-param :
+    (Arg(x, s@SimpleSort(x_Class)), e1) -> |[ "~x" + "=" + e2.getId() ]|
+    where <defined-java-type> s
+        ; e2 := <arg-to-java-exp> e1
+        
+  arg-to-java-exp :
+    Var(x){Type(t)} -> |[ x ]|
+    where not(<eq>(t, "Component"))
+    
+  arg-to-java-exp :
+    FieldAccess(Var(x){Type("Component")}, y) -> |[ y ]|
+    
+  arg-to-java-exp :
+    FieldAccess(e1, y) -> |[ e2.y_get() ]|
+    where e2 := <arg-to-java-exp> e1
+        ; y_get := <concat-strings>["get", <capitalize-string> y]
+    
+  arg-to-java-exp :
+    Call(e1, x, e2*) -> |[ e3.x(e4*) ]|
+    where e3 := <arg-to-java-exp> e1
+        ; e4* := <map(arg-to-java-exp)> e2*
+        
+  arg-to-java-exp :
+    ThisCall(x, e1*) -> |[ x(e2*) ]|
+    where e2* := <map(arg-to-java-exp)> e1*
+      
+
+rules // collections
+
+  collection-to-java(|x, x_Class) = 
+      dbg(|"select-declarations match: ")
+    ; X          := <capitalize-string> x
+    ; x_List     := <concat-strings>[x, "List"]
+    ; x_getList  := <concat-strings>["get", X, "List"]
+    ; x_initList := <concat-strings>["init", X, "List"]
+    ; !|[ 
+		  @DataModel(~string:String([Chars(x_List)]))
+		  private List<x_Class> x_List;
+	
+		  public List<x_Class> x_getList() {
+		    log.info("~x_getList");
+			return x_List;
+		  }
+	
+		  @Factory(~string:String([Chars(x_List)]))
+		  public void x_initList() {
+			log.info("~x_initList");
+			x_List = em.createQuery("from " + "~x_Class").getResultList();
+		  }
+	   ]|
+  
+  collection-init-to-java(|x) =
+      X          := <capitalize-string> x
+    ; x_initList := <concat-strings>["init", X, "List"]
+    ; ! bstm*|[ x_initList(); ]| 
+
+rules // tables
+        
+  collection-to-declarations :
+    TemplateCallDeclaredType("table", x, SimpleSort(x_Class), columns) ->
+      <collection-to-java(|x, x_Class)>
+  
+  collection-to-initialization :
+    TemplateCallDeclaredType("table", x, SimpleSort(x_Class), columns) ->
+      <collection-init-to-java(|x)>
+
+rules // for all: for(x : s) { ... }
+
+  collection-to-declarations :
+    ForAll(x, SimpleSort(x_Class), elems) ->
+      <dbg(|"forall-declarations success: ")
+        ; collection-to-java(|x, x_Class)>
+        
+  collection-to-initialization :
+    ForAll(x, SimpleSort(x_Class),elems) ->
+      <collection-init-to-java(|x)>
+          
+rules // select
+
+  select-to-declarations :
+    Select(x, SimpleSort(x_Class), label, e1) -> <dbg(|"select-declarations success: ")>
+    |[ 
+      private String x_new;
+
+	  public void x_setNew(String p) {
+		x_new = p;
+	  }
+
+	  public String x_getNew() {
+		return x_new;
+	  }
+	  
+/*
+	public void addPerson(ValueChangeEvent event) {
+		log.info("addPerson" + " " + newPerson22);
+		log.info("addPerson: new value = " + event.getNewValue());
+		Person person22 = em.find(Person.class, new Long((String)event.getNewValue()));
+		addPerson0(person22);
+	}
+*/
+
+	  public void x_select(ValueChangeEvent event) {
+		log.info("~x_select" + ": new value = " + " " + event.getNewValue());
+		Long id = new Long((String)event.getNewValue());
+		if (id > 0) {
+		  x_Class x = em.find(x_Class.class, id);
+		  e2;
+		}
+      }
+
+	  @DataModel(~string:String([Chars(x_List)]))
+	  private Map<String, String> x_List;
+
+	  public Map<String, String> x_getList() {
+		return x_List;
+	  }
+
+	  @Factory(~string:String([Chars(x_List)]))
+	  public void x_initList() {
+		log.info("~x_initList");
+		x_List = new HashMap<String, String>();
+		for (Object o : em.createQuery("from " + "~x_Class").getResultList()) {
+			x_Class p = (x_Class) o;
+		    x_List.put(p.getName(), p.getId().toString());
+		}
+	  }
+    ]|
+    where dbg(|"select-declarations match: ")
+        ; X          := <capitalize-string> x
+        ; x_new      := <concat-strings>["new", X]
+        ; x_getNew   := <concat-strings>["getNew", X]
+        ; x_setNew   := <concat-strings>["setNew", X]
+        ; x_select   := <concat-strings>["select", X]
+        ; x_List     := <concat-strings>[x, "List"]
+        ; x_getList  := <concat-strings>["get", X, "List"]
+        ; x_initList := <concat-strings>["init", X, "List"]
+        ; dbg(|"select-to-declarations names: ")
+        ; e2          := <arg-to-java-exp> e1
+        ; dbg(|"select-to-declarations java-exp: ")
+        
+  select-to-initialization :
+    Select(x, SimpleSort(x_Class), label, e) ->
+    bstm*|[ x_initList(); ]| 
+    where X          := <capitalize-string> x
+        ; x_initList := <concat-strings>["init", X, "List"]
+
+rules // template expression functions
+   template-functions-to-code = []
+//     (x_fn, e) -> |[
+//       public boolean x_fn(
+rules // page variables
+  
+  vardecl-to-initialization :
+    VarDeclInit(x, s, e1) -> bstm*|[ x = e2; ]|
+    where not(HqlQuery(_) := e1)
+        ; e2 := <expression-to-java> e1
+
+  vardecl-to-member-variable :
+    VarDecl(x, s) -> |[
+      private t x;
+      
+      public t x_get() {
+        log.info("~x_get");
+        return x;
+      }
+      
+      public void x_set(t x) {
+        log.info("~x_set");
+        this.x = x;
+      }
+    ]|
+    where t     := <java-type> s
+        ; X     := <capitalize-string> x
+        ; x_get := <concat-strings>["get", X]
+        ; x_set := <concat-strings>["set", X]
+        
+  vardecl-to-member-variable :
+    VarDeclInit(x, s, e) -> <vardecl-to-member-variable> VarDecl(x, s)
+    where not(HqlQuery(_) := e)
+    
+rules // page-level variables with query initializers
+        
+  vardecl-to-member-variable :
+    VarDeclInit(x, s, HqlQuery(e1)) ->
+    |[
+       @DataModel(~string:String([Chars(x)]))
+       private t x;
+      
+       public t x_get() {
+         log.info("~x_get");
+         return x;
+       }
+      
+       public void x_set(t x) {
+         log.info("~x_set");
+         this.x = x;
+       }
+      
+	   @Factory(~string:String([Chars(x)]))
+       public void x_init() {
+         log.info("~x_init");
+         x = e2.getResultList();
+       }
+    ]|
+    where t      := <java-type> s
+        ; e2     := <query-to-create-query> e1
+        ; X      := <capitalize-string> x
+        ; x_init := <concat-strings>["init", X]
+        ; x_get  := <concat-strings>["get", X]
+        ; x_set  := <concat-strings>["set", X]
+
+  vardecl-to-initialization :
+    VarDeclInit(x, s, HqlQuery(_)) -> bstm*|[
+      x_init();
+    ]|
+    where x_init := <concat-strings>["init", <capitalize-string>x]
+
+  query-to-create-query :
+    e -> <repeat(once-AddQueryParameter)> |[ em.createQuery("~q") ]|
+    where q := <alltd(replace-parameter); pp-hql-to-string; trim-chars('\n')> e
+    
+  replace-parameter :
+    DslExp(e1) -> IdParam(x2)
+    where x1  := <newname> "param"
+        ; x2 := <concat-strings>[":", x1]
+        ; e2 := <expression-to-java> e1
+        ; rules( 
+            AddQueryParameter :+ e -> |[ e.setParameter("~x1", e2) ]|
+          )
+
+rules // For generating template functions
+
+   template-functions-to-java :
+    functions -> JavaFile(["src"],
+    compilation-unit|[
+      package pkgname;
+
+      import java.util.*;
+      import javax.persistence.*;
+      import pkgname2.*;
+
+      public class TemplateFunctions {
+	    ~*cbds1
+      }
+    ]|)
+    where pkgname := <Package>
+        ; pkgname2 := <DomainPackage>
+        ; cbds1 := <map(template-function-to-java)> functions
+
+   template-function-to-java :
+     (x_fn, params, e1) -> |[
+       public static boolean x_fn(param*) {
+         return e2;
+       } ]|
+     where param* := <map(template-function-param-to-java)> params
+         ; e2 := <expression-to-java> e1
+    
+   template-function-param-to-java :
+     (x, s) -> |[ t x ]|
+     where t := <java-type> s
