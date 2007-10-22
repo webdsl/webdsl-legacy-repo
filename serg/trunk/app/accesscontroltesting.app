@@ -85,6 +85,12 @@ section access control testing
     rules template tempbla()
     {
       true
+      rules template div("divinsidetemplatedef")
+      {
+        true
+        true
+      
+      }
       rules action doit()
       {
         true&&true
@@ -99,12 +105,19 @@ section access control testing
       true
       true
     }
+    
 
+    rules template div("divinsidetemplatedef")
+    {
+      true
+      
+    }
   }
   
   define tempbla()
   {
     output("tempbla")
+    div("divinsidetemplatedef"){output("meertempbla")}
     action doit()
     {
       if(true=true){}
