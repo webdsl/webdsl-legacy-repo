@@ -69,11 +69,11 @@
       </foldingUpdater>
    </extension>
    <extension
-         point="org.eclipse.imp.runtime.foldingUpdater">
-      <foldingUpdater
-            class="webdsl.safari.foldingUpdater.WebDSLFoldingUpdater"
+         point="org.eclipse.imp.runtime.referenceResolvers">
+      <referenceResolver
+            class="webdsl.safari.referenceResolvers.WebDSLReferenceResolver"
             language="WebDSL">
-      </foldingUpdater>
+      </referenceResolver>
    </extension>
 
 </plugin>
