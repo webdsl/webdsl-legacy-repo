@@ -4,10 +4,10 @@ description {
   Testapp for richfaces
 }
 
-imports app/people
-imports app/publications
-imports app/templates
-imports app/init
+imports people
+imports publications
+imports templates
+imports init
 
 section home
 
