@@ -15,20 +15,14 @@ section main template
   }
 
 section basic page elements
-
   
-  define homesidebar() {
+  define sidebar() {
     list { listitem{ navigate("Home", home()) } }
   }
   
-  define sidebar() {
-    "default sidebar"
-  }
-  
-  define sidebar() {
+  define body(){
     "default body"
   }
-  
   
 section menus
   
