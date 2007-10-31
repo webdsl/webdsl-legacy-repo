@@ -58,7 +58,7 @@ public class WebDSLTokenColorer extends TokenColorerBase implements
 		numberAttribute = new TextAttribute(display
 				.getSystemColor(SWT.COLOR_DARK_YELLOW), null, SWT.NORMAL);
 		keywordAttribute = new TextAttribute(display
-				.getSystemColor(SWT.COLOR_DARK_MAGENTA), null, SWT.NORMAL);
+				.getSystemColor(SWT.COLOR_DARK_MAGENTA), null, SWT.BOLD);
 	}
 
 }

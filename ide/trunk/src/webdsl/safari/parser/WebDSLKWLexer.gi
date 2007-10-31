@@ -38,6 +38,7 @@
     true
     false
     null
+    email
     -- define is also a keyword, sort of, but defined in the regular lexer
 %End
 
@@ -141,6 +142,12 @@
     Keyword ::= p a g e
         /.$BeginAction
             $setResult($_page);
+          $EndAction
+        ./
+
+    Keyword ::= e m a i l
+        /.$BeginAction
+            $setResult($_email);
           $EndAction
         ./
 

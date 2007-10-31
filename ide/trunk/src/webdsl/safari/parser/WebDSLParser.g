@@ -15,7 +15,7 @@
     $additional_interfaces /., IParser./
 %End
 
-%Terminals
+%Keywords
     --            
     -- Here, you may list terminals needed by this grammar.
     -- Furthermore, a terminal may be mapped into an alias
@@ -53,6 +53,7 @@
     true
     false
     null
+    email
          
     IDENTIFIER
     DESCRIPTIONCOMMENT
@@ -178,7 +179,7 @@
       define ModifierList PutId '(' FormalArgList ')' 
                                 '{' TemplateElementList '}'
      
-    Modifier ::= page
+    Modifier ::= page | email
     ModifierList$$Modifier ::= %Empty
                              | ModifierList Modifier
     

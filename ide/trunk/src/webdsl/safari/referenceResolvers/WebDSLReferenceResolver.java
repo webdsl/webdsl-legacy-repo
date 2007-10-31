@@ -47,7 +47,8 @@ public class WebDSLReferenceResolver implements IReferenceResolver,
 			WebDSLParser parser = (WebDSLParser) controller.getParser();
 			WebDSLParser.SymbolTable symtab = parser.getEnclosingSymbolTable(id);
 
-			System.out.println("Hit: " + node + (controller.getCurrentAst() != null) + "->" + id + "->" + symtab.findDeclaration(id.toString()));
+			System.out.print("Hit: " + node + (controller.getCurrentAst() != null) + "->" + id + "->");
+			System.out.println(symtab.findDeclaration(id.toString()));
 			return symtab.findDeclaration(id.toString());
 		}
 
