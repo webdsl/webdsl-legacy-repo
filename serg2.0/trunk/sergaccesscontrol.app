@@ -6,20 +6,20 @@ description {
   projects, colloquia, etc.
 }
 
-imports app/templates
-imports app/people
-imports app/access
-imports app/blog
-imports app/colloquium
-imports app/publications
-imports app/projects
-imports app/initdb
-imports app/groups
-imports app/news
-imports app/issues
-imports app/forum
-imports app/shop
-imports app/software
+imports templates
+imports people
+imports access
+imports blog
+imports colloquium
+imports publications
+imports projects
+imports initdb
+imports groups
+imports news
+imports issues
+imports forum
+imports shop
+imports software
 
 section home
 

@@ -1,4 +1,4 @@
-module app/forum
+module forum
 
 description {
   A forum is a collection of discussion threads.

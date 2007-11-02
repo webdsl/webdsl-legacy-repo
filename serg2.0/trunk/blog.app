@@ -1,4 +1,4 @@
-module app/blog
+module blog
 
 description {
   A blog is a journal-like sequence of time-stamped entries. The

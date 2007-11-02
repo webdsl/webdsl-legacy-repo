@@ -1,4 +1,4 @@
-module app/people
+module people
 
 section users
 

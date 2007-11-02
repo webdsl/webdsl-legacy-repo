@@ -1,4 +1,4 @@
-module app/flickr
+module flickr
 
 description {
   Store references to flickr images and corresponding pages.

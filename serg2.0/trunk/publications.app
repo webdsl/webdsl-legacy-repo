@@ -1,4 +1,4 @@
-module app/publications
+module publications
 
 description {
   Publications are published documents. There is a large variety of publication mediums,

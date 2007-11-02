@@ -1,4 +1,4 @@
-module app/initdb
+module initdb
 
 description {
   This module defines an action to add some objects to the database.

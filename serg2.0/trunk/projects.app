@@ -1,4 +1,4 @@
-module app/projects
+module projects
 
 section domain
 

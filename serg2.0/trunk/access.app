@@ -1,4 +1,4 @@
-module app/access
+module access
 
 section login
 

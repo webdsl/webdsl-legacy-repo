@@ -1,4 +1,4 @@
-module app/shop
+module shop
 
 sections domain
 
