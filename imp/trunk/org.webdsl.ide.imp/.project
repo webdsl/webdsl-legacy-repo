@@ -6,22 +6,8 @@
 	</projects>
 	<buildSpec>
 		<buildCommand>
-			<name>org.eclipse.imp.lpg.runtime.LPGBuilder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-		<buildCommand>
 			<name>org.eclipse.jdt.core.javabuilder</name>
 			<arguments>
-			</arguments>
-		</buildCommand>
-		<buildCommand>
-			<name>org.eclipse.imp.smapifier.SmapieBuilder</name>
-			<arguments>
-				<dictionary>
-					<key>exten</key>
-					<value>g</value>
-				</dictionary>
 			</arguments>
 		</buildCommand>
 		<buildCommand>
