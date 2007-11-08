@@ -19,34 +19,9 @@
             language="WebDSL">
       </parserWrapper>
    </extension>
-   <extension
-         point="org.eclipse.imp.runtime.tokenColorer">
-      <tokenColorer
-            class="webdsl.safari.tokenColorer.WebDSLTokenColorer"
-            language="WebDSL">
-      </tokenColorer>
-   </extension>
-   <extension
-         point="org.eclipse.imp.runtime.tokenColorer">
-      <tokenColorer
-            class="webdsl.safari.tokenColorer.WebDSLTokenColorer"
-            language="WebDSL">
-      </tokenColorer>
-   </extension>
-   <extension
-         point="org.eclipse.imp.runtime.tokenColorer">
-      <tokenColorer
-            class="webdsl.safari.tokenColorer.WebDSLTokenColorer"
-            language="WebDSL">
-      </tokenColorer>
-   </extension>
-   <extension
-         point="org.eclipse.imp.runtime.tokenColorer">
-      <tokenColorer
-            class="webdsl.safari.tokenColorer.WebDSLTokenColorer"
-            language="WebDSL">
-      </tokenColorer>
-   </extension>
+
+   <!-- UNDONE: editor services
+
    <extension
          point="org.eclipse.imp.runtime.tokenColorer">
       <tokenColorer
@@ -75,5 +50,7 @@
             language="WebDSL">
       </referenceResolver>
    </extension>
+   
+   -->
 
 </plugin>

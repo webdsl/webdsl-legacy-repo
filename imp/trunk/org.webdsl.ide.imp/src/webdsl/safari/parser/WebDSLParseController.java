@@ -2,6 +2,7 @@ package webdsl.safari.parser;
 
 import lpg.runtime.IAst;
 
+import org.spoofax.jsglr.NotImplementedException;
 import org.strategoxt.imp.runtime.parser.SGLRParseController;
 
 import aterm.ATerm;
@@ -15,17 +16,11 @@ public class WebDSLParseController extends SGLRParseController {
 
 	public WebDSLParseController() {
 		super("/ln/WebDSL.tbl");
-		try {
-			// FIXME: Don't use absolute parse table path
-		} catch (Exception x) {
-			// TODO: Proper parse table exception handling
-			throw new RuntimeException(x);
-		}
 	}
 
 	@Override
 	protected IAst getAst(ATerm term) {
 		// FIXME: Convert ATerm to AST
-		return null;
+		throw new NotImplementedException();
 	}
 }
