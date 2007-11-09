@@ -19,6 +19,6 @@
   <booleanAttribute key="automaticValidate" value="false"/>
   <booleanAttribute key="useDefaultConfig" value="true"/>
   <booleanAttribute key="automaticAdd" value="true"/>
-  <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-ea:org.strategoxt.imp.runtime...:org.spoofax..."/>
+  <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-ea:org.strategoxt.imp.runtime... -ea:org.spoofax... -Xss10m"/>
   <booleanAttribute key="useProduct" value="true"/>
 </launchConfiguration>
