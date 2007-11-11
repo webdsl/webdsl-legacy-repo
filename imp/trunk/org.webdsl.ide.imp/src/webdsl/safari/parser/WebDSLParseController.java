@@ -1,9 +1,14 @@
 package webdsl.safari.parser;
 
+import java.io.IOException;
+
 import lpg.runtime.IAst;
 
+import org.spoofax.jsglr.InvalidParseTableException;
 import org.spoofax.jsglr.NotImplementedException;
 import org.strategoxt.imp.runtime.parser.SGLRParseController;
+
+import webdsl.Activator;
 
 import aterm.ATerm;
 
@@ -14,8 +19,10 @@ import aterm.ATerm;
  */
 public class WebDSLParseController extends SGLRParseController {
 
-	public WebDSLParseController() {
-		super("/ln/WebDSL.tbl");
+	public WebDSLParseController() 
+			throws IOException, InvalidParseTableException {
+		
+		super(Activator.class.getResourceAsStream("/syntax/WebDSL.tbl"));
 	}
 
 	@Override
