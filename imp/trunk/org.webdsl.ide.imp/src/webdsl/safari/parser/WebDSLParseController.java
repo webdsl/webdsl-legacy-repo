@@ -22,4 +22,21 @@ public class WebDSLParseController extends SGLRParseController {
 		
 		super(new SGLRAstNodeFactory(), Activator.class.getResourceAsStream("/syntax/WebDSL.tbl"));
 	}
+	
+	// Methods that should be overridden by the generator
+	
+	@Override
+	public boolean isKeyword(int kind) {
+		return super.isKeyword(kind);
+	}
+	
+	@Override
+	public String getTokenKindName(int kind) {
+		return super.getTokenKindName(kind);
+	}
+	
+	@Override
+	public String getSingleLineCommentPrefix() {
+		return super.getSingleLineCommentPrefix();
+	}
 }
