@@ -7,12 +7,11 @@ import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 
-import webdsl.safari.parser.WebDSLParsersym;
+import static webdsl.safari.parser.WebDSLParsersym.*;
 
 import lpg.runtime.IToken;
 
-public class WebDSLTokenColorer extends TokenColorerBase implements
-		WebDSLParsersym, ITokenColorer {
+public class WebDSLTokenColorer extends TokenColorerBase implements ITokenColorer {
 
 	TextAttribute commentAttribute, keywordAttribute, stringAttribute,
 			numberAttribute, doubleAttribute, identifierAttribute,

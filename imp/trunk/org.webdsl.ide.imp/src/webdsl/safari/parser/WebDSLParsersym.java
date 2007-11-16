@@ -9,6 +9,6 @@ import org.strategoxt.imp.runtime.parser.ast.SGLRParsersym;
  * 
  * @author Lennart Kats <L.C.L.Kats add tudelft.nl>
  */
-public interface WebDSLParsersym extends SGLRParsersym {
+public class WebDSLParsersym extends SGLRParsersym {
 
 }
