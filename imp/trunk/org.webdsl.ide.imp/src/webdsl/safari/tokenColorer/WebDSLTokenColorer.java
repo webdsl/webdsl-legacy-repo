@@ -15,7 +15,7 @@ public class WebDSLTokenColorer extends TokenColorerBase implements ITokenColore
 
 	TextAttribute commentAttribute, keywordAttribute, stringAttribute,
 			numberAttribute, doubleAttribute, identifierAttribute,
-			sectionAttribute;
+			sectionAttribute, operatorAttribute;
 
 	public TextAttribute getColoring(IParseController controller, IToken token) {
 		switch (token.getKind()) {
@@ -42,6 +42,8 @@ public class WebDSLTokenColorer extends TokenColorerBase implements ITokenColore
 			return keywordAttribute;
 		case TK_IDENTIFIER:
 			return identifierAttribute;
+		case TK_OPERATOR:
+			return operatorAttribute;
 
 		default:
 			return super.getColoring(controller, token);
@@ -67,6 +69,8 @@ public class WebDSLTokenColorer extends TokenColorerBase implements ITokenColore
 				.getSystemColor(SWT.COLOR_DARK_YELLOW), null, SWT.NORMAL);
 		keywordAttribute = new TextAttribute(display
 				.getSystemColor(SWT.COLOR_DARK_MAGENTA), null, SWT.BOLD);
+		operatorAttribute = new TextAttribute(display
+				.getSystemColor(SWT.COLOR_RED), null, SWT.NORMAL);
 	}
 
 }
