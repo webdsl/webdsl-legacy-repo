@@ -31,13 +31,13 @@ public class WebDSLTokenColorer extends TokenColorerBase implements ITokenColore
 			// return stringAttribute;
 		case TK_SECTIONCOMMENT:
 			return sectionAttribute;
-		case TK_DESCRIPTIONCOMMENT: case TK_NOTECOMMENT: case TK_SINGLE_LINE_COMMENT:
-			return commentAttribute;
 		case TK_define:
 			return keywordAttribute;
 		}
 		*/
-		
+
+		case TK_LAYOUT:
+			return commentAttribute;
 		case TK_KEYWORD:
 			return keywordAttribute;
 		case TK_IDENTIFIER:
