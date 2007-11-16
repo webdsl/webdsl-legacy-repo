@@ -20,8 +20,6 @@
       </parserWrapper>
    </extension>
 
-   <!-- UNDONE: editor services
-
    <extension
          point="org.eclipse.imp.runtime.tokenColorer">
       <tokenColorer
@@ -29,6 +27,8 @@
             language="WebDSL">
       </tokenColorer>
    </extension>
+
+   <!-- UNDONE: editor services
    <extension
          point="org.eclipse.imp.runtime.outliner">
       <outliner
