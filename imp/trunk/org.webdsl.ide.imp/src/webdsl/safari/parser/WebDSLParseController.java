@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.spoofax.jsglr.InvalidParseTableException;
 import org.strategoxt.imp.runtime.parser.SGLRParseController;
+import org.strategoxt.imp.runtime.parser.tokens.SGLRTokenKindManager;
 import org.strategoxt.imp.runtime.parser.ast.SGLRAstNodeFactory;
 
 import webdsl.Activator;
@@ -20,20 +21,12 @@ public class WebDSLParseController extends SGLRParseController {
 	public WebDSLParseController() 
 			throws IOException, InvalidParseTableException {
 		
-		super(new SGLRAstNodeFactory(), Activator.class.getResourceAsStream("/syntax/WebDSL.tbl"));
+		// TODO: Grammar-specific node factory and token kind manager
+		
+		super(new SGLRAstNodeFactory(), new SGLRTokenKindManager(), Activator.class.getResourceAsStream("/syntax/WebDSL.tbl"), null);
 	}
 	
 	// Methods that should be overridden by the generator
-	
-	@Override
-	public boolean isKeyword(int kind) {
-		return super.isKeyword(kind);
-	}
-	
-	@Override
-	public String getTokenKindName(int kind) {
-		return super.getTokenKindName(kind);
-	}
 	
 	@Override
 	public String getSingleLineCommentPrefix() {

@@ -1,6 +1,6 @@
 package webdsl.safari.parser;
 
-import org.strategoxt.imp.runtime.parser.ast.SGLRParsersym;
+import org.strategoxt.imp.runtime.parser.tokens.SGLRParsersym;
 
 /**
  * Interface containing constant values for the WebDSL parser token kinds.

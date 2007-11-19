@@ -42,6 +42,10 @@ public class WebDSLTokenColorer extends TokenColorerBase implements ITokenColore
 			return keywordAttribute;
 		case TK_IDENTIFIER:
 			return identifierAttribute;
+		case TK_STRING:
+			return stringAttribute;
+		case TK_NUMBER:
+			return numberAttribute;
 		case TK_OPERATOR:
 			return operatorAttribute;
 
@@ -58,7 +62,7 @@ public class WebDSLTokenColorer extends TokenColorerBase implements ITokenColore
 		commentAttribute = new TextAttribute(display
 				.getSystemColor(SWT.COLOR_DARK_CYAN), null, SWT.ITALIC);
 		stringAttribute = new TextAttribute(display
-				.getSystemColor(SWT.COLOR_DARK_BLUE), null, SWT.NORMAL);
+				.getSystemColor(SWT.COLOR_MAGENTA), null, SWT.NORMAL);
 		identifierAttribute = new TextAttribute(display
 				.getSystemColor(SWT.COLOR_BLACK), null, SWT.NORMAL);
 		doubleAttribute = new TextAttribute(display
