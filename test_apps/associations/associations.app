@@ -7,7 +7,8 @@ description {
 imports templates
 imports many-to-many
 imports many-to-one
-//imports one-to-one
+imports one-to-many
+imports one-to-one
 
 section pages
 

@@ -10,12 +10,12 @@ section data
 
 entity Man {
   name :: String (name)
-//  wife -> Woman // (inverse=Woman.husband)
+  wife -> Woman // (inverse=Woman.husband)
 }
 
 entity Woman {
    name :: String (name)
-//   husband -> Man (inverse=Man.wife)
+   husband -> Man (inverse=Man.wife)
 }
 
 globals {

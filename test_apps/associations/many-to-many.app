@@ -16,6 +16,15 @@ entity Book {
    authors -> Set<Author> (inverse=Author.books)
 }
 
+entity Uauthor {
+  name :: String (name)
+}
+
+entity Ubook {
+   title :: String (name)
+   authors -> Set<Uauthor>
+}
+
 globals {
   var zef : Author := Author {
     name := "Zef"
@@ -38,6 +47,24 @@ globals {
     title := "Advanced street Slang"
     authors := {zef, danny, jippe}
   };
+  
+  var a1 : Uauthor := Uauthor {
+    name := "Zef"
+  };
+
+  var a2 : Uauthor := Uauthor {
+    name := "Danny"
+  };
+  
+  var b1 : Ubook := Ubook {
+    title := "Street language part I"
+    authors := {a1, a2}
+  };
+  
+  var b2 : Ubook := Ubook {
+    title := "Advanced street Slang"
+    authors := {a1}
+  };
 }
 
 section pages
@@ -59,6 +86,29 @@ define page manytomany() {
       list {
         for(p : Author) {
           listitem { navigate(editAuthor(p)) { output(p.name) } }
+        }
+      }
+    }
+  }
+}
+
+define page umanytomany() {
+  main()
+  define body() {
+    div("div1") {
+      header() { "Books" }
+      list {
+        for(p : Ubook) {
+          listitem { navigate(editUbook(p)) { output(p.title) } }
+        }
+      }
+    }
+    
+    div("div2") {
+      header() { "Authors" }
+      list {
+        for(p : Uauthor) {
+          listitem { navigate(editUauthor(p)) { output(p.name) } }
         }
       }
     }

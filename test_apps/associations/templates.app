@@ -17,11 +17,20 @@ section main template.
 section basic page elements.
 
   define sidebar() {
+    navigate(home()) {"Home"}
+    header() {"Unidirectional"}
     list() {
-      listitem() { navigate(home()) {"Home"} }
+      listitem() { navigate(umanytomany()) {"Many-to-many"} }
+      listitem() { navigate(umanytoone()) {"Many-to-one"} }
+      listitem() { navigate(uonetomany()) {"One-to-many"} }
+      listitem() { navigate(onetoone()) {"One-to-one"} }
+    }
+    header() {"Bidirectional"}
+    list() {
       listitem() { navigate(manytomany()) {"Many-to-many"} }
       listitem() { navigate(manytoone()) {"Many-to-one"} }
-//      listitem() { navigate(onetoone()) {"One-to-one"} }
+      listitem() { navigate(onetomany()) {"One-to-many"} }
+      listitem() { navigate(onetoone()) {"One-to-one"} }
     }
   }
 

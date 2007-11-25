@@ -17,6 +17,16 @@ entity Pet {
    owner -> Person (inverse=Person.pets)
 }
 
+entity Uperson {
+  name :: String (name)
+}
+
+entity Upet {
+   name :: String (name)
+   species :: String
+   owner -> Uperson
+}
+
 globals {
 
   var pet1 : Pet := Pet {
@@ -44,6 +54,31 @@ globals {
     pets := {pet2}
   };
 
+  var up1 : Uperson := Uperson {
+    name := "Zef"
+  };
+
+  var up2 : Uperson := Uperson {
+    name := "Danny"
+  };
+  
+  var upet1 : Upet := Upet {
+    name := "Minoes"
+    species := "Poes"
+    owner := up1
+  };
+  
+  var upet2 : Upet := Upet {
+    name := "Fido"
+    species := "Hond"
+    owner := up2
+  };
+  
+  var upet3 : Upet := Upet {
+    name := "Ronnie"
+    species := "Rat"
+    owner := up2
+  };
 }
 
 section pages
@@ -65,6 +100,29 @@ define page manytoone() {
       list {
         for(p : Person) {
           listitem { navigate(editPerson(p)) { output(p.name) } }
+        }
+      }
+    }
+  }
+}
+
+define page umanytoone() {
+  main()
+  define body() {
+    div("div1") {
+      header() { "Pets" }
+      list {
+        for(p : Upet) {
+          listitem { navigate(editUpet(p)) { output(p.name) } }
+        }
+      }
+    }
+    
+    div("div2") {
+      header() { "Persons" }
+      list {
+        for(p : Uperson) {
+          listitem { navigate(editUperson(p)) { output(p.name) } }
         }
       }
     }
