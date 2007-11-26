@@ -22,9 +22,10 @@ section ac stuff.
   principal is User with credentials username,password
 
   predicate viewAllowed(u:User){
-    (u.viewAccess = pub)
+    securityContext.principal = u
+    || (u.viewAccess = pub)
     || (u.viewAccess = fri && securityContext.principal in u.friends)
-    || (u.viewAccess = priv && securityContext.principal = u)
+    //|| (u.viewAccess = priv && securityContext.principal = u)
   }
 
   rules page viewUser(u : User)
@@ -51,59 +52,61 @@ section ac stuff.
     } 
   } 
   
-  pointcut groupediting
+  pointcut groupediting(ug : UserGroup)
   {
-    template group*,
-    page editUserGroup
+    template group*(ug),
+    page editUserGroup(ug)
   }
   rules pointcut groupediting(ug : UserGroup)
   {
     securityContext.principal = ug.owner || securityContext.principal in ug.moderators 
   }
   
-  pointcut grouppageediting
+  pointcut grouppageediting(p:GroupPage)
   {
-    template groupPageEdit,
-    page editGroupPage
+    template groupPageEdit(p),
+    page editGroupPage(p)
   }
   rules pointcut grouppageediting(p:GroupPage)
   {
     securityContext.principal = p.group.owner || securityContext.principal in p.group.moderators
   }
   
-  pointcut public
+  pointcut public()
   {
-    page home,
-    page register
+    page home(),
+    page register()
   }
   rules pointcut public()
   {
     true
   }
   
-  pointcut pageediting
+  pointcut pageediting(p: Page)
   {
-    page editPage,
-    template homePageEdit
+    page editPage(p),
+    template homePageEdit(p)
   } 
   rules pointcut pageediting(p: Page)
   {
     p.owner = securityContext.principal
   }
   
-  pointcut userediting 
+  
+  pointcut userediting(u:User)
   {
-    template userEdit,
-    page editUser,
-    template friend*,
-    template group*,
-    page groups,
-    page friends
+    template userEdit(u),
+    page editUser(u),
+    template friend*(u),
+    template group*(u),
+    page groups(u),
+    page friends(u)
   }  
   rules pointcut userediting(u:User)
   {
     u = securityContext.principal
   }
+
   
   rules template login()
   { 
@@ -113,6 +116,7 @@ section ac stuff.
   { 
     securityContext.loggedIn
   }
+  
   rules template div("loggedIn")
   {
     securityContext.loggedIn
