@@ -15,7 +15,7 @@
          name="WebDSL Parser Wrapper"
          point="org.eclipse.imp.runtime.parser">
       <parserWrapper
-            class="webdsl.safari.parser.WebDSLParseController"
+            class="parser.WebDSLParseController"
             language="WebDSL">
       </parserWrapper>
    </extension>
