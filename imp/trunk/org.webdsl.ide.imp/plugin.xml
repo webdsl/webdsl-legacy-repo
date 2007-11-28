@@ -27,8 +27,8 @@
             language="WebDSL">
       </tokenColorer>
    </extension>
-
-   <!-- UNDONE: editor services
+   
+   
    <extension
          point="org.eclipse.imp.runtime.outliner">
       <outliner
@@ -36,6 +36,8 @@
             language="WebDSL">
       </outliner>
    </extension>
+
+   <!-- UNDONE: editor services
    <extension
          point="org.eclipse.imp.runtime.foldingUpdater">
       <foldingUpdater
