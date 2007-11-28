@@ -6,6 +6,8 @@ import parser.ast.ASTNode;
 import parser.ast.AbstractVisitor;
 import parser.ast.Module;
 import parser.ast.Section;
+import parser.ast.Section1;
+import parser.ast.SectionHeader;
 
 /**
  * This file provides a skeletal implementation of the language-dependent aspects
@@ -34,7 +36,7 @@ public class WebDSLOutliner extends OutlinerBase {
 
 		public void unimplementedVisitor(String s) {
 			// Sometimes useful for debugging
-			//System.out.println(s);
+			System.out.println(s);
 		}
 
 		// START_HERE
@@ -50,11 +52,11 @@ public class WebDSLOutliner extends OutlinerBase {
 		// current level of indentation without changing the level.  Some
 		// examples follow ...
 
-		public boolean visit(Section n) {
-			Module module = (Module) n.getModuleSort();
-			String section = module.getList().toString();
+		public boolean visit(Section1 n) {
+			SectionHeader section = (SectionHeader) n.getSectionHeaderSort();
+			String header = section.toString();
 			
-			addSubItem(section.substring(0, section.length()-1), n);
+			addSubItem(header.substring(0, header.length()-1), n);
 			return true;
 		}
 	}
