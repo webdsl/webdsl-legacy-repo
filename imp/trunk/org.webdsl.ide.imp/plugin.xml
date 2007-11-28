@@ -37,7 +37,6 @@
       </outliner>
    </extension>
 
-   <!-- UNDONE: editor services
    <extension
          point="org.eclipse.imp.runtime.foldingUpdater">
       <foldingUpdater
@@ -45,6 +44,8 @@
             language="WebDSL">
       </foldingUpdater>
    </extension>
+
+   <!-- UNDONE: editor services
    <extension
          point="org.eclipse.imp.runtime.referenceResolvers">
       <referenceResolver
