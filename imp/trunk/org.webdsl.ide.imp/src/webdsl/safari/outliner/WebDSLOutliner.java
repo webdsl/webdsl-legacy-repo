@@ -4,8 +4,6 @@ import org.eclipse.imp.services.base.OutlinerBase;
 
 import parser.ast.ASTNode;
 import parser.ast.AbstractVisitor;
-import parser.ast.Module;
-import parser.ast.Section;
 import parser.ast.Section1;
 import parser.ast.SectionHeader;
 
