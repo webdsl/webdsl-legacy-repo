@@ -51,7 +51,7 @@ public class WebDSLOutliner extends OutlinerBase {
 			ASTNode descriptor = n.getSectionName();
 			
 			java.lang.String text = descriptor.toString();
-			pushSubItem(text.substring(0, text.length()-1), n);
+			pushSubItem(text, n);
 			return true;
 		}
 
@@ -63,7 +63,7 @@ public class WebDSLOutliner extends OutlinerBase {
 			ASTNode descriptor = n.getId();
 			
 			java.lang.String text = descriptor.toString();
-			addSubItem(text.substring(0, text.length()-1), n);
+			addSubItem(text, n);
 			return true;
 		}
 
@@ -71,7 +71,7 @@ public class WebDSLOutliner extends OutlinerBase {
 			ASTNode descriptor = n.getId();
 			
 			java.lang.String text = descriptor.toString();
-			addSubItem(text.substring(0, text.length()-1), n);
+			addSubItem(text, n);
 			return true;
 		}
 
@@ -79,7 +79,7 @@ public class WebDSLOutliner extends OutlinerBase {
 			ASTNode descriptor = n.getId();
 			
 			java.lang.String text = descriptor.toString();
-			addSubItem(text.substring(0, text.length()-1), n);
+			addSubItem(text, n);
 			return true;
 		}
 	}
