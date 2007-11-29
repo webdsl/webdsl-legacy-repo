@@ -26,7 +26,7 @@ public class WebDSLOutliner extends OutlinerBase {
 			// TODO:  Replace the language name here with the name of your
 			// own language (provided that your language isn't called "Leg"
 			// and you want a heading like this at the top of your outline)
-			pushTopItem("WebDSL program", null);
+			// UNDONE: pushTopItem("", null);
 		}
 
 		public void unimplementedVisitor(java.lang.String s) {
@@ -46,6 +46,22 @@ public class WebDSLOutliner extends OutlinerBase {
 		// method addSubItem(..) allows you to add an outline item at the
 		// current level of indentation without changing the level.  Some
 		// examples follow ...
+
+		public boolean visit(Module n) {
+			ASTNode descriptor = n.getModuleName();
+			
+			java.lang.String text = descriptor.toString();
+			pushTopItem(text, n);
+			return true;
+		}
+
+		public boolean visit(Application n) {
+			ASTNode descriptor = n.getQId();
+			
+			java.lang.String text = descriptor.toString();
+			pushTopItem(text, n);
+			return true;
+		}
 
 		public boolean visit(Section1 n) {
 			ASTNode descriptor = n.getSectionName();

@@ -6,9 +6,7 @@ import java.util.List;
 
 import org.eclipse.imp.services.base.FolderBase;
 
-import parser.ast.ASTNode;
-import parser.ast.AbstractVisitor;
-import parser.ast.Section1;
+import parser.ast.*;
 
 import lpg.runtime.*;
 
@@ -86,7 +84,7 @@ public class WebDSLFoldingUpdater extends FolderBase {
 	 * in the editor as the widgets that control folding.
 	 */
 	private class FoldingVisitor extends AbstractVisitor {
-		public void unimplementedVisitor(String s) {
+		public void unimplementedVisitor(java.lang.String s) {
 		}
 
 		// START_HERE
@@ -100,7 +98,7 @@ public class WebDSLFoldingUpdater extends FolderBase {
 		// is explicitly provided.  An example was shown below ...
 
 		// Create annotations for the folding of blocks (for example)
-		public boolean visit(Section1 n) {
+		public boolean visit(SectionSort n) {
 			makeAnnotation(n);
 			return true;
 		}
