@@ -30,7 +30,6 @@ public class WebDSLFoldingUpdater extends FolderBase {
 		super.makeAnnotation(first_offset, last_offset - first_offset + 1);
 	}
 
-	/* UNDONE: Default generated code but unused
 	//
 	// Use this version of makeAnnotation when you have a range of 
 	// tokens to fold.
@@ -51,7 +50,6 @@ public class WebDSLFoldingUpdater extends FolderBase {
 	private void makeAnnotation(ASTNode n) {
 		makeAnnotation(n.getLeftIToken(), n.getRightIToken());
 	}
-	*/
 
 	private void makeAdjunctAnnotations(ASTNode theAST) {
 		ILexStream lexStream = prsStream.getLexStream();
