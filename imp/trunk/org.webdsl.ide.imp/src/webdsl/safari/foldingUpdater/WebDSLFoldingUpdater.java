@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.eclipse.imp.services.base.FolderBase;
+import org.strategoxt.imp.runtime.FoldingHelper;
 
 import parser.ast.*;
 
@@ -22,11 +23,14 @@ import lpg.runtime.*;
  */
 public class WebDSLFoldingUpdater extends FolderBase {
 	IPrsStream prsStream;
+	
+	private FoldingHelper helper;
 
 	public void makeAnnotationWithOffsets(int first_offset, int last_offset) {
 		super.makeAnnotation(first_offset, last_offset - first_offset + 1);
 	}
 
+	/* UNDONE: Default generated code but unused
 	//
 	// Use this version of makeAnnotation when you have a range of 
 	// tokens to fold.
@@ -47,6 +51,7 @@ public class WebDSLFoldingUpdater extends FolderBase {
 	private void makeAnnotation(ASTNode n) {
 		makeAnnotation(n.getLeftIToken(), n.getRightIToken());
 	}
+	*/
 
 	private void makeAdjunctAnnotations(ASTNode theAST) {
 		ILexStream lexStream = prsStream.getLexStream();
@@ -99,7 +104,12 @@ public class WebDSLFoldingUpdater extends FolderBase {
 
 		// Create annotations for the folding of blocks (for example)
 		public boolean visit(SectionSort n) {
-			makeAnnotation(n);
+			helper.makeCompleteAnnotation(n);
+			return true;
+		}
+		
+		public boolean visit(DefinitionSort n) {
+			helper.makeCompleteAnnotation(n);
 			return true;
 		}
 	};
@@ -111,6 +121,9 @@ public class WebDSLFoldingUpdater extends FolderBase {
 		ASTNode theAST = (ASTNode) ast;
 		prsStream = theAST.getLeftIToken().getPrsStream();
 		AbstractVisitor abstractVisitor = new FoldingVisitor();
+		
+		helper = new FoldingHelper(this, prsStream);
+		
 		theAST.accept(abstractVisitor);
 		makeAdjunctAnnotations(theAST);
 	}
