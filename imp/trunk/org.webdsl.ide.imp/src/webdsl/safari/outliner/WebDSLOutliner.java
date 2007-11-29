@@ -2,10 +2,7 @@ package webdsl.safari.outliner;
 
 import org.eclipse.imp.services.base.OutlinerBase;
 
-import parser.ast.ASTNode;
-import parser.ast.AbstractVisitor;
-import parser.ast.Section1;
-import parser.ast.SectionHeader;
+import parser.ast.*;
 
 /**
  * This file provides a skeletal implementation of the language-dependent aspects
@@ -32,7 +29,7 @@ public class WebDSLOutliner extends OutlinerBase {
 			pushTopItem("WebDSL program", null);
 		}
 
-		public void unimplementedVisitor(String s) {
+		public void unimplementedVisitor(java.lang.String s) {
 			// Sometimes useful for debugging
 			// System.out.println(s);
 		}
@@ -51,10 +48,38 @@ public class WebDSLOutliner extends OutlinerBase {
 		// examples follow ...
 
 		public boolean visit(Section1 n) {
-			SectionHeader section = (SectionHeader) n.getSectionHeaderSort();
-			String header = section.toString();
+			ASTNode descriptor = n.getSectionName();
 			
-			addSubItem(header.substring(0, header.length()-1), n);
+			java.lang.String text = descriptor.toString();
+			pushSubItem(text.substring(0, text.length()-1), n);
+			return true;
+		}
+
+		public void endVisit(Section1 n) {
+			popSubItem();
+		}
+
+		public boolean visit(Entity n) {
+			ASTNode descriptor = n.getId();
+			
+			java.lang.String text = descriptor.toString();
+			addSubItem(text.substring(0, text.length()-1), n);
+			return true;
+		}
+
+		public boolean visit(EntityNoSuper n) {
+			ASTNode descriptor = n.getId();
+			
+			java.lang.String text = descriptor.toString();
+			addSubItem(text.substring(0, text.length()-1), n);
+			return true;
+		}
+
+		public boolean visit(Function n) {
+			ASTNode descriptor = n.getId();
+			
+			java.lang.String text = descriptor.toString();
+			addSubItem(text.substring(0, text.length()-1), n);
 			return true;
 		}
 	}
