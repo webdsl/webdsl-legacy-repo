@@ -17,16 +17,67 @@ section DAC AccessControl
 
   access control rules
   {
+    predicate mayViewDocument (u:User, d:Document) {
+      d.owner = u || u in d.viewAccess
+    }
+
+    predicate mayEditDocument (u:User, d:Document) {
+      d.owner = u || u in d.editAccess
+    }
+
+
     principal is User with credentials name
 
     rules page home()
     {
       true
     }
-
     rules template sidebar()
     {
       true
+    }
+    rules template div("loggedIn")
+    {
+      securityContext.loggedIn
+    }
+
+
+    rules pointcut documentViewing(d:Document)
+    {
+      mayViewDocument(securityContext.principal,d)
+    }
+
+    rules page createDocument()
+    {
+      securityContext.loggedIn
+    }
+
+    rules pointcut documentEditing(d:Document)
+    {
+      mayEditDocument(securityContext.principal,d)
+    }
+
+    rules pointcut grantsedit(d:Document)
+    {
+      d.owner=securityContext.principal || securityContext.principal in d.grantingRights
+    }
+
+    rules pointcut grantingrightssedit (d:Document)
+    {
+      d.owner=securityContext.principal
+    }
+
+
+    pointcut documentEditing(d:Document)
+    {
+      template navigateLinkListItemEditDoc(d),
+      page editDocument(d)
+    }
+
+    pointcut grantsedit(d:Document)
+    {
+      template navigateLinkListItemGrants(d),
+      page editGrants(d)
     }
 
     pointcut documentViewing(d:Document)
@@ -35,62 +86,9 @@ section DAC AccessControl
       page viewDocument(d)
     }
 
-    rules pointcut documentViewing(d:Document)
-    {
-      mayViewDocument(securityContext.principal,d)
-    }
-
-    predicate mayViewDocument (u:User, d:Document) {
-      d.owner = u || u in d.viewAccess
-    }
-
-    rules page createDocument()
-    {
-      securityContext.loggedIn
-    }
-
-    pointcut documentEditing(d:Document)
-    {
-      template navigateLinkListItemEditDoc(d),
-      page editDocument(d)
-    }
-
-    rules pointcut documentEditing(d:Document)
-    {
-      mayEditDocument(securityContext.principal,d)
-    }
-
-    predicate mayEditDocument (u:User, d:Document) {
-      d.owner = u || u in d.editAccess
-    }
-
-
-    rules template div("loggedIn")
-    {
-      securityContext.loggedIn
-    }
-
-
-    pointcut grantsedit(d:Document)
-    {
-      template navigateLinkListItemGrants(d),
-      page editGrants(d)
-    }
-
-    rules pointcut grantsedit(d:Document)
-    {
-      d.owner=securityContext.principal || securityContext.principal in d.grantingRights
-    }
-
-
     pointcut grantingrightssedit(d:Document)
     {
       template navigateLinkListItemGrantingRights(d),
       page editGrantingRights(d)
-    }
-
-    rules pointcut grantingrightssedit (d:Document)
-    {
-      d.owner=securityContext.principal
     }
   }

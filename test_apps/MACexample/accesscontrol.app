@@ -19,6 +19,23 @@ section MAC AccessControl
 
   access control rules
   {
+    predicate mayViewDocument (u:User, d:Document) {
+      u.clearance >= d.classification
+    }
+
+    predicate mayCreateDocument (u:User, d:Document) {
+      u.clearance <= d.classification
+    }
+
+    predicate mayViewMission (u:User, m:Mission) {
+      u.clearance <= m.classification
+    }
+
+    predicate mayCreateMission(u:User, m:Mission) {
+      u.clearance >= m.classification
+    }
+
+
     principal is User with credentials name
 
     rules page home()
@@ -31,11 +48,11 @@ section MAC AccessControl
       true
     }
 
-    pointcut documentViewing(d:Document)
+    rules template div("loggedIn")
     {
-      template navigateLinkListItemDoc(d),
-      page viewDocument(d)
+      securityContext.loggedIn
     }
+
 
     rules pointcut documentViewing(d:Document)
     {
@@ -49,21 +66,6 @@ section MAC AccessControl
       {
         mayCreateDocument(securityContext.principal,d)
       }
-    }
-
-    predicate mayViewDocument (u:User, d:Document) {
-      u.clearance >= d.classification
-    }
-
-    predicate mayCreateDocument (u:User, d:Document) {
-      u.clearance <= d.classification
-    }
-
-
-    pointcut MissionViewing(m:Mission)
-    {
-      template navigateLinkListItemMission(m),
-      page viewMission(m)
     }
 
     rules pointcut MissionViewing(m:Mission)
@@ -80,16 +82,17 @@ section MAC AccessControl
       }
     }
 
-    predicate mayViewMission (u:User, m:Mission) {
-      u.clearance <= m.classification
-    }
 
-    predicate mayCreateMission(u:User, m:Mission) {
-      u.clearance >= m.classification
-    }
-
-    rules template div("loggedIn")
+    pointcut MissionViewing(m:Mission)
     {
-      securityContext.loggedIn
+      template navigateLinkListItemMission(m),
+      page viewMission(m)
     }
+
+    pointcut documentViewing(d:Document)
+    {
+      template navigateLinkListItemDoc(d),
+      page viewDocument(d)
+    }
+
   }
