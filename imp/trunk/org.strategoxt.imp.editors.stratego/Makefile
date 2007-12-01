@@ -1,7 +1,7 @@
-SYNTAX     = WebDSL
-EXTENSIONS = mod,app
-PACKAGE    = org.webdsl.ide.imp
-SOURCE     = ../../../webdsls/trunk/src/org/webdsl/dsl/syntax/$(SYNTAX).def
+SYNTAX     = Stratego
+EXTENSIONS = str
+PACKAGE    = org.stratetegoxt.imp.editors.stratego
+SOURCE     = ~/.nix-profile/share/sdf/stratego-front/Stratego.def
 
 SDF2IMP    = ../org.strategoxt.imp.metatooling/sdf2imp
 
@@ -22,4 +22,3 @@ $(SYNTAX).def : $(SOURCE)
 
 $(SYNTAX).tbl : $(SYNTAX).def
 	sdf2table -i $< -o $@ -m $(SYNTAX)
-
