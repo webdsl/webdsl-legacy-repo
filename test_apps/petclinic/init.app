@@ -58,80 +58,80 @@ section global data
     var o1 : Owner :=
       Owner {
         name := "George Franklin"
-        address := ""
-        city := ""
+        address := "110 W. Liberty St."
+        city := "Madison"
         telephone := ""
       };
 
     var o2 : Owner :=
       Owner {
         name := "Betty Davis"
-        address := ""
-        city := ""
+        address := "638 Cardinal Ave."
+        city := "Sun Prairie"
         telephone := ""
       };
 
     var o3 : Owner :=
       Owner {
         name := "Eduardo Rodriquez"
-        address := ""
-        city := ""
+        address := "2693 Commerce St."
+        city := "McFarland"
         telephone := ""
       };
 
     var o4 : Owner :=
       Owner {
         name := "Harold Davis"
-        address := ""
-        city := ""
+        address := "563 Friendly St."
+        city := "Windsor"
         telephone := ""
       };
 
     var o5 : Owner :=
       Owner {
         name := "Peter McTavish"
-        address := ""
-        city := ""
+        address := "2387 S. Fair Way"
+        city := "Madison"
         telephone := ""
       };
 
     var o6 : Owner :=
       Owner {
         name := "Jean Coleman"
-        address := ""
-        city := ""
+        address := "105 N. Lake St."
+        city := "Monona"
         telephone := ""
       };
 
     var o7 : Owner :=
       Owner {
         name := "Jeff Black"
-        address := ""
-        city := ""
+        address := "1450 Oak Blvd."
+        city := "Monona"
         telephone := ""
       };
 
     var o8 : Owner :=
       Owner {
         name := "Maria Escobito"
-        address := ""
-        city := ""
+        address := "345 Maple St."
+        city := "Madison"
         telephone := ""
       };
 
     var o9 : Owner :=
       Owner {
         name := "David Schroeder"
-        address := ""
-        city := ""
+        address := "2749 Blackhawk Trail"
+        city := "Madison"
         telephone := ""
       };
 
     var o10 : Owner :=
       Owner {
         name := "Carlos Estaban"
-        address := ""
-        city := ""
+        address := "2335 Independence La."
+        city := "Waunakee"
         telephone := ""
       };
   }

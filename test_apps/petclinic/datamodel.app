@@ -3,8 +3,8 @@ module datamodel
 section definition
 
   entity Owner {
-    name :: String(name)
-    address :: String
+    name :: String (name, notempty)
+    address :: String (notempty, minlength(6))
     city :: String
     telephone :: String
     pets -> Set<Pet>
@@ -41,7 +41,7 @@ section queries
 
     function searchOwner(searchString : String) : List<Owner> {
       var tempString : String := "%" + searchString + "%";
-      var res : List<Owner> := select o from Owner as o where o._name like ~tempString order by o._name descending;
+      var res : List<Owner> := select o from Owner as o where o._name like ~tempString order by o._name ascending;
       return res;
     }
 

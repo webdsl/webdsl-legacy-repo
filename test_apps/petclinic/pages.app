@@ -6,12 +6,15 @@ define page vets() {
   main()
   define body() {
     header { "Veterinarians:" }
-    list {
-      for (v : Vet) { 
-        listitem { text(v.name) }
-        list {
-          for (s : Specialty in v.specialtiesList) {
-            listitem { text(s.name) }
+    table() {
+      row { "Name" "Specialty" }
+      for (v : Vet) {
+        row {
+          text(v.name)
+          table() {
+            for (s : Specialty in v.specialtiesList) {
+              row { text(s.name) }
+            }
           }
         }
       }
@@ -22,14 +25,14 @@ define page vets() {
 define page findOwner() {
   main()
   define body() {
-    var searchString : String := "";
+    var searchString : String;
 
     header { "Find Owners:" }
     text("Last Name: ")
     input(searchString)
-    actionLink("Find Owners", findOwners(searchString))
-    action findOwners(s : String) {
-      goto owners(s);
+    action("Find Owners", findOwners())
+    action findOwners() {
+      return owners(searchString);
     }
 
     div("add_owner_link_div") {
@@ -42,12 +45,17 @@ define page owners(searchString : String) {
   main()
   define body() {
     var foundOwners : List<Owner> := searchOwner(searchString);
-  
+
     header { "Owners:" }
-    list {
-      for (o : Owner in foundOwners) { 
-        listitem { text(o.name) }
+    table() {
+      row { "Name" "Address" "City" "Telephone" }
+      for (o : Owner in foundOwners) {
+        row { action(o.name, ownerDetails(o)) text(o.address) text(o.city) text(o.telephone) }
       }
+    }
+
+    action ownerDetails(owner : Owner) {
+      return owner(owner);
     }
   }
 }

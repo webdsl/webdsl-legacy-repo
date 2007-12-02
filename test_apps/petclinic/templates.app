@@ -18,6 +18,9 @@ section basic page elements.
 
   define top() {
     div("header") {}
+    div("menubar") { 
+      menutemp()
+    }
   }
 
   define footer() {
@@ -30,3 +33,36 @@ section basic page elements.
       }
     }
   }
+
+  define menutemp() {
+  
+    menubar {
+      menu {
+        menuheader{ "Home" }
+//        menuitem {
+//          menu {
+//            menuheader{ "New" }
+//            menuitem { "Page" }
+//            menuitem { "Blog" }
+//          }
+//        }
+//        for(p : Page in config.startpages) { menuitem{ output(p) } }
+      }
+      menu {
+        menuheader{ "Veterinarians" }
+        menuitem { navigate(vets()) { "Display veterinarians" } }
+        menuitem { navigate(createVet()) { "Create veterinarian" } }
+      }
+    }
+
+  }
+  
+//    list {
+//      listitem { navigate(home()) { "Home" } }
+//      listitem { navigate(vets()) { "Veterinarians" }
+//        list {
+//          listitem { navigate(vets()) { "Display veterinarians" } }
+//          listitem { navigate(createVet()) { "Create veterinarian" } }
+//        }
+//      }
+//    }
