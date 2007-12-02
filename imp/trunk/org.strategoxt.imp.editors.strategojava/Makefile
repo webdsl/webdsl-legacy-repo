@@ -8,14 +8,14 @@ SDF2IMP    = ../org.strategoxt.imp.metatooling/sdf2imp
 all : eclipse-deps
 
 clean :
-	rm -f src/parser/$(SYNTAX)ParseController.java
+	rm -f src/parser/$(SYNTAX)ParseController.java plugin.xml
 	rm -rf src/parser/ast
 	# ...
 
 eclipse-deps : plugin.xml # and others
 
 plugin.xml : $(SYNTAX).def $(SYNTAX).tbl $(SDF2IMP) Makefile
-	$(SDF2IMP) -i $< -p $(SYNTAX).tbl -e $(EXTENSIONS) -m $(SYNTAX) -n $(PACKAGE)
+	$(SDF2IMP) --verbose 2 -i $< -p $(SYNTAX).tbl -e $(EXTENSIONS) -m $(SYNTAX) -n $(PACKAGE)
 
 $(SYNTAX).def : $(SOURCE)
 	ln -s $< $@
