@@ -38,18 +38,10 @@ section basic page elements.
   
     menubar {
       menu {
-        menuheader{ "Home" }
-//        menuitem {
-//          menu {
-//            menuheader{ "New" }
-//            menuitem { "Page" }
-//            menuitem { "Blog" }
-//          }
-//        }
-//        for(p : Page in config.startpages) { menuitem{ output(p) } }
+        menuheader{ navigate(home()) { "Home" } }
       }
       menu {
-        menuheader{ "Veterinarians" }
+        menuheader{ navigate(vets()) { "Veterinarians" } }
         menuitem { navigate(vets()) { "Display veterinarians" } }
         menuitem { navigate(createVet()) { "Create veterinarian" } }
       }
