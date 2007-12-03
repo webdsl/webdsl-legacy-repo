@@ -2,7 +2,7 @@ SYNTAX     = Stratego-Java-15
 EXTENSIONS = str
 PACKAGE    = org.stratetegoxt.imp.editors.strategojava
 SOURCE     = ~/.nix-profile/share/java-front/$(SYNTAX).def
-START      = Module[StrategoHost] # TODO: or should this just be module?
+START      = Module[StrategoHost]
 
 SDF2IMP    = ../org.strategoxt.imp.metatooling/sdf2imp
 
