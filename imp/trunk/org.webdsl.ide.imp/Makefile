@@ -2,6 +2,7 @@ SYNTAX     = WebDSL
 EXTENSIONS = mod,app
 PACKAGE    = org.webdsl.ide.imp
 SOURCE     = ../../../webdsls/trunk/src/org/webdsl/dsl/syntax/$(SYNTAX).def
+START      = Application # TODO: what about multiple start symbols?
 
 SDF2IMP    = ../org.strategoxt.imp.metatooling/sdf2imp
 
@@ -15,7 +16,7 @@ clean :
 eclipse-deps : plugin.xml # and others
 
 plugin.xml : $(SYNTAX).def $(SYNTAX).tbl $(SDF2IMP) Makefile
-	$(SDF2IMP) -i $< -p $(SYNTAX).tbl -e $(EXTENSIONS) -m $(SYNTAX) -n $(PACKAGE) --verbose 2
+	$(SDF2IMP) -i $< -p $(SYNTAX).tbl -e $(EXTENSIONS) -m $(SYNTAX) -s $(START) -n $(PACKAGE) --verbose 2
 
 $(SYNTAX).def : $(SOURCE)
 	ln -s $< $@
