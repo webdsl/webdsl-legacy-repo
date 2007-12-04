@@ -54,7 +54,7 @@
 			<arg value="-la"/>
 			<arg value="${user.home}/.nix-profile/lib/libjava-front.la"/>
 
-			<fileset dir="${src}" includes="*.str"/>
+			<fileset dir="${src}" includes="*.str" excludes="Desugar.str"/>
 			<mapper type="glob" from="*.str" to="*"/>
 		</apply>
 	</target>
