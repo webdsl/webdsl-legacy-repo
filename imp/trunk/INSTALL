@@ -17,7 +17,6 @@
   $ make syntax
 
 * Launch the plugin Makefiles:
-  $ make -C org.strategoxt.imp.metatooling
-  $ make -C org.webdsl.ide.imp
+  $ make
 
 * Continue building the plugins in an IMP-enabled Eclipse instance.
