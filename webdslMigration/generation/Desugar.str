@@ -1,0 +1,48 @@
+module Desugar
+imports
+	DomainTransformationSyntax
+	liblib
+
+strategies
+	domainTransformationDesugar = 
+		rewriteDefinitions;
+		innermost(
+			rewriteOpenEnd
+		)
+	// TODO reference to self??	
+	rewriteDefinitions : 
+		Transformer(ent, els) -> <outermost(rewriteTransformationDefinitions)>Transformer(ent, <filter(not(?TransformationDefinition(_, _)))>els) // Outermost to make sure also the references in references are replaced
+		where
+			<map(try(defineTransformation))> els
+		
+	defineTransformation =  
+		?TransformationDefinition(trafoId, trafo);
+		rules (
+			rewriteTransformationDefinitions : 
+				TransformationRequest(trafoId) -> trafo
+		)
+	
+	rewriteOpenEnd : 
+		OpenEnd(trafo) -> Ejection(trafo, <getType> trafo)
+		
+	/* ---- Auxiliary strategies ---- */
+	getType : 
+		EmptyEntity() -> <newname> "newEntity"
+	getType : 
+		PropertyAddition(trafo, _, _, _) -> <getType> trafo
+	getType : 
+		PropertyRemoval(trafo, _) -> <getType> trafo
+	getType : 
+		ElevateAttributeOverReference(trafo, _, _) -> <getType> trafo
+	getType : 
+		PropertyNameChange(trafo, _, _) -> <getType> trafo
+	getType : 
+		PropertySimpleTypeChange(trafo, _, _) -> <getType> trafo
+	getType : 
+		PropertyReferenceTypeChange(trafo, _, _, _) -> <getType> trafo
+	getType : 
+		Injection(entityId) -> entityId
+	getType : 
+		Ejection(_, entityId) -> entityId
+	getType : 
+		OpenEnd(trafo) -> <getType> trafo

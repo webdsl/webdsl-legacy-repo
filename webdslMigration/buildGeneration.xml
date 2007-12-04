@@ -1,0 +1,90 @@
+<project name="dataMigrationGeneration" basedir="." default="buildAll">
+	<description>
+        data migration generation build file
+    </description>
+
+	<!-- set global properties for this build -->
+	<property name="src" location="generation"/>
+	<property name="build" location="bin/generation"/>
+	<property name="dist" location="bin/dist/generation"/>
+	<property name="webdslsLocation" location="/home/sander/WebDSL/svn/webdsls"/>
+	<property name="strategoBinariesLocation" location="${user.home}/.nix-profile/bin"/>
+
+	<target name="init">
+		<mkdir dir="${build}"/>
+		<mkdir dir="${dist}"/>
+	</target>
+
+	<target name="buildAll" depends="pack-sdf,processSyntaxToCompiler,strc"/>
+
+	<target name="pack-sdf" depends="init">
+		<apply executable="${strategoBinariesLocation}/pack-sdf" dest="${build}">
+			<arg value="-i"/>
+			<srcfile/>
+			<arg value="-o"/>
+			<targetfile/>
+			<arg value="-I"/>
+			<arg value="${webdslsLocation}/trunk/src/org/webdsl/dsl/syntax"/>
+			<fileset dir="${src}" includes="*.sdf"/>
+			<mapper type="glob" from="*.sdf" to="*.def"/>
+		</apply>
+	</target>
+
+	<target name="strc" depends="init">
+		<apply executable="${strategoBinariesLocation}/strc" dest="${dist}">
+			<arg value="-i"/>
+			<srcfile/>
+			<arg value="-o"/>
+			<targetfile/>
+			<arg value="-I"/>
+			<arg value="${webdslsLocation}/trunk/src/org/webdsl/dsl/syntax"/>
+			<arg value="-I"/>
+			<arg value="${webdslsLocation}/trunk/src"/>
+			<arg value="-I"/>
+			<arg value="${build}"/>
+			<arg value="-I"/>
+			<arg value="${user.home}/.nix-profile/share/java-front"/>
+			<arg value="-I"/>
+			<arg value="${user.home}/.nix-profile/share/sdf/gpp"/>
+			<arg value="-I"/>
+			<arg value="${user.home}/.nix-profile/share/sdf/xml-front"/>
+
+			<arg value="-la"/>
+			<arg value="stratego-lib"/>
+			<arg value="-la"/>
+			<arg value="${user.home}/.nix-profile/lib/libjava-front.la"/>
+
+			<fileset dir="${src}" includes="*.str"/>
+			<mapper type="glob" from="*.str" to="*"/>
+		</apply>
+	</target>
+
+	<target name="processSyntaxToCompiler" depends="init,pack-sdf">
+		<exec executable="${strategoBinariesLocation}/sdf2table">
+    		<arg value="-i"/>
+	    	<arg value="${build}/DomainTransformationSyntax.def"/>
+	    	<arg value="-o"/>
+			<arg value="${dist}/DomainTransformationSyntax.tbl"/>
+			<arg value="-m"/>
+			<arg value="DomainTransformationSyntax"/>
+		</exec>
+		<exec executable="${strategoBinariesLocation}/sdf2rtg">
+    		<arg value="-i"/>
+	    	<arg value="${build}/DomainTransformationSyntax.def"/>
+	    	<arg value="-o"/>
+			<arg value="${build}/DomainTransformationSyntax.rtg"/>
+			<arg value="-m"/>
+			<arg value="DomainTransformationSyntax"/>
+		</exec>
+		<exec executable="${strategoBinariesLocation}/rtg2sig">	<!-- Cannot be generic: rtg2sig cannot handle absolute paths -->
+    		<arg value="-i"/>
+	    	<arg value="bin/generation/DomainTransformationSyntax.rtg"/> <!-- rtg2sig cannot handle absolute paths -->
+	    	<arg value="-o"/>
+			<arg value="bin/generation/DomainTransformationSyntax.str"/> <!-- rtg2sig cannot handle absolute paths -->
+		</exec>
+	</target>
+
+	<target name="clean" description="clean up" >
+		<delete dir="${build}"/>
+	</target>
+</project>

@@ -1,0 +1,143 @@
+module DomainMigration
+imports
+	DomainTransformationSyntax
+	liblib
+	libjava-front
+	Desugar
+	org/webdsl/dsl/generation/java-code
+	org/webdsl/dsl/transformation/types
+	org/webdsl/dsl/syntax/parse-webdsl
+	org/webdsl/dsl/transformation/desugar
+	org/webdsl/dsl/builtins/builtins-desugar
+	org/webdsl/dsl/generation/generator
+
+strategies
+	main = 
+		io-wrap(constructMigration(|"webdslorg0", "webdslorg1"))
+		
+	constructMigration(|persistenceUnit0, persistenceUnit1) =
+		domainTransformationDesugar;
+		removeTransformer;
+		map(constructTransformers(|"emf1", "domain_0", "domain_1"));
+		surroundWithDefaultFunctionality(|persistenceUnit0, persistenceUnit1)
+		
+	surroundWithDefaultFunctionality(|persistenceUnit0, persistenceUnit1) : // TODO parametrize domain names
+		migrators -> |[
+			import migration.*;
+			import transformation.*;
+			import javax.persistence.*;
+			
+			public class CustomMigrator {
+				
+				public static void main(String[] args)
+				{
+					System.out.println("Starting migration");
+					EntityManagerFactory emf0 = Persistence.createEntityManagerFactory(persistenceUnit0);
+					EntityManagerFactory emf1 = Persistence.createEntityManagerFactory(persistenceUnit1);
+				
+					HibernateTransFormerClassPair[] migrators = ~migratorsArrayInit;
+					CombinedHibernateMigrator hmig = new CombinedHibernateMigrator(emf0, emf1, migrators);
+					
+					try {
+						hmig.migrate();
+					} catch (TransFormationException ex) {
+						ex.printStackTrace();
+					}
+					
+					emf0.close();
+					emf1.close();
+					System.out.println("Migration completed");
+				}
+			}
+		]|
+		where !ArrayInit(migrators) => migratorsArrayInit
+
+	removeTransformer : // TODO
+		Transformer(entities, transformations) -> transformations
+	
+	constructTransformers(|targetSessionFactory, oldDomainPackage, newDomainPackage) = 
+		// TODO Remove any transformations that do not have injections in advance (transformation of these is only relevant at data-model level)
+		innermost(
+			emptyEntityToMigration + 
+			injectionToMigration(|oldDomainPackage) + 
+			propertyAdditionToMigration +
+			propertyRemovalToMigration +
+			elevateAttributeOverReferenceToMigration +
+			propertyNameChangeToMigration + 
+			propertySimpleTypeChangeToMigration +
+			propertyReferenceTypeChangeToMigration(|targetSessionFactory, oldDomainPackage, newDomainPackage) +
+			ejectionToMigration(|newDomainPackage)
+		)
+	
+	emptyEntityToMigration : 
+		EmptyEntity() -> 
+			|[ new EmptyObject() ]|
+			
+	injectionToMigration(|oldDomainPackage) : 
+		Injection(entityId) -> 
+			|[ new Injection(~x:oldDomainPackage.~x:entityId.class) ]|
+	
+	propertyAdditionToMigration : 
+		PropertyAddition(itrafo, propertyName, _, defaultValue) -> 
+			|[ new AddAttribute("~propertyName", ~defaultValueExpression, ~itrafo) ]|
+		where <expression-to-java> defaultValue => defaultValueExpression
+	
+	propertyRemovalToMigration :
+		PropertyRemoval(itrafo, propertyName) ->
+			|[ new DropAttribute("~propertyName", ~itrafo) ]|
+			
+	elevateAttributeOverReferenceToMigration : 
+		ElevateAttributeOverReference(itrafo, refName, attName) -> 
+			|[ new ElevateAttributeOverReference("~attName", "~refName", ~itrafo) ]|
+	
+	propertyNameChangeToMigration :
+		PropertyNameChange(itrafo, oldName, newName) -> 
+			|[ new AttributeNameChange("~oldName", "~newName", ~itrafo) ]|
+			
+	propertySimpleTypeChangeToMigration :
+		PropertySimpleTypeChange(itrafo, name, newType) -> 
+			|[ new AttributeConversion("~name", ~typeConversion, ~itrafo) ]|
+		where <getTypeConversion> newType => typeConversion
+		
+	propertyReferenceTypeChangeToMigration(|targetSessionFactory, oldDomainPackage, newDomainPackage) :
+		PropertyReferenceTypeChange(itrafo, name, newType, trafo) -> // TODO targetSession
+			|[ new AttributeTransformation(
+					"~name",
+					new HibernateTransformer(~trafoInJava, ~x:newDomainPackage.~x:newType.class, ~x:targetSessionFactory),
+					~itrafo
+				)
+			]|
+		where
+			<constructTransformers(|targetSessionFactory, oldDomainPackage, newDomainPackage)> trafo => trafoInJava	// trafo is a Transformation, so no ejection
+			
+	ejectionToMigration(|newDomainPackage) : 
+		Ejection(itrafo, newName) -> 
+			|[ new HibernateTransFormerClassPair(~itrafo, ~x:newDomainPackage.~x:newName.class) ]|
+	
+	/* ---- Auxiliary strategies ---- */
+	getTypeConversion : 
+		String -> |[ PrimitiveTypeConversions.selectByName("toString") ]|
+		
+/*	
+	rewritePropertyTypeChange : 
+	PropertyTypeChange(trafo, name, newSort) -> PropertyTypeChange(trafo, name, <getPropertyType(|name)> trafo, newSort)
+	
+	
+	getPropertyType(|propertyName) : 
+		PropertyAddition(trafo, _, _, _) -> <getType> trafo
+	getPropertyType(|propertyName) : 
+		PropertyRemoval(trafo, _) -> <getType> trafo
+	getPropertyType(|propertyName) : 
+		PropertyNameChange(trafo, _, _) -> <getType> trafo
+	getPropertyType(|propertyName) : 
+		PropertyTypeChange(trafo, name , type) -> type
+		where <eq> (propertyName, name)
+	getPropertyType(|propertyName) : 
+		Injection(entityId) -> entityId
+	getPropertyType(|propertyName) : 
+		Ejection(_, entityId) -> entityId
+	getPropertyType(|propertyName) : 
+		OpenEnd(trafo) -> <getType> trafo
+	getPropertyType(|propertyName) : 
+		EntityNoSuper(_, properties, _) -> <fetch(?PropertyNoAnno(propertyName, _, _)); ?PropertyNoAnno(_ , _, sort); !sort> properties
+*/		

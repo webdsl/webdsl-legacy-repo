@@ -1,0 +1,64 @@
+module DomainTransformationSyntax
+
+hiddens
+	context-free start-symbols Application Module
+
+imports WebDSL
+
+exports
+	sorts 
+		Transformation
+		EquivalenceTransformation
+		RefinementTransformation
+		RestrictingTransformation
+		
+		ClosedTransformation
+		Transformer
+		Definition
+
+	context-free syntax
+		%% TODO Local data model trafo to global data model trafo transformation 
+		%% TODO Remove data level information from data model level (maybe use oracle)
+		%% TODO Use hierarchical type restriction of transformation type (composition of two transformations)
+	
+		%% ---- Framework ---- %%
+		"transform" Transformation Id									-> ClosedTransformation {cons("Ejection")}
+		ClosedTransformation											-> TransformerElement
+		"entities" Entity* "transformations" TransformerElement*		-> Transformer {cons("Transformer")}
+
+		%% ==================================================================================== %%
+		
+		%% ---- Isomorphisms ---- %%
+		EquivalenceTransformation 										-> Transformation
+		Transformation "propertyNameChange" "(" Id "," Id ")"			-> EquivalenceTransformation {cons("PropertyNameChange")}
+		
+		%% ---- Refinements ---- %%
+		RefinementTransformation 										-> Transformation
+		Transformation "addProperty" "(" Id "," Sort "," Exp ")"		-> RefinementTransformation {cons("PropertyAddition")}
+		"emptyEntity"													-> EquivalenceTransformation {cons("EmptyEntity")}
+		Id																-> EquivalenceTransformation {cons("Injection")}
+				%% Assuming reference is many to one (set and list are not references!)
+		Transformation "elevateAttributeOverReference" "(" Id "," Id ")"-> EquivalenceTransformation {cons("ElevateAttributeOverReference")}
+
+		%% ---- Data restrictions ---- %%
+		RestrictingTransformation 										-> Transformation
+		Transformation "removeProperty" "(" Id ")"	 					-> RestrictingTransformation {cons("PropertyRemoval")}
+
+		%% ---- Combined ---- %% TODO !
+		Transformation "propertySimpleTypeChange" "(" Id "," Sort ")"	-> Transformation {cons("PropertySimpleTypeChange")}
+		Transformation "propertyReferenceTypeChange" "(" Id "," Id "," Transformation ")"	
+																		-> Transformation {cons("PropertyReferenceTypeChange")}
+		
+		%% ==================================================================================== %%
+		
+		%% ---- Sugar ---- %%
+		"transform" Transformation										-> ClosedTransformation {cons("OpenEnd")}
+		
+		Id "=" Transformation											-> Definition {cons("TransformationDefinition")}
+		Definition														-> TransformerElement
+		"$" Id															-> Transformation {cons("TransformationRequest")}
+		
+		%% ---- Other ---- %%		
+		"emptyEntity"													-> Id {reject}
+		
+	context-free start-symbols Transformer
