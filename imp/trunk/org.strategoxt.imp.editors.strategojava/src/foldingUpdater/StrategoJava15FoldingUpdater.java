@@ -108,13 +108,34 @@ public class StrategoJava15FoldingUpdater extends FolderBase {
 			return true;
 		}
 		
+		public boolean visit(ClassDec n) {
+			helper.makeCompleteAnnotation(n);
+			return true;
+		}
+		
 		public boolean visit(MethodDec n) {
 			helper.makeCompleteAnnotation(n);
 			return true;
 		}
 		
-		public boolean visit(Imports n) {
+		public boolean visit(StaticInit n) {
 			helper.makeCompleteAnnotation(n);
+			return true;
+		}
+		
+		public boolean visit(InstanceInit n) {
+			helper.makeCompleteAnnotation(n);
+			return true;
+		}
+		
+		public boolean visit(ConstrDec n) {
+			helper.makeCompleteAnnotation(n);
+			return true;
+		}
+		
+		public boolean visit(parser.ast.List n) {
+			if (n.getElementSort().equals("ImportDec_JavaObject"))
+				helper.makeCompleteAnnotation(n);
 			return true;
 		}
 	};
