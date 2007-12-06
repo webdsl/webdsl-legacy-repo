@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Vector;
 
-public abstract class Transformation{
+public abstract class UntypedTransformation{
 	public abstract Object getAttribute(List<Object> input, String attributeName) throws TransFormationException;
 	public abstract List<Injection> getInjections();
 	
@@ -68,7 +68,7 @@ public abstract class Transformation{
 		transForm(input, output, editableAtts.toArray(new String[editableAtts.size()]));
 	}
 
-	private static String getAttributeNameFromSetter(Method setter)
+	protected static String getAttributeNameFromSetter(Method setter)
 	{
 		String name = setter.getName();
 		String firstChar = name.substring(3, 4);
@@ -76,10 +76,17 @@ public abstract class Transformation{
 		return firstChar.toLowerCase() + tail;
 	}
 	
-	private static String getSetterFromAttributeName(String attName)
+	protected static String getSetterFromAttributeName(String attName)
 	{
 		String firstChar = attName.substring(0, 1);
 		String tail = attName.substring(1, attName.length());
 		return "set" + firstChar.toUpperCase() + tail;
+	}
+	
+	protected static String getGetterFromAttributeName(String attName)
+	{
+		String firstChar = attName.substring(0, 1);
+		String tail = attName.substring(1, attName.length());
+		return "get" + firstChar.toUpperCase() + tail;
 	}
 }

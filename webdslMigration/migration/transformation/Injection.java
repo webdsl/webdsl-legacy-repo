@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Vector;
 
-public class Injection extends Transformation {	// Cannot use generics, as the type paramter cannot be evaluated at runtime
+public class Injection extends UntypedTransformation {	// Cannot use generics, as the type paramter cannot be evaluated at runtime
 	private Class injectionType;
 	
 	public Injection(Class injectionType) {

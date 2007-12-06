@@ -2,12 +2,12 @@ package transformation;
 
 import java.util.List;
 
-public class AttributeNameChange extends Transformation {
-	private final Transformation inputTrafo;
+public class AttributeNameChange extends UntypedTransformation {
+	private final UntypedTransformation inputTrafo;
 	private final String oldAttributeName;
 	private final String newAttributeName;
 	
-	public AttributeNameChange(String oldAttributeName, String newAttributeName, Transformation inputTrafo) {
+	public AttributeNameChange(String oldAttributeName, String newAttributeName, UntypedTransformation inputTrafo) {
 		this.inputTrafo = inputTrafo;
 		this.oldAttributeName = oldAttributeName;
 		this.newAttributeName = newAttributeName;
@@ -37,7 +37,7 @@ public class AttributeNameChange extends Transformation {
 	/**
 	 * @return the input transformation
 	 */
-	public Transformation getInputTrafo() {
+	public UntypedTransformation getInputTrafo() {
 		return inputTrafo;
 	}
 

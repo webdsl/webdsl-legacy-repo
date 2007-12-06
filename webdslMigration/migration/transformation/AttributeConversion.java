@@ -4,12 +4,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
-public class AttributeConversion extends Transformation {
-	private final Transformation inputTrafo;
+public class AttributeConversion extends UntypedTransformation {
+	private final UntypedTransformation inputTrafo;
 	private final String attributeName;
 	private final Method conversion;
 	
-	public AttributeConversion(String attributeName, Method conversion, Transformation inputTrafo) {
+	public AttributeConversion(String attributeName, Method conversion, UntypedTransformation inputTrafo) {
 		this.inputTrafo = inputTrafo;
 		this.attributeName = attributeName;
 		this.conversion = conversion;
@@ -47,7 +47,7 @@ public class AttributeConversion extends Transformation {
 	/**
 	 * @return the input transformation
 	 */
-	public Transformation getInputTrafo() {
+	public UntypedTransformation getInputTrafo() {
 		return inputTrafo;
 	}
 

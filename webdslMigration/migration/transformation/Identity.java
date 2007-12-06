@@ -2,10 +2,10 @@ package transformation;
 
 import java.util.List;
 
-public class Identity extends Transformation {
-	private final Transformation inputTrafo;
+public class Identity extends UntypedTransformation {
+	private final UntypedTransformation inputTrafo;
 	
-	public Identity(Transformation inputTrafo) {
+	public Identity(UntypedTransformation inputTrafo) {
 		this.inputTrafo = inputTrafo;
 	}
 
@@ -17,7 +17,7 @@ public class Identity extends Transformation {
 	/**
 	 * @return the input transformation
 	 */
-	public Transformation getInputTrafo() {
+	public UntypedTransformation getInputTrafo() {
 		return inputTrafo;
 	}
 

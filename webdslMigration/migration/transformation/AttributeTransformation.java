@@ -3,12 +3,12 @@ package transformation;
 import java.util.List;
 import java.util.Vector;
 
-public class AttributeTransformation extends Transformation {
-	private final Transformation inputTrafo;
+public class AttributeTransformation extends UntypedTransformation {
+	private final UntypedTransformation inputTrafo;
 	private final String attributeName;
-	private final Transformer attTrans;
+	private final TypedTransformation attTrans;
 	
-	public AttributeTransformation(String attributeName, Transformer attTrans, Transformation inputTrafo) {
+	public AttributeTransformation(String attributeName, TypedTransformation attTrans, UntypedTransformation inputTrafo) {
 		this.inputTrafo = inputTrafo;
 		this.attributeName = attributeName;
 		this.attTrans = attTrans;
@@ -35,14 +35,14 @@ public class AttributeTransformation extends Transformation {
 	/**
 	 * @return the input transformation
 	 */
-	public Transformation getInputTrafo() {
+	public UntypedTransformation getInputTrafo() {
 		return inputTrafo;
 	}
 
 	/**
 	 * @return the attTrans
 	 */
-	public Transformer getAttTrans() {
+	public TypedTransformation getAttTrans() {
 		return attTrans;
 	}
 

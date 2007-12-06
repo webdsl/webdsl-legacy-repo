@@ -9,12 +9,12 @@ import java.util.List;
  * @author sander
  *
  */
-public class ElevateAttributeOverReference extends Transformation {
-	private final Transformation inputTrafo;
+public class ElevateAttributeOverReference extends UntypedTransformation {
+	private final UntypedTransformation inputTrafo;
 	private final String attributeName;
 	private final String referenceName;
 	
-	public ElevateAttributeOverReference(String attributeName, String referenceName, Transformation inputTrafo) {
+	public ElevateAttributeOverReference(String attributeName, String referenceName, UntypedTransformation inputTrafo) {
 		this.inputTrafo = inputTrafo;
 		this.attributeName = attributeName;
 		this.referenceName = referenceName;
@@ -53,7 +53,7 @@ public class ElevateAttributeOverReference extends Transformation {
 	/**
 	 * @return the input transformation
 	 */
-	public Transformation getInputTrafo() {
+	public UntypedTransformation getInputTrafo() {
 		return inputTrafo;
 	}
 
@@ -67,12 +67,5 @@ public class ElevateAttributeOverReference extends Transformation {
 	@Override
 	public List<Injection> getInjections() {
 		return inputTrafo.getInjections();
-	}
-	
-	private static String getGetterFromAttributeName(String attName)
-	{
-		String firstChar = attName.substring(0, 1);
-		String tail = attName.substring(1, attName.length());
-		return "get" + firstChar.toUpperCase() + tail;
 	}
 }

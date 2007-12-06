@@ -3,7 +3,7 @@ package transformation;
 import java.util.List;
 import java.util.Vector;
 
-public class EmptyObject extends Transformation {
+public class EmptyObject extends UntypedTransformation {
 	
 	public EmptyObject() {
 	}

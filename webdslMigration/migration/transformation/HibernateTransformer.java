@@ -7,14 +7,14 @@ import javax.persistence.EntityManagerFactory;
 import org.hibernate.SessionFactory;
 import org.hibernate.ejb.HibernateEntityManagerFactory;
 
+// TODO Verify list of persistent attributes before allowing regular getter
 
-
-public class HibernateTransformer implements Transformer {
-	private final Transformation trans;
+public class HibernateTransformer extends TypedTransformation {
+	private final UntypedTransformation trans;
 	private final Class targetClass; 
 	private final EntityManagerFactory targetEMF;
 	
-	public HibernateTransformer(Transformation trans, Class targetClass, EntityManagerFactory targetEMF) {
+	public HibernateTransformer(UntypedTransformation trans, Class targetClass, EntityManagerFactory targetEMF) {
 		this.trans = trans;
 		this.targetClass = targetClass;
 		this.targetEMF = targetEMF;
@@ -67,5 +67,10 @@ public class HibernateTransformer implements Transformer {
 				targetPropertyNames[i] = targetPropertyNames[i].substring(1);
 		
 		return targetPropertyNames;
+	}
+
+	@Override
+	public Class getType() {
+		return targetClass;
 	}
 }

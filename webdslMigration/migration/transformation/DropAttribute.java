@@ -2,11 +2,11 @@ package transformation;
 
 import java.util.List;
 
-public class DropAttribute extends Transformation {
-	private final Transformation inputTrafo;
+public class DropAttribute extends UntypedTransformation {
+	private final UntypedTransformation inputTrafo;
 	private final String attributeName;
 	
-	public DropAttribute(String attributeName, Transformation inputTrafo) {
+	public DropAttribute(String attributeName, UntypedTransformation inputTrafo) {
 		this.inputTrafo = inputTrafo;
 		this.attributeName = attributeName;
 	}
@@ -28,7 +28,7 @@ public class DropAttribute extends Transformation {
 	/**
 	 * @return the input transformation
 	 */
-	public Transformation getInputTrafo() {
+	public UntypedTransformation getInputTrafo() {
 		return inputTrafo;
 	}
 

@@ -1,13 +1,13 @@
 package migration;
 
-import transformation.Transformation;
+import transformation.UntypedTransformation;
 
 public class HibernateTransFormerClassPair
 {
-	private final Transformation transformation;
+	private final UntypedTransformation transformation;
 	private final Class targetClass;
 	
-	public HibernateTransFormerClassPair(Transformation transformation, Class targetClass) {
+	public HibernateTransFormerClassPair(UntypedTransformation transformation, Class targetClass) {
 		this.transformation = transformation;
 		this.targetClass = targetClass;
 	}
@@ -22,7 +22,7 @@ public class HibernateTransFormerClassPair
 	/**
 	 * @return the transformation
 	 */
-	public Transformation getTransformation() {
+	public UntypedTransformation getTransformation() {
 		return transformation;
 	}
 }

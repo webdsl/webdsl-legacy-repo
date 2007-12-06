@@ -2,11 +2,11 @@ package transformation;
 
 import java.util.List;
 
-public class BeanTransformer implements Transformer {
-	private final Transformation trans;
+public class BeanTransformer extends TypedTransformation {
+	private final UntypedTransformation trans;
 	private final Class targetClass; 
 	
-	public BeanTransformer(Transformation trans, Class targetClass) {
+	public BeanTransformer(UntypedTransformation trans, Class targetClass) {
 		this.trans = trans;
 		this.targetClass = targetClass;
 	}
@@ -25,5 +25,10 @@ public class BeanTransformer implements Transformer {
 
 	public List<Injection> getInjections() {
 		return trans.getInjections();
+	}
+
+	@Override
+	public Class getType() {
+		return targetClass;
 	}
 }

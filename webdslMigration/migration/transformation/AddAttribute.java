@@ -2,12 +2,12 @@ package transformation;
 
 import java.util.List;
 
-public class AddAttribute extends Transformation {
-	private final Transformation inputTrafo;
+public class AddAttribute extends UntypedTransformation {
+	private final UntypedTransformation inputTrafo;
 	private final String attributeName;
 	private final Object defaultValue;
 	
-	public AddAttribute(String attributeName, Object defaultValue, Transformation inputTrafo) {
+	public AddAttribute(String attributeName, Object defaultValue, UntypedTransformation inputTrafo) {
 		this.inputTrafo = inputTrafo;
 		this.attributeName = attributeName;
 		this.defaultValue = defaultValue;
@@ -30,7 +30,7 @@ public class AddAttribute extends Transformation {
 	/**
 	 * @return the input transformation
 	 */
-	public Transformation getInputTrafo() {
+	public UntypedTransformation getInputTrafo() {
 		return inputTrafo;
 	}
 
