@@ -1,16 +1,21 @@
 entities
 
   entity BlogEntry {
+    blog      -> Blog (inverse=Blog.entries)
     key       :: String (id)
     title     :: String (name)
     author    -> User
+    created   :: Date
+    updated   :: Date
+    category  -> Category // select from categories defined in blog
+    intro     :: WikiText
     body      :: WikiText
+    comments  <> List<BlogComment>
   }
 
   entity Blog {
     key        :: String (id)
     title      :: String (name)
-    topic      :: String
     entries    -> List<BlogEntry>
   }
 
@@ -18,41 +23,44 @@ transformations
 
 	BlogEntryTransformation = 
 		BlogEntry
-		removeProperty(author)
-		propertySimpleTypeChange(body, String)
+		removeProperty(intro)
+		removeProperty(updated)
+		removeProperty(comments)
 
 	BlogTransformation = 
 		Blog
 		addProperty (
-			subtitle,
+			newProperty,
 			String,
-			"defaultSubTitle"
+			"newDefaultValue"
 		)
-		removeProperty(topic)
+		extend entity Blog {
+		  newProperty :: String (default = "foo")
+	    }
+		removeProperty(title)
 		propertyNameChange(entries, blogEntries)
 		propertySimpleTypeChange(key, String)
 		propertyReferenceTypeChange(entries, BlogEntry, $BlogEntryTransformation)
 
 	transform
-		Blog
+		Blog (mainInjection)
 		relatedMerge (	
 			function relation(b1 : DerivedType, b2 : DerivedType) : Bool {b1._key = b2._key},
 			Blog
 			removeProperty(key)
-			removeProperty(topic)
 			removeProperty(entries)
-			propertyNameChange(title, subTitle)
 		)
-		BlogWithTitleAsSubtitle
+		Bla
     )
-	
+		
+
 	transform
 		$BlogTransformation
-		Blog
+		Blag
 	
 	transform
 		$BlogEntryTransformation
 		
 	transform
 		emptyEntity
-		newEntityName
+		someNewEntityName
