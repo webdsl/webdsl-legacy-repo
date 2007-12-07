@@ -34,24 +34,20 @@ transformations
 			String,
 			"newDefaultValue"
 		)
-		extend entity Blog {
-		  newProperty :: String (default = "foo")
-	    }
 		removeProperty(title)
 		propertyNameChange(entries, blogEntries)
 		propertySimpleTypeChange(key, String)
 		propertyReferenceTypeChange(entries, BlogEntry, $BlogEntryTransformation)
 
 	transform
-		Blog (mainInjection)
+		Blog
 		relatedMerge (	
-			function relation(b1 : DerivedType, b2 : DerivedType) : Bool {b1._key = b2._key},
+			function relation(b1 : DerivedType, b2 : DerivedType) : Bool {return b1.key = b2.key;},
 			Blog
 			removeProperty(key)
 			removeProperty(entries)
 		)
 		Bla
-    )
 		
 
 	transform

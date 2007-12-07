@@ -11,6 +11,8 @@ exports
 		EquivalenceTransformation
 		RefinementTransformation
 		RestrictingTransformation
+		ClosedTransformation
+		TransformerElement
 		
 		ClosedTransformation
 		Transformer
@@ -35,10 +37,12 @@ exports
 		%% ---- Refinements ---- %%
 		RefinementTransformation 										-> Transformation
 		Transformation "addProperty" "(" Id "," Sort "," Exp ")"		-> RefinementTransformation {cons("PropertyAddition")}
-		"emptyEntity"													-> EquivalenceTransformation {cons("EmptyEntity")}
-		Id																-> EquivalenceTransformation {cons("Injection")}
+		"emptyEntity"													-> RefinementTransformation {cons("EmptyEntity")}
+		Id																-> RefinementTransformation {cons("Injection")}
+		Id "(" Id ")"													-> RefinementTransformation {cons("NamedInjection")}
+		
 				%% Assuming reference is many to one (set and list are not references!)
-		Transformation "elevateAttributeOverReference" "(" Id "," Id ")"-> EquivalenceTransformation {cons("ElevateAttributeOverReference")}
+		Transformation "elevateAttributeOverReference" "(" Id "," Id ")"-> RefinementTransformation {cons("ElevateAttributeOverReference")}
 
 		%% ---- Data restrictions ---- %%
 		RestrictingTransformation 										-> Transformation
@@ -47,8 +51,12 @@ exports
 		%% ---- Combined ---- %% TODO !
 		Transformation "propertySimpleTypeChange" "(" Id "," Sort ")"	-> Transformation {cons("PropertySimpleTypeChange")}
 		Transformation "propertyReferenceTypeChange" "(" Id "," Id "," Transformation ")"	
+
 																		-> Transformation {cons("PropertyReferenceTypeChange")}
-		
+		Transformation "merge" "(" Transformation ")"
+																		-> Transformation {cons("Merge")}
+		Transformation "relatedMerge" "(" Function "," Transformation ")"
+																		-> Transformation {cons("RelatedMerge")}
 		%% ==================================================================================== %%
 		
 		%% ---- Sugar ---- %%
@@ -57,6 +65,12 @@ exports
 		Id "=" Transformation											-> Definition {cons("TransformationDefinition")}
 		Definition														-> TransformerElement
 		"$" Id															-> Transformation {cons("TransformationRequest")}
+		
+		
+		%% Transformation Id												-> EmbeddedClosedTransformation {cons("EmbeddedClosedTransformation")}
+		%% Transformation "split" "(" Id* ")" "to" EmbeddedClosedTransformation
+																		-> Transformation {cons("Split")}
+		
 		
 		%% ---- Other ---- %%		
 		"emptyEntity"													-> Id {reject}

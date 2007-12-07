@@ -1,6 +1,8 @@
 module DomainMigration
 imports
 	DomainTransformationSyntax
+	DomainTransformation
+	IntermediateTypes
 	liblib
 	libjava-front
 	Desugar
@@ -12,18 +14,28 @@ imports
 	org/webdsl/dsl/generation/generator
 
 strategies
-	main = 
+	main-DomainMigration = 
 		io-wrap(constructMigration(|"webdslorg0", "webdslorg1"))
-		
+	
 	constructMigration(|persistenceUnit0, persistenceUnit1) =
 		domainTransformationDesugar;
-		removeTransformer;
-		map(constructTransformers(|"emf1", "domain_0", "domain_1"));
-		surroundWithDefaultFunctionality(|persistenceUnit0, persistenceUnit1)
-		
+		?Transformer(originalTypeSet, transformations);
+		!transformations;
+		rules (	DomainPackage :=  PackageName([Id("migration")]));
+		handleIntermediateTypes(|originalTypeSet);
+		constructCustomMigrator(|persistenceUnit0, persistenceUnit1);
+		echo(!"Migration successful")
+	
+	constructCustomMigrator(|persistenceUnit0, persistenceUnit1) = 
+		map(constructTransformers(|"emf1", "domain_0", "domain_1")); 
+		surroundWithDefaultFunctionality(|persistenceUnit0, persistenceUnit1);
+		risky(java-file-to-file | "Cannot write java to file")
+	
 	surroundWithDefaultFunctionality(|persistenceUnit0, persistenceUnit1) : // TODO parametrize domain names
-		migrators -> |[
-			import migration.*;
+		migrators -> JavaFile(["src"],
+		compilation-unit|[
+			package pkgname;
+			
 			import transformation.*;
 			import javax.persistence.*;
 			
@@ -32,8 +44,8 @@ strategies
 				public static void main(String[] args)
 				{
 					System.out.println("Starting migration");
-					EntityManagerFactory emf0 = Persistence.createEntityManagerFactory(persistenceUnit0);
-					EntityManagerFactory emf1 = Persistence.createEntityManagerFactory(persistenceUnit1);
+					EntityManagerFactory emf0 = Persistence.createEntityManagerFactory("~persistenceUnit0");
+					EntityManagerFactory emf1 = Persistence.createEntityManagerFactory("~persistenceUnit1");
 				
 					HibernateTransFormerClassPair[] migrators = ~migratorsArrayInit;
 					CombinedHibernateMigrator hmig = new CombinedHibernateMigrator(emf0, emf1, migrators);
@@ -49,11 +61,10 @@ strategies
 					System.out.println("Migration completed");
 				}
 			}
-		]|
-		where !ArrayInit(migrators) => migratorsArrayInit
-
-	removeTransformer : // TODO
-		Transformer(entities, transformations) -> transformations
+		]| )
+		where 
+			!ArrayInit(migrators) => migratorsArrayInit;
+			pkgname := <DomainPackage>
 	
 	constructTransformers(|targetSessionFactory, oldDomainPackage, newDomainPackage) = 
 		// TODO Remove any transformations that do not have injections in advance (transformation of these is only relevant at data-model level)
@@ -66,7 +77,9 @@ strategies
 			propertyNameChangeToMigration + 
 			propertySimpleTypeChangeToMigration +
 			propertyReferenceTypeChangeToMigration(|targetSessionFactory, oldDomainPackage, newDomainPackage) +
-			ejectionToMigration(|newDomainPackage)
+			ejectionToMigration(|newDomainPackage) +
+			mergeToMigration + 
+			relatedMergeToMigration
 		)
 	
 	emptyEntityToMigration : 
@@ -80,7 +93,9 @@ strategies
 	propertyAdditionToMigration : 
 		PropertyAddition(itrafo, propertyName, _, defaultValue) -> 
 			|[ new AddAttribute("~propertyName", ~defaultValueExpression, ~itrafo) ]|
-		where <expression-to-java> defaultValue => defaultValueExpression
+		where <expression-to-java> defaultValue => defaultValueExpression;
+		<debug(!"---- DefaultValueExpression: ")> defaultValueExpression;
+		<debug(!"---- DefaultValue: ")> defaultValue
 	
 	propertyRemovalToMigration :
 		PropertyRemoval(itrafo, propertyName) ->
@@ -113,6 +128,27 @@ strategies
 	ejectionToMigration(|newDomainPackage) : 
 		Ejection(itrafo, newName) -> 
 			|[ new HibernateTransFormerClassPair(~itrafo, ~x:newDomainPackage.~x:newName.class) ]|
+	
+	mergeToMigration :
+		Merge(itrafo, slavetrafo) ->
+			|[ new Merge(~slavetrafo, ~itrafo) ]|
+	
+	relatedMergeToMigration : 
+		RelatedMerge(
+			itrafo, 
+			Function(_, [Arg(arg1, SimpleSort(argType1)), Arg(arg2, SimpleSort(argType2))], SimpleSort("Bool"), relationDef), 
+			slavetrafo
+		) 
+		->
+		|[ 
+			new RelatedMerge (
+				new BinaryRelation <~x:argType1, ~x:argType2>(){public boolean relate(~x:argType1 ~x:arg1, ~x:argType2 ~x:arg2){~javaRelation} },
+				new BeanTransformer(~slavetrafo, ~x:argType2.class),
+				new BeanTransformer(~itrafo, ~x:argType1.class)
+			)
+		]|
+		where
+			<risky(statement-to-java | "Cannot convert relation statements to java")> relationDef => javaRelation
 	
 	/* ---- Auxiliary strategies ---- */
 	getTypeConversion : 

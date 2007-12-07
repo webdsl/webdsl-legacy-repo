@@ -5,11 +5,19 @@ imports
 
 strategies
 	domainTransformationDesugar = 
+		bottomup(
+			try(rewriteDoubleQuote)
+		);
 		rewriteDefinitions;
-		innermost(
+		innermost(			// Do this now, to prevent having to write getType for other sugar
 			rewriteOpenEnd
 		)
 	// TODO reference to self??	
+	
+	rewriteDoubleQuote : 
+		String(x) -> String(y)
+			where y := <un-double-quote> x
+	
 	rewriteDefinitions : 
 		Transformer(ent, els) -> <outermost(rewriteTransformationDefinitions)>Transformer(ent, <filter(not(?TransformationDefinition(_, _)))>els) // Outermost to make sure also the references in references are replaced
 		where
@@ -46,3 +54,7 @@ strategies
 		Ejection(_, entityId) -> entityId
 	getType : 
 		OpenEnd(trafo) -> <getType> trafo
+	getType : 
+		Merge(trafo1, trafo2) -> <getType> trafo1
+	getType : 
+		RelatedMerge(trafo1, _, trafo2) -> <getType> Merge(trafo1, trafo2)

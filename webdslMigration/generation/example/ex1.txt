@@ -36,7 +36,7 @@ transformations
 	transform
 		Blog
 		relatedMerge (	
-			function relation(b1 : DerivedType, b2 : DerivedType) : Bool {b1._key = b2._key},
+			function relation(b1 : DerivedType, b2 : DerivedType) : Bool {return b1.key = b2.key;},
 			Blog
 			removeProperty(key)
 			removeProperty(topic)
@@ -44,7 +44,6 @@ transformations
 			propertyNameChange(title, subTitle)
 		)
 		BlogWithTitleAsSubtitle
-    )
 	
 	transform
 		$BlogTransformation

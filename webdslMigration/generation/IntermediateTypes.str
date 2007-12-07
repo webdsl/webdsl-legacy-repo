@@ -1,0 +1,80 @@
+module IntermediateTypes
+imports
+	DomainTransformation
+	DomainTransformationSyntax
+	liblib
+	libjava-front
+	org/webdsl/dsl/generation/java-code
+	org/webdsl/dsl/transformation/types
+	org/webdsl/dsl/syntax/parse-webdsl
+	org/webdsl/dsl/transformation/desugar
+	org/webdsl/dsl/builtins/builtins-desugar
+	org/webdsl/dsl/generation/generator
+
+strategies
+	handleIntermediateTypes(|originalTypeSet) : 
+		transformations -> <risky(substituteDerivedTypes|"Intermediate type substitution failed")>transformations
+		where
+			risky(deriveTypes(|originalTypeSet) | "Intermediate type derivation failed");
+			risky(defineTypes | "Intermediate type definition failed")
+
+	defineTypes =
+		map(risky(defineType|"Cannot define intermediate type"))
+	defineType : 
+		(name, EntityNoSuper(_, properties, functions)) -> <risky(entity-to-java-Entity | "Entity to java conversion failed"); risky(java-file-to-file | "Cannot write java to file")>EntityNoSuper(name, properties, functions)
+	
+	substituteDerivedTypes = 
+		bottomup(	// bottom-up to make sure the elements can still be recognized
+			try (
+				substituteDerivedTypesRelatedMerge
+			)
+		)
+	
+	deriveTypes (|originalTypeSet) = 
+		map(
+			collect-all(
+				//debug(!"collecting from: ");
+				deriveType(|originalTypeSet)
+			);
+			concat
+		);
+		concat;
+		debug(!"Derived types: ")
+	
+	deriveType (|originalTypeSet): 
+		RelatedMerge(
+			itrafo, 
+			Function(name , [Arg(arg1, argType1), Arg(arg2, argType2)], resType, relationDef), 
+			slavetrafo
+		)
+		->
+		<conc> (newTypes1, newTypes2)
+	where
+		if <?SimpleSort("DerivedType")> argType1 then
+			newArgTypeName1	:= <newname>"DerivedMergeLHSType_";
+			newTypes1 := [(newArgTypeName1, <transform> (originalTypeSet, itrafo))]
+		else
+			newArgType1	:= argType1;
+			newTypes1 := []
+		end;
+		if <?SimpleSort("DerivedType")> argType2 then
+			newArgTypeName2	:= <newname>"DerivedMergeRHSType_";
+			newTypes2 := [(newArgTypeName2, <transform> (originalTypeSet, slavetrafo))]
+		else
+			newArgType2	:= argType2;
+			newTypes2 := []
+		end;
+		rules (
+			substituteDerivedTypesRelatedMerge : 
+				RelatedMerge(
+					itrafo, 
+					Function(name , [Arg(arg1, argType1), Arg(arg2, argType2)], resType, relationDef), 
+					slavetrafo
+				)
+				->
+				RelatedMerge(
+					itrafo, 
+					Function(name , [Arg(arg1, SimpleSort(newArgTypeName1)), Arg(arg2, SimpleSort(newArgTypeName2))], resType, relationDef), 
+					slavetrafo
+				)
+		)

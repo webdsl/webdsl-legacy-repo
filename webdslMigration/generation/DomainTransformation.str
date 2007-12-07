@@ -5,39 +5,51 @@ imports
 	Desugar
 
 strategies
-	main = 
+	main-DomainTransformation = 
 		io-wrap(
 			domainTransformationDesugar;
-			prepareAndApplyTransformation
+			transform
 		)
-		
-	prepareAndApplyTransformation : 
-		Transformer(entities, transformations) -> Transformer(<map(innermost(SubstituteInjection)); applyTransformation> transformations, [])
-			where <map(injectionConstruction)> entities
-			
+	
+	transform : 
+		Transformer(entities, transformations) -> <transform>(entities, transformations)
+	
+	transform : 
+		(entities, transformations) -> <map(innermost(SubstituteInjection); applyTransformation)> transformations
+			where 
+				<is-list> transformations;
+				<map(injectionConstruction)> entities
+	
+	transform : 
+		(entities, transformation) -> <innermost(SubstituteInjection); applyTransformation> transformation
+			where
+				<not(is-list)> transformation;
+				<map(injectionConstruction)> entities
+	
 	injectionConstruction : 
 		EntityNoSuper(entityName, properties, functions) -> EntityNoSuper(entityName, properties, functions)
 			where rules(SubstituteInjection : Injection(entityName) ->  EntityNoSuper(entityName, properties, functions))
 
 	applyTransformation = 
-		map(
-			innermost(
-				emptyEntityRewrite + 
-				ejectionRewrite +
-				propertyRemoval +
-				propertyAddition +
-				elevateAttributeOverReference +
-				propertyNameChange +
-				propertySimpleTypeChange +
-				propertyReferenceTypeChange
-			)
+		innermost(
+			emptyEntityRewrite + 
+			ejectionRewrite +
+			propertyRemoval +
+			propertyAddition +
+			elevateAttributeOverReference +
+			propertyNameChange +
+			propertySimpleTypeChange +
+			propertyReferenceTypeChange +
+			merge +
+			relatedMerge
 		)
 		
-	/** Constant **/
+	/****************************** Level 0 ******************************/
 	emptyEntityRewrite : 
 		EmptyEntity() ->
 			EntityNoSuper(<getType>, [], [])	// Name should be overwritten anyway
-	
+
+	/****************************** Level 1 ******************************/
 	/** Entity modifications **/
 	ejectionRewrite : 
 		Ejection(EntityNoSuper(entityName, properties, functions), newEntityName) ->
@@ -81,3 +93,24 @@ strategies
 					ChangeReferencePropertyType : Property(name, kind, _, annos) ->  Property(name, kind, newSort, annos) 
 				)
 	
+	/****************************** Level 2 ******************************/	
+	merge :
+		Merge(EntityNoSuper(entityName, masterProperties, functions), EntityNoSuper(_, [slaveProperty|slavePropertiesTail], _)) ->
+			Merge(EntityNoSuper(entityName, newProperties, functions), EntityNoSuper(entityName,  slavePropertiesTail, []))
+		where
+			<mergeElementAndList(|slaveProperty)> masterProperties => newProperties
+	merge :
+		Merge(EntityNoSuper(entityName, masterProperties, functions), EntityNoSuper(_, [], _)) ->
+			EntityNoSuper(entityName, masterProperties, functions)
+			
+	relatedMerge :
+		RelatedMerge(e1, _, e2) -> Merge(e1, e2)
+
+	/****************************** Auxiliary ******************************/	
+	mergeElementAndList(|element) : list -> list
+		where <elem> (element, list)
+	mergeElementAndList(|element) : list -> [element|list]
+		where not(<elem> (element, list))
+	
+			
+			
