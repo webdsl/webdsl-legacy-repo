@@ -67,9 +67,8 @@ exports
 		"$" Id															-> Transformation {cons("TransformationRequest")}
 		
 		
-		%% Transformation Id												-> EmbeddedClosedTransformation {cons("EmbeddedClosedTransformation")}
-		%% Transformation "split" "(" Id* ")" "to" EmbeddedClosedTransformation
-																		-> Transformation {cons("Split")}
+		Transformation "addProperty" Id "::" Sort "(" Exp ")"			-> RefinementTransformation {cons("DecorativePropertyAddition")}
+		
 		
 		
 		%% ---- Other ---- %%		

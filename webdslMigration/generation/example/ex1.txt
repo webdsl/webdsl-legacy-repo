@@ -23,11 +23,8 @@ transformations
 
 	BlogTransformation = 
 		Blog
-		addProperty (
-			subtitle,
-			String,
-			"defaultSubTitle"
-		)
+		addProperty 
+			subtitle :: String ("defaultSubTitle")
 		removeProperty(topic)
 		propertyNameChange(entries, blogEntries)
 		propertySimpleTypeChange(key, String)
