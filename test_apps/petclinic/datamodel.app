@@ -11,28 +11,30 @@ section definition
   }
 
   entity Pet {
-    name :: String(name)
+    name :: String(name, notempty)
     birthdate :: Date
     type -> PetType
     visits -> Set<Visit>
+    owner -> Owner (inverse=Owner.pets)
   }
 
   entity PetType {
-    name :: String(name)
+    name :: String(name, notempty)
   }
 
   entity Vet {
-    name :: String(name)
+    name :: String(name, notempty)
     specialties -> Set<Specialty>
   }
 
   entity Specialty {
-    name     :: String (name)
+    name     :: String (name, notempty)
   }
 
   entity Visit {
     date :: Date
     description :: String
+    pet -> Pet (inverse=Pet.visits)
   }
 
 section queries

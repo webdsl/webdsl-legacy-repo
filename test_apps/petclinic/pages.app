@@ -7,7 +7,7 @@ define page vets() {
   define body() {
     header { "Veterinarians:" }
     table() {
-      row { "Name" "Specialty" }
+      header { "Name" "Specialty" }
       for (v : Vet) {
         row {
           text(v.name)
@@ -48,7 +48,7 @@ define page owners(searchString : String) {
 
     header { "Owners:" }
     table() {
-      row { "Name" "Address" "City" "Telephone" }
+      header { "Name" "Address" "City" "Telephone" }
       for (o : Owner in foundOwners) {
         row { action(o.name, ownerDetails(o)) text(o.address) text(o.city) text(o.telephone) }
       }
@@ -56,6 +56,20 @@ define page owners(searchString : String) {
 
     action ownerDetails(owner : Owner) {
       return owner(owner);
+    }
+  }
+}
+
+define page owner(o : Owner) {
+  main()
+  define body() {
+
+    header { "Owner: " text(o.name) }
+    table() {
+      row { "Name: " text(o.name) }
+      row { "Address: " text(o.address) }
+      row { "City: " text(o.city) }
+      row { "Telephone: " text(o.telephone) }
     }
   }
 }

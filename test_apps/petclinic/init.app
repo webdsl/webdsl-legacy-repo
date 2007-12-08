@@ -60,7 +60,7 @@ section global data
         name := "George Franklin"
         address := "110 W. Liberty St."
         city := "Madison"
-        telephone := ""
+        telephone := "6085551023"
       };
 
     var o2 : Owner :=
@@ -68,7 +68,7 @@ section global data
         name := "Betty Davis"
         address := "638 Cardinal Ave."
         city := "Sun Prairie"
-        telephone := ""
+        telephone := "6085551749"
       };
 
     var o3 : Owner :=
@@ -76,7 +76,7 @@ section global data
         name := "Eduardo Rodriquez"
         address := "2693 Commerce St."
         city := "McFarland"
-        telephone := ""
+        telephone := "6085558763"
       };
 
     var o4 : Owner :=
@@ -84,7 +84,7 @@ section global data
         name := "Harold Davis"
         address := "563 Friendly St."
         city := "Windsor"
-        telephone := ""
+        telephone := "6085553198"
       };
 
     var o5 : Owner :=
@@ -92,7 +92,7 @@ section global data
         name := "Peter McTavish"
         address := "2387 S. Fair Way"
         city := "Madison"
-        telephone := ""
+        telephone := "6085552765"
       };
 
     var o6 : Owner :=
@@ -100,7 +100,7 @@ section global data
         name := "Jean Coleman"
         address := "105 N. Lake St."
         city := "Monona"
-        telephone := ""
+        telephone := "6085552654"
       };
 
     var o7 : Owner :=
@@ -108,7 +108,7 @@ section global data
         name := "Jeff Black"
         address := "1450 Oak Blvd."
         city := "Monona"
-        telephone := ""
+        telephone := "6085555387"
       };
 
     var o8 : Owner :=
@@ -116,7 +116,7 @@ section global data
         name := "Maria Escobito"
         address := "345 Maple St."
         city := "Madison"
-        telephone := ""
+        telephone := "6085557683"
       };
 
     var o9 : Owner :=
@@ -124,7 +124,7 @@ section global data
         name := "David Schroeder"
         address := "2749 Blackhawk Trail"
         city := "Madison"
-        telephone := ""
+        telephone := "6085559435"
       };
 
     var o10 : Owner :=
@@ -132,6 +132,58 @@ section global data
         name := "Carlos Estaban"
         address := "2335 Independence La."
         city := "Waunakee"
-        telephone := ""
+        telephone := "6085555487"
       };
+    
+    var pt1 : PetType :=
+      PetType {
+        name := "Cat"
+      };
+    
+    var pt2 : PetType :=
+      PetType {
+        name := "Dog"
+      };
+    
+    var pt3 : PetType :=
+      PetType {
+        name := "Parrot"
+      };
+    
+    var pt4 : PetType :=
+      PetType {
+        name := "Hamster"
+      };
+    
+    var p1 : Pet :=
+     Pet {
+       name := "Carla"
+       birthdate := Date("22/06/2002")
+       type := pt1
+       owner := o6
+     };
+     
+   var p2 : Pet :=
+     Pet {
+       name := "Harry"
+       birthdate := Date("13/04/2001")
+       type := pt4
+       owner := o6
+     };
+     
+   var p3 : Pet :=
+     Pet {
+       name := "Peter"
+       birthdate := Date("03/01/1997")
+       type := pt3
+       owner := o1
+     };
+     
+   var p4 : Pet :=
+     Pet {
+       name := "Fido"
+       birthdate := Date("18/11/1991")
+       type := pt2
+       owner := o3
+     };
   }
