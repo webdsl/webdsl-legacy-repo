@@ -68,7 +68,7 @@ exports
 		
 		
 		Transformation "addProperty" Id "::" Sort "(" Exp ")"			-> RefinementTransformation {cons("DecorativePropertyAddition")}
-		
+		Transformation "propertySimpleTypeChange" Id "::" Sort 			-> Transformation {cons("DecorativePropertySimpleTypeChange")}
 		
 		
 		%% ---- Other ---- %%		

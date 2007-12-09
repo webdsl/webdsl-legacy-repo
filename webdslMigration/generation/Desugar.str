@@ -8,7 +8,8 @@ strategies
 		// More or less harmless rewrites (merely change single node to semantically equivalent single node)
 		innermost(
 			rewriteDoubleQuote + 
-			rewriteDecorativePropertyAddition
+			rewriteDecorativePropertyAddition + 
+			rewriteDecorativePropertySimpleTypeChange
 		);
 		// More harmful rewrites
 		rewriteDefinitions;
@@ -19,6 +20,9 @@ strategies
 	
 	rewriteDecorativePropertyAddition : 
 		DecorativePropertyAddition(itrafo, propName, propType, propDefaultValue) -> PropertyAddition(itrafo, propName, propType, propDefaultValue)
+	
+	rewriteDecorativePropertySimpleTypeChange : 
+		DecorativePropertySimpleTypeChange(itrafo, propName, propType) -> PropertySimpleTypeChange(itrafo, propName, propType)
 	
 	rewriteDoubleQuote : 
 		String(x) -> String(y)

@@ -27,7 +27,8 @@ transformations
 			subtitle :: String ("defaultSubTitle")
 		removeProperty(topic)
 		propertyNameChange(entries, blogEntries)
-		propertySimpleTypeChange(key, String)
+		propertySimpleTypeChange
+			key :: String
 		propertyReferenceTypeChange(entries, BlogEntry, $BlogEntryTransformation)
 
 	transform
