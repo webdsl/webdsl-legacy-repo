@@ -37,8 +37,8 @@ strategies
 			);
 			concat
 		);
-		concat//;
-//		debug(!"Derived types: ") //TODO Print number of derived types
+		concat;
+		where (<fprintnl> (stdout(), [<length; int-to-string>, " intermediate types have been derived"]))
 	
 	deriveType (|originalTypeSet): 
 		RelatedMerge(

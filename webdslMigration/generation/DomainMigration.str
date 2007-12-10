@@ -41,7 +41,7 @@ strategies
 		surroundWithDefaultFunctionality(|persistenceUnit0, persistenceUnit1);
 		risky(java-file-to-file | "Cannot write java to file")
 	
-	surroundWithDefaultFunctionality(|persistenceUnit0, persistenceUnit1) : // TODO parametrize domain names
+	surroundWithDefaultFunctionality(|persistenceUnit0, persistenceUnit1) :
 		migrators -> JavaFile(["src"],
 		compilation-unit|[
 			package pkgname;
