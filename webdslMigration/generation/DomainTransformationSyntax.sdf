@@ -26,7 +26,7 @@ exports
 		%% ---- Framework ---- %%
 		"transform" Transformation Id									-> ClosedTransformation {cons("Ejection")}
 		ClosedTransformation											-> TransformerElement
-		"entities" Entity* "transformations" TransformerElement*		-> Transformer {cons("Transformer")}
+		Section* "transformations" TransformerElement*		-> Transformer {cons("Transformer")}
 
 		%% ==================================================================================== %%
 		

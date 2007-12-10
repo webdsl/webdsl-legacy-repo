@@ -20,11 +20,21 @@ strategies
 	constructMigration(|persistenceUnit0, persistenceUnit1) =
 		domainTransformationDesugar;
 		?Transformer(originalTypeSet, transformations);
-		!transformations;
+		
+		// Construct domain 0
+		rules (	DomainPackage :=  PackageName([Id("domain_0")]));
+		<collect-all(entity-to-java-Entity; risky(java-file-to-file | "Cannot write java to file (while constructing domain 0)"))> originalTypeSet;				
+		// TODO Use collect, without collecting
+		
+		// Construct domain 1
+		rules (	DomainPackage :=  PackageName([Id("domain_1")]));
+		<transform; map(entity-to-java-Entity); risky(map(java-file-to-file) | "Cannot write java to file (while constructing domain 1)")> (originalTypeSet, transformations);
+		
+		// Construct migration (intermediate  types and migration itself)
 		rules (	DomainPackage :=  PackageName([Id("migration")]));
-		handleIntermediateTypes(|originalTypeSet);
+		<handleIntermediateTypes(|originalTypeSet)> transformations;
 		constructCustomMigrator(|persistenceUnit0, persistenceUnit1);
-		echo(!"Migration successful")
+		!"Migration successful"
 	
 	constructCustomMigrator(|persistenceUnit0, persistenceUnit1) = 
 		map(constructTransformers(|"emf1", "domain_0", "domain_1")); 
@@ -93,9 +103,7 @@ strategies
 	propertyAdditionToMigration : 
 		PropertyAddition(itrafo, propertyName, _, defaultValue) -> 
 			|[ new AddAttribute("~propertyName", ~defaultValueExpression, ~itrafo) ]|
-		where <expression-to-java> defaultValue => defaultValueExpression;
-		<debug(!"---- DefaultValueExpression: ")> defaultValueExpression;
-		<debug(!"---- DefaultValue: ")> defaultValue
+		where <expression-to-java> defaultValue => defaultValueExpression
 	
 	propertyRemovalToMigration :
 		PropertyRemoval(itrafo, propertyName) ->
@@ -142,13 +150,17 @@ strategies
 		->
 		|[ 
 			new RelatedMerge (
-				new BinaryRelation <~x:argType1, ~x:argType2>(){public boolean relate(~x:argType1 ~x:arg1, ~x:argType2 ~x:arg2){~javaRelation} },
+				new BinaryRelation <~x:argType1, ~x:argType2>(){public boolean relate(~x:argType1 ~x:arg1, ~x:argType2 ~x:arg2){ ~javaRelation }},
 				new BeanTransformer(~slavetrafo, ~x:argType2.class),
 				new BeanTransformer(~itrafo, ~x:argType1.class)
 			)
 		]|
 		where
-			<risky(statement-to-java | "Cannot convert relation statements to java")> relationDef => javaRelation
+			{|
+				InFunction : 
+				rules(InFunction : _ -> <id>);	// to make sure the translation below is seen as function translation
+				javaRelation := <statement-to-java> relationDef
+			|}
 	
 	/* ---- Auxiliary strategies ---- */
 	getTypeConversion : 

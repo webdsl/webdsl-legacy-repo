@@ -1,4 +1,4 @@
-entities
+section domain
 
   entity BlogEntry {
     key       :: String (id)

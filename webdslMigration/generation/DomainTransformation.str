@@ -12,19 +12,21 @@ strategies
 		)
 	
 	transform : 
-		Transformer(entities, transformations) -> <transform>(entities, transformations)
+		Transformer(sections, transformations) -> <transform>(sections, transformations)
 	
 	transform : 
-		(entities, transformations) -> <map(innermost(SubstituteInjection); applyTransformation)> transformations
+		(sections, transformations) -> <map(innermost(SubstituteInjection); applyTransformation)> transformations
 			where 
 				<is-list> transformations;
-				<map(injectionConstruction)> entities
+				// TODO use collect withou the collecting part (result of collect not required
+				<collect-all(injectionConstruction)> sections	// collect is required, because the list of entities is actually a list of Sections
 	
 	transform : 
-		(entities, transformation) -> <innermost(SubstituteInjection); applyTransformation> transformation
+		(sections, transformation) -> <innermost(SubstituteInjection); applyTransformation> transformation
 			where
 				<not(is-list)> transformation;
-				<map(injectionConstruction)> entities
+				// TODO Same as above
+				<collect-all(injectionConstruction)> sections 	// collect is required, because the list of entities is actually a list of Sections
 	
 	injectionConstruction : 
 		EntityNoSuper(entityName, properties, functions) -> EntityNoSuper(entityName, properties, functions)

@@ -33,13 +33,12 @@ strategies
 	deriveTypes (|originalTypeSet) = 
 		map(
 			collect-all(
-				//debug(!"collecting from: ");
 				deriveType(|originalTypeSet)
 			);
 			concat
 		);
-		concat;
-		debug(!"Derived types: ")
+		concat//;
+//		debug(!"Derived types: ") //TODO Print number of derived types
 	
 	deriveType (|originalTypeSet): 
 		RelatedMerge(
