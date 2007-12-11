@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Vector;
 
 public abstract class UntypedTransformation{
-	public abstract Object getAttribute(List<Object> input, String attributeName) throws TransFormationException;
+	public abstract Object getAttribute(List<Object> input, String attributeName) throws TransformationException;
 	public abstract List<Injection> getInjections();
 	
-	public void transForm(List<Object> input, Object output, String[] attributeNames) throws TransFormationException
+	public void transForm(List<Object> input, Object output, String[] attributeNames) throws TransformationException
 	{
 		for(String attName : attributeNames)
 		{
@@ -29,15 +29,15 @@ public abstract class UntypedTransformation{
 				params[0] = transformedAttribute;
 				m.invoke(output, params);
 			} catch (IllegalArgumentException e) {
-				throw new TransFormationException("Target of transformation has a setter ("+getSetterFromAttributeName(attName)+") that does not accept a parameter of type "+transformedAttribute.getClass()+", which resulted from the given transformation (are the source domain, transformation and target domain compatible?)", e);
+				throw new TransformationException("Target of transformation has a setter ("+getSetterFromAttributeName(attName)+") that does not accept a parameter of type "+transformedAttribute.getClass()+", which resulted from the given transformation (are the source domain, transformation and target domain compatible?)", e);
 			} catch (IllegalAccessException e) {
-				throw new TransFormationException("Cannot access setter "+getSetterFromAttributeName(attName)+" of type "+output.getClass(), e);
+				throw new TransformationException("Cannot access setter "+getSetterFromAttributeName(attName)+" of type "+output.getClass(), e);
 			} catch (InvocationTargetException e) {
-				throw new TransFormationException("Setter "+getSetterFromAttributeName(attName)+" threw an exception during transformation", e);
+				throw new TransformationException("Setter "+getSetterFromAttributeName(attName)+" threw an exception during transformation", e);
 			} catch (SecurityException e) {
-				throw new TransFormationException("Could not access type "+output.getClass()+" to find a setter for attribute "+attName, e);
+				throw new TransformationException("Could not access type "+output.getClass()+" to find a setter for attribute "+attName, e);
 			} catch (NoSuchMethodException e) {
-				throw new TransFormationException("Did not find a setter for attribute "+attName+" in type "+output.getClass(), e);
+				throw new TransformationException("Did not find a setter for attribute "+attName+" in type "+output.getClass(), e);
 			}
 		}
 	}
@@ -50,9 +50,9 @@ public abstract class UntypedTransformation{
 	 * class. 
 	 * @param input Input to the transformation
 	 * @param output Output of the transformation (the contents of this parameter may be overwritten)
-	 * @throws TransFormationException If the transformation can not be completed correctly
+	 * @throws TransformationException If the transformation can not be completed correctly
 	 */
-	public void transForm(List<Object> input, Object output) throws TransFormationException
+	public void transForm(List<Object> input, Object output) throws TransformationException
 	{
 		// Select right methods (all setters)
 		Vector<String> editableAtts= new Vector<String>();

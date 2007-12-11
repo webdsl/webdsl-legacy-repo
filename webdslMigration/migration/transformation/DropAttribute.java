@@ -12,9 +12,9 @@ public class DropAttribute extends UntypedTransformation {
 	}
 
 	@Override
-	public Object getAttribute(List<Object> input, String attributeName) throws TransFormationException {
+	public Object getAttribute(List<Object> input, String attributeName) throws TransformationException {
 		if(attributeName.equals(this.attributeName))
-			throw new TransFormationException("Dropped attribute requested (" + attributeName+")");
+			throw new TransformationException("Dropped attribute requested (" + attributeName+")");
 		return inputTrafo.getAttribute(input, attributeName);
 	}
 

@@ -12,11 +12,11 @@ public class Merge extends UntypedTransformation {
 	}
 
 	@Override
-	public Object getAttribute(List<Object> input, String attributeName) throws TransFormationException {
+	public Object getAttribute(List<Object> input, String attributeName) throws TransformationException {
 		// Try master, if not succesful, use slave (possibly throws exception)
 		try {
 			return inputTrafo.getAttribute(input, attributeName);}
-		catch(TransFormationException e){}
+		catch(TransformationException e){}
 		return slaveTrafo.getAttribute(input, attributeName);
 	}
 

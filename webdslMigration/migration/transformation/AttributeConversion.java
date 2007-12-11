@@ -16,7 +16,7 @@ public class AttributeConversion extends UntypedTransformation {
 	}
 
 	@Override
-	public Object getAttribute(List<Object> input, String attributeName) throws TransFormationException {
+	public Object getAttribute(List<Object> input, String attributeName) throws TransformationException {
 		if(attributeName.equals(this.attributeName))
 		{
 			// Convert
@@ -25,13 +25,13 @@ public class AttributeConversion extends UntypedTransformation {
 			try {
 				return conversion.invoke(null, args);
 			} catch (IllegalArgumentException e) {
-				throw new TransFormationException("Attribute conversion does not accept single argument of type "+args[0].getClass().getName(), e);
+				throw new TransformationException("Attribute conversion does not accept single argument of type "+args[0].getClass().getName(), e);
 			} catch (IllegalAccessException e) {
-				throw new TransFormationException("Access to attribute conversion denied", e);
+				throw new TransformationException("Access to attribute conversion denied", e);
 			} catch (InvocationTargetException e) {
-				throw new TransFormationException("Attribute conversion threw an exception", e);
+				throw new TransformationException("Attribute conversion threw an exception", e);
 			} catch (NullPointerException e) {
-				throw new TransFormationException("Attribute conversion resulted in an NullPointerException, is the given conversion static?", e);
+				throw new TransformationException("Attribute conversion resulted in an NullPointerException, is the given conversion static?", e);
 			}
 		}
 		return inputTrafo.getAttribute(input, attributeName);

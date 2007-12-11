@@ -9,8 +9,8 @@ public class EmptyObject extends UntypedTransformation {
 	}
 
 	@Override
-	public Object getAttribute(List<Object> input, String attributeName) throws TransFormationException {
-		throw new TransFormationException("Attribute "+attributeName+" is not part of the transformation (getAttribute arrived at EmptyObject)");
+	public Object getAttribute(List<Object> input, String attributeName) throws TransformationException {
+		throw new TransformationException("Attribute "+attributeName+" is not part of the transformation (getAttribute arrived at EmptyObject)");
 	}
 	
 	@Override

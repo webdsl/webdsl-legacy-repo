@@ -10,7 +10,7 @@ public class Identity extends UntypedTransformation {
 	}
 
 	@Override
-	public Object getAttribute(List<Object> input, String attributeName) throws TransFormationException {
+	public Object getAttribute(List<Object> input, String attributeName) throws TransformationException {
 		return inputTrafo.getAttribute(input, attributeName);
 	}
 

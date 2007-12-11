@@ -1,4 +1,4 @@
-package transformation;
+package transformation.hibernate;
 
 import java.util.List;
 
@@ -6,6 +6,11 @@ import javax.persistence.EntityManagerFactory;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.ejb.HibernateEntityManagerFactory;
+
+import transformation.Injection;
+import transformation.TransformationException;
+import transformation.TypedTransformation;
+import transformation.UntypedTransformation;
 
 // TODO Verify list of persistent attributes before allowing regular getter
 
@@ -20,15 +25,15 @@ public class HibernateTransformer extends TypedTransformation {
 		this.targetEMF = targetEMF;
 	}
 	
-	public Object transform(List<Object> input) throws TransFormationException {
+	public Object transform(List<Object> input) throws TransformationException {
 		try {
 			Object trafoResult = targetClass.newInstance();
 			trans.transForm(input, trafoResult, getPersistentAttributeNames(targetEMF, targetClass));
 			return trafoResult;
 		} catch (InstantiationException e) {
-			throw new TransFormationException("Could not instantiate result of Hibernate transformation", e);
+			throw new TransformationException("Could not instantiate result of Hibernate transformation", e);
 		} catch (IllegalAccessException e) {
-			throw new TransFormationException("Could not instantiate result of Hibernate transformation (constructor restricted)", e);
+			throw new TransformationException("Could not instantiate result of Hibernate transformation (constructor restricted)", e);
 		}
 	}
 	

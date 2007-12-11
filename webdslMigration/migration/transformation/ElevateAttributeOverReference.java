@@ -21,7 +21,7 @@ public class ElevateAttributeOverReference extends UntypedTransformation {
 	}
 
 	@Override
-	public Object getAttribute(List<Object> input, String attributeName) throws TransFormationException {
+	public Object getAttribute(List<Object> input, String attributeName) throws TransformationException {
 		if(attributeName.equals(this.attributeName))
 		{
 			try {
@@ -29,15 +29,15 @@ public class ElevateAttributeOverReference extends UntypedTransformation {
 				Method getter = reference.getClass().getMethod(getGetterFromAttributeName(attributeName), new Class[0]);
 				return getter.invoke(reference, new Object[0]);
 			} catch (SecurityException e) {
-				throw new TransFormationException("Could not access the referenced object's attribute "+attributeName+" to descend its value", e);
+				throw new TransformationException("Could not access the referenced object's attribute "+attributeName+" to descend its value", e);
 			} catch (NoSuchMethodException e) {
-				throw new TransFormationException("Could not access the referenced object's attribute "+attributeName+" to descend its value (no getter defined)", e);
+				throw new TransformationException("Could not access the referenced object's attribute "+attributeName+" to descend its value (no getter defined)", e);
 			} catch (IllegalArgumentException e) {
-				throw new TransFormationException("Could not access the referenced object's attribute "+attributeName+" to descend its value (getter does not accept empty parameterlist)", e);
+				throw new TransformationException("Could not access the referenced object's attribute "+attributeName+" to descend its value (getter does not accept empty parameterlist)", e);
 			} catch (IllegalAccessException e) {
-				throw new TransFormationException("Could not access the referenced object's attribute "+attributeName+" to descend its value", e);
+				throw new TransformationException("Could not access the referenced object's attribute "+attributeName+" to descend its value", e);
 			} catch (InvocationTargetException e) {
-				throw new TransFormationException("Could not get attribute to descend, getter of attribute "+attributeName+" resulted in an exception", e);
+				throw new TransformationException("Could not get attribute to descend, getter of attribute "+attributeName+" resulted in an exception", e);
 			}
 		}
 		return inputTrafo.getAttribute(input, attributeName);

@@ -10,9 +10,9 @@ import org.hibernate.ReplicationMode;
 import org.hibernate.Session;
 import org.hibernate.ejb.HibernateEntityManager;
 
-import transformation.HibernateTransformer;
 import transformation.Injection;
-import transformation.TransFormationException;
+import transformation.TransformationException;
+import transformation.hibernate.HibernateTransformer;
 
 /**
  * The Hibernate migrator holds a source, target and transformation. Using these, it will extract objects from 
@@ -39,9 +39,9 @@ public class HibernateMigrator
 	 * available in the database. Object ID's will not be altered (even when these are set to be generated). If 
 	 * an id is already available in the database, the object containing it will not be overwritten. Any 
 	 * transformation result with this id will be ignored.
-	 * @throws TransFormationException When the transformation breaks down.
+	 * @throws TransformationException When the transformation breaks down.
 	 */
-	public void migrate() throws TransFormationException
+	public void migrate() throws TransformationException
 	{
 		List<Injection> injections = transformer.getInjections();
 		
@@ -55,7 +55,7 @@ public class HibernateMigrator
 		targetTrans.commit();	// TODO Improve
 	}
 	
-	protected void migrate(List<Injection> unProcessedInjections, List<Object> input) throws TransFormationException
+	protected void migrate(List<Injection> unProcessedInjections, List<Object> input) throws TransformationException
 	{
 		// If all injections are processed, start transformer
 		if(unProcessedInjections.size() == 0)

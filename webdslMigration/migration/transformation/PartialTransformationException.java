@@ -1,6 +1,6 @@
 package transformation;
 
-public class PartialTransformationException extends TransFormationException {
+public class PartialTransformationException extends TransformationException {
 	public PartialTransformationException() {
 		super("Transformation not defined for this combination of inputs");
 	}

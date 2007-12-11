@@ -14,7 +14,7 @@ public class AttributeNameChange extends UntypedTransformation {
 	}
 
 	@Override
-	public Object getAttribute(List<Object> input, String attributeName) throws TransFormationException {
+	public Object getAttribute(List<Object> input, String attributeName) throws TransformationException {
 		if(attributeName.equals(newAttributeName))
 			return inputTrafo.getAttribute(input, oldAttributeName);
 		return inputTrafo.getAttribute(input, attributeName);

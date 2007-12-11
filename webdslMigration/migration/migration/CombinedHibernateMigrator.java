@@ -5,8 +5,8 @@ package migration;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-import transformation.HibernateTransformer;
-import transformation.TransFormationException;
+import transformation.TransformationException;
+import transformation.hibernate.HibernateTransformer;
 
 public class CombinedHibernateMigrator 
 {
@@ -35,7 +35,7 @@ public class CombinedHibernateMigrator
         }
 	}
 	
-	public void migrate() throws TransFormationException
+	public void migrate() throws TransformationException
 	{
 		for(HibernateMigrator migrator : migrators)
 			migrator.migrate();

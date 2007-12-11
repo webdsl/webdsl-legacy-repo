@@ -12,7 +12,7 @@ public class RelatedMerge extends Merge {
 	}
 
 	@Override
-	public Object getAttribute(List<Object> input, String attributeName) throws TransFormationException {
+	public Object getAttribute(List<Object> input, String attributeName) throws TransformationException {
 		// Check 
 		Object inputResult = ((TypedTransformation)getInputTrafo()).transform(input);
 		Object slaveResult = ((TypedTransformation)getSlaveTrafo()).transform(input);

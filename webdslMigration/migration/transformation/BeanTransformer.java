@@ -11,15 +11,15 @@ public class BeanTransformer extends TypedTransformation {
 		this.targetClass = targetClass;
 	}
 	
-	public Object transform(List<Object> input) throws TransFormationException {
+	public Object transform(List<Object> input) throws TransformationException {
 		try {
 			Object trafoResult = targetClass.newInstance();
 			trans.transForm(input, trafoResult);
 			return trafoResult;
 		} catch (InstantiationException e) {
-			throw new TransFormationException("Could not instantiate result of transformation", e);
+			throw new TransformationException("Could not instantiate result of transformation", e);
 		} catch (IllegalAccessException e) {
-			throw new TransFormationException("Could not instantiate result of transformation (constructor restricted)", e);
+			throw new TransformationException("Could not instantiate result of transformation (constructor restricted)", e);
 		}
 	}
 

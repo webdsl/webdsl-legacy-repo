@@ -1,12 +1,12 @@
 package transformation;
 
-public class TransFormationException extends Exception {
+public class TransformationException extends Exception {
 
-	public TransFormationException(String msg) {
+	public TransformationException(String msg) {
 		super(msg);
 	}
 	
-	public TransFormationException(String msg, Throwable cause) {
+	public TransformationException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 }

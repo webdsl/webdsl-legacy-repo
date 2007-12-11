@@ -15,7 +15,7 @@ public class AttributeTransformation extends UntypedTransformation {
 	}
 
 	@Override
-	public Object getAttribute(List<Object> input, String attributeName) throws TransFormationException {
+	public Object getAttribute(List<Object> input, String attributeName) throws TransformationException {
 		if(attributeName.equals(this.attributeName))
 		{
 			List<Object> transformInput = new Vector<Object>();
