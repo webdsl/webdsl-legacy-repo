@@ -1,8 +1,12 @@
 package org.webdsl.tools;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.faces.context.FacesContext;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 
 public final class Utils {
 	public static Date parseDate(String date, String format) {
@@ -36,5 +40,23 @@ public final class Utils {
 			return false;
 		}
 		return a.equals(b);
+	}
+	
+	public static void download(FacesContext facesContext, byte[] file, String name, String type) {
+		if (!facesContext.getResponseComplete()) {
+	    	   HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
+	    	   response.setContentType(type);
+	    	   response.setContentLength(file.length);
+	    	   response.setHeader("Content-disposition","attachment; filename=" + name);
+	    	   ServletOutputStream out;
+	    	   try {
+	    		   out = response.getOutputStream();
+	    		   out.write(file);
+	    		   out.flush();
+	    	   } catch (IOException e) {
+	    		//TODO: something  
+	    	   }
+	    	   facesContext.responseComplete();
+	       }
 	}
 }
