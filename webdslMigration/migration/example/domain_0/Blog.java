@@ -1,9 +1,11 @@
 package example.domain_0;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 @Entity @javax.persistence.Inheritance(strategy = javax.persistence.InheritanceType.SINGLE_TABLE) @javax.persistence.DiscriminatorColumn(name = "DISCRIMINATOR", discriminatorType = javax.persistence.DiscriminatorType.STRING, length = 255) public class Blog  implements Serializable
 { 
@@ -48,7 +50,7 @@ import javax.persistence.Id;
   { 
     this._title = _title;
   }
-/*
+
   @ManyToMany(fetch = javax.persistence.FetchType.LAZY) @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE}) private java.util.List<BlogEntry> _entries = new java.util.ArrayList<BlogEntry>();
 
   public java.util.List<BlogEntry> getEntries()
@@ -73,5 +75,5 @@ import javax.persistence.Id;
   public int getEntriesLength()
   { 
     return getEntries().size();
-  }*/
+  }
 }

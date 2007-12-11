@@ -2,14 +2,14 @@ section domain
 
   entity BlogEntry {
     key       :: String (id)
-    title     :: String (name)
+    title     :: String
     author    -> User
     body      :: WikiText
   }
 
   entity Blog {
     key        :: String (id)
-    title      :: String (name)
+    title      :: String
     topic      :: String
     entries    -> List<BlogEntry>
   }
@@ -29,14 +29,13 @@ transformations
 		propertyNameChange(entries, blogEntries)
 		propertySimpleTypeChange
 			key :: String
-		propertyReferenceTypeChange(entries, BlogEntry, $BlogEntryTransformation)
+		propertyReferenceTypeChange(entries, List<BlogEntry>, $BlogEntryTransformation)
 
 	transform
 		Blog
 		relatedMerge (	
 			function relation(b1 : DerivedType, b2 : DerivedType) : Bool {return b1.key = b2.key;},
 			Blog
-			removeProperty(key)
 			removeProperty(topic)
 			removeProperty(entries)
 			propertyNameChange(title, subTitle)

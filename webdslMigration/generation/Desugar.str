@@ -2,9 +2,17 @@ module Desugar
 imports
 	DomainTransformationSyntax
 	liblib
+	org/webdsl/dsl/transformation/desugar
+	org/webdsl/dsl/transformation/types
+	org/webdsl/dsl/utils/utils
+	org/webdsl/dsl/generation/xhtml-page
+	org/webdsl/dsl/syntax/parse-webdsl
+	org/webdsl/dsl/generation/generator
 
 strategies
 	domainTransformationDesugar = 
+		desugarDomain;
+		
 		// More or less harmless rewrites (merely change single node to semantically equivalent single node)
 		innermost(
 			rewriteDoubleQuote + 
@@ -17,6 +25,9 @@ strategies
 			rewriteOpenEnd
 		)
 	// TODO reference to self??	
+	
+	desugarDomain : 
+		Transformer(dom, trans) -> Transformer(<desugar-any> dom, trans)	// TODO attach extend entity not taken into account
 	
 	rewriteDecorativePropertyAddition : 
 		DecorativePropertyAddition(itrafo, propName, propType, propDefaultValue) -> PropertyAddition(itrafo, propName, propType, propDefaultValue)

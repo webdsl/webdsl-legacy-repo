@@ -6,22 +6,38 @@ import javax.persistence.Persistence;
 import migration.CombinedHibernateMigrator;
 import migration.HibernateTransFormerClassPair;
 import transformation.AddAttribute;
+import transformation.AttributeConversion;
+import transformation.AttributeTransformation;
 import transformation.BeanTransformer;
 import transformation.BinaryRelation;
 import transformation.Injection;
+import transformation.PrimitiveTypeConversions;
 import transformation.RelatedMerge;
-import transformation.TransFormationException;
+import transformation.TransformationException;
+import transformation.hibernate.HibernateTransformationMapping;
+import transformation.hibernate.HibernateTransformer;
 
 public class ExampleMigrator {
 	
-	public static void main(String[] args)
+	public static void main(String[] args) throws TransformationException
 	{
 		EntityManagerFactory emf0 = Persistence.createEntityManagerFactory("webdslDomain0");
 		EntityManagerFactory emf1 = Persistence.createEntityManagerFactory("webdslDomain1");
 		
 		HibernateTransFormerClassPair[] transformers = {
 				new HibernateTransFormerClassPair(
-					new AddAttribute("newAttribute", "newAttributeValue", new Injection(example.domain_0.Blog.class)),
+					new AttributeTransformation("entries",
+						new HibernateTransformationMapping(
+							java.util.List.class,
+							new HibernateTransformer(
+								new AttributeConversion("key", PrimitiveTypeConversions.selectByName("identity"),
+								new Injection(example.domain_0.Blog.class)),
+								example.domain_1.Blog.class,
+								emf1
+							)
+						),
+					new AddAttribute("newAttribute", "newAttributeValue", 
+					new Injection(example.domain_0.Blog.class))),
 					example.domain_1.Blog.class
 				),
 				new HibernateTransFormerClassPair(
@@ -41,7 +57,7 @@ public class ExampleMigrator {
 		
 		try {
 			hmig.migrate();
-		} catch (TransFormationException e) {
+		} catch (TransformationException e) {
 			e.printStackTrace();
 		}
 		

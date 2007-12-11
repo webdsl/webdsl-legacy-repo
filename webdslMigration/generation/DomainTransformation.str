@@ -75,7 +75,6 @@ strategies
 		PropertyNameChange(EntityNoSuper(entityName, properties, functions), oldName, newName) ->
 			EntityNoSuper(entityName, <map(try(ChangePropertyName))> properties, functions)
 				where rules(
-					ChangePropertyName : PropertyNoAnno(oldName, kind, sort) ->  PropertyNoAnno(newName, kind, sort)
 					ChangePropertyName : Property(oldName, kind, sort, annos) ->  Property(newName, kind, sort, annos) 
 				)
 				
@@ -83,7 +82,6 @@ strategies
 		PropertySimpleTypeChange(EntityNoSuper(entityName, properties, functions), name, newSort) ->
 			EntityNoSuper(entityName, <map(try(ChangeSimplePropertyType))> properties, functions)
 				where rules(	// TODO Scope required?
-					ChangeSimplePropertyType : PropertyNoAnno(name, kind, _) ->  PropertyNoAnno(name, kind, newSort)
 					ChangeSimplePropertyType : Property(name, kind, _, annos) ->  Property(name, kind, newSort, annos) 
 				)
 	
@@ -91,7 +89,6 @@ strategies
 		PropertyReferenceTypeChange(EntityNoSuper(entityName, properties, functions), name, newSort, _) ->
 			EntityNoSuper(entityName, <map(try(ChangeReferencePropertyType))> properties, functions)
 				where rules(	// TODO Scope required?
-					ChangeReferencePropertyType : PropertyNoAnno(name, kind, _) ->  PropertyNoAnno(name, kind, newSort)
 					ChangeReferencePropertyType : Property(name, kind, _, annos) ->  Property(name, kind, newSort, annos) 
 				)
 	

@@ -50,8 +50,7 @@ exports
 
 		%% ---- Combined ---- %% TODO !
 		Transformation "propertySimpleTypeChange" "(" Id "," Sort ")"	-> Transformation {cons("PropertySimpleTypeChange")}
-		Transformation "propertyReferenceTypeChange" "(" Id "," Id "," Transformation ")"	
-
+		Transformation "propertyReferenceTypeChange" "(" Id "," Sort "," Transformation ")"
 																		-> Transformation {cons("PropertyReferenceTypeChange")}
 		Transformation "merge" "(" Transformation ")"
 																		-> Transformation {cons("Merge")}
