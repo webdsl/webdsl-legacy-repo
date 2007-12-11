@@ -113,6 +113,11 @@ public class StrategoJava15FoldingUpdater extends FolderBase {
 			return true;
 		}
 		
+		public boolean visit(Imports n) {
+			helper.makeCompleteAnnotation(n);
+			return true;
+		}
+		
 		public boolean visit(MethodDec n) {
 			helper.makeCompleteAnnotation(n);
 			return true;
@@ -134,7 +139,7 @@ public class StrategoJava15FoldingUpdater extends FolderBase {
 		}
 		
 		public boolean visit(parser.ast.List n) {
-			if (n.getElementSort().equals("ImportDec_JavaObject"))
+			if (n.getElementSort().equals("ImportDec_JavaObject") || n.getElementSort().equals("ImportDec_JavaObject"))
 				helper.makeCompleteAnnotation(n);
 			return true;
 		}
