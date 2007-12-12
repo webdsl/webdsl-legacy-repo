@@ -5,6 +5,19 @@ imports
 	Desugar
 
 strategies
+// WebDSL and transformation syntax integration
+/*	transform : 
+		// Select the transformations first (we no longer need the type information, or any of that kind)
+		sections -> <collect-all-transformations; applyTransformation> injectionLessSections
+		where
+		{|	SubstituteInjection :
+			alltd(injectionConstruction);
+			injectionLessSections := outermost(SubstituteInjection)
+		|}
+		
+	collect-all-transformations = 
+		collect-all(?Ejection(_, _))
+*/
 	transform : 
 		Transformer(sections, transformations) -> <transform>(sections, transformations)
 	

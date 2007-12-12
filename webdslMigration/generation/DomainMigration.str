@@ -27,7 +27,6 @@ strategies
 		info(|"constructing source domain");
 		rules (	DomainPackage :=  PackageName([Id("domain_0")]));
 		!originalTypeSet;
-		debug(!"original typeset: ");
 		(alltd(declare-entity)										<+ error(|"Unable to declare source domain entities"));		
 		(alltd(entity-to-java-Entity)								<+ error(|"Unable to translate entity to java entity"));
 		(alltd(java-file-to-file)									<+ error(|"Cannot write java to file (while constructing source domain)"));
@@ -37,7 +36,6 @@ strategies
 		rules (	DomainPackage :=  PackageName([Id("domain_1")]));
 		!(originalTypeSet, transformations);
 		(transform	 								 				<+ error(|"Unable to apply transformations to domain"));
-		debug(!"Transformed typeset ");
 		(alltd(declare-entity) 										<+ error(|"Unable to declare target domain entities"));
 		(map(entity-to-java-Entity)									<+ error(|"Unable to translate entity to java entity"));
 		(map(java-file-to-file)			 							<+ error(|"Cannot write java to file (while constructing target domain)"));
