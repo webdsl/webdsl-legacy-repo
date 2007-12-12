@@ -7,3 +7,5 @@ all :
 sdf2imp :
 	$(MAKE) -C org.strategoxt.imp.metatooling sdf2imp
 
+check :
+	$(MAKE) -C org.strategoxt.imp.metatooling check
