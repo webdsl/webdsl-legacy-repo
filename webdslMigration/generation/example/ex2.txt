@@ -1,60 +1,32 @@
-entities
-
-  entity BlogEntry {
-    blog      -> Blog (inverse=Blog.entries)
-    key       :: String (id)
-    title     :: String (name)
-    author    -> User
-    created   :: Date
-    updated   :: Date
-    category  -> Category // select from categories defined in blog
-    intro     :: WikiText
-    body      :: WikiText
-    comments  <> List<BlogComment>
-  }
-
-  entity Blog {
-    key        :: String (id)
-    title      :: String (name)
-    entries    -> List<BlogEntry>
-  }
+imports blog/data
 
 transformations
 
-	BlogEntryTransformation = 
-		BlogEntry
-		removeProperty(intro)
-		removeProperty(updated)
-		removeProperty(comments)
-
 	BlogTransformation = 
 		Blog
-		addProperty 
-			subtitle :: String ("defaultSubTitle")
-		removeProperty(title)
-		propertyNameChange(entries, blogEntries)
-		propertySimpleTypeChange
-			key :: String
-		propertyReferenceTypeChange(entries, BlogEntry, $BlogEntryTransformation)
-
-	transform
-		Blog
-		relatedMerge (	
-			function relation(b1 : DerivedType, b2 : DerivedType) : Bool {return b1.key = b2.key;},
-			Blog
-			removeProperty(key)
-			removeProperty(entries)
-		)
-		Bla
+		removeProperty authors	// Set not supported yet
+		propertyReferenceTypeChange(entries, List<BlogEntry>, $BlogEntryTransformation)
+		propertyReferenceTypeChange(categories, List<Category>, Category)
 		
-
+	BlogEntryTransformation = 
+		BlogEntry
+		removeProperty blog		// Mutual references not supported yet
+		propertyReferenceTypeChange(user, User, User)	// !!!!!!!!!!!!!!!!!!
+		propertyReferenceTypeChange(category, Category, Category)
+		propertyReferenceTypeChange(comments, List<BlogComment>, BlogComment)
+	
+	BlogCommentTransformation = 
+		BlogComment
+		propertyReferenceTypeChange(author, User, User)
+		
 	transform
 		$BlogTransformation
-		Blag
-	
 	transform
 		$BlogEntryTransformation
-		
 	transform
-		emptyEntity
-		someNewEntityName
+		$BlogCommentTransformation
+	transform
+		Category
+	transform
+		User
+	

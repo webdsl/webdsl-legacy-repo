@@ -15,7 +15,7 @@
 		<mkdir dir="${dist}"/>
 	</target>
 
-	<target name="buildAll" depends="pack-sdf,processSyntaxToCompiler,strc"/>
+	<target name="buildAll" depends="pack-sdf,processSyntaxToCompiler,domainMigration"/>
 
 	<target name="pack-sdf" depends="init">
 		<apply executable="${strategoBinariesLocation}/pack-sdf" dest="${build}">
@@ -30,12 +30,14 @@
 		</apply>
 	</target>
 
-	<target name="strc" depends="init">
+	<target name="domainMigration" depends="init">
 		<apply executable="${strategoBinariesLocation}/strc" dest="${dist}">
 			<arg value="-i"/>
 			<srcfile/>
 			<arg value="-o"/>
 			<targetfile/>
+			<arg value="-m"/>
+			<arg value="main-DomainMigration"/>
 			<arg value="-I"/>
 			<arg value="${webdslsLocation}/trunk/src/org/webdsl/dsl/syntax"/>
 			<arg value="-I"/>
@@ -54,7 +56,7 @@
 			<arg value="-la"/>
 			<arg value="${user.home}/.nix-profile/lib/libjava-front.la"/>
 
-			<fileset dir="${src}" includes="*.str" excludes="Desugar.str"/>
+			<fileset dir="${src}" includes="DomainMigration.str"/>
 			<mapper type="glob" from="*.str" to="*"/>
 		</apply>
 	</target>
@@ -86,5 +88,9 @@
 
 	<target name="clean" description="clean up" >
 		<delete dir="${build}"/>
+	</target>
+
+	<target name="cleanall" description="clean up" depends="clean" >
+		<delete dir="${dist}"/>
 	</target>
 </project>

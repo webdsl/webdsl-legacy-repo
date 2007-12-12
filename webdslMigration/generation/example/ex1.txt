@@ -9,7 +9,7 @@ section domain
 
   entity Blog {
     key        :: String (id)
-    title      :: String
+    title      :: String (name)
     topic      :: String
     entries    -> List<BlogEntry>
   }

@@ -17,26 +17,52 @@ strategies
 	main-DomainMigration = 
 		io-wrap(constructMigration(|"webdslorg0", "webdslorg1"))
 	
+	
+	
 	constructMigration(|persistenceUnit0, persistenceUnit1) =
-		domainTransformationDesugar;
-		risky(alltd(declare-entity) | "Unable to declare entities");		// Make sure the entities can be translated to java
+		prepare;
 		?Transformer(originalTypeSet, transformations);
 		
 		// Construct domain 0
+		info(|"constructing source domain");
 		rules (	DomainPackage :=  PackageName([Id("domain_0")]));
-		<alltd(entity-to-java-Entity; risky(java-file-to-file | "Cannot write java to file (while constructing domain 0)"))> originalTypeSet;
+		!originalTypeSet;
+		debug(!"original typeset: ");
+		(alltd(declare-entity)										<+ error(|"Unable to declare source domain entities"));		
+		(alltd(entity-to-java-Entity)								<+ error(|"Unable to translate entity to java entity"));
+		(alltd(java-file-to-file)									<+ error(|"Cannot write java to file (while constructing source domain)"));
 		
 		// Construct domain 1
+		info(|"constructing target domain");
 		rules (	DomainPackage :=  PackageName([Id("domain_1")]));
-		<transform; map(entity-to-java-Entity); risky(map(java-file-to-file) | "Cannot write java to file (while constructing domain 1)")> (originalTypeSet, transformations);
+		!(originalTypeSet, transformations);
+		(transform	 								 				<+ error(|"Unable to apply transformations to domain"));
+		debug(!"Transformed typeset ");
+		(alltd(declare-entity) 										<+ error(|"Unable to declare target domain entities"));
+		(map(entity-to-java-Entity)									<+ error(|"Unable to translate entity to java entity"));
+		(map(java-file-to-file)			 							<+ error(|"Cannot write java to file (while constructing target domain)"));
 		
 		// Construct migration (intermediate  types and migration itself)
 		rules (	DomainPackage :=  PackageName([Id("migration")]));
-			// Ugly hack: view all target types as intermediate types, because the entity to java cannot process package names (only used for entity definitions that refer to target type in generic types)
+		info(|"deriving and constructing intermediate types");
+			// Ugly hack - view all target types as intermediate types, because the entity to java cannot process package names (only used for entity definitions that refer to target type in generic types)
 			<alltd(entity-to-java-Entity; risky(java-file-to-file | "Cannot write java to file (while constructing domain 1 to be used as intermediate types)"))> originalTypeSet;
 		<handleIntermediateTypes(|originalTypeSet)> transformations;
+		info(|"constructing migrator");
 		constructCustomMigrator(|persistenceUnit0, persistenceUnit1);
-		!"Migration successful"
+		info(|"migration generated");
+		!""
+	
+	prepare = 
+		info(|"importing modules");
+		importModulesInTransformer;
+		info(|"desugaring domain");
+		desugarDomain;
+		info(|"desugaring transformations");
+		desugarTransformations
+	
+	importModulesInTransformer : 
+		Transformer(originalTypeSet, transformations) -> Transformer(<import-modules> originalTypeSet, transformations)
 	
 	constructCustomMigrator(|persistenceUnit0, persistenceUnit1) = 
 		map(constructTransformers(|"emf1", "domain_0", "domain_1")); 
@@ -182,5 +208,8 @@ strategies
 			|}
 	
 	/* ---- Auxiliary strategies ---- */
+	error(|msg) = 
+		log(|Error(), msg, <id>)
+	
 	getTypeConversion : 
 		String -> |[ PrimitiveTypeConversions.selectByName("toString") ]|

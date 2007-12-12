@@ -5,12 +5,6 @@ imports
 	Desugar
 
 strategies
-	main-DomainTransformation = 
-		io-wrap(
-			domainTransformationDesugar;
-			transform
-		)
-	
 	transform : 
 		Transformer(sections, transformations) -> <transform>(sections, transformations)
 	
@@ -73,24 +67,33 @@ strategies
 	/** Property modifications **/
 	propertyNameChange :
 		PropertyNameChange(EntityNoSuper(entityName, properties, functions), oldName, newName) ->
-			EntityNoSuper(entityName, <map(try(ChangePropertyName))> properties, functions)
-				where rules(
-					ChangePropertyName : Property(oldName, kind, sort, annos) ->  Property(newName, kind, sort, annos) 
-				)
+			EntityNoSuper(entityName, newProperties, functions)
+			where 
+			{|	ChangePropertyName : 
+				rules(
+					ChangePropertyName : Property(oldName, kind, sort, annos) ->  Property(newName, kind, sort, annos) );
+				newProperties := <map(try(ChangePropertyName))> properties
+			|}
 				
 	propertySimpleTypeChange :
 		PropertySimpleTypeChange(EntityNoSuper(entityName, properties, functions), name, newSort) ->
-			EntityNoSuper(entityName, <map(try(ChangeSimplePropertyType))> properties, functions)
-				where rules(	// TODO Scope required?
-					ChangeSimplePropertyType : Property(name, kind, _, annos) ->  Property(name, kind, newSort, annos) 
-				)
+			EntityNoSuper(entityName, newProperties, functions)
+			where 
+			{|	ChangeSimplePropertyType : 
+				rules(
+					ChangeSimplePropertyType : Property(name, kind, _, annos) ->  Property(name, kind, newSort, annos) );
+				newProperties := <map(try(ChangeSimplePropertyType))> properties
+			|}
 	
 	propertyReferenceTypeChange :
 		PropertyReferenceTypeChange(EntityNoSuper(entityName, properties, functions), name, newSort, _) ->
-			EntityNoSuper(entityName, <map(try(ChangeReferencePropertyType))> properties, functions)
-				where rules(	// TODO Scope required?
-					ChangeReferencePropertyType : Property(name, kind, _, annos) ->  Property(name, kind, newSort, annos) 
-				)
+			EntityNoSuper(entityName, newProperties, functions)
+			where
+			{|	ChangeReferencePropertyType : 
+				rules(
+					ChangeReferencePropertyType : Property(name, kind, _, annos) ->  Property(name, kind, newSort, annos) );
+				newProperties := <map(try(ChangeReferencePropertyType))> properties
+			|}
 	
 	/****************************** Level 2 ******************************/	
 	merge :

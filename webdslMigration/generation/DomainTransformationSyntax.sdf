@@ -26,7 +26,7 @@ exports
 		%% ---- Framework ---- %%
 		"transform" Transformation Id									-> ClosedTransformation {cons("Ejection")}
 		ClosedTransformation											-> TransformerElement
-		Section* "transformations" TransformerElement*		-> Transformer {cons("Transformer")}
+		Section* "transformations" TransformerElement*					-> Transformer {cons("Transformer")}
 
 		%% ==================================================================================== %%
 		
@@ -68,6 +68,7 @@ exports
 		
 		Transformation "addProperty" Id "::" Sort "(" Exp ")"			-> RefinementTransformation {cons("DecorativePropertyAddition")}
 		Transformation "propertySimpleTypeChange" Id "::" Sort 			-> Transformation {cons("DecorativePropertySimpleTypeChange")}
+		Transformation "removeProperty" Id			 					-> RestrictingTransformation {cons("PropertyRemoval")}
 		
 		
 		%% ---- Other ---- %%		
