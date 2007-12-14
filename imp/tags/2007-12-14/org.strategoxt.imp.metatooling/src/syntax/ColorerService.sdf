@@ -1,0 +1,51 @@
+module ColorerService
+
+imports
+  Common
+
+exports
+
+  sorts
+    Section ColorRule Font Color ColorName ColorRuleId TokenKind TokenKindName
+
+  context-free syntax
+	"colorer" ColorRule* -> Section {cons("Colorer")}
+	
+	"colorer" -> RuleId {reject}
+
+  context-free syntax
+    ColorRuleId ":" Color Color? Font -> ColorRule {cons("Rule")}
+    
+    RuleId        -> ColorRuleId
+    TokenKindName -> ColorRuleId {cons("Token"), prefer}
+    
+    "identifier" "token" -> TokenKindName {cons("TK_IDENTIFIER")}
+    "number"     "token" -> TokenKindName {cons("TK_NUMBER")}
+    "string"     "token" -> TokenKindName {cons("TK_STRING")}
+    "keyword"    "token" -> TokenKindName {cons("TK_KEYWORD")}
+    "operator"   "token" -> TokenKindName {cons("TK_OPERATOR")}
+    "var"        "token" -> TokenKindName {cons("TK_VAR")}
+    "junk"       "token" -> TokenKindName {cons("TK_JUNK")}
+    "unknown"    "token" -> TokenKindName {cons("TK_UNKNOWN")}
+    
+             -> Font {cons("NORMAL")}
+    "bold"   -> Font {cons("BOLD")}
+    "italic" -> Font {cons("ITALIC")}
+  
+    ColorName   -> Color {cons("ColorName")}
+    Int Int Int -> Color {cons("ColorRGB")}
+  
+    "red"            -> ColorName {cons("RED")}
+    "dark" "red"     -> ColorName {cons("DARK_RED")}
+    "green"          -> ColorName {cons("GREEN")}
+    "dark" "green"   -> ColorName {cons("DARK_GREEN")}
+    "white"          -> ColorName {cons("WHITE")}
+    "black"          -> ColorName {cons("BLACK")}
+    "yellow"         -> ColorName {cons("YELLOW")}
+    "dark" "yellow"  -> ColorName {cons("DARK_YELLOW")}
+    "blue"           -> ColorName {cons("BLUE")}
+    "dark" "blue"    -> ColorName {cons("DARK_BLUE")}
+    "magenta"        -> ColorName {cons("MAGENTA")}
+    "dark" "magenta" -> ColorName {cons("DARK_MAGENTA")}
+    "gray"           -> ColorName {cons("GRAY")}
+    "dark" "gray"    -> ColorName {cons("DARK_GRAY")}

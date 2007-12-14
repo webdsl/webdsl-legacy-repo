@@ -1,0 +1,22 @@
+* Install IMP
+  - Preferably from source: http://eclipse-imp.sourceforge.net/developers/
+  - May require Wine:
+    http://eclipse-imp.sourceforge.net/jikespg/index.html#LPG_Troubleshooting
+  - Building it is probably easiest when copying the IMP jars from an existing
+    (Windows) installation
+
+* Patch the WebDSL syntax for jsglr compatibility (known bug):
+  - Change the following line in WebDSL.sdf  (by default in
+    ../../webdsls/trunk/src/org/webdsl/dsl/syntax/WebDSL.sdf):
+       LAYOUT? -/- [\/].[\/] to 
+    to   
+       %% HACK: JSGLR doesn't accept this atm
+       %% LAYOUT? -/- [\/].[\/]
+
+* Build the WebDSL syntax (by default in ../../webdsls/trunk/):
+  $ make syntax
+
+* Launch the plugin Makefiles:
+  $ make
+
+* Continue building the plugins in an IMP-enabled Eclipse instance.
