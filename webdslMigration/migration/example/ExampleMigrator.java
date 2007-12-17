@@ -6,11 +6,13 @@ import javax.persistence.Persistence;
 import migration.CombinedHibernateMigrator;
 import migration.HibernateTransFormerClassPair;
 import transformation.AddAttribute;
+import transformation.AddAttributeDefaultValue;
 import transformation.AttributeConversion;
 import transformation.AttributeTransformation;
 import transformation.BeanTransformer;
 import transformation.BinaryRelation;
 import transformation.Injection;
+import transformation.ObjectConversion;
 import transformation.PrimitiveTypeConversions;
 import transformation.RelatedMerge;
 import transformation.TransformationException;
@@ -36,12 +38,13 @@ public class ExampleMigrator {
 								emf1
 							)
 						),
-					new AddAttribute("newAttribute", "newAttributeValue", 
+					new AddAttribute("newAttribute", 
+							new ObjectConversion<example.domain_0.Blog> () { public Object convert(example.domain_0.Blog i) {return i.getId();}}, 
 					new Injection(example.domain_0.Blog.class))),
 					example.domain_1.Blog.class
 				),
 				new HibernateTransFormerClassPair(
-					new AddAttribute("newAttribute", "newAttributeValue", new Injection(example.domain_0.Blog.class)),
+					new AddAttributeDefaultValue("newAttribute", "newAttributeValue", new Injection(example.domain_0.Blog.class)),
 					example.domain_1.Blog.class
 				),
 				new HibernateTransFormerClassPair(

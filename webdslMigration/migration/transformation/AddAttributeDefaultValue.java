@@ -2,21 +2,21 @@ package transformation;
 
 import java.util.List;
 
-public class AddAttribute extends UntypedTransformation {
-	private final TypedTransformation inputTrafo;
+public class AddAttributeDefaultValue extends UntypedTransformation {
+	private final UntypedTransformation inputTrafo;
 	private final String attributeName;
-	private final ObjectConversion valueCalculation;
+	private final Object defValue;
 	
-	public AddAttribute(String attributeName, ObjectConversion valueCalculation, TypedTransformation inputTrafo) {
+	public AddAttributeDefaultValue(String attributeName, Object defValue, TypedTransformation inputTrafo) {
 		this.inputTrafo = inputTrafo;
 		this.attributeName = attributeName;
-		this.valueCalculation = valueCalculation;
+		this.defValue = defValue;
 	}
 
 	@Override
 	public Object getAttribute(List<Object> input, String attributeName) throws TransformationException {
 		if(attributeName.equals(this.attributeName))
-			return valueCalculation.convert(inputTrafo.transform(input));
+			return defValue;
 		return inputTrafo.getAttribute(input, attributeName);
 	}
 
@@ -34,6 +34,13 @@ public class AddAttribute extends UntypedTransformation {
 		return inputTrafo;
 	}
 	
+	/**
+	 * @return the defValue
+	 */
+	public Object getDefValue() {
+		return defValue;
+	}
+
 	@Override
 	public List<Injection> getInjections() {
 		return inputTrafo.getInjections();
