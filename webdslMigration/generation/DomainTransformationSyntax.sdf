@@ -58,6 +58,7 @@ exports
 																		-> Transformation {cons("Merge")}
 		Transformation "relatedMerge" "(" Exp "," Transformation ")"
 																		-> Transformation {cons("RelatedMerge")}
+		Transformation "restrict" "(" Exp ")"							-> Transformation {cons("Restrict")}
 		%% ==================================================================================== %%
 		
 		%% ---- Sugar ---- %%

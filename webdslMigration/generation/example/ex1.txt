@@ -26,7 +26,8 @@ transformations
 		addPropertyDefaultValue
 			subtitle :: String ("defaultSubTitle")
 		addProperty
-			subtitleWhichIsSetToTheTitle :: String (self.title)
+			subtitleWhichIsSetToTheTitle :: String (current.title)
+		restrict (true)
 		removeProperty(topic)
 		propertyNameChange(entries, blogEntries)
 		propertySimpleTypeChange

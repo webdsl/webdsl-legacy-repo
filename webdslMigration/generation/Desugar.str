@@ -83,3 +83,5 @@ strategies
 		Merge(trafo1, trafo2) -> <getType> trafo1
 	getType : 
 		RelatedMerge(trafo1, _, trafo2) -> <getType> Merge(trafo1, trafo2)
+	getType : 
+		Restrict(itrafo, _) -> <getType> itrafo

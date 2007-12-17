@@ -116,7 +116,8 @@ strategies
 			propertyReferenceTypeChangeToMigration(|targetSessionFactory, oldDomainPackage, newDomainPackage, originalTypeSet) +
 			ejectionToMigration(|newDomainPackage) +
 			mergeToMigration + 
-			relatedMergeToMigration(|originalTypeSet)
+			relatedMergeToMigration(|originalTypeSet) +
+			restrictToMigration(|originalTypeSet)
 		)
 	
 	emptyEntityToMigration : 
@@ -137,7 +138,7 @@ strategies
 			|[
 				new AddAttribute(
 					"~propertyName",
-					new ObjectConversion<~x:intermType> () { public Object convert(~x:intermType self) {return ~javaValueCalculation;}},
+					new ObjectConversion<~x:intermType> () { public Object convert(~x:intermType current) {return ~javaValueCalculation;}},
 					new BeanTransformer(~itrafo, ~x:intermType.class)
 				)
 			]|
@@ -203,7 +204,7 @@ strategies
 		->
 		|[ 
 			new RelatedMerge (
-				new BinaryRelation <~x:intermTypeMaster, ~x:intermTypeSlave>(){public boolean relate(~x:intermTypeMaster i1, ~x:intermTypeSlave i2){ return ~javaRelation; }},
+				new BinaryPredicate <~x:intermTypeMaster, ~x:intermTypeSlave>(){public boolean relate(~x:intermTypeMaster i1, ~x:intermTypeSlave i2){ return ~javaRelation; }},
 				new BeanTransformer(~slavetrafo, ~x:intermTypeSlave.class),
 				new BeanTransformer(~itrafo, ~x:intermTypeMaster.class)
 			)
@@ -212,6 +213,18 @@ strategies
 			intermTypeMaster := <getIntermediateType(|originalTypeSet)> itrafo;
 			intermTypeSlave := <getIntermediateType(|originalTypeSet)> slavetrafo;
 			javaRelation := <expression-to-java> relation
+	
+	restrictToMigration(|originalTypeSet) : 
+		Restrict(itrafo, predicate) -> 
+			|[
+				new Restrict(
+					new UnaryPredicate<~x:intermType> () { public boolean evaluate(~x:intermType current) {return ~javaPredicate;}},
+					new BeanTransformer(~itrafo, ~x:intermType.class)
+				)
+			]|
+		where
+			intermType := <getIntermediateType(|originalTypeSet)> itrafo;
+			javaPredicate := <expression-to-java> predicate
 	
 	/* ---- Auxiliary strategies ---- */
 	error(|msg) = 

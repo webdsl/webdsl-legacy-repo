@@ -50,6 +50,7 @@ strategies
 			propertyNameChange +
 			propertySimpleTypeChange +
 			propertyReferenceTypeChange +
+			restrict +
 			merge +
 			relatedMerge
 		)
@@ -112,6 +113,9 @@ strategies
 					ChangeReferencePropertyType : Property(name, kind, _, annos) ->  Property(name, kind, newSort, annos) );
 				newProperties := <map(try(ChangeReferencePropertyType))> properties
 			|}
+			
+	restrict :
+		Restrict(e, _) -> e
 	
 	/****************************** Level 2 ******************************/	
 	merge :
