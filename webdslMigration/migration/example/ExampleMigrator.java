@@ -10,12 +10,14 @@ import transformation.AddAttributeDefaultValue;
 import transformation.AttributeConversion;
 import transformation.AttributeTransformation;
 import transformation.BeanTransformer;
-import transformation.BinaryRelation;
+import transformation.BinaryPredicate;
 import transformation.Injection;
 import transformation.ObjectConversion;
 import transformation.PrimitiveTypeConversions;
 import transformation.RelatedMerge;
+import transformation.Restrict;
 import transformation.TransformationException;
+import transformation.UnaryPredicate;
 import transformation.hibernate.HibernateTransformationMapping;
 import transformation.hibernate.HibernateTransformer;
 
@@ -40,7 +42,9 @@ public class ExampleMigrator {
 						),
 					new AddAttribute("newAttribute", 
 							new ObjectConversion<example.domain_0.Blog> () { public Object convert(example.domain_0.Blog i) {return i.getId();}}, 
-					new Injection(example.domain_0.Blog.class))),
+					new Restrict(
+							new UnaryPredicate<example.domain_0.Blog>() {public boolean evaluate(example.domain_0.Blog i1){return true;}},
+					new Injection(example.domain_0.Blog.class)))),
 					example.domain_1.Blog.class
 				),
 				new HibernateTransFormerClassPair(
@@ -49,7 +53,7 @@ public class ExampleMigrator {
 				),
 				new HibernateTransFormerClassPair(
 					new RelatedMerge(
-						new BinaryRelation<example.domain_0.Blog, example.domain_0.Blog>(){public boolean relate(example.domain_0.Blog i1, example.domain_0.Blog i2){return i1 == i2;}},
+						new BinaryPredicate<example.domain_0.Blog, example.domain_0.Blog>(){public boolean relate(example.domain_0.Blog i1, example.domain_0.Blog i2){return i1 == i2;}},
 						new BeanTransformer(new Injection(example.domain_0.Blog.class), example.domain_0.Blog.class),
 						new BeanTransformer(new Injection(example.domain_0.Blog.class), example.domain_0.Blog.class)),
 					example.domain_1.Blog.class
