@@ -37,9 +37,11 @@ exports
 		%% ---- Refinements ---- %%
 		RefinementTransformation 										-> Transformation
 		Transformation "addProperty" "(" Id "," Sort "," Exp ")"		-> RefinementTransformation {cons("PropertyAddition")}
+				%% TODO Maybe detect trafo below from trafo above?
+		Transformation "addPropertyDefaultValue" "(" Id "," Sort "," Exp ")"
+																		-> RefinementTransformation {cons("PropertyAdditionDefaultValue")}
 		"emptyEntity"													-> RefinementTransformation {cons("EmptyEntity")}
 		Id																-> RefinementTransformation {cons("Injection")}
-		Id "(" Id ")"													-> RefinementTransformation {cons("NamedInjection")}
 		
 				%% Assuming reference is many to one (set and list are not references!)
 		Transformation "elevateAttributeOverReference" "(" Id "," Id ")"-> RefinementTransformation {cons("ElevateAttributeOverReference")}
@@ -54,7 +56,7 @@ exports
 																		-> Transformation {cons("PropertyReferenceTypeChange")}
 		Transformation "merge" "(" Transformation ")"
 																		-> Transformation {cons("Merge")}
-		Transformation "relatedMerge" "(" Function "," Transformation ")"
+		Transformation "relatedMerge" "(" Exp "," Transformation ")"
 																		-> Transformation {cons("RelatedMerge")}
 		%% ==================================================================================== %%
 		
@@ -67,6 +69,8 @@ exports
 		
 		
 		Transformation "addProperty" Id "::" Sort "(" Exp ")"			-> RefinementTransformation {cons("DecorativePropertyAddition")}
+		Transformation "addPropertyDefaultValue" Id "::" Sort "(" Exp ")"	
+																		-> RefinementTransformation {cons("DecorativePropertyAdditionDefaultValue")}
 		Transformation "propertySimpleTypeChange" Id "::" Sort 			-> Transformation {cons("DecorativePropertySimpleTypeChange")}
 		Transformation "removeProperty" Id			 					-> RestrictingTransformation {cons("PropertyRemoval")}
 		

@@ -17,6 +17,7 @@ strategies
 		// More or less harmless rewrites (merely change single node to semantically equivalent single node)
 		innermost(
 			rewriteDoubleQuote + 
+			rewriteDecorativePropertyAdditionDefaultValue + 
 			rewriteDecorativePropertyAddition + 
 			rewriteDecorativePropertySimpleTypeChange
 		);
@@ -27,6 +28,9 @@ strategies
 		)
 	// TODO reference to self??	
 	
+	rewriteDecorativePropertyAdditionDefaultValue : 
+		DecorativePropertyAdditionDefaultValue(itrafo, propName, propType, propDefaultValue) -> PropertyAdditionDefaultValue(itrafo, propName, propType, propDefaultValue)
+
 	rewriteDecorativePropertyAddition : 
 		DecorativePropertyAddition(itrafo, propName, propType, propDefaultValue) -> PropertyAddition(itrafo, propName, propType, propDefaultValue)
 	
@@ -55,6 +59,8 @@ strategies
 	/* ---- Auxiliary strategies ---- */
 	getType : 
 		EmptyEntity() -> <newname> "newEntity"
+	getType : 
+		PropertyAdditionDefaultValue(trafo, _, _, _) -> <getType> trafo
 	getType : 
 		PropertyAddition(trafo, _, _, _) -> <getType> trafo
 	getType : 

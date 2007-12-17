@@ -1,3 +1,4 @@
+// TODO Use either HibernateTransformer, or Bean transformer, not both
 module DomainMigration
 imports
 	DomainTransformationSyntax
@@ -16,15 +17,13 @@ imports
 strategies
 	main-DomainMigration = 
 		io-wrap(constructMigration(|"webdslorg0", "webdslorg1"))
-	
-	
-	
+
 	constructMigration(|persistenceUnit0, persistenceUnit1) =
 		prepare;
 		?Transformer(originalTypeSet, transformations);
 		
 		// Construct domain 0
-		info(|"constructing source domain");
+		info(|" -- constructing source domain");
 		rules (	DomainPackage :=  PackageName([Id("domain_0")]));
 		!originalTypeSet;
 		(alltd(declare-entity)										<+ error(|"Unable to declare source domain entities"));		
@@ -32,7 +31,7 @@ strategies
 		(alltd(java-file-to-file)									<+ error(|"Cannot write java to file (while constructing source domain)"));
 		
 		// Construct domain 1
-		info(|"constructing target domain");
+		info(|" -- constructing target domain");
 		rules (	DomainPackage :=  PackageName([Id("domain_1")]));
 		!(originalTypeSet, transformations);
 		(transform	 								 				<+ error(|"Unable to apply transformations to domain"));
@@ -42,28 +41,28 @@ strategies
 		
 		// Construct migration (intermediate  types and migration itself)
 		rules (	DomainPackage :=  PackageName([Id("migration")]));
-		info(|"deriving and constructing intermediate types");
+		info(|" -- deriving and constructing intermediate types");
 			// Ugly hack - view all target types as intermediate types, because the entity to java cannot process package names (only used for entity definitions that refer to target type in generic types)
 			<alltd(entity-to-java-Entity; risky(java-file-to-file | "Cannot write java to file (while constructing domain 1 to be used as intermediate types)"))> originalTypeSet;
-		<handleIntermediateTypes(|originalTypeSet)> transformations;
-		info(|"constructing migrator");
-		constructCustomMigrator(|persistenceUnit0, persistenceUnit1);
-		info(|"migration generated");
+		//<handleIntermediateTypes(|originalTypeSet)> transformations;
+		info(|" -- constructing migrator");
+		<constructCustomMigrator(|persistenceUnit0, persistenceUnit1, originalTypeSet)> transformations;
+		info(|" -- migration generated");
 		!""
 	
 	prepare = 
-		info(|"importing modules");
+		info(|" -- importing modules");
 		importModulesInTransformer;
-		info(|"desugaring domain");
+		info(|" -- desugaring domain");
 		desugarDomain;
-		info(|"desugaring transformations");
+		info(|" -- desugaring transformations");
 		desugarTransformations
 	
 	importModulesInTransformer : 
 		Transformer(originalTypeSet, transformations) -> Transformer(<import-modules> originalTypeSet, transformations)
 	
-	constructCustomMigrator(|persistenceUnit0, persistenceUnit1) = 
-		map(constructTransformers(|"emf1", "domain_0", "domain_1")); 
+	constructCustomMigrator(|persistenceUnit0, persistenceUnit1, originalTypeSet) = 
+		map(constructTransformers(|"emf1", "domain_0", "domain_1", originalTypeSet)); 
 		surroundWithDefaultFunctionality(|persistenceUnit0, persistenceUnit1);
 		risky(java-file-to-file | "Cannot write java to file")
 	
@@ -103,20 +102,21 @@ strategies
 			!ArrayInit(migrators) => migratorsArrayInit;
 			pkgname := <DomainPackage>
 	
-	constructTransformers(|targetSessionFactory, oldDomainPackage, newDomainPackage) = 
+	constructTransformers(|targetSessionFactory, oldDomainPackage, newDomainPackage, originalTypeSet) = 
 		// TODO Remove any transformations that do not have injections in advance (transformation of these is only relevant at data-model level)
-		innermost(
+		outermost(	// Outermost, such that the intermediate types can be derived on the fly (when needed)
 			emptyEntityToMigration + 
 			injectionToMigration(|oldDomainPackage) + 
-			propertyAdditionToMigration +
+			propertyAdditionDefaultValueToMigration +
+			propertyAdditionToMigration(|originalTypeSet) +
 			propertyRemovalToMigration +
 			elevateAttributeOverReferenceToMigration +
 			propertyNameChangeToMigration + 
 			propertySimpleTypeChangeToMigration +
-			propertyReferenceTypeChangeToMigration(|targetSessionFactory, oldDomainPackage, newDomainPackage) +
+			propertyReferenceTypeChangeToMigration(|targetSessionFactory, oldDomainPackage, newDomainPackage, originalTypeSet) +
 			ejectionToMigration(|newDomainPackage) +
 			mergeToMigration + 
-			relatedMergeToMigration
+			relatedMergeToMigration(|originalTypeSet)
 		)
 	
 	emptyEntityToMigration : 
@@ -127,10 +127,24 @@ strategies
 		Injection(entityId) -> 
 			|[ new Injection(~x:oldDomainPackage.~x:entityId.class) ]|
 	
-	propertyAdditionToMigration : 
-		PropertyAddition(itrafo, propertyName, _, defaultValue) -> 
-			|[ new AddAttribute("~propertyName", ~defaultValueExpression, ~itrafo) ]|
+	propertyAdditionDefaultValueToMigration : 
+		PropertyAdditionDefaultValue(itrafo, propertyName, _, defaultValue) -> 
+			|[ new AddAttributeDefaultValue("~propertyName", ~defaultValueExpression, ~itrafo) ]|
 		where <expression-to-java> defaultValue => defaultValueExpression
+	
+	propertyAdditionToMigration(|originalTypeSet) : 
+		PropertyAddition(itrafo, propertyName, _, valueCalculation) -> 
+			|[
+				new AddAttribute(
+					"~propertyName",
+					new ObjectConversion<~x:intermType> () { public Object convert(~x:intermType self) {return ~javaValueCalculation;}},
+					new BeanTransformer(~itrafo, ~x:intermType.class)
+				)
+			]|
+		where 
+			intermType := <getIntermediateType(|originalTypeSet)> itrafo;
+			javaValueCalculation := <expression-to-java> valueCalculation
+	
 	
 	propertyRemovalToMigration :
 		PropertyRemoval(itrafo, propertyName) ->
@@ -150,7 +164,7 @@ strategies
 		where <getTypeConversion> newType => typeConversion
 	
 	// Normal reference
-	propertyReferenceTypeChangeToMigration(|targetSessionFactory, oldDomainPackage, newDomainPackage) :
+	propertyReferenceTypeChangeToMigration(|targetSessionFactory, oldDomainPackage, newDomainPackage, originalTypeSet) :
 		PropertyReferenceTypeChange(itrafo, name, SimpleSort(newType), trafo) -> // TODO targetSession
 			|[ new AttributeTransformation(
 					"~name",
@@ -159,10 +173,10 @@ strategies
 				)
 			]|
 		where
-			<constructTransformers(|targetSessionFactory, oldDomainPackage, newDomainPackage)> trafo => trafoInJava	// trafo is a Transformation, so no ejection
+			<constructTransformers(|targetSessionFactory, oldDomainPackage, newDomainPackage, originalTypeSet)> trafo => trafoInJava	// trafo is a Transformation, so no ejection
 
 	// Generic type reference (requires distinction because of Hibernate)
-	propertyReferenceTypeChangeToMigration(|targetSessionFactory, oldDomainPackage, newDomainPackage) :
+	propertyReferenceTypeChangeToMigration(|targetSessionFactory, oldDomainPackage, newDomainPackage, originalTypeSet) :
 		PropertyReferenceTypeChange(itrafo, name, GenericSort(List, [SimpleSort(newGenericArgType)]), trafo) ->
 			|[ new AttributeTransformation(
 					"~name",
@@ -174,7 +188,7 @@ strategies
 				)
 			]|
 		where
-			<constructTransformers(|targetSessionFactory, oldDomainPackage, newDomainPackage)> trafo => trafoInJava	// trafo is a Transformation, so no ejection
+			<constructTransformers(|targetSessionFactory, oldDomainPackage, newDomainPackage, originalTypeSet)> trafo => trafoInJava	// trafo is a Transformation, so no ejection
 			
 	ejectionToMigration(|newDomainPackage) : 
 		Ejection(itrafo, newName) -> 
@@ -182,28 +196,22 @@ strategies
 	
 	mergeToMigration :
 		Merge(itrafo, slavetrafo) ->
-			|[ new Merge(~slavetrafo, ~itrafo) ]|
+			|[ new Merge(~slavetrafo, ~itrafo) ]|	
 	
-	relatedMergeToMigration : 
-		RelatedMerge(
-			itrafo, 
-			Function(_, [Arg(arg1, SimpleSort(argType1)), Arg(arg2, SimpleSort(argType2))], SimpleSort("Bool"), relationDef), 
-			slavetrafo
-		) 
+	relatedMergeToMigration(|originalTypeSet) : 
+		RelatedMerge(itrafo, relation, slavetrafo) 
 		->
 		|[ 
 			new RelatedMerge (
-				new BinaryRelation <~x:argType1, ~x:argType2>(){public boolean relate(~x:argType1 ~x:arg1, ~x:argType2 ~x:arg2){ ~javaRelation }},
-				new BeanTransformer(~slavetrafo, ~x:argType2.class),
-				new BeanTransformer(~itrafo, ~x:argType1.class)
+				new BinaryRelation <~x:intermTypeMaster, ~x:intermTypeSlave>(){public boolean relate(~x:intermTypeMaster i1, ~x:intermTypeSlave i2){ return ~javaRelation; }},
+				new BeanTransformer(~slavetrafo, ~x:intermTypeSlave.class),
+				new BeanTransformer(~itrafo, ~x:intermTypeMaster.class)
 			)
 		]|
 		where
-			{|
-				InFunction : 
-				rules(InFunction : _ -> <id>);	// to make sure the translation below is seen as function translation
-				javaRelation := <statement-to-java> relationDef
-			|}
+			intermTypeMaster := <getIntermediateType(|originalTypeSet)> itrafo;
+			intermTypeSlave := <getIntermediateType(|originalTypeSet)> slavetrafo;
+			javaRelation := <expression-to-java> relation
 	
 	/* ---- Auxiliary strategies ---- */
 	error(|msg) = 

@@ -23,8 +23,10 @@ transformations
 
 	BlogTransformation = 
 		Blog
-		addProperty 
+		addPropertyDefaultValue
 			subtitle :: String ("defaultSubTitle")
+		addProperty
+			subtitleWhichIsSetToTheTitle :: String (self.title)
 		removeProperty(topic)
 		propertyNameChange(entries, blogEntries)
 		propertySimpleTypeChange
@@ -34,7 +36,7 @@ transformations
 	transform
 		Blog
 		relatedMerge (	
-			function relation(b1 : DerivedType, b2 : DerivedType) : Bool {return b1.key = b2.key;},
+			i1.key = i2.key,
 			Blog
 			removeProperty(topic)
 			removeProperty(entries)

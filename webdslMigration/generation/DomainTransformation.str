@@ -44,6 +44,7 @@ strategies
 			emptyEntityRewrite + 
 			ejectionRewrite +
 			propertyRemoval +
+			propertyAdditionDefaultValue +
 			propertyAddition +
 			elevateAttributeOverReference +
 			propertyNameChange +
@@ -64,8 +65,12 @@ strategies
 		Ejection(EntityNoSuper(entityName, properties, functions), newEntityName) ->
 			EntityNoSuper(newEntityName, properties, functions)
 	
+	propertyAdditionDefaultValue :
+		PropertyAdditionDefaultValue(EntityNoSuper(entityName, properties, functions), propertyName, sort, defValue) ->	
+			PropertyAddition(EntityNoSuper(entityName, properties, functions), propertyName, sort, defValue)
+	
 	propertyAddition :
-		PropertyAddition(EntityNoSuper(entityName, properties, functions), propertyName, sort,_) ->	// Default value will be ignored for now (cannot be used as part of the domain model)
+		PropertyAddition(EntityNoSuper(entityName, properties, functions), propertyName, sort,_) -> // Calculation will be ignored for now (cannot be used as part of the domain model)
 			EntityNoSuper(entityName, <conc>(properties, [Property(propertyName, Simple(), sort, [])]) , functions)
 	
 	propertyRemoval :

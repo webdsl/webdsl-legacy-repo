@@ -12,6 +12,22 @@ imports
 	org/webdsl/dsl/generation/generator
 
 strategies
+	getIntermediateType(|originalTypeSet) : 
+		trafo -> interMediateTypeName
+		where
+			interMediateTypeName := <newname>"DerivedType_";
+			<risky(deriveType(|originalTypeSet) | "Intermediate type derivation failed")> trafo;
+			risky(defineType(|interMediateTypeName) | "Intermediate type definition failed");
+			info(|<concat-strings> ["Constructed intermediate type ", interMediateTypeName])
+
+	defineType(|name) : 
+		EntityNoSuper(_, properties, functions) -> <risky(entity-to-java-Entity | "Entity to java conversion failed"); risky(java-file-to-file | "Cannot write java to file")>EntityNoSuper(name, properties, functions)
+
+	deriveType (|originalTypeSet) : 
+		trafo -> <transform> (originalTypeSet, trafo)
+	
+/*
+
 	handleIntermediateTypes(|originalTypeSet) : 
 		transformations -> <risky(substituteDerivedTypes|"Intermediate type substitution failed")>transformations
 		where
@@ -77,3 +93,4 @@ strategies
 					slavetrafo
 				)
 		)
+*/
