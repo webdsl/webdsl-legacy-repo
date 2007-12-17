@@ -62,6 +62,11 @@ section DAC AccessControl
         mayEditDocument(securityContext.principal,d)
       }
     }
+    rules page formwithfunctioncall()
+    {
+      true
+      //action simply allowed, function will do the check
+    }
     
     rules template sidebar()
     {
@@ -83,6 +88,14 @@ section DAC AccessControl
       mayEditDocument(securityContext.principal,d)
     }
     
+    rules function aSaveFunction(d:Document)
+    {
+      mayEditDocument(securityContext.principal,d)
+    }
+    rules function dummyfunction(d:Document)
+    {
+      mayEditDocument(securityContext.principal,d)
+    }
     
     
     rules page nogo()

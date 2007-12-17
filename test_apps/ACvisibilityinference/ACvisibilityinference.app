@@ -148,16 +148,49 @@ section pages
     define body()
     {     
       
-     //  forall loops
-     form
+      //  forall loops
+      form
       {
         for(d:Document)
         {
           table{ editRowsDocument(d) }
           action("Save", save(d))
         }
-      }
-     
+      }  
+    }
+  }  
+  
+  globals
+  { 
+    function aSaveFunction(doccc:Document):Int
+    {
+      dummyfunction(doccc);
+      doccc.save();
+      return 0;
+    }
+    
+    function dummyfunction(doc:Document):Int
+    {
+      if(false){aSaveFunction(doc);}
+      return 0;
+    }
+  }
+  define page formwithfunctioncall()
+  {
+    action saveAction(docc:Document) { aSaveFunction(docc); }
+    main()
+    define body()
+    {       
+      //forall with function call in action
+      form
+      {
+        table{ editRowsDocument(d0) }
+        action("Save", saveAction(d0))
+        
+        table{ editRowsDocument(d1) }
+        actionLink("Save", saveAction(d1))
+      }    
+      
     }
   }
 

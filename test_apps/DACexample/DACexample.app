@@ -20,48 +20,14 @@ section DAC pages
 
   define page home()
   {
-
     main()
     define body()
     {
-      title("Documents")
-      list
+      menubar("vertical")
       {
-        for(d:Document)
-        {
-          output(d.title)
-          navigateLinkListItemDoc(d)
-          navigateLinkListItemEditDoc(d)
-          navigateLinkListItemGrants(d)
-          navigateLinkListItemGrantingRights(d)
-        }
-        div("loggedIn")
-        {
-          listitem { navigate(createDocument()){output("create new document")} }
-        }
+        themenu()
       }
-
     }
-  }
-
-  define navigateLinkListItemDoc(d:Document)
-  {
-    listitem{ navigate(viewDocument(d)) { " view" } }
-  }
-
-  define navigateLinkListItemEditDoc(d:Document)
-  {
-    listitem{ navigate(editDocument(d)) { " edit" } }
-  }
-
-  define navigateLinkListItemGrants(d:Document)
-  {
-    listitem{ navigate(editGrants(d)) { " edit view/edit access" } }
-  }
-
-  define navigateLinkListItemGrantingRights(d:Document)
-  {
-    listitem{ navigate(editGrantingRights(d)) { " edit granting rights" } }
   }
 
   define page viewDocument(d:Document)

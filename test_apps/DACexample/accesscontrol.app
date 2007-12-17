@@ -36,13 +36,9 @@ section DAC AccessControl
     {
       true
     }
-    rules template div("loggedIn")
-    {
-      securityContext.loggedIn
-    }
 
 
-    rules pointcut documentViewing(d:Document)
+    rules page viewDocument(d:Document)
     {
       mayViewDocument(securityContext.principal,d)
     }
@@ -52,43 +48,18 @@ section DAC AccessControl
       securityContext.loggedIn
     }
 
-    rules pointcut documentEditing(d:Document)
+    rules page editDocument(d:Document)
     {
       mayEditDocument(securityContext.principal,d)
     }
 
-    rules pointcut grantsedit(d:Document)
+    rules page editGrants(d:Document)
     {
       d.owner=securityContext.principal || securityContext.principal in d.grantingRights
     }
 
-    rules pointcut grantingrightssedit (d:Document)
+    rules page editGrantingRights(d:Document)
     {
       d.owner=securityContext.principal
-    }
-
-
-    pointcut documentEditing(d:Document)
-    {
-      template navigateLinkListItemEditDoc(d),
-      page editDocument(d)
-    }
-
-    pointcut grantsedit(d:Document)
-    {
-      template navigateLinkListItemGrants(d),
-      page editGrants(d)
-    }
-
-    pointcut documentViewing(d:Document)
-    {
-      template navigateLinkListItemDoc(d),
-      page viewDocument(d)
-    }
-
-    pointcut grantingrightssedit(d:Document)
-    {
-      template navigateLinkListItemGrantingRights(d),
-      page editGrantingRights(d)
     }
   }

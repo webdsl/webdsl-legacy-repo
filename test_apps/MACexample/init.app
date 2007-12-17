@@ -50,11 +50,28 @@ section MAC init
       classification := 3
     };
 
+    var mis0 : Mission := Mission
+    {
+      title := "mission classification 0"
+      text := "mission 0 text"
+      classification := 0
+    };
     var mis1 : Mission := Mission
     {
-      title := "the mission"
-      text := "text"
+      title := "mission classification 1"
+      text := "mission 1 text"
+      classification := 1
+    };
+    var mis2 : Mission := Mission
+    {
+      title := "mission classification 2"
+      text := "mission 2 text"
       classification := 2
     };
-
+    var mis3 : Mission := Mission
+    {
+      title := "mission classification 3"
+      text := "mission 3 text"
+      classification := 3
+    };
   }

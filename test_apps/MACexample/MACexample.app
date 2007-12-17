@@ -21,42 +21,14 @@ section MAC pages
 
   define page home()
   {
-
     main()
     define body()
     {
-      title("Documents")
-      list
+      menubar("vertical")
       {
-        for(d:Document)
-        {
-          navigateLinkListItemDoc(d)
-        }
-        div("loggedIn")
-        {
-          listitem { navigate(createDocument()){output("create new document")} }
-        }
-        for(o:Mission)
-        {
-          navigateLinkListItemMission(o)
-        }
-        div("loggedIn")
-        {
-          listitem { navigate(createMission()){output("create new Mission")} }
-        }
+        themenu()
       }
-
     }
-  }
-
-  define navigateLinkListItemMission(o:Mission)
-  {
-    listitem{ navigate(viewMission(o)) { output(o.title) } }
-  }
-
-  define navigateLinkListItemDoc(d:Document)
-  {
-    listitem{ navigate(viewDocument(d)) { output(d.title) } }
   }
 
   define page viewDocument(d:Document)
@@ -83,9 +55,7 @@ section MAC pages
     {
       form
       {
-        input(d.title)
-        input(d.text)
-        input(d.classification)
+        editRowsDocument(d)
         action("save",save(d))
       }
     }
@@ -115,9 +85,7 @@ section MAC pages
     {
       form
       {
-        input(m.title)
-        input(m.text)
-        input(m.classification)
+        editRowsMission(m)
         action("save",save(m))
       }
     }

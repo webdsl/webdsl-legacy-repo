@@ -48,6 +48,9 @@ section RBAC templates
         menuheader{navigate(formwithforall()){"Form with for all"}}
       }
       menu {
+        menuheader{navigate(formwithfunctioncall()){"Form with function call"}}
+      }
+      menu {
         menuheader{"Edit Documents navigate in for"}
         menuitem
         {
@@ -57,6 +60,22 @@ section RBAC templates
           }
         }
       }
+      //menu {
+      //  menuheader{"Edit Documents navigate in nested for"}
+      //  menuitem
+      //  {
+      //    for(d:Document)
+      //    {
+      //      for(d1:Document in thedoc.doclist)
+      //      {
+      //        if(d=d1)
+      //        {
+      //          navigate(editDocument(d)){output(d.title)}
+      //        }    
+      //      }
+      //    }
+      //  }
+      //}
     } 
   }
   define sidebar()

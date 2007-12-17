@@ -57,28 +57,18 @@ section RBAC AccessControl
     rules template sidebar()
     {
       true
-      rules action *(*)
-      {
-        true
-      }
-      rules action activate(r:Role)
-      {
-        r in securityContext.principal.roles
-      }
-    }
-
-    rules template div("canEdit")
-    {
-      mayEditDocument(securityContext.activeRole)
-    }
-
-    rules template div("loggedIn")
-    {
-      securityContext.loggedIn
+     // rules action *(*)
+     // {
+    //    true
+    //  }
+    //  rules action activate(r:Role)
+    //  {
+    // /   r in securityContext.principal.roles
+    //  }
     }
 
 
-    rules pointcut documentViewing()
+    rules page viewDocument(*)
     {
       mayViewDocument(securityContext.activeRole)
     }
@@ -88,35 +78,26 @@ section RBAC AccessControl
       mayEditDocument(securityContext.activeRole)
     }
 
-    rules pointcut documentEditing()
+    rules page editDocument(*)
     {
       mayEditDocument(securityContext.activeRole)
     }
 
-    rules pointcut userRoleEditing()
+    rules page editUserRoles(*)
     {
       mayEditRoles(securityContext.activeRole)
     }
-
-
-    pointcut documentViewing()
+    
+    rules page viewUser(u:User)
     {
-      template navigateLinkListItemDoc(*),
-      page viewDocument(*)
+      u=securityContext.principal||mayEditRoles(securityContext.activeRole)
     }
 
-    pointcut documentEditing()
-    {
-      template navigateLinkListItemEditDoc(*),
-      page editDocument(*)
-    }
 
-    pointcut userRoleEditing()
+    rules function activateRole(r:Role)
     {
-      template navigateLinkListItemUser(*),
-      page editUserRoles(*)
+      r in securityContext.principal.roles
     }
-
   }
 
 

@@ -1,21 +1,59 @@
 module templates
 
 section MAC templates
-
-  define main() {
-    div("outersidebar") {
-      sidebar()
+  define main() 
+  {
+    block("top") {
+      top()
     }
-    div("outerbody") {
-      div("menubar") {
-        menu()
+
+    block("body") {
+      block("left_innerbody") {
+        sidebar()
       }
-      body()
+      block("main_innerbody") {
+        body()
+      }
+    }
+
+    block("footer") {
       footer()
     }
   }
+
   define footer(){}
-  define menu(){}
+  define top() {
+    block("header") {}
+    block("menubar") { 
+      menubar
+      {
+        themenu()
+      }
+    }
+  }
+  define themenu()
+  {
+    menu
+    {
+      menuheader{"View documents"}
+    
+      for(d:Document)
+      {
+        menuitem{ navigate(viewDocument(d)) { output(d.title) } }
+      }
+    }    
+    menu{menuheader { navigate(createDocument()){output("new document")} }}  
+    menu
+    {
+      menuheader{"View missions"}
+      
+      for(o:Mission)
+      {
+        menuitem{ navigate(viewMission(o)) { output(o.title) } }
+      }
+    }
+    menu{menuheader { navigate(createMission()){output("new mission")} }}
+  }
   define body(){}
   define sidebar()
   {

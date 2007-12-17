@@ -48,13 +48,7 @@ section MAC AccessControl
       true
     }
 
-    rules template div("loggedIn")
-    {
-      securityContext.loggedIn
-    }
-
-
-    rules pointcut documentViewing(d:Document)
+    rules page viewDocument(d:Document)
     {
       mayViewDocument(securityContext.principal,d)
     }
@@ -68,7 +62,7 @@ section MAC AccessControl
       }
     }
 
-    rules pointcut MissionViewing(m:Mission)
+    rules page viewMission(m:Mission)
     {
       mayViewMission(securityContext.principal,m)
     }
@@ -81,18 +75,4 @@ section MAC AccessControl
         mayCreateMission(securityContext.principal,m)
       }
     }
-
-
-    pointcut MissionViewing(m:Mission)
-    {
-      template navigateLinkListItemMission(m),
-      page viewMission(m)
-    }
-
-    pointcut documentViewing(d:Document)
-    {
-      template navigateLinkListItemDoc(d),
-      page viewDocument(d)
-    }
-
   }

@@ -21,51 +21,14 @@ section RBAC pages
 
   define page home()
   {
-
     main()
     define body()
     {
-      title("Documents")
-      list
+      menubar("vertical")
       {
-        for(d:Document)
-        {
-          output(d.title)
-          navigateLinkListItemDoc(d)
-          navigateLinkListItemEditDoc(d)
-        }
-      }
-      list
-      {
-        for(u:User)
-        {
-          output(u.name)
-          navigateLinkListItemUser(u)
-        }
-      }
-      div("canEdit")
-      {
-        list
-        {
-          listitem { navigate(createDocument()){output("create new document")} }
-        }
+        themenu()
       }
     }
-  }
-
-  define navigateLinkListItemUser(u:User)
-  {
-    listitem{ navigate(editUserRoles(u)) { " edit roles" } }
-  }
-
-  define navigateLinkListItemDoc(d:Document)
-  {
-    listitem{ navigate(viewDocument(d)) { " view" } }
-  }
-
-  define navigateLinkListItemEditDoc(d:Document)
-  {
-    listitem{ navigate(editDocument(d)) { " edit" } }
   }
 
   define page viewDocument(d:Document)
@@ -73,8 +36,16 @@ section RBAC pages
     main()
     define body()
     {
-      output(d.title)
-      output(d.text)
+      table{viewRowsDocument(d)}
+    }
+  }
+  
+  define page viewUser(u:User)
+  {
+    main()
+    define body()
+    {
+      table{viewRowsUser(u)}
     }
   }
 

@@ -1,21 +1,51 @@
 module templates
 
-section MAC templates
-
-  define main() {
-    div("outersidebar") {
-      sidebar()
+section DAC templates
+  define main() 
+  {
+    block("top") {
+      top()
     }
-    div("outerbody") {
-      div("menubar") {
-        menu()
+
+    block("body") {
+      block("left_innerbody") {
+        sidebar()
       }
-      body()
+      block("main_innerbody") {
+        body()
+      }
+    }
+
+    block("footer") {
       footer()
     }
   }
+
   define footer(){}
-  define menu(){}
+  define top() {
+    block("header") {}
+    block("menubar") { 
+      menubar
+      {
+        themenu()
+      }
+    }
+  }
+
+  define themenu()
+  {
+    for(d:Document)
+    {
+      menu{
+        menuheader{navigate(viewDocument(d)) { output(d.title)}}
+        menuitem{ navigate(viewDocument(d)) { "view" } }
+        menuitem{ navigate(editDocument(d)) { "edit" } }
+        menuitem{ navigate(editGrants(d)) { "view/edit access" } }
+        menuitem{ navigate(editGrantingRights(d)) { "granting" } }
+      }
+    }
+    menu{menuheader{navigate(createDocument()){output("create new")}}}
+  }
   define body(){}
   define sidebar()
   {
