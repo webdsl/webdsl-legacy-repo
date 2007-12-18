@@ -11,6 +11,7 @@ section domain
     key        :: String (id)
     title      :: String (name)
     topic      :: String
+    removable  :: String
     entries    -> List<BlogEntry>
   }
 
@@ -23,6 +24,7 @@ transformations
 
 	BlogTransformation = 
 		Blog
+		keep (key, title, topic, entries)
 		addPropertyDefaultValue
 			subtitle :: String ("defaultSubTitle")
 		addProperty
@@ -36,7 +38,7 @@ transformations
 
 	transform
 		Blog
-		relatedMerge (	
+		merge (	
 			i1.key = i2.key,
 			Blog
 			removeProperty(topic)

@@ -44,6 +44,7 @@ strategies
 			emptyEntityRewrite + 
 			ejectionRewrite +
 			propertyRemoval +
+			propertyKeep +
 			propertyAdditionDefaultValue +
 			propertyAddition +
 			elevateAttributeOverReference +
@@ -77,7 +78,17 @@ strategies
 	propertyRemoval :
 		PropertyRemoval(EntityNoSuper(entityName, properties, functions), propertyName) ->
 			EntityNoSuper(entityName, <remove-all(?Property(propertyName, _, _, _))> properties, functions)
-			
+	
+	propertyKeep :
+		PropertyKeep(EntityNoSuper(entityName, properties, functions), propertyNamesToKeep) ->
+			EntityNoSuper(entityName, newProperties, functions)
+		where
+			newProperties := <filter(where(propertyInPropertyNamesList(|propertyNamesToKeep)))> properties
+		
+		propertyInPropertyNamesList(|propertyNamesList) = 
+			?Property(propertyName, _, _, _);
+			<elem> (propertyName, propertyNamesList)
+		
 	elevateAttributeOverReference : 
 		ElevateAttributeOverReference(EntityNoSuper(entityName, properties, functions), refName, attName) -> 
 			EntityNoSuper(entityName, <conc> (properties, propertyToElevate), functions)

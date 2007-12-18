@@ -7,7 +7,7 @@ public class AddAttributeDefaultValue extends UntypedTransformation {
 	private final String attributeName;
 	private final Object defValue;
 	
-	public AddAttributeDefaultValue(String attributeName, Object defValue, TypedTransformation inputTrafo) {
+	public AddAttributeDefaultValue(String attributeName, Object defValue, UntypedTransformation inputTrafo) {
 		this.inputTrafo = inputTrafo;
 		this.attributeName = attributeName;
 		this.defValue = defValue;

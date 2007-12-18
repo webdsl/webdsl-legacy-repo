@@ -74,6 +74,7 @@ strategies
 			import transformation.*;
 			import transformation.hibernate.*;
 			import javax.persistence.*;
+			import java.util.*;
 			
 			public class CustomMigrator {
 				
@@ -110,6 +111,7 @@ strategies
 			propertyAdditionDefaultValueToMigration +
 			propertyAdditionToMigration(|originalTypeSet) +
 			propertyRemovalToMigration +
+			propertyKeepToMigration +
 			elevateAttributeOverReferenceToMigration +
 			propertyNameChangeToMigration + 
 			propertySimpleTypeChangeToMigration +
@@ -150,6 +152,18 @@ strategies
 	propertyRemovalToMigration :
 		PropertyRemoval(itrafo, propertyName) ->
 			|[ new DropAttribute("~propertyName", ~itrafo) ]|
+	
+	/* The property keep is not implemented at generation time. In theory this would be 
+	 * possible here and now, but would make the transformations transformations dependent
+	 * on the source data model. A feature which is probably not desirable when looking at
+	 * transformation composition.
+	 */
+	propertyKeepToMigration :
+		PropertyKeep(itrafo, propertyNames) ->
+			|[ new KeepAttributes(~e:namesInJava, ~itrafo) ]|
+		where
+			<map(\propname -> |["~propname"]|\)> propertyNames;	// Make strings
+			namesInJava := <arrayToJavaArray(|"String")>
 			
 	elevateAttributeOverReferenceToMigration : 
 		ElevateAttributeOverReference(itrafo, refName, attName) -> 
@@ -232,3 +246,6 @@ strategies
 	
 	getTypeConversion : 
 		String -> |[ PrimitiveTypeConversions.selectByName("toString") ]|
+	
+	arrayToJavaArray(|type) : 
+			array ->  NewArray(TypeName(Id(type)), [Dim()], ArrayInit(array))

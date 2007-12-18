@@ -49,6 +49,7 @@ exports
 		%% ---- Data restrictions ---- %%
 		RestrictingTransformation 										-> Transformation
 		Transformation "removeProperty" "(" Id ")"	 					-> RestrictingTransformation {cons("PropertyRemoval")}
+		Transformation "keep" "(" {Id ","}* ")"							-> RestrictingTransformation {cons("PropertyKeep")}
 
 		%% ---- Combined ---- %% TODO !
 		Transformation "propertySimpleTypeChange" "(" Id "," Sort ")"	-> Transformation {cons("PropertySimpleTypeChange")}
@@ -56,7 +57,7 @@ exports
 																		-> Transformation {cons("PropertyReferenceTypeChange")}
 		Transformation "merge" "(" Transformation ")"
 																		-> Transformation {cons("Merge")}
-		Transformation "relatedMerge" "(" Exp "," Transformation ")"
+		Transformation "merge" "(" Exp "," Transformation ")"
 																		-> Transformation {cons("RelatedMerge")}
 		Transformation "restrict" "(" Exp ")"							-> Transformation {cons("Restrict")}
 		%% ==================================================================================== %%
