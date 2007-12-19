@@ -93,25 +93,3 @@ section RBAC pages
 
     }
   }
-
-  define page editUserRoles(u:User)
-  {
-
-    action save(u:User)
-    {
-      u.save();
-      return home();
-    }
-
-    main()
-    define body()
-    {
-      form
-      {
-        input(u.roles)
-
-        action("save",save(u))
-      }
-
-    }
-  }

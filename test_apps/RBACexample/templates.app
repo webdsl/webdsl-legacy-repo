@@ -74,33 +74,16 @@ section RBAC templates
 
       action login(u:User)
       {
-        securityContext.principal := u;
-        securityContext.loggedIn := true;
-        securityContext.activeRole := null;
+        userLogin(u);
         return home();
       }
       action logout()
       {
-        securityContext.principal := null;
-        securityContext.loggedIn := false;
-        securityContext.activeRole := null;
+        userLogout();
         return home();
       }
     }
 
-    form
-    {
-      list
-      {
-        for(r:Role)// in securityContext.principal.rolesList)
-        {
-          listitem { actionLink(r.name,activate(r)) }
-        }
-      }
-      action activate(r:Role)
-      {
-        activateRole(r); //infer from rules on the function
-      }
-    }
+    roleActivation()
     
   }

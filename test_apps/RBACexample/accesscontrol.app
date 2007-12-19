@@ -49,23 +49,20 @@ section RBAC AccessControl
 
     principal is User with credentials name
 
-    rules page home()
+    pointcut openSections()
+    {
+      page home(),
+      template sidebar(),
+      template roleActivation()
+      //,function userLogin(*),
+     // function userLogout()
+    }
+    
+    rules pointcut openSections()
     {
       true
     }
 
-    rules template sidebar()
-    {
-      true
-     // rules action *(*)
-     // {
-    //    true
-    //  }
-    //  rules action activate(r:Role)
-    //  {
-    // /   r in securityContext.principal.roles
-    //  }
-    }
 
 
     rules page viewDocument(*)
@@ -108,4 +105,64 @@ globals
     securityContext.activeRole := r;
     return 0;
   }
+  
+  function userLogin(u:User):Int
+  {
+    securityContext.principal := u;
+    securityContext.loggedIn := true;
+    securityContext.activeRole := null;
+    return 0;
+  }
+  
+  function userLogout():Int
+  {
+    securityContext.principal := null;
+    securityContext.loggedIn := false;
+    securityContext.activeRole := null;
+    return 0;
+  }
 }
+
+
+//administration
+  define page editUserRoles(u:User)
+  {
+
+    action save(u:User)
+    {
+      u.save();
+      return home();
+    }
+
+    main()
+    define body()
+    {
+      form
+      {
+        input(u.roles)
+
+        action("save",save(u))
+      }
+
+    }
+  }
+  
+
+// interface
+  define roleActivation()
+  {
+    form
+    {
+      list
+      {
+        for(r:Role)// in securityContext.principal.rolesList)
+        {
+          listitem { actionLink(r.name,activate(r)) }
+        }
+      }
+      action activate(r:Role)
+      {
+        activateRole(r); //infer from rules on the function
+      }
+    }
+  }
