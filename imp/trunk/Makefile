@@ -2,6 +2,7 @@ all :
 	$(MAKE) -C org.strategoxt.imp.metatooling all
 	$(MAKE) -C org.strategoxt.imp.editors.stratego all
 	$(MAKE) -C org.strategoxt.imp.editors.strategojava all
+	$(MAKE) -C org.strategoxt.imp.editors.strategowebdsl all
 	$(MAKE) -C org.strategoxt.imp.editors.editordescriptor all
 	$(MAKE) -C org.strategoxt.imp.editors.php all
 
