@@ -24,7 +24,7 @@ public class Injection extends TypedTransformation {	// Cannot use generics, as 
 		if(input.size() == 0)
 			throw new TransformationException("No input left when requesting attribute of injection transformation (not enough inputs supplied to a transformation?)");
 		try {
-			Object currentInput = input.remove(0);
+			Object currentInput = input.get(0);
 			Method getter = currentInput.getClass().getMethod(attributeNameToGetter(attributeName), new Class[0]);
 			return getter.invoke(currentInput, new Object[0]);
 			

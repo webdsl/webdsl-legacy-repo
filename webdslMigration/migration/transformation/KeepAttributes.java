@@ -1,7 +1,5 @@
 package transformation;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class KeepAttributes extends UntypedTransformation {
@@ -15,7 +13,7 @@ public class KeepAttributes extends UntypedTransformation {
 
 	@Override
 	public Object getAttribute(List<Object> input, String attributeName) throws TransformationException {
-		if(!kept(attributeName))	// TODO Handle input correctly in this case
+		if(!kept(attributeName))
 			throw new TransformationException("Dropped attribute requested in KeepAttribute (" + attributeName+")");
 		return inputTrafo.getAttribute(input, attributeName);
 	}

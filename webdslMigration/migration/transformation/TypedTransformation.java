@@ -4,6 +4,16 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
+/**
+ * Augments the untyped transformation with a type.
+ * Any class extending this one is required to implement a transform method that will transform 
+ * a given Object to a new Object and a getType method. The getAttribute method from 
+ * UntypedTransformation is overridden by a default implementation that makes use of the Bean 
+ * convention (specifically getter names). Override this method if this default convention does 
+ * not apply to your type context.
+ * @author sander
+ *
+ */
 public abstract class TypedTransformation extends UntypedTransformation{
 	public abstract Object transform(List<Object> input) throws TransformationException;
 	public abstract Class getType();

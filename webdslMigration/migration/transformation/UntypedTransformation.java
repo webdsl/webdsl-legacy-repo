@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Vector;
-
+ 
 public abstract class UntypedTransformation{
 	public abstract Object getAttribute(List<Object> input, String attributeName) throws TransformationException;
 	public abstract List<Injection> getInjections();

@@ -1,6 +1,7 @@
 package transformation;
 
 import java.util.List;
+import java.util.Vector;
 
 public class Merge extends UntypedTransformation {
 	private final UntypedTransformation inputTrafo;
@@ -13,11 +14,14 @@ public class Merge extends UntypedTransformation {
 
 	@Override
 	public Object getAttribute(List<Object> input, String attributeName) throws TransformationException {
+		List<List<Object>> splitInput = divideAndCheckInputs(input);
+		
 		// Try master, if not succesful, use slave (possibly throws exception)
 		try {
-			return inputTrafo.getAttribute(input, attributeName);}
+			return inputTrafo.getAttribute(splitInput.get(0), attributeName);}
 		catch(TransformationException e){}
-		return slaveTrafo.getAttribute(input, attributeName);
+		
+		return slaveTrafo.getAttribute(splitInput.get(1), attributeName);
 	}
 
 	@Override
@@ -40,5 +44,20 @@ public class Merge extends UntypedTransformation {
 	 */
 	public UntypedTransformation getSlaveTrafo() {
 		return slaveTrafo;
+	}
+	
+	protected List<List<Object>> divideAndCheckInputs(List<Object> input) throws TransformationException {
+		// Split input over input part and slave part
+		int nrMasterInputs = inputTrafo.getInjections().size();
+		int nrSlaveInputs = slaveTrafo.getInjections().size();
+		if(input.size() != nrMasterInputs + nrSlaveInputs)
+			throw new TransformationException("Incorrect number of inputs in merge: got "+input.size()+" but required "+nrMasterInputs + nrSlaveInputs);
+		List<Object> masterInput = input.subList(0, nrMasterInputs);
+		List<Object> slaveInput = input.subList(nrMasterInputs, nrSlaveInputs);
+		
+		Vector<List<Object>> result = new Vector<List<Object>>();
+		result.add(masterInput);
+		result.add(slaveInput);
+		return result;		
 	}
 }

@@ -1,8 +1,14 @@
 package transformation;
 
 import java.util.List;
-import java.util.Vector;
 
+/**
+ * Like a merge, execpt that the output from the master and slave transformation is 
+ * verified by means of a given relation. If successful, the input will be used to
+ * merge, if not, the transformation ends by means of a partial transformation exception.
+ * @author sander
+ *
+ */
 public class RelatedMerge extends Merge {
 	
 	private final BinaryPredicate relation;
@@ -14,12 +20,11 @@ public class RelatedMerge extends Merge {
 
 	@Override
 	public Object getAttribute(List<Object> input, String attributeName) throws TransformationException {
-		Vector<Object> i1 = new Vector<Object>(); i1.addAll(input);	// TODO Fix
-		Vector<Object> i2 = new Vector<Object>(); i2.addAll(input);
-		
+		List<List<Object>> splitInput = divideAndCheckInputs(input);
+
 		// Check 
-		Object inputResult = ((TypedTransformation)getInputTrafo()).transform(i1);
-		Object slaveResult = ((TypedTransformation)getSlaveTrafo()).transform(i2);
+		Object inputResult = ((TypedTransformation)getInputTrafo()).transform(splitInput.get(0));
+		Object slaveResult = ((TypedTransformation)getSlaveTrafo()).transform(splitInput.get(1));
 		if(!relation.relate(inputResult, slaveResult))
 			throw new PartialTransformationException();
 		// Get
