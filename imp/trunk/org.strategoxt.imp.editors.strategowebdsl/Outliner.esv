@@ -1,0 +1,61 @@
+module Outliner
+  outliner
+    // Generated for WebDSL
+    
+    Application.Application
+    Section.Section
+    Entity.Entity
+    Property.Property
+    Sort.GenericSort
+    Annotation.ValidationAnnoPatternWithFlags
+    Property.DerivedProperty
+    Exp.ObjectCreation
+    Exp.TypedListCreation
+    Exp.TypedSetCreation
+    Exp.ThisCall
+    Exp.Call
+    FromClassOrOuterQueryPath_HQL.FromClass
+    InClassDeclaration_HQL.InClassDeclaration
+    InCollectionDeclaration_HQL.InCollection
+    InCollectionElementsDeclaration_HQL.InCollectionElements
+    FromJoin_HQL.FromJoin
+    GroupByClause_HQL.GroupBy
+    Function.Function
+    Statement.If
+    Statement.IfNoElse
+    Statement.ForStmt
+    Statement.ForStmtNoFilter
+    Entity.EntityNoSuper
+    Entity.SessionEntity
+    Entity.Task
+    Definition.ExtendEntity
+    Definition.ExtendSessionEntity
+    TemplateDefinition.Define
+    Action.Action
+    TemplateCall.TemplateCallNoBody
+    TemplateCall.TemplateCallDeclaredType
+    TemplateCall.TemplateCallBody
+    TemplateCall.TemplateCall
+    TemplateElement.For
+    TemplateElement.ForNoFilter
+    TemplateElement.ForAll
+    TemplateElement.ForAllNoFilter
+    TemplateElement.IfTempl
+    TemplateElement.Subtable
+    AccessControlDefinition.AccessControlPrincipal
+    AccessControlRule.AccessControlRule
+    MatchArgs.MatchArgs
+    MatchArgs.MatchArgs
+    AccessControlDefinition.Predicate
+    AccessControlPointcut.AccessControlPointcut
+    AccessControlPointcutElement.AccessControlPointcutElement
+    Module.Module
+   
+    // Stratego
+    
+    _.Module
+    _.Def_StrategoHost
+    _.Overlay
+    _.RuleDec
+    _.StrategyDec
+    

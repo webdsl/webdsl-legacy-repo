@@ -2,12 +2,13 @@ module Outliner
   outliner
     // Manually added
     
-    _.Module
-    _.Def_StrategoHostSort
+    Def_StrategoHost
+    _.RuleDec
     _.Overlay
-    _.Rules
-    _.Strategies
-    _.Overlays
+    _.StrategyDec
+    
+    _.Module
+    _.Overlay
     _.ClassDec
     _.MethodDec
   

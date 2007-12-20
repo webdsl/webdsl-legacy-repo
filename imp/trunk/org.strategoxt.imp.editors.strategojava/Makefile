@@ -1,5 +1,5 @@
 SYNTAX     = Stratego-Java-15
-EXTENSIONS = str
+EXTENSIONS = str,strj
 PACKAGE    = org.strategoxt.imp.editors.strategojava
 SOURCE     = ~/.nix-profile/share/java-front/$(SYNTAX).def
 START      = Module[StrategoHost]

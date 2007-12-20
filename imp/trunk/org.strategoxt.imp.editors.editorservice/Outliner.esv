@@ -1,6 +1,6 @@
 module Outliner
   
+  //Outline goes here.
+  
   outliner
-    Module
-    
-    Section
+    Module.Module
