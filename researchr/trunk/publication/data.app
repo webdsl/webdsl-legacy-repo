@@ -11,6 +11,12 @@ section publication
     url      :: URL
     pages    :: String // should be pair of integers
   }
+
+  // relation
+  extend entity Publication {
+    cites -> Set<Publication>
+    citedBy -> Set<Publication> (inverse=Publication.cites)
+  }
   
   // journal
   // inconferenceproceedings
