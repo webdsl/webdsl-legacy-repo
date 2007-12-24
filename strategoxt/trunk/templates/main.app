@@ -1,34 +1,5 @@
 module templates/main
 
-section main template
-
-  define mainWDO() 
-  {
-    block("top") {
-      top()
-    }
-
-    block("body") {
-      block("left_innerbody") {
-        sidebar()
-      }
-      block("main_innerbody") {
-        body()
-      }
-    }
-
-    block("footer") {
-      footer()
-    }
-  }
-  
-  define topWDO() {
-    block("header") {}
-    block("menubar") { 
-      applicationMenubar()
-    }
-  }
-  
 section strategoxt template
 
   define main()
@@ -57,21 +28,13 @@ section strategoxt template
 section basic page elements
 
   define logo() {
-    section{header{navigate(home()){"WebDSL"}}}
+    //navigate(home()){output(config.logo)}
+    "Insert logo here"
   }
 
-  define homeSidebar() {
-    list { 
-      listitem{ navigate(home()){"Home"} }
-      //listitem { currentUser() }
-    }
-  }
-  
   define sidebar() {
     logo()
-    homeSidebar()
-    contextSidebar()
-    applicationSidebar()
+    output(config.sidebar.content)
   }
   
   define applicationSidebar() { }

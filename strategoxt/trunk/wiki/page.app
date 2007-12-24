@@ -45,7 +45,9 @@ section wiki page
     }
     define body() {
       section {
-        header{ output(p.title) }
+        block("twikiTopicTitle") {
+          header{ output(p.title) }
+        }
 	par{ output(p.content) }
 	
 	block("wikiPageByLine") {
@@ -153,6 +155,7 @@ section wiki page editing
     main() 
     title{"Edit Page: " output(p.name)}
     define body() {
+      block("twikiEditPage") {
       section {
         header{"Edit Page: " output(p.name)}
         form { 
@@ -166,6 +169,7 @@ section wiki page editing
           }
 	}
       }
+      }
     }
   }
   
@@ -177,6 +181,7 @@ section wiki page editing
     main() 
     title{"Create New Wiki Page"}
     define body() {
+      block("twikiEditPage") {
       section {
         header{"Create New Wiki Page"}
         form { 
@@ -198,6 +203,7 @@ section wiki page editing
 	    return page(p);
           }
 	}
+      }
       }
     }
   }

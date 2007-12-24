@@ -20,9 +20,6 @@ section home page
   {
     title{output(config.homepage.name)}
     main()
-    define sidebar() {
-      output(config.sidebar.content)
-    }
     define body() {
       output(config.homepage.content)
       //section{
@@ -35,6 +32,7 @@ section home page
 section application configuration
 
   entity Configuration {
+    logo          :: Image
     //blogs         -> Set<Blog>
     //forums        -> Set<Forum>
     homepage      -> Page

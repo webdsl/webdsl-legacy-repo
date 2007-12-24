@@ -21,11 +21,16 @@
 html body {
   font-family: verdana, lucida, helvetica, sans-serif;
   font-size: medium;
-  background-image: url("http://localhost:8080/strategoxt/stylesheets/cgn4.jpg");
+  background-image: url("cgn4.jpg");
   background-repeat: no-repeat;
   background-color: rgb(246, 246, 246);
-  margin:0;
-  padding:0;
+  margin : 0;
+  padding : 0;
+  height : 100%;
+  width : 100%;
+  position : absolute;
+  background-position : 0px 0px;
+
 }
 
 .webtitle {
@@ -281,7 +286,7 @@ label {
 
 .twikiLeftBarContents {
   margin  : 0;
-  padding : 1em 0 1.7em 1em;
+  padding : 1em 0 1.7em 0em;
   width   : auto;
   color: #005aa0;
   font-size : small;
@@ -1029,12 +1034,16 @@ html>body .twikiToc li a {
 	voice-family:inherit;
 	width:100%;
 }
+.twikiEditPage input { 
+  width : 100%;
+}
 .twikiEditPage textarea {
 	background-color:#FCFAF7;
 	width:auto;
 	voice-family: "\"}\""; /* hide the following for Explorer 5.x */
 	voice-family:inherit;
 	width:100%;
+        height : 40em;
 }
 .twikiEditPage .twikiHelp {
 	margin-top:2em;
