@@ -1,0 +1,126 @@
+module twiki-to-markdown
+imports libstrategolib xml-info
+
+strategies
+
+  main = 
+    input-wrap(
+      alltd(?Element(Name(_,"body"),_,<map(convert)>))
+    )
+
+  print-strings =
+   <fprint>(stdout, <id>)
+
+  convert =
+    ignore-element
+    <+ special-element
+    <+ convert-element
+    <+ debug(!"unknown-element: ")
+
+strategies 
+
+  // if not special or ignored keep xhtml elements as is
+
+  convert-element =
+    ?Element(Name(_, tag), attr*, elem*)
+    ; <print-strings> ["<", tag]
+    ; <map(print-attribute)> attr*
+    ; <printstring> ">"
+    ; <map(convert)> elem*
+    ; <print-strings> ["</", tag, ">"]
+
+  print-attribute =
+    ?Attribute(Name(_, aname), aval)
+    ; <print-strings>[" ", aname, "=\"", aval, "\""]
+
+  convert-element =
+    ?Text(x)
+    ; <string-tokenize>(['\n'], x)
+    ; map(trim-leading-whitespace;  printstring)
+
+strategies
+
+  // elements to ignore
+
+  ignore-element =
+    ? Element(
+            Name(_, "a")
+          , [ Attribute(Name(None(), "name"), "PageTop")
+            , Attribute(Name(None(), "id"), "PageTop")
+            ]
+          , []
+          )
+
+  ignore-element =
+    ? Element(
+            Name(_, "a")
+          , [ Attribute(Name(None(), "name"), "PageBottom")
+            , Attribute(Name(None(), "id"), "PageBottom")
+            ]
+          , []
+          )
+
+strategies
+
+  // elements to treat specially
+
+  special-element =
+    ?Element(Name(_, "p"), [], [])
+    ; <printstring> "\n\n"
+
+  special-element =
+    ?Element(
+            Name(_, "h3")
+          , []
+          , [ Element(
+                Name(_, "a")
+              , [ Attribute(Name(None(), "name"), _)
+                , Attribute(Name(None(), "id"), _)
+                ]
+              , []
+              )
+            , Text(txt)
+            ]
+          )
+    ; <print-strings>["\n### ", txt, "\n\n"]
+
+  special-element =
+    ?Element(Name(_, "p"), [], elem*)
+    ; <printstring> "\n"
+    ; <map(convert)> elem*
+    ; <printstring> "\n"
+
+  special-element =
+    ?Element(Name(_,"em"), [], [Text(x)])
+    ; <print-strings>["_", x, "_"]
+
+
+  special-element =
+    internal-link
+    <+ external-link
+
+  internal-link =
+    ?Element(Name(_, "a"), 
+	[ Attribute(Name(_, "class"), "twikiLink")
+        , Attribute(Name(_, "href"), url1)]
+      , [Text(anchor)])
+    ; url2 := <convert-internal-url> url1
+    ; <print-strings>["[[", url2, "|", anchor, "]]"]
+
+  external-link =
+    ?Element(Name(_, "a"), 
+      <fetch(?Attribute(Name(_, "href"), url))>
+      , [Text(anchor)])
+    ; <print-strings>["[", anchor, "](", url, ")"]
+
+
+  convert-internal-url =
+    <string-tokenize>(['/'], <id>) => ["http:", site, web, topic]
+    ; <concat-strings> ["page(", web, "/", topic, ")"]
+
+  special-element =
+    ?Element(Name(_, "pre")
+            ,[Attribute(Name(_, "space"), "preserve")]
+            ,[Text(txt)]
+            )
+    ; <indent-text(|4); printstring> txt
