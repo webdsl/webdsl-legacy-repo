@@ -28,6 +28,6 @@ section globals
         name    := "OtherPage"
         author  := zef
 	authors := {zef}
-    	content := "This is anoter page, refering to the [[page(MainPage)]]."
+    	content := "This is another page, referring to the [[page(MainPage)]]."
       };
   }

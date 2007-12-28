@@ -25,6 +25,12 @@ section main page for wiki
           // todo: make accessible via wiki markup?
         } }
       }
+      section { 
+        header{"TWiki Page Index"}
+        list { for(p : TwikiPage) { 
+          listitem { output(p) }
+        } }
+      }
     }
   }
   
@@ -32,12 +38,12 @@ section wiki page
   
   define page page(p : Page)
   {
-    init {
-      if(p.authors.length = 0) {
-        // This is a new page
-        goto editPage(p);
-      }
-    }
+    //init {
+    //  if(p.authors.length = 0) {
+    //    // This is a new page
+    //    goto editPage(p);
+    //  }
+    //}
     main()
     title{output(p.title)}
     define wikiOperationsMenuItems() {

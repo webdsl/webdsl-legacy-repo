@@ -4,3 +4,5 @@ imports wiki/data
 imports wiki/page
 imports wiki/init
 imports wiki/access-control
+
+imports wiki/twiki

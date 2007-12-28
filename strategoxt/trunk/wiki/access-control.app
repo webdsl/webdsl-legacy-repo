@@ -37,7 +37,13 @@ section wiki
     }
         
     rules page newPage() {
-      securityContext.loggedIn
+      true
+      // securityContext.loggedIn
+    }
+
+    rules page createPage() {
+      true
+      // securityContext.loggedIn
     }
 
     rules template pageOperationsMenuItems(p : Page) {
