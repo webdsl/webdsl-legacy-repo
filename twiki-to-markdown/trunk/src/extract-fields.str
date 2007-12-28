@@ -1,0 +1,71 @@
+module extract-fields
+imports libstrategolib xml-info
+
+strategies
+
+  main = 
+    rules( 
+      HiddenCount := 0
+      InputCount := 0
+    );
+    input-wrap(
+      alltd(extract-field)
+    )
+
+  print-strings =
+   <fprint>(stdout(), <id>)
+
+  extract-field =
+    extract-hidden-field 
+    <+ extract-input-field
+    <+ extract-textarea-field 
+    <+ extract-submit-field
+
+  extract-hidden-field =
+    ?Element(Name(_, "input"), 
+       [ Attribute(Name(_, "type"), "hidden") | attrs ]
+       , [] )
+    ; <fetch(?Attribute(Name(None(), "name"), name))> attrs
+    ; <fetch(?Attribute(Name(None(), "value"), value))> attrs
+    ; file := <concat-strings>["hidden_", <HiddenCount;int-to-string>]
+    ; rules( HiddenCount := <HiddenCount; inc> )
+    ; stream := <fopen>(file, "w")
+    ; <fputs>(value, stream)
+    ; <fclose> stream
+    ; <print-strings>[" -F ", "\"", name, "=@", file, ";type=text/plain\""]
+
+
+  extract-input-field =
+    ?Element(Name(_, "input"),
+       [ Attribute(Name(None(), "type"), "text")
+       , Attribute(Name(None(), "name"), name)
+       | _]
+       , [])
+    ; file := <concat-strings>["input_", <InputCount;int-to-string>]
+    ; rules( InputCount := <InputCount; inc> )
+    ; <print-strings>[" -F ", "\"", name, "=@", file, "\""]
+
+
+  extract-textarea-field =
+    ?Element(Name(_, "textarea"),
+       [ Attribute(Name(None(), "name"), name)
+       | _]
+       , [])
+    ; file := <concat-strings>["input_", <InputCount;int-to-string>]
+    ; rules( InputCount := <InputCount; inc> )
+    ; <print-strings>[" -F ", "\"", name, "=@", file, "\""]
+
+
+  extract-submit-field =
+    ?Element(Name(_, "input"), 
+      [ Attribute(Name(None(), "type"), "submit")
+      , Attribute(Name(None(), "name"),  name)
+      , Attribute(Name(None(), "value"), value)
+      ]
+      , [] )
+    ; file := <concat-strings>["hidden_", <HiddenCount;int-to-string>]
+    ; rules( HiddenCount := <HiddenCount; inc> )
+    ; stream := <fopen>(file, "w")
+    ; <fputs>(value, stream)
+    ; <fclose> stream
+    ; <print-strings>[" -F ", "\"", name, "=@", file, ";type=text/plain\""]

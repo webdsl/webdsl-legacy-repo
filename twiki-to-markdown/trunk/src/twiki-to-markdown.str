@@ -94,7 +94,6 @@ strategies
     ?Element(Name(_,"em"), [], [Text(x)])
     ; <print-strings>["_", x, "_"]
 
-
   special-element =
     internal-link
     <+ external-link
@@ -112,7 +111,6 @@ strategies
       <fetch(?Attribute(Name(_, "href"), url))>
       , [Text(anchor)])
     ; <print-strings>["[", anchor, "](", url, ")"]
-
 
   convert-internal-url =
     <string-tokenize>(['/'], <id>) => ["http:", site, web, topic]
