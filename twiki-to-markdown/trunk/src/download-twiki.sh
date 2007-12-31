@@ -29,7 +29,7 @@ do
       #	   http://localhost:8080/strategoxt/newPage.seam
 
       echo "insert into TwikiPage (_key, _content) " \
-           " values ('${topic}', '`cat ${web}/${topic}.md.esc`');" \
+           " values ('${topic}', '`cat ${web}/${topic}.md`');" \
 	   >> inserts.msql
     done
   fi

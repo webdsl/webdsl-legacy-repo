@@ -1,6 +1,12 @@
 module twiki-to-markdown
 imports libstrategolib xml-info
 
+overlays
+
+  Elem(tag, attrs, elems) = Element(Name(_ None(), tag), attrs, elems)
+
+  Attr(name, value) = Attribute(Name(_ None(), name), value)
+
 strategies
 
   main = 
@@ -9,7 +15,7 @@ strategies
     )
 
   print-strings =
-   <fprint>(stdout, <id>)
+   <fprint>(stdout(), <id>)
 
   convert =
     ignore-element
@@ -17,9 +23,8 @@ strategies
     <+ convert-element
     <+ debug(!"unknown-element: ")
 
-strategies 
 
-  // if not special or ignored keep xhtml elements as is
+strategies // default: copy xhtml elements literally
 
   convert-element =
     ?Element(Name(_, tag), attr*, elem*)
@@ -31,16 +36,17 @@ strategies
 
   print-attribute =
     ?Attribute(Name(_, aname), aval)
-    ; <print-strings>[" ", aname, "=\"", aval, "\""]
+    ; <print-strings>[" ", aname, "=\"", <escape-text> aval, "\""]
 
   convert-element =
-    ?Text(x)
-    ; <string-tokenize>(['\n'], x)
-    ; map(trim-leading-whitespace;  printstring)
+    ?Text(txt)
+    ; <string-tokenize>(['\n'], txt)
+    ; map(trim-leading-whitespace; escape-text; printstring)
 
-strategies
+  escape-text = 
+    string-as-chars(escape-chars(Escape <+ Escape-single-quote))
 
-  // elements to ignore
+strategies // elements to ignore
 
   ignore-element =
     ? Element(
@@ -60,20 +66,16 @@ strategies
           , []
           )
 
-strategies
 
-  // elements to treat specially
+strategies // structural markup
 
   special-element =
-    ?Element(Name(_, "p"), [], [])
+    ?Elem("p", [], [])
     ; <printstring> "\n\n"
 
   special-element =
-    ?Element(
-            Name(_, "h3")
-          , []
-          , [ Element(
-                Name(_, "a")
+    ?Element(Name(_, "h3"), []
+          , [ Element(Name(_, "a")
               , [ Attribute(Name(None(), "name"), _)
                 , Attribute(Name(None(), "id"), _)
                 ]
@@ -82,7 +84,7 @@ strategies
             , Text(txt)
             ]
           )
-    ; <print-strings>["\n### ", txt, "\n\n"]
+    ; <print-strings>["\n### ", <escape-text>txt, "\n\n"]
 
   special-element =
     ?Element(Name(_, "p"), [], elem*)
@@ -91,34 +93,60 @@ strategies
     ; <printstring> "\n"
 
   special-element =
-    ?Element(Name(_,"em"), [], [Text(x)])
-    ; <print-strings>["_", x, "_"]
+    ?Element(Name(_,"em"), [], [Text(txt)])
+    ; <print-strings>["_", <escape-text>txt, "_"]
+
+
+strategies // links
+
+//[E. Visser](/Stratego/EelcoVisser)
 
   special-element =
     internal-link
     <+ external-link
 
   internal-link =
-    ?Element(Name(_, "a"), 
-	[ Attribute(Name(_, "class"), "twikiLink")
-        , Attribute(Name(_, "href"), url1)]
-      , [Text(anchor)])
+    ?Elem("a", [ Attribute(Name(_, "class"), "twikiLink")
+               , Attribute(Name(_, "href"), url1)]
+             , [Text(anchor)])
     ; url2 := <convert-internal-url> url1
-    ; <print-strings>["[[", url2, "|", anchor, "]]"]
+    ; <print-strings>["[[", url2, "|", <escape-text>anchor, "]] "]
 
   external-link =
     ?Element(Name(_, "a"), 
       <fetch(?Attribute(Name(_, "href"), url))>
       , [Text(anchor)])
-    ; <print-strings>["[", anchor, "](", url, ")"]
+    ; <print-strings>["[", <escape-text>anchor, "](", url, ") "]
 
   convert-internal-url =
-    <string-tokenize>(['/'], <id>) => ["http:", site, web, topic]
-    ; <concat-strings> ["page(", web, "/", topic, ")"]
+    <string-tokenize>(['/'], <id>)
+    ; debug(!"internal url: ")
+    ; if ?["http:", site, web, topic] then
+        <concat-strings> ["page(", web, "/", topic, ")"]
+      else if ?[web, topic] then
+        <concat-strings> ["page(", web, "/", topic, ")"]
+      end end
 
   special-element =
     ?Element(Name(_, "pre")
             ,[Attribute(Name(_, "space"), "preserve")]
             ,[Text(txt)]
             )
-    ; <indent-text(|4); printstring> txt
+    ; <indent-text(|4); escape-text; printstring> txt
+
+
+/* 
+
+TODO
+
+- escape ' in text
+
+- internal links
+
+- leave out table of contents
+
+- space after links, emphasis
+
+- link syntax
+
+*/
