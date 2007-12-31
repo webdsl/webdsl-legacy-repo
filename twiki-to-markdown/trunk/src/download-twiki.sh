@@ -20,9 +20,9 @@ do
       parse-xml-info -i ${web}/${topic}.xhtml |\
 	  ${HOME}/webdsl/twiki-to-markdown/src/twiki-to-markdown  > ${web}/${topic}.md
 
-#      sed -e "s/\'/\\'/g"  ${web}/${topic}.md > ${web}/${topic}.md.esc 
+      sed s/\'/\\\'/g  ${web}/${topic}.md > ${web}/${topic}.md.esc 
 
-      cp ${web}/${topic}.md ${web}/${topic}.md.esc 
+#      cp ${web}/${topic}.md ${web}/${topic}.md.esc 
 
       #echo curl -F "j_id86:j_id91:j_id92=${topic}" \
       #	   -F "j_id86:j_id98:j_id99=<${web}/${topic}.md" \
