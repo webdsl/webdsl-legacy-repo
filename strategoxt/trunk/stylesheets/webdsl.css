@@ -193,6 +193,8 @@ textarea {
 	font-family:monospace;
 	font-size:100%;
 	margin:0.25em 0;
+        height : 40em;
+	width:100%;
 }
 input, select {
 	font-family:verdana,arial,sans-serif;
