@@ -1,4 +1,4 @@
-application org.webdsl.www
+application org.strategoxt.www
 
 description {
   This application is the website for webdsl.org
