@@ -1,0 +1,17 @@
+module site-specific
+
+strategies
+
+  site-specific-element =
+    site-specific-link
+
+  site-specific-link =
+    ?Elem("a", <fetch(?Attribute(Name(_, "href"), url))>
+             , [Text(anchor)])
+    ; <string-tokenize(|['/'])> url
+    ; convert-specific-url
+    ; <print-strings>["[", <escape-text>anchor, "](", <id>, ")"]
+
+  convert-specific-url =
+    ?["http:", "www.cs.uu.nl", "~visser", "ftp", file]
+    ; <concat-strings>["http://www.st.ewi.tudelft.nl/~eelco/papers/", file]

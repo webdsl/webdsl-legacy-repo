@@ -1,11 +1,23 @@
 module twiki-to-markdown
-imports libstrategolib xml-info
+
+imports libstrategolib 
+	xml-info
+	site-specific
+
+signature
+  constructors
+    EntityRef : String -> CharData
+    Literal   : String -> CharData
 
 overlays
 
   Elem(tag, attrs, elems) = Element(Name(_ None(), tag), attrs, elems)
 
   Attr(name, value) = Attribute(Name(_ None(), name), value)
+
+  H(tag, elems) = Elem(tag, [], elems)
+
+  Anchor() = Elem("a", [Attr("name", _ ""), Attr("id", _ "")], [])
 
 strategies
 
@@ -19,10 +31,13 @@ strategies
 
   convert =
     ignore-element
+    <+ site-specific-element
     <+ special-element
     <+ convert-element
     <+ debug(!"unknown-element: ")
 
+  site-specific-element =
+    fail
 
 strategies // default: copy xhtml elements literally
 
@@ -38,10 +53,36 @@ strategies // default: copy xhtml elements literally
     ?Attribute(Name(_, aname), aval)
     ; <print-strings>[" ", aname, "=\"", <escape-text> aval, "\""]
 
+strategies // default: copy element text literally 
+
   convert-element =
     ?Text(txt)
-    ; <string-tokenize>(['\n'], txt)
-    ; map(trim-leading-whitespace; escape-text; printstring)
+    ; where(<is-string> txt)
+    ; <convert-text-string> txt
+
+  convert-element =
+    ?Text(txt)
+    ; where(<is-list> txt)
+    ; <map(convert-text-string)> txt
+
+  convert-text-string =
+    is-string
+    ; escape-text
+    ; printstring
+    //; <string-tokenize-keep-empty(|['\n'])> txt
+    //; <string-tokenize-keep-empty>(['\n'], txt)
+    //; map(trim-leading-whitespace; escape-text; printstring; <printstring>"\n")
+
+  convert-text-string =
+    ?Literal(<is-string>)
+    ; escape-text
+    ; printstring
+
+  convert-text-string =
+    ?EntityRef(ref)
+    ; if not("nbsp" := ref) then
+        <print-strings>["&", ref, ";"]
+      end
 
   escape-text = 
     string-as-chars(escape-chars(Escape <+ Escape-single-quote))
@@ -58,13 +99,18 @@ strategies // elements to ignore
           )
 
   ignore-element =
-    ? Element(
-            Name(_, "a")
+    ?Element(Name(_, "a")
           , [ Attribute(Name(None(), "name"), "PageBottom")
             , Attribute(Name(None(), "id"), "PageBottom")
             ]
           , []
           )
+
+  ignore-element =
+    ?Element(Name(_, "a")
+            , [ Attribute(Name(None(), "name"), _)
+              , Attribute(Name(None(), "id"), _) ]
+            , [])
 
 
 strategies // structural markup
@@ -74,18 +120,18 @@ strategies // structural markup
     ; <printstring> "\n\n"
 
   special-element =
-    ?Element(Name(_, "h3"), []
-          , [ Element(Name(_, "a")
-              , [ Attribute(Name(None(), "name"), _)
-                , Attribute(Name(None(), "id"), _)
-                ]
-              , []
-              )
-            , Text(txt)
-            ]
-          )
-    ; <print-strings>["\n### ", <escape-text>txt, "\n\n"]
+    convert-header(|"h1", "#")
+    <+ convert-header(|"h2", "##")
+    <+ convert-header(|"h3", "###")
+    <+ convert-header(|"h4", "####")
+    <+ convert-header(|"h5", "#####")
 
+  convert-header(|h, hashes) =
+    ?Elem(h, [], elems)
+    ; <print-strings>[hashes, " "]
+    ; <map(convert)> elems
+    //; <print-strings>["\n"]
+    
   special-element =
     ?Element(Name(_, "p"), [], elem*)
     ; <printstring> "\n"
@@ -96,10 +142,77 @@ strategies // structural markup
     ?Element(Name(_,"em"), [], [Text(txt)])
     ; <print-strings>["_", <escape-text>txt, "_"]
 
+strategies // lists
+
+  special-element =
+    ?Elem("ul", [], elems)
+    ; {| ListIndent
+       : rules( 
+           ListIndent  := <concat-strings>["   ", <ListIndent <+ !"">] 
+           OrderedList :- _
+         )
+       ; <map(convert)> elems
+       |}
+    //; <print-strings>["\n"]
+
+  special-element =
+    ?Elem("ol", [], elems)
+    ; {| ListIndent, OL 
+       : rules( 
+           ListIndent  := <concat-strings>["   ", <ListIndent <+ !"">] 
+           OrderedList : _ 
+         )
+       ; <map(convert)> elems
+       |}
+    //; <print-strings>["\n"]
+
+  special-element =
+    ?Elem("li", [], elems)
+    ; <print-strings>[
+        "\n", 
+        <ListIndent <+ !"">, 
+        <if OrderedList then !"1. " else !"- " end>]
+    ; <map(convert)> elems
+
+strategies // tables
+
+  special-element =
+    ?Elem("table", _, elems)
+    ; <print-strings>["\n<table>"]
+    ; <map(convert)> elems
+    ; <print-strings>["\n</table>"]
+
+  special-element =
+    ?Elem("tr", _, elems)
+    ; <print-strings>["\n<tr>"]
+    ; <map(convert)> elems
+    ; <print-strings>["\n</tr>"]
+
+  special-element =
+    ?Elem("th", _, elems)
+    ; <print-strings>["\n<th>"]
+    ; <map(convert)> elems
+    ; <print-strings>[" </th>"]
+
+  special-element =
+    ?Elem("td", _, elems)
+    ; <print-strings>["\n <td>"]
+    ; <map(convert)> elems
+    ; <print-strings>[" </td>"]
+
+strategies
+
+  special-element =
+    ?Elem("div", [Attr("class", "twikiToc")], _)
+    //; <print-strings>["\n%TOC%\n"]
+
+  special-element =
+    ?Elem("span"
+	 , [ Attr("class", "twikiNewLink") | _ ]
+         , [ Elem("font", _, [Text(txt)] ) | _ ] )
+    ; <print-strings>[<escape-text>txt]
 
 strategies // links
-
-//[E. Visser](/Stratego/EelcoVisser)
 
   special-element =
     internal-link
@@ -110,36 +223,40 @@ strategies // links
                , Attribute(Name(_, "href"), url1)]
              , [Text(anchor)])
     ; url2 := <convert-internal-url> url1
-    ; <print-strings>["[[", url2, "|", <escape-text>anchor, "]] "]
+    ; <print-strings>["[[", url2, "|", <escape-text>anchor, "]]"]
 
   external-link =
     ?Element(Name(_, "a"), 
       <fetch(?Attribute(Name(_, "href"), url))>
       , [Text(anchor)])
-    ; <print-strings>["[", <escape-text>anchor, "](", url, ") "]
+    ; <print-strings>["[", <escape-text>anchor, "](", url, ")"]
 
   convert-internal-url =
     <string-tokenize>(['/'], <id>)
     ; debug(!"internal url: ")
     ; if ?["http:", site, web, topic] then
-        <concat-strings> ["page(", web, "/", topic, ")"]
+        <concat-strings> ["twikiPage(", web, "/", topic, ")"]
       else if ?[web, topic] then
-        <concat-strings> ["page(", web, "/", topic, ")"]
+        <concat-strings> ["twikiPage(", web, "/", topic, ")"]
+      else 
+        debug(!"unparseable internal link: "); fail 
       end end
 
   special-element =
-    ?Element(Name(_, "pre")
-            ,[Attribute(Name(_, "space"), "preserve")]
-            ,[Text(txt)]
-            )
-    ; <indent-text(|4); escape-text; printstring> txt
+    ?Elem("pre"
+         ,[Attr("space", "preserve")]
+         ,[Text(txt)])
+    ; <string-tokenize(|['\n'])> txt
+    ; map(where(<printstring>"\n    "); escape-text; printstring)
+
+    //; <indent-text(|4); debug(!"code: ");  escape-text; debug(!"code escaped: "); printstring> txt
 
 
 /* 
 
 TODO
 
-- escape ' in text
+x escape ' in text
 
 - internal links
 
@@ -147,6 +264,14 @@ TODO
 
 - space after links, emphasis
 
+- ordered lists (<ol>)
+
 - link syntax
+
+- tables
+
+  - at least pretty-print html syntax
+  - remove annotations/attributes
+  - extend markdown with twiki-like table syntax?
 
 */
