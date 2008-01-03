@@ -67,11 +67,14 @@ strategies // default: copy element text literally
 
   convert-text-string =
     is-string
-    ; escape-text
-    ; printstring
-    //; <string-tokenize-keep-empty(|['\n'])> txt
-    //; <string-tokenize-keep-empty>(['\n'], txt)
-    //; map(trim-leading-whitespace; escape-text; printstring; <printstring>"\n")
+    ; string-tokenize-keep-empty(|['\n'])
+    ; if not(?["" | _]) then
+        where(Hd; escape-text; <print-strings>[<id>, " "])
+        ; Tl
+      end
+    ; map(trim-leading-whitespace; escape-text; <print-strings>[<id>, " "])
+
+    // problem: <p><a href="...">foo</a> bar</p>
 
   convert-text-string =
     ?Literal(<is-string>)
@@ -112,6 +115,9 @@ strategies // elements to ignore
               , Attribute(Name(None(), "id"), _) ]
             , [])
 
+  ignore-element =
+    ?Elem("font", _, elems)
+    ; <map(convert-element)> elems
 
 strategies // structural markup
 
@@ -134,9 +140,9 @@ strategies // structural markup
     
   special-element =
     ?Element(Name(_, "p"), [], elem*)
-    ; <printstring> "\n"
+    ; <printstring> "\n\n"
     ; <map(convert)> elem*
-    ; <printstring> "\n"
+    //; <printstring> "\n"
 
   special-element =
     ?Element(Name(_,"em"), [], [Text(txt)])
@@ -242,6 +248,8 @@ strategies // links
         debug(!"unparseable internal link: "); fail 
       end end
 
+strategies // literal code
+
   special-element =
     ?Elem("pre"
          ,[Attr("space", "preserve")]
@@ -251,6 +259,9 @@ strategies // links
 
     //; <indent-text(|4); debug(!"code: ");  escape-text; debug(!"code escaped: "); printstring> txt
 
+  special-element =
+    ?Elem("code", _, [Text(txt)])
+    ; <print-strings>["`", <escape-text>txt, "`"]
 
 /* 
 
@@ -258,20 +269,39 @@ TODO
 
 x escape ' in text
 
+- replace \n in text by space to avoid spurious newlines
+  x space after links, emphasis
+
 - internal links
+  - Main/UserName -> [[user(UserName)]]
 
-- leave out table of contents
+x leave out table of contents
 
-- space after links, emphasis
-
-- ordered lists (<ol>)
+x ordered lists (<ol>)
 
 - link syntax
+  - links in headers and tables not processed
 
 - tables
 
   - at least pretty-print html syntax
   - remove annotations/attributes
   - extend markdown with twiki-like table syntax?
+
+- markdown bug: empty line in code fragment
+
+   http://localhost:8080/strategoxt/twikiPage/Stratego/DynamicRulesRethought
+
+- markdown / preprocessor bug:
+
+Notice that in this example the result is not <code>Plus(5, 6){\"a\", \"b\", \"c\"}</code>. The Plus term
+will have just one annotation, which is the list <code>[\"a\", \"b\", \"c\"]</code>. You can use [[twikiPage(Stratego/ListMatching)|ListMatching]] to solve 
+this problem:
+
+x AutoXT: <code>...</code>
+
+- Stratego/BuildingProgramOptimizersWithRewritingStrategies
+
+  - remove indentation from body text
 
 */
