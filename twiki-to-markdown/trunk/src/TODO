@@ -1,0 +1,53 @@
+TODO
+
+DOWNLOADING
+
+- record meta data for a diff (based on .txt,v file)
+- download diffs for page
+
+
+CONVERSION
+
+- strong -> **
+
+x escape ' in text
+
+x- replace \n in text by space to avoid spurious newlines
+  x space after links, emphasis
+
+- internal links
+  - Main/UserName -> [[user(UserName)]]
+  - links to Transform/ -> pto
+  - links to Sdf/ -> ???
+
+- url is itself?
+  -> not in markdown; use an extension of markdown?
+
+- link syntax
+  - links in headers and tables not processed
+
+x leave out table of contents
+
+x ordered lists (<ol>)
+
+- tables
+  x at least pretty-print html syntax
+  x remove annotations/attributes
+  - extend markdown with twiki-like table syntax?
+
+- markdown bug: empty line in code fragment
+
+   http://localhost:8080/strategoxt/twikiPage/Stratego/DynamicRulesRethought
+
+x markdown / preprocessor bug (in Stratego/TermAnnotation):
+
+Notice that in this example the result is not <code>Plus(5, 6){\"a\", \"b\", \"c\"}</code>. The Plus term
+will have just one annotation, which is the list <code>[\"a\", \"b\", \"c\"]</code>. You can use [[twikiPage(Stratego/ListMatching)|ListMatching]] to solve 
+this problem:
+
+x AutoXT: <code>...</code>
+
+x Stratego/BuildingProgramOptimizersWithRewritingStrategies
+
+  x remove indentation from body text
+

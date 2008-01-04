@@ -42,7 +42,14 @@ strategies
 strategies // default: copy xhtml elements literally
 
   convert-element =
+    ?Element(Name(_, tag), attr*, [])
+    ; <print-strings> ["<", tag]
+    ; <map(print-attribute)> attr*
+    ; <printstring> "/>"
+
+  convert-element =
     ?Element(Name(_, tag), attr*, elem*)
+    ; where(<not(?[])> elem*)
     ; <print-strings> ["<", tag]
     ; <map(print-attribute)> attr*
     ; <printstring> ">"
@@ -68,11 +75,14 @@ strategies // default: copy element text literally
   convert-text-string =
     is-string
     ; string-tokenize-keep-empty(|['\n'])
-    ; if not(?["" | _]) then
+    ; if ?["" | _] then
+        where(<print-strings>["\n"])
+        ; Tl
+      else
         where(Hd; escape-text; <print-strings>[<id>, " "])
         ; Tl
       end
-    ; map(trim-leading-whitespace; escape-text; <print-strings>[<id>, " "])
+    ; map(trim-leading-whitespace; trim-trailing-whitespace; escape-text; <print-strings>[<id>, " "])
 
     // problem: <p><a href="...">foo</a> bar</p>
 
@@ -126,6 +136,15 @@ strategies // structural markup
     ; <printstring> "\n\n"
 
   special-element =
+    ?Element(Name(_, "p"), [], elem*)
+    ; <printstring> "\n\n"
+    ; <map(convert)> elem*
+
+  special-element =
+    ?Elem("hr", [], [])
+    ; <printstring> "\n--------------------------------------------\n"
+
+  special-element =
     convert-header(|"h1", "#")
     <+ convert-header(|"h2", "##")
     <+ convert-header(|"h3", "###")
@@ -138,20 +157,24 @@ strategies // structural markup
     ; <map(convert)> elems
     //; <print-strings>["\n"]
     
-  special-element =
-    ?Element(Name(_, "p"), [], elem*)
-    ; <printstring> "\n\n"
-    ; <map(convert)> elem*
-    //; <printstring> "\n"
 
   special-element =
     ?Element(Name(_,"em"), [], [Text(txt)])
     ; <print-strings>["_", <escape-text>txt, "_"]
 
+  special-element =
+    ?Element(Name(_,"strong"), [], [Text(txt)])
+    ; <print-strings>["**", <escape-text>txt, "**"]
+
+  special-element =
+    ?Element(Name(_,"b"), [], [Text(txt)])
+    ; <print-strings>["**", <escape-text>txt, "**"]
+
 strategies // lists
 
   special-element =
     ?Elem("ul", [], elems)
+    ; <print-strings>["\n\n"]
     ; {| ListIndent
        : rules( 
            ListIndent  := <concat-strings>["   ", <ListIndent <+ !"">] 
@@ -159,10 +182,10 @@ strategies // lists
          )
        ; <map(convert)> elems
        |}
-    //; <print-strings>["\n"]
 
   special-element =
     ?Elem("ol", [], elems)
+    ; <print-strings>["\n\n"]
     ; {| ListIndent, OL 
        : rules( 
            ListIndent  := <concat-strings>["   ", <ListIndent <+ !"">] 
@@ -170,7 +193,6 @@ strategies // lists
          )
        ; <map(convert)> elems
        |}
-    //; <print-strings>["\n"]
 
   special-element =
     ?Elem("li", [], elems)
@@ -251,11 +273,11 @@ strategies // links
 strategies // literal code
 
   special-element =
-    ?Elem("pre"
-         ,[Attr("space", "preserve")]
-         ,[Text(txt)])
-    ; <string-tokenize(|['\n'])> txt
+    ?Elem("pre", [Attr("space", "preserve")], [Text(txt)])
+    ; <string-tokenize-keep-empty(|['\n'])> txt
+    ; where(<printstring>"\n")
     ; map(where(<printstring>"\n    "); escape-text; printstring)
+    ; where(<printstring>"\n\n")
 
     //; <indent-text(|4); debug(!"code: ");  escape-text; debug(!"code escaped: "); printstring> txt
 
@@ -263,45 +285,10 @@ strategies // literal code
     ?Elem("code", _, [Text(txt)])
     ; <print-strings>["`", <escape-text>txt, "`"]
 
-/* 
+  special-element =
+    ?Elem("code", _, elems)
+    ; where(<not([])> elems)
+    ; <print-strings>["`"]
+    ; <map(convert)> elems
+    ; <print-strings>["`"]
 
-TODO
-
-x escape ' in text
-
-- replace \n in text by space to avoid spurious newlines
-  x space after links, emphasis
-
-- internal links
-  - Main/UserName -> [[user(UserName)]]
-
-x leave out table of contents
-
-x ordered lists (<ol>)
-
-- link syntax
-  - links in headers and tables not processed
-
-- tables
-
-  - at least pretty-print html syntax
-  - remove annotations/attributes
-  - extend markdown with twiki-like table syntax?
-
-- markdown bug: empty line in code fragment
-
-   http://localhost:8080/strategoxt/twikiPage/Stratego/DynamicRulesRethought
-
-- markdown / preprocessor bug:
-
-Notice that in this example the result is not <code>Plus(5, 6){\"a\", \"b\", \"c\"}</code>. The Plus term
-will have just one annotation, which is the list <code>[\"a\", \"b\", \"c\"]</code>. You can use [[twikiPage(Stratego/ListMatching)|ListMatching]] to solve 
-this problem:
-
-x AutoXT: <code>...</code>
-
-- Stratego/BuildingProgramOptimizersWithRewritingStrategies
-
-  - remove indentation from body text
-
-*/
