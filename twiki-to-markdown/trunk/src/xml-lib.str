@@ -1,0 +1,23 @@
+module xml-lib
+
+imports	xml-info
+
+signature
+  constructors
+    EntityRef : String -> CharData
+    Literal   : String -> CharData
+
+overlays
+
+  Elem(tag, attrs, elems) = Element(Name(_ None(), tag), attrs, elems)
+
+  Attr(name, value) = Attribute(Name(_ None(), name), value)
+
+  H(tag, elems) = Elem(tag, [], elems)
+
+  Anchor() = Elem("a", [Attr("name", _ ""), Attr("id", _ "")], [])
+
+strategies
+
+  print-strings =
+   <fprint>(stdout(), <id>)

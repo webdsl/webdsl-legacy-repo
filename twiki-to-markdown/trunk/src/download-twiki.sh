@@ -2,46 +2,42 @@
 
 echo "" > inserts.msql
 
+basedir=`dirname $0`
+
 for web in *
 do
   if test -d ${web}
   then
-    for file in $web/*.txt
+    echo "converting web ${web}"
+    # for file in $web/*.txt
+    for file in `find ${web} -name \*.txt \
+	          -a \( -not \( -name WebStatistics.txt \
+                               -o -name WebPreferences.txt \
+                               -o -name WebChanges.txt \
+                               -o -name WebChanges500.txt \
+                               -o -name WebChanges200.txt \
+                               -o -name WebChanges100.txt \
+                               -o -name WebChanges.txt \
+                               -o -name WebRss.txt \
+                               -o -name WebSearch.txt \
+                               -o -name WebTools.txt \
+                               -o -name WebTopicList.txt \
+                               -o -name WebIndex.txt \
+                               -o -name WebCustomMenus.txt \
+                               -o -name WebCustomMenus.txt \
+                               -o -name WebNotify.txt \
+                               -o -name TWikiUsers.txt \
+	                     \) \)`
     do
-
+      
       topic=`basename ${file} .txt`
 
-      echo "downloading ${web}/${topic}"
+      #echo ${web}/${topic}
 
-#      wget http://www.stratego-language.org/${web}/${topic}?skin=plain -O ${web}/${topic}.html
-
-      html2xhtml ${web}/${topic}.html > ${web}/${topic}.xhtml
-
-      parse-xml-info -i ${web}/${topic}.xhtml |\
-	  ${HOME}/webdsl/twiki-to-markdown/src/twiki-to-markdown  > ${web}/${topic}.md
-
-      sed s/\'/\\\'/g  ${web}/${topic}.md > ${web}/${topic}.md.esc 
-
-#     cp ${web}/${topic}.md ${web}/${topic}.md.esc 
-
-      #echo curl -F "j_id86:j_id91:j_id92=${topic}" \
-      #	   -F "j_id86:j_id98:j_id99=<${web}/${topic}.md" \
-      #	   http://localhost:8080/strategoxt/newPage.seam
-
-      
-      echo "insert into TwikiPage (_key, _web, _topic, _content) " \
-           " values ('${web}/${topic}', '${web}', '${topic}', '" >> inserts.msql
-      cat ${web}/${topic}.md >> inserts.msql
-      echo "');" >> inserts.msql
+      ${basedir}/download-twiki-topic.sh ${web} ${topic}
 
     done
   fi
 done
 
-
-#/strategoxt/newPage.seam
-
-#Name: j_id86:j_id91:j_id92
-
-#Content: j_id86:j_id98:j_id99
 

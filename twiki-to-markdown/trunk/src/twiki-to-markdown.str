@@ -1,33 +1,16 @@
 module twiki-to-markdown
 
 imports libstrategolib 
-	xml-info
 	site-specific
-
-signature
-  constructors
-    EntityRef : String -> CharData
-    Literal   : String -> CharData
-
-overlays
-
-  Elem(tag, attrs, elems) = Element(Name(_ None(), tag), attrs, elems)
-
-  Attr(name, value) = Attribute(Name(_ None(), name), value)
-
-  H(tag, elems) = Elem(tag, [], elems)
-
-  Anchor() = Elem("a", [Attr("name", _ ""), Attr("id", _ "")], [])
+	xml-lib
 
 strategies
 
   main = 
+    where(initiatialize-stratego-external-links);
     input-wrap(
       alltd(?Element(Name(_,"body"),_,<map(convert)>))
     )
-
-  print-strings =
-   <fprint>(stdout(), <id>)
 
   convert =
     ignore-element
@@ -129,6 +112,9 @@ strategies // elements to ignore
     ?Elem("font", _, elems)
     ; <map(convert-element)> elems
 
+  ignore-element =
+    ?Elem("div", [Attr("class", "twikiWebTitle")], _)
+
 strategies // structural markup
 
   special-element =
@@ -152,7 +138,7 @@ strategies // structural markup
     <+ convert-header(|"h5", "#####")
 
   convert-header(|h, hashes) =
-    ?Elem(h, [], elems)
+    ?Elem(h, _, elems)
     ; <print-strings>[hashes, " "]
     ; <map(convert)> elems
     //; <print-strings>["\n"]
@@ -248,10 +234,11 @@ strategies // links
 
   internal-link =
     ?Elem("a", [ Attribute(Name(_, "class"), "twikiLink")
-               , Attribute(Name(_, "href"), url1)]
+               , Attribute(Name(_, "href"), url)]
              , [Text(anchor)])
-    ; url2 := <convert-internal-url> url1
-    ; <print-strings>["[[", url2, "|", <escape-text>anchor, "]]"]
+    ; <convert-internal-url(|<escape-text>anchor); print-strings> url
+    
+    //; <print-strings>["[[", url2, "|", anchor, "]]"]
 
   external-link =
     ?Element(Name(_, "a"), 
@@ -259,13 +246,13 @@ strategies // links
       , [Text(anchor)])
     ; <print-strings>["[", <escape-text>anchor, "](", url, ")"]
 
-  convert-internal-url =
+  convert-internal-url(|anchor) =
     <string-tokenize>(['/'], <id>)
     ; debug(!"internal url: ")
     ; if ?["http:", site, web, topic] then
-        <concat-strings> ["twikiPage(", web, "/", topic, ")"]
+        <internal-url(|anchor)> (web, topic)
       else if ?[web, topic] then
-        <concat-strings> ["twikiPage(", web, "/", topic, ")"]
+        <internal-url(|anchor)> (web, topic)
       else 
         debug(!"unparseable internal link: "); fail 
       end end

@@ -1,13 +1,12 @@
 module site-specific
 
-strategies
+strategies // external links
 
   site-specific-element =
     site-specific-link
 
   site-specific-link =
-    ?Elem("a", <fetch(?Attribute(Name(_, "href"), url))>
-             , [Text(anchor)])
+    ?Elem("a", <fetch(?Attribute(Name(_, "href"), url))>, [Text(anchor)])
     ; <string-tokenize(|['/'])> url
     ; convert-specific-url
     ; <print-strings>["[", <escape-text>anchor, "](", <id>, ")"]
@@ -16,4 +15,33 @@ strategies
     ?["http:", "www.cs.uu.nl", "~visser", "ftp", file]
     ; <concat-strings>["http://www.st.ewi.tudelft.nl/~eelco/papers/", file]
 
+strategies // internal links
 
+  internal-url(|anchor) =
+    internal-url-specific(|anchor)
+    <+ internal-to-external(|anchor)
+    <+ internal-url-default(|anchor)
+    
+  internal-url-default(|anchor) :
+    (web, topic) -> ["[[page(", web, "/", topic, ")|", anchor, "]]"]
+
+  internal-url-specific(|anchor) :
+    ("Main", topic) -> <concat-strings> ["[[user(", topic, ")]]"]
+
+  generate-internal-to-external-url =
+    ?(url, webs)
+    ; <map({web: 
+         ?web
+         ; rules( 
+             internal-to-external(|anchor) : 
+               (web, topic) -> ["[", anchor, "](", url, "/page/", web, "/", topic, ")"]
+           )
+       })> webs
+
+  initiatialize-stratego-external-links =
+    <generate-internal-to-external-url> 
+      ("http://www.program-transformation.org",
+       [ "Gmt", "PEPM07", "PEPM08", "Sdf", "Sts", "Tools", "Transform", "Variability" ])
+
+  internal-url-specific(|anchor) :
+    ("Main", topic) -> <concat-strings> ["user(", topic, ")"]

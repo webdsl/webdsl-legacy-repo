@@ -1,0 +1,57 @@
+module extract-user
+
+imports libstrategolib
+	xml-lib
+
+strategies
+
+  main =
+    input-wrap(
+      alltd(extract-user-property)
+    )
+
+  extract-user-property =
+    ?Elem("title", [], [Text(txt)]) 					// " OegeDeMoor < Main < TWiki"
+    ; [username ,"<","Main","<","TWiki"] := <string-tokenize(|[' ','\n'])> txt
+    ; <print-strings> ["username=\"", username]
+    ; <print-strings> ["\"\n"]
+
+  extract-user-property =
+    ?Elem("li", [], [Text(txt)]) 					// " Name: Eelco Visser\n"
+    ; ["Name:" | names] := <string-tokenize(|[' ','\n'])> txt
+    ; <print-strings> ["fullname=\"" | <separate-by(|" ")>names]
+    ; <print-strings> ["\"\n"]
+
+  extract-user-property =
+    ?Elem("li", []
+         , [ Text(" Email: ")
+           , Elem("a", [Attr("href", mailto)]				// "mailto:visser@cs.uu.nl"
+                     , [Text(email)]					// "visser@cs.uu.nl"
+                  )])
+    ; <print-strings> ["email=\"", email]
+    ; <print-strings> ["\"\n"]
+
+
+  extract-user-property =
+    ?Elem("li", [], [Text(txt)]) 					// " Affiliation: Utrecht University\n"
+    ; ["Affiliation:" | names] := <string-tokenize(|[' ','\n'])> txt
+    ; <print-strings> ["affiliation=\"" | <separate-by(|" ")>names]
+    ; <print-strings> ["\"\n"]
+
+  extract-user-property =
+    ?Elem("li", [], [Text(txt)])					// " Country: Netherlands\n"
+    ; ["Country:" | names] := <string-tokenize(|[' ','\n'])> txt
+    ; <print-strings> ["country=\"" | <separate-by(|" ")>names]
+    ; <print-strings> ["\"\n"]
+
+  extract-user-property =
+    ?Elem("li", []
+              , [ Text(" Homepage URL: ")
+                , Elem("a"
+                  , [ Attr("href", url) | _ ]
+                  , [Text(url)]						// "http://www.cs.uu.nl/~visser"
+                  )
+                ]
+              )
+    ; <print-strings> ["homepage=\"", url]
+    ; <print-strings> ["\"\n"]
