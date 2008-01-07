@@ -107,5 +107,7 @@ section RBAC templates
         securityContext.loggedIn := false;
         return home();
       }
+      
+      listitem { navigate(stress()){"stress test"} }
     }
   }

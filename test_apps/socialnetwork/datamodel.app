@@ -15,10 +15,14 @@ section definition
     
     function potentialFriend (f:User): Bool
     {
+      var isrequesting : Bool := f in [fr.requester for (fr : FriendRequest in this.incomingFriendRequests)];
+      var isrequested : Bool := f in [fr.requestee for (fr : FriendRequest in this.friendRequests)];
+      var isfriend : Bool := f in this.friends;
+      
       if (this != f
-      && !(f in [fr.requester for (fr : FriendRequest in this.incomingFriendRequests)])
-      && !(f in [fr.requestee for (fr : FriendRequest in this.friendRequests)])
-      && !(f in this.friends)
+      && !isrequesting
+      && !isrequested
+      && !isfriend
       )
       {
         return true;
@@ -77,7 +81,7 @@ section definition
   }
   
   
-  section anti-view-edit-page-HACKS
+  section overwrite-view-edit-pages
   
   define page viewFriendRequest(f:FriendRequest){}
   define page editFriendRequest(f:FriendRequest){}

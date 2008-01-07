@@ -106,4 +106,8 @@ section DAC AccessControl
     {
       true
     }    
+    rules page stress()
+    {
+      true
+    }
   } 

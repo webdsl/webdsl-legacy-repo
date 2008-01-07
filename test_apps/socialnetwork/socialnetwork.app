@@ -15,34 +15,43 @@ section home.
 
   define homePageEdit(p:Page)
   {
-    form
+    table
     {
-      input(p.name)
-      input(p.content)
-      action("save",savePage())
-      action savePage()
+      form
       {
-        p.save();
+        row{input(p.name)}
+        row{input(p.content)}
+        row{action("save",savePage())}
+        action savePage()
+        {
+          p.save();
+        }
       }
     }
   }
   define userEdit(u:User)
   {
-    form
+    table
     {
-      block("name")
+      form
       {
-        "Username"
-        input(u.username) 
-        action("save username", saveUser())
-      }
-      block("access")
-      {
-        "User page access"
-        input(u.viewAccess)
-      }
-      action saveUser() {
-        u.save();
+        row
+        {
+          "Username: "
+          input(u.username)
+        }
+        row
+        {
+          "User page access: "
+          input(u.viewAccess)
+        }
+        row
+        {
+          action("save user", saveUser())
+        }
+        action saveUser() {
+          u.save();
+        }
       }
     }
   }
@@ -70,10 +79,7 @@ section home.
         section { "My Friends: " output (u.friends)}
         section { "My Groups: " output (u.groups)}
         section { output(p.content) }
-        div("owner")
-        {
-          section{navigate(editPage(p)) { "Edit my page" }}
-        }
+        section{navigate(editPage(p)) { "Edit my page" }}   
       }
     }
   }
@@ -91,41 +97,48 @@ section home.
   
   define groupRequests(u:User)
   {
-    form
-    {  
-      list { 
+    table
+    {
+      form
+      {  
+     
         for(ug : UserGroup where u.potentialGroup(ug)) 
         { 
-          listitem{output(ug.name) action("request group membership",reqGroup(ug)) } 
+          row{output(ug.name) action("request group membership",reqGroup(ug)) } 
         } 
-      }
-      action reqGroup(ug: UserGroup) {
-        var mreq : MembershipRequest := MembershipRequest
-        {
-          requester := u
-          requestee := ug
-        };
-        mreq.save();
-        u.membershipRequests.add(mreq);
-        ug.incomingMembershipRequests.add(mreq);
+       
+        action reqGroup(ug: UserGroup) {
+          var mreq : MembershipRequest := MembershipRequest
+          {
+            requester := u
+            requestee := ug
+          };
+          mreq.save();
+          u.membershipRequests.add(mreq);
+          ug.incomingMembershipRequests.add(mreq);
+        }
       }
     }
   }
   define groupStartedMembershipRequests(u:User)
   {
-    form
+    table
     {
-      list {
+      form
+      {
+ 
         for(memreqs : MembershipRequest in u.membershipRequestsList) 
         { 
-          listitem{ output(memreqs.requestee.name) action("cancel",cancelMemRequest(memreqs)) } 
+          row{ output(memreqs.requestee.name) 
+          row{action("cancel",cancelMemRequest(memreqs)) }} 
         } 
-      }
-      action cancelMemRequest(f:MembershipRequest)
-      {
-        f.delete();
-        f.requestee.incomingMembershipRequests.remove(f);
-        f.requester.membershipRequests.remove(f);
+       
+        action cancelMemRequest(f:MembershipRequest)
+        {
+          f.delete();
+          f.requestee.incomingMembershipRequests.remove(f);
+          f.requester.membershipRequests.remove(f);
+        }
       }
     }
   }
@@ -135,10 +148,10 @@ section home.
     define body()
     {
       header{"My Groups"}
-      list {
+      table {
         for(myg :UserGroup in u.groupsList) 
         { 
-          listitem{navigate(viewUserGroup(myg)) { output(myg.name) }} 
+          row{navigate(viewUserGroup(myg)) { output(myg.name) }} 
         } 
       }
       header{"New Groups and Memberships"}
@@ -151,66 +164,81 @@ section home.
 
   define friendNewRequests(u:User)
   {
-    form
-    {  
-      list { 
+    table
+    {
+      form
+      {  
+        
         for(us : User where u.potentialFriend(us) )
         { 
-          listitem{output(us.username) action("request friendship",reqFriend(us)) } 
+          row{output(us.username) action("request friendship",reqFriend(us)) }
         } 
-      }
-      action reqFriend(us: User) {
-        var freq : FriendRequest := FriendRequest
-        {
-          requester := u
-          requestee := us
-        };
-        freq.save();
         
-        u.friendRequests.add(freq);
-        us.incomingFriendRequests.add(freq);
+        action reqFriend(us: User) {
+          var freq : FriendRequest := FriendRequest
+          {
+            requester := u
+            requestee := us
+          };
+          freq.save();
+          
+          u.friendRequests.add(freq);
+          us.incomingFriendRequests.add(freq);
+        }
       }
     }
+    
   }
+  
   define friendStartedRequests(u:User)
   {
-    form
+    table
     {
-      list {
+      form
+      {
+        
         for(ownfreqs : FriendRequest in u.friendRequestsList) 
         { 
-          listitem{ output(ownfreqs.requestee.username) action("cancel",cancelFriendRequest(ownfreqs)) } 
+          row {output(ownfreqs.requestee.username) action("cancel",cancelFriendRequest(ownfreqs))}
         } 
-      }
-      action cancelFriendRequest(f:FriendRequest)
-      { 
-        f.requester.friendRequests.remove(f);
-        f.requestee.incomingFriendRequests.remove(f);   
-        f.delete();
+        
+        action cancelFriendRequest(f:FriendRequest)
+        { 
+          f.requester.friendRequests.remove(f);
+          f.requestee.incomingFriendRequests.remove(f);   
+          f.delete();
+        }
       }
     }
   }  
   define friendIncomingRequests(u:User)
   {
-    form
+    table
     {
-      list {
+      form
+      {
         for(incfreqs : FriendRequest in u.incomingFriendRequestsList) 
         { 
-          listitem{ output(incfreqs.requester.username)  action("accept",acceptFriendRequest(incfreqs))} 
+          row
+          {
+            output(incfreqs.requester.username)
+            action("accept",acceptFriendRequest(incfreqs))
+          }
         } 
-      }
-      action acceptFriendRequest(f:FriendRequest)
-      {
-        f.requester.friends.add(f.requestee);
-        f.requestee.friends.add(f.requester);
         
-        f.requester.friendRequests.remove(f);
-        f.requestee.incomingFriendRequests.remove(f);
-        f.delete();
-  
+        action acceptFriendRequest(f:FriendRequest)
+        {
+          f.requester.friends.add(f.requestee);
+          f.requestee.friends.add(f.requester);
+          
+          f.requester.friendRequests.remove(f);
+          f.requestee.incomingFriendRequests.remove(f);
+          f.delete();
+    
+        }
       }
     }
+    
   } 
   
   define page friends(u:User)
@@ -218,20 +246,24 @@ section home.
     main()
     define body()
     {
-      
+
       header{"My Friends"}
-      list {
-        for(myf : User in u.friendsList) 
-        { 
-          listitem{ navigate(viewUser(myf)){output(myf.username)}} 
-        } 
+
+      for(myf : User in u.friendsList) 
+      { 
+        section{navigate(viewUser(myf)){output(myf.username)}}      
       }
+     
       header{"New Friendship requests"}
       friendNewRequests(u)
+      
       header{"Your Friendship requests"}
       friendStartedRequests(u)
+     
       header{"Incoming Friendship requests"}
       friendIncomingRequests(u)
+     
+     
     }
   }
 
@@ -240,24 +272,30 @@ section home.
 
     define body() {
       title{"Social Network Start"}
-      section{
-        section {
-          header{"All members"}
-          list { 
-            for(u : User) 
-            { 
-              listitem{ navigate(viewUser(u)) { output(u.name) } } 
-            } 
-          }
-          header{"All groups"}
-          list {
-            for(g : UserGroup) 
-            { 
-              listitem{ navigate(viewUserGroup(g)) { output(g.name) } } 
-            } 
-          }
+    
+      table{ 
+        row{login()}
+      }
+  
+      header{"All members"}
+      
+      table
+      {
+        for(u : User where viewAllowed(u)) 
+        { 
+          row{ navigate(viewUser(u)) { output(u.name) } } 
         }
       }
+      
+      header{"All groups"}
+      table
+      { 
+        for(g : UserGroup where groupViewAllowed(g)) 
+        { 
+          row{navigate(viewUserGroup(g)) { output(g.name) }} 
+        }  
+      }
+      
     }
   }
   

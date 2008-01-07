@@ -22,34 +22,26 @@ section ac stuff.
   principal is User with credentials username,password
 
   predicate viewAllowed(u:User){
-    securityContext.principal = u
-    || (u.viewAccess = pub)
+    //securityContext.principal = u
+    (u.viewAccess = pub)
     || (u.viewAccess = fri && securityContext.principal in u.friends)
-    //|| (u.viewAccess = priv && securityContext.principal = u)
+    || (u.viewAccess = priv && securityContext.principal = u)
   }
 
   rules page viewUser(u : User)
   {
     viewAllowed(u)
-    rules template div("owner")
-    {
-       securityContext.principal = u
-    } 
   }
   
   predicate groupViewAllowed(ug : UserGroup){
     (ug.viewAccess = pub) 
     || (ug.viewAccess = mem && securityContext.principal in ug.members)
-    || (ug.viewAccess = priv && securityContext.principal = ug.owner)
+    || (ug.viewAccess = priv && (securityContext.principal = ug.owner || securityContext.principal in ug.moderators))
   }
   
   rules page viewUserGroup(ug : UserGroup)
   {
     groupViewAllowed(ug)
-    rules template div("ownermod")
-    {
-       securityContext.principal = ug.owner || securityContext.principal in ug.moderators
-    } 
   } 
   
   pointcut groupediting(ug : UserGroup)
@@ -116,10 +108,4 @@ section ac stuff.
   { 
     securityContext.loggedIn
   }
-  
-  rules template div("loggedIn")
-  {
-    securityContext.loggedIn
-  }
-
 }

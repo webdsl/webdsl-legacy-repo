@@ -193,4 +193,76 @@ section pages
       
     }
   }
-
+   
+  define page stress()
+  {
+    main()
+    define body()
+    {   
+         
+      //for loops  
+      form
+      {
+        for(d:Document)
+        {
+          navigate(document(d)){output(d.title)}
+        }
+        for(d:Document)
+        {
+          navigate(document(d)){output(d.title)}
+        }
+        for(d:Document)
+        {
+          navigate(document(d)){output(d.title)}
+        }
+        for(d:Document)
+        {
+          navigate(document(d)){output(d.title)}
+        }
+        for(d:Document)
+        {
+          navigate(document(d)){output(d.title)}
+        }
+        for(d:Document)
+        {
+          navigate(document(d)){output(d.title)}
+        }
+        for(d:Document)
+        {
+          navigate(document(d)){output(d.title)}
+        }
+        for(d:Document)
+        {
+          navigate(document(d)){output(d.title)}
+        }
+        for(d:Document)
+        {
+          navigate(document(d)){output(d.title)}
+        }
+        for(d:Document)
+        {
+          navigate(document(d)){output(d.title)}
+        }
+        for(d:Document)
+        {
+          navigate(document(d)){output(d.title)}
+        }
+        for(d:Document)
+        {
+          navigate(document(d)){output(d.title)}
+        }
+        for(d:Document)
+        {
+          navigate(document(d)){output(d.title)}
+        }
+        for(d:Document)
+        {
+          navigate(document(d)){output(d.title)}
+        }
+        for(d:Document)
+        {
+          navigate(document(d)){output(d.title)}
+        }
+      }
+    }
+  }

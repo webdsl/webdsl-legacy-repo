@@ -1,31 +1,31 @@
-module sergroups
+module usergroups
 
 section groups.
 
   define groupNewUserGroup(u:User)
   {
     var newGroup : UserGroup := UserGroup{};
-    
-    form
+    table
     {
-      input(newGroup.name)
-      action("create group",create())
-      action create()
+      form
       {
-        newGroup.owner := u;
-        newGroup.members.add(u);
-        u.groups.add(newGroup);
-        var ptemp: GroupPage:=GroupPage{};
-        ptemp.name := newGroup.name + "page";
-        ptemp.group :=newGroup;
-        ptemp.content := "group page";
-        newGroup.page := ptemp;
-        newGroup.viewAccess := priv;
-        newGroup.save();
-        
+        row{input(newGroup.name)}
+        row{action("create group",create())}
+        action create()
+        {
+          newGroup.owner := u;
+          newGroup.members.add(u);
+          u.groups.add(newGroup);
+          var ptemp: GroupPage:=GroupPage{};
+          ptemp.name := newGroup.name + "page";
+          ptemp.group :=newGroup;
+          ptemp.content := "group page";
+          newGroup.page := ptemp;
+          newGroup.viewAccess := priv;
+          newGroup.save();       
+        }
       }
-    }
-    
+    } 
   }
   
   define page viewUserGroup(g: UserGroup)
@@ -56,34 +56,34 @@ section groups.
       output(g.page.name)   
       output(g.page.content)   
       
-      div("ownermod")
-      {
-        section{navigate(editUserGroup(g)) { "Edit my group" }}
-        section{navigate(editGroupPage(g.page)) { "Edit group page" }}
-      }
+  
+      section{navigate(editUserGroup(g)) { "Edit my group" }}
+      section{navigate(editGroupPage(g.page)) { "Edit group page" }}
+      
     }
   }
   
   
   define groupIncomingMembershipRequests(ug:UserGroup)
   {
-    form
+    table
     {
-      list {
+      form
+      {
         for(f : MembershipRequest where f.requestee = ug) 
         { 
-          listitem{ output(f.requester.username)  action("accept",acceptMemRequest(f))} 
+          row{ output(f.requester.username)  action("accept",acceptMemRequest(f))} 
         } 
-      }
-      action acceptMemRequest(f: MembershipRequest)
-      {
-        f.requester.groups.add(f.requestee);
-        f.requestee.members.add(f.requester);
-        
-        f.requester.membershipRequests.remove(f);
-        f.requestee.incomingMembershipRequests.remove(f);
-        f.delete();
-        
+      
+        action acceptMemRequest(f: MembershipRequest)
+        {
+          f.requester.groups.add(f.requestee);
+          f.requestee.members.add(f.requester);
+          
+          f.requester.membershipRequests.remove(f);
+          f.requestee.incomingMembershipRequests.remove(f);
+          f.delete();   
+        }
       }
     }
   } 
@@ -93,56 +93,67 @@ section groups.
     
     define body()
     {
-      form
+      header{"Group info"}
+      table
       {
-        block("name")
+        form
         {
-          "Group name"
-          input(ug.name)       
-          action("save",saveUserGroup())
-        }
-        block("access")
-        {
-          "Group page access"
-          input(ug.viewAccess)
-        }
-        action saveUserGroup()
-        {
-          ug.save();
-        }
-      } 
-      form
+          row
+          {
+            "Group name"
+            input(ug.name)  
+          }     
+          row
+          {
+            "Group page access"
+            input(ug.viewAccess)
+          }
+          row
+          {
+            action("save",saveUserGroup())
+          }
+          action saveUserGroup()
+          {
+            ug.save();
+          }
+        } 
+      }
+     
+      header{"Current Moderators"}
+      table
       {
-        header{"Current Moderators"}
-        list {
+        form
+        {
           for(m : User where m in ug.moderators) 
           { 
-            listitem{ output(m.username) action("demote",demoteMod(m)) } 
+            row{ output(m.username) action("demote",demoteMod(m)) } 
           } 
-        }
-        action demoteMod(mod:User)
-        {
-          ug.moderators.remove(mod);
-         
+          
+          action demoteMod(mod:User)
+          {
+            ug.moderators.remove(mod);
+          }
         }
       }
-
-      form
+      
+      header{"New Moderators"}
+      table
       {
-        header{"New Moderators"}
-        list {
+        form
+        {
           for(m : User where m in ug.members && !(m in ug.moderators )&& m!=ug.owner) 
           { 
-            listitem{ output(m.username) action("promote",promoteMod(m)) } 
+            row{ output(m.username) action("promote",promoteMod(m)) } 
           } 
-        }
-        action promoteMod(mod:User)
-        {
-          ug.moderators.add(mod);
-          
+          action promoteMod(mod:User)
+          {
+            ug.moderators.add(mod);  
+          }
         }
       }
+      
       header{"Incoming Group membership requests"}
+    
       groupIncomingMembershipRequests(ug)
       
     }
