@@ -57,12 +57,12 @@ section initialization of application configuration
   globals {
   
     var appSidebar : Page := Page{
-      name    := "Sidebar"
+      key    := "Sidebar"
       content := ""
     };
     
     var homePage : Page := Page{
-      name    := "WebHome"
+      key    := "WebHome"
       content := ""
       author  := eelco
     };

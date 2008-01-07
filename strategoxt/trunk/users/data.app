@@ -3,11 +3,14 @@ module users/data
 section definition
 
   entity User {
-    username :: String (id,name)
-    fullname :: String
-    email    :: Email (unique)
-    homepage :: URL
-    password :: Secret
+    username    :: String (id,name)
+    fullname    :: String
+    email       :: Email (unique)
+    password    :: Secret
+    homepage    :: URL
+    country     :: String
+    affiliation :: String
+    confirmed   :: Bool (hidden)
   }
 
   entity UserRegistration {
@@ -30,4 +33,11 @@ section definition
         password := this.password
       };
     }
+  }
+  
+  entity UserGroup {
+    groupname  :: String (id, name)
+    fullname   :: String 
+    moderators -> Set<User>
+    members    -> Set<User>
   }

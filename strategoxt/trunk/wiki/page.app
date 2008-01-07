@@ -202,7 +202,7 @@ section wiki page editing
           }
                
           action savePage() {
-            var p : Page := Page{ name := newName };
+            var p : Page := Page{ key := newName };
             if (newTitle = "") { newTitle := newName; }
             p.makeChange(newTitle, newContent, securityContext.principal);
             p.persist();

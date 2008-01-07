@@ -190,15 +190,16 @@ form {
 	padding:0;
 }
 textarea {
-	font-family:monospace;
-	font-size:100%;
-	margin:0.25em 0;
+	font-family : monospace;
+	font-size : 100%;
+	margin : 0.25em 0;
         height : 40em;
-	width:100%;
+	width : 80em;
 }
 input, select {
 	font-family:verdana,arial,sans-serif;
 	padding:1px;
+	width : 20em;
 	/*background-color:#E8F1F9;*/
 }
 select {

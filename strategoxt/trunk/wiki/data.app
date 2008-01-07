@@ -2,27 +2,25 @@ module wiki/data
 
 section definition
 
+  entity Web {
+    name    :: String    (id, name)
+    pages   -> Set<Page> 
+    members -> Set<User>
+  }
+
   entity Page {
-    name     :: String    (id,name)
-    title    :: String
+    key      :: String (id, name)
+    web      -> Web    (inverse=Web.pages)
+    topic    :: String
+    title    :: String 
     content  :: WikiText
     authors  -> Set<User> 
   }
- 
+
   extend entity User {
     authored -> Set<Page> (inverse=Page.authors)
   }
-  
-//section tagging
-//
-//  extend entity Tag {
-//    pages -> Set<Page> (inverse=Page.tags)
-//  }
-//  
-//  extend entity Page {
-//    tags -> Set<Tag>
-//  }
-  
+
 section versioning
 
   extend entity Page {
@@ -31,7 +29,7 @@ section versioning
     version  :: Int
     author   -> User      // contributor of latest change
   }
-  
+
   entity PageDiff {
     page     -> Page
     next     -> PageDiff
@@ -47,8 +45,8 @@ section versioning
 section content of a page diff
 
   extend entity PageDiff {
-    content  :: WikiText := computeContent()
-    
+    content :: WikiText := computeContent()
+
     function computeContent() : WikiText {
       if (next = null) {
         return patch.applyPatch(page.content);
@@ -62,9 +60,11 @@ section creating new pages
 
   globals {
   
-    function newPage(n : String) : Page {
+    function newPage(web : Web, topic : String) : Page {
       return Page {
-        name    := n
+        key     := web.name + "/" + topic
+        web     := web
+        topic   := topic
         author  := securityContext.principal
         version := 0
       };
@@ -110,3 +110,14 @@ section making change to a page
       return this;
     }
   }
+  
+  
+//section tagging
+//
+//  extend entity Tag {
+//    pages -> Set<Page> (inverse=Page.tags)
+//  }
+//  
+//  extend entity Page {
+//    tags -> Set<Tag>
+//  }

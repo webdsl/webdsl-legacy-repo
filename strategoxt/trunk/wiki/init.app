@@ -17,7 +17,7 @@ section globals
 
     var mainPage : Page := 
       Page {
-        name    := "MainPage"
+        key    := "MainPage"
         author  := zef
 	authors := {zef}
 	content := "This is a simple main page. Here's An[[page(OtherPage)]]."
@@ -25,7 +25,7 @@ section globals
       
     var otherPage : Page := 
       Page {
-        name    := "OtherPage"
+        key    := "OtherPage"
         author  := zef
 	authors := {zef}
     	content := "This is another page, referring to the [[page(MainPage)]]."
