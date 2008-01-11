@@ -4,25 +4,23 @@ import java.util.List;
 import java.util.Vector;
 
 public class AttributeTransformation extends UntypedTransformation {
-	private final UntypedTransformation inputTrafo;
 	private final String attributeName;
 	private final TypedTransformation attTrans;
 	
-	public AttributeTransformation(String attributeName, TypedTransformation attTrans, UntypedTransformation inputTrafo) {
-		this.inputTrafo = inputTrafo;
+	public AttributeTransformation(String attributeName, TypedTransformation attTrans) {
 		this.attributeName = attributeName;
 		this.attTrans = attTrans;
 	}
 
 	@Override
-	public Object getAttribute(List<Object> input, String attributeName) throws TransformationException {
+	public Object getAttribute(List<UntypedTransformation> input, TransformationScope scope, String attributeName) throws TransformationException {
 		if(attributeName.equals(this.attributeName))
 		{
-			List<Object> transformInput = new Vector<Object>();
-			transformInput.add(inputTrafo.getAttribute(input, attributeName));
-			return attTrans.transform(transformInput);
+			List<UntypedTransformation> transformInput = new Vector<UntypedTransformation>();
+			transformInput.add(new Injection(hd(input).getAttribute(tl(input), scope, attributeName)));
+			return attTrans.transform(transformInput, scope);
 		}
-		return inputTrafo.getAttribute(input, attributeName);
+		return hd(input).getAttribute(tl(input), scope, attributeName);
 	}
 
 	/**
@@ -33,13 +31,6 @@ public class AttributeTransformation extends UntypedTransformation {
 	}
 
 	/**
-	 * @return the input transformation
-	 */
-	public UntypedTransformation getInputTrafo() {
-		return inputTrafo;
-	}
-
-	/**
 	 * @return the attTrans
 	 */
 	public TypedTransformation getAttTrans() {
@@ -47,7 +38,7 @@ public class AttributeTransformation extends UntypedTransformation {
 	}
 
 	@Override
-	public List<Injection> getInjections() {
-		return inputTrafo.getInjections();
+	public int getNrInputs(TransformationScope scope, List<UntypedTransformation> inputs) throws TransformationException {
+		return 1 + hd(inputs).getNrInputs(scope, tl(inputs));
 	}
 }

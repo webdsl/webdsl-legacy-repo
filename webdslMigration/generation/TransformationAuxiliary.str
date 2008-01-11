@@ -1,0 +1,52 @@
+module TransformationAuxiliary
+imports
+	DomainTransformationSyntax 
+	liblib
+	TransformationDefinition
+
+strategies
+	maxNrInputs(|context) :
+		input -> <maxNrInputs> input
+		where
+			<construct-all-max-nr-inputs-prerequisites> context
+	
+	construct-all-max-nr-inputs-prerequisites = 
+		// Construct the possible replacements of transformation definitions (only to be replaced when necessary to prevent looping on mutual recursion)
+		(constructTransformationDefinitionRewrites		<+ error(|"Unable to process transformation definitions"));
+		// Construct all possible replacements of types with their definitions (to enable calculation with types
+		(alltd(typeConstruction)						<+ error(|"Unable to process type definitions"))
+	 
+	maxNrInputs : 
+		(Injection(_, _), inputs)									-> 0
+	maxNrInputs : 
+		(EmptyEntity(), inputs)										-> 0
+	maxNrInputs : 	
+		(PropertyAddition(_, _, _), [input0| inputtl])				-> <add> (1, <maxNrInputs> (input0, inputtl))
+	maxNrInputs : 
+		(PropertyAdditionDefaultValue(_, _, _), [input0| inputtl])	-> <add> (1, <maxNrInputs> (input0, inputtl))
+	maxNrInputs : 
+		(PropertyRemoval(_), [input0| inputtl])						-> <add> (1, <maxNrInputs> (input0, inputtl))
+	maxNrInputs : 
+		(PropertyKeep(_), [input0| inputtl])						-> <add> (1, <maxNrInputs> (input0, inputtl))
+	maxNrInputs : 
+		(PropertySimpleTypeChange(_, _), [input0| inputtl])			-> <add> (1, <maxNrInputs> (input0, inputtl))
+	maxNrInputs : 
+		(PropertyReferenceTypeChange(_, _, _), [input0| inputtl])	-> <add> (1, <maxNrInputs> (input0, inputtl))
+	maxNrInputs : 
+		(Restrict(_), [input0| inputtl])							-> <add> (1, <maxNrInputs> (input0, inputtl))
+	maxNrInputs : 
+		(PropertyNameChange(_, _), [input0| inputtl])				-> <add> (1, <maxNrInputs> (input0, inputtl))
+	maxNrInputs : 
+		(ElevateAttributeOverReference(_, _), [input0| inputtl])	-> <add> (1, <maxNrInputs> (input0, inputtl))
+	maxNrInputs : 
+		(Merge(), [input0| [input1| inputtl]])						-> <add>(<add> (2, nrInputs0), nrInputs1)
+		where
+			nrInputs0 := <maxNrInputs> (input0, inputtl);
+			inputtlPart1 := <drop(|nrInputs0)> inputtl;
+			nrInputs1 := <maxNrInputs> (input1, inputtlPart1)
+	maxNrInputs : 
+		(RelatedMerge(_), inputs)									-> <maxNrInputs> (Merge(), inputs)
+	maxNrInputs : 
+		(TypedRelatedMerge(_, _, _), inputs)					-> <maxNrInputs> (Merge(), inputs)
+	maxNrInputs : 
+		(TransformationApplication(t1, t2, _), inputs)				-> <subt> (<maxNrInputs> (t1, [t2 | inputs]), 1)

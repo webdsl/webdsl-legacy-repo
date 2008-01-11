@@ -8,74 +8,54 @@ import java.util.Vector;
 import transformation.Injection;
 import transformation.PartialTransformationException;
 import transformation.TransformationException;
+import transformation.TransformationScope;
 import transformation.TypedTransformation;
+import transformation.UntypedTransformation;
 
 public class HibernateTransformationMapping extends TypedTransformation {
 	private TypedTransformation trafo;
 	private Class type;
 	
-	// TODO verify type using first injection of trafo, before injecting
-	public HibernateTransformationMapping(Class type, TypedTransformation trafo) throws TransformationException
-	{
-		this.type = type;
+	public HibernateTransformationMapping(Class type, TypedTransformation trafo) {
 		this.trafo = trafo;
-		if(!Collection.class.isAssignableFrom(type))
-			throw new TransformationException("The collection class ("+type.getName()+") used to construct a HibernateTransformationMapping is not an instance of java.util.Collection");
+		this.type = type;
 	}
 	
 	@Override
-	public Object getAttribute(List<Object> input, String attributeName) throws TransformationException {
+	public Object getAttribute(List<UntypedTransformation> input, TransformationScope scope, String attributeName) throws TransformationException {
 		throw new TransformationException("Cannot get any attributes from a hibernate transformation mapping (from a Hibernate Collection)");
 	}
 	
 	@Override
-	public List<Injection> getInjections() {
-		// Get injections from transformation, but remove first, this will be the injection point for the mapping
-		List<Injection> trafoInjections = trafo.getInjections();
-		trafoInjections = trafoInjections.subList(1, trafoInjections.size());
+	public Object transform(List<UntypedTransformation> input, TransformationScope scope) throws TransformationException {
+		// Verify trafo and type (this could be done at construction, but then the constructor would throw an exception, which is not very useful in generation)
+		if(trafo.getNrInputs(null, null) != 1)
+			throw new TransformationException("Transformation to be mapped over a Hibernate collection (list, set, etc) can only rely on a single parameter");
+		if(!Collection.class.isAssignableFrom(type))
+			throw new TransformationException("The collection class ("+type.getName()+") used to construct a HibernateTransformationMapping is not an instance of java.util.Collection");
+
+		// Verify input
+		if(!(hd(input) instanceof Injection))
+			throw new TransformationException("Cannot apply a Hibernate mapping transformation to anything other than injections");
 		
-		// Add the collection injection point
-		Vector<Injection> result = new Vector<Injection>();
-		result.add(new Injection(type));
-		// Add trafo injections
-		result.addAll(trafoInjections);
-		return result;
-	}
-	@Override
-	public Class getType() {
-		return type;
-	}
-	
-	public Class getElementType() {
-		return trafo.getType();
-	}
-	
-	@Override
-	public Object transform(List<Object> input) throws TransformationException {
+		Injection inj = (Injection) hd(input);
 		try {
-			Collection result = (Collection)type.newInstance(); 		// type cast verified at constructor
-			Collection sourceCollection = (Collection)input.remove(0);	// type cast not verified, exception caught below
+			Collection result = (Collection)type.newInstance(); 			// type cast verified at constructor
+			Collection source = (Collection)inj.getInjected();				// type cast not verified, exception caught below
 			
-			Iterator sourceIt = sourceCollection.iterator();
+			Iterator sourceIt = source.iterator();
 			while(sourceIt.hasNext())
 			{
-				Object source = sourceIt.next();
-				// Add source to input; Add remaining inputs to input
-				Vector<Object> newInput = new Vector<Object>();
-				newInput.add(source);
-				newInput.addAll(input);	// First has already been removed
+				Object so = sourceIt.next();
+				// Add source as transformation (Injection) to new input
+				Vector<UntypedTransformation> newInput = new Vector<UntypedTransformation>();
+				newInput.add(new Injection(so));
 				// Do transformation and add result (if not partial) to result collection
 				try {
-					Object trafoResult = trafo.transform(newInput);
+					Object trafoResult = trafo.transform(newInput, scope);
 					result.add(trafoResult);
 				} catch(PartialTransformationException e) {}
 			}
-			
-			// Fix input list (remove trafo injections)
-			int nrInjectionsToremove = trafo.getInjections().size() - 1; // One (the mapping injection) has already been removed above;
-			for(int i=0; i<nrInjectionsToremove; i++)
-				input.remove(0);
-			
 			return result;
 			
 		} catch (InstantiationException e) {
@@ -83,8 +63,12 @@ public class HibernateTransformationMapping extends TypedTransformation {
 		} catch (IllegalAccessException e) {
 			throw new TransformationException("Unable to construct instance of type "+type.getName()+" to be used in hibernate transformation mapping", e);
 		} catch(ClassCastException e) {
-			throw new TransformationException("Input provided to hibernate transformationmapping was not of type "+type.getName(), e);
+			throw new TransformationException("Input provided to hibernate transformationmapping was not a collection", e);
 		}
-		
+	}
+
+	@Override
+	public int getNrInputs(TransformationScope scope, List<UntypedTransformation> inputs) throws TransformationException {
+		return 1;
 	}
 }

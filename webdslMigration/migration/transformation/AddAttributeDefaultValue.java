@@ -3,21 +3,19 @@ package transformation;
 import java.util.List;
 
 public class AddAttributeDefaultValue extends UntypedTransformation {
-	private final UntypedTransformation inputTrafo;
 	private final String attributeName;
 	private final Object defValue;
 	
-	public AddAttributeDefaultValue(String attributeName, Object defValue, UntypedTransformation inputTrafo) {
-		this.inputTrafo = inputTrafo;
+	public AddAttributeDefaultValue(String attributeName, Object defValue) {
 		this.attributeName = attributeName;
 		this.defValue = defValue;
 	}
 
 	@Override
-	public Object getAttribute(List<Object> input, String attributeName) throws TransformationException {
+	public Object getAttribute(List<UntypedTransformation> input, TransformationScope scope,  String attributeName) throws TransformationException {
 		if(attributeName.equals(this.attributeName))
 			return defValue;
-		return inputTrafo.getAttribute(input, attributeName);
+		return hd(input).getAttribute(tl(input), scope, attributeName);
 	}
 
 	/**
@@ -28,13 +26,6 @@ public class AddAttributeDefaultValue extends UntypedTransformation {
 	}
 
 	/**
-	 * @return the input transformation
-	 */
-	public UntypedTransformation getInputTrafo() {
-		return inputTrafo;
-	}
-	
-	/**
 	 * @return the defValue
 	 */
 	public Object getDefValue() {
@@ -42,7 +33,7 @@ public class AddAttributeDefaultValue extends UntypedTransformation {
 	}
 
 	@Override
-	public List<Injection> getInjections() {
-		return inputTrafo.getInjections();
+	public int getNrInputs(TransformationScope scope, List<UntypedTransformation> inputs) throws TransformationException {
+		return 1 + hd(inputs).getNrInputs(scope, tl(inputs));
 	}
 }

@@ -1,0 +1,207 @@
+module DataModelTransformationToDataTransformation
+imports
+	DomainTransformationSyntax
+	TransformationTypeDerivation
+	IntermediateTypes
+	liblib
+	libjava-front
+	TransformationDefinition
+	org/webdsl/dsl/generation/java-code
+	org/webdsl/dsl/transformation/types
+	org/webdsl/dsl/syntax/parse-webdsl
+	org/webdsl/dsl/transformation/desugar
+	org/webdsl/dsl/builtins/builtins-desugar
+	org/webdsl/dsl/generation/generator
+
+strategies
+	/****** Typing the transformation where necessary (using intermediate types) ******/
+	transformationToJava =
+		topdown(try(singleTransformationToJava))	// top-down, such that the intermediate types can be derived on the fly (when needed)
+		<+ error(|"Unable to write transformation to Java")
+
+	singleTransformationToJava = 
+		// First, try the transformations that require more than one node (s.t. the nodes are not removed by other rules)
+		propertyAdditionToJava <+ 
+		relatedMergeToJava <+
+		restrictToJava <+
+		
+		// Then all others			
+		emptyEntityToJava <+ 
+		injectionToJava <+ 
+		propertyAdditionDefaultValueToJava <+
+		propertyRemovalToJava <+
+		propertyKeepToJava <+
+		elevateAttributeOverReferenceToJava <+
+		propertyNameChangeToJava <+
+		propertySimpleTypeChangeToJava <+
+		propertyReferenceTypeChangeToJava <+
+		mergeToJava <+
+		typedRelatedMergeToJava <+
+		
+		// Then all transformationDefinition related
+		lambdaTransformationToJava <+
+		transformationCallToJava <+
+		
+		// And finally
+		applicationToJava
+		
+	emptyEntityToJava : 
+		EmptyEntity() ->  |[ new EmptyObject() ]|
+			
+	injectionToJava : 
+		Injection(injectedExpr, _) -> |[ new Injection(~injected) ]|
+		where injected := <expression-to-java> injectedExpr
+	
+	propertyAdditionDefaultValueToJava : 
+		PropertyAdditionDefaultValue(propertyName, _, defaultValue) -> 
+			|[ new AddAttributeDefaultValue("~propertyName", ~defaultValueExpression) ]|
+		where defaultValueExpression := <expression-to-java> defaultValue
+	
+	/* This transformation required its own application. The reason is that it requires the type of
+	 * its input. This implies that the transformation cannot be defined without being able to derive
+	 * the type of its input. This is due to the fact that expressions cannot be untyped.
+	 */
+	propertyAdditionToJava : 
+		TransformationApplication(PropertyAddition(propertyName, _, valueCalculation), itrafo, _) -> 
+			|[
+				new Application (
+					new AddAttribute(
+						"~propertyName",
+						new ObjectConversion<~x:intermType> () { public Object convert(~x:intermType current) {return ~javaValueCalculation;}}
+					),
+					new Application (
+						new BeanTransformer(~x:intermType.class),
+						~itrafo
+					)
+				)
+			]|
+		where 
+			intermType := <getIntermediateType> itrafo;
+			javaValueCalculation := <expression-to-java> valueCalculation
+		
+	propertyRemovalToJava :
+		PropertyRemoval(propertyName) ->
+			|[ new DropAttribute("~propertyName") ]|
+	
+	/* The property keep is not implemented at generation time. In theory this would be 
+	 * possible here and now, but would make the transformations transformations dependent
+	 * on the source data model. A feature which is probably not desirable when looking at
+	 * transformation composition.
+	 */
+	propertyKeepToJava :
+		PropertyKeep(propertyNames) ->
+			|[ new KeepAttributes(~e:namesInJava) ]|
+		where
+			<map(\propname -> |["~propname"]|\)> propertyNames;	// Make strings
+			namesInJava := <arrayToJavaArray(|"String")>
+
+	elevateAttributeOverReferenceToJava : 
+		ElevateAttributeOverReference(refName, attName) -> 
+			|[ new ElevateAttributeOverReference("~attName", "~refName") ]|
+	
+	propertyNameChangeToJava :
+		PropertyNameChange(oldName, newName) -> 
+			|[ new AttributeNameChange("~oldName", "~newName") ]|
+	
+	propertySimpleTypeChangeToJava :
+		PropertySimpleTypeChange(name, newType) -> 
+			|[ new AttributeConversion("~name", ~typeConversion) ]|
+		where <getTypeConversion> newType => typeConversion
+	
+	// Normal reference
+	propertyReferenceTypeChangeToJava :
+		PropertyReferenceTypeChange(name, SimpleSort(newType), trafo) -> 
+			|[ new AttributeTransformation(
+					"~name",
+					new BeanTransformer(~trafoInJava)
+				)
+			]|
+		where
+			<transformationToJava> trafo => trafoInJava
+
+	// Generic type reference (requires distinction because of Hibernate)
+	propertyReferenceTypeChangeToJava :
+		PropertyReferenceTypeChange(name, GenericSort("List", [SimpleSort(newGenericArgType)]), trafo) ->
+			|[ new AttributeTransformation(
+					"~name",
+					new HibernateTransformationMapping(
+						java.util.List.class,				// TODO support more than just lists
+						new TypedApplication(
+							new BeanTransformer(domain_1.~x:newGenericArgType.class),// TODO Hack: WebDSL does not support packages yet
+							~trafoInJava
+						)
+					)
+				)
+			]|
+		where
+			<transformationToJava> trafo => trafoInJava	// trafo is a Transformation, so no ejection
+	
+	mergeToJava :
+		Merge() -> |[ new Merge() ]|	
+
+	typedRelatedMergeToJava : 
+		TypedRelatedMerge(type0, type1, relation)
+		->
+		|[ new RelatedMerge (
+				new BinaryPredicate <~x:intermType0, ~x:intermType1>(){public boolean relate(~x:intermType0 i1, ~x:intermType1 i2){ return ~javaRelation; }}
+			) ]|
+		where
+			intermType0 := <getNewIntermediateTypeName>;
+			intermType1 := <getNewIntermediateTypeName>;
+			<defineType(|intermType0)> type0;
+			<defineType(|intermType1)> type1;
+			javaRelation := <expression-to-java> relation
+	
+
+	relatedMergeToJava : 
+		TransformationApplication( TransformationApplication( RelatedMerge(relation), itrafo1, _), itrafo2, _)
+		->
+		|[ 
+			new Application (
+				new Application (
+					new RelatedMerge (
+						new BinaryPredicate <~x:intermType1, ~x:intermType2>(){public boolean relate(~x:intermType1 i1, ~x:intermType2 i2){ return ~javaRelation; }}
+					),
+					new Application (
+						new BeanTransformer(~x:intermType1.class),
+						~itrafo1
+					)
+				),
+				new Application (
+					new BeanTransformer(~x:intermType2.class),
+					~itrafo2
+				)
+			)
+		]|
+		where
+			intermType1 := <getIntermediateType> itrafo1;
+			intermType2 := <getIntermediateType> itrafo2;
+			javaRelation := <expression-to-java> relation
+	
+	restrictToJava : 
+		TransformationApplication(Restrict(predicate), itrafo, _) -> 
+			|[
+				new Application (
+					new Restrict(
+						new UnaryPredicate<~x:intermType> () { public boolean evaluate(~x:intermType current) {return ~javaPredicate;}}
+					),
+					new Application (
+						new BeanTransformer(~x:intermType.class),
+						~itrafo
+					)
+				)
+			]|
+		where
+			intermType := <getIntermediateType> itrafo;
+			javaPredicate := <expression-to-java> predicate
+	
+	applicationToJava : 
+		TransformationApplication(itrafo1, itrafo2, _) -> 
+			|[ new Application (~itrafo1, ~itrafo2) ]|
+	
+	/* ---- Auxiliary strategies ---- */
+	getTypeConversion : 
+		String -> |[ PrimitiveTypeConversions.selectByName("toString") ]|
+	
+	arrayToJavaArray(|type) : 
+			array ->  NewArray(TypeName(Id(type)), [Dim()], ArrayInit(array))

@@ -1,0 +1,86 @@
+module TransformationDefinition
+imports
+	DomainTransformationSyntax
+	TransformationTypeDerivation
+	DataModelTransformationToDataTransformation
+	liblib
+
+strategies
+	/****************************** Constructing the definition table ******************************/
+	constructTransformationDefinitionRewrites =  
+		alltd(constructTransformationDefinitionRewrite)
+	
+	constructTransformationDefinitionRewrite : 
+		TransformationDefinition(trafoId, args, trafo) -> TransformationDefinition(trafoId, args, trafo)
+		where
+			<setTransformationDefinition> (trafoId, LambdaTransformation(args, trafo))
+	
+	setTransformationDefinition : 
+		(trafoId, to) -> (trafoId, to)
+		where
+			rules (RewriteTransformationDefinition : TransformationCall(trafoId) -> to)
+
+	/****************************** Deriving types of defined transformations ******************************/
+
+	deriveTransformationTypeStep :
+		(LambdaTransformation([arg0|argtl], trafo), [input0| inputtl]) -> 
+			<deriveTransformationType> (LambdaTransformation(argtl, trafo), inputtl)
+		where
+			// Define the parameter to its parameter name
+			<setTransformationDefinition> (arg0, input0)			
+	deriveTransformationTypeStep :
+		(LambdaTransformation([], trafo), remainingInputs) -> 		// There may still inputs remain, since the result of the transformation may be a transformation
+			<deriveTransformationType> (trafo, remainingInputs)
+	deriveTransformationTypeStep :
+		(TransformationCall(trafoId), inputs) -> 
+			<deriveTransformationType> (def, inputs)		// TODO This can cause looping when using mutual recursion, can this be prevented?
+		where
+			(def := <RewriteTransformationDefinition> TransformationCall(trafoId)
+				<+ error(|"Transformation undefined")
+			)
+			
+
+	/****************************** Max Input lengths ******************************/
+	
+	maxNrInputs : 
+		(LambdaTransformation([arg0 | argtl], trafo), [input0 | inputtl]) -> <add>(subMaxNrInputs, 1) // (+1 for arg0)
+		where
+		{| RewriteTransformationDefinition : 
+			// Set the local variable to go to something that does not require any inputs (since the number of inputs of the parameter will be measured in the application)
+			<setTransformationDefinition> (arg0, input0);
+			subMaxNrInputs := <maxNrInputs> (LambdaTransformation(argtl, trafo), inputtl)
+		|}
+	maxNrInputs : 
+		(LambdaTransformation([], trafo), inputs)	-> <maxNrInputs> (trafo, inputs)
+	maxNrInputs :
+		(TransformationCall(trafoId), inputs)		-> <maxNrInputs> (def, inputs)
+		where
+			(def := <RewriteTransformationDefinition> 	<+ error(|"Transformation undefined"))
+	
+	/****************************** TransformationToJava ******************************/
+	lambdaTransformationToJava : 
+		LambdaTransformation(args, trafo) -> 
+			|[ new LambdaTransformation(~e:namesInJava , ~trafo) ]|	
+		where
+			<map(\ arg -> |["~arg"]| \)> args;
+			namesInJava := <arrayToJavaArray(|"String")> 
+		
+	transformationCallToJava : 
+		TransformationCall(trafoId) -> 
+			|[ new TransformationCall("~trafoId") ]|
+			
+	transformationDefinitionToJava(|scopeName) : 
+		TransformationDefinition(trafoId, args, trafo) -> 
+			|[ ~x:scopeName.setDefinition("~trafoId", ~dec); ]|
+		where
+			dec := <transformationToJava> LambdaTransformation(args, trafo)
+		
+	/****************************** Other ******************************/
+	rewriteEmptyLambdaTransformation : 
+		LambdaTransformation([], trafo) -> trafo
+		
+	collectAllTransformationDefinitions = 
+		collect-all(?TransformationDefinition(_, _, _))
+
+	arrayToJavaArray(|type) : 
+		array ->  NewArray(TypeName(Id(type)), [Dim()], ArrayInit(array))

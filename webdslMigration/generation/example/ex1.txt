@@ -1,3 +1,5 @@
+application migBlog
+
 section domain
 
   entity BlogEntry {
@@ -15,45 +17,48 @@ section domain
     entries    -> List<BlogEntry>
   }
 
-transformations
+section transformations
 
-	BlogEntryTransformation = 
-		BlogEntry
-		removeProperty(author)
+	globals {
+	  transformation BlogEntryTransformation (be)
+	  {
+	    be;
+		removeProperty(author);
 		propertySimpleTypeChange(body, String)
-
-	BlogTransformation = 
-		Blog
-		keep (key, title, topic, entries)
+	  }
+	  
+	  transformation BlogTransformation (b)
+	  {
+	    b;
+		keep (key, title, topic, entries);
 		addPropertyDefaultValue
-			subtitle :: String ("defaultSubTitle")
-		addProperty
-			subtitleWhichIsSetToTheTitle :: String (current.title)
-		restrict (true)
-		removeProperty(topic)
-		propertyNameChange(entries, blogEntries)
+			subtitle :: String ("defaultSubTitle");
+//		addProperty
+//			subtitleWhichIsSetToTheTitle :: String (current.title);
+//		restrict (true);
+		removeProperty(topic);
+		propertyNameChange(entries, blogEntries);
 		propertySimpleTypeChange
-			key :: String
-		propertyReferenceTypeChange(entries, List<BlogEntry>, $BlogEntryTransformation)
-
-	transform
-		Blog
-		merge (	
-			i1.key = i2.key,
-			Blog
-			removeProperty(topic)
-			removeProperty(entries)
-			propertyNameChange(title, subTitle)
-		)
-		BlogWithTitleAsSubtitle
-	
-	transform
-		$BlogTransformation
-		Blog
-	
-	transform
-		$BlogEntryTransformation
-		
-	transform
-		emptyEntity
-		newEntityName
+			key :: String;
+		propertyReferenceTypeChange(entries, List<BlogEntry>, BlogEntryTransformation)
+	  }
+	  
+	  migrate BlogEntry {
+	    BlogEntryTransformation
+	  }
+	  
+	  migrate Blog {
+	    BlogTransformation
+	  }
+	  
+	  migrate Blog Blog to BlogWithTitleAsSubtitle {
+	  	removeProperty(topic);
+	  	transformation () {removeProperty(entries)};		// A useless lambda transformation
+		propertyNameChange(title, subTitle);
+		merge (i1.key = i2.key)
+	  }
+	  
+	  migrate to newEntityName {
+	    emptyEntity
+	  }
+	}

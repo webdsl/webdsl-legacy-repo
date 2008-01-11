@@ -3,19 +3,17 @@ package transformation;
 import java.util.List;
 
 public class DropAttribute extends UntypedTransformation {
-	private final UntypedTransformation inputTrafo;
 	private final String attributeName;
 	
-	public DropAttribute(String attributeName, UntypedTransformation inputTrafo) {
-		this.inputTrafo = inputTrafo;
+	public DropAttribute(String attributeName) {
 		this.attributeName = attributeName;
 	}
 
 	@Override
-	public Object getAttribute(List<Object> input, String attributeName) throws TransformationException {
+	public Object getAttribute(List<UntypedTransformation> input, TransformationScope scope, String attributeName) throws TransformationException {
 		if(attributeName.equals(this.attributeName))
 			throw new TransformationException("Dropped attribute requested (" + attributeName+")");
-		return inputTrafo.getAttribute(input, attributeName);
+		return hd(input).getAttribute(tl(input), scope, attributeName);
 	}
 
 	/**
@@ -25,15 +23,8 @@ public class DropAttribute extends UntypedTransformation {
 		return attributeName;
 	}
 
-	/**
-	 * @return the input transformation
-	 */
-	public UntypedTransformation getInputTrafo() {
-		return inputTrafo;
-	}
-
 	@Override
-	public List<Injection> getInjections() {
-		return inputTrafo.getInjections();
+	public int getNrInputs(TransformationScope scope, List<UntypedTransformation> inputs) throws TransformationException {
+		return 1 + hd(inputs).getNrInputs(scope, tl(inputs));
 	}
 }

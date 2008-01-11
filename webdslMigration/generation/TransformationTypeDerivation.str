@@ -1,0 +1,175 @@
+module TransformationTypeDerivation
+imports
+	DomainTransformationSyntax 
+	liblib
+	Desugar
+	TransformationDefinition
+	TransformationAuxiliary
+
+strategies
+	deriveTransformationType (|context, inputTypes)=
+		deriveTransformationTypeFromInputs(|context, <map(constructTypeInjection)>inputTypes)	// Use injections, since the input array must be transformations (not types)
+		
+	deriveTransformationTypeFromInputs (|context, inputs)=
+		?trafo;
+		{| RewriteTransformationDefinition, SubstituteType : 
+			<construct-all-transformation-prerequisites> context;
+			<deriveTransformationType> (trafo, inputs)
+		|}
+	
+	construct-all-transformation-prerequisites = 
+		// Construct the possible replacements of transformation definitions (only to be replaced when necessary to prevent looping on mutual recursion)
+		(constructTransformationDefinitionRewrites		<+ error(|"Unable to process transformation definitions"));
+		// Construct all possible replacements of types with their definitions (to enable calculation with types
+		(alltd(typeConstruction)						<+ error(|"Unable to process type definitions"))
+		
+	typeConstruction : 
+		EntityNoSuper(entityName, properties, functions) -> EntityNoSuper(entityName, properties, functions)
+		where rules(SubstituteType : entityName ->  EntityNoSuper(entityName, properties, functions))
+
+	// Input may either be a type Id, or a type declaration (Entity)
+	constructTypeInjection : 
+		type -> Injection(Null(), type)
+
+	deriveTransformationType = 
+		typeAnnotatedDeriveTransformationTypeStep <+
+		// (Transformation, List<Transformation>) -> Type		Given a transformation and all its inputs, calculate type
+		deriveTransformationTypeStep <+
+		// (Transformation, Type) -> Type						Given a transformation that requires one single input and its input type, calculate type
+		// This is a simplified notation, it can be expressed as a deriveTransformationTypeStep
+		(
+			?(trafo, [input0 | inputtl]);
+			<deriveTransformationType> (input0, inputtl);
+			<deriveTransformationTypeStepSingleInput> (trafo, <id>)
+		) <+
+		error(|"Oops, unable to derive the type of:")
+		// Transformation definition stuff is imported above (included in the deriveTransformationTypeStep rules)
+		
+		
+	/****************************** Level 0 ******************************/
+	deriveTransformationTypeStep : 
+		(EmptyEntity(), _) -> EntityNoSuper("newEntity", [], [])	// Name should be overwritten anyway
+	
+	deriveTransformationTypeStep : 
+		(Injection(_, someId), _) -> type
+		where
+			(type := <SubstituteType> someId 	<+ <error(|"Unable to find type with id")> someId)
+
+	deriveTransformationTypeStep : 
+		(Injection(injectedExpr, EntityNoSuper(a1, a2, a3)), _) -> EntityNoSuper(a1, a2, a3)
+
+	/****************************** Level 1 ******************************/
+	/** Entity modifications **/
+	deriveTransformationTypeStep :
+		(PropertyAdditionDefaultValue(propertyName, sort, defValue), inputs) ->	
+			<deriveTransformationType> (PropertyAddition(propertyName, sort, defValue), inputs)
+	
+	deriveTransformationTypeStepSingleInput :
+		(PropertyAddition(propertyName, sort, _), EntityNoSuper(entityName, properties, functions)) ->	// Calculation will be ignored for now (cannot be used as part of the domain model)
+			EntityNoSuper(entityName, <conc>(properties, [Property(propertyName, Simple(), sort, [])]) , functions)
+	
+	deriveTransformationTypeStepSingleInput :
+		(PropertyRemoval(propertyName), EntityNoSuper(entityName, properties, functions)) ->
+			EntityNoSuper(entityName, <remove-all(?Property(propertyName, _, _, _))> properties, functions)
+	
+	deriveTransformationTypeStepSingleInput :
+		(PropertyKeep(propertyNamesToKeep), EntityNoSuper(entityName, properties, functions)) ->
+			EntityNoSuper(entityName, newProperties, functions)
+		where
+			newProperties := <filter(where(propertyInPropertyNamesList(|propertyNamesToKeep)))> properties
+		
+		propertyInPropertyNamesList(|propertyNamesList) = 
+			?Property(propertyName, _, _, _);
+			<elem> (propertyName, propertyNamesList)
+		
+	deriveTransformationTypeStepSingleInput : 
+		(ElevateAttributeOverReference(refName, attName), EntityNoSuper(entityName, properties, functions)) -> 
+			EntityNoSuper(entityName, <conc> (properties, propertyToElevate), functions)
+		where <fetch(?Property(propertyName, _, _, _))> properties => propertyToElevate
+	
+	/** Property modifications **/
+	deriveTransformationTypeStepSingleInput :
+		(PropertyNameChange(oldName, newName), EntityNoSuper(entityName, properties, functions)) ->
+			EntityNoSuper(entityName, newProperties, functions)
+			where 
+			{|	ChangePropertyName : 
+				rules(
+					ChangePropertyName : Property(oldName, kind, sort, annos) ->  Property(newName, kind, sort, annos) );
+				newProperties := <map(try(ChangePropertyName))> properties
+			|}
+				
+	deriveTransformationTypeStepSingleInput :
+		(PropertySimpleTypeChange(name, newSort), EntityNoSuper(entityName, properties, functions)) ->
+			EntityNoSuper(entityName, newProperties, functions)
+			where 
+			{|	ChangeSimplePropertyType : 
+				rules(
+					ChangeSimplePropertyType : Property(name, kind, _, annos) ->  Property(name, kind, newSort, annos) );
+				newProperties := <map(try(ChangeSimplePropertyType))> properties
+			|}
+	
+	deriveTransformationTypeStepSingleInput :
+		(PropertyReferenceTypeChange(name, newSort, _), EntityNoSuper(entityName, properties, functions)) ->
+			EntityNoSuper(entityName, newProperties, functions)
+			where
+			{|	ChangeReferencePropertyType : 
+				rules(
+					ChangeReferencePropertyType : Property(name, kind, _, annos) ->  Property(name, kind, newSort, annos) );
+				newProperties := <map(try(ChangeReferencePropertyType))> properties
+			|}
+			
+	deriveTransformationTypeStepSingleInput :
+		(Restrict(_), e) -> e
+	
+	/****************************** Level 2 ******************************/	
+	deriveTransformationTypeStep :
+		(Merge(), [input0 | [input1 | inputtl]]) ->
+			EntityNoSuper(entityName, newProperties, functions)
+		where
+			// Select input sequences
+			( nrInputs0 := <maxNrInputs> (input0, inputtl)		<+ <error(|"Unable to determine maximum number of inputs of: ")> (input0, inputtl) );
+			inputtlPart1 := <drop(|nrInputs0)> inputtl;
+			// Derive types of children
+			<deriveTransformationType> (input0, inputtl) 		; ?EntityNoSuper(entityName, masterProperties, functions);
+			<deriveTransformationType> (input1, inputtlPart1)	; ?EntityNoSuper(_, slaveProperties, _);
+			// Derive types of merge
+			newProperties := <mergeListAndList> (masterProperties, slaveProperties)
+	deriveTransformationTypeStep :
+		(RelatedMerge(_), inputs) -> <deriveTransformationTypeStep> (Merge(), inputs)
+	deriveTransformationTypeStep :
+		(TypedRelatedMerge(EntityNoSuper(entityName, masterProperties, functions), EntityNoSuper(_, slaveProperties, _), _), _) -> 
+			EntityNoSuper(entityName, newProperties, functions)
+		where
+			newProperties := <mergeListAndList> (masterProperties, slaveProperties)
+
+	/****************************** Application ******************************/	
+	deriveTransformationTypeStep : 
+		(TransformationApplication(t1, t2, _), inputs) -> typeOft1
+		where
+			typeOft1 := <deriveTransformationType> (t1, [t2| inputs])
+/*			nrOfInputsT1 := <maxNrInputs> t1;
+			nrOfInputsT2 := <maxNrInputs> t2;
+			inputsT1 := <take(|nrOfInputsT1 - 1)> inputs;
+			inputsT2 := <reverse; take(|nrOfInputsT2); reverse> inputs;
+			typeOft2 := <deriveTransformationType> (t2, inputsT2);
+			typeOft1 := <deriveTransformationType> (t1, [typeOft2| inputsT1])
+*/	
+	typeAnnotatedDeriveTransformationTypeStep : 
+		(TransformationApplication(t1, t2, annos), _) -> type
+		where
+			type := <getTypeFromAnnotation> annos
+
+	/****************************** Auxiliary ******************************/	
+	mergeListAndList : (list1, [list2hd | list2tl]) -> 
+		<mergeListAndList> (<mergeElementAndList(|list2hd)> list1, list2tl)
+	mergeListAndList : (list1, []) -> list1
+	mergeElementAndList(|element) : list -> list
+		where <elem> (element, list)
+	mergeElementAndList(|element) : list -> [element|list]
+		where not(<elem> (element, list))
+	
+	getTypeFromAnnotation =
+		fetch(?TypeAnnotation); 
+		?TypeAnnotation(type); 
+		!type
+	

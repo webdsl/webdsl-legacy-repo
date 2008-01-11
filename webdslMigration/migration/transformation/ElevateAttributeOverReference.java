@@ -10,22 +10,20 @@ import java.util.List;
  *
  */
 public class ElevateAttributeOverReference extends UntypedTransformation {
-	private final UntypedTransformation inputTrafo;
 	private final String attributeName;
 	private final String referenceName;
 	
-	public ElevateAttributeOverReference(String attributeName, String referenceName, UntypedTransformation inputTrafo) {
-		this.inputTrafo = inputTrafo;
+	public ElevateAttributeOverReference(String attributeName, String referenceName) {
 		this.attributeName = attributeName;
 		this.referenceName = referenceName;
 	}
 
 	@Override
-	public Object getAttribute(List<Object> input, String attributeName) throws TransformationException {
+	public Object getAttribute(List<UntypedTransformation> input, TransformationScope scope, String attributeName) throws TransformationException {
 		if(attributeName.equals(this.attributeName))
 		{
 			try {
-				Object reference = inputTrafo.getAttribute(input, referenceName);
+				Object reference = hd(input).getAttribute(tl(input), scope, referenceName);
 				Method getter = reference.getClass().getMethod(getGetterFromAttributeName(attributeName), new Class[0]);
 				return getter.invoke(reference, new Object[0]);
 			} catch (SecurityException e) {
@@ -40,7 +38,7 @@ public class ElevateAttributeOverReference extends UntypedTransformation {
 				throw new TransformationException("Could not get attribute to descend, getter of attribute "+attributeName+" resulted in an exception", e);
 			}
 		}
-		return inputTrafo.getAttribute(input, attributeName);
+		return hd(input).getAttribute(tl(input), scope, attributeName);
 	}
 
 	/**
@@ -51,13 +49,6 @@ public class ElevateAttributeOverReference extends UntypedTransformation {
 	}
 
 	/**
-	 * @return the input transformation
-	 */
-	public UntypedTransformation getInputTrafo() {
-		return inputTrafo;
-	}
-
-	/**
 	 * @return the referenceName
 	 */
 	public String getReferenceName() {
@@ -65,7 +56,7 @@ public class ElevateAttributeOverReference extends UntypedTransformation {
 	}
 
 	@Override
-	public List<Injection> getInjections() {
-		return inputTrafo.getInjections();
+	public int getNrInputs(TransformationScope scope, List<UntypedTransformation> inputs) throws TransformationException {
+		return 1 + hd(inputs).getNrInputs(scope, tl(inputs));
 	}
 }

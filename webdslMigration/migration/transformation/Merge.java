@@ -1,63 +1,38 @@
 package transformation;
 
 import java.util.List;
-import java.util.Vector;
 
 public class Merge extends UntypedTransformation {
-	private final UntypedTransformation inputTrafo;
-	private final UntypedTransformation slaveTrafo;
-	
-	public Merge(UntypedTransformation slaveTrafo, UntypedTransformation inputTrafo) {
-		this.inputTrafo = inputTrafo;
-		this.slaveTrafo = slaveTrafo;
-	}
+	public Merge() {}
 
 	@Override
-	public Object getAttribute(List<Object> input, String attributeName) throws TransformationException {
-		List<List<Object>> splitInput = divideAndCheckInputs(input);
+	public Object getAttribute(List<UntypedTransformation> input, TransformationScope scope, String attributeName) throws TransformationException {
+		UntypedTransformation input1 = hd(input);					// first
+		UntypedTransformation input2 = hd(tl(input));				// second
+		List<UntypedTransformation> remainingInput = tl(tl(input));	// third and higher
+		List<UntypedTransformation> inputToFirst = remainingInput.subList(0, input1.getNrInputs(null, null));
+		List<UntypedTransformation> inputToSecond = remainingInput.subList(input1.getNrInputs(null, null), remainingInput.size());	// size should exactly be required number of inputs
 		
 		// Try master, if not succesful, use slave (possibly throws exception)
 		try {
-			return inputTrafo.getAttribute(splitInput.get(0), attributeName);}
+			return input1.getAttribute(inputToFirst, scope, attributeName);}
 		catch(TransformationException e){}
 		
-		return slaveTrafo.getAttribute(splitInput.get(1), attributeName);
+		return input2.getAttribute(inputToSecond, scope, attributeName);
 	}
 
 	@Override
-	public List<Injection> getInjections() {
-		List <Injection> masterInjections = inputTrafo.getInjections();
-		List <Injection> slaveInjections = slaveTrafo.getInjections();
-		masterInjections.addAll(slaveInjections);
-		return masterInjections;
-	}
-
-	/**
-	 * @return the inputTrafo
-	 */
-	public UntypedTransformation getInputTrafo() {
-		return inputTrafo;
-	}
-
-	/**
-	 * @return the slaveTrafo
-	 */
-	public UntypedTransformation getSlaveTrafo() {
-		return slaveTrafo;
+	public int getNrInputs(TransformationScope scope, List<UntypedTransformation> inputs) throws TransformationException {
+		UntypedTransformation nr0 = hd(inputs);
+		UntypedTransformation nr1 = hd(tl(inputs));
+		List<UntypedTransformation> tl = tl(tl(inputs));
+		
+		int nrInputs0 = nr0.getNrInputs(scope, tl);
+		// Remove inputs that were meant for first trafo
+		List<UntypedTransformation> inputtlPart1 = tl.subList(nrInputs0, tl.size());
+		int nrInputs1 = nr1.getNrInputs(scope, inputtlPart1);
+		return 2 + nrInputs0 + nrInputs1;
 	}
 	
-	protected List<List<Object>> divideAndCheckInputs(List<Object> input) throws TransformationException {
-		// Split input over input part and slave part
-		int nrMasterInputs = inputTrafo.getInjections().size();
-		int nrSlaveInputs = slaveTrafo.getInjections().size();
-		if(input.size() != nrMasterInputs + nrSlaveInputs)
-			throw new TransformationException("Incorrect number of inputs in merge: got "+input.size()+" but required "+nrMasterInputs + nrSlaveInputs);
-		List<Object> masterInput = input.subList(0, nrMasterInputs);
-		List<Object> slaveInput = input.subList(nrMasterInputs, nrSlaveInputs);
-		
-		Vector<List<Object>> result = new Vector<List<Object>>();
-		result.add(masterInput);
-		result.add(slaveInput);
-		return result;		
-	}
+
 }

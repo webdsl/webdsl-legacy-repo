@@ -7,38 +7,32 @@ import javax.persistence.EntityManagerFactory;
 import org.hibernate.SessionFactory;
 import org.hibernate.ejb.HibernateEntityManagerFactory;
 
-import transformation.Injection;
 import transformation.TransformationException;
+import transformation.TransformationScope;
 import transformation.TypedTransformation;
 import transformation.UntypedTransformation;
 
 // TODO Verify list of persistent attributes before allowing regular getter
 
 public class HibernateTransformer extends TypedTransformation {
-	private final UntypedTransformation trans;
 	private final Class targetClass; 
 	private final EntityManagerFactory targetEMF;
 	
-	public HibernateTransformer(UntypedTransformation trans, Class targetClass, EntityManagerFactory targetEMF) {
-		this.trans = trans;
+	public HibernateTransformer(Class targetClass, EntityManagerFactory targetEMF) {
 		this.targetClass = targetClass;
 		this.targetEMF = targetEMF;
 	}
 	
-	public Object transform(List<Object> input) throws TransformationException {
+	public Object transform(List<UntypedTransformation> input, TransformationScope scope) throws TransformationException {
 		try {
 			Object trafoResult = targetClass.newInstance();
-			trans.transForm(input, trafoResult, getPersistentAttributeNames(targetEMF, targetClass));
+			hd(input).transForm(tl(input), scope, trafoResult, getPersistentAttributeNames(targetEMF, targetClass));
 			return trafoResult;
 		} catch (InstantiationException e) {
 			throw new TransformationException("Could not instantiate result of Hibernate transformation", e);
 		} catch (IllegalAccessException e) {
 			throw new TransformationException("Could not instantiate result of Hibernate transformation (constructor restricted)", e);
 		}
-	}
-	
-	public List<Injection> getInjections() {
-		return trans.getInjections();
 	}
 	
 	/**
@@ -75,7 +69,7 @@ public class HibernateTransformer extends TypedTransformation {
 	}
 
 	@Override
-	public Class getType() {
-		return targetClass;
+	public int getNrInputs(TransformationScope scope, List<UntypedTransformation> inputs) throws TransformationException {
+		return 1;
 	}
 }

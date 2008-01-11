@@ -13,22 +13,29 @@ public class RelatedMerge extends Merge {
 	
 	private final BinaryPredicate relation;
 	
-	public RelatedMerge(BinaryPredicate relation, TypedTransformation slaveTrafo, TypedTransformation inputTrafo) {
-		super(slaveTrafo, inputTrafo);
+	public RelatedMerge(BinaryPredicate relation) {
+		super();
 		this.relation = relation;
 	}
 
 	@Override
-	public Object getAttribute(List<Object> input, String attributeName) throws TransformationException {
-		List<List<Object>> splitInput = divideAndCheckInputs(input);
+	public Object getAttribute(List<UntypedTransformation> input, TransformationScope scope, String attributeName) throws TransformationException {
+		UntypedTransformation input1 = hd(input);					// first
+		UntypedTransformation input2 = hd(tl(input));				// second
+		List<UntypedTransformation> remainingInput = tl(tl(input));	// third and higher
+		List<UntypedTransformation> inputToFirst = remainingInput.subList(0, input1.getNrInputs(null, null));
+		List<UntypedTransformation> inputToSecond = remainingInput.subList(input1.getNrInputs(null, null), remainingInput.size());	// size should exactly be required number of inputs
+		
+		shouldBeTypedTransformation(input1);
+		shouldBeTypedTransformation(input2);
 
 		// Check 
-		Object inputResult = ((TypedTransformation)getInputTrafo()).transform(splitInput.get(0));
-		Object slaveResult = ((TypedTransformation)getSlaveTrafo()).transform(splitInput.get(1));
-		if(!relation.relate(inputResult, slaveResult))
+		Object input1Result = ((TypedTransformation)input1).transform(inputToFirst, scope);
+		Object input2Result = ((TypedTransformation)input2).transform(inputToSecond, scope);
+		if(!relation.relate(input1Result, input2Result))
 			throw new PartialTransformationException();
 		// Get
-		return super.getAttribute(input, attributeName);
+		return super.getAttribute(input, scope, attributeName);
 	}
 
 	/**

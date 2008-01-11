@@ -3,18 +3,16 @@ package transformation;
 import java.util.List;
 
 public class BeanTransformer extends TypedTransformation {
-	private final UntypedTransformation trans;
 	private final Class targetClass; 
 	
-	public BeanTransformer(UntypedTransformation trans, Class targetClass) {
-		this.trans = trans;
+	public BeanTransformer(Class targetClass) {
 		this.targetClass = targetClass;
 	}
 	
-	public Object transform(List<Object> input) throws TransformationException {
+	public Object transform(List<UntypedTransformation> input, TransformationScope scope) throws TransformationException {
 		try {
 			Object trafoResult = targetClass.newInstance();
-			trans.transForm(input, trafoResult);
+			hd(input).transForm(tl(input), scope, trafoResult);
 			return trafoResult;
 		} catch (InstantiationException e) {
 			throw new TransformationException("Could not instantiate result of transformation", e);
@@ -23,12 +21,12 @@ public class BeanTransformer extends TypedTransformation {
 		}
 	}
 
-	public List<Injection> getInjections() {
-		return trans.getInjections();
+	public Class getType() {
+		return targetClass;
 	}
 
 	@Override
-	public Class getType() {
-		return targetClass;
+	public int getNrInputs(TransformationScope scope, List<UntypedTransformation> inputs) throws TransformationException {
+		return 1 + hd(inputs).getNrInputs(scope, tl(inputs));
 	}
 }

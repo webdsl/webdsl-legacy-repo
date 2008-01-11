@@ -2,16 +2,20 @@ package transformation;
 
 import java.util.List;
 
-public class Identity extends UntypedTransformation {
-	public Identity() {}
+public class TransformationCall extends UntypedTransformation {
+	String id;
+	
+	public TransformationCall(String id) {
+		this.id = id;
+	}
 
 	@Override
 	public Object getAttribute(List<UntypedTransformation> input, TransformationScope scope, String attributeName) throws TransformationException {
-		return hd(input).getAttribute(tl(input), scope, attributeName);
+		return scope.getDefinition(id).getAttribute(input, scope, attributeName);
 	}
 
 	@Override
 	public int getNrInputs(TransformationScope scope, List<UntypedTransformation> inputs) throws TransformationException {
-		return 1 + hd(inputs).getNrInputs(scope, tl(inputs));
+		return scope.getDefinition(id).getNrInputs(scope, inputs);
 	}
 }

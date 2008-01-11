@@ -15,12 +15,11 @@ import java.util.List;
  *
  */
 public abstract class TypedTransformation extends UntypedTransformation{
-	public abstract Object transform(List<Object> input) throws TransformationException;
-	public abstract Class getType();
+	public abstract Object transform(List<UntypedTransformation> input, TransformationScope scope) throws TransformationException;
 	
 	@Override
-	public Object getAttribute(List<Object> input, String attributeName) throws TransformationException {
-		Object res = transform(input);
+	public Object getAttribute(List<UntypedTransformation> input, TransformationScope scope, String attributeName) throws TransformationException {
+		Object res = transform(input, scope);
 		try {
 			Method getter = res.getClass().getDeclaredMethod(getGetterFromAttributeName(attributeName), new Class[0]);
 			return getter.invoke(res, new Object[0]);

@@ -8,76 +8,84 @@ imports WebDSL
 exports
 	sorts 
 		Transformation
+		TransformationAnnotation
+		TransformationDefinition
 		EquivalenceTransformation
 		RefinementTransformation
 		RestrictingTransformation
-		ClosedTransformation
-		TransformerElement
 		
-		ClosedTransformation
-		Transformer
-		Definition
+		Migration
+		MigrationDefinition
 
 	context-free syntax
 		%% TODO Local data model trafo to global data model trafo transformation 
 		%% TODO Remove data level information from data model level (maybe use oracle)
-		%% TODO Use hierarchical type restriction of transformation type (composition of two transformations)
 	
 		%% ---- Framework ---- %%
-		"transform" Transformation Id									-> ClosedTransformation {cons("Ejection")}
-		ClosedTransformation											-> TransformerElement
-		Section* "transformations" TransformerElement*					-> Transformer {cons("Transformer")}
-
+		Section*															-> MigrationDefinition
+		TransformationDefinition											-> GlobalsDef
+		Migration															-> GlobalsDef
+		"transformation" Id "(" {Id ","}* ")" "{" Transformation "}"		-> TransformationDefinition {cons("TransformationDefinition")}
+		"transformation" "(" {Id ","}* ")" "{" Transformation "}"			-> Transformation {cons("LambdaTransformation")}
+		"(" Transformation Transformation ")" TransformationAnnotation*		-> Transformation {cons("TransformationApplication")}
+		Id																	-> Transformation {cons("TransformationCall"), avoid}
+		"migrate" Id* "to" Id "{" Transformation "}"						-> Migration {cons("Migration")}
+		"to"																-> Id {reject}
+		
+		EntityNoSuper														-> Type {cons("TypeDeclaration")}
+		Id																	-> Type {cons("TypeId")}
 		%% ==================================================================================== %%
 		
 		%% ---- Isomorphisms ---- %%
-		EquivalenceTransformation 										-> Transformation
-		Transformation "propertyNameChange" "(" Id "," Id ")"			-> EquivalenceTransformation {cons("PropertyNameChange")}
+		EquivalenceTransformation 											-> Transformation
+		"propertyNameChange" "(" Id "," Id ")"								-> EquivalenceTransformation {cons("PropertyNameChange")}
 		
 		%% ---- Refinements ---- %%
-		RefinementTransformation 										-> Transformation
-		Transformation "addProperty" "(" Id "," Sort "," Exp ")"		-> RefinementTransformation {cons("PropertyAddition")}
+		RefinementTransformation 											-> Transformation
+		"addProperty" "(" Id "," Sort "," Exp ")"							-> RefinementTransformation {cons("PropertyAddition")}
 				%% TODO Maybe detect trafo below from trafo above?
-		Transformation "addPropertyDefaultValue" "(" Id "," Sort "," Exp ")"
-																		-> RefinementTransformation {cons("PropertyAdditionDefaultValue")}
-		"emptyEntity"													-> RefinementTransformation {cons("EmptyEntity")}
-		Id																-> RefinementTransformation {cons("Injection")}
+		"addPropertyDefaultValue" "(" Id "," Sort "," Exp ")"				-> RefinementTransformation {cons("PropertyAdditionDefaultValue")}
+		"emptyEntity"														-> RefinementTransformation {cons("EmptyEntity")}
+		"emptyEntity"														-> Id {reject}
+		"inject" Exp ":" Type												-> RefinementTransformation {cons("Injection")}
 		
 				%% Assuming reference is many to one (set and list are not references!)
-		Transformation "elevateAttributeOverReference" "(" Id "," Id ")"-> RefinementTransformation {cons("ElevateAttributeOverReference")}
+		"elevateAttributeOverReference" "(" Id "," Id ")"					-> RefinementTransformation {cons("ElevateAttributeOverReference")}
 
 		%% ---- Data restrictions ---- %%
-		RestrictingTransformation 										-> Transformation
-		Transformation "removeProperty" "(" Id ")"	 					-> RestrictingTransformation {cons("PropertyRemoval")}
-		Transformation "keep" "(" {Id ","}* ")"							-> RestrictingTransformation {cons("PropertyKeep")}
+		RestrictingTransformation 											-> Transformation
+		"removeProperty" "(" Id ")"	 										-> RestrictingTransformation {cons("PropertyRemoval")}
+		"keep" "(" {Id ","}* ")"											-> RestrictingTransformation {cons("PropertyKeep")}
 
 		%% ---- Combined ---- %% TODO !
-		Transformation "propertySimpleTypeChange" "(" Id "," Sort ")"	-> Transformation {cons("PropertySimpleTypeChange")}
-		Transformation "propertyReferenceTypeChange" "(" Id "," Sort "," Transformation ")"
-																		-> Transformation {cons("PropertyReferenceTypeChange")}
-		Transformation "merge" "(" Transformation ")"
-																		-> Transformation {cons("Merge")}
-		Transformation "merge" "(" Exp "," Transformation ")"
-																		-> Transformation {cons("RelatedMerge")}
-		Transformation "restrict" "(" Exp ")"							-> Transformation {cons("Restrict")}
+		"propertySimpleTypeChange" "(" Id "," Sort ")"						-> Transformation {cons("PropertySimpleTypeChange")}
+		"propertyReferenceTypeChange" "(" Id "," Sort "," Transformation ")"-> Transformation {cons("PropertyReferenceTypeChange")}
+		"merge"						 										-> Transformation {cons("Merge")}
+		"merge" "(" Exp ")"													-> Transformation {cons("RelatedMerge")}
+		"merge" "(" Type "," Type ")" "(" Exp ")"							-> Transformation {cons("TypedRelatedMerge")}
+		
+		"restrict" "(" Exp ")"												-> Transformation {cons("Restrict")}
+		
 		%% ==================================================================================== %%
 		
 		%% ---- Sugar ---- %%
-		"transform" Transformation										-> ClosedTransformation {cons("OpenEnd")}
+		"migrate" Id* "{" Transformation "}"								-> Migration {cons("OpenMigration")}
+		Transformation ";" Transformation									-> Transformation {cons("Composition")}
+		"(" Transformation Transformation+ ")" TransformationAnnotation*	-> Transformation {cons("MultiParameterTransformationApplication")}
+%%		"transformation" Id "(" {Id ","}* ")" "{" Transformation "}"		-> TransformationDefinition {cons("FreeTransformationDefinition")}
+%%		"transformation" "(" {Id ","}* ")" "{" Transformation "}"			-> Transformation {cons("FreeLambdaTransformation")}
+%%			"ref" Id ?? (make equivalent to call? Ambiguous?)
 		
-		Id "=" Transformation											-> Definition {cons("TransformationDefinition")}
-		Definition														-> TransformerElement
-		"$" Id															-> Transformation {cons("TransformationRequest")}
+		"addProperty" Id "::" Sort "(" Exp ")"								-> RefinementTransformation {cons("DecorativePropertyAddition")}
+		"addPropertyDefaultValue" Id "::" Sort "(" Exp ")"					-> RefinementTransformation {cons("DecorativePropertyAdditionDefaultValue")}
+		"propertySimpleTypeChange" Id "::" Sort 							-> Transformation {cons("DecorativePropertySimpleTypeChange")}
+		"removeProperty" Id			 										-> RestrictingTransformation {cons("PropertyRemoval")}
 		
-		
-		Transformation "addProperty" Id "::" Sort "(" Exp ")"			-> RefinementTransformation {cons("DecorativePropertyAddition")}
-		Transformation "addPropertyDefaultValue" Id "::" Sort "(" Exp ")"	
-																		-> RefinementTransformation {cons("DecorativePropertyAdditionDefaultValue")}
-		Transformation "propertySimpleTypeChange" Id "::" Sort 			-> Transformation {cons("DecorativePropertySimpleTypeChange")}
-		Transformation "removeProperty" Id			 					-> RestrictingTransformation {cons("PropertyRemoval")}
-		
-		
-		%% ---- Other ---- %%		
-		"emptyEntity"													-> Id {reject}
-		
-	context-free start-symbols Transformer
+		%% ==================================================================================== %%
+		"@" "type" "=" Entity												-> TransformationAnnotation {cons("TypeAnnotation")}
+		"@" "typeName" "=" Id												-> TransformationAnnotation {cons("TypeNameAnnotation")}
+	context-free priorities 
+		{left:
+			Transformation ";" Transformation								-> Transformation
+		}
+	context-free start-symbols Application

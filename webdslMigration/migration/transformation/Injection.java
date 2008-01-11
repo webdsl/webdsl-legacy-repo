@@ -3,30 +3,19 @@ package transformation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
-import java.util.Vector;
 
 public class Injection extends TypedTransformation {	// Cannot use generics, as the type paramter cannot be evaluated at runtime
-	private Class injectionType;
+	private Object injected;
 	
-	public Injection(Class injectionType) {
-		this.injectionType = injectionType;
-	}
-	
-	/**
-	 * @return the injectionType
-	 */
-	public Class getInjectionType() {
-		return injectionType;
+	public Injection(Object injected) {
+		this.injected = injected;
 	}
 	
 	@Override
-	public Object getAttribute(List<Object> input, String attributeName) throws TransformationException {
-		if(input.size() == 0)
-			throw new TransformationException("No input left when requesting attribute of injection transformation (not enough inputs supplied to a transformation?)");
+	public Object getAttribute(List<UntypedTransformation> input, TransformationScope scope, String attributeName) throws TransformationException {
 		try {
-			Object currentInput = input.get(0);
-			Method getter = currentInput.getClass().getMethod(attributeNameToGetter(attributeName), new Class[0]);
-			return getter.invoke(currentInput, new Object[0]);
+			Method getter = injected.getClass().getMethod(attributeNameToGetter(attributeName), new Class[0]);
+			return getter.invoke(injected, new Object[0]);
 			
 		} catch (SecurityException e) {
 			throw new TransformationException("Cannot access getter for "+attributeName, e);
@@ -41,13 +30,6 @@ public class Injection extends TypedTransformation {	// Cannot use generics, as 
 		}
 	}
 	
-	@Override
-	public List<Injection> getInjections() {
-		Vector<Injection> res = new Vector<Injection>();
-		res.add(this);
-		return res;
-	}
-	
 	private String attributeNameToGetter(String attributeName)
 	{
 		String firstChar = attributeName.substring(0, 1);
@@ -55,13 +37,24 @@ public class Injection extends TypedTransformation {	// Cannot use generics, as 
 		return "get" + firstChar.toUpperCase() + tail;
 	}
 
-	@Override
 	public Class getType() {
-		return injectionType;
+		return injected.getClass();
+	}
+	
+	/**
+	 * @return the injected
+	 */
+	public Object getInjected() {
+		return injected;
 	}
 
 	@Override
-	public Object transform(List<Object> input) throws TransformationException {
-		return input.remove(0);
+	public Object transform(List<UntypedTransformation> input, TransformationScope scope) throws TransformationException {
+		return injected;
+	}
+
+	@Override
+	public int getNrInputs(TransformationScope scope, List<UntypedTransformation> inputs) throws TransformationException {
+		return 0;
 	}
 }

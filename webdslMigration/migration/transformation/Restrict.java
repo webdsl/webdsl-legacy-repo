@@ -3,37 +3,19 @@ package transformation;
 import java.util.List;
 
 public class Restrict extends TypedTransformation {
-	private final TypedTransformation itrafo;
 	private final UnaryPredicate pred;
 	
-	public Restrict(UnaryPredicate pred, TypedTransformation itrafo) {
-		this.itrafo = itrafo;
+	public Restrict(UnaryPredicate pred) {
 		this.pred = pred;
 	}
 	
 	@Override
-	public Class getType() {
-		return itrafo.getType();
-	}
-
-	@Override
-	public Object transform(List<Object> input) throws TransformationException {
-		Object trafoRes = itrafo.transform(input);
+	public Object transform(List<UntypedTransformation> input, TransformationScope scope) throws TransformationException {
+		shouldBeTypedTransformation(hd(input));
+		Object trafoRes = ((TypedTransformation)hd(input)).transform(tl(input), scope);
 		if(!pred.evaluate(trafoRes))
 			throw new PartialTransformationException();
 		return trafoRes;
-	}
-
-	@Override
-	public List<Injection> getInjections() {
-		return itrafo.getInjections();
-	}
-	
-	/**
-	 * @return the itrafo
-	 */
-	public TypedTransformation getItrafo() {
-		return itrafo;
 	}
 
 	/**
@@ -41,5 +23,10 @@ public class Restrict extends TypedTransformation {
 	 */
 	public UnaryPredicate getPred() {
 		return pred;
+	}
+
+	@Override
+	public int getNrInputs(TransformationScope scope, List<UntypedTransformation> inputs) throws TransformationException {
+		return 1 + hd(inputs).getNrInputs(scope, tl(inputs));
 	}	
 }

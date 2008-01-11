@@ -30,7 +30,32 @@
 		</apply>
 	</target>
 
-	<target name="domainMigration" depends="init">
+	<target name="processSyntaxToCompiler" depends="init,pack-sdf">
+		<exec executable="${strategoBinariesLocation}/sdf2table">
+    		<arg value="-i"/>
+	    	<arg value="${build}/DomainTransformationSyntax.def"/>
+	    	<arg value="-o"/>
+			<arg value="${dist}/DomainTransformationSyntax.tbl"/>
+			<arg value="-m"/>
+			<arg value="DomainTransformationSyntax"/>
+		</exec>
+		<exec executable="${strategoBinariesLocation}/sdf2rtg">
+    		<arg value="-i"/>
+	    	<arg value="${build}/DomainTransformationSyntax.def"/>
+	    	<arg value="-o"/>
+			<arg value="${build}/DomainTransformationSyntax.rtg"/>
+			<arg value="-m"/>
+			<arg value="DomainTransformationSyntax"/>
+		</exec>
+		<exec executable="${strategoBinariesLocation}/rtg2sig">	<!-- Cannot be generic: rtg2sig cannot handle absolute paths -->
+    		<arg value="-i"/>
+	    	<arg value="bin/generation/DomainTransformationSyntax.rtg"/> <!-- rtg2sig cannot handle absolute paths -->
+	    	<arg value="-o"/>
+			<arg value="bin/generation/DomainTransformationSyntax.str"/> <!-- rtg2sig cannot handle absolute paths -->
+		</exec>
+	</target>
+
+	<target name="domainMigration" depends="init,processSyntaxToCompiler">
 		<apply executable="${strategoBinariesLocation}/strc" dest="${dist}">
 			<arg value="-i"/>
 			<srcfile/>
@@ -59,31 +84,6 @@
 			<fileset dir="${src}" includes="DomainMigration.str"/>
 			<mapper type="glob" from="*.str" to="*"/>
 		</apply>
-	</target>
-
-	<target name="processSyntaxToCompiler" depends="init,pack-sdf">
-		<exec executable="${strategoBinariesLocation}/sdf2table">
-    		<arg value="-i"/>
-	    	<arg value="${build}/DomainTransformationSyntax.def"/>
-	    	<arg value="-o"/>
-			<arg value="${dist}/DomainTransformationSyntax.tbl"/>
-			<arg value="-m"/>
-			<arg value="DomainTransformationSyntax"/>
-		</exec>
-		<exec executable="${strategoBinariesLocation}/sdf2rtg">
-    		<arg value="-i"/>
-	    	<arg value="${build}/DomainTransformationSyntax.def"/>
-	    	<arg value="-o"/>
-			<arg value="${build}/DomainTransformationSyntax.rtg"/>
-			<arg value="-m"/>
-			<arg value="DomainTransformationSyntax"/>
-		</exec>
-		<exec executable="${strategoBinariesLocation}/rtg2sig">	<!-- Cannot be generic: rtg2sig cannot handle absolute paths -->
-    		<arg value="-i"/>
-	    	<arg value="bin/generation/DomainTransformationSyntax.rtg"/> <!-- rtg2sig cannot handle absolute paths -->
-	    	<arg value="-o"/>
-			<arg value="bin/generation/DomainTransformationSyntax.str"/> <!-- rtg2sig cannot handle absolute paths -->
-		</exec>
 	</target>
 
 	<target name="clean" description="clean up" >

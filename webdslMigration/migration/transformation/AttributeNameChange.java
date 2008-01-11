@@ -3,21 +3,19 @@ package transformation;
 import java.util.List;
 
 public class AttributeNameChange extends UntypedTransformation {
-	private final UntypedTransformation inputTrafo;
 	private final String oldAttributeName;
 	private final String newAttributeName;
 	
-	public AttributeNameChange(String oldAttributeName, String newAttributeName, UntypedTransformation inputTrafo) {
-		this.inputTrafo = inputTrafo;
+	public AttributeNameChange(String oldAttributeName, String newAttributeName) {
 		this.oldAttributeName = oldAttributeName;
 		this.newAttributeName = newAttributeName;
 	}
 
 	@Override
-	public Object getAttribute(List<Object> input, String attributeName) throws TransformationException {
+	public Object getAttribute(List<UntypedTransformation> input, TransformationScope scope, String attributeName) throws TransformationException {
 		if(attributeName.equals(newAttributeName))
-			return inputTrafo.getAttribute(input, oldAttributeName);
-		return inputTrafo.getAttribute(input, attributeName);
+			return hd(input).getAttribute(tl(input), scope, oldAttributeName);
+		return hd(input).getAttribute(tl(input), scope, attributeName);
 	}
 
 	/**
@@ -34,15 +32,8 @@ public class AttributeNameChange extends UntypedTransformation {
 		return oldAttributeName;
 	}
 
-	/**
-	 * @return the input transformation
-	 */
-	public UntypedTransformation getInputTrafo() {
-		return inputTrafo;
-	}
-
 	@Override
-	public List<Injection> getInjections() {
-		return inputTrafo.getInjections();
+	public int getNrInputs(TransformationScope scope, List<UntypedTransformation> inputs) throws TransformationException {
+		return 1 + hd(inputs).getNrInputs(scope, tl(inputs));
 	}
 }

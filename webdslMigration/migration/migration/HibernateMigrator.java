@@ -12,7 +12,9 @@ import org.hibernate.ejb.HibernateEntityManager;
 
 import transformation.Injection;
 import transformation.TransformationException;
-import transformation.hibernate.HibernateTransformer;
+import transformation.TransformationScope;
+import transformation.TypedTransformation;
+import transformation.UntypedTransformation;
 
 /**
  * The Hibernate migrator holds a source, target and transformation. Using these, it will extract objects from 
@@ -22,14 +24,16 @@ import transformation.hibernate.HibernateTransformer;
  */
 public class HibernateMigrator
 {
-	private final HibernateTransformer transformer;
-	EntityManager sourceEM;
-	EntityManager targetEM;
+	private final TypedTransformation transformer;
+	private final EntityManager sourceEM;
+	private final EntityManager targetEM;
+	private final List<Class> inputTypes;
 	
-	public HibernateMigrator(EntityManager sourceEM, EntityManager targetEM, HibernateTransformer transformer) {
+	public HibernateMigrator(EntityManager sourceEM, EntityManager targetEM, TypedTransformation transformer, List<Class> inputTypes) {
 		this.transformer = transformer;
 		this.sourceEM = sourceEM;
 		this.targetEM = targetEM;
+		this.inputTypes = inputTypes;
 	}
 	
 	/**
@@ -41,44 +45,41 @@ public class HibernateMigrator
 	 * transformation result with this id will be ignored.
 	 * @throws TransformationException When the transformation breaks down.
 	 */
-	public void migrate() throws TransformationException
+	public void migrate(TransformationScope scope) throws TransformationException
 	{
-		List<Injection> injections = transformer.getInjections();
-		
 		EntityTransaction sourceTrans = sourceEM.getTransaction();
 		EntityTransaction targetTrans = targetEM.getTransaction();
 		sourceTrans.begin(); targetTrans.begin();
 		
-		migrate(injections, new Vector<Object>());
+		migrate(inputTypes, new Vector<UntypedTransformation>(), scope);
 		
 		sourceTrans.commit();
 		targetTrans.commit();	// TODO Improve
 	}
 	
-	protected void migrate(List<Injection> unProcessedInjections, List<Object> input) throws TransformationException
+	protected void migrate(List<Class> unProcessedTypes, List<UntypedTransformation> input, TransformationScope scope) throws TransformationException
 	{
 		// If all injections are processed, start transformer
-		if(unProcessedInjections.size() == 0)
+		if(unProcessedTypes.size() == 0)
 		{			
 			// Transform
-			Object result = transformer.transform(input);
+			Object result = transformer.transform(input, scope);
 			
 			// Load (falling back to Hibernate to use replication)
 			HibernateEntityManager hibEM = (HibernateEntityManager) targetEM;
 			Session session = hibEM.getSession();
 			session.replicate(result, ReplicationMode.IGNORE);
-			// TODO Could cause multiple merges of same object (depends on merge implementation) when other objects refer to this one, make more efficient? 
 		}
 		
 		// If not, get more data from the database
 		else
 		{
-			Injection inj = unProcessedInjections.remove(0);
-			List sources = sourceEM.createQuery("from "+inj.getInjectionType().getName()).getResultList();
+			Class firstType = unProcessedTypes.get(0);
+			List sources = sourceEM.createQuery("from "+firstType.getName()).getResultList();
 			for(Object s : sources)
 			{
-				input.add(s);
-				migrate(unProcessedInjections, input);
+				input.add(new Injection(s));
+				migrate(unProcessedTypes.subList(1, unProcessedTypes.size()), input, scope);
 				input.remove(input.size() - 1);
 			}
 		}

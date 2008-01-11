@@ -1,12 +1,13 @@
-// TODO Use either HibernateTransformer, or Bean transformer, not both
 module DomainMigration
 imports
 	DomainTransformationSyntax
-	DomainTransformation
+	DataModelTransformationToDataTransformation
 	IntermediateTypes
 	liblib
 	libjava-front
 	Desugar
+	TransformationAuxiliary
+	TransformationDefinition
 	org/webdsl/dsl/generation/java-code
 	org/webdsl/dsl/transformation/types
 	org/webdsl/dsl/syntax/parse-webdsl
@@ -20,53 +21,86 @@ strategies
 
 	constructMigration(|persistenceUnit0, persistenceUnit1) =
 		prepare;
-		?Transformer(originalTypeSet, transformations);
-		
-		// Construct domain 0
-		info(|" -- constructing source domain");
-		rules (	DomainPackage :=  PackageName([Id("domain_0")]));
-		!originalTypeSet;
-		(alltd(declare-entity)										<+ error(|"Unable to declare source domain entities"));		
-		(alltd(entity-to-java-Entity)								<+ error(|"Unable to translate entity to java entity"));
-		(alltd(java-file-to-file)									<+ error(|"Cannot write java to file (while constructing source domain)"));
+		?world;
+		// Contruct domain 0
+		<constructDomain(|"domain_0")> world;
 		
 		// Construct domain 1
-		info(|" -- constructing target domain");
-		rules (	DomainPackage :=  PackageName([Id("domain_1")]));
-		!(originalTypeSet, transformations);
-		(transform	 								 				<+ error(|"Unable to apply transformations to domain"));
-		(alltd(declare-entity) 										<+ error(|"Unable to declare target domain entities"));
-		(map(entity-to-java-Entity)									<+ error(|"Unable to translate entity to java entity"));
-		(map(java-file-to-file)			 							<+ error(|"Cannot write java to file (while constructing target domain)"));
+		<
+			collectAllMigrations;
+			map(
+				(getMigrationType(|world)									<+ error(|"Unable to derive migration type"))
+			);
+			constructDomain(|"domain_1")
+		> world;
 		
-		// Construct migration (intermediate  types and migration itself)
+		// Construct migration (intermediate types and migration itself)
 		rules (	DomainPackage :=  PackageName([Id("migration")]));
 		info(|" -- deriving and constructing intermediate types");
 			// Ugly hack - view all target types as intermediate types, because the entity to java cannot process package names (only used for entity definitions that refer to target type in generic types)
-			<alltd(entity-to-java-Entity; risky(java-file-to-file | "Cannot write java to file (while constructing domain 1 to be used as intermediate types)"))> originalTypeSet;
-		//<handleIntermediateTypes(|originalTypeSet)> transformations;
-		info(|" -- constructing migrator");
-		<constructCustomMigrator(|persistenceUnit0, persistenceUnit1, originalTypeSet)> transformations;
-		info(|" -- migration generated");
+		<constructDomain(|"migration")> world;
+			
+		{| RewriteTransformationDefinition:
+			info(|" -- constructing migrator");
+			!world;
+			collectAllMigrations;
+			map(
+				(migrationToJava(|world)									<+ error(|"Unable to write migration to Java"))
+			);
+			surroundWithDefaultFunctionality(|persistenceUnit0, persistenceUnit1, <constructGlobalTransformationDefs(|"scope")> world);
+			risky(java-file-to-file | "Cannot write java to file");
+			info(|" -- migration generated")
+		|};
 		!""
 	
 	prepare = 
 		info(|" -- importing modules");
-		importModulesInTransformer;
-		info(|" -- desugaring domain");
+		import-modules;
+		info(|" -- desugaring");
 		desugarDomain;
-		info(|" -- desugaring transformations");
 		desugarTransformations
 	
-	importModulesInTransformer : 
-		Transformer(originalTypeSet, transformations) -> Transformer(<import-modules> originalTypeSet, transformations)
+	constructDomain(|domainName) = 
+		info(|<concat-strings> [" -- constructing domain ", domainName]);
+		rules (	DomainPackage :=  PackageName([Id(domainName)]));
+		(alltd(declare-entity)										<+ error(|"Unable to declare domain entities"));		
+		(alltd(entity-to-java-Entity)								<+ error(|"Unable to translate entity to java entity"));
+		(alltd(java-file-to-file)									<+ error(|"Cannot write java to file"))
+
+	collectAllMigrations = 
+		collect-all(?Migration(_, _, _))
 	
-	constructCustomMigrator(|persistenceUnit0, persistenceUnit1, originalTypeSet) = 
-		map(constructTransformers(|"emf1", "domain_0", "domain_1", originalTypeSet)); 
-		surroundWithDefaultFunctionality(|persistenceUnit0, persistenceUnit1);
-		risky(java-file-to-file | "Cannot write java to file")
+	getMigrationType(|world) : 
+		Migration(inputTypeNames, outputTypeName, transformation) -> EntityNoSuper(outputTypeName, props, funcs)
+		where
+			<deriveTransformationType(|world, inputTypeNames)> transformation;
+			?EntityNoSuper(_, props, funcs)
 	
-	surroundWithDefaultFunctionality(|persistenceUnit0, persistenceUnit1) :
+	migrationToJava(|world) : // Assuming any transformation definitions outside this migration have been defined
+		Migration(inputTypes, outputType, transformation) -> 
+			|[
+				new HibernateMigrator(em0, em1,
+					new TypedApplication(
+						new HibernateTransformer(domain_1.~x:outputType.class, emf1),	// TODO Hack: domain_1 should be improved when packages are supported in WebDSL
+						~trafoInJava
+					),
+					Arrays.asList(~e:inputTypesAsList)
+				)
+			
+			]|
+		where
+			constructTransformationDefinitionRewrites;
+			typesAsInjections := <map(\inputType -> Injection(Null(), inputType)\)> inputTypes; // Make injections, since inputs must be transformations (not types)
+			decoratedTransformation := <decorateTransformationWithIntermediateTypes(|world, typesAsInjections)> transformation;
+			trafoInJava := <transformationToJava> decoratedTransformation;
+			<debug(!" -- Migration In Java:")> trafoInJava;
+			inputTypesAsList := <map(\inputType -> |[~x:inputType.class]|\); arrayToJavaArray(|"Class")> inputTypes
+	
+	constructGlobalTransformationDefs(|scopeName) = 
+		collectAllTransformationDefinitions;
+		map(transformationDefinitionToJava(|scopeName) <+ error(|"Unable to write transformation definition to Java"))
+	
+	surroundWithDefaultFunctionality(|persistenceUnit0, persistenceUnit1, globalDefs) :
 		migrators -> JavaFile(["src"],
 		compilation-unit|[
 			package pkgname;
@@ -83,12 +117,17 @@ strategies
 					System.out.println("Starting migration");
 					EntityManagerFactory emf0 = Persistence.createEntityManagerFactory("~persistenceUnit0");
 					EntityManagerFactory emf1 = Persistence.createEntityManagerFactory("~persistenceUnit1");
+					EntityManager em0 = emf0.createEntityManager();
+					EntityManager em1 = emf1.createEntityManager();
+					
+					TransformationScope scope = new TransformationScope();
+					~*globalDefs
+					
+					HibernateMigrator[] migs = ~migratorsArrayInit;
 					
 					try {
-						HibernateTransFormerClassPair[] migrators = ~migratorsArrayInit;
-						CombinedHibernateMigrator hmig = new CombinedHibernateMigrator(emf0, emf1, migrators);
-						
-						hmig.migrate();
+						for(HibernateMigrator mig: migs)
+							mig.migrate(scope);
 					} catch (TransformationException ex) {
 						ex.printStackTrace();
 					}
@@ -103,149 +142,10 @@ strategies
 			!ArrayInit(migrators) => migratorsArrayInit;
 			pkgname := <DomainPackage>
 	
-	constructTransformers(|targetSessionFactory, oldDomainPackage, newDomainPackage, originalTypeSet) = 
-		// TODO Remove any transformations that do not have injections in advance (transformation of these is only relevant at data-model level)
-		outermost(	// Outermost, such that the intermediate types can be derived on the fly (when needed)
-			emptyEntityToMigration + 
-			injectionToMigration(|oldDomainPackage) + 
-			propertyAdditionDefaultValueToMigration +
-			propertyAdditionToMigration(|originalTypeSet) +
-			propertyRemovalToMigration +
-			propertyKeepToMigration +
-			elevateAttributeOverReferenceToMigration +
-			propertyNameChangeToMigration + 
-			propertySimpleTypeChangeToMigration +
-			propertyReferenceTypeChangeToMigration(|targetSessionFactory, oldDomainPackage, newDomainPackage, originalTypeSet) +
-			ejectionToMigration(|newDomainPackage) +
-			mergeToMigration + 
-			relatedMergeToMigration(|originalTypeSet) +
-			restrictToMigration(|originalTypeSet)
-		)
-	
-	emptyEntityToMigration : 
-		EmptyEntity() -> 
-			|[ new EmptyObject() ]|
-			
-	injectionToMigration(|oldDomainPackage) : 
-		Injection(entityId) -> 
-			|[ new Injection(~x:oldDomainPackage.~x:entityId.class) ]|
-	
-	propertyAdditionDefaultValueToMigration : 
-		PropertyAdditionDefaultValue(itrafo, propertyName, _, defaultValue) -> 
-			|[ new AddAttributeDefaultValue("~propertyName", ~defaultValueExpression, ~itrafo) ]|
-		where <expression-to-java> defaultValue => defaultValueExpression
-	
-	propertyAdditionToMigration(|originalTypeSet) : 
-		PropertyAddition(itrafo, propertyName, _, valueCalculation) -> 
-			|[
-				new AddAttribute(
-					"~propertyName",
-					new ObjectConversion<~x:intermType> () { public Object convert(~x:intermType current) {return ~javaValueCalculation;}},
-					new BeanTransformer(~itrafo, ~x:intermType.class)
-				)
-			]|
-		where 
-			intermType := <getIntermediateType(|originalTypeSet)> itrafo;
-			javaValueCalculation := <expression-to-java> valueCalculation
-	
-	
-	propertyRemovalToMigration :
-		PropertyRemoval(itrafo, propertyName) ->
-			|[ new DropAttribute("~propertyName", ~itrafo) ]|
-	
-	/* The property keep is not implemented at generation time. In theory this would be 
-	 * possible here and now, but would make the transformations transformations dependent
-	 * on the source data model. A feature which is probably not desirable when looking at
-	 * transformation composition.
-	 */
-	propertyKeepToMigration :
-		PropertyKeep(itrafo, propertyNames) ->
-			|[ new KeepAttributes(~e:namesInJava, ~itrafo) ]|
-		where
-			<map(\propname -> |["~propname"]|\)> propertyNames;	// Make strings
-			namesInJava := <arrayToJavaArray(|"String")>
-			
-	elevateAttributeOverReferenceToMigration : 
-		ElevateAttributeOverReference(itrafo, refName, attName) -> 
-			|[ new ElevateAttributeOverReference("~attName", "~refName", ~itrafo) ]|
-	
-	propertyNameChangeToMigration :
-		PropertyNameChange(itrafo, oldName, newName) -> 
-			|[ new AttributeNameChange("~oldName", "~newName", ~itrafo) ]|
-			
-	propertySimpleTypeChangeToMigration :
-		PropertySimpleTypeChange(itrafo, name, newType) -> 
-			|[ new AttributeConversion("~name", ~typeConversion, ~itrafo) ]|
-		where <getTypeConversion> newType => typeConversion
-	
-	// Normal reference
-	propertyReferenceTypeChangeToMigration(|targetSessionFactory, oldDomainPackage, newDomainPackage, originalTypeSet) :
-		PropertyReferenceTypeChange(itrafo, name, SimpleSort(newType), trafo) -> // TODO targetSession
-			|[ new AttributeTransformation(
-					"~name",
-					new HibernateTransformer(~trafoInJava, ~x:newDomainPackage.~x:newType.class, ~x:targetSessionFactory),
-					~itrafo
-				)
-			]|
-		where
-			<constructTransformers(|targetSessionFactory, oldDomainPackage, newDomainPackage, originalTypeSet)> trafo => trafoInJava	// trafo is a Transformation, so no ejection
-
-	// Generic type reference (requires distinction because of Hibernate)
-	propertyReferenceTypeChangeToMigration(|targetSessionFactory, oldDomainPackage, newDomainPackage, originalTypeSet) :
-		PropertyReferenceTypeChange(itrafo, name, GenericSort(List, [SimpleSort(newGenericArgType)]), trafo) ->
-			|[ new AttributeTransformation(
-					"~name",
-					new HibernateTransformationMapping(
-						java.util.List.class,
-						new HibernateTransformer(~trafoInJava, ~x:newDomainPackage.~x:newGenericArgType.class, ~x:targetSessionFactory)
-					),
-					~itrafo
-				)
-			]|
-		where
-			<constructTransformers(|targetSessionFactory, oldDomainPackage, newDomainPackage, originalTypeSet)> trafo => trafoInJava	// trafo is a Transformation, so no ejection
-			
-	ejectionToMigration(|newDomainPackage) : 
-		Ejection(itrafo, newName) -> 
-			|[ new HibernateTransFormerClassPair(~itrafo, ~x:newDomainPackage.~x:newName.class) ]|
-	
-	mergeToMigration :
-		Merge(itrafo, slavetrafo) ->
-			|[ new Merge(~slavetrafo, ~itrafo) ]|	
-	
-	relatedMergeToMigration(|originalTypeSet) : 
-		RelatedMerge(itrafo, relation, slavetrafo) 
-		->
-		|[ 
-			new RelatedMerge (
-				new BinaryPredicate <~x:intermTypeMaster, ~x:intermTypeSlave>(){public boolean relate(~x:intermTypeMaster i1, ~x:intermTypeSlave i2){ return ~javaRelation; }},
-				new BeanTransformer(~slavetrafo, ~x:intermTypeSlave.class),
-				new BeanTransformer(~itrafo, ~x:intermTypeMaster.class)
-			)
-		]|
-		where
-			intermTypeMaster := <getIntermediateType(|originalTypeSet)> itrafo;
-			intermTypeSlave := <getIntermediateType(|originalTypeSet)> slavetrafo;
-			javaRelation := <expression-to-java> relation
-	
-	restrictToMigration(|originalTypeSet) : 
-		Restrict(itrafo, predicate) -> 
-			|[
-				new Restrict(
-					new UnaryPredicate<~x:intermType> () { public boolean evaluate(~x:intermType current) {return ~javaPredicate;}},
-					new BeanTransformer(~itrafo, ~x:intermType.class)
-				)
-			]|
-		where
-			intermType := <getIntermediateType(|originalTypeSet)> itrafo;
-			javaPredicate := <expression-to-java> predicate
-	
 	/* ---- Auxiliary strategies ---- */
 	error(|msg) = 
-		log(|Error(), msg, <id>)
-	
-	getTypeConversion : 
-		String -> |[ PrimitiveTypeConversions.selectByName("toString") ]|
-	
+		log(|Error(), msg, <id>); 
+		fail
+		
 	arrayToJavaArray(|type) : 
 			array ->  NewArray(TypeName(Id(type)), [Dim()], ArrayInit(array))

@@ -6,16 +6,16 @@ import java.util.List;
 import java.util.Vector;
  
 public abstract class UntypedTransformation{
-	public abstract Object getAttribute(List<Object> input, String attributeName) throws TransformationException;
-	public abstract List<Injection> getInjections();
+	public abstract Object getAttribute(List<UntypedTransformation> input, TransformationScope scope, String attributeName) throws TransformationException;
+	public abstract int getNrInputs(TransformationScope scope, List<UntypedTransformation> inputs) throws TransformationException;
 	
-	public void transForm(List<Object> input, Object output, String[] attributeNames) throws TransformationException
+	public void transForm(List<UntypedTransformation> input, TransformationScope scope, Object output, String[] attributeNames) throws TransformationException
 	{
 		for(String attName : attributeNames)
 		{
 			// Copy input, to make sure the current input remains unchanged and can be reused
-			List<Object> inputCopy = new Vector<Object>(input);
-			Object transformedAttribute = getAttribute(inputCopy, attName);
+			List<UntypedTransformation> inputCopy = new Vector<UntypedTransformation>(input);
+			Object transformedAttribute = getAttribute(inputCopy, scope, attName);
 			
 			try
 			{
@@ -52,7 +52,7 @@ public abstract class UntypedTransformation{
 	 * @param output Output of the transformation (the contents of this parameter may be overwritten)
 	 * @throws TransformationException If the transformation can not be completed correctly
 	 */
-	public void transForm(List<Object> input, Object output) throws TransformationException
+	public void transForm(List<UntypedTransformation> input, TransformationScope scope, Object output) throws TransformationException
 	{
 		// Select right methods (all setters)
 		Vector<String> editableAtts= new Vector<String>();
@@ -65,7 +65,7 @@ public abstract class UntypedTransformation{
 		}
 		
 		// Transform
-		transForm(input, output, editableAtts.toArray(new String[editableAtts.size()]));
+		transForm(input, scope, output, editableAtts.toArray(new String[editableAtts.size()]));
 	}
 
 	protected static String getAttributeNameFromSetter(Method setter)
@@ -88,5 +88,19 @@ public abstract class UntypedTransformation{
 		String firstChar = attName.substring(0, 1);
 		String tail = attName.substring(1, attName.length());
 		return "get" + firstChar.toUpperCase() + tail;
+	}
+	
+	protected void shouldBeTypedTransformation(UntypedTransformation t) throws TransformationException
+	{
+		if(!(t instanceof TypedTransformation))
+			throw new TransformationException("Input to the " + this.getClass().getName() + " transformation should be a typed transformation");
+	}
+	
+	protected List<UntypedTransformation> tl (List<UntypedTransformation> i) {
+		return i.subList(1, i.size());
+	}
+	
+	protected UntypedTransformation hd (List<UntypedTransformation> i) {
+		return i.get(0);
 	}
 }

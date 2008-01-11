@@ -5,23 +5,21 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 public class AttributeConversion extends UntypedTransformation {
-	private final UntypedTransformation inputTrafo;
 	private final String attributeName;
 	private final Method conversion;
 	
-	public AttributeConversion(String attributeName, Method conversion, UntypedTransformation inputTrafo) {
-		this.inputTrafo = inputTrafo;
+	public AttributeConversion(String attributeName, Method conversion) {
 		this.attributeName = attributeName;
 		this.conversion = conversion;
 	}
 
 	@Override
-	public Object getAttribute(List<Object> input, String attributeName) throws TransformationException {
+	public Object getAttribute(List<UntypedTransformation> input, TransformationScope scope, String attributeName) throws TransformationException {
 		if(attributeName.equals(this.attributeName))
 		{
 			// Convert
 			Object[] args = new Object[1];
-			args[0] = inputTrafo.getAttribute(input, attributeName);
+			args[0] = hd(input).getAttribute(tl(input), scope, attributeName);
 			try {
 				return conversion.invoke(null, args);
 			} catch (IllegalArgumentException e) {
@@ -34,7 +32,7 @@ public class AttributeConversion extends UntypedTransformation {
 				throw new TransformationException("Attribute conversion resulted in an NullPointerException, is the given conversion static?", e);
 			}
 		}
-		return inputTrafo.getAttribute(input, attributeName);
+		return hd(input).getAttribute(tl(input), scope, attributeName);
 	}
 
 	/**
@@ -45,21 +43,14 @@ public class AttributeConversion extends UntypedTransformation {
 	}
 
 	/**
-	 * @return the input transformation
-	 */
-	public UntypedTransformation getInputTrafo() {
-		return inputTrafo;
-	}
-
-	/**
 	 * @return the conversion
 	 */
 	public Method getConversion() {
 		return conversion;
 	}
-	
+
 	@Override
-	public List<Injection> getInjections() {
-		return inputTrafo.getInjections();
+	public int getNrInputs(TransformationScope scope, List<UntypedTransformation> inputs) throws TransformationException {
+		return 1 + hd(inputs).getNrInputs(scope, tl(inputs));
 	}
 }
