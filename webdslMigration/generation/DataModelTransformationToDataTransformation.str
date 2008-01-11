@@ -121,11 +121,11 @@ strategies
 
 	// Generic type reference (requires distinction because of Hibernate)
 	propertyReferenceTypeChangeToJava :
-		PropertyReferenceTypeChange(name, GenericSort("List", [SimpleSort(newGenericArgType)]), trafo) ->
+		PropertyReferenceTypeChange(name, GenericSort(genericSort, [SimpleSort(newGenericArgType)]), trafo) ->
 			|[ new AttributeTransformation(
 					"~name",
 					new HibernateTransformationMapping(
-						java.util.List.class,				// TODO support more than just lists
+						~javaGeneric,
 						new TypedApplication(
 							new BeanTransformer(domain_1.~x:newGenericArgType.class),// TODO Hack: WebDSL does not support packages yet
 							~trafoInJava
@@ -134,7 +134,13 @@ strategies
 				)
 			]|
 		where
-			<transformationToJava> trafo => trafoInJava	// trafo is a Transformation, so no ejection
+			trafoInJava := <transformationToJava> trafo;
+			javaGeneric := <genericSortToJavaGeneric> genericSort
+					
+		genericSortToJavaGeneric : 
+			"List"	-> |[java.util.List.class]|
+		genericSortToJavaGeneric : 
+			"Set"	-> |[java.util.Set.class]|
 	
 	mergeToJava :
 		Merge() -> |[ new Merge() ]|	

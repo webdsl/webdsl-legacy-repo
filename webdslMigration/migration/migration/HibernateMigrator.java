@@ -54,7 +54,7 @@ public class HibernateMigrator
 		migrate(inputTypes, new Vector<UntypedTransformation>(), scope);
 		
 		sourceTrans.commit();
-		targetTrans.commit();	// TODO Improve
+		targetTrans.commit();
 	}
 	
 	protected void migrate(List<Class> unProcessedTypes, List<UntypedTransformation> input, TransformationScope scope) throws TransformationException

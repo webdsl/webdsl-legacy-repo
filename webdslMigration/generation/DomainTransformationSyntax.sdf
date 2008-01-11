@@ -72,9 +72,6 @@ exports
 		"migrate" Id* "{" Transformation "}"								-> Migration {cons("OpenMigration")}
 		Transformation ";" Transformation									-> Transformation {cons("Composition")}
 		"(" Transformation Transformation+ ")" TransformationAnnotation*	-> Transformation {cons("MultiParameterTransformationApplication")}
-%%		"transformation" Id "(" {Id ","}* ")" "{" Transformation "}"		-> TransformationDefinition {cons("FreeTransformationDefinition")}
-%%		"transformation" "(" {Id ","}* ")" "{" Transformation "}"			-> Transformation {cons("FreeLambdaTransformation")}
-%%			"ref" Id ?? (make equivalent to call? Ambiguous?)
 		
 		"addProperty" Id "::" Sort "(" Exp ")"								-> RefinementTransformation {cons("DecorativePropertyAddition")}
 		"addPropertyDefaultValue" Id "::" Sort "(" Exp ")"					-> RefinementTransformation {cons("DecorativePropertyAdditionDefaultValue")}
