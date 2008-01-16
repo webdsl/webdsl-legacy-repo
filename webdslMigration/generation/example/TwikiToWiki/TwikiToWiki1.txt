@@ -1,0 +1,64 @@
+module TwikiToWiki1
+
+imports wiki/twiki
+imports wiki/data
+
+section transformations
+
+globals {
+	transformation twikiUserToUser (user)
+	{
+		user;
+		restrict
+		(
+			(	select p from TwikiPage as p 
+				where (p._author = ~current.username)
+			).length = 0
+		);
+  		removeProperty(converted);
+  		addPropertyDefaultValue
+			confirmed :: Int (0) //TODO Bool (false);
+	}
+}
+	
+section migrations
+
+globals {
+	migrate TWikiPage to Page {
+		propertyNameChange(web, web_old);
+		addProperty
+			web :: Web 
+				(	select w from Web as w 
+					where (w._web = ~current.web_old)
+				);
+		removeProperty(web_old)
+		
+		addProperty
+			modified :: Date (...current.date...);
+		removeProperty(date);
+
+		addProperty
+			authors :: Set<TwikiUser> 
+					({(	select u from User as u 
+						where (u._username = ~current.author)
+					);});
+		propertyReferenceTypeChange(authors, Set<User>, twikiUserToUser);
+		
+		removeProperty(converted);
+		
+		addProperty
+			title :: String (current.topic);
+		
+		propertyNameChange(author, author_old);
+		addProperty
+			author :: User 
+					(	select u from User as u 
+						where (u._username = ~current.author_old)
+					);
+		removeProperty(author_old)
+	}
+	
+	migrate TWikiUser to User {
+		twikiUserToUser
+	}
+}

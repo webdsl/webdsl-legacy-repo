@@ -1,0 +1,42 @@
+module TwikiToWiki2
+
+imports wiki/data
+
+section additionalMigrations
+
+globals {
+	// Addition of redundant data
+	migrate User to User
+	{
+		addProperty
+			authored :: Set<Page> ({...})
+	}
+
+	// Addition of pageDiffs	
+	migrate Page Page to PageDiff
+	{
+		transformation(i1, i2)
+		{
+			(	merge(i1.topic == i2.topic && i2.version - i1.version == 1)
+				
+				i1;
+				addProperty
+					page :: Page (current)
+				
+				i2;
+				removeProperty(modified);
+				propertyNameChange(content, oldContent)
+			);
+			addProperty
+				patch :: Patch (calc patch from current.content and current.oldContent);
+			propertyNameChange(modified, created);
+			removeProperty(key);
+			removeProperty(web);
+			removeProperty(topic);
+			removeProperty(title);
+			removeProperty(content);
+			removeProperty(oldContent);
+			removeProperty(authors);
+		}
+	}
+}	
