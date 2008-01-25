@@ -43,12 +43,12 @@ strategies
 	/****************************** Intermediate type definition ******************************/	
 		
 	getIntermediateType : 
-		TransformationApplication(_, _, annos) -> interMediateTypeName
+		TransformationApplication(lhs, rhs, annos) -> interMediateTypeName
 		where
 			interMediateTypeName := <getNewIntermediateTypeName>;
-			<risky(getType | "Unable to get type from annotations (does the transformation use primitives that require typing, but cannot be typed in the current setting?)")> annos;
-			risky(defineType(|interMediateTypeName) | "Intermediate type definition failed");
-			info(|<concat-strings> ["Constructed intermediate type ", interMediateTypeName])
+			<getType> annos 					<+ <error(|"Unable to get type from annotations (does the transformation use primitives that require typing, but cannot be typed in the current setting?)")> TransformationApplication(lhs, rhs, annos)//;
+			//defineType(|interMediateTypeName) 	<+ error(|"Intermediate type definition failed");
+			//info(|<concat-strings> ["Constructed intermediate type ", interMediateTypeName])
 
 	getNewIntermediateTypeName = 
 		<newname>"DerivedType_"

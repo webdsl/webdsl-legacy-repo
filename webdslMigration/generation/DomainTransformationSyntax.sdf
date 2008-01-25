@@ -4,6 +4,8 @@ hiddens
 	context-free start-symbols Application Module
 
 imports WebDSL
+imports MixHQL[HQL]
+
 
 exports
 	sorts 
@@ -85,4 +87,3 @@ exports
 		{left:
 			Transformation ";" Transformation								-> Transformation
 		}
-	context-free start-symbols Application

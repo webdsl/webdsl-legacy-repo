@@ -24,24 +24,30 @@ globals {
 section migrations
 
 globals {
-	migrate TWikiPage to Page {
+	migrate TwikiPage to Page {
+		removeProperty(key);
+		addProperty
+			key :: String (current.web + "/" + current.topic);
+	
 		propertyNameChange(web, web_old);
 		addProperty
 			web :: Web 
 				(	select w from Web as w 
 					where (w._web = ~current.web_old)
 				);
-		removeProperty(web_old)
+		removeProperty(web_old);
 		
 		addProperty
-			modified :: Date (...current.date...);
+			modified :: Date (null);	// TODO Date from long
 		removeProperty(date);
 
 		addProperty
 			authors :: Set<TwikiUser> 
-					({(	select u from User as u 
+					(
+					{(	select u from User as u 
 						where (u._username = ~current.author)
-					);});
+					)}
+					);
 		propertyReferenceTypeChange(authors, Set<User>, twikiUserToUser);
 		
 		removeProperty(converted);
@@ -58,7 +64,7 @@ globals {
 		removeProperty(author_old)
 	}
 	
-	migrate TWikiUser to User {
+	migrate TwikiUser to User {
 		twikiUserToUser
 	}
 }

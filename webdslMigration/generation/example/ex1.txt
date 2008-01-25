@@ -52,10 +52,13 @@ section transformations
 	  }
 	  
 	  migrate Blog Blog to BlogWithTitleAsSubtitle {
-	  	removeProperty(topic);
-	  	transformation () {removeProperty(entries)};		// A useless lambda transformation
-		propertyNameChange(title, subTitle);
-		merge (i1.key = i2.key)
+	    (merge (i1.key = i2.key)
+	    
+	  		removeProperty(topic);
+	  		transformation () {removeProperty(entries)};		// A useless lambda transformation
+			propertyNameChange(title, subTitle)
+		)
+		
 	  }
 	  
 	  migrate to newEntityName {

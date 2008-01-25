@@ -93,7 +93,6 @@ strategies
 			typesAsInjections := <map(\inputType -> Injection(Null(), inputType)\)> inputTypes; // Make injections, since inputs must be transformations (not types)
 			decoratedTransformation := <decorateTransformationWithIntermediateTypes(|world, typesAsInjections)> transformation;
 			trafoInJava := <transformationToJava> decoratedTransformation;
-			<debug(!" -- Migration In Java:")> trafoInJava;
 			inputTypesAsList := <map(\inputType -> |[~x:inputType.class]|\); arrayToJavaArray(|"Class")> inputTypes
 	
 	constructGlobalTransformationDefs(|scopeName) = 

@@ -37,7 +37,6 @@ section versioning
     patch    :: Patch     // patch to create content of this version from next
     created  :: Date
     previous -> PageDiff
-    date     :: Date
     author   -> User
     version  :: Int
   }
