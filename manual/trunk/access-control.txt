@@ -253,4 +253,6 @@ The template call for this template is added to the editDocument page:
   }
 </verbatim>
 By using a template the Access Control can be disabled easily by not 
-including the access control definitions and the template.
+including the access control definitions and the template. 
+The unresolved template definitions will give a warning but the page 
+will generate normally and ignore the template call.
