@@ -53,19 +53,65 @@ extensions:
   page]]</tt>.
 * Verbatim tag: < verbatim>Verbatim code< /verbatim>.
 
+**Date**  
 
-# Date
+Represents a date (not including a time). When *input* is used with a
+date type, a calendar widget will appear. Dates can be used as
+literals using the <tt>Date</tt> constructor:
+<verbatim>var d : Date := Date("22/06/1983");</verbatim>
 
-# Time
+**Time**  
 
-# DateTime
+Represents a time (not including a date). Time literals can be
+expressed using a <tt>Time</tt> constructor. Example:
+<verbatim>var t : Time := Time("22:08");</verbatim>
 
-# Patch
+**DateTime** 
 
-# Image
+Represents both a date and a time. DateTime literals can be expressed
+using a <tt>DateTime</tt> constructor. Example:
 
-# File
+<verbatim>var dt : DateTime := DateTime("22/06/1983 22:08", "dd/MM/yyyy H:mm");</verbatim>
 
-# Set<...>
+The second parameter is optional and can also be used for *Date* and
+*Time* types, it represents the date/time formatting string.
 
-# List (not quite mature yet)
+**Patch**  
+
+Represents a patch. Has two methods:
+
+* <tt>patch.applyPatch(objectString)</tt> applies <tt>patch</tt> to <tt>objectString</tt>
+* <tt>str.makePatch(originalString)</tt> creates a patch from a
+  variable of String-compatible type <tt>str</tt>, by comparing it to
+  <tt>originalString</tt>.
+
+**Image**  
+
+Represents an (uploaded) image.
+
+**File**  
+
+Represents an (uploaded) file.
+
+**URL**  
+
+Represents a link.
+
+**Set**  
+
+Represents a collection of items of a certain type. Example
+
+<verbatim>var s : Set<Int> := {1, 2, 3, 4};</verbatim>
+
+Fields:
+
+* <tt>s.length</tt> gives the number of items in this set.
+
+**List**  
+Represents an ordered list of items of a certain type. Example:
+
+<verbatim>var l : List<Int> := [1, 2, 3, 4];</verbatim>
+
+Fields:
+
+* <tt>l.length</tt> gives the number of items in this list.
