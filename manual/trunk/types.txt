@@ -1,0 +1,71 @@
+Types in WebDSL
+===============
+
+**String**  
+Represents a string of characters. Example:
+<verbatim>var s : String := "Hello world";</verbatim>
+
+**Int**  
+Represents an integer number. Example:
+<verbatim>var i : Int := 3;</verbatim>
+
+
+**Float**  
+Represents a floating number. Example:
+<verbatim>var f : Float := 3.5;</verbatim>
+
+**Boolean**  
+Represents a truth. Either <tt>true</tt> or <tt>false</tt>. Example:
+<verbatim>var b : Boolean := true;</verbatim>
+
+**Secret**
+Represents a secret string (usually a password). Has two methods:
+
+* <tt>secretVar.check(digest)</tt> checks the <tt>secretVar</tt>
+  password against the digest version contained in <tt>digest</tt>.
+* <tt>secretVar.digest()</tt> generates a digest version of the
+  clear-text password contained in <tt>secretVar</tt>.
+
+Example:
+<verbatim>if (user.password.check(password)) {
+  securityContext.principal := us;
+  securityContext.loggedIn := true;
+}</verbatim>
+
+
+**Email**  
+Represents an e-mail address as a string.
+
+**Text**  
+A longer string, in the UI represented as a text area and as
+outputed as formatted output.
+
+**WikiText**  
+
+Wiki text represented as an extension of Text. The format of wiki text is based on
+[MarkDown](http://daringfireball.net/projects/markdown/), with two
+extensions:
+
+* Wiki links: [ [page(MainPage)]] where "page" is the name of the page
+  to link to and "MainPage" is the id of the first parameter. If no
+  parameters are passed, simply [ [page] ] is also allowed. A wiki link
+  can be given a different name like so: <tt>[ [page(Mainpage)|the main
+  page]]</tt>.
+* Verbatim tag: < verbatim>Verbatim code< /verbatim>.
+
+
+# Date
+
+# Time
+
+# DateTime
+
+# Patch
+
+# Image
+
+# File
+
+# Set<...>
+
+# List (not quite mature yet)

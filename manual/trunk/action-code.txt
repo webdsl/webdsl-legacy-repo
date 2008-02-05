@@ -47,7 +47,7 @@ The for-statement has the following syntax:
     <code to be executed repetitively>
 }</verbatim>
 
-pp*Note:* the implementation of *order by* is not stable yet.
+*Note:* the implementation of *order by* is not stable yet.
 
 Example:
 
@@ -79,64 +79,3 @@ Example:
 
 <verbatim>goto editPage(p);</verbatim>
 
-Expressions
------------
-
-**literals**  
-A number of literals are supported:
-
-* Strings: <tt>"This is a string"</tt>
-* Ints: <tt>22</tt>
-* Float: <tt>8.3</tt>
-* Boolean: <tt>true</tt>/<tt>false</tt>
-* List: <tt>[&lt;expression&gt;, &lt;expression&gt;, ...]</tt>
-* Empty list: <tt>List&lt;Int&gt;()</tt>
-* Set: <tt>{&lt;expression&gt;, &lt;expression&gt;, ...}</tt>
-* Empty set: <tt>Set&lt;Int&gt;()</tt>
-* Null: <tt>null</tt>
-
-**operators**  
-The following operators are supported:
-
-* Addition (numeric types) and string concatenation: <tt>+</tt>
-* Subtraction (numeric types): <tt>-</tt>
-* Multiplication (numeric types): <tt>*</tt>
-* Division (numeric types): <tt>/</tt>
-* Modulus (integer type): <tt>%</tt>
-
-**binary operators**  
-
-* Equality: <tt>=</tt>
-* Inequality: <tt>!=</tt>
-* Bigger than: <tt>></tt>
-* Bigger than or equal to: <tt>>=</tt>
-* Smaller than: <tt><</tt>
-* Smaller than or equal to: <tt><=</tt>
-* Instance of: <tt>is a</tt> (checks if a certain expression is of a certain type)
-* Contained in collection: <tt>in</tt> (checks if a certain expression is contained in a collection)
-* and: <tt>&&</tt>
-* or: <tt>||</tt>
-* not: <tt>!</tt>
-
-Example:
-<verbatim>if(!(b > 3) && (b in [8, 5] || b + 3 = 7)) {
-   // ...
-}</verbatim>
-
-**variables**  
-Variables can be accessed by use of their identifiers and their properties using the . notation. Example: <tt>person.lastName</tt>
-
-**list comprehensions**  
-List comprehensions are a combination of mapping, filtering and sorting. Example:
-
-<verbatim>[e.title
- for(e : BlogEntry in b.entries 
-     where e.created > date 
-     order by e.created desc)]</verbatim>
-
-This expression returns all titles (<tt>e.title</tt>) from
-<tt>b.entries</tt> where the time created (<tt>e.created</tt>) is
-greater than a certain <tt>date</tt>, ordered by <tt>e.created</tt> in
-descending order. Both the <tt>where</tt> and <tt>order by</tt>
-clauses are optional. An ordering is either ascending (<tt>asc</tt>)
-or descending (<tt>desc</tt>).
