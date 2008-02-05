@@ -2,16 +2,16 @@
 
 WebDSL provides a simple module system for organizing definitions. Every file that declares components of an application declares a module name, as well as any modules that it imports:
 
-<pre>
+<verbatim>
 module org/webdsl/example
 
 imports org/webdsl/anothermodule
 imports org/webdsl/yetanothermodule
-</pre>
+</verbatim>
 
 Modules are divided into different sections, grouping page and entity definitions:
 
-<pre>
+<verbatim>
 module org/webdsl/example
 
 section An example section
@@ -19,4 +19,4 @@ section An example section
 entity Foo {
   baz : String
 }
-</pre>
+</verbatim>

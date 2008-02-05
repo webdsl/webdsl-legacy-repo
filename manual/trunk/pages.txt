@@ -39,17 +39,17 @@ Custom pages can be built using basic page elements. These determine the basic s
 
 * <verbatim>section { <page element*> }</verbatim>: Indicate sections in a document; may be nested. May include a <verbatim>header( <text> )</verbatim> element that indicates the section title.
 
-* <verbatim>block [(<class>]) { <page element*> }</verbatim>: groups text; optionally defines a class for referencing in CSS.
-
 * <verbatim>text (<value>)</verbatim>: displays text. For example, <verbatim>text (user.name)</verbatim> prints the name property of a user.
 
-* <verbatim>navigate</verbatim>
+* <verbatim>block [(<class>]) { <page element*> }</verbatim>: groups text; optionally defines a class for referencing in CSS.
 
-* <verbatim>spacer</verbatim>
+* <verbatim>navigate ( <page> ) { <title> }</verbatim>: Link to a page. For example: <verbatim>page(news()) { "News" }</verbatim>
 
-* <verbatim>horizontalspacer</verbatim>
+* <verbatim>spacer</verbatim>: a spacer.
 
-* <verbatim>image</verbatim>
+* <verbatim>horizontalspacer</verbatim>: a horizontal line.
+
+* <verbatim>image ( <file> )</verbatim>: an image.
 
 <b>Menus</b>
 
@@ -63,19 +63,42 @@ Custom pages can be built using basic page elements. These determine the basic s
 
 <b>Tables and lists</b>
 
-* <verbatim>table</verbatim>
+* <verbatim>table</verbatim>, <verbatim>row</verbatim>: create tables. For example:
+<verbatim>
+  table  {
+    row { "Username" output(user.name) }
+    row { "Password" "it's a secret" }
+  }
+</verbatim>
 
-* <verbatim>row</verbatim>
-
-* <verbatim>list</verbatim>
-
-* <verbatim>listitem</verbatim>
+* <verbatim>list</verbatim>, <verbatim>listitem</verbatim>: create lists. For example:
+<verbatim>
+  list {
+    listitem { "Milk" }
+    listitem { "Potatoes" }
+    listitem { "Cheese (lots)" }
+  }
+</verbatim>
 
 <b>Forms</b>
 
-* <verbatim>form { <(form element | page element)* }</verbatim>
+Forms enable user input, and may include action elements (see below).
 
-* <verbatim>captcha</verbatim>: creates a [CAPTCHA](http://en.wikipedia.org/wiki/CAPTCHA) form element
+* <verbatim>form { ... }</verbatim>: defines a new form. Example:
+
+<verbatim>
+  form {
+    var name : String;
+    var password : Secret;
+    
+    table {
+      row { "Username:" input { username } }
+      row { "Password:" input { password } }
+    }
+  }
+</verbatim>
+
+* <verbatim>captcha</verbatim>: creates a fully automatic [CAPTCHA](http://en.wikipedia.org/wiki/CAPTCHA) form element.
 
 Generative page elements
 ------------------------
