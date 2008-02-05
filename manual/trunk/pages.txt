@@ -1,0 +1,149 @@
+Pages
+=====
+
+Pages in WebDSL can be defined using the <verbatim>define page { <page element*> }</verbatim> construct:
+
+<pre>
+define page home() {
+  title { "Page title" }
+
+  section {
+    header("Hello world.")  
+  
+    text { "Greetings to you." }
+  }
+}
+</pre>
+
+Generated pages
+---------------
+
+From entity definitions, view and pages are automatically generated. As desired, these can be overridden with custom definitions.
+
+For an entity type EntityX, the following pages are generated:
+
+* entityX: views an entity.
+
+* createEntityX: creates a new entity.
+
+* editEntityX: edits an entity.
+
+* allUser: lists all entities of type EntityX.
+
+Basic page elements
+-------------------
+
+Custom pages can be built using basic page elements. These determine the basic structure and layout of a page. These include:
+
+* <verbatim>title { <page element*> }</verbatim>: Declares the title of the current page.
+
+* <verbatim>section { <page element*> }</verbatim>: Indicate sections in a document; may be nested. May include a <verbatim>header( <text> )</verbatim> element that indicates the section title.
+
+* <verbatim>block [(<class>]) { <page element*> }</verbatim>: groups text; optionally defines a class for referencing in CSS.
+
+* <verbatim>text (<value>)</verbatim>: displays text. For example, <verbatim>text (user.name)</verbatim> prints the name property of a user.
+
+* <verbatim>navigate</verbatim>
+
+* <verbatim>spacer</verbatim>
+
+* <verbatim>horizontalspacer</verbatim>
+
+* <verbatim>image</verbatim>
+
+<b>Menus</b>
+
+* <verbatim>menubar</verbatim>
+
+* <verbatim>menuheader</verbatim>
+
+* <verbatim>menu</verbatim>
+
+* <verbatim>menuitem</verbatim>
+
+<b>Tables and lists</b>
+
+* <verbatim>table</verbatim>
+
+* <verbatim>row</verbatim>
+
+* <verbatim>list</verbatim>
+
+* <verbatim>listitem</verbatim>
+
+<b>Forms</b>
+
+* <verbatim>form { <(form element | page element)* }</verbatim>
+
+* <verbatim>captcha</verbatim>: creates a [CAPTCHA](http://en.wikipedia.org/wiki/CAPTCHA) form element
+
+Generative page elements
+------------------------
+
+Generative elements of a page define page elements based on the type of their parameters.
+
+* <verbatim>input(<value>)</verbatim>: creates an input form element. Can be applied directly to the proparties of an entity (e.g., input(user.name)) or to local variables.
+
+* <verbatim>output</verbatim>: displays a value.
+
+Page parameters
+---------------
+
+Pages can have parameters. For example, to override the default 'view' page of an entity user, define:
+
+<verbatim>
+define page user(u : User) {
+  "The name of this user is " u.name
+}
+</verbatim>
+
+Templates
+---------
+
+Templates enable reuse of page elements. For example, a template for a footer could be:
+
+<verbatim>define footer() { All pages are belong to us. }</verbatim>
+
+This template can be included in a page by invocation of its name: <verbatim>footer()</verbatim> or <verbatim>footer</verbatim>
+
+Template definitions can be defined locally in a page, to restrict their use to that page. They can also be defined in the global scope to allow reuse in other pages.
+
+Like pages, templates can be parametrized.
+
+Actions
+-------
+
+Actions define the interactive behavior of pages. _See [[page(Actions)|actions]]._
+
+Example
+-------
+
+We conclude this page with a user page.
+
+define page user(u : User) {
+  main()
+  define body() {
+    table { 
+      row { "Name:  " output(u.name)}
+      row { "Group: " output(u.group)}
+      row { "Email: " output(u.email)}
+    }
+
+    navigate ( editUser(u)) { "Go to generic edit page"  }
+
+    form { 
+      // forms may contain input elements and actions
+      "Edit this user"
+      table { 
+        row { "Name:  " input(u.name) }
+        row { "Group: " input(u.group) }
+        row { "Email: " output(u.email) }
+        action ( "save", saveUser() )
+       }
+    }
+
+    action saveUser() {
+      u.persist();
+    }
+  }
+}
