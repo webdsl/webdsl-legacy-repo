@@ -11,8 +11,16 @@ Defines a variable within the current scope with name *identifier* of
 type *Sort*, with (optionally) initial value *expression*.
 
 
-Control structures
+Statements
 ----------
+**assignments**  
+The syntax of an assignment:
+<verbatim><variable> := <value expression>;</verbatim>
+
+Example:
+
+<verbatim>p.lastName := "Doe";</verbatim>
+
 
 **if**  
 The if-statement has the following syntax:
@@ -39,7 +47,7 @@ The for-statement has the following syntax:
     <code to be executed repetitively>
 }</verbatim>
 
-*Note:* the implementation of *order by* is not stable yet.
+pp*Note:* the implementation of *order by* is not stable yet.
 
 Example:
 
@@ -108,9 +116,10 @@ The following operators are supported:
 * Contained in collection: <tt>in</tt> (checks if a certain expression is contained in a collection)
 * and: <tt>&&</tt>
 * or: <tt>||</tt>
+* not: <tt>!</tt>
 
 Example:
-<verbatim>if(b > 3 && (b in [8, 5] || b + 3 = 7)) {
+<verbatim>if(!(b > 3) && (b in [8, 5] || b + 3 = 7)) {
    // ...
 }</verbatim>
 
