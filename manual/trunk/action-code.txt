@@ -1,0 +1,72 @@
+Action code
+===========
+
+Variable declaration
+----------
+
+Syntax:
+<verbatim>var <identifier> : <Sort> [:= <expression>];</verbatim>
+
+Defines a variable within the current scope with name *identifier* of
+type *Sort*, with (optionally) initial value *expression*.
+
+
+Control structures
+----------
+
+**if**  
+The if-statement has the following syntax:
+
+<verbatim>if(<expression>) {
+   <block executed if true>
+} [else {
+   <block executed if false>
+}]</verbatim>
+
+If the expression is true the first block of code is executed, if it's
+false, the second block is executed. The else block is
+optional. Example:
+
+<verbatim>if(user.lastName = "Doe") {
+   msg := "You are unkown";
+}</verbatim>
+
+**for**  
+The for-statement has the following syntax:
+
+
+<verbatim>for(<identifier> : <Sort> in <expression> [where <condition>] [order by <expression>]) {
+    <code to be executed repetitively>
+}</verbatim>
+
+*Note:* the implementation of *order by* is not stable yet.
+
+Example:
+
+<verbatim>
+for(p : Person in persons where p.lastName = "Doe") {
+   does.add(p)
+}</verbatim>
+
+**return**  
+Syntax:
+
+<verbatim>return <expression>;</verbatim>
+
+Example:
+
+<verbatim>return p.lastName;</verbatim>
+
+In the context of a entity function this returns the expression as the
+result of that function. In the context of an action definition, it
+tells the action to redirect the user to the page specified in the
+expression.
+
+**goto**  
+The goto statement (only allowed in the defintion of an action, not in function code) redirects the user to the specified page. Syntax:
+
+<verbatim>goto <page>([params]);</verbatim>
+
+Example:
+
+<verbatim>goto editPage(p);<verbatim>
