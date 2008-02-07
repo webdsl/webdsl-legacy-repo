@@ -40,7 +40,7 @@ section registration
 section groups
   
   entity UserGroup {
-    groupname  :: String (id, name)
+    name       :: String (id, name)
     fullname   :: String 
     moderators -> Set<User>
     members    -> Set<User>
@@ -58,6 +58,7 @@ section groups
   }
   
   globals {
-    var adminGroup : UserGroup := UserGroup{name := "adminGroup"};
-    var allGroup : UserGroup   := UserGroup{name := "allGroup"};
+    var adminGroup     : UserGroup := UserGroup{name := "adminGroup"};
+    var webCreateGroup : UserGroup := UserGroup{name := "webCreateGroup"};
+    var allGroup       : UserGroup := UserGroup{name := "allGroup"};
   }

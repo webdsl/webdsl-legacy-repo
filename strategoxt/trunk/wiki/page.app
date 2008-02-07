@@ -18,8 +18,8 @@ section main page for wiki
     define body() {
       section { 
         header{"Wiki Webs"}
-        list { for(w : Web order by w.name desc) { 
-          listitem { output(w) }
+        list { for(web : Web order by web.name desc) { 
+          listitem { output(web) }
         } }
       }
       section { 
@@ -39,7 +39,7 @@ section main page for wiki
   
 section web
 
-  define page web(w : Web)
+  define page web(web : Web)
   {
     main()
     title{"Web " output(web.name)}
@@ -47,12 +47,12 @@ section web
       webOperationsMenuItems(web)
     }
     define sidebar() {
-      output(w.sidebar.content)
+      output(web.sidebar.content)
     }
     define body() {
       section { 
-        header{output(w.title)}
-        par{output(w.home.content)}
+        header{output(web.title)}
+        par{output(web.home.content)}
       }
     }
   }
@@ -70,7 +70,7 @@ section web
     define body() {
       section { 
         header{"Index of " output(web) " Web"}
-        list { for(p : Topic in web.topics) { 
+        list { for(p : Topic in web.topicsList) { 
           listitem { output(p) }
         } }
       }
@@ -98,7 +98,7 @@ section web
             return web(web);
           }
         }
-        editPermissions(w.acl)
+        editPermissions(web.acl)
       }
     }
   }
@@ -109,8 +109,8 @@ section web
     title{"New Web"}
     define body() {
       var name    : String;
-      var viewers : UserGroup;
-      var editors : UserGroup;
+      var viewers : Set<UserGroup>;
+      var editors : Set<UserGroup>;
       section {
         header { "Create New Web" }
         form {
@@ -121,9 +121,9 @@ section web
           }
           action("Create",  createWeb())
           action createWeb() {
-            var w : Web := newWeb(name, viewers, editors);
-            w.persist();
-            return web(w);
+            var web : Web := newWeb(name, viewers, editors, securityContext.principal);
+            web.persist();
+            return web(web);
           }
         }
       }
@@ -135,26 +135,26 @@ section wiki topic
   define page topic(topic : Topic)
   {
     init {
-      if(p.authors.length = 0) {
+      if(topic.authors.length = 0) {
         // This is a new topic
-        goto newTopic();
+        goto accessDenied(); 
       }
     }
     main()
-    title{output(p.title)}
+    title{output(topic.title)}
     define wikiOperationsMenuItems() {
-      topicOperationsMenuItems(p)
-      webOperationsMenuItems(web)
+      topicOperationsMenuItems(topic)
+      webOperationsMenuItems(topic.web)
     }
     define body() {
       section {
         block("twikiTopicTitle") {
-          header{ output(p.title) }
+          header{ output(topic.title) }
         }
-	par{ output(p.content) }
+	par{ output(topic.content) }
 	block("wikiTopicByLine") {
 	  par{"Contributions by " 
-	    for(author : User in p.authorsList) {
+	    for(author : User in topic.authorsList) {
 	      output(author) " "
 	    }
 	  }
@@ -213,7 +213,7 @@ section wiki topic editing
 	    action("Save changes", saveTopic()) 
 	  }
           action saveTopic() {
-            var topic : Topic := newTopic(web, newName, newTitle, newContent);
+            var topic : Topic := newTopic(web, newName, newTitle, newContent, securityContext.principal);
             topic.persist();
 	    return topic(topic);
           }
@@ -238,6 +238,7 @@ section topic operations
       menuheader{ navigate(wiki()){"Wiki"} }
       wikiOperationsMenuItems()
       menuitem{ navigate(wikiIndex()){"Topic Index"} }
+      menuitem{ navigate(newWeb()){"New Web"} }
       menuspacer{}
       for(p : Topic in config.starttopicsList) {
         menuitem{ output(p) }

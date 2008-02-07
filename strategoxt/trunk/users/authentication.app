@@ -33,8 +33,8 @@ section authentication
       table {
         row{ "Username: " input(username) }
         row{ "Password: " input(password) }
-        row{ action("Sign in", signin()) "" }
       }
+      par{ action("Sign in", signin()) }
       action signin() {
         var users : List<User> :=
           select u from User as u 

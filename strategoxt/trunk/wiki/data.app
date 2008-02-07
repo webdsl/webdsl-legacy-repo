@@ -26,7 +26,7 @@ section definition
 section versioning
 
   extend entity Topic {
-    diffs    -> List<TopicDiff> (order by version asc)
+    diffs    -> List<TopicDiff> // (order by version asc)
     created  :: Date
     modified :: Date
     version  :: Int
@@ -48,10 +48,10 @@ section content of a topic diff
     function contentOfVersion(vs : Int) : WikiText {
       var cont : WikiText := content;
       var cur  : Int := version;
-      while (cur > vs) {
-        cont := diffs.get(cur).patch.applyPatch(content);
-        cur  := cur - 1;
-      }
+      //while (cur > vs) {
+      //  cont := diffs.get(cur).patch.applyPatch(content);
+      //  cur  := cur - 1;
+      //}
       return cont;
     }
     
@@ -61,35 +61,39 @@ section creating new topics
 
   globals {
 
-    function newWeb(webname : String, viewers : UserGroup, editors : UserGroup) : Web {
+    function newWeb(webname : String, viewers : Set<UserGroup>, 
+                    editors : Set<UserGroup>, author : User) : Web 
+    {
       var moderators : UserGroup := 
         UserGroup {
-          groupname  := webname + "Moderators"
+          name       := webname + "Moderators"
           fullname   := webname + " Moderators Group"
-          moderators := {securityContext.principal}
-          members    := {securityContext.principal}
+          moderators := {author}
+          members    := {author}
         };
       var web : Web :=
         Web{
           name := webname
           acl := ACL{ 
-                   view := {viewers} 
-                   edit := {editors} 
+                   view     := viewers 
+                   edit     := editors 
                    moderate := {moderators}
-                   admin := {adminGroup} }
+                   admin    := {adminGroup} }
         };
-      web.home    := newTopic(web, "WebHome");
-      web.sidebar := newTopic(web, "SideBar");
+      web.home    := newTopic(web, "WebHome", "WebHome", "", author);
+      web.sidebar := newTopic(web, "SideBar", "SideBar", "", author);
       return web;
     }
 
-    function newTopic(newWeb : Web, newTopic : String, newTitle : String, text : WikiText) : Topic {
+    function newTopic(newWeb : Web, newTopic : String, 
+                      newTitle : String, text : WikiText, author : User) : Topic 
+    {
       var diff : TopicDiff :=
         TopicDiff {
           version := 0
           title   := newTitle
-          patch   := "".makePatch(text)
-          author  := securityContext.principal
+          // patch   := "".makePatch(text)
+          author  := author
         };
       var topic : Topic := 
         Topic {
@@ -99,9 +103,9 @@ section creating new topics
           title   := newTitle
           content := text
           version := 0
-          acl     := ACL{ view := {} edit := {} moderate := {} admin := {} }
+          acl     := ACL{ }
         };
-      topic.authors.add(securityContext.principal);
+      topic.authors.add(author);
       return topic;
     }
 

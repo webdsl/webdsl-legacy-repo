@@ -3,31 +3,19 @@ module wiki-init
 section globals
 
   globals {
+  
     var zef : User := 
       User {
         username   := "ZefHemel"
         password   := "secret"
+        groups     := {allGroup}        
       };
 
     var eelco : User := 
       User {
         username   := "EelcoVisser"
         password   := "foo"
-      };
-
-    var mainPage : Page := 
-      Page {
-        key    := "MainPage"
-        author  := zef
-	authors := {zef}
-	content := "This is a simple main page. Here's An[[page(OtherPage)]]."
+        groups     := {adminGroup, webCreateGroup, allGroup}
       };
       
-    var otherPage : Page := 
-      Page {
-        key    := "OtherPage"
-        author  := zef
-	authors := {zef}
-    	content := "This is another page, referring to the [[page(MainPage)]]."
-      };
   }

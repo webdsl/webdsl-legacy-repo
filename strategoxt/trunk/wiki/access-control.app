@@ -6,60 +6,28 @@ section ac data
     acl -> ACL
   }
   
-  extend entity Page {
+  extend entity Topic {
     acl -> ACL
-  }
-  
-  note {
-  
-    - policy for creation of groups
-  
-    - policy for assigning members to groups
-  
-    - policy for assigning groups to pages and webs
-  
   }
   
 section acr
 
-  globals {
-    
-    function containsOneOf(xs : Set<UserGroup>, ys :  Set<UserGroup>) : Bool {
-      for(y : A in ys) {
-        if(y in xs) { return true; }
-      }
-      return false;
-    }
-    
-    // note: this should be defined using true generics
-   
-    function memberOf(xs : Set<UserGroup>) : Bool {
-      if (xs.length = 0) { return false; }
-      else {
-        for(y : A in securityContext.principal.groups) {
-          if(y in xs) { return true; }
-        }
-        return false;
-      }
-    }
-  }
-  
   access control rules
   {
-    predicate mayViewWeb(w : Web) {
-      memberOf(w.acl.view)
+    predicate mayViewWeb(w : Web, user : User) {
+      (w.acl.view.length = 0) || memberOf(w.acl.view, user)
     }
     
-    predicate mayEditWeb(w : Web) {
-      memberOf(w.acl.edit)
+    predicate mayEditWeb(w : Web, user : User) {
+      memberOf(w.acl.edit, user)
     }
     
-    predicate mayViewPage(p : Page) {
-      memberOf(p.acl.view) || mayViewWeb(p.web)
+    predicate mayViewTopic(p : Topic, user : User) {
+      memberOf(p.acl.view, user) || mayViewWeb(p.web, user)
     }
     
-    predicate mayEditPage(p : Page) {
-      memberOf(p.acl.view) || mayEditWeb(p.web)
+    predicate mayEditTopic(p : Topic, user : User) {
+      memberOf(p.acl.view, user) || mayEditWeb(p.web, user)
     }
   }
   
@@ -69,10 +37,6 @@ section acr
       true
     }
   
-    rules page page(p : Page) {
-      mayViewPage(p)
-    }
-    
     rules page wiki() {
       true
     }
@@ -81,30 +45,44 @@ section acr
       true
     }
     
-    rules page pageDiff(d : PageDiff) {
-      mayViewPage(d.page)
+    rules page web(web : Web) {
+      mayViewWeb(web, securityContext.principal)
     }
     
-    rules page editPageDiff(d : PageDiff) {
-      mayEditPage(d.page)
+    rules page webIndex(web : Web) {
+      mayViewWeb(web, securityContext.principal)
     }
     
-    rules page editPage(p : Page) {
-      mayEditPage(d.page)
+    rules page editWeb(web : Web) {
+      mayEditWeb(web, securityContext.principal)
     }
-        
-    rules page newPage() {
-      securityContext.loggedIn
-      // make web dependent
+    
+    rules page newWeb() {
+      webCreateGroup in securityContext.principal.groups
+    }
+    
+    rules page topic(topic : Topic) {
+      mayViewTopic(topic, securityContext.principal)
+    }
+    
+    rules page editTopic(topic : Topic) {
+      mayEditTopic(topic,  securityContext.principal)
+    }
+    
+    rules page newTopic(web : Web) {
+      mayEditWeb(web,  securityContext.principal)
+    }
+    
+    rules page topicDiff(d : TopicDiff) {
+      mayViewTopic(d.topic,  securityContext.principal)
+    }
+    
+    rules page editTopicDiff(d : TopicDiff) {
+      mayEditTopic(d.topic,  securityContext.principal)
     }
 
-    rules page createPage() {
-      securityContext.loggedIn
-      // make web dependent
-    }
-
-    rules template pageOperationsMenuItems(p : Page) {
-      securityContext.loggedIn
+    rules template topicOperationsMenuItems(topic : Topic) {
+      mayEditTopic(topic,  securityContext.principal)
     }
 
   }

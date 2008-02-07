@@ -16,7 +16,6 @@ section ac administration
         action("Save Permissions", savePermissions())
         action savePermissions() {
           acl.save();
-          return;
         }
       }
     }
