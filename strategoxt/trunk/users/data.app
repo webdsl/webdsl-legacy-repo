@@ -1,6 +1,6 @@
 module users/data
 
-section definition
+section users
 
   entity User {
     username    :: String (id,name)
@@ -12,6 +12,8 @@ section definition
     affiliation :: String
     confirmed   :: Bool (hidden)
   }
+  
+section registration
 
   entity UserRegistration {
     username   :: String (notnull)
@@ -35,9 +37,27 @@ section definition
     }
   }
   
+section groups
+  
   entity UserGroup {
     groupname  :: String (id, name)
     fullname   :: String 
     moderators -> Set<User>
     members    -> Set<User>
+  }
+  
+  extend entity User {
+    groups -> Set<UserGroup> (inverse=UserGroup.members)
+  }
+
+  entity ACL {
+    view     -> Set<UserGroup>
+    edit     -> Set<UserGroup>
+    moderate -> Set<UserGroup>
+    admin    -> Set<UserGroup>
+  }
+  
+  globals {
+    var adminGroup : UserGroup := UserGroup{name := "adminGroup"};
+    var allGroup : UserGroup   := UserGroup{name := "allGroup"};
   }

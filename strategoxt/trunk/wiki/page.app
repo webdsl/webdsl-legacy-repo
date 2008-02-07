@@ -14,19 +14,22 @@ section main page for wiki
   define page wikiIndex()
   {
     main()
-    title{"Wiki Page Index"}
+    title{"Wiki Topic Index"}
     define body() {
       section { 
-        header{"Wiki Page Index"}
-        list { for(p : Page) { 
-          listitem { output(p) }
-          // todo: sort by title
-          // todo: use title and key
-          // todo: make accessible via wiki markup?
+        header{"Wiki Webs"}
+        list { for(w : Web order by w.name desc) { 
+          listitem { output(w) }
         } }
       }
       section { 
-        header{"TWiki Page Index"}
+        header{"Wiki Topic Index"}
+        list { for(p : Topic) { 
+          listitem { output(p) }
+        } }
+      }
+      section { 
+        header{"TWiki Topic Index"}
         list { for(p : TwikiPage) { 
           listitem { output(p) }
         } }
@@ -34,20 +37,114 @@ section main page for wiki
     }
   }
   
-section wiki page
-  
-  define page page(p : Page)
+section web
+
+  define page web(w : Web)
   {
-    //init {
-    //  if(p.authors.length = 0) {
-    //    // This is a new page
-    //    goto editPage(p);
-    //  }
-    //}
+    main()
+    title{"Web " output(web.name)}
+    define wikiOperationsMenuItems() {
+      webOperationsMenuItems(web)
+    }
+    define sidebar() {
+      output(w.sidebar.content)
+    }
+    define body() {
+      section { 
+        header{output(w.title)}
+        par{output(w.home.content)}
+      }
+    }
+  }
+
+  define page webIndex(web : Web)
+  {
+    main()
+    title{"Index of Web " output(web.name)}
+    define wikiOperationsMenuItems() {
+      webOperationsMenuItems(web)
+    }
+    define sidebar() {
+      output(web.sidebar.content)
+    }
+    define body() {
+      section { 
+        header{"Index of " output(web) " Web"}
+        list { for(p : Topic in web.topics) { 
+          listitem { output(p) }
+        } }
+      }
+    }
+  }
+  
+  define page editWeb(web : Web)
+  {
+    main()
+    title{"Edit Web " output(web.name)}
+    define body() {
+      section{
+        header{"Edit Web " output(web)}
+        form{
+          table{
+            row{ "Title"   input(web.title) }
+            row{ "Home"    input(web.home) }
+            row{ "    "    input(web.home.content) }
+            row{ "Sidebar" input(web.sidebar) }
+            row{ ""        input(web.sidebar.content) }
+          }
+          action("Save", saveWeb())
+          action saveWeb() {
+            web.save();
+            return web(web);
+          }
+        }
+        editPermissions(w.acl)
+      }
+    }
+  }
+  
+  define page newWeb()
+  {
+    main()
+    title{"New Web"}
+    define body() {
+      var name    : String;
+      var viewers : UserGroup;
+      var editors : UserGroup;
+      section {
+        header { "Create New Web" }
+        form {
+          table{
+            row{ "Name"    input(name) }
+            row{ "Viewers" input(viewers) }
+            row{ "Editors" input(editors) }
+          }
+          action("Create",  createWeb())
+          action createWeb() {
+            var w : Web := newWeb(name, viewers, editors);
+            w.persist();
+            return web(w);
+          }
+        }
+      }
+    }
+  }
+
+section wiki topic
+  
+  define page topic(topic : Topic)
+  {
+    init {
+      if(p.authors.length = 0) {
+        // This is a new topic
+        goto newTopic();
+      }
+    }
     main()
     title{output(p.title)}
     define wikiOperationsMenuItems() {
-      pageOperationsMenuItems(p)
+      topicOperationsMenuItems(p)
+      webOperationsMenuItems(web)
     }
     define body() {
       section {
@@ -55,29 +152,94 @@ section wiki page
           header{ output(p.title) }
         }
 	par{ output(p.content) }
-	
-	block("wikiPageByLine") {
+	block("wikiTopicByLine") {
 	  par{"Contributions by " 
 	    for(author : User in p.authorsList) {
-	    output(author) " "
-	    }}
-      	  par{ previousLink(p) }
+	      output(author) " "
+	    }
+	  }
       	}
       }
     }
   }
   
-section page operations
+section wiki topic editing
+
+  define page editTopic(topic : Topic)
+  {
+    var newTitle   : String   := topic.title;
+    var newContent : WikiText := topic.content;
+    main() 
+    title{"Edit Topic: " output(topic.name)}
+    define body() {
+      block("twikiEditTopic") {
+        section {
+          header{"Edit Topic: " output(topic.name)}
+          form { 
+            par{ input(newTitle) }
+	    par{ input(newContent) }
+	    par{ action("Save changes", saveTopic()) }
+            action saveTopic() {
+              topic.makeChange(newTitle, newContent, securityContext.principal);
+              topic.persist();
+	      return topic(topic);
+            }
+	  }
+        }
+        editPermissions(topic.acl)
+      }
+    }
+  }
+  
+  define page newTopic(web : Web)
+  {
+    var newName    : String;
+    var newTitle   : String;
+    var newContent : WikiText;
+    main() 
+    title{"Create New Topic"}
+    define body() {
+      block("twikiEditTopic") {
+        section {
+          header{"Create New Topic"}
+          form { 
+            table {
+              row{ "Name"  input(newName) }
+              row{ ""      "The name of a topic is the key that is used to refer to it "
+                           "and cannot be changed after creation. " }
+              row{ "Title" input(newTitle) }
+	      row{ ""      input(newContent) }
+	    }
+	    action("Save changes", saveTopic()) 
+	  }
+          action saveTopic() {
+            var topic : Topic := newTopic(web, newName, newTitle, newContent);
+            topic.persist();
+	    return topic(topic);
+          }
+        }
+      }
+    }
+  }
+
+section wiki topic history
+	
+  // TODO
+  
+  // show specific version
+  
+  // show change history
+  
+section topic operations
 
   define wikiMenu()
   {
     menu{
       menuheader{ navigate(wiki()){"Wiki"} }
       wikiOperationsMenuItems()
-      menuitem{ navigate(wikiIndex()){"Page Index"} }
-      menuitem{ navigate(newPage()){"New Page"} }
+      menuitem{ navigate(wikiIndex()){"Topic Index"} }
       menuspacer{}
-      for(p : Page in config.startpagesList) {
+      for(p : Topic in config.starttopicsList) {
         menuitem{ output(p) }
       }
     }
@@ -86,130 +248,38 @@ section page operations
   define wikiOperationsMenuItems() {
   }
     
-  define pageOperationsMenuItems(p : Page)
+  define webOperationsMenuItems(web : Web)
   {
-    menuitem{ navigate(editPage(p)) { "Edit This Page" } }
+    menuitem{ navigate(newTopic(web)){"New Topic"} }
+    menuitem{ navigate(web(web)){"Web Index"} }
+  }
+  
+  define topicOperationsMenuItems(p : Topic)
+  {
+    menuitem{ navigate(editTopic(p)) { "Edit This Topic" } }
     menuitem{ 
-      if (p in config.startpages) {
+      if (p in config.starttopics) {
         form {
-          actionLink("Remove as Startpage", unmakeStartpage())
-          action unmakeStartpage() {
-            config.startpages.remove(p);
+          actionLink("Remove as Starttopic", unmakeStarttopic())
+          action unmakeStarttopic() {
+            config.starttopics.remove(p);
             config.persist();
           }
         }
       }
-      if (!(p in config.startpages)) {
+      if (!(p in config.starttopics)) {
         form{
-          actionLink("Add to Startpages", makeStartpage())
-          action makeStartpage() {
-            config.startpages.add(p);
+          actionLink("Add to Starttopics", makeStarttopic())
+          action makeStarttopic() {
+            config.starttopics.add(p);
             config.persist();
           }
         }
       }
-   }
+    }
     menuspacer{}
   }
   
-section wiki page history
   
-  define previousLink(p : Page)
-  {
-    if (p.previous != null) {
-      navigate(diff(p.previous)){"Previous"}
-    }
-  }
-	
-  define page diff(diff : PageDiff)
-  {
-    main()
-    title{output(diff.page.name) " / version " output(diff.version)}
-    define body() {
-      section{
-        header{output(diff.page) " / version " output(diff.version)}
-        output(diff.content)
-        par{ "Last changes by " output(diff.author) }
-        par{ nextPreviousLink(diff) }
-        // todo: show the difference
-      }
-    }
-  }
   
-  define nextPreviousLink(diff : PageDiff)
-  {
-     if (diff.previous != null ) {
-          navigate(diff(diff.previous)){"Previous"} " "
-     }
-     if (diff.previous = null ) {
-          "Previous" " "
-     }
-     if (diff.next != null ) {
-       navigate(diff(diff.next)){"Next"}
-     }
-     if (diff.next = null ) {
-       navigate(page(diff.page)){"Next"}
-     }
-  }
   
-section wiki page editing
-
-  define page editPage(p : Page)
-  {
-    var newTitle   : String   := p.title;
-    var newContent : WikiText := p.content;
-    main() 
-    title{"Edit Page: " output(p.name)}
-    define body() {
-      block("twikiEditPage") {
-      section {
-        header{"Edit Page: " output(p.name)}
-        form { 
-          par{ input(newTitle) }
-	  par{ input(newContent) }
-	  par{ action("Save changes", savePage()) }
-          action savePage() {
-            p.makeChange(newTitle, newContent, securityContext.principal);
-            p.persist();
-	    return page(p);
-          }
-	}
-      }
-      }
-    }
-  }
-  
-  define page newPage()
-  {
-    var newName    : String;
-    var newTitle   : String;
-    var newContent : WikiText;
-    main() 
-    title{"Create New Wiki Page"}
-    define body() {
-      block("twikiEditPage") {
-      section {
-        header{"Create New Wiki Page"}
-        form { 
-          par{ "Name" input(newName) }
-          par{ "Title: " input(newTitle) }
-	  par{ input(newContent) }
-	  par{ action("Save changes", savePage()) }
-	  par{}
-          par{ 
-            "*) The name of a page is the key that is used to refer to it "
-            "and cannot be changed after creation. " 
-          }
-               
-          action savePage() {
-            var p : Page := Page{ key := newName };
-            if (newTitle = "") { newTitle := newName; }
-            p.makeChange(newTitle, newContent, securityContext.principal);
-            p.persist();
-	    return page(p);
-          }
-	}
-      }
-      }
-    }
-  }

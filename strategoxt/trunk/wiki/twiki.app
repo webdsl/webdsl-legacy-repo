@@ -56,11 +56,11 @@ section user conversion
 section data model for TWiki pages
 
   entity TwikiPage {
-    key      :: String (name) := this.web + "/" + this.topic + "_" + this.version.toString()
+    key       :: String (name) := this.web + "/" + this.topic + "_" + this.version.toString()
     web       :: String
     topic     :: String
     version   :: Int
-    date      :: String
+    date      :: String // Epoch
     author    :: String
     content   :: WikiText
     converted :: Bool

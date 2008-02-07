@@ -4,120 +4,128 @@ section definition
 
   entity Web {
     name    :: String    (id, name)
-    pages   -> Set<Page> 
-    members -> Set<User>
+    title   :: String
+    home    -> Topic
+    sidebar -> Topic
+    topics  -> Set<Topic>
   }
 
-  entity Page {
-    key      :: String (id, name)
-    web      -> Web    (inverse=Web.pages)
-    topic    :: String
+  entity Topic {
+    key      :: String (id)
+    web      -> Web    (inverse=Web.topics)
+    name     :: String
     title    :: String 
     content  :: WikiText
     authors  -> Set<User> 
   }
 
   extend entity User {
-    authored -> Set<Page> (inverse=Page.authors)
+    authored -> Set<Topic> (inverse=Topic.authors)
   }
 
 section versioning
 
-  extend entity Page {
-    previous -> PageDiff  // diff with respect to content
+  extend entity Topic {
+    diffs    -> List<TopicDiff> (order by version asc)
+    created  :: Date
     modified :: Date
     version  :: Int
-    author   -> User      // contributor of latest change
   }
 
-  entity PageDiff {
-    page     -> Page
-    next     -> PageDiff
+  entity TopicDiff {
+    topic    -> Topic   (inverse=Topic.diffs)
+    version  :: Int     // primary key with topic
     title    :: String
-    patch    :: Patch     // patch to create content of this version from next
+    patch    :: Patch   // patch to create content of this version from next
     created  :: Date
-    previous -> PageDiff
-    date     :: Date
     author   -> User
-    version  :: Int
   }
 
-section content of a page diff
-
-  extend entity PageDiff {
-    content :: WikiText := computeContent()
-
-    function computeContent() : WikiText {
-      if (next = null) {
-        return patch.applyPatch(page.content);
-      } else {
-        return patch.applyPatch(next.content);
+section content of a topic diff
+    
+  extend entity Topic {
+  
+    function contentOfVersion(vs : Int) : WikiText {
+      var cont : WikiText := content;
+      var cur  : Int := version;
+      while (cur > vs) {
+        cont := diffs.get(cur).patch.applyPatch(content);
+        cur  := cur - 1;
       }
-    }
-  }
-  
-section creating new pages
-
-  globals {
-  
-    function newPage(web : Web, topic : String) : Page {
-      return Page {
-        key     := web.name + "/" + topic
-        web     := web
-        topic   := topic
-        author  := securityContext.principal
-        version := 0
-      };
+      return cont;
     }
     
   }
   
-section making change to a page
+section creating new topics
 
-  // hmm, this implements a doubly linked list of diffs; you'd expect a List
-  // implementation to deal with this correctly; however, sofar Hibernate
-  // lists have not preserved ordering; but then one would always need the
-  // Page in combination with the version; maybe good anyway to use the
-  // page key as partial key of the diff anyway
+  globals {
 
-  extend entity Page {
-    function makeChange(newTitle : String, newText : WikiText, newAuthor : User) : Page {
-      if (this.version > 0) {
-        var diff : PageDiff := 
-          PageDiff {
-            page     := this
-            previous := this.previous 
-            created  := this.modified
-            title    := this.title
-            patch    := newText.makePatch(this.content)
-            author   := this.author
-            version  := this.version
-          };
-        if (this.previous != null) {
-          this.previous.next := diff;
-        }
-        this.previous := diff;
-      }
-      //this.modified := now();
+    function newWeb(webname : String, viewers : UserGroup, editors : UserGroup) : Web {
+      var moderators : UserGroup := 
+        UserGroup {
+          groupname  := webname + "Moderators"
+          fullname   := webname + " Moderators Group"
+          moderators := {securityContext.principal}
+          members    := {securityContext.principal}
+        };
+      var web : Web :=
+        Web{
+          name := webname
+          acl := ACL{ 
+                   view := {viewers} 
+                   edit := {editors} 
+                   moderate := {moderators}
+                   admin := {adminGroup} }
+        };
+      web.home    := newTopic(web, "WebHome");
+      web.sidebar := newTopic(web, "SideBar");
+      return web;
+    }
+
+    function newTopic(newWeb : Web, newTopic : String, newTitle : String, text : WikiText) : Topic {
+      var diff : TopicDiff :=
+        TopicDiff {
+          version := 0
+          title   := newTitle
+          patch   := "".makePatch(text)
+          author  := securityContext.principal
+        };
+      var topic : Topic := 
+        Topic {
+          key     := newWeb.name + "/" + newTopic
+          web     := newWeb
+          name    := newTopic
+          title   := newTitle
+          content := text
+          version := 0
+          acl     := ACL{ view := {} edit := {} moderate := {} admin := {} }
+        };
+      topic.authors.add(securityContext.principal);
+      return topic;
+    }
+
+  }
+  
+section making change to a topic
+
+  extend entity Topic {
+  
+    function makeChange(newTitle : String, newText : WikiText, newAuthor : User) : Topic 
+    {
+      var diff : TopicDiff := 
+        TopicDiff {
+          topic     := this
+          version  := this.version + 1
+          title    := newTitle
+          patch    := newText.makePatch(this.content)
+          author   := newAuthor
+        };
       this.version := this.version + 1;
       this.title   := newTitle;
       this.content := newText;
-      this.author  := newAuthor;
       this.authors.add(newAuthor);
-      if (this.author != null) {
-        this.author.authored.add(this);
-      }
       return this;
     }
+    
   }
-  
-  
-//section tagging
-//
-//  extend entity Tag {
-//    pages -> Set<Page> (inverse=Page.tags)
-//  }
-//  
-//  extend entity Page {
-//    tags -> Set<Tag>
-//  }
