@@ -205,8 +205,7 @@ section wiki topic editing
           form { 
             table {
               row{ "Name"  input(newName) }
-              row{ ""      "The name of a topic is the key that is used to refer to it "
-                           "and cannot be changed after creation. " }
+              row{ ""      "The name of a topic is the key that is used to refer to it and cannot be changed after creation. " }
               row{ "Title" input(newTitle) }
 	      row{ ""      input(newContent) }
 	    }
