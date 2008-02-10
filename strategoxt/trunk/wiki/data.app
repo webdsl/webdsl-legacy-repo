@@ -71,6 +71,7 @@ section creating new topics
           moderators := {author}
           members    := {author}
         };
+      author.groups.add(moderators);
       var web : Web :=
         Web{
           name := webname

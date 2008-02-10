@@ -15,21 +15,27 @@ section acr
   access control rules
   {
     predicate mayViewWeb(w : Web, user : User) {
-      (w.acl.view.length = 0) || memberOf(w.acl.view, user)
+      w != null && w.acl != null 
+      && ((w.acl.view.length = 0) || memberOf(w.acl.view, user))
     }
     
     predicate mayEditWeb(w : Web, user : User) {
-      memberOf(w.acl.edit, user)
+      w != null && w.acl != null 
+      &&  memberOf(w.acl.edit, user)
     }
     
     predicate mayViewTopic(t : Topic, user : User) {
-      memberOf(t.acl.view, user) 
-      || (t.acl.view.length = 0) && mayViewWeb(t.web, user)
+      t != null 
+      && ((t.acl != null && memberOf(t.acl.view, user))
+          || ((t.acl = null || t.acl.view.length = 0)
+              && mayViewWeb(t.web, user)))
     }
     
     predicate mayEditTopic(t : Topic, user : User) {
-      memberOf(t.acl.edit, user) 
-      || (t.acl.edit.length = 0) && mayEditWeb(t.web, user)
+      t != null 
+      && ((t.acl != null && memberOf(t.acl.edit, user))
+          || ((t.acl = null || t.acl.edit.length = 0)
+              && mayEditWeb(t.web, user)))
     }
   }
   

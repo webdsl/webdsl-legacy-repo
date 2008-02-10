@@ -81,6 +81,9 @@ section web
   {
     main()
     title{"Edit Web " output(web.name)}
+    define sidebar() {
+      output(web.sidebar.content)
+    }
     define body() {
       section{
         header{"Edit Web " output(web)}
@@ -142,6 +145,9 @@ section wiki topic
     }
     main()
     title{output(topic.title)}
+    define sidebar() {
+      output(topic.web.sidebar.content)
+    }
     define wikiOperationsMenuItems() {
       topicOperationsMenuItems(topic)
       webOperationsMenuItems(topic.web)
@@ -209,10 +215,18 @@ section wiki topic editing
               row{ "Title" input(newTitle) }
 	      row{ ""      input(newContent) }
 	    }
-	    action("Save changes", saveTopic()) 
+	    action("Save changes", saveTopic())
 	  }
           action saveTopic() {
-            var topic : Topic := newTopic(web, newName, newTitle, newContent, securityContext.principal);
+            var topics : List<Topic> := select t from Topic as t where (t._key = ~newName);
+            
+            for (t : Topic in topics) {
+              // give error message: topic already exists
+              return topic(t);
+            }            
+            
+            var topic : Topic
+                := newTopic(web, newName, newTitle, newContent, securityContext.principal);
             topic.persist();
 	    return topic(topic);
           }
@@ -236,8 +250,8 @@ section topic operations
     menu{
       menuheader{ navigate(wiki()){"Wiki"} }
       wikiOperationsMenuItems()
-      menuitem{ navigate(wikiIndex()){"Topic Index"} }
       menuitem{ navigate(newWeb()){"New Web"} }
+      menuitem{ navigate(wikiIndex()){"All Topics"} }
       menuspacer{}
       for(p : Topic in config.starttopicsList) {
         menuitem{ output(p) }
@@ -250,8 +264,11 @@ section topic operations
     
   define webOperationsMenuItems(web : Web)
   {
+    menuitem{ navigate(web(web)){output(web.name) " WebHome"} }
+    menuitem{ navigate(webIndex(web)){output(web.name) " Index"} }
     menuitem{ navigate(newTopic(web)){"New Topic"} }
-    menuitem{ navigate(web(web)){"Web Index"} }
+    menuitem{ navigate(editWeb(web)){"Edit " output(web.name) " Web"} }
+    menuspacer{}
   }
   
   define topicOperationsMenuItems(p : Topic)

@@ -24,7 +24,7 @@ section ac policies
     // note: this should be defined using true generics
    
     function memberOf(xs : Set<UserGroup>, user : User) : Bool {
-      if (xs.length = 0) { return false; }
+      if (user = null || xs = null || xs.length = 0) { return false; }
       else {
         for(y : UserGroup in user.groups) {
           if(y in xs) { return true; }
@@ -60,7 +60,7 @@ section users
     }
     
     rules page editUser(u : User) {
-      securityContext.principal = u
+      securityContext.principal in adminGroup.members
     }
     
     rules page register() {
@@ -68,7 +68,7 @@ section users
     }
     
     rules page pendingRegistrations() {
-      securityContext.loggedIn
+      securityContext.principal in adminGroup.members
     }
     
     rules page registrationPending(*) {
@@ -101,13 +101,15 @@ section groups
   access control rules {
   
     rules page userGroup(g : UserGroup) {
-      securityContext.loggedIn
-      //securityContext.principal in g.members
+      securityContext.principal in g.members
     }
     
     rules page editUserGroup(g : UserGroup) {
-      securityContext.loggedIn
-      //securityContext.principal in g.moderators
+      securityContext.principal in g.moderators
+    }
+    
+    rules template editPermissions(acl : ACL) {
+      memberOf(acl.moderate, securityContext.principal)
     }
 
   }
