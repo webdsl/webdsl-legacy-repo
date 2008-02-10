@@ -22,12 +22,14 @@ section acr
       memberOf(w.acl.edit, user)
     }
     
-    predicate mayViewTopic(p : Topic, user : User) {
-      memberOf(p.acl.view, user) || mayViewWeb(p.web, user)
+    predicate mayViewTopic(t : Topic, user : User) {
+      memberOf(t.acl.view, user) 
+      || (t.acl.view.length = 0) && mayViewWeb(t.web, user)
     }
     
-    predicate mayEditTopic(p : Topic, user : User) {
-      memberOf(p.acl.view, user) || mayEditWeb(p.web, user)
+    predicate mayEditTopic(t : Topic, user : User) {
+      memberOf(t.acl.edit, user) 
+      || (t.acl.edit.length = 0) && mayEditWeb(t.web, user)
     }
   }
   

@@ -101,11 +101,13 @@ section groups
   access control rules {
   
     rules page userGroup(g : UserGroup) {
-      securityContext.principal in g.members
+      securityContext.loggedIn
+      //securityContext.principal in g.members
     }
     
     rules page editUserGroup(g : UserGroup) {
-      securityContext.principal in g.moderators
+      securityContext.loggedIn
+      //securityContext.principal in g.moderators
     }
 
   }

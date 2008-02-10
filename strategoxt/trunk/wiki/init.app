@@ -8,6 +8,7 @@ section globals
       User {
         username   := "ZefHemel"
         password   := "secret"
+        confirmed  := true
         groups     := {allGroup}        
       };
 
@@ -15,6 +16,7 @@ section globals
       User {
         username   := "EelcoVisser"
         password   := "foo"
+        confirmed  := true
         groups     := {adminGroup, webCreateGroup, allGroup}
       };
       

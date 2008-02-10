@@ -41,7 +41,6 @@ section groups
   
   entity UserGroup {
     name       :: String (id, name)
-    fullname   :: String 
     moderators -> Set<User>
     members    -> Set<User>
   }

@@ -16,11 +16,11 @@ section definition
     name     :: String
     title    :: String 
     content  :: WikiText
-    authors  -> Set<User> 
+    authors  -> Set<User> (inverse=User.authored)
   }
 
   extend entity User {
-    authored -> Set<Topic> (inverse=Topic.authors)
+    authored -> Set<Topic> 
   }
 
 section versioning
@@ -67,7 +67,7 @@ section creating new topics
       var moderators : UserGroup := 
         UserGroup {
           name       := webname + "Moderators"
-          fullname   := webname + " Moderators Group"
+          //fullname   := webname + " Moderators Group"
           moderators := {author}
           members    := {author}
         };
@@ -106,6 +106,7 @@ section creating new topics
           acl     := ACL{ }
         };
       topic.authors.add(author);
+      author.authored.add(topic);
       return topic;
     }
 
