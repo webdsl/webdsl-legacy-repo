@@ -82,7 +82,8 @@ section creating new topics
                    admin    := {adminGroup} }
         };
       web.home    := newTopic(web, "WebHome", "WebHome", "", author);
-      web.sidebar := newTopic(web, "SideBar", "SideBar", "", author);
+      web.sidebar := newTopic(web, "SideBar", "SideBar", 
+                       "* **[[topic(" + webname + "/WebHome)|" +  webname + "]]", author);
       return web;
     }
 

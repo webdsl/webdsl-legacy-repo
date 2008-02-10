@@ -75,7 +75,11 @@ section users
       true
     }
     
-    rules page changePassword() {
+    rules template adminMenu() {
+      securityContext.principal in adminGroup.members
+    }
+
+      rules page changePassword() {
       securityContext.loggedIn
     }
     
@@ -108,8 +112,10 @@ section groups
       securityContext.principal in g.moderators
     }
     
-    rules template editPermissions(acl : ACL) {
+    rules template editPermissions(acl : ACL, aclSuper : ACL) {
       memberOf(acl.moderate, securityContext.principal)
+      || (acl.moderate.length = 0 
+          && memberOf(aclSuper.moderate, securityContext.principal))
     }
 
   }

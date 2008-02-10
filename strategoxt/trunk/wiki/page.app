@@ -101,7 +101,7 @@ section web
             return web(web);
           }
         }
-        editPermissions(web.acl)
+        editPermissions(web.acl, web.acl)
       }
     }
   }
@@ -192,7 +192,7 @@ section wiki topic editing
             }
 	  }
         }
-        editPermissions(topic.acl)
+        editPermissions(topic.acl, topic.web.acl)
       }
     }
   }
@@ -202,6 +202,8 @@ section wiki topic editing
     var newName    : String;
     var newTitle   : String;
     var newContent : WikiText;
+    var viewers    : Set<UserGroup>;
+    var editors    : Set<UserGroup>;
     main() 
     title{"Create New Topic"}
     define body() {
@@ -214,6 +216,8 @@ section wiki topic editing
               row{ ""      "The name of a topic is the key that is used to refer to it and cannot be changed after creation. " }
               row{ "Title" input(newTitle) }
 	      row{ ""      input(newContent) }
+              row{ "Viewers" input(viewers) }
+              row{ "Editors" input(editors) }
 	    }
 	    action("Save changes", saveTopic())
 	  }
@@ -227,6 +231,8 @@ section wiki topic editing
             
             var topic : Topic
                 := newTopic(web, newName, newTitle, newContent, securityContext.principal);
+            topic.acl.view := viewers;
+            topic.acl.edit := editors;
             topic.persist();
 	    return topic(topic);
           }

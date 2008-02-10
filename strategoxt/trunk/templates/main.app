@@ -92,9 +92,3 @@ section menus
     }
   }
   
-  access control rules {
-    rules template adminMenu() {
-      securityContext.loggedIn
-      // todo: check that principal has admin rights
-    }
-  }

@@ -2,7 +2,7 @@ module users/administration
   
 section ac administration
 
-  define editPermissions(acl : ACL)
+  define editPermissions(acl : ACL, aclSuper : ACL)
   {
     section{
       header{"Change Permissions"}
@@ -23,11 +23,14 @@ section ac administration
   
   define viewPermissions(acl : ACL)
   {
-    table{
-      row{"View"     output(acl.view)}
-      row{"Edit"     output(acl.edit)}
-      row{"Moderate" output(acl.moderate)}
-      row{"Admin"    output(acl.admin)}
+    section{
+      header{"Permissions"}
+      table{
+        row{"View"     output(acl.view)}
+        row{"Edit"     output(acl.edit)}
+        row{"Moderate" output(acl.moderate)}
+        row{"Admin"    output(acl.admin)}
+      }
     }
   }
   
