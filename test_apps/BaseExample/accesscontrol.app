@@ -2,25 +2,26 @@ module accesscontrol
 
 section AccessControl Declarations
 
-  define allowedUsersRow(document:Document) {
+  define allowedUsersRow(document:Document){
     row{ "Allowed Users:" input(document.allowedUsers) }
   }
 
-  define login() {
+  define login(){
     var usr : User := User{};
-    form { 
-      table {
+    form{ 
+      table{
         row{ "Name: " input(usr.name) }
         row{ "Password: " input(usr.password) }
-        row{ action("Sign in", signin()) "" }
+        row{ captcha() }
+        row{ action("Log In", login()) "" }
       }
-      action signin() {
+      action login(){
         var users : List<User> :=
           select u from User as u 
           where (u._name = ~usr.name);
   
-        for (us : User in users ) {
-          if (us.password.check(usr.password)) {
+        for (us : User in users ){
+          if (us.password.check(usr.password)){
             securityContext.principal := us;
             securityContext.loggedIn := true;
             return viewUser(securityContext.principal);
@@ -32,22 +33,19 @@ section AccessControl Declarations
     }
   }
 
-  define logout()
-  {
+  define logout(){
     "Logged in as " output(securityContext.principal)
-    form {
-      actionLink("Log Out", logoff())
-      action logoff() {
+    form{
+      actionLink("Log Out", logout())
+      action logout(){
         securityContext.loggedIn := false;
         securityContext.principal := null;
-
         return home();
       }
     }
   }
 
-  extend entity Document
-  {
+  extend entity Document{
     allowedUsers -> Set<User>
   }
 
@@ -57,8 +55,8 @@ section AccessControl Declarations
 
     pointcut openSections() {
       page home(),
-      template login(),
-      template logout(),
+     // template login(),
+      //template logout(),
       page createDocument(),
       page createUser(),
       page viewUser(*)

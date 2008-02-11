@@ -4,36 +4,69 @@ section RBAC init
 
   globals
   {
-    var u0 : User := User
+    var alice : User := User
     {
-      name := "user0"
+      name := "Alice"
       organization := o0
     };
-    var u1 : User := User
+    var bob : User := User
     {
-      name := "user1"
+      name := "Bob"
       organization := o0
     };
-    var u2 : User := User
+    var charlie : User := User
     {
-      name := "user2"
+      name := "Charlie"
       organization := o1
     };
-    var u3 : User := User
+    var dave : User := User
     {
-      name := "user3"
+      name := "Dave"
       organization := o2
     };
+    
+    var danny : User := User
+    {
+      name := "Danny"
+      organization := o2
+    };
+    var eelco : User := User
+    {
+      name := "Eelco"
+      organization := o2
+    };
+    
     var o0 : Organization := Organization
     {
-      name := "organization1"
+      name := "Organization 1"
     };
     var o1 : Organization := Organization
     {
-      name := "organization2"
+      name := "Organization 2"
     };
     var o2 : Organization := Organization
     {
-      name := "organization3"
+      name := "Organization 3"
+    };
+    
+    
+    var c1 : Conference := Conference {
+      name := "ICWE08"
+      topic := "International Conference on Web Engineering"
+      programChair := alice
+      programCommittee := {bob}
+      reviewCommittee := {dave}
+      submissionsOpen := true
+      //submittedPapers -> Set<Paper>
+      //acceptedPapers -> Set<Paper>
+      //rejectedPapers -> Set<Paper>
+    };
+    
+    var pap1 : Paper := Paper{
+      title := "Declarative Access Control for Web Applications"
+      conference := c1
+      authors := {danny,eelco}
+      assignedReviewers := {dave}
+      assignedPC := {bob}
     };
   }

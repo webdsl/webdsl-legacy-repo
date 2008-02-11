@@ -24,9 +24,22 @@ section RBAC pages
     main()
     define body()
     {
-      menubar("vertical")
+      for(d:Document)
       {
-        themenu()
+  
+        //section{ output(d.title) ":" }
+        section{ navigate(viewDocument(d)) { "view " output(d.title) } }
+        section{ navigate(editDocument(d)) { "edit " output(d.title)} }
+        
+      }
+      
+          
+      for(u:User)
+      {
+
+
+        section{ navigate(editUserRoles(u)) { "edit roles of " output(u.name) } }
+     
       }
     }
   }

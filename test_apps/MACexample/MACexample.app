@@ -19,25 +19,60 @@ description {
 
 section MAC pages
 
-  define page home()
-  {
+  define page home(){
+    //quick fix (bug with Int parameter):
+    var do0:Document := Document{ classification := 0 };
+    var do1:Document := Document{ classification := 1 };
+    var do2:Document := Document{ classification := 2 };
+    var do3:Document := Document{ classification := 3 };
+  
     main()
-    define body()
-    {
-      menubar("vertical")
-      {
-        themenu()
+    define body(){
+      "Viewing: "
+      for(d:Document){
+        section{ navigate(viewDocument(d)){ output(d.title) } }
       }
+      "Creating: "
+      //bugged
+      //for(classification:Int in [0,1,2,3])
+      //{
+      //  section{ navigate(createClassificationDocument(classification)){ "Create Document with classification" output(classification) } }
+      //}
+      section{ navigate(createClassificationDocument(do0)){ "Create Document with classification" output(0) } }
+      section{ navigate(createClassificationDocument(do1)){ "Create Document with classification" output(1) } }
+      section{ navigate(createClassificationDocument(do2)){ "Create Document with classification" output(2) } }
+      section{ navigate(createClassificationDocument(do3)){ "Create Document with classification" output(3) } }
     }
   }
 
-  define page viewDocument(d:Document)
-  {
+  define page viewDocument(d:Document){
     main()
-    define body()
-    {
+    define body(){
       output(d.title)
       output(d.text)
+    }
+  }
+
+
+  //define page createClassificationDocument(cl:Int)
+  define page createClassificationDocument(d:Document)
+  {
+    //var d:Document := Document{ classification := cl };
+
+    action save(d:Document){
+      d.save();
+      return home();
+    }
+
+    main()
+    define body(){
+      form{
+        table{
+          row{ "Title:" input(d.title) }
+          row{ "Text:" input(d.text) }
+        }
+        action("save",save(d))
+      }
     }
   }
 

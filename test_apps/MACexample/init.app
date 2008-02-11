@@ -6,22 +6,22 @@ section MAC init
   {
     var u0 : User := User
     {
-      name := "user 0"
+      name := "Alice"
       clearance := 0
     };
     var u1 : User := User
     {
-      name := "user 1"
+      name := "Bob"
       clearance := 1
     };
     var u2 : User := User
     {
-      name := "user 2"
+      name := "Charlie"
       clearance := 2
     };
     var u3 : User := User
     {
-      name := "user 3"
+      name := "Dave"
       clearance := 3
     };
 

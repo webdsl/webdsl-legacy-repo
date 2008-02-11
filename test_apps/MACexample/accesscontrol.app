@@ -2,6 +2,11 @@ module accesscontrol
 
 section MAC AccessControl
 
+  extend session securityContext{
+    clearance :: Int
+  }
+ 
+
   extend entity Document
   {
     classification :: Int
@@ -19,13 +24,21 @@ section MAC AccessControl
 
   access control rules
   {
-    predicate mayViewDocument (u:User, d:Document) {
-      u.clearance >= d.classification
+    predicate mayViewDocument (d:Document) {
+      //loggedImn check should be automatic here too
+      securityContext.loggedIn&&securityContext.clearance>-1&&
+      securityContext.clearance >= d.classification
     }
 
-    predicate mayCreateDocument (u:User, d:Document) {
-      u.clearance <= d.classification
+    predicate mayCreateDocument (d:Document) {
+      //loggedImn check should be automatic here too
+      securityContext.loggedIn&&securityContext.clearance>-1&&
+      securityContext.clearance <= d.classification
     }
+    
+    //predicate mayCreateDocumentClass (u:User, cl:Int) {
+    //  u.clearance <= cl
+    //}
 
     predicate mayViewMission (u:User, m:Mission) {
       u.clearance <= m.classification
@@ -38,19 +51,20 @@ section MAC AccessControl
 
     principal is User with credentials name
 
-    rules page home()
+    pointcut openSections()
     {
-      true
+      page home(),
+      template sidebar()
     }
 
-    rules template sidebar()
+    rules pointcut openSections()
     {
       true
     }
 
     rules page viewDocument(d:Document)
     {
-      mayViewDocument(securityContext.principal,d)
+      mayViewDocument(d)
     }
 
     rules page createDocument()
@@ -58,9 +72,17 @@ section MAC AccessControl
       securityContext.loggedIn
       rules action save(d:Document)
       {
-        mayCreateDocument(securityContext.principal,d)
+        mayCreateDocument(d)
       }
     }
+    
+    rules page createClassificationDocument(d:Document){
+      mayCreateDocument(d)
+    }
+    
+    //rules page createClassificationDocument(class:Int){
+    //  mayCreateDocumentClass(securityContext.principal,class)
+    //}
 
     rules page viewMission(m:Mission)
     {
@@ -73,6 +95,17 @@ section MAC AccessControl
       rules action save(m:Mission)
       {
         mayCreateMission(securityContext.principal,m)
+      }
+    }
+    
+    
+    
+    rules template sidebar()
+    {
+      true
+      rules action activateCL(clear:Int)
+      {
+        securityContext.principal.clearance >= clear
       }
     }
   }

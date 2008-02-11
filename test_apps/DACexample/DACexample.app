@@ -23,10 +23,17 @@ section DAC pages
     main()
     define body()
     {
-      menubar("vertical")
+      for(d:Document)
       {
-        themenu()
+        section{navigate(viewDocument(d)) { output(d.title) ":"}}
+        section{navigate(viewDocument(d)) { "view" }}
+        section{navigate(editDocument(d)) { "edit" }}
+        section{navigate(editViewEditGrants(d)) { "view/edit access" }}
+        section{navigate(editGrantingRights(d)) { "granting" }}
+        section{"&nbsp;"}
       }
+     //section{"&nbsp;"}
+      //section{navigate(createDocument()){output("create new")}}
     }
   }
 
@@ -86,7 +93,7 @@ section DAC pages
     }
   }
 
-  define page editGrants(d:Document)
+  define page editViewEditGrants(d:Document)
   {
     main()
     define body()

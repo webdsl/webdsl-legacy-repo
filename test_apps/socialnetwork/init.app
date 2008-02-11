@@ -3,48 +3,64 @@ module init
 section globals .
 
   globals {
-    var zef : User := 
+    var alice : User := 
       User {
-        username   := "zef"
-        password   := "secret"
+        username   := "Alice"
+        password   := "changeme"
         viewAccess := priv
+        friends    := {bob}
       };
 
-    var danny : User := 
+    var bob : User := 
       User {
-        username   := "danny"
-        password   := "ac"
-        viewAccess := priv
+        username   := "Bob"
+        password   := "changeme"
+        viewAccess := fri
+        friends    := {alice,charlie}
       };
       
-    var eelco : User := 
+    var charlie : User := 
       User {
-        username   := "eelco"
-        password   := "foo"
-        viewAccess := priv
+        username   := "Charlie"
+        password   := "changeme"
+        viewAccess := pub
       };
+  
+    var dave : User := 
+      User {
+        username   := "Dave"
+        password   := "changeme"
+        viewAccess := priv
+      };  
     
-    var zefPage : Page := 
+    var alicePage : Page := 
       Page {
-        name := "Member page: "+zef.username
-        owner := zef
-        content := "This is zefs home page."
+        name := "Member page: "+alice.username
+        owner := alice
+        content := "This is Alice's page."
        
       };
       
-    var dannyPage : Page := 
+    var bobPage : Page := 
       Page {
-        name := "Member page: "+danny.username
-        owner := danny
-        content := "This is dannys home page."
+        name := "Member page: "+bob.username
+        owner := bob
+        content := "This is Bob's page."
        
       };
-      
-    var eelcoPage : Page := 
+    var charliePage : Page := 
       Page {
-        name := "Member page: "+eelco.username
-        owner := eelco
-        content := "This is eelcos home page."
+        name := "Member page: "+charlie.username
+        owner := charlie
+        content := "This is Charlie's page."
+       
+      };
+     var davePage : Page := 
+      Page {
+        name := "Member page: "+dave.username
+        owner := dave
+        content := "This is Dave's page."
+       
       };
   }
         

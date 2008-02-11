@@ -25,6 +25,14 @@ section DAC AccessControl
       d.owner = u || u in d.editAccess
     }
 
+    predicate mayChangeViewEditGrants (u:User, d:Document) {
+      d.owner = u || u in d.grantingRights
+    }
+
+    predicate mayChangeGrantingRights (u:User, d:Document) {
+      d.owner = u
+    }
+
 
     principal is User with credentials name
 
@@ -53,13 +61,13 @@ section DAC AccessControl
       mayEditDocument(securityContext.principal,d)
     }
 
-    rules page editGrants(d:Document)
+    rules page editViewEditGrants(d:Document)
     {
-      d.owner=securityContext.principal || securityContext.principal in d.grantingRights
+      mayChangeViewEditGrants(securityContext.principal,d)
     }
 
     rules page editGrantingRights(d:Document)
     {
-      d.owner=securityContext.principal
+      mayChangeGrantingRights(securityContext.principal,d)
     }
   }

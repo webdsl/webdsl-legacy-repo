@@ -6,22 +6,22 @@ section RBAC init
   {
     var u0 : User := User
     {
-      name := "user0"
+      name := "Alice"
       roles := {admin}
     };
     var u1 : User := User
     {
-      name := "user1"
+      name := "Bob"
       roles := {editor}
     };
     var u2 : User := User
     {
-      name := "user2"
+      name := "Charlie"
       roles := {editor,viewer}
     };
     var u3 : User := User
     {
-      name := "user3"
+      name := "Dave"
       roles := {viewer}
     };
 

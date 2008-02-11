@@ -48,8 +48,8 @@ section RBAC templates
     {
       menu
       {
-        menuheader{navigate(viewUser(u)) { output(u.name) }}
-        menuitem{ navigate(editUserRoles(u)) { "edit roles" } }
+    //    menuheader{navigate(viewUser(u)) { output(u.name) }}
+        menuheader{ navigate(editUserRoles(u)) { "edit roles" } }
       }
     }
     menu{menuheader { navigate(createDocument()){output("create new document")} } }
@@ -57,11 +57,25 @@ section RBAC templates
   define body(){}
   define sidebar()
   {
+    
+    
+          list
+      {
+        listitem { "Welcome " output(securityContext.principal.name)}
+        listitem { "Activate Role:"}
+      }
+        roleActivation()
+    
+    
+    
     form
     {
-      "Welcome " output(securityContext.principal.name)
-      list
-      {
+
+      
+      
+
+      
+      list{
         listitem { navigate(home()){output("home")} }
 
         listitem { action("logout",logout()) }
@@ -84,6 +98,6 @@ section RBAC templates
       }
     }
 
-    roleActivation()
+   
     
   }

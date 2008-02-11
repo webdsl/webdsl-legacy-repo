@@ -6,19 +6,19 @@ section MAC init
   {
     var u0 : User := User
     {
-      name := "user 0"
+      name := "Alice"
     };
     var u1 : User := User
     {
-      name := "user 1"
+      name := "Bob"
     };
     var u2 : User := User
     {
-      name := "user 2"
+      name := "Charlie"
     };
     var u3 : User := User
     {
-      name := "user 3"
+      name := "Dave"
     };
 
     var d0 : Document := Document

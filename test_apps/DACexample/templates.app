@@ -40,7 +40,7 @@ section DAC templates
         menuheader{navigate(viewDocument(d)) { output(d.title)}}
         menuitem{ navigate(viewDocument(d)) { "view" } }
         menuitem{ navigate(editDocument(d)) { "edit" } }
-        menuitem{ navigate(editGrants(d)) { "view/edit access" } }
+        menuitem{ navigate(editViewEditGrants(d)) { "view/edit access" } }
         menuitem{ navigate(editGrantingRights(d)) { "granting" } }
       }
     }
