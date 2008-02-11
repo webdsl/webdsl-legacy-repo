@@ -10,6 +10,7 @@ section users
     homepage    :: URL
     country     :: String
     affiliation :: String
+    profile     :: WikiText
     confirmed   :: Bool (hidden)
   }
   
@@ -40,9 +41,11 @@ section registration
 section groups
   
   entity UserGroup {
-    name       :: String (id, name)
-    moderators -> Set<User>
-    members    -> Set<User>
+    name        :: String (id, name)
+    description :: WikiText
+    moderators  -> Set<User>
+    members     -> Set<User>
+    requested   -> Set<User>
   }
   
   extend entity User {

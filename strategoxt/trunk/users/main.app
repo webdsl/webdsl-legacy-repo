@@ -1,9 +1,11 @@
 module users/main
 
 imports users/data
+imports users/profile
 imports users/registration
 imports users/authentication
 imports users/administration
+imports users/groups
 imports users/access-control
 
 section main page for user admin

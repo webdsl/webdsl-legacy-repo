@@ -63,6 +63,11 @@ section users
       securityContext.principal in adminGroup.members
     }
     
+    rules page editProfile(u : User) {
+      securityContext.principal = u
+      || securityContext.principal in adminGroup.members
+    }
+    
     rules page register() {
       true
     }
@@ -79,7 +84,15 @@ section users
       securityContext.principal in adminGroup.members
     }
 
-      rules page changePassword() {
+    rules page configuration(*) {
+      isAdministrator()
+    }
+
+    rules page editConfiguration(*) {
+      isAdministrator()
+    }
+  
+    rules page changePassword() {
       securityContext.loggedIn
     }
     
@@ -104,11 +117,24 @@ section groups
 
   access control rules {
   
+    rules page groups() {
+      true
+    }
+  
     rules page userGroup(g : UserGroup) {
-      securityContext.principal in g.members
+      securityContext.loggedIn
     }
     
     rules page editUserGroup(g : UserGroup) {
+      securityContext.principal in g.moderators
+    }
+    
+    rules template joinGroup(g : UserGroup) {
+      !(securityContext.principal in g.members)
+      && !(securityContext.principal in g.requested)
+    }
+    
+    rules page membershipRequests(g : UserGroup) {
       securityContext.principal in g.moderators
     }
     

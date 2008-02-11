@@ -34,7 +34,7 @@ section basic page elements
 
   define sidebar() {
     logo()
-    output(config.sidebar.content)
+    if(config.sidebar != null) { output(config.sidebar.content) }
   }
   
   define applicationSidebar() { }
@@ -71,12 +71,8 @@ section menus
       //forumMenu()
       //issuesMenu()
       //presentationsMenu()
-      menu { 
-        menuheader{ navigate(users()){"Users"} }
-        for(b : User in config.usersList) {
-          menuitem{ output(b) }
-        }
-      }
+      groupMenu()
+      usersMenu()
       currentUser()
       adminMenu()
     }

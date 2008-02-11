@@ -1,7 +1,7 @@
 application org.strategoxt.www
 
 description {
-  This application is the website for webdsl.org
+  This application is the website for strategoxt.org
 }
 
 imports templates/main
@@ -12,11 +12,8 @@ section home page
 
   define page home() 
   {
-    title{output(config.homepage.name)}
+    if(config.homepage != null) { title{output(config.homepage.title)} }
     main()
-    define sidebar() {
-      if(config.sidebar != null) { output(config.sidebar.content) } 
-    }
     define body() {
       if(config.homepage != null) { output(config.homepage.content) }
     }
@@ -32,20 +29,9 @@ section application configuration
     wikistartpage -> Topic
     starttopics   -> Set<Topic>
   }
-  
-  access control rules {
-    rules page configuration(*) {
-      isAdministrator()
-    }
-    rules page editConfiguration(*) {
-      isAdministrator()
-    }
-  }
 
 section initialization of application configuration
 
   globals {
-        
-    var config : Configuration := Configuration { };
-    
+    var config : Configuration := Configuration { };    
   }

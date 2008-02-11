@@ -78,6 +78,7 @@ section authentication
       menuheader{ "You" }
       menuitem{ output(securityContext.principal) }
       menuitem{ signoffAction() }
+      menuitem{ navigate(editProfile(securityContext.principal)){"Edit Profile"} }
       menuitem{ navigate(changePassword()){"Change Password"} }
       // There's some problems with this, so disabling for now
       //menuitem{ navigate(editUser(securityContext.principal)){"Edit Profile"} }
