@@ -66,7 +66,7 @@ section acr
     }
     
     rules page newWeb() {
-      webCreateGroup in securityContext.principal.groups
+      webCreateGroup in securityContext.principal.activeGroups
     }
     
     rules page topic(topic : Topic) {

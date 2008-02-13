@@ -11,11 +11,13 @@ module users/access-control
   }
   
 access control policy
+
   anonymous OR admin
 
 section admin ac
 
   access control rules admin {
+  
     pointcut admin()
     {
       page *(*),
@@ -24,8 +26,9 @@ section admin ac
     }
    
     rules pointcut admin() {
-      securityContext.principal in adminGroup.members
+      adminGroup in securityContext.principal.activeGroups
     }  
+    
   }
   
 section ac policies
@@ -44,7 +47,7 @@ section ac policies
     function memberOf(xs : Set<UserGroup>, user : User) : Bool {
       if (user = null || xs = null || xs.length = 0) { return false; }
       else {
-        for(y : UserGroup in user.groups) {
+        for(y : UserGroup in user.activeGroups) {
           if(y in xs) { return true; }
         }
         return false;

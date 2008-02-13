@@ -102,14 +102,20 @@ section active groups 2
   {
     main()
     define body() {
-      "Foo"
-      form {
-        select(securityContext.principal.activeGroups 
-               from securityContext.principal.groups)
-        action("Select Groups", selectGroups())
-      }
-      action selectGroups() {
-        return user(securityContext.principal);
+      section{
+        header{"Change Role"}
+        
+        par{"Choose groups that you want to be active in"}
+        
+        form {
+          select(securityContext.principal.activeGroups 
+                 from securityContext.principal.groups)
+          action("Select Groups", selectGroups())
+        }
+        
+        action selectGroups() {
+          return user(securityContext.principal);
+        }
       }
     }
   }
