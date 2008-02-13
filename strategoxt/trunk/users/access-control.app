@@ -10,7 +10,6 @@ module users/access-control
   
   }
   
-  
 access control policy
   anonymous OR admin
 
@@ -32,9 +31,9 @@ section admin ac
 section ac policies
 
   globals {
-    
+  
     function containsOneOf(xs : Set<UserGroup>, ys :  Set<UserGroup>) : Bool {
-      for(y : UserGroup in ys) {
+     for(y : UserGroup in ys) {
         if(y in xs) { return true; }
       }
       return false;
@@ -142,30 +141,30 @@ section users
   
 section groups
 
-  access control rules {
+access control rules {
   
-    rules page groups() {
-      true
-    }
+  rules page groups() {
+    true
+  }
   
-    rules template userGroupOperationsMenu(g:UserGroup)
-    {
-      !(securityContext.principal in g.members)
-      && !(securityContext.principal in g.requested)
-    }
+  rules template userGroupOperationsMenu(g:UserGroup)
+  {
+    !(securityContext.principal in g.members)
+    && !(securityContext.principal in g.requested)
+  }
   
-    rules template modGroupOperationsMenu(g:UserGroup)
-    {
-      securityContext.principal in g.moderators
-    }
+  rules template modGroupOperationsMenu(g:UserGroup)
+  {
+    securityContext.principal in g.moderators
+  }
   
-    rules page userGroup(g : UserGroup) {
-      securityContext.loggedIn
-    }
+  rules page userGroup(g : UserGroup) {
+    securityContext.loggedIn
+  }
     
-    rules page editUserGroup(g : UserGroup) {
-      securityContext.principal in g.moderators
-    }
+  rules page editUserGroup(g : UserGroup) {
+    securityContext.principal in g.moderators
+  }
     
     rules template joinGroup(g : UserGroup) {
       !(securityContext.principal in g.members)
@@ -181,9 +180,10 @@ section groups
       || (acl.moderate.length = 0 
           && memberOf(aclSuper.moderate, securityContext.principal))
     }
+    
+}
 
-  }
-  
+ 
 section authentication actions
 
   access control rules {
@@ -206,6 +206,10 @@ section authentication actions
     
     rules template signoffAction() {
       securityContext.loggedIn
+    }
+    
+    rules page changeRole() {
+      securityContext.loggedIn      
     }
     
   }

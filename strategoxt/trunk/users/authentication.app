@@ -22,6 +22,7 @@ section authentication
   define signinMenu() {
     menu{ 
       menuheader{ navigate(login()){"Sign in"} }
+      menuitem{ navigate(register()){"Register"} }
     }
   }
     
@@ -29,6 +30,7 @@ section authentication
   {
     var username : String;
     var password : Secret;
+    var group    : UserGroup;
     form { 
       table {
         row{ "Username: " input(username) }
@@ -80,9 +82,34 @@ section authentication
       menuitem{ signoffAction() }
       menuitem{ navigate(editProfile(securityContext.principal)){"Edit Profile"} }
       menuitem{ navigate(changePassword()){"Change Password"} }
+      menuitem{ navigate(changeRole()){"Change Role"} }
       // There's some problems with this, so disabling for now
       //menuitem{ navigate(editUser(securityContext.principal)){"Edit Profile"} }
     }
   }
   
   
+section active groups 1
+
+  extend entity User {
+    activeGroups -> Set<UserGroup>
+  }
+  
+section active groups 2
+
+  
+  define page changeRole()
+  {
+    main()
+    define body() {
+      "Foo"
+      form {
+        select(securityContext.principal.activeGroups 
+               from securityContext.principal.groups)
+        action("Select Groups", selectGroups())
+      }
+      action selectGroups() {
+        return user(securityContext.principal);
+      }
+    }
+  }

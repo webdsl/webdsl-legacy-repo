@@ -60,6 +60,7 @@ section user profile
             row{ "Homepage"    input(user.homepage) }
             row{ "Country"     input(user.country) }
             row{ "Affiliation" input(user.affiliation) }
+            row{ "Active groups:" select(user.activeGroups from user.groups) }
             row{ "Profile"     input(user.profile) }
           }
           action("Save",  saveProfile())
