@@ -43,11 +43,11 @@ section versioning
 
 section content of a topic diff
     
-  extend entity Topic {
+  globals {
   
-    function contentOfVersion(vs : Int) : WikiText {
-      var cont : WikiText := content;
-      var cur  : Int := version;
+    function contentOfVersion(topic:Topic,vs : Int) : WikiText {
+      var cont : WikiText := topic.content;
+      var cur  : Int := topic.version;
       //while (cur > vs) {
       //  cont := diffs.get(cur).patch.applyPatch(content);
       //  cur  := cur - 1;
@@ -116,23 +116,23 @@ section creating new topics
   
 section making change to a topic
 
-  extend entity Topic {
+  globals {
   
-    function makeChange(newTitle : String, newText : WikiText, newAuthor : User) : Topic 
+    function makeChange(topic:Topic, newTitle : String, newText : WikiText, newAuthor : User) : Topic 
     {
       var diff : TopicDiff := 
         TopicDiff {
-          topic     := this
-          version  := this.version + 1
+          topic     := topic
+          version  := topic.version + 1
           title    := newTitle
-          patch    := newText.makePatch(this.content)
+          patch    := newText.makePatch(topic.content)
           author   := newAuthor
         };
-      this.version := this.version + 1;
-      this.title   := newTitle;
-      this.content := newText;
-      this.authors.add(newAuthor);
-      return this;
+      topic.version := topic.version + 1;
+      topic.title   := newTitle;
+      topic.content := newText;
+      topic.authors.add(newAuthor);
+      return topic;
     }
     
   }

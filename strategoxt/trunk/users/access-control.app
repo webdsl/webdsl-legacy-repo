@@ -10,6 +10,25 @@ module users/access-control
   
   }
   
+  
+access control policy
+  anonymous OR admin
+
+section admin ac
+
+  access control rules admin {
+    pointcut admin()
+    {
+      page *(*),
+      template *(*),
+      function *(*)
+    }
+   
+    rules pointcut admin() {
+      securityContext.principal in adminGroup.members
+    }  
+  }
+  
 section ac policies
 
   globals {

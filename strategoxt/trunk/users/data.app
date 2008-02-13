@@ -26,14 +26,14 @@ section registration
     confirmed  :: Bool (hidden)
   }
   
-  extend entity UserRegistration {
-    function makeUser() : User {
+  globals {
+    function makeUser(u:UserRegistration) : User {
       return User {
-        username := this.username
-        fullname := this.fullname
-        email    := this.email
-        homepage := this.homepage
-        password := this.password
+        username := u.username
+        fullname := u.fullname
+        email    := u.email
+        homepage := u.homepage
+        password := u.password
       };
     }
   }

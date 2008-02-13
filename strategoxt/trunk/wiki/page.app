@@ -157,14 +157,14 @@ section wiki topic
         block("twikiTopicTitle") {
           header{ output(topic.title) }
         }
-	par{ output(topic.content) }
-	block("wikiTopicByLine") {
-	  par{"Contributions by " 
-	    for(author : User in topic.authorsList) {
-	      output(author) " "
-	    }
-	  }
-      	}
+    par{ output(topic.content) }
+    block("wikiTopicByLine") {
+      par{"Contributions by " 
+        for(author : User in topic.authorsList) {
+          output(author) " "
+        }
+      }
+        }
       }
     }
   }
@@ -183,14 +183,14 @@ section wiki topic editing
           header{"Edit Topic: " output(topic.name)}
           form { 
             par{ input(newTitle) }
-	    par{ input(newContent) }
-	    par{ action("Save changes", saveTopic()) }
+            par{ input(newContent) }
+            par{ action("Save changes", saveTopic()) }
             action saveTopic() {
-              topic.makeChange(newTitle, newContent, securityContext.principal);
+              makeChange(topic,newTitle, newContent, securityContext.principal);
               topic.persist();
-	      return topic(topic);
+              return topic(topic);
             }
-	  }
+          }
         }
         editPermissions(topic.acl, topic.web.acl)
       }
@@ -215,12 +215,12 @@ section wiki topic editing
               row{ "Name"  input(newName) }
               row{ ""      "The name of a topic is the key that is used to refer to it and cannot be changed after creation. " }
               row{ "Title" input(newTitle) }
-	      row{ ""      input(newContent) }
+              row{ ""      input(newContent) }
               row{ "Viewers" input(viewers) }
               row{ "Editors" input(editors) }
-	    }
-	    action("Save changes", saveTopic())
-	  }
+      }
+      action("Save changes", saveTopic())
+    }
           action saveTopic() {
             var topics : List<Topic> := select t from Topic as t where (t._key = ~newName);
             
@@ -234,7 +234,7 @@ section wiki topic editing
             topic.acl.view := viewers;
             topic.acl.edit := editors;
             topic.persist();
-	    return topic(topic);
+            return topic(topic);
           }
         }
       }
@@ -242,7 +242,7 @@ section wiki topic editing
   }
 
 section wiki topic history
-	
+  
   // TODO
   
   // show specific version

@@ -11,15 +11,15 @@ section create new user
     title{"Register new user"}
     define body() {
       section {
-	header{"Register New User"}
-	
-	par { "To become a registered user for this site, "
-	"fill in the following information."
-	"The moderator will decide on registration based on this information."
-	"Due to spamming, registration cannot be automatic" }
-	
+      header{"Register New User"}
+  
+      par { "To become a registered user for this site, "
+      "fill in the following information."
+      "The moderator will decide on registration based on this information."
+      "Due to spamming, registration cannot be automatic" }
+  
         //par{ output(message) }
-	
+  
         var newUser : UserRegistration := UserRegistration { };
         form { 
           table{ editRowsUserRegistration(newUser) }
@@ -41,10 +41,10 @@ section create new user
                 newUser.password := newUser.password.digest();
                 newUser.persist();
                 email(sendConfirmEmail(newUser));
-	        return registrationPending(newUser.username);
-	      }
+          return registrationPending(newUser.username);
+        }
           }
-	}
+  }
       }
     }
   }
@@ -179,7 +179,7 @@ section moderation of user registration requests by admin
         "Reason for rejection: " inputText(rejection)
         
         action confirm(reg : UserRegistration) {
-          var user : User := reg.makeUser();
+          var user : User := makeUser(reg);
           reg.delete();
           user.persist();
           email(confirmRegistration(user));
