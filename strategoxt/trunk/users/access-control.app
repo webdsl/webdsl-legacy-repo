@@ -39,6 +39,14 @@ section users
 
   access control rules {
   
+    rules template *(*) {
+      true
+    }
+    
+    rules function *(*) {
+      true
+    }
+  
     //predicate memberOf(xs : Set<UserGroup>) {
     //  memberOfAux(xs, securityContext.principal)
     //}
