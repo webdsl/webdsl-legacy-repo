@@ -114,29 +114,26 @@ section groups
   define page editUserGroup (userGroup : UserGroup) {
     main()
     define groupOperationsMenu(){ modGroupOperationsMenu(userGroup)}
-    define body () {
-      section(){
-        header(){
+    define body() {
+      section{
+        header{
           "Edit "
           "UserGroup"
+          " "
           output(userGroup.name)
         }
-        form(){
-          table(){
+        form{
+          table{
             editRowsUserGroup(userGroup)
           }
-          
-          action("Save", save())
-         
+          action("Save", save())     
           action("Cancel", cancel())
         }
       }
-      action cancel ( )
-      {
+      action cancel(){
         return userGroup(userGroup);
       }
-      action save ( )
-      {
+      action save(){
         userGroup.save();
         return userGroup(userGroup);
       }
