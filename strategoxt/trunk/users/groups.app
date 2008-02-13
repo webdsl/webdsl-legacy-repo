@@ -12,8 +12,21 @@ section menu
       }
     }
   }
+  
+  define groupOperationsMenu(){}
 
-  define groupOperationsMenu() { }
+  define userGroupOperationsMenu(g:UserGroup) { 
+    menuitem{ output(g) }
+    menuitem{ joinGroup(g) }
+    menuspacer{}
+  }
+
+  define modGroupOperationsMenu(g:UserGroup) {
+    menuitem{ output(g) }
+    menuitem{ navigate(editUserGroup(g)){"Edit this Group"} }
+    menuitem{ navigate(membershipRequests(g)){"Membership Requests"} }
+    menuspacer{}
+  }
   
 section groups
 
@@ -35,11 +48,9 @@ section groups
   {
     main()
     title{output(g.name) " Group"}
-    define groupOperationsMenu() { 
-      menuitem{ joinGroup(g) }
-      menuitem{ navigate(editUserGroup(g)){"Edit this Group"} }
-      menuitem{ navigate(membershipRequests(g)){"Membership Requests"} }
-      menuspacer{}
+    define groupOperationsMenu(){
+      userGroupOperationsMenu(g)
+      modGroupOperationsMenu(g)
     }
     define body() {
       section{
@@ -70,6 +81,7 @@ section groups
   define page membershipRequests(g : UserGroup)
   {
     main()
+    define groupOperationsMenu(){ modGroupOperationsMenu(g)}
     define body() {
       section{
         header{"Membership Requests for " output(g) " Group"}
@@ -85,6 +97,8 @@ section groups
         g.members.add(u);
         g.requested.remove(u);
         g.persist();
+        //fix for bug with inverse relations
+        u.groups.add(g);
         // note: send email confirmation
         return membershipRequests(g);
       }
@@ -93,6 +107,38 @@ section groups
         g.persist();
         // note: send email confirmation
         return membershipRequests(g);
+      }
+    }
+  }
+  
+  define page editUserGroup (userGroup : UserGroup) {
+    main()
+    define groupOperationsMenu(){ modGroupOperationsMenu(userGroup)}
+    define body () {
+      section(){
+        header(){
+          "Edit "
+          "UserGroup"
+          output(userGroup.name)
+        }
+        form(){
+          table(){
+            editRowsUserGroup(userGroup)
+          }
+          
+          action("Save", save())
+         
+          action("Cancel", cancel())
+        }
+      }
+      action cancel ( )
+      {
+        return userGroup(userGroup);
+      }
+      action save ( )
+      {
+        userGroup.save();
+        return userGroup(userGroup);
       }
     }
   }

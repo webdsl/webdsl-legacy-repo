@@ -121,6 +121,17 @@ section groups
       true
     }
   
+    rules template userGroupOperationsMenu(g:UserGroup)
+    {
+      !(securityContext.principal in g.members)
+      && !(securityContext.principal in g.requested)
+    }
+  
+    rules template modGroupOperationsMenu(g:UserGroup)
+    {
+      securityContext.principal in g.moderators
+    }
+  
     rules page userGroup(g : UserGroup) {
       securityContext.loggedIn
     }
