@@ -26,7 +26,7 @@ section admin ac
     }
    
     rules pointcut admin() {
-      adminGroup in securityContext.principal.activeGroups
+      isAdministrator()
     }  
     
   }
@@ -44,10 +44,10 @@ section ac policies
     
     // note: this should be defined using true generics
    
-    function memberOf(xs : Set<UserGroup>, user : User) : Bool {
-      if (user = null || xs = null || xs.length = 0) { return false; }
+    function memberOf(xs : Set<UserGroup>) : Bool { 
+      if (securityContext.principal = null || xs = null || xs.length = 0) { return false; }
       else {
-        for(y : UserGroup in user.activeGroups) {
+        for(y : UserGroup in securityContext.principal.activeGroups) { 
           if(y in xs) { return true; }
         }
         return false;
@@ -55,10 +55,8 @@ section ac policies
     }
     
   }
-  
-section users
-
-  access control rules {
+    
+  access control rules { // hack
   
     rules template *(*) {
       true
@@ -68,17 +66,27 @@ section users
       true
     }
   
-    //predicate memberOf(xs : Set<UserGroup>) {
-    //  memberOfAux(xs, securityContext.principal)
-    //}
+  }
+
+section users
+
+  access control rules { // user profiles
   
-    predicate isAdministrator() {
-      securityContext.principal in adminGroup.members
+    rules template *(*) {
+      true
     }
     
-    // note: this can be changed into a check against the 'active groups'
-    // of the principal in order to instigate a sort of role-based access
-    // control where not all roles are always active
+    rules function *(*) {
+      true
+    }
+  
+    predicate isAdministrator() {
+      adminGroup in securityContext.principal.activeGroups
+    }
+    
+    predicate isWebCreator() {
+      webCreateGroup in securityContext.principal.activeGroups
+    }
     
     rules page user(*) {
       true
@@ -89,30 +97,33 @@ section users
     }
     
     rules page editUser(u : User) {
-      securityContext.principal in adminGroup.members
+      isAdministrator()
     }
     
     rules page editProfile(u : User) {
       securityContext.principal = u
-      || securityContext.principal in adminGroup.members
     }
     
+    rules template thisUserMenu(u : User) {
+      isAdministrator()
+    }
+    
+  }
+  
+  access control rules { // registration
+  
     rules page register() {
       true
     }
     
     rules page pendingRegistrations() {
-      securityContext.principal in adminGroup.members
+      isAdministrator()
     }
     
     rules page registrationPending(*) {
       true
     }
     
-    rules template adminMenu() {
-      securityContext.principal in adminGroup.members
-    }
-
     rules page configuration(*) {
       isAdministrator()
     }
@@ -134,7 +145,7 @@ section users
     }
     
     rules template showUserRegistration(*) {
-      securityContext.loggedIn
+      isAdministrator()
     }
     
     rules page login() {
@@ -144,21 +155,10 @@ section users
   
 section groups
 
-access control rules {
+access control rules { // groups
   
   rules page groups() {
     true
-  }
-  
-  rules template userGroupOperationsMenu(g:UserGroup)
-  {
-    !(securityContext.principal in g.members)
-    && !(securityContext.principal in g.requested)
-  }
-  
-  rules template modGroupOperationsMenu(g:UserGroup)
-  {
-    securityContext.principal in g.moderators
   }
   
   rules page userGroup(g : UserGroup) {
@@ -169,20 +169,26 @@ access control rules {
     securityContext.principal in g.moderators
   }
     
-    rules template joinGroup(g : UserGroup) {
-      !(securityContext.principal in g.members)
-      && !(securityContext.principal in g.requested)
-    }
+  rules template joinGroup(g : UserGroup) {
+    !(securityContext.principal in g.members)
+    && !(securityContext.principal in g.requested)
+  }
     
-    rules page membershipRequests(g : UserGroup) {
-      securityContext.principal in g.moderators
-    }
+  rules page membershipRequests(g : UserGroup) {
+    securityContext.principal in g.moderators
+  }
     
-    rules template editPermissions(acl : ACL, aclSuper : ACL) {
-      memberOf(acl.moderate, securityContext.principal)
-      || (acl.moderate.length = 0 
-          && memberOf(aclSuper.moderate, securityContext.principal))
-    }
+  rules template editPermissions(acl : ACL, aclSuper : ACL) {
+    memberOf(acl.moderate) 
+    || (acl.moderate.length = 0 
+        && memberOf(aclSuper.moderate)) 
+  }
+    
+  predicate mayEditACL(acl : ACL, aclSuper : ACL) {
+    memberOf(acl.moderate) 
+    || (acl.moderate.length = 0 
+        && memberOf(aclSuper.moderate))
+  }
     
 }
 
@@ -211,7 +217,7 @@ section authentication actions
       securityContext.loggedIn
     }
     
-    rules page changeRole() {
+    rules page changeActiveGroups() {
       securityContext.loggedIn      
     }
     

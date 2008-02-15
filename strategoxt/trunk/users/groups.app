@@ -6,26 +6,20 @@ section menu
   {
     menu{
       menuheader{ navigate(groups()){"Groups"} }
-      groupOperationsMenu()
       for(g : UserGroup) {
-        menuitem{ output(g) }
+        menuitem{ navigate(userGroup(g)){output(g.name)} }
       }
     }
   }
   
-  define groupOperationsMenu(){}
-
-  define userGroupOperationsMenu(g:UserGroup) { 
-    menuitem{ output(g) }
-    menuitem{ joinGroup(g) }
-    menuspacer{}
-  }
-
-  define modGroupOperationsMenu(g:UserGroup) {
-    menuitem{ output(g) }
-    menuitem{ navigate(editUserGroup(g)){"Edit this Group"} }
-    menuitem{ navigate(membershipRequests(g)){"Membership Requests"} }
-    menuspacer{}
+  define thisGroupMenu(g : UserGroup) { 
+    menu{
+      menuheader{ navigate(userGroup(g)){"This Group"} }
+      menuitem{ joinGroup(g) }
+      menuspacer{}
+      menuitem{ navigate(editUserGroup(g)){"Edit this Group"} }
+      menuitem{ navigate(membershipRequests(g)){"Membership Requests"} }
+    }
   }
   
 section groups
@@ -38,7 +32,7 @@ section groups
       section{
         header{"Groups"}
         list { for(g : UserGroup) {
-          listitem{ output(g) }
+          listitem{ navigate(userGroup(g)){output(g.name)}  }
         } }
       }
     }
@@ -48,10 +42,7 @@ section groups
   {
     main()
     title{output(g.name) " Group"}
-    define groupOperationsMenu(){
-      userGroupOperationsMenu(g)
-      modGroupOperationsMenu(g)
-    }
+    define thisMenu() { thisGroupMenu(g) }
     define body() {
       section{
         header{output(g.name) " Group"}
@@ -112,8 +103,8 @@ section groups
   }
   
   define page editUserGroup (userGroup : UserGroup) {
-    main()
-    define groupOperationsMenu(){ modGroupOperationsMenu(userGroup)}
+    main()    
+    define thisMenu() { thisGroupMenu(g) }
     define body() {
       section{
         header{

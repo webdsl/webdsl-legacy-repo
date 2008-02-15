@@ -35,3 +35,5 @@ section initialization of application configuration
   globals {
     var config : Configuration := Configuration { };    
   }
+
+  

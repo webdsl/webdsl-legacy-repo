@@ -4,19 +4,16 @@ section ac administration
 
   define editPermissions(acl : ACL, aclSuper : ACL)
   {
-    section{
-      header{"Change Permissions"}
-      form{
-        table{
-          row{"View"     input(acl.view)}
-          row{"Edit"     input(acl.edit)}
-          row{"Moderate" input(acl.moderate)}
-          // admin is fixed to adminGroup
-        }
-        action("Save Permissions", savePermissions())
-        action savePermissions() {
-          acl.save();
-        }
+    form{
+      table{
+        row{"View"     input(acl.view)}
+        row{"Edit"     input(acl.edit)}
+        row{"Moderate" input(acl.moderate)}
+        // admin is fixed to adminGroup
+      }
+      action("Save Permissions", savePermissions())
+      action savePermissions() {
+        acl.save();
       }
     }
   }

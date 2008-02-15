@@ -43,11 +43,11 @@ section web
   {
     main()
     title{"Web " output(web.name)}
-    define wikiOperationsMenuItems() {
-      webOperationsMenuItems(web)
-    }
     define sidebar() {
       output(web.sidebar.content)
+    }
+    define thisMenu() {
+      thisWebMenu(web)
     }
     define body() {
       section { 
@@ -61,8 +61,8 @@ section web
   {
     main()
     title{"Index of Web " output(web.name)}
-    define wikiOperationsMenuItems() {
-      webOperationsMenuItems(web)
+    define thisMenu() {
+      thisWebMenu(web)
     }
     define sidebar() {
       output(web.sidebar.content)
@@ -81,6 +81,9 @@ section web
   {
     main()
     title{"Edit Web " output(web.name)}
+    define thisMenu() {
+      thisWebMenu(web)
+    }
     define sidebar() {
       output(web.sidebar.content)
     }
@@ -101,7 +104,26 @@ section web
             return web(web);
           }
         }
-        editPermissions(web.acl, web.acl)
+      }
+    }
+  }
+  
+  define page editWebPermissions(web : Web)
+  {
+    main() 
+    title{"Edit Permissions of Web: " output(web)}
+    define sidebar() {
+      output(web.sidebar.content)
+    }
+    define thisMenu() {
+      thisWebMenu(web)
+    }
+    define body() {
+      block("twikiEditTopic") {
+        section {
+          header{"Edit Permissions of Web: " output(web)}
+          editPermissions(web.acl, web.acl)
+        }
       }
     }
   }
@@ -148,9 +170,9 @@ section wiki topic
     define sidebar() {
       output(topic.web.sidebar.content)
     }
-    define wikiOperationsMenuItems() {
-      topicOperationsMenuItems(topic)
-      webOperationsMenuItems(topic.web)
+    define thisMenu() {
+      thisWebMenu(topic.web)
+      thisTopicMenu(topic)
     }
     define body() {
       section {
@@ -177,6 +199,13 @@ section wiki topic editing
     var newContent : WikiText := topic.content;
     main() 
     title{"Edit Topic: " output(topic.name)}
+    define sidebar() {
+      output(topic.web.sidebar.content)
+    }
+    define thisMenu() {
+      thisWebMenu(topic.web)
+      thisTopicMenu(topic)
+    }
     define body() {
       block("twikiEditTopic") {
         section {
@@ -197,6 +226,27 @@ section wiki topic editing
     }
   }
   
+  define page editTopicPermissions(topic : Topic)
+  {
+    main() 
+    title{"Edit Permissions of Topic: " output(topic.name)}
+    define sidebar() {
+      output(topic.web.sidebar.content)
+    }
+    define thisMenu() {
+      thisWebMenu(topic.web)
+      thisTopicMenu(topic)
+    }
+    define body() {
+      block("twikiEditTopic") {
+        section {
+          header{"Edit Permissions of Topic: " output(topic.name)}
+          editPermissions(topic.acl, topic.web.acl)
+        }
+      }
+    }
+  }
+    
   define page newTopic(web : Web)
   {
     var newName    : String;
@@ -206,6 +256,12 @@ section wiki topic editing
     var editors    : Set<UserGroup>;
     main() 
     title{"Create New Topic"}
+    define sidebar() {
+      output(web.sidebar.content)
+    }
+    define thisMenu() {
+      thisWebMenu(web)
+    }
     define body() {
       block("twikiEditTopic") {
         section {
@@ -218,9 +274,9 @@ section wiki topic editing
               row{ ""      input(newContent) }
               row{ "Viewers" input(viewers) }
               row{ "Editors" input(editors) }
-      }
-      action("Save changes", saveTopic())
-    }
+           }
+           action("Save changes", saveTopic())
+          }
           action saveTopic() {
             var topics : List<Topic> := select t from Topic as t where (t._key = ~newName);
             
@@ -255,8 +311,6 @@ section topic operations
   {
     menu{
       menuheader{ navigate(wiki()){"Wiki"} }
-      wikiOperationsMenuItems()
-      menuitem{ navigate(newWeb()){"New Web"} }
       menuitem{ navigate(wikiIndex()){"All Topics"} }
       menuspacer{}
       for(p : Topic in config.starttopicsList) {
@@ -265,42 +319,55 @@ section topic operations
     }
   }
   
-  define wikiOperationsMenuItems() {
-  }
-    
-  define webOperationsMenuItems(web : Web)
-  {
-    menuitem{ navigate(web(web)){output(web.name) " WebHome"} }
-    menuitem{ navigate(webIndex(web)){output(web.name) " Index"} }
-    menuitem{ navigate(newTopic(web)){"New Topic"} }
-    menuitem{ navigate(editWeb(web)){"Edit " output(web.name) " Web"} }
-    menuspacer{}
+  define thisWikiMenu() {
+    menu{
+      menuheader{ navigate(wiki()){ "This Wiki" }}
+      menuitem{ navigate(newWeb()){"New Web"} }
+      menuitem{ navigate(configuration(config)){"Configuration"} }
+      menuitem{ navigate(editConfiguration(config)){"Edit Configuration"} }
+      menuitem{ navigate(pendingRegistrations()){"Pending Registrations"} }
+    }
   }
   
-  define topicOperationsMenuItems(p : Topic)
+  define thisWebMenu(web : Web)
   {
-    menuitem{ navigate(editTopic(p)) { "Edit This Topic" } }
-    menuitem{ 
-      if (p in config.starttopics) {
-        form {
-          actionLink("Remove as Starttopic", unmakeStarttopic())
-          action unmakeStarttopic() {
-            config.starttopics.remove(p);
-            config.persist();
+    menu{
+      menuheader{ navigate(web(web)){"This Web"} }
+      menuitem{ navigate(web(web)){output(web.name) " WebHome"} }
+      menuitem{ navigate(webIndex(web)){output(web.name) " Index"} }
+      menuspacer{}
+      menuitem{ navigate(newTopic(web)){"New Topic"} }
+      menuitem{ navigate(editWeb(web)){"Edit " output(web.name) " Web"} }
+    }
+  }
+  
+  define thisTopicMenu(t : Topic)
+  {
+    menu{
+      menuheader{ navigate(topic(t)){"This Topic"} }
+      menuitem{ navigate(editTopic(t)) { "Edit Content" } }
+      menuitem{ navigate(editTopicPermissions(t)) { "Edit Permissions" } }
+      menuitem{ 
+        if (t in config.starttopics) {
+          form {
+            actionLink("Remove as Starttopic", unmakeStarttopic())
+            action unmakeStarttopic() {
+              config.starttopics.remove(t);
+              config.persist();
+            }
           }
         }
-      }
-      if (!(p in config.starttopics)) {
-        form{
-          actionLink("Add to Starttopics", makeStarttopic())
-          action makeStarttopic() {
-            config.starttopics.add(p);
-            config.persist();
+        if (!(t in config.starttopics)) {
+          form{
+            actionLink("Add to Starttopics", makeStarttopic())
+            action makeStarttopic() {
+              config.starttopics.add(t);
+              config.persist();
+            }
           }
         }
       }
     }
-    menuspacer{}
   }
   
   

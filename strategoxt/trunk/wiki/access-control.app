@@ -14,28 +14,28 @@ section acr
 
   access control rules
   {
-    predicate mayViewWeb(w : Web, user : User) {
+    predicate mayViewWeb(w : Web) {
       w != null && w.acl != null 
-      && ((w.acl.view.length = 0) || memberOf(w.acl.view, user))
+      && ((w.acl.view.length = 0) || memberOf(w.acl.view)) 
     }
     
-    predicate mayEditWeb(w : Web, user : User) {
+    predicate mayEditWeb(w : Web) {
       w != null && w.acl != null 
-      &&  memberOf(w.acl.edit, user)
+      &&  memberOf(w.acl.edit) 
     }
     
-    predicate mayViewTopic(t : Topic, user : User) {
+    predicate mayViewTopic(t : Topic) {
       t != null 
-      && ((t.acl != null && memberOf(t.acl.view, user))
+      && ((t.acl != null && memberOf(t.acl.view)) 
           || ((t.acl = null || t.acl.view.length = 0)
-              && mayViewWeb(t.web, user)))
+              && mayViewWeb(t.web)))
     }
     
-    predicate mayEditTopic(t : Topic, user : User) {
+    predicate mayEditTopic(t : Topic) {
       t != null 
-      && ((t.acl != null && memberOf(t.acl.edit, user))
+      && ((t.acl != null && memberOf(t.acl.edit)) 
           || ((t.acl = null || t.acl.edit.length = 0)
-              && mayEditWeb(t.web, user)))
+              && mayEditWeb(t.web)))
     }
   }
   
@@ -54,43 +54,55 @@ section acr
     }
     
     rules page web(web : Web) {
-      mayViewWeb(web, securityContext.principal)
+      mayViewWeb(web)
     }
     
     rules page webIndex(web : Web) {
-      mayViewWeb(web, securityContext.principal)
+      mayViewWeb(web)
     }
     
     rules page editWeb(web : Web) {
-      mayEditWeb(web, securityContext.principal)
+      mayEditWeb(web)
     }
     
     rules page newWeb() {
-      webCreateGroup in securityContext.principal.activeGroups
+      isWebCreator()
     }
     
     rules page topic(topic : Topic) {
-      mayViewTopic(topic, securityContext.principal)
+      mayViewTopic(topic)
     }
     
     rules page editTopic(topic : Topic) {
-      mayEditTopic(topic,  securityContext.principal)
+      mayEditTopic(topic)
+    }
+    
+    rules page editTopicPermissions(topic : Topic) {
+      mayEditACL(topic.acl, topic.web.acl)
     }
     
     rules page newTopic(web : Web) {
-      mayEditWeb(web,  securityContext.principal)
+      mayEditWeb(web)
     }
     
     rules page topicDiff(d : TopicDiff) {
-      mayViewTopic(d.topic,  securityContext.principal)
+      mayViewTopic(d.topic)
     }
     
     rules page editTopicDiff(d : TopicDiff) {
-      mayEditTopic(d.topic,  securityContext.principal)
+      mayEditTopic(d.topic)
     }
 
-    rules template topicOperationsMenuItems(topic : Topic) {
-      mayEditTopic(topic,  securityContext.principal)
+    rules template thisTopicMenu(topic : Topic) {
+      mayEditTopic(topic)
+    }
+
+    rules template thisWebMenu(web : Web) {
+      mayViewWeb(web)
+    }
+
+    rules template thisWikiMenu() {
+      isWebCreator()
     }
 
   }

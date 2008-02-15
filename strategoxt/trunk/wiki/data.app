@@ -83,7 +83,7 @@ section creating new topics
         };
       web.home    := newTopic(web, "WebHome", "WebHome", "", author);
       web.sidebar := newTopic(web, "SideBar", "SideBar", 
-                       "* **[[topic(" + webname + "/WebHome)|" +  webname + "]]", author);
+                       "* **[[topic(" + webname + "/WebHome)|" +  webname + "]]**", author);
       return web;
     }
 

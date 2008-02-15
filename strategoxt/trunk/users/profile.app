@@ -11,15 +11,20 @@ section menu
   define usersMenu() {
     menu { 
       menuheader{ navigate(users()){"Users"} }
-      userOperationsMenu()
-      for(b : User in config.usersList) {
-        menuitem{ output(b) }
+      for(u : User order by u.username) {
+        menuitem{ output(u) }
       }
     }
   }
   
-  define userOperationsMenu() { }
-      
+  define thisUserMenu(user : User)
+  {
+    menu {
+      menuheader{ navigate(user(user)){ "This User" } }
+      menuitem{ navigate(editUser(user)){"Edit"} }
+    }
+  }
+
 section user profile
 
   define page user(user : User)
@@ -28,13 +33,11 @@ section user profile
     title{"User " output(user.fullname)}
     define sidebar() {
     }
-    define userOperationsMenu() { 
-      menuitem{ navigate(editUser(user)){"Edit User " output(user.name)} }
-      menuspacer{}
-    }
+    define thisMenu() { thisUserMenu(user) }
     define body() {
       section{
         header{output(user.fullname)}
+        par{output(user.profile)}
         table{
           row{ "Username"    output(user.username) }
           row{ "Homepage"    output(user.homepage) }
@@ -42,7 +45,6 @@ section user profile
           row{ "Affiliation" output(user.affiliation) }
           row{ "Groups"      for(g : UserGroup in user.groupsList) { output(g) " " } }
         }
-        par{output(user.profile)}
       }
     }
   }
@@ -51,6 +53,7 @@ section user profile
   {
     main()
     title{"Edit Profile " output(user.username)}
+    define thisMenu() { thisUserMenu(user) }
     define body() {
       section{
         header{"Edit Profile " output(user.username)}
@@ -72,3 +75,4 @@ section user profile
       }
     }
   }
+  

@@ -9,6 +9,7 @@ section strategoxt template
         block("twikiMiddleContainer") {
           block("twikiLeftBar") {
             block("twikiLeftBarContents") {
+              logo()
               sidebar()
             }
           }
@@ -28,12 +29,10 @@ section strategoxt template
 section basic page elements
 
   define logo() {
-    //navigate(home()){output(config.logo)}
-    "Insert logo here"
+    if (config.logo != null) { navigate(home()){output(config.logo)} }
   }
 
   define sidebar() {
-    logo()
     if(config.sidebar != null) { output(config.sidebar.content) }
   }
   
@@ -74,17 +73,11 @@ section menus
       groupMenu()
       usersMenu()
       currentUser()
-      adminMenu()
+      thisWikiMenu()
+      thisMenu()
     }
   }
   
-  define adminMenu() 
-  {
-    menu { 
-      menuheader{ "Admin" }
-      menuitem{ navigate(configuration(config)){"Configuration"} }
-      menuitem{ navigate(editConfiguration(config)){"Edit Configuration"} }
-      menuitem{ navigate(pendingRegistrations()){"Pending Registrations"} }
-    }
-  }
+  define thisMenu() {  } 
+  
   

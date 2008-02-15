@@ -77,14 +77,13 @@ section authentication
   define signoffMenu() 
   {
     menu{
-      menuheader{ "You" }
+      menuheader{ navigate(user(securityContext.principal)){"You"} }
       menuitem{ output(securityContext.principal) }
       menuitem{ signoffAction() }
+      menuitem{ navigate(changeActiveGroups()){"Change Active Groups"} }
+      menuspacer{}
       menuitem{ navigate(editProfile(securityContext.principal)){"Edit Profile"} }
       menuitem{ navigate(changePassword()){"Change Password"} }
-      menuitem{ navigate(changeRole()){"Change Role"} }
-      // There's some problems with this, so disabling for now
-      //menuitem{ navigate(editUser(securityContext.principal)){"Edit Profile"} }
     }
   }
   
@@ -98,14 +97,14 @@ section active groups 1
 section active groups 2
 
   
-  define page changeRole()
+  define page changeActiveGroups()
   {
     main()
     define body() {
       section{
-        header{"Change Role"}
+        header{"Change Active Groups"}
         
-        par{"Choose groups that you want to be active in"}
+        par{"Choose groups that you want to be active in."}
         
         form {
           select(securityContext.principal.activeGroups 
