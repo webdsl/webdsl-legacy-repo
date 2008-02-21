@@ -42,9 +42,14 @@ section pages
 define page home() {
   main()
   define body() {
-  	"Supper instance is:"
-  	output(supperInstance)
-//  	"Sub instance is:"
-  	output(container)
+  	"We have a container:" output(container)
+  	
+  	"It contains:" output(container.it)
+  	
+  	"And this is of type:"
+  	
+  	if(container.it is a Supper) { " Supper " }
+  	if(container.it is a Sub)    { " Sub " }
+  	if(subInstance is a Sub)    { " - sub is Sub " }
   }
 }
