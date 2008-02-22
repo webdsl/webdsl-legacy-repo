@@ -81,11 +81,11 @@ section users
     }
   
     predicate isAdministrator() {
-      adminGroup in securityContext.principal.activeGroups
+      securityContext.principal != null&& adminGroup in securityContext.principal.activeGroups
     }
     
     predicate isWebCreator() {
-      webCreateGroup in securityContext.principal.activeGroups
+      securityContext.principal != null&& webCreateGroup in securityContext.principal.activeGroups
     }
     
     rules page user(*) {

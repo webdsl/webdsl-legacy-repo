@@ -104,7 +104,7 @@ section groups
   
   define page editUserGroup (userGroup : UserGroup) {
     main()    
-    define thisMenu() { thisGroupMenu(g) }
+    define thisMenu() { thisGroupMenu(userGroup) }
     define body() {
       section{
         header{
