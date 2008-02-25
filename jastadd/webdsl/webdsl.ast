@@ -1,0 +1,30 @@
+Program ::= Module;
+
+Module ::= <ID : String> Declaration* ;
+
+abstract Declaration ;
+
+SortDeclaration : Declaration ::= <ID : String> ;
+
+Entity : SortDeclaration ::= Property* ;
+
+BuiltinDecl : SortDeclaration ;
+
+GenericSortDecl : SortDeclaration ;
+
+abstract Property ::= <ID : String> Sort Annotation*;
+
+SimpleProperty : Property;
+CompProperty   : Property;
+RefProperty    : Property;
+
+abstract Sort ;
+
+SimpleSort : Sort ::= <ID : String> ;
+
+GenericSort : Sort ::= <ID : String> Sort* ;
+
+abstract Annotation ;
+
+SimpleAnnotation : Annotation ::= <ID:String>;
+InverseAnnotation : Annotation ::= SimpleSort <PropertyId : String>;

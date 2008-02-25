@@ -1,0 +1,22 @@
+
+aspect TermDump {
+  public String ASTNode.dumpTree() {
+    StringBuffer s = new StringBuffer();
+    dumpTree(s, 0);
+    return s.toString();
+  }
+
+  public void ASTNode.dumpTree(StringBuffer s, int j) {
+    for(int i = 0; i < j; i++) {
+      s.append("  ");
+    }
+    s.append(dumpString() + "\n");
+    for(int i = 0; i < getNumChild(); i++)
+      getChild(i).dumpTree(s, j + 1);
+  }
+
+  syn String ASTNode.dumpString() = getClass().getName();
+
+  eq SimpleSort.dumpString() = super.dumpString() + "[" + getID() + "]";
+
+}

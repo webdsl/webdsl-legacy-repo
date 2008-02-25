@@ -1,0 +1,71 @@
+<!--
+ Targets for working from terminal window:
+       build (default) - generates java files and compiles them
+       clean           - removes all generated files and class files
+ Targets for working from Eclipse:
+       gen             - generates java files
+       genClean        - removes all generated files and their class files
+-->
+<project name="Program" default="build">
+
+<!-- "package" is the directory where generated files will be stored -->
+<property name="package" value="AST"/>
+
+<!-- "tools" is the directory where generators and libraries are located. -->
+<property name="tools" value="tools"/>
+	
+<!-- "jflex" is an ant task class for the scanner generator in JFlex.jar -->
+<taskdef name="jflex" classname="JFlex.anttask.JFlexTask" classpath="${tools}/JFlex.jar"/>
+<!-- "beaver" is an ant task class for the parser generator in beaver.jar -->
+<taskdef name="beaver" classname="beaver.comp.run.AntTask" classpath="${tools}/beaver.jar"/>
+<!-- "jastadd" is an ant task class in jastadd2.jar -->
+<taskdef name="jastadd" classname="jastadd.JastAddTask" classpath="${tools}/jastadd2.jar"/>
+
+<!-- compile sources -->
+<target name="build" depends="gen">
+	<javac debug="true" nowarn="true" srcdir="." includes="**/*.java" excludes="test/**" 
+         classpath=".:${tools}/beaver-rt.jar:${tools}/junit.jar"/>
+</target>
+	
+<!-- generate compiler source files -->
+<target name="gen" depends="scanner,parser">
+	  <!-- create AST node types and weave aspect modules -->
+		<jastadd package="${package}" rewrite="true" beaver="true" novisitcheck="true" outdir="${basedir}" debug="true">
+			<fileset dir=".">
+				<include name="**/*.ast"/>
+				<include name="**/*.jrag"/>
+				<include name="**/*.jadd"/>
+			</fileset>
+		</jastadd>
+</target>
+
+<target name="scanner">
+	  <!-- generate the scanner -->
+		<jflex file="Scanner.flex" outdir="${package}" nobak="yes"/>
+</target>
+
+<target name="parser">
+	<!-- generate the parser phase 2, translating .lalr to .beaver -->
+		<java classpath="${tools}/JastAddParser.jar:${tools}/beaver-rt.jar" classname="Main" fork="true">
+			<arg line="Parser.parser ${package}/Parser.beaver"/>
+		</java>
+	<!-- generate the parser phase 3, translating .beaver to .java -->
+	<beaver file="${package}/Parser.beaver" terminalNames="yes" compress="no" useSwitch="yes"/>
+</target>
+
+<!-- remove generated source files and .class files -->
+<target name="clean" depends="cleanGen">
+     <!-- delete all .class files recursively -->
+    <delete>
+      <fileset dir="." includes="**/*.class"/>
+    </delete>
+</target>
+
+<!-- remove generated source files -->
+<target name="cleanGen">
+	 <delete dir="${package}"/>
+</target>
+
+</project>
+
+

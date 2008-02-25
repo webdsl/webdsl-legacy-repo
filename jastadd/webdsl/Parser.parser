@@ -1,0 +1,108 @@
+%header {:
+ package AST;
+:};
+%embed {:
+  class Events extends beaver.Parser.Events {
+    public void scannerError(Scanner.Exception e) {
+      errors.add(e.line + ", " + e.column + ": " + e.getMessage());
+    }
+    public void syntaxError(Symbol token) {
+      int line = token.getLine(token.getStart());
+      int column = token.getColumn(token.getStart());
+      int endLine = token.getLine(token.getEnd());
+      int endColumn = token.getColumn(token.getEnd());
+      String value = token.value != null ? token.value.toString() : Terminals.NAMES[token.getId()];
+      errors.add(line + ", " + column + " - " + endLine + ", " + endColumn + ": " + "unexpected token \"" + value + "\"");
+    }
+    public void unexpectedTokenRemoved(Symbol token) {
+    }
+    public void missingTokenInserted(Symbol token) {
+    }
+    public void misspelledTokenReplaced(Symbol token) {
+    }
+    public void errorPhraseRemoved(Symbol error) {
+    }
+  }
+
+        {
+            report = new Events(); // Use error handler in parser
+        }
+
+   public Program parse(java.io.InputStream is) throws java.io.IOException {
+     Program p;
+     errors = new ArrayList();
+     try {
+       Scanner scanner = new Scanner(is);
+       p = (Program)parse(scanner);
+     } catch(Parser.Exception e) {
+       // build empty Program for failed error recovery
+       p = new Program();
+     } catch(Error e) {
+       p = new Program();
+       errors.add(e.getMessage());
+     }
+     p.setParseErrors(errors);
+     return p;
+   }
+   protected java.util.Collection<String> errors = new ArrayList<String>();
+:};
+
+Program program =
+  module {: return new Program(module); :}
+  ;
+Module module =
+  MODULE IDENTIFIER decl_list {: return new Module(IDENTIFIER, decl_list); :}
+  ;
+List decl_list =
+  declaration {: return new List().add(declaration); :}
+  | decl_list declaration {: return decl_list.add(declaration); :}
+  ;
+
+Declaration declaration =
+  entity
+  ;
+
+Declaration entity =
+  ENTITY IDENTIFIER LBRACE property_list RBRACE
+  {: return new Entity(IDENTIFIER, property_list); :}
+  ;
+
+List property_list =
+  property {: return new List().add(property); :}
+  | property_list property {: return property_list.add(property); :}
+  ;
+
+Property property =
+  IDENTIFIER COLONS sort annotations? {: return new SimpleProperty(IDENTIFIER, sort, annotations); :}
+ | IDENTIFIER ARROW sort annotations? {: return new RefProperty(IDENTIFIER, sort, annotations); :}
+ ;
+
+Sort sort =
+  simple_sort 
+  | IDENTIFIER LT sort_list GT {: return new GenericSort(IDENTIFIER, sort_list); :}
+  ;
+
+SimpleSort simple_sort =
+  IDENTIFIER {: return new SimpleSort(IDENTIFIER); :}
+  ;
+
+List sort_list = 
+  sort {: return new List().add(sort); :}
+  | sort_list sort {: return sort_list.add(sort); :}
+  ;
+
+List annotations =
+  LPAREN annotation_list RPAREN {: return annotation_list; :}
+  ;
+
+
+List annotation_list =
+  annotation {: return new List().add(annotation); :}
+  | annotation_list COMMA annotation {: return annotation_list.add(annotation); :}
+  ;
+
+Annotation annotation =
+    IDENTIFIER {: return new SimpleAnnotation(IDENTIFIER); :}
+  | INVERSE EQ simple_sort DOT IDENTIFIER {: return new InverseAnnotation(simple_sort, IDENTIFIER); :}
+  ;
+  

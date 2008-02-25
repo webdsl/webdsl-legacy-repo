@@ -1,0 +1,14 @@
+import java.util.*;
+
+aspect Grammar {
+  // Errors during parsing are stored here
+  private Collection<String> Program.parseErrors;
+  // Add parsing errors to the program node
+  public void Program.setParseErrors(Collection<String> collection) {
+    parseErrors = collection;
+  }
+  public Collection<String> Program.parseErrors() {
+    return parseErrors;
+  }
+
+}
