@@ -10,3 +10,6 @@ section dataModel
     authors -> Set<User> (inverse=User.topics)
   }
   
+  extend entity User {  
+    topics -> Set<Topic>
+  }

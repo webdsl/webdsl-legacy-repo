@@ -206,7 +206,9 @@ aspect ExtendedEntities {
   }
 */
 
-  coll Set<ExtendEntity> Entity.extendedEntities() [new HashSet<ExtendEntity>()] with add;
+  coll Set<ExtendEntity> Entity.extendedEntities() [new HashSet<ExtendEntity>()] 
+       with add
+       root Program;
 
   ExtendEntity contributes
     this
