@@ -1,28 +1,56 @@
 aspect Builtins {
-
   syn nta List<Declaration> Module.builtins() {
     return new List<Declaration>()
 	   .add(new BuiltinDecl("String"))
 	   .add(new BuiltinDecl("Secret"))
 	   .add(new BuiltinDecl("WikiText"))
+	   .add(new BuiltinDecl("Email"))
 	   .add(new GenericSortDecl("List"))
 	   .add(new GenericSortDecl("Set"));	   
   }
-
 }
 
-// todo: entity name cannot be builtin sort
+aspect TreeStructure {
 
-// todo: no two entities with same name
+  inh Program Declaration.enclosingProgram();
+
+  eq Program.getChild().enclosingProgram()
+    = this;
+
+  inh Module Declaration.enclosingModule();
+
+  inh Module Imports.enclosingModule();
+
+  eq Module.getChild().enclosingModule()
+    = this;
+
+  inh Entity Annotation.enclosingEntity() ;
+
+  eq Entity.getChild().enclosingEntity()
+    = this;
+
+  eq ExtendEntity.getChild().enclosingEntity()
+    = extendedEntity();
+
+  inh Property Annotation.enclosingProperty();
+
+  eq Property.getChild().enclosingProperty() 
+    = this;
+
+}
 
 aspect Sorts {
 
   inh Declaration Sort.lookupSort(String name);
 
+  inh Declaration Entity.lookupSort(String name);
+
+  inh Declaration ExtendEntity.lookupSort(String name);
+
   eq Module.getChild().lookupSort(String name) 
      = localLookupSort(name);
 
-  syn Declaration Module.localLookupSort(String name) {
+  syn lazy Declaration Module.localLookupSort(String name) {
     for (Declaration d : builtins()) {
       if(d.declaresSort(name)) { return d; }
     }
@@ -42,9 +70,73 @@ aspect Sorts {
       && getNumSort() == 1
       && getSort(0).declaration() == e;
 
+    // = ?|[ List<e> ]| <+ ?|[ Set<e> ]|
+    // = ?GenericSort("List" | "Set", [e])
+
+}
+
+aspect Imports {
+
+  syn Module Imports.module() =
+    lookupModule(getID());
+
+  inh Module Imports.lookupModule(String name);
+
+  eq Program.getChild().lookupModule(String name)
+    = localLookupModule(name);
+
+  syn lazy Module Program.localLookupModule(String name) {
+      for(Module m : getModules()) {
+        if(m.getID().equals(name)) 
+	  return m;
+      }
+      Module m = Program.parseModule(name + ".app");
+      addModule(m);
+      return m;
+  }
+
 }
 
 aspect Declarations {
+
+/*
+
+  coll Collection<Declaration> Module.getDeclarations()
+       [new HashSet<Declaration>()] 
+       with addAll
+       root Program;
+
+  Declaration contributes this.asSet()
+    to  Module.getDeclarations() 
+    for enclosingModule();
+
+  private Collection<Declaration> Declaration.asSet() {
+    Collection<Declaration> set = new HashSet<Declaration>();
+    set.add(this);
+    return set;
+  }
+
+  Imports contributes this.module().getDeclarations() 
+    to  Module.getDeclarations() 
+    for enclosingModule();
+
+*/
+
+  syn Collection<Declaration> Module.getDeclarations() circular [new HashSet<Declaration>()] {
+    Set<Declaration> set = new HashSet<Declaration>();
+    for(AbstractSection a : getAbstractSections()) {
+      if (a instanceof Section) {
+        Section s = (Section)a;
+        for(Declaration d : s.getDeclarations()) {
+          set.add(d);
+        }
+      } else if (a instanceof Imports) {
+	Imports i = (Imports)a;
+        set.addAll(i.module().getDeclarations());
+      }
+    }
+    return set;
+  }
 
   syn boolean Declaration.declaresSort(String name) 
      = false ;
@@ -54,14 +146,11 @@ aspect Declarations {
 
   syn Declaration Sort.declaration();
 
-  syn Declaration SimpleSort.declaration() = lookupSort(getID());
+  syn Declaration SimpleSort.declaration() 
+    = lookupSort(getID());
 
-  syn Declaration GenericSort.declaration() = lookupSort(getID());
-
-  inh Entity Annotation.enclosingEntity() ;
-
-  eq Entity.getChild().enclosingEntity()
-    = this;
+  syn Declaration GenericSort.declaration() 
+    = lookupSort(getID());
 
 }
 
@@ -76,84 +165,60 @@ aspect Entities {
 
 }
 
+aspect ExtendedEntities {
 
-aspect Wellformedness {
-
-  syn boolean ASTNode.wellformed() = true;
-
-  syn boolean SimpleSort.wellformed() = declaration() != null;
-
-  syn boolean InverseAnnotation.wellformed() {
-    Declaration declaration = getSimpleSort().declaration();
-    if (declaration == null || !(declaration instanceof Entity))
-      return false;
-    else {
-      Entity entity = ((Entity)declaration);
-      Property p = entity.localLookupProperty(getPropertyId());
-      if (p == null) { return false; }
-      else {
-        return p.getSort().canContain(enclosingEntity());
+  refine NameBind eq Entity.localLookupProperty(String name) {
+    Property result = NameBind.Entity.localLookupProperty(name);
+    if(result != null) 
+      return result;    
+    for(ExtendEntity e : extendedEntities()) {
+      for(Property p : e.getPropertyList()) {
+        if (p.getID().equals(name)) { return p; }
       }
     }
+    return null;
+  }
+
+  syn Entity ExtendEntity.extendedEntity() {
+    Declaration d = lookupSort(getID());
+    if (d instanceof Entity)
+      return (Entity)d;
+    else 
+      return null;
   }
 
 /*
-  property TypeErrorProperty InverseAnnotation.wellformed() {
+  syn Set<ExtendEntity> Entity.extendedEntities()
+    = lookupExtensions(getID());
 
-    Declaration d = getSimpleSort.declaration();
+  inh Set<ExtendEntity> Entity.lookupExtensions(String name);
 
-    Entity e = (Entity)d when d instanceof Entity;
-    
-    error : "sort " + getSimpleSort().getID() +
-            + " of inverse annotation " + this 
-            + " is not an entity"
+  eq Module.getChild().lookupExtensions(String name) 
+     = localLookupExtensions(name);
 
-    Property p = e.declaresProperty(getPropertyId())
-
-    check p.getSort().canContain(enclosingEntity());
-      error ...
-
+  syn lazy Set<ExtendEntity> Module.localLookupExtensions(String name) {
+    Set<ExtendEntity> extensions = new HashSet<ExtendEntity>();
+    for(Declaration d : getDeclarations()) {
+      if ((d instanceof ExtendEntity) && ((ExtendEntity)d).getID().equals(name))
+        extensions.add((ExtendEntity)d);
+    }
+    return extensions;
   }
-
 */
 
-  
+  coll Set<ExtendEntity> Entity.extendedEntities() [new HashSet<ExtendEntity>()] with add;
 
-
-}
-
-class Property {
-}
-
-class BooleanProperty extends Property {
-  boolean success;
-}
-
-class TypeErrorProperty extends BooleanProperty {
+  ExtendEntity contributes
+    this
+  to Entity.extendedEntities() for extendedEntity();
 
 }
 
-class AnnotationErrorProperty extends TypeErrorProperty {
 
-}
+aspect Wellformedness {
 
-class BugPatterProperty extends Property {
-
-}
-
-aspect ErrorCollection {
-
-  public void SimpleSort.collectErrors(Collection<String> errors) {
-    super.collectErrors(errors);
-    if(!wellformed())
-      errors.add("Sort " + getID() + " is not wellformed");
-  }
-
-  public void InverseAnnotation.collectErrors(Collection<String> errors) {
-    super.collectErrors(errors);
-    if(!wellformed())
-      errors.add("Inverse annotation is not wellformed");
-  }
+  syn boolean ASTNode.wellformed() 
+    = true;
 
   public void ASTNode.collectErrors(Collection<String> errors) {
     for(ASTNode child : this)
@@ -161,3 +226,104 @@ aspect ErrorCollection {
   }
 
 }
+
+aspect EntityWellformedness {  
+
+  syn boolean Entity.isUnique()
+    // there can be no two entities with the same name
+    = lookupSort(getID()) == this;
+
+  syn boolean Entity.doesNotDefineBuiltinSort()
+    // entity name cannot be a builtin sort
+    = !(lookupSort(getID()) instanceof BuiltinDecl);
+
+  syn boolean Entity.wellformed()
+    = isUnique() && doesNotDefineBuiltinSort();
+
+  public void Entity.collectErrors(Collection<String> errors) {
+    super.collectErrors(errors);
+    if(!wellformed()) {
+      if(!doesNotDefineBuiltinSort())
+         errors.add("Entity " + getID() + " redefines built-in sort");
+      else if(!isUnique())
+         errors.add("Multiple entities with name " + getID());
+    }
+  }
+
+}
+
+aspect PropertyWellformedness {
+
+  // properties should be unique also in extended entities
+
+  // SimpleProperty should only refer to BuiltinType
+
+  // RefProperty and CompProperty should only refer to Entity type
+
+}
+
+
+aspect SortWellformedness {
+
+  syn boolean SimpleSort.wellformed() 
+    = declaration() != null;
+    // a sort is wellformed if there is a declaration that defines it
+
+  public void SimpleSort.collectErrors(Collection<String> errors) {
+    super.collectErrors(errors);
+    if(!wellformed())
+      errors.add("Sort " + getID() + " is not declared");
+  }
+
+}
+
+aspect InverseAnnotationWellformedness {
+
+  // annotation should refer to another defined entity which
+  // should have a property refer to the enclosing property
+  // of the annotation
+
+  syn Entity InverseAnnotation.entity() {
+    Declaration d = getSimpleSort().declaration();
+    if (d == null || !(d instanceof Entity))
+      return null;
+    else 
+      return (Entity)d;
+  }
+
+  syn Property InverseAnnotation.property() {
+    if (entity() == null) 
+      return null;
+    else
+      return entity().localLookupProperty(getPropertyId());
+  }
+
+  syn boolean InverseAnnotation.isInverse()
+    = property() != null
+      && property().getSort().canContain(enclosingEntity());
+
+  syn boolean InverseAnnotation.wellformed()
+    = isInverse();
+
+  public void InverseAnnotation.collectErrors(Collection<String> errors) {
+    super.collectErrors(errors);
+
+    String errorBase =
+      "error: inverse annotation on property " 
+      + enclosingEntity().getID() + "." + enclosingProperty().getID();
+
+    if(entity() == null)
+      errors.add(errorBase 
+                 + " refers to non-existing entity " + getSimpleSort().getID());
+    else if (property() == null)
+      errors.add(errorBase 
+                 + ": entity " + getSimpleSort().getID()
+                 + " has no property " + getPropertyId());
+    else if (!isInverse())
+      errors.add(errorBase
+                 + ": entity " + getSimpleSort().getID() + "." + getPropertyId()
+                 + " is not an assocation to " + enclosingEntity().getID());
+  }
+
+}
+

@@ -1,30 +1,53 @@
-Program ::= Module;
+Program 
+  ::= Module*;
 
-Module ::= <ID : String> Declaration* ;
+Module 
+  ::= <ID : String> AbstractSection*;
 
-abstract Declaration ;
+abstract AbstractSection; 
 
-SortDeclaration : Declaration ::= <ID : String> ;
+Section : AbstractSection
+  ::= <ID : String> Declaration*;
 
-Entity : SortDeclaration ::= Property* ;
+Imports : AbstractSection
+  ::= <ID : String>;
 
-BuiltinDecl : SortDeclaration ;
 
-GenericSortDecl : SortDeclaration ;
+abstract Declaration;
 
-abstract Property ::= <ID : String> Sort Annotation*;
+SortDeclaration : Declaration 
+  ::= <ID : String> ;
+
+BuiltinDecl     : SortDeclaration;
+GenericSortDecl : SortDeclaration;
+
+Entity : SortDeclaration 
+  ::= Property*;
+
+ExtendEntity : Declaration
+  ::= <ID : String> Property*;
+
+abstract Property 
+  ::= <ID : String> Sort Annotation*;
 
 SimpleProperty : Property;
 CompProperty   : Property;
 RefProperty    : Property;
 
+
 abstract Sort ;
 
-SimpleSort : Sort ::= <ID : String> ;
+SimpleSort : Sort 
+  ::= <ID : String> ;
 
-GenericSort : Sort ::= <ID : String> Sort* ;
+GenericSort : Sort 
+  ::= <ID : String> Sort* ;
 
-abstract Annotation ;
 
-SimpleAnnotation : Annotation ::= <ID:String>;
-InverseAnnotation : Annotation ::= SimpleSort <PropertyId : String>;
+abstract Annotation;
+
+SimpleAnnotation : Annotation 
+  ::= <ID:String>;
+
+InverseAnnotation : Annotation 
+  ::= SimpleSort <PropertyId : String>;

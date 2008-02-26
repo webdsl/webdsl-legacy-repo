@@ -1,0 +1,40 @@
+
+/*
+  property TypeErrorProperty InverseAnnotation.wellformed() {
+
+    Declaration d = getSimpleSort.declaration();
+
+    Entity e = (Entity)d when d instanceof Entity;
+    
+    error : "sort " + getSimpleSort().getID() +
+            + " of inverse annotation " + this 
+            + " is not an entity"
+
+    Property p = e.declaresProperty(getPropertyId())
+
+    check p.getSort().canContain(enclosingEntity());
+      error ...
+
+  }
+
+*/
+
+class Property {
+}
+
+class BooleanProperty extends Property {
+  boolean success;
+}
+
+class TypeErrorProperty extends BooleanProperty {
+
+}
+
+class AnnotationErrorProperty extends TypeErrorProperty {
+
+}
+
+class BugPatterProperty extends Property {
+
+}
+

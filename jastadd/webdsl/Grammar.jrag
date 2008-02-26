@@ -1,14 +1,45 @@
+import java.io.*;
 import java.util.*;
 
 aspect Grammar {
+
   // Errors during parsing are stored here
-  private Collection<String> Program.parseErrors;
-  // Add parsing errors to the program node
-  public void Program.setParseErrors(Collection<String> collection) {
+
+  private Collection<String> Module.parseErrors;
+
+  // Add parsing errors to the module node
+
+  public void Module.setParseErrors(Collection<String> collection) {
     parseErrors = collection;
   }
-  public Collection<String> Program.parseErrors() {
+
+  public Collection<String> Module.parseErrors() {
     return parseErrors;
   }
+
+    public static Module Program.parseModule(String name) {
+	
+	Module m = null;
+
+	try {
+	    m = new Parser().parse(new FileInputStream(name));
+	}
+	catch (FileNotFoundException e) {
+	    System.err.println("Could not find " + name);
+	    System.exit(1);
+	}
+	catch (IOException e) {
+	    System.err.println("Error reading from " + name);
+	    System.exit(1);
+	}
+	
+	for(String error : m.parseErrors())
+	    System.err.println(error);
+	
+	if(!(m.parseErrors().isEmpty()))
+	    System.exit(1);
+	
+	return m;
+    }
 
 }

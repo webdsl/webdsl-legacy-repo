@@ -1,4 +1,6 @@
-module foo
+module wiki
+
+section dataModel
 
   entity User {
     username :: String
@@ -10,21 +12,13 @@ module foo
   entity Topic {
     name    :: String
     content :: WikiText
-    foo     -> Bla
   }
   
   extend entity Topic {
     acl -> ACL
-    authors -> Set<User> (inverse=User.topics)
   }
   
   entity ACL {
     viewers -> Set<User>
     editors -> Set<User>
-  }
-  
-  entity Email {
-    from :: String
-    to   :: String
-    body :: String
   }

@@ -58,6 +58,9 @@ Identifier = [:jletter:][:jletterdigit:]*
 <YYINITIAL> {
   "module" { return sym(Terminals.MODULE); }
   "entity" { return sym(Terminals.ENTITY); }
+  "extend" { return sym(Terminals.EXTEND); }
+  "imports" { return sym(Terminals.IMPORTS); }
+  "section" { return sym(Terminals.SECTION); }
   "inverse" { return sym(Terminals.INVERSE); }
   "->" { return sym(Terminals.ARROW); }
   "::" { return sym(Terminals.COLONS); }

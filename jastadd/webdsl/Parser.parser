@@ -28,17 +28,17 @@
             report = new Events(); // Use error handler in parser
         }
 
-   public Program parse(java.io.InputStream is) throws java.io.IOException {
-     Program p;
+   public Module parse(java.io.InputStream is) throws java.io.IOException {
+     Module p;
      errors = new ArrayList();
      try {
        Scanner scanner = new Scanner(is);
-       p = (Program)parse(scanner);
+       p = (Module)parse(scanner);
      } catch(Parser.Exception e) {
-       // build empty Program for failed error recovery
-       p = new Program();
+       // build empty Module for failed error recovery
+       p = new Module();
      } catch(Error e) {
-       p = new Program();
+       p = new Module();
        errors.add(e.getMessage());
      }
      p.setParseErrors(errors);
@@ -47,12 +47,20 @@
    protected java.util.Collection<String> errors = new ArrayList<String>();
 :};
 
-Program program =
-  module {: return new Program(module); :}
-  ;
 Module module =
-  MODULE IDENTIFIER decl_list {: return new Module(IDENTIFIER, decl_list); :}
+  MODULE IDENTIFIER section_list? {: return new Module(IDENTIFIER, section_list); :}
   ;
+
+List section_list =
+  section {: return new List().add(section); :}
+  | section_list section {: return section_list.add(section); :}
+  ; 
+
+AbstractSection section =
+  SECTION IDENTIFIER decl_list {: return new Section(IDENTIFIER, decl_list); :}
+  | IMPORTS IDENTIFIER {: return new Imports(IDENTIFIER); :}
+  ;
+
 List decl_list =
   declaration {: return new List().add(declaration); :}
   | decl_list declaration {: return decl_list.add(declaration); :}
@@ -60,11 +68,17 @@ List decl_list =
 
 Declaration declaration =
   entity
+  | extend_entity
   ;
 
 Declaration entity =
   ENTITY IDENTIFIER LBRACE property_list RBRACE
   {: return new Entity(IDENTIFIER, property_list); :}
+  ;
+
+Declaration extend_entity =
+  EXTEND ENTITY IDENTIFIER LBRACE property_list RBRACE
+  {: return new ExtendEntity(IDENTIFIER, property_list); :}
   ;
 
 List property_list =

@@ -1,0 +1,50 @@
+import org.antlr.stringtemplate.*;
+
+aspect EntityClasses {
+
+  coll Set<JavaCompilationUnit> Program.code() [new HashSet<JavaCompilationUnit>()] 
+       with add 
+       root Program;
+
+  Entity contributes 
+    entityClass() 
+  to Program.code() for enclosingProgram();
+
+  syn nta JavaCompilationUnit Entity.entityClass() {
+
+    StringTemplate t = new StringTemplate(
+      "class $name$ {\n  $property$}"
+    );
+    t.setAttribute("name", getID());
+    for(Property p : getPropertyList()) { 
+      t.setAttribute("property", p.code());
+    } 
+    return new JavaCompilationUnit(getID(),t.toString());
+  }
+
+  syn String Property.code() {
+    StringTemplate t = new StringTemplate(
+        "private $type$ $name$;\n"
+      + "public $type$ get$Name$() { return $name$; }\n"
+      + "public void set$Name$($type$ x) { $name$ = x; }\n"
+    );
+    t.setAttribute("type", getSort().javaType());
+    t.setAttribute("name", "_" + getID());
+    t.setAttribute("Name", getID());
+    return t.toString();
+  }
+
+}
+
+
+aspect JavaTypes {
+
+  syn String Sort.javaType() 
+    = ((SortDeclaration)declaration()).javaType();
+
+  syn String SortDeclaration.javaType()
+    = getID();
+ 
+  // note: refine this to return fully qualified type names
+
+}
