@@ -8,21 +8,6 @@ imports templates
 
 section data model
 
-  session session1 {
-    name :: String
-    bloobie :: Int
-  }
-  
-  session session2 {
-    name :: String
-    bloobie :: Int
-  }
-
-  session session3 {
-    name :: String
-    bloobie :: Int
-  }
-  
   entity Foo {
     name :: String
   }
@@ -36,19 +21,31 @@ section data model
     }
   }
 
+  session something {
+    i :: Int
+  }
+
 section pages
 
 define page home() {
   main()
   define body() {
     init {
-      session1.name := "Piet Jan Hein";
-      session1.bloobie := 10;
-      session2.bloobie;
-      session2.name := sayFoobar();
+      something.i := 10;
     }
     "Hello world!"
     output(f.name)
+    var foo : Foo := f;
+    output(foo.name)
+    for(f : Foo) {
+      output(f.name)
+    }
+    form {
+      action("Click me", doAction())
+      action doAction() {
+        something.i := 8;
+      }
+    }
   }
 }
 
