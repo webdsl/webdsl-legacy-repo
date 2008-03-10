@@ -2,23 +2,58 @@ module templates
 
 section main template.
 
-  define main() {
-    div("outersidebar") {
-      sidebar()
+ define main() 
+  {
+    block("top") {
+      top()
     }
-    div("outerbody") {
-      div("menubar") {
-        menu()
+
+    block("body") {
+      block("left_innerbody") {
+        sidebar()
       }
-      body()
+      block("main_innerbody") {
+        body()
+      }
+    }
+
+    block("footer") {
       footer()
     }
   }
+  
+  define top() {
+    block("header") {}
+    block("menubar") {
+      menubar {
+        applicationMenubar()
+        conferenceMenu()
+      }
+    }
+  }
+
+  define applicationMenubar() { }
 
 section basic page elements.
 
   define sidebar() {
-
+    list {
+      listitem { navigate(home()) { "Home" } }
+      if(securityContext.loggedIn) {
+        form {
+          listitem { actionLink("Sign Off", signoff()) }
+          action signoff() {
+            securityContext.loggedIn := false;
+            securityContext.principal := null;
+            return home();
+          }
+        }
+      }
+      if(!securityContext.loggedIn) {
+        listitem { navigate(signin()) { "Sign in" } }
+        listitem { navigate(register()) { "Register" } }        
+      }
+    }
   }
   
   define footer() {
@@ -29,21 +64,13 @@ section basic page elements.
   
 section menus.
   
-  define menu() {
-
-    
-  }
-  
-section entity management.
-
-  define manageMenu() {}
-  
-  define page manage() {
-    main()
-    define sidebar() {}
-    define body() {
-      createMenu()
-      allMenu()
+  define conferenceMenu() {
+    menu {
+      menuheader { "Conference" }
+      menuitem { navigate(allConference()) { "List all" } }
+      menuitem { navigate(createConference()) { "Create conference"} }
     }
   }
+
+  
 

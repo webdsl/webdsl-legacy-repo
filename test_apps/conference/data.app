@@ -9,12 +9,12 @@ entity User {
   password        :: Secret
   authoredPapers  -> Set<Paper>
   authoredReviews -> Set<Paper>
+  isAdmin         :: Bool
   roles           -> Set<ConferenceRole>
   activeRoles     -> Set<ConferenceRole>
 }
 
 enum UserRole {
-  adminRole("Administrator"),
   chairRole("Chair"), 
   pcRole("PC Member"), 
   authorRole("Author"), 
