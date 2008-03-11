@@ -26,6 +26,14 @@ entity ConferenceRole {
   role       -> UserRole
 }
 
+entity PCInvite {
+  name :: String
+  email :: Email
+  conference -> Conference
+  accepted :: Bool
+  reason :: Text
+}
+
 section conference data model
 
 entity Conference {
@@ -34,6 +42,8 @@ entity Conference {
   chairs             -> Set<User>
   pc                 -> Set<User>
   papers             -> Set<Paper>
+  stage              -> ConferenceStage
+  invites            -> Set<PCInvite>
 }
 
 entity Paper {
@@ -46,6 +56,12 @@ entity Paper {
 }
 
 section reviews
+
+enum ConferenceStage {
+  assemblePC("Assemling the PC"),
+  acceptingPapers("Accepting papers"),
+  reviewing("Reviewing")
+}
 
 enum Classification {
   championClass("Champion"),
