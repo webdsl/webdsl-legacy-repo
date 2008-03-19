@@ -3,15 +3,17 @@ module data
 section access control data model
 
 entity User {
-  username        :: String (id)
+  username        :: String
   name            :: String
-  email           :: Email
+  email           :: Email(id)
   password        :: Secret
   authoredPapers  -> Set<Paper>
   authoredReviews -> Set<Paper>
   isAdmin         :: Bool
   roles           -> Set<ConferenceRole>
   activeRoles     -> Set<ConferenceRole>
+  tasks           -> Set<Task>
+  registered      :: Bool
 }
 
 enum UserRole {
@@ -26,12 +28,9 @@ entity ConferenceRole {
   role       -> UserRole
 }
 
-entity PCInvite {
-  name :: String
-  email :: Email
-  conference -> Conference
-  accepted :: Bool
-  reason :: Text
+entity Task {
+  assignee -> User (inverse=User.tasks)
+  completed :: Bool  
 }
 
 section conference data model
@@ -43,7 +42,7 @@ entity Conference {
   pc                 -> Set<User>
   papers             -> Set<Paper>
   stage              -> ConferenceStage
-  invites            -> Set<PCInvite>
+  pcInvites          -> Set<PcInvite>
 }
 
 entity Paper {

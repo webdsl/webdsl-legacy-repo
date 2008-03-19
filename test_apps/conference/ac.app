@@ -20,6 +20,10 @@ access control rules {
   rules page error(msg : String) {
     true
   }
+
+  rules page message(msg : String) {
+    true
+  }
   
   rules page user(*) {
     true

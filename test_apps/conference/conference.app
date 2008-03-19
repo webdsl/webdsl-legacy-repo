@@ -5,9 +5,11 @@ description {
 }
 
 imports data
+imports user
 imports templates
 imports ac
 imports initialize
+imports pcinvite
 
 section pages
 
@@ -23,72 +25,6 @@ define page home() {
   }
 }
 
-define page signin() {
-  main()
-  title{"Sign in"}
-  define body() {
-    var username : String;
-    var password : Secret;
-    form { 
-      table {
-        row{ "Username: " input(username) }
-        row{ "Password: " input(password) }
-        row{ action("Sign in", signin()) "" }
-      }
-      action signin() {
-        var users : List<User> :=
-          select u from User as u 
-          where (u._username = ~username);
-  
-        for (us : User in users ) {
-          if (us.password.check(password)) {
-            securityContext.principal := us;
-            securityContext.loggedIn := true;
-            return user(securityContext.principal);
-          }
-        }
-        securityContext.loggedIn := false;
-        return error("Wrong combination of username/password");
-      }
-    }
-    par{ navigate(register()){"Register new user"} }
-  }
-}
-
-define page register() {
-  main()
-  title{"Register new user"}
-  define body() {
-    section {
-      header{"Register New User"}
-      
-      var newUser : User := User { };
-      form { 
-        table{
-          row { "Username" input(newUser.username) }
-          row { "Full name" input(newUser.name) }
-          row { "Email" input(newUser.email) }
-          row { "Password" input(newUser.password) }
-        }
-        captcha()
-        action("Register", createUser())
-        action createUser() {
-          var users : List<User> :=
-            select u from User as u 
-            where (u._username = ~newUser.username) or (u._email = ~newUser.email);
-            
-          if (users.length > 0) {
-            return error("Username or email address already in use");
-          } else {  
-            newUser.password := newUser.password.digest();
-            newUser.persist();
-            return signin();
-          }
-        }
-      }
-    }
-  }
-}
 
 define page createConference() {
   main()
@@ -111,15 +47,33 @@ define page createConference() {
   }  
 }
 
+globals {
+  function getUser(name : String, email : Email) : User {
+    var u : User;
+    var users : List<User> :=
+          select u from User as u 
+          where (u._email = ~email);
+    if(users.length = 0) {
+      u := User { name := name email := email registered := false };
+      u.persist();
+    } else {
+      for(eu : User in users) { // HACK!
+        u := eu;
+      }
+    }
+    return u;
+  }
+}
+
 access control rules {
   rules page conference(c : Conference) {
-    (c.stage = assemblePC && (securityContext.principal.isAdmin || securityContext.principal in c.chairs))
+    (c.stage = assemblePC && (securityContext.principal.isAdmin || securityContext.principal in c.chairs || securityContext.principal in c.pc))
     ||
     (c.stage = acceptingPapers)
     ||
     (c.stage = reviewing)
   }
-}  
+}
 
 define page conference(c : Conference) {
   main()
@@ -131,20 +85,32 @@ define page conference(c : Conference) {
         header{"Assembling PC"}
         "Current invites:"
         list {
-          for(inv : PCInvite in c.invitesList) {
-            listitem { output(inv.name) "(Status: " output(inv.accepted) ")" }
+          for(inv : PcInvite in c.pcInvitesList) {
+            listitem {
+              output(inv.user.name) "(Accepted yet: " output(inv.accepted) ")" 
+              if(!inv.accepted && inv.reason != "") {
+                "Reason: " output(inv.reason)
+              }
+            }
           }
         }
         "Add member:"
-        var pcInvite : PCInvite := PCInvite{ conference := c accepted := null }
+        var pcInvite : PcInvite := PcInvite{ conference := c }
+        var name : String
+        var email : Email
         form {
           table {
-            row { "Name:" input(pcInvite.name) }
-            row { "Email:" input(pcInvite.email) }
+            row { "Name:" input(name) }
+            row { "Email:" input(email) }
           }
           action("Invite", invite())
           action invite() {
-            email(inviteMail(pcInvite));
+            pcInvite.user := getUser(name, email);
+            pcInvite.persist();
+            c.pcInvites.add(pcInvite);
+            var pcTask : PcInviteTask := PcInviteTask { assignee := pcInvite.user invite := pcInvite };
+            pcTask.persist();
+            //email(inviteMail(pcInvite));
             return conference(c);
           }
         }
@@ -153,50 +119,35 @@ define page conference(c : Conference) {
   }  
 }
 
-define email inviteMail(invite : PCInvite) {
-  to(invite.email)
+define email inviteMail(invite : PcInvite) {
+  to(invite.user.email)
   subject("Invite to join PC of "+invite.conference.name)
   from("admin@webdsl.org")
   body {
-    par{ "Dear " output(invite.name) ","}
+    par{ "Dear " output(invite.user.name) ","}
     par{ "We would like to invite you to join the PC of " output(invite.conference.name) }
     par{ "Please confirm or reject this request at " 
-         navigate(confirmPCInvite(invite)){url(confirmPCInvite(invite))}
+         navigate(tasks(invite.user)){url(tasks(invite.user))}
     }
     par { "Best," }
     par { "The " output(invite.conference.name) " Team" }
   }
 }
 
-define page confirmPCInvite(invite : PCInvite) {
-  title {"Confirm PC invite"}
-  define body() {
-    header{"Confirm PC Invite"}
-    form {
-      "Optional reason:" input(invite.reason)
-      action("Accept", accept())
-      action("Reject", reject())
-      
-      action accept() {
-        invite.accepted := true;
-        return home();
-      }
-      
-      action reject() {
-        invite.accepted := false;
-        return home();
-      }
-    }
-  }
-}
-  
-
-
 define page error(msg : String) {
   main()
   title{"Error"}
   define body() {
     header{"Error"}
+    output(msg)
+  }
+}
+
+define page message(msg : String) {
+  main()
+  title{"Message"}
+  define body() {
+    header{"Message"}
     output(msg)
   }
 }
