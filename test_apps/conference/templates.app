@@ -26,34 +26,27 @@ section main template.
     block("header") {}
     block("menubar") {
       menubar {
-        applicationMenubar()
-        conferenceMenu()
+        conferencesMenu()
       }
     }
   }
-
-  define applicationMenubar() { }
 
 section basic page elements.
 
   define sidebar() {
     list {
-      listitem { navigate(home()) { "Home" } }
-      if(securityContext.loggedIn) {
-        form {
-          listitem { actionLink("Sign Off", signoff()) }
-          action signoff() {
-            securityContext.loggedIn := false;
-            securityContext.principal := null;
-            return home();
-          }
-        }
-      }
-      if(!securityContext.loggedIn) {
-        listitem { navigate(signin()) { "Sign in" } }
-        listitem { navigate(register()) { "Register" } }        
-      }
+      contextSidebar()
     }
+    
+    list {
+    }
+  }
+  
+  define contextSidebar() { }
+  
+  define conferenceSidebar(c : Conference) {
+    listitem { navigate(conference(c)) { "Conference home" } }
+    listitem { navigate(submitPaper(c)) { "Submit paper" } }      
   }
   
   define footer() {
@@ -64,11 +57,34 @@ section basic page elements.
   
 section menus.
   
-  define conferenceMenu() {
-    menu {
-      menuheader { "Conference" }
-      menuitem { navigate(allConference()) { "List all" } }
-      menuitem { navigate(createConference()) { "Create conference"} }
+  define conferencesMenu() {
+    form {
+      menu {
+        menuheader { navigate(home()) { "Home" } }
+      }
+      menu {
+        menuheader { "Conferences" }
+        for(c : Conference) {
+          menuitem { output(c) }
+        }
+        menuitem { navigate(createConference()) { "Create conference"} }
+      }
+      menu {
+        menuheader { "User" }
+        if(securityContext.loggedIn) {
+          menuitem { navigate(tasks(securityContext.principal)) { "Tasks" } }
+          menuitem { actionLink("Sign Off", signoff()) }
+          action signoff() {
+            securityContext.loggedIn := false;
+            securityContext.principal := null;
+            return home();
+          }
+        }
+        if(!securityContext.loggedIn) {
+          menuitem { navigate(signin()) { "Sign in" } }
+          menuitem { navigate(register()) { "Register" } }
+        }
+      }
     }
   }
 

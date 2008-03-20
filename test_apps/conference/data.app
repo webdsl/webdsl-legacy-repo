@@ -8,7 +8,7 @@ entity User {
   email           :: Email(id)
   password        :: Secret
   authoredPapers  -> Set<Paper>
-  authoredReviews -> Set<Paper>
+  authoredReviews -> Set<Review>
   isAdmin         :: Bool
   roles           -> Set<ConferenceRole>
   activeRoles     -> Set<ConferenceRole>
@@ -26,6 +26,24 @@ enum UserRole {
 entity ConferenceRole {
   conference -> Conference
   role       -> UserRole
+}
+
+globals {
+  function getConferenceRole(c : Conference, r : UserRole) : ConferenceRole {
+    var cr : ConferenceRole;
+    var conferenceRoles : List<ConferenceRole> :=
+          select cr from ConferenceRole as cr
+          where (cr._conference = ~c) and (cr._role = ~r);
+    if(conferenceRoles.length = 0) {
+      cr := ConferenceRole { conference := c role := r };
+      cr.persist();
+    } else {
+      for(crole : ConferenceRole in conferenceRoles) { // HACK!
+        cr := crole;
+      }
+    }
+    return cr;
+  }
 }
 
 entity Task {
@@ -50,7 +68,7 @@ entity Paper {
   title      :: String (name)
   abstract   :: Text
   authors    -> Set<User> (inverse=User.authoredPapers)
-  reviewers  -> Set<User>
+  reviewers  -> Set<User> (inverse=User.authoredReviews)
   reviews    <> Set<Review>
 }
 
@@ -59,7 +77,10 @@ section reviews
 enum ConferenceStage {
   assemblePC("Assemling the PC"),
   acceptingPapers("Accepting papers"),
-  reviewing("Reviewing")
+  bidOnPapers("Bidding on papers"),
+  reviewing("Reviewing"),
+  decideOnAcceptance("Decide on acceptance of papers"),
+  resultsKnown("Results are known")
 }
 
 enum Classification {
@@ -83,6 +104,7 @@ enum Relevance {
   
 entity Review {
   paper             -> Paper (inverse=Paper.reviews)
+  author            -> User (inverse=User.authoredReviews)
   classification    -> Classification
   expertise         -> Expertise
   relevance         -> Relevance

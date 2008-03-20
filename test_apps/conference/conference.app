@@ -5,11 +5,13 @@ description {
 }
 
 imports data
-imports user
-imports templates
 imports ac
+imports user
 imports initialize
 imports pcinvite
+imports paper
+imports bid
+imports templates
 
 section pages
 
@@ -67,54 +69,32 @@ globals {
 
 access control rules {
   rules page conference(c : Conference) {
-    (c.stage = assemblePC && (securityContext.principal.isAdmin || securityContext.principal in c.chairs || securityContext.principal in c.pc))
+    (c.stage = assemblePC && securityContext.loggedIn && (securityContext.principal.isAdmin || securityContext.principal in c.chairs || securityContext.principal in c.pc))
     ||
     (c.stage = acceptingPapers)
     ||
-    (c.stage = reviewing)
+    (c.stage = bidOnPapers && (securityContext.principal.isAdmin || securityContext.principal in c.chairs || securityContext.principal in c.pc))
   }
 }
 
 define page conference(c : Conference) {
   main()
   title{"Conference: " output(c.name) }
+
+  define contextSidebar() {
+    conferenceSidebar(c)
+  }
+
   define body() {
     header{output(c.name)}
     if(c.stage = assemblePC) {
-      section {
-        header{"Assembling PC"}
-        "Current invites:"
-        list {
-          for(inv : PcInvite in c.pcInvitesList) {
-            listitem {
-              output(inv.user.name) "(Accepted yet: " output(inv.accepted) ")" 
-              if(!inv.accepted && inv.reason != "") {
-                "Reason: " output(inv.reason)
-              }
-            }
-          }
-        }
-        "Add member:"
-        var pcInvite : PcInvite := PcInvite{ conference := c }
-        var name : String
-        var email : Email
-        form {
-          table {
-            row { "Name:" input(name) }
-            row { "Email:" input(email) }
-          }
-          action("Invite", invite())
-          action invite() {
-            pcInvite.user := getUser(name, email);
-            pcInvite.persist();
-            c.pcInvites.add(pcInvite);
-            var pcTask : PcInviteTask := PcInviteTask { assignee := pcInvite.user invite := pcInvite };
-            pcTask.persist();
-            //email(inviteMail(pcInvite));
-            return conference(c);
-          }
-        }
-      }
+      assemblePCView(c)
+    }
+    if(c.stage = acceptingPapers) {
+      acceptingPapersView(c)
+    }
+    if(c.stage = bidOnPapers) {
+      biddingView(c)
     }
   }  
 }
