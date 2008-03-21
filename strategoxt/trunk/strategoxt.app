@@ -36,4 +36,13 @@ section initialization of application configuration
     var config : Configuration := Configuration { };    
   }
 
-  
+  access control rules {
+    
+    rules page configuration(config : Configuration) {
+      isAdministrator()
+    }
+    rules page editConfiguration(config : Configuration) {
+      isAdministrator()
+    }
+    
+  }

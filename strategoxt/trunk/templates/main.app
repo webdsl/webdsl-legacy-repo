@@ -10,7 +10,7 @@ section strategoxt template
           block("twikiLeftBar") {
             block("twikiLeftBarContents") {
               logo()
-              sidebar()
+              applicationSidebar()
             }
           }
           block("twikiMain") {
@@ -33,10 +33,12 @@ section basic page elements
   }
 
   define sidebar() {
-    if(config.sidebar != null) { output(config.sidebar.content) }
   }
   
-  define applicationSidebar() { }
+  define applicationSidebar() { 
+    if(config.sidebar != null) { output(config.sidebar.content) }
+    sidebar()
+  }
   
   define footer() {
     block("footer") {

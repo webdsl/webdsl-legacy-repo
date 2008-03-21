@@ -221,7 +221,6 @@ section wiki topic editing
             }
           }
         }
-        editPermissions(topic.acl, topic.web.acl)
       }
     }
   }
@@ -338,6 +337,7 @@ section topic operations
       menuspacer{}
       menuitem{ navigate(newTopic(web)){"New Topic"} }
       menuitem{ navigate(editWeb(web)){"Edit " output(web.name) " Web"} }
+      menuitem{ navigate(editWebPermissions(web)){"Edit " output(web.name) " Web Permissions"} }
     }
   }
   

@@ -81,6 +81,10 @@ section acr
       mayEditACL(topic.acl, topic.web.acl)
     }
     
+    rules page editWebPermissions(web : Web) {
+      mayEditACL(web.acl, web.acl)
+    }
+    
     rules page newTopic(web : Web) {
       mayEditWeb(web)
     }

@@ -43,7 +43,11 @@ section ac policies
     }
     
     // note: this should be defined using true generics
-   
+     
+  //predicate memberOf(gs : Set<UserGroup>) {
+  //  Or[g in gs | g : UserGroup in principal.activeGroups]
+  //}
+  
     function memberOf(xs : Set<UserGroup>) : Bool { 
       if (securityContext.principal = null || xs = null || xs.length = 0) { return false; }
       else {
@@ -53,6 +57,8 @@ section ac policies
         return false;
       }
     }
+    
+ 
     
   }
     
@@ -81,11 +87,13 @@ section users
     }
   
     predicate isAdministrator() {
-      securityContext.principal != null&& adminGroup in securityContext.principal.activeGroups
+      securityContext != null && securityContext.principal != null &&
+      adminGroup in securityContext.principal.activeGroups
     }
     
     predicate isWebCreator() {
-      securityContext.principal != null&& webCreateGroup in securityContext.principal.activeGroups
+      securityContext != null && securityContext.principal != null &&
+      webCreateGroup in securityContext.principal.activeGroups
     }
     
     rules page user(*) {
