@@ -1,4 +1,4 @@
-module users/data
+module org/webdsl/library/users/data
 
 section users
 
@@ -36,31 +36,4 @@ section registration
         password := u.password
       };
     }
-  }
-  
-section groups
-  
-  entity UserGroup {
-    name        :: String (id, name)
-    description :: WikiText
-    moderators  -> Set<User>
-    members     -> Set<User>
-    requested   -> Set<User>
-  }
-  
-  extend entity User {
-    groups -> Set<UserGroup> (inverse=UserGroup.members)
-  }
-
-  entity ACL {
-    view     -> Set<UserGroup>
-    edit     -> Set<UserGroup>
-    moderate -> Set<UserGroup>
-    admin    -> Set<UserGroup>
-  }
-  
-  globals {
-    var adminGroup     : UserGroup := UserGroup{name := "adminGroup"};
-    var webCreateGroup : UserGroup := UserGroup{name := "webCreateGroup"};
-    var allGroup       : UserGroup := UserGroup{name := "allGroup"};
   }

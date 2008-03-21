@@ -1,4 +1,6 @@
-module users/profile
+module org/webdsl/library/users/profile
+
+imports org/webdsl/library/users/data
 
 description {
 

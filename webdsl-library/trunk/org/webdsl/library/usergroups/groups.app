@@ -1,4 +1,7 @@
-module users/groups
+module org/webdsl/library/usergroups/groups
+
+imports org/webdsl/library/usergroups/data
+
 
 section menu
 

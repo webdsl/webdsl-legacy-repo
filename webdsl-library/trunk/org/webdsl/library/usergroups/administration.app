@@ -1,4 +1,4 @@
-module users/administration
+module org/webdsl/library/usergroups/administration
   
 section ac administration
 

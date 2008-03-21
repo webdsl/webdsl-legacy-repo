@@ -1,4 +1,6 @@
-module users/profiles
+module org/webdsl/library/users/registration
+
+imports org/webdsl/library/users/data
 
 // workflow for registering a new user
 
@@ -41,10 +43,10 @@ section create new user
                 newUser.password := newUser.password.digest();
                 newUser.persist();
                 email(sendConfirmEmail(newUser));
-          return registrationPending(newUser.username);
-        }
+                return registrationPending(newUser.username);
+              }
           }
-  }
+        }
       }
     }
   }

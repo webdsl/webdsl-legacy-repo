@@ -1,4 +1,6 @@
-module users/access-control
+module org/webdsl/library/users/access-control
+
+imports org/webdsl/library/users/data
 
   note {
   

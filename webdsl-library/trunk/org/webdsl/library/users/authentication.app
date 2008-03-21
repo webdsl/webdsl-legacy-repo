@@ -1,4 +1,6 @@
-module users/authentication
+module org/webdsl/library/users/authentication
+
+imports org/webdsl/library/users/data
 
 section authentication
 
