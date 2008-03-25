@@ -11,6 +11,7 @@ imports initialize
 imports pcinvite
 imports paper
 imports bid
+imports reviewassignment
 imports templates
 
 section pages
@@ -73,7 +74,9 @@ access control rules {
     ||
     (c.stage = acceptingPapers)
     ||
-    (c.stage = bidOnPapers && (securityContext.principal.isAdmin || securityContext.principal in c.chairs || securityContext.principal in c.pc))
+    (c.stage = bidOnPapers && securityContext.loggedIn && (securityContext.principal.isAdmin || securityContext.principal in c.chairs || securityContext.principal in c.pc))
+    ||
+    (c.stage = decideReviewAssignment && securityContext.loggedIn && (securityContext.principal.isAdmin || securityContext.principal in c.chairs))
   }
 }
 
@@ -95,6 +98,9 @@ define page conference(c : Conference) {
     }
     if(c.stage = bidOnPapers) {
       biddingView(c)
+    }
+    if(c.stage = decideReviewAssignment) {
+      decideReviewAssignment(c)
     }
   }  
 }

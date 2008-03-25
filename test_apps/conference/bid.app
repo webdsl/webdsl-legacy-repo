@@ -34,12 +34,24 @@ globals {
     }
     return c;
   }
+  
+  function checkForAllBiddingTasks(c : Conference) : Conference {
+    for(u : User in c.pc) {
+      for(t : Task in u.tasks where (!t.completed) && (t is a BidTask)) {
+        return c; // There are still uncompleted BidTasks in the PC
+      }
+    }
+    // Apparently there are no uncompleted bid tasks in the PC
+    c.stage := decideReviewAssignment;
+    initializeReviews(c);
+    return c;
+  }
 }
 
 enum BidCategory {
   highBid("I really want to review this paper"),
   lowBid("I can review this paper"),
-  conflictBid("I have a conlfict with this paper"),
+  conflictBid("I have a conflict with this paper"),
   blockBid("I definitely don't want to review this paper"),
   dontCareBid("Don't care")
 }
@@ -74,6 +86,7 @@ define page bidTask(b : BidTask) {
         action("Save biddings", saveBiddings())
         action saveBiddings() {
           b.completed := true;
+          checkForAllBiddingTasks(b.conference);
           return message("Your biddings were saved. Thank you.");
         }
       }

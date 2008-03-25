@@ -41,14 +41,6 @@ access control rules {
     securityContext.principal.isAdmin || securityContext.principal in c.chairs
   }
   
-  rules page conference(c : Conference) {
-    (c.stage = assemblePC && (securityContext.principal.isAdmin || securityContext.principal in c.chairs))
-    ||
-    (c.stage = acceptingPapers)
-    ||
-    (c.stage = reviewing)
-  }
-
   rules template *(*) {
     true
   }

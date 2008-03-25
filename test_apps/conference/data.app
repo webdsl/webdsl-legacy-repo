@@ -78,6 +78,7 @@ enum ConferenceStage {
   assemblePC("Assemling the PC"),
   acceptingPapers("Accepting papers"),
   bidOnPapers("Bidding on papers"),
+  decideReviewAssignment("Decide on who will review which papers"),
   reviewing("Reviewing"),
   decideOnAcceptance("Decide on acceptance of papers"),
   resultsKnown("Results are known")
