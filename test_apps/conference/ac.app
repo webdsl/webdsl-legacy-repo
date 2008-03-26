@@ -29,10 +29,6 @@ access control rules {
     true
   }
   
-  rules page conference(*) {
-    true
-  }
-  
   rules page createConference() {
     securityContext.principal.isAdmin
   }

@@ -76,7 +76,7 @@ section pages
 
   access control rules {
     rules page conference(c : Conference) {
-      c.stage != assemblePC || securityContext.principal.isAdmin || securityContext.principal in c.chairs
+      c.stage != assemblePC || (securityContext.principal.isAdmin || securityContext.principal in c.chairs)
     }
   }
 
