@@ -48,4 +48,8 @@ access control rules {
   rules function *(*) {
     true
   }
+
+  rules action *(*) {
+    true
+  }
 }
