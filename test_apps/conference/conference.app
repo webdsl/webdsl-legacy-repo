@@ -7,12 +7,15 @@ description {
 imports data
 imports ac
 imports user
+imports paper
 imports initialize
 imports pcinvite
-imports acceptpapers
+imports submitpapers
 imports bid
 imports reviewassignment
 imports review
+imports decideacceptance
+imports submitfinalpapers
 imports templates
 
 section utilities
@@ -103,21 +106,23 @@ section pages
 
   access control rules {
     rules template submittedPapers(c : Conference) {
-      securityContext.principal.isAdmin || securityContext.principal in c.chairs || securityContext.principal in c.pc
+      (c.stage != conferenceCompleted && (securityContext.principal.isAdmin || securityContext.principal in c.chairs || securityContext.principal in c.pc))
+      ||
+      (c.stage = conferenceCompleted)
     }
   }
   define submittedPapers(c : Conference) {
     section {
-      header {"Submitted papers"}
-      "Current submitted papers:"
+      header {"Conference papers"}
       list {
-        for(p : Paper in c.papersList) {
+        for(p : Paper in c.papersList where (c.stage = conferenceCompleted && p.final) || (c.stage != conferenceCompleted)) {
           listitem { output(p) }
         }
       }
     }
   }
 
+/*
   define email inviteMail(invite : PcInvite) {
     to(invite.user.email)
     subject("Invite to join PC of "+invite.conference.name)
@@ -132,6 +137,7 @@ section pages
       par { "The " output(invite.conference.name) " Team" }
     }
   }
+*/
 
   define page error(msg : String) {
     main()

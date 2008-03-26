@@ -56,6 +56,16 @@ section basic page elements.
   }
   
 section menus.
+
+  globals {
+    function getTaskCount() : Int { // Far from ideal, but couldn't get it to work with a list comprehension
+      var ts : Set<Task> := Set<Task>();
+      for(t : Task in securityContext.principal.tasks where !t.completed) {
+        ts.add(t);
+      }
+      return ts.length;
+    }
+  }
   
   define conferencesMenu() {
     form {
@@ -72,7 +82,7 @@ section menus.
       menu {
         menuheader { "User" }
         if(securityContext.loggedIn) {
-          menuitem { navigate(tasks(securityContext.principal)) { "Tasks" } }
+          menuitem { navigate(tasks(securityContext.principal)) { "Tasks (" output(getTaskCount()) ")" } }
           menuitem { actionLink("Sign Off", signoff()) }
           action signoff() {
             securityContext.loggedIn := false;

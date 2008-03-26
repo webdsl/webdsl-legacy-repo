@@ -50,6 +50,14 @@ section access control data model
       // Send email about it
       return t;
     }
+
+    function calculateAccepts(p : Paper) : Int {
+      var accepts : Int := 0;
+      for(r : Review in p.reviewsList where r.classification = championClass || r.classification = acceptClass) {
+        accepts := accepts + 1;
+      }
+      return accepts;
+    }
   }
 
   entity Task {
@@ -71,11 +79,14 @@ section conference data model
 
   entity Paper {
     conference -> Conference (inverse=Conference.papers)
-    title      :: String (name)
-    abstract   :: Text
-    authors    -> Set<User> (inverse=User.authoredPapers)
-    reviewers  -> Set<User> (inverse=User.authoredReviews)
-    reviews    <> Set<Review>
+    title          :: String (name)
+    abstract       :: Text
+    authors        -> Set<User> (inverse=User.authoredPapers)
+    reviewers      -> Set<User> (inverse=User.authoredReviews)
+    reviews        <> Set<Review>
+    classification -> PaperClassification
+    final          :: Bool
+
   }
 
 section reviews
@@ -87,7 +98,8 @@ section reviews
     decideReviewAssignment("Decide on who will review which papers"),
     reviewing("Reviewing"),
     decideOnAcceptance("Decide on acceptance of papers"),
-    resultsKnown("Results are known")
+    submitFinalPapers("Results known, submit final papers"),
+    conferenceCompleted("Ready for the actual conference")
   }
 
   enum Classification {
@@ -95,6 +107,11 @@ section reviews
     acceptClass("Accept"), 
     rejectClass("Reject"), 
     seriousProblemsClass("Reject, has serious problems")
+  }
+
+  enum PaperClassification {
+    acceptedClassification("Accepted"),
+    rejectedClassification("Rejected")
   }
 
   enum Expertise {
@@ -118,5 +135,6 @@ section reviews
     committeeComments :: Text
     summary           :: Text
     evaluation        :: Text
+    completed         :: Bool
   }
 

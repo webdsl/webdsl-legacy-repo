@@ -90,7 +90,7 @@ section pages
             var pcTask : PcInvitedTask := PcInvitedTask { invite := pcInvite };
             pcTask.persist();
             assignTask(pcTask, pcInvite.user);
-            return conference(t.conference);
+            return assemblePcTask(t);
           }
         }
       }

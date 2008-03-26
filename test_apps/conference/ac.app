@@ -40,7 +40,7 @@ access control rules {
   rules page editConference(c : Conference) {
     securityContext.principal.isAdmin || securityContext.principal in c.chairs
   }
-  
+
   rules template *(*) {
     true
   }

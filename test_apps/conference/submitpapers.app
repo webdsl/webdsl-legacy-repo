@@ -1,4 +1,4 @@
-module paper
+module submitpapers
 
 section initialization
 
