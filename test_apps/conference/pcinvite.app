@@ -11,7 +11,7 @@ section data model
 
   entity PcInvitedTask : Task {
     invite -> PcInvite
-    name   :: String := "Invitation to join PC of " + invite.conference.name
+    name   :: String := "Respond to invitation to join PC of " + invite.conference.name
   }
 
   entity AssemblePcTask : Task {
