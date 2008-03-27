@@ -49,7 +49,7 @@ section pages
   
   access control rules {
     rules page assemblePcTask(t : AssemblePcTask) {
-      t in securityContext.principal.tasks
+      t in securityContext.principal.tasks && !t.completed
     }
   }
 
@@ -112,7 +112,7 @@ section pages
 
   access control rules {
     rules page pcInvitedTask(t : PcInvitedTask) {
-      t in securityContext.principal.tasks
+      t in securityContext.principal.tasks && !t.completed
     }
   }
 

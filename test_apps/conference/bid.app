@@ -67,7 +67,7 @@ section pages
 
   access control rules {
     rules page bidTask(b : BidTask) {
-      securityContext.principal in b.assignees
+      securityContext.principal in b.assignees && !b.completed
     }
   }
 

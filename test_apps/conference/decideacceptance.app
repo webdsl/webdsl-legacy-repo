@@ -45,7 +45,7 @@ section pages
 
   access control rules {
     rules page acceptPapersTask(t : AcceptPapersTask) {
-      t in securityContext.principal.tasks
+      t in securityContext.principal.tasks && !t.completed
     }
   }
   define page acceptPapersTask(t : AcceptPapersTask) {

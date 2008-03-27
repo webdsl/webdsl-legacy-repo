@@ -28,7 +28,7 @@ section pages
 
   access control rules {
     rules page reviewTask(t : ReviewTask) {
-      t in securityContext.principal.tasks
+      t in securityContext.principal.tasks && !t.completed
     }
   }
 

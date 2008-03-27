@@ -105,7 +105,7 @@ define page tasks(u : User) {
       header{"Tasks already done"}
       list {
         for(t : Task in u.tasksList where t.completed) {
-          listitem { output(t) }
+          listitem { output(t.name) }
         }
       }
     }
