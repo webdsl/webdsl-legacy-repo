@@ -1,0 +1,99 @@
+/**
+ * Transformation of a WebDSL application to a collection of XML and Java files
+ *
+ * @author Eelco Visser
+ */
+
+module org/webdsl/dsl/transformation/dsl-to-core
+
+imports
+  libstrategolib
+  //Java-15
+  libjava-front
+
+imports
+  libwebdsl-front
+  org/webdsl/dsl/transformation/-
+  org/webdsl/dsl/builtins/-
+
+strategies
+  info(|msg) = log(|Info(), msg)
+
+strategies
+
+  dsl-to-core = id
+    ; stop-before-importing
+    ; info(|"importing modules")
+    ; import-modules
+
+    ; stop-before-desugaring
+    ; info(|"desugaring")
+    ; desugar
+      ; stop-after
+
+    ; declare-definitions
+      ; stop-after
+
+    ; add-view-edit-pages-to-app
+      ; stop-after
+
+    ; process-access-control
+    ; aggregate-subclass-info
+    ; desugar
+      ; stop-after
+    ; declare-definitions
+      ; stop-after
+
+    ; stop-before-typechecking
+    ; info(|"typechecking")
+    ; typecheck
+      ; stop-after
+
+    ; stop-before-template-expansion
+    ; info(|"template expansion")
+    ; expand-page-templates
+      ; stop-after
+    ; desugar
+      ; stop-after
+    ; typecheck
+      ; stop-after
+
+    ; access-control-weaving-after-template-expansion
+
+    ; derive
+      ; stop-after
+    ; desugar
+      ; stop-after
+    ; typecheck
+      ; stop-after
+    ; propagate-component-names
+      ; stop-after
+
+strategies
+
+  declare-definitions =
+    where(
+      alltd(declare-definition)
+      ; ?Application(qid, sections)
+      ; ents := <collect(?SessionEntity(_, _, _))> sections
+      ; rules ( SessionEntities := ents )
+    )
+
+  declare-definition =
+    declare-entity
+
+  declare-definition =
+    declare-template-definition
+
+  declare-definition =
+    declare-action
+
+  declare-definition =
+    declare-globals
+
+
+   // Creates <AllSubClasses> rule to be used in desugar.str (DeriveOutputSimpleRefAssociation)
+   aggregate-subclass-info =
+     where(
+        allsubclasses := <repeat(once-SubClasses)> []
+        ; rules( AllSubClasses := allsubclasses ))
