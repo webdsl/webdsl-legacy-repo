@@ -33,6 +33,7 @@ section business logic
 
     function inviteAcceptTransition(t : PcInvitedTask) : PcInvitedTask {
       t.invite.conference.pc.add(securityContext.principal);
+      securityContext.principal.roles.add(getConferenceRole(t.invite.conference, pcRole));
       t.invite.accepted := true;
       t.completed := true;
       return t;

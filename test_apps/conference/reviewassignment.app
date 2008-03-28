@@ -64,7 +64,7 @@ section pages
               output(p)
               container {
                 for(r : Review in p.reviewsList) {
-                  input(r.author)
+                  select(r.author from t.conference.pc)
                 }
               }
             }

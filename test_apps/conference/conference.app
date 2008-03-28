@@ -67,6 +67,9 @@ section pages
         
         action createConference() {
           c.persist();
+          for(chair : User in c.chairs) {
+            chair.roles.add(getConferenceRole(c, chairRole));
+          }
           initPcInviteStage(c);
           return conference(c);
         }

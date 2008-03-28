@@ -11,7 +11,6 @@ section access control data model
     authoredReviews -> Set<Review>
     isAdmin         :: Bool
     roles           -> Set<ConferenceRole>
-    activeRoles     -> Set<ConferenceRole>
     tasks           -> Set<Task> (inverse=Task.assignees)
     registered      :: Bool
   }
@@ -19,13 +18,16 @@ section access control data model
   enum UserRole {
     chairRole("Chair"), 
     pcRole("PC Member"), 
-    authorRole("Author"), 
-    reviewerRole("User") 
+    authorRole("Author")
   }
 
   entity ConferenceRole {
     conference -> Conference
     role       -> UserRole
+  }
+
+  extend session securityContext {
+    activeRoles -> Set<ConferenceRole>
   }
 
   globals {
