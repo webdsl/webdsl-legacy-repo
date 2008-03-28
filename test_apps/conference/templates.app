@@ -83,6 +83,7 @@ section menus.
         menuheader { "User" }
         if(securityContext.loggedIn) {
           menuitem { navigate(tasks(securityContext.principal)) { "Tasks (" output(getTaskCount()) ")" } }
+          menuitem { navigate(selectActiveRoles()) { "Select active roles" } }
           menuitem { actionLink("Sign Off", signoff()) }
           action signoff() {
             securityContext.loggedIn := false;

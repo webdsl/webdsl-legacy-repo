@@ -25,6 +25,7 @@ section access control data model
   entity ConferenceRole {
     conference -> Conference
     role       -> UserRole
+    name       :: String := role.name + " in " + conference.name
   }
 
   extend session securityContext {

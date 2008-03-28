@@ -112,4 +112,23 @@ section pages
     }
   }
 
+  access control rules {
+    rules page selectActiveRoles() {
+      securityContext.loggedIn
+    }
+  }
+  define page selectActiveRoles() {
+    title{"Set active roles"}
+    main()
+    define body() {
+      header{"Select active roles"}
+      form {
+        select(securityContext.activeRoles from securityContext.principal.roles)
 
+        action("Set", setRoles())
+        action setRoles() {
+          return home();
+        }
+      }
+    }
+  }
