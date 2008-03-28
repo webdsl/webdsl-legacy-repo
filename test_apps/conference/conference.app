@@ -125,6 +125,30 @@ section pages
     }
   }
 
+  access control rules {
+    rules page selectActiveRoles(c : Conference) {
+      securityContext.loggedIn
+    }
+  }
+  define page selectActiveRoles(c : Conference) {
+    title{"Set conference role"}
+    main()
+    define contextSidebar() {
+      conferenceSidebar(c)
+    }
+    define body() {
+      header{"Set active roles for " output(c)}
+      form {
+        select(securityContext.activeRoles from securityContext.principal.roles)
+
+        action("Set", setRoles())
+        action setRoles() {
+          return home();
+        }
+      }
+    }
+  }
+
 /*
   define email inviteMail(invite : PcInvite) {
     to(invite.user.email)

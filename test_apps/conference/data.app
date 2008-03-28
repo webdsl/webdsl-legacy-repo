@@ -18,7 +18,8 @@ section access control data model
   enum UserRole {
     chairRole("Chair"), 
     pcRole("PC Member"), 
-    authorRole("Author")
+    authorRole("Author"),
+    reviewerRole("Reviewer")
   }
 
   entity ConferenceRole {
