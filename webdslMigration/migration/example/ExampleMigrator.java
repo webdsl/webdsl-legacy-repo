@@ -8,10 +8,14 @@ import javax.persistence.Persistence;
 
 import migration.HibernateMigrator;
 import transformation.AddAttribute;
+import transformation.AddAttributeDefaultValue;
 import transformation.Application;
 import transformation.AttributeConversion;
 import transformation.AttributeTransformation;
 import transformation.BinaryPredicate;
+import transformation.DropAttribute;
+import transformation.EmptyObject;
+import transformation.Injection;
 import transformation.ObjectConversion;
 import transformation.PrimitiveTypeConversions;
 import transformation.RelatedMerge;
@@ -71,7 +75,46 @@ public class ExampleMigrator {
 						)
 					),
 					Arrays.asList(new Class[] {example.domain_0.Blog.class, example.domain_0.Blog.class})
-				)
+				),
+			
+			/* Examples for ASE08 article */	
+			new HibernateMigrator(em0, em1,
+				new TypedApplication(
+					new HibernateTransformer(example.domain_1.Blog.class, emf1),
+					new Application(
+						new AddAttributeDefaultValue("name", ""),
+						new Application(
+							new AddAttributeDefaultValue("description", ""),
+							new Application(
+								new AddAttributeDefaultValue("members", null),
+								new EmptyObject()
+							)
+						)
+					)	
+				),
+				Arrays.asList(new Class[] {example.domain_0.Blog.class})
+			),
+			new HibernateMigrator(em0, em1,
+				new TypedApplication(
+					new HibernateTransformer(example.domain_1.Blog.class, emf1),
+					new DropAttribute("description")
+				),
+				Arrays.asList(new Class[] {example.domain_0.Blog.class})
+			),
+			new HibernateMigrator(em0, em1,
+				new TypedApplication(
+					new HibernateTransformer(example.domain_1.Blog.class, emf1),
+					new AddAttribute(
+						"topic",
+						new ObjectConversion<example.domain_0.Blog> () { 
+							public Object convert(example.domain_0.Blog i) {
+								return i.getId(); //.getWeb().getTopic();
+							}
+						}
+					)
+				),
+				Arrays.asList(new Class[] {example.domain_0.Blog.class})
+			)
 		};
 	
 		try {

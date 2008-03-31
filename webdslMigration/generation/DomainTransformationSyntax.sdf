@@ -34,7 +34,7 @@ exports
 		"migrate" Id* "to" Id "{" Transformation "}"						-> Migration {cons("Migration")}
 		"to"																-> Id {reject}
 		
-		EntityNoSuper														-> Type {cons("TypeDeclaration")}
+		Entity																-> Type {cons("TypeDeclaration")}
 		Id																	-> Type {cons("TypeId")}
 		%% ==================================================================================== %%
 		
@@ -87,3 +87,4 @@ exports
 		{left:
 			Transformation ";" Transformation								-> Transformation
 		}
+	context-free start-symbols Application

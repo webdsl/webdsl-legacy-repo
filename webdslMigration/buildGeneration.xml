@@ -18,7 +18,7 @@
 	<target name="buildAll" depends="pack-sdf,processSyntaxToCompiler,domainMigration"/>
 
 	<target name="pack-sdf" depends="init">
-		<apply executable="${strategoBinariesLocation}/pack-sdf" dest="${build}">
+		<apply executable="${strategoBinariesLocation}/pack-sdf" dest="${build}" failonerror="true">
 			<arg value="-i"/>
 			<srcfile/>
 			<arg value="-o"/>
@@ -31,7 +31,7 @@
 	</target>
 
 	<target name="processSyntaxToCompiler" depends="init,pack-sdf">
-		<exec executable="${strategoBinariesLocation}/sdf2table">
+		<exec executable="${strategoBinariesLocation}/sdf2table" failonerror="true">
     		<arg value="-i"/>
 	    	<arg value="${build}/DomainTransformationSyntax.def"/>
 	    	<arg value="-o"/>
@@ -39,7 +39,7 @@
 			<arg value="-m"/>
 			<arg value="DomainTransformationSyntax"/>
 		</exec>
-		<exec executable="${strategoBinariesLocation}/sdf2rtg">
+		<exec executable="${strategoBinariesLocation}/sdf2rtg" failonerror="true">
     		<arg value="-i"/>
 	    	<arg value="${build}/DomainTransformationSyntax.def"/>
 	    	<arg value="-o"/>
@@ -47,7 +47,7 @@
 			<arg value="-m"/>
 			<arg value="DomainTransformationSyntax"/>
 		</exec>
-		<exec executable="${strategoBinariesLocation}/rtg2sig">	<!-- Cannot be generic: rtg2sig cannot handle absolute paths -->
+		<exec executable="${strategoBinariesLocation}/rtg2sig" failonerror="true">	<!-- Cannot be generic: rtg2sig cannot handle absolute paths -->
     		<arg value="-i"/>
 	    	<arg value="bin/generation/DomainTransformationSyntax.rtg"/> <!-- rtg2sig cannot handle absolute paths -->
 	    	<arg value="-o"/>
@@ -56,7 +56,15 @@
 	</target>
 
 	<target name="domainMigration" depends="init,processSyntaxToCompiler">
-		<apply executable="${strategoBinariesLocation}/strc" dest="${dist}">
+		<dependset>
+			<srcfilelist
+				dir		= "${src}"
+				files	= "**/*.str"/>
+			<targetfileset
+				dir		= "${dist}"
+				includes = "**/*"/>
+		</dependset>
+		<apply executable="${strategoBinariesLocation}/strc" dest="${dist}" failonerror="true">
 			<arg value="-i"/>
 			<srcfile/>
 			<arg value="-o"/>
