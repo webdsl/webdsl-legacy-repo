@@ -1,6 +1,6 @@
 SYNTAX     = WebDSL
 EXTENSIONS = mod,app
-PACKAGE    = org.webdsl.ide.imp
+PACKAGE    = org.strategoxt.imp.editors.webdsl
 SOURCE     = ../../../webdsls/trunk/src/org/webdsl/dsl/syntax/$(SYNTAX).def
 START      = Application # TODO: what about multiple start symbols?
 
