@@ -2,9 +2,8 @@ module decideacceptance
 
 section data model
   
-  entity AcceptPapersTask : Task {
-    conference -> Conference
-    name       :: String := "Decide what papers to accept for " + conference.name
+  entity AcceptPapersTask : ConferenceTask {
+    name       :: String := "Decide what papers to accept for " + this.conference.name
   }
 
 section business logic

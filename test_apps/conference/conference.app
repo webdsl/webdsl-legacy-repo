@@ -95,11 +95,15 @@ section pages
       header{output(c.name)}
       section {
         par { "Conference stage: " output(c.stage.name) }
+        conferenceTasks(c)
         header{"Program Comittee"}
         list {
           for(u : User in c.pcList) {
             listitem { output(u) }
           }
+        }
+        if(c.pc.length = 0) {
+          "No PC members yet."
         }
         submittedPapers(c)
         par { navigate(submitPaper(c)) { "Submit paper" } }
@@ -109,7 +113,7 @@ section pages
 
   access control rules {
     rules template submittedPapers(c : Conference) {
-      (c.stage != conferenceCompleted && (securityContext.principal.isAdmin || securityContext.principal in c.chairs || securityContext.principal in c.pc))
+      (c.stage != conferenceCompleted && c.stage != assemblePC && (securityContext.principal.isAdmin || securityContext.principal in c.chairs || securityContext.principal in c.pc))
       ||
       (c.stage = conferenceCompleted)
     }
@@ -120,6 +124,22 @@ section pages
       list {
         for(p : Paper in c.papersList where (c.stage = conferenceCompleted && p.final) || (c.stage != conferenceCompleted)) {
           listitem { output(p) }
+        }
+      }
+    }
+  }
+
+  access control rules {
+    rules template conferenceTasks(c : Conference) {
+      securityContext.loggedIn
+    }
+  }
+  define conferenceTasks(c : Conference) {
+    section {
+      header {"Your tasks related to this conference"}
+      list {
+        for(t : Task in securityContext.principal.tasksList where ((t is a ConferenceTask) && !t.completed && (t as ConferenceTask).conference = c)) {
+          listitem { output(t) }
         }
       }
     }

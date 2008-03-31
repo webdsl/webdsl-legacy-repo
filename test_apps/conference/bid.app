@@ -15,9 +15,8 @@ section data model
     category -> BidCategory
   }
 
-  entity BidTask : Task {
-    conference -> Conference
-    name :: String := "Bid on papers in " + conference.name
+  entity BidTask : ConferenceTask {
+    name :: String := "Bid on papers in " + this.conference.name
   }
 
   enum BidCategory {

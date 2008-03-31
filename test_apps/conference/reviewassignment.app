@@ -2,9 +2,8 @@ module reviewassignment
 
 section data model
 
-  entity DecideReviewAssignmentTask : Task {
-    conference -> Conference
-    name       :: String := "Decide on review assignment for " + conference.name
+  entity DecideReviewAssignmentTask : ConferenceTask {
+    name       :: String := "Decide on review assignment for " + this.conference.name
   }
 
 section business logic

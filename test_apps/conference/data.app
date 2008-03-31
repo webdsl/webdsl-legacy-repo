@@ -69,6 +69,10 @@ section access control data model
     completed :: Bool  
   }
 
+  entity ConferenceTask : Task {
+    conference -> Conference
+  }
+
 section conference data model
 
   entity Conference {

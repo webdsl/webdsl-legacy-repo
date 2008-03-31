@@ -2,9 +2,9 @@ module review
 
 section data model
 
-  entity ReviewTask : Task {
+  entity ReviewTask : ConferenceTask {
     review -> Review
-    name   :: String := "Review paper '" + review.paper.title + "' for " + review.paper.conference.name
+    name   :: String := "Review paper '" + review.paper.title + "' for " + this.conference.name
   }
 
 section data logic
@@ -16,7 +16,7 @@ section data logic
       for(u : User in c.pcList) {
         u.roles.add(rrole);
         for(r : Review in u.authoredReviewsList) {
-          var t : ReviewTask := ReviewTask { review := r };
+          var t : ReviewTask := ReviewTask { conference := c, review := r };
           assignTask(t, u);
         }
       }

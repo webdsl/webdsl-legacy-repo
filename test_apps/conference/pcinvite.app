@@ -9,14 +9,13 @@ section data model
     accepted   :: Bool
   }
 
-  entity PcInvitedTask : Task {
+  entity PcInvitedTask : ConferenceTask {
     invite -> PcInvite
     name   :: String := "Respond to invitation to join PC of " + invite.conference.name
   }
 
-  entity AssemblePcTask : Task {
-    conference -> Conference
-    name       :: String := "Assemble a PC for " + conference.name
+  entity AssemblePcTask : ConferenceTask {
+    name       :: String := "Assemble a PC for " + this.conference.name
   }
 
 section business logic
@@ -88,7 +87,7 @@ section pages
             pcInvite.user := getUser(name, email);
             pcInvite.persist();
             t.conference.pcInvites.add(pcInvite);
-            var pcTask : PcInvitedTask := PcInvitedTask { invite := pcInvite };
+            var pcTask : PcInvitedTask := PcInvitedTask { conference := t.conference, invite := pcInvite };
             pcTask.persist();
             assignTask(pcTask, pcInvite.user);
             return assemblePcTask(t);
