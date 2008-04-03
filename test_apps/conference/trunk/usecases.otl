@@ -1,0 +1,44 @@
+Use Cases in Conference Application
+Conference context (c : Conference)
+	createConference
+		precondition: principal.isAdmin
+		postcondition: -
+		 This should include something saying that a new Conference object was created
+	invitePcMember
+		precondition: c.status = assemblePC && securityContext.principal in c.chairs
+		postcondition: -
+		 There should be added a new PcInvite to c.pcInvites
+	acceptPapers
+		precondition: c.status = assemblePC
+		postcondition: c.status = acceptingPapers
+	bidOnPapers <actor in c.pc>
+	 This is where a PC member bids on a paper
+		precondition: c.status = bidOnPapers
+		postcondition: -
+	Automatically executed use-cases
+		submissionDeadlineExpired
+			precondition: c.status = acceptingPapers
+			postcondition: c.status = bidOnPapers
+		finishBidding
+			precondition: And[pcMember.bids.status = bidsCompleted | pcMember : User in c.pc]
+			postcondition: c.status = decideReviewAssignment
+		decideReviewAssignment
+
+User context u : User
+	registerNewUser <actor = u>
+		precondition: -
+		postcondition: u.status = registeredUser
+	updateUserProfile <actor = u>
+		precondition: u.status = registeredUser
+		postcondition: -
+
+Paper context p : Paper
+	create
+		precondition: p.conference.status = acceptingPapers
+		postcondition: p.status = draftPaper && And[authorRole in author.roles | author : User in paper.authors] && actor in p.authors
+	update <actor in p.authors>
+		precondition: p.status != submittedPaper && p.status != finalPaper
+		postcondition: -
+	submit <actor in p.authors>
+		precondition: p.status = draftPaper
+		postcondition: p.status = submittedPaper

@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head><title>Use Cases in Conference Application</title>
+<!--  $Revision: 1.43 $ -->
+<!--  $Date: 2005/06/07 13:16:40 $ -->
+<!--  $Author: noel $ -->
+<link href="nnnnnn.css" rel="stylesheet" type="text/css">
+<body>
+<div class="DocTitle">
+<h1>Use Cases in Conference Application</h1>
+</div>
+<div class="MainPage">
+<ol>
+<li  class="L1" >Conference context (c : Conference) <ol>
+<li  class="L2" >createConference <ol>
+<li  class="L3" >precondition: principal.isAdmin
+<li  class="L3" >postcondition: -
+<p  class="P3" >This should include something saying that a new Conference object was created </p>
+</ol>
+<li  class="L2" >invitePcMember <ol>
+<li  class="L3" >precondition: c.status = assemblePC && securityContext.principal in c.chairs
+<li  class="L3" >postcondition: -
+<p  class="P3" >There should be added a new PcInvite to c.pcInvites </p>
+</ol>
+<li  class="L2" >acceptPapers <ol>
+<li  class="L3" >precondition: c.status = assemblePC
+<li  class="L3" >postcondition: c.status = acceptingPapers </ol>
+<li  class="L2" >bidOnPapers <actor in c.pc>
+<p  class="P2" >This is where a PC member bids on a paper </p>
+<ol>
+<li  class="L3" >precondition: c.status = bidOnPapers
+<li  class="L3" >postcondition: - </ol>
+<li  class="L2" >Automatically executed use-cases <ol>
+<li  class="L3" >submissionDeadlineExpired <ol>
+<li  class="L4" >precondition: c.status = acceptingPapers
+<li  class="L4" >postcondition: c.status = bidOnPapers </ol>
+<li  class="L3" >finishBidding <ol>
+<li  class="L4" >precondition: And[pcMember.bids.status = bidsCompleted | pcMember : User in c.pc]
+<li  class="L4" >postcondition: c.status = decideReviewAssignment </ol>
+<li  class="L3" >decideReviewAssignment </ol>
+</ol>
+<li  class="L1" >User context u : User <ol>
+<li  class="L2" >registerNewUser <actor = u> <ol>
+<li  class="L3" >precondition: -
+<li  class="L3" >postcondition: u.status = registeredUser </ol>
+<li  class="L2" >updateUserProfile <actor = u> <ol>
+<li  class="L3" >precondition: u.status = registeredUser
+<li  class="L3" >postcondition: - </ol>
+</ol>
+<li  class="L1" >Paper context p : Paper <ol>
+<li  class="L2" >create <ol>
+<li  class="L3" >precondition: p.conference.status = acceptingPapers
+<li  class="L3" >postcondition: p.status = draftPaper && And[authorRole in author.roles | author : User in paper.authors] && actor in p.authors </ol>
+<li  class="L2" >update <actor in p.authors> <ol>
+<li  class="L3" >precondition: p.status != submittedPaper && p.status != finalPaper
+<li  class="L3" >postcondition: - </ol>
+<li  class="L2" >submit <actor in p.authors> <ol>
+<li  class="L3" >precondition: p.status = draftPaper
+<li  class="L3" >postcondition: p.status = submittedPaper </ol>
+</ol>
+<li  class="L1" >[Test another something] </ol>
+</div>
+<div class="Footer">
+<hr>
+
+<br>
+usecases.otl&nbsp&nbsp 2008/04/03 14:25
+</div>
+</body></html>
