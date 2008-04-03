@@ -1,44 +1,64 @@
 Use Cases in Conference Application
 Conference context (c : Conference)
-	createConference
-		precondition: principal.isAdmin
-		postcondition: -
+	createConference <actor.isAdmin>
+		pre: -
+		post: c.status = assemblePC
 		 This should include something saying that a new Conference object was created
-	invitePcMember
-		precondition: c.status = assemblePC && securityContext.principal in c.chairs
-		postcondition: -
+	invitePcMember <actor in c.chairs>
+		pre: c.status = assemblePC && securityContext.principal in c.chairs
+		post: -
 		 There should be added a new PcInvite to c.pcInvites
-	acceptPapers
-		precondition: c.status = assemblePC
-		postcondition: c.status = acceptingPapers
+	acceptPapers <actor in c.chairs>
+		pre: c.status = assemblePC
+		post: c.status = acceptingPapers
 	bidOnPapers <actor in c.pc>
 	 This is where a PC member bids on a paper
-		precondition: c.status = bidOnPapers
-		postcondition: -
-	Automatically executed use-cases
+		pre: c.status = bidOnPapers
+		post: -
+	decideReviewAssignment <actor in c.chairs>
+		pre: c.status = decideReviewAssignment
+		post: And[r.author != null | r : Review in U[p.reviews | p : Paper in c.papers]] && c.status = reviewing
+	decideOnAcceptance <actor in c.chairs>
+		pre: c.status = decideOnAcceptance
+		post: And[p.classificationFinal | p : Paper in c.papers] && c.status = submitFinalPapers
+		 And authors are notified of acceptance/rejection
+	Automatically executed use-cases (based on pre)
 		submissionDeadlineExpired
-			precondition: c.status = acceptingPapers
-			postcondition: c.status = bidOnPapers
+			pre: c.status = acceptingPapers
+			post: c.status = bidOnPapers
 		finishBidding
-			precondition: And[pcMember.bids.status = bidsCompleted | pcMember : User in c.pc]
-			postcondition: c.status = decideReviewAssignment
-		decideReviewAssignment
+			pre: And[pcMember.bids.status = bidsFinal | pcMember : User in c.pc]
+			post: c.status = decideReviewAssignment
+		allReviewsAreDone
+			pre: And[r.status = reviewFinished | r : Review in U[p.reviews | p : Paper in c.papers]] && c.status = reviewing
+			post: c.status = decideOnAcceptance
 
 User context u : User
 	registerNewUser <actor = u>
-		precondition: -
-		postcondition: u.status = registeredUser
+		pre: -
+		post: u.status = registeredUser
 	updateUserProfile <actor = u>
-		precondition: u.status = registeredUser
-		postcondition: -
+		pre: u.status = registeredUser
+		post: -
 
 Paper context p : Paper
-	create
-		precondition: p.conference.status = acceptingPapers
-		postcondition: p.status = draftPaper && And[authorRole in author.roles | author : User in paper.authors] && actor in p.authors
+	create <loggedIn()>
+		pre: p.conference.status = acceptingPapers
+		post: p.status = draftPaper && And[authorRole in author.roles | author : User in paper.authors] && actor in p.authors
 	update <actor in p.authors>
-		precondition: p.status != submittedPaper && p.status != finalPaper
-		postcondition: -
+		pre: p.status != submittedPaper && p.status != finalPaper
+		post: -
 	submit <actor in p.authors>
-		precondition: p.status = draftPaper
-		postcondition: p.status = submittedPaper
+		pre: p.status = draftPaper
+		post: p.status = submittedPaper
+	submitFinal <actor in p.authors>
+		pre: p.conference.status = submitFinalPapers && p.classification = acceptedClassification && p.status != finalPaper
+		post: p.status = finalPaper
+
+Review context r : Review
+	update <actor = r.author>
+		pre: r.paper.conference.status = reviewing && r.status = reviewInProgress
+		post: -
+	submit <actor = r.author>
+		pre: r.paper.conference.status = reviewing && r.status = reviewInProgress
+		post: r.status = reviewFinished

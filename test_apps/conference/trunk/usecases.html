@@ -11,58 +11,80 @@
 <div class="MainPage">
 <ol>
 <li  class="L1" >Conference context (c : Conference) <ol>
-<li  class="L2" >createConference <ol>
-<li  class="L3" >precondition: principal.isAdmin
-<li  class="L3" >postcondition: -
+<li  class="L2" >createConference <actor.isAdmin> <ol>
+<li  class="L3" >pre: -
+<li  class="L3" >post: c.status = assemblePC
 <p  class="P3" >This should include something saying that a new Conference object was created </p>
 </ol>
-<li  class="L2" >invitePcMember <ol>
-<li  class="L3" >precondition: c.status = assemblePC && securityContext.principal in c.chairs
-<li  class="L3" >postcondition: -
+<li  class="L2" >invitePcMember <actor in c.chairs> <ol>
+<li  class="L3" >pre: c.status = assemblePC && securityContext.principal in c.chairs
+<li  class="L3" >post: -
 <p  class="P3" >There should be added a new PcInvite to c.pcInvites </p>
 </ol>
-<li  class="L2" >acceptPapers <ol>
-<li  class="L3" >precondition: c.status = assemblePC
-<li  class="L3" >postcondition: c.status = acceptingPapers </ol>
+<li  class="L2" >acceptPapers <actor in c.chairs> <ol>
+<li  class="L3" >pre: c.status = assemblePC
+<li  class="L3" >post: c.status = acceptingPapers </ol>
 <li  class="L2" >bidOnPapers <actor in c.pc>
 <p  class="P2" >This is where a PC member bids on a paper </p>
 <ol>
-<li  class="L3" >precondition: c.status = bidOnPapers
-<li  class="L3" >postcondition: - </ol>
-<li  class="L2" >Automatically executed use-cases <ol>
+<li  class="L3" >pre: c.status = bidOnPapers
+<li  class="L3" >post: - </ol>
+<li  class="L2" >decideReviewAssignment <actor in c.chairs> <ol>
+<li  class="L3" >pre: c.status = decideReviewAssignment
+<li  class="L3" >post: And[r.author != null | r : Review in U[p.reviews | p : Paper in c.papers]] && c.status = reviewing </ol>
+<li  class="L2" >decideOnAcceptance <actor in c.chairs> <ol>
+<li  class="L3" >pre: c.status = decideOnAcceptance
+<li  class="L3" >post: And[p.classificationFinal | p : Paper in c.papers] && c.status = submitFinalPapers
+<p  class="P3" >And authors are notified of acceptance/rejection </p>
+</ol>
+<li  class="L2" >Automatically executed use-cases (based on pre) <ol>
 <li  class="L3" >submissionDeadlineExpired <ol>
-<li  class="L4" >precondition: c.status = acceptingPapers
-<li  class="L4" >postcondition: c.status = bidOnPapers </ol>
+<li  class="L4" >pre: c.status = acceptingPapers
+<li  class="L4" >post: c.status = bidOnPapers </ol>
 <li  class="L3" >finishBidding <ol>
-<li  class="L4" >precondition: And[pcMember.bids.status = bidsCompleted | pcMember : User in c.pc]
-<li  class="L4" >postcondition: c.status = decideReviewAssignment </ol>
-<li  class="L3" >decideReviewAssignment </ol>
+<li  class="L4" >pre: And[pcMember.bids.status = bidsFinal | pcMember : User in c.pc]
+<li  class="L4" >post: c.status = decideReviewAssignment </ol>
+<li  class="L3" >allReviewsAreDone <ol>
+<li  class="L4" >pre: And[r.status = reviewFinished | r : Review in U[p.reviews | p : Paper in c.papers]] && c.status = reviewing
+<li  class="L4" >post: c.status = decideOnAcceptance </ol>
+</ol>
 </ol>
 <li  class="L1" >User context u : User <ol>
 <li  class="L2" >registerNewUser <actor = u> <ol>
-<li  class="L3" >precondition: -
-<li  class="L3" >postcondition: u.status = registeredUser </ol>
+<li  class="L3" >pre: -
+<li  class="L3" >post: u.status = registeredUser </ol>
 <li  class="L2" >updateUserProfile <actor = u> <ol>
-<li  class="L3" >precondition: u.status = registeredUser
-<li  class="L3" >postcondition: - </ol>
+<li  class="L3" >pre: u.status = registeredUser
+<li  class="L3" >post: - </ol>
 </ol>
 <li  class="L1" >Paper context p : Paper <ol>
-<li  class="L2" >create <ol>
-<li  class="L3" >precondition: p.conference.status = acceptingPapers
-<li  class="L3" >postcondition: p.status = draftPaper && And[authorRole in author.roles | author : User in paper.authors] && actor in p.authors </ol>
+<li  class="L2" >create <loggedIn()> <ol>
+<li  class="L3" >pre: p.conference.status = acceptingPapers
+<li  class="L3" >post: p.status = draftPaper && And[authorRole in author.roles | author : User in paper.authors] && actor in p.authors </ol>
 <li  class="L2" >update <actor in p.authors> <ol>
-<li  class="L3" >precondition: p.status != submittedPaper && p.status != finalPaper
-<li  class="L3" >postcondition: - </ol>
+<li  class="L3" >pre: p.status != submittedPaper && p.status != finalPaper
+<li  class="L3" >post: - </ol>
 <li  class="L2" >submit <actor in p.authors> <ol>
-<li  class="L3" >precondition: p.status = draftPaper
-<li  class="L3" >postcondition: p.status = submittedPaper </ol>
+<li  class="L3" >pre: p.status = draftPaper
+<li  class="L3" >post: p.status = submittedPaper </ol>
+<li  class="L2" >submitFinal <actor in p.authors> <ol>
+<li  class="L3" >pre: p.conference.status = submitFinalPapers && p.classification = acceptedClassification && p.status != finalPaper
+<li  class="L3" >post: p.status = finalPaper </ol>
 </ol>
-<li  class="L1" >[Test another something] </ol>
+<li  class="L1" >Review context r : Review <ol>
+<li  class="L2" >update <actor = r.author> <ol>
+<li  class="L3" >pre: r.paper.conference.status = reviewing && r.status = reviewInProgress
+<li  class="L3" >post: - </ol>
+<li  class="L2" >submit <actor = r.author> <ol>
+<li  class="L3" >pre: r.paper.conference.status = reviewing && r.status = reviewInProgress
+<li  class="L3" >post: r.status = reviewFinished </ol>
+</ol>
+</ol>
 </div>
 <div class="Footer">
 <hr>
 
 <br>
-usecases.otl&nbsp&nbsp 2008/04/03 14:25
+usecases.otl&nbsp&nbsp 2008/04/03 15:59
 </div>
 </body></html>

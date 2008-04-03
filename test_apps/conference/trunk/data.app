@@ -13,6 +13,7 @@ section access control data model
     roles           -> Set<ConferenceRole>
     tasks           -> Set<ConferenceTask> (inverse=ConferenceTask.assignees)
     registered      :: Bool
+    bids -> Set<ConferenceBid>
   }
 
   enum UserRole {
@@ -83,25 +84,25 @@ section conference data model
     chairs             -> Set<User>
     pc                 -> Set<User>
     papers             -> Set<Paper>
-    stage              -> ConferenceStage
+    status             -> ConferenceStatus
     pcInvites          -> Set<PcInvite>
   }
 
   entity Paper {
     conference -> Conference (inverse=Conference.papers)
-    title          :: String (name)
-    abstract       :: Text
-    authors        -> Set<User> (inverse=User.authoredPapers)
-    reviewers      -> Set<User> (inverse=User.authoredReviews)
-    reviews        <> Set<Review>
-    classification -> PaperClassification
-    final          :: Bool
-
+    title               :: String (name)
+    abstract            :: Text
+    authors             -> Set<User> (inverse=User.authoredPapers)
+    reviewers           -> Set<User> (inverse=User.authoredReviews)
+    reviews             <> Set<Review>
+    classification      -> PaperClassification
+    classificationFinal :: Bool
+    final               :: Bool
   }
 
 section reviews
 
-  enum ConferenceStage {
+  enum ConferenceState {
     assemblePC("Assemling the PC"),
     acceptingPapers("Accepting papers"),
     bidOnPapers("Bidding on papers"),
@@ -110,6 +111,22 @@ section reviews
     decideOnAcceptance("Decide on acceptance of papers"),
     submitFinalPapers("Results known, submit final papers"),
     conferenceCompleted("Ready for the actual conference")
+  }
+
+  entity ConferenceBids {
+    conference -> Conference
+    bids -> Set<Bid>
+    status -> BidsStatus
+  }
+
+  enum BidsStatus {
+    bidsDraft("Bids are still updated"),
+    bidsFinal("Bids are final")
+  }
+
+  entity Bid {
+    paper -> Paper
+    category -> BidCategory
   }
 
   enum Classification {
@@ -145,6 +162,12 @@ section reviews
     committeeComments :: Text
     summary           :: Text
     evaluation        :: Text
-    completed         :: Bool
+    status            -> ReviewStatus
+  }
+
+  enum ReviewStatus {
+    reviewNotAssigned("Review is in progress"),
+    reviewInProgress("Review is in progress"),
+    reviewFinished("Review is finished")
   }
 

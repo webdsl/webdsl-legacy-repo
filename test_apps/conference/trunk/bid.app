@@ -6,14 +6,6 @@ description {
 
 section data model
 
-  extend entity User {
-    bids -> Set<Bid>
-  }
-
-  entity Bid {
-    paper -> Paper
-    category -> BidCategory
-  }
 
   entity BidTask : ConferenceTask {
     name :: String := "Bid on papers in " + this.conference.name
