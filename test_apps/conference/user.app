@@ -96,7 +96,7 @@ section pages
       section {
         header{"Task to do" }
         list {
-          for(t : Task in u.tasksList where !t.completed) {
+          for(t : ConferenceTask in u.tasksList where !t.completed) {
             listitem { output(t) }
           }
         }
@@ -104,7 +104,7 @@ section pages
       section {
         header{"Tasks already done"}
         list {
-          for(t : Task in u.tasksList where t.completed) {
+          for(t : ConferenceTask in u.tasksList where t.completed) {
             listitem { output(t.name) }
           }
         }

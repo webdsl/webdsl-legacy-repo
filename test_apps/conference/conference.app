@@ -43,12 +43,12 @@ section pages
   define page home() {
     main()
     define body() {
+      header{"Conferences"}
       list {
-        listitem { navigate(allConference()) { "All conferences" } }
-        listitem { navigate(createConference()) { "Create conference" } }
-        listitem { navigate(createPaper()) { "Submit paper" } }
-        listitem { navigate(createReview()) { "Write review" } }      
-      }                        
+        for(c : Conference) {
+          listitem { output(c) }
+        }
+      }
     }
   }
 
@@ -138,7 +138,7 @@ section pages
     section {
       header {"Your tasks related to this conference"}
       list {
-        for(t : Task in securityContext.principal.tasksList where ((t is a ConferenceTask) && !t.completed && (t as ConferenceTask).conference = c)) {
+        for(t : ConferenceTask in securityContext.principal.tasksList where !t.completed && t.conference = c) {
           listitem { output(t) }
         }
       }

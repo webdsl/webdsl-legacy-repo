@@ -2,7 +2,7 @@ module submitfinalpapers
 
 section data model
 
-  entity SubmitFinalPaperTask : Task {
+  entity SubmitFinalPaperTask : ConferenceTask {
     paper -> Paper
     name  :: String := "Submit final version of paper '" + paper.name
   }
@@ -18,7 +18,7 @@ section business logic
           // Too bad...
         } else {
           // Yay! Create a write final paper task
-          var t : SubmitFinalPaperTask := SubmitFinalPaperTask { paper := p };
+          var t : SubmitFinalPaperTask := SubmitFinalPaperTask { conference := c, paper := p };
           for(author : User in p.authorsList) {
             assignTask(t, author);
           }

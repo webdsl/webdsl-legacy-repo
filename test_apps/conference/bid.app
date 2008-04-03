@@ -47,7 +47,7 @@ section business logic
     
     function checkForAllBiddingTasks(c : Conference) : Conference {
       for(u : User in c.pc) {
-        for(t : Task in u.tasks where (!t.completed) && (t is a BidTask)) {
+        for(t : ConferenceTask in u.tasks where (!t.completed) && (t is a BidTask)) {
           return c; // There are still uncompleted BidTasks in the PC
         }
       }

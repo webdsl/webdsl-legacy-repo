@@ -59,8 +59,8 @@ section menus.
 
   globals {
     function getTaskCount() : Int { // Far from ideal, but couldn't get it to work with a list comprehension
-      var ts : Set<Task> := Set<Task>();
-      for(t : Task in securityContext.principal.tasks where !t.completed) {
+      var ts : Set<ConferenceTask> := Set<ConferenceTask>();
+      for(t : ConferenceTask in securityContext.principal.tasks where !t.completed) {
         ts.add(t);
       }
       return ts.length;

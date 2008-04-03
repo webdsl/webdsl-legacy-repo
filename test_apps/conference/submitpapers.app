@@ -2,9 +2,8 @@ module submitpapers
 
 section initialization
 
-  entity ConferenceDeadlinePassedTask : Task {
-    conference -> Conference
-    name       :: String := "Mark submission deadline as passed for " + conference.name
+  entity ConferenceDeadlinePassedTask : ConferenceTask {
+    name       :: String := "Mark submission deadline as passed for " + this.conference.name
   }
   globals {
     function initAcceptingPapers(c : Conference)  : Conference { 

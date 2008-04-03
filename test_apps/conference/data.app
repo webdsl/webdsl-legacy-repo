@@ -5,13 +5,13 @@ section access control data model
   entity User {
     username        :: String
     name            :: String
-    email           :: Email(id)
+    email           :: Email (id)
     password        :: Secret
     authoredPapers  -> Set<Paper>
     authoredReviews -> Set<Review>
     isAdmin         :: Bool
     roles           -> Set<ConferenceRole>
-    tasks           -> Set<Task> (inverse=Task.assignees)
+    tasks           -> Set<ConferenceTask> (inverse=ConferenceTask.assignees)
     registered      :: Bool
   }
 
@@ -49,7 +49,7 @@ section access control data model
       return cr;
     }
 
-    function assignTask(t : Task, u : User) : Task {
+    function assignTask(t : ConferenceTask, u : User) : ConferenceTask {
       u.tasks.add(t);
       // Send email about it
       return t;
@@ -64,12 +64,14 @@ section access control data model
     }
   }
 
-  entity Task {
+  /*entity Task {
     assignees -> Set<User> 
     completed :: Bool  
-  }
+  } */
 
-  entity ConferenceTask : Task {
+  entity ConferenceTask {
+    assignees -> Set<User> 
+    completed :: Bool  
     conference -> Conference
   }
 
