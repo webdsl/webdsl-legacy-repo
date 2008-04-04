@@ -2,6 +2,12 @@ module data
 
 section data model
 
+  entity User {
+    username :: String (name)
+    password :: Secret
+    email    :: Email
+  }
+
   entity Page {
     name     :: String    (id,name)
     title    :: String
@@ -32,6 +38,12 @@ section versioning
     date     :: Date
     author   -> User
     version  :: Int
+    status   -> PageDiffStatus
+  }
+
+  enum PageDiffStatus {
+    notApprovedStatus("Not yet approved"),
+    approvedStatus("Approved")
   }
 
 section content of a page diff
@@ -51,7 +63,6 @@ section content of a page diff
 section creating new pages
 
   globals {
-  
     function newPage(n : String) : Page {
       return Page {
         name    := n
@@ -59,7 +70,6 @@ section creating new pages
         version := 0
       };
     }
-    
   }
   
 section making change to a page
@@ -75,13 +85,14 @@ section making change to a page
       if (this.version > 0) {
         var diff : PageDiff := 
           PageDiff {
-            page     := this
-            previous := this.previous 
-            created  := this.modified
-            title    := this.title
-            patch    := newText.makePatch(this.content)
-            author   := this.author
-            version  := this.version
+            page     := this,
+            previous := this.previous,
+            created  := this.modified,
+            title    := this.title,
+            patch    := newText.makePatch(this.content),
+            author   := this.author,
+            version  := this.version,
+            status   := notApprovedStatus
           };
         if (this.previous != null) {
           this.previous.next := diff;

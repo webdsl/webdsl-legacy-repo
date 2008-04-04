@@ -5,10 +5,29 @@ description {
 }
 
 imports templates
+imports data
+imports user
+imports init
+
+section access control
+
+  access control rules {
+    principal is User with credentials username, password
+
+    rules page *(*) {
+      true
+    }
+    rules template *(*) {
+      true
+    }
+    rules action *(*) {
+      true
+    }
+  }
 
 section pages
 
-  define page wikiIndex() {
+  define page home() {
     main()
     title{"Wiki Page Index"}
     define body() {
@@ -32,8 +51,8 @@ section pages
     }
     main()
     title{output(p.title)}
-    define wikiOperationsMenuItems() {
-      pageOperationsMenuItems(p)
+    define contextSidebar() {
+      navigate(editPage(p)) { "Edit" }
     }
     define body() {
       section {
@@ -50,29 +69,6 @@ section pages
         }
       }
     }
-  }
-  
-section page operations
-
-  define wikiMenu()
-  {
-    menu{
-      menuheader{ navigate(wiki()){"Wiki"} }
-      wikiOperationsMenuItems()
-      menuitem{ navigate(wikiIndex()){"Page Index"} }
-      menuitem{ navigate(newPage()){"New Page"} }
-      menuspacer{}
-      for(p : Page in config.startpagesList) {
-        menuitem{ output(p) }
-      }
-    }
-  }
-  
-  define wikiOperationsMenuItems() {
-  }
-    
-  define pageOperationsMenuItems(p : Page) {
-    menuitem{ navigate(editPage(p)) { "Edit This Page" } }
   }
   
 section wiki page history
@@ -171,9 +167,3 @@ section wiki page editing
     }
   }
 
-define page home() {
-  main()
-  define body() {
-    "Hello world!"
-  }
-}

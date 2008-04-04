@@ -2,24 +2,46 @@ module templates
 
 section main template.
 
-  define main() {
-    div("outersidebar") {
-      sidebar()
+ define main() {
+    block("top") {
+      top()
     }
-    div("outerbody") {
-      div("menubar") {
-        menu()
+
+    block("body") {
+      block("left_innerbody") {
+        sidebar()
       }
-      body()
+      block("main_innerbody") {
+        body()
+      }
+    }
+
+    block("footer") {
       footer()
+    }
+  }
+  
+  define top() {
+    block("header") {}
+    block("menubar") {
+      menubar {
+        conferencesMenu()
+      }
     }
   }
 
 section basic page elements.
 
   define sidebar() {
-
+    list {
+      contextSidebar()
+    }
+    
+    list {
+    }
   }
+  
+  define contextSidebar() { }
   
   define footer() {
     "generated with "
@@ -28,22 +50,52 @@ section basic page elements.
   }
   
 section menus.
-  
-  define menu() {
 
-    
+  define conferencesMenu() {
+    form {
+      menu {
+        menuheader { navigate(home()) { "Home" } }
+      }
+      menu {
+        menuheader { "Pages" }
+        for(p : Page) {
+          menuitem { output(p) }
+        }
+        menuitem { navigate(newPage()) { "New page" } }
+      }
+      menu {
+        menuheader { "User" }
+        if(securityContext.loggedIn) {
+          menuitem { actionLink("Sign Off", signoff()) }
+          action signoff() {
+            securityContext.loggedIn := false;
+            securityContext.principal := null;
+            return home();
+          }
+        }
+        if(!securityContext.loggedIn) {
+          menuitem { navigate(signin()) { "Sign in" } }
+          menuitem { navigate(register()) { "Register" } }
+        }
+      }
+    }
   }
-  
-section entity management.
 
-  define manageMenu() {}
-  
-  define page manage() {
+  define page error(msg : String) {
     main()
-    define sidebar() {}
+    title{"Error"}
     define body() {
-      createMenu()
-      allMenu()
+      header{"Error"}
+      output(msg)
+    }
+  }
+
+  define page message(msg : String) {
+    main()
+    title{"Message"}
+    define body() {
+      header{"Message"}
+      output(msg)
     }
   }
 
