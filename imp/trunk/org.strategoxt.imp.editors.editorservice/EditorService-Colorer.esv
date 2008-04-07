@@ -1,0 +1,50 @@
+module EditorService-Colorer
+
+  colorer Additional coloring
+  
+    SectionName: italic
+    
+    ColorName: black
+    
+    // all Outliner: green
+  
+  // Example: sort-based highlighting with background color
+  // Id: yellow green
+  
+  // Example: sort- and constructor-based highlighting
+  // ClassBodyDec.MethodDec: yellow
+  
+  // Example: constructor-based highlighting
+  // *.MethodDec: 255 0 0
+  
+  // Example: background colors for ToMetaExpr/FromMetaExpr, if supported by the grammar
+  // all *.ToMetaExpr:   _ 255 200 255
+  // all *.FromMetaExpr: _ white
+  
+  colorer Default, token-based highlighting
+    keyword token:
+      127 0 85
+      bold
+
+    identifier token:
+      black
+
+    string token:
+      blue
+
+    number token:
+      dark
+      green
+
+    var token:
+      255 0 100
+      italic
+
+    operator token:
+      0 0 128
+
+    // comments
+
+    layout token:
+      100 100 0
+      italic

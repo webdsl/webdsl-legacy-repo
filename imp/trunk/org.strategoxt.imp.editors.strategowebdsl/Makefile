@@ -1,4 +1,4 @@
-SYNTAX     = StrategoWebDSL
+SYNTAX     = Stratego-WebDSL-Java-XML
 EXTENSIONS = str,strw
 PACKAGE    = org.strategoxt.imp.editors.strategowebdsl
 SOURCE     = ../../../webdsls/trunk/src/org/webdsl/dsl/syntax/$(SYNTAX).def
