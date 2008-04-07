@@ -1,4 +1,4 @@
-<project name="dataMigration" basedir="." default="buildAll">
+<project name="javaDataMigration" basedir="." default="buildAll">
 	<description>
         data migration build file
     </description>

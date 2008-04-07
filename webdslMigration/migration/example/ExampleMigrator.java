@@ -15,6 +15,7 @@ import transformation.AttributeTransformation;
 import transformation.BinaryPredicate;
 import transformation.DropAttribute;
 import transformation.EmptyObject;
+import transformation.Identity;
 import transformation.Injection;
 import transformation.ObjectConversion;
 import transformation.PrimitiveTypeConversions;

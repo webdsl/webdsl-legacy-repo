@@ -18,7 +18,7 @@ import transformation.UntypedTransformation;
 
 /**
  * The Hibernate migrator holds a source, target and transformation. Using these, it will extract objects from 
- * the source, transform them and load the into the new database. This proces is automated and can be started 
+ * the source, transform them and load the into the new database. This process is automated and can be started 
  * using 'migrate'.
  * @author Sander Vermolen
  */
@@ -39,7 +39,7 @@ public class HibernateMigrator
 	/**
 	 * Will extract old objects from source database, transform using transformer and load objects into 
 	 * the new database. The source objects used are restricted by the injections defined in the transformer.
-	 * The traget objects loaded are restricted by the result of the transformation and by the objects already
+	 * The target objects loaded are restricted by the result of the transformation and by the objects already
 	 * available in the database. Object ID's will not be altered (even when these are set to be generated). If 
 	 * an id is already available in the database, the object containing it will not be overwritten. Any 
 	 * transformation result with this id will be ignored.
@@ -59,13 +59,19 @@ public class HibernateMigrator
 	
 	protected void migrate(List<Class> unProcessedTypes, List<UntypedTransformation> input, TransformationScope scope) throws TransformationException
 	{
-		// If all injections are processed, start transformer
+		// If all inputs are processed, start transformer
 		if(unProcessedTypes.size() == 0)
-		{			
+		{
+			System.out.println("Input collected, starting transformation now ...");
 			// Transform
 			Object result = transformer.transform(input, scope);
 			
+			
+			
+			System.out.println("Transformation finished, storing result ..." + result);
+			
 			// Load (falling back to Hibernate to use replication)
+			//targetEM.persist(result);
 			HibernateEntityManager hibEM = (HibernateEntityManager) targetEM;
 			Session session = hibEM.getSession();
 			session.replicate(result, ReplicationMode.IGNORE);
@@ -75,7 +81,9 @@ public class HibernateMigrator
 		else
 		{
 			Class firstType = unProcessedTypes.get(0);
+			System.out.println("Loading objects for type "+firstType.getName());
 			List sources = sourceEM.createQuery("from "+firstType.getName()).getResultList();
+			System.out.println(sources.size()+" objects loaded");
 			for(Object s : sources)
 			{
 				input.add(new Injection(s));

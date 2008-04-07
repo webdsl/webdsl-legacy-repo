@@ -15,8 +15,8 @@ public class Application extends UntypedTransformation {
 	@Override
 	public Object getAttribute(List<UntypedTransformation> input, TransformationScope scope, String attributeName) throws TransformationException {
 		// Check nr inputs
-		if(input.size() != getNrInputs(null, null))
-			throw new TransformationException("Incorrect number of inputs to transformation (got "+input.size()+", but needed "+getNrInputs(null, null)+")");
+		//if(input.size() != getNrInputs(null, null))
+		//	throw new TransformationException("Incorrect number of inputs to transformation (got "+input.size()+", but needed "+getNrInputs(null, null)+")");
 		
 		Vector<UntypedTransformation> newInput = new Vector<UntypedTransformation>();
 		newInput.add(t2);

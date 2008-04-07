@@ -13,7 +13,7 @@ public class Merge extends UntypedTransformation {
 		List<UntypedTransformation> inputToFirst = remainingInput.subList(0, input1.getNrInputs(null, null));
 		List<UntypedTransformation> inputToSecond = remainingInput.subList(input1.getNrInputs(null, null), remainingInput.size());	// size should exactly be required number of inputs
 		
-		// Try master, if not succesful, use slave (possibly throws exception)
+		// Try master, if not successful, use slave (possibly throws exception)
 		try {
 			return input1.getAttribute(inputToFirst, scope, attributeName);}
 		catch(TransformationException e){}

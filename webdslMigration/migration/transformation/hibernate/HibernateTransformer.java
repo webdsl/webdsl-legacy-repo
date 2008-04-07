@@ -60,6 +60,10 @@ public class HibernateTransformer extends TypedTransformation {
 		for(int i=0; i<targetPropertyNamesWithoutId.length; i++)
 			targetPropertyNames[i+1] = targetPropertyNamesWithoutId[i];
 		
+		System.out.println("Selected persistent attributes:");
+		for(int i=0; i<targetPropertyNames.length; i++)
+			System.out.println(targetPropertyNames[i]);
+		
 		// Fix for WebDSL (remove prefix underscores from names, since getters and setters are named without underscores) 
 		for(int i=0; i<targetPropertyNames.length; i++)
 			if(targetPropertyNames[i].startsWith("_"))

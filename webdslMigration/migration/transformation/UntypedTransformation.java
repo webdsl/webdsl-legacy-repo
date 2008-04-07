@@ -17,6 +17,7 @@ public abstract class UntypedTransformation{
 			List<UntypedTransformation> inputCopy = new Vector<UntypedTransformation>(input);
 			Object transformedAttribute = getAttribute(inputCopy, scope, attName);
 			
+			System.out.println("Setting attribute "+attName+" to "+transformedAttribute);			
 			try
 			{
 				// Find setter
