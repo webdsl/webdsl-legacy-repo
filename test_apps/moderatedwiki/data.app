@@ -6,11 +6,22 @@ section data model
     username :: String (name)
     password :: Secret
     email    :: Email
+    status   -> UserStatus
+    roles    -> Set<UserRole>
+  }
+
+  enum UserStatus {
+    notApproved("Not yet approved"),
+    registered("Registered")
+  }
+
+  enum UserRole {
+    adminRole("Admin role"),
+    moderatorRole("Moderator role")
   }
 
   entity Page {
     name     :: String    (id,name)
-    title    :: String
     content  :: WikiText
     authors  -> Set<User> 
   }
@@ -31,7 +42,6 @@ section versioning
   entity PageDiff {
     page     -> Page
     next     -> PageDiff
-    title    :: String
     patch    :: Patch     // patch to create content of this version from next
     created  :: Date
     previous -> PageDiff
@@ -43,7 +53,8 @@ section versioning
 
   enum PageDiffStatus {
     notApprovedStatus("Not yet approved"),
-    approvedStatus("Approved")
+    approvedStatus("Approved"),
+    rejectedStatus("Rejected")
   }
 
 section content of a page diff
@@ -65,9 +76,10 @@ section creating new pages
   globals {
     function newPage(n : String) : Page {
       return Page {
-        name    := n
-        author  := securityContext.principal
-        version := 0
+        name    := n,
+        author  := securityContext.principal,
+        version := 0,
+        content := ""
       };
     }
   }
@@ -80,35 +92,36 @@ section making change to a page
   // Page in combination with the version; maybe good anyway to use the
   // page key as partial key of the diff anyway
 
-  extend entity Page {
-    function makeChange(newTitle : String, newText : WikiText, newAuthor : User) : Page {
-      if (this.version > 0) {
-        var diff : PageDiff := 
-          PageDiff {
-            page     := this,
-            previous := this.previous,
-            created  := this.modified,
-            title    := this.title,
-            patch    := newText.makePatch(this.content),
-            author   := this.author,
-            version  := this.version,
-            status   := notApprovedStatus
-          };
-        if (this.previous != null) {
-          this.previous.next := diff;
-        }
-        this.previous := diff;
+  globals {
+    function makeChange(p : Page, newText : WikiText, newAuthor : User) : Page {
+      var diff : PageDiff := 
+        PageDiff {
+          page     := p,
+          previous := p.previous,
+          created  := p.modified,
+          patch    := p.content.makePatch(newText), // was: newText.makePatch(p.content),
+          author   := newAuthor, // was: p.author,
+          version  := p.version,
+          status   := notApprovedStatus
+        };
+      diff.persist();
+      //p.modified := now();
+      return p;
+    }
+
+    function approveRevision(p : Page, pd : PageDiff) : PageDiff {
+      if (p.previous != null) {
+        p.previous.next := pd;
       }
-      //this.modified := now();
-      this.version := this.version + 1;
-      this.title   := newTitle;
-      this.content := newText;
-      this.author  := newAuthor;
-      this.authors.add(newAuthor);
-      if (this.author != null) {
-        this.author.authored.add(this);
+      p.previous := pd;
+      p.version := p.version + 1;
+      p.content := pd.content;
+      p.author  := pd.author;
+      p.authors.add(pd.author);
+      if (p.author != null) {
+        p.author.authored.add(p);
       }
-      return this;
+      return pd;
     }
   }
 

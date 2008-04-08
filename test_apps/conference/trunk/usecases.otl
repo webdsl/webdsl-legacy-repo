@@ -5,7 +5,7 @@ Conference context (c : Conference)
 		post: c.status = assemblePC
 		 This should include something saying that a new Conference object was created
 	invitePcMember <actor in c.chairs>
-		pre: c.status = assemblePC && securityContext.principal in c.chairs
+		pre: c.status = assemblePC
 		post: -
 		 There should be added a new PcInvite to c.pcInvites
 	acceptPapers <actor in c.chairs>

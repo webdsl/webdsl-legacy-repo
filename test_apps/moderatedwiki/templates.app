@@ -58,7 +58,7 @@ section menus.
       }
       menu {
         menuheader { "Pages" }
-        for(p : Page) {
+        for(p : Page where p.version > 0 || (adminRole in securityContext.principal.roles) || (moderatorRole in securityContext.principal.roles)) {
           menuitem { output(p) }
         }
         menuitem { navigate(newPage()) { "New page" } }

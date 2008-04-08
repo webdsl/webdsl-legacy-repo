@@ -43,20 +43,21 @@ section pages
   }
 
   define page page(p : Page) {
-    init {
+    /*init {
       if(p.authors.length = 0) {
         // This is a new page
         goto editPage(p);
       }
-    }
+    }*/
     main()
-    title{output(p.title)}
+    title{output(p.name)}
     define contextSidebar() {
       navigate(editPage(p)) { "Edit" }
+      revisionsToApprove(p)
     }
     define body() {
       section {
-        header{ output(p.title) }
+        header{ output(p.name) }
         par{ output(p.content) }
 	
         block("wikiPageByLine") {
@@ -66,6 +67,22 @@ section pages
             }
           }
           par{ previousLink(p) }
+        }
+      }
+    }
+  }
+
+  access control rules {
+    rules template revisionsToApprove(*) {
+      moderatorRole in securityContext.principal.roles
+    }
+  }
+  define revisionsToApprove(p : Page) {
+    section {
+      header {"Revisions to approve"}
+      list {
+        for(pd : PageDiff where pd.page = p && pd.status = notApprovedStatus) {
+          listitem { navigate(approveRevision(pd)) { "by " output(pd.author) } }
         }
       }
     }
@@ -113,7 +130,6 @@ section wiki page history
 section wiki page editing
 
   define page editPage(p : Page) {
-    var newTitle   : String   := p.title;
     var newContent : WikiText := p.content;
     main() 
     title{"Edit Page: " output(p.name)}
@@ -121,14 +137,13 @@ section wiki page editing
       section {
         header{"Edit Page: " output(p.name)}
         form { 
-          par{ input(newTitle) }
           par{ input(newContent) }
           par{ action("Save changes", savePage()) }
 
           action savePage() {
-            p.makeChange(newTitle, newContent, securityContext.principal);
+            makeChange(p, newContent, securityContext.principal);
             p.persist();
-            return page(p);
+            return message("Thank you, your changes will be available online once a moderator approves it.");
           }
         }
       }
@@ -137,7 +152,6 @@ section wiki page editing
   
   define page newPage() {
     var newName    : String;
-    var newTitle   : String;
     var newContent : WikiText;
     main() 
     title{"Create New Wiki Page"}
@@ -146,7 +160,6 @@ section wiki page editing
         header{"Create New Wiki Page"}
         form { 
           par{ "Name" input(newName) }
-          par{ "Title: " input(newTitle) }
           par{ input(newContent) }
           par{ action("Save changes", savePage()) }
           par{}
@@ -156,14 +169,44 @@ section wiki page editing
           }
                
           action savePage() {
-            var p : Page := Page{ name := newName };
-            if (newTitle = "") { newTitle := newName; }
-            p.makeChange(newTitle, newContent, securityContext.principal);
+            var p : Page := newPage(newName);
+            makeChange(p, newContent, securityContext.principal);
             p.persist();
-            return page(p);
+            return message("Thank you, your changes will be available online once a moderator approves it.");
           }
         }
       }
+    }
+  }
+
+  access control rules {
+    rules page approveRevision(*) {
+      moderatorRole in securityContext.principal.roles
+    }
+  }
+  define page approveRevision(pd : PageDiff) {
+    main()
+    title{"Approve revision for " output(pd.page.name) }
+    define body() {
+     header{"Approve revision for " output(pd.page) }
+     form {
+       table {
+         row { "Submitted by" output(pd.author) }
+         row { "Content:" output(pd.content) }
+       }
+       action("Accept", accept())
+       action("Reject", reject())
+
+       action accept() {
+         approveRevision(pd.page, pd);
+         pd.status := approvedStatus;
+         return page(pd.page);
+       }
+       action reject() {
+         pd.status := rejectedStatus;
+         return page(pd.page);
+       }
+     }
     }
   }
 
