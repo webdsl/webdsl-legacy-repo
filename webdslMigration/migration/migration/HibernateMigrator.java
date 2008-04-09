@@ -51,7 +51,8 @@ public class HibernateMigrator
 		EntityTransaction targetTrans = targetEM.getTransaction();
 		sourceTrans.begin(); targetTrans.begin();
 		
-		migrate(inputTypes, new Vector<UntypedTransformation>(), scope);
+		if(inputTypes.size() > 0)
+			migrate(inputTypes, new Vector<UntypedTransformation>(), scope);
 		
 		sourceTrans.commit();
 		targetTrans.commit();
@@ -62,14 +63,9 @@ public class HibernateMigrator
 		// If all inputs are processed, start transformer
 		if(unProcessedTypes.size() == 0)
 		{
-			System.out.println("Input collected, starting transformation now ...");
 			// Transform
 			Object result = transformer.transform(input, scope);
-			
-			
-			
-			System.out.println("Transformation finished, storing result ..." + result);
-			
+						
 			// Load (falling back to Hibernate to use replication)
 			//targetEM.persist(result);
 			HibernateEntityManager hibEM = (HibernateEntityManager) targetEM;
