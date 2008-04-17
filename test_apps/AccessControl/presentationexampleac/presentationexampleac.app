@@ -20,6 +20,7 @@ section pages
         form{
           table{
             row{ "Text:" input(m.content) }
+            row{ "ViewAccess:" input(m.viewAccess)}
           }
           action("Save", save())
       
