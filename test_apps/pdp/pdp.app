@@ -18,18 +18,7 @@ operations for PdpMeeting
     }
     view {
       title{"Fill in employee form"}
-      main()
-      define contextSidebar() {
-        pdpMeetingOperations(p)
-      }
-      define body() {
-        form {
-          table {
-            row { "Employee preparation" input(p.employeePreparation) }
-          }
-          action("Submit", do())
-        }
-      }
+      derive operationPage from p for (employeePreparation)
     }
   }
 
