@@ -31,7 +31,7 @@ section templates
         menu {
           menuheader { "User" }
           menuitem { navigate(signin()) { "Sign in" } }
-          menuitem { navigate(pdpMeetingTasks()) { "PDP Tasks" } }
+          menuitem { navigate(allTasks()) { "Tasks" } }
         }
       }
     }

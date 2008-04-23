@@ -45,7 +45,7 @@ section access control
             if (us.password.check(password)) {
               securityContext.principal := us;
               securityContext.loggedIn := true;
-              return pdpMeetingTasks();
+              return allTasks();
             }
           }
           securityContext.loggedIn := false;
