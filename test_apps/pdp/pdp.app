@@ -30,18 +30,7 @@ operations for PdpMeeting
     }
     view {
       title{"Fill in manager form"}
-      main()
-      define contextSidebar() {
-        pdpMeetingOperations(p)
-      }
-      define body() {
-        form {
-          table {
-            row { "Manager preparation" input(p.managerPreparation) }
-          }
-          action("Submit", do())
-        }
-      }
+      derive operationPage from p for (managerPreparation)
     }
   }
 
@@ -50,18 +39,7 @@ operations for PdpMeeting
     when { status.employeeFilledIn && status.managerFilledIn && !status.final}
     view {
       title{"Write report"}
-      main()
-      define contextSidebar() {
-        pdpMeetingOperations(p)
-      }
-      define body() {
-        form {
-          table {
-            row { "Report" input(p.report) }
-          }
-          action("Submit", do())
-        }
-      }
+      derive operationPage from p for (report)
     }
   }
 
@@ -105,10 +83,7 @@ section pages
     define body() {
       header{"Pdp meeting " output(pdpMeeting)}
       table {
-        row { "Employee:" output(pdpMeeting.employee) }
-        row { "Employee preparation:" output(pdpMeeting.employeePreparation) }
-        row { "Manager preparation:" output(pdpMeeting.managerPreparation) }
-        row { "Report:" output(pdpMeeting.report) }
+        derive viewRows from pdpMeeting
       }
     }
   }
