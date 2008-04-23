@@ -29,7 +29,13 @@ use cases
       new pd : PageDiff;
       p.add(pd);
       pd.status := notApprovedStatus;
-      return message("Your changes have been saved, but still have to be approved by a moderator.");
+      //return message("Your changes have been saved, but still have to be approved by a moderator.");
+    }
+  }
+
+  define page editPage(p : Page) {
+    form {
+      action("Save", logic())
     }
   }
 

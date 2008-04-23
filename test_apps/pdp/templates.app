@@ -17,8 +17,15 @@ section main template.
 
 section basic page elements.
 
-  define sidebar() {
+  define contextSidebar() { }
 
+  define sidebar() {
+    list {
+      listitem { navigate(signin()) { "Sign in" } }
+      //listitem { navigate(pdpMeetingTasks()) { "PDP Tasks" } }
+      //listitem { navigate(pdpMeetingStatuses()) { "PDP Statuses" } }
+    }
+    contextSidebar()
   }
   
   define footer() {
