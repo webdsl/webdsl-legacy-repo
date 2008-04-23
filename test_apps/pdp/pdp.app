@@ -64,7 +64,7 @@ section pages
   define page home() {
     main()
     define body() {
-      "Hello world!"
+      "Use the menus!"
     }
   }
 

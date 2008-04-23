@@ -1,56 +1,52 @@
 module templates
 
-section main template.
+section templates
 
   define main() {
-    div("outersidebar") {
-      sidebar()
+    block("top") {
+      top()
     }
-    div("outerbody") {
-      div("menubar") {
-        menu()
+
+    block("body") {
+      block("left_innerbody") {
+        sidebar()
       }
-      body()
+      block("main_innerbody") {
+        body()
+      }
+    }
+
+    block("footer") {
       footer()
+    }
+  }
+  
+  define top() {
+    block("header") {}
+    block("menubar") {
+      menubar {
+        menu {
+          menuheader { navigate(home()) { "Home" } }
+        }
+        menu {
+          menuheader { "User" }
+          menuitem { navigate(signin()) { "Sign in" } }
+          menuitem { navigate(pdpMeetingTasks()) { "PDP Tasks" } }
+        }
+      }
     }
   }
 
 section basic page elements.
 
-  define contextSidebar() { }
-
   define sidebar() {
-    list {
-      listitem { navigate(signin()) { "Sign in" } }
-      //listitem { navigate(pdpMeetingTasks()) { "PDP Tasks" } }
-      //listitem { navigate(pdpMeetingStatuses()) { "PDP Statuses" } }
-    }
     contextSidebar()
   }
+  
+  define contextSidebar() { }
   
   define footer() {
     "generated with "
     navigate("WebDSL", url("http://www.webdsl.org")) " and "
     navigate("Stratego/XT", url("http://www.strategoxt.org"))
   }
-  
-section menus.
-  
-  define menu() {
-
-    
-  }
-  
-section entity management.
-
-  define manageMenu() {}
-  
-  define page manage() {
-    main()
-    define sidebar() {}
-    define body() {
-      createMenu()
-      allMenu()
-    }
-  }
-
