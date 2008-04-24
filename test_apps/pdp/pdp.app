@@ -31,7 +31,7 @@ operations for PdpMeeting
     (viewAllReviews(paper) || commentReviews(paper))*;
 */
   operation employeeFillInForm(p : PdpMeeting) {
-    who("Employee") { securityContext.principal = p.employee }
+    who { securityContext.principal = p.employee }
     when { !status.employeeFilledIn }
     do {
       status.employeeFilledIn := true;
