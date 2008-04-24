@@ -32,10 +32,7 @@ operations for PdpMeeting
 */
   operation employeeFillInForm(p : PdpMeeting) {
     who { securityContext.principal = p.employee }
-    when { !status.employeeFilledIn }
-    do {
-      status.employeeFilledIn := true;
-    }
+    when { !status.employeeFillInFormPerformed }
     view {
       title{"Fill in employee form"}
       derive operationPage from p for (employeePreparation)
@@ -44,10 +41,7 @@ operations for PdpMeeting
 
   operation managerFillInForm(p : PdpMeeting) {
     who { securityContext.principal = p.employee.manager }
-    when { !status.managerFilledIn }
-    do {
-      status.managerFilledIn := true;
-    }
+    when { !status.managerFillInFormPerformed }
     view {
       title{"Fill in manager form"}
       derive operationPage from p for (managerPreparation)
@@ -56,7 +50,7 @@ operations for PdpMeeting
 
   operation writeReport(p : PdpMeeting) {
     who { securityContext.principal = p.employee.manager }
-    when { status.employeeFilledIn && status.managerFilledIn && !status.final}
+    when { status.employeeFillInFormPerformed && status.managerFillInFormPerformed && !status.finalizeReportPerformed }
     view {
       title{"Write report"}
       derive operationPage from p for (report)
@@ -65,18 +59,12 @@ operations for PdpMeeting
 
   operation finalizeReport(p : PdpMeeting) {
     who { securityContext.principal = p.employee.manager }
-    when { status.employeeFilledIn && status.managerFilledIn  && !status.final }
-    do {
-      status.final := true;
-    }
+    when { status.writeReportPerformed && !status.finalizeReportPerformed }
   }
 
   operation approveReport(p : PdpMeeting) {
     who { securityContext.principal = p.employee }
-    when { status.employeeFilledIn && status.managerFilledIn && !status.employeeApproved && status.final}
-    do {
-      status.employeeApproved := true;
-    }
+    when { status.finalizeReportPerformed && !status.approveReportPerformed }
   }
 
 section pages

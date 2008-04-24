@@ -17,12 +17,14 @@ section data model
     report :: Text
   }
 
+  /*
   status PdpMeeting {
     employeeFilledIn :: Bool
     managerFilledIn  :: Bool
     final            :: Bool
     employeeApproved :: Bool
   }
+  */
 
   globals {
     var aManager : User := User {
