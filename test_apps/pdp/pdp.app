@@ -10,9 +10,28 @@ imports data
 imports ac
 
 operations for PdpMeeting
+/*
 
+  pdpProcess = 
+    createMeeting; 
+    (employeeFillInForm || managerFillInForm);
+    writeReport*;
+    finalizeReport;
+    approveReport;
+    archiveReport
+
+
+  foobar(d) = 
+    baz(d); (foo + bar); baz ; (stop + foobar(d))
+
+  review(paper) =
+    rev := createReview(paper);
+    writeReview(rev)+;
+    finalizeReview(rev);
+    (viewAllReviews(paper) || commentReviews(paper))*;
+*/
   operation employeeFillInForm(p : PdpMeeting) {
-    who { securityContext.principal = p.employee }
+    who("Employee") { securityContext.principal = p.employee }
     when { !status.employeeFilledIn }
     do {
       status.employeeFilledIn := true;
