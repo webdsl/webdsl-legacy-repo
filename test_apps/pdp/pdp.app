@@ -12,7 +12,7 @@ imports ac
 operations for PdpMeeting
 /*
 
-  pdpProcess = 
+  pdpProcess(p : PdpMeeting) = 
     createMeeting; 
     (employeeFillInForm || managerFillInForm);
     writeReport*;
@@ -30,9 +30,21 @@ operations for PdpMeeting
     finalizeReview(rev);
     (viewAllReviews(paper) || commentReviews(paper))*;
 */
+
+  workflow meetingWorkflow(p : PdpMeeting) {
+    // adds p.meetingWorkflow :: OperationStatus property
+    // generate page meetingWorkflow(p : PdpdMeeting) with status
+    init {
+      p := PdpMeeting { };
+    }
+    done { p.approveReport.performed }
+    // generate global function checkMeetingWorkflowPerformed(p : PdpMeeting)
+    // that is called every time an operation is performed on PdpMeeting
+  }
+
   operation employeeFillInForm(p : PdpMeeting) {
     who { securityContext.principal = p.employee }
-    when { !status.employeeFillInFormPerformed }
+    when { !p.employeeFillInForm.performed }
     view {
       title{"Fill in employee form"}
       derive operationPage from p for (employeePreparation)
@@ -41,7 +53,7 @@ operations for PdpMeeting
 
   operation managerFillInForm(p : PdpMeeting) {
     who { securityContext.principal = p.employee.manager }
-    when { !status.managerFillInFormPerformed }
+    when { !p.managerFillInForm.performed }
     view {
       title{"Fill in manager form"}
       derive operationPage from p for (managerPreparation)
@@ -50,7 +62,7 @@ operations for PdpMeeting
 
   operation writeReport(p : PdpMeeting) {
     who { securityContext.principal = p.employee.manager }
-    when { status.employeeFillInFormPerformed && status.managerFillInFormPerformed && !status.finalizeReportPerformed }
+    when { p.employeeFillInForm.performed && p.managerFillInForm.performed && !p.finalizeReport.performed }
     view {
       title{"Write report"}
       derive operationPage from p for (report)
@@ -59,12 +71,12 @@ operations for PdpMeeting
 
   operation finalizeReport(p : PdpMeeting) {
     who { securityContext.principal = p.employee.manager }
-    when { status.writeReportPerformed && !status.finalizeReportPerformed }
+    when { p.writeReport.performed && !p.finalizeReport.performed }
   }
 
   operation approveReport(p : PdpMeeting) {
     who { securityContext.principal = p.employee }
-    when { status.finalizeReportPerformed && !status.approveReportPerformed }
+    when { p.finalizeReport.performed && !p.approveReport.performed }
   }
 
 section pages
