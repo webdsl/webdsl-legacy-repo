@@ -68,8 +68,8 @@ div.wikiPageByLine {
  ********************************************************/
 
 body {
-  width            : 1000px;
-  margin           : 10px auto 0px auto;
+  /*width            : 1000px;*/
+  margin           : 10px 50px 0px 50px;
   border           : solid 1px #333333;
   background-color : #cccccc;
 /*   background-color : green; */
@@ -162,7 +162,6 @@ clear:left;
 }
 
 .header {
-  background-image : url(../images/WebDSL-small.png);
   background-repeat: no-repeat;
   background-position: top left;
   height : 50px;
@@ -230,11 +229,11 @@ h3 {
 }
 h4 {
   font-size : 100%;
-}
+
 
 .outputWikiText h1 {
   font-size : 130%;
-}
+
 
 .outputWikiText h2 {
   font-size : 115%;
@@ -271,10 +270,10 @@ select {
 
 textarea {
   border: solid 1px #cccccc;
-}
 
-pre {
-  font-size: 1.2em;
+
+pre 
+  font-size: 1.2em
 }
 
 /********************************************************
