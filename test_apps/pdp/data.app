@@ -38,7 +38,4 @@ section data model
       password := "secret",
       manager  := aManager
     };
-    var pdp : PdpMeeting := PdpMeeting {
-      employee := aUser
-    };
   }

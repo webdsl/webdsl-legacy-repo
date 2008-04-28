@@ -32,14 +32,10 @@ operations for PdpMeeting
 */
 
   workflow meetingWorkflow(p : PdpMeeting) {
-    // adds p.meetingWorkflow :: OperationStatus property
-    // generate page meetingWorkflow(p : PdpdMeeting) with status
-    init {
-      p := PdpMeeting { };
+    init(a : Int, b : Int) {
+      // Yo yo!
     }
     done { p.approveReport.performed }
-    // generate global function checkMeetingWorkflowPerformed(p : PdpMeeting)
-    // that is called every time an operation is performed on PdpMeeting
   }
 
   operation employeeFillInForm(p : PdpMeeting) {
@@ -84,7 +80,20 @@ section pages
   define page home() {
     main()
     define body() {
-      "Use the menus!"
+      var employee : User
+      form {
+        header{"Organize PDP Meeting"}
+        "For: " input(employee)
+        action("Organize", organize())
+
+        action organize() {
+          var p : PdpMeeting := PdpMeeting{ };
+          p.employee := employee;
+          p.meetingWorkflow.start(22, 8);
+          p.persist();
+          return message("Done!");
+        }
+      }
     }
   }
 
