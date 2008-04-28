@@ -1,0 +1,24 @@
+module workflows/finalversion
+
+operations final version
+
+  workflow editFinalVersionWorkflow(p : Paper) {
+    init() {
+      
+    }
+    done { p.finalize.performed }
+  }
+  
+  operation editPaper(p : Paper) {
+    who { securityContext.principal in p.authors }
+    when { !p.finalize.performed }
+    view {
+      title{"Edit paper"}
+      derive editPage from p
+    }
+  }
+  
+  operation finalize(p : Paper) {
+    who { securityContext.principal in p.authors }
+    when { !p.finalize.performed }
+  }

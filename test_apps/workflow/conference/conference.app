@@ -10,7 +10,6 @@ imports utils
 imports initialize
 imports accesscontrol
 imports workflows/conference
-imports workflows/pcinvitation
 
 
 section main
@@ -23,7 +22,8 @@ section main
         form {
           action("Start new conference", start())
           action start() {
-            c : Conference := startNewConferenceWorkflow();
+            var c : Conference := Conference{};
+            c.conferenceWorkflow.start();
             return c;
           }
         }

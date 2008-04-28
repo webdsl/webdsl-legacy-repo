@@ -6,20 +6,12 @@ section data model conference
     name               :: String
     submissionDeadline :: DateTime
     chairs             -> Set<User> 
-    pcInvitations      -> Set<PcInvitation>
     pcMembers          -> Set<User>
     papers             -> Set<Paper>
   }
-  
-/*  status Conference {
-    stage :: ConferenceStage
-  }
-*/
 
   extend entity User {
-/*    roles           -> Set<ConferenceRole>
-    tasks           -> Set<ConferenceTask> (inverse=ConferenceTask.assignees)
-*/    registered      :: Bool
+    registered      :: Bool
   }
   
   entity Nix { 

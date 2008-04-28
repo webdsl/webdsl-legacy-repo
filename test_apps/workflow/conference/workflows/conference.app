@@ -1,21 +1,14 @@
 module workflows/conference
 
-operations conference  
-  // old; replaced by performed etc.
-  enum ConferenceStage {
-    assemblePC("Assembling the PC"),
-    acceptingPapers("Accepting papers"),
-    bidOnPapers("Bidding on papers"),
-    decideReviewAssignment("Decide on who will review which papers"),
-    reviewing("Reviewing"),
-    decideOnAcceptance("Decide on acceptance of papers"),
-    submitFinalPapers("Results known, submit final papers"),
-    conferenceCompleted("Ready for the actual conference")
-  }
+imports workflows/pcinvitation
+imports workflows/bid
+imports workflows/review
+imports workflows/finalversion
 
+operations conference  
   workflow conferenceWorkflow(c : Conference) {
     init {
-      c := Conference{}
+// hoeft niet meer; er is al een conference-object, en we hoeven niets te doen aan het begin      c := Conference{}
     }
     done { c.finalizeConference.performed }
   }
@@ -27,7 +20,8 @@ operations conference
     who { securityContext.principal in c.chairs }
     when { !c.finalizePc.performed }
     do {
-      pcInv : PcInvitation := newPcInvitationWorkflow(name, email);
+      var pcInv : PcInvitation := PcInvitation{};
+      pcInv.pcInvitationWorkflow.start(name, email);
       c.pcInvitations.add(pcInv);
     }
     view {
@@ -54,7 +48,7 @@ operations conference
    */
   operation finalizePc(c: Conference) {
     who { securityContext.principal in c.chairs }
-    when { status.stage = assemblePC }
+    when { !c.finalizePc.performed }
     do {
       c.finalizePc.performed := true;
     }
@@ -74,11 +68,11 @@ operations conference
               row {
                 "" "name" "response"
               }
-              for (pcInv : PcInvitation in c.pcInvitations) {
+              for (pcInv : PcInvitation in c.pcInvitationsList) {
                 row {
                   "Invitation: "
-                  pcInv.user.name
-                  if (pcInv.done) {
+                  text(pcInv.user.name)
+                  if (pcInv.pcInvitationWorkflow.done) {
                     if (pcInv.accepted) {
                       "accepted"
                     } else {
@@ -96,7 +90,7 @@ operations conference
           section() {
             header{"Program Committee members"}
             table {
-              for (user : User in c.pcInvitations) {
+              for (user : User in c.pcInvitationsList) {
                 row {
                   output(user)
                 }
@@ -112,9 +106,12 @@ operations conference
     }
   }
   
-  // hier verder
   operation submitPaper(c: Conference) {
-    when { status.stage = acceptingPapers }
+    when { c.finalizePc.performed && !c.stopAcceptingPapers.performed }
+    do {
+      paper.save();
+      c.papers.add(paper);
+    }
     view {
       title{"Submit paper"}
       main()
@@ -127,9 +124,9 @@ operations conference
           header(){"Submit paper"}
           form(){
             table(){
-              editRowsPaper(paper){}
+              derive editRows from paper for (title, abstract, authors)
             }
-            action("Save", save()){}
+            action("Save", do()){}
             action("Cancel", cancel()){}
           }
         }
@@ -137,69 +134,168 @@ operations conference
         {
           return home();
         }
-        action save ( )
-        {
-          paper.save();
-          return paper(paper);
+      }
+    }
+  }
+
+  operation stopAcceptingPapers(c : Conference) {
+    who { securityContext.principal in c.chairs }
+    when { c.finalizePc.performed && !c.stopAcceptingPapers.performed }
+    view {
+      main()
+      define contextSidebar() {
+        conferenceOperations(c)
+      }
+      define body() {
+        section() {
+          header("Stop accepting papers")
+          "Currently submitted papers: "
+          table {
+            for (p: Paper in c.papersList) {
+              row{ output(p) }
+            }
+          }
+          form {
+            action("Stop accepting papers", do())
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * add bids for all papers, for all possible reviewers
+   * also add 2 reviews for all papers
+   */
+  operation startBidding(c : Conference) {
+    when { c.stopAcceptingPapers.performed && !c.startBidding.performed }
+    do {
+      for (p: Paper in c.papersList) {
+        for (reviewer : User in c.pcMembersList) {
+          var bid : Bid := Bid{
+            paper    := p
+            reviewer := reviewer
+          };
+          bid.bidWorkflow.start();
+          c.bids.add(bid);
+        }
+        var review1 : Review := Review{};
+        var review2 : Review := Review{};
+        p.reviews.add(review1);
+        p.reviews.add(review2);
+      }
+    }
+  }
+  
+  operation assignReviews(c : Conference) {
+    who { securityContext.principal in c.chairs }
+    when { c.stopAcceptingPapers.performed && !c.startReviewing.performed }
+    view {
+      main()
+      define contextSidebar() {
+        conferenceOperations(c)
+      }
+      define body() {
+        section() {
+          header("Select reviewers")
+
+          section {
+            header{"PC Member preferences"}
+            for(u : User in c.pcMembersList) {
+              section {
+                header{output(u)}
+                list {
+                  for(b : Bid in u.bidsList) {
+                    listitem {
+                      if (b.doBid.performed) { output(b.paper) " - " output(b.category) }
+                      else { output(b.paper) " - Not yet performed bid" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          section {
+            header{"Assign"}
+            form {
+              table {
+                for(p : Paper in c.papersList) {
+                  row { 
+                    output(p)
+                    container {
+                      for(r : Review in p.reviewsList) {
+                        select(r.author from c.pcMembers)
+                      }
+                    }
+                  }
+                }
+                row {
+                  action("Save", do())
+                }
+              }
+            }
+          }
         }
       }
     }
   }
   
-  operation allPapersReceived(c : Conference) {
-    when { c.finalizePc.performed && !c.allPapersReceived.performed }
-  }
-  
-  operation decideReviewAssignment(c : Conference) {
-    when { c.allPapersReceived.performed && !c.decideReviewAssignment.performed }
+  operation startReviewing(c : Conference) {
+    who { securityContext.principal in c.chairs }
+    when { c.stopAcceptingPapers.performed && !c.startReviewing.performed }
+    do {
+      for (p : Paper in c.papersList) {
+        for (r : Review in p.reviewsList) {
+          r.reviewWorkflow.start();
+        }
+      }
+    }
   }
   
   operation decideOnAcceptance(c : Conference) {
-    when { c.decideReviewAssignment.performed && !c.decideOnAcceptance.performed }
+    who { securityContext.principal in c.chairs }
+    when { c.startReviewing.performed && !c.decideOnAcceptance.performed }
+    view {
+      main()
+      define contextSidebar() {
+        conferenceOperations(c)
+      }
+      define body() {
+        section() {
+          header{"Decide on paper acceptance"}
+
+          form {
+            for (paper : Paper in c.papersList) {
+              section {
+                header{"Paper: " text(paper.title)}
+                section {
+                  header{"Reviews"}
+                  table {
+                    for (review : Review in paper.reviewsList) {
+                      row { "Reviewer: " text(review.author.name) "Acceptance: " text(review.acceptance) }
+                    } 
+                  }
+                }
+                section {
+                  header {"Accept paper?"}
+                  input(paper.accepted)
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    do {
+      // start workflows for all accepted papers
+      for (paper : Paper in c.papersList where paper.accepted) {
+        paper.editFinalVersionWorkflow.start();
+      }
+    }
   }
   
   operation finalizeConference(c : Conference) {
-    when { c.decideOnAcceptance.performed && !finalizeConference.performed }
+    who { securityContext.principal in c.chairs }
+    when { c.decideOnAcceptance.performed && !c.finalizeConference.performed }
   }
-
-/*
-section conference pages
-
-  define page conference(c : Conference) {
-    main()
-    title{"Conference: " output(c.name) }
-
-    define contextSidebar() {
-      conferenceSidebar(c)
-    }
-
-    define body() {
-      header{output(c.name)}
-      section {
-        par { "Conference stage: " output(c.stage.name) }
-//        conferenceTasks(c)
-        header{"Program Committee"}
-        list {
-          for(u : User in c.pcMembersList) {
-            listitem { output(u) }
-          }
-        }
-        if(c.pcMembers.length = 0) {
-          "No PC members yet."
-        }
-        submittedPapers(c)
-        par { navigate(submitPaper(c)) { "Submit paper" } }
-      }
-    }
-  }
-  
-  define submittedPapers(c : Conference) {
-    section {
-      header {"Conference papers"}
-      list {
-        for(p : Paper in c.papersList where (c.stage = conferenceCompleted && p.final) || (c.stage != conferenceCompleted)) {
-          listitem { output(p) }
-        }
-      }
-    }
-  }*/

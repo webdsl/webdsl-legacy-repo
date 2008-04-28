@@ -8,12 +8,15 @@ section data model
     reason     :: Text
     accepted   :: Bool
   }
+  
+  extend entity Conference {
+    pcInvitations -> Set<PcInvitation>
+  }
 
 operations pcInvitation
 
   workflow pcInvitationWorkflow(pcInv : PcInvitation) {
     init(name : String, email : Email) {
-
       var user : User := getUser(name, email);
       pcInv.user := user;
     }
