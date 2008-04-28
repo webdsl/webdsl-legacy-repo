@@ -15,11 +15,10 @@ section data model
   
   extend entity Paper {
     reviews        <> Set<Review>
-    reviewers      -> Set<User> (inverse=User.authoredReviews)
   }
   
   extend entity User {
-    authoredReviews -> Set<Paper>
+    authoredReviews -> Set<Review>
   }
   
   enum AcceptanceClassification {

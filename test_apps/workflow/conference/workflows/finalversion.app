@@ -9,7 +9,7 @@ operations final version
     done { p.finalize.performed }
   }
   
-  operation editPaper(p : Paper) {
+  operation editFinalPaper(p : Paper) {
     who { securityContext.principal in p.authors }
     when { !p.finalize.performed }
     view {

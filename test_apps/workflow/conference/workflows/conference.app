@@ -75,10 +75,12 @@ operations conference
                   if (pcInv.pcInvitationWorkflow.done) {
                     if (pcInv.accepted) {
                       "accepted"
-                    } else {
+                    } 
+                    if (!pcInv.accepted) {
                       "rejected"
                     }
-                  } else {
+                  } 
+                  if (!pcInv.pcInvitationWorkflow.done) {
                     "not responded yet"
                   }
                 }
@@ -90,7 +92,7 @@ operations conference
           section() {
             header{"Program Committee members"}
             table {
-              for (user : User in c.pcInvitationsList) {
+              for (user : User in c.pcMembersList) {
                 row {
                   output(user)
                 }
@@ -113,6 +115,7 @@ operations conference
       c.papers.add(paper);
     }
     view {
+      var paper : Paper := Paper{}
       title{"Submit paper"}
       main()
       define contextSidebar() {
@@ -120,10 +123,9 @@ operations conference
       }
       define body () {
         section(){
-          var paper : Paper := Paper{}
-          header(){"Submit paper"}
-          form(){
-            table(){
+          header{"Submit paper"}
+          form {
+            table {
               derive editRows from paper for (title, abstract, authors)
             }
             action("Save", do()){}
@@ -148,7 +150,7 @@ operations conference
       }
       define body() {
         section() {
-          header("Stop accepting papers")
+          header{"Stop accepting papers"}
           "Currently submitted papers: "
           table {
             for (p: Paper in c.papersList) {
@@ -197,7 +199,7 @@ operations conference
       }
       define body() {
         section() {
-          header("Select reviewers")
+          header{"Select reviewers"}
 
           section {
             header{"PC Member preferences"}
@@ -207,8 +209,8 @@ operations conference
                 list {
                   for(b : Bid in u.bidsList) {
                     listitem {
-                      if (b.doBid.performed) { output(b.paper) " - " output(b.category) }
-                      else { output(b.paper) " - Not yet performed bid" }
+                      if (b.doBid.performed)  { output(b.paper) " - " output(b.category) }
+                      if (!b.doBid.performed) { output(b.paper) " - Not yet performed bid" }
                     }
                   }
                 }

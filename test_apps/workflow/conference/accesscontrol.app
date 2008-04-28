@@ -5,6 +5,7 @@ section access control
   access control rules {
     principal is User with credentials username, password
 
+    rules page *(*) { true }
     rules template *(*) { true }
     //rules action *(*) { true }
     

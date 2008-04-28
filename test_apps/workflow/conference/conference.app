@@ -19,16 +19,29 @@ section main
     define body() {
       section() {
         header(){"Home page"}
-        form {
-          action("Start new conference", start())
-          action start() {
-            var c : Conference := Conference{};
-            c.conferenceWorkflow.start();
-            return c;
-          }
-        }
       }
     }
+  }
+  
+  define page klusConference() {
+    main()
+    define body() {
+      var conference : Conference := Conference{}
+      derive createPage from conference for (name, chairs)
+    }
+  }
+  
+  define page conference(c : Conference) {
+    main()
+    define contextSidebar() {
+      conferenceOperations(c)
+    }
+    define body() {
+      header{"Conference " output(c)}
+      table {
+        derive viewRows from c
+      }
+    } 
   }
   
 
