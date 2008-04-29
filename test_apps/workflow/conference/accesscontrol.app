@@ -78,6 +78,7 @@ section access control pages
     main()
     init{
       securityContext.loggedIn := false;
+      securityContext.principal := null;
       //return signIn();
     }
   }

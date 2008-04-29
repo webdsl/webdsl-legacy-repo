@@ -3,7 +3,7 @@ module workflows/pcinvitation
 section data model 
 
   entity PcInvitation {
-    user       -> User
+    user       -> User (name)
     conference -> Conference
     reason     :: Text
     accepted   :: Bool
@@ -20,22 +20,22 @@ operations pcInvitation
       var user : User := getUser(name, email);
       pcInv.user := user;
     }
-    done { pcInv.respond.performed }
+    done { pcInv.respondToInvitation.performed }
   }
   
   /**
    * respond: for now, just editing the PcInvitation entity; later: a nice page
    */
-  operation respond(pcInv : PcInvitation) {
+  operation respondToInvitation(pcInv : PcInvitation) {
     who { securityContext.principal = pcInv.user }
-    when { !pcInv.respond.performed }
+    when { pcInv.pcInvitationWorkflow.started && !pcInv.respondToInvitation.performed }
     do {
       pcInv.save();
       // add user to pcMembers if accepted
       if (pcInv.accepted) {
         pcInv.conference.pcMembers.add(pcInv.user);
       }
-      pcInv.respond.performed := true;
+      pcInv.respondToInvitation.performed := true;
     }
     view {
       title{"Please respond to the invitation"}

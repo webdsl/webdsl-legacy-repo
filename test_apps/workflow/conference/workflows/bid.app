@@ -34,7 +34,7 @@ operations bid
   
   operation doBid(bid : Bid) {
     who { securityContext.principal = bid.reviewer }
-    when { !bid.doBid.performed }
+    when { bid.bidWorkflow.started && !bid.doBid.performed }
     view {
       // todo: paper weergeven
       derive operationPage from bid for (category)

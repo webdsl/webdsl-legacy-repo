@@ -51,7 +51,7 @@ operations review
 
   operation doReview(review : Review) {
     who { securityContext.principal = review.reviewer }
-    when { !review.finalizeReview.performed }
+    when { review.reviewWorkflow.started && !review.finalizeReview.performed }
     view {
       derive operationPage from review
     }
@@ -59,5 +59,5 @@ operations review
   
   operation finalizeReview(review : Review) {
     who { securityContext.principal = review.reviewer }
-    when { !review.finalizeReview.performed }
+    when { review.reviewWorkflow.started && review.doReview.performed && !review.finalizeReview.performed }
   }

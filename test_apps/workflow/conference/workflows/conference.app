@@ -172,6 +172,7 @@ operations conference
    * also add 2 reviews for all papers
    */
   operation startBidding(c : Conference) {
+    who { securityContext.principal in c.chairs }
     when { c.stopAcceptingPapers.performed && !c.startBidding.performed }
     do {
       for (p: Paper in c.papersList) {

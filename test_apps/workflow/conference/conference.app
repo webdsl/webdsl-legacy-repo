@@ -40,11 +40,48 @@ section main
       }
     }
   }
-  /*
-    define conferenceOperations(c : Conference) {
-      
+  
+  define conferenceOperations(c : Conference) {
+    conferenceOperationsList(c)
+    
+    // display operations on invitations
+    for (i : PcInvitation in c.pcInvitationsList) {
+      if (pcInvitationHasOperations(i)) {
+        "Invitation: "
+        pcInvitationsList(i)
+      }
     }
-    */
+    
+    // display operations on bids
+    for (b : Bid in c.bidsList) {
+      if (bidHasOperations(b)) {
+        "Bids: "
+        bidOperationsList(b)
+      }
+    }
+
+    // display operations on papers and reviews
+    for (p : Paper in c.papersList) {
+      if (paperHasOperations(p) || true in [reviewHasOperations(r) | r : Review in p.reviewsList]) {
+        "Operations exist for " output(p)
+      }
+      if (paperHasOperations(p)) {
+        paperOperationsList(p)
+      }
+    }
+    
+    
+  }
+  
+  define displayPaperOperations(p : Paper) {
+    paperOperationsList(p)
+    for (r : Review in p.reviewsList) {
+      if (reviewHasOperations(r)) {
+        reviewOperationsList(r)
+      }
+    }
+  }
+    
   /*
     define page conference(c : Conference) {
       main()
