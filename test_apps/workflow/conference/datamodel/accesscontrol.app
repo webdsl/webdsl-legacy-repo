@@ -12,7 +12,7 @@ section data model access control
 
   define page editUser(us : User) {
     main()
-    body() {
+    define body() {
       header{"Edit " output(us.name)}
       form {
         table {
@@ -22,6 +22,7 @@ section data model access control
             action save() {
               us.password = us.password.digest();
               us.save();
+              return user(us);
             }
           }
         }

@@ -53,27 +53,27 @@ section main
     }
     
     // display operations on bids
-    for (b : Bid in c.bidsList) {
-      if (bidHasOperations(b)) {
-        "Bids: "
-        bidOperationsList(b)
+    if (Or[bidHasOperations(b) | b : Bid in c.bidsList]) {
+      "Bids: "
+      for (b : Bid in c.bidsList) {
+        if (bidHasOperations(b)) {
+          bidOperationsList(b) " on " text(b.paper.title)
+        }
       }
     }
-
+    
     // display operations on papers and reviews
     for (p : Paper in c.papersList) {
-      if (paperHasOperations(p) || true in [reviewHasOperations(r) | r : Review in p.reviewsList]) {
+      if (paperHasOperations(p) || Or[reviewHasOperations(r) | r : Review in p.reviewsList]) {
         "Operations exist for " output(p)
       }
       if (paperHasOperations(p)) {
         paperOperationsList(p)
       }
     }
-    
-    
   }
   
-  define displayPaperOperations(p : Paper) {
+  define paperOperations(p : Paper) {
     paperOperationsList(p)
     for (r : Review in p.reviewsList) {
       if (reviewHasOperations(r)) {

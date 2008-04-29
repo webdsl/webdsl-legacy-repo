@@ -3,10 +3,11 @@ module workflows/pcinvitation
 section data model 
 
   entity PcInvitation {
-    user       -> User (name)
+    user       -> User
     conference -> Conference
     reason     :: Text
     accepted   :: Bool
+    name :: String := user.name
   }
   
   extend entity Conference {
@@ -28,7 +29,7 @@ operations pcInvitation
    */
   operation respondToInvitation(pcInv : PcInvitation) {
     who { securityContext.principal = pcInv.user }
-    when { pcInv.pcInvitationWorkflow.started && !pcInv.respondToInvitation.performed }
+    when { !pcInv.conference.conferenceWorkflow.done && pcInv.pcInvitationWorkflow.started && !pcInv.respondToInvitation.performed }
     do {
       pcInv.save();
       // add user to pcMembers if accepted

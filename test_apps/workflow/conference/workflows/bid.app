@@ -5,6 +5,7 @@ section data model
     reviewer -> User (inverse=User.bids)
     paper -> Paper
     category -> BidCategory
+    name :: String := reviewer.name + " on " + paper.title
   }
   
   extend entity User {
@@ -34,7 +35,7 @@ operations bid
   
   operation doBid(bid : Bid) {
     who { securityContext.principal = bid.reviewer }
-    when { bid.bidWorkflow.started && !bid.doBid.performed }
+    when { !bid.paper.conference.conferenceWorkflow.done && bid.bidWorkflow.started && !bid.doBid.performed }
     view {
       // todo: paper weergeven
       derive operationPage from bid for (category)

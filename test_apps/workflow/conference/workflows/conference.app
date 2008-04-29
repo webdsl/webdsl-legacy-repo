@@ -7,9 +7,7 @@ imports workflows/finalversion
 
 operations conference  
   workflow conferenceWorkflow(c : Conference) {
-    init {
-// hoeft niet meer; er is al een conference-object, en we hoeven niets te doen aan het begin      c := Conference{}
-    }
+    init {}
     done { c.finalizeConference.performed }
   }
   
@@ -235,9 +233,6 @@ operations conference
                     container {
                       for(r : Review in p.reviewsList) {
                         table {
-                          row {
-                            "Review for " text(p.title)
-                          }  
                           derive editRows from r for (reviewer)
                         }
                       }
