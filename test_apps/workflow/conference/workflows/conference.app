@@ -20,7 +20,9 @@ operations conference
     who { securityContext.principal in c.chairs }
     when { !c.finalizePc.performed }
     do {
-      var pcInv : PcInvitation := PcInvitation{};
+      var pcInv : PcInvitation := PcInvitation{
+        conference := c
+      };
       pcInv.pcInvitationWorkflow.start(name, email);
       c.pcInvitations.add(pcInv);
     }
@@ -66,7 +68,7 @@ operations conference
             header{"Invitations"}
             table {
               row {
-                "" "name" "response"
+                "" "Name" "Response"
               }
               for (pcInv : PcInvitation in c.pcInvitationsList) {
                 row {
@@ -111,8 +113,8 @@ operations conference
   operation submitPaper(c: Conference) {
     when { c.finalizePc.performed && !c.stopAcceptingPapers.performed }
     do {
+      paper.conference := c;
       paper.save();
-      c.papers.add(paper);
     }
     view {
       var paper : Paper := Paper{}
@@ -181,8 +183,12 @@ operations conference
           bid.bidWorkflow.start();
           c.bids.add(bid);
         }
-        var review1 : Review := Review{};
-        var review2 : Review := Review{};
+        var review1 : Review := Review{
+          paper := p
+        };
+        var review2 : Review := Review{
+          paper := p
+        };
         p.reviews.add(review1);
         p.reviews.add(review2);
       }
@@ -191,7 +197,7 @@ operations conference
   
   operation assignReviews(c : Conference) {
     who { securityContext.principal in c.chairs }
-    when { c.stopAcceptingPapers.performed && !c.startReviewing.performed }
+    when { c.startBidding.performed && !c.startReviewing.performed }
     view {
       main()
       define contextSidebar() {
@@ -227,7 +233,12 @@ operations conference
                     output(p)
                     container {
                       for(r : Review in p.reviewsList) {
-                        select(r.author from c.pcMembers)
+                        table {
+                          row {
+                            "Review for " text(p.title)
+                          }  
+                          derive editRows from r for (reviewer)
+                        }
                       }
                     }
                   }
@@ -245,7 +256,7 @@ operations conference
   
   operation startReviewing(c : Conference) {
     who { securityContext.principal in c.chairs }
-    when { c.stopAcceptingPapers.performed && !c.startReviewing.performed }
+    when { c.assignReviews.performed && !c.startReviewing.performed }
     do {
       for (p : Paper in c.papersList) {
         for (r : Review in p.reviewsList) {
@@ -275,7 +286,7 @@ operations conference
                   header{"Reviews"}
                   table {
                     for (review : Review in paper.reviewsList) {
-                      row { "Reviewer: " text(review.author.name) "Acceptance: " text(review.acceptance) }
+                      row { "Reviewer: " text(review.reviewer.name) "Acceptance: " text(review.acceptance.name) }
                     } 
                   }
                 }
@@ -285,6 +296,7 @@ operations conference
                 }
               }
             }
+            action("Save", do())
           }
         }
       }

@@ -11,7 +11,7 @@ operations final version
   
   operation editFinalPaper(p : Paper) {
     who { securityContext.principal in p.authors }
-    when { !p.finalize.performed }
+    when { p.editFinalVersionWorkflow.started && !p.finalize.performed }
     view {
       title{"Edit paper"}
       derive editPage from p
@@ -20,5 +20,5 @@ operations final version
   
   operation finalize(p : Paper) {
     who { securityContext.principal in p.authors }
-    when { !p.finalize.performed }
+    when { p.editFinalVersionWorkflow.started && !p.finalize.performed }
   }

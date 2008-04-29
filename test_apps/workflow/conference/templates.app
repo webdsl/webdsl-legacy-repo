@@ -34,8 +34,11 @@ section templates
       }  
       loginMenu()
       menu {
-        menuheader{ "temp" }
-        menuitem{ navigate(createNix()){"Create nix"} }
+        menuheader{ "Conferences" }
+        for (c : Conference) {
+          menuitem{ navigate(conference(c)){output(c.name)} }
+        }
+        menuitem{ navigate(createConference()){"Create conference"} }
       }
     }
   }

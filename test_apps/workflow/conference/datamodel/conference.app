@@ -3,7 +3,7 @@ module datamodel/conference
 section data model conference
 
   entity Conference {
-    name               :: String
+    name               :: String (name)
     submissionDeadline :: DateTime
     chairs             -> Set<User> 
     pcMembers          -> Set<User>
@@ -12,8 +12,4 @@ section data model conference
 
   extend entity User {
     registered      :: Bool
-  }
-  
-  entity Nix { 
-    nix :: Int
   }

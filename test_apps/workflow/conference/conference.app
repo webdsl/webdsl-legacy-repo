@@ -23,46 +23,90 @@ section main
     }
   }
   
-  define page klusConference() {
+  define page createConference() {
     main()
     define body() {
-      var conference : Conference := Conference{}
-      derive createPage from conference for (name, chairs)
-    }
-  }
-  
-  define page conference(c : Conference) {
-    main()
-    define contextSidebar() {
-      conferenceOperations(c)
-    }
-    define body() {
-      header{"Conference " output(c)}
-      table {
-        derive viewRows from c
-      }
-    } 
-  }
-  
-
-  
-/*
-operations conference creation
-
-  operation conferences(n: Nix) {
-    who { securityContext.principal.isAdmin }
-    when { true }
-    view {
-      title{"Create conference"}
-      main()
-      define contextSidebar() {
-        for (c : Conference) {
-          menuitem{output(c)}
+      form {
+        var conference : Conference := Conference{}
+        header{"Create conference"}
+        table {
+          derive editRows from conference for (name, chairs)
+          row { action("Create", create()) }
+          action create() {
+            conference.save();
+            return conference(conference);
+          }
         }
       }
-      define body() {
-        navigate(createConference()){"Create a conference"}
-      }
     }
   }
-  */
+  /*
+    define conferenceOperations(c : Conference) {
+      
+    }
+    */
+  /*
+    define page conference(c : Conference) {
+      main()
+      define contextSidebar() {
+        conferenceOperations(c)
+      }
+      define body() {
+        header{"Conference " navigate(editConference(c)){text(c.name)}}
+        table {
+          derive viewRows from c
+        }
+      } 
+    }
+    
+    define page pcInvitation(pcInv : PcInvitation) {
+      main()
+      define contextSidebar() {
+        pcInvitationOperations(pcInv)
+      }
+      define body() {
+        header{"Invitation for Program Committee"}
+        table {
+          derive viewRows from pcInv
+        }
+      } 
+    }
+    
+    define page bid(b : Bid) {
+      main()
+      define contextSidebar() {
+        bidOperations(b)
+      }
+      define body() {
+        header{"Bid on " output(b.paper)}
+        table {
+          derive viewRows from b for (category)
+        }
+      } 
+    }
+
+    define page review(r : Review) {
+      main()
+      define contextSidebar() {
+        reviewOperations(r)
+      }
+      define body() {
+        header{"Review " output(r.paper.title)}
+        table {
+          derive viewRows from r
+        }
+      } 
+    }
+    
+    define page paper(p : Paper) {
+      main()
+      define contextSidebar() {
+        paperOperations(p)
+      }
+      define body() {
+        header{"Paper " output(p.title)}
+        table {
+          derive viewRows from p
+        }
+      } 
+    }*/

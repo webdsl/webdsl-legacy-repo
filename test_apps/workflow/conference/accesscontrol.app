@@ -27,8 +27,6 @@ section access control
     pointcut adminOperations() {
         page create*(*)
       , page edit*(*)
-      , page nix*(*)
-      , page conference*(*)
     }
     
     rules pointcut adminOperations() {

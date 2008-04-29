@@ -4,7 +4,7 @@ section data model
 
   entity Review {
     paper             -> Paper (inverse=Paper.reviews)
-    author            -> User (inverse=User.authoredReviews)
+    reviewer          -> User (inverse=User.authoredReviews)
     acceptance        -> AcceptanceClassification
     expertise         -> Expertise
     relevance         -> Relevance
@@ -50,7 +50,7 @@ operations review
   }
 
   operation doReview(review : Review) {
-    who { securityContext.principal = review.author }
+    who { securityContext.principal = review.reviewer }
     when { !review.finalizeReview.performed }
     view {
       derive operationPage from review
@@ -58,6 +58,6 @@ operations review
   }
   
   operation finalizeReview(review : Review) {
-    who { securityContext.principal = review.author }
+    who { securityContext.principal = review.reviewer }
     when { !review.finalizeReview.performed }
   }

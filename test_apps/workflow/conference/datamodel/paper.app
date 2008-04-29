@@ -7,7 +7,7 @@ section data model conference paper
   }
 
   entity Paper {
-    conference -> Conference (inverse=Conference.papers)
+    conference     -> Conference (inverse=Conference.papers)
     title          :: String (name)
     abstract       :: Text
     authors        -> Set<User> (inverse=User.authoredPapers)
