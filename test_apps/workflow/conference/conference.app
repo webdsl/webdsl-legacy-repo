@@ -48,7 +48,7 @@ section main
     for (i : PcInvitation in c.pcInvitationsList) {
       if (pcInvitationHasOperations(i)) {
         "Invitation: "
-        pcInvitationsList(i)
+        pcInvitationOperationsList(i)
       }
     }
     
