@@ -78,6 +78,7 @@ section pages
     main()
     define body() {
       var employee : User
+      navigatebutton(signin(), "Sign in!")
       form {
         header{"Organize PDP Meeting"}
         "For: " input(employee)
