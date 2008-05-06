@@ -1,0 +1,9 @@
+import mydsl;
+
+extension org::example::dsl::Extensions reexport;
+extension org::example::dsl::GenEditorExtensions reexport;
+
+/*
+ * use this file to overwrite the label() and the image()
+ * extension for your model elements
+ */

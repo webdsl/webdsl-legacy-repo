@@ -1,0 +1,28 @@
+
+import mydsl;
+import tree;
+
+extension org::example::dsl::EditorExtensions;
+
+extension org::openarchitectureware::xtext::parser::LinkerUtils;
+
+/*
+ * finds the declaration for the given element
+ * the string is the hyperlinked identifier
+ */
+emf::EObject findDeclaration(String s, Object grammarelement, Object element) : null;
+
+/*
+ * finds the declaration for the given element
+ * the string is the hyperlinked identifier
+ */
+List[UIContentNode] findReferences(String s, Object grammarelement, Object element) : null;
+
+
+/*
+ * UIContentNode creator
+ */
+create UIContentNode createContentNode(emf::EObject ctx, String label, String image) :
+	setLabel(label)->
+	setImage(image)->
+	setContext(ctx);
