@@ -59,9 +59,21 @@ operations for PdpMeeting
   operation writeReport(p : PdpMeeting) {
     who { securityContext.principal = p.employee.manager }
     when { p.employeeFillInForm.performed && p.managerFillInForm.performed && !p.finalizeReport.performed }
+    do { 
+      b := true;
+    }
     view {
       title{"Write report"}
-      derive operationPage from p for (report)
+      //derive operationPage from p for (report)
+      main()
+      define body() {
+        section {
+          section {
+            var b : Bool := false;
+            input(b)
+          }
+        }
+      }
     }
   }
 
