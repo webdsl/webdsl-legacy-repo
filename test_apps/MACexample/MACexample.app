@@ -18,13 +18,16 @@ description {
 }
 
 section MAC pages
-
-  define page home(){
-    //quick fix (bug with Int parameter):
-    var do0:Document := Document{ classification := 0 };
+globals{
+   var do0:Document := Document{ classification := 0 };
     var do1:Document := Document{ classification := 1 };
     var do2:Document := Document{ classification := 2 };
     var do3:Document := Document{ classification := 3 };
+  }
+  
+  define page home(){
+    //quick fix (bug with Int parameter):
+ 
   
     main()
     define body(){
@@ -55,9 +58,10 @@ section MAC pages
 
 
   //define page createClassificationDocument(cl:Int)
-  define page createClassificationDocument(d:Document)
+  define page createClassificationDocument(d24:Document)
   {
     //var d:Document := Document{ classification := cl };
+var d:Document := Document{ classification := d24.classification };
 
     action save(d:Document){
       d.save();

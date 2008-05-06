@@ -54,7 +54,9 @@ section MAC AccessControl
     pointcut openSections()
     {
       page home(),
-      template sidebar()
+      template sidebar(),
+      template *(*),
+      function *(*)
     }
 
     rules pointcut openSections()
@@ -78,6 +80,9 @@ section MAC AccessControl
     
     rules page createClassificationDocument(d:Document){
       mayCreateDocument(d)
+      rule action save(d:Document){
+        mayCreateDocument(d)
+      }
     }
     
     //rules page createClassificationDocument(class:Int){
@@ -103,9 +108,17 @@ section MAC AccessControl
     rules template sidebar()
     {
       true
-      rules action activateCL(clear:Int)
+      rule action activateCL(clear:Int)
       {
         securityContext.principal.clearance >= clear
       }
+      rule action login(*)
+      {
+        true
+      }
+      rule action logout(*)
+      {
+        true
+      } 
     }
   }
