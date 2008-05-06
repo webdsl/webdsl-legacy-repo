@@ -32,9 +32,6 @@ operations for PdpMeeting
 */
 
   workflow meetingWorkflow(p : PdpMeeting) {
-    init(a : Int, b : Int) {
-      // Yo yo!
-    }
     done { p.approveReport.performed }
   }
 
@@ -59,21 +56,9 @@ operations for PdpMeeting
   operation writeReport(p : PdpMeeting) {
     who { securityContext.principal = p.employee.manager }
     when { p.employeeFillInForm.performed && p.managerFillInForm.performed && !p.finalizeReport.performed }
-    do { 
-      b := true;
-    }
     view {
       title{"Write report"}
-      //derive operationPage from p for (report)
-      main()
-      define body() {
-        section {
-          section {
-            var b : Bool := false;
-            input(b)
-          }
-        }
-      }
+      derive operationPage from p for (report)
     }
   }
 
@@ -101,12 +86,21 @@ section pages
         action organize() {
           var p : PdpMeeting := PdpMeeting{ };
           p.employee := employee;
-          p.meetingWorkflow.start(22, 8);
+          p.meetingWorkflow.start();
           p.persist();
+          // Test stuff
+          if(true in [pdpMeetingHasOperations(p) | x : Int in [1, 2, 3, 4]]) {
+            // Bla
+          }
           return message("Done!");
         }
       }
     }
+  }
+
+  define pdpMeetingOperations(p : PdpMeeting) {
+    "haha!"
+    pdpMeetingOperationsList(p)
   }
 
   access control rules {
@@ -115,6 +109,7 @@ section pages
     }
   }
 
+/*
   define page pdpMeeting(pdpMeeting : PdpMeeting) {
     title {"Pdp Meeting " output(pdpMeeting)}
     main()
@@ -128,4 +123,5 @@ section pages
       }
     }
   }
+  */
 
