@@ -1,0 +1,44 @@
+//specify your DSL grammar rules here ...
+//IMPORTANT: You should change the property 'overwrite.pluginresources=true' in the properties file to 'overwrite.pluginresources=false' AFTER first generation
+
+Application :
+  "application" name=ID (sections+=Section)* ;
+  
+Section :
+  "section" name=ID (definitions+=Definition)* ;
+  
+Definition :
+  Entity | TemplateDefinition ;
+  
+Entity :
+  "entity name=ID "{" 
+    (properties+=Property)*
+  "}" ;
+  
+Property :
+  name=ID ":" Sort 
+    "(" (annotations+=Annotation)* ")" ;
+    
+Sort :
+  name=ID ;
+  
+TemplateDefinition :
+  "define" (modifiers+=Modifier)+ name=ID
+     "(" (arguments+=FormalArg)* ")"
+     "{" (elements+=TemplateElement)* "}" ;
+     
+Modifier :
+  "page" ;
+  
+TemplateElement :
+  TemplateCall 
+  | TemplateDefinition 
+  | String
+  ;
+
+TemplateCall :
+  name=ID "(" (arguments+=Exp)* ")"
+          "{" (elements+=TemplateElement)* "}" ;
+          
+   
+  
