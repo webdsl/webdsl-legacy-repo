@@ -44,6 +44,14 @@ section DAC AccessControl
     {
       true
     }
+    rule template *(*)
+    {
+      true
+    }
+    rule function *(*)
+    {
+      true
+    }
 
 
     rules page viewDocument(d:Document)
