@@ -89,7 +89,7 @@ section pages
           p.meetingWorkflow.start();
           p.persist();
           // Test stuff
-          if(true in [pdpMeetingHasOperations(p) | x : Int in [1, 2, 3, 4]]) {
+          if(Or[x > 3 | x : Int in [1, 2, 3, 4, 5]]) {
             // Bla
           }
           return message("Done!");

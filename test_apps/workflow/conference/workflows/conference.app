@@ -7,7 +7,10 @@ imports workflows/finalversion
 
 operations conference  
   workflow conferenceWorkflow(c : Conference) {
+<<<<<<< HEAD:workflow/conference/workflows/conference.app
     init {}
+=======
+>>>>>>> Removed some unnecessary code.:workflow/conference/workflows/conference.app
     done { c.finalizeConference.performed }
   }
   

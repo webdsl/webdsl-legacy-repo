@@ -72,8 +72,13 @@ section main
       }
     }
   }
+<<<<<<< HEAD:workflow/conference/conference.app
   
   define paperOperations(p : Paper) {
+=======
+ /* 
+  define displayPaperOperations(p : Paper) {
+>>>>>>> Removed some unnecessary code.:workflow/conference/conference.app
     paperOperationsList(p)
     for (r : Review in p.reviewsList) {
       if (reviewHasOperations(r)) {
@@ -81,69 +86,4 @@ section main
       }
     }
   }
-    
-  /*
-    define page conference(c : Conference) {
-      main()
-      define contextSidebar() {
-        conferenceOperations(c)
-      }
-      define body() {
-        header{"Conference " navigate(editConference(c)){text(c.name)}}
-        table {
-          derive viewRows from c
-        }
-      } 
-    }
-    
-    define page pcInvitation(pcInv : PcInvitation) {
-      main()
-      define contextSidebar() {
-        pcInvitationOperations(pcInv)
-      }
-      define body() {
-        header{"Invitation for Program Committee"}
-        table {
-          derive viewRows from pcInv
-        }
-      } 
-    }
-    
-    define page bid(b : Bid) {
-      main()
-      define contextSidebar() {
-        bidOperations(b)
-      }
-      define body() {
-        header{"Bid on " output(b.paper)}
-        table {
-          derive viewRows from b for (category)
-        }
-      } 
-    }
-
-    define page review(r : Review) {
-      main()
-      define contextSidebar() {
-        reviewOperations(r)
-      }
-      define body() {
-        header{"Review " output(r.paper.title)}
-        table {
-          derive viewRows from r
-        }
-      } 
-    }
-    
-    define page paper(p : Paper) {
-      main()
-      define contextSidebar() {
-        paperOperations(p)
-      }
-      define body() {
-        header{"Paper " output(p.title)}
-        table {
-          derive viewRows from p
-        }
-      } 
-    }*/
+  */

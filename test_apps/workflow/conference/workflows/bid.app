@@ -27,9 +27,6 @@ section data model
 operations bid
 
   workflow bidWorkflow(bid : Bid) {
-    init() {
-      
-    }
     done { bid.doBid.performed }
   }
   
