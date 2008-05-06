@@ -7,7 +7,7 @@ section data model
     conference -> Conference
     reason     :: Text
     accepted   :: Bool
-    name :: String := user.name
+    name       :: String := "Invitation for " + user.name + " to join PC of " + conference.name
   }
   
   extend entity Conference {
@@ -29,7 +29,7 @@ operations pcInvitation
    */
   operation respondToInvitation(pcInv : PcInvitation) {
     who { securityContext.principal = pcInv.user }
-    when { !pcInv.conference.conferenceWorkflow.done && pcInv.pcInvitationWorkflow.started && !pcInv.respondToInvitation.performed }
+    when { !pcInv.conference.conferenceWorkflow.performed && pcInv.pcInvitationWorkflow.started && !pcInv.respondToInvitation.performed }
     do {
       // add user to pcMembers if accepted
       if (pcInv.accepted) {
@@ -39,6 +39,6 @@ operations pcInvitation
     }
     view {
       title{"Please respond to the invitation"}
-      derive operationPage from pcInv for (conference, accepted, reason)
+      derive operationPage from pcInv for (accepted, reason)
     }
   }

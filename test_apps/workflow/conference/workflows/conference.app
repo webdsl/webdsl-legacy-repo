@@ -68,7 +68,7 @@ operations conference
                 row {
                   "Invitation: "
                   text(pcInv.user.name)
-                  if (pcInv.pcInvitationWorkflow.done) {
+                  if (pcInv.pcInvitationWorkflow.performed) {
                     if (pcInv.accepted) {
                       "accepted"
                     } 
@@ -76,7 +76,7 @@ operations conference
                       "rejected"
                     }
                   } 
-                  if (!pcInv.pcInvitationWorkflow.done) {
+                  if (!pcInv.pcInvitationWorkflow.performed) {
                     "not responded yet"
                   }
                 }

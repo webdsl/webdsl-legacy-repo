@@ -78,6 +78,18 @@ body {
   font-size        : 0.75em;
 }
 
+a {
+  color: darkblue;
+  text-decoration : none;
+}
+
+a:active, a:link, a:visited {
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
 /********************************************************
 
  POSITIONING
@@ -229,11 +241,11 @@ h3 {
 }
 h4 {
   font-size : 100%;
-
+}
 
 .outputWikiText h1 {
   font-size : 130%;
-
+}
 
 .outputWikiText h2 {
   font-size : 115%;
@@ -248,17 +260,6 @@ img {
   border : 0px;
 }
 
-a {
-  color: darkblue;
-  text-decoration : none;
-}
-
-a:active, a:link, a:visited {
-}
-
-a:hover {
-  text-decoration: underline;
-}
 
 input {
   border: solid 1px #cccccc;
@@ -270,10 +271,10 @@ select {
 
 textarea {
   border: solid 1px #cccccc;
+}
 
-
-pre 
-  font-size: 1.2em
+pre  {
+  font-size: 1.2em;
 }
 
 /********************************************************

@@ -43,18 +43,21 @@ section data model
 operations review
 
   workflow reviewWorkflow(review : Review) {
+    init() {
+
+    }
     done { review.finalizeReview.performed }
   }
 
   operation doReview(review : Review) {
     who { securityContext.principal = review.reviewer }
-    when { !review.paper.conference.conferenceWorkflow.done && review.reviewWorkflow.started && !review.finalizeReview.performed }
+    when { !review.paper.conference.conferenceWorkflow.performed && review.reviewWorkflow.started && !review.finalizeReview.performed }
     view {
-      derive operationPage from review
+      derive operationPage from review for (acceptance, expertise, relevance, committeeComments, summary, evaluation)
     }
   }
   
   operation finalizeReview(review : Review) {
     who { securityContext.principal = review.reviewer }
-    when { !review.paper.conference.conferenceWorkflow.done && review.reviewWorkflow.started && review.doReview.performed && !review.finalizeReview.performed }
+    when { !review.paper.conference.conferenceWorkflow.performed && review.reviewWorkflow.started && review.doReview.performed && !review.finalizeReview.performed }
   }
