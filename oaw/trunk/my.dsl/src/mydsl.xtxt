@@ -1,0 +1,78 @@
+//specify your DSL grammar rules here ...
+//IMPORTANT: You should change the property 'overwrite.pluginresources=true' in the properties file to 'overwrite.pluginresources=false' AFTER first generation
+
+Application :
+  "application" name=ID (sections+=Section)* ;
+  
+Section :
+  "section" name=ID (definitions+=Definition)* ;
+  
+Definition :
+  Entity | TemplateDefinition ;
+  
+Entity :
+  "entity" (name=ID) "{" 
+    (properties+=Property)*
+  "}" ;
+  
+Property :
+  name=ID ":" type=Sort
+    "(" (annotations+=Annotation)* ")" ;
+    
+Sort :
+//  SimpleSort | GenericSort ;
+  
+//SimpleSort :
+  name=ID ;
+  
+//GenericSort :
+//  name=ID "<" (arguments+=Sort)+ ">" ;
+  
+Annotation :
+  name=ID ;
+
+TemplateDefinition :
+  "define" (modifiers+=Modifier)* name=ID
+     "(" (arguments+=FormalArg)* ")"
+     "{" (elements+=TemplateElement)* "}" ;
+     
+FormalArg :
+  name=ID ":" Sort ;
+  
+Modifier :
+  PageModifier ;
+  
+PageModifier :
+  "page" ;
+  
+TemplateElement :
+  TemplateCall 
+  | TemplateDefinition 
+  | StringLiteral
+  ;
+
+StringLiteral :
+  STRING ;
+  
+TemplateCall :
+  name=ID "(" (arguments+=Exp)* ")"
+          "{" (elements+=TemplateElement)* "}" ;
+
+
+Exp :
+  FieldAccess
+  | PrimaryExp
+  ;
+  
+Var :
+  name=ID ;
+  
+PrimaryExp :
+  "(" Exp ")"
+  | Var
+  | StringLiteral
+  ; 
+  
+FieldAccess :
+   PrimaryExp "." field=ID ;
+  

@@ -1,0 +1,13 @@
+import mydsl;
+
+extension org::openarchitectureware::xtext::parser::LinkerUtils;
+
+extension org::example::dsl::Extensions;
+
+/*
+ * check linking
+ */
+
+
+
+

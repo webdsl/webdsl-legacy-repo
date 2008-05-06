@@ -1,0 +1,17 @@
+RULE_ID=4
+RULE_STRING=5
+RULE_INT=6
+RULE_WS=7
+RULE_SL_COMMENT=9
+RULE_ML_COMMENT=8
+'entity'=12
+'}'=14
+'('=16
+':'=15
+'define'=18
+'section'=11
+'.'=20
+')'=17
+'page'=19
+'{'=13
+'application'=10

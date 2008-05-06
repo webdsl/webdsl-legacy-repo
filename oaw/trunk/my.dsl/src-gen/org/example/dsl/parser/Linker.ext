@@ -1,0 +1,12 @@
+
+extension org::example::dsl::Extensions;
+extension org::example::dsl::Linking;
+
+link(emf::EObject this) :
+	this.allElements().internalLink();
+
+private Void internalLink(emf::EObject this) :
+	null;
+
+
+

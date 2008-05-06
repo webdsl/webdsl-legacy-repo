@@ -1,0 +1,25 @@
+import mydsl;
+
+extension org::example::dsl::GenExtensions reexport;
+
+/*
+ * This extension file is intended to be used for defining
+ * general extensions for the domain model.
+ * It inherits generated extensions from GenExtensions.
+ * You can overwrite or spezialize them here
+ */
+ 
+Entity entity(Property this) :
+  this.eContainer ;
+  
+List[Entity] entities(Application this) :
+  this.sections.allLocalElements().typeSelect(Entity) ;
+
+List[TemplateDefinition] definitions(Application this) :
+  this.sections.allLocalElements().typeSelect(TemplateDefinition) ;
+  
+List[TemplateDefinition] pageDefinitions(Application this) :
+  this.definitions().select(d | d.isPageDefinition()) ;
+
+Boolean isPageDefinition(TemplateDefinition this) :
+  modifiers.typeSelect(PageModifier).size == 1 ;
