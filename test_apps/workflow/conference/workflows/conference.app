@@ -7,10 +7,6 @@ imports workflows/finalversion
 
 operations conference  
   workflow conferenceWorkflow(c : Conference) {
-<<<<<<< HEAD:workflow/conference/workflows/conference.app
-    init {}
-=======
->>>>>>> Removed some unnecessary code.:workflow/conference/workflows/conference.app
     done { c.finalizeConference.performed }
   }
   
@@ -20,13 +16,6 @@ operations conference
   operation invitePcMember(c: Conference) {
     who { securityContext.principal in c.chairs }
     when { !c.finalizePc.performed }
-    do {
-      var pcInv : PcInvitation := PcInvitation{
-        conference := c
-      };
-      pcInv.pcInvitationWorkflow.start(name, email);
-      c.pcInvitations.add(pcInv);
-    }
     view {
       var name : String
       var email : Email
@@ -44,6 +33,13 @@ operations conference
         }
       }
     }
+    do {
+      var pcInv : PcInvitation := PcInvitation{
+        conference := c
+      };
+      pcInv.pcInvitationWorkflow.start(name, email);
+      c.pcInvitations.add(pcInv);
+    }
   }
   
   /**
@@ -52,9 +48,6 @@ operations conference
   operation finalizePc(c: Conference) {
     who { securityContext.principal in c.chairs }
     when { !c.finalizePc.performed }
-    do {
-      c.finalizePc.performed := true;
-    }
     view {
       main()
       define contextSidebar() {
@@ -113,10 +106,6 @@ operations conference
   
   operation submitPaper(c: Conference) {
     when { c.finalizePc.performed && !c.stopAcceptingPapers.performed }
-    do {
-      paper.conference := c;
-      paper.save();
-    }
     view {
       var paper : Paper := Paper{}
       title{"Submit paper"}
@@ -140,6 +129,10 @@ operations conference
           return home();
         }
       }
+    }
+    do {
+      paper.conference := c;
+      paper.save();
     }
   }
 

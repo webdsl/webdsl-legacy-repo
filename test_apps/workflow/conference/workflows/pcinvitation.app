@@ -31,7 +31,6 @@ operations pcInvitation
     who { securityContext.principal = pcInv.user }
     when { !pcInv.conference.conferenceWorkflow.done && pcInv.pcInvitationWorkflow.started && !pcInv.respondToInvitation.performed }
     do {
-      pcInv.save();
       // add user to pcMembers if accepted
       if (pcInv.accepted) {
         pcInv.conference.pcMembers.add(pcInv.user);

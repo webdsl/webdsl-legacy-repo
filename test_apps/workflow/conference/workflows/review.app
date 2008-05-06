@@ -43,9 +43,6 @@ section data model
 operations review
 
   workflow reviewWorkflow(review : Review) {
-    init() {
-
-    }
     done { review.finalizeReview.performed }
   }
 

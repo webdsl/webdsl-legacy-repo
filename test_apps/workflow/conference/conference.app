@@ -57,7 +57,7 @@ section main
       "Bids: "
       for (b : Bid in c.bidsList) {
         if (bidHasOperations(b)) {
-          bidOperationsList(b) " on " text(b.paper.title)
+          bidOperationsList(b) // first make new lines disappear. " on " text(b.paper.title)
         }
       }
     }
@@ -72,13 +72,8 @@ section main
       }
     }
   }
-<<<<<<< HEAD:workflow/conference/conference.app
   
   define paperOperations(p : Paper) {
-=======
- /* 
-  define displayPaperOperations(p : Paper) {
->>>>>>> Removed some unnecessary code.:workflow/conference/conference.app
     paperOperationsList(p)
     for (r : Review in p.reviewsList) {
       if (reviewHasOperations(r)) {
@@ -86,4 +81,3 @@ section main
       }
     }
   }
-  */
