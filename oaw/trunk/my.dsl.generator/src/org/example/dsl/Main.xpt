@@ -1,0 +1,48 @@
+«IMPORT mydsl»
+«EXTENSION org::example::dsl::Extensions»
+
+«REM»
+   This is the 'main' template. 
+   You should replace the type 'Object' with your respective meta type.
+«ENDREM»
+
+«DEFINE main FOR Application»
+  «EXPAND entityclass FOREACH this.derive().entities()»
+  «EXPAND sessionbean FOREACH this.derive().pageDefinitions()»
+  «EXPAND presentation FOREACH this.derive().pageDefinitions()»
+«ENDDEFINE»
+
+«DEFINE entityclass FOR Entity» 
+    «FILE this.name+".java"»
+      public class «name» {
+          «FOREACH this.properties AS p»
+             private  «p.type.name» _«p.name»;
+             
+             public void set«p.name»(«p.type.name» «p.name») {
+               this._«p.name» = «p.name»;
+             }
+             
+             public void get«p.name»() {
+               return «p.name»;
+             }
+          «ENDFOREACH»
+      }
+    «ENDFILE»
+«ENDDEFINE»
+
+«DEFINE sessionbean FOR TemplateDefinition»
+    «FILE this.name+".java"»
+      @Stateful
+      public class «name»Bean {
+        @In EntityManager em;
+      }
+    «ENDFILE»
+«ENDDEFINE»
+
+
+«DEFINE presentation FOR TemplateDefinition»
+    «FILE this.name+".xhtml"»
+      «name»
+    «ENDFILE»
+«ENDDEFINE»
+
