@@ -1,0 +1,103 @@
+import mydsl;
+
+extension org::example::dsl::GenExtensions reexport;
+
+Entity entity(Property this) :
+  this.eContainer ;
+  
+List[Entity] entities(emf::EObject this) :
+  allElements().typeSelect(Entity) ;
+
+List[TemplateDefinition] definitions(emf::EObject this) :
+  allElements().typeSelect(TemplateDefinition) ;
+  
+List[TemplateDefinition] pageDefinitions(emf::EObject this) :
+  definitions().select(d | d.isPageDefinition()) ;
+
+Boolean isPageDefinition(TemplateDefinition this) :
+  modifiers.typeSelect(PageModifier).size == 1 ;
+  
+Boolean hasPageDefinition(Application this, String name) :
+  pageDefinitions().select(d | d.name == name).size == 1 ;
+  
+  
+/* types of expressions */
+
+Sort typeof(Exp this) :
+  new Sort ;
+
+/* derive desugared application */
+
+create Application this derive(Application app) :
+  setName(app.name) ->
+  sections.addAll(app.sections.collect(s|derive(s))) ->
+  sections.add(viewEditDefinitions(app)) ;
+  
+create Section this derive(Section s) :
+  setName(s.name) ->
+  definitions.addAll(s.definitions.select(d|derive())) ;
+  
+/* desugaring definitions */
+
+Definition derive(Definition d) :
+  derive(d) ;
+
+create TemplateDefinition this derive(TemplateDefinition def) :
+   this.setName(def.name) ->
+   this.setModifiers(def.modifiers) ->
+   this.setArguments(def.arguments) ->
+   this.setElements(def.elements.select(e|derive(e))) ;
+
+create Entity this derive(Entity e) :
+   this.setName(e.name) ->
+   this.setProperties(e.properties) ;
+   
+/* desugaring template elements */
+   
+TemplateElement derive(TemplateElement e) :
+  derive(e) ;
+  
+create ForTemplate this derive(ForTemplate f) :
+  this.setIterator(f.iterator) ->
+  this.setSource(f.source) ->
+  this.setType(f.type) ->
+  this.setElements(f.elements.select(e | derive(e))) ;
+  
+create StringLiteral this derive(StringLiteral s) :
+  this ;
+  
+TemplateElement derive(TemplateCall call) :
+  switch(call.name) {
+    case "output" :   
+      deriveOutput(call)
+    default : 
+      deriveTemplateCall(call)
+  } ;
+  
+TemplateCall deriveTemplateCall(TemplateCall call) :
+  let e = new TemplateCall :
+    e.setName(call.name) ->
+     e.setArguments(call.arguments) ->
+     e.setElements(call.elements.select(e | derive(e))) ->
+     e;
+  
+TemplateElement deriveOutput(TemplateCall call) :
+  switch(call.arguments.expressions.get(0)) {
+    default : 
+      deriveTemplateCall(call)
+  } ;
+  
+  // here it should happen! 
+  //   output(e :: Text)   -> outputText(e)
+  //   output(e :: String) -> outputString(e)
+  //   output(e :: X)      -> navigate(x(e)){e.name}
+  
+/* deriving edit pages from entity declarations */
+
+create Section this viewEditDefinitions(Application app) :
+  setName("Generated") -> 
+  app.entities().collect(e | deriveEditPage(e)) ;
+  
+create TemplateDefinition deriveEditPage(Entity e) :
+  null ;
+

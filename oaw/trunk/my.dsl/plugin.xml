@@ -1,0 +1,16 @@
+<plugin>
+   <extension
+         point="org.openarchitectureware.xtext.core.base.dynamic_package">
+      <resource
+            location="platform:/plugin/my.dsl/org.example.dsl/mydsl.ecore"
+            uri="mydsl">
+      </resource>
+   </extension>
+   <extension
+         point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            class="org.example.dsl.resource.mydslResourceFactory"
+            type="dsl">
+      </parser>
+   </extension>
+</plugin>

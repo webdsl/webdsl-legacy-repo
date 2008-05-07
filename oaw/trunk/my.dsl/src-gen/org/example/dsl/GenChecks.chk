@@ -1,0 +1,15 @@
+import mydsl;
+
+extension org::openarchitectureware::xtext::parser::LinkerUtils;
+
+extension org::example::dsl::Extensions;
+
+/*
+ * check linking
+ */
+context TemplateCall ERROR "Couldn't resolve reference to '"+this.parsedString("name")+"'" :
+	this.parsedString("name")!=null ? name!=null : true;
+
+
+
+

@@ -1,0 +1,20 @@
+
+extension org::example::dsl::Extensions;
+extension org::openarchitectureware::xtext::parser::LinkerUtils;
+
+link(emf::EObject this) :
+	let all = allLocalElements() :
+		all.typeSelect(mydsl::TemplateCall).collect(e|e.link_name()) ->
+        null;
+
+
+
+
+Void link_name(mydsl::TemplateCall this) :
+	(let ents = this.allElements().typeSelect(mydsl::TemplateDefinition) :
+
+		this.setName(ents.select(e|e.id() == this.parsedString("name")).first())
+);
+
+
+

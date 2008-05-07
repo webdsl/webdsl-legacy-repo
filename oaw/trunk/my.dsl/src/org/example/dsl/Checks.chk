@@ -1,0 +1,59 @@
+import mydsl;
+
+extension org::example::dsl::Extensions;
+/*
+ * This check file is used by the parser
+ * and by the editor. Add your constraints here!
+ */
+
+context Application ERROR "Write your constraint message here...!" :
+   true;
+
+context Section ERROR "Write your constraint message here...!" :
+   true;
+
+context Definition ERROR "Write your constraint message here...!" :
+   true;
+
+context Entity ERROR "Duplicate entity declaration for "+name :
+   allElements().typeSelect(Entity).select(e|e.name == this.name).size == 1;
+
+context Property ERROR "Duplicate property declaration for "+name :
+   entity().properties.select(p|p.name == this.name).size == 1;
+
+context Sort ERROR "Write your constraint message here...!" :
+   true;
+
+context Annotation ERROR "Write your constraint message here...!" :
+   true;
+
+context TemplateDefinition ERROR "Write your constraint message here...!" :
+   true;
+
+context FormalArg ERROR "Write your constraint message here...!" :
+   true;
+
+context Modifier ERROR "Write your constraint message here...!" :
+   true;
+
+context TemplateElement ERROR "Write your constraint message here...!" :
+   true;
+
+context StringLiteral ERROR "Write your constraint message here...!" :
+   true;
+
+context TemplateCall ERROR "Write your constraint message here...!" :
+   true;
+
+context Exp ERROR "Write your constraint message here...!" :
+   true;
+
+context Var ERROR "Write your constraint message here...!" :
+   true;
+
+context PrimaryExp ERROR "Write your constraint message here...!" :
+   true;
+
+context FieldAccess ERROR "Write your constraint message here...!" :
+   true;
+

@@ -1,0 +1,95 @@
+Application :
+  "application" name=ID (sections+=Section)* ;
+  
+Section :
+  "section" name=ID (definitions+=Definition)* ;
+  
+Definition :
+  Entity | TemplateDefinition ;
+  
+Entity :
+  "entity" (name=ID) "{" (properties+=Property)* "}" ;
+  
+Property :
+  name=ID ":" type=Sort ("(" annotations=Annotations ")")? ;
+
+Annotations :
+  Annotation ("," Annotation)* ;
+  
+Sort :
+  SimpleSort | GenericSort ;
+  
+SimpleSort :
+  name=ID ;
+  
+GenericSort :
+  name=ID "<" arguments=SortArguments ">" ;
+  
+SortArguments :
+  Sort ("," Sort)* ;
+  
+Annotation :
+  name=ID ;
+
+TemplateDefinition :
+  "define" (modifiers+=Modifier)* name=ID
+     "(" (arguments=FormalArgs)? ")"
+     "{" (elements+=TemplateElement)* "}" ;
+     
+FormalArgs :
+  FormalArg ("," FormalArg)* ;
+  
+FormalArg :
+  name=ID ":" type=Sort ;
+  
+Modifier :
+  PageModifier ;
+  
+PageModifier :
+  "page" ;
+  
+TemplateElement :
+  TemplateCall 
+  | TemplateDefinition 
+  | StringLiteral
+  | ForTemplate
+  ;
+
+ForTemplate :
+  "for" "(" iterator=Var ":" type=Sort "in" source=Exp ")" "{" 
+     (elements+=TemplateElement)* 
+  "}" ;
+  
+StringLiteral :
+  value=STRING ;
+   
+TemplateCall :
+  name=[TemplateDefinition] ("(" arguments=Arguments ")")?
+          ("{" (elements+=TemplateElement)* "}")? ;
+
+Exp :
+  FieldAccess 
+  ;
+  
+FieldAccess :
+  target=PrimaryExp ("." fields+=ID)* ;
+  
+PrimaryExp :
+  ParenExp
+  | Var
+  | StringLiteral
+  | FunCall
+  ; 
+  
+Var :
+  name=ID ;
+  
+ParenExp :
+  "(" Exp ")" ;
+  
+FunCall :
+  function=Var "(" arguments=Arguments ")" ;
+  
+Arguments :
+  expressions+=Exp ("," expressions+=Exp)* ;
+  
