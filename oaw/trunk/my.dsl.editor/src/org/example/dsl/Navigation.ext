@@ -1,0 +1,10 @@
+import mydsl;
+
+extension org::example::dsl::Extensions;
+extension org::example::dsl::GenNavigation reexport;
+/*
+ * overwrite the extensions
+ * ''emf::EObject findDeclaration(String,Object,Object)''
+ * ''List[emf::EObject] findReferences(String,Object,Object)''
+ * from org::example::dsl::GenNavigation.ext to control the construction of the findReferences / findDeclaration actions
+ */

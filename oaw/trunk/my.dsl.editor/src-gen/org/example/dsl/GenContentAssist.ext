@@ -1,0 +1,169 @@
+import mydsl;
+import codeassist;
+
+extension org::example::dsl::EditorExtensions;
+
+/* proposals for Feature Section::name */
+List[Proposal] completeSection_name(emf::EObject ctx, String prefix) :
+	{newProposal("SectionName")};
+
+/* proposals for Feature TemplateDefinition::name */
+List[Proposal] completeTemplateDefinition_name(emf::EObject ctx, String prefix) :
+	{newProposal("TemplateDefinitionName")};
+
+/* proposals for Feature FieldAccess::fields */
+List[Proposal] completeFieldAccess_fields(emf::EObject ctx, String prefix) :
+	{newProposal("FieldAccessFields")};
+
+/* proposals for Feature Property::name */
+List[Proposal] completeProperty_name(emf::EObject ctx, String prefix) :
+	{newProposal("PropertyName")};
+
+/* proposals for Feature Application::name */
+List[Proposal] completeApplication_name(emf::EObject ctx, String prefix) :
+	{newProposal("ApplicationName")};
+
+/* proposals for Feature SimpleSort::name */
+List[Proposal] completeSimpleSort_name(emf::EObject ctx, String prefix) :
+	{newProposal("SimpleSortName")};
+
+/* proposals for Feature StringLiteral::value */
+List[Proposal] completeStringLiteral_value(emf::EObject ctx, String prefix) :
+	{newProposal("StringLiteralValue")};
+
+/* proposals for Feature GenericSort::name */
+List[Proposal] completeGenericSort_name(emf::EObject ctx, String prefix) :
+	{newProposal("GenericSortName")};
+
+/* proposals for Feature Annotation::name */
+List[Proposal] completeAnnotation_name(emf::EObject ctx, String prefix) :
+	{newProposal("AnnotationName")};
+
+/* proposals for Feature Entity::name */
+List[Proposal] completeEntity_name(emf::EObject ctx, String prefix) :
+	{newProposal("EntityName")};
+
+/* proposals for Feature FormalArg::name */
+List[Proposal] completeFormalArg_name(emf::EObject ctx, String prefix) :
+	{newProposal("FormalArgName")};
+
+/* proposals for Feature Var::name */
+List[Proposal] completeVar_name(emf::EObject ctx, String prefix) :
+	{newProposal("VarName")};
+
+
+
+/* proposals for Feature TemplateDefinition::elements */
+List[Proposal] completeTemplateDefinition_elements(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature FieldAccess::target */
+List[Proposal] completeFieldAccess_target(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature TemplateDefinition::arguments */
+List[Proposal] completeTemplateDefinition_arguments(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Property::annotations */
+List[Proposal] completeProperty_annotations(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature TemplateCall::arguments */
+List[Proposal] completeTemplateCall_arguments(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature FunCall::function */
+List[Proposal] completeFunCall_function(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Arguments::expressions */
+List[Proposal] completeArguments_expressions(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature TemplateDefinition::modifiers */
+List[Proposal] completeTemplateDefinition_modifiers(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature FunCall::arguments */
+List[Proposal] completeFunCall_arguments(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Section::definitions */
+List[Proposal] completeSection_definitions(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature FormalArg::type */
+List[Proposal] completeFormalArg_type(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature GenericSort::arguments */
+List[Proposal] completeGenericSort_arguments(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Entity::properties */
+List[Proposal] completeEntity_properties(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature ForTemplate::source */
+List[Proposal] completeForTemplate_source(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Arguments::expressions */
+List[Proposal] completeArguments_expressions(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Property::type */
+List[Proposal] completeProperty_type(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature TemplateCall::elements */
+List[Proposal] completeTemplateCall_elements(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature ForTemplate::elements */
+List[Proposal] completeForTemplate_elements(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Application::sections */
+List[Proposal] completeApplication_sections(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature ForTemplate::type */
+List[Proposal] completeForTemplate_type(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature ForTemplate::iterator */
+List[Proposal] completeForTemplate_iterator(emf::EObject ctx, String prefix) :
+	{};
+
+
+
+/* proposals for TemplateCall::name */
+List[Proposal] completeTemplateCall_name(emf::EObject ctx, String prefix) :
+	ctx.allElements().typeSelect(mydsl::TemplateDefinition).collect(x|newProposal(x.label(),x.id(),x.image()));
+
+
+List[Proposal] sortProposals(List[Proposal] proposalsToSort):
+	proposalsToSort;
+
+isKeywordProposal(Proposal this):
+	type == Type::KEYWORD;
+
+isAssignmentProposal(Proposal this):
+	type == Type::ASSIGNMENT;
+	
+isEnumProposal(Proposal this):
+	type == Type::ENUM_LITERAL;
+
+// create extensions
+Proposal newProposal(String proposal) :
+	newProposal(proposal,proposal);
+	
+Proposal newProposal(String label, String toReplace) :
+	newProposal(label,toReplace,"default.gif");
+	
+create Proposal newProposal(String label, String replace, String image) :
+	setLabel(label==null?"ERROR":label)->
+	setToInsert(replace==null?"ERROR":replace)->
+	setImage(image);

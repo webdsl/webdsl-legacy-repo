@@ -1,0 +1,35 @@
+
+import mydsl;
+import tree;
+
+extension org::example::dsl::EditorExtensions;
+
+extension org::openarchitectureware::xtext::parser::LinkerUtils;
+
+/*
+ * finds the declaration for the given element
+ * the string is the hyperlinked identifier
+ */
+emf::EObject findDeclaration(String s, Object grammarelement, Object element) : null;
+
+findDeclaration(String s,xtext::Assignment ass, TemplateCall ele) :
+	switch (ass.feature) {
+		case "name" : allElements(ele).typeSelect(mydsl::TemplateDefinition).select(e|e.id()==s).first()
+		default : null
+	};
+/*
+ * finds the declaration for the given element
+ * the string is the hyperlinked identifier
+ */
+List[UIContentNode] findReferences(String s, Object grammarelement, Object element) : null;
+
+List[UIContentNode] findReferences(String s,xtext::Assignment rule, mydsl::TemplateDefinition ele) :
+	allElements(ele).typeSelect(mydsl::TemplateCall).select(e|e.parsedString("name")==s).collect(e|e.createContentNode(e.label(),e.image()));
+
+/*
+ * UIContentNode creator
+ */
+create UIContentNode createContentNode(emf::EObject ctx, String label, String image) :
+	setLabel(label)->
+	setImage(image)->
+	setContext(ctx);
