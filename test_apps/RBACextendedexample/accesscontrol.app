@@ -89,7 +89,8 @@ section RBAC AccessControl
       page user(*),
       page project(*),
       page projectRole(*),
-      page role(*)
+      page role(*),
+      template *(*)
     }
 
     
@@ -119,10 +120,12 @@ section RBAC AccessControl
       mayEditDocument(securityContext.activeProjectRole,d)
     }
 
-
-    rules function activateRole(pr:ProjectRole)
-    {
-      pr in securityContext.principal.roles
+    rule template roleActivation(){
+      true
+      rule action activate(pr1:ProjectRole)
+      {
+        pr1 in securityContext.principal.roles
+      }
     }
     
     rules page editUserRoles(u:User)
@@ -141,6 +144,7 @@ section RBAC AccessControl
     }
   }
 
+section moreglobals
 
   globals
   {  

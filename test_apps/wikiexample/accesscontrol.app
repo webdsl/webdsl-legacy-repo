@@ -18,7 +18,8 @@ section wiki AccessControl
       page user(*),
       page editUser(*),
       page createUser(),
-      page page(*)
+      page page(*),
+      template *(*)
     }
 
     rules pointcut openSections()
@@ -39,7 +40,7 @@ section wiki AccessControl
     
   }
   
-  
+section globals
   globals
   {  
     
