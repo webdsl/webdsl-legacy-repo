@@ -5,7 +5,7 @@ section authentication
   access control rules {
     principal is User with credentials username, password
   }
-
+section users
   define currentUser() {
     signinMenu()
     signoffMenu()

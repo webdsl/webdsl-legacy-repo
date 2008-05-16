@@ -1,6 +1,6 @@
 module users/access-control
 
-  note {
+  description {
   
     - policy for creation of groups
   
@@ -14,22 +14,21 @@ access control policy
 
   anonymous OR admin
 
-section admin ac
 
-  access control rules admin {
+
+  access control rules admin
   
     pointcut admin()
     {
       page *(*),
-      template *(*),
-      function *(*)
+      template *(*)
     }
    
     rules pointcut admin() {
       isAdministrator()
     }  
     
-  }
+ 
   
 section ac policies
 
@@ -62,17 +61,6 @@ section ac policies
     
   }
     
-  access control rules { // hack
-  
-    rules template *(*) {
-      true
-    }
-    
-    rules function *(*) {
-      true
-    }
-  
-  }
 
 section users
 
@@ -82,10 +70,7 @@ section users
       true
     }
     
-    rules function *(*) {
-      true
-    }
-  
+
     predicate isAdministrator() {
       securityContext != null && securityContext.principal != null &&
       adminGroup in securityContext.principal.activeGroups
