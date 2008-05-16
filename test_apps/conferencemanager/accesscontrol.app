@@ -214,7 +214,7 @@ section conference manager AccessControl
       securityContext.principal in p.assignedReviewers
     }
   }
-
+section moreglobals
   globals
   {  
     function userLogin(u:User):Int

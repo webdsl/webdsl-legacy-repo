@@ -67,7 +67,8 @@ section ac stuff.
   pointcut public()
   {
     page home(),
-    page register()
+    page register(),
+    template *(*)
   }
   rules pointcut public()
   {
@@ -98,7 +99,6 @@ section ac stuff.
   {
     u = securityContext.principal
   }
-
   
   rules template login()
   { 
