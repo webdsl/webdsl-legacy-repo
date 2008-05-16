@@ -41,9 +41,9 @@ section RBAC pages
     }
   }
 
-  define page createDocument()
+  define page createNewDocument(p:Project)
   {
-    var d:Document:=Document{};
+    var d:Document:=Document{project := p};
     action save(d:Document)
     {
       d.save();

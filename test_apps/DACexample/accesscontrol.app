@@ -48,10 +48,6 @@ section DAC AccessControl
     {
       true
     }
-    rule function *(*)
-    {
-      true
-    }
 
 
     rules page viewDocument(d:Document)

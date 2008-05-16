@@ -52,7 +52,7 @@ section RBAC templates
         menuitem{ navigate(editUserRoles(u)) { "edit roles" } }
       }
     }
-    menu{menuheader { navigate(createDocument()){output("create new document")} } }
+    menu{menuheader { navigate(createNewDocument(securityContext.activeProjectRole.project)){output("create new document")} } }
   }
   define body(){}
   define sidebar()

@@ -106,9 +106,10 @@ section RBAC AccessControl
       mayViewDocument(securityContext.activeProjectRole,d)
     }
 
-    rules page createDocument()
+    rules page createNewDocument(pr:Project)
     {
       securityContext.activeProjectRole.role = editor
+      && securityContext.activeProjectRole.project = pr
       rules action save(d:Document)
       {
         mayEditDocument(securityContext.activeProjectRole,d)

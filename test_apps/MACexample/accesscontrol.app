@@ -55,8 +55,7 @@ section MAC AccessControl
     {
       page home(),
       template sidebar(),
-      template *(*),
-      function *(*)
+      template *(*)
     }
 
     rules pointcut openSections()
