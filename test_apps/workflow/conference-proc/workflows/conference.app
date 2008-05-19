@@ -23,114 +23,18 @@ procedures conference
 
   procedure conference(c : Conference) {
     process {
-
       inviteProgramCommittee;
-      
       publishCallForPapers;
-      
-      submitAbstract 
-      |OR| submitPaper 
-      |OR| extendAbstractDeadline
-      |OR| extendPaperDeadline ;
-      
-   
-    }
-  }
-  
-  /**
-   * Inviting pc members. Separate workflows manage this invitation. 
-   */
-   
-  procedure invitePcMember(c: Conference) {
-    who { securityContext.principal in c.chairs }
-    when { !c.finalizePc.performed }
-    view {
-      var name : String
-      var email : Email
-      main()
-      define contextSidebar() {
-        conferenceProcedures(c)
-      }
-      define body() {      
-        form {
-          table {
-            row { "Name:" input(name) }
-            row { "Email:" input(email) }
-          }
-          action("Invite", do())
-        }
-      }
-    }
-    do {
-      var pcInv : PcInvitation := PcInvitation{
-        conference := c
+      parallel {
+        submitAbstract 
+        | submitPaper 
+        | extendAbstractDeadline
+        | extendPaperDeadline
       };
-      pcInv.pcInvitationWorkflow.start(name, email);
-      c.pcInvitations.add(pcInv);
+      assignReviewers;
     }
   }
   
-  /**
-   * If there are enough pc members that have accepted the invitation, we can finalize the pc
-   */
-  procedure finalizePc(c: Conference) {
-    who { securityContext.principal in c.chairs }
-    when { !c.finalizePc.performed }
-    view {
-      main()
-      define contextSidebar() {
-        conferenceProcedures(c)
-      }
-      define body() {
-        section() {
-          header{"Finalize the program committee"}
-          
-          // view all invitations with their statuses
-          section() {
-            header{"Invitations"}
-            table {
-              row {
-                "" "Name" "Response"
-              }
-              for (pcInv : PcInvitation in c.pcInvitationsList) {
-                row {
-                  "Invitation: "
-                  text(pcInv.user.name)
-                  if (pcInv.pcInvitationWorkflow.performed) {
-                    if (pcInv.accepted) {
-                      "accepted"
-                    } 
-                    if (!pcInv.accepted) {
-                      "rejected"
-                    }
-                  } 
-                  if (!pcInv.pcInvitationWorkflow.performed) {
-                    "not responded yet"
-                  }
-                }
-              }
-            }
-          }
-          
-          // view the list of program committee members
-          section() {
-            header{"Program Committee members"}
-            table {
-              for (user : User in c.pcMembersList) {
-                row {
-                  output(user)
-                }
-              }
-            }
-          }
-        
-          form {
-            action("Finalize", do())
-          }       
-        }
-      }
-    }
-  }
 
   procedure stopAcceptingPapers(c : Conference) {
     who { securityContext.principal in c.chairs }
