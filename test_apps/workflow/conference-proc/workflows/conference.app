@@ -25,20 +25,19 @@ procedures conference
     process {
       inviteProgramCommittee;
       publishCallForPapers;
-      parallel {
+      repeat { 
+        // should enable parallel non-blocking invocations of these procedures
         submitAbstract 
-        | submitPaper 
-        | extendAbstractDeadline
-        | extendPaperDeadline
+        |OR| submitPaper 
+        |OR| extendAbstractDeadline
+        |OR| extendPaperDeadline
       };
       assignReviewers;
     }
   }
   
-
   procedure stopAcceptingPapers(c : Conference) {
-    who { securityContext.principal in c.chairs }
-    when { c.finalizePc.performed && !c.stopAcceptingPapers.performed }
+    who { principal in c.chairs }
     view {
       main()
       define contextSidebar() {
