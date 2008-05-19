@@ -40,24 +40,49 @@ section data model
     marginallyRelevant("Marginally relevant")
   }
 
-operations review
+procedures review
 
-  workflow reviewWorkflow(review : Review) {
-    init() {
-
+  procedure review(review : Review) {
+    who { 
+      principal = review.reviewer 
     }
-    done { review.finalizeReview.performed }
+    process {
+      submitReview;
+      (viewReviews |OR| reviseReview |OR| commentReviews)*;
+      finalizeReview
+    }
   }
 
-  operation doReview(review : Review) {
-    who { securityContext.principal = review.reviewer }
-    when { !review.paper.conference.conferenceWorkflow.performed && review.reviewWorkflow.started && !review.finalizeReview.performed }
+  procedure submitReview(review : Review) {
+    who { 
+      securityContext.principal = review.reviewer 
+    }
     view {
-      derive operationPage from review for (acceptance, expertise, relevance, committeeComments, summary, evaluation)
+      derive procedurePage from review 
+         for (acceptance, expertise, relevance, committeeComments, summary, evaluation)
     }
   }
   
-  operation finalizeReview(review : Review) {
+  procedure viewReviews(review : Review) {
     who { securityContext.principal = review.reviewer }
-    when { !review.paper.conference.conferenceWorkflow.performed && review.reviewWorkflow.started && review.doReview.performed && !review.finalizeReview.performed }
+    view {
+      for (r : Review in review.papers.reviews ) {
+        derive viewPage from r
+           for (acceptance, expertise, relevance, committeeComments, summary, evaluation)
+      }
+    }
+  }
+  
+  procedure reviseReview(review : Review) {
+    who { 
+      securityContext.principal = review.reviewer 
+    }
+    view {
+      derive procedurePage from review 
+         for (acceptance, expertise, relevance, committeeComments, summary, evaluation)
+    }
+  }
+  
+  procedure finalizeReview(review : Review) {
+    who { securityContext.principal = review.reviewer }
   }
