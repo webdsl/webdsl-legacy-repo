@@ -9,7 +9,7 @@ imports templates
 imports data
 imports ac
 
-operations for PdpMeeting
+procedures for PdpMeeting
 /*
 
   pdpProcess(p : PdpMeeting) = 
@@ -30,44 +30,55 @@ operations for PdpMeeting
     finalizeReview(rev);
     (viewAllReviews(paper) || commentReviews(paper))*;
 */
-
+/*
   workflow meetingWorkflow(p : PdpMeeting) {
+<<<<<<< .mine
+    // adds p.meetingWorkflow :: procedureStatus property
+    // generate page meetingWorkflow(p : PdpdMeeting) with status
+    init {
+      p := PdpMeeting { };
+    }
+=======
+>>>>>>> .r1234
     done { p.approveReport.performed }
-  }
+<<<<<<< .mine
+    // generate global function checkMeetingWorkflowPerformed(p : PdpMeeting)
+    // that is called every time an procedure is performed on PdpMeeting
+  }*/
 
-  operation employeeFillInForm(p : PdpMeeting) {
+  procedure employeeFillInForm(p : PdpMeeting) {
     who { securityContext.principal = p.employee }
     when { !p.employeeFillInForm.performed }
     view {
       title{"Fill in employee form"}
-      derive operationPage from p for (employeePreparation)
+      derive procedurePage from p for (employeePreparation)
     }
   }
 
-  operation managerFillInForm(p : PdpMeeting) {
+  procedure managerFillInForm(p : PdpMeeting) {
     who { securityContext.principal = p.employee.manager }
     when { !p.managerFillInForm.performed }
     view {
       title{"Fill in manager form"}
-      derive operationPage from p for (managerPreparation)
+      derive procedurePage from p for (managerPreparation)
     }
   }
 
-  operation writeReport(p : PdpMeeting) {
+  procedure writeReport(p : PdpMeeting) {
     who { securityContext.principal = p.employee.manager }
     when { p.employeeFillInForm.performed && p.managerFillInForm.performed && !p.finalizeReport.performed }
     view {
       title{"Write report"}
-      derive operationPage from p for (report)
+      derive procedurePage from p for (report)
     }
   }
 
-  operation finalizeReport(p : PdpMeeting) {
+  procedure finalizeReport(p : PdpMeeting) {
     who { securityContext.principal = p.employee.manager }
     when { p.writeReport.performed && !p.finalizeReport.performed }
   }
 
-  operation approveReport(p : PdpMeeting) {
+  procedure approveReport(p : PdpMeeting) {
     who { securityContext.principal = p.employee }
     when { p.finalizeReport.performed && !p.approveReport.performed }
   }
@@ -87,7 +98,7 @@ section pages
         action organize() {
           var p : PdpMeeting := PdpMeeting{ };
           p.employee := employee;
-          p.meetingWorkflow.start();
+          //p.meetingWorkflow.start();
           p.persist();
           // Test stuff
           if(Or[x > 3 | x : Int in [1, 2, 3, 4, 5]]) {
@@ -98,16 +109,17 @@ section pages
       }
     }
   }
+  
+access control rules 
+  rule page pdpMeeting(pdpMeeting : PdpMeeting) {
+    securityContext.principal = pdpMeeting.employee || securityContext.principal = pdpMeeting.employee.manager
+  }
+    
+section pages
 
   define pdpMeetingOperations(p : PdpMeeting) {
     "haha!"
     pdpMeetingOperationsList(p)
-  }
-
-  access control rules {
-    rules page pdpMeeting(pdpMeeting : PdpMeeting) {
-      securityContext.principal = pdpMeeting.employee || securityContext.principal = pdpMeeting.employee.manager
-    }
   }
 
 /*
@@ -115,7 +127,7 @@ section pages
     title {"Pdp Meeting " output(pdpMeeting)}
     main()
     define contextSidebar() {
-      pdpMeetingOperations(pdpMeeting)
+      pdpMeetingprocedures(pdpMeeting)
     }
     define body() {
       header{"Pdp meeting " output(pdpMeeting)}
