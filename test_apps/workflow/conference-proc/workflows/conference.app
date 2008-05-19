@@ -5,15 +5,43 @@ imports workflows/bid
 imports workflows/review
 imports workflows/finalversion
 
-operations conference  
-  workflow conferenceWorkflow(c : Conference) {
-    done { c.finalizeConference.performed }
+procedures conference  
+
+  procedure createConference(m : ConferenceManager) {
+    who {
+      principal = m.admin
+    }
+    view {
+      var c : Conference := Conference{};
+      derive editPage from c for (name, chairs)
+    }
+    do {
+      c.conferenceWorkflow.start();
+      m.conferences.add(c);
+    }
+  }
+
+  procedure conference(c : Conference) {
+    process {
+
+      inviteProgramCommittee;
+      
+      publishCallForPapers;
+      
+      submitAbstract 
+      |OR| submitPaper 
+      |OR| extendAbstractDeadline
+      |OR| extendPaperDeadline ;
+      
+   
+    }
   }
   
   /**
    * Inviting pc members. Separate workflows manage this invitation. 
    */
-  operation invitePcMember(c: Conference) {
+   
+  procedure invitePcMember(c: Conference) {
     who { securityContext.principal in c.chairs }
     when { !c.finalizePc.performed }
     view {
@@ -21,7 +49,7 @@ operations conference
       var email : Email
       main()
       define contextSidebar() {
-        conferenceOperations(c)
+        conferenceProcedures(c)
       }
       define body() {      
         form {
@@ -45,13 +73,13 @@ operations conference
   /**
    * If there are enough pc members that have accepted the invitation, we can finalize the pc
    */
-  operation finalizePc(c: Conference) {
+  procedure finalizePc(c: Conference) {
     who { securityContext.principal in c.chairs }
     when { !c.finalizePc.performed }
     view {
       main()
       define contextSidebar() {
-        conferenceOperations(c)
+        conferenceProcedures(c)
       }
       define body() {
         section() {
@@ -103,46 +131,14 @@ operations conference
       }
     }
   }
-  
-  operation submitPaper(c: Conference) {
-    when { c.finalizePc.performed && !c.stopAcceptingPapers.performed }
-    view {
-      var paper : Paper := Paper{}
-      title{"Submit paper"}
-      main()
-      define contextSidebar() {
-        conferenceOperations(c)
-      }
-      define body () {
-        section(){
-          header{"Submit paper"}
-          form {
-            table {
-              derive editRows from paper for (title, abstract, authors)
-            }
-            action("Save", do()){}
-            action("Cancel", cancel()){}
-          }
-        }
-        action cancel ( )
-        {
-          return home();
-        }
-      }
-    }
-    do {
-      paper.conference := c;
-      paper.save();
-    }
-  }
 
-  operation stopAcceptingPapers(c : Conference) {
+  procedure stopAcceptingPapers(c : Conference) {
     who { securityContext.principal in c.chairs }
     when { c.finalizePc.performed && !c.stopAcceptingPapers.performed }
     view {
       main()
       define contextSidebar() {
-        conferenceOperations(c)
+        conferenceProcedures(c)
       }
       define body() {
         section() {
@@ -165,7 +161,7 @@ operations conference
    * add bids for all papers, for all possible reviewers
    * also add 2 reviews for all papers
    */
-  operation startBidding(c : Conference) {
+  procedure startBidding(c : Conference) {
     who { securityContext.principal in c.chairs }
     when { c.stopAcceptingPapers.performed && !c.startBidding.performed }
     do {
@@ -190,13 +186,13 @@ operations conference
     }
   }
   
-  operation assignReviews(c : Conference) {
+  procedure assignReviews(c : Conference) {
     who { securityContext.principal in c.chairs }
     when { c.startBidding.performed && !c.startReviewing.performed }
     view {
       main()
       define contextSidebar() {
-        conferenceOperations(c)
+        conferenceProcedures(c)
       }
       define body() {
         section() {
@@ -246,7 +242,7 @@ operations conference
     }
   }
   
-  operation startReviewing(c : Conference) {
+  procedure startReviewing(c : Conference) {
     who { securityContext.principal in c.chairs }
     when { c.assignReviews.performed && !c.startReviewing.performed }
     do {
@@ -258,13 +254,13 @@ operations conference
     }
   }
   
-  operation decideOnAcceptance(c : Conference) {
+  procedure decideOnAcceptance(c : Conference) {
     who { securityContext.principal in c.chairs }
     when { c.startReviewing.performed && !c.decideOnAcceptance.performed }
     view {
       main()
       define contextSidebar() {
-        conferenceOperations(c)
+        conferenceProcedures(c)
       }
       define body() {
         section() {
@@ -301,7 +297,7 @@ operations conference
     }
   }
   
-  operation finalizeConference(c : Conference) {
+  procedure finalizeConference(c : Conference) {
     who { securityContext.principal in c.chairs }
     when { c.decideOnAcceptance.performed && !c.finalizeConference.performed }
   }

@@ -1,11 +1,12 @@
 module workflows/bid
 
 section data model 
+
   entity Bid {
     reviewer -> User (inverse=User.bids)
-    paper -> Paper
+    paper    -> Paper
     category -> BidCategory
-    name :: String := reviewer.name + " on " + paper.title
+    name     :: String := reviewer.name + " on " + paper.title
   }
   
   extend entity User {
@@ -24,17 +25,18 @@ section data model
     dontCareBid("Don't care")
   }
 
-operations bid
+procedures bid
 
-  workflow bidWorkflow(bid : Bid) {
-    done { bid.doBid.performed }
-  }
-  
-  operation doBid(bid : Bid) {
-    who { securityContext.principal = bid.reviewer }
-    when { !bid.paper.conference.conferenceWorkflow.performed && bid.bidWorkflow.started && !bid.doBid.performed }
+  procedure bid(bid : Bid) {
+    who { 
+      securityContext.principal = bid.reviewer 
+    }
+    when { 
+      c.abstractDeadline < now() 
+      && bid.paper.conference.biddingEnabled
+    }
     view {
       // todo: paper weergeven
-      derive operationPage from bid for (category)
+      derive procedurePage from bid for (category)
     }
   }
