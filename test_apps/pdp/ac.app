@@ -1,28 +1,25 @@
 module ac
 
-section access control
 
-  access control rules {
-    principal is User with credentials username, password
+access control rules 
+
+  rule page createPdpMeeting() {
+    true
   }
 
-  access control rules {
-    rules page createPdpMeeting() {
-      true
-    }
+  rule page *(*) {
+    true
+  }
+  rule action *(*) {
+    true
+  }
+  rule template *(*) {
+    true
   }
 
-  access control rules {
-    rules page *(*) {
-      true
-    }
-    rules action *(*) {
-      true
-    }
-    rules template *(*) {
-      true
-    }
-  }
+section pages
+
+  principal is User with credentials username, password
 
   define page signin() {
     main()
