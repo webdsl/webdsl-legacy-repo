@@ -45,7 +45,7 @@ section invitation
     invitations -> Set<CommitteeInvitation>
   }
 
-procedures committee invitation
+section committee invitation
 
   procedure composeProgramCommittee(c : Conference) {
     who {
@@ -63,7 +63,7 @@ procedures committee invitation
       c.pc := comm;
     }
     process {
-      inviteCommittee(c) // implies starting the workflow
+      inviteCommittee(comm) // implies starting the workflow
     }
   }
 
@@ -109,7 +109,6 @@ procedures committee invitation
   procedure finalizeCommittee(c: Committee) {
     who { principal in c.chairs }
   }
-  
 
   define showInvitations(c : Committee) {
     section() {

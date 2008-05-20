@@ -1,5 +1,6 @@
 module workflows/bid
 
+/*
 section data model 
 
   entity Bid {
@@ -25,7 +26,7 @@ section data model
     dontCareBid("Don't care")
   }
 
-procedures bid
+section bid
 
   procedure bid(bid : Bid) {
     who { 
@@ -40,3 +41,4 @@ procedures bid
       derive procedurePage from bid for (category)
     }
   }
+*/

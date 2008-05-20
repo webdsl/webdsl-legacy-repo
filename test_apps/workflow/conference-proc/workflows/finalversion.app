@@ -1,21 +1,22 @@
 module workflows/finalversion
 
-operations final version
+section final version
 
-  workflow editFinalVersionWorkflow(p : Paper) {
-    done { p.finalize.performed }
+  procedure editFinalVersion(p : Paper) {
+    process{
+      repeat{ editFinalPaper(p) };
+      finalize(p)
+    }
   }
   
-  operation editFinalPaper(p : Paper) {
+  procedure editFinalPaper(p : Paper) {
     who { securityContext.principal in p.authors }
-    when { !p.conference.conferenceWorkflow.performed && p.editFinalVersionWorkflow.started && !p.finalize.performed }
     view {
       title{"Edit paper"}
       derive editPage from p
     }
   }
   
-  operation finalize(p : Paper) {
-    who { securityContext.principal in p.authors }
-    when { !p.conference.conferenceWorkflow.performed && p.editFinalVersionWorkflow.started && !p.finalize.performed }
+  procedure finalize(p : Paper) {
+    who { principal in p.authors }
   }

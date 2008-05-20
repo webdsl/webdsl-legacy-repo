@@ -12,7 +12,8 @@ section creating conferences
   // then admitted by a moderator
   
   entity ConferenceManager {
-    admin : User  
+    admin       -> User  
+    conferences -> Set<Conference>
   }
 
   procedure createConference(m : ConferenceManager) {
@@ -31,16 +32,17 @@ section creating conferences
     }
   }
   
+/*
+
 section the conference workflow
 
   procedure conference(c : Conference) {
     process {
-      createCallForPapers(c)
+      createCallForPapers(c);
       composeProgramCommittee(c);
       publishCallForPapers(c);
       enableSubmissions(c);
-      repeat { 
-        // should enable parallel non-blocking invocations of these procedures
+      repeat { // should enable parallel non-blocking invocations of these procedures
              submitAbstract(c)
         |OR| submitPaper(c) 
         |OR| extendAbstractDeadline(c)
@@ -58,7 +60,7 @@ section call for papers
   procedure publishCallForPapers(c : Conference) {
     who { principal in c.pc.chairs }
     view {
-      derive procedurePage for c from (callforpapers)
+      derive procedurePage from c for (callforpapers)
     }
   }
   
@@ -230,3 +232,5 @@ section call for papers
     who { securityContext.principal in c.chairs }
     when { c.decideOnAcceptance.performed && !c.finalizeConference.performed }
   }
+
+*/

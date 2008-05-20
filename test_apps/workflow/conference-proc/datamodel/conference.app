@@ -1,6 +1,13 @@
 module datamodel/conference
 
-section data model conference
+section conference manager
+
+  entity ConferenceManager {
+    admin       -> User  
+    conferences -> Set<Conference>
+  }
+  
+section conference
 
   entity Conference {
     name             :: String (name)

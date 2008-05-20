@@ -40,16 +40,16 @@ section data model
     marginallyRelevant("Marginally relevant")
   }
 
-procedures review
+section review
 
-  procedure review(review : Review) {
+  procedure review(r : Review) {
     who { 
-      principal = review.reviewer 
+      principal = r.reviewer 
     }
     process {
-      submitReview;
-      (viewReviews |OR| reviseReview |OR| commentReviews)*;
-      finalizeReview
+      submitReview(r);
+      (viewReviews(r.paper) |OR| reviseReview(r) |OR| commentReviews(r.paper))*;
+      finalizeReview(r)
     }
   }
 
