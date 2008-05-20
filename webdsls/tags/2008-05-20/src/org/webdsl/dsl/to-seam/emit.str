@@ -1,0 +1,86 @@
+module org/webdsl/dsl/generation/emit
+
+imports
+  libstrategolib
+  libjava-front
+
+imports
+  libwebdsl-front
+  org/webdsl/dsl/generation/-
+
+rules
+
+  /* Takes a java compilation unit and stores it to be emitted later */
+
+  emit-java-code =
+    ?cu@CompilationUnit(_, _, _)
+    ; rules(
+        JavaClassesToEmit :+= JavaFile(["src"], cu)
+      )
+
+  emit-facelets =
+    ?do@Document(_, _, _)
+    ; rules(
+        FaceletsToEmit :+= XmlFile(["view"], <concat-strings> [<Page>, ".xhtml"], do)
+      )
+
+  emit-css =
+    ?st@Stylesheet(_)
+    ; rules(
+        StylesheetsToEmit :+= CssFile(["view/stylesheets"], <concat-strings> [<Page>, ".css"], st)
+      )
+
+    //; info(|["Just added a java file: ", jf])
+    // index on pkg + class name
+    // ; rules( JavaClass :+ (pkg, cls) -> jf )
+    // dr-all-keys(|"JavaClass") produces all lhs
+    // all-keys-JavaClass
+
+  emit-webdsl-code =
+    ?def
+    //; info(|["WebDSL emitted: ", <pp-webdsl-to-string> def])
+    ; rules(
+        WebDSLDefinitionsToEmit :+ l -> [def|l]
+      )
+
+  emit-webdsl-section =
+    ?sec
+    //; info(|["WebDSL emitted: ", <pp-webdsl-to-string> def])
+    ; rules(
+        WebDSLSectionsToEmit :+ l -> [sec|l]
+      )
+
+  add-bean-interfaces =
+    <concat> [<filter(add-bean-interface)>, <id>]
+
+  add-bean-interface :
+    jf@JavaFile(_, CompilationUnit(_, _, [ClassDec(ClassDecHead(_, Id(classname), _, _, _), _)]))
+    ->
+    <create-local-interface(|<BeanPackage>, <DomainPackage>, <concat-strings> [classname, "Interface"])> jf
+    where <string-ends-with(|"Bean")> classname
+          <+ "ApplicationContext" := classname
+
+  get-java-artifacts =
+    bagof-JavaClassesToEmit
+    ; java-concat-ids
+    ; merge-classes
+    ; add-bean-interfaces
+
+  get-webdsl-definitions =
+    if defs := <repeat(once-WebDSLDefinitionsToEmit)> [] then
+      ! [Section("Emited WebDSL code", defs)]
+    else
+      ! []
+    end
+  ; ?defsection
+  ; if secs := <repeat(once-WebDSLSectionsToEmit)> [] then
+      ! <concat> [defsection,secs]
+    else
+      ! defsection
+    end
+
+  get-facelets =
+    bagof-FaceletsToEmit
+
+  get-css-artifacts =
+    bagof-StylesheetsToEmit

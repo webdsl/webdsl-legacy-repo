@@ -1,0 +1,18 @@
+module Derive
+
+%% syntax for derivation of pages
+exports
+
+  sorts Derive DeriveType DeriveProperty
+
+context-free syntax
+
+  "derive" Id "from" Exp "for" "(" 
+    {DeriveProperty ","}* 
+  ")"                            -> TemplateElement {cons("Derive"), prefer}
+  "derive" Id "from" Exp         -> TemplateElement {cons("Derive"), prefer}
+  
+  Id                             -> DeriveProperty
+  
+  "derive"                       -> TemplateCall {reject}
+    
