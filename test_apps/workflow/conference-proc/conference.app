@@ -1,4 +1,4 @@
-application com.example.conference
+application org.webdsl.conference
 
 description {
   Conference application
@@ -8,8 +8,7 @@ imports templates
 imports datamodel/main
 imports initialize
 imports accesscontrol
-//imports utils
-//imports workflows/conference
+imports workflows/conference
 
 
 section main

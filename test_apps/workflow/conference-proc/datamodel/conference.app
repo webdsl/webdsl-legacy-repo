@@ -13,7 +13,9 @@ section conference manager
 section conference
 
   entity Conference {
+    acronym          :: String (id)
     name             :: String (name)
+    fullname         :: String
     callforpapers    :: Text
     abstractDeadline :: DateTime
     paperDeadline    :: DateTime

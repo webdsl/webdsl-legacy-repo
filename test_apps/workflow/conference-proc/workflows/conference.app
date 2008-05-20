@@ -1,9 +1,9 @@
 module workflows/conference
 
-imports workflows/pcinvitation
-imports workflows/bid
-imports workflows/review
-imports workflows/finalversion
+// imports workflows/committee
+//imports workflows/bid
+//imports workflows/review
+//imports workflows/finalversion
 
 section creating conferences
 
@@ -11,42 +11,32 @@ section creating conferences
   // or a user should request the creation of a new conference, which is
   // then admitted by a moderator
   
-
-  procedure createConference(m : ConferenceManager) {
+  procedure newConference(m : ConferenceManager) {
     who {
-      principal = m.admin
+      securityContext.principal = m.admin
     }
     view {
       var c : Conference := Conference{};
-      derive editPage from c for (name, chairs)
+      derive procedurePage from c for (acronym, name, fullname, chairs)
     }
     do {
       m.conferences.add(c);
     }
-    process {
-      conference(c)
-    }
+    //process {
+    //  runConference(c)
+    //}
   }
+  
+  procedure runConference(c : Conference) {
+    who { securityContext.principal in c.chairs }
+    //process {
+    //  composeProgramCommittee(c);
+    //}
+  }
+  
   
 /*
 
-  define page createConference() {
-    main()
-    define body() {
-      form {
-        var conference : Conference := Conference{}
-        header{"Create conference"}
-        table {
-          derive editRows from conference for (name, chairs)
-          row { action("Create", create()) }
-          action create() {
-            conference.save();
-            return conference(conference);
-          }
-        }
-      }
-    }
-  }
   
 section the conference workflow
 
@@ -102,10 +92,9 @@ section call for papers
     }
   }
 
-  /**
-   * add bids for all papers, for all possible reviewers
-   * also add 2 reviews for all papers
-   */
+  // add bids for all papers, for all possible reviewers
+  // also add 2 reviews for all papers
+
   procedure startBidding(c : Conference) {
     who { securityContext.principal in c.chairs }
     when { c.stopAcceptingPapers.performed && !c.startBidding.performed }

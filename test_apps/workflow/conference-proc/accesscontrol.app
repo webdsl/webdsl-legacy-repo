@@ -1,5 +1,8 @@
 module accesscontrol
 
+imports datamodel/conference
+imports utils
+
 section access control
 
   access control rules {
@@ -58,7 +61,7 @@ section access control pages
             select u from User as u 
             where (u._username = ~username);
     
-          for (us : User in users  where us.registered) {
+          for (us : User in users where us.registered) {
             if (us.password.check(password)) {
               securityContext.principal := us;
               securityContext.loggedIn := true;
@@ -126,12 +129,4 @@ section access control pages
       }
     }
   }
-
-
-  define page error(msg : String) {
-    main()
-    title{"Error: " output(msg)}
-    define body() {
-      "Error: " output(msg)
-    }
-  }
+  

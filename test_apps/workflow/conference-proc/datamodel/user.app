@@ -29,3 +29,29 @@ section users
       }
     }
   }
+  
+  globals {
+  
+    // getUser: find a user or make a new user
+    
+    function getUser(name : String, email : Email) : User {
+      var u : User;
+      var users : List<User> :=
+            select u from User as u 
+            where (u._email = ~email);
+      if(users.length = 0) {
+        u := User { 
+          name       := name
+          email      := email
+          password   := "secret"
+          registered := false 
+        };
+        u.persist();
+      } else {
+        for(eu : User in users) { // HACK!
+          u := eu;
+        }
+      }
+      return u;
+    }
+  }

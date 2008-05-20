@@ -1,5 +1,5 @@
-module datamodel
+module datamodel/main
 
-imports datamodel/accesscontrol
+imports datamodel/user
 imports datamodel/conference
 imports datamodel/paper

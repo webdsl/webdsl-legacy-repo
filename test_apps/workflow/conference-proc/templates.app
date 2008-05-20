@@ -37,12 +37,11 @@ section templates
         for (c : Conference) {
           menuitem{ navigate(conference(c)){output(c.name)} }
         }
-        menuitem{ navigate(createConference()){"Create conference"} }
+        menuitem{ navigate(newConference(manager)){"Create conference"} }
       }
     }
   }
-
-
+  
   define loginMenu() {
     if (securityContext.loggedIn) {
       menu {
