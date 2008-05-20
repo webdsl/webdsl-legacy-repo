@@ -1,6 +1,6 @@
-module datamodel/accesscontrol
+module datamodel/user
 
-section data model access control
+section users
 
   entity User {
     username        :: String (name)

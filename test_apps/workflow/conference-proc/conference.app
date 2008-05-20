@@ -4,12 +4,12 @@ description {
   Conference application
 }
 
-imports datamodel
+//imports datamodel
 imports templates
-imports utils
-imports initialize
-imports accesscontrol
-imports workflows/conference
+//imports utils
+//imports initialize
+//imports accesscontrol
+//imports workflows/conference
 
 
 section main
@@ -23,23 +23,9 @@ section main
     }
   }
   
-  define page createConference() {
-    main()
-    define body() {
-      form {
-        var conference : Conference := Conference{}
-        header{"Create conference"}
-        table {
-          derive editRows from conference for (name, chairs)
-          row { action("Create", create()) }
-          action create() {
-            conference.save();
-            return conference(conference);
-          }
-        }
-      }
-    }
-  }
+/*
+
+
   
   define conferenceOperations(c : Conference) {
     conferenceOperationsList(c)
@@ -81,3 +67,5 @@ section main
       }
     }
   }
+  
+*/

@@ -11,10 +11,6 @@ section creating conferences
   // or a user should request the creation of a new conference, which is
   // then admitted by a moderator
   
-  entity ConferenceManager {
-    admin       -> User  
-    conferences -> Set<Conference>
-  }
 
   procedure createConference(m : ConferenceManager) {
     who {
@@ -34,6 +30,24 @@ section creating conferences
   
 /*
 
+  define page createConference() {
+    main()
+    define body() {
+      form {
+        var conference : Conference := Conference{}
+        header{"Create conference"}
+        table {
+          derive editRows from conference for (name, chairs)
+          row { action("Create", create()) }
+          action create() {
+            conference.save();
+            return conference(conference);
+          }
+        }
+      }
+    }
+  }
+  
 section the conference workflow
 
   procedure conference(c : Conference) {

@@ -128,3 +128,11 @@ section access control pages
     }
   }
 
+
+  define page error(msg : String) {
+    main()
+    //title{"Error: " output(msg)}
+    //define body() {
+    //  "Error: " output(msg)
+    //}
+  }

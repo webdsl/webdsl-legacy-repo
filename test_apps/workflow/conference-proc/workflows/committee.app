@@ -1,33 +1,4 @@
-module committee
-  
-section committee
-
-  entity Committee {
-    name        :: String (name) // e.g. "Program Committee", "Steering Committee"
-    chairs      -> Set<User>
-    members     -> Set<User>
-    conference  -> Conference // do we need this?
-    // instead of a link to the conference we could 
-    // use a description of the purpose; i.e. can we
-    // make the Committee workflow reusable (what is the
-    // difference with a group?)
-    description :: Text
-  }
-
-  define showCommittee(c : Committee) {
-    section {
-      header{"Committee Members"}
-      table {
-        for (user : User in c.membersList) {
-          row {
-            output(user)
-            // affilliation
-            if(user in c.chairs) { "(chair)" }
-          }
-        }
-      }
-    }
-  }
+module workflows/committee
   
 section invitation
 
@@ -45,19 +16,22 @@ section invitation
     invitations -> Set<CommitteeInvitation>
   }
 
+/*
 section committee invitation
 
+  note {
+    In the current model committee chairs are appointed by the
+    general chairs. However, chairs should be invited first and 
+    then take over to invite committee members.
+  }
+      
   procedure composeProgramCommittee(c : Conference) {
-    who {
-      principal in c.chairs
-    }
+    who { principal in c.chairs }
     view {
       var comm : Committee := Committee{
         conference := c
       };
       derive editPage from comm for (name, chairs)
-      // note chairs should be invited first and then take over
-      // to invite committee members
     }
     do {
       c.pc := comm;
@@ -67,11 +41,13 @@ section committee invitation
     }
   }
 
-  procecure inviteCommittee(c : Committee) {
+  procecure inviteCommittee(comm : Committee) {
     process {
-      repeat { inviteCommitteeMember(c) };
+      repeat { 
+        inviteCommitteeMember(c)
+        |OR| viewInvitations(c)
+      };
       finalizeCommittee(c)
-      // approveCommittee(c) // steering committee and others should approve
     }
   }
    
@@ -110,7 +86,7 @@ section committee invitation
     who { principal in c.chairs }
   }
 
-  define showInvitations(c : Committee) {
+  define showInvitations(comm : Committee) {
     section() {
       header{"Invitations"}
       table {
@@ -150,3 +126,5 @@ operations invitation
       }
     }
   }
+  
+*/
