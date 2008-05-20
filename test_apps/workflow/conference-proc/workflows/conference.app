@@ -1,6 +1,8 @@
 module workflows/conference
 
 imports workflows/committee
+imports workflows/submission
+
 //imports workflows/bid
 //imports workflows/review
 //imports workflows/finalversion
@@ -30,7 +32,8 @@ section creating conferences
   procedure runConference(c : Conference) {
     who { securityContext.principal in c.chairs }
     process {
-      composeProgramCommittee(c)
+      composeProgramCommittee(c);
+      submitPaper(c)
     }
   }
   

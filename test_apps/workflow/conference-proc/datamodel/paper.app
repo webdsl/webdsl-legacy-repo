@@ -7,11 +7,12 @@ section conference paper
 
   entity Paper {
     conference  -> Conference (inverse=Conference.papers)
-    title       :: String (name)
-    abstract    :: Text
-    authors     -> Set<User> (inverse=User.authoredPapers)
-    accepted    :: Bool
-    final       :: Bool
+    title     :: String (name)
+    authors   -> Set<User> (inverse=User.authoredPapers)
+    abstract  :: Text
+    content   :: Text
+    accepted  :: Bool 
+    final     :: Bool
   }
 
   extend entity User {
