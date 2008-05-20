@@ -30,15 +30,14 @@ section access control
     }
     
     rules pointcut adminOperations() {
-      securityContext.principal != null && securityContext.principal.isAdmin
+      securityContext.principal.isAdmin
     }
 
     rules page editConference(c : Conference) {
-      securityContext.principal != null && (securityContext.principal.isAdmin || securityContext.principal in c.chairs)
+      securityContext.principal.isAdmin || securityContext.principal in c.chairs
     }
     
   }
-  
 
 section access control pages
 
@@ -131,8 +130,8 @@ section access control pages
 
   define page error(msg : String) {
     main()
-    //title{"Error: " output(msg)}
-    //define body() {
-    //  "Error: " output(msg)
-    //}
+    title{"Error: " output(msg)}
+    define body() {
+      "Error: " output(msg)
+    }
   }

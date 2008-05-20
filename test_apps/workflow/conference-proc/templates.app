@@ -31,18 +31,18 @@ section templates
       menu { 
         menuheader{ navigate(home()){"Home"} }
       }  
-      //loginMenu()
-      //menu {
-      //  menuheader{ "Conferences" }
-      //  for (c : Conference) {
-      //    menuitem{ navigate(conference(c)){output(c.name)} }
-      //  }
-      //  menuitem{ navigate(createConference()){"Create conference"} }
-      //}
+      loginMenu()
+      menu {
+        menuheader{ "Conferences" }
+        for (c : Conference) {
+          menuitem{ navigate(conference(c)){output(c.name)} }
+        }
+        menuitem{ navigate(createConference()){"Create conference"} }
+      }
     }
   }
 
-/*
+
   define loginMenu() {
     if (securityContext.loggedIn) {
       menu {
@@ -56,4 +56,3 @@ section templates
       }
     }
   }
-*/

@@ -9,7 +9,7 @@ section global vars
       password := "secret"
       email := "zef@zefhemel.com"
       isAdmin := true
-      registered := true
+      //registered := true
     };
     var user02: User := User {
       username := "eelco"
@@ -17,7 +17,7 @@ section global vars
       password := "secret"
       email := "visser@acm.org"
       isAdmin := true
-      registered := true
+      //registered := true
     };
     var user03: User := User {
       username := "ruben"
@@ -25,13 +25,13 @@ section global vars
       password := "secret"
       email := "rverhaaf@gmail.com"
       isAdmin := true
-      registered := true
+      //registered := true
     };
     var user04: User := User {
       username := "somebody"
       name := "Some Author"
       password := "secret"
       email := "bla@blueh.com"
-      registered := true
+      //registered := true
     };
   }

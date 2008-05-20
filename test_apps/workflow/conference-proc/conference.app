@@ -4,11 +4,11 @@ description {
   Conference application
 }
 
-//imports datamodel
 imports templates
+imports datamodel/main
+imports initialize
+imports accesscontrol
 //imports utils
-//imports initialize
-//imports accesscontrol
 //imports workflows/conference
 
 
@@ -25,8 +25,6 @@ section main
   
 /*
 
-
-  
   define conferenceOperations(c : Conference) {
     conferenceOperationsList(c)
     

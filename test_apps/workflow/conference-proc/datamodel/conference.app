@@ -1,6 +1,7 @@
 module datamodel/conference
 
 imports datamodel/user
+imports datamodel/paper
 
 section conference manager
 
