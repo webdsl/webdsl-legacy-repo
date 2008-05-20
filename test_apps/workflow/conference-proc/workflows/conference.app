@@ -1,6 +1,6 @@
 module workflows/conference
 
-// imports workflows/committee
+imports workflows/committee
 //imports workflows/bid
 //imports workflows/review
 //imports workflows/finalversion
@@ -22,16 +22,16 @@ section creating conferences
     do {
       m.conferences.add(c);
     }
-    //process {
-    //  runConference(c)
-    //}
+    process {
+      runConference(c)
+    }
   }
   
   procedure runConference(c : Conference) {
     who { securityContext.principal in c.chairs }
-    //process {
-    //  composeProgramCommittee(c);
-    //}
+    process {
+      composeProgramCommittee(c)
+    }
   }
   
   

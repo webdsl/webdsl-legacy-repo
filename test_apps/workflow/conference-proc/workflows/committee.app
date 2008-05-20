@@ -1,6 +1,34 @@
 module workflows/committee
   
-section invitation
+  note {
+    In the current model committee chairs are appointed by the
+    general chairs. However, chairs should be invited first and 
+    then take over to invite committee members.
+  }
+
+section create committee
+
+  procedure composeProgramCommittee(c : Conference) {
+    who { securityContext.principal in c.chairs }
+    view {
+      var comm : Committee := Committee{
+        name       := "Program Committee"
+        conference := c
+      };
+      derive procedurePage from comm for (description, chairs)
+    }
+    do {
+      c.pc := comm;
+      for(u : User in comm.chairs) {
+        comm.members.add(u);
+      }
+    }
+    process {
+      inviteCommittee(comm) // implies starting the workflow
+    }
+  }
+ 
+section invitations
 
   entity CommitteeInvitation {
     user       -> User
@@ -15,33 +43,10 @@ section invitation
   extend entity Committee {
     invitations -> Set<CommitteeInvitation>
   }
+  
+section invite members
 
-/*
-section committee invitation
-
-  note {
-    In the current model committee chairs are appointed by the
-    general chairs. However, chairs should be invited first and 
-    then take over to invite committee members.
-  }
-      
-  procedure composeProgramCommittee(c : Conference) {
-    who { principal in c.chairs }
-    view {
-      var comm : Committee := Committee{
-        conference := c
-      };
-      derive editPage from comm for (name, chairs)
-    }
-    do {
-      c.pc := comm;
-    }
-    process {
-      inviteCommittee(comm) // implies starting the workflow
-    }
-  }
-
-  procecure inviteCommittee(comm : Committee) {
+  procedure inviteCommittee(comm : Committee) {
     process {
       repeat { 
         inviteCommitteeMember(c)
@@ -50,29 +55,32 @@ section committee invitation
       finalizeCommittee(c)
     }
   }
-   
-  procedure inviteCommitteeMember(c: Committee) {
-    who { principal in c.chairs }
+
+  procedure inviteCommitteeMember(comm : Committee) {
+    who { securityContext.principal in comm.chairs }
     view {
       var name : String
       var email : Email
-      form {
-        table {
-          row { "Name:" input(name) }
-          row { "Email:" input(email) }
+      main()
+      define body() {
+        form {
+          table {
+            row { "Name:" input(name) }
+            row { "Email:" input(email) }
+          }
+          action("Invite", do())
         }
-        action("Invite", do())
       }
     }
     do {
       var user : User := getUser(name, email);
       var inv : CommitteeInvitation := CommitteeInvitation{
-        committee := c
+        committee := comm
         user := user
       };
-      c.invitations.add(inv);
+      comm.invitations.add(inv);
     }
-    process {    
+    process {
       respondToInvitation(inv)
     }
   }
@@ -83,7 +91,7 @@ section committee invitation
   // the committee should be an entity!
   
   procedure finalizeCommittee(c: Committee) {
-    who { principal in c.chairs }
+    who { securityContext.principal in c.chairs }
   }
 
   define showInvitations(comm : Committee) {
@@ -93,16 +101,15 @@ section committee invitation
         row {
           "" "Name" "Response"
         }
-        for (inv : CommitteeInvitation in c.invitationsList) {
+        for (inv : CommitteeInvitation in comm.invitationsList) {
           row {
             "Invitation: "
             output(inv.user)
-            // this s
-            if (inv.invitation.performed) {
+            if (inv.respondToInvitation.performed) {
               if (inv.accepted) { "accepted" } 
               if (!inv.accepted) { "rejected" }
             }
-            if (!inv.invitationWorkflow.performed) {
+            if (!inv.respondToInvitation.performed) {
               "not responded yet"
             }
           }
@@ -111,14 +118,18 @@ section committee invitation
     }
   }
 
-operations invitation
-
   procedure respondToInvitation(inv : CommitteeInvitation) {
-    who { principal = inv.user }
+    who { securityContext.principal = inv.user }
     view {
+      main()
       title{"Invitation for " }
-      output(inv.description)
-      derive operationPage from inv for (accepted, reason)
+      define body() {
+        output(inv.committee.description)
+        form {
+          derive editRows from inv for (accepted, reason)
+          action("Submit", do())
+        }
+      }
     }
     do {
       if (inv.accepted) {
@@ -126,5 +137,3 @@ operations invitation
       }
     }
   }
-  
-*/
