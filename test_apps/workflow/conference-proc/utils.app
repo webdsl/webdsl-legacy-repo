@@ -31,9 +31,9 @@ section utilities
             where (u._email = ~email);
       if(users.length = 0) {
         u := User { 
-          name := name
-          email := email
-          password := "secret"
+          name       := name
+          email      := email
+          password   := "secret"
           registered := false 
         };
         u.persist();

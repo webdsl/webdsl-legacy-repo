@@ -1,7 +1,14 @@
 module submission
 
+section paper submission
+
+  procedure submitAbstract(c : Conference) {
+    when { c.abstractDeadline < now() }
   
-  procedure submitPaper(c: Conference) {
+  
+  }
+  
+  procedure submitPaper(p : Paper) {
     when { c.paperDeadline < now()
     
   c.finalizePc.performed && !c.stopAcceptingPapers.performed }

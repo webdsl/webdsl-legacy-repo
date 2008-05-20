@@ -5,7 +5,15 @@ imports workflows/bid
 imports workflows/review
 imports workflows/finalversion
 
-procedures conference  
+section creating conferences
+
+  // the conference should really be initiated by the steering committee
+  // or a user should request the creation of a new conference, which is
+  // then admitted by a moderator
+  
+  entity ConferenceManager {
+    admin : User  
+  }
 
   procedure createConference(m : ConferenceManager) {
     who {
@@ -16,23 +24,41 @@ procedures conference
       derive editPage from c for (name, chairs)
     }
     do {
-      c.conferenceWorkflow.start();
       m.conferences.add(c);
     }
+    process {
+      conference(c)
+    }
   }
+  
+section the conference workflow
 
   procedure conference(c : Conference) {
     process {
-      inviteProgramCommittee;
-      publishCallForPapers;
+      createCallForPapers(c)
+      composeProgramCommittee(c);
+      publishCallForPapers(c);
+      enableSubmissions(c);
       repeat { 
         // should enable parallel non-blocking invocations of these procedures
-        submitAbstract 
-        |OR| submitPaper 
-        |OR| extendAbstractDeadline
-        |OR| extendPaperDeadline
+             submitAbstract(c)
+        |OR| submitPaper(c) 
+        |OR| extendAbstractDeadline(c)
+        |OR| extendPaperDeadline(c)
       };
-      assignReviewers;
+      enableBidding(c);
+      assignReviewers(c);
+      composeProgram(c)
+    }
+  }
+  
+  
+section call for papers
+
+  procedure publishCallForPapers(c : Conference) {
+    who { principal in c.pc.chairs }
+    view {
+      derive procedurePage for c from (callforpapers)
     }
   }
   

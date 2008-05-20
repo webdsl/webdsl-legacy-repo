@@ -1,148 +1,153 @@
 module committee
+  
+section committee
 
-section data model 
+  entity Committee {
+    name        :: String (name) // e.g. "Program Committee", "Steering Committee"
+    chairs      -> Set<User>
+    members     -> Set<User>
+    conference  -> Conference // do we need this?
+    // instead of a link to the conference we could 
+    // use a description of the purpose; i.e. can we
+    // make the Committee workflow reusable (what is the
+    // difference with a group?)
+    description :: Text
+  }
 
-  entity PcInvitation {
+  define showCommittee(c : Committee) {
+    section {
+      header{"Committee Members"}
+      table {
+        for (user : User in c.membersList) {
+          row {
+            output(user)
+            // affilliation
+            if(user in c.chairs) { "(chair)" }
+          }
+        }
+      }
+    }
+  }
+  
+section invitation
+
+  entity CommitteeInvitation {
     user       -> User
-    conference -> Conference
+    committee  -> Committee 
     reason     :: Text
     accepted   :: Bool
     name       :: String 
                := "Invitation for " + user.name 
-                  + " to join PC of " + conference.name
+                  + " to join " + committee.name
   }
   
-  extend entity Conference {
-    pcInvitations -> Set<PcInvitation>
+  extend entity Committee {
+    invitations -> Set<CommitteeInvitation>
   }
 
 procedures committee invitation
 
-  procecure inviteProgramCommittee(c : Conference) {
+  procedure composeProgramCommittee(c : Conference) {
+    who {
+      principal in c.chairs
+    }
+    view {
+      var comm : Committee := Committee{
+        conference := c
+      };
+      derive editPage from comm for (name, chairs)
+      // note chairs should be invited first and then take over
+      // to invite committee members
+    }
+    do {
+      c.pc := comm;
+    }
     process {
-      repeat { invitePcMember };
-      finalizeProgramCommittee
-    }  
+      inviteCommittee(c) // implies starting the workflow
+    }
+  }
+
+  procecure inviteCommittee(c : Committee) {
+    process {
+      repeat { inviteCommitteeMember(c) };
+      finalizeCommittee(c)
+      // approveCommittee(c) // steering committee and others should approve
+    }
   }
    
-  procedure invitePcMember(c: Conference) {
-    who { 
-      principal in c.chairs 
-    }
+  procedure inviteCommitteeMember(c: Committee) {
+    who { principal in c.chairs }
     view {
       var name : String
       var email : Email
-      main()
-      define contextSidebar() {
-        conferenceProcedures(c)
-      }
-      define body() {      
-        form {
-          table {
-            row { "Name:" input(name) }
-            row { "Email:" input(email) }
-          }
-          action("Invite", do())
+      form {
+        table {
+          row { "Name:" input(name) }
+          row { "Email:" input(email) }
         }
+        action("Invite", do())
       }
     }
     do {
       var user : User := getUser(name, email);
-      pcInv.user := user;
-      
-      var pcInv : PcInvitation := PcInvitation{
-        conference := c
+      var inv : CommitteeInvitation := CommitteeInvitation{
+        committee := c
+        user := user
       };
-      pcInv.pcInvitationWorkflow.start(name, email);
-      c.pcInvitations.add(pcInv);
+      c.invitations.add(inv);
+    }
+    process {    
+      respondToInvitation(inv)
     }
   }
   
   // why not 'show the committee' with a finalize action?
   
-  procedure finalizeProgramCommittee(c: Conference) {
-    description {
-      If there are enough pc members that have accepted 
-      the invitation, finalize the committee.
-    }     
-    who { 
-      principal in c.chairs 
-    }
-    view {
-      main()
-      define contextSidebar() {
-        conferenceProcedures(c)
-      }
-      define body() {
-        section() {
-          header{"Finalize the program committee"}
-          showInvitations(c)
-          showCommitte(c)
-          form { action("Finalize", do()) }       
-        }
-      }
-    }
+  // this should just be a button on the committee page
+  // the committee should be an entity!
+  
+  procedure finalizeCommittee(c: Committee) {
+    who { principal in c.chairs }
   }
   
-  define showCommitte(c : Conference) {
-    section {
-      header{"Program Committee members"}
-      table {
-        for (user : User in c.pcMembersList) {
-          row {output(user)}
-        }
-      }
-    }
-  }
 
-  define showInvitations(c : Conference) {
-            // view all invitations with their statuses
-          section() {
-            header{"Invitations"}
-            table {
-              row {
-                "" "Name" "Response"
-              }
-              for (pcInv : PcInvitation in c.pcInvitationsList) {
-                row {
-                  "Invitation: "
-                  text(pcInv.user.name)
-                  if (pcInv.pcInvitationWorkflow.performed) {
-                    if (pcInv.accepted) {
-                      "accepted"
-                    } 
-                    if (!pcInv.accepted) {
-                      "rejected"
-                    }
-                  } 
-                  if (!pcInv.pcInvitationWorkflow.performed) {
-                    "not responded yet"
-                  }
-                }
-              }
+  define showInvitations(c : Committee) {
+    section() {
+      header{"Invitations"}
+      table {
+        row {
+          "" "Name" "Response"
+        }
+        for (inv : CommitteeInvitation in c.invitationsList) {
+          row {
+            "Invitation: "
+            output(inv.user)
+            // this s
+            if (inv.invitation.performed) {
+              if (inv.accepted) { "accepted" } 
+              if (!inv.accepted) { "rejected" }
+            }
+            if (!inv.invitationWorkflow.performed) {
+              "not responded yet"
             }
           }
-  }
-  
-operations pcInvitation
-
-  procedure pcInvitation(pcInv : PcInvitation) {
-    process {
-      respondToInvitation
-    }
-  }
-
-  operation respondToInvitation(pcInv : PcInvitation) {
-    who { 
-      principal = pcInv.user 
-    }
-    do {
-      if (pcInv.accepted) {
-        pcInv.conference.pcMembers.add(pcInv.user);
+        }
       }
     }
+  }
+
+operations invitation
+
+  procedure respondToInvitation(inv : CommitteeInvitation) {
+    who { principal = inv.user }
     view {
-      title{"Please respond to the invitation"}
-      derive operationPage from pcInv for (accepted, reason)
+      title{"Invitation for " }
+      output(inv.description)
+      derive operationPage from inv for (accepted, reason)
+    }
+    do {
+      if (inv.accepted) {
+        inv.committee.members.add(inv.user);
+      }
     }
   }

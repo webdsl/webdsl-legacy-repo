@@ -33,7 +33,7 @@ procedures bid
     }
     when { 
       c.abstractDeadline < now() 
-      && bid.paper.conference.biddingEnabled
+      && bid.paper.conference.enableBidding.performed
     }
     view {
       // todo: paper weergeven
