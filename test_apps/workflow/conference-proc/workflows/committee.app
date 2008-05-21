@@ -50,7 +50,6 @@ section invite members
     process {
       repeat { 
         inviteCommitteeMember(c)
-        |OR| viewInvitations(c)
       };
       finalizeCommittee(c)
     }
@@ -81,7 +80,7 @@ section invite members
       comm.invitations.add(inv);
     }
     process {
-      respondToInvitation(inv)
+      start respondToInvitation(inv)
     }
   }
   

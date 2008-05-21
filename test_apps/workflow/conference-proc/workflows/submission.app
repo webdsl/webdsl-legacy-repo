@@ -7,7 +7,9 @@ section paper submission
 
   procedure submitAbstract(c : Conference) {
     who { securityContext.loggedIn }
-    when { c.abstractDeadline.before(now()) }
+    when { c.abstractDeadline.before(now()) 
+           && c.publishCallForPapers.performed
+    }
     view {
       var p : Paper := Paper{ conference := c };
       derive procedurePage from p 
@@ -15,6 +17,10 @@ section paper submission
     }
     do {
       c.papers.add(p);
+    }
+    process {
+      start bidding(p);
+      submitPaper(p)
     }
   }
   
@@ -26,11 +32,25 @@ section paper submission
          for (view(title), view(authors), abstract, content)
     }
     do { }
+    process {
+      submitPaper(p) + finalizeSubmission(p)
+    }
   }
   
   // submitPaper can be applied any number of times (at least one)
   // before the deadline has passed
 
+  procedure finalizeSubmission(p : Paper) {
+    who  { securityContext.principal in p.authors }
+    when { p.conference.paperDeadline.before(now()) }
+    view {
+      derive procedurePage from p 
+         for (view(title), view(authors), abstract, content)
+    }
+    do { 
+    }
+  }
+  
 section pages
 
   access control rules {
@@ -46,7 +66,7 @@ section presentation
     title {output(p.title)}
     main()
     define contextSidebar() {
-      conferenceSidebar(p.conference)
+      //conferenceSidebar(p.conference)
     }
     define body() {
       header{output(p.title)}

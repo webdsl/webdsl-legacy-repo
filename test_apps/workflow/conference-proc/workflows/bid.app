@@ -32,8 +32,8 @@ section bid
       securityContext.principal = bid.reviewer 
     }
     when { 
-      c.abstractDeadline < now() 
-      && bid.paper.conference.enableBidding.performed
+      bid.paper.conference.abstractDeadline.before(now())
+      //&& bid.paper.conference.enableBidding.performed
     }
     view {
       // todo: paper weergeven

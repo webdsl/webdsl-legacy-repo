@@ -21,21 +21,55 @@ section creating conferences
       derive procedurePage from c for (acronym, name, fullname, chairs)
     }
     do {
-      m.conferences.add(c);
+      m.conferences.add(c); 
     }
     process {
-      runConference(c)
+      runConference(c)   => runConferenceStart(c)
     }
   }
   
   procedure runConference(c : Conference) {
     who { securityContext.principal in c.chairs }
+    when { c.runConference.running }
     process {
+      createCallForPapers(c);
       composeProgramCommittee(c);
-      submitPaper(c)
+      publishCallForPapers(c);
+      openSubmissions(c);
+      repeat {
+        extendAbstractDeadline(c);
+        extendPaperDeadline(c);
+      }
+      closeSubmissions(c);
+      enableBidding(c);
+      assignReviewers(c);
+      composeProgram(c)
+      
     }
   }
   
+  procedure openSubmissions(c : Conference) {
+    who { securityContext.principal in c.pc.chairs }
+    process {
+      start submitAbstract(c) // c.submitAbstract.running := true ;
+    }
+  }
+  procedure closeSubmissions(c : Conference) {
+    who { securityContext.principal in c.pc.chairs }
+    process {
+      stop submitAbstract(c)
+    }
+  }
+  
+  procedure createCallForPapers(c : Conference) {
+  
+    start() { }
+    performed() {} 
+    
+    who{ securityContext.principal in c.chairs }
+    when { }
+  
+  }
   
 /*
 

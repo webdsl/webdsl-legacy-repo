@@ -40,12 +40,12 @@ section data model
     marginallyRelevant("Marginally relevant")
   }
 
-/*
+
 section review
 
   procedure review(r : Review) {
     who { 
-      principal = r.reviewer 
+      securityContext.principal = r.reviewer 
     }
     process {
       submitReview(r);
@@ -67,7 +67,7 @@ section review
   procedure viewReviews(review : Review) {
     who { securityContext.principal = review.reviewer }
     view {
-      for (r : Review in review.papers.reviews ) {
+      for (r : Review in review.paper.reviewsList ) {
         derive viewPage from r
            for (acceptance, expertise, relevance, committeeComments, summary, evaluation)
       }
@@ -87,4 +87,3 @@ section review
   procedure finalizeReview(review : Review) {
     who { securityContext.principal = review.reviewer }
   }
-*/
