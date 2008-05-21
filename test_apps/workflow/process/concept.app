@@ -5,6 +5,10 @@
 procedures
 
   procedure main(c : C) {
+    enabled { }
+  }
+
+  procedure main(c : C) {
     who { }
     when { }
     enabled { }
@@ -37,7 +41,7 @@ procedures
   [e1|tail] => 
     done { map(first(tail)).enable() }
   
-  [if(cond){e1}else{e2}|t1;tail] =>
+  [if(cond){e1;e1l}else{e2;e2l}|t1;tail] =>
     [ifSplit; ifTussen(cond){e1;e1l}else{e2;e2l}|[t1|tail]])
       where
         ifSplit = gen(if) {
@@ -56,13 +60,13 @@ procedures
           done = t1.enable();
         }
   
-  [(e1 |XOR| e2)|t1;tail] =>
+  [a(x); (b1(e); e1; c1 |XOR| e2)|t1;tail] =>
     [xorSplit; xorTussen(e1 |XOR| e2); t1;tail]
       where
-        xorSplit = gen(xor) {
-          enabled {
-            e1.enable();
-            e2.enable();
+        procedure a(x : A) {
+          processed {
+            enable#b1(x);
+            enable#b2(x);
           }
         }
       ; e1 {
