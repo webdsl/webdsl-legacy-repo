@@ -40,6 +40,7 @@ section data model
     marginallyRelevant("Marginally relevant")
   }
 
+/*
 section review
 
   procedure review(r : Review) {
@@ -86,3 +87,4 @@ section review
   procedure finalizeReview(review : Review) {
     who { securityContext.principal = review.reviewer }
   }
+*/

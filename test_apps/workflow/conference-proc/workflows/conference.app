@@ -2,9 +2,8 @@ module workflows/conference
 
 imports workflows/committee
 imports workflows/submission
-
-//imports workflows/bid
-//imports workflows/review
+imports workflows/bid
+imports workflows/review
 //imports workflows/finalversion
 
 section creating conferences

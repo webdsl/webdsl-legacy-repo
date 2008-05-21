@@ -17,52 +17,66 @@ section main
     main()
     define body() {
       section() {
-        header(){"Home page"}
+        header(){"Conferences"}
+        list {
+          for(c : Conference in manager.conferencesList) {
+            listitem{ output(c) }
+          }
+        }
       }
     }
   }
   
-/*
+  
+  // make associations from User to
+  // - conferences
+  // - authoredPapers
+  // - reviewdedPapers
+  // - bidPapers
+  // allows more efficient creation of task list
 
-  define conferenceOperations(c : Conference) {
-    conferenceOperationsList(c)
+  define conferenceProcedures(c : Conference) {
+    conferenceProceduresList(c)
     
-    // display operations on invitations
-    for (i : PcInvitation in c.pcInvitationsList) {
-      if (pcInvitationHasOperations(i)) {
+    if (c.pc != null && committeeHasProcedures(c.pc)) {
+      committeeProceduresList(c.pc)
+    }
+    
+    // display procedures on invitations
+    for (i : CommitteeInvitation in c.pc.invitationsList) {
+      if (committeeInvitationHasProcedures(i)) {
         "Invitation: "
-        pcInvitationOperationsList(i)
+        committeeInvitationProceduresList(i)
       }
     }
     
-    // display operations on bids
-    if (Or[bidHasOperations(b) | b : Bid in c.bidsList]) {
+    // display procedures on bids
+    if (Or[bidHasProcedures(b) | b : Bid in c.bidsList]) {
       "Bids: "
       for (b : Bid in c.bidsList) {
-        if (bidHasOperations(b)) {
-          bidOperationsList(b) // first make new lines disappear. " on " text(b.paper.title)
+        if (bidHasProcedures(b)) {
+          bidProceduresList(b) // first make new lines disappear. " on " text(b.paper.title)
         }
       }
     }
     
-    // display operations on papers and reviews
+    // display procedures on papers and reviews
     for (p : Paper in c.papersList) {
-      if (paperHasOperations(p) || Or[reviewHasOperations(r) | r : Review in p.reviewsList]) {
-        "Operations exist for " output(p)
+      if (paperHasProcedures(p) 
+          || Or[reviewHasProcedures(r) | r : Review in p.reviewsList]) {
+        "Procedures exist for " output(p)
       }
-      if (paperHasOperations(p)) {
-        paperOperationsList(p)
+      if (paperHasProcedures(p)) {
+        paperProceduresList(p)
       }
     }
   }
   
-  define paperOperations(p : Paper) {
-    paperOperationsList(p)
+  define paperProcedures(p : Paper) {
+    paperProceduresList(p)
     for (r : Review in p.reviewsList) {
-      if (reviewHasOperations(r)) {
-        reviewOperationsList(r)
+      if (reviewHasProcedures(r)) {
+        reviewProceduresList(r)
       }
     }
   }
-  
-*/

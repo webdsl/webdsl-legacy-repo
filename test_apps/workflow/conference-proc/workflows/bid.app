@@ -1,6 +1,5 @@
 module workflows/bid
 
-/*
 section data model 
 
   entity Bid {
@@ -41,4 +40,4 @@ section bid
       derive procedurePage from bid for (category)
     }
   }
-*/
+  
