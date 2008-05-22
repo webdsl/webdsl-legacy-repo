@@ -13,62 +13,34 @@ section creating conferences
   // then admitted by a moderator
   
   procedure newConference(m : ConferenceManager) {
-    who {
-      securityContext.principal = m.admin
-    }
+    who { securityContext.principal = m.admin }
     view {
       var c : Conference := Conference{};
       derive procedurePage from c for (acronym, name, fullname, chairs)
     }
-    do {
-      m.conferences.add(c); 
-    }
-    process {
-      runConference(c)   => runConferenceStart(c)
-    }
+    do { m.conferences.add(c); }
+    process { runConference(c).enable() }
   }
   
   procedure runConference(c : Conference) {
-    who { securityContext.principal in c.chairs }
-    when { c.runConference.running }
     process {
       createCallForPapers(c);
       composeProgramCommittee(c);
       publishCallForPapers(c);
       openSubmissions(c);
-      repeat {
-        extendAbstractDeadline(c);
-        extendPaperDeadline(c);
-      }
+      repeat { extendDeadlines(c); }
       closeSubmissions(c);
       enableBidding(c);
       assignReviewers(c);
-      composeProgram(c)
-      
-    }
-  }
-  
-  procedure openSubmissions(c : Conference) {
-    who { securityContext.principal in c.pc.chairs }
-    process {
-      start submitAbstract(c) // c.submitAbstract.running := true ;
-    }
-  }
-  procedure closeSubmissions(c : Conference) {
-    who { securityContext.principal in c.pc.chairs }
-    process {
-      stop submitAbstract(c)
+      composeProgram(c)      
     }
   }
   
   procedure createCallForPapers(c : Conference) {
-  
-    start() { }
-    performed() {} 
-    
     who{ securityContext.principal in c.chairs }
-    when { }
-  
+    view {
+      derive procedurePage from c for (callforpapers)
+    }  
   }
   
 /*
@@ -131,31 +103,6 @@ section call for papers
   // add bids for all papers, for all possible reviewers
   // also add 2 reviews for all papers
 
-  procedure startBidding(c : Conference) {
-    who { securityContext.principal in c.chairs }
-    when { c.stopAcceptingPapers.performed && !c.startBidding.performed }
-    do {
-      for (p: Paper in c.papersList) {
-        for (reviewer : User in c.pcMembersList) {
-          var bid : Bid := Bid{
-            paper    := p
-            reviewer := reviewer
-          };
-          bid.bidWorkflow.start();
-          c.bids.add(bid);
-        }
-        var review1 : Review := Review{
-          paper := p
-        };
-        var review2 : Review := Review{
-          paper := p
-        };
-        p.reviews.add(review1);
-        p.reviews.add(review2);
-      }
-    }
-  }
-  
   procedure assignReviews(c : Conference) {
     who { securityContext.principal in c.chairs }
     when { c.startBidding.performed && !c.startReviewing.performed }

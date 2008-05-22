@@ -2,25 +2,33 @@ module workflows/submission
 
 section paper submission
 
-  // submitting a paper requires submitting an abstract first,
-  // before the abstractDeadline
-
+  procedure openSubmissions(c : Conference) {
+    who { securityContext.principal in c.pc.chairs }
+    process {
+      submitAbstract(c).enable();
+    }
+  }
+  
+  procedure closeSubmissions(c : Conference) {
+    who { securityContext.principal in c.pc.chairs }
+    process {
+      submitAbstract(c).disable();
+    }
+  }
+  
   procedure submitAbstract(c : Conference) {
     who { securityContext.loggedIn }
-    when { c.abstractDeadline.before(now()) 
-           && c.publishCallForPapers.performed
-    }
+    when { c.abstractDeadline.before(now()) }
     view {
       var p : Paper := Paper{ conference := c };
       derive procedurePage from p 
          for (title, authors, abstract)
     }
-    do {
-      c.papers.add(p);
-    }
+    do { c.papers.add(p); } 
+    done { this.enable(); } // keep abstract submission open
     process {
-      start bidding(p);
-      submitPaper(p)
+      bidding(p).enable();
+      submitPaper(p).enable()
     }
   }
   
@@ -31,15 +39,21 @@ section paper submission
       derive procedurePage from p 
          for (view(title), view(authors), abstract, content)
     }
-    do { }
     process {
-      submitPaper(p) + finalizeSubmission(p)
+      repeat{ reviseSubmission(p) };
+      finalizeSubmission(p)
+    }
+  }
+
+  procedure reviseSubmission(p : Paper) {
+    who  { securityContext.principal in p.authors }
+    when { p.conference.paperDeadline.before(now()) }
+    view {
+      derive procedurePage from p 
+         for (view(title), view(authors), abstract, content)
     }
   }
   
-  // submitPaper can be applied any number of times (at least one)
-  // before the deadline has passed
-
   procedure finalizeSubmission(p : Paper) {
     who  { securityContext.principal in p.authors }
     when { p.conference.paperDeadline.before(now()) }

@@ -54,7 +54,25 @@ section invite members
       finalizeCommittee(c)
     }
   }
+  
+  // simplified version of invite, which allows selection from registered
+  // users only
 
+  procedure inviteCommitteeMember(comm : Committee) {
+    who { securityContext.principal in comm.chairs }
+    view {
+      var inv : CommitteeInvitation := CommitteeInvitation{
+        committee := comm
+      };
+      derive procedurePage from inv for (user)
+    }
+    do { comm.invitations.add(inv); }
+    process {
+      inv.respondToInvitation().enable()
+    }
+  }
+  
+/*
   procedure inviteCommitteeMember(comm : Committee) {
     who { securityContext.principal in comm.chairs }
     view {
@@ -80,10 +98,11 @@ section invite members
       comm.invitations.add(inv);
     }
     process {
-      start respondToInvitation(inv)
+      respondToInvitation(inv)
     }
   }
-  
+*/
+
   // why not 'show the committee' with a finalize action?
   
   // this should just be a button on the committee page
@@ -91,6 +110,11 @@ section invite members
   
   procedure finalizeCommittee(c: Committee) {
     who { securityContext.principal in c.chairs }
+    do {
+      for(inv : Invitation in comm.invitationsList) {
+        inv.respondToInvitation().disable()
+      }
+    }
   }
 
   define showInvitations(comm : Committee) {
