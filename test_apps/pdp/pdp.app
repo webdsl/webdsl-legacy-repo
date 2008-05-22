@@ -9,46 +9,20 @@ imports templates
 imports data
 imports ac
 
-procedures for PdpMeeting
-/*
+section procedures
 
-  pdpProcess(p : PdpMeeting) = 
-    createMeeting; 
-    (employeeFillInForm || managerFillInForm);
-    writeReport*;
-    finalizeReport;
-    approveReport;
-    archiveReport
-
-
-  foobar(d) = 
-    baz(d); (foo + bar); baz ; (stop + foobar(d))
-
-  review(paper) =
-    rev := createReview(paper);
-    writeReview(rev)+;
-    finalizeReview(rev);
-    (viewAllReviews(paper) || commentReviews(paper))*;
-*/
-/*
-  workflow meetingWorkflow(p : PdpMeeting) {
-<<<<<<< .mine
-    // adds p.meetingWorkflow :: procedureStatus property
-    // generate page meetingWorkflow(p : PdpdMeeting) with status
-    init {
-      p := PdpMeeting { };
+  auto procedure startWf(p : PdpMeeting) {
+    done {
+      p.employeeFillInForm.enable();
+      p.managerFillInForm.enable();
     }
-=======
->>>>>>> .r1234
-    done { p.approveReport.performed }
-<<<<<<< .mine
-    // generate global function checkMeetingWorkflowPerformed(p : PdpMeeting)
-    // that is called every time an procedure is performed on PdpMeeting
-  }*/
+  }
 
   procedure employeeFillInForm(p : PdpMeeting) {
     who { securityContext.principal = p.employee }
-    when { !p.employeeFillInForm.performed }
+    done {
+      p.branchEnd1.enable(); 
+    }
     view {
       title{"Fill in employee form"}
       derive procedurePage from p for (employeePreparation)
@@ -57,16 +31,49 @@ procedures for PdpMeeting
 
   procedure managerFillInForm(p : PdpMeeting) {
     who { securityContext.principal = p.employee.manager }
-    when { !p.managerFillInForm.performed }
+    done {
+      p.branchEnd2.enable(); 
+    }
     view {
       title{"Fill in manager form"}
       derive procedurePage from p for (managerPreparation)
     }
   }
 
+  auto procedure branchEnd1(p : PdpMeeting) {
+    do {
+      if(p.syncAlmostReady) {
+        p.employeeManagerSync.enable();
+        p.syncAlmostReady := false;
+      } else {
+        p.syncAlmostReady := true;
+      }
+    }
+  }
+
+  auto procedure branchEnd2(p : PdpMeeting) {
+    do {
+      if(p.syncAlmostReady) {
+        p.employeeManagerSync.enable();
+        p.syncAlmostReady := false;
+      } else {
+        p.syncAlmostReady := true;
+      }
+    }
+  }
+
+  auto procedure employeeManagerSync(p : PdpMeeting) {
+    done {
+      p.writeReport.enable();
+    }
+  }
+
   procedure writeReport(p : PdpMeeting) {
     who { securityContext.principal = p.employee.manager }
-    when { p.employeeFillInForm.performed && p.managerFillInForm.performed && !p.finalizeReport.performed }
+    done {
+      p.finalizeReport.enable();
+      p.writeReport.enable();
+    }
     view {
       title{"Write report"}
       derive procedurePage from p for (report)
@@ -75,12 +82,14 @@ procedures for PdpMeeting
 
   procedure finalizeReport(p : PdpMeeting) {
     who { securityContext.principal = p.employee.manager }
-    when { p.writeReport.performed && !p.finalizeReport.performed }
+    done {
+      p.approveReport.enable();
+      p.writeReport.disable();
+    }
   }
 
   procedure approveReport(p : PdpMeeting) {
     who { securityContext.principal = p.employee }
-    when { p.finalizeReport.performed && !p.approveReport.performed }
   }
 
 section pages
@@ -98,12 +107,9 @@ section pages
         action organize() {
           var p : PdpMeeting := PdpMeeting{ };
           p.employee := employee;
-          //p.meetingWorkflow.start();
           p.persist();
+          p.startWf.enable();
           // Test stuff
-          if(Or[x > 3 | x : Int in [1, 2, 3, 4, 5]]) {
-            // Bla
-          }
           return message("Done!");
         }
       }
