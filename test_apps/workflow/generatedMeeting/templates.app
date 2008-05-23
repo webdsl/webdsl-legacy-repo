@@ -6,7 +6,6 @@ section templates
     block("top") {
       top()
     }
-
     block("body") {
       block("left_innerbody") {
         sidebar()
@@ -15,14 +14,9 @@ section templates
         body()
       }
     }
-
-    block("footer") {
-      footer()
-    }
   }
   
   define top() {
-    block("header") {}
     block("menubar") {
       menubar {
         menu {

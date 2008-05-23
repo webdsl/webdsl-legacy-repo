@@ -51,6 +51,14 @@ section pages
     }
   }
   
+  define page progressMeeting(p : ProgressMeeting) {
+    main()
+    define body() {
+      table {
+        derive viewRows from p for (employee, employeeView, managerView, report, commentaar)
+      }
+    }  
+  }
 section procedures
 
 /*  procedure meeting(p : ProgressMeeting) {
