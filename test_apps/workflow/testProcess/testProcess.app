@@ -17,12 +17,12 @@ section procedures
       p.managerFillInForm.enable();
     }
     process {
-      employeeFillInForm(p);
+/*      employeeFillInForm(p);
       managerFillInForm(p);
       writeReport(p);
       finalizeReport(p);
       approveReport(p)
-    }
+*/    }
   }
 
   procedure employeeFillInForm(p : PdpMeeting) {
