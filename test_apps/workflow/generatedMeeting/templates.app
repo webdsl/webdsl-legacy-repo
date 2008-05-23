@@ -22,10 +22,17 @@ section templates
         menu {
           menuheader { navigate(home()) { "Home" } }
         }
-        menu {
-          menuheader { "User" }
-          menuitem { navigate(signin()) { "Sign in" } }
-          menuitem { navigate(allTasks()) { "Tasks" } }
+        if (!securityContext.loggedIn) { 
+          menu {
+            menuheader { navigate(signin()) { "Sign in" } }
+          }
+        }
+        if (securityContext.loggedIn) { 
+          menu {
+            menuheader { output(securityContext.principal) }
+            menuitem { signoff() }
+            menuitem { navigate(allTasks()) { "Tasks" } }
+          }
         }
       }
     }

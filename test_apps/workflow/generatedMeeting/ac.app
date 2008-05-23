@@ -67,6 +67,14 @@ section pages
     }
   }
   
+  define signoff() {
+    form{actionLink("Sign off", signoff())}
+    action signoff() {
+      securityContext.principal := null;
+      securityContext.loggedIn := false;
+    }
+  }
+  
   define page error(msg : String) {
     main()
     title{"Error"}

@@ -130,7 +130,7 @@ section procedures
       title{"Write report"}
       derive procedurePage from p 
          for (view(employee), view(employeeView), 
-              view(managerView), report)
+              view(managerView), report, view(commentaar))
     }
     done {
       p.finalizeReport.disable();

@@ -407,17 +407,16 @@ table table tr td {
 
 /* for IE */
 textarea .inputText {
-  height : 20em;
+  height : 4em;
   width  : 95%;
 }
 /* for other browsers */
 textarea,[nul] .inputText {
-   height : 20em;
+   height : 4em;
    width  : 95%;
    /* border : solid 1px black;
    border-right : 0px;
    padding-left : 3px; */
-   
    border : inset 2px lightgrey;
 }
 
