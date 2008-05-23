@@ -18,6 +18,7 @@ section data
   }
 
   entity ProgressMeeting {
+    name           :: String := this.employee.name 
     employee       -> User
     employeeView   :: Text
     managerView    :: Text
