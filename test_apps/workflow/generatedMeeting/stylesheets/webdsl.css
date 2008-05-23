@@ -134,10 +134,13 @@ a:hover {
 .left_innerbody {
   float: left;
 /*   position: absolute; */
-  width: 150px;
+  width: 100px;
   margin: 0px 0px 0px 0px;
   background-color: white;
-  padding: 10px 10px 0px 10px;
+  padding-top    : 10px ;
+  padding-bottom : 10px ;
+  padding-left   : 2px;
+  padding-right  : 2px;
   border-right : 1px solid gray;
   height: 100%;
 /*   padding: 0px; */
@@ -151,7 +154,7 @@ clear:left;
   border-left : 1px solid gray;
 /*   margin: 0px 10px 10px 210px; */
 /*   left: 210px; */
-  padding: 0px 0px 10px 20px;
+  padding: 0px 0px 10px 10px;
 /*   background-color: lightgreen; */
 /* display: inline-block; */
   display: inline-block;
@@ -191,7 +194,7 @@ clear:left;
   border-bottom: 1px solid #333333;
 /*   border-left
 : 1px solid gray; */
-  padding-left: 170px;
+  padding-left: 104px;
 /*   margin-bottom: 12px; /* Hack to align main_innerbody and left_innerbody to the top in opera and ie */
 }
 

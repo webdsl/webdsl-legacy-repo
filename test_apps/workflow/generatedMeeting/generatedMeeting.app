@@ -24,7 +24,7 @@ section data
     managerView    :: Text
     report         :: Text
     reportApproved :: Bool
-    commentaar     :: Text
+    commentz       :: Text
     meetings       -> Set<ProgressMeeting>
   }
   
@@ -35,7 +35,7 @@ section pages
     define body() {
       var employee : User
       //navigatebutton(signin(), "Sign in!")
-      header{"Organize PDP Meeting"}
+      header{"Organize Progress Meeting"}
       form {
         "For: " input(employee)
         action("Organize", organize())
@@ -54,9 +54,13 @@ section pages
   
   define page progressMeeting(p : ProgressMeeting) {
     main()
+    define contextSidebar() { 
+      progressMeetingProceduresList(p)
+    }
     define body() {
       table {
-        derive viewRows from p for (employee, employeeView, managerView, report, commentaar)
+        derive viewRows from p 
+        for (employee, employeeView, managerView, report, commentz)
       }
     }  
   }
@@ -83,12 +87,12 @@ section procedures
   
   auto procedure andSplit(p : ProgressMeeting) {
     done {
-      p.employeeViewProc.enable();
-      p.managerViewProc.enable();
+      p.writeEmployeeView.enable();
+      p.writeManagerView.enable();
     }
   }
   
-  procedure employeeViewProc(p : ProgressMeeting) {
+  procedure writeEmployeeView(p : ProgressMeeting) {
     who { securityContext.principal = p.employee }
     view {
       title{"Fill in employee view"}
@@ -100,7 +104,7 @@ section procedures
     }
   }
 
-  procedure managerViewProc(p : ProgressMeeting) {
+  procedure writeManagerView(p : ProgressMeeting) {
     who { securityContext.principal = p.employee.manager }
     view {
       title{"Fill in manager view"}
@@ -130,7 +134,7 @@ section procedures
       title{"Write report"}
       derive procedurePage from p 
          for (view(employee), view(employeeView), 
-              view(managerView), report, view(commentaar))
+              view(managerView), report, view(commentz))
     }
     done {
       p.finalizeReport.disable();
@@ -161,7 +165,7 @@ section procedures
       title{"Provide comments"}
       derive procedurePage from p 
          for (view(employee), view(report), 
-              commentaar)
+              commentz)
     }
     done {
       p.xorJoin.enable();

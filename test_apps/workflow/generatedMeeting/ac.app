@@ -10,7 +10,7 @@ section global
     };
     var aUser : User := User {
       username := "user",
-      name     := "Joe User",
+      name     := "Jane User",
       password := "secret",
       manager  := aManager
     };
