@@ -1,0 +1,75 @@
+/**
+
+ Styling rules for WebDSL
+
+*/
+
+module org/webdsl/dsl/modules/styling
+
+imports
+  libstrategolib
+
+imports
+  org/webdsl/dsl/modules/styling/-
+
+rules
+
+/*  process-style:
+    Application(qid, sections) -> files'
+    where files' := <collect(style-to-css)> sections*/
+
+rules
+
+/*  declare-definition =
+    declare-theme
+
+  declare-theme =
+    ?ThemeDefinition(mod, name, declarations)
+    ; <debug> name*/
+    
+
+rules
+
+  typecheck-section =
+    typecheck-style-section
+
+  typecheck-definition =
+    typecheck-theme-definition
+    
+  typecheck-definition =
+    typecheck-layout-definition    
+  
+  
+  typecheck-style-section =
+    ?StyleSection(_, _)
+  
+  typecheck-theme-definition =
+    ?ThemeDefinition(_, _, _)
+    
+  typecheck-layout-definition =
+    ?LayoutDefinition(_, _)
+    
+/*  typecheck-style-definition:
+    StyleSection(name, definitions) -> StyleSection(name, definitions) */
+
+
+rules
+  output-generated-file =
+    css-file-to-file
+
+signature
+  constructors
+    CssFile : String * String * Document -> File
+
+strategies
+
+  css-file-to-file =
+    css-file-to-text-file
+    ; try(text-file-to-file)
+
+  css-file-to-text-file :
+    CssFile(pkg, name, doc) -> TextFile(filename, text)
+    where path := <create-dirs> pkg
+            ; filename := <concat-strings> [path, "/", name]
+            ; text := <pp-css-to-string <+ write-to-string> doc
+
