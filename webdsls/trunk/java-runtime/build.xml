@@ -1,9 +1,9 @@
-<project name="JavaSupport" default="dist" basedir=".">
+<project name="WebDSL Java runtime" default="dist" basedir=".">
 	<!-- set global properties for this build -->
 	<property name="src" location="src" />
 	<property name="build" location="bin" />
 	<property name="dist" location="dist" />
-	<property name="webdsls_template" location="$(HOME)/webdsl/webdsls/src/org/webdsl/dsl/project/template" />
+	<property name="webdsls_template" location="../src/org/webdsl/dsl/project/template" />
 
 	<target name="init">
 		<!-- Create the time stamp -->
