@@ -3,7 +3,7 @@
 	<property name="src" location="src" />
 	<property name="build" location="bin" />
 	<property name="dist" location="dist" />
-	<property name="webdsls_template" location="/home/zef/webdsl/webdsls/src/org/webdsl/dsl/project/template" />
+	<property name="webdsls_template" location="$(HOME)/webdsl/webdsls/src/org/webdsl/dsl/project/template" />
 
 	<target name="init">
 		<!-- Create the time stamp -->
