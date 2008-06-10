@@ -21,9 +21,16 @@ public abstract class UntypedTransformation{
 			try
 			{
 				// Find setter
+				// This is the original code:
+				// this does not work, because the type of the setter may have the correct name, it does not necessarily have tom come from the right package
 				Class[] paramTypes = new Class[1];
 				paramTypes[0] = transformedAttribute.getClass();
-				Method m = output.getClass().getMethod(getSetterFromAttributeName(attName), paramTypes);			
+				Method m = output.getClass().getMethod(getSetterFromAttributeName(attName), paramTypes);
+				// This is the new:				
+				//Method m = getSetter(attName, output.getClass());
+				
+				// TODO the above comments are probably incorrect (verify)
+				
 			
 				// Call setter
 				Object[] params = new Object[1];
@@ -67,6 +74,24 @@ public abstract class UntypedTransformation{
 		
 		// Transform
 		transForm(input, scope, output, editableAtts.toArray(new String[editableAtts.size()]));
+	}
+	
+	/**
+	 * This is an alternative to the getMethod approach from Class. This function ignores
+	 * the packages types came from, but only looks at type names instead. It does not 
+	 * verify the parameter type (it does verify the number of parameters).
+	 * @return The setter
+	 * @throws NoSuchMethodException If no setter was found 
+	 */
+	public static Method getSetter(String att, Class containingClass) throws NoSuchMethodException {
+		String setterName = getSetterFromAttributeName(att);
+		Method[] methods = containingClass.getMethods();
+		for(Method m : methods) {
+			if(	m.getName().equals(setterName) 		&& 
+				m.getParameterTypes().length == 1		)
+				return m;
+		}
+		throw new NoSuchMethodException("Attribute "+att+" does not have a setter within "+containingClass.getName());
 	}
 
 	protected static String getAttributeNameFromSetter(Method setter)

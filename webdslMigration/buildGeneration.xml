@@ -1,4 +1,4 @@
-<project name="dataMigrationGeneration" basedir="." default="buildAll">
+<project name="webdslMigration" basedir="." default="buildAll">
 	<description>
         data migration generation build file
     </description>
