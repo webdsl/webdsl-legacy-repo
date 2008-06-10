@@ -20,8 +20,8 @@ define page home() {
   main()
   define body() {
     list {
-      for(u : User where true order by u asc) {
-        listitem { text(u.username) }
+      for(u : User) {
+        listitem { text(u.message) }
       }
     }
   }
