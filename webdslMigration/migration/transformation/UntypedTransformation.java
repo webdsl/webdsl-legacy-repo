@@ -17,27 +17,25 @@ public abstract class UntypedTransformation{
 			List<UntypedTransformation> inputCopy = new Vector<UntypedTransformation>(input);
 			Object transformedAttribute = getAttribute(inputCopy, scope, attName);
 			
-			System.out.println("Setting attribute "+attName+" to "+transformedAttribute);			
+			System.out.println("Setting attribute "+attName+" to "+transformedAttribute);
+			Method setter = null;
 			try
 			{
 				// Find setter
 				// This is the original code:
-				// this does not work, because the type of the setter may have the correct name, it does not necessarily have tom come from the right package
-				Class[] paramTypes = new Class[1];
-				paramTypes[0] = transformedAttribute.getClass();
-				Method m = output.getClass().getMethod(getSetterFromAttributeName(attName), paramTypes);
-				// This is the new:				
-				//Method m = getSetter(attName, output.getClass());
+				// this does not work, because Hibernate obfuscates the types 
+				//Class[] paramTypes = new Class[1];
+				//paramTypes[0] = transformedAttribute.getClass();
+				//Method m = output.getClass().getMethod(getSetterFromAttributeName(attName), paramTypes);
+				// This is the new:
+				setter = getSetter(attName, output.getClass());
 				
-				// TODO the above comments are probably incorrect (verify)
-				
-			
 				// Call setter
 				Object[] params = new Object[1];
 				params[0] = transformedAttribute;
-				m.invoke(output, params);
+				setter.invoke(output, params);
 			} catch (IllegalArgumentException e) {
-				throw new TransformationException("Target of transformation has a setter ("+getSetterFromAttributeName(attName)+") that does not accept a parameter of type "+transformedAttribute.getClass()+", which resulted from the given transformation (are the source domain, transformation and target domain compatible?)", e);
+				throw new TransformationException("Target of transformation ("+output.getClass().getName()+") has a setter ("+getSetterFromAttributeName(attName)+") that does not accept a parameter of type "+transformedAttribute.getClass().getName()+" ("+transformedAttribute.getClass().getSuperclass().getName()+"), which resulted from the given transformation. It should get a "+setter.getParameterTypes()[0].getName()+" instead. (Are the source domain, transformation and target domain compatible?)", e);
 			} catch (IllegalAccessException e) {
 				throw new TransformationException("Cannot access setter "+getSetterFromAttributeName(attName)+" of type "+output.getClass(), e);
 			} catch (InvocationTargetException e) {
@@ -45,7 +43,14 @@ public abstract class UntypedTransformation{
 			} catch (SecurityException e) {
 				throw new TransformationException("Could not access type "+output.getClass()+" to find a setter for attribute "+attName, e);
 			} catch (NoSuchMethodException e) {
-				throw new TransformationException("Did not find a setter for attribute "+attName+" in type "+output.getClass(), e);
+				Method m = null;
+				try {
+					m = getSetter(attName, output.getClass());
+				}
+				catch(NoSuchMethodException e2) {
+					throw new TransformationException("Did not find a setter for attribute "+attName+" in type "+output.getClass()+", not even when ignoring parameter types", e);
+				}
+				throw new TransformationException("Did not find a setter for attribute "+attName+" in type "+output.getClass() + " that has parameter type "+transformedAttribute.getClass().getName()+". There is a setter for this attribute, but it has "+m.getParameterTypes()[0].getName()+" as parameter type", e);
 			}
 		}
 	}
@@ -88,7 +93,7 @@ public abstract class UntypedTransformation{
 		Method[] methods = containingClass.getMethods();
 		for(Method m : methods) {
 			if(	m.getName().equals(setterName) 		&& 
-				m.getParameterTypes().length == 1		)
+				m.getParameterTypes().length == 1		)	// TODO Also verify that this parameter is subtype
 				return m;
 		}
 		throw new NoSuchMethodException("Attribute "+att+" does not have a setter within "+containingClass.getName());
