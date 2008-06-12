@@ -13,7 +13,26 @@ section data model
 entity User {
   username :: String (name)
   password :: Secret
-  message :: String := "Hello " + username
+  message :: String := "Hello " + this.username
+}
+
+extend entity User {
+  prop :: Int
+}
+
+globals {
+  function test(z : Int) {
+    var a : Set<Int>;
+    var q : Int := 3;
+    a := [ x * q | x : Int in [1, 2, 3, 4]]; 
+    var q2 : Bool := And[x > 3 | x : Int in a];
+  }
+}
+
+globals {
+  extend function test(z : Int) {
+    var b : Bool := z = 3;
+  }
 }
 
 define page home() {
@@ -34,9 +53,9 @@ define page newUser() {
 
     input(u.username)
     input(u.password)
-    action("Create", save())
+    action("Create", save(u))
 
-    action save() {
+    action save(usr : User) {
 
     }
   }
