@@ -1,4 +1,4 @@
-ALL_APP = $(wildcard *.app)
+ALL_APP = $(wildcard *.app) $(wildcard */*.app)
 TESTS = $(ALL_APP:.app=)
 
 LN_S = ln -s
@@ -18,8 +18,8 @@ check: $(TESTS)
 	echo "FAIL: $$fail";
 
 $(TESTS): run-test.sh
-	@$(LN_S) $< $@
-	@chmod +x $@
+	@$(LN_S) $$(pwd)/$< ./$@
+	@chmod +x ./$@
 
 clean:
 	-@rm -f $(TESTS)
