@@ -1,0 +1,4 @@
+#!/bin/bash
+
+name=$1.app
+dsl-to-seam -i $name --stop-after 1
