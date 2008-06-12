@@ -7,9 +7,6 @@ section main template.
       sidebar()
     }
     div("outerbody") {
-      div("menubar") {
-        menu()
-      }
       body()
       footer()
     }
@@ -27,12 +24,6 @@ section basic page elements.
     navigate("Stratego/XT", url("http://www.strategoxt.org"))
   }
   
-section menus.
-  
-  define menu() {
-
-    
-  }
   
 section entity management.
 
