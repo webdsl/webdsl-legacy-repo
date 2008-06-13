@@ -1,5 +1,6 @@
-ALL_APP = $(wildcard *.app) $(wildcard */*.app)
-TESTS = $(ALL_APP:.app=)
+TESTS_SUCCEED = $(wildcard succeed/*.app) $(wildcard succeed/*/*.app)
+TESTS_FAIL =$(wildcard fail/*.app) $(wildcard fail/*/*.app)
+TESTS = $(TESTS_SUCCEED:.app=) $(TESTS_FAIL:.app=)
 
 LN_S = ln -s
 
@@ -17,9 +18,16 @@ check: $(TESTS)
 	echo "PASS: $$pass"; \
 	echo "FAIL: $$fail";
 
-$(TESTS): run-test.sh
+$(TESTS_SUCCEED:.app=): run-test-succeed.sh
+	@$(LN_S) $$(pwd)/$< ./$@
+	@chmod +x ./$@
+
+$(TESTS_FAIL:.app=): run-test-fail.sh
 	@$(LN_S) $$(pwd)/$< ./$@
 	@chmod +x ./$@
 
 clean:
-	-@rm -f $(TESTS)
+	@echo "Removing all symbolic links to tests";
+	-@rm -f $(TESTS);
+	@echo "Removing all .out-files";
+	-@rm *.out
