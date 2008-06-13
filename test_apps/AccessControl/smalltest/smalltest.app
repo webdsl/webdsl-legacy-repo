@@ -6,13 +6,22 @@ imports templates
 imports data
 
 section fdsfsd
-  principal is User with credentials name
-  predicate bla(){true}
 
+
+
+  predicate bla(){true}
+globals{
+    var u0 : User := User
+    {
+      name := "Alice"
+      admin := true
+      
+    };
+}
 access control rules
   rule page home(*)
   {true rule action testaction(d:Document){true}}
-///ccess control rules
+/*access control rules
  // rule page *()
  // {
    // true
@@ -29,7 +38,7 @@ access control rules
   //rule action testaction(d123123132321:Document)
 //  {
   //  d123123132321.name = "sdfsdfsfdsdfDS"
-  //}
+  //}*/
   rule page testpage(d2:Document,m2:Mission)
   {
     d2.name = m2.name
@@ -51,12 +60,29 @@ access control rules
       doc1222.name = m1.name
     }
   }
-  rule function testfunc(d:Document)
+  rule function testfunc(d34:Document)
   {
-    d.name=d.name
+    d34.name=d34.name
   }
+  rule function *(*)
+  {
+    false
+  }
+
+//access control policy
+//  admin OR anonymous
   
-section MAC pages
+//access control rules admin
+//  rule page *(*){securityContext.principal.admin}
+//  rule template *(*){securityContext.principal.admin}
+//  rule function *(*){securityContext.principal.admin}
+  
+section gfdgjdgkl
+
+  principal is User with credentials name,admin
+
+
+
 
 globals{
 function testfunc(d2:Document):Document
@@ -70,13 +96,17 @@ function testfunc(d2:Document):Document
 
   define page testpage(d1:Document,m1:Mission)
   {
-    action testaction(d:Document,d23:Document) {
-      testfunc(d);
+    action testaction(d1:Document,d23:Document) {
+      testfunc(d1);
       return home();
     }
     main()
     define body()
     {
+   //form
+        action("testaction",testaction(d1,d1))
+    
+    
     testtemplate(d1)
     
     navigate(testpage(d1,m1)){"dfgdfg"}

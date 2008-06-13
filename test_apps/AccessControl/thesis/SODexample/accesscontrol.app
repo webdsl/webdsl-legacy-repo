@@ -218,14 +218,21 @@ section SOD AccessControl
     }
 
 
-    rules function activateRole(r:Role)
+    rule page roleActivation()
     {
-      r in securityContext.principal.roles
-      && canBeActivated(r,securityContext.activeRoles)
+      true
+      rule action activate(r:Role)
+      {
+          r in securityContext.principal.roles
+          && canBeActivated(r,securityContext.activeRoles)
+      }
+  
     }
+        
+    
   }
 
-
+section more globals
 globals
 {
   function activateRole(r:Role):Int
@@ -238,7 +245,10 @@ globals
   {
     securityContext.principal := u;
     securityContext.loggedIn := true;
-    securityContext.activeRoles.clear();
+    for (ar:Role in securityContext.activeRoles )
+    {
+      securityContext.activeRoles.remove(ar);
+    }
     return 0;
   }
   
@@ -246,7 +256,10 @@ globals
   {
     securityContext.principal := null;
     securityContext.loggedIn := false;
-    securityContext.activeRoles.clear();
+    for (ar:Role in securityContext.activeRoles )
+    {
+      securityContext.activeRoles.remove(ar);
+    }
     return 0;
   }
 }

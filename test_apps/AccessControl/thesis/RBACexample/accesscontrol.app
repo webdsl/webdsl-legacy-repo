@@ -54,8 +54,7 @@ section RBAC AccessControl
       page home(),
       template sidebar(),
       template roleActivation(),
-      template *(*),
-      function *(*)
+      template *(*)
       //,function userLogin(*),
      // function userLogout()
     }
@@ -93,10 +92,7 @@ section RBAC AccessControl
     }
 
 
-    rules function activateRole(r11:Role)
-    {
-      r11 in securityContext.principal.roles
-    }
+ 
     
     rule template roleActivation()
     {

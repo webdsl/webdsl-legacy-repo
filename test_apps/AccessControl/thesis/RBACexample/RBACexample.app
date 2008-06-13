@@ -61,7 +61,19 @@ section RBAC pages
       table{viewRowsUser(u)}
     }
   }
-
+  
+  validator bla(d:String){
+    if(d = "123")
+    {fail;}
+  }:"title cannot be 123" + d
+  
+  validator bla1(d:String){
+    if(d != "Hello")
+    {fail;}
+  }:"title must be 'Hello', current title: " +d
+  
+  
+  
   define page createDocument()
   {
     var d:Document:=Document{};
@@ -74,9 +86,12 @@ section RBAC pages
     main()
     define body()
     {
+      section{validate bla1(d.title)}
+    
       form
       {
-        input(d.title)
+        input(d.title) validate bla(d.title)
+        
         input(d.text)
 
         action("save",save(d))
