@@ -30,4 +30,4 @@ clean:
 	@echo "Removing all symbolic links to tests";
 	-@rm -f $(TESTS);
 	@echo "Removing all .out-files";
-	-@rm *.out
+	-@rm -f fail/*.out fail/*/*.out succeed/*.out succeed/*/*.out

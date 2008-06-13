@@ -12,7 +12,7 @@ else
     echo "FAILED to compile: $name"
     cat $name.out
   else
-    echo "FAIL: $name (output in $name.out)"
+    echo "FAILED to compile: $name (output in $name.out)"
   fi
 fi
 exit $result

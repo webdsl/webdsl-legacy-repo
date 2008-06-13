@@ -12,7 +12,7 @@ else
     echo "FAILED in finding error: $name"
     cat $name.out
   else
-    echo "FAIL: $name (output in $name.out)"
+    echo "FAILED in finding error: $name (output in $name.out)"
   fi
 fi
 test 0 -ne $result
