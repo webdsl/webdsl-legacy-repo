@@ -7,7 +7,7 @@ globals {
     return "a";
   }
   
-  extend function getA(i : Int) : String {
+  extend function getA(i : Int) {
     return "b";
   }
 }
