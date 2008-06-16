@@ -28,7 +28,7 @@ section pc
     
     }
     
-    rule pointcut test(a:Int)
+    rule pointcut test(b:Int)
     {
-      a>4
+      b>4
     }
