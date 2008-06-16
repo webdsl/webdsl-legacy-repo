@@ -1,3 +1,5 @@
+//Error: Extended entity Userr does not exist:
+
 application test
 
 section datamodel

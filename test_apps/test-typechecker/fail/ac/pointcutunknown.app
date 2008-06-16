@@ -1,3 +1,5 @@
+//Error: pointcut somepointcut does not exist:
+
 application test
 
 access control rules
