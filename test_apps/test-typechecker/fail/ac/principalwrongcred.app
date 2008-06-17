@@ -1,3 +1,5 @@
+//Error: principal credentials are not valid:
+
 application test
 
 section principal

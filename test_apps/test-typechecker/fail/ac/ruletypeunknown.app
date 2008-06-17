@@ -1,3 +1,5 @@
+//Error: rule type unknown: 
+
 application test
 
 access control rules

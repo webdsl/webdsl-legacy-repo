@@ -1,3 +1,4 @@
+//Error: pointcut element uses unknown identifier:
 application test
 
 access control rules

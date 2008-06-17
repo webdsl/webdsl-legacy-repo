@@ -1,3 +1,5 @@
+//Error: principal entity does not exist:
+
 application test
 
 section principal

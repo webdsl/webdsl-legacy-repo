@@ -1,3 +1,4 @@
+//Error: predicate should contain a Bool expression:
 application test
 
 section predicate

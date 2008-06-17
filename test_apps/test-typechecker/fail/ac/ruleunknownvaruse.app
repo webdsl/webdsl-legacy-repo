@@ -1,3 +1,5 @@
+//Error: Variable b not defined
+
 application test
 
 access control rules
