@@ -1,4 +1,4 @@
-// invalid left-hand side in assignment
+// Variable a not defined
 
 application test
 
@@ -6,6 +6,7 @@ section functions
 
 globals {
   function do() {
-    a := 3;
+    var b : Int;
+    b := a;
   }
 }
