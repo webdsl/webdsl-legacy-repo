@@ -1,4 +1,4 @@
-// function has no return type but tries to return a variable
+// function getA has no return type but tries to return a variable
 
 application test
 
