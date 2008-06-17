@@ -1,3 +1,5 @@
+// Variable nonexistent not defined
+
 application test
 
 section functions

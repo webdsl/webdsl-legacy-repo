@@ -1,3 +1,5 @@
+// Extended session entity Userr does not exist: extend session Userr
+
 application test
 
 section datamodel

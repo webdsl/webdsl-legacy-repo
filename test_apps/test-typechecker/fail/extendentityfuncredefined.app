@@ -1,3 +1,4 @@
+// Extend session/entity redefines function: function test ( a : Int b : String ) : String
 application test
 
 section datamodel

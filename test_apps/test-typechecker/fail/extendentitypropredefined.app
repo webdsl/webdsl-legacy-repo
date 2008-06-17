@@ -1,3 +1,5 @@
+// Extend session/entity redefines property: name :: Int
+
 application test
 
 section datamodel

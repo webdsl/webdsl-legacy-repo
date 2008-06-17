@@ -1,3 +1,5 @@
+// Expected: Simple type. Encountered: Set<Paper>
+
 application test
 
 section datamodel

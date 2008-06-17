@@ -1,3 +1,5 @@
+// Type mismatch between attribute type Set<String> and inverse entity type Paper
+
 application test
 
 section datamodel

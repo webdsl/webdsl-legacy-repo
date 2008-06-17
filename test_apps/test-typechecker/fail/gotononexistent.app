@@ -1,3 +1,5 @@
+// page nonexistent does not exist
+
 application test
 
 section functions

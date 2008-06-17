@@ -1,3 +1,5 @@
+// Type mismatch between inverse attribute type String and entity type User
+
 application test
 
 section datamodel
@@ -7,5 +9,5 @@ section datamodel
   }
 
   entity Paper {
-    authors        -> String
+    authors        :: String
   }

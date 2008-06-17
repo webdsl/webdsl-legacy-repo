@@ -1,3 +1,5 @@
+// function has no return type but tries to return a variable
+
 application test
 
 section datamodel

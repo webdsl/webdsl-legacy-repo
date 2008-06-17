@@ -1,3 +1,5 @@
+// An init block can not contain a return statement
+
 application test
 
 section functions
