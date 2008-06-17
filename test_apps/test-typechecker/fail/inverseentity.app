@@ -1,3 +1,5 @@
+// Inverse annotations cannot be declared on both sides.
+
 application test
 
 section datamodel

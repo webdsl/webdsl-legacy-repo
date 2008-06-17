@@ -1,3 +1,5 @@
+// Wrong operand types for operator Mul
+
 application test
 
 section functions
