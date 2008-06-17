@@ -1,4 +1,4 @@
-// Wrong arguments in call to getA
+// No function getA with this signature
 
 application test
 

@@ -1,4 +1,4 @@
-// page nonexistent does not exist
+// No function or page nonexistent with this signature
 
 application test
 
