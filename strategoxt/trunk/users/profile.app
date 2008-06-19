@@ -21,7 +21,7 @@ section menu
   {
     menu {
       menuheader{ navigate(user(user)){ "This User" } }
-      menuitem{ navigate(editUser(user)){"Edit"} }
+      menuitem{ navigate(editProfile(user)){"Edit"} }
     }
   }
 

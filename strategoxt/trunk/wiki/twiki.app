@@ -103,6 +103,12 @@ section wiki page
     }
   }
   
+section edit pages
+
+  define page editTwikiPage(p : TwikiPage) {
+    derive editPage from p
+  }
+
 section page operations
   
   define twikiPageOperationsMenuItems(p : TwikiPage)

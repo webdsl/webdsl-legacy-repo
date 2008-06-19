@@ -30,6 +30,14 @@ section application configuration
     starttopics   -> Set<Topic>
   }
 
+  define page configuration(c : Configuration) {
+    derive viewPage from c
+  }
+
+  define page editConfiguration(c : Configuration) {
+    derive editPage from c
+  }
+
 section initialization of application configuration
 
   globals {
