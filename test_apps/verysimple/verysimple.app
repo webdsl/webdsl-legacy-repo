@@ -14,12 +14,15 @@ entity User {
   username :: String (name)
   password :: Secret
   message :: String := "Hello " + this.username
-  messages -> Set<Message>// (inverse=Message.author)
+  messages -> Set<Message> (inverse=Message.author)
 }
+
+enum ApproveEnum { approved("Approved!"), rejected("Rejected!") }
 
 entity Message {
   author -> User
   message :: Text
+  status -> ApproveEnum
 }
 
 extend entity User {
@@ -38,6 +41,8 @@ globals {
 globals {
   extend function test(z : Int) {
     var b : Bool := z = 3;
+    var m : Message := Message {};
+    m.status := approved;
   }
 }
 
