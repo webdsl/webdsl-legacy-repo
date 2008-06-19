@@ -14,6 +14,12 @@ entity User {
   username :: String (name)
   password :: Secret
   message :: String := "Hello " + this.username
+  messages -> Set<Message>// (inverse=Message.author)
+}
+
+entity Message {
+  author -> User
+  message :: Text
 }
 
 extend entity User {
@@ -24,7 +30,7 @@ globals {
   function test(z : Int) {
     var a : Set<Int>;
     var q : Int := 3;
-    a := [ x * q | x : Int in [1, 2, 3, 4]]; 
+    a := [ x * q | x : Int in {1, 2, 3, 4}]; 
     var q2 : Bool := And[x > 3 | x : Int in a];
   }
 }
