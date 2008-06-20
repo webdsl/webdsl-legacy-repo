@@ -50,8 +50,7 @@ section create new user
   }
   
   define editRowsUserRegistration (userRegistration : UserRegistration) {
-    editRowsObject(userRegistration){
-    }
+    derive editRows from userRegistration
     row(){
       "Username:"
       input(userRegistration.username){
@@ -167,7 +166,8 @@ section moderation of user registration requests by admin
   {
     section{
       header{output(reg.username)}
-      viewRowsUserRegistration(reg)
+      derive viewRows from reg
+      //viewRowsUserRegistration(reg)
       form{
         var rejection : Text;
         

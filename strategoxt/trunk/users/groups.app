@@ -115,7 +115,7 @@ section groups
         }
         form{
           table{
-            editRowsUserGroup(userGroup)
+            derive editRows from userGroup
           }
           action("Save", save())     
           action("Cancel", cancel())
