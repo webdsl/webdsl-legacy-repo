@@ -1,4 +1,4 @@
-// No function getA with this signature
+// No function or page getA with this signature
 
 application test
 
