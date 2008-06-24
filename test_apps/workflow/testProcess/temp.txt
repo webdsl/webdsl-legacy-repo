@@ -1,0 +1,2281 @@
+application org.webdsl.testProcess
+
+access
+
+control
+
+rules
+
+anonymous
+
+rule
+
+page
+
+accessDenied
+
+(
+
+)
+
+{
+
+true
+
+rule
+
+action
+
+*
+
+(
+
+*
+
+)
+
+{
+
+true
+
+}
+
+}
+
+section  access denied page. .
+
+  function genpagepredicatecombined0 ( ) : Bool
+  {
+    return false;
+  }
+
+  function genpagepredicatecombined1 ( ) : Bool
+  {
+    return genpagepredicate8();
+  }
+
+  function genpagepredicatecombined2 ( ) : Bool
+  {
+    return genpagepredicate8();
+  }
+
+  function genpagepredicatecombined3 ( ) : Bool
+  {
+    return genpagepredicate8();
+  }
+
+  function genpagepredicatecombined4 ( ) : Bool
+  {
+    return genpagepredicate8();
+  }
+
+  function genpagepredicatecombined5 ( msg : String ) : Bool
+  {
+    return genpagepredicate8();
+  }
+
+  function genpagepredicatecombined6 ( msg : String ) : Bool
+  {
+    return genpagepredicate8();
+  }
+
+  function genpagepredicatecombined7 ( p : PdpMeeting ) : Bool
+  {
+    return genpagepredicate0(p) && genpagepredicate8();
+  }
+
+  function genpagepredicatecombined8 ( p : PdpMeeting ) : Bool
+  {
+    return genpagepredicate1(p) && genpagepredicate8();
+  }
+
+  function genpagepredicatecombined9 ( p : PdpMeeting ) : Bool
+  {
+    return genpagepredicate2(p) && genpagepredicate8();
+  }
+
+  function genpagepredicatecombined10 ( p : PdpMeeting ) : Bool
+  {
+    return genpagepredicate3(p) && genpagepredicate8();
+  }
+
+  function genpagepredicatecombined11 ( p : PdpMeeting ) : Bool
+  {
+    return genpagepredicate4(p) && genpagepredicate8();
+  }
+
+  function genpagepredicatecombined12 ( p : PdpMeeting ) : Bool
+  {
+    return genpagepredicate5(p) && genpagepredicate6(p) && genpagepredicate8();
+  }
+
+  function genpagepredicatecombined13 ( p : PdpMeeting ) : Bool
+  {
+    return genpagepredicate5(p) && genpagepredicate6(p) && genpagepredicate8();
+  }
+
+  function genpagepredicatecombined14 ( ) : Bool
+  {
+    return genpagepredicate8();
+  }
+
+  define page accessDenied () {
+    init
+    {
+      if ( genpagepredicatecombined0() )
+        {
+        }
+      else
+        {
+          goto accessDenied();
+        }
+    }
+    title("Access Denied"){
+    }
+    text("Access Denied: "){
+    }
+    if ( genpagepredicatecombined14() ) {
+      navigate(home()){
+        "return to home page"
+      }
+    }
+  }
+
+description
+  {
+  A workflow example for a personal development plan workflow
+}
+
+module templates
+section  templates .
+
+  function genpagepredicate0 ( p : PdpMeeting ) : Bool
+  {
+    return && && && && && && true;
+  }
+
+  function genpagepredicate1 ( p : PdpMeeting ) : Bool
+  {
+    return && && && && true;
+  }
+
+  function genpagepredicate2 ( p : PdpMeeting ) : Bool
+  {
+    return && && && && true;
+  }
+
+  function genpagepredicate3 ( p : PdpMeeting ) : Bool
+  {
+    return && && && && true;
+  }
+
+  function genpagepredicate4 ( p : PdpMeeting ) : Bool
+  {
+    return && && && true;
+  }
+
+  function genpagepredicate5 ( p : PdpMeeting ) : Bool
+  {
+    return && && && true;
+  }
+
+  function genpagepredicate6 ( p : PdpMeeting ) : Bool
+  {
+    return && && && && true;
+  }
+
+  function genpagepredicate7 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genpagepredicate8 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate0 ( ) : Bool
+  {
+    return true;
+  }
+
+  function gentemplatepredicate0 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genpagepredicate9 ( pdpMeeting : PdpMeeting ) : Bool
+  {
+    return securityContext.principal = pdpMeeting.employee || securityContext.principal = pdpMeeting.employee.manager;
+  }
+
+  function genactionpredicate1 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate2 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate3 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate4 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate5 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate6 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate7 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate8 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate9 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate10 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate11 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate12 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate13 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate14 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate15 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate16 ( genuniquevar0 : PdpMeeting ) : Bool
+  {
+    return && && && && && && true;
+  }
+
+  function genactionpredicate17 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate18 ( genuniquevar1 : PdpMeeting ) : Bool
+  {
+    return && && && && true;
+  }
+
+  function genactionpredicate19 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate20 ( genuniquevar2 : PdpMeeting ) : Bool
+  {
+    return && && && && true;
+  }
+
+  function genactionpredicate21 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate22 ( genuniquevar3 : PdpMeeting ) : Bool
+  {
+    return && && && && true;
+  }
+
+  function genactionpredicate23 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate24 ( genuniquevar4 : PdpMeeting ) : Bool
+  {
+    return && && && true;
+  }
+
+  function genactionpredicate25 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate26 ( genuniquevar5 : PdpMeeting ) : Bool
+  {
+    return && && && && true;
+  }
+
+  function genactionpredicate27 ( genuniquevar6 : PdpMeeting ) : Bool
+  {
+    return && && && true;
+  }
+
+  function genactionpredicate28 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate29 ( genuniquevar7 : PdpMeeting ) : Bool
+  {
+    return && && && && true;
+  }
+
+  function genactionpredicate30 ( genuniquevar8 : PdpMeeting ) : Bool
+  {
+    return && && && true;
+  }
+
+  function genactionpredicate31 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate32 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicatecombined0 ( ) : Bool
+  {
+    return genactionpredicate0() && genactionpredicate12();
+  }
+
+  function genactionpredicatecombined1 ( genuniquevar9 : PdpMeeting ) : Bool
+  {
+    return genactionpredicate0() && genactionpredicate15();
+  }
+
+  function genactionpredicatecombined2 ( genuniquevar11 : PdpMeeting ) : Bool
+  {
+    return genactionpredicate0() && genactionpredicate17();
+  }
+
+  function genactionpredicatecombined3 ( genuniquevar12 : PdpMeeting ) : Bool
+  {
+    return genactionpredicate0() && genactionpredicate19();
+  }
+
+  function genactionpredicatecombined4 ( genuniquevar13 : PdpMeeting ) : Bool
+  {
+    return genactionpredicate0() && genactionpredicate21();
+  }
+
+  function genactionpredicatecombined5 ( ) : Bool
+  {
+    return genactionpredicate0() && genactionpredicate31();
+  }
+
+  define page allTasks () {
+    init
+    {
+      if ( genpagepredicatecombined1() )
+        {
+        }
+      else
+        {
+          goto accessDenied();
+        }
+    }
+    title(){
+      "All tasks"
+    }
+    dummy(){
+      if ( gentemplatepredicate0() ) {
+        block("top"){
+          dummy(){
+            if ( gentemplatepredicate0() ) {
+              block("header"){
+              }
+              block("menubar"){
+                menubar("horizontal"){
+                  menu(){
+                    menuheader(){
+                      if ( genpagepredicatecombined14() ) {
+                        navigate(home()){
+                          "Home"
+                        }
+                      }
+                    }
+                  }
+                  menu(){
+                    menuheader(){
+                      "User"
+                    }
+                    menuitem(){
+                      if ( genpagepredicatecombined4() ) {
+                        navigate(signin()){
+                          "Sign in"
+                        }
+                      }
+                    }
+                    menuitem(){
+                      if ( genpagepredicatecombined1() ) {
+                        navigate(allTasks()){
+                          "Tasks"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        block("body"){
+          block("left_innerbody"){
+            dummy(){
+              if ( gentemplatepredicate0() ) {
+                dummy(){
+                  dummy(){
+                  }
+                }
+              }
+            }
+          }
+          block("main_innerbody"){
+            dummy(){
+              header(){
+                "All tasks"
+              }
+              section(){
+                dummy(){
+                  if ( gentemplatepredicate0() ) {
+                    header(){
+                      "Pdp meeting"
+                    }
+                    list(){
+                      for ( pdpMeeting8 : PdpMeeting where true order by null asc ) {
+                        if ( pdpMeetingHasProcedures(pdpMeeting8) ) {
+                          listitem(){
+                            navigate(pdpMeeting(pdpMeeting8)){
+                              text(pdpMeeting8.name){
+                              }
+                            }
+                            dummy(){
+                              if ( gentemplatepredicate0() ) {
+                                list(){
+                                  if ( && pdpMeeting8.approveReport.enabled && ) {
+                                    listitem(){
+                                      navigatebutton(approveReport(pdpMeeting8), "Approve report"){
+                                      }
+                                    }
+                                  }
+                                  if ( && pdpMeeting8.finalizeReport.enabled && ) {
+                                    listitem(){
+                                      navigatebutton(finalizeReport(pdpMeeting8), "Finalize report"){
+                                      }
+                                    }
+                                  }
+                                  if ( && pdpMeeting8.writeReport.enabled && ) {
+                                    listitem(){
+                                      if ( genpagepredicatecombined10(pdpMeeting8) ) {
+                                        navigate(writeReport(pdpMeeting8)){
+                                          text("Write report"){
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                  if ( && pdpMeeting8.managerFillInForm.enabled && ) {
+                                    listitem(){
+                                      if ( genpagepredicatecombined9(pdpMeeting8) ) {
+                                        navigate(managerFillInForm(pdpMeeting8)){
+                                          text("Manager fill in form"){
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                  if ( && pdpMeeting8.employeeFillInForm.enabled && ) {
+                                    listitem(){
+                                      if ( genpagepredicatecombined8(pdpMeeting8) ) {
+                                        navigate(employeeFillInForm(pdpMeeting8)){
+                                          text("Employee fill in form"){
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                  if ( && pdpMeeting8.startWf.enabled && ) {
+                                    listitem(){
+                                      if ( genpagepredicatecombined7(pdpMeeting8) ) {
+                                        navigate(startWf(pdpMeeting8)){
+                                          text("Start wf"){
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        block("footer"){
+          dummy(){
+            if ( gentemplatepredicate0() ) {
+              "generated with "
+              navigate(url("http://www.webdsl.org")){
+                text("WebDSL"){
+                }
+              }
+              " and "
+              navigate(url("http://www.strategoxt.org")){
+                text("Stratego/XT"){
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  function pdpMeetingHasProcedures ( pdpMeeting : PdpMeeting ) : Bool
+  {
+    return && pdpMeeting.approveReport.enabled && || && pdpMeeting.finalizeReport.enabled && || && pdpMeeting.writeReport.enabled && || && pdpMeeting.managerFillInForm.enabled && || && pdpMeeting.employeeFillInForm.enabled && || && pdpMeeting.startWf.enabled && || false;
+  }
+
+  define page pdpMeetingTasks () {
+    init
+    {
+      if ( genpagepredicatecombined2() )
+        {
+        }
+      else
+        {
+          goto accessDenied();
+        }
+    }
+    title(){
+      "Pdp meeting"
+    }
+    dummy(){
+      if ( gentemplatepredicate0() ) {
+        block("top"){
+          dummy(){
+            if ( gentemplatepredicate0() ) {
+              block("header"){
+              }
+              block("menubar"){
+                menubar("horizontal"){
+                  menu(){
+                    menuheader(){
+                      if ( genpagepredicatecombined14() ) {
+                        navigate(home()){
+                          "Home"
+                        }
+                      }
+                    }
+                  }
+                  menu(){
+                    menuheader(){
+                      "User"
+                    }
+                    menuitem(){
+                      if ( genpagepredicatecombined4() ) {
+                        navigate(signin()){
+                          "Sign in"
+                        }
+                      }
+                    }
+                    menuitem(){
+                      if ( genpagepredicatecombined1() ) {
+                        navigate(allTasks()){
+                          "Tasks"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        block("body"){
+          block("left_innerbody"){
+            dummy(){
+              if ( gentemplatepredicate0() ) {
+                dummy(){
+                  dummy(){
+                  }
+                }
+              }
+            }
+          }
+          block("main_innerbody"){
+            dummy(){
+              header(){
+                "Tasks"
+              }
+              dummy(){
+                if ( gentemplatepredicate0() ) {
+                  header(){
+                    "Pdp meeting"
+                  }
+                  list(){
+                    for ( pdpMeeting14 : PdpMeeting where true order by null asc ) {
+                      if ( pdpMeetingHasProcedures(pdpMeeting14) ) {
+                        listitem(){
+                          navigate(pdpMeeting(pdpMeeting14)){
+                            text(pdpMeeting14.name){
+                            }
+                          }
+                          dummy(){
+                            if ( gentemplatepredicate0() ) {
+                              list(){
+                                if ( && pdpMeeting14.approveReport.enabled && ) {
+                                  listitem(){
+                                    navigatebutton(approveReport(pdpMeeting14), "Approve report"){
+                                    }
+                                  }
+                                }
+                                if ( && pdpMeeting14.finalizeReport.enabled && ) {
+                                  listitem(){
+                                    navigatebutton(finalizeReport(pdpMeeting14), "Finalize report"){
+                                    }
+                                  }
+                                }
+                                if ( && pdpMeeting14.writeReport.enabled && ) {
+                                  listitem(){
+                                    if ( genpagepredicatecombined10(pdpMeeting14) ) {
+                                      navigate(writeReport(pdpMeeting14)){
+                                        text("Write report"){
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                                if ( && pdpMeeting14.managerFillInForm.enabled && ) {
+                                  listitem(){
+                                    if ( genpagepredicatecombined9(pdpMeeting14) ) {
+                                      navigate(managerFillInForm(pdpMeeting14)){
+                                        text("Manager fill in form"){
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                                if ( && pdpMeeting14.employeeFillInForm.enabled && ) {
+                                  listitem(){
+                                    if ( genpagepredicatecombined8(pdpMeeting14) ) {
+                                      navigate(employeeFillInForm(pdpMeeting14)){
+                                        text("Employee fill in form"){
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                                if ( && pdpMeeting14.startWf.enabled && ) {
+                                  listitem(){
+                                    if ( genpagepredicatecombined7(pdpMeeting14) ) {
+                                      navigate(startWf(pdpMeeting14)){
+                                        text("Start wf"){
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        block("footer"){
+          dummy(){
+            if ( gentemplatepredicate0() ) {
+              "generated with "
+              navigate(url("http://www.webdsl.org")){
+                text("WebDSL"){
+                }
+              }
+              " and "
+              navigate(url("http://www.strategoxt.org")){
+                text("Stratego/XT"){
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  define page pdpMeetingStatus () {
+    init
+    {
+      if ( genpagepredicatecombined3() )
+        {
+        }
+      else
+        {
+          goto accessDenied();
+        }
+    }
+    title(){
+      "Pdp meeting"
+    }
+    dummy(){
+      if ( gentemplatepredicate0() ) {
+        block("top"){
+          dummy(){
+            if ( gentemplatepredicate0() ) {
+              block("header"){
+              }
+              block("menubar"){
+                menubar("horizontal"){
+                  menu(){
+                    menuheader(){
+                      if ( genpagepredicatecombined14() ) {
+                        navigate(home()){
+                          "Home"
+                        }
+                      }
+                    }
+                  }
+                  menu(){
+                    menuheader(){
+                      "User"
+                    }
+                    menuitem(){
+                      if ( genpagepredicatecombined4() ) {
+                        navigate(signin()){
+                          "Sign in"
+                        }
+                      }
+                    }
+                    menuitem(){
+                      if ( genpagepredicatecombined1() ) {
+                        navigate(allTasks()){
+                          "Tasks"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        block("body"){
+          block("left_innerbody"){
+            dummy(){
+              if ( gentemplatepredicate0() ) {
+                dummy(){
+                  dummy(){
+                  }
+                }
+              }
+            }
+          }
+          block("main_innerbody"){
+            dummy(){
+              section(){
+                header(){
+                  "Status"
+                }
+                section(){
+                  dummy(){
+                    if ( gentemplatepredicate0() ) {
+                      header(){
+                        "Pdp meeting"
+                      }
+                      list(){
+                        for ( pdpMeeting20 : PdpMeeting where true order by null asc ) {
+                          listitem(){
+                            navigate(pdpMeeting(pdpMeeting20)){
+                              text(pdpMeeting20.name){
+                              }
+                            }
+                            list(){
+                              if ( pdpMeeting20.approveReport.enabled && ) {
+                                if ( ) {
+                                  listitem(){
+                                    if ( genpagepredicatecombined13(pdpMeeting20) ) {
+                                      navigate(approveReport(pdpMeeting20)){
+                                        text("Approve report"){
+                                        }
+                                        " (X)"
+                                      }
+                                    }
+                                  }
+                                }
+                                if ( ! ) {
+                                  listitem(){
+                                    text("Approve report"){
+                                    }
+                                  }
+                                }
+                              }
+                              if ( pdpMeeting20.finalizeReport.enabled && ) {
+                                if ( ) {
+                                  listitem(){
+                                    if ( genpagepredicatecombined11(pdpMeeting20) ) {
+                                      navigate(finalizeReport(pdpMeeting20)){
+                                        text("Finalize report"){
+                                        }
+                                        " (X)"
+                                      }
+                                    }
+                                  }
+                                }
+                                if ( ! ) {
+                                  listitem(){
+                                    text("Finalize report"){
+                                    }
+                                  }
+                                }
+                              }
+                              if ( pdpMeeting20.writeReport.enabled && ) {
+                                if ( ) {
+                                  listitem(){
+                                    if ( genpagepredicatecombined10(pdpMeeting20) ) {
+                                      navigate(writeReport(pdpMeeting20)){
+                                        text("Write report"){
+                                        }
+                                        ""
+                                      }
+                                    }
+                                  }
+                                }
+                                if ( ! ) {
+                                  listitem(){
+                                    text("Write report"){
+                                    }
+                                  }
+                                }
+                              }
+                              if ( pdpMeeting20.managerFillInForm.enabled && ) {
+                                if ( ) {
+                                  listitem(){
+                                    if ( genpagepredicatecombined9(pdpMeeting20) ) {
+                                      navigate(managerFillInForm(pdpMeeting20)){
+                                        text("Manager fill in form"){
+                                        }
+                                        ""
+                                      }
+                                    }
+                                  }
+                                }
+                                if ( ! ) {
+                                  listitem(){
+                                    text("Manager fill in form"){
+                                    }
+                                  }
+                                }
+                              }
+                              if ( pdpMeeting20.employeeFillInForm.enabled && ) {
+                                if ( ) {
+                                  listitem(){
+                                    if ( genpagepredicatecombined8(pdpMeeting20) ) {
+                                      navigate(employeeFillInForm(pdpMeeting20)){
+                                        text("Employee fill in form"){
+                                        }
+                                        ""
+                                      }
+                                    }
+                                  }
+                                }
+                                if ( ! ) {
+                                  listitem(){
+                                    text("Employee fill in form"){
+                                    }
+                                  }
+                                }
+                              }
+                              if ( pdpMeeting20.startWf.enabled && ) {
+                                if ( ) {
+                                  listitem(){
+                                    if ( genpagepredicatecombined7(pdpMeeting20) ) {
+                                      navigate(startWf(pdpMeeting20)){
+                                        text("Start wf"){
+                                        }
+                                        ""
+                                      }
+                                    }
+                                  }
+                                }
+                                if ( ! ) {
+                                  listitem(){
+                                    text("Start wf"){
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        block("footer"){
+          dummy(){
+            if ( gentemplatepredicate0() ) {
+              "generated with "
+              navigate(url("http://www.webdsl.org")){
+                text("WebDSL"){
+                }
+              }
+              " and "
+              navigate(url("http://www.strategoxt.org")){
+                text("Stratego/XT"){
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  entity ProcedureStatus {
+    name :: String ( ) := "Procedure status"
+    enabled :: Bool ( )
+    date :: DateTime ( )
+  }
+section  basic page elements. .
+
+module data
+section  data model .
+
+  var aManager : User := User{username := "manager" name := "Joe Manager" password := "secret"} ;
+
+  var aUser : User := User{username := "user" name := "Joe User" password := "secret" manager := aManager} ;
+
+  entity User {
+    username :: String ( )
+    name :: String ( )
+    password :: Secret ( )
+    manager -> User ( )
+  }
+
+  entity PdpMeeting {
+    approveReport <> ProcedureStatus ( )
+    finalizeReport <> ProcedureStatus ( )
+    writeReport <> ProcedureStatus ( )
+    managerFillInForm <> ProcedureStatus ( )
+    employeeFillInForm <> ProcedureStatus ( )
+    startWf <> ProcedureStatus ( )
+    employee -> User ( )
+    name :: String ( ) := this.employee.name + " PDP Form"
+    employeePreparation :: Text ( )
+    managerPreparation :: Text ( )
+    report :: Text ( )
+    syncAlmostReady :: Bool ( )
+  }
+
+module ac
+access
+control
+rules
+anonymous
+rule
+page
+createPdpMeeting
+(
+)
+{
+true
+rule
+action
+*
+(
+*
+)
+{
+true
+}
+}
+rule
+page
+*
+(
+*
+)
+{
+true
+rule
+action
+*
+(
+*
+)
+{
+true
+}
+}
+rule
+action
+*
+(
+*
+)
+{
+true
+}
+rule
+template
+*
+(
+*
+)
+{
+true
+rule
+action
+*
+(
+*
+)
+{
+true
+}
+}
+section  pages .
+
+  session securityContext {
+    principal -> User ( )
+    loggedIn :: Bool ( )
+  }
+
+  function loggedIn ( ) : Bool
+  {
+    return securityContext.principal != null;
+  }
+
+  define page signin () {
+    init
+    {
+      if ( genpagepredicatecombined4() )
+        {
+        }
+      else
+        {
+          goto accessDenied();
+        }
+    }
+    dummy(){
+      if ( gentemplatepredicate0() ) {
+        block("top"){
+          dummy(){
+            if ( gentemplatepredicate0() ) {
+              block("header"){
+              }
+              block("menubar"){
+                menubar("horizontal"){
+                  menu(){
+                    menuheader(){
+                      if ( genpagepredicatecombined14() ) {
+                        navigate(home()){
+                          "Home"
+                        }
+                      }
+                    }
+                  }
+                  menu(){
+                    menuheader(){
+                      "User"
+                    }
+                    menuitem(){
+                      if ( genpagepredicatecombined4() ) {
+                        navigate(signin()){
+                          "Sign in"
+                        }
+                      }
+                    }
+                    menuitem(){
+                      if ( genpagepredicatecombined1() ) {
+                        navigate(allTasks()){
+                          "Tasks"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        block("body"){
+          block("left_innerbody"){
+            dummy(){
+              if ( gentemplatepredicate0() ) {
+                dummy(){
+                  if ( gentemplatepredicate0() ) {
+                  }
+                }
+              }
+            }
+          }
+          block("main_innerbody"){
+            dummy(){
+              var username1 : String ;
+              var password1 : Secret ;
+              form(){
+                table(){
+                  row(){
+                    "Username: "
+                    inputString(signin.username1){
+                    }
+                  }
+                  row(){
+                    "Password: "
+                    inputSecret(signin.password1){
+                    }
+                  }
+                  row(){
+                    if ( genactionpredicatecombined0() ) {
+                      action("Sign in", signin.signin()){
+                      }
+                    }
+                    ""
+                  }
+                }
+                action signin ( )
+                {
+                  if ( genactionpredicatecombined0() )
+                    {
+                      var users2 : List<User> := select u from User as u where ( u . _username = signin.username1 ) ;
+                      for ( us : User in users2 where true order by null asc )
+                      {
+                        if ( us.password.check(signin.password1) )
+                          {
+                            securityContext.principal := us;
+                            securityContext.loggedIn := true;
+                            return allTasks();
+                          }
+                        else
+                          {
+                          }
+                      }
+                      securityContext.loggedIn := false;
+                      return error("Wrong combination of username/password");
+                    }
+                  else
+                    {
+                      return accessDenied();
+                    }
+                }
+              }
+            }
+          }
+        }
+        block("footer"){
+          dummy(){
+            if ( gentemplatepredicate0() ) {
+              "generated with "
+              navigate(url("http://www.webdsl.org")){
+                text("WebDSL"){
+                }
+              }
+              " and "
+              navigate(url("http://www.strategoxt.org")){
+                text("Stratego/XT"){
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    title(){
+      "Sign in"
+    }
+  }
+
+  define page error (msg : String) {
+    init
+    {
+      if ( genpagepredicatecombined5(msg) )
+        {
+        }
+      else
+        {
+          goto accessDenied();
+        }
+    }
+    dummy(){
+      if ( gentemplatepredicate0() ) {
+        block("top"){
+          dummy(){
+            if ( gentemplatepredicate0() ) {
+              block("header"){
+              }
+              block("menubar"){
+                menubar("horizontal"){
+                  menu(){
+                    menuheader(){
+                      if ( genpagepredicatecombined14() ) {
+                        navigate(home()){
+                          "Home"
+                        }
+                      }
+                    }
+                  }
+                  menu(){
+                    menuheader(){
+                      "User"
+                    }
+                    menuitem(){
+                      if ( genpagepredicatecombined4() ) {
+                        navigate(signin()){
+                          "Sign in"
+                        }
+                      }
+                    }
+                    menuitem(){
+                      if ( genpagepredicatecombined1() ) {
+                        navigate(allTasks()){
+                          "Tasks"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        block("body"){
+          block("left_innerbody"){
+            dummy(){
+              if ( gentemplatepredicate0() ) {
+                dummy(){
+                  if ( gentemplatepredicate0() ) {
+                  }
+                }
+              }
+            }
+          }
+          block("main_innerbody"){
+            dummy(){
+              header(){
+                "Error"
+              }
+              text(error.msg){
+              }
+            }
+          }
+        }
+        block("footer"){
+          dummy(){
+            if ( gentemplatepredicate0() ) {
+              "generated with "
+              navigate(url("http://www.webdsl.org")){
+                text("WebDSL"){
+                }
+              }
+              " and "
+              navigate(url("http://www.strategoxt.org")){
+                text("Stratego/XT"){
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    title(){
+      "Error"
+    }
+  }
+
+  define page message (msg : String) {
+    init
+    {
+      if ( genpagepredicatecombined6(msg) )
+        {
+        }
+      else
+        {
+          goto accessDenied();
+        }
+    }
+    dummy(){
+      if ( gentemplatepredicate0() ) {
+        block("top"){
+          dummy(){
+            if ( gentemplatepredicate0() ) {
+              block("header"){
+              }
+              block("menubar"){
+                menubar("horizontal"){
+                  menu(){
+                    menuheader(){
+                      if ( genpagepredicatecombined14() ) {
+                        navigate(home()){
+                          "Home"
+                        }
+                      }
+                    }
+                  }
+                  menu(){
+                    menuheader(){
+                      "User"
+                    }
+                    menuitem(){
+                      if ( genpagepredicatecombined4() ) {
+                        navigate(signin()){
+                          "Sign in"
+                        }
+                      }
+                    }
+                    menuitem(){
+                      if ( genpagepredicatecombined1() ) {
+                        navigate(allTasks()){
+                          "Tasks"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        block("body"){
+          block("left_innerbody"){
+            dummy(){
+              if ( gentemplatepredicate0() ) {
+                dummy(){
+                  if ( gentemplatepredicate0() ) {
+                  }
+                }
+              }
+            }
+          }
+          block("main_innerbody"){
+            dummy(){
+              header(){
+                "Message"
+              }
+              text(message.msg){
+              }
+            }
+          }
+        }
+        block("footer"){
+          dummy(){
+            if ( gentemplatepredicate0() ) {
+              "generated with "
+              navigate(url("http://www.webdsl.org")){
+                text("WebDSL"){
+                }
+              }
+              " and "
+              navigate(url("http://www.strategoxt.org")){
+                text("Stratego/XT"){
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    title(){
+      "Message"
+    }
+  }
+
+section  procedures .
+
+  function startWfEnabled ( p : PdpMeeting ) : Void
+  {
+    p.startWf.enabled := true;
+    startWfDo(p);
+  }
+
+  function startWfProcessed ( p : PdpMeeting ) : Void
+  {
+  }
+
+  function startWfDone ( p : PdpMeeting ) : Void
+  {
+    p.startWf.enabled := false;
+    employeeFillInFormEnabled(p);
+  }
+
+  function startWfDo ( p : PdpMeeting ) : Void
+  {
+    startWfDone(p);
+  }
+
+  function startWfDisabled ( p : PdpMeeting ) : Void
+  {
+    p.startWf.enabled := false;
+  }
+
+  function employeeFillInFormEnabled ( p : PdpMeeting ) : Void
+  {
+    p.employeeFillInForm.enabled := true;
+  }
+
+  function employeeFillInFormProcessed ( p : PdpMeeting ) : Void
+  {
+  }
+
+  function employeeFillInFormDone ( p : PdpMeeting ) : Void
+  {
+    p.employeeFillInForm.enabled := false;
+  }
+
+  function employeeFillInFormDo ( p : PdpMeeting ) : Void
+  {
+    employeeFillInFormDone(p);
+  }
+
+  function employeeFillInFormDisabled ( p : PdpMeeting ) : Void
+  {
+    p.employeeFillInForm.enabled := false;
+  }
+
+  function managerFillInFormEnabled ( p : PdpMeeting ) : Void
+  {
+    p.managerFillInForm.enabled := true;
+  }
+
+  function managerFillInFormProcessed ( p : PdpMeeting ) : Void
+  {
+  }
+
+  function managerFillInFormDone ( p : PdpMeeting ) : Void
+  {
+    p.managerFillInForm.enabled := false;
+  }
+
+  function managerFillInFormDo ( p : PdpMeeting ) : Void
+  {
+    managerFillInFormDone(p);
+  }
+
+  function managerFillInFormDisabled ( p : PdpMeeting ) : Void
+  {
+    p.managerFillInForm.enabled := false;
+  }
+
+  function writeReportEnabled ( p : PdpMeeting ) : Void
+  {
+    p.writeReport.enabled := true;
+  }
+
+  function writeReportProcessed ( p : PdpMeeting ) : Void
+  {
+  }
+
+  function writeReportDone ( p : PdpMeeting ) : Void
+  {
+    p.writeReport.enabled := false;
+  }
+
+  function writeReportDo ( p : PdpMeeting ) : Void
+  {
+    writeReportDone(p);
+  }
+
+  function writeReportDisabled ( p : PdpMeeting ) : Void
+  {
+    p.writeReport.enabled := false;
+  }
+
+  function finalizeReportEnabled ( p : PdpMeeting ) : Void
+  {
+    p.finalizeReport.enabled := true;
+  }
+
+  function finalizeReportProcessed ( p : PdpMeeting ) : Void
+  {
+  }
+
+  function finalizeReportDone ( p : PdpMeeting ) : Void
+  {
+    p.finalizeReport.enabled := false;
+  }
+
+  function finalizeReportDo ( p : PdpMeeting ) : Void
+  {
+    finalizeReportDone(p);
+  }
+
+  function finalizeReportDisabled ( p : PdpMeeting ) : Void
+  {
+    p.finalizeReport.enabled := false;
+  }
+
+  function approveReportEnabled ( p : PdpMeeting ) : Void
+  {
+    p.approveReport.enabled := true;
+  }
+
+  function approveReportProcessed ( p : PdpMeeting ) : Void
+  {
+  }
+
+  function approveReportDone ( p : PdpMeeting ) : Void
+  {
+    p.approveReport.enabled := false;
+  }
+
+  function approveReportDo ( p : PdpMeeting ) : Void
+  {
+    approveReportDone(p);
+  }
+
+  function approveReportDisabled ( p : PdpMeeting ) : Void
+  {
+    p.approveReport.enabled := false;
+  }
+
+  function approveReportEnabled ( p : PdpMeeting ) : Void
+  {
+    p.approveReport.enabled := true;
+  }
+
+  function approveReportProcessed ( p : PdpMeeting ) : Void
+  {
+    var a : Int := 4 ;
+  }
+
+  function approveReportDone ( p : PdpMeeting ) : Void
+  {
+    p.approveReport.enabled := false;
+  }
+
+  function approveReportDo ( p : PdpMeeting ) : Void
+  {
+    approveReportDone(p);
+  }
+
+  function approveReportDisabled ( p : PdpMeeting ) : Void
+  {
+    p.approveReport.enabled := false;
+  }
+
+  define page startWf (p : PdpMeeting) {
+    init
+    {
+      if ( genpagepredicatecombined7(p) )
+        {
+        }
+      else
+        {
+          goto accessDenied();
+        }
+    }
+    action doAction ( )
+    {
+      if ( genactionpredicatecombined1(startWf.p) )
+        {
+          startWfDone(startWf.p);
+          return pdpMeeting(startWf.p);
+        }
+      else
+        {
+          return accessDenied();
+        }
+    }
+  }
+
+  define page employeeFillInForm (p : PdpMeeting) {
+    init
+    {
+      if ( genpagepredicatecombined8(p) )
+        {
+        }
+      else
+        {
+          goto accessDenied();
+        }
+    }
+    title(){
+      "Fill in employee form"
+    }
+    dummy(){
+      dummy(){
+        if ( gentemplatepredicate0() ) {
+          block("top"){
+            dummy(){
+              if ( gentemplatepredicate0() ) {
+                block("header"){
+                }
+                block("menubar"){
+                  menubar("horizontal"){
+                    menu(){
+                      menuheader(){
+                        if ( genpagepredicatecombined14() ) {
+                          navigate(home()){
+                            "Home"
+                          }
+                        }
+                      }
+                    }
+                    menu(){
+                      menuheader(){
+                        "User"
+                      }
+                      menuitem(){
+                        if ( genpagepredicatecombined4() ) {
+                          navigate(signin()){
+                            "Sign in"
+                          }
+                        }
+                      }
+                      menuitem(){
+                        if ( genpagepredicatecombined1() ) {
+                          navigate(allTasks()){
+                            "Tasks"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          block("body"){
+            block("left_innerbody"){
+              dummy(){
+                if ( gentemplatepredicate0() ) {
+                  dummy(){
+                    dummy(){
+                    }
+                  }
+                }
+              }
+            }
+            block("main_innerbody"){
+              dummy(){
+                header(){
+                  text("Current page"){
+                  }
+                  " "
+                  navigate(pdpMeeting(employeeFillInForm.p)){
+                    text(employeeFillInForm.p.name){
+                    }
+                  }
+                }
+                form(){
+                  table(){
+                    dummy(){
+                      row(){
+                        "Employee preparation: "
+                        inputText(employeeFillInForm.p.employeePreparation){
+                        }
+                      }
+                    }
+                  }
+                  if ( genactionpredicatecombined2(employeeFillInForm.p) ) {
+                    action("Submit", employeeFillInForm.doAction()){
+                    }
+                  }
+                }
+              }
+            }
+          }
+          block("footer"){
+            dummy(){
+              if ( gentemplatepredicate0() ) {
+                "generated with "
+                navigate(url("http://www.webdsl.org")){
+                  text("WebDSL"){
+                  }
+                }
+                " and "
+                navigate(url("http://www.strategoxt.org")){
+                  text("Stratego/XT"){
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      define contextSidebar () {
+        dummy(){
+        }
+      }
+      define body () {
+        header(){
+          text("Current page"){
+          }
+          " "
+          navigate(pdpMeeting(employeeFillInForm.p)){
+            text(employeeFillInForm.p.name){
+            }
+          }
+        }
+        form(){
+          table(){
+            dummy(){
+              row(){
+                "Employee preparation: "
+                inputText(employeeFillInForm.p.employeePreparation){
+                }
+              }
+            }
+          }
+          if ( genactionpredicatecombined2(employeeFillInForm.p) ) {
+            action("Submit", employeeFillInForm.doAction()){
+            }
+          }
+        }
+      }
+    }
+    action doAction ( )
+    {
+      if ( genactionpredicatecombined2(employeeFillInForm.p) )
+        {
+          employeeFillInFormDone(employeeFillInForm.p);
+          return pdpMeeting(employeeFillInForm.p);
+        }
+      else
+        {
+          return accessDenied();
+        }
+    }
+  }
+
+  define page managerFillInForm (p : PdpMeeting) {
+    init
+    {
+      if ( genpagepredicatecombined9(p) )
+        {
+        }
+      else
+        {
+          goto accessDenied();
+        }
+    }
+    title(){
+      "Fill in manager form"
+    }
+    dummy(){
+      dummy(){
+        if ( gentemplatepredicate0() ) {
+          block("top"){
+            dummy(){
+              if ( gentemplatepredicate0() ) {
+                block("header"){
+                }
+                block("menubar"){
+                  menubar("horizontal"){
+                    menu(){
+                      menuheader(){
+                        if ( genpagepredicatecombined14() ) {
+                          navigate(home()){
+                            "Home"
+                          }
+                        }
+                      }
+                    }
+                    menu(){
+                      menuheader(){
+                        "User"
+                      }
+                      menuitem(){
+                        if ( genpagepredicatecombined4() ) {
+                          navigate(signin()){
+                            "Sign in"
+                          }
+                        }
+                      }
+                      menuitem(){
+                        if ( genpagepredicatecombined1() ) {
+                          navigate(allTasks()){
+                            "Tasks"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          block("body"){
+            block("left_innerbody"){
+              dummy(){
+                if ( gentemplatepredicate0() ) {
+                  dummy(){
+                    dummy(){
+                    }
+                  }
+                }
+              }
+            }
+            block("main_innerbody"){
+              dummy(){
+                header(){
+                  text("Current page"){
+                  }
+                  " "
+                  navigate(pdpMeeting(managerFillInForm.p)){
+                    text(managerFillInForm.p.name){
+                    }
+                  }
+                }
+                form(){
+                  table(){
+                    dummy(){
+                      row(){
+                        "Manager preparation: "
+                        inputText(managerFillInForm.p.managerPreparation){
+                        }
+                      }
+                    }
+                  }
+                  if ( genactionpredicatecombined3(managerFillInForm.p) ) {
+                    action("Submit", managerFillInForm.doAction()){
+                    }
+                  }
+                }
+              }
+            }
+          }
+          block("footer"){
+            dummy(){
+              if ( gentemplatepredicate0() ) {
+                "generated with "
+                navigate(url("http://www.webdsl.org")){
+                  text("WebDSL"){
+                  }
+                }
+                " and "
+                navigate(url("http://www.strategoxt.org")){
+                  text("Stratego/XT"){
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      define contextSidebar () {
+        dummy(){
+        }
+      }
+      define body () {
+        header(){
+          text("Current page"){
+          }
+          " "
+          navigate(pdpMeeting(managerFillInForm.p)){
+            text(managerFillInForm.p.name){
+            }
+          }
+        }
+        form(){
+          table(){
+            dummy(){
+              row(){
+                "Manager preparation: "
+                inputText(managerFillInForm.p.managerPreparation){
+                }
+              }
+            }
+          }
+          if ( genactionpredicatecombined3(managerFillInForm.p) ) {
+            action("Submit", managerFillInForm.doAction()){
+            }
+          }
+        }
+      }
+    }
+    action doAction ( )
+    {
+      if ( genactionpredicatecombined3(managerFillInForm.p) )
+        {
+          managerFillInFormDone(managerFillInForm.p);
+          return pdpMeeting(managerFillInForm.p);
+        }
+      else
+        {
+          return accessDenied();
+        }
+    }
+  }
+
+  define page writeReport (p : PdpMeeting) {
+    init
+    {
+      if ( genpagepredicatecombined10(p) )
+        {
+        }
+      else
+        {
+          goto accessDenied();
+        }
+    }
+    title(){
+      "Write report"
+    }
+    dummy(){
+      dummy(){
+        if ( gentemplatepredicate0() ) {
+          block("top"){
+            dummy(){
+              if ( gentemplatepredicate0() ) {
+                block("header"){
+                }
+                block("menubar"){
+                  menubar("horizontal"){
+                    menu(){
+                      menuheader(){
+                        if ( genpagepredicatecombined14() ) {
+                          navigate(home()){
+                            "Home"
+                          }
+                        }
+                      }
+                    }
+                    menu(){
+                      menuheader(){
+                        "User"
+                      }
+                      menuitem(){
+                        if ( genpagepredicatecombined4() ) {
+                          navigate(signin()){
+                            "Sign in"
+                          }
+                        }
+                      }
+                      menuitem(){
+                        if ( genpagepredicatecombined1() ) {
+                          navigate(allTasks()){
+                            "Tasks"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          block("body"){
+            block("left_innerbody"){
+              dummy(){
+                if ( gentemplatepredicate0() ) {
+                  dummy(){
+                    dummy(){
+                    }
+                  }
+                }
+              }
+            }
+            block("main_innerbody"){
+              dummy(){
+                header(){
+                  text("Current page"){
+                  }
+                  " "
+                  navigate(pdpMeeting(writeReport.p)){
+                    text(writeReport.p.name){
+                    }
+                  }
+                }
+                form(){
+                  table(){
+                    dummy(){
+                      row(){
+                        "Report: "
+                        inputText(writeReport.p.report){
+                        }
+                      }
+                    }
+                  }
+                  if ( genactionpredicatecombined4(writeReport.p) ) {
+                    action("Submit", writeReport.doAction()){
+                    }
+                  }
+                }
+              }
+            }
+          }
+          block("footer"){
+            dummy(){
+              if ( gentemplatepredicate0() ) {
+                "generated with "
+                navigate(url("http://www.webdsl.org")){
+                  text("WebDSL"){
+                  }
+                }
+                " and "
+                navigate(url("http://www.strategoxt.org")){
+                  text("Stratego/XT"){
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      define contextSidebar () {
+        dummy(){
+        }
+      }
+      define body () {
+        header(){
+          text("Current page"){
+          }
+          " "
+          navigate(pdpMeeting(writeReport.p)){
+            text(writeReport.p.name){
+            }
+          }
+        }
+        form(){
+          table(){
+            dummy(){
+              row(){
+                "Report: "
+                inputText(writeReport.p.report){
+                }
+              }
+            }
+          }
+          if ( genactionpredicatecombined4(writeReport.p) ) {
+            action("Submit", writeReport.doAction()){
+            }
+          }
+        }
+      }
+    }
+    action doAction ( )
+    {
+      if ( genactionpredicatecombined4(writeReport.p) )
+        {
+          writeReportDone(writeReport.p);
+          return pdpMeeting(writeReport.p);
+        }
+      else
+        {
+          return accessDenied();
+        }
+    }
+  }
+
+  define page finalizeReport (p : PdpMeeting) {
+    init
+    {
+      if ( genpagepredicatecombined11(p) )
+        {
+          finalizeReportDone(p);
+          goto pdpMeeting(p);
+        }
+      else
+        {
+          goto accessDenied();
+        }
+    }
+  }
+
+  define page approveReport (p : PdpMeeting) {
+    init
+    {
+      if ( genpagepredicatecombined12(p) )
+        {
+          approveReportDone(p);
+          goto pdpMeeting(p);
+        }
+      else
+        {
+          goto accessDenied();
+        }
+    }
+  }
+
+  extend
+
+  define page approveReport (p : PdpMeeting) {
+    init
+    {
+      if ( genpagepredicatecombined13(p) )
+        {
+          approveReportDone(p);
+          goto pdpMeeting(p);
+        }
+      else
+        {
+          goto accessDenied();
+        }
+    }
+  }
+
+section  pages .
+
+  define page home () {
+    init
+    {
+      if ( genpagepredicatecombined14() )
+        {
+        }
+      else
+        {
+          goto accessDenied();
+        }
+    }
+    dummy(){
+      if ( gentemplatepredicate0() ) {
+        block("top"){
+          dummy(){
+            if ( gentemplatepredicate0() ) {
+              block("header"){
+              }
+              block("menubar"){
+                menubar("horizontal"){
+                  menu(){
+                    menuheader(){
+                      if ( genpagepredicatecombined14() ) {
+                        navigate(home()){
+                          "Home"
+                        }
+                      }
+                    }
+                  }
+                  menu(){
+                    menuheader(){
+                      "User"
+                    }
+                    menuitem(){
+                      if ( genpagepredicatecombined4() ) {
+                        navigate(signin()){
+                          "Sign in"
+                        }
+                      }
+                    }
+                    menuitem(){
+                      if ( genpagepredicatecombined1() ) {
+                        navigate(allTasks()){
+                          "Tasks"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        block("body"){
+          block("left_innerbody"){
+            dummy(){
+              if ( gentemplatepredicate0() ) {
+                dummy(){
+                  dummy(){
+                  }
+                }
+              }
+            }
+          }
+          block("main_innerbody"){
+            dummy(){
+              var employee1 : User ;
+              navigatebutton(signin(), "Sign in!"){
+              }
+              form(){
+                header(){
+                  "Organize PDP Meeting"
+                }
+                "For: "
+                div("inputSimpleRefAssociation"){
+                  select ( user01 : User , Select , home.employee1 )
+                }
+                if ( genactionpredicatecombined5() ) {
+                  action("Organize", home.organize()){
+                  }
+                }
+                action organize ( )
+                {
+                  if ( genactionpredicatecombined5() )
+                    {
+                      var p66 : PdpMeeting := PdpMeeting{} ;
+                      p66.employee := home.employee1;
+                      p66.persist();
+                      startWfEnabled(p66);
+                      return message("Done!");
+                    }
+                  else
+                    {
+                      return accessDenied();
+                    }
+                }
+              }
+            }
+          }
+        }
+        block("footer"){
+          dummy(){
+            if ( gentemplatepredicate0() ) {
+              "generated with "
+              navigate(url("http://www.webdsl.org")){
+                text("WebDSL"){
+                }
+              }
+              " and "
+              navigate(url("http://www.strategoxt.org")){
+                text("Stratego/XT"){
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+section  pages .

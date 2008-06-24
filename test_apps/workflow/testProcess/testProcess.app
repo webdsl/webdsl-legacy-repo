@@ -14,12 +14,10 @@ section procedures
   auto procedure startWf(p : PdpMeeting) {
     done {
       p.employeeFillInForm.enable();
-      p.managerFillInForm.enable();
     }
     process {
       employeeFillInForm(p);
-      managerFillInForm(p);
-      writeReport(p);
+
       finalizeReport(p);
       approveReport(p)
     }
@@ -56,6 +54,12 @@ section procedures
   procedure approveReport(p : PdpMeeting) {
     who { securityContext.principal = p.employee }
   }
+  
+  extend procedure approveReport(p : PdpMeeting) {
+    processed {
+      var a : Int := 4;
+    }
+  }
 
 section pages
 
@@ -91,6 +95,11 @@ section pages
   define pdpMeetingOperations(p : PdpMeeting) {
     "haha!"
     pdpMeetingOperationsList(p)
+  }
+  
+  // patch since no auto generation of view pages
+  define pdpMeeting(p : PdpMeeting) {
+    derive viewPage from p
   }
 
 /*
