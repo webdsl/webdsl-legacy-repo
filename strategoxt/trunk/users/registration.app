@@ -40,7 +40,7 @@ section create new user
               {  
                 newUser.password := newUser.password.digest();
                 newUser.persist();
-                email(sendConfirmEmail(newUser));
+                //email(sendConfirmEmail(newUser));
           return registrationPending(newUser.username);
         }
           }
@@ -182,12 +182,12 @@ section moderation of user registration requests by admin
           var user : User := makeUser(reg);
           reg.delete();
           user.persist();
-          email(confirmRegistration(user));
+          //email(confirmRegistration(user));
           //return pendingRegistrations();
         }
         
         action reject(reg : UserRegistration, rejection : Text) {
-          email(rejectRegistration(reg, rejection));
+          //email(rejectRegistration(reg, rejection));
           reg.delete();
           //return pendingRegistrations();
         }
