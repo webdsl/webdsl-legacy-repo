@@ -1,4 +1,5 @@
 TESTS_SUCCEED = $(wildcard succeed/*.app) $(wildcard succeed/*/*.app)
+TESTS_SUCCEED_ALL = $(wildcard succeed/*.app) $(wildcard succeed/*/*.app)
 TESTS_FAIL =$(wildcard fail/*.app) $(wildcard fail/*/*.app)
 TESTS = $(TESTS_SUCCEED:.app=) $(TESTS_FAIL:.app=)
 
@@ -8,6 +9,20 @@ check: $(TESTS)
 	@pass=0; fail=0; \
 	for i in $(TESTS); do \
 		if $(TESTENVIRONMENT) ./$$i; then\
+		  pass=$$(($$pass + 1)); \
+	  else \
+	    fail=$$(($$fail + 1)); \
+		fi; \
+	done; \
+	echo ;\
+	echo "Total:"; \
+	echo "PASS: $$pass"; \
+	echo "FAIL: $$fail";
+
+checkall: $(TESTS_SUCCEED_ALL)
+	@pass=0; fail=0; \
+	for i in $(TESTS_SUCCEED_ALL); do \
+		if $(TESTENVIRONMENT) ./run-test-succeed-all.sh $$i; then\
 		  pass=$$(($$pass + 1)); \
 	  else \
 	    fail=$$(($$fail + 1)); \
