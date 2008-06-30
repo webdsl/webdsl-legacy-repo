@@ -71,7 +71,7 @@ section creating new topics
           moderators := {author}
           members    := {author}
         };
-      author.groups.add(moderators);
+      //author.groups.add(moderators);
       var web : Web :=
         Web{
           name := webname
@@ -108,7 +108,7 @@ section creating new topics
           acl     := ACL{ }
         };
       topic.authors.add(author);
-      author.authored.add(topic);
+      //author.authored.add(topic);
       return topic;
     }
 
