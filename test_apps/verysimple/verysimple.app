@@ -16,32 +16,31 @@ entity User {
   message :: String := "Hello " + this.username
 }
 
-entity Message {
-  author -> User
-  message :: Text
+entity SpecialPage: Page {
+  extraField :: String
 }
 
-extend entity User {
-  prop :: Int
+entity SuperSpecialPage : Page {
+  anotherField :: String
 }
 
-var globalsomething : Int := 3;
-
-function test(z : Int) {
-  var a : Set<Int>;
-  var q : Int := 3 + globalsomething;
-  a := [ x * q | x : Int in {1, 2, 3, 4}]; 
-  var q2 : Bool := And[x > 3 | x : Int in a];
+entity Page {
+  name :: String
+  text :: WikiText
 }
 
-extend function test(z : Int) {
-  var b : Bool := z = 3;
-  var m : Message := Message {};
+function doSomething(i : Int) : Int {
+  return 1 + 2;
+}
+
+function doSomething(s : String) : Int {
+  return 3 + 4;
 }
 
 define page home() {
   main()
-  define body() {
+  define template body() {
+    //output(doSomething(3))
     list {
       for(u : User) {
         listitem { text(u.message) }

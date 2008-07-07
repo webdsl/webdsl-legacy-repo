@@ -7,6 +7,8 @@ section main template.
       sidebar()
     }
     div("outerbody") {
+      div("menubar") {
+      }
       body()
       footer()
     }
