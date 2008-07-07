@@ -14,6 +14,8 @@ section main template.
     }
   }
 
+  define body() { }
+
 section basic page elements.
 
   define sidebar() {

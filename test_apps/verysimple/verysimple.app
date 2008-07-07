@@ -52,25 +52,20 @@ function doSomething(s : String) : Int {
 }
 
 define page home() {
-  ""
-  /*
   main()
   define body() {
-    //output(doSomething(3))
-    //output(p.perform())
-    //output(ssp.perform())
+    output(doSomething(3))
+    output(p.perform())
+    output(ssp.perform())
     list {
       for(u : User) {
         listitem { text(u.message) }
       }
     }
   }
-  */
 }
 
 define page newUser() {
-  ""
-  /*
   main()
   define body() {
     var u : User := User{};
@@ -86,5 +81,4 @@ define page newUser() {
       }
     }
   }
-  */
 }
