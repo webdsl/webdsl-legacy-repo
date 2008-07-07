@@ -16,18 +16,32 @@ entity User {
   message :: String := "Hello " + this.username
 }
 
+entity Page {
+  name :: String
+  text :: WikiText
+
+  function perform() : String {
+     return "Page performed"; 
+  }
+}
+
 entity SpecialPage: Page {
   extraField :: String
+  function perform() : String {
+     return "SpecialPage performed"; 
+  }
 }
 
 entity SuperSpecialPage : Page {
   anotherField :: String
+
+  function perform() : String {
+     return this.anotherField + "SuperSpecialPage performed"; 
+  }
 }
 
-entity Page {
-  name :: String
-  text :: WikiText
-}
+var ssp : SuperSpecialPage := SuperSpecialPage {};
+var p : Page := Page {};
 
 function doSomething(i : Int) : Int {
   return 1 + 2;
@@ -38,22 +52,25 @@ function doSomething(s : String) : Int {
 }
 
 define page home() {
+  ""
+  /*
   main()
-  define template body() {
+  define body() {
     //output(doSomething(3))
+    //output(p.perform())
+    //output(ssp.perform())
     list {
       for(u : User) {
         listitem { text(u.message) }
       }
     }
   }
-}
-
-define page user(u : User) {
-  derive editPage from u for (username, password)
+  */
 }
 
 define page newUser() {
+  ""
+  /*
   main()
   define body() {
     var u : User := User{};
@@ -69,4 +86,5 @@ define page newUser() {
       }
     }
   }
+  */
 }

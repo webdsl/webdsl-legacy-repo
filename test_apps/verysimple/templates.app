@@ -31,6 +31,7 @@ section entity management.
 
   define manageMenu() {}
   
+  /*
   define page manage() {
     main()
     define sidebar() {}
@@ -39,4 +40,5 @@ section entity management.
       allMenu()
     }
   }
+  */
 
