@@ -30,7 +30,17 @@ entity SpecialPage: Page {
   function perform() : String {
      return "SpecialPage performed"; 
   }
+  function next(i : Int) {
+    var s : String := "";
+  }
 }
+
+/*extend entity SpecialPage {
+  extend function next(i : Int) {
+    var bs : String := "";
+  }
+}
+*/
 
 entity SuperSpecialPage : Page {
   anotherField :: String
@@ -38,6 +48,20 @@ entity SuperSpecialPage : Page {
   function perform() : String {
      return this.anotherField + "SuperSpecialPage performed"; 
   }
+  function next(i : Int) {
+    var a : String := "";
+  }
+}
+/*
+extend entity SuperSpecialPage {
+  extend function next(i : Int) {
+    var bs2 : String := "";
+  }
+}
+*/
+
+extend function next(this0 : SuperSpecialPage, i : Int) {
+  var q : String := "Extended next";
 }
 
 var ssp : SuperSpecialPage := SuperSpecialPage {};
