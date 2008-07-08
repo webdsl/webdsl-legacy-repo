@@ -28,7 +28,7 @@ section data model
   }
   */
 
-  globals {
+/*  globals {
     var aManager : User := User {
       username := "manager",
       name     := "Joe Manager",
@@ -40,4 +40,4 @@ section data model
       password := "secret",
       manager  := aManager
     };
-  }
+  }*/

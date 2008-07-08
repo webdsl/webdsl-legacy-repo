@@ -31,9 +31,9 @@ section pages
         table {
           row{ "Username: " input(username) }
           row{ "Password: " input(password) }
-          row{ action("Sign in", signin()) "" }
+          row{ action("Sign in", dosignin()) "" }
         }
-        action signin() {
+        action dosignin() {
           var users : List<User> :=
             select u from User as u 
             where (u._username = ~username);

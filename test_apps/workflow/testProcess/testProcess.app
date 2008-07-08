@@ -11,7 +11,7 @@ imports ac
 
 section procedures
 
-  auto procedure startWf(p : PdpMeeting) {
+  auto procedure testWorkflow(p : PdpMeeting) {
     done {
       p.employeeFillInForm.enable();
     }
@@ -77,7 +77,7 @@ section pages
           var p : PdpMeeting := PdpMeeting{ };
           p.employee := employee;
           p.persist();
-          p.startWf.enable();
+          p.testWorkflow.enable();
           // Test stuff
           return message("Done!");
         }
@@ -94,27 +94,14 @@ section pages
 
   define pdpMeetingOperations(p : PdpMeeting) {
     "haha!"
-    pdpMeetingOperationsList(p)
+//    pdpMeetingOperationsList(p)
   }
   
   // patch since no auto generation of view pages
-  define pdpMeeting(p : PdpMeeting) {
+  define page pdpMeeting(p : PdpMeeting) {
     derive viewPage from p
   }
-
-/*
-  define page pdpMeeting(pdpMeeting : PdpMeeting) {
-    title {"Pdp Meeting " output(pdpMeeting)}
-    main()
-    define contextSidebar() {
-      pdpMeetingprocedures(pdpMeeting)
-    }
-    define body() {
-      header{"Pdp meeting " output(pdpMeeting)}
-      table {
-        derive viewRows from pdpMeeting
-      }
-    }
+  define page user(u : User) {
+    derive viewPage from u
   }
-  */
 
