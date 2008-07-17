@@ -13,9 +13,7 @@ section main template.
       }
   
       block("main_innerbody") {
-        form() {
-          body()
-        }
+        body()
       }
     }
 
@@ -27,6 +25,7 @@ section main template.
 section basic page elements.
 
   define top() {
+    var a : String;
     block("header") {}
     block("menubar") { 
       topmenu()
@@ -38,6 +37,7 @@ section basic page elements.
   }
 
   define footer() {
+    var a : String;
     block("footer") {
       block("left_footer") {
         navigate(url("http://www.webdsl.org")) { "About WebDSL" }

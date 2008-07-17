@@ -8,11 +8,15 @@ imports templates
 imports datamodel
 imports init
 imports pages
+imports style
 
 section pages
 
 define page home() {
+  title { "PetClinic Home Page" }
+  
   main()
+  
   define body() {
     header { "Welcome" }
     

@@ -53,8 +53,6 @@ section global data
         specialties := {spec3}
       };
 
-
-
     var o1 : Owner :=
       Owner {
         name := "George Franklin"

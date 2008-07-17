@@ -3,15 +3,15 @@ module datamodel
 section definition
 
   entity Owner {
-    name :: String (name, notempty)
-    address :: String (notempty, minlength(6))
+    name :: String (name)
+    address :: String
     city :: String
     telephone :: String
     pets -> Set<Pet>
   }
 
   entity Pet {
-    name :: String(name, notempty)
+    name :: String(name)
     birthdate :: Date
     type -> PetType
     visits -> Set<Visit>
@@ -19,16 +19,16 @@ section definition
   }
 
   entity PetType {
-    name :: String(name, notempty)
+    name :: String(name)
   }
 
   entity Vet {
-    name :: String(name, notempty)
+    name :: String(name)
     specialties -> Set<Specialty>
   }
 
   entity Specialty {
-    name     :: String (name, notempty)
+    name     :: String (name)
   }
 
   entity Visit {
