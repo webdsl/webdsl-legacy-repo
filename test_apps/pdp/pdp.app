@@ -9,24 +9,22 @@ imports templates
 imports data
 imports ac
 
+section data
+
 section procedures
 
   auto procedure startWf(p : PdpMeeting) {
-    /*process {
+    do {
+      p.employeeFillInForm.enable();
+    }
+  }
+  /*  process {
       (employeeFillInForm(p) |AND| managerFillInForm(p));
       writeReport(p)
     }*/
-    done {
-      p.employeeFillInForm.enable();
-      p.managerFillInForm.enable();
-    }
-  }
 
   procedure employeeFillInForm(p : PdpMeeting) {
     who { securityContext.principal = p.employee }
-    done {
-      p.branchEnd1.enable(); 
-    }
     view {
       title{"Fill in employee form"}
       derive procedurePage from p for (employeePreparation)
@@ -35,49 +33,14 @@ section procedures
 
   procedure managerFillInForm(p : PdpMeeting) {
     who { securityContext.principal = p.employee.manager }
-    done {
-      p.branchEnd2.enable(); 
-    }
     view {
       title{"Fill in manager form"}
       derive procedurePage from p for (managerPreparation)
     }
   }
 
-  auto procedure branchEnd1(p : PdpMeeting) {
-    do {
-      if(p.syncAlmostReady) {
-        p.employeeManagerSync.enable();
-        p.syncAlmostReady := false;
-      } else {
-        p.syncAlmostReady := true;
-      }
-    }
-  }
-
-  auto procedure branchEnd2(p : PdpMeeting) {
-    do {
-      if(p.syncAlmostReady) {
-        p.employeeManagerSync.enable();
-        p.syncAlmostReady := false;
-      } else {
-        p.syncAlmostReady := true;
-      }
-    }
-  }
-
-  auto procedure employeeManagerSync(p : PdpMeeting) {
-    done {
-      p.writeReport.enable();
-    }
-  }
-
   procedure writeReport(p : PdpMeeting) {
     who { securityContext.principal = p.employee.manager }
-    done {
-      p.finalizeReport.enable();
-      p.writeReport.enable();
-    }
     view {
       title{"Write report"}
       derive procedurePage from p for (report)
@@ -86,10 +49,6 @@ section procedures
 
   procedure finalizeReport(p : PdpMeeting) {
     who { securityContext.principal = p.employee.manager }
-    done {
-      p.approveReport.enable();
-      p.writeReport.disable();
-    }
   }
 
   procedure approveReport(p : PdpMeeting) {
@@ -102,7 +61,6 @@ section pages
     main()
     define body() {
       var employee : User
-      navigatebutton(signin(), "Sign in!")
       form {
         header{"Organize PDP Meeting"}
         "For: " input(employee)
@@ -112,7 +70,6 @@ section pages
           var p : PdpMeeting := PdpMeeting{ };
           p.employee := employee;
           p.persist();
-          p.startWf.enable();
           // Test stuff
           return message("Done!");
         }
@@ -132,7 +89,6 @@ section pages
     pdpMeetingOperationsList(p)
   }
 
-/*
   define page pdpMeeting(pdpMeeting : PdpMeeting) {
     title {"Pdp Meeting " output(pdpMeeting)}
     main()
@@ -146,5 +102,4 @@ section pages
       }
     }
   }
-  */
 

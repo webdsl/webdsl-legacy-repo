@@ -11,12 +11,10 @@ section data model
 
   entity PdpMeeting {
     employee -> User
-    name :: String := employee.name + " PDP Form"
+    name :: String := this.employee.name + " PDP Form"
     employeePreparation :: Text
     managerPreparation :: Text
     report :: Text
-
-    syncAlmostReady :: Bool
   }
 
   /*
