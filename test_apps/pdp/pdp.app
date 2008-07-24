@@ -12,6 +12,10 @@ imports ac
 section procedures
 
   auto procedure startWf(p : PdpMeeting) {
+    /*process {
+      (employeeFillInForm(p) |AND| managerFillInForm(p));
+      writeReport(p)
+    }*/
     done {
       p.employeeFillInForm.enable();
       p.managerFillInForm.enable();
