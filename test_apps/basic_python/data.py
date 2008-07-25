@@ -16,3 +16,6 @@ class User(webdsl.data.Model):
     @property
     def name(self):
         return self.screenname
+
+Message.init_model()
+User.init_model()

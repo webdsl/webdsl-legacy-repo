@@ -2,6 +2,13 @@ from google.appengine.ext import db
 
 class Model(db.Model):
     @classmethod
+    def init_model(cls):
+        cls.attribute_types = {}
+        for attr in dir(cls):
+            if isinstance(getattr(cls, attr), db.Property):
+                cls.attribute_types[attr] = getattr(cls, attr).datastore_type()
+
+    @classmethod
     def fetch_by_id(cls, id):
         if hasattr(cls, 'id'):
             return cls.all().filter("%s = " % cls.id, id).get()
