@@ -22,7 +22,7 @@ def generateFormHash(data, template, level=0):
         try:
             h = hash(str(data.key()))
         except:
-            h = hash(data)
+            h = hash(data.__class__.__name__)
     else:
         h = hash(data)
     if level == 0:
