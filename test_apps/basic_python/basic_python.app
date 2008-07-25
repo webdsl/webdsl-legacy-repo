@@ -13,7 +13,8 @@ entity Message {
   reply_to -> Message
 }
 
-define page home() {
+define page hello() {
   "Hello world!"
+  "How are you doing\'s?"
 }
 

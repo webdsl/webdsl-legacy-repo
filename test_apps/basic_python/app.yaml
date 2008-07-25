@@ -5,5 +5,5 @@ api_version: 1
 
 handlers:
 - url: /.*
-  script: main2.py
+  script: main.py
 
