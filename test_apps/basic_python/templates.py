@@ -1,6 +1,7 @@
 import data
 import cgi
 import webdsl.utils
+import logging
 
 class Main(webdsl.utils.RequestHandler):
     def render(self):
@@ -23,16 +24,20 @@ class Vmessage(webdsl.utils.RequestHandler):
         self.scope['message'].put()
         self.redirect_to_self()
 
+    def do_delete(self):
+        self.scope['message'].delete()
+        self.redirect_to_self()
+
     def render(self):
         out = self.rh.response.out
 
         # Start of form
         out.write('<form method="POST">')
         form_id = webdsl.utils.generateFormHash(self.scope, self)
-        if self.rh.request.get('form_id') == form_id:
+        is_submitted_form = self.rh.request.get('form_id') == form_id
+        if is_submitted_form:
             self.data_bind()
         out.write('<input type="hidden" name="form_id" value="%s"/>' % form_id)
-        #
         
         # Input
         out.write('<input type="text" name="message__sender" value="')
@@ -40,6 +45,7 @@ class Vmessage(webdsl.utils.RequestHandler):
         out.write('"/>')
 
         out.write(': ')
+
         # Input
         out.write('<input type="text" name="message__message" value="')
         out.write(cgi.escape(self.scope['message'].message, True))
@@ -47,8 +53,12 @@ class Vmessage(webdsl.utils.RequestHandler):
 
         # Action reference
         out.write('<input type="submit" name="action-1" value="Save"/>')
-        if self.rh.request.get('action-1'):
+        if self.rh.request.get('action-1') and is_submitted_form:
             self.do_save()
+
+        out.write('<input type="submit" name="action-2" value="Delete"/>')
+        if self.rh.request.get('action-2') and is_submitted_form:
+            self.do_delete()
 
         # End of form
         out.write("</form>\n")
