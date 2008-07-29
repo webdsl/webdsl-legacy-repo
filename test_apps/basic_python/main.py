@@ -1,6 +1,6 @@
 import webdsl.utils
 import data
-import templates
+import template
 
 main = webdsl.utils.run
 

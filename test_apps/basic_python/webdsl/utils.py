@@ -47,10 +47,10 @@ def register(path, cls, param_mappings=[]):
             i = 0
             d = {}
             while i < len(params):
-                (name, id_type, type) = param_mappings[i]
+                (name, id_name, id_type, type) = param_mappings[i]
                 param = urllib.unquote(params[i])
                 if issubclass(type, webdsl.data.Model):
-                    o.scope[name] = type.fetch_by_id(id_type(param))
+                    o.scope[name] = type.fetch_by_id(id_name, id_type(param))
                 else:
                     o.scope[name] = type(param)
                 i += 1
@@ -74,12 +74,12 @@ class RequestHandler(object):
         self.prepare_templates()
         self.initialize()
 
-    def data_bind(self):
-        for key, value in self.rh.request.params.items():
-            if '__' in key:
-                (arg, field) = key.split('__')
-                arg = str(arg)
-                setattr(self.scope[arg], field, self.scope[arg].attribute_types[arg](value))
+#    def data_bind(self):
+#        for key, value in self.rh.request.params.items():
+#            if '__' in key:
+#                (arg, field) = key.split('__')
+#                arg = str(arg)
+#                setattr(self.scope[arg], field, self.scope[arg].attribute_types[arg](value))
 
     def redirect_to_self(self):
         self.rh.redirect(self.rh.request.path_info)

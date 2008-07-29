@@ -2,6 +2,7 @@ import data
 import cgi
 import webdsl.utils
 import logging
+import md5
 
 class Main(webdsl.utils.RequestHandler):
     def render(self):
@@ -35,19 +36,23 @@ class Vmessage(webdsl.utils.RequestHandler):
         out.write('<form method="POST">')
         form_id = webdsl.utils.generateFormHash(self.scope, self)
         is_submitted_form = self.rh.request.get('form_id') == form_id
-        if is_submitted_form:
-            self.data_bind()
         out.write('<input type="hidden" name="form_id" value="%s"/>' % form_id)
         
         # Input
-        out.write('<input type="text" name="message__sender" value="')
+        md5digest = md5.md5('message.sender').hexdigest()
+        if is_submitted_form:
+            self.scope['message'].sender = self.rh.request.get('sender-' + md5digest)
+        out.write('<input type="text" name="sender-' + md5digest + '" value="')
         out.write(cgi.escape(self.scope['message'].sender, True))
         out.write('"/>')
 
         out.write(': ')
 
         # Input
-        out.write('<input type="text" name="message__message" value="')
+        md5digest = md5.md5('message.message').hexdigest()
+        if is_submitted_form:
+            self.scope['message'].message = self.rh.request.get('message-' + md5digest)
+        out.write('<input type="text" name="message-' + md5digest + '" value="')
         out.write(cgi.escape(self.scope['message'].message, True))
         out.write('"/>')
 

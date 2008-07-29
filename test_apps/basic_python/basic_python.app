@@ -18,3 +18,14 @@ define page hello() {
   "How are you doing\'s?"
 }
 
+define page viewMessage(m : Message) {
+  form {
+    input(m.sender) ":" input(m.message)
+    action("Save", save())
+  }
+  action save() {
+    m.save();
+    return hello();
+  }
+}
+

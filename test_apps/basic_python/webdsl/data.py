@@ -9,9 +9,9 @@ class Model(db.Model):
                 cls.attribute_types[attr] = getattr(cls, attr).datastore_type()
 
     @classmethod
-    def fetch_by_id(cls, id):
-        if hasattr(cls, 'id'):
-            return cls.all().filter("%s = " % cls.id, id).get()
+    def fetch_by_id(cls, id_name, id):
+        if id_name:
+            return cls.all().filter("%s = " % id_name, id).get()
         else:
             return cls.get_by_id(id)
 
