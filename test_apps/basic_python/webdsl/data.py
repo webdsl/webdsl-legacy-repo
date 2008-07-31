@@ -1,29 +1,28 @@
 from google.appengine.ext import db
+import logging
 
 class Model(db.Model):
     def __init__(self, *params, **kparams):
-        db.Model.__init__(self, *params, **kparams)
         self._post_process_props = []
+        logging.info('Created and initted object: %s' % self)
+        logging.info('-------------------')
+        db.Model.__init__(self, *params, **kparams)
 
     def put(self):
         db.Model.put(self)
         for attr in self._post_process_props:
             getattr(self, attr).inverse_prop_key = unicode(self.key())
             getattr(self, attr).perform_post_put()
+        import webdsl.querylist
+        webdsl.querylist.query_counter += 1
 
     def __cmp__(self, other):
         if self.is_saved() and other.is_saved():
             return cmp(str(self.key()), str(other.key()))
         else:
-            return db.Model.__cmp__(self, other)
+            result = cmp(hash(self), hash(other))
+            return cmp(hash(self), hash(other))
 
-
-#    @classmethod
-#    def init_model(cls):
-#        cls.attribute_types = {}
-#        for attr in dir(cls):
-#            if isinstance(getattr(cls, attr), db.Property):
-#                cls.attribute_types[attr] = getattr(cls, attr).datastore_type()
 
     @classmethod
     def fetch_by_id(cls, id):
