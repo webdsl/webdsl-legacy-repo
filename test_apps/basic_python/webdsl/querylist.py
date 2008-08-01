@@ -5,15 +5,7 @@ op_to_filter = {'=': 'eq', '!=': 'neq', '<': 'lt', '<=': 'leq', '>': 'gt', '>=':
 
 query_counter = 0
 
-class Person(object):
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-    def __repr__(self):
-        return '(Name: %s, Age: %d)' % (self.name, self.age)
-
-class QueryList(object):
+class QuerySet(object):
     def __init__(self, lst):
         self.lst = lst
         self.filters = []
@@ -98,7 +90,7 @@ class QueryList(object):
             self.lst.remove(item)
 
     def copy(self):
-        c = QueryList(self.lst)
+        c = QuerySet(self.lst)
         c.filters = self.filters[:]
         c.order = self.order
         c.limit_ = self.limit_
@@ -117,24 +109,25 @@ class QueryList(object):
         else:
             return len(self.list())
 
-class OneToManyDbQueryList(QueryList):
-    """Database version of QueryList"""
-    def __init__(self, type, inverse_prop, inverse_prop_key=None):
-        QueryList.__init__(self, [])
+class OneToManyDbQuerySet(QuerySet):
+    """Database version of QuerySet"""
+    def __init__(self, type, inverse_prop, inverse_prop_key, item_count):
+        QuerySet.__init__(self, [])
         if isinstance(type, basestring):
             import data # Assume it's from there
             type = getattr(data, type)
         self.type = type
-        self.item_count = 0
+        self.item_count = item_count
         self.inverse_prop = inverse_prop
         self.inverse_prop_key = inverse_prop_key
         self.append_list = []
         self.remove_list = []
-        self.query_list = QueryList([])
+        self.query_list = QuerySet([])
 
     def append(self, item):
-        self.item_count += 1
-        self.append_list.append(item)
+        if not item in self.append_list:
+            self.item_count += 1
+            self.append_list.append(item)
 
     def remove(self, item):
         self.item_count -= 1
@@ -144,14 +137,14 @@ class OneToManyDbQueryList(QueryList):
             self.remove_list.append(item)
 
     def list(self):
-        query_list = QueryList(self.query_list.lst[:])
+        query_list = QuerySet(self.query_list.lst[:])
         if self.inverse_prop_key:
             self.query = self.type.all().filter("%s =" % self.inverse_prop, self.inverse_prop_key)
             for prop, op, val in self.filters:
                 self.query.filter('%s %s' % (prop, op), val)
             if self.order:
                 self.query.order_by(self.order)
-            query_list = QueryList(list(self.query.fetch(self.limit_ + len(self.remove_list), self.offset)))
+            query_list = QuerySet(list(self.query.fetch(self.limit_ + len(self.remove_list), self.offset)))
             global query_counter
             query_counter += 1
 
@@ -168,18 +161,17 @@ class OneToManyDbQueryList(QueryList):
         return query_list.limit(self.limit_, self.offset).list()
 
     def persist(self):
-        '''We now have a key, put it in all the appended items!'''
         for item in self.append_list:
             setattr(item, self.inverse_prop, self.inverse_prop_key)
-            item.put() # Have to this one put
+            item.put()
         for item in self.remove_list:
             setattr(item, self.inverse_prop, None)
-            item.put() # Have to this one put
+            item.put()
         self.append_list = []
         self.remove_list = []
 
     def copy(self):
-        c = self.__class__(self.type, self.inverse_prop, self.inverse_prop_key)
+        c = self.__class__(self.type, self.inverse_prop, self.inverse_prop_key, self.item_count)
         c.filters = self.filters[:]
         c.order = self.order
         c.limit_ = self.limit_
@@ -195,25 +187,25 @@ class OneToManyDbQueryList(QueryList):
             return len(self.list())
 
 
-class ManyToManyDbQueryList(OneToManyDbQueryList):
-    """Database version of QueryList"""
+class ManyToManyDbQuerySet(OneToManyDbQuerySet):
+    """Database version of QuerySet"""
 
     def persist(self):
         '''We now have a key, put it in all the appended items!'''
         for item in self.append_list:
             if not self.inverse_prop_key in getattr(item, self.inverse_prop):
                 getattr(item, self.inverse_prop).append(self.inverse_prop_key)
-                item.put() # Have to this one put
+                item.put() 
         for item in self.remove_list:
             getattr(item, self.inverse_prop).remove(self.inverse_prop_key)
-            item.put() # Have to this one put
+            item.put()
         self.append_list = []
         self.remove_list = []
 
-class AllDbQueryList(QueryList):
-    """Database version of QueryList"""
+class AllDbQuerySet(QuerySet):
+    """Database version of QuerySet"""
     def __init__(self, type):
-        QueryList.__init__(self, [])
+        QuerySet.__init__(self, [])
         self.type = type
         self.append_list = []
         self.remove_list = []
@@ -234,7 +226,7 @@ class AllDbQueryList(QueryList):
             self.query.filter('%s %s' % (prop, op), val)
         if self.order:
             self.query.order_by(self.order)
-        self.query_list = QueryList(list(self.query.fetch(self.limit_ + len(self.remove_list), self.offset)))
+        self.query_list = QuerySet(list(self.query.fetch(self.limit_ + len(self.remove_list), self.offset)))
         global query_counter
         query_counter += 1
 
@@ -249,7 +241,7 @@ class AllDbQueryList(QueryList):
         return self.query_list.limit(self.limit_, self.offset).list()
 
     def copy(self):
-        c = AllDbQueryList(self.type)
+        c = AllDbQuerySet(self.type)
         c.filters = self.filters[:]
         c.order = self.order
         c.limit_ = self.limit_

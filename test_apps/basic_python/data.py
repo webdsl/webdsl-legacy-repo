@@ -22,30 +22,29 @@ class User(webdsl.db.Model):
     def get_messages(self):
         if not self._messages:
             self._post_process_props.append('messages')
-            self._messages = webdsl.querylist.OneToManyDbQueryList('Message', 'inverse__User_messages', self.id)
+            self._messages = webdsl.querylist.OneToManyDbQuerySet('Message', 'inverse__User_messages', self.id, self.messages_count)
         return self._messages
     def set_messages(self, value):
         # TODO: Remove old items
         for item in value:
             self.messages.append(item)
     messages = property(get_messages, set_messages)
+    messages_count = db.IntegerProperty(default=0)
 
     # friends -> Set<User> many to many
     _friends = None
     def get_friends(self):
         if not self._friends:
             self._post_process_props.append('friends')
-            self._friends = webdsl.querylist.ManyToManyDbQueryList('User', 'inverse__User_friends', self.id)
+            self._friends = webdsl.querylist.ManyToManyDbQuerySet('User', 'inverse__User_friends', self.id, self.friends_count)
         return self._friends
     def set_friends(self, value):
         # TODO: Remove old items
         for item in value:
             self.friends.append(item)
     friends = property(get_friends, set_friends)
+    friends_count  = db.IntegerProperty(default=0)
 
     def __repr__(self):
         return 'User(name=%s)' % self.name
 
-#class Paper(webdsl.db.Model):
-    #title = db.StringProperty()
-    #inverse__User_papers = db.StringListProperty(default=[])

@@ -64,11 +64,10 @@ print 'Adding a temporary message and query the hybrid of database and in-memory
 t = datetime.now()
 u.messages.append(Message(text='Nieuwe bericht, niet in DB.', to='Zef'))
 print u.messages.filter_eq('to', 'Zef')
-print len(u.messages)
 print datetime.now() - t
 
 print "And now, let us query all..."
-for m in webdsl.querylist.AllDbQueryList(Message).filter_eq('to', 'Zef'):
+for m in webdsl.querylist.AllDbQuerySet(Message).filter_eq('to', 'Zef'):
     print m
 
 print '----------------- FRIEND STUFF -----------------------'
