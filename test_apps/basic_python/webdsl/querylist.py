@@ -111,15 +111,13 @@ class QuerySet(object):
 
 class OneToManyDbQuerySet(QuerySet):
     """Database version of QuerySet"""
-    def __init__(self, type, inverse_prop, inverse_prop_key, item_count):
+    def __init__(self, obj, inverse_prop, inverse_prop_key, item_count, declared_inverse_prop=None):
         QuerySet.__init__(self, [])
-        if isinstance(type, basestring):
-            import data # Assume it's from there
-            type = getattr(data, type)
-        self.type = type
+        self.obj = obj
         self.item_count = item_count
         self.inverse_prop = inverse_prop
         self.inverse_prop_key = inverse_prop_key
+        self.declared_inverse_prop = declared_inverse_prop
         self.append_list = []
         self.remove_list = []
         self.query_list = QuerySet([])
@@ -128,6 +126,8 @@ class OneToManyDbQuerySet(QuerySet):
         if not item in self.append_list:
             self.item_count += 1
             self.append_list.append(item)
+            if self.declared_inverse_prop:
+                setattr(item, self.declared_inverse_prop, self.obj)
 
     def remove(self, item):
         self.item_count -= 1
@@ -135,11 +135,13 @@ class OneToManyDbQuerySet(QuerySet):
             self.append_list.remove(item)
         else:
             self.remove_list.append(item)
+        if self.declared_inverse_prop:
+            setattr(item, self.declared_inverse_prop, None)
 
     def list(self):
         query_list = QuerySet(self.query_list.lst[:])
         if self.inverse_prop_key:
-            self.query = self.type.all().filter("%s =" % self.inverse_prop, self.inverse_prop_key)
+            self.query = self.obj.__class__.all().filter("%s =" % self.inverse_prop, self.inverse_prop_key)
             for prop, op, val in self.filters:
                 self.query.filter('%s %s' % (prop, op), val)
             if self.order:
@@ -171,7 +173,7 @@ class OneToManyDbQuerySet(QuerySet):
         self.remove_list = []
 
     def copy(self):
-        c = self.__class__(self.type, self.inverse_prop, self.inverse_prop_key, self.item_count)
+        c = self.__class__(self.obj, self.inverse_prop, self.inverse_prop_key, self.item_count)
         c.filters = self.filters[:]
         c.order = self.order
         c.limit_ = self.limit_
@@ -189,6 +191,23 @@ class OneToManyDbQuerySet(QuerySet):
 
 class ManyToManyDbQuerySet(OneToManyDbQuerySet):
     """Database version of QuerySet"""
+
+    def append(self, item):
+        if not item in self.append_list:
+            self.item_count += 1
+            self.append_list.append(item)
+            logging.info(item)
+            if self.declared_inverse_prop:
+                getattr(item, self.declared_inverse_prop).append(self.obj)
+
+    def remove(self, item):
+        self.item_count -= 1
+        if item in self.append_list:
+            self.append_list.remove(item)
+        else:
+            self.remove_list.append(item)
+        if self.declared_inverse_prop:
+            getattr(item, self.declared_inverse_prop).remove(self.obj)
 
     def persist(self):
         '''We now have a key, put it in all the appended items!'''

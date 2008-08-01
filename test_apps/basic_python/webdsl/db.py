@@ -4,15 +4,24 @@ import logging
 class Model(db.Model):
     def __init__(self, *params, **kparams):
         self._post_process_props = []
+        self._putting = False
         db.Model.__init__(self, *params, **kparams)
 
     def put(self):
+        #if self._putting:
+            #return
+        #print 'Saving %s' % self
+        self._putting = True
+        # Set counters
+        for attr in self._post_process_props:
+            setattr(self, attr+'_count', getattr(self, attr).item_count)
         db.Model.put(self)
         for attr in self._post_process_props:
             getattr(self, attr).inverse_prop_key = self.id
             getattr(self, attr).persist()
         import webdsl.querylist
         webdsl.querylist.query_counter += 1
+        self._putting = False
 
     def __cmp__(self, other):
         if self.is_saved() and other.is_saved():

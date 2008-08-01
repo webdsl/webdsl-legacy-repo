@@ -22,7 +22,7 @@ class User(webdsl.db.Model):
     def get_messages(self):
         if not self._messages:
             self._post_process_props.append('messages')
-            self._messages = webdsl.querylist.OneToManyDbQuerySet('Message', 'inverse__User_messages', self.id, self.messages_count)
+            self._messages = webdsl.querylist.OneToManyDbQuerySet(self, 'inverse__User_messages', self.id, self.messages_count)
         return self._messages
     def set_messages(self, value):
         # TODO: Remove old items
@@ -36,7 +36,7 @@ class User(webdsl.db.Model):
     def get_friends(self):
         if not self._friends:
             self._post_process_props.append('friends')
-            self._friends = webdsl.querylist.ManyToManyDbQuerySet('User', 'inverse__User_friends', self.id, self.friends_count)
+            self._friends = webdsl.querylist.ManyToManyDbQuerySet(self, 'inverse__User_friends', self.id, self.friends_count, 'friends')
         return self._friends
     def set_friends(self, value):
         # TODO: Remove old items

@@ -74,10 +74,11 @@ print '----------------- FRIEND STUFF -----------------------'
 u2 = User()
 u2.name = 'Danny'
 u2.friends.append(u)
-u.friends.append(u2)
 print "Eelco's friends: %s" % u.friends
 print "Danny's friends: %s" % u2.friends
 u2.put()
 u.put()
+print u.friends
+print u2.friends
 #
 print 'Total of %d queries.' % webdsl.querylist.query_counter
