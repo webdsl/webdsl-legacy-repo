@@ -1,9 +1,9 @@
 from google.appengine.ext import db
-import webdsl.data
+import webdsl.db
 import webdsl.utils
 import webdsl.querylist
 from datetime import datetime
-#import data
+from data import User, Message
 #import template
 
 #main = webdsl.utils.run
@@ -11,19 +11,8 @@ from datetime import datetime
 #if __name__ == '__main__':
     #main()
 
-class Message(webdsl.data.Model):
-    inverse__User_messages = db.StringProperty() # Containing key
-    to = db.StringProperty()
-    text = db.TextProperty()
 
-    def __repr__(self):
-        return 'Message(to=%s, text=%s)' % (self.to, self.text)
-
-class User(webdsl.data.Model):
-    name = db.StringProperty()
-    messages = webdsl.querylist.OneToManyListProperty(Message, 'inverse__User_messages')
-    id = 'name'
-
+webdsl.querylist.query_counter = 0
 print 'Content-type: text/plain'
 print
 print 'Deleting old junk...'
@@ -41,6 +30,8 @@ t = datetime.now()
 u = User()
 u.name = 'Eelco'
 u.messages.append(Message(text='Hallo allemaal!', to='Zef'))
+u.put()
+
 m = Message(text='Goede morgen!', to='Zef')
 u.messages.append(m)
 u.messages.append(Message(text='Smoi!', to='Danny'))
@@ -80,4 +71,14 @@ print "And now, let us query all..."
 for m in webdsl.querylist.AllDbQueryList(Message).filter_eq('to', 'Zef'):
     print m
 
+print '----------------- FRIEND STUFF -----------------------'
+u2 = User()
+u2.name = 'Danny'
+u2.friends.append(u)
+u.friends.append(u2)
+print "Eelco's friends: %s" % u.friends
+print "Danny's friends: %s" % u2.friends
+u2.put()
+u.put()
+#
 print 'Total of %d queries.' % webdsl.querylist.query_counter

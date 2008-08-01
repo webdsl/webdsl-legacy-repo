@@ -121,6 +121,9 @@ class OneToManyDbQueryList(QueryList):
     """Database version of QueryList"""
     def __init__(self, type, inverse_prop, inverse_prop_key=None):
         QueryList.__init__(self, [])
+        if isinstance(type, basestring):
+            import data # Assume it's from there
+            type = getattr(data, type)
         self.type = type
         self.item_count = 0
         self.inverse_prop = inverse_prop
@@ -128,8 +131,6 @@ class OneToManyDbQueryList(QueryList):
         self.append_list = []
         self.remove_list = []
         self.query_list = QueryList([])
-        if inverse_prop_key:
-            self.query = type.all().filter("%s =" % inverse_prop, inverse_prop_key)
 
     def append(self, item):
         self.item_count += 1
@@ -145,6 +146,7 @@ class OneToManyDbQueryList(QueryList):
     def list(self):
         query_list = QueryList(self.query_list.lst[:])
         if self.inverse_prop_key:
+            self.query = self.type.all().filter("%s =" % self.inverse_prop, self.inverse_prop_key)
             for prop, op, val in self.filters:
                 self.query.filter('%s %s' % (prop, op), val)
             if self.order:
@@ -165,7 +167,7 @@ class OneToManyDbQueryList(QueryList):
 
         return query_list.limit(self.limit_, self.offset).list()
 
-    def perform_post_put(self):
+    def persist(self):
         '''We now have a key, put it in all the appended items!'''
         for item in self.append_list:
             setattr(item, self.inverse_prop, self.inverse_prop_key)
@@ -177,7 +179,7 @@ class OneToManyDbQueryList(QueryList):
         self.remove_list = []
 
     def copy(self):
-        c = OneToManyDbQueryList(self.type, self.inverse_prop, self.inverse_prop_key)
+        c = self.__class__(self.type, self.inverse_prop, self.inverse_prop_key)
         c.filters = self.filters[:]
         c.order = self.order
         c.limit_ = self.limit_
@@ -193,80 +195,21 @@ class OneToManyDbQueryList(QueryList):
             return len(self.list())
 
 
-class ManyToManyDbQueryList(QueryList):
+class ManyToManyDbQueryList(OneToManyDbQueryList):
     """Database version of QueryList"""
-    def __init__(self, type, inverse_prop, inverse_prop_key=None):
-        QueryList.__init__(self, [])
-        self.type = type
-        self.item_count = 0
-        self.inverse_prop = inverse_prop
-        self.inverse_prop_key = inverse_prop_key
-        self.append_list = []
-        self.remove_list = []
-        self.query_list = QueryList([])
-        if inverse_prop_key:
-            self.query = type.all().filter("%s =" % inverse_prop, inverse_prop_key)
 
-    def append(self, item):
-        self.item_count += 1
-        self.append_list.append(item)
-
-    def remove(self, item):
-        self.item_count -= 1
-        if item in self.append_list:
-            self.append_list.remove(item)
-        else:
-            self.remove_list.append(item)
-
-    def list(self):
-        query_list = QueryList(self.query_list.lst[:])
-        if self.inverse_prop_key:
-            for prop, op, val in self.filters:
-                self.query.filter('%s %s' % (prop, op), val)
-            if self.order:
-                self.query.order_by(self.order)
-            query_list = QueryList(list(self.query.fetch(self.limit_ + len(self.remove_list), self.offset)))
-            global query_counter
-            query_counter += 1
-
-        if not self.inverse_prop_key or self.append_list or self.remove_list:
-            for item in self.append_list:
-                query_list.append(item)
-            for item in self.remove_list:
-                query_list.remove(item)
-            for prop, op, val in self.filters:
-                query_list = getattr(query_list, 'filter_%s' % op_to_filter[op])(prop, val)
-            if self.order:
-                query_list = query_list.order_by(self.order)
-
-        return query_list.limit(self.limit_, self.offset).list()
-
-    def perform_post_put(self):
+    def persist(self):
         '''We now have a key, put it in all the appended items!'''
         for item in self.append_list:
-            setattr(item, self.inverse_prop, self.inverse_prop_key)
-            item.put() # Have to this one put
+            if not self.inverse_prop_key in getattr(item, self.inverse_prop):
+                getattr(item, self.inverse_prop).append(self.inverse_prop_key)
+                item.put() # Have to this one put
         for item in self.remove_list:
-            setattr(item, self.inverse_prop, None)
+            getattr(item, self.inverse_prop).remove(self.inverse_prop_key)
             item.put() # Have to this one put
         self.append_list = []
         self.remove_list = []
 
-    def copy(self):
-        c = OneToManyDbQueryList(self.type, self.inverse_prop, self.inverse_prop_key)
-        c.filters = self.filters[:]
-        c.order = self.order
-        c.limit_ = self.limit_
-        c.offset = self.offset
-        c.append_list = self.append_list
-        c.remove_list = self.remove_list
-        return c
-
-    def __len__(self):
-        if not self.filters:
-            return self.item_count
-        else:
-            return len(self.list())
 class AllDbQueryList(QueryList):
     """Database version of QueryList"""
     def __init__(self, type):
@@ -315,36 +258,3 @@ class AllDbQueryList(QueryList):
         c.remove_list = self.remove_list
         return c
 
-class OneToManyListProperty(db.Property):
-    def __init__(self, type, inverse_prop, *params, **kparams):
-        self.type = type
-        self.inverse_prop = inverse_prop
-        db.Property.__init__(self, *params, **kparams)
-
-    def __get__(self, model_instance, model_class):
-        if model_instance is None:
-            return self
-        if not hasattr(model_instance, self._attr_name()) or not getattr(model_instance, self._attr_name()):
-            model_instance._post_process_props.append(self.name)
-            #logging.info(dir(model_instance))
-            setattr(model_instance, self._attr_name(), OneToManyDbQueryList(self.type, self.inverse_prop, unicode(model_instance.key()) if model_instance.is_saved() else None))
-        return getattr(model_instance, self._attr_name())
-
-    def __set__(self, model_instance, value_list):
-        if model_instance is None:
-            return
-        logging.info("%s.%s: %s" % (model_instance, self.inverse_prop, value_list))
-        if value_list and isinstance(value_list, long): # Value from the data store (= item count)
-            getattr(model_instance, self.name).item_count = value_list
-        elif value_list and isinstance(value_list, list):
-            # TODO: Remove old items
-            for item in value_list:
-                getattr(model_instance, self.name).append(item)
-
-    def get_value_for_datastore(self, model_instance):
-        return getattr(model_instance, self.name).item_count
-
-    def make_value_from_datastore(self, value):
-        return value
-
-    data_type = long

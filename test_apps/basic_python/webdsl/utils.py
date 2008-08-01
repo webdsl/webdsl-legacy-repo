@@ -1,5 +1,5 @@
 import wsgiref.handlers
-import webdsl.data
+import webdsl.db
 import logging
 import urllib
 import template_bindings
@@ -49,7 +49,7 @@ def register(path, cls, param_mappings=[]):
             while i < len(params):
                 (name, id_name, id_type, type) = param_mappings[i]
                 param = urllib.unquote(params[i])
-                if issubclass(type, webdsl.data.Model):
+                if issubclass(type, webdsl.db.Model):
                     o.scope[name] = type.fetch_by_id(id_name, id_type(param))
                 else:
                     o.scope[name] = type(param)
