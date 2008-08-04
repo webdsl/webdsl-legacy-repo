@@ -29,10 +29,10 @@ print 'Making a new object, adding a bunch of messages...'
 t = datetime.now()
 u = User()
 u.name = 'Eelco'
-u.messages.append(Message(text='Hallo allemaal!', recipients=['Zef']))
-u.put()
+#u.messages.append(Message(text='Hallo allemaal!', recipients=['Zef']))
+#u.put()
 
-m = Message(text='Goede morgen!', recipients=['Zef'])
+m = Message(text='Goede morgen (zegt Zef)!', recipients=['Zef'])
 u.messages.append(m)
 u.messages.append(Message(text='Smoi!', recipients=['Danny']))
 print 'Before removing:'
@@ -47,7 +47,7 @@ print datetime.now() - t
 
 print 'Querying the in-memory list...'
 t = datetime.now()
-print u.messages.filter_eq('recipients', 'Zef')
+print u.messages.filter_in('recipients', 'Zef')
 print datetime.now() - t
 
 print 'Persisting the object...'
@@ -57,17 +57,17 @@ print datetime.now() - t
 
 print 'Querying it in the database...'
 t = datetime.now()
-print u.messages.filter_eq('recipients', 'Zef')
+print u.messages.filter_in('recipients', 'Zef')
 print datetime.now() - t
 
 print 'Adding a temporary message and query the hybrid of database and in-memory...'
 t = datetime.now()
-u.messages.append(Message(text='Nieuwe bericht, niet in DB.', recipients='Zef'))
-print u.messages.filter_eq('recipients', 'Zef')
+u.messages.append(Message(text='Nieuwe bericht, niet in DB.', recipients=['Zef']))
+print u.messages.filter_in('recipients', 'Zef')
 print datetime.now() - t
 
 print "And now, let us query all..."
-for m in webdsl.querylist.AllDbQuerySet(Message).filter_eq('recipients', 'Zef'):
+for m in webdsl.querylist.AllDbQuerySet(Message).filter_in('recipients', 'Zef'):
     print m
 
 print '----------------- FRIEND STUFF -----------------------'
@@ -80,6 +80,5 @@ u2.put()
 u.put()
 print u.friends
 print u2.friends
-print '---------- String list property -------------'
 
 print 'Total of %d queries.' % webdsl.querylist.query_counter

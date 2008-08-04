@@ -1,7 +1,7 @@
 from google.appengine.ext import db
 import logging
 
-op_to_filter = {'=': 'eq', '!=': 'neq', '<': 'lt', '<=': 'leq', '>': 'gt', '>=': 'geq'}
+op_to_filter = { 'eq': '=',  'neq': '!=', 'lt': '<', 'leq': '<=', 'gt': '>', 'geq': '>=', 'in': '=' }
 
 query_counter = 0
 
@@ -15,33 +15,37 @@ class QuerySet(object):
 
     def filter_eq(self, prop, val):
         c = self.copy()
-        c.filters.append((prop, '=', val))
+        c.filters.append((prop, 'eq', val))
         return c
 
     def filter_neq(self, prop, val):
         c = self.copy()
-        c.filters.append((prop, '!=', val))
+        c.filters.append((prop, 'neq', val))
         return c
 
     def filter_lt(self, prop, val):
         c = self.copy()
-        c.filters.append((prop, '<', val))
+        c.filters.append((prop, 'lt', val))
         return c
 
     def filter_leq(self, prop, val):
         c = self.copy()
-        c.filters.append((prop, '<=', val))
+        c.filters.append((prop, 'leq', val))
         return c
 
     def filter_gt(self, prop, val):
         c = self.copy()
-        c.filters.append((prop, '>', val))
+        c.filters.append((prop, 'gt', val))
         return c
 
     def filter_geq(self, prop, val):
-        self.filters.append((prop, '>=', val))
         c = self.copy()
-        c.filters.append((prop, '>=', val))
+        c.filters.append((prop, 'geq', val))
+        return c
+
+    def filter_in(self, prop, val):
+        c = self.copy()
+        c.filters.append((prop, 'in', val))
         return c
 
     def order_by(self, prop):
@@ -59,32 +63,36 @@ class QuerySet(object):
         lst = self.lst[:]
         for prop, op, val in self.filters:
             if prop:
-                if op == '=':
+                if op == 'eq':
                     # @TODO: Take lists into consideration
                     lst = filter(lambda o: getattr(o, prop) == val, lst)
-                elif op == '!=':
+                elif op == 'neq':
                     lst = filter(lambda o: getattr(o, prop) != val, lst)
-                elif op == '<':
+                elif op == 'lt':
                     lst = filter(lambda o: getattr(o, prop) < val, lst)
-                elif op == '<=':
+                elif op == 'leq':
                     lst = filter(lambda o: getattr(o, prop) <= val, lst)
-                elif op == '>':
+                elif op == 'gt':
                     lst = filter(lambda o: getattr(o, prop) > val, lst)
-                elif op == '>=':
+                elif op == 'geq':
                     lst = filter(lambda o: getattr(o, prop) >= val, lst)
+                elif op == 'in':
+                    lst = filter(lambda o: val in getattr(o, prop), lst)
             else:
-                if op == '=':
+                if op == 'eq':
                     lst = filter(lambda v: v == val, lst)
-                elif op == '!=':
+                elif op == 'neq':
                     lst = filter(lambda v: v != val, lst)
-                elif op == '<':
+                elif op == 'lt':
                     lst = filter(lambda v: v < val, lst)
-                elif op == '<=':
+                elif op == 'leq':
                     lst = filter(lambda v: v <= val, lst)
-                elif op == '>':
+                elif op == 'gt':
                     lst = filter(lambda v: v > val, lst)
-                elif op == '>=':
+                elif op == 'geq':
                     lst = filter(lambda v: v >= val, lst)
+                elif op == 'in':
+                    lst = filter(lambda v: val in v, lst)
         if self.order:
             descending = False
             prop = self.order
@@ -132,9 +140,13 @@ class QuerySet(object):
 
 class OneToManyDbQuerySet(QuerySet):
     """Database version of QuerySet"""
-    def __init__(self, obj, inverse_prop, inverse_prop_key, item_count, declared_inverse_prop=None):
+    def __init__(self, obj, type, inverse_prop, inverse_prop_key, item_count, declared_inverse_prop=None):
         QuerySet.__init__(self, [])
         self.obj = obj
+        if isinstance(type, basestring):
+            import data
+            type = getattr(data, type)
+        self.type = type
         self.item_count = item_count
         self.inverse_prop = inverse_prop
         self.inverse_prop_key = inverse_prop_key
@@ -162,9 +174,9 @@ class OneToManyDbQuerySet(QuerySet):
     def list(self):
         query_list = QuerySet(self.query_list.lst[:])
         if self.inverse_prop_key:
-            self.query = self.obj.__class__.all().filter("%s =" % self.inverse_prop, self.inverse_prop_key)
+            self.query = self.type.all().filter("%s =" % self.inverse_prop, self.inverse_prop_key)
             for prop, op, val in self.filters:
-                self.query.filter('%s %s' % (prop, op), val)
+                self.query.filter('%s %s' % (prop, op_to_filter[op]), val)
             if self.order:
                 self.query.order_by(self.order)
             query_list = QuerySet(list(self.query.fetch(self.limit_ + len(self.remove_list), self.offset)))
@@ -177,7 +189,7 @@ class OneToManyDbQuerySet(QuerySet):
             for item in self.remove_list:
                 query_list.remove(item)
             for prop, op, val in self.filters:
-                query_list = getattr(query_list, 'filter_%s' % op_to_filter[op])(prop, val)
+                query_list = getattr(query_list, 'filter_%s' % op)(prop, val)
             if self.order:
                 query_list = query_list.order_by(self.order)
 
@@ -194,7 +206,7 @@ class OneToManyDbQuerySet(QuerySet):
         self.remove_list = []
 
     def copy(self):
-        c = self.__class__(self.obj, self.inverse_prop, self.inverse_prop_key, self.item_count)
+        c = self.__class__(self.obj, self.type, self.inverse_prop, self.inverse_prop_key, self.item_count)
         c.filters = self.filters[:]
         c.order = self.order
         c.limit_ = self.limit_
@@ -263,7 +275,7 @@ class AllDbQuerySet(QuerySet):
 
     def list(self):
         for prop, op, val in self.filters:
-            self.query.filter('%s %s' % (prop, op), val)
+            self.query.filter('%s %s' % (prop, op_to_filter[op]), val)
         if self.order:
             self.query.order_by(self.order)
         self.query_list = QuerySet(list(self.query.fetch(self.limit_ + len(self.remove_list), self.offset)))
@@ -274,7 +286,7 @@ class AllDbQuerySet(QuerySet):
             for item in self.append_list:
                 self.query_list.append(item)
             for prop, op, val in self.filters:
-                self.query_list = getattr(self.query_list, 'filter_%s' % op_to_filter[op])(prop, val)
+                self.query_list = getattr(self.query_list, 'filter_%s' % op)(prop, val)
             if self.order:
                 self.query_list = self.query_list.order_by(self.order)
 
@@ -293,14 +305,15 @@ class AllDbQuerySet(QuerySet):
 class QuerySetProperty(db.Property):
 
     def __set__(self, model_instance, value):
-        setattr(self, self._attr_name(), QuerySet(value))
+        if value:
+            setattr(model_instance, self._attr_name(), QuerySet(value))
 
     def __get__(self, model_instance, model_class):
         if not model_instance:
             return self
-        if not hasattr(self, self._attr_name()):
-            setattr(self, self._attr_name(), QuerySet([]))
-        return getattr(self, self._attr_name())
+        if not hasattr(model_instance, self._attr_name()):
+            setattr(model_instance, self._attr_name(), QuerySet([]))
+        return getattr(model_instance, self._attr_name())
 
     def get_value_for_datastore(self, model_instance):
         return getattr(model_instance, self.name).list()
