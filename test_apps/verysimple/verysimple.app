@@ -77,12 +77,19 @@ function doSomething(s : String) : Int {
   return 3 + 4;
 }
 
+function pPerform() : String {
+  return p.perform();
+}
+function sspPerform() : String {
+  return ssp.perform();
+}
+
 define page home() {
   main()
   define body() {
     output(doSomething(3))
-    output(p.perform())
-    output(ssp.perform())
+    output(pPerform())
+    output(sspPerform())
     list {
       for(u : User) {
         listitem { text(u.message) }
@@ -99,9 +106,9 @@ define page newUser() {
 
       input(u.username)
       input(u.password)
-      action("Create", save(u))
+      action("Create", save())
 
-      action save(usr : User) {
+      action save() {
         u.persist();
         return home();
       }
