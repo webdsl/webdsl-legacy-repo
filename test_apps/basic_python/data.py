@@ -6,11 +6,11 @@ import webdsl.querylist
 
 class Message(webdsl.db.Model):
     inverse__User_messages = db.StringProperty() # Containing key
-    to = db.StringProperty()
+    recipients = webdsl.querylist.QuerySetProperty()
     text = db.TextProperty()
 
     def __repr__(self):
-        return 'Message(to=%s, text=%s)' % (self.to, self.text)
+        return 'Message(recipients=%s, text=%s)' % (self.recipients, self.text)
 
 class User(webdsl.db.Model):
     name = db.StringProperty()

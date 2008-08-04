@@ -7,7 +7,7 @@ query_counter = 0
 
 class QuerySet(object):
     def __init__(self, lst):
-        self.lst = lst
+        self.lst = list(lst)
         self.filters = []
         self.order = None
         self.limit_ = 1000
@@ -58,28 +58,49 @@ class QuerySet(object):
     def list(self):
         lst = self.lst[:]
         for prop, op, val in self.filters:
-            if op == '=':
-                lst = filter(lambda o: getattr(o, prop) == val, lst)
-            elif op == '!=':
-                lst = filter(lambda o: getattr(o, prop) != val, lst)
-            elif op == '<':
-                lst = filter(lambda o: getattr(o, prop) < val, lst)
-            elif op == '<=':
-                lst = filter(lambda o: getattr(o, prop) <= val, lst)
-            elif op == '>':
-                lst = filter(lambda o: getattr(o, prop) > val, lst)
-            elif op == '>=':
-                lst = filter(lambda o: getattr(o, prop) >= val, lst)
+            if prop:
+                if op == '=':
+                    # @TODO: Take lists into consideration
+                    lst = filter(lambda o: getattr(o, prop) == val, lst)
+                elif op == '!=':
+                    lst = filter(lambda o: getattr(o, prop) != val, lst)
+                elif op == '<':
+                    lst = filter(lambda o: getattr(o, prop) < val, lst)
+                elif op == '<=':
+                    lst = filter(lambda o: getattr(o, prop) <= val, lst)
+                elif op == '>':
+                    lst = filter(lambda o: getattr(o, prop) > val, lst)
+                elif op == '>=':
+                    lst = filter(lambda o: getattr(o, prop) >= val, lst)
+            else:
+                if op == '=':
+                    lst = filter(lambda v: v == val, lst)
+                elif op == '!=':
+                    lst = filter(lambda v: v != val, lst)
+                elif op == '<':
+                    lst = filter(lambda v: v < val, lst)
+                elif op == '<=':
+                    lst = filter(lambda v: v <= val, lst)
+                elif op == '>':
+                    lst = filter(lambda v: v > val, lst)
+                elif op == '>=':
+                    lst = filter(lambda v: v >= val, lst)
         if self.order:
             descending = False
             prop = self.order
             if prop.startswith('-'):
                 descending = True
                 prop = prop[1:]
-            if not descending:
-                lst.sort(lambda x, y: cmp(getattr(x, prop), getattr(y, prop)))
+            if prop:
+                if not descending:
+                    lst.sort(lambda x, y: cmp(getattr(x, prop), getattr(y, prop)))
+                else:
+                    lst.sort(lambda x, y: cmp(getattr(y, prop), getattr(x, prop)))
             else:
-                lst.sort(lambda x, y: cmp(getattr(y, prop), getattr(x, prop)))
+                if not descending:
+                    lst.sort(lambda x, y: cmp(x, y))
+                else:
+                    lst.sort(lambda x, y: cmp(y, x))
         return lst[self.offset:self.offset+self.limit_]
 
     def append(self, item):
@@ -269,3 +290,23 @@ class AllDbQuerySet(QuerySet):
         c.remove_list = self.remove_list
         return c
 
+class QuerySetProperty(db.Property):
+
+    def __set__(self, model_instance, value):
+        setattr(self, self._attr_name(), QuerySet(value))
+
+    def __get__(self, model_instance, model_class):
+        if not model_instance:
+            return self
+        if not hasattr(self, self._attr_name()):
+            setattr(self, self._attr_name(), QuerySet([]))
+        return getattr(self, self._attr_name())
+
+    def get_value_for_datastore(self, model_instance):
+        return getattr(model_instance, self.name).list()
+
+    def make_value_from_datastore(self, value):
+        return QuerySet(value)
+
+    def datastore_type(self):
+        return list

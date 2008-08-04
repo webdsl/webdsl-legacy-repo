@@ -60,10 +60,12 @@ extend entity SuperSpecialPage {
 }
 */
 
+/*
 extend function next(this0 : SuperSpecialPage, i : Int) {
   var q : String := "Extended next";
 }
 
+*/
 var ssp : SuperSpecialPage := SuperSpecialPage {};
 var p : Page := Page {};
 
