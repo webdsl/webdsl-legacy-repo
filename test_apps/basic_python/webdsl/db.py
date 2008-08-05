@@ -9,6 +9,9 @@ class Model(db.Model):
             if kparams.has_key(attr) and kparams[attr] == None:
                 kparams[attr] = []
         db.Model.__init__(self, *params, **kparams)
+        non_google_properties = filter(lambda attr: not isinstance(getattr(self.__class__, attr), db.Property), kparams.keys())
+        for attr in non_google_properties:
+            setattr(self, attr, kparams[attr])
 
     def put(self):
         for attr in self._post_process_props:

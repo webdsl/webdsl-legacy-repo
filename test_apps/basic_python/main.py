@@ -28,11 +28,10 @@ u2 = data.User()
 u2.username = 'Zef'
 u2.put()
 
-m = data.Message(message='Goede morgen (zegt Zef)!')
-m.recipients = [u, u2]
+m = data.Message(message='Goede morgen (zegt Zef)!', recipients=[u,u2])
 print m.recipients
 u.messages.append(m)
-u.messages.append(data.Message(message='Smoi!'))
+u.messages.append(data.Message(message='Smoi!', recipients=[u]))
 print 'Before removing:'
 print u.messages
 u.messages.remove(m)
