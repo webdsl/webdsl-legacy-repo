@@ -4,18 +4,25 @@ description {
 	This is an automatically generated description
 }
 
-section pages
+section data model
 
-entity Message {
-  sender   :: String
-	message  :: Text
-  date     :: DateTime
-  reply_to -> Message
+entity User {
+  username :: String(id)
+  messages -> Set<Message> (inverse=Message.sender)
+  receivedmessages -> Set<Message>
 }
 
-define page hello() {
+entity Message {
+  sender   -> User
+  recipients -> Set<User> (inverse=User.receivedmessages)
+  date     :: DateTime
+  message  :: Text
+}
+
+section pages
+
+define page home() {
   "Hello world!"
-  "How are you doing\'s?"
 }
 
 define page viewMessage(m : Message) {
@@ -25,7 +32,7 @@ define page viewMessage(m : Message) {
   }
   action save() {
     m.save();
-    return hello();
+    return home();
   }
 }
 

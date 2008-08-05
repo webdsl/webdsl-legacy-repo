@@ -4,15 +4,13 @@ import logging
 class Model(db.Model):
     def __init__(self, *params, **kparams):
         self._post_process_props = []
-        self._putting = False
+        list_props = filter(lambda attr: isinstance(getattr(self.__class__, attr), db.ListProperty), dir(self.__class__))
+        for attr in list_props:
+            if kparams.has_key(attr) and kparams[attr] == None:
+                kparams[attr] = []
         db.Model.__init__(self, *params, **kparams)
 
     def put(self):
-        #if self._putting:
-            #return
-        #print 'Saving %s' % self
-        self._putting = True
-        # Set counters
         for attr in self._post_process_props:
             setattr(self, attr+'_count', getattr(self, attr).item_count)
         db.Model.put(self)
@@ -21,7 +19,6 @@ class Model(db.Model):
             getattr(self, attr).persist()
         import webdsl.querylist
         webdsl.querylist.query_counter += 1
-        self._putting = False
 
     def __cmp__(self, other):
         if self.is_saved() and other.is_saved():
@@ -37,14 +34,14 @@ class Model(db.Model):
         if self.id_property:
             return getattr(self, self.id_property)
         elif self.is_saved():
-            return unicode(self.key())
+            return self.key().id()
         else:
             return None
 
     @classmethod
     def fetch_by_id(cls, id):
-        if hasattr(cls, 'id'):
-            return cls.all().filter("%s = " % cls.id, id).get()
+        if hasattr(cls, 'id_property'):
+            return cls.all().filter("%s = " % cls.id_property, id).get()
         else:
             return cls.get_by_id(id)
 

@@ -1,7 +1,7 @@
 from google.appengine.ext import db
 import logging
-import webdsl.utils
-import webdsl.data
+import webdsl.querylist
+import webdsl.db
 import data
 import cgi
 import md5
@@ -12,11 +12,7 @@ class ViewMessage(webdsl.utils.RequestHandler):
         form_id = webdsl.utils.generateFormHash( self.scope ,  self )
         is_submitted_form = self.rh.request.get( 'form_id' ) == form_id
         out.write( '<input type="hidden" name="form_id" value="%s"/>' % form_id )
-        if is_submitted_form :
-            self.scope['m1'].sender = self.rh.request.get( 'm1.sender' )
-        out.write( '<input type="text" name="' + 'm1.sender' + '" value="' )
-        out.write( cgi.escape( self.scope['m1'].sender ,  True ) )
-        out.write( '"/>' )
+        out.write( 'Skipped element.' )
         out.write( ':' )
         if is_submitted_form :
             self.scope['m1'].message = self.rh.request.get( 'm1.message' )
@@ -29,11 +25,27 @@ class ViewMessage(webdsl.utils.RequestHandler):
         out.write( '</form>' )
     def do_save(self):
         self.scope['m1'].put( )
-        self.rh.redirect( '/hello' + '' )
-class Hello(webdsl.utils.RequestHandler):
+        self.rh.redirect( '/home' + '' )
+class Home(webdsl.utils.RequestHandler):
     def render(self):
         out = self.rh.response.out
         out.write( 'Hello world!' )
-        out.write( 'How are you doing\'s?' )
+class Body(webdsl.utils.RequestHandler):
+    def render(self):
+        out = self.rh.response.out
+        out.write( 'Skipped element.' )
+        out.write( 'Skipped element.' )
+class ProcedureStatus(webdsl.utils.RequestHandler):
+    def render(self):
+        out = self.rh.response.out
+        out.write( 'Skipped element.' )
+class AllTasks(webdsl.utils.RequestHandler):
+    def render(self):
+        out = self.rh.response.out
+        out.write( 'Skipped element.' )
+        out.write( 'Skipped element.' )
+        out.write( 'Skipped element.' )
 webdsl.utils.register( '/viewMessage/([^/]+)' ,  ViewMessage ,  [ ( 'm1' , '' ,  long ,  data.Message ) ] )
-webdsl.utils.register( '/hello' ,  Hello ,  [ ] )
+webdsl.utils.register( '' ,  Home ,  [ ] )
+webdsl.utils.register( '/procedureStatus/([^/]+)' ,  ProcedureStatus ,  [ ( 's1' , '' ,  long ,  data.ProcedureStatus ) ] )
+webdsl.utils.register( '/allTasks' ,  AllTasks ,  [ ] )

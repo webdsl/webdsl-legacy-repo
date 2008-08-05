@@ -3,14 +3,8 @@ import webdsl.db
 import webdsl.utils
 import webdsl.querylist
 from datetime import datetime
-from data import User, Message
-#import template
-
-#main = webdsl.utils.run
-
-#if __name__ == '__main__':
-    #main()
-
+import data
+import template
 
 webdsl.querylist.query_counter = 0
 print 'Content-type: text/plain'
@@ -18,23 +12,27 @@ print
 print 'Deleting old junk...'
 t = datetime.now()
 print 'Hoi!'
-for u in User.all():
+for u in data.User.all():
     u.delete()
-for m in Message.all():
+for m in data.Message.all():
     m.delete()
 print datetime.now() - t
 print 'Ok, ready? Go!'
 
 print 'Making a new object, adding a bunch of messages...'
 t = datetime.now()
-u = User()
-u.name = 'Eelco'
-#u.messages.append(Message(text='Hallo allemaal!', recipients=['Zef']))
-#u.put()
+u = data.User()
+u.username = 'Eelco'
+u.put()
+u2 = data.User()
+u2.username = 'Zef'
+u2.put()
 
-m = Message(text='Goede morgen (zegt Zef)!', recipients=['Zef'])
+m = data.Message(message='Goede morgen (zegt Zef)!')
+m.recipients = [u, u2]
+print m.recipients
 u.messages.append(m)
-u.messages.append(Message(text='Smoi!', recipients=['Danny']))
+u.messages.append(data.Message(message='Smoi!'))
 print 'Before removing:'
 print u.messages
 u.messages.remove(m)
@@ -44,41 +42,14 @@ print 'Re-adding...'
 u.messages.append(m)
 print u.messages
 print datetime.now() - t
-
-print 'Querying the in-memory list...'
-t = datetime.now()
-print u.messages.filter_in('recipients', 'Zef')
-print datetime.now() - t
-
-print 'Persisting the object...'
-t = datetime.now()
 u.put()
-print datetime.now() - t
+print [m.sender.username for m in u.messages]
+print 'All of Eelco\'s received messages:'
+print u.receivedmessages
 
-print 'Querying it in the database...'
-t = datetime.now()
-print u.messages.filter_in('recipients', 'Zef')
-print datetime.now() - t
+#main = webdsl.utils.run
 
-print 'Adding a temporary message and query the hybrid of database and in-memory...'
-t = datetime.now()
-u.messages.append(Message(text='Nieuwe bericht, niet in DB.', recipients=['Zef']))
-print u.messages.filter_in('recipients', 'Zef')
-print datetime.now() - t
+#if __name__ == '__main__':
+    #main()
 
-print "And now, let us query all..."
-for m in webdsl.querylist.AllDbQuerySet(Message).filter_in('recipients', 'Zef'):
-    print m
-
-print '----------------- FRIEND STUFF -----------------------'
-u2 = User()
-u2.name = 'Danny'
-u2.friends.append(u)
-print "Eelco's friends: %s" % u.friends
-print "Danny's friends: %s" % u2.friends
-u2.put()
-u.put()
-print u.friends
-print u2.friends
-
-print 'Total of %d queries.' % webdsl.querylist.query_counter
+#print 'Total of %d queries.' % webdsl.querylist.query_counter
