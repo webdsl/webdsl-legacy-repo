@@ -1,0 +1,27 @@
+SYNTAX     = WebDSL
+EXTENSIONS = mod,app
+PACKAGE    = org.strategoxt.imp.editors.webdsl
+SOURCE     = ../../../webdsls/trunk/src/org/webdsl/dsl/syntax/$(SYNTAX).def
+START      = Application # TODO: what about multiple start symbols?
+
+SDF2IMP    = ../org.strategoxt.imp.metatooling/sdf2imp
+ESVS       = ${wildcard *.esv}
+
+all : eclipse-deps
+
+clean :
+	rm -f src/parser/$(SYNTAX)ParseController.java plugin.xml
+	rm -rf src/parser/ast
+	# ...
+
+eclipse-deps : plugin.xml # and others
+
+plugin.xml : $(SYNTAX).def $(SYNTAX).tbl $(SDF2IMP) Makefile $(ESVS)
+	$(SDF2IMP) -i $< -p $(SYNTAX).tbl -e $(EXTENSIONS) -m $(SYNTAX) -s $(START) -n $(PACKAGE) --verbose 2
+
+$(SYNTAX).def : $(SOURCE)
+	ln -s $< $@
+
+$(SYNTAX).tbl : $(SYNTAX).def
+	sdf2table -i $< -o $@ -m $(SYNTAX)
+

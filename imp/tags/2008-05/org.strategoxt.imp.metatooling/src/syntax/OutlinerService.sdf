@@ -1,0 +1,18 @@
+module OutlinerService
+
+imports
+  Common
+
+exports
+
+  sorts
+    Section OutlineRule
+
+  context-free syntax
+    "outliner" SectionName OutlineRule* -> Section {cons("Outliner")}
+	
+	"outliner" -> ReservedName
+    
+    %% TODO: Patterns for outlinerservice
+
+    Node -> OutlineRule

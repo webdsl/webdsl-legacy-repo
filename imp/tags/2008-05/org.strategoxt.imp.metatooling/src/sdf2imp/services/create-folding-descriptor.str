@@ -1,0 +1,55 @@
+module sdf2imp/services/create-folding-descriptor
+
+imports
+  libstratego-lib
+  
+  sdf2imp/util/-
+  sdf2imp/services/ast-form-heuristic
+  
+strategies
+
+  create-folding-descriptor =
+    heuristic-folding-productions;
+    map(create-folding-or-outliner-rule);
+    
+    <output-default-descriptor-file> |[
+      module <descriptor-name> "-Folding"
+      
+      ~
+      ~// Folding rules take the form of <sort>.<constructor>, <sort>._, or _.<constructor>
+      ~
+        
+      folding Default folding definitions
+      
+        ~*<id>
+    ]|
+  
+  heuristic-folding-productions =
+    StartSymbol;
+    
+    heuristic-collect-all-rtg(
+      // UNDONE: not(is-list-production);
+      where(
+        heuristic-child-sorts;
+        one(heuristic-sort-is-list)
+      );
+      
+      where(
+        heuristic-production-has-no-same-sort-descendant
+      );
+      
+      verbose-msg(!"Folding match:", heuristic-asfix-sort-name, constructor-name)
+    )
+  
+  create-folding-or-outliner-rule =
+    where(sort := <heuristic-asfix-sort-name>);
+  
+    if is-list-production then
+      !descriptor |[ ~(sort)*.<constructor-name> ]|
+    <+
+      !descriptor |[ ~(sort)* ]|
+    else
+      !descriptor |[ ~sort.<constructor-name> ]|
+    <+
+      !descriptor |[ ~sort ]|
+    end

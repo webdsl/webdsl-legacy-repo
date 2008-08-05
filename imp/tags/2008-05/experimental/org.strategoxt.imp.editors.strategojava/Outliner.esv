@@ -1,0 +1,58 @@
+module Outliner
+  outliner
+    // Manually added
+    
+    Def_StrategoHost
+    _.RuleDec
+    _.Overlay
+    _.StrategyDec
+    
+    _.Module
+    _.Overlay
+    _.ClassDec
+    _.MethodDec
+  
+    // Auto-generated
+    
+    Module_StrategoHost.Module
+    StrategyDef_StrategoHost.SDefT
+    FunType_StrategoHost.FunType
+    Sort_StrategoHost.Sort
+    Strategy_StrategoHost.CallT
+    PreTerm_StrategoHost.Op
+    PreTerm_StrategoHost.OpQ
+    PreTerm_StrategoHost.ListTail
+    Term_StrategoHost.AnnoList
+    TypeDecSpec_JavaObject.Member
+    Anno_JavaObject.Anno
+    VarDecId_JavaObject.ArrayVarDecId
+    MethodDecHead_JavaObject.DeprMethodDecHead
+    EnumBody_JavaObject.EnumBody
+    EnumBody_JavaObject.EnumBody
+    SwitchBlock_JavaObject.SwitchBlock
+    SwitchGroup_JavaObject.SwitchGroup
+    Stm_JavaObject.Try
+    Stm_JavaObject.Try
+    AnnoDecHead_JavaObject.AnnoDecHead
+    AnnoElemDec_JavaObject.AnnoMethodDec
+    ConstantDec_JavaObject.ConstantDec
+    InterfaceDecHead_JavaObject.InterfaceDecHead
+    AbstractMethodDec_JavaObject.AbstractMethodDec
+    AbstractMethodDec_JavaObject.DeprAbstractMethodDec
+    ArrayCreationExpr_JavaObject.NewArray
+    ArrayCreationExpr_JavaObject.NewArray
+    MethodSpec_JavaObject.GenericMethod
+    CompilationUnit_JavaObject.CompilationUnit
+    Strategy_StrategoHost.CallDynamic
+    Strategy_StrategoHost.PrimT
+    Strategy_StrategoHost.Call
+    Strategy_StrategoHost.Prim
+    Strategy_StrategoHost.CongQ
+    RuleDec_StrategoHost.RDec
+    RuleDec_StrategoHost.RDecT
+    StrategyDef_StrategoHost.ExtSDefInl
+    StrategyDef_StrategoHost.ExtSDef
+    StrategyDef_StrategoHost.SDef
+    RuleDef_StrategoHost.RDef
+    RuleDef_StrategoHost.RDefT
+    Overlay_StrategoHost.Overlay
