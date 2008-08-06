@@ -178,7 +178,7 @@ class OneToManyDbQuerySet(QuerySet):
             for prop, op, val in self.filters:
                 self.query.filter('%s %s' % (prop, op_to_filter[op]), val)
             if self.order:
-                self.query.order_by(self.order)
+                self.query.order(self.order)
             query_list = QuerySet(list(self.query.fetch(self.limit_ + len(self.remove_list), self.offset)))
             global query_counter
             query_counter += 1
@@ -277,7 +277,7 @@ class AllDbQuerySet(QuerySet):
         for prop, op, val in self.filters:
             self.query.filter('%s %s' % (prop, op_to_filter[op]), val)
         if self.order:
-            self.query.order_by(self.order)
+            self.query.order(self.order)
         self.query_list = QuerySet(list(self.query.fetch(self.limit_ + len(self.remove_list), self.offset)))
         global query_counter
         query_counter += 1

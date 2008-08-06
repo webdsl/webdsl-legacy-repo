@@ -1,4 +1,4 @@
-application com.example.basic
+application com.example.guestbook
 
 description {
 	This is an automatically generated description
@@ -8,13 +8,11 @@ section data model
 
 entity User {
   username :: String(id)
-  messages -> Set<Message> (inverse=Message.sender)
-  receivedmessages -> Set<Message>
+  messages -> Set<Entry> (inverse=Entry.sender)
 }
 
-entity Message {
+entity Entry {
   sender   -> User
-  recipients -> Set<User> (inverse=User.receivedmessages)
   date     :: DateTime
   message  :: Text
 }
@@ -27,13 +25,16 @@ define main() {
     foot()
 }
 define head() {
-    par { image("http://webdsl.org/webdslorg/images/WebDSL-small.png") }
+    header { "Wiki Guestbook" }
     navigate(home()) { "Home" }
+    " | "
+    navigate(register()) { "Register" }
     horizontalspacer
 }
 define foot() {
     horizontalspacer
-    par { "Copyright Zef Hemel, 2008" }
+    par {"Powered by"}
+    image("http://webdsl.org/webdslorg/images/WebDSL-small.png") 
 }
 
 define body() {
@@ -42,37 +43,80 @@ define body() {
 section pages
 
 define page home() {
-    title{"Home!"}
+    title{"Guestbook"}
     main()
     define body() {
-      section {
-          header{ "Test!" }
-          par { "Here you see all messages." }
-      }
       table {
-          header { "Sender" "Message" "Action" }
-          for(m : Message) {
-              row { output(m.sender.username) output(m.message) navigate(editMessage(m)) { "Edit" }}
+          header { "Sender" "Entry" "Action" }
+          for(m : Entry) {
+              row { output(m.sender.username) output(m.message) navigate(editEntry(m)) { "Edit" }}
           }
       }
-      navigate(home()) { "Home" }
-      "|"
-      navigate(editAll()) { "Edit all" }
+      var newEntry : Entry := Entry{};
+      section {
+        section { 
+          header{ "Add entry" } 
+          addEntryTemplate(newEntry)
+        }
+      }
+      //"|"
+      //navigate(editAll()) { "Edit all" }
     }
 }
 
-define page editMessage(m : Message) {
+define page register() {
+  title {"Register"}
+  main()
+  define body() {
+    var user : User := User{};
+    form {
+      par { "Username: " input(user.username) }
+      action("Register", register())
+    }
+    action register() {
+      user.save();
+      return home();
+    }
+  }
+}
+
+define page editEntry(m : Entry) {
     main()
     define body() {
-      form {
-        input(m.message)
-        action("Save", save())
-      }
-      action save() {
-        m.save();
-        return home();
-      }
+        editEntryTemplate(m)
     }
+}
+
+define editEntryTemplate(m : Entry) {
+  form {
+    table {
+      row { "Sender: " input(m.sender) }
+      row { "Message: " input(m.message) }
+    }
+    action("Save", save())
+    action("Delete", delete())
+  }
+  action save() {
+    m.save();
+    return home();
+  }
+  action delete() {
+    m.delete();
+    return home();
+  }
+}
+define addEntryTemplate(m : Entry) {
+  form {
+    table {
+      row { "Sender: " input(m.sender) }
+      row { "Message: " input(m.message) }
+    }
+    action("Add", save())
+  }
+  action save() {
+    m.save();
+    return home();
+  }
 }
 
 define page editAll() {
@@ -80,7 +124,7 @@ define page editAll() {
     define body() {
       form {
         table {
-          for(m : Message) {
+          for(m : Entry) {
             row { output(m.sender) input(m.message) }
           }
         }

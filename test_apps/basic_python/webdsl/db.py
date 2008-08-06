@@ -51,9 +51,13 @@ class Model(db.Model):
     @classmethod
     def fetch_by_id(cls, id):
         if cls.id_property:
-            return cls.all().filter("%s = " % cls.id_property, id).get()
+            type = getattr(cls, cls.id_property).data_type
+            if isinstance(id, type):
+                return cls.all().filter("%s = " % cls.id_property, id).get()
+            else:
+                return cls.all().filter("%s = " % cls.id_property, type(id)).get()
         else:
-            return cls.get_by_id(id)
+            return cls.get_by_id(long(id))
 
     
 
