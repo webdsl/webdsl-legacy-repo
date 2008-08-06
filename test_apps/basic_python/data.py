@@ -2,6 +2,7 @@ from google.appengine.ext import db
 import logging
 import webdsl.querylist
 import webdsl.db
+from webdsl.utils import new_line
 class Message(webdsl.db.Model):
     message = db.TextProperty( )
     date = db.DateTimeProperty( auto_now_add = True )

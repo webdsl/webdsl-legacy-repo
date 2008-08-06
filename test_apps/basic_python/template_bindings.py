@@ -5,11 +5,11 @@ class ParentTemplate(object):
 
     @property
     def template_bindings(self):
-        from templates import *
+        from template import *
         
         tb = {}
         tb['main'] = Main
-        tb['body'] = Body
-        tb['vmessage'] = Vmessage
+        tb['foot'] = Foot
+        tb['head'] = Head
         return tb
 

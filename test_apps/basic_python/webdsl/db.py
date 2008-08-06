@@ -24,6 +24,8 @@ class Model(db.Model):
         webdsl.querylist.query_counter += 1
 
     def __cmp__(self, other):
+        if not other:
+            return False
         if self.is_saved() and other.is_saved():
             return cmp(str(self.key()), str(other.key()))
         else:
@@ -41,9 +43,14 @@ class Model(db.Model):
         else:
             return None
 
+    # Temporary
+    @property
+    def name(self):
+        return self.id
+
     @classmethod
     def fetch_by_id(cls, id):
-        if hasattr(cls, 'id_property'):
+        if cls.id_property:
             return cls.all().filter("%s = " % cls.id_property, id).get()
         else:
             return cls.get_by_id(id)
