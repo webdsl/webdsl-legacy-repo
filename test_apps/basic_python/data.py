@@ -3,8 +3,11 @@ import logging
 import webdsl.querylist
 import webdsl.db
 import webdsl.markdown
+import data
+import function
+class Role(webdsl.db.Model):
+    name = db.StringProperty( default = '' )
 class Entry(webdsl.db.Model):
-    someUser = webdsl.db.PartiallyInlinedReferenceProperty( 'User' ,  [ 'id' ,  'name' ,  'username' ] )
     message = db.TextProperty( default = '' )
     date = db.DateTimeProperty( auto_now_add = True )
     def get_sender(self):
@@ -15,6 +18,7 @@ class Entry(webdsl.db.Model):
     inverse__User_entries = db.StringProperty( default = '' )
     inverse__User_entries_inline = webdsl.db.PartiallyInlinedReferenceProperty( 'User' ,  [ 'id' ,  'name' ,  'username' ] )
 class User(webdsl.db.Model):
+    role = webdsl.db.PartiallyInlinedReferenceProperty( 'Role' ,  [ 'name' ,  'id' ] )
     _entries = None
     def get_entries(self):
         if self._entries == None :
@@ -32,10 +36,34 @@ class User(webdsl.db.Model):
         return self.username
     id_property = 'username'
 class ProcedureStatus(webdsl.db.Model):
+    def next(self, state):
+        pass
+    def disable(self):
+        self.disabled( )
+    def enable(self, c, r):
+        self.caller = c
+        self.returnstate = r
+        self.enabled( )
+    def enable(self):
+        self.enabled( )
+    def processed(self):
+        pass
+    def done(self):
+        pass
+    def do(self):
+        pass
+    def disabled(self):
+        pass
+    def enabled(self):
+        pass
     returnstate = db.IntegerProperty( default = 0 )
     caller = webdsl.db.PartiallyInlinedReferenceProperty( 'ProcedureStatus' ,  [ 'name' ,  'id' ] )
     date = db.DateTimeProperty( auto_now_add = True )
     enabled = db.BooleanProperty( default = False )
+    @property
+    def name(self):
+        return 'Procedure status'
+RoleProxy = webdsl.db.create_proxy_model( Role )
 EntryProxy = webdsl.db.create_proxy_model( Entry )
 UserProxy = webdsl.db.create_proxy_model( User )
 ProcedureStatusProxy = webdsl.db.create_proxy_model( ProcedureStatus )

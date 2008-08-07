@@ -9,13 +9,33 @@ section data model
 entity User {
   username :: String(id, name, inline)
   entries -> Set<Entry> (inverse=Entry.sender)
+  role -> Role
 }
 
 entity Entry {
   sender   -> User
   date     :: DateTime
   message  :: Text
-  someUser -> User
+}
+
+section logic
+
+function doSomethingUseful() {
+  var e : Entry := Entry{};
+  e.message := "Hello!";
+  e.sender := createUser("Frits2");
+  e.persist();
+}
+
+function createUser(username : String) : User {
+  var u : User := User{ username := username };
+  u.persist();
+  return u;
+}
+
+enum Role {
+  adminRole("Administrator"),
+  userRole("User")
 }
 
 section templates
@@ -41,6 +61,13 @@ define foot() {
 define body() {
     "Nothin"
 }
+
+define print(s : String) {
+  output(s)
+}
+define print(i : Int) {
+  output(i)
+}
 section pages
 
 define page home() {
@@ -50,7 +77,7 @@ define page home() {
       table {
           header { "Sender" "Entry" "Action" }
           for(m : Entry order by m.date asc) {
-              row { output(m.sender.username) output(m.message) navigate(editEntry(m)) { "Edit" }}
+              row { output(m.sender.username) output(m.sender.role.name) output(m.message) navigate(editEntry(m)) { "Edit" }}
           }
       }
       var newEntry : Entry := Entry{};
@@ -60,8 +87,13 @@ define page home() {
           addEntryTemplate(newEntry)
         }
       }
-      //"|"
-      //navigate(editAll()) { "Edit all" }
+      form {
+        action("Do something", doSomething())
+
+        action doSomething() {
+          doSomethingUseful();
+        }
+      }
     }
 }
 
@@ -72,6 +104,7 @@ define page register() {
     var user : User := User{};
     form {
       par { "Username: " input(user.username) }
+      par { "Role: " input(user.role) }
       action("Register", register())
     }
     action register() {

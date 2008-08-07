@@ -2,10 +2,12 @@ from google.appengine.ext import db
 import webdsl.db
 import webdsl.utils
 import webdsl.querylist
+import webdsl.session
 from datetime import datetime
 import data
 import template
 import logging
+import global_variable
 
 webdsl.querylist.query_counter = 0
 #print 'Content-type: text/plain'
@@ -55,6 +57,14 @@ webdsl.querylist.query_counter = 0
 main = webdsl.utils.run
 
 if __name__ == '__main__':
+    #session = webdsl.session.Session()
+    #if "counter" in session:
+    #    session['counter'] += 1
+    #else:
+    #    session['counter'] = 1
+    #print 'Content-type: text/plain'
+    #print
+    #print session['counter']
     main()
 
 #print 'Total of %d queries.' % webdsl.querylist.query_counter

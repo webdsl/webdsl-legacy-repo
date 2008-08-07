@@ -4,6 +4,7 @@ import webdsl.querylist
 import webdsl.db
 import webdsl.markdown
 import data
+import function
 import cgi
 import md5
 from webdsl.utils import new_line
@@ -31,7 +32,7 @@ class EditAll_body(webdsl.utils.RequestHandler):
             out.write( '<tr>' )
             out.write( '<td>' )
             out.write( '<a href="' + '/user' + '/' + str( m11.sender.username ) + '' + '">' )
-            out.write( cgi.escape( m11.sender.name ,  True ) )
+            out.write( cgi.escape( unicode( m11.sender.name ) ,  True ) )
             out.write( new_line( ) )
             out.write( '</a>' )
             out.write( '</td>' )
@@ -41,7 +42,7 @@ class EditAll_body(webdsl.utils.RequestHandler):
             if is_submitted_form :
                 m11.message = self.rh.request.get( field_id )
             out.write( '<textarea name="' + field_id + '" class="inputText">' )
-            out.write( cgi.escape( m11.message ,  True ) )
+            out.write( cgi.escape( unicode( m11.message ) ,  True ) )
             out.write( '</textarea>' )
             out.write( '</td>' )
             out.write( new_line( ) )
@@ -49,7 +50,7 @@ class EditAll_body(webdsl.utils.RequestHandler):
             out.write( new_line( ) )
         out.write( new_line( ) )
         out.write( '</table>' )
-        out.write( '<input type="submit" name="action-' + '1' + '" value="' + cgi.escape( 'Save' ,  True ) + '"/>' )
+        out.write( '<input type="submit" name="action-' + '1' + '" value="' + cgi.escape( unicode( 'Save' ) ,  True ) + '"/>' )
         if self.rh.request.get( 'action-' + '1' ) and is_submitted_form :
             self.do_save( )
         out.write( '</form>' )
@@ -79,8 +80,8 @@ class AddEntryTemplate(webdsl.utils.RequestHandler):
                 out.write( '<option selected="selected" ' )
             else:
                 out.write( '<option ' )
-            out.write( 'value="' + cgi.escape( item.id ,  True ) + '">' )
-            out.write( cgi.escape( item.name ,  True ) )
+            out.write( 'value="' + cgi.escape( unicode( item.id ) ,  True ) + '">' )
+            out.write( cgi.escape( unicode( item.name ) ,  True ) )
             out.write( '</option>' )
         out.write( '</select>' )
         out.write( new_line( ) )
@@ -99,14 +100,14 @@ class AddEntryTemplate(webdsl.utils.RequestHandler):
         if is_submitted_form :
             self.scope['m10'].message = self.rh.request.get( field_id )
         out.write( '<textarea name="' + field_id + '" class="inputText">' )
-        out.write( cgi.escape( self.scope['m10'].message ,  True ) )
+        out.write( cgi.escape( unicode( self.scope['m10'].message ) ,  True ) )
         out.write( '</textarea>' )
         out.write( '</td>' )
         out.write( new_line( ) )
         out.write( '</tr>' )
         out.write( new_line( ) )
         out.write( '</table>' )
-        out.write( '<input type="submit" name="action-' + '1' + '" value="' + cgi.escape( 'Add' ,  True ) + '"/>' )
+        out.write( '<input type="submit" name="action-' + '1' + '" value="' + cgi.escape( unicode( 'Add' ) ,  True ) + '"/>' )
         if self.rh.request.get( 'action-' + '1' ) and is_submitted_form :
             self.do_save( )
         out.write( '</form>' )
@@ -137,8 +138,8 @@ class EditEntryTemplate(webdsl.utils.RequestHandler):
                 out.write( '<option selected="selected" ' )
             else:
                 out.write( '<option ' )
-            out.write( 'value="' + cgi.escape( item.id ,  True ) + '">' )
-            out.write( cgi.escape( item.name ,  True ) )
+            out.write( 'value="' + cgi.escape( unicode( item.id ) ,  True ) + '">' )
+            out.write( cgi.escape( unicode( item.name ) ,  True ) )
             out.write( '</option>' )
         out.write( '</select>' )
         out.write( new_line( ) )
@@ -157,17 +158,17 @@ class EditEntryTemplate(webdsl.utils.RequestHandler):
         if is_submitted_form :
             self.scope['m9'].message = self.rh.request.get( field_id )
         out.write( '<textarea name="' + field_id + '" class="inputText">' )
-        out.write( cgi.escape( self.scope['m9'].message ,  True ) )
+        out.write( cgi.escape( unicode( self.scope['m9'].message ) ,  True ) )
         out.write( '</textarea>' )
         out.write( '</td>' )
         out.write( new_line( ) )
         out.write( '</tr>' )
         out.write( new_line( ) )
         out.write( '</table>' )
-        out.write( '<input type="submit" name="action-' + '1' + '" value="' + cgi.escape( 'Save' ,  True ) + '"/>' )
+        out.write( '<input type="submit" name="action-' + '1' + '" value="' + cgi.escape( unicode( 'Save' ) ,  True ) + '"/>' )
         if self.rh.request.get( 'action-' + '1' ) and is_submitted_form :
             self.do_save( )
-        out.write( '<input type="submit" name="action-' + '2' + '" value="' + cgi.escape( 'Delete' ,  True ) + '"/>' )
+        out.write( '<input type="submit" name="action-' + '2' + '" value="' + cgi.escape( unicode( 'Delete' ) ,  True ) + '"/>' )
         if self.rh.request.get( 'action-' + '2' ) and is_submitted_form :
             self.do_delete( )
         out.write( '</form>' )
@@ -215,11 +216,32 @@ class Register_body(webdsl.utils.RequestHandler):
         if is_submitted_form :
             self.scope['user4'].username = self.rh.request.get( field_id )
         out.write( '<input type="text" name="' + field_id + '" class="inputString" value="' )
-        out.write( cgi.escape( self.scope['user4'].username ,  True ) )
+        out.write( cgi.escape( unicode( self.scope['user4'].username ) ,  True ) )
         out.write( '"/>' )
         out.write( new_line( ) )
         out.write( '</p>' )
-        out.write( '<input type="submit" name="action-' + '1' + '" value="' + cgi.escape( 'Register' ,  True ) + '"/>' )
+        out.write( '<p>' )
+        out.write( 'Role: ' )
+        out.write( new_line( ) )
+        out.write( '<div class="' + 'inputSimpleRefAssociation' + '">' )
+        field_id = webdsl.utils.generateUniqueFieldName( self.scope [ 'user4' ] ,  'user4.role' ,  self )
+        if is_submitted_form :
+            self.scope['user4'].role = data.Role.fetch_by_id( self.rh.request.get( field_id ) )
+        out.write( '<select name="' + field_id + '">' )
+        for item in webdsl.querylist.AllDbQuerySet( data.Role ) :
+            if self.scope['user4'].role == item :
+                out.write( '<option selected="selected" ' )
+            else:
+                out.write( '<option ' )
+            out.write( 'value="' + cgi.escape( unicode( item.id ) ,  True ) + '">' )
+            out.write( cgi.escape( unicode( item.name ) ,  True ) )
+            out.write( '</option>' )
+        out.write( '</select>' )
+        out.write( new_line( ) )
+        out.write( '</div>' )
+        out.write( new_line( ) )
+        out.write( '</p>' )
+        out.write( '<input type="submit" name="action-' + '1' + '" value="' + cgi.escape( unicode( 'Register' ) ,  True ) + '"/>' )
         if self.rh.request.get( 'action-' + '1' ) and is_submitted_form :
             self.do_register( )
         out.write( '</form>' )
@@ -261,7 +283,11 @@ class Home_body(webdsl.utils.RequestHandler):
         for m7 in webdsl.querylist.AllDbQuerySet(data.Entry).order_by( 'date' ) :
             out.write( '<tr>' )
             out.write( '<td>' )
-            out.write( cgi.escape( m7.sender.username ,  True ) )
+            out.write( cgi.escape( unicode( m7.sender.username ) ,  True ) )
+            out.write( '</td>' )
+            out.write( new_line( ) )
+            out.write( '<td>' )
+            out.write( cgi.escape( unicode( m7.sender.role.name ) ,  True ) )
             out.write( '</td>' )
             out.write( new_line( ) )
             out.write( '<td>' )
@@ -292,6 +318,25 @@ class Home_body(webdsl.utils.RequestHandler):
         out.write( '</div>' )
         out.write( new_line( ) )
         out.write( '</div>' )
+        out.write( '<form method="POST">' )
+        form_id = webdsl.utils.generateFormHash( self.scope ,  self )
+        is_submitted_form = self.rh.request.get( 'form_id' ) == form_id
+        out.write( '<input type="hidden" name="form_id" value="%s"/>' % form_id )
+        out.write( '<input type="submit" name="action-' + '1' + '" value="' + cgi.escape( unicode( 'Do something' ) ,  True ) + '"/>' )
+        if self.rh.request.get( 'action-' + '1' ) and is_submitted_form :
+            self.do_doSomething( )
+        out.write( '</form>' )
+    def do_doSomething(self):
+        function.doSomethingUseful( )
+        self.redirect_to_self( )
+class Print3(webdsl.utils.RequestHandler):
+    def render(self):
+        out = self.out
+        out.write( cgi.escape( unicode( self.scope [ 'i1' ] ) ,  True ) )
+class Print1(webdsl.utils.RequestHandler):
+    def render(self):
+        out = self.out
+        out.write( cgi.escape( unicode( self.scope [ 's3' ] ) ,  True ) )
 class Body(webdsl.utils.RequestHandler):
     def render(self):
         out = self.out
@@ -340,7 +385,7 @@ class ProcedureStatus_body(webdsl.utils.RequestHandler):
     def render(self):
         out = self.out
         out.write( '<' + 'h1' + '>' )
-        out.write( cgi.escape( self.scope['s1'].name ,  True ) )
+        out.write( cgi.escape( unicode( self.scope['s2'].name ) ,  True ) )
         out.write( new_line( ) )
         out.write( '</' + 'h1' + '>' )
         out.write( '<table>' )
@@ -350,7 +395,7 @@ class ProcedureStatus_body(webdsl.utils.RequestHandler):
         out.write( '</td>' )
         out.write( new_line( ) )
         out.write( '<td>' )
-        out.write( cgi.escape( self.scope['s1'].name ,  True ) )
+        out.write( cgi.escape( unicode( self.scope['s2'].name ) ,  True ) )
         out.write( '</td>' )
         out.write( new_line( ) )
         out.write( '</tr>' )
@@ -361,7 +406,7 @@ class ProcedureStatus_body(webdsl.utils.RequestHandler):
         out.write( '</td>' )
         out.write( new_line( ) )
         out.write( '<td>' )
-        out.write( cgi.escape( self.scope['s1'].enabled ,  True ) )
+        out.write( cgi.escape( unicode( self.scope['s2'].enabled ) ,  True ) )
         out.write( '</td>' )
         out.write( new_line( ) )
         out.write( '</tr>' )
@@ -371,7 +416,7 @@ class ProcedureStatus_body(webdsl.utils.RequestHandler):
         out.write( 'Date: ' )
         out.write( '</td>' )
         out.write( new_line( ) )
-        out.write( 'Skipped element: ' + 'TemplateCall("outputDateTime",[FieldAccess(Var("s1"),"date")],[])' )
+        out.write( 'Skipped element: ' + 'TemplateCall("outputDateTime",[FieldAccess(Var("s2"),"date")],[])' )
         out.write( '</tr>' )
         out.write( new_line( ) )
         out.write( '<tr>' )
@@ -380,8 +425,8 @@ class ProcedureStatus_body(webdsl.utils.RequestHandler):
         out.write( '</td>' )
         out.write( new_line( ) )
         out.write( '<td>' )
-        out.write( '<a href="' + '/procedureStatus' + '/' + str( self.scope['s1'].caller.key().id( ) ) + '' + '">' )
-        out.write( cgi.escape( self.scope['s1'].caller.name ,  True ) )
+        out.write( '<a href="' + '/procedureStatus' + '/' + str( self.scope['s2'].caller.key().id( ) ) + '' + '">' )
+        out.write( cgi.escape( unicode( self.scope['s2'].caller.name ) ,  True ) )
         out.write( new_line( ) )
         out.write( '</a>' )
         out.write( '</td>' )
@@ -394,7 +439,7 @@ class ProcedureStatus_body(webdsl.utils.RequestHandler):
         out.write( '</td>' )
         out.write( new_line( ) )
         out.write( '<td>' )
-        out.write( cgi.escape( self.scope['s1'].returnstate ,  True ) )
+        out.write( cgi.escape( unicode( self.scope['s2'].returnstate ) ,  True ) )
         out.write( '</td>' )
         out.write( new_line( ) )
         out.write( '</tr>' )
@@ -423,10 +468,10 @@ class AllTasks_body(webdsl.utils.RequestHandler):
         out.write( '</' + 'h1' + '>' )
         out.write( '<div class="' + 'section1' + '">' )
         out.write( '</div>' )
-webdsl.utils.register( '/user/([^/]+)' ,  User ,  [ ( 'u1' , '' ,  unicode ,  data.User ) ] )
+webdsl.utils.register( '/user/([^/]+)' ,  User ,  [ ( 'u2' , '' ,  unicode ,  data.User ) ] )
 webdsl.utils.register( '/editAll' ,  EditAll ,  [ ] )
 webdsl.utils.register( '/editEntry/([^/]+)' ,  EditEntry ,  [ ( 'm8' , '' ,  long ,  data.Entry ) ] )
 webdsl.utils.register( '/register' ,  Register ,  [ ] )
 webdsl.utils.register( '/' ,  Home ,  [ ] )
-webdsl.utils.register( '/procedureStatus/([^/]+)' ,  ProcedureStatus ,  [ ( 's1' , '' ,  long ,  data.ProcedureStatus ) ] )
+webdsl.utils.register( '/procedureStatus/([^/]+)' ,  ProcedureStatus ,  [ ( 's2' , '' ,  long ,  data.ProcedureStatus ) ] )
 webdsl.utils.register( '/allTasks' ,  AllTasks ,  [ ] )
