@@ -1,3 +1,0 @@
-#!/bin/bash
-
-dsl-to-seam -i basic_python.app --python

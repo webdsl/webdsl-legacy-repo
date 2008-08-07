@@ -87,13 +87,6 @@ define page home() {
           addEntryTemplate(newEntry)
         }
       }
-      form {
-        action("Do something", doSomething())
-
-        action doSomething() {
-          doSomethingUseful();
-        }
-      }
     }
 }
 
