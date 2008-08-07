@@ -5,17 +5,23 @@ import webdsl.querylist
 from datetime import datetime
 import data
 import template
+import logging
 
 webdsl.querylist.query_counter = 0
-# print 'Content-type: text/plain'
-# print
-# print 'Deleting old junk...'
-# t = datetime.now()
-# print 'Hoi!'
-# for u in data.User.all():
-#     u.delete()
-# for m in data.Message.all():
-#     m.delete()
+#print 'Content-type: text/plain'
+#print
+#print 'Deleting old junk...'
+#t = datetime.now()
+#print 'Hoi!'
+#for u in data.User.all():
+#    u.delete()
+#for e in data.Entry.all():
+#    e.delete()
+#u = data.User(username="Sjaak")
+#e = data.Entry()
+#e.message = "Hoi!"
+#u.entries.append(e)
+#u.put()
 # print datetime.now() - t
 # print 'Ok, ready? Go!'
 # 

@@ -7,14 +7,15 @@ description {
 section data model
 
 entity User {
-  username :: String(id)
-  messages -> Set<Entry> (inverse=Entry.sender)
+  username :: String(id, name, inline)
+  entries -> Set<Entry> (inverse=Entry.sender)
 }
 
 entity Entry {
   sender   -> User
   date     :: DateTime
-  message  :: Text
+  message  :: WikiText
+  someUser -> User
 }
 
 section templates
@@ -48,7 +49,7 @@ define page home() {
     define body() {
       table {
           header { "Sender" "Entry" "Action" }
-          for(m : Entry) {
+          for(m : Entry order by m.date asc) {
               row { output(m.sender.username) output(m.message) navigate(editEntry(m)) { "Edit" }}
           }
       }

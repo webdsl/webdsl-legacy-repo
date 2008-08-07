@@ -2,6 +2,7 @@ from google.appengine.ext import db
 import logging
 import webdsl.querylist
 import webdsl.db
+import webdsl.markdown
 import data
 import cgi
 import md5
@@ -39,7 +40,7 @@ class EditAll_body(webdsl.utils.RequestHandler):
             field_id = webdsl.utils.generateUniqueFieldName( m11 ,  'm11.message' ,  self )
             if is_submitted_form :
                 m11.message = self.rh.request.get( field_id )
-            out.write( '<textarea name="' + field_id + '">' )
+            out.write( '<textarea name="' + field_id + '" class="inputWikiText">' )
             out.write( cgi.escape( m11.message ,  True ) )
             out.write( '</textarea>' )
             out.write( '</td>' )
@@ -79,7 +80,7 @@ class AddEntryTemplate(webdsl.utils.RequestHandler):
             else:
                 out.write( '<option ' )
             out.write( 'value="' + cgi.escape( item.id ,  True ) + '">' )
-            out.write( cgi.escape( item.id ,  True ) )
+            out.write( cgi.escape( item.name ,  True ) )
             out.write( '</option>' )
         out.write( '</select>' )
         out.write( new_line( ) )
@@ -97,7 +98,7 @@ class AddEntryTemplate(webdsl.utils.RequestHandler):
         field_id = webdsl.utils.generateUniqueFieldName( self.scope [ 'm10' ] ,  'm10.message' ,  self )
         if is_submitted_form :
             self.scope['m10'].message = self.rh.request.get( field_id )
-        out.write( '<textarea name="' + field_id + '">' )
+        out.write( '<textarea name="' + field_id + '" class="inputWikiText">' )
         out.write( cgi.escape( self.scope['m10'].message ,  True ) )
         out.write( '</textarea>' )
         out.write( '</td>' )
@@ -137,7 +138,7 @@ class EditEntryTemplate(webdsl.utils.RequestHandler):
             else:
                 out.write( '<option ' )
             out.write( 'value="' + cgi.escape( item.id ,  True ) + '">' )
-            out.write( cgi.escape( item.id ,  True ) )
+            out.write( cgi.escape( item.name ,  True ) )
             out.write( '</option>' )
         out.write( '</select>' )
         out.write( new_line( ) )
@@ -155,7 +156,7 @@ class EditEntryTemplate(webdsl.utils.RequestHandler):
         field_id = webdsl.utils.generateUniqueFieldName( self.scope [ 'm9' ] ,  'm9.message' ,  self )
         if is_submitted_form :
             self.scope['m9'].message = self.rh.request.get( field_id )
-        out.write( '<textarea name="' + field_id + '">' )
+        out.write( '<textarea name="' + field_id + '" class="inputWikiText">' )
         out.write( cgi.escape( self.scope['m9'].message ,  True ) )
         out.write( '</textarea>' )
         out.write( '</td>' )
@@ -257,14 +258,14 @@ class Home_body(webdsl.utils.RequestHandler):
         out.write( new_line( ) )
         out.write( '</tr>' )
         out.write( new_line( ) )
-        for m7 in webdsl.querylist.AllDbQuerySet( data.Entry ).order_by('date') :
+        for m7 in webdsl.querylist.AllDbQuerySet(data.Entry).order_by( 'date' ) :
             out.write( '<tr>' )
             out.write( '<td>' )
             out.write( cgi.escape( m7.sender.username ,  True ) )
             out.write( '</td>' )
             out.write( new_line( ) )
             out.write( '<td>' )
-            out.write( cgi.escape( m7.message ,  True ) )
+            out.write( webdsl.parse_wikitext( m7.message ) )
             out.write( '</td>' )
             out.write( new_line( ) )
             out.write( '<td>' )
@@ -308,7 +309,7 @@ class Head(webdsl.utils.RequestHandler):
     def render(self):
         out = self.out
         out.write( '<' + 'h1' + '>' )
-        out.write( 'Wiki Guestbook ' )
+        out.write( 'Wiki Guestbook' )
         out.write( new_line( ) )
         out.write( '</' + 'h1' + '>' )
         out.write( '<a href="' + '/' + '' + '">' )

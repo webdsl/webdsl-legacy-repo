@@ -1,5 +1,6 @@
 from google.appengine.ext import db
 import logging
+import simplejson
 
 class Model(db.Model):
     def __init__(self, *params, **kparams):
@@ -32,6 +33,12 @@ class Model(db.Model):
             result = cmp(hash(self), hash(other))
             return cmp(hash(self), hash(other))
 
+    def as_dict(self, inlined_properties=['id', 'name']):
+        d = {}
+        for prop in inlined_properties:
+            d[prop] = getattr(self, prop)
+        return d
+
     id_property = None
 
     @property
@@ -43,7 +50,6 @@ class Model(db.Model):
         else:
             return None
 
-    # Temporary
     @property
     def name(self):
         return self.id
@@ -59,5 +65,48 @@ class Model(db.Model):
         else:
             return cls.get_by_id(long(id))
 
-    
+def create_proxy_model(cls):
+    class _proxy(cls):
+        def __init__(self, id_value, initial_values):
+            self._wrapped_object = None
+            self._id_value = id_value
+            self._initial_values = initial_values
 
+        def __getattribute__(self, attr):
+            if attr.startswith('_'):
+                return cls.__getattribute__(self, attr)
+            if not self._wrapped_object and self._initial_values.has_key(attr):
+                return self._initial_values[attr]
+            if not self._wrapped_object:
+                logging.info("Lazy loaded whole object: %s id: %s" % (cls, self._id_value))
+                self._wrapped_object = cls.fetch_by_id(self._id_value)
+            return getattr(self._wrapped_object, attr)
+
+    _proxy.__name__ = "%sProxy" % cls.__name__
+    return _proxy
+
+class PartiallyInlinedReferenceProperty(db.Property):
+    def __init__(self, type_str, inlined_properties, *params, **kparams):
+        self.type_str = type_str
+        self.inlined_properties = inlined_properties
+        db.Property.__init__(self, *params, **kparams)
+
+    def get_value_for_datastore(self, model_instance):
+        if not hasattr(model_instance, self.name):
+            return None
+        value = getattr(model_instance, self.name)
+        if not value:
+            return None
+        if not value.is_saved():
+            value.put()
+        return simplejson.dumps(value.as_dict(self.inlined_properties))
+
+    def make_value_from_datastore(self, value):
+        if not value:
+            return None
+        import data
+        d = simplejson.loads(value)
+        return getattr(data, self.type_str + "Proxy")(d['id'], d)
+
+    def datastore_type(self):
+        return db.Text
