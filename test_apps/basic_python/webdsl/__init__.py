@@ -19,7 +19,7 @@ def parse_wikitext(str):
         if not title:
             title = page
         str = str.replace(whole, '[%s](%s)' % (title, url))
-    return markdown.Markdown(str, safe_mode='escape').convert()
+    return markdown.Markdown(safe_mode='escape').convert(str)
 
 def parse_text(str):
-    return markdown.Markdown(str, safe_mode='escape').convert()
+    return markdown.Markdown(safe_mode='escape').convert(str)

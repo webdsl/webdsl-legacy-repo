@@ -76,7 +76,15 @@ def register(path, cls, param_mappings=[]):
             o.title = ""
             o.init()
             o.render()
-            self.response.out.write('''<html><head><title>%s</title></head><body>''' % o.title)
+            self.response.out.write('''
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>%s</title>
+    <link href="/css/webdsl.css" rel="stylesheet" type="text/css" />
+</head>
+<body>''' % o.title)
             self.response.out.write(out.getvalue())
             self.response.out.write('''</body></html>''')
         def post(self, *params):

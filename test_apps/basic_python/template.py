@@ -40,7 +40,7 @@ class EditAll_body(webdsl.utils.RequestHandler):
             field_id = webdsl.utils.generateUniqueFieldName( m11 ,  'm11.message' ,  self )
             if is_submitted_form :
                 m11.message = self.rh.request.get( field_id )
-            out.write( '<textarea name="' + field_id + '" class="inputWikiText">' )
+            out.write( '<textarea name="' + field_id + '" class="inputText">' )
             out.write( cgi.escape( m11.message ,  True ) )
             out.write( '</textarea>' )
             out.write( '</td>' )
@@ -98,7 +98,7 @@ class AddEntryTemplate(webdsl.utils.RequestHandler):
         field_id = webdsl.utils.generateUniqueFieldName( self.scope [ 'm10' ] ,  'm10.message' ,  self )
         if is_submitted_form :
             self.scope['m10'].message = self.rh.request.get( field_id )
-        out.write( '<textarea name="' + field_id + '" class="inputWikiText">' )
+        out.write( '<textarea name="' + field_id + '" class="inputText">' )
         out.write( cgi.escape( self.scope['m10'].message ,  True ) )
         out.write( '</textarea>' )
         out.write( '</td>' )
@@ -156,7 +156,7 @@ class EditEntryTemplate(webdsl.utils.RequestHandler):
         field_id = webdsl.utils.generateUniqueFieldName( self.scope [ 'm9' ] ,  'm9.message' ,  self )
         if is_submitted_form :
             self.scope['m9'].message = self.rh.request.get( field_id )
-        out.write( '<textarea name="' + field_id + '" class="inputWikiText">' )
+        out.write( '<textarea name="' + field_id + '" class="inputText">' )
         out.write( cgi.escape( self.scope['m9'].message ,  True ) )
         out.write( '</textarea>' )
         out.write( '</td>' )
@@ -214,7 +214,7 @@ class Register_body(webdsl.utils.RequestHandler):
         field_id = webdsl.utils.generateUniqueFieldName( self.scope [ 'user4' ] ,  'user4.username' ,  self )
         if is_submitted_form :
             self.scope['user4'].username = self.rh.request.get( field_id )
-        out.write( '<input type="text" name="' + field_id + '" value="' )
+        out.write( '<input type="text" name="' + field_id + '" class="inputString" value="' )
         out.write( cgi.escape( self.scope['user4'].username ,  True ) )
         out.write( '"/>' )
         out.write( new_line( ) )
@@ -265,7 +265,7 @@ class Home_body(webdsl.utils.RequestHandler):
             out.write( '</td>' )
             out.write( new_line( ) )
             out.write( '<td>' )
-            out.write( webdsl.parse_wikitext( m7.message ) )
+            out.write( webdsl.parse_text( m7.message ) )
             out.write( '</td>' )
             out.write( new_line( ) )
             out.write( '<td>' )

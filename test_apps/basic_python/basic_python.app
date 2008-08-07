@@ -14,7 +14,7 @@ entity User {
 entity Entry {
   sender   -> User
   date     :: DateTime
-  message  :: WikiText
+  message  :: Text
   someUser -> User
 }
 
