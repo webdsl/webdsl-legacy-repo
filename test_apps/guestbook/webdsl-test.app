@@ -37,7 +37,7 @@ section ac login stuff
             if (us.password.check(password)) {
               securityContext.principal := us;
               securityContext.loggedIn := true;
-              return home();
+              return message("You have been logged in.");
             }
           }
           securityContext.loggedIn := false;
@@ -60,6 +60,15 @@ section ac login stuff
     main()
     define body() {
       header{"Error!"}
+      output(msg)
+    }
+  }
+
+  define page message(msg : String) {
+    title("Message")
+    main()
+    define body() {
+      header{"Friendly Message"}
       output(msg)
     }
   }
@@ -140,8 +149,9 @@ define page register() {
       for(u : User where u.username = user.username) {
         return error("User already registered. Sorry.");
       }
+      user.password := user.password.digest();
       user.save();
-      return home();
+      return message("You have no been registered. Click Login to login.");
     }
   }
 }
