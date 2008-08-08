@@ -1,7 +1,0 @@
-#! /bin/sh -e
-
-# collect modules 
-pack-sdf -i Python.sdf -o Python.def
-
-# generate parse table
-sdf2table -i Python.def -o Python.tbl -m Python

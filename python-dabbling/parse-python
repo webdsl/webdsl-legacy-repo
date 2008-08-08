@@ -1,4 +1,0 @@
-#!/bin/bash
-
-sglri -p ./Python.tbl -i $1 -o $1.ast && pp-aterm -i $1.ast
-
