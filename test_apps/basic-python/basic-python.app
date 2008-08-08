@@ -4,10 +4,71 @@ description {
 	This is an automatically generated description
 }
 
+section access control
+
+  principal is User with credentials username
+  
+access control rules
+
+  rule page home() {
+      true
+  }
+
+  rule page login() {
+    true
+  }
+
+  rule page register() {
+    true
+  }
+
+  rule page error(*) {
+    true
+  }
+
+section ac login stuff
+
+  define page login() {
+    main()
+    title{"Log in"}
+    define body() {
+      var username : String;
+      var password : Secret;
+      form { 
+        table {
+          row{ "Username: " input(username) }
+          row{ "Password: " input(password) }
+          row{ action("Sign in", signin()) "" }
+        }
+        action signin() {
+          for (us : User where us.username = username) {
+            if (us.password.check(password)) {
+              securityContext.principal := us;
+              securityContext.loggedIn := true;
+              return home();
+            }
+          }
+          securityContext.loggedIn := false;
+          return error("Wrong combination of username and password");
+        }
+      }
+    }
+  }
+
+  define page error(msg : String) {
+    title("Error!")
+    main()
+    define body() {
+      header{"Error!"}
+      output(msg)
+    }
+  }
+
 section data model
 
 entity User {
   username :: String(id, name, inline)
+  password :: Secret
   entries -> Set<Entry> (inverse=Entry.sender)
   role -> Role
 }
@@ -48,6 +109,8 @@ define main() {
 define head() {
     header { "Wiki Guestbook" }
     navigate(home()) { "Home" }
+    " | "
+    navigate(login()) { "Login" }
     " | "
     navigate(register()) { "Register" }
     horizontalspacer
@@ -97,6 +160,7 @@ define page register() {
     var user : User := User{};
     form {
       par { "Username: " input(user.username) }
+      par { "Password: " input(user.password) }
       par { "Role: " input(user.role) }
       action("Register", register())
     }
@@ -133,16 +197,18 @@ define editEntryTemplate(m : Entry) {
   }
 }
 define addEntryTemplate(m : Entry) {
-  form {
-    table {
-      row { "Sender: " input(m.sender) }
-      row { "Message: " input(m.message) }
+  if(securityContext.loggedIn) {
+    form {
+      action("Add", save())
+      table {
+        row { "Message: " input(m.message) }
+      }
     }
-    action("Add", save())
-  }
-  action save() {
-    m.save();
-    return home();
+    action save() {
+      m.sender := securityContext.principal;
+      m.save();
+      return home();
+    }
   }
 }
 

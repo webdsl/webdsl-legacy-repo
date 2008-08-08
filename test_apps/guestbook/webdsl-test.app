@@ -4,10 +4,71 @@ description {
 	This is an automatically generated description
 }
 
+section access control
+
+  principal is User with credentials username
+  
+access control rules
+
+  rule page *(*) {
+      true
+  }
+
+  rule page editEntry(e : Entry) {
+      e.sender = securityContext.principal
+  }
+
+section ac login stuff
+
+  define page login() {
+    main()
+    title{"Log in"}
+    define body() {
+      var username : String;
+      var password : Secret;
+      form { 
+        table {
+          row{ "Username: " input(username) }
+          row{ "Password: " input(password) }
+          row{ action("Sign in", signin()) "" }
+        }
+        action signin() {
+          for (us : User where us.username = username) {
+            if (us.password.check(password)) {
+              securityContext.principal := us;
+              securityContext.loggedIn := true;
+              return home();
+            }
+          }
+          securityContext.loggedIn := false;
+          return error("Wrong combination of username and password");
+        }
+      }
+    }
+  }
+
+  define page logout() {
+    init {
+      securityContext.loggedIn := false;
+      securityContext.principal := null;
+      goto home();
+    }
+  }
+
+  define page error(msg : String) {
+    title("Error!")
+    main()
+    define body() {
+      header{"Error!"}
+      output(msg)
+    }
+  }
+
 section data model
 
 entity User {
   username :: String(id, name, inline)
+  password :: Secret
   entries -> Set<Entry> (inverse=Entry.sender)
 }
 
@@ -15,7 +76,6 @@ entity Entry {
   sender   -> User
   date     :: DateTime
   message  :: Text
-  someUser -> User
 }
 
 section templates
@@ -29,6 +89,13 @@ define head() {
     header { "Wiki Guestbook" }
     navigate(home()) { "Home" }
     " | "
+    if(!securityContext.loggedIn) {
+      navigate(login()) { "Login" }
+    }
+    if(securityContext.loggedIn) {
+      navigate(logout()) { "Logout" }
+    }
+    " | "
     navigate(register()) { "Register" }
     horizontalspacer
 }
@@ -41,6 +108,7 @@ define foot() {
 define body() {
     "Nothin"
 }
+
 section pages
 
 define page home() {
@@ -54,14 +122,7 @@ define page home() {
           }
       }
       var newEntry : Entry := Entry{};
-      section {
-        section { 
-          header{ "Add entry" } 
-          addEntryTemplate(newEntry)
-        }
-      }
-      //"|"
-      //navigate(editAll()) { "Edit all" }
+      addEntryTemplate(newEntry)
     }
 }
 
@@ -72,9 +133,13 @@ define page register() {
     var user : User := User{};
     form {
       par { "Username: " input(user.username) }
+      par { "Password: " input(user.password) }
       action("Register", register())
     }
     action register() {
+      for(u : User where u.username = user.username) {
+        return error("User already registered. Sorry.");
+      }
       user.save();
       return home();
     }
@@ -91,7 +156,6 @@ define page editEntry(m : Entry) {
 define editEntryTemplate(m : Entry) {
   form {
     table {
-      row { "Sender: " input(m.sender) }
       row { "Message: " input(m.message) }
     }
     action("Save", save())
@@ -106,35 +170,26 @@ define editEntryTemplate(m : Entry) {
     return home();
   }
 }
-define addEntryTemplate(m : Entry) {
-  form {
-    table {
-      row { "Sender: " input(m.sender) }
-      row { "Message: " input(m.message) }
-    }
-    action("Add", save())
-  }
-  action save() {
-    m.save();
-    return home();
-  }
-}
 
-define page editAll() {
-    main()
-    define body() {
-      form {
-        table {
-          for(m : Entry) {
-            row { output(m.sender) input(m.message) }
+define addEntryTemplate(m : Entry) {
+  if(securityContext.loggedIn) {
+    section {
+      section { 
+        header{ "Add entry" } 
+        form {
+          table {
+            row { "Message: " input(m.message) }
           }
+          action("Add", save())
         }
-        action("Save", save())
-      }
-      action save() {
-        return home();
+        action save() {
+          m.sender := securityContext.principal;
+          m.save();
+          return home();
+        }
       }
     }
+  }
 }
 
 define page user(u : User) {
