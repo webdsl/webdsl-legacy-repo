@@ -70,7 +70,6 @@ entity User {
   username :: String(id, name, inline)
   password :: Secret
   entries -> Set<Entry> (inverse=Entry.sender)
-  role -> Role
 }
 
 entity Entry {
@@ -92,11 +91,6 @@ function createUser(username : String) : User {
   var u : User := User{ username := username };
   u.persist();
   return u;
-}
-
-enum Role {
-  adminRole("Administrator"),
-  userRole("User")
 }
 
 section templates
@@ -140,7 +134,7 @@ define page home() {
       table {
           header { "Sender" "Entry" "Action" }
           for(m : Entry order by m.date asc) {
-              row { output(m.sender.username) output(m.sender.role.name) output(m.message) navigate(editEntry(m)) { "Edit" }}
+              row { output(m.sender.username) output(m.message) navigate(editEntry(m)) { "Edit" }}
           }
       }
       var newEntry : Entry := Entry{};
@@ -161,10 +155,10 @@ define page register() {
     form {
       par { "Username: " input(user.username) }
       par { "Password: " input(user.password) }
-      par { "Role: " input(user.role) }
       action("Register", register())
     }
     action register() {
+      user.password := user.password.digest();
       user.save();
       return home();
     }
