@@ -128,7 +128,7 @@ define page home() {
       table {
           header { "Sender" "Entry" "Action" }
           for(m : Entry order by m.date desc per 10) {
-              row { output(m.sender.username) output(m.message) navigate(editEntry(m)) { "Edit" }}
+              row { output(m.sender) output(m.message) navigate(editEntry(m)) { "Edit" }}
           }
       }
       var newEntry : Entry := Entry{};
@@ -204,5 +204,14 @@ define addEntryTemplate(m : Entry) {
 }
 
 define page user(u : User) {
-    "User"
+    title { output(u.username) }
+    main()
+    define body() {
+      header{ output(u.username) "entries" }
+      list {
+        for(e : Entry in u.entries order by e.date asc per 10) {
+          listitem { output(e.message) }
+        }
+      }
+    }
 }

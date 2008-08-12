@@ -26,16 +26,14 @@ section data model
   }
   */
 
-  globals {
-    var aManager : User := User {
-      username := "manager",
-      name     := "Joe Manager",
-      password := "secret"
-    };
-    var aUser : User := User {
-      username := "user",
-      name     := "Joe User",
-      password := "secret",
-      manager  := aManager
-    };
-  }
+  var aManager : User := User {
+    username := "manager",
+    name     := "Joe Manager",
+    password := "secret"
+  };
+  var aUser : User := User {
+    username := "user",
+    name     := "Joe User",
+    password := "secret",
+    manager  := aManager
+  };

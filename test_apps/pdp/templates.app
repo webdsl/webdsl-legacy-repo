@@ -37,6 +37,10 @@ section templates
     }
   }
 
+  define body() {
+    "Default body"
+  }
+
 section basic page elements.
 
   define sidebar() {

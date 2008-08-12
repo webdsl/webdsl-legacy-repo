@@ -13,7 +13,7 @@ section data
 
 section procedures
 
-  auto procedure startWf(p : PdpMeeting) {
+  procedure startWf(p : PdpMeeting) {
     do {
       p.employeeFillInForm.enable();
     }
@@ -70,6 +70,7 @@ section pages
           var p : PdpMeeting := PdpMeeting{ };
           p.employee := employee;
           p.persist();
+          p.startWf.enable();
           // Test stuff
           return message("Done!");
         }
@@ -84,16 +85,16 @@ access control rules
     
 section pages
 
-  define pdpMeetingOperations(p : PdpMeeting) {
+  define pdpMeetingProcedures(p : PdpMeeting) {
     "haha!"
-    pdpMeetingOperationsList(p)
+    pdpMeetingProceduresList(p)
   }
 
   define page pdpMeeting(pdpMeeting : PdpMeeting) {
     title {"Pdp Meeting " output(pdpMeeting)}
     main()
     define contextSidebar() {
-      pdpMeetingprocedures(pdpMeeting)
+      pdpMeetingProcedures(pdpMeeting)
     }
     define body() {
       header{"Pdp meeting " output(pdpMeeting)}
@@ -101,5 +102,9 @@ section pages
         derive viewRows from pdpMeeting
       }
     }
+  }
+
+  define page user(u : User) {
+    output(u.name)
   }
 
