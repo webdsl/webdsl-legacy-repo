@@ -124,25 +124,11 @@ define page home() {
     title{"Guestbook"}
     main()
     define body() {
-      var p : Int := 0;
+      //var p : Int := 0;
       table {
           header { "Sender" "Entry" "Action" }
-          for(m : Entry order by m.date desc limit 10 offset 10*p) {
+          for(m : Entry order by m.date desc per 10) {
               row { output(m.sender.username) output(m.message) navigate(editEntry(m)) { "Edit" }}
-          }
-          form {
-            hidden(p)
-            if(p > 0) {
-              action("previous", previous())
-            }
-            action("next", next())
-
-            action previous() {
-              p := p - 1;
-            }
-            action next() {
-              p := p + 1;
-            }
           }
       }
       var newEntry : Entry := Entry{};
