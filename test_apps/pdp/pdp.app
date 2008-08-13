@@ -13,9 +13,10 @@ section data
 
 section procedures
 
-  procedure startWf(p : PdpMeeting) {
+  auto procedure startWf(p : PdpMeeting) {
     do {
       p.employeeFillInForm.enable();
+      p.managerFillInForm.enable();
     }
   }
   /*  process {
@@ -29,6 +30,11 @@ section procedures
       title{"Fill in employee form"}
       derive procedurePage from p for (employeePreparation)
     }
+    done {
+      if(!p.managerFillInForm.isEnabled) {
+        p.writeReport.enable();
+      }
+    }
   }
 
   procedure managerFillInForm(p : PdpMeeting) {
@@ -36,6 +42,11 @@ section procedures
     view {
       title{"Fill in manager form"}
       derive procedurePage from p for (managerPreparation)
+    }
+    done {
+      if(!p.employeeFillInForm.isEnabled) {
+        p.writeReport.enable();
+      }
     }
   }
 
@@ -45,10 +56,16 @@ section procedures
       title{"Write report"}
       derive procedurePage from p for (report)
     }
+    done {
+      p.finalizeReport.enable();
+    }
   }
 
   procedure finalizeReport(p : PdpMeeting) {
     who { securityContext.principal = p.employee.manager }
+    done {
+      p.finalizeReport.enable();
+    }
   }
 
   procedure approveReport(p : PdpMeeting) {
@@ -67,10 +84,10 @@ section pages
         action("Organize", organize())
 
         action organize() {
-          var p : PdpMeeting := PdpMeeting{ };
+          var p : PdpMeeting := newPdpMeeting();
           p.employee := employee;
-          p.persist();
           p.startWf.enable();
+          p.persist();
           // Test stuff
           return message("Done!");
         }
