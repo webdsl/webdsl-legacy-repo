@@ -6,20 +6,18 @@ description {
 
 section pages
 
+function testIt() {
+  var input : SDFInput<WebDSL>  := "application parseme";
+  var parsed : ATerm := input.parse();
+  var moduleName : String := parsed.get(0).toString();
+}
+
 define page home() {
   main()
   define body() {
-    "stratego calls testing"
-     
-    var input : SDFInput<WebDSL> ;
-    var parsed : ATerm ;
-    var moduleName : String;
-    init{
-      input := "application readme";
-      parsed  := input.parse();
-      moduleName  := parsed.get(0).toString();
-    }
-    "I just parsed" text(moduleName)
+    "stratego calls testing"    
+        
+    "I just parsed" text(testIt())
   }
 }
 
