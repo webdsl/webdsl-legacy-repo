@@ -6,19 +6,23 @@ description {
 
 section pages
 
-function testIt() {
+function testIt():String {
   var input : SDFInput<WebDSL>  := "application parseme";
   var parsed : ATerm := input.parse();
   var moduleName : String := parsed.get(0).toString();
+  return moduleName;
 }
 
 define page home() {
-  main()
-  define body() {
-    "stratego calls testing"    
+
+  var s:String := testIt();
+
+  "stratego calls testing"    
         
-    "I just parsed" text(testIt())
-  }
+  output(s)
+  
+  
+  //output(testIt())
 }
 
 entity exampleEntity {
