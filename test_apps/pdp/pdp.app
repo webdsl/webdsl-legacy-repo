@@ -19,6 +19,12 @@ section procedures
       p.managerFillInForm.enable();
     }
   }
+
+  extend procedure startWf(p : PdpMeeting) {
+    processed {
+      var s : String := "Zef";
+    }
+  }
   /*  process {
       (employeeFillInForm(p) |AND| managerFillInForm(p));
       writeReport(p)
@@ -102,10 +108,11 @@ access control rules
     
 section pages
 
-  define pdpMeetingProcedures(p : PdpMeeting) {
+/*  define pdpMeetingProcedures(p : PdpMeeting) {
     "haha!"
     pdpMeetingProceduresList(p)
   }
+  */
 
   define page pdpMeeting(pdpMeeting : PdpMeeting) {
     title {"Pdp Meeting " output(pdpMeeting)}
