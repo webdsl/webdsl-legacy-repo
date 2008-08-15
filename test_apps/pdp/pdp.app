@@ -63,6 +63,7 @@ section procedures
       derive procedurePage from p for (report)
     }
     done {
+      p.writeReport.enable();
       p.finalizeReport.enable();
     }
   }
@@ -70,7 +71,8 @@ section procedures
   procedure finalizeReport(p : PdpMeeting) {
     who { securityContext.principal = p.employee.manager }
     done {
-      p.finalizeReport.enable();
+      p.approveReport.enable();
+      p.writeReport.disable();
     }
   }
 
