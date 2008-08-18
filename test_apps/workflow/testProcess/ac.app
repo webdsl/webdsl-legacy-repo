@@ -23,7 +23,7 @@ section pages
 
   define page signin() {
     main()
-    title{"Sign in"}
+    title{"Log in"}
     define body() {
       var username : String;
       var password : Secret;
@@ -34,19 +34,15 @@ section pages
           row{ action("Sign in", dosignin()) "" }
         }
         action dosignin() {
-          var users : List<User> :=
-            select u from User as u 
-            where (u._username = ~username);
-    
-          for (us : User in users) {
+          for (us : User where us.username = username) {
             if (us.password.check(password)) {
               securityContext.principal := us;
               securityContext.loggedIn := true;
-              return allTasks();
+              return message("You have been logged in.");
             }
           }
           securityContext.loggedIn := false;
-          return error("Wrong combination of username/password");
+          return error("Wrong combination of username and password");
         }
       }
     }
