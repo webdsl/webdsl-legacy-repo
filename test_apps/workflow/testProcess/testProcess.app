@@ -12,18 +12,13 @@ imports ac
 section procedures
 
   auto procedure testWorkflow(p : PdpMeeting) {
-    done {
-      p.employeeFillInForm.enable();
-    }
     process {
-      employeeFillInForm(p);
-
-      finalizeReport(p);
-      approveReport(p)
+        if (true) {writeReport(p)}
+        ; finalizeReport(p)
     }
   }
 
-  procedure employeeFillInForm(p : PdpMeeting) {
+/*  procedure employeeFillInForm(p : PdpMeeting) {
     who { securityContext.principal = p.employee }
     view {
       title{"Fill in employee form"}
@@ -38,7 +33,7 @@ section procedures
       derive procedurePage from p for (managerPreparation)
     }
   }
-
+*/
   procedure writeReport(p : PdpMeeting) {
     who { securityContext.principal = p.employee.manager }
     view {
@@ -51,7 +46,7 @@ section procedures
     who { securityContext.principal = p.employee.manager }
   }
 
-  procedure approveReport(p : PdpMeeting) {
+/*  procedure approveReport(p : PdpMeeting) {
     who { securityContext.principal = p.employee }
   }
   
@@ -59,9 +54,11 @@ section procedures
     processed {
       var a : Int := 4;
     }
-  }
+  }*/
 
 section pages
+
+  define body() {}
 
   define page home() {
     main()
