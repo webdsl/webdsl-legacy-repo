@@ -152,7 +152,7 @@ define page register() {
       }
       user.password := user.password.digest();
       user.save();
-      return message("You have no been registered. Click Login to login.");
+      return message("You have now been registered. Click Login to login.");
     }
   }
 }
