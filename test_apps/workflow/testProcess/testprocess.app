@@ -71,7 +71,7 @@ section pages
         action("Organize", organize())
 
         action organize() {
-          var p : PdpMeeting := PdpMeeting{ };
+          var p : PdpMeeting := newPdpMeeting();
           p.employee := employee;
           p.persist();
           p.testWorkflow.enable();
