@@ -4,6 +4,6 @@ imports EditorService-Colorer.generated
 
 colorer Additional coloring
   
-  SectionName: italic
+  SectionName: _ italic
    
   ColorName: black
