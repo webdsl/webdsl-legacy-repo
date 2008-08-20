@@ -7,16 +7,14 @@ START      = Module
 SDF2IMP    = ../org.strategoxt.imp.metatooling/sdf2imp
 ESVS       = ${wildcard *.esv}
 
-all : eclipse-deps
+all : bin/$(SYNTAX).packed.esv
 
 clean :
-	rm -f src/parser/$(SYNTAX)ParseController.java plugin.xml
+	rm -f src/parser/$(SYNTAX)ParseController.java bin/$(SYNTAX).packed.esv
 	rm -rf src/parser/ast
 	# ...
 
-eclipse-deps : plugin.xml # and others
-
-plugin.xml : $(SYNTAX).def $(SYNTAX).tbl $(SDF2IMP) Makefile $(ESVS)
+bin/$(SYNTAX).packed.esv : $(SYNTAX).def $(SYNTAX).tbl $(SDF2IMP) Makefile $(ESVS)
 	$(SDF2IMP) -i $< -p $(SYNTAX).tbl -e $(EXTENSIONS) -m $(SYNTAX) -s $(START) -n $(PACKAGE) --verbose 2
 
 $(SYNTAX).def : $(SOURCE)
