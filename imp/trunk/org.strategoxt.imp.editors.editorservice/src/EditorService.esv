@@ -1,8 +1,8 @@
 module EditorService
 
 imports
-  EditorService-Colorer.generated
-  EditorService-Outliner.generated
+  EditorService-Colorer
+  EditorService-Outliner
   EditorService-Folding.generated
 
 language 
