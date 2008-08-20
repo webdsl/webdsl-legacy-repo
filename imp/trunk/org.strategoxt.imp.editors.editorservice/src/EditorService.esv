@@ -1,18 +1,18 @@
 module EditorService
 
 imports
-  EditorService-Colorer
-  EditorService-Outliner
+  EditorService-Colorer.generated
+  EditorService-Outliner.generated
   EditorService-Folding.generated
 
 language 
-  name EditorService
-  description "EditorService"
-  url http://strategoxt.org
+  name : EditorService
+  description : "sdf2imp-generated editor for the EditorService language"
+  url : http://strategoxt.org
   
-  id org.strategoxt.imp.editors.editorservice
-  extends aliases
+  id : org.strategoxt.imp.editors.editorservice
+  extends :
+  aliases :
   
-  extensions esv
-  table syntax/EditorService.tbl
-  start symbol Module
+  table : syntax/EditorService.tbl
+  start symbol : Module
