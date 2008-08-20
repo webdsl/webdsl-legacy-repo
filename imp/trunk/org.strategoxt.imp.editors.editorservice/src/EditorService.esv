@@ -6,13 +6,14 @@ imports
   EditorService-Folding.generated
 
 language 
-  name : EditorService
-  description : "sdf2imp-generated editor for the EditorService language"
-  url : http://strategoxt.org
+  name         : EditorService
+  description  : "sdf2imp-generated editor for the EditorService language"
+  url          : http://strategoxt.org
   
-  id : org.strategoxt.imp.editors.editorservice
-  extends :
-  aliases :
+  id           : org.strategoxt.imp.editors.editorservice
+  extends      :
+  aliases      :
   
-  table : syntax/EditorService.tbl
+  extensions   : esv
+  table        : syntax/EditorService.tbl
   start symbol : Module
