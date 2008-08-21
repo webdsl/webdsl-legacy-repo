@@ -11,8 +11,6 @@ language
   url          : http://strategoxt.org
   
   id           : org.strategoxt.imp.editors.editorservice
-  extends      :
-  aliases      :
   
   extensions   : esv
   table        : syntax/EditorService.tbl
