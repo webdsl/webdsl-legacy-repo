@@ -9,6 +9,7 @@ imports datamodel
 imports init
 imports pages
 imports style
+imports layout
 
 section pages
 
@@ -16,11 +17,4 @@ define page home() {
   title { "PetClinic Home Page" }
   
   main()
-  
-  define body() {
-    header { "Welcome" }
-    
-    div("find_owner_div") { navigate(findOwner()) { "Find owner" } }
-    div("display_vets_div") { navigate(vets()) { "Display veterinarians" } }
-  }
 }

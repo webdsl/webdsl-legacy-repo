@@ -3,33 +3,22 @@ module pages
 section pages
 
 define page vets() {
-  style { "bla.css" }
   main()
-  define body() {
+  define mainbody() {
     header { "Veterinarians:" }
     table() {
       header { "Name" "Specialty" }
       for (v : Vet) {
         row {
-          text(v.name)
-          bla2(v.specialtiesList)
+          text(v.name) output(v.specialtiesList)
         }
       }
     }
   }
 }
 
-/*
-define ouput(coll : *<*>) {
-    list() {
-      for (s : * in coll) {
-        listitem { text("____") output(s.name) } 
-      }
-    }
-}
-*/
 
-define bla2(coll : List<Specialty>) {
+define output(coll : List<Specialty>) {
     list() {
       for (s : Specialty in coll) {
         listitem { text("____") output(s.name) } 
@@ -37,7 +26,7 @@ define bla2(coll : List<Specialty>) {
     }
 }
 
-define bla2(coll : List<Visit>) {
+define output(coll : List<Visit>) {
     list() {
       for (v : Visit in coll) {
         listitem { text("....") output(v.date) } 
@@ -46,38 +35,36 @@ define bla2(coll : List<Visit>) {
 }
 
 
-define bla2(i1 : Int, i2 : Int, i3 : Int) {
-    text("bla")
-}
-
 define page vet(v : Vet) {
   main()
-  define body() {
+  define mainbody() {
     header { "Veterinarian: " output(v.name) }
-    bla2(v.specialtiesList)
+    output(v.specialtiesList)
   }
 }
 
 define page pet(p : Pet) {
   main()
-  define body() {
+  define mainbody() {
     header { "Pet: " output(p.name) }
-    bla2(p.visitsList)
+    output(p.visitsList)
   }
 }
 
 define page findOwner() {
   main()
-  define body() {
+  define mainbody() {
     var searchString : String;
 
-    header { "Find Owners:" }
-    text("Last Name: ")
-    input(searchString)
-    action("Find Owners", findOwners())
-    action findOwners() {
-      return owners(searchString);
-    }
+	form {
+		header { "Find Owners:" }
+		text("Last Name: ")
+		input(searchString)
+		action("Find Owners", findOwners())
+		action findOwners() {
+		  return owners(searchString);
+		}
+	}
 
     div("add_owner_link_div") {
       navigate(createOwner()) { "Add Owner" }
@@ -87,27 +74,24 @@ define page findOwner() {
 
 define page owners(searchString : String) {
   main()
-  define body() {
-    var foundOwners : List<Owner> := searchOwner(searchString);
-
-    header { "Owners:" }
-    table() {
-      header { "Name" "Address" "City" "Telephone" }
-      for (o : Owner in foundOwners) {
-        output(o.name)
-        row { action(o.name, ownerDetails(o)) text(o.address) text(o.city) text(o.telephone) }
-      }
-    }
-
-    action ownerDetails(owner : Owner) {
-      return owner(owner);
-    }
+  define mainbody() {
+		var foundOwners : List<Owner> := searchOwner(searchString);
+	
+		header { "Owners:" }
+		table() {
+		  header { "Name" "Address" "City" "Telephone" }
+		  for (o : Owner in foundOwners) {
+			row {
+			  navigate(owner(o)) { output(o.name) } text(o.address) text(o.city) text(o.telephone)
+			}
+		  }
+		}
   }
 }
 
 define page owner(o : Owner) {
   main()
-  define body() {
+  define mainbody() {
 
     header { "Owner: " text(o.name) }
     table() {
@@ -121,7 +105,7 @@ define page owner(o : Owner) {
 
 define page allVisit() {
   main()
-  define body() {
+  define mainbody() {
     list() {
       for (v : Visit) {
         listitem { text(v.name) }
@@ -143,7 +127,7 @@ define page allOwner() {
 
 define page allPet() {
   main()
-  define body() {
+  define mainbody() {
     list() {
       for (p : Pet) {
         listitem { text(p.name) }
@@ -157,9 +141,37 @@ define page createVet() {
   derive createPage from v
 }
 
-define page createOwner() { 
-  var o : Owner;
-  derive createPage from o
+define page createOwner() {
+  title("Create new owner")
+
+  main()
+  define mainbody() {
+    var o : Owner;
+    header{ "Create new owner" } 
+    form { 
+      group("Owner details") {
+        groupitem { label("Name:") { input(o.name) } }
+        groupitem { label("Address:") { input(o.address) } }
+      }
+      group("More details") {
+        groupitem { label("City:") { input(o.city) } }
+        groupitem { label("Telephone:") { input(o.telephone) } }
+        groupitem { label("Pets:") { input(o.pets) } }
+      }
+      group {
+        action("Save", save()) 
+        action("Cancel", cancel())
+      }
+    }
+    
+    action save() { 
+      o.save(); 
+	  return owner(o);
+    }
+    action cancel() {
+      cancel home();
+    }
+  } 
 }
 
 define page createVisit() { 
@@ -174,8 +186,4 @@ define page createPet() {
 
 define page specialty(s : Specialty) { 
   derive viewPage from s
-}
-
-define page test() {
-  "bla"
 }

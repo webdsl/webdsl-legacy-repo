@@ -2,8 +2,6 @@ module init
 
 section global data
 
-  globals {
-
     var spec1 : Specialty :=
       Specialty {
         name := "dentistry"
@@ -27,7 +25,6 @@ section global data
     var vet2 : Vet :=
       Vet {
         name := "Linda Douglas"
-        specialties := {spec1, spec2}
       };
 
     var vet3 : Vet :=
@@ -38,19 +35,16 @@ section global data
     var vet4 : Vet :=
       Vet {
         name := "Helen Leary"
-        specialties := {spec3}
       };
 
     var vet5 : Vet :=
       Vet {
         name := "Rafael Ortega"
-        specialties := {spec2}
       };
 
     var vet6 : Vet :=
       Vet {
         name := "Henry Stevens"
-        specialties := {spec3}
       };
 
     var o1 : Owner :=
@@ -184,4 +178,3 @@ section global data
        type := pt2
        owner := o3
      };
-  }

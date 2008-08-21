@@ -3,93 +3,58 @@ module templates
 section main template.
 
   define main() {
-    block("top") {
-      top()
-    }
-
-    block("body") {
-      block("left_innerbody") {
-        sidebar()
-      }
-  
-      block("main_innerbody") {
-        body()
-      }
-    }
-
-    block("footer") {
-      footer()
-    }
+    top()
+    topmenubar()
+    sidebar()
+    mainbody()
+    footer()
   }
 
 section basic page elements.
 
   define top() {
-    var a : String;
-    block("header") {}
-    block("menubar") { 
-      topmenu()
+    block("logos") {
+      image("images/webdsl_logo_small.png")
+      image("images/webdsl_logo_text.png")
     }
+    block("text") {
+	  text("default header")
+	}
+  }
+  
+  define topmenubar() {
+    topmenu()
   }
   
   define sidebar() {
-    sidemenu()
+    header { "Side Menu" }
+    
+    block { navigate(findOwner()) { "Find owner" } }
+    block { navigate(vets()) { "Display veterinarians" } }
+  }
+  
+  define mainbody() {
+    "Welcome to the Pet Clinic"
   }
 
   define footer() {
-    var a : String;
-    block("footer") {
-      block("left_footer") {
-        navigate(url("http://www.webdsl.org")) { "About WebDSL" }
+    block("footer_links") {
+      list {
+        listitem { navigate(home()) { "About" } }
+        listitem { navigate(home()) { "Privacy" } }
+        listitem { navigate(home()) { "Disclaimer" } }
+        listitem { navigate(url("http://www.webdsl.org")) { "About WebDSL" } }
       }
-      block("right_footer") {
-        text("PetClinic :: a WebDSL demonstration")
-      }
+    }
+    
+    block("footer_text") {
+      text("PetClinic :: a WebDSL demonstration")
     }
   }
 
   define topmenu() {
   
     menubar {
-      menu {
-        menuheader { navigate(home()) { "Home" } }
-      }
-      menu {
-        menuheader { navigate(vets()) { "Veterinarians" } }
-        menuitem { navigate(vets()) { "Display veterinarians" } }
-        menuitem { navigate(createVet()) { "Create veterinarian" } }
-      }
-      menu {
-        menuheader { navigate(allOwner()) { "Owners" } }
-        menuitem { navigate(findOwner()) { "Find owner" } }
-        menuitem { navigate(createOwner()) { "Create owner" } }
-        menuspacer
-        for (o : Owner) {
-          menuitem { output(o) }
-        }
-      }
-      menu {
-        menuheader { navigate(allPet()) { "Pet" } }
-        menuitem { navigate(createPet()) { "Create Pet" } }
-        menuspacer
-        for (p : Pet) {
-          menuitem { output(p) }
-        }
-      }
-      menu {
-        if (false) {
-          menuheader { navigate(allVisit()) { "Visit" } }
-        }
-        if (true) {
-          menuitem { navigate(createVisit()) { "New Visit" } }
-        }
-      }
-    }
-  }
-  
-  define sidemenu() {
-    
-    menubar("vertical") {
       menu {
         menuheader { navigate(home()) { "Home" } }
       }
