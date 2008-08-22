@@ -14,6 +14,14 @@ access control rules
       true
   }
 
+  rule template *(*) {
+      true
+  }
+
+  rule action *(*) {
+      true
+  }
+
   rule page editEntry(e : Entry) {
       e.sender = securityContext.principal
   }
