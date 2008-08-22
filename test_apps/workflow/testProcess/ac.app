@@ -38,7 +38,7 @@ section pages
             if (us.password.check(password)) {
               securityContext.principal := us;
               securityContext.loggedIn := true;
-              return message("You have been logged in.");
+              return allTasks();
             }
           }
           securityContext.loggedIn := false;

@@ -13,12 +13,21 @@ section procedures
 
   auto procedure testWorkflow(p : PdpMeeting) {
     process {
-        if (true) {writeReport(p)}
-        ; finalizeReport(p)
+      (employeeFillInForm(p) |AND| managerFillInForm(p));
+      repeat {
+        writeReport(p);
+        approveReport(p)
+      } until finalizeReport(p)
+      
+      /*if (true) {
+          writeReport(p)
+      };
+      finalizeReport(p)
+      */
     }
   }
 
-/*  procedure employeeFillInForm(p : PdpMeeting) {
+  procedure employeeFillInForm(p : PdpMeeting) {
     who { securityContext.principal = p.employee }
     view {
       title{"Fill in employee form"}
@@ -33,7 +42,7 @@ section procedures
       derive procedurePage from p for (managerPreparation)
     }
   }
-*/
+
   procedure writeReport(p : PdpMeeting) {
     who { securityContext.principal = p.employee.manager }
     view {
@@ -46,16 +55,10 @@ section procedures
     who { securityContext.principal = p.employee.manager }
   }
 
-/*  procedure approveReport(p : PdpMeeting) {
+  procedure approveReport(p : PdpMeeting) {
     who { securityContext.principal = p.employee }
   }
   
-  extend procedure approveReport(p : PdpMeeting) {
-    processed {
-      var a : Int := 4;
-    }
-  }*/
-
 section pages
 
   define body() {}
@@ -91,7 +94,7 @@ section pages
 
   // patch since no auto generation of view pages
   define page pdpMeeting(p : PdpMeeting) {
-    derive viewPage from p
+    derive procedureViewPage from p
   }
   define page user(u : User) {
     derive viewPage from u
