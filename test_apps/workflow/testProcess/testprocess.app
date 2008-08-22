@@ -89,11 +89,6 @@ access control rules
     
 section pages
 
-  define pdpMeetingOperations(p : PdpMeeting) {
-    "haha!"
-//    pdpMeetingOperationsList(p)
-  }
-  
   // patch since no auto generation of view pages
   define page pdpMeeting(p : PdpMeeting) {
     derive viewPage from p
