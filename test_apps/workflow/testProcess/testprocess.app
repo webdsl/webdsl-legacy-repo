@@ -18,12 +18,6 @@ section procedures
         writeReport(p);
         approveReport(p)
       } until finalizeReport(p)
-      
-      /*if (true) {
-          writeReport(p)
-      };
-      finalizeReport(p)
-      */
     }
   }
 
