@@ -4,7 +4,7 @@ imports
   EditorService-Colorer
   EditorService-Outliner
   EditorService-Folding.generated
-  EditorService-Syntax.generated
+  EditorService-Syntax
 
 language
 
