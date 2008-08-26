@@ -4,7 +4,7 @@ section pages
 
 define page vets() {
   main()
-  define mainbody() {
+  define body() {
     header { "Veterinarians:" }
     table() {
       header { "Name" "Specialty" }
@@ -37,7 +37,7 @@ define output(coll : List<Visit>) {
 
 define page vet(v : Vet) {
   main()
-  define mainbody() {
+  define body() {
     header { "Veterinarian: " output(v.name) }
     output(v.specialtiesList)
   }
@@ -45,7 +45,7 @@ define page vet(v : Vet) {
 
 define page pet(p : Pet) {
   main()
-  define mainbody() {
+  define body() {
     header { "Pet: " output(p.name) }
     output(p.visitsList)
   }
@@ -53,7 +53,7 @@ define page pet(p : Pet) {
 
 define page findOwner() {
   main()
-  define mainbody() {
+  define body() {
     var searchString : String;
 
 	form {
@@ -74,7 +74,7 @@ define page findOwner() {
 
 define page owners(searchString : String) {
   main()
-  define mainbody() {
+  define body() {
 		var foundOwners : List<Owner> := searchOwner(searchString);
 	
 		header { "Owners:" }
@@ -91,7 +91,7 @@ define page owners(searchString : String) {
 
 define page owner(o : Owner) {
   main()
-  define mainbody() {
+  define body() {
 
     header { "Owner: " text(o.name) }
     table() {
@@ -105,7 +105,7 @@ define page owner(o : Owner) {
 
 define page allVisit() {
   main()
-  define mainbody() {
+  define body() {
     list() {
       for (v : Visit) {
         listitem { text(v.name) }
@@ -127,7 +127,7 @@ define page allOwner() {
 
 define page allPet() {
   main()
-  define mainbody() {
+  define body() {
     list() {
       for (p : Pet) {
         listitem { text(p.name) }
@@ -145,7 +145,7 @@ define page createOwner() {
   title("Create new owner")
 
   main()
-  define mainbody() {
+  define body() {
     var o : Owner;
     header{ "Create new owner" } 
     form { 

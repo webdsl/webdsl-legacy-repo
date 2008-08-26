@@ -5,6 +5,7 @@ style globalStyle
   const mainColor : Color := #330099;
   const globalFont : Font := Font.Lucida.Grande;
   const globalFontSize : Length := 0.75em;
+  const layoutBorderColor : Color := #c0c0c0;
 
   section() {
     font := globalFont;
@@ -13,7 +14,42 @@ style globalStyle
   
   navigate() {
     font := globalFont;
-    font-size := globalFontSize;    
+    font-size := globalFontSize;
+  }
+  
+  header() {
+    font := globalFont;
+    font-size := globalFontSize * 1.3333em;
+    margin-top := 0px;
+  }
+  
+  table() {
+  	font := globalFont;
+    font-size := globalFontSize;
+  }
+  
+  table() > header() {
+    font := globalFont;
+    font-size := 1em;
+    font-weight := Weight.bold;
+    font-color := #404040;
+    image := url("images/menubar_bg.png");
+    image-repeat := Repeat.horizontal;
+    border-color := layoutBorderColor;
+  }
+  
+  table() > row() {
+    background-color := Color.white;
+  }
+  
+  block() {
+    font := globalFont;
+    font-size := 1em;
+  }
+  
+  form() {
+    font := globalFont;
+    font-size := globalFontSize;
   }
 
 
@@ -22,13 +58,9 @@ style templateStyle
   const layoutBorderColor : Color := #c0c0c0;
   const globalFont : Font := Font.Lucida.Grande;
 
-  template topmenubar() {
-    margin-bottom := 1em;
-  }
-  
   template topmenu() {
-    width := 80%;
-    align := Align.center;
+    width := 100%;
+    margin-bottom := 1em;
   }
   
   template top() {
@@ -36,7 +68,7 @@ style templateStyle
     width := 100%;
   }
   
-  template top() >> #logos {
+  template top() >> logos {
     width := 25em;
   }
   
@@ -45,7 +77,7 @@ style templateStyle
     align := Align.center;
   }
   
-  template main() > #body {
+  template main() > #mainbody {
     width := 80%;
     align := Align.center;
     padding-top := 4px;
@@ -53,6 +85,14 @@ style templateStyle
   
   template sidebar() {
   	width := 15em;
+  	padding := 1em;
+  }
+  
+  template body() {
+    padding := 1em;
+   	border-left-color := layoutBorderColor;
+  	border-left-style := BorderStyle.solid;
+  	border-left-width := 1px;
   }
 
   template footer() {
@@ -63,7 +103,7 @@ style templateStyle
     font := globalFont;
     font-size := 0.7em;
     width := top().width;
-    margin-top := topmenubar().margin-bottom;
+    margin-top := topmenu().margin-bottom;
   }
 
 style formStyle
@@ -83,9 +123,15 @@ style formStyle
   }
   
   page createOwner() >> group() >> label() {
-    align := Align.right;
+    align := Align.left;
     width := labelWidth;
   }
+  
+  form() {
+    width := (page createOwner() >> group()).padding-left +
+             (page createOwner() >> group()).padding-right;
+  }
+
 
 /*
   width: 27.125em;#createOwner fieldset > ol.padding-left +			1  em = 16px
@@ -103,28 +149,26 @@ style menuStyle
   const globalBorderColor : Color := #c0c0c0;
   const fontColor : Color := #505050;
 
-  template topmenubar() {
+  template topmenu() {
     background-color := #ffff00;
-    width := 100%;
     image := url("images/menubar_bg.png");
     image-repeat := Repeat.horizontal;
     border-color := globalBorderColor;
     border-width := 1px;
     border-style := BorderStyle.solid;
   }
-  
-  template topmenu() >> menu() > menuheader() {
+
+  template topmenu() >> menubar() {
+    width := 80%;
+    align := Align.center;
+  }
+/*  
+  template topmenu() >> menubar() > menu() > menuheader() {
     border-right-color := globalBorderColor;
     border-right-width := 1px;
     border-right-style := BorderStyle.solid;
   }
-  
-  template topmenu() >> menu() > menuheader().first-child {
-    border-left-color := globalBorderColor;
-    border-left-width := 1px;
-    border-left-style := BorderStyle.solid;
-  }
-  
+*/  
   template topmenu() >> menu() > menuheader() > navigate() {
     padding := 0.3em;
     font := Font.Lucida.Grande; // | Font.Verdana | Font.sans-serif;
@@ -135,6 +179,7 @@ style menuStyle
   
   template topmenu() >> menu() >> navigate().hover {
     image := url("images/menubar_bg_hover.png");
+    image-repeat := Repeat.horizontal;
   }
 
 style footerStyle

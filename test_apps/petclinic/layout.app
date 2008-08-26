@@ -4,8 +4,8 @@ layout
 
   template main() {
     top();
-    topmenubar();
-    body: [ sidebar() | mainbody() ];
+    topmenu();
+    mainbody: [ sidebar() | body() ];
     footer();
   }
   

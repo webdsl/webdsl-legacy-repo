@@ -4,9 +4,9 @@ section main template.
 
   define main() {
     top()
-    topmenubar()
+    topmenu()
     sidebar()
-    mainbody()
+    body()
     footer()
   }
 
@@ -14,16 +14,12 @@ section basic page elements.
 
   define top() {
     block("logos") {
-      image("images/webdsl_logo_small.png")
-      image("images/webdsl_logo_text.png")
+      image("/images/webdsl_logo_small.png")
+      image("/images/webdsl_logo_text.png")
     }
     block("text") {
 	  text("default header")
 	}
-  }
-  
-  define topmenubar() {
-    topmenu()
   }
   
   define sidebar() {
@@ -33,7 +29,7 @@ section basic page elements.
     block { navigate(vets()) { "Display veterinarians" } }
   }
   
-  define mainbody() {
+  define body() {
     "Welcome to the Pet Clinic"
   }
 
