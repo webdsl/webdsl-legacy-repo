@@ -14,7 +14,7 @@ clean :
 	# ...
 
 bin/$(SYNTAX).packed.esv : $(SYNTAX).def $(SYNTAX).tbl $(SDF2IMP) Makefile $(ESVS)
-	$(SDF2IMP) -i $< -p $(SYNTAX).tbl -m $(SYNTAX)
+	$(SDF2IMP) -i $< -p $(SYNTAX).tbl -m $(SYNTAX) --verbose 2
 
 $(SYNTAX).def : $(SOURCE)
 	ln -s $< $@
