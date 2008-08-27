@@ -68,7 +68,7 @@ style templateStyle
     width := 100%;
   }
   
-  template top() >> logos {
+  template top() >> #logos {
     width := 25em;
   }
   
@@ -127,10 +127,6 @@ style formStyle
     width := labelWidth;
   }
   
-  form() {
-    width := (page createOwner() >> group()).padding-left +
-             (page createOwner() >> group()).padding-right;
-  }
 
 
 /*

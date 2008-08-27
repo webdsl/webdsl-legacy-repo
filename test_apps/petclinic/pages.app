@@ -90,17 +90,7 @@ define page owners(searchString : String) {
 }
 
 define page owner(o : Owner) {
-  main()
-  define body() {
-
-    header { "Owner: " text(o.name) }
-    table() {
-      row { "Name: " text(o.name) }
-      row { "Address: " text(o.address) }
-      row { "City: " text(o.city) }
-      row { "Telephone: " text(o.telephone) }
-    }
-  }
+  derive viewPage from o
 }
 
 define page allVisit() {
