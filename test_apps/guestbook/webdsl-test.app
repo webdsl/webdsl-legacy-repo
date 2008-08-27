@@ -100,24 +100,27 @@ section templates
 define main() {
     head()
     body()
+    powered()
     foot()
 }
 define head() {
     header { "Wiki Guestbook" }
-    navigate(home()) { "Home" }
-    " | "
-    if(!securityContext.loggedIn) {
-      navigate(login()) { "Login" }
+    list {
+      listitem { navigate(home()) { "Home" } }
+      if(!securityContext.loggedIn) {
+        listitem { navigate(login()) { "Login" } }
+      }
+      if(securityContext.loggedIn) {
+        listitem { navigate(logout()) { "Logout" } }
+      }
+      listitem { navigate(register()) { "Register" } }
     }
-    if(securityContext.loggedIn) {
-      navigate(logout()) { "Logout" }
-    }
-    " | "
-    navigate(register()) { "Register" }
-    horizontalspacer
 }
 define foot() {
-    horizontalspacer
+  "(c) Zef Hemel, 2008"
+}
+
+define powered() {
     par {"Powered by"}
     image("http://webdsl.org/webdslorg/images/WebDSL-small.png") 
 }
@@ -223,3 +226,48 @@ define page user(u : User) {
       }
     }
 }
+
+layout
+  template main() {
+    head();
+    body();
+    footer: [ powered() | foot() ];
+    //powered();
+    //foot();
+  }
+
+style guestBookStyle
+
+  template head() {
+    background-color := Color.gray;
+    width := main().width;
+  }
+
+  template head() >> list() {
+    orientation := Orientation.horizontal;
+    separator := Separator.pipe;
+    separator-space := 10px; // @todo: rename to spacing and set on listitem()
+  }
+
+  template body() {
+    width := main().width;
+  }
+  
+  template powered() {
+    align := Align.left;
+  }
+
+  #footer {
+    border-top-width := 1px;
+    border-top-style := BorderStyle.solid;
+    border-top-color := Color.black;
+  }
+
+  template foot() {
+    align := Align.right;
+  }
+
+  template main() {
+    align := Align.center;
+    width := 800px;
+  }
