@@ -1,13 +1,12 @@
 SYNTAX     = EditorService
-EXTENSIONS = esv
-PACKAGE    = org.strategoxt.imp.editors.editorservice
 SOURCE     = ../org.strategoxt.imp.metatooling/src/syntax/$(SYNTAX).def
-START      = Module
+CTREE      = ../org.strategoxt.imp.metatooling/sdf2imp.ctree
 
 SDF2IMP    = ../org.strategoxt.imp.metatooling/sdf2imp
-ESVS       = ${wildcard *.esv}
+ESVS       = ${wildcard src/*.esv}
 
-all : bin/$(SYNTAX).packed.esv
+all : bin/$(SYNTAX).packed.esv $(CTREE)
+	cp $(CTREE) bin
 
 clean :
 	rm -f src/parser/$(SYNTAX)ParseController.java bin/$(SYNTAX).packed.esv
@@ -15,7 +14,7 @@ clean :
 	# ...
 
 bin/$(SYNTAX).packed.esv : $(SYNTAX).def $(SYNTAX).tbl $(SDF2IMP) Makefile $(ESVS)
-	$(SDF2IMP) -i $< -p $(SYNTAX).tbl -e $(EXTENSIONS) -m $(SYNTAX) -s $(START) -n $(PACKAGE) --verbose 2
+	$(SDF2IMP) -i $< -p $(SYNTAX).tbl -m $(SYNTAX)
 
 $(SYNTAX).def : $(SOURCE)
 	ln -s $< $@
