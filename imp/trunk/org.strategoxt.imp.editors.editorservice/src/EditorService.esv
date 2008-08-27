@@ -5,6 +5,7 @@ imports
   EditorService-Outliner
   EditorService-Folding.generated
   EditorService-Syntax
+  EditorService-Compiler.generated
 
 language
 
