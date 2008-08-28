@@ -9,12 +9,12 @@ imports
 
 language
 
-  name         : EditorService
-  description  : "sdf2imp-generated editor for the EditorService language"
-  url          : http://strategoxt.org
+  name          : EditorService
+  description   : "sdf2imp-generated editor for the EditorService language"
+  url           : http://strategoxt.org
   
-  id           : org.strategoxt.imp.editors.editorservice
+  id            : org.strategoxt.imp.editors.editorservice
   
-  extensions   : esv
-  table        : syntax/EditorService.tbl
-  start symbol : Module
+  extensions    : esv
+  table         : syntax/EditorService.tbl
+  start symbols : Module
