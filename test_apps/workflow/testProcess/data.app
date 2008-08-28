@@ -16,15 +16,23 @@ section data model
     managerPreparation :: Text
     report :: Text
   }
+  
+  entity TestDinges {
+    name :: String
+    commentz :: String
+    proc1Text :: String
+    proc2Text :: String
+    child -> TestDinges
+  }
 
-  /*
+  
   status PdpMeeting {
     employeeFilledIn :: Bool
     managerFilledIn  :: Bool
     final            :: Bool
     employeeApproved :: Bool
   }
-  */
+  
 
   globals {
     var aManager : User := User {
@@ -38,4 +46,5 @@ section data model
       password := "secret",
       manager  := aManager
     };
+    
   }

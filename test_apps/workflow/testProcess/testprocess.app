@@ -11,16 +11,56 @@ imports ac
 
 section procedures
 
-  auto procedure testWorkflow(p : PdpMeeting) {
+/*  auto procedure testWorkflow(p : PdpMeeting) {
     process {
-      (employeeFillInForm(p) |AND| managerFillInForm(p));
+      (employeeFillInForm(p) and managerFillInForm(p));
+      repeat {
+        writeReport(p);
+        approveReport(p)
+      } until finalizeReport(p)
+    }
+  }*/
+
+/*  auto procedure testWorkflow(p : PdpMeeting) {
+    process {
+      (employeeFillInForm(p) ; managerFillInForm(p))
+      +
+      (writeReport(p) ; approveReport(p)) 
+    }
+  }*/
+
+/*  auto procedure testWorkflow(p : PdpMeeting) {
+    process {
+      while (p.report != "Dude") {
+        writeReport(p) ; managerFillInForm(p)
+      }
+    }
+  }*/
+  
+/*  auto procedure testWorkflow(p : PdpMeeting) {
+    process {
+      writeReport(p) ; 
+      if (p.report != "Dude") {
+        managerFillInForm(p)
+      }
+    }
+  }*/
+
+
+  procedure testWorkflow(p : PdpMeeting) {
+    do {
+      p.report := "Kanarie";
+      p.persist();
+    }
+    process {
+      (employeeFillInForm(p) xor managerFillInForm(p));
       repeat {
         writeReport(p);
         approveReport(p)
       } until finalizeReport(p)
     }
   }
-
+  
   procedure employeeFillInForm(p : PdpMeeting) {
     who { securityContext.principal = p.employee }
     view {
@@ -53,7 +93,35 @@ section procedures
     who { securityContext.principal = p.employee }
   }
   
+  auto procedure testDingesWorkflow(t : TestDinges) {
+    process {
+      proc1(t)
+      ; if (t.child != null) {
+          testDingesWorkflow(t.child)
+        }
+      ; proc2(t)
+    }
+  }
+  
+  procedure proc1(t : TestDinges) {
+    view {
+      title{"Fill proc1 for " text(t.name)}
+      derive procedurePage from t for (proc1Text)
+    }
+  }
+  
+  procedure proc2(t : TestDinges) {
+    view {
+      title{"Fill proc1 for " text(t.name)}
+      derive procedurePage from t for (proc2Text)
+    }
+  }
+  
 section pages
+
+  globals {
+    var test3: TestDinges;
+  }
 
   define body() {}
 
@@ -61,20 +129,58 @@ section pages
     main()
     define body() {
       var employee : User
-      navigatebutton(signin(), "Sign in!")
-      form {
-        header{"Organize PDP Meeting"}
-        "For: " input(employee)
-        action("Organize", organize())
-
-        action organize() {
-          var p : PdpMeeting := newPdpMeeting();
-          p.employee := employee;
-          p.persist();
-          p.testWorkflow.enable();
-          // Test stuff
-          return message("Done!");
+      section {
+        form {
+          header{"Quick start PDP Meeting for employee"}
+          action("Quick start", quickStart())
+        
+          action quickStart() {
+            test3 := newTestDinges();
+            test3.name := "Bovenste";
+            test3.child := newTestDinges();
+            test3.child.name := "Middelste";
+            test3.child.child := newTestDinges();
+            test3.child.child.name := "Onderste";
+            test3.child.child.persist();
+            test3.child.persist();
+            test3.persist();
+            test3.testDingesWorkflow.enable();
+            
+            var p : PdpMeeting := newPdpMeeting();
+            p.employee := aUser;
+            p.persist();
+            p.testWorkflow.enable();
+            
+            return message("Tests gestart");
+          }
         }
+      }
+      
+      section {
+        form {
+          header{"Organize PDP Meeting"}
+          "For: " input(employee)
+          action("Organize", organize())
+
+          action organize() {
+/*            var p : PdpMeeting := newPdpMeeting();
+            p.employee := employee;
+            p.persist();
+            p.testWorkflow.enable();
+*/            // Test stuff
+            return message("Done!");
+          }
+        }
+      }
+    }
+  }
+  
+  define page allMeetings() {
+    main()
+    define body() {
+      for(p : PdpMeeting) {
+        text(p.name)
+        text(" ")
       }
     }
   }
@@ -82,6 +188,9 @@ section pages
 access control rules 
   rule page pdpMeeting(pdpMeeting : PdpMeeting) {
     securityContext.principal = pdpMeeting.employee || securityContext.principal = pdpMeeting.employee.manager
+  }
+  rule page testDinges(t : testDinges) {
+    true
   }
     
 section pages
@@ -92,5 +201,8 @@ section pages
   }
   define page user(u : User) {
     derive viewPage from u
+  }
+  define page testDinges(t : TestDinges) {
+    derive procedureViewPage from t
   }
 

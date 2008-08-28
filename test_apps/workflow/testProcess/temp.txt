@@ -4,117 +4,107 @@ section  access denied page. .
 
   function genpagepredicatecombined0 ( ) : Bool
   {
-    return genpagepredicate0() && genpagepredicate8();
+    return genpagepredicate0() && genpagepredicate6();
   }
 
   function genpagepredicatecombined1 ( ) : Bool
   {
-    return genpagepredicate8();
+    return genpagepredicate6();
   }
 
   function genpagepredicatecombined2 ( ) : Bool
   {
-    return genpagepredicate8();
+    return genpagepredicate6();
   }
 
   function genpagepredicatecombined3 ( ) : Bool
   {
-    return genpagepredicate8();
+    return genpagepredicate6();
   }
 
-  function genpagepredicatecombined4 ( s7 : ProcedureStatus ) : Bool
+  function genpagepredicatecombined4 ( s5 : ProcedureStatus ) : Bool
   {
-    return genpagepredicate8();
+    return genpagepredicate6();
   }
 
   function genpagepredicatecombined5 ( ) : Bool
   {
-    return genpagepredicate8();
+    return genpagepredicate6();
   }
 
   function genpagepredicatecombined6 ( msg2 : String ) : Bool
   {
-    return genpagepredicate8();
+    return genpagepredicate6();
   }
 
   function genpagepredicatecombined7 ( msg3 : String ) : Bool
   {
-    return genpagepredicate8();
+    return genpagepredicate6();
   }
 
-  function genpagepredicatecombined8 ( s8 : TestWorkflowProcedureStatus ) : Bool
+  function genpagepredicatecombined8 ( s6 : IfProc0ProcedureStatus ) : Bool
   {
-    return genpagepredicate8();
+    return genpagepredicate6();
   }
 
-  function genpagepredicatecombined9 ( s9 : EmployeeFillInFormProcedureStatus ) : Bool
+  function genpagepredicatecombined9 ( t19 : TestDinges ) : Bool
   {
-    return genpagepredicate8();
+    return genpagepredicate4(t19) && genpagepredicate6();
   }
 
-  function genpagepredicatecombined10 ( s10 : ManagerFillInFormProcedureStatus ) : Bool
+  function genpagepredicatecombined10 ( s7 : TestWorkflowProcedureStatus ) : Bool
   {
-    return genpagepredicate8();
+    return genpagepredicate6();
   }
 
-  function genpagepredicatecombined11 ( s11 : WriteReportProcedureStatus ) : Bool
+  function genpagepredicatecombined11 ( s8 : Proc1ProcedureStatus ) : Bool
   {
-    return genpagepredicate8();
+    return genpagepredicate6();
   }
 
-  function genpagepredicatecombined12 ( s12 : FinalizeReportProcedureStatus ) : Bool
+  function genpagepredicatecombined12 ( s9 : Proc2ProcedureStatus ) : Bool
   {
-    return genpagepredicate8();
+    return genpagepredicate6();
   }
 
-  function genpagepredicatecombined13 ( s13 : ApproveReportProcedureStatus ) : Bool
+  function genpagepredicatecombined13 ( t20 : TestDinges ) : Bool
   {
-    return genpagepredicate8();
+    return genpagepredicate1(t20) && genpagepredicate6();
   }
 
-  function genpagepredicatecombined14 ( p80 : PdpMeeting ) : Bool
+  function genpagepredicatecombined14 ( t21 : TestDinges ) : Bool
   {
-    return genpagepredicate1(p80) && genpagepredicate8();
+    return genpagepredicate2(t21) && genpagepredicate6();
   }
 
-  function genpagepredicatecombined15 ( p81 : PdpMeeting ) : Bool
+  function genpagepredicatecombined15 ( t22 : TestDinges ) : Bool
   {
-    return genpagepredicate2(p81) && genpagepredicate8();
+    return genpagepredicate3(t22) && genpagepredicate6();
   }
 
-  function genpagepredicatecombined16 ( p82 : PdpMeeting ) : Bool
+  function genpagepredicatecombined16 ( ) : Bool
   {
-    return genpagepredicate3(p82) && genpagepredicate8();
+    return genpagepredicate6();
   }
 
-  function genpagepredicatecombined17 ( p83 : PdpMeeting ) : Bool
+  function genpagepredicatecombined17 ( ) : Bool
   {
-    return genpagepredicate4(p83) && genpagepredicate8();
+    return genpagepredicate6();
   }
 
-  function genpagepredicatecombined18 ( p84 : PdpMeeting ) : Bool
+  function genpagepredicatecombined18 ( p4 : PdpMeeting ) : Bool
   {
-    return genpagepredicate5(p84) && genpagepredicate8();
+    return genpagepredicate6() && genpagepredicate7(p4);
   }
 
-  function genpagepredicatecombined19 ( p85 : PdpMeeting ) : Bool
+  function genpagepredicatecombined19 ( u1 : User ) : Bool
   {
-    return genpagepredicate6(p85) && genpagepredicate8();
+    return genpagepredicate6();
   }
 
-  function genpagepredicatecombined20 ( ) : Bool
+  function genpagepredicatecombined20 ( t23 : TestDinges ) : Bool
   {
-    return genpagepredicate8();
-  }
-
-  function genpagepredicatecombined21 ( p88 : PdpMeeting ) : Bool
-  {
-    return genpagepredicate8() && genpagepredicate9(p88);
-  }
-
-  function genpagepredicatecombined22 ( u1 : User ) : Bool
-  {
-    return genpagepredicate8();
+    return genpagepredicate6();
   }
 
   function genpagepredicate0 ( ) : Bool
@@ -122,42 +112,32 @@ section  access denied page. .
     return true;
   }
 
-  function genpagepredicate1 ( p : PdpMeeting ) : Bool
+  function genpagepredicate1 ( t : TestDinges ) : Bool
   {
-    return true && true && true && true && true && true;
+    return true && true && true && true && t.testWorkflow.isEnabled;
   }
 
-  function genpagepredicate2 ( p : PdpMeeting ) : Bool
+  function genpagepredicate2 ( t : TestDinges ) : Bool
   {
-    return true && true && securityContext.principal = p.employee && true && true;
+    return true && true && true && true && t.proc1.isEnabled;
   }
 
-  function genpagepredicate3 ( p : PdpMeeting ) : Bool
+  function genpagepredicate3 ( t : TestDinges ) : Bool
   {
-    return true && true && securityContext.principal = p.employee.manager && true && true;
+    return true && true && true && true && t.proc2.isEnabled;
   }
 
-  function genpagepredicate4 ( p : PdpMeeting ) : Bool
+  function genpagepredicate4 ( t : TestDinges ) : Bool
   {
-    return true && true && securityContext.principal = p.employee.manager && true && true;
+    return true && true && true && true && true && t.ifProc0.isEnabled;
   }
 
-  function genpagepredicate5 ( p : PdpMeeting ) : Bool
-  {
-    return true && true && securityContext.principal = p.employee.manager && true;
-  }
-
-  function genpagepredicate6 ( p : PdpMeeting ) : Bool
-  {
-    return true && true && securityContext.principal = p.employee && true;
-  }
-
-  function genpagepredicate7 ( ) : Bool
+  function genpagepredicate5 ( ) : Bool
   {
     return true;
   }
 
-  function genpagepredicate8 ( ) : Bool
+  function genpagepredicate6 ( ) : Bool
   {
     return true;
   }
@@ -172,9 +152,14 @@ section  access denied page. .
     return true;
   }
 
-  function genpagepredicate9 ( pdpMeeting : PdpMeeting ) : Bool
+  function genpagepredicate7 ( pdpMeeting : PdpMeeting ) : Bool
   {
     return securityContext.principal = pdpMeeting.employee || securityContext.principal = pdpMeeting.employee.manager;
+  }
+
+  function genpagepredicate8 ( t : testDinges ) : Bool
+  {
+    return true;
   }
 
   function genactionpredicate1 ( ) : Bool
@@ -232,9 +217,9 @@ section  access denied page. .
     return true;
   }
 
-  function genactionpredicate12 ( ) : Bool
+  function genactionpredicate12 ( genuniquevar0 : TestDinges ) : Bool
   {
-    return true;
+    return true && true && true && true && true && genuniquevar0.ifProc0.isEnabled;
   }
 
   function genactionpredicate13 ( ) : Bool
@@ -257,9 +242,9 @@ section  access denied page. .
     return true;
   }
 
-  function genactionpredicate17 ( genuniquevar0 : PdpMeeting ) : Bool
+  function genactionpredicate17 ( genuniquevar1 : TestDinges ) : Bool
   {
-    return true && true && true && true && true && true;
+    return true && true && true && true && genuniquevar1.testWorkflow.isEnabled;
   }
 
   function genactionpredicate18 ( ) : Bool
@@ -267,9 +252,9 @@ section  access denied page. .
     return true;
   }
 
-  function genactionpredicate19 ( genuniquevar1 : PdpMeeting ) : Bool
+  function genactionpredicate19 ( genuniquevar2 : TestDinges ) : Bool
   {
-    return true && true && securityContext.principal = genuniquevar1.employee && true && true;
+    return true && true && true && true && genuniquevar2.proc1.isEnabled;
   }
 
   function genactionpredicate20 ( ) : Bool
@@ -277,9 +262,9 @@ section  access denied page. .
     return true;
   }
 
-  function genactionpredicate21 ( genuniquevar2 : PdpMeeting ) : Bool
+  function genactionpredicate21 ( genuniquevar3 : TestDinges ) : Bool
   {
-    return true && true && securityContext.principal = genuniquevar2.employee.manager && true && true;
+    return true && true && true && true && genuniquevar3.proc2.isEnabled;
   }
 
   function genactionpredicate22 ( ) : Bool
@@ -287,19 +272,19 @@ section  access denied page. .
     return true;
   }
 
-  function genactionpredicate23 ( genuniquevar3 : PdpMeeting ) : Bool
-  {
-    return true && true && securityContext.principal = genuniquevar3.employee.manager && true && true;
-  }
-
-  function genactionpredicate24 ( ) : Bool
+  function genactionpredicate23 ( ) : Bool
   {
     return true;
   }
 
-  function genactionpredicate25 ( genuniquevar4 : PdpMeeting ) : Bool
+  function genactionpredicate24 ( genuniquevar4 : PdpMeeting ) : Bool
   {
-    return true && true && securityContext.principal = genuniquevar4.employee.manager && true;
+    return securityContext.principal = genuniquevar4.employee || securityContext.principal = genuniquevar4.employee.manager;
+  }
+
+  function genactionpredicate25 ( ) : Bool
+  {
+    return true;
   }
 
   function genactionpredicate26 ( ) : Bool
@@ -307,9 +292,9 @@ section  access denied page. .
     return true;
   }
 
-  function genactionpredicate27 ( genuniquevar5 : PdpMeeting ) : Bool
+  function genactionpredicate27 ( ) : Bool
   {
-    return true && true && securityContext.principal = genuniquevar5.employee && true;
+    return true;
   }
 
   function genactionpredicate28 ( ) : Bool
@@ -317,9 +302,9 @@ section  access denied page. .
     return true;
   }
 
-  function genactionpredicate29 ( genuniquevar6 : PdpMeeting ) : Bool
+  function genactionpredicate29 ( ) : Bool
   {
-    return securityContext.principal = genuniquevar6.employee || securityContext.principal = genuniquevar6.employee.manager;
+    return true;
   }
 
   function genactionpredicate30 ( ) : Bool
@@ -332,171 +317,428 @@ section  access denied page. .
     return true;
   }
 
+  function genactionpredicate32 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate33 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate34 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate35 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate36 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate37 ( ) : Bool
+  {
+    return true;
+  }
+
   function genactionpredicatecombined0 ( ) : Bool
   {
     return genactionpredicate0() && genactionpredicate7();
   }
 
-  function genactionpredicatecombined1 ( genuniquevar7 : PdpMeeting ) : Bool
+  function genactionpredicatecombined1 ( genuniquevar5 : TestDinges ) : Bool
   {
-    return genactionpredicate0() && genactionpredicate16();
+    return genactionpredicate0() && genactionpredicate17(genuniquevar5) && genactionpredicate16();
   }
 
-  function genactionpredicatecombined2 ( genuniquevar8 : PdpMeeting ) : Bool
+  function genactionpredicatecombined2 ( genuniquevar6 : TestDinges ) : Bool
   {
-    return genactionpredicate0() && genactionpredicate18();
+    return genactionpredicate0() && genactionpredicate19(genuniquevar6) && genactionpredicate18();
   }
 
-  function genactionpredicatecombined3 ( genuniquevar9 : PdpMeeting ) : Bool
+  function genactionpredicatecombined3 ( genuniquevar7 : TestDinges ) : Bool
   {
-    return genactionpredicate0() && genactionpredicate20();
+    return genactionpredicate0() && genactionpredicate21(genuniquevar7) && genactionpredicate20();
   }
 
-  function genactionpredicatecombined4 ( genuniquevar11 : PdpMeeting ) : Bool
+  function genactionpredicatecombined4 ( ) : Bool
   {
     return genactionpredicate0() && genactionpredicate22();
   }
 
   function genactionpredicatecombined5 ( ) : Bool
   {
-    return genactionpredicate0() && genactionpredicate28();
+    return genactionpredicate0() && genactionpredicate22();
   }
 
   define page accessDenied () {
     init
     {
       if ( genpagepredicatecombined0() )
-        {
-        }
+      {
+      }
       else
-        {
-          goto accessDenied();
-        }
+      {
+        goto accessDenied();
+      }
     }
     title("Access Denied"){
     }
     text("Access Denied: "){
     }
-    if ( genpagepredicatecombined20() ) {
+    if ( genpagepredicatecombined16() ) {
       navigate(home()){
         "return to home page"
       }
     }
   }
 
-description
-  {
+style
+
+default_
+
+body
+
+{
+
+font-size
+
+:=
+
+100
+
+%
+
+;
+
+line-height
+
+:=
+
+1.125
+
+em
+
+;
+
+}
+
+template
+
+testDingesStatusList
+
+(
+
+)
+
+{
+
+background-color
+
+:=
+
+#
+
+ffffff
+
+;
+
+}
+
+template
+
+testDingesTaskList
+
+(
+
+)
+
+{
+
+background-color
+
+:=
+
+#
+
+ffffff
+
+;
+
+}
+
+template
+
+testDingesProcedures
+
+(
+
+)
+
+{
+
+}
+
+template
+
+testDingesProceduresList
+
+(
+
+)
+
+{
+
+}
+
+template
+
+body
+
+(
+
+)
+
+{
+
+background-color
+
+:=
+
+#
+
+ffffff
+
+;
+
+}
+
+template
+
+footer
+
+(
+
+)
+
+{
+
+background-color
+
+:=
+
+#
+
+ffffff
+
+;
+
+}
+
+template
+
+contextSidebar
+
+(
+
+)
+
+{
+
+background-color
+
+:=
+
+#
+
+ffffff
+
+;
+
+}
+
+template
+
+sidebar
+
+(
+
+)
+
+{
+
+background-color
+
+:=
+
+#
+
+ffffff
+
+;
+
+}
+
+template
+
+top
+
+(
+
+)
+
+{
+
+background-color
+
+:=
+
+#
+
+ffffff
+
+;
+
+}
+
+template
+
+main
+
+(
+
+)
+
+{
+
+background-color
+
+:=
+
+#
+
+ffffff
+
+;
+
+}
+
+description {
   A workflow example for a personal development plan workflow
 }
 
 module templates
 section  templates .
 
-  function enabled ( this0 : ProcedureStatus ) : Void
+  function newTestDinges ( ) : TestDinges
   {
-  }
-
-  function disabled ( this0 : ProcedureStatus ) : Void
-  {
-  }
-
-  function do ( this0 : ProcedureStatus ) : Void
-  {
-  }
-
-  function done ( this0 : ProcedureStatus ) : Void
-  {
-    processed(this0);
-  }
-
-  function processed ( this0 : ProcedureStatus ) : Void
-  {
-    enable(this0.finalizeReport);
-    enable(this0.approveReport);
-    processed(this0);
-  }
-
-  function enable ( this0 : ProcedureStatus ) : Void
-  {
-    this0.enabled := true;
-    enabled(this0);
-  }
-
-  function enable ( this0 : ProcedureStatus c : ProcedureStatus r : Int ) : Void
-  {
-    this0.enabled := true;
-    this0.caller := c;
-    this0.returnstate := r;
-    enabled(this0);
-  }
-
-  function disable ( this0 : ProcedureStatus ) : Void
-  {
-    this0.enabled := false;
-    disabled(this0);
-  }
-
-  function next ( this0 : ProcedureStatus state : Int ) : Void
-  {
+    var o : TestDinges := TestDinges{} ;
+    o.persist();
+    o.ifProc0 := IfProc0ProcedureStatus{};
+    o.ifProc0.t := o;
+    o.ifProc0.persist();
+    o.proc2 := Proc2ProcedureStatus{};
+    o.proc2.t := o;
+    o.proc2.persist();
+    o.proc1 := Proc1ProcedureStatus{};
+    o.proc1.t := o;
+    o.proc1.persist();
+    o.testWorkflow := TestWorkflowProcedureStatus{};
+    o.testWorkflow.t := o;
+    o.testWorkflow.persist();
+    return o;
   }
 
   entity ProcedureStatus {
-    name :: String ( ) := "Procedure status"
-    enabled :: Bool ( )
-    date :: DateTime ( )
     caller -> ProcedureStatus ( )
     returnstate :: Int ( )
+    name :: String ( ) := "Procedure status"
+    isEnabled :: Bool ( )
+    date :: DateTime ( )
+    function enable__ProcedureStatus__Int ( c : ProcedureStatus r : Int ) : Void
+    {
+      this.isEnabled := true;
+      this.caller := c;
+      this.returnstate := r;
+      this.persist();
+      this.enabled();
+    }
+    function next ( state : Int ) : Void
+    {
+    }
+    function processed ( ) : Void
+    {
+      this.isEnabled := false;
+      this.persist();
+      if ( this.caller != null )
+      {
+        this.caller.next(this.returnstate);
+      }
+      else
+      {
+      }
+    }
+    function enabled ( ) : Void
+    {
+    }
+    function disabled ( ) : Void
+    {
+    }
+    function do ( ) : Void
+    {
+    }
+    function done ( ) : Void
+    {
+    }
+    function enable__ ( ) : Void
+    {
+      this.isEnabled := true;
+      this.persist();
+      this.enabled();
+    }
+    function disable ( ) : Void
+    {
+      this.isEnabled := false;
+      this.persist();
+      this.disabled();
+    }
   }
 
-  define template pdpMeetingProceduresList (pdpMeeting7 : PdpMeeting) {
-    list(){
-      if ( securityContext.principal = pdpMeeting7.employee && pdpMeeting7.approveReport.enabled && true ) {
-        listitem(){
-          navigatebutton(approveReport(pdpMeeting7), "Approve report"){
-          }
-        }
-      }
-      if ( securityContext.principal = pdpMeeting7.employee.manager && pdpMeeting7.finalizeReport.enabled && true ) {
-        listitem(){
-          navigatebutton(finalizeReport(pdpMeeting7), "Finalize report"){
-          }
-        }
-      }
-      if ( securityContext.principal = pdpMeeting7.employee.manager && pdpMeeting7.writeReport.enabled && true ) {
-        listitem(){
-          if ( genpagepredicatecombined17(pdpMeeting7) ) {
-            navigate(writeReport(pdpMeeting7)){
-              text("Write report"){
+  define template testDingesProceduresList (testDinges5 : TestDinges) {
+    if ( gentemplatepredicate0() ) {
+      list(){
+        if ( true && testDinges5.proc2.isEnabled && true ) {
+          listitem(){
+            if ( genpagepredicatecombined15(testDinges5) ) {
+              navigate(proc2(testDinges5)){
+                text("Proc2"){
+                }
               }
             }
           }
         }
-      }
-      if ( securityContext.principal = pdpMeeting7.employee.manager && pdpMeeting7.managerFillInForm.enabled && true ) {
-        listitem(){
-          if ( genpagepredicatecombined16(pdpMeeting7) ) {
-            navigate(managerFillInForm(pdpMeeting7)){
-              text("Manager fill in form"){
+        if ( true && testDinges5.proc1.isEnabled && true ) {
+          listitem(){
+            if ( genpagepredicatecombined14(testDinges5) ) {
+              navigate(proc1(testDinges5)){
+                text("Proc1"){
+                }
               }
             }
           }
         }
-      }
-      if ( securityContext.principal = pdpMeeting7.employee && pdpMeeting7.employeeFillInForm.enabled && true ) {
-        listitem(){
-          if ( genpagepredicatecombined15(pdpMeeting7) ) {
-            navigate(employeeFillInForm(pdpMeeting7)){
-              text("Employee fill in form"){
-              }
-            }
-          }
-        }
-      }
-      if ( true && pdpMeeting7.testWorkflow.enabled && true ) {
-        listitem(){
-          if ( genpagepredicatecombined14(pdpMeeting7) ) {
-            navigate(testWorkflow(pdpMeeting7)){
-              text("Test workflow"){
+        if ( true && testDinges5.testWorkflow.isEnabled && true ) {
+          listitem(){
+            if ( genpagepredicatecombined13(testDinges5) ) {
+              navigate(testWorkflow(testDinges5)){
+                text("Test workflow"){
+                }
               }
             }
           }
@@ -505,8 +747,10 @@ section  templates .
     }
   }
 
-  define template pdpMeetingProcedures (pdpMeeting8 : PdpMeeting) {
-    pdpMeetingProceduresList(pdpMeeting8){
+  define template testDingesProcedures (testDinges6 : TestDinges) {
+    if ( gentemplatepredicate0() ) {
+      testDingesProceduresList(testDinges6){
+      }
     }
   }
 
@@ -514,12 +758,12 @@ section  templates .
     init
     {
       if ( genpagepredicatecombined1() )
-        {
-        }
+      {
+      }
       else
-        {
-          goto accessDenied();
-        }
+      {
+        goto accessDenied();
+      }
     }
     title(){
       "All tasks"
@@ -531,32 +775,34 @@ section  templates .
         "All tasks"
       }
       section(){
-        pdpMeetingTaskList(){
+        testDingesTaskList(){
         }
       }
     }
   }
 
-  function pdpMeetingHasProcedures ( pdpMeeting : PdpMeeting ) : Bool
+  function testDingesHasProcedures ( testDinges : TestDinges ) : Bool
   {
-    return securityContext.principal = pdpMeeting.employee && pdpMeeting.approveReport.enabled && true || securityContext.principal = pdpMeeting.employee.manager && pdpMeeting.finalizeReport.enabled && true || securityContext.principal = pdpMeeting.employee.manager && pdpMeeting.writeReport.enabled && true || securityContext.principal = pdpMeeting.employee.manager && pdpMeeting.managerFillInForm.enabled && true || securityContext.principal = pdpMeeting.employee && pdpMeeting.employeeFillInForm.enabled && true || true && pdpMeeting.testWorkflow.enabled && true || false;
+    return true && testDinges.proc2.isEnabled && true || true && testDinges.proc1.isEnabled && true || true && testDinges.testWorkflow.isEnabled && true || false;
   }
 
-  define template pdpMeetingTaskList () {
-    header(){
-      "Pdp meeting"
-    }
-    list(){
-      for ( pdpMeeting9 : PdpMeeting where true order by null asc ) {
-        if ( pdpMeetingHasProcedures(pdpMeeting9) ) {
-          listitem(){
-            if ( genpagepredicatecombined21(pdpMeeting9) ) {
-              navigate(pdpMeeting(pdpMeeting9)){
-                text(pdpMeeting9.name){
+  define template testDingesTaskList () {
+    if ( gentemplatepredicate0() ) {
+      header(){
+        "Test dinges"
+      }
+      list(){
+        for ( testDinges7 : TestDinges where true order by null asc limit 1000 offset 0 ) {
+          if ( testDingesHasProcedures(testDinges7) ) {
+            listitem(){
+              if ( genpagepredicatecombined20(testDinges7) ) {
+                navigate(testDinges(testDinges7)){
+                  text(testDinges7.name){
+                  }
                 }
               }
-            }
-            pdpMeetingProceduresList(pdpMeeting9){
+              testDingesProceduresList(testDinges7){
+              }
             }
           }
         }
@@ -564,19 +810,19 @@ section  templates .
     }
   }
 
-  define page pdpMeetingTasks () {
+  define page testDingesTasks () {
     init
     {
       if ( genpagepredicatecombined2() )
-        {
-        }
+      {
+      }
       else
-        {
-          goto accessDenied();
-        }
+      {
+        goto accessDenied();
+      }
     }
     title(){
-      "Pdp meeting"
+      "Test dinges"
     }
     main(){
     }
@@ -584,135 +830,80 @@ section  templates .
       header(){
         "Tasks"
       }
-      pdpMeetingTaskList(){
+      testDingesTaskList(){
       }
     }
   }
 
-  define template pdpMeetingStatusList () {
-    header(){
-      "Pdp meeting"
-    }
-    list(){
-      for ( pdpMeeting10 : PdpMeeting where true order by null asc ) {
-        listitem(){
-          if ( genpagepredicatecombined21(pdpMeeting10) ) {
-            navigate(pdpMeeting(pdpMeeting10)){
-              text(pdpMeeting10.name){
+  define template testDingesStatusList () {
+    if ( gentemplatepredicate0() ) {
+      header(){
+        "Test dinges"
+      }
+      list(){
+        for ( testDinges8 : TestDinges where true order by null asc limit 1000 offset 0 ) {
+          listitem(){
+            if ( genpagepredicatecombined20(testDinges8) ) {
+              navigate(testDinges(testDinges8)){
+                text(testDinges8.name){
+                }
               }
             }
-          }
-          list(){
-            if ( pdpMeeting10.approveReport.enabled && true ) {
-              if ( securityContext.principal = pdpMeeting10.employee ) {
-                listitem(){
-                  if ( genpagepredicatecombined19(pdpMeeting10) ) {
-                    navigate(approveReport(pdpMeeting10)){
-                      text("Approve report"){
+            list(){
+              if ( testDinges8.proc2.isEnabled && true ) {
+                if ( true ) {
+                  listitem(){
+                    if ( genpagepredicatecombined15(testDinges8) ) {
+                      navigate(proc2(testDinges8)){
+                        text("Proc2"){
+                        }
+                        ""
                       }
-                      " (X)"
+                    }
+                  }
+                }
+                if ( ! true ) {
+                  listitem(){
+                    text("Proc2"){
                     }
                   }
                 }
               }
-              if ( ! securityContext.principal = pdpMeeting10.employee ) {
-                listitem(){
-                  text("Approve report"){
+              if ( testDinges8.proc1.isEnabled && true ) {
+                if ( true ) {
+                  listitem(){
+                    if ( genpagepredicatecombined14(testDinges8) ) {
+                      navigate(proc1(testDinges8)){
+                        text("Proc1"){
+                        }
+                        ""
+                      }
+                    }
                   }
                 }
-              }
-            }
-            if ( pdpMeeting10.finalizeReport.enabled && true ) {
-              if ( securityContext.principal = pdpMeeting10.employee.manager ) {
-                listitem(){
-                  if ( genpagepredicatecombined18(pdpMeeting10) ) {
-                    navigate(finalizeReport(pdpMeeting10)){
-                      text("Finalize report"){
-                      }
-                      " (X)"
+                if ( ! true ) {
+                  listitem(){
+                    text("Proc1"){
                     }
                   }
                 }
               }
-              if ( ! securityContext.principal = pdpMeeting10.employee.manager ) {
-                listitem(){
-                  text("Finalize report"){
-                  }
-                }
-              }
-            }
-            if ( pdpMeeting10.writeReport.enabled && true ) {
-              if ( securityContext.principal = pdpMeeting10.employee.manager ) {
-                listitem(){
-                  if ( genpagepredicatecombined17(pdpMeeting10) ) {
-                    navigate(writeReport(pdpMeeting10)){
-                      text("Write report"){
+              if ( testDinges8.testWorkflow.isEnabled && true ) {
+                if ( true ) {
+                  listitem(){
+                    if ( genpagepredicatecombined13(testDinges8) ) {
+                      navigate(testWorkflow(testDinges8)){
+                        text("Test workflow"){
+                        }
+                        ""
                       }
-                      ""
                     }
                   }
                 }
-              }
-              if ( ! securityContext.principal = pdpMeeting10.employee.manager ) {
-                listitem(){
-                  text("Write report"){
-                  }
-                }
-              }
-            }
-            if ( pdpMeeting10.managerFillInForm.enabled && true ) {
-              if ( securityContext.principal = pdpMeeting10.employee.manager ) {
-                listitem(){
-                  if ( genpagepredicatecombined16(pdpMeeting10) ) {
-                    navigate(managerFillInForm(pdpMeeting10)){
-                      text("Manager fill in form"){
-                      }
-                      ""
+                if ( ! true ) {
+                  listitem(){
+                    text("Test workflow"){
                     }
-                  }
-                }
-              }
-              if ( ! securityContext.principal = pdpMeeting10.employee.manager ) {
-                listitem(){
-                  text("Manager fill in form"){
-                  }
-                }
-              }
-            }
-            if ( pdpMeeting10.employeeFillInForm.enabled && true ) {
-              if ( securityContext.principal = pdpMeeting10.employee ) {
-                listitem(){
-                  if ( genpagepredicatecombined15(pdpMeeting10) ) {
-                    navigate(employeeFillInForm(pdpMeeting10)){
-                      text("Employee fill in form"){
-                      }
-                      ""
-                    }
-                  }
-                }
-              }
-              if ( ! securityContext.principal = pdpMeeting10.employee ) {
-                listitem(){
-                  text("Employee fill in form"){
-                  }
-                }
-              }
-            }
-            if ( pdpMeeting10.testWorkflow.enabled && true ) {
-              if ( true ) {
-                listitem(){
-                  if ( genpagepredicatecombined14(pdpMeeting10) ) {
-                    navigate(testWorkflow(pdpMeeting10)){
-                      text("Test workflow"){
-                      }
-                      ""
-                    }
-                  }
-                }
-              }
-              if ( ! true ) {
-                listitem(){
-                  text("Test workflow"){
                   }
                 }
               }
@@ -723,19 +914,19 @@ section  templates .
     }
   }
 
-  define page pdpMeetingStatus () {
+  define page testDingesStatus () {
     init
     {
       if ( genpagepredicatecombined3() )
-        {
-        }
+      {
+      }
       else
-        {
-          goto accessDenied();
-        }
+      {
+        goto accessDenied();
+      }
     }
     title(){
-      "Pdp meeting"
+      "Test dinges"
     }
     main(){
     }
@@ -745,90 +936,90 @@ section  templates .
           "Status"
         }
         section(){
-          pdpMeetingStatusList(){
+          testDingesStatusList(){
           }
         }
       }
     }
   }
 
-  define page procedureStatus (s7 : ProcedureStatus) {
+  define page procedureStatus (s5 : ProcedureStatus) {
     init
     {
-      if ( genpagepredicatecombined4(s7) )
-        {
-        }
+      if ( genpagepredicatecombined4(s5) )
+      {
+      }
       else
-        {
-          goto accessDenied();
-        }
+      {
+        goto accessDenied();
+      }
     }
     dummy(){
       main(){
       }
       define local body () {
         header(){
-          text(procedureStatus.s7.name){
+          text(s5.name){
           }
         }
         table(){
           dummy(){
             row(){
               "Name: "
-              text(procedureStatus.s7.name){
+              text(s5.name){
               }
             }
             row(){
-              "Enabled: "
-              text(procedureStatus.s7.enabled){
+              "Is enabled: "
+              outputBool(s5.isEnabled){
               }
             }
             row(){
               "Date: "
-              outputDateTime(procedureStatus.s7.date){
+              outputDateTime(s5.date){
               }
             }
             row(){
               "Caller: "
-              if ( genpagepredicatecombined4(procedureStatus.s7.caller) ) {
-                navigate(procedureStatus(procedureStatus.s7.caller)){
-                  text(procedureStatus.s7.caller.name){
+              if ( genpagepredicatecombined4(s5.caller) ) {
+                navigate(procedureStatus(s5.caller)){
+                  text(s5.caller.name){
                   }
                 }
               }
             }
             row(){
               "Returnstate: "
-              text(procedureStatus.s7.returnstate){
+              outputInt(s5.returnstate){
               }
             }
             row(){
               "Name: "
-              text(procedureStatus.s7.name){
+              text(s5.name){
               }
             }
             row(){
-              "Enabled: "
-              text(procedureStatus.s7.enabled){
+              "Is enabled: "
+              outputBool(s5.isEnabled){
               }
             }
             row(){
               "Date: "
-              outputDateTime(procedureStatus.s7.date){
+              outputDateTime(s5.date){
               }
             }
             row(){
               "Caller: "
-              if ( genpagepredicatecombined4(procedureStatus.s7.caller) ) {
-                navigate(procedureStatus(procedureStatus.s7.caller)){
-                  text(procedureStatus.s7.caller.name){
+              if ( genpagepredicatecombined4(s5.caller) ) {
+                navigate(procedureStatus(s5.caller)){
+                  text(s5.caller.name){
                   }
                 }
               }
             }
             row(){
               "Returnstate: "
-              text(procedureStatus.s7.returnstate){
+              outputInt(s5.returnstate){
               }
             }
           }
@@ -838,55 +1029,59 @@ section  templates .
   }
 
   define template main () {
-    block("top"){
-      top(){
-      }
-    }
-    block("body"){
-      block("left_innerbody"){
-        sidebar(){
+    if ( gentemplatepredicate0() ) {
+      block("top"){
+        top(){
         }
       }
-      block("main_innerbody"){
-        body(){
+      block("body"){
+        block("left_innerbody"){
+          sidebar(){
+          }
+        }
+        block("main_innerbody"){
+          body(){
+          }
         }
       }
-    }
-    block("footer"){
-      footer(){
+      block("footer"){
+        footer(){
+        }
       }
     }
   }
 
   define template top () {
-    block("header"){
-    }
-    block("menubar"){
-      menubar("horizontal"){
-        menu(){
-          menuheader(){
-            if ( genpagepredicatecombined20() ) {
-              navigate(home()){
-                "Home"
+    if ( gentemplatepredicate0() ) {
+      block("header"){
+      }
+      block("menubar"){
+        menubar("horizontal"){
+          menu(){
+            menuheader(){
+              if ( genpagepredicatecombined16() ) {
+                navigate(home()){
+                  "Home"
+                }
               }
             }
           }
-        }
-        menu(){
-          menuheader(){
-            "User"
-          }
-          menuitem(){
-            if ( genpagepredicatecombined5() ) {
-              navigate(signin()){
-                "Sign in"
+          menu(){
+            menuheader(){
+              "User"
+            }
+            menuitem(){
+              if ( genpagepredicatecombined5() ) {
+                navigate(signin()){
+                  "Sign in"
+                }
               }
             }
-          }
-          menuitem(){
-            if ( genpagepredicatecombined1() ) {
-              navigate(allTasks()){
-                "Tasks"
+            menuitem(){
+              if ( genpagepredicatecombined1() ) {
+                navigate(allTasks()){
+                  "Tasks"
+                }
               }
             }
           }
@@ -897,28 +1092,44 @@ section  templates .
 section  basic page elements. .
 
   define template sidebar () {
-    contextSidebar(){
+    if ( gentemplatepredicate0() ) {
+      contextSidebar(){
+      }
     }
   }
 
   define template contextSidebar () {
+    if ( gentemplatepredicate0() ) {
+    }
   }
 
   define template footer () {
-    "generated with "
-    navigate(url("http://www.webdsl.org")){
-      text("WebDSL"){
+    if ( gentemplatepredicate0() ) {
+      "generated with "
+      navigate(url("http://www.webdsl.org")){
+        text("WebDSL"){
+        }
       }
-    }
-    " and "
-    navigate(url("http://www.strategoxt.org")){
-      text("Stratego/XT"){
+      " and "
+      navigate(url("http://www.strategoxt.org")){
+        text("Stratego/XT"){
+        }
       }
     }
   }
 
 module data
 section  data model .
+
+  var aManager : User := User{username := "manager" name := "Joe Manager" password := "secret"} ;
+
+  var aUser : User := User{username := "user" name := "Joe User" password := "secret" manager := aManager} ;
+
+  var test1 : TestDinges := TestDinges{name := "onderste"} ;
+
+  var test2 : TestDinges := TestDinges{name := "middelste" child := test1} ;
+
+  var test3 : TestDinges := TestDinges{name := "bovenste" child := test2} ;
 
   entity User {
     username :: String ( )
@@ -928,18 +1139,23 @@ section  data model .
   }
 
   entity PdpMeeting {
-    approveReport <> ApproveReportProcedureStatus ( )
-    finalizeReport <> FinalizeReportProcedureStatus ( )
-    writeReport <> WriteReportProcedureStatus ( )
-    managerFillInForm <> ManagerFillInFormProcedureStatus ( )
-    employeeFillInForm <> EmployeeFillInFormProcedureStatus ( )
-    testWorkflow <> TestWorkflowProcedureStatus ( )
     employee -> User ( )
     name :: String ( ) := this.employee.name + " PDP Form"
     employeePreparation :: Text ( )
     managerPreparation :: Text ( )
     report :: Text ( )
-    syncAlmostReady :: Bool ( )
+  }
+
+  entity TestDinges {
+    proc2 <> Proc2ProcedureStatus ( )
+    proc1 <> Proc1ProcedureStatus ( )
+    testWorkflow <> TestWorkflowProcedureStatus ( )
+    ifProc0 <> IfProc0ProcedureStatus ( )
+    name :: String ( )
+    commentz :: String ( )
+    proc1 :: String ( )
+    proc2 :: String ( )
+    child -> TestDinges ( )
   }
 
 module ac
@@ -982,17 +1198,17 @@ section  pages .
     init
     {
       if ( genpagepredicatecombined5() )
-        {
-        }
+      {
+      }
       else
-        {
-          goto accessDenied();
-        }
+      {
+        goto accessDenied();
+      }
     }
     main(){
     }
     title(){
-      "Sign in"
+      "Log in"
     }
     define local body () {
       var username2 : String ;
@@ -1001,17 +1217,17 @@ section  pages .
         table(){
           row(){
             "Username: "
-            inputString(signin.username2){
+            inputString(username2){
             }
           }
           row(){
             "Password: "
-            inputSecret(signin.password2){
+            inputSecret(password2){
             }
           }
           row(){
             if ( genactionpredicatecombined0() ) {
-              action("Sign in", signin.dosignin()){
+              action("Sign in", dosignin()){
               }
             }
             ""
@@ -1020,27 +1236,26 @@ section  pages .
         action dosignin ( )
         {
           if ( genactionpredicatecombined0() )
+          {
+            for ( us : User where us.username = username2 order by null asc limit 1000 offset 0 )
             {
-              var users4 : List<User> := select u from User as u where ( u . _username = signin.username2 ) ;
-              for ( us : User in users4 where true order by null asc )
+              if ( us.password.check(password2) )
               {
-                if ( us.password.check(signin.password2) )
-                  {
-                    securityContext.principal := us;
-                    securityContext.loggedIn := true;
-                    return allTasks();
-                  }
-                else
-                  {
-                  }
+                securityContext.principal := us;
+                securityContext.loggedIn := true;
+                return allTasks();
               }
-              securityContext.loggedIn := false;
-              return error("Wrong combination of username/password");
+              else
+              {
+              }
             }
+            securityContext.loggedIn := false;
+            return error("Wrong combination of username and password");
+          }
           else
-            {
-              return accessDenied();
-            }
+          {
+            return accessDenied();
+          }
         }
       }
     }
@@ -1050,12 +1265,12 @@ section  pages .
     init
     {
       if ( genpagepredicatecombined6(msg2) )
-        {
-        }
+      {
+      }
       else
-        {
-          goto accessDenied();
-        }
+      {
+        goto accessDenied();
+      }
     }
     main(){
     }
@@ -1066,7 +1281,7 @@ section  pages .
       header(){
         "Error"
       }
-      text(error.msg2){
+      text(msg2){
       }
     }
   }
@@ -1075,12 +1290,12 @@ section  pages .
     init
     {
       if ( genpagepredicatecombined7(msg3) )
-        {
-        }
+      {
+      }
       else
-        {
-          goto accessDenied();
-        }
+      {
+        goto accessDenied();
+      }
     }
     main(){
     }
@@ -1091,120 +1306,330 @@ section  pages .
       header(){
         "Message"
       }
-      text(message.msg3){
+      text(msg3){
       }
     }
   }
 
 section  procedures .
 
-  function enabled ( this0 : TestWorkflowProcedureStatus ) : Void
-  {
-    this0.enabled := true;
-    do(this0);
+  entity IfProc0ProcedureStatus : ProcedureStatus {
+    t -> TestDinges ( )
+    function enableIf ( ) : Void
+    {
+      this.next(0);
+    }
+    function disableIf ( ) : Void
+    {
+      this.t.child.testWorkflow.disable();
+    }
+    function next ( state : Int ) : Void
+    {
+      if ( state = 0 )
+      {
+        this.t.child.testWorkflow.enable__ProcedureStatus__Int(this as ProcedureStatus, 1);
+      }
+      else
+      {
+      }
+      if ( state = 1 )
+      {
+        this.processed();
+      }
+      else
+      {
+      }
+    }
+    function enabled ( ) : Void
+    {
+      if ( this.t.child != null )
+      {
+        this.enableIf();
+      }
+      else
+      {
+        this.processed();
+      }
+      this.do();
+    }
+    function done ( ) : Void
+    {
+      this.isEnabled := false;
+      this.persist();
+      this.next(0);
+    }
+    function do ( ) : Void
+    {
+      this.done();
+    }
+    function disabled ( ) : Void
+    {
+      disableIf();
+    }
   }
 
-  function disabled ( this0 : TestWorkflowProcedureStatus ) : Void
-  {
-    this0.enabled := false;
+  define page ifProc0ProcedureStatus (s6 : IfProc0ProcedureStatus) {
+    init
+    {
+      if ( genpagepredicatecombined8(s6) )
+      {
+      }
+      else
+      {
+        goto accessDenied();
+      }
+    }
+    dummy(){
+      main(){
+      }
+      define local body () {
+        header(){
+          text(s6.name){
+          }
+        }
+        table(){
+          dummy(){
+            row(){
+              "T: "
+              if ( genpagepredicatecombined20(s6.t) ) {
+                navigate(testDinges(s6.t)){
+                  text(s6.t.name){
+                  }
+                }
+              }
+            }
+            row(){
+              "T: "
+              if ( genpagepredicatecombined20(s6.t) ) {
+                navigate(testDinges(s6.t)){
+                  text(s6.t.name){
+                  }
+                }
+              }
+            }
+            row(){
+              "Name: "
+              text(s6.name){
+              }
+            }
+            row(){
+              "Is enabled: "
+              outputBool(s6.isEnabled){
+              }
+            }
+            row(){
+              "Date: "
+              outputDateTime(s6.date){
+              }
+            }
+            row(){
+              "Caller: "
+              if ( genpagepredicatecombined4(s6.caller) ) {
+                navigate(procedureStatus(s6.caller)){
+                  text(s6.caller.name){
+                  }
+                }
+              }
+            }
+            row(){
+              "Returnstate: "
+              outputInt(s6.returnstate){
+              }
+            }
+            row(){
+              "Name: "
+              text(s6.name){
+              }
+            }
+            row(){
+              "Is enabled: "
+              outputBool(s6.isEnabled){
+              }
+            }
+            row(){
+              "Date: "
+              outputDateTime(s6.date){
+              }
+            }
+            row(){
+              "Caller: "
+              if ( genpagepredicatecombined4(s6.caller) ) {
+                navigate(procedureStatus(s6.caller)){
+                  text(s6.caller.name){
+                  }
+                }
+              }
+            }
+            row(){
+              "Returnstate: "
+              outputInt(s6.returnstate){
+              }
+            }
+          }
+        }
+      }
+    }
   }
 
-  function do ( this0 : TestWorkflowProcedureStatus ) : Void
-  {
-    done(this0);
-  }
-
-  function done ( this0 : TestWorkflowProcedureStatus ) : Void
-  {
-    this0.enabled := false;
-    enable(this0.employeeFillInForm);
-    processed(this0);
-  }
-
-  function processed ( this0 : TestWorkflowProcedureStatus ) : Void
-  {
+  define page ifProc0 (t19 : TestDinges) {
+    init
+    {
+      if ( genpagepredicatecombined9(t19) )
+      {
+      }
+      else
+      {
+        goto accessDenied();
+      }
+    }
   }
 
   entity TestWorkflowProcedureStatus : ProcedureStatus {
+    t -> TestDinges ( )
+    function next ( state : Int ) : Void
+    {
+      if ( state = 0 )
+      {
+        this.t.proc1.enable__ProcedureStatus__Int(this as ProcedureStatus, 1);
+      }
+      else
+      {
+      }
+      if ( state = 1 )
+      {
+        this.t.ifProc0.enable__ProcedureStatus__Int(this as ProcedureStatus, 2);
+      }
+      else
+      {
+      }
+      if ( state = 2 )
+      {
+        this.t.proc2.enable__ProcedureStatus__Int(this as ProcedureStatus, 3);
+      }
+      else
+      {
+      }
+      if ( state = 3 )
+      {
+        this.processed();
+      }
+      else
+      {
+      }
+    }
+    function enabled ( ) : Void
+    {
+    }
+    function done ( ) : Void
+    {
+      this.isEnabled := false;
+      this.persist();
+      this.next(0);
+    }
+    function do ( ) : Void
+    {
+      this.done();
+    }
+    function disabled ( ) : Void
+    {
+    }
   }
 
-  define page testWorkflowProcedureStatus (s8 : TestWorkflowProcedureStatus) {
+  define page testWorkflowProcedureStatus (s7 : TestWorkflowProcedureStatus) {
     init
     {
-      if ( genpagepredicatecombined8(s8) )
-        {
-        }
+      if ( genpagepredicatecombined10(s7) )
+      {
+      }
       else
-        {
-          goto accessDenied();
-        }
+      {
+        goto accessDenied();
+      }
     }
     dummy(){
       main(){
       }
       define local body () {
         header(){
-          text(testWorkflowProcedureStatus.s8.name){
+          text(s7.name){
           }
         }
         table(){
           dummy(){
             row(){
-              "Name: "
-              text(testWorkflowProcedureStatus.s8.name){
+              "T: "
+              if ( genpagepredicatecombined20(s7.t) ) {
+                navigate(testDinges(s7.t)){
+                  text(s7.t.name){
+                  }
+                }
               }
             }
             row(){
-              "Enabled: "
-              text(testWorkflowProcedureStatus.s8.enabled){
+              "T: "
+              if ( genpagepredicatecombined20(s7.t) ) {
+                navigate(testDinges(s7.t)){
+                  text(s7.t.name){
+                  }
+                }
+              }
+            }
+            row(){
+              "Name: "
+              text(s7.name){
+              }
+            }
+            row(){
+              "Is enabled: "
+              outputBool(s7.isEnabled){
               }
             }
             row(){
               "Date: "
-              outputDateTime(testWorkflowProcedureStatus.s8.date){
+              outputDateTime(s7.date){
               }
             }
             row(){
               "Caller: "
-              if ( genpagepredicatecombined4(testWorkflowProcedureStatus.s8.caller) ) {
-                navigate(procedureStatus(testWorkflowProcedureStatus.s8.caller)){
-                  text(testWorkflowProcedureStatus.s8.caller.name){
+              if ( genpagepredicatecombined4(s7.caller) ) {
+                navigate(procedureStatus(s7.caller)){
+                  text(s7.caller.name){
                   }
                 }
               }
             }
             row(){
               "Returnstate: "
-              text(testWorkflowProcedureStatus.s8.returnstate){
+              outputInt(s7.returnstate){
               }
             }
             row(){
               "Name: "
-              text(testWorkflowProcedureStatus.s8.name){
+              text(s7.name){
               }
             }
             row(){
-              "Enabled: "
-              text(testWorkflowProcedureStatus.s8.enabled){
+              "Is enabled: "
+              outputBool(s7.isEnabled){
               }
             }
             row(){
               "Date: "
-              outputDateTime(testWorkflowProcedureStatus.s8.date){
+              outputDateTime(s7.date){
               }
             }
             row(){
               "Caller: "
-              if ( genpagepredicatecombined4(testWorkflowProcedureStatus.s8.caller) ) {
-                navigate(procedureStatus(testWorkflowProcedureStatus.s8.caller)){
-                  text(testWorkflowProcedureStatus.s8.caller.name){
+              if ( genpagepredicatecombined4(s7.caller) ) {
+                navigate(procedureStatus(s7.caller)){
+                  text(s7.caller.name){
                   }
                 }
               }
             }
             row(){
               "Returnstate: "
-              text(testWorkflowProcedureStatus.s8.returnstate){
+              outputInt(s7.returnstate){
               }
             }
           }
@@ -1213,111 +1638,121 @@ section  procedures .
     }
   }
 
-  function enabled ( this0 : EmployeeFillInFormProcedureStatus ) : Void
-  {
-    this0.enabled := true;
+  entity Proc1ProcedureStatus : ProcedureStatus {
+    t -> TestDinges ( )
+    function enabled ( ) : Void
+    {
+    }
+    function done ( ) : Void
+    {
+      this.isEnabled := false;
+      this.persist();
+      this.processed();
+    }
+    function do ( ) : Void
+    {
+      this.done();
+    }
+    function disabled ( ) : Void
+    {
+    }
   }
 
-  function disabled ( this0 : EmployeeFillInFormProcedureStatus ) : Void
-  {
-    this0.enabled := false;
-  }
-
-  function do ( this0 : EmployeeFillInFormProcedureStatus ) : Void
-  {
-    done(this0);
-  }
-
-  function done ( this0 : EmployeeFillInFormProcedureStatus ) : Void
-  {
-    this0.enabled := false;
-    processed(this0);
-  }
-
-  function processed ( this0 : EmployeeFillInFormProcedureStatus ) : Void
-  {
-  }
-
-  entity EmployeeFillInFormProcedureStatus : ProcedureStatus {
-  }
-
-  define page employeeFillInFormProcedureStatus (s9 : EmployeeFillInFormProcedureStatus) {
+  define page proc1ProcedureStatus (s8 : Proc1ProcedureStatus) {
     init
     {
-      if ( genpagepredicatecombined9(s9) )
-        {
-        }
+      if ( genpagepredicatecombined11(s8) )
+      {
+      }
       else
-        {
-          goto accessDenied();
-        }
+      {
+        goto accessDenied();
+      }
     }
     dummy(){
       main(){
       }
       define local body () {
         header(){
-          text(employeeFillInFormProcedureStatus.s9.name){
+          text(s8.name){
           }
         }
         table(){
           dummy(){
             row(){
-              "Name: "
-              text(employeeFillInFormProcedureStatus.s9.name){
+              "T: "
+              if ( genpagepredicatecombined20(s8.t) ) {
+                navigate(testDinges(s8.t)){
+                  text(s8.t.name){
+                  }
+                }
               }
             }
             row(){
-              "Enabled: "
-              text(employeeFillInFormProcedureStatus.s9.enabled){
+              "T: "
+              if ( genpagepredicatecombined20(s8.t) ) {
+                navigate(testDinges(s8.t)){
+                  text(s8.t.name){
+                  }
+                }
+              }
+            }
+            row(){
+              "Name: "
+              text(s8.name){
+              }
+            }
+            row(){
+              "Is enabled: "
+              outputBool(s8.isEnabled){
               }
             }
             row(){
               "Date: "
-              outputDateTime(employeeFillInFormProcedureStatus.s9.date){
+              outputDateTime(s8.date){
               }
             }
             row(){
               "Caller: "
-              if ( genpagepredicatecombined4(employeeFillInFormProcedureStatus.s9.caller) ) {
-                navigate(procedureStatus(employeeFillInFormProcedureStatus.s9.caller)){
-                  text(employeeFillInFormProcedureStatus.s9.caller.name){
+              if ( genpagepredicatecombined4(s8.caller) ) {
+                navigate(procedureStatus(s8.caller)){
+                  text(s8.caller.name){
                   }
                 }
               }
             }
             row(){
               "Returnstate: "
-              text(employeeFillInFormProcedureStatus.s9.returnstate){
+              outputInt(s8.returnstate){
               }
             }
             row(){
               "Name: "
-              text(employeeFillInFormProcedureStatus.s9.name){
+              text(s8.name){
               }
             }
             row(){
-              "Enabled: "
-              text(employeeFillInFormProcedureStatus.s9.enabled){
+              "Is enabled: "
+              outputBool(s8.isEnabled){
               }
             }
             row(){
               "Date: "
-              outputDateTime(employeeFillInFormProcedureStatus.s9.date){
+              outputDateTime(s8.date){
               }
             }
             row(){
               "Caller: "
-              if ( genpagepredicatecombined4(employeeFillInFormProcedureStatus.s9.caller) ) {
-                navigate(procedureStatus(employeeFillInFormProcedureStatus.s9.caller)){
-                  text(employeeFillInFormProcedureStatus.s9.caller.name){
+              if ( genpagepredicatecombined4(s8.caller) ) {
+                navigate(procedureStatus(s8.caller)){
+                  text(s8.caller.name){
                   }
                 }
               }
             }
             row(){
               "Returnstate: "
-              text(employeeFillInFormProcedureStatus.s9.returnstate){
+              outputInt(s8.returnstate){
               }
             }
           }
@@ -1326,111 +1761,121 @@ section  procedures .
     }
   }
 
-  function enabled ( this0 : ManagerFillInFormProcedureStatus ) : Void
-  {
-    this0.enabled := true;
+  entity Proc2ProcedureStatus : ProcedureStatus {
+    t -> TestDinges ( )
+    function enabled ( ) : Void
+    {
+    }
+    function done ( ) : Void
+    {
+      this.isEnabled := false;
+      this.persist();
+      this.processed();
+    }
+    function do ( ) : Void
+    {
+      this.done();
+    }
+    function disabled ( ) : Void
+    {
+    }
   }
 
-  function disabled ( this0 : ManagerFillInFormProcedureStatus ) : Void
-  {
-    this0.enabled := false;
-  }
-
-  function do ( this0 : ManagerFillInFormProcedureStatus ) : Void
-  {
-    done(this0);
-  }
-
-  function done ( this0 : ManagerFillInFormProcedureStatus ) : Void
-  {
-    this0.enabled := false;
-    processed(this0);
-  }
-
-  function processed ( this0 : ManagerFillInFormProcedureStatus ) : Void
-  {
-  }
-
-  entity ManagerFillInFormProcedureStatus : ProcedureStatus {
-  }
-
-  define page managerFillInFormProcedureStatus (s10 : ManagerFillInFormProcedureStatus) {
+  define page proc2ProcedureStatus (s9 : Proc2ProcedureStatus) {
     init
     {
-      if ( genpagepredicatecombined10(s10) )
-        {
-        }
+      if ( genpagepredicatecombined12(s9) )
+      {
+      }
       else
-        {
-          goto accessDenied();
-        }
+      {
+        goto accessDenied();
+      }
     }
     dummy(){
       main(){
       }
       define local body () {
         header(){
-          text(managerFillInFormProcedureStatus.s10.name){
+          text(s9.name){
           }
         }
         table(){
           dummy(){
             row(){
-              "Name: "
-              text(managerFillInFormProcedureStatus.s10.name){
+              "T: "
+              if ( genpagepredicatecombined20(s9.t) ) {
+                navigate(testDinges(s9.t)){
+                  text(s9.t.name){
+                  }
+                }
               }
             }
             row(){
-              "Enabled: "
-              text(managerFillInFormProcedureStatus.s10.enabled){
+              "T: "
+              if ( genpagepredicatecombined20(s9.t) ) {
+                navigate(testDinges(s9.t)){
+                  text(s9.t.name){
+                  }
+                }
+              }
+            }
+            row(){
+              "Name: "
+              text(s9.name){
+              }
+            }
+            row(){
+              "Is enabled: "
+              outputBool(s9.isEnabled){
               }
             }
             row(){
               "Date: "
-              outputDateTime(managerFillInFormProcedureStatus.s10.date){
+              outputDateTime(s9.date){
               }
             }
             row(){
               "Caller: "
-              if ( genpagepredicatecombined4(managerFillInFormProcedureStatus.s10.caller) ) {
-                navigate(procedureStatus(managerFillInFormProcedureStatus.s10.caller)){
-                  text(managerFillInFormProcedureStatus.s10.caller.name){
+              if ( genpagepredicatecombined4(s9.caller) ) {
+                navigate(procedureStatus(s9.caller)){
+                  text(s9.caller.name){
                   }
                 }
               }
             }
             row(){
               "Returnstate: "
-              text(managerFillInFormProcedureStatus.s10.returnstate){
+              outputInt(s9.returnstate){
               }
             }
             row(){
               "Name: "
-              text(managerFillInFormProcedureStatus.s10.name){
+              text(s9.name){
               }
             }
             row(){
-              "Enabled: "
-              text(managerFillInFormProcedureStatus.s10.enabled){
+              "Is enabled: "
+              outputBool(s9.isEnabled){
               }
             }
             row(){
               "Date: "
-              outputDateTime(managerFillInFormProcedureStatus.s10.date){
+              outputDateTime(s9.date){
               }
             }
             row(){
               "Caller: "
-              if ( genpagepredicatecombined4(managerFillInFormProcedureStatus.s10.caller) ) {
-                navigate(procedureStatus(managerFillInFormProcedureStatus.s10.caller)){
-                  text(managerFillInFormProcedureStatus.s10.caller.name){
+              if ( genpagepredicatecombined4(s9.caller) ) {
+                navigate(procedureStatus(s9.caller)){
+                  text(s9.caller.name){
                   }
                 }
               }
             }
             row(){
               "Returnstate: "
-              text(managerFillInFormProcedureStatus.s10.returnstate){
+              outputInt(s9.returnstate){
               }
             }
           }
@@ -1439,389 +1884,25 @@ section  procedures .
     }
   }
 
-  function enabled ( this0 : WriteReportProcedureStatus ) : Void
-  {
-    this0.enabled := true;
-  }
-
-  function disabled ( this0 : WriteReportProcedureStatus ) : Void
-  {
-    this0.enabled := false;
-  }
-
-  function do ( this0 : WriteReportProcedureStatus ) : Void
-  {
-    done(this0);
-  }
-
-  function done ( this0 : WriteReportProcedureStatus ) : Void
-  {
-    this0.enabled := false;
-    processed(this0);
-  }
-
-  function processed ( this0 : WriteReportProcedureStatus ) : Void
-  {
-  }
-
-  entity WriteReportProcedureStatus : ProcedureStatus {
-  }
-
-  define page writeReportProcedureStatus (s11 : WriteReportProcedureStatus) {
+  define page testWorkflow (t20 : TestDinges) {
     init
     {
-      if ( genpagepredicatecombined11(s11) )
-        {
-        }
-      else
-        {
-          goto accessDenied();
-        }
-    }
-    dummy(){
-      main(){
+      if ( genpagepredicatecombined13(t20) )
+      {
       }
-      define local body () {
-        header(){
-          text(writeReportProcedureStatus.s11.name){
-          }
-        }
-        table(){
-          dummy(){
-            row(){
-              "Name: "
-              text(writeReportProcedureStatus.s11.name){
-              }
-            }
-            row(){
-              "Enabled: "
-              text(writeReportProcedureStatus.s11.enabled){
-              }
-            }
-            row(){
-              "Date: "
-              outputDateTime(writeReportProcedureStatus.s11.date){
-              }
-            }
-            row(){
-              "Caller: "
-              if ( genpagepredicatecombined4(writeReportProcedureStatus.s11.caller) ) {
-                navigate(procedureStatus(writeReportProcedureStatus.s11.caller)){
-                  text(writeReportProcedureStatus.s11.caller.name){
-                  }
-                }
-              }
-            }
-            row(){
-              "Returnstate: "
-              text(writeReportProcedureStatus.s11.returnstate){
-              }
-            }
-            row(){
-              "Name: "
-              text(writeReportProcedureStatus.s11.name){
-              }
-            }
-            row(){
-              "Enabled: "
-              text(writeReportProcedureStatus.s11.enabled){
-              }
-            }
-            row(){
-              "Date: "
-              outputDateTime(writeReportProcedureStatus.s11.date){
-              }
-            }
-            row(){
-              "Caller: "
-              if ( genpagepredicatecombined4(writeReportProcedureStatus.s11.caller) ) {
-                navigate(procedureStatus(writeReportProcedureStatus.s11.caller)){
-                  text(writeReportProcedureStatus.s11.caller.name){
-                  }
-                }
-              }
-            }
-            row(){
-              "Returnstate: "
-              text(writeReportProcedureStatus.s11.returnstate){
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  function enabled ( this0 : FinalizeReportProcedureStatus ) : Void
-  {
-    this0.enabled := true;
-  }
-
-  function disabled ( this0 : FinalizeReportProcedureStatus ) : Void
-  {
-    this0.enabled := false;
-  }
-
-  function do ( this0 : FinalizeReportProcedureStatus ) : Void
-  {
-    done(this0);
-  }
-
-  function done ( this0 : FinalizeReportProcedureStatus ) : Void
-  {
-    this0.enabled := false;
-    processed(this0);
-  }
-
-  function processed ( this0 : FinalizeReportProcedureStatus ) : Void
-  {
-  }
-
-  entity FinalizeReportProcedureStatus : ProcedureStatus {
-  }
-
-  define page finalizeReportProcedureStatus (s12 : FinalizeReportProcedureStatus) {
-    init
-    {
-      if ( genpagepredicatecombined12(s12) )
-        {
-        }
       else
-        {
-          goto accessDenied();
-        }
-    }
-    dummy(){
-      main(){
+      {
+        goto accessDenied();
       }
-      define local body () {
-        header(){
-          text(finalizeReportProcedureStatus.s12.name){
-          }
-        }
-        table(){
-          dummy(){
-            row(){
-              "Name: "
-              text(finalizeReportProcedureStatus.s12.name){
-              }
-            }
-            row(){
-              "Enabled: "
-              text(finalizeReportProcedureStatus.s12.enabled){
-              }
-            }
-            row(){
-              "Date: "
-              outputDateTime(finalizeReportProcedureStatus.s12.date){
-              }
-            }
-            row(){
-              "Caller: "
-              if ( genpagepredicatecombined4(finalizeReportProcedureStatus.s12.caller) ) {
-                navigate(procedureStatus(finalizeReportProcedureStatus.s12.caller)){
-                  text(finalizeReportProcedureStatus.s12.caller.name){
-                  }
-                }
-              }
-            }
-            row(){
-              "Returnstate: "
-              text(finalizeReportProcedureStatus.s12.returnstate){
-              }
-            }
-            row(){
-              "Name: "
-              text(finalizeReportProcedureStatus.s12.name){
-              }
-            }
-            row(){
-              "Enabled: "
-              text(finalizeReportProcedureStatus.s12.enabled){
-              }
-            }
-            row(){
-              "Date: "
-              outputDateTime(finalizeReportProcedureStatus.s12.date){
-              }
-            }
-            row(){
-              "Caller: "
-              if ( genpagepredicatecombined4(finalizeReportProcedureStatus.s12.caller) ) {
-                navigate(procedureStatus(finalizeReportProcedureStatus.s12.caller)){
-                  text(finalizeReportProcedureStatus.s12.caller.name){
-                  }
-                }
-              }
-            }
-            row(){
-              "Returnstate: "
-              text(finalizeReportProcedureStatus.s12.returnstate){
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  function enabled ( this0 : ApproveReportProcedureStatus ) : Void
-  {
-    this0.enabled := true;
-  }
-
-  function disabled ( this0 : ApproveReportProcedureStatus ) : Void
-  {
-    this0.enabled := false;
-  }
-
-  function do ( this0 : ApproveReportProcedureStatus ) : Void
-  {
-    done(this0);
-  }
-
-  function done ( this0 : ApproveReportProcedureStatus ) : Void
-  {
-    this0.enabled := false;
-  }
-
-  function processed ( this0 : ApproveReportProcedureStatus ) : Void
-  {
-    var a : Int := 4 ;
-  }
-
-  entity ApproveReportProcedureStatus : ProcedureStatus {
-  }
-
-  define page approveReportProcedureStatus (s13 : ApproveReportProcedureStatus) {
-    init
-    {
-      if ( genpagepredicatecombined13(s13) )
-        {
-        }
-      else
-        {
-          goto accessDenied();
-        }
-    }
-    dummy(){
-      main(){
-      }
-      define local body () {
-        header(){
-          text(approveReportProcedureStatus.s13.name){
-          }
-        }
-        table(){
-          dummy(){
-            row(){
-              "Name: "
-              text(approveReportProcedureStatus.s13.name){
-              }
-            }
-            row(){
-              "Enabled: "
-              text(approveReportProcedureStatus.s13.enabled){
-              }
-            }
-            row(){
-              "Date: "
-              outputDateTime(approveReportProcedureStatus.s13.date){
-              }
-            }
-            row(){
-              "Caller: "
-              if ( genpagepredicatecombined4(approveReportProcedureStatus.s13.caller) ) {
-                navigate(procedureStatus(approveReportProcedureStatus.s13.caller)){
-                  text(approveReportProcedureStatus.s13.caller.name){
-                  }
-                }
-              }
-            }
-            row(){
-              "Returnstate: "
-              text(approveReportProcedureStatus.s13.returnstate){
-              }
-            }
-            row(){
-              "Name: "
-              text(approveReportProcedureStatus.s13.name){
-              }
-            }
-            row(){
-              "Enabled: "
-              text(approveReportProcedureStatus.s13.enabled){
-              }
-            }
-            row(){
-              "Date: "
-              outputDateTime(approveReportProcedureStatus.s13.date){
-              }
-            }
-            row(){
-              "Caller: "
-              if ( genpagepredicatecombined4(approveReportProcedureStatus.s13.caller) ) {
-                navigate(procedureStatus(approveReportProcedureStatus.s13.caller)){
-                  text(approveReportProcedureStatus.s13.caller.name){
-                  }
-                }
-              }
-            }
-            row(){
-              "Returnstate: "
-              text(approveReportProcedureStatus.s13.returnstate){
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  define page testWorkflow (p80 : PdpMeeting) {
-    init
-    {
-      if ( genpagepredicatecombined14(p80) )
-        {
-        }
-      else
-        {
-          goto accessDenied();
-        }
-    }
-    action doAction ( )
-    {
-      if ( genactionpredicatecombined1(testWorkflow.p80) )
-        {
-          testWorkflow.p80.done();
-          return pdpMeeting(testWorkflow.p80);
-        }
-      else
-        {
-          return accessDenied();
-        }
-    }
-  }
-
-  define page employeeFillInForm (p81 : PdpMeeting) {
-    init
-    {
-      if ( genpagepredicatecombined15(p81) )
-        {
-        }
-      else
-        {
-          goto accessDenied();
-        }
     }
     title(){
-      "Fill in employee form"
+      "Initialize workflow"
     }
     dummy(){
       main(){
       }
       define local contextSidebar () {
-        pdpMeetingProcedures(employeeFillInForm.p81){
+        testDingesProcedures(t20){
         }
       }
       define local body () {
@@ -1829,9 +1910,9 @@ section  procedures .
           text("Current page"){
           }
           " "
-          if ( genpagepredicatecombined21(employeeFillInForm.p81) ) {
-            navigate(pdpMeeting(employeeFillInForm.p81)){
-              text(employeeFillInForm.p81.name){
+          if ( genpagepredicatecombined20(t20) ) {
+            navigate(testDinges(t20)){
+              text(t20.name){
               }
             }
           }
@@ -1840,52 +1921,62 @@ section  procedures .
           table(){
             dummy(){
               row(){
-                "Employee preparation: "
-                inputText(employeeFillInForm.p81.employeePreparation){
+                "Name: "
+                inputString(t20.name){
+                }
+              }
+              row(){
+                "Commentz: "
+                inputString(t20.commentz){
                 }
               }
             }
           }
-          if ( genactionpredicatecombined2(employeeFillInForm.p81) ) {
-            action("Submit", employeeFillInForm.doAction()){
+          dummy(){
+            if ( genactionpredicatecombined1(t20) ) {
+              action("Submit", doAction()){
+              }
+            }
+            action doAction ( )
+            {
+              if ( genactionpredicatecombined1(t20) )
+              {
+                t20.persist();
+                t20.testWorkflow.do();
+                return testDinges(t20);
+              }
+              else
+              {
+                return accessDenied();
+              }
             }
           }
         }
       }
     }
-    action doAction ( )
-    {
-      if ( genactionpredicatecombined2(employeeFillInForm.p81) )
-        {
-          employeeFillInForm.p81.done();
-          return pdpMeeting(employeeFillInForm.p81);
-        }
-      else
-        {
-          return accessDenied();
-        }
-    }
   }
 
-  define page managerFillInForm (p82 : PdpMeeting) {
+  define page proc1 (t21 : TestDinges) {
     init
     {
-      if ( genpagepredicatecombined16(p82) )
-        {
-        }
+      if ( genpagepredicatecombined14(t21) )
+      {
+      }
       else
-        {
-          goto accessDenied();
-        }
+      {
+        goto accessDenied();
+      }
     }
     title(){
-      "Fill in manager form"
+      "Fill proc1 for "
+      text(t21.name){
+      }
     }
     dummy(){
       main(){
       }
       define local contextSidebar () {
-        pdpMeetingProcedures(managerFillInForm.p82){
+        testDingesProcedures(t21){
         }
       }
       define local body () {
@@ -1893,9 +1984,9 @@ section  procedures .
           text("Current page"){
           }
           " "
-          if ( genpagepredicatecombined21(managerFillInForm.p82) ) {
-            navigate(pdpMeeting(managerFillInForm.p82)){
-              text(managerFillInForm.p82.name){
+          if ( genpagepredicatecombined20(t21) ) {
+            navigate(testDinges(t21)){
+              text(t21.name){
               }
             }
           }
@@ -1904,52 +1995,58 @@ section  procedures .
           table(){
             dummy(){
               row(){
-                "Manager preparation: "
-                inputText(managerFillInForm.p82.managerPreparation){
+                "Proc1: "
+                div("inputSimpleRefAssociation"){
+                  select ( proc1ProcedureStatus03 : Proc1ProcedureStatus , Select , t21.proc1 )
                 }
               }
             }
           }
-          if ( genactionpredicatecombined3(managerFillInForm.p82) ) {
-            action("Submit", managerFillInForm.doAction()){
+          dummy(){
+            if ( genactionpredicatecombined2(t21) ) {
+              action("Submit", doAction()){
+              }
+            }
+            action doAction ( )
+            {
+              if ( genactionpredicatecombined2(t21) )
+              {
+                t21.persist();
+                t21.proc1.do();
+                return testDinges(t21);
+              }
+              else
+              {
+                return accessDenied();
+              }
             }
           }
         }
       }
     }
-    action doAction ( )
-    {
-      if ( genactionpredicatecombined3(managerFillInForm.p82) )
-        {
-          managerFillInForm.p82.done();
-          return pdpMeeting(managerFillInForm.p82);
-        }
-      else
-        {
-          return accessDenied();
-        }
-    }
   }
 
-  define page writeReport (p83 : PdpMeeting) {
+  define page proc2 (t22 : TestDinges) {
     init
     {
-      if ( genpagepredicatecombined17(p83) )
-        {
-        }
+      if ( genpagepredicatecombined15(t22) )
+      {
+      }
       else
-        {
-          goto accessDenied();
-        }
+      {
+        goto accessDenied();
+      }
     }
     title(){
-      "Write report"
+      "Fill proc1 for "
+      text(t22.name){
+      }
     }
     dummy(){
       main(){
       }
       define local contextSidebar () {
-        pdpMeetingProcedures(writeReport.p83){
+        testDingesProcedures(t22){
         }
       }
       define local body () {
@@ -1957,9 +2054,9 @@ section  procedures .
           text("Current page"){
           }
           " "
-          if ( genpagepredicatecombined21(writeReport.p83) ) {
-            navigate(pdpMeeting(writeReport.p83)){
-              text(writeReport.p83.name){
+          if ( genpagepredicatecombined20(t22) ) {
+            navigate(testDinges(t22)){
+              text(t22.name){
               }
             }
           }
@@ -1968,108 +2065,130 @@ section  procedures .
           table(){
             dummy(){
               row(){
-                "Report: "
-                inputText(writeReport.p83.report){
+                "Proc1: "
+                div("inputSimpleRefAssociation"){
+                  select ( proc1ProcedureStatus13 : Proc1ProcedureStatus , Select , t22.proc1 )
                 }
               }
             }
           }
-          if ( genactionpredicatecombined4(writeReport.p83) ) {
-            action("Submit", writeReport.doAction()){
+          dummy(){
+            if ( genactionpredicatecombined3(t22) ) {
+              action("Submit", doAction()){
+              }
+            }
+            action doAction ( )
+            {
+              if ( genactionpredicatecombined3(t22) )
+              {
+                t22.persist();
+                t22.proc2.do();
+                return testDinges(t22);
+              }
+              else
+              {
+                return accessDenied();
+              }
             }
           }
         }
       }
-    }
-    action doAction ( )
-    {
-      if ( genactionpredicatecombined4(writeReport.p83) )
-        {
-          writeReport.p83.done();
-          return pdpMeeting(writeReport.p83);
-        }
-      else
-        {
-          return accessDenied();
-        }
-    }
-  }
-
-  define page finalizeReport (p84 : PdpMeeting) {
-    init
-    {
-      if ( genpagepredicatecombined18(p84) )
-        {
-          p84.done();
-          goto pdpMeeting(p84);
-        }
-      else
-        {
-          goto accessDenied();
-        }
-    }
-  }
-
-  define page approveReport (p85 : PdpMeeting) {
-    init
-    {
-      if ( genpagepredicatecombined19(p85) )
-        {
-          p85.done();
-          goto pdpMeeting(p85);
-        }
-      else
-        {
-          goto accessDenied();
-        }
     }
   }
 
 section  pages .
 
+  define template body () {
+    if ( gentemplatepredicate0() ) {
+    }
+  }
+
   define page home () {
     init
     {
-      if ( genpagepredicatecombined20() )
-        {
-        }
+      if ( genpagepredicatecombined16() )
+      {
+      }
       else
-        {
-          goto accessDenied();
-        }
+      {
+        goto accessDenied();
+      }
     }
     main(){
     }
     define local body () {
       var employee2 : User ;
-      navigatebutton(signin(), "Sign in!"){
-      }
-      form(){
-        header(){
-          "Organize PDP Meeting"
-        }
-        "For: "
-        div("inputSimpleRefAssociation"){
-          select ( user01 : User , Select , home.employee2 )
-        }
-        if ( genactionpredicatecombined5() ) {
-          action("Organize", home.organize()){
+      section(){
+        form(){
+          header(){
+            "Quick start PDP Meeting for employee"
           }
-        }
-        action organize ( )
-        {
-          if ( genactionpredicatecombined5() )
-            {
-              var p86 : PdpMeeting := PdpMeeting{} ;
-              p86.employee := home.employee2;
-              p86.persist();
-              enable(p86.testWorkflow);
-              return message("Done!");
+          if ( genactionpredicatecombined4() ) {
+            action("Quick start", quickStart()){
             }
-          else
+          }
+          action quickStart ( )
+          {
+            if ( genactionpredicatecombined4() )
+            {
+              test3 := newTestDinges();
+              test3.testWorkflow.enable__();
+              return message("Test gestart");
+            }
+            else
             {
               return accessDenied();
             }
+          }
+        }
+      }
+      section(){
+        form(){
+          header(){
+            "Organize PDP Meeting"
+          }
+          "For: "
+          div("inputSimpleRefAssociation"){
+            select ( user01 : User , Select , employee2 )
+          }
+          if ( genactionpredicatecombined5() ) {
+            action("Organize", organize()){
+            }
+          }
+          action organize ( )
+          {
+            if ( genactionpredicatecombined5() )
+            {
+              return message("Done!");
+            }
+            else
+            {
+              return accessDenied();
+            }
+          }
+        }
+      }
+    }
+  }
+
+  define page allMeetings () {
+    init
+    {
+      if ( genpagepredicatecombined17() )
+      {
+      }
+      else
+      {
+        goto accessDenied();
+      }
+    }
+    main(){
+    }
+    define local body () {
+      for ( p3 : PdpMeeting where true order by null asc limit 1000 offset 0 ) {
+        text(p3.name){
+        }
+        text(" "){
         }
       }
     }
@@ -2077,174 +2196,61 @@ section  pages .
 
 section  pages .
 
-  define template pdpMeetingOperations (p87 : PdpMeeting) {
-    "haha!"
-  }
-
-  define page pdpMeeting (p88 : PdpMeeting) {
+  define page pdpMeeting (p4 : PdpMeeting) {
     init
     {
-      if ( genpagepredicatecombined21(p88) )
-        {
-        }
+      if ( genpagepredicatecombined18(p4) )
+      {
+      }
       else
-        {
-          goto accessDenied();
-        }
+      {
+        goto accessDenied();
+      }
     }
     dummy(){
       main(){
       }
       define local body () {
         header(){
-          text(pdpMeeting.p88.name){
+          text(p4.name){
           }
         }
         table(){
           dummy(){
             row(){
-              "Approve report: "
-              if ( genpagepredicatecombined13(pdpMeeting.p88.approveReport) ) {
-                navigate(approveReportProcedureStatus(pdpMeeting.p88.approveReport)){
-                  text(pdpMeeting.p88.approveReport.name){
-                  }
-                }
-              }
-            }
-            row(){
-              "Finalize report: "
-              if ( genpagepredicatecombined12(pdpMeeting.p88.finalizeReport) ) {
-                navigate(finalizeReportProcedureStatus(pdpMeeting.p88.finalizeReport)){
-                  text(pdpMeeting.p88.finalizeReport.name){
-                  }
-                }
-              }
-            }
-            row(){
-              "Write report: "
-              if ( genpagepredicatecombined11(pdpMeeting.p88.writeReport) ) {
-                navigate(writeReportProcedureStatus(pdpMeeting.p88.writeReport)){
-                  text(pdpMeeting.p88.writeReport.name){
-                  }
-                }
-              }
-            }
-            row(){
-              "Manager fill in form: "
-              if ( genpagepredicatecombined10(pdpMeeting.p88.managerFillInForm) ) {
-                navigate(managerFillInFormProcedureStatus(pdpMeeting.p88.managerFillInForm)){
-                  text(pdpMeeting.p88.managerFillInForm.name){
-                  }
-                }
-              }
-            }
-            row(){
-              "Employee fill in form: "
-              if ( genpagepredicatecombined9(pdpMeeting.p88.employeeFillInForm) ) {
-                navigate(employeeFillInFormProcedureStatus(pdpMeeting.p88.employeeFillInForm)){
-                  text(pdpMeeting.p88.employeeFillInForm.name){
-                  }
-                }
-              }
-            }
-            row(){
-              "Test workflow: "
-              if ( genpagepredicatecombined8(pdpMeeting.p88.testWorkflow) ) {
-                navigate(testWorkflowProcedureStatus(pdpMeeting.p88.testWorkflow)){
-                  text(pdpMeeting.p88.testWorkflow.name){
-                  }
-                }
-              }
-            }
-            row(){
-              "Approve report: "
-              if ( genpagepredicatecombined13(pdpMeeting.p88.approveReport) ) {
-                navigate(approveReportProcedureStatus(pdpMeeting.p88.approveReport)){
-                  text(pdpMeeting.p88.approveReport.name){
-                  }
-                }
-              }
-            }
-            row(){
-              "Finalize report: "
-              if ( genpagepredicatecombined12(pdpMeeting.p88.finalizeReport) ) {
-                navigate(finalizeReportProcedureStatus(pdpMeeting.p88.finalizeReport)){
-                  text(pdpMeeting.p88.finalizeReport.name){
-                  }
-                }
-              }
-            }
-            row(){
-              "Write report: "
-              if ( genpagepredicatecombined11(pdpMeeting.p88.writeReport) ) {
-                navigate(writeReportProcedureStatus(pdpMeeting.p88.writeReport)){
-                  text(pdpMeeting.p88.writeReport.name){
-                  }
-                }
-              }
-            }
-            row(){
-              "Manager fill in form: "
-              if ( genpagepredicatecombined10(pdpMeeting.p88.managerFillInForm) ) {
-                navigate(managerFillInFormProcedureStatus(pdpMeeting.p88.managerFillInForm)){
-                  text(pdpMeeting.p88.managerFillInForm.name){
-                  }
-                }
-              }
-            }
-            row(){
-              "Employee fill in form: "
-              if ( genpagepredicatecombined9(pdpMeeting.p88.employeeFillInForm) ) {
-                navigate(employeeFillInFormProcedureStatus(pdpMeeting.p88.employeeFillInForm)){
-                  text(pdpMeeting.p88.employeeFillInForm.name){
-                  }
-                }
-              }
-            }
-            row(){
-              "Test workflow: "
-              if ( genpagepredicatecombined8(pdpMeeting.p88.testWorkflow) ) {
-                navigate(testWorkflowProcedureStatus(pdpMeeting.p88.testWorkflow)){
-                  text(pdpMeeting.p88.testWorkflow.name){
-                  }
-                }
-              }
-            }
-            row(){
               "Employee: "
-              if ( genpagepredicatecombined22(pdpMeeting.p88.employee) ) {
-                navigate(user(pdpMeeting.p88.employee)){
-                  text(pdpMeeting.p88.employee.name){
+              if ( genpagepredicatecombined19(p4.employee) ) {
+                navigate(user(p4.employee)){
+                  text(p4.employee.name){
                   }
                 }
               }
             }
             row(){
               "Name: "
-              text(pdpMeeting.p88.name){
+              text(p4.name){
               }
             }
             row(){
               "Employee preparation: "
-              outputText(pdpMeeting.p88.employeePreparation){
+              outputText(p4.employeePreparation){
               }
             }
             row(){
               "Manager preparation: "
-              outputText(pdpMeeting.p88.managerPreparation){
+              outputText(p4.managerPreparation){
               }
             }
             row(){
               "Report: "
-              outputText(pdpMeeting.p88.report){
-              }
-            }
-            row(){
-              "Sync almost ready: "
-              text(pdpMeeting.p88.syncAlmostReady){
+              outputText(p4.report){
               }
             }
           }
+        }
+      }
+      define local contextSidebar () {
+        pdpMeetingProcedures(p4){
         }
       }
     }
@@ -2253,49 +2259,99 @@ section  pages .
   define page user (u1 : User) {
     init
     {
-      if ( genpagepredicatecombined22(u1) )
-        {
-        }
+      if ( genpagepredicatecombined19(u1) )
+      {
+      }
       else
-        {
-          goto accessDenied();
-        }
+      {
+        goto accessDenied();
+      }
     }
     dummy(){
       main(){
       }
       define local body () {
         header(){
-          text(user.u1.name){
+          text(u1.name){
           }
         }
         table(){
           dummy(){
             row(){
               "Username: "
-              text(user.u1.username){
+              text(u1.username){
               }
             }
             row(){
               "Name: "
-              text(user.u1.name){
+              text(u1.name){
               }
             }
             row(){
               "Password: "
-              outputSecret(user.u1.password){
+              outputSecret(u1.password){
               }
             }
             row(){
               "Manager: "
-              if ( genpagepredicatecombined22(user.u1.manager) ) {
-                navigate(user(user.u1.manager)){
-                  text(user.u1.manager.name){
+              if ( genpagepredicatecombined19(u1.manager) ) {
+                navigate(user(u1.manager)){
+                  text(u1.manager.name){
                   }
                 }
               }
             }
           }
+        }
+      }
+    }
+  }
+
+  define page testDinges (t23 : TestDinges) {
+    init
+    {
+      if ( genpagepredicatecombined20(t23) )
+      {
+      }
+      else
+      {
+        goto accessDenied();
+      }
+    }
+    dummy(){
+      main(){
+      }
+      define local body () {
+        header(){
+          text(t23.name){
+          }
+        }
+        table(){
+          dummy(){
+            row(){
+              "Name: "
+              text(t23.name){
+              }
+            }
+            row(){
+              "Commentz: "
+              text(t23.commentz){
+              }
+            }
+            row(){
+              "Child: "
+              if ( genpagepredicatecombined20(t23.child) ) {
+                navigate(testDinges(t23.child)){
+                  text(t23.child.name){
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      define local contextSidebar () {
+        testDingesProcedures(t23){
         }
       }
     }
