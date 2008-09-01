@@ -21,7 +21,7 @@ define page vets() {
 define output(coll : List<Specialty>) {
     list() {
       for (s : Specialty in coll) {
-        listitem { text("____") output(s.name) } 
+        listitem { output(s.name) } 
       }
     }
 }
@@ -66,7 +66,7 @@ define page findOwner() {
 		}
 	}
 
-    div("add_owner_link_div") {
+    block("add_owner_link_div") {
       navigate(createOwner()) { "Add Owner" }
     }
   }
@@ -107,13 +107,22 @@ define page allVisit() {
 define page allOwner() {
   main()
   define body() {
-    list() {
-      for (o : Owner) {
-        listitem { text(o.name) }
-      }
+    for (o : Owner) {
+      ownerDetails(o)
     }
   }
 }
+
+define ownerDetails(o : Owner) {
+  group(o.name) { 
+	groupitem { label("Name: ") { output(o.name) } }
+	groupitem { label("Address") { output(o.address) } }
+	groupitem { label("City") { output(o.city) } }
+	groupitem { label("Telephone: ") { output(o.telephone) } }
+	groupitem { label("Pets: ") { output(o.pets) } }
+  }
+}
+
 
 define page allPet() {
   main()

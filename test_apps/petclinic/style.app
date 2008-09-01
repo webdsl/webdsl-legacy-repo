@@ -51,7 +51,21 @@ style globalStyle
     font := globalFont;
     font-size := globalFontSize;
   }
-
+  
+    
+  //@todo: dealing with font-size must be easier!
+  form() >> group() {
+    font-size := globalFontSize * 1.333em;
+  }
+  
+  group() {
+    font := globalFont;
+    font-size := globalFontSize;
+  }
+  
+  group() >> navigate() {
+    font-size := 1.333em * globalFontSize;
+  }
 
 style templateStyle
 
@@ -68,16 +82,16 @@ style templateStyle
     width := 100%;
   }
   
-  template top() >> #logos {
+  template top() >> .logos {
     width := 25em;
   }
   
-  template top() > #logo_area {
+  template top() > .logo_area {
     width := 80%;
     align := Align.center;
   }
   
-  template main() > #mainbody {
+  template main() > .mainbody {
     width := 80%;
     align := Align.center;
     padding-top := 4px;
@@ -105,6 +119,22 @@ style templateStyle
     width := top().width;
     margin-top := topmenu().margin-bottom;
   }
+  
+  template output(c : List<Specialty>) >> list() {
+    orientation := Orientation.horizontal;
+    separator := Separator.comma;
+    spacing-right := 0.2em;
+  }
+  
+  page allPet() >> list() {
+    orientation := Orientation.horizontal;
+    separator := Separator.comma;
+    spacing-right := 0.2em;
+  }
+  
+  page allOwner() >> ownerDetails(o : Owner) {
+    spacing-right := 4em;
+  }
 
 style formStyle
 
@@ -115,7 +145,7 @@ style formStyle
     spacing := formItemSpacing;
   }
   
-  form() >> group() {
+  group() {
     image := url("images/background_gradient.png");
     border-top-color := #003399;
     border-bottom-color := #003399;
@@ -180,11 +210,11 @@ style menuStyle
 
 style footerStyle
 
-  template footer() >> #footer_text {
+  template footer() >> .footer_text {
     align := Align.right;
   }
   
-  template footer() >> #footer_links {
+  template footer() >> .footer_links {
     align := Align.left;
   }
 
@@ -195,5 +225,5 @@ style footerStyle
   template footer() >> list() {
     orientation := Orientation.horizontal;
     separator := Separator.pipe;
-    separator-space := 2em; // @todo: rename to spacing and set on listitem()
+    spacing := 2em; // @todo: rename to spacing and set on listitem()??
   }

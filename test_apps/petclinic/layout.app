@@ -16,3 +16,7 @@ layout
   template footer() {
     f: [ footer_links | footer_text ];
   }
+  
+  page allOwner() {
+    float { ownerDetails(o : Owner) }
+  }
