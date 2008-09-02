@@ -246,7 +246,7 @@ style guestBookStyle
   template head() >> list() {
     orientation := Orientation.horizontal;
     separator := Separator.pipe;
-    separator-space := 10px; // @todo: rename to spacing and set on listitem()
+    spacing := 10px; // @todo: rename to spacing and set on listitem()
   }
 
   template body() {
