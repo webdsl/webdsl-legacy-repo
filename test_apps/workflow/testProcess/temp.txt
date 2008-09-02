@@ -4,107 +4,197 @@ section  access denied page. .
 
   function genpagepredicatecombined0 ( ) : Bool
   {
-    return genpagepredicate0() && genpagepredicate6();
+    return genpagepredicate0() && genpagepredicate14();
   }
 
   function genpagepredicatecombined1 ( ) : Bool
   {
-    return genpagepredicate6();
+    return genpagepredicate14();
   }
 
   function genpagepredicatecombined2 ( ) : Bool
   {
-    return genpagepredicate6();
+    return genpagepredicate14();
   }
 
   function genpagepredicatecombined3 ( ) : Bool
   {
-    return genpagepredicate6();
+    return genpagepredicate14();
   }
 
-  function genpagepredicatecombined4 ( s5 : ProcedureStatus ) : Bool
+  function genpagepredicatecombined4 ( ) : Bool
   {
-    return genpagepredicate6();
+    return genpagepredicate14();
   }
 
   function genpagepredicatecombined5 ( ) : Bool
   {
-    return genpagepredicate6();
+    return genpagepredicate14();
   }
 
-  function genpagepredicatecombined6 ( msg2 : String ) : Bool
+  function genpagepredicatecombined6 ( s13 : ProcedureStatus ) : Bool
   {
-    return genpagepredicate6();
+    return genpagepredicate14();
   }
 
-  function genpagepredicatecombined7 ( msg3 : String ) : Bool
+  function genpagepredicatecombined7 ( ) : Bool
   {
-    return genpagepredicate6();
+    return genpagepredicate14();
   }
 
-  function genpagepredicatecombined8 ( s6 : IfProc0ProcedureStatus ) : Bool
+  function genpagepredicatecombined8 ( msg2 : String ) : Bool
   {
-    return genpagepredicate6();
+    return genpagepredicate14();
   }
 
-  function genpagepredicatecombined9 ( t19 : TestDinges ) : Bool
+  function genpagepredicatecombined9 ( msg3 : String ) : Bool
   {
-    return genpagepredicate4(t19) && genpagepredicate6();
+    return genpagepredicate14();
   }
 
-  function genpagepredicatecombined10 ( s7 : TestWorkflowProcedureStatus ) : Bool
+  function genpagepredicatecombined10 ( s14 : XorProc0ProcedureStatus ) : Bool
   {
-    return genpagepredicate6();
+    return genpagepredicate14();
   }
 
-  function genpagepredicatecombined11 ( s8 : Proc1ProcedureStatus ) : Bool
+  function genpagepredicatecombined11 ( p39 : PdpMeeting ) : Bool
   {
-    return genpagepredicate6();
+    return genpagepredicate12(p39) && genpagepredicate14();
   }
 
-  function genpagepredicatecombined12 ( s9 : Proc2ProcedureStatus ) : Bool
+  function genpagepredicatecombined12 ( s15 : RepeatUntilProc0ProcedureStatus ) : Bool
   {
-    return genpagepredicate6();
+    return genpagepredicate14();
   }
 
-  function genpagepredicatecombined13 ( t20 : TestDinges ) : Bool
+  function genpagepredicatecombined13 ( p40 : PdpMeeting ) : Bool
   {
-    return genpagepredicate1(t20) && genpagepredicate6();
+    return genpagepredicate11(p40) && genpagepredicate14();
   }
 
-  function genpagepredicatecombined14 ( t21 : TestDinges ) : Bool
+  function genpagepredicatecombined14 ( s16 : TestWorkflowProcedureStatus ) : Bool
   {
-    return genpagepredicate2(t21) && genpagepredicate6();
+    return genpagepredicate14();
   }
 
-  function genpagepredicatecombined15 ( t22 : TestDinges ) : Bool
+  function genpagepredicatecombined15 ( s17 : EmployeeFillInFormProcedureStatus ) : Bool
   {
-    return genpagepredicate3(t22) && genpagepredicate6();
+    return genpagepredicate14();
   }
 
-  function genpagepredicatecombined16 ( ) : Bool
+  function genpagepredicatecombined16 ( s18 : ManagerFillInFormProcedureStatus ) : Bool
   {
-    return genpagepredicate6();
+    return genpagepredicate14();
   }
 
-  function genpagepredicatecombined17 ( ) : Bool
+  function genpagepredicatecombined17 ( s19 : WriteReportProcedureStatus ) : Bool
   {
-    return genpagepredicate6();
+    return genpagepredicate14();
   }
 
-  function genpagepredicatecombined18 ( p4 : PdpMeeting ) : Bool
+  function genpagepredicatecombined18 ( s20 : FinalizeReportProcedureStatus ) : Bool
   {
-    return genpagepredicate6() && genpagepredicate7(p4);
+    return genpagepredicate14();
   }
 
-  function genpagepredicatecombined19 ( u1 : User ) : Bool
+  function genpagepredicatecombined19 ( s21 : ApproveReportProcedureStatus ) : Bool
   {
-    return genpagepredicate6();
+    return genpagepredicate14();
   }
 
-  function genpagepredicatecombined20 ( t23 : TestDinges ) : Bool
+  function genpagepredicatecombined20 ( s22 : IfProc0ProcedureStatus ) : Bool
   {
-    return genpagepredicate6();
+    return genpagepredicate14();
+  }
+
+  function genpagepredicatecombined21 ( t19 : TestDinges ) : Bool
+  {
+    return genpagepredicate10(t19) && genpagepredicate14();
+  }
+
+  function genpagepredicatecombined22 ( s23 : TestDingesWorkflowProcedureStatus ) : Bool
+  {
+    return genpagepredicate14();
+  }
+
+  function genpagepredicatecombined23 ( s24 : Proc1ProcedureStatus ) : Bool
+  {
+    return genpagepredicate14();
+  }
+
+  function genpagepredicatecombined24 ( s25 : Proc2ProcedureStatus ) : Bool
+  {
+    return genpagepredicate14();
+  }
+
+  function genpagepredicatecombined25 ( p41 : PdpMeeting ) : Bool
+  {
+    return genpagepredicate1(p41) && genpagepredicate14();
+  }
+
+  function genpagepredicatecombined26 ( p42 : PdpMeeting ) : Bool
+  {
+    return genpagepredicate2(p42) && genpagepredicate14();
+  }
+
+  function genpagepredicatecombined27 ( p43 : PdpMeeting ) : Bool
+  {
+    return genpagepredicate3(p43) && genpagepredicate14();
+  }
+
+  function genpagepredicatecombined28 ( p44 : PdpMeeting ) : Bool
+  {
+    return genpagepredicate4(p44) && genpagepredicate14();
+  }
+
+  function genpagepredicatecombined29 ( p45 : PdpMeeting ) : Bool
+  {
+    return genpagepredicate5(p45) && genpagepredicate14();
+  }
+
+  function genpagepredicatecombined30 ( p46 : PdpMeeting ) : Bool
+  {
+    return genpagepredicate6(p46) && genpagepredicate14();
+  }
+
+  function genpagepredicatecombined31 ( t20 : TestDinges ) : Bool
+  {
+    return genpagepredicate7(t20) && genpagepredicate14();
+  }
+
+  function genpagepredicatecombined32 ( t21 : TestDinges ) : Bool
+  {
+    return genpagepredicate8(t21) && genpagepredicate14();
+  }
+
+  function genpagepredicatecombined33 ( t22 : TestDinges ) : Bool
+  {
+    return genpagepredicate9(t22) && genpagepredicate14();
+  }
+
+  function genpagepredicatecombined34 ( ) : Bool
+  {
+    return genpagepredicate14();
+  }
+
+  function genpagepredicatecombined35 ( ) : Bool
+  {
+    return genpagepredicate14();
+  }
+
+  function genpagepredicatecombined36 ( p49 : PdpMeeting ) : Bool
+  {
+    return genpagepredicate14() && genpagepredicate15(p49);
+  }
+
+  function genpagepredicatecombined37 ( u1 : User ) : Bool
+  {
+    return genpagepredicate14();
+  }
+
+  function genpagepredicatecombined38 ( t23 : TestDinges ) : Bool
+  {
+    return genpagepredicate14();
   }
 
   function genpagepredicate0 ( ) : Bool
@@ -112,32 +202,72 @@ section  access denied page. .
     return true;
   }
 
-  function genpagepredicate1 ( t : TestDinges ) : Bool
+  function genpagepredicate1 ( p : PdpMeeting ) : Bool
   {
-    return true && true && true && true && t.testWorkflow.isEnabled;
+    return true && true && true && p.testWorkflow.isEnabled;
   }
 
-  function genpagepredicate2 ( t : TestDinges ) : Bool
+  function genpagepredicate2 ( p : PdpMeeting ) : Bool
+  {
+    return true && true && securityContext.principal = p.employee && true && p.employeeFillInForm.isEnabled;
+  }
+
+  function genpagepredicate3 ( p : PdpMeeting ) : Bool
+  {
+    return true && true && securityContext.principal = p.employee.manager && true && p.managerFillInForm.isEnabled;
+  }
+
+  function genpagepredicate4 ( p : PdpMeeting ) : Bool
+  {
+    return true && true && securityContext.principal = p.employee.manager && true && p.writeReport.isEnabled;
+  }
+
+  function genpagepredicate5 ( p : PdpMeeting ) : Bool
+  {
+    return true && true && securityContext.principal = p.employee.manager && p.finalizeReport.isEnabled;
+  }
+
+  function genpagepredicate6 ( p : PdpMeeting ) : Bool
+  {
+    return true && true && securityContext.principal = p.employee && p.approveReport.isEnabled;
+  }
+
+  function genpagepredicate7 ( t : TestDinges ) : Bool
+  {
+    return true && true && true && true && t.testDingesWorkflow.isEnabled;
+  }
+
+  function genpagepredicate8 ( t : TestDinges ) : Bool
   {
     return true && true && true && true && t.proc1.isEnabled;
   }
 
-  function genpagepredicate3 ( t : TestDinges ) : Bool
+  function genpagepredicate9 ( t : TestDinges ) : Bool
   {
     return true && true && true && true && t.proc2.isEnabled;
   }
 
-  function genpagepredicate4 ( t : TestDinges ) : Bool
+  function genpagepredicate10 ( t : TestDinges ) : Bool
   {
     return true && true && true && true && true && t.ifProc0.isEnabled;
   }
 
-  function genpagepredicate5 ( ) : Bool
+  function genpagepredicate11 ( p : PdpMeeting ) : Bool
+  {
+    return true && true && true && true && true && p.repeatUntilProc0.isEnabled;
+  }
+
+  function genpagepredicate12 ( p : PdpMeeting ) : Bool
+  {
+    return true && true && true && true && true && p.xorProc0.isEnabled;
+  }
+
+  function genpagepredicate13 ( ) : Bool
   {
     return true;
   }
 
-  function genpagepredicate6 ( ) : Bool
+  function genpagepredicate14 ( ) : Bool
   {
     return true;
   }
@@ -152,12 +282,12 @@ section  access denied page. .
     return true;
   }
 
-  function genpagepredicate7 ( pdpMeeting : PdpMeeting ) : Bool
+  function genpagepredicate15 ( pdpMeeting : PdpMeeting ) : Bool
   {
     return securityContext.principal = pdpMeeting.employee || securityContext.principal = pdpMeeting.employee.manager;
   }
 
-  function genpagepredicate8 ( t : testDinges ) : Bool
+  function genpagepredicate16 ( t : testDinges ) : Bool
   {
     return true;
   }
@@ -217,9 +347,9 @@ section  access denied page. .
     return true;
   }
 
-  function genactionpredicate12 ( genuniquevar0 : TestDinges ) : Bool
+  function genactionpredicate12 ( ) : Bool
   {
-    return true && true && true && true && true && genuniquevar0.ifProc0.isEnabled;
+    return true;
   }
 
   function genactionpredicate13 ( ) : Bool
@@ -227,9 +357,9 @@ section  access denied page. .
     return true;
   }
 
-  function genactionpredicate14 ( ) : Bool
+  function genactionpredicate14 ( genuniquevar0 : PdpMeeting ) : Bool
   {
-    return true;
+    return true && true && true && true && true && genuniquevar0.xorProc0.isEnabled;
   }
 
   function genactionpredicate15 ( ) : Bool
@@ -242,9 +372,9 @@ section  access denied page. .
     return true;
   }
 
-  function genactionpredicate17 ( genuniquevar1 : TestDinges ) : Bool
+  function genactionpredicate17 ( genuniquevar1 : PdpMeeting ) : Bool
   {
-    return true && true && true && true && genuniquevar1.testWorkflow.isEnabled;
+    return true && true && true && true && true && genuniquevar1.repeatUntilProc0.isEnabled;
   }
 
   function genactionpredicate18 ( ) : Bool
@@ -252,9 +382,9 @@ section  access denied page. .
     return true;
   }
 
-  function genactionpredicate19 ( genuniquevar2 : TestDinges ) : Bool
+  function genactionpredicate19 ( ) : Bool
   {
-    return true && true && true && true && genuniquevar2.proc1.isEnabled;
+    return true;
   }
 
   function genactionpredicate20 ( ) : Bool
@@ -262,9 +392,9 @@ section  access denied page. .
     return true;
   }
 
-  function genactionpredicate21 ( genuniquevar3 : TestDinges ) : Bool
+  function genactionpredicate21 ( ) : Bool
   {
-    return true && true && true && true && genuniquevar3.proc2.isEnabled;
+    return true;
   }
 
   function genactionpredicate22 ( ) : Bool
@@ -277,9 +407,9 @@ section  access denied page. .
     return true;
   }
 
-  function genactionpredicate24 ( genuniquevar4 : PdpMeeting ) : Bool
+  function genactionpredicate24 ( ) : Bool
   {
-    return securityContext.principal = genuniquevar4.employee || securityContext.principal = genuniquevar4.employee.manager;
+    return true;
   }
 
   function genactionpredicate25 ( ) : Bool
@@ -287,9 +417,9 @@ section  access denied page. .
     return true;
   }
 
-  function genactionpredicate26 ( ) : Bool
+  function genactionpredicate26 ( genuniquevar2 : TestDinges ) : Bool
   {
-    return true;
+    return true && true && true && true && true && genuniquevar2.ifProc0.isEnabled;
   }
 
   function genactionpredicate27 ( ) : Bool
@@ -312,9 +442,9 @@ section  access denied page. .
     return true;
   }
 
-  function genactionpredicate31 ( ) : Bool
+  function genactionpredicate31 ( genuniquevar3 : PdpMeeting ) : Bool
   {
-    return true;
+    return true && true && true && genuniquevar3.testWorkflow.isEnabled;
   }
 
   function genactionpredicate32 ( ) : Bool
@@ -322,9 +452,9 @@ section  access denied page. .
     return true;
   }
 
-  function genactionpredicate33 ( ) : Bool
+  function genactionpredicate33 ( genuniquevar4 : PdpMeeting ) : Bool
   {
-    return true;
+    return true && true && securityContext.principal = genuniquevar4.employee && true && genuniquevar4.employeeFillInForm.isEnabled;
   }
 
   function genactionpredicate34 ( ) : Bool
@@ -332,9 +462,9 @@ section  access denied page. .
     return true;
   }
 
-  function genactionpredicate35 ( ) : Bool
+  function genactionpredicate35 ( genuniquevar5 : PdpMeeting ) : Bool
   {
-    return true;
+    return true && true && securityContext.principal = genuniquevar5.employee.manager && true && genuniquevar5.managerFillInForm.isEnabled;
   }
 
   function genactionpredicate36 ( ) : Bool
@@ -342,39 +472,199 @@ section  access denied page. .
     return true;
   }
 
-  function genactionpredicate37 ( ) : Bool
+  function genactionpredicate37 ( genuniquevar6 : PdpMeeting ) : Bool
+  {
+    return true && true && securityContext.principal = genuniquevar6.employee.manager && true && genuniquevar6.writeReport.isEnabled;
+  }
+
+  function genactionpredicate38 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate39 ( genuniquevar7 : PdpMeeting ) : Bool
+  {
+    return true && true && securityContext.principal = genuniquevar7.employee.manager && genuniquevar7.finalizeReport.isEnabled;
+  }
+
+  function genactionpredicate40 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate41 ( genuniquevar8 : PdpMeeting ) : Bool
+  {
+    return true && true && securityContext.principal = genuniquevar8.employee && genuniquevar8.approveReport.isEnabled;
+  }
+
+  function genactionpredicate42 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate43 ( genuniquevar9 : TestDinges ) : Bool
+  {
+    return true && true && true && true && genuniquevar9.testDingesWorkflow.isEnabled;
+  }
+
+  function genactionpredicate44 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate45 ( genuniquevar11 : TestDinges ) : Bool
+  {
+    return true && true && true && true && genuniquevar11.proc1.isEnabled;
+  }
+
+  function genactionpredicate46 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate47 ( genuniquevar12 : TestDinges ) : Bool
+  {
+    return true && true && true && true && genuniquevar12.proc2.isEnabled;
+  }
+
+  function genactionpredicate48 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate49 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate50 ( genuniquevar13 : PdpMeeting ) : Bool
+  {
+    return securityContext.principal = genuniquevar13.employee || securityContext.principal = genuniquevar13.employee.manager;
+  }
+
+  function genactionpredicate51 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate52 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate53 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate54 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate55 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate56 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate57 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate58 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate59 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate60 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate61 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate62 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate63 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate64 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate65 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate66 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate67 ( ) : Bool
   {
     return true;
   }
 
   function genactionpredicatecombined0 ( ) : Bool
   {
-    return genactionpredicate0() && genactionpredicate7();
+    return genactionpredicate0() && genactionpredicate9();
   }
 
-  function genactionpredicatecombined1 ( genuniquevar5 : TestDinges ) : Bool
+  function genactionpredicatecombined1 ( genuniquevar14 : PdpMeeting ) : Bool
   {
-    return genactionpredicate0() && genactionpredicate17(genuniquevar5) && genactionpredicate16();
+    return genactionpredicate0() && genactionpredicate33(genuniquevar14) && genactionpredicate32();
   }
 
-  function genactionpredicatecombined2 ( genuniquevar6 : TestDinges ) : Bool
+  function genactionpredicatecombined2 ( genuniquevar15 : PdpMeeting ) : Bool
   {
-    return genactionpredicate0() && genactionpredicate19(genuniquevar6) && genactionpredicate18();
+    return genactionpredicate0() && genactionpredicate35(genuniquevar15) && genactionpredicate34();
   }
 
-  function genactionpredicatecombined3 ( genuniquevar7 : TestDinges ) : Bool
+  function genactionpredicatecombined3 ( genuniquevar16 : PdpMeeting ) : Bool
   {
-    return genactionpredicate0() && genactionpredicate21(genuniquevar7) && genactionpredicate20();
+    return genactionpredicate0() && genactionpredicate37(genuniquevar16) && genactionpredicate36();
   }
 
-  function genactionpredicatecombined4 ( ) : Bool
+  function genactionpredicatecombined4 ( genuniquevar17 : TestDinges ) : Bool
   {
-    return genactionpredicate0() && genactionpredicate22();
+    return genactionpredicate0() && genactionpredicate45(genuniquevar17) && genactionpredicate44();
   }
 
-  function genactionpredicatecombined5 ( ) : Bool
+  function genactionpredicatecombined5 ( genuniquevar18 : TestDinges ) : Bool
   {
-    return genactionpredicate0() && genactionpredicate22();
+    return genactionpredicate0() && genactionpredicate47(genuniquevar18) && genactionpredicate46();
+  }
+
+  function genactionpredicatecombined6 ( ) : Bool
+  {
+    return genactionpredicate0() && genactionpredicate48();
+  }
+
+  function genactionpredicatecombined7 ( ) : Bool
+  {
+    return genactionpredicate0() && genactionpredicate48();
   }
 
   define page accessDenied () {
@@ -392,7 +682,7 @@ section  access denied page. .
     }
     text("Access Denied: "){
     }
-    if ( genpagepredicatecombined16() ) {
+    if ( genpagepredicatecombined34() ) {
       navigate(home()){
         "return to home page"
       }
@@ -431,7 +721,51 @@ em
 
 template
 
+pdpMeetingStatusList
+
+(
+
+)
+
+{
+
+background-color
+
+:=
+
+#
+
+ffffff
+
+;
+
+}
+
+template
+
 testDingesStatusList
+
+(
+
+)
+
+{
+
+background-color
+
+:=
+
+#
+
+ffffff
+
+;
+
+}
+
+template
+
+pdpMeetingTaskList
 
 (
 
@@ -470,6 +804,30 @@ background-color
 ffffff
 
 ;
+
+}
+
+template
+
+pdpMeetingProcedures
+
+(
+
+)
+
+{
+
+}
+
+template
+
+pdpMeetingProceduresList
+
+(
+
+)
+
+{
 
 }
 
@@ -649,9 +1007,42 @@ section  templates .
     o.proc1 := Proc1ProcedureStatus{};
     o.proc1.t := o;
     o.proc1.persist();
+    o.testDingesWorkflow := TestDingesWorkflowProcedureStatus{};
+    o.testDingesWorkflow.t := o;
+    o.testDingesWorkflow.persist();
+    o.persist();
+    return o;
+  }
+
+  function newPdpMeeting ( ) : PdpMeeting
+  {
+    var o : PdpMeeting := PdpMeeting{} ;
+    o.persist();
+    o.repeatUntilProc0 := RepeatUntilProc0ProcedureStatus{};
+    o.repeatUntilProc0.p := o;
+    o.repeatUntilProc0.persist();
+    o.xorProc0 := XorProc0ProcedureStatus{};
+    o.xorProc0.p := o;
+    o.xorProc0.persist();
+    o.approveReport := ApproveReportProcedureStatus{};
+    o.approveReport.p := o;
+    o.approveReport.persist();
+    o.finalizeReport := FinalizeReportProcedureStatus{};
+    o.finalizeReport.p := o;
+    o.finalizeReport.persist();
+    o.writeReport := WriteReportProcedureStatus{};
+    o.writeReport.p := o;
+    o.writeReport.persist();
+    o.managerFillInForm := ManagerFillInFormProcedureStatus{};
+    o.managerFillInForm.p := o;
+    o.managerFillInForm.persist();
+    o.employeeFillInForm := EmployeeFillInFormProcedureStatus{};
+    o.employeeFillInForm.p := o;
+    o.employeeFillInForm.persist();
     o.testWorkflow := TestWorkflowProcedureStatus{};
-    o.testWorkflow.t := o;
+    o.testWorkflow.p := o;
     o.testWorkflow.persist();
+    o.persist();
     return o;
   }
 
@@ -715,7 +1106,7 @@ section  templates .
       list(){
         if ( true && testDinges5.proc2.isEnabled && true ) {
           listitem(){
-            if ( genpagepredicatecombined15(testDinges5) ) {
+            if ( genpagepredicatecombined33(testDinges5) ) {
               navigate(proc2(testDinges5)){
                 text("Proc2"){
                 }
@@ -725,7 +1116,7 @@ section  templates .
         }
         if ( true && testDinges5.proc1.isEnabled && true ) {
           listitem(){
-            if ( genpagepredicatecombined14(testDinges5) ) {
+            if ( genpagepredicatecombined32(testDinges5) ) {
               navigate(proc1(testDinges5)){
                 text("Proc1"){
                 }
@@ -733,11 +1124,11 @@ section  templates .
             }
           }
         }
-        if ( true && testDinges5.testWorkflow.isEnabled && true ) {
+        if ( true && testDinges5.testDingesWorkflow.isEnabled && true ) {
           listitem(){
-            if ( genpagepredicatecombined13(testDinges5) ) {
-              navigate(testWorkflow(testDinges5)){
-                text("Test workflow"){
+            if ( genpagepredicatecombined31(testDinges5) ) {
+              navigate(testDingesWorkflow(testDinges5)){
+                text("Test dinges workflow"){
                 }
               }
             }
@@ -750,6 +1141,68 @@ section  templates .
   define template testDingesProcedures (testDinges6 : TestDinges) {
     if ( gentemplatepredicate0() ) {
       testDingesProceduresList(testDinges6){
+      }
+    }
+  }
+
+  define template pdpMeetingProceduresList (pdpMeeting7 : PdpMeeting) {
+    if ( gentemplatepredicate0() ) {
+      list(){
+        if ( securityContext.principal = pdpMeeting7.employee && pdpMeeting7.approveReport.isEnabled && true ) {
+          listitem(){
+            navigatebutton(approveReport(pdpMeeting7), "Approve report"){
+            }
+          }
+        }
+        if ( securityContext.principal = pdpMeeting7.employee.manager && pdpMeeting7.finalizeReport.isEnabled && true ) {
+          listitem(){
+            navigatebutton(finalizeReport(pdpMeeting7), "Finalize report"){
+            }
+          }
+        }
+        if ( securityContext.principal = pdpMeeting7.employee.manager && pdpMeeting7.writeReport.isEnabled && true ) {
+          listitem(){
+            if ( genpagepredicatecombined28(pdpMeeting7) ) {
+              navigate(writeReport(pdpMeeting7)){
+                text("Write report"){
+                }
+              }
+            }
+          }
+        }
+        if ( securityContext.principal = pdpMeeting7.employee.manager && pdpMeeting7.managerFillInForm.isEnabled && true ) {
+          listitem(){
+            if ( genpagepredicatecombined27(pdpMeeting7) ) {
+              navigate(managerFillInForm(pdpMeeting7)){
+                text("Manager fill in form"){
+                }
+              }
+            }
+          }
+        }
+        if ( securityContext.principal = pdpMeeting7.employee && pdpMeeting7.employeeFillInForm.isEnabled && true ) {
+          listitem(){
+            if ( genpagepredicatecombined26(pdpMeeting7) ) {
+              navigate(employeeFillInForm(pdpMeeting7)){
+                text("Employee fill in form"){
+                }
+              }
+            }
+          }
+        }
+        if ( true && pdpMeeting7.testWorkflow.isEnabled && true ) {
+          listitem(){
+            navigatebutton(testWorkflow(pdpMeeting7), "Test workflow"){
+            }
+          }
+        }
+      }
+    }
+  }
+
+  define template pdpMeetingProcedures (pdpMeeting8 : PdpMeeting) {
+    if ( gentemplatepredicate0() ) {
+      pdpMeetingProceduresList(pdpMeeting8){
       }
     }
   }
@@ -777,13 +1230,15 @@ section  templates .
       section(){
         testDingesTaskList(){
         }
+        pdpMeetingTaskList(){
+        }
       }
     }
   }
 
   function testDingesHasProcedures ( testDinges : TestDinges ) : Bool
   {
-    return true && testDinges.proc2.isEnabled && true || true && testDinges.proc1.isEnabled && true || true && testDinges.testWorkflow.isEnabled && true || false;
+    return true && testDinges.proc2.isEnabled && true || true && testDinges.proc1.isEnabled && true || true && testDinges.testDingesWorkflow.isEnabled && true || false;
   }
 
   define template testDingesTaskList () {
@@ -795,9 +1250,17 @@ section  templates .
         for ( testDinges7 : TestDinges where true order by null asc limit 1000 offset 0 ) {
           if ( testDingesHasProcedures(testDinges7) ) {
             listitem(){
-              if ( genpagepredicatecombined20(testDinges7) ) {
-                navigate(testDinges(testDinges7)){
-                  text(testDinges7.name){
+              dummy(){
+                if ( testDinges7 != null ) {
+                  if ( genpagepredicatecombined38(testDinges7) ) {
+                    navigate(testDinges(testDinges7)){
+                      text(testDinges7.name){
+                      }
+                    }
+                  }
+                }
+                if ( testDinges7 = null ) {
+                  text("null"){
                   }
                 }
               }
@@ -835,6 +1298,68 @@ section  templates .
     }
   }
 
+  function pdpMeetingHasProcedures ( pdpMeeting : PdpMeeting ) : Bool
+  {
+    return securityContext.principal = pdpMeeting.employee && pdpMeeting.approveReport.isEnabled && true || securityContext.principal = pdpMeeting.employee.manager && pdpMeeting.finalizeReport.isEnabled && true || securityContext.principal = pdpMeeting.employee.manager && pdpMeeting.writeReport.isEnabled && true || securityContext.principal = pdpMeeting.employee.manager && pdpMeeting.managerFillInForm.isEnabled && true || securityContext.principal = pdpMeeting.employee && pdpMeeting.employeeFillInForm.isEnabled && true || true && pdpMeeting.testWorkflow.isEnabled && true || false;
+  }
+
+  define template pdpMeetingTaskList () {
+    if ( gentemplatepredicate0() ) {
+      header(){
+        "Pdp meeting"
+      }
+      list(){
+        for ( pdpMeeting9 : PdpMeeting where true order by null asc limit 1000 offset 0 ) {
+          if ( pdpMeetingHasProcedures(pdpMeeting9) ) {
+            listitem(){
+              dummy(){
+                if ( pdpMeeting9 != null ) {
+                  if ( genpagepredicatecombined36(pdpMeeting9) ) {
+                    navigate(pdpMeeting(pdpMeeting9)){
+                      text(pdpMeeting9.name){
+                      }
+                    }
+                  }
+                }
+                if ( pdpMeeting9 = null ) {
+                  text("null"){
+                  }
+                }
+              }
+              pdpMeetingProceduresList(pdpMeeting9){
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  define page pdpMeetingTasks () {
+    init
+    {
+      if ( genpagepredicatecombined3() )
+      {
+      }
+      else
+      {
+        goto accessDenied();
+      }
+    }
+    title(){
+      "Pdp meeting"
+    }
+    main(){
+    }
+    define local body () {
+      header(){
+        "Tasks"
+      }
+      pdpMeetingTaskList(){
+      }
+    }
+  }
+
   define template testDingesStatusList () {
     if ( gentemplatepredicate0() ) {
       header(){
@@ -843,9 +1368,17 @@ section  templates .
       list(){
         for ( testDinges8 : TestDinges where true order by null asc limit 1000 offset 0 ) {
           listitem(){
-            if ( genpagepredicatecombined20(testDinges8) ) {
-              navigate(testDinges(testDinges8)){
-                text(testDinges8.name){
+            dummy(){
+              if ( testDinges8 != null ) {
+                if ( genpagepredicatecombined38(testDinges8) ) {
+                  navigate(testDinges(testDinges8)){
+                    text(testDinges8.name){
+                    }
+                  }
+                }
+              }
+              if ( testDinges8 = null ) {
+                text("null"){
                 }
               }
             }
@@ -853,7 +1386,7 @@ section  templates .
               if ( testDinges8.proc2.isEnabled && true ) {
                 if ( true ) {
                   listitem(){
-                    if ( genpagepredicatecombined15(testDinges8) ) {
+                    if ( genpagepredicatecombined33(testDinges8) ) {
                       navigate(proc2(testDinges8)){
                         text("Proc2"){
                         }
@@ -872,7 +1405,7 @@ section  templates .
               if ( testDinges8.proc1.isEnabled && true ) {
                 if ( true ) {
                   listitem(){
-                    if ( genpagepredicatecombined14(testDinges8) ) {
+                    if ( genpagepredicatecombined32(testDinges8) ) {
                       navigate(proc1(testDinges8)){
                         text("Proc1"){
                         }
@@ -888,12 +1421,12 @@ section  templates .
                   }
                 }
               }
-              if ( testDinges8.testWorkflow.isEnabled && true ) {
+              if ( testDinges8.testDingesWorkflow.isEnabled && true ) {
                 if ( true ) {
                   listitem(){
-                    if ( genpagepredicatecombined13(testDinges8) ) {
-                      navigate(testWorkflow(testDinges8)){
-                        text("Test workflow"){
+                    if ( genpagepredicatecombined31(testDinges8) ) {
+                      navigate(testDingesWorkflow(testDinges8)){
+                        text("Test dinges workflow"){
                         }
                         ""
                       }
@@ -902,7 +1435,7 @@ section  templates .
                 }
                 if ( ! true ) {
                   listitem(){
-                    text("Test workflow"){
+                    text("Test dinges workflow"){
                     }
                   }
                 }
@@ -917,7 +1450,7 @@ section  templates .
   define page testDingesStatus () {
     init
     {
-      if ( genpagepredicatecombined3() )
+      if ( genpagepredicatecombined4() )
       {
       }
       else
@@ -943,10 +1476,183 @@ section  templates .
     }
   }
 
-  define page procedureStatus (s5 : ProcedureStatus) {
+  define template pdpMeetingStatusList () {
+    if ( gentemplatepredicate0() ) {
+      header(){
+        "Pdp meeting"
+      }
+      list(){
+        for ( pdpMeeting10 : PdpMeeting where true order by null asc limit 1000 offset 0 ) {
+          listitem(){
+            dummy(){
+              if ( pdpMeeting10 != null ) {
+                if ( genpagepredicatecombined36(pdpMeeting10) ) {
+                  navigate(pdpMeeting(pdpMeeting10)){
+                    text(pdpMeeting10.name){
+                    }
+                  }
+                }
+              }
+              if ( pdpMeeting10 = null ) {
+                text("null"){
+                }
+              }
+            }
+            list(){
+              if ( pdpMeeting10.approveReport.isEnabled && true ) {
+                if ( securityContext.principal = pdpMeeting10.employee ) {
+                  listitem(){
+                    if ( genpagepredicatecombined30(pdpMeeting10) ) {
+                      navigate(approveReport(pdpMeeting10)){
+                        text("Approve report"){
+                        }
+                        " (X)"
+                      }
+                    }
+                  }
+                }
+                if ( ! securityContext.principal = pdpMeeting10.employee ) {
+                  listitem(){
+                    text("Approve report"){
+                    }
+                  }
+                }
+              }
+              if ( pdpMeeting10.finalizeReport.isEnabled && true ) {
+                if ( securityContext.principal = pdpMeeting10.employee.manager ) {
+                  listitem(){
+                    if ( genpagepredicatecombined29(pdpMeeting10) ) {
+                      navigate(finalizeReport(pdpMeeting10)){
+                        text("Finalize report"){
+                        }
+                        " (X)"
+                      }
+                    }
+                  }
+                }
+                if ( ! securityContext.principal = pdpMeeting10.employee.manager ) {
+                  listitem(){
+                    text("Finalize report"){
+                    }
+                  }
+                }
+              }
+              if ( pdpMeeting10.writeReport.isEnabled && true ) {
+                if ( securityContext.principal = pdpMeeting10.employee.manager ) {
+                  listitem(){
+                    if ( genpagepredicatecombined28(pdpMeeting10) ) {
+                      navigate(writeReport(pdpMeeting10)){
+                        text("Write report"){
+                        }
+                        ""
+                      }
+                    }
+                  }
+                }
+                if ( ! securityContext.principal = pdpMeeting10.employee.manager ) {
+                  listitem(){
+                    text("Write report"){
+                    }
+                  }
+                }
+              }
+              if ( pdpMeeting10.managerFillInForm.isEnabled && true ) {
+                if ( securityContext.principal = pdpMeeting10.employee.manager ) {
+                  listitem(){
+                    if ( genpagepredicatecombined27(pdpMeeting10) ) {
+                      navigate(managerFillInForm(pdpMeeting10)){
+                        text("Manager fill in form"){
+                        }
+                        ""
+                      }
+                    }
+                  }
+                }
+                if ( ! securityContext.principal = pdpMeeting10.employee.manager ) {
+                  listitem(){
+                    text("Manager fill in form"){
+                    }
+                  }
+                }
+              }
+              if ( pdpMeeting10.employeeFillInForm.isEnabled && true ) {
+                if ( securityContext.principal = pdpMeeting10.employee ) {
+                  listitem(){
+                    if ( genpagepredicatecombined26(pdpMeeting10) ) {
+                      navigate(employeeFillInForm(pdpMeeting10)){
+                        text("Employee fill in form"){
+                        }
+                        ""
+                      }
+                    }
+                  }
+                }
+                if ( ! securityContext.principal = pdpMeeting10.employee ) {
+                  listitem(){
+                    text("Employee fill in form"){
+                    }
+                  }
+                }
+              }
+              if ( pdpMeeting10.testWorkflow.isEnabled && true ) {
+                if ( true ) {
+                  listitem(){
+                    if ( genpagepredicatecombined25(pdpMeeting10) ) {
+                      navigate(testWorkflow(pdpMeeting10)){
+                        text("Test workflow"){
+                        }
+                        " (X)"
+                      }
+                    }
+                  }
+                }
+                if ( ! true ) {
+                  listitem(){
+                    text("Test workflow"){
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  define page pdpMeetingStatus () {
     init
     {
-      if ( genpagepredicatecombined4(s5) )
+      if ( genpagepredicatecombined5() )
+      {
+      }
+      else
+      {
+        goto accessDenied();
+      }
+    }
+    title(){
+      "Pdp meeting"
+    }
+    main(){
+    }
+    define local body () {
+      section(){
+        header(){
+          "Status"
+        }
+        section(){
+          pdpMeetingStatusList(){
+          }
+        }
+      }
+    }
+  }
+
+  define page procedureStatus (s13 : ProcedureStatus) {
+    init
+    {
+      if ( genpagepredicatecombined6(s13) )
       {
       }
       else
@@ -959,67 +1665,83 @@ section  templates .
       }
       define local body () {
         header(){
-          text(s5.name){
+          text(s13.name){
           }
         }
         table(){
           dummy(){
             row(){
               "Name: "
-              text(s5.name){
+              text(s13.name){
               }
             }
             row(){
               "Is enabled: "
-              outputBool(s5.isEnabled){
+              outputBool(s13.isEnabled){
               }
             }
             row(){
               "Date: "
-              outputDateTime(s5.date){
+              outputDateTime(s13.date){
               }
             }
             row(){
               "Caller: "
-              if ( genpagepredicatecombined4(s5.caller) ) {
-                navigate(procedureStatus(s5.caller)){
-                  text(s5.caller.name){
+              dummy(){
+                if ( s13.caller != null ) {
+                  if ( genpagepredicatecombined6(s13.caller) ) {
+                    navigate(procedureStatus(s13.caller)){
+                      text(s13.caller.name){
+                      }
+                    }
+                  }
+                }
+                if ( s13.caller = null ) {
+                  text("null"){
                   }
                 }
               }
             }
             row(){
               "Returnstate: "
-              outputInt(s5.returnstate){
+              outputInt(s13.returnstate){
               }
             }
             row(){
               "Name: "
-              text(s5.name){
+              text(s13.name){
               }
             }
             row(){
               "Is enabled: "
-              outputBool(s5.isEnabled){
+              outputBool(s13.isEnabled){
               }
             }
             row(){
               "Date: "
-              outputDateTime(s5.date){
+              outputDateTime(s13.date){
               }
             }
             row(){
               "Caller: "
-              if ( genpagepredicatecombined4(s5.caller) ) {
-                navigate(procedureStatus(s5.caller)){
-                  text(s5.caller.name){
+              dummy(){
+                if ( s13.caller != null ) {
+                  if ( genpagepredicatecombined6(s13.caller) ) {
+                    navigate(procedureStatus(s13.caller)){
+                      text(s13.caller.name){
+                      }
+                    }
+                  }
+                }
+                if ( s13.caller = null ) {
+                  text("null"){
                   }
                 }
               }
             }
             row(){
               "Returnstate: "
-              outputInt(s5.returnstate){
+              outputInt(s13.returnstate){
               }
             }
           }
@@ -1059,7 +1781,7 @@ section  templates .
         menubar("horizontal"){
           menu(){
             menuheader(){
-              if ( genpagepredicatecombined16() ) {
+              if ( genpagepredicatecombined34() ) {
                 navigate(home()){
                   "Home"
                 }
@@ -1071,7 +1793,7 @@ section  templates .
               "User"
             }
             menuitem(){
-              if ( genpagepredicatecombined5() ) {
+              if ( genpagepredicatecombined7() ) {
                 navigate(signin()){
                   "Sign in"
                 }
@@ -1125,12 +1847,6 @@ section  data model .
 
   var aUser : User := User{username := "user" name := "Joe User" password := "secret" manager := aManager} ;
 
-  var test1 : TestDinges := TestDinges{name := "onderste"} ;
-
-  var test2 : TestDinges := TestDinges{name := "middelste" child := test1} ;
-
-  var test3 : TestDinges := TestDinges{name := "bovenste" child := test2} ;
-
   entity User {
     username :: String ( )
     name :: String ( )
@@ -1139,6 +1855,14 @@ section  data model .
   }
 
   entity PdpMeeting {
+    approveReport <> ApproveReportProcedureStatus ( )
+    finalizeReport <> FinalizeReportProcedureStatus ( )
+    writeReport <> WriteReportProcedureStatus ( )
+    managerFillInForm <> ManagerFillInFormProcedureStatus ( )
+    employeeFillInForm <> EmployeeFillInFormProcedureStatus ( )
+    testWorkflow <> TestWorkflowProcedureStatus ( )
+    repeatUntilProc0 <> RepeatUntilProc0ProcedureStatus ( )
+    xorProc0 <> XorProc0ProcedureStatus ( )
     employee -> User ( )
     name :: String ( ) := this.employee.name + " PDP Form"
     employeePreparation :: Text ( )
@@ -1149,13 +1873,20 @@ section  data model .
   entity TestDinges {
     proc2 <> Proc2ProcedureStatus ( )
     proc1 <> Proc1ProcedureStatus ( )
-    testWorkflow <> TestWorkflowProcedureStatus ( )
+    testDingesWorkflow <> TestDingesWorkflowProcedureStatus ( )
     ifProc0 <> IfProc0ProcedureStatus ( )
     name :: String ( )
-    commentz :: String ( )
+    comments :: String ( )
     proc1 :: String ( )
-    proc2 :: String ( )
+    proc2Text :: String ( )
     child -> TestDinges ( )
+  }
+
+  status PdpMeeting {
+    employeeFilledIn :: Bool ( )
+    managerFilledIn :: Bool ( )
+    final :: Bool ( )
+    employeeApproved :: Bool ( )
   }
 
 module ac
@@ -1197,7 +1928,7 @@ section  pages .
   define page signin () {
     init
     {
-      if ( genpagepredicatecombined5() )
+      if ( genpagepredicatecombined7() )
       {
       }
       else
@@ -1264,7 +1995,7 @@ section  pages .
   define page error (msg2 : String) {
     init
     {
-      if ( genpagepredicatecombined6(msg2) )
+      if ( genpagepredicatecombined8(msg2) )
       {
       }
       else
@@ -1289,7 +2020,7 @@ section  pages .
   define page message (msg3 : String) {
     init
     {
-      if ( genpagepredicatecombined7(msg3) )
+      if ( genpagepredicatecombined9(msg3) )
       {
       }
       else
@@ -1313,6 +2044,1412 @@ section  pages .
 
 section  procedures .
 
+  entity XorProc0ProcedureStatus : ProcedureStatus {
+    p -> PdpMeeting ( )
+    function enable1 ( ) : Void
+    {
+      this.next(0);
+    }
+    function enable2 ( ) : Void
+    {
+      this.next(2);
+    }
+    function disable1 ( ) : Void
+    {
+      this.p.employeeFillInForm.disable();
+    }
+    function disable2 ( ) : Void
+    {
+      this.p.managerFillInForm.disable();
+    }
+    function next ( state : Int ) : Void
+    {
+      if ( state = 0 )
+      {
+        this.p.employeeFillInForm.enable__ProcedureStatus__Int(this as ProcedureStatus, 1);
+      }
+      else
+      {
+      }
+      if ( state = 1 )
+      {
+        this.disable2();
+        this.processed();
+      }
+      else
+      {
+      }
+      if ( state = 2 )
+      {
+        this.p.managerFillInForm.enable__ProcedureStatus__Int(this as ProcedureStatus, 3);
+      }
+      else
+      {
+      }
+      if ( state = 3 )
+      {
+        this.disable1();
+        this.processed();
+      }
+      else
+      {
+      }
+    }
+    function enabled ( ) : Void
+    {
+      this.enable1();
+      this.enable2();
+    }
+    function done ( ) : Void
+    {
+      this.isEnabled := false;
+      this.persist();
+      this.next(0);
+    }
+    function do ( ) : Void
+    {
+      this.done();
+    }
+    function disabled ( ) : Void
+    {
+      disable1();
+      disable2();
+    }
+  }
+
+  define page xorProc0ProcedureStatus (s14 : XorProc0ProcedureStatus) {
+    init
+    {
+      if ( genpagepredicatecombined10(s14) )
+      {
+      }
+      else
+      {
+        goto accessDenied();
+      }
+    }
+    dummy(){
+      main(){
+      }
+      define local body () {
+        header(){
+          text(s14.name){
+          }
+        }
+        table(){
+          dummy(){
+            row(){
+              "P: "
+              dummy(){
+                if ( s14.p != null ) {
+                  if ( genpagepredicatecombined36(s14.p) ) {
+                    navigate(pdpMeeting(s14.p)){
+                      text(s14.p.name){
+                      }
+                    }
+                  }
+                }
+                if ( s14.p = null ) {
+                  text("null"){
+                  }
+                }
+              }
+            }
+            row(){
+              "P: "
+              dummy(){
+                if ( s14.p != null ) {
+                  if ( genpagepredicatecombined36(s14.p) ) {
+                    navigate(pdpMeeting(s14.p)){
+                      text(s14.p.name){
+                      }
+                    }
+                  }
+                }
+                if ( s14.p = null ) {
+                  text("null"){
+                  }
+                }
+              }
+            }
+            row(){
+              "Name: "
+              text(s14.name){
+              }
+            }
+            row(){
+              "Is enabled: "
+              outputBool(s14.isEnabled){
+              }
+            }
+            row(){
+              "Date: "
+              outputDateTime(s14.date){
+              }
+            }
+            row(){
+              "Caller: "
+              dummy(){
+                if ( s14.caller != null ) {
+                  if ( genpagepredicatecombined6(s14.caller) ) {
+                    navigate(procedureStatus(s14.caller)){
+                      text(s14.caller.name){
+                      }
+                    }
+                  }
+                }
+                if ( s14.caller = null ) {
+                  text("null"){
+                  }
+                }
+              }
+            }
+            row(){
+              "Returnstate: "
+              outputInt(s14.returnstate){
+              }
+            }
+            row(){
+              "Name: "
+              text(s14.name){
+              }
+            }
+            row(){
+              "Is enabled: "
+              outputBool(s14.isEnabled){
+              }
+            }
+            row(){
+              "Date: "
+              outputDateTime(s14.date){
+              }
+            }
+            row(){
+              "Caller: "
+              dummy(){
+                if ( s14.caller != null ) {
+                  if ( genpagepredicatecombined6(s14.caller) ) {
+                    navigate(procedureStatus(s14.caller)){
+                      text(s14.caller.name){
+                      }
+                    }
+                  }
+                }
+                if ( s14.caller = null ) {
+                  text("null"){
+                  }
+                }
+              }
+            }
+            row(){
+              "Returnstate: "
+              outputInt(s14.returnstate){
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  define page xorProc0 (p39 : PdpMeeting) {
+    init
+    {
+      if ( genpagepredicatecombined11(p39) )
+      {
+      }
+      else
+      {
+        goto accessDenied();
+      }
+    }
+  }
+
+  entity RepeatUntilProc0ProcedureStatus : ProcedureStatus {
+    p -> PdpMeeting ( )
+    function enable1 ( ) : Void
+    {
+      this.next(0);
+    }
+    function enable2 ( ) : Void
+    {
+      this.next(3);
+    }
+    function disable1 ( ) : Void
+    {
+      this.p.writeReport.disable();
+      this.p.approveReport.disable();
+    }
+    function disable2 ( ) : Void
+    {
+      this.p.finalizeReport.disable();
+    }
+    function next ( state : Int ) : Void
+    {
+      if ( state = 0 )
+      {
+        this.p.writeReport.enable__ProcedureStatus__Int(this as ProcedureStatus, 1);
+      }
+      else
+      {
+      }
+      if ( state = 1 )
+      {
+        this.disable2();
+        this.p.approveReport.enable__ProcedureStatus__Int(this as ProcedureStatus, 2);
+      }
+      else
+      {
+      }
+      if ( state = 2 )
+      {
+        this.enable1();
+        this.enable2();
+      }
+      else
+      {
+      }
+      if ( state = 3 )
+      {
+        this.p.finalizeReport.enable__ProcedureStatus__Int(this as ProcedureStatus, 4);
+      }
+      else
+      {
+      }
+      if ( state = 4 )
+      {
+        this.disable1();
+        this.processed();
+      }
+      else
+      {
+      }
+    }
+    function enabled ( ) : Void
+    {
+      this.enable1();
+    }
+    function done ( ) : Void
+    {
+      this.isEnabled := false;
+      this.persist();
+      this.next(0);
+    }
+    function do ( ) : Void
+    {
+      this.done();
+    }
+    function disabled ( ) : Void
+    {
+      this.disable1();
+      this.disable2();
+    }
+  }
+
+  define page repeatUntilProc0ProcedureStatus (s15 : RepeatUntilProc0ProcedureStatus) {
+    init
+    {
+      if ( genpagepredicatecombined12(s15) )
+      {
+      }
+      else
+      {
+        goto accessDenied();
+      }
+    }
+    dummy(){
+      main(){
+      }
+      define local body () {
+        header(){
+          text(s15.name){
+          }
+        }
+        table(){
+          dummy(){
+            row(){
+              "P: "
+              dummy(){
+                if ( s15.p != null ) {
+                  if ( genpagepredicatecombined36(s15.p) ) {
+                    navigate(pdpMeeting(s15.p)){
+                      text(s15.p.name){
+                      }
+                    }
+                  }
+                }
+                if ( s15.p = null ) {
+                  text("null"){
+                  }
+                }
+              }
+            }
+            row(){
+              "P: "
+              dummy(){
+                if ( s15.p != null ) {
+                  if ( genpagepredicatecombined36(s15.p) ) {
+                    navigate(pdpMeeting(s15.p)){
+                      text(s15.p.name){
+                      }
+                    }
+                  }
+                }
+                if ( s15.p = null ) {
+                  text("null"){
+                  }
+                }
+              }
+            }
+            row(){
+              "Name: "
+              text(s15.name){
+              }
+            }
+            row(){
+              "Is enabled: "
+              outputBool(s15.isEnabled){
+              }
+            }
+            row(){
+              "Date: "
+              outputDateTime(s15.date){
+              }
+            }
+            row(){
+              "Caller: "
+              dummy(){
+                if ( s15.caller != null ) {
+                  if ( genpagepredicatecombined6(s15.caller) ) {
+                    navigate(procedureStatus(s15.caller)){
+                      text(s15.caller.name){
+                      }
+                    }
+                  }
+                }
+                if ( s15.caller = null ) {
+                  text("null"){
+                  }
+                }
+              }
+            }
+            row(){
+              "Returnstate: "
+              outputInt(s15.returnstate){
+              }
+            }
+            row(){
+              "Name: "
+              text(s15.name){
+              }
+            }
+            row(){
+              "Is enabled: "
+              outputBool(s15.isEnabled){
+              }
+            }
+            row(){
+              "Date: "
+              outputDateTime(s15.date){
+              }
+            }
+            row(){
+              "Caller: "
+              dummy(){
+                if ( s15.caller != null ) {
+                  if ( genpagepredicatecombined6(s15.caller) ) {
+                    navigate(procedureStatus(s15.caller)){
+                      text(s15.caller.name){
+                      }
+                    }
+                  }
+                }
+                if ( s15.caller = null ) {
+                  text("null"){
+                  }
+                }
+              }
+            }
+            row(){
+              "Returnstate: "
+              outputInt(s15.returnstate){
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  define page repeatUntilProc0 (p40 : PdpMeeting) {
+    init
+    {
+      if ( genpagepredicatecombined13(p40) )
+      {
+      }
+      else
+      {
+        goto accessDenied();
+      }
+    }
+  }
+
+  entity TestWorkflowProcedureStatus : ProcedureStatus {
+    p -> PdpMeeting ( )
+    function next ( state : Int ) : Void
+    {
+      if ( state = 0 )
+      {
+        this.p.xorProc0.enable__ProcedureStatus__Int(this as ProcedureStatus, 1);
+      }
+      else
+      {
+      }
+      if ( state = 1 )
+      {
+        this.p.repeatUntilProc0.enable__ProcedureStatus__Int(this as ProcedureStatus, 2);
+      }
+      else
+      {
+      }
+      if ( state = 2 )
+      {
+        this.processed();
+      }
+      else
+      {
+      }
+    }
+    function enabled ( ) : Void
+    {
+    }
+    function done ( ) : Void
+    {
+      this.isEnabled := false;
+      this.persist();
+      this.next(0);
+    }
+    function do ( ) : Void
+    {
+      this.p.report := "Kanarie";
+      this.p.persist();
+      this.done();
+    }
+    function disabled ( ) : Void
+    {
+    }
+  }
+
+  define page testWorkflowProcedureStatus (s16 : TestWorkflowProcedureStatus) {
+    init
+    {
+      if ( genpagepredicatecombined14(s16) )
+      {
+      }
+      else
+      {
+        goto accessDenied();
+      }
+    }
+    dummy(){
+      main(){
+      }
+      define local body () {
+        header(){
+          text(s16.name){
+          }
+        }
+        table(){
+          dummy(){
+            row(){
+              "P: "
+              dummy(){
+                if ( s16.p != null ) {
+                  if ( genpagepredicatecombined36(s16.p) ) {
+                    navigate(pdpMeeting(s16.p)){
+                      text(s16.p.name){
+                      }
+                    }
+                  }
+                }
+                if ( s16.p = null ) {
+                  text("null"){
+                  }
+                }
+              }
+            }
+            row(){
+              "P: "
+              dummy(){
+                if ( s16.p != null ) {
+                  if ( genpagepredicatecombined36(s16.p) ) {
+                    navigate(pdpMeeting(s16.p)){
+                      text(s16.p.name){
+                      }
+                    }
+                  }
+                }
+                if ( s16.p = null ) {
+                  text("null"){
+                  }
+                }
+              }
+            }
+            row(){
+              "Name: "
+              text(s16.name){
+              }
+            }
+            row(){
+              "Is enabled: "
+              outputBool(s16.isEnabled){
+              }
+            }
+            row(){
+              "Date: "
+              outputDateTime(s16.date){
+              }
+            }
+            row(){
+              "Caller: "
+              dummy(){
+                if ( s16.caller != null ) {
+                  if ( genpagepredicatecombined6(s16.caller) ) {
+                    navigate(procedureStatus(s16.caller)){
+                      text(s16.caller.name){
+                      }
+                    }
+                  }
+                }
+                if ( s16.caller = null ) {
+                  text("null"){
+                  }
+                }
+              }
+            }
+            row(){
+              "Returnstate: "
+              outputInt(s16.returnstate){
+              }
+            }
+            row(){
+              "Name: "
+              text(s16.name){
+              }
+            }
+            row(){
+              "Is enabled: "
+              outputBool(s16.isEnabled){
+              }
+            }
+            row(){
+              "Date: "
+              outputDateTime(s16.date){
+              }
+            }
+            row(){
+              "Caller: "
+              dummy(){
+                if ( s16.caller != null ) {
+                  if ( genpagepredicatecombined6(s16.caller) ) {
+                    navigate(procedureStatus(s16.caller)){
+                      text(s16.caller.name){
+                      }
+                    }
+                  }
+                }
+                if ( s16.caller = null ) {
+                  text("null"){
+                  }
+                }
+              }
+            }
+            row(){
+              "Returnstate: "
+              outputInt(s16.returnstate){
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  entity EmployeeFillInFormProcedureStatus : ProcedureStatus {
+    p -> PdpMeeting ( )
+    function enabled ( ) : Void
+    {
+    }
+    function done ( ) : Void
+    {
+      this.isEnabled := false;
+      this.persist();
+      this.processed();
+    }
+    function do ( ) : Void
+    {
+      this.done();
+    }
+    function disabled ( ) : Void
+    {
+    }
+  }
+
+  define page employeeFillInFormProcedureStatus (s17 : EmployeeFillInFormProcedureStatus) {
+    init
+    {
+      if ( genpagepredicatecombined15(s17) )
+      {
+      }
+      else
+      {
+        goto accessDenied();
+      }
+    }
+    dummy(){
+      main(){
+      }
+      define local body () {
+        header(){
+          text(s17.name){
+          }
+        }
+        table(){
+          dummy(){
+            row(){
+              "P: "
+              dummy(){
+                if ( s17.p != null ) {
+                  if ( genpagepredicatecombined36(s17.p) ) {
+                    navigate(pdpMeeting(s17.p)){
+                      text(s17.p.name){
+                      }
+                    }
+                  }
+                }
+                if ( s17.p = null ) {
+                  text("null"){
+                  }
+                }
+              }
+            }
+            row(){
+              "P: "
+              dummy(){
+                if ( s17.p != null ) {
+                  if ( genpagepredicatecombined36(s17.p) ) {
+                    navigate(pdpMeeting(s17.p)){
+                      text(s17.p.name){
+                      }
+                    }
+                  }
+                }
+                if ( s17.p = null ) {
+                  text("null"){
+                  }
+                }
+              }
+            }
+            row(){
+              "Name: "
+              text(s17.name){
+              }
+            }
+            row(){
+              "Is enabled: "
+              outputBool(s17.isEnabled){
+              }
+            }
+            row(){
+              "Date: "
+              outputDateTime(s17.date){
+              }
+            }
+            row(){
+              "Caller: "
+              dummy(){
+                if ( s17.caller != null ) {
+                  if ( genpagepredicatecombined6(s17.caller) ) {
+                    navigate(procedureStatus(s17.caller)){
+                      text(s17.caller.name){
+                      }
+                    }
+                  }
+                }
+                if ( s17.caller = null ) {
+                  text("null"){
+                  }
+                }
+              }
+            }
+            row(){
+              "Returnstate: "
+              outputInt(s17.returnstate){
+              }
+            }
+            row(){
+              "Name: "
+              text(s17.name){
+              }
+            }
+            row(){
+              "Is enabled: "
+              outputBool(s17.isEnabled){
+              }
+            }
+            row(){
+              "Date: "
+              outputDateTime(s17.date){
+              }
+            }
+            row(){
+              "Caller: "
+              dummy(){
+                if ( s17.caller != null ) {
+                  if ( genpagepredicatecombined6(s17.caller) ) {
+                    navigate(procedureStatus(s17.caller)){
+                      text(s17.caller.name){
+                      }
+                    }
+                  }
+                }
+                if ( s17.caller = null ) {
+                  text("null"){
+                  }
+                }
+              }
+            }
+            row(){
+              "Returnstate: "
+              outputInt(s17.returnstate){
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  entity ManagerFillInFormProcedureStatus : ProcedureStatus {
+    p -> PdpMeeting ( )
+    function enabled ( ) : Void
+    {
+    }
+    function done ( ) : Void
+    {
+      this.isEnabled := false;
+      this.persist();
+      this.processed();
+    }
+    function do ( ) : Void
+    {
+      this.done();
+    }
+    function disabled ( ) : Void
+    {
+    }
+  }
+
+  define page managerFillInFormProcedureStatus (s18 : ManagerFillInFormProcedureStatus) {
+    init
+    {
+      if ( genpagepredicatecombined16(s18) )
+      {
+      }
+      else
+      {
+        goto accessDenied();
+      }
+    }
+    dummy(){
+      main(){
+      }
+      define local body () {
+        header(){
+          text(s18.name){
+          }
+        }
+        table(){
+          dummy(){
+            row(){
+              "P: "
+              dummy(){
+                if ( s18.p != null ) {
+                  if ( genpagepredicatecombined36(s18.p) ) {
+                    navigate(pdpMeeting(s18.p)){
+                      text(s18.p.name){
+                      }
+                    }
+                  }
+                }
+                if ( s18.p = null ) {
+                  text("null"){
+                  }
+                }
+              }
+            }
+            row(){
+              "P: "
+              dummy(){
+                if ( s18.p != null ) {
+                  if ( genpagepredicatecombined36(s18.p) ) {
+                    navigate(pdpMeeting(s18.p)){
+                      text(s18.p.name){
+                      }
+                    }
+                  }
+                }
+                if ( s18.p = null ) {
+                  text("null"){
+                  }
+                }
+              }
+            }
+            row(){
+              "Name: "
+              text(s18.name){
+              }
+            }
+            row(){
+              "Is enabled: "
+              outputBool(s18.isEnabled){
+              }
+            }
+            row(){
+              "Date: "
+              outputDateTime(s18.date){
+              }
+            }
+            row(){
+              "Caller: "
+              dummy(){
+                if ( s18.caller != null ) {
+                  if ( genpagepredicatecombined6(s18.caller) ) {
+                    navigate(procedureStatus(s18.caller)){
+                      text(s18.caller.name){
+                      }
+                    }
+                  }
+                }
+                if ( s18.caller = null ) {
+                  text("null"){
+                  }
+                }
+              }
+            }
+            row(){
+              "Returnstate: "
+              outputInt(s18.returnstate){
+              }
+            }
+            row(){
+              "Name: "
+              text(s18.name){
+              }
+            }
+            row(){
+              "Is enabled: "
+              outputBool(s18.isEnabled){
+              }
+            }
+            row(){
+              "Date: "
+              outputDateTime(s18.date){
+              }
+            }
+            row(){
+              "Caller: "
+              dummy(){
+                if ( s18.caller != null ) {
+                  if ( genpagepredicatecombined6(s18.caller) ) {
+                    navigate(procedureStatus(s18.caller)){
+                      text(s18.caller.name){
+                      }
+                    }
+                  }
+                }
+                if ( s18.caller = null ) {
+                  text("null"){
+                  }
+                }
+              }
+            }
+            row(){
+              "Returnstate: "
+              outputInt(s18.returnstate){
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  entity WriteReportProcedureStatus : ProcedureStatus {
+    p -> PdpMeeting ( )
+    function enabled ( ) : Void
+    {
+    }
+    function done ( ) : Void
+    {
+      this.isEnabled := false;
+      this.persist();
+      this.processed();
+    }
+    function do ( ) : Void
+    {
+      this.done();
+    }
+    function disabled ( ) : Void
+    {
+    }
+  }
+
+  define page writeReportProcedureStatus (s19 : WriteReportProcedureStatus) {
+    init
+    {
+      if ( genpagepredicatecombined17(s19) )
+      {
+      }
+      else
+      {
+        goto accessDenied();
+      }
+    }
+    dummy(){
+      main(){
+      }
+      define local body () {
+        header(){
+          text(s19.name){
+          }
+        }
+        table(){
+          dummy(){
+            row(){
+              "P: "
+              dummy(){
+                if ( s19.p != null ) {
+                  if ( genpagepredicatecombined36(s19.p) ) {
+                    navigate(pdpMeeting(s19.p)){
+                      text(s19.p.name){
+                      }
+                    }
+                  }
+                }
+                if ( s19.p = null ) {
+                  text("null"){
+                  }
+                }
+              }
+            }
+            row(){
+              "P: "
+              dummy(){
+                if ( s19.p != null ) {
+                  if ( genpagepredicatecombined36(s19.p) ) {
+                    navigate(pdpMeeting(s19.p)){
+                      text(s19.p.name){
+                      }
+                    }
+                  }
+                }
+                if ( s19.p = null ) {
+                  text("null"){
+                  }
+                }
+              }
+            }
+            row(){
+              "Name: "
+              text(s19.name){
+              }
+            }
+            row(){
+              "Is enabled: "
+              outputBool(s19.isEnabled){
+              }
+            }
+            row(){
+              "Date: "
+              outputDateTime(s19.date){
+              }
+            }
+            row(){
+              "Caller: "
+              dummy(){
+                if ( s19.caller != null ) {
+                  if ( genpagepredicatecombined6(s19.caller) ) {
+                    navigate(procedureStatus(s19.caller)){
+                      text(s19.caller.name){
+                      }
+                    }
+                  }
+                }
+                if ( s19.caller = null ) {
+                  text("null"){
+                  }
+                }
+              }
+            }
+            row(){
+              "Returnstate: "
+              outputInt(s19.returnstate){
+              }
+            }
+            row(){
+              "Name: "
+              text(s19.name){
+              }
+            }
+            row(){
+              "Is enabled: "
+              outputBool(s19.isEnabled){
+              }
+            }
+            row(){
+              "Date: "
+              outputDateTime(s19.date){
+              }
+            }
+            row(){
+              "Caller: "
+              dummy(){
+                if ( s19.caller != null ) {
+                  if ( genpagepredicatecombined6(s19.caller) ) {
+                    navigate(procedureStatus(s19.caller)){
+                      text(s19.caller.name){
+                      }
+                    }
+                  }
+                }
+                if ( s19.caller = null ) {
+                  text("null"){
+                  }
+                }
+              }
+            }
+            row(){
+              "Returnstate: "
+              outputInt(s19.returnstate){
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  entity FinalizeReportProcedureStatus : ProcedureStatus {
+    p -> PdpMeeting ( )
+    function enabled ( ) : Void
+    {
+    }
+    function done ( ) : Void
+    {
+      this.isEnabled := false;
+      this.persist();
+      this.processed();
+    }
+    function do ( ) : Void
+    {
+      this.done();
+    }
+    function disabled ( ) : Void
+    {
+    }
+  }
+
+  define page finalizeReportProcedureStatus (s20 : FinalizeReportProcedureStatus) {
+    init
+    {
+      if ( genpagepredicatecombined18(s20) )
+      {
+      }
+      else
+      {
+        goto accessDenied();
+      }
+    }
+    dummy(){
+      main(){
+      }
+      define local body () {
+        header(){
+          text(s20.name){
+          }
+        }
+        table(){
+          dummy(){
+            row(){
+              "P: "
+              dummy(){
+                if ( s20.p != null ) {
+                  if ( genpagepredicatecombined36(s20.p) ) {
+                    navigate(pdpMeeting(s20.p)){
+                      text(s20.p.name){
+                      }
+                    }
+                  }
+                }
+                if ( s20.p = null ) {
+                  text("null"){
+                  }
+                }
+              }
+            }
+            row(){
+              "P: "
+              dummy(){
+                if ( s20.p != null ) {
+                  if ( genpagepredicatecombined36(s20.p) ) {
+                    navigate(pdpMeeting(s20.p)){
+                      text(s20.p.name){
+                      }
+                    }
+                  }
+                }
+                if ( s20.p = null ) {
+                  text("null"){
+                  }
+                }
+              }
+            }
+            row(){
+              "Name: "
+              text(s20.name){
+              }
+            }
+            row(){
+              "Is enabled: "
+              outputBool(s20.isEnabled){
+              }
+            }
+            row(){
+              "Date: "
+              outputDateTime(s20.date){
+              }
+            }
+            row(){
+              "Caller: "
+              dummy(){
+                if ( s20.caller != null ) {
+                  if ( genpagepredicatecombined6(s20.caller) ) {
+                    navigate(procedureStatus(s20.caller)){
+                      text(s20.caller.name){
+                      }
+                    }
+                  }
+                }
+                if ( s20.caller = null ) {
+                  text("null"){
+                  }
+                }
+              }
+            }
+            row(){
+              "Returnstate: "
+              outputInt(s20.returnstate){
+              }
+            }
+            row(){
+              "Name: "
+              text(s20.name){
+              }
+            }
+            row(){
+              "Is enabled: "
+              outputBool(s20.isEnabled){
+              }
+            }
+            row(){
+              "Date: "
+              outputDateTime(s20.date){
+              }
+            }
+            row(){
+              "Caller: "
+              dummy(){
+                if ( s20.caller != null ) {
+                  if ( genpagepredicatecombined6(s20.caller) ) {
+                    navigate(procedureStatus(s20.caller)){
+                      text(s20.caller.name){
+                      }
+                    }
+                  }
+                }
+                if ( s20.caller = null ) {
+                  text("null"){
+                  }
+                }
+              }
+            }
+            row(){
+              "Returnstate: "
+              outputInt(s20.returnstate){
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  entity ApproveReportProcedureStatus : ProcedureStatus {
+    p -> PdpMeeting ( )
+    function enabled ( ) : Void
+    {
+    }
+    function done ( ) : Void
+    {
+      this.isEnabled := false;
+      this.persist();
+      this.processed();
+    }
+    function do ( ) : Void
+    {
+      this.done();
+    }
+    function disabled ( ) : Void
+    {
+    }
+  }
+
+  define page approveReportProcedureStatus (s21 : ApproveReportProcedureStatus) {
+    init
+    {
+      if ( genpagepredicatecombined19(s21) )
+      {
+      }
+      else
+      {
+        goto accessDenied();
+      }
+    }
+    dummy(){
+      main(){
+      }
+      define local body () {
+        header(){
+          text(s21.name){
+          }
+        }
+        table(){
+          dummy(){
+            row(){
+              "P: "
+              dummy(){
+                if ( s21.p != null ) {
+                  if ( genpagepredicatecombined36(s21.p) ) {
+                    navigate(pdpMeeting(s21.p)){
+                      text(s21.p.name){
+                      }
+                    }
+                  }
+                }
+                if ( s21.p = null ) {
+                  text("null"){
+                  }
+                }
+              }
+            }
+            row(){
+              "P: "
+              dummy(){
+                if ( s21.p != null ) {
+                  if ( genpagepredicatecombined36(s21.p) ) {
+                    navigate(pdpMeeting(s21.p)){
+                      text(s21.p.name){
+                      }
+                    }
+                  }
+                }
+                if ( s21.p = null ) {
+                  text("null"){
+                  }
+                }
+              }
+            }
+            row(){
+              "Name: "
+              text(s21.name){
+              }
+            }
+            row(){
+              "Is enabled: "
+              outputBool(s21.isEnabled){
+              }
+            }
+            row(){
+              "Date: "
+              outputDateTime(s21.date){
+              }
+            }
+            row(){
+              "Caller: "
+              dummy(){
+                if ( s21.caller != null ) {
+                  if ( genpagepredicatecombined6(s21.caller) ) {
+                    navigate(procedureStatus(s21.caller)){
+                      text(s21.caller.name){
+                      }
+                    }
+                  }
+                }
+                if ( s21.caller = null ) {
+                  text("null"){
+                  }
+                }
+              }
+            }
+            row(){
+              "Returnstate: "
+              outputInt(s21.returnstate){
+              }
+            }
+            row(){
+              "Name: "
+              text(s21.name){
+              }
+            }
+            row(){
+              "Is enabled: "
+              outputBool(s21.isEnabled){
+              }
+            }
+            row(){
+              "Date: "
+              outputDateTime(s21.date){
+              }
+            }
+            row(){
+              "Caller: "
+              dummy(){
+                if ( s21.caller != null ) {
+                  if ( genpagepredicatecombined6(s21.caller) ) {
+                    navigate(procedureStatus(s21.caller)){
+                      text(s21.caller.name){
+                      }
+                    }
+                  }
+                }
+                if ( s21.caller = null ) {
+                  text("null"){
+                  }
+                }
+              }
+            }
+            row(){
+              "Returnstate: "
+              outputInt(s21.returnstate){
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
   entity IfProc0ProcedureStatus : ProcedureStatus {
     t -> TestDinges ( )
     function enableIf ( ) : Void
@@ -1321,13 +3458,13 @@ section  procedures .
     }
     function disableIf ( ) : Void
     {
-      this.t.child.testWorkflow.disable();
+      this.t.child.testDingesWorkflow.disable();
     }
     function next ( state : Int ) : Void
     {
       if ( state = 0 )
       {
-        this.t.child.testWorkflow.enable__ProcedureStatus__Int(this as ProcedureStatus, 1);
+        this.t.child.testDingesWorkflow.enable__ProcedureStatus__Int(this as ProcedureStatus, 1);
       }
       else
       {
@@ -1350,7 +3487,6 @@ section  procedures .
       {
         this.processed();
       }
-      this.do();
     }
     function done ( ) : Void
     {
@@ -1368,10 +3504,10 @@ section  procedures .
     }
   }
 
-  define page ifProc0ProcedureStatus (s6 : IfProc0ProcedureStatus) {
+  define page ifProc0ProcedureStatus (s22 : IfProc0ProcedureStatus) {
     init
     {
-      if ( genpagepredicatecombined8(s6) )
+      if ( genpagepredicatecombined20(s22) )
       {
       }
       else
@@ -1384,85 +3520,117 @@ section  procedures .
       }
       define local body () {
         header(){
-          text(s6.name){
+          text(s22.name){
           }
         }
         table(){
           dummy(){
             row(){
               "T: "
-              if ( genpagepredicatecombined20(s6.t) ) {
-                navigate(testDinges(s6.t)){
-                  text(s6.t.name){
+              dummy(){
+                if ( s22.t != null ) {
+                  if ( genpagepredicatecombined38(s22.t) ) {
+                    navigate(testDinges(s22.t)){
+                      text(s22.t.name){
+                      }
+                    }
+                  }
+                }
+                if ( s22.t = null ) {
+                  text("null"){
                   }
                 }
               }
             }
             row(){
               "T: "
-              if ( genpagepredicatecombined20(s6.t) ) {
-                navigate(testDinges(s6.t)){
-                  text(s6.t.name){
+              dummy(){
+                if ( s22.t != null ) {
+                  if ( genpagepredicatecombined38(s22.t) ) {
+                    navigate(testDinges(s22.t)){
+                      text(s22.t.name){
+                      }
+                    }
+                  }
+                }
+                if ( s22.t = null ) {
+                  text("null"){
                   }
                 }
               }
             }
             row(){
               "Name: "
-              text(s6.name){
+              text(s22.name){
               }
             }
             row(){
               "Is enabled: "
-              outputBool(s6.isEnabled){
+              outputBool(s22.isEnabled){
               }
             }
             row(){
               "Date: "
-              outputDateTime(s6.date){
+              outputDateTime(s22.date){
               }
             }
             row(){
               "Caller: "
-              if ( genpagepredicatecombined4(s6.caller) ) {
-                navigate(procedureStatus(s6.caller)){
-                  text(s6.caller.name){
+              dummy(){
+                if ( s22.caller != null ) {
+                  if ( genpagepredicatecombined6(s22.caller) ) {
+                    navigate(procedureStatus(s22.caller)){
+                      text(s22.caller.name){
+                      }
+                    }
+                  }
+                }
+                if ( s22.caller = null ) {
+                  text("null"){
                   }
                 }
               }
             }
             row(){
               "Returnstate: "
-              outputInt(s6.returnstate){
+              outputInt(s22.returnstate){
               }
             }
             row(){
               "Name: "
-              text(s6.name){
+              text(s22.name){
               }
             }
             row(){
               "Is enabled: "
-              outputBool(s6.isEnabled){
+              outputBool(s22.isEnabled){
               }
             }
             row(){
               "Date: "
-              outputDateTime(s6.date){
+              outputDateTime(s22.date){
               }
             }
             row(){
               "Caller: "
-              if ( genpagepredicatecombined4(s6.caller) ) {
-                navigate(procedureStatus(s6.caller)){
-                  text(s6.caller.name){
+              dummy(){
+                if ( s22.caller != null ) {
+                  if ( genpagepredicatecombined6(s22.caller) ) {
+                    navigate(procedureStatus(s22.caller)){
+                      text(s22.caller.name){
+                      }
+                    }
+                  }
+                }
+                if ( s22.caller = null ) {
+                  text("null"){
                   }
                 }
               }
             }
             row(){
               "Returnstate: "
-              outputInt(s6.returnstate){
+              outputInt(s22.returnstate){
               }
             }
           }
@@ -1474,7 +3642,7 @@ section  procedures .
   define page ifProc0 (t19 : TestDinges) {
     init
     {
-      if ( genpagepredicatecombined9(t19) )
+      if ( genpagepredicatecombined21(t19) )
       {
       }
       else
@@ -1484,7 +3652,7 @@ section  procedures .
     }
   }
 
-  entity TestWorkflowProcedureStatus : ProcedureStatus {
+  entity TestDingesWorkflowProcedureStatus : ProcedureStatus {
     t -> TestDinges ( )
     function next ( state : Int ) : Void
     {
@@ -1519,6 +3687,7 @@ section  procedures .
     }
     function enabled ( ) : Void
     {
+      this.do();
     }
     function done ( ) : Void
     {
@@ -1535,10 +3704,10 @@ section  procedures .
     }
   }
 
-  define page testWorkflowProcedureStatus (s7 : TestWorkflowProcedureStatus) {
+  define page testDingesWorkflowProcedureStatus (s23 : TestDingesWorkflowProcedureStatus) {
     init
     {
-      if ( genpagepredicatecombined10(s7) )
+      if ( genpagepredicatecombined22(s23) )
       {
       }
       else
@@ -1551,85 +3720,117 @@ section  procedures .
       }
       define local body () {
         header(){
-          text(s7.name){
+          text(s23.name){
           }
         }
         table(){
           dummy(){
             row(){
               "T: "
-              if ( genpagepredicatecombined20(s7.t) ) {
-                navigate(testDinges(s7.t)){
-                  text(s7.t.name){
+              dummy(){
+                if ( s23.t != null ) {
+                  if ( genpagepredicatecombined38(s23.t) ) {
+                    navigate(testDinges(s23.t)){
+                      text(s23.t.name){
+                      }
+                    }
+                  }
+                }
+                if ( s23.t = null ) {
+                  text("null"){
                   }
                 }
               }
             }
             row(){
               "T: "
-              if ( genpagepredicatecombined20(s7.t) ) {
-                navigate(testDinges(s7.t)){
-                  text(s7.t.name){
+              dummy(){
+                if ( s23.t != null ) {
+                  if ( genpagepredicatecombined38(s23.t) ) {
+                    navigate(testDinges(s23.t)){
+                      text(s23.t.name){
+                      }
+                    }
+                  }
+                }
+                if ( s23.t = null ) {
+                  text("null"){
                   }
                 }
               }
             }
             row(){
               "Name: "
-              text(s7.name){
+              text(s23.name){
               }
             }
             row(){
               "Is enabled: "
-              outputBool(s7.isEnabled){
+              outputBool(s23.isEnabled){
               }
             }
             row(){
               "Date: "
-              outputDateTime(s7.date){
+              outputDateTime(s23.date){
               }
             }
             row(){
               "Caller: "
-              if ( genpagepredicatecombined4(s7.caller) ) {
-                navigate(procedureStatus(s7.caller)){
-                  text(s7.caller.name){
+              dummy(){
+                if ( s23.caller != null ) {
+                  if ( genpagepredicatecombined6(s23.caller) ) {
+                    navigate(procedureStatus(s23.caller)){
+                      text(s23.caller.name){
+                      }
+                    }
+                  }
+                }
+                if ( s23.caller = null ) {
+                  text("null"){
                   }
                 }
               }
             }
             row(){
               "Returnstate: "
-              outputInt(s7.returnstate){
+              outputInt(s23.returnstate){
               }
             }
             row(){
               "Name: "
-              text(s7.name){
+              text(s23.name){
               }
             }
             row(){
               "Is enabled: "
-              outputBool(s7.isEnabled){
+              outputBool(s23.isEnabled){
               }
             }
             row(){
               "Date: "
-              outputDateTime(s7.date){
+              outputDateTime(s23.date){
               }
             }
             row(){
               "Caller: "
-              if ( genpagepredicatecombined4(s7.caller) ) {
-                navigate(procedureStatus(s7.caller)){
-                  text(s7.caller.name){
+              dummy(){
+                if ( s23.caller != null ) {
+                  if ( genpagepredicatecombined6(s23.caller) ) {
+                    navigate(procedureStatus(s23.caller)){
+                      text(s23.caller.name){
+                      }
+                    }
+                  }
+                }
+                if ( s23.caller = null ) {
+                  text("null"){
                   }
                 }
               }
             }
             row(){
               "Returnstate: "
-              outputInt(s7.returnstate){
+              outputInt(s23.returnstate){
               }
             }
           }
@@ -1658,10 +3859,10 @@ section  procedures .
     }
   }
 
-  define page proc1ProcedureStatus (s8 : Proc1ProcedureStatus) {
+  define page proc1ProcedureStatus (s24 : Proc1ProcedureStatus) {
     init
     {
-      if ( genpagepredicatecombined11(s8) )
+      if ( genpagepredicatecombined23(s24) )
       {
       }
       else
@@ -1674,85 +3875,117 @@ section  procedures .
       }
       define local body () {
         header(){
-          text(s8.name){
+          text(s24.name){
           }
         }
         table(){
           dummy(){
             row(){
               "T: "
-              if ( genpagepredicatecombined20(s8.t) ) {
-                navigate(testDinges(s8.t)){
-                  text(s8.t.name){
+              dummy(){
+                if ( s24.t != null ) {
+                  if ( genpagepredicatecombined38(s24.t) ) {
+                    navigate(testDinges(s24.t)){
+                      text(s24.t.name){
+                      }
+                    }
+                  }
+                }
+                if ( s24.t = null ) {
+                  text("null"){
                   }
                 }
               }
             }
             row(){
               "T: "
-              if ( genpagepredicatecombined20(s8.t) ) {
-                navigate(testDinges(s8.t)){
-                  text(s8.t.name){
+              dummy(){
+                if ( s24.t != null ) {
+                  if ( genpagepredicatecombined38(s24.t) ) {
+                    navigate(testDinges(s24.t)){
+                      text(s24.t.name){
+                      }
+                    }
+                  }
+                }
+                if ( s24.t = null ) {
+                  text("null"){
                   }
                 }
               }
             }
             row(){
               "Name: "
-              text(s8.name){
+              text(s24.name){
               }
             }
             row(){
               "Is enabled: "
-              outputBool(s8.isEnabled){
+              outputBool(s24.isEnabled){
               }
             }
             row(){
               "Date: "
-              outputDateTime(s8.date){
+              outputDateTime(s24.date){
               }
             }
             row(){
               "Caller: "
-              if ( genpagepredicatecombined4(s8.caller) ) {
-                navigate(procedureStatus(s8.caller)){
-                  text(s8.caller.name){
+              dummy(){
+                if ( s24.caller != null ) {
+                  if ( genpagepredicatecombined6(s24.caller) ) {
+                    navigate(procedureStatus(s24.caller)){
+                      text(s24.caller.name){
+                      }
+                    }
+                  }
+                }
+                if ( s24.caller = null ) {
+                  text("null"){
                   }
                 }
               }
             }
             row(){
               "Returnstate: "
-              outputInt(s8.returnstate){
+              outputInt(s24.returnstate){
               }
             }
             row(){
               "Name: "
-              text(s8.name){
+              text(s24.name){
               }
             }
             row(){
               "Is enabled: "
-              outputBool(s8.isEnabled){
+              outputBool(s24.isEnabled){
               }
             }
             row(){
               "Date: "
-              outputDateTime(s8.date){
+              outputDateTime(s24.date){
               }
             }
             row(){
               "Caller: "
-              if ( genpagepredicatecombined4(s8.caller) ) {
-                navigate(procedureStatus(s8.caller)){
-                  text(s8.caller.name){
+              dummy(){
+                if ( s24.caller != null ) {
+                  if ( genpagepredicatecombined6(s24.caller) ) {
+                    navigate(procedureStatus(s24.caller)){
+                      text(s24.caller.name){
+                      }
+                    }
+                  }
+                }
+                if ( s24.caller = null ) {
+                  text("null"){
                   }
                 }
               }
             }
             row(){
               "Returnstate: "
-              outputInt(s8.returnstate){
+              outputInt(s24.returnstate){
               }
             }
           }
@@ -1781,10 +4014,10 @@ section  procedures .
     }
   }
 
-  define page proc2ProcedureStatus (s9 : Proc2ProcedureStatus) {
+  define page proc2ProcedureStatus (s25 : Proc2ProcedureStatus) {
     init
     {
-      if ( genpagepredicatecombined12(s9) )
+      if ( genpagepredicatecombined24(s25) )
       {
       }
       else
@@ -1797,85 +4030,117 @@ section  procedures .
       }
       define local body () {
         header(){
-          text(s9.name){
+          text(s25.name){
           }
         }
         table(){
           dummy(){
             row(){
               "T: "
-              if ( genpagepredicatecombined20(s9.t) ) {
-                navigate(testDinges(s9.t)){
-                  text(s9.t.name){
+              dummy(){
+                if ( s25.t != null ) {
+                  if ( genpagepredicatecombined38(s25.t) ) {
+                    navigate(testDinges(s25.t)){
+                      text(s25.t.name){
+                      }
+                    }
+                  }
+                }
+                if ( s25.t = null ) {
+                  text("null"){
                   }
                 }
               }
             }
             row(){
               "T: "
-              if ( genpagepredicatecombined20(s9.t) ) {
-                navigate(testDinges(s9.t)){
-                  text(s9.t.name){
+              dummy(){
+                if ( s25.t != null ) {
+                  if ( genpagepredicatecombined38(s25.t) ) {
+                    navigate(testDinges(s25.t)){
+                      text(s25.t.name){
+                      }
+                    }
+                  }
+                }
+                if ( s25.t = null ) {
+                  text("null"){
                   }
                 }
               }
             }
             row(){
               "Name: "
-              text(s9.name){
+              text(s25.name){
               }
             }
             row(){
               "Is enabled: "
-              outputBool(s9.isEnabled){
+              outputBool(s25.isEnabled){
               }
             }
             row(){
               "Date: "
-              outputDateTime(s9.date){
+              outputDateTime(s25.date){
               }
             }
             row(){
               "Caller: "
-              if ( genpagepredicatecombined4(s9.caller) ) {
-                navigate(procedureStatus(s9.caller)){
-                  text(s9.caller.name){
+              dummy(){
+                if ( s25.caller != null ) {
+                  if ( genpagepredicatecombined6(s25.caller) ) {
+                    navigate(procedureStatus(s25.caller)){
+                      text(s25.caller.name){
+                      }
+                    }
+                  }
+                }
+                if ( s25.caller = null ) {
+                  text("null"){
                   }
                 }
               }
             }
             row(){
               "Returnstate: "
-              outputInt(s9.returnstate){
+              outputInt(s25.returnstate){
               }
             }
             row(){
               "Name: "
-              text(s9.name){
+              text(s25.name){
               }
             }
             row(){
               "Is enabled: "
-              outputBool(s9.isEnabled){
+              outputBool(s25.isEnabled){
               }
             }
             row(){
               "Date: "
-              outputDateTime(s9.date){
+              outputDateTime(s25.date){
               }
             }
             row(){
               "Caller: "
-              if ( genpagepredicatecombined4(s9.caller) ) {
-                navigate(procedureStatus(s9.caller)){
-                  text(s9.caller.name){
+              dummy(){
+                if ( s25.caller != null ) {
+                  if ( genpagepredicatecombined6(s25.caller) ) {
+                    navigate(procedureStatus(s25.caller)){
+                      text(s25.caller.name){
+                      }
+                    }
+                  }
+                }
+                if ( s25.caller = null ) {
+                  text("null"){
                   }
                 }
               }
             }
             row(){
               "Returnstate: "
-              outputInt(s9.returnstate){
+              outputInt(s25.returnstate){
               }
             }
           }
@@ -1884,10 +4149,25 @@ section  procedures .
     }
   }
 
-  define page testWorkflow (t20 : TestDinges) {
+  define page testWorkflow (p41 : PdpMeeting) {
     init
     {
-      if ( genpagepredicatecombined13(t20) )
+      if ( genpagepredicatecombined25(p41) )
+      {
+        p41.testWorkflow.do();
+        goto pdpMeeting(p41);
+      }
+      else
+      {
+        goto accessDenied();
+      }
+    }
+  }
+
+  define page employeeFillInForm (p42 : PdpMeeting) {
+    init
+    {
+      if ( genpagepredicatecombined26(p42) )
       {
       }
       else
@@ -1896,13 +4176,13 @@ section  procedures .
       }
     }
     title(){
-      "Initialize workflow"
+      "Fill in employee form"
     }
     dummy(){
       main(){
       }
       define local contextSidebar () {
-        testDingesProcedures(t20){
+        pdpMeetingProcedures(p42){
         }
       }
       define local body () {
@@ -1910,9 +4190,17 @@ section  procedures .
           text("Current page"){
           }
           " "
-          if ( genpagepredicatecombined20(t20) ) {
-            navigate(testDinges(t20)){
-              text(t20.name){
+          dummy(){
+            if ( p42 != null ) {
+              if ( genpagepredicatecombined36(p42) ) {
+                navigate(pdpMeeting(p42)){
+                  text(p42.name){
+                  }
+                }
+              }
+            }
+            if ( p42 = null ) {
+              text("null"){
               }
             }
           }
@@ -1921,29 +4209,24 @@ section  procedures .
           table(){
             dummy(){
               row(){
-                "Name: "
-                inputString(t20.name){
-                }
-              }
-              row(){
-                "Commentz: "
-                inputString(t20.commentz){
+                "Employee preparation: "
+                inputText(p42.employeePreparation){
                 }
               }
             }
           }
           dummy(){
-            if ( genactionpredicatecombined1(t20) ) {
+            if ( genactionpredicatecombined1(p42) ) {
               action("Submit", doAction()){
               }
             }
             action doAction ( )
             {
-              if ( genactionpredicatecombined1(t20) )
+              if ( genactionpredicatecombined1(p42) )
               {
-                t20.persist();
-                t20.testWorkflow.do();
-                return testDinges(t20);
+                p42.persist();
+                p42.employeeFillInForm.do();
+                return pdpMeeting(p42);
               }
               else
               {
@@ -1956,10 +4239,203 @@ section  procedures .
     }
   }
 
+  define page managerFillInForm (p43 : PdpMeeting) {
+    init
+    {
+      if ( genpagepredicatecombined27(p43) )
+      {
+      }
+      else
+      {
+        goto accessDenied();
+      }
+    }
+    title(){
+      "Fill in manager form"
+    }
+    dummy(){
+      main(){
+      }
+      define local contextSidebar () {
+        pdpMeetingProcedures(p43){
+        }
+      }
+      define local body () {
+        header(){
+          text("Current page"){
+          }
+          " "
+          dummy(){
+            if ( p43 != null ) {
+              if ( genpagepredicatecombined36(p43) ) {
+                navigate(pdpMeeting(p43)){
+                  text(p43.name){
+                  }
+                }
+              }
+            }
+            if ( p43 = null ) {
+              text("null"){
+              }
+            }
+          }
+        }
+        form(){
+          table(){
+            dummy(){
+              row(){
+                "Manager preparation: "
+                inputText(p43.managerPreparation){
+                }
+              }
+            }
+          }
+          dummy(){
+            if ( genactionpredicatecombined2(p43) ) {
+              action("Submit", doAction()){
+              }
+            }
+            action doAction ( )
+            {
+              if ( genactionpredicatecombined2(p43) )
+              {
+                p43.persist();
+                p43.managerFillInForm.do();
+                return pdpMeeting(p43);
+              }
+              else
+              {
+                return accessDenied();
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  define page writeReport (p44 : PdpMeeting) {
+    init
+    {
+      if ( genpagepredicatecombined28(p44) )
+      {
+      }
+      else
+      {
+        goto accessDenied();
+      }
+    }
+    title(){
+      "Write report"
+    }
+    dummy(){
+      main(){
+      }
+      define local contextSidebar () {
+        pdpMeetingProcedures(p44){
+        }
+      }
+      define local body () {
+        header(){
+          text("Current page"){
+          }
+          " "
+          dummy(){
+            if ( p44 != null ) {
+              if ( genpagepredicatecombined36(p44) ) {
+                navigate(pdpMeeting(p44)){
+                  text(p44.name){
+                  }
+                }
+              }
+            }
+            if ( p44 = null ) {
+              text("null"){
+              }
+            }
+          }
+        }
+        form(){
+          table(){
+            dummy(){
+              row(){
+                "Report: "
+                inputText(p44.report){
+                }
+              }
+            }
+          }
+          dummy(){
+            if ( genactionpredicatecombined3(p44) ) {
+              action("Submit", doAction()){
+              }
+            }
+            action doAction ( )
+            {
+              if ( genactionpredicatecombined3(p44) )
+              {
+                p44.persist();
+                p44.writeReport.do();
+                return pdpMeeting(p44);
+              }
+              else
+              {
+                return accessDenied();
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  define page finalizeReport (p45 : PdpMeeting) {
+    init
+    {
+      if ( genpagepredicatecombined29(p45) )
+      {
+        p45.finalizeReport.do();
+        goto pdpMeeting(p45);
+      }
+      else
+      {
+        goto accessDenied();
+      }
+    }
+  }
+
+  define page approveReport (p46 : PdpMeeting) {
+    init
+    {
+      if ( genpagepredicatecombined30(p46) )
+      {
+        p46.approveReport.do();
+        goto pdpMeeting(p46);
+      }
+      else
+      {
+        goto accessDenied();
+      }
+    }
+  }
+
+  define page testDingesWorkflow (t20 : TestDinges) {
+    init
+    {
+      if ( genpagepredicatecombined31(t20) )
+      {
+      }
+      else
+      {
+        goto accessDenied();
+      }
+    }
+  }
+
   define page proc1 (t21 : TestDinges) {
     init
     {
-      if ( genpagepredicatecombined14(t21) )
+      if ( genpagepredicatecombined32(t21) )
       {
       }
       else
@@ -1984,9 +4460,17 @@ section  procedures .
           text("Current page"){
           }
           " "
-          if ( genpagepredicatecombined20(t21) ) {
-            navigate(testDinges(t21)){
-              text(t21.name){
+          dummy(){
+            if ( t21 != null ) {
+              if ( genpagepredicatecombined38(t21) ) {
+                navigate(testDinges(t21)){
+                  text(t21.name){
+                  }
+                }
+              }
+            }
+            if ( t21 = null ) {
+              text("null"){
               }
             }
           }
@@ -1996,20 +4480,20 @@ section  procedures .
             dummy(){
               row(){
                 "Proc1: "
-                div("inputSimpleRefAssociation"){
+                block("", "inputSimpleRefAssociation"){
                   select ( proc1ProcedureStatus03 : Proc1ProcedureStatus , Select , t21.proc1 )
                 }
               }
             }
           }
           dummy(){
-            if ( genactionpredicatecombined2(t21) ) {
+            if ( genactionpredicatecombined4(t21) ) {
               action("Submit", doAction()){
               }
             }
             action doAction ( )
             {
-              if ( genactionpredicatecombined2(t21) )
+              if ( genactionpredicatecombined4(t21) )
               {
                 t21.persist();
                 t21.proc1.do();
@@ -2029,7 +4513,7 @@ section  procedures .
   define page proc2 (t22 : TestDinges) {
     init
     {
-      if ( genpagepredicatecombined15(t22) )
+      if ( genpagepredicatecombined33(t22) )
       {
       }
       else
@@ -2054,9 +4538,17 @@ section  procedures .
           text("Current page"){
           }
           " "
-          if ( genpagepredicatecombined20(t22) ) {
-            navigate(testDinges(t22)){
-              text(t22.name){
+          dummy(){
+            if ( t22 != null ) {
+              if ( genpagepredicatecombined38(t22) ) {
+                navigate(testDinges(t22)){
+                  text(t22.name){
+                  }
+                }
+              }
+            }
+            if ( t22 = null ) {
+              text("null"){
               }
             }
           }
@@ -2065,21 +4557,20 @@ section  procedures .
           table(){
             dummy(){
               row(){
-                "Proc1: "
-                div("inputSimpleRefAssociation"){
-                  select ( proc1ProcedureStatus13 : Proc1ProcedureStatus , Select , t22.proc1 )
+                "Proc2 text: "
+                inputString(t22.proc2Text){
                 }
               }
             }
           }
           dummy(){
-            if ( genactionpredicatecombined3(t22) ) {
+            if ( genactionpredicatecombined5(t22) ) {
               action("Submit", doAction()){
               }
             }
             action doAction ( )
             {
-              if ( genactionpredicatecombined3(t22) )
+              if ( genactionpredicatecombined5(t22) )
               {
                 t22.persist();
                 t22.proc2.do();
@@ -2098,6 +4589,8 @@ section  procedures .
 
 section  pages .
 
+  var test3 : TestDinges ;
+
   define template body () {
     if ( gentemplatepredicate0() ) {
     }
@@ -2106,7 +4599,7 @@ section  pages .
   define page home () {
     init
     {
-      if ( genpagepredicatecombined16() )
+      if ( genpagepredicatecombined34() )
       {
       }
       else
@@ -2123,17 +4616,29 @@ section  pages .
           header(){
             "Quick start PDP Meeting for employee"
           }
-          if ( genactionpredicatecombined4() ) {
+          if ( genactionpredicatecombined6() ) {
             action("Quick start", quickStart()){
             }
           }
           action quickStart ( )
           {
-            if ( genactionpredicatecombined4() )
+            if ( genactionpredicatecombined6() )
             {
               test3 := newTestDinges();
-              test3.testWorkflow.enable__();
-              return message("Test gestart");
+              test3.name := "Bovenste";
+              test3.child := newTestDinges();
+              test3.child.name := "Middelste";
+              test3.child.child := newTestDinges();
+              test3.child.child.name := "Onderste";
+              test3.child.child.persist();
+              test3.child.persist();
+              test3.persist();
+              test3.testDingesWorkflow.enable__();
+              var p47 : PdpMeeting := newPdpMeeting() ;
+              p47.employee := aUser;
+              p47.persist();
+              p47.testWorkflow.enable__();
+              return message("Tests gestart");
             }
             else
             {
@@ -2148,16 +4653,16 @@ section  pages .
             "Organize PDP Meeting"
           }
           "For: "
-          div("inputSimpleRefAssociation"){
+          block("", "inputSimpleRefAssociation"){
             select ( user01 : User , Select , employee2 )
           }
-          if ( genactionpredicatecombined5() ) {
+          if ( genactionpredicatecombined7() ) {
             action("Organize", organize()){
             }
           }
           action organize ( )
           {
-            if ( genactionpredicatecombined5() )
+            if ( genactionpredicatecombined7() )
             {
               return message("Done!");
             }
@@ -2174,7 +4679,7 @@ section  pages .
   define page allMeetings () {
     init
     {
-      if ( genpagepredicatecombined17() )
+      if ( genpagepredicatecombined35() )
       {
       }
       else
@@ -2185,8 +4690,8 @@ section  pages .
     main(){
     }
     define local body () {
-      for ( p3 : PdpMeeting where true order by null asc limit 1000 offset 0 ) {
-        text(p3.name){
+      for ( p48 : PdpMeeting where true order by null asc limit 1000 offset 0 ) {
+        text(p48.name){
         }
         text(" "){
         }
@@ -2196,10 +4701,10 @@ section  pages .
 
 section  pages .
 
-  define page pdpMeeting (p4 : PdpMeeting) {
+  define page pdpMeeting (p49 : PdpMeeting) {
     init
     {
-      if ( genpagepredicatecombined18(p4) )
+      if ( genpagepredicatecombined36(p49) )
       {
       }
       else
@@ -2212,45 +4717,53 @@ section  pages .
       }
       define local body () {
         header(){
-          text(p4.name){
+          text(p49.name){
           }
         }
         table(){
           dummy(){
             row(){
               "Employee: "
-              if ( genpagepredicatecombined19(p4.employee) ) {
-                navigate(user(p4.employee)){
-                  text(p4.employee.name){
+              dummy(){
+                if ( p49.employee != null ) {
+                  if ( genpagepredicatecombined37(p49.employee) ) {
+                    navigate(user(p49.employee)){
+                      text(p49.employee.name){
+                      }
+                    }
+                  }
+                }
+                if ( p49.employee = null ) {
+                  text("null"){
                   }
                 }
               }
             }
             row(){
               "Name: "
-              text(p4.name){
+              text(p49.name){
               }
             }
             row(){
               "Employee preparation: "
-              outputText(p4.employeePreparation){
+              outputText(p49.employeePreparation){
               }
             }
             row(){
               "Manager preparation: "
-              outputText(p4.managerPreparation){
+              outputText(p49.managerPreparation){
               }
             }
             row(){
               "Report: "
-              outputText(p4.report){
+              outputText(p49.report){
               }
             }
           }
         }
       }
       define local contextSidebar () {
-        pdpMeetingProcedures(p4){
+        pdpMeetingProcedures(p49){
         }
       }
     }
@@ -2259,7 +4772,7 @@ section  pages .
   define page user (u1 : User) {
     init
     {
-      if ( genpagepredicatecombined19(u1) )
+      if ( genpagepredicatecombined37(u1) )
       {
       }
       else
@@ -2294,9 +4807,17 @@ section  pages .
             }
             row(){
               "Manager: "
-              if ( genpagepredicatecombined19(u1.manager) ) {
-                navigate(user(u1.manager)){
-                  text(u1.manager.name){
+              dummy(){
+                if ( u1.manager != null ) {
+                  if ( genpagepredicatecombined37(u1.manager) ) {
+                    navigate(user(u1.manager)){
+                      text(u1.manager.name){
+                      }
+                    }
+                  }
+                }
+                if ( u1.manager = null ) {
+                  text("null"){
                   }
                 }
               }
@@ -2310,7 +4831,7 @@ section  pages .
   define page testDinges (t23 : TestDinges) {
     init
     {
-      if ( genpagepredicatecombined20(t23) )
+      if ( genpagepredicatecombined38(t23) )
       {
       }
       else
@@ -2334,15 +4855,28 @@ section  pages .
               }
             }
             row(){
-              "Commentz: "
-              text(t23.commentz){
+              "Comments: "
+              text(t23.comments){
+              }
+            }
+            row(){
+              "Proc2 text: "
+              text(t23.proc2Text){
               }
             }
             row(){
               "Child: "
-              if ( genpagepredicatecombined20(t23.child) ) {
-                navigate(testDinges(t23.child)){
-                  text(t23.child.name){
+              dummy(){
+                if ( t23.child != null ) {
+                  if ( genpagepredicatecombined38(t23.child) ) {
+                    navigate(testDinges(t23.child)){
+                      text(t23.child.name){
+                      }
+                    }
+                  }
+                }
+                if ( t23.child = null ) {
+                  text("null"){
                   }
                 }
               }

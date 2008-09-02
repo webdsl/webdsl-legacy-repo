@@ -19,7 +19,7 @@ section data model
   
   entity TestDinges {
     name :: String
-    commentz :: String
+    comments :: String
     proc1Text :: String
     proc2Text :: String
     child -> TestDinges
