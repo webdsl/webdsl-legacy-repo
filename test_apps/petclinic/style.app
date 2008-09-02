@@ -126,14 +126,12 @@ style templateStyle
     spacing-right := 0.2em;
   }
   
-  page allPet() >> list() {
-    orientation := Orientation.horizontal;
-    separator := Separator.comma;
-    spacing-right := 0.2em;
+  page allOwner() >> ownerDetails(o : Owner) {
+    spacing-right := 1em;
   }
   
-  page allOwner() >> ownerDetails(o : Owner) {
-    spacing-right := 4em;
+  template ownerDetails(o : Owner) > group() > groupitem() {
+    width := 22em;
   }
 
 style formStyle
