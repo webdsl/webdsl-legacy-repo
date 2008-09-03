@@ -26,13 +26,13 @@ section MAC AccessControl
   {
     predicate mayViewDocument (d:Document) {
       //loggedImn check should be automatic here too
-      securityContext.loggedIn&&securityContext.clearance>-1&&
+      //securityContext.loggedIn&&securityContext.clearance>-1&&
       securityContext.clearance >= d.classification
     }
 
     predicate mayCreateDocument (d:Document) {
       //loggedImn check should be automatic here too
-      securityContext.loggedIn&&securityContext.clearance>-1&&
+      //securityContext.loggedIn&&securityContext.clearance>-1&&
       securityContext.clearance <= d.classification
     }
     
@@ -54,6 +54,7 @@ section MAC AccessControl
     pointcut openSections()
     {
       page home(),
+      template main(),
       template sidebar(),
       template *(*)
     }

@@ -91,21 +91,21 @@ section MAC templates
       action activateCL(i:Int)
       {
         securityContext.clearance := i;
-        return home();
+        //return home();
       }
       action login(u:User)
       {
         securityContext.principal := u;
         securityContext.loggedIn := true;
-        securityContext.clearance := -1;
-        return home();
+        securityContext.clearance := null;
+        //return home();
       }
       action logout()
       {
         securityContext.principal := null;
         securityContext.loggedIn := false;
-        securityContext.clearance := -1;
-        return home();
+        securityContext.clearance := null;
+        //return home();
       }
     }
   }
