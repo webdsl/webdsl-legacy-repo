@@ -2,12 +2,12 @@ module templates
 
 section templates
 
-  define viewUpdate(u : Update) {
+  define displayMessage(m : Message) {
     section {
       block("metadata") {
-        output(u.user) " on " output(u.date) ": "
+        output(m.user) " on " output(m.date) ": "
       }
-      output(u.text)
+      output(m.text)
     }
   }
 
@@ -16,7 +16,6 @@ section main template.
   define main() {
     top()
     topmenu()
-    //sidebar()
     body()
     footer()
   }
@@ -34,23 +33,16 @@ section basic page elements.
           var msg : String
           form {
             input(msg)
-            action("Update", update())
+            action("Send", send())
 
-            action update() {
-              var u : Update := Update {};
-              u.user := securityContext.principal;
-              u.text := msg;
-              u.save();
+            action send() {
+              sendMessage(msg);
               return user(securityContext.principal);
             }
           }
         }
       }
     }
-  }
-  
-  define sidebar() {
-    header { "Side Menu" }
   }
   
   define body() {
@@ -96,12 +88,12 @@ section basic page elements.
 
 section default pages
 
-  define page message(msg : String) {
+  define page info(msg : String) {
     main()
-    title { "Message" }
+    title { "Info" }
     define body() {
       section {
-        header { "Message" }
+        header { "Info" }
         output(msg)
       }
     }

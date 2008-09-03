@@ -7,17 +7,25 @@ section global data
         username := "zef"
         password := "secret"
       };
+    
+    var user2 : User :=
+      User {
+        username := "eelco"
+        password := "secret"
+      };
 
-    var update1 : Update :=
-      Update {
+/*
+    var message1 : Message :=
+      Message {
         user := user1
         text := "This is my first message"
       };
 
-    var update2 : Update :=
-      Update {
+    var message2 : Message :=
+      Message {
         user := user1
-        replyTo := update1
+        replyTo := message2
         text := "This is a reply to that first message."
       };
 
+*/

@@ -37,7 +37,7 @@ section ac login stuff
             if (us.password.check(password)) {
               securityContext.principal := us;
               securityContext.loggedIn := true;
-              return message("You have been logged in.");
+              return user(us);
             }
           }
           securityContext.loggedIn := false;
@@ -73,7 +73,7 @@ section ac login stuff
         }
         user.password := user.password.digest();
         user.save();
-        return message("You have now been registered. Click Login to login.");
+        return info("You have now been registered. Click Login to login.");
       }
     }
   }

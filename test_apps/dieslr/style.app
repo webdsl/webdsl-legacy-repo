@@ -14,7 +14,6 @@ style globalStyle
   
   navigate() {
     font := globalFont;
-    font-size := globalFontSize;
   }
   
   header() {
@@ -95,10 +94,6 @@ style templateStyle
     font-size := 0.8em;
   }
 
-  template top() >> section() >> navigate() {
-    font-size := 1em;
-  }
-  
   template main() {
     width := 800px;
     align := Align.center;
@@ -107,11 +102,6 @@ style templateStyle
 
   template main() > body() {
     width := 80%;
-  }
-  
-  template sidebar() {
-  	width := 15em;
-  	padding := 1em;
   }
   
   template body() {
@@ -134,7 +124,7 @@ style templateStyle
     margin-top := topmenu().margin-bottom;
   }
   
-  template viewUpdate(u : Update) {
+  template displayMessage(m : Message) {
     border-width := 1px;
     border-color := layoutBorderColor;
     border-style := BorderStyle.solid;
@@ -144,11 +134,7 @@ style templateStyle
     padding-bottom := 5px;
   }
 
-  template viewUpdate(u : Update) >> navigate() {
-    font-size := 1em;
-  }
-
-  template viewUpdate(u : Update) >> .metadata {
+  template displayMessage(m : Message) >> .metadata {
     font-weight := Weight.bold;
   }
 
@@ -248,5 +234,5 @@ style footerStyle
   template footer() >> list() {
     orientation := Orientation.horizontal;
     separator := Separator.pipe;
-    spacing := 2em; // @todo: rename to spacing and set on listitem()??
+    spacing := 2em; 
   }

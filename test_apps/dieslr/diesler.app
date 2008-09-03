@@ -11,6 +11,7 @@ imports init
 imports pages
 imports style
 imports layout
+imports logic
 
 section pages
 
@@ -19,8 +20,8 @@ define page home() {
 	main()
 	define body() {
     header { "Latest updates" }
-    for(u : Update order by u.date desc limit 10) {
-      viewUpdate(u)
+    for(m : Message where m.recipient = null order by m.date desc limit 10) {
+      displayMessage(m)
     }
 	}
 }
