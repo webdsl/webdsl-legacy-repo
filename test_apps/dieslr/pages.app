@@ -6,7 +6,7 @@ define page user(user : User) {
   main()
   title { output(user.username) }
   define body() {
-    for(u : Message in user.sentMessages order by u.date desc limit 20) {
+    for(u : Message in user.sentMessages where u.original = true order by u.date desc per 20) {
       displayMessage(u)
     }
     section {
@@ -16,20 +16,21 @@ define page user(user : User) {
       output(user.followers)
       form {
         if(securityContext.loggedIn) {
-          if(securityContext.principal in user.followers) {
-            action("Unfollow", unfollow())
-            action unfollow() {
-              securityContext.principal.following.remove(user);
-              securityContext.principal.save();
-              return user(user);
-            }
-          }
-          if(!(securityContext.principal in user.followers)) {
-            action("Follow", follow())
-            action follow() {
-              securityContext.principal.following.add(user);
-              securityContext.principal.save();
-              return user(user);
+          par {
+            if(securityContext.principal in user.followers) {
+              action("Unfollow", unfollow())
+              action unfollow() {
+                securityContext.principal.following.remove(user);
+                securityContext.principal.save();
+                return user(user);
+              }
+            } else {
+              action("Follow", follow())
+              action follow() {
+                securityContext.principal.following.add(user);
+                securityContext.principal.save();
+                return user(user);
+              }
             }
           }
         }

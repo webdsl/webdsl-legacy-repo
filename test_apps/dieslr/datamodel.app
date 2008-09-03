@@ -5,16 +5,17 @@ section definition
   entity User {
     username         :: String (id, name)
     password         :: Secret
-    sentMessages     -> Set<Message>
-    receivedMessages -> Set<Message>
+    sentMessages     -> Set<Message> (inverse=Message.sender)
+    receivedMessages -> Set<Message> (inverse=Message.recipient)
     followers        -> Set<User> (inverse=User.following)
     following        -> Set<User>
   }
 
   entity Message {
-    user      -> User (inverse=User.sentMessages)
-    recipient -> User (inverse=User.receivedMessages)
+    sender    -> User
+    recipient -> User
     replyTo   -> Message // Can be null
     text      :: Text
     date      :: DateTime
+    original  :: Bool // true for the original message (so not copies for each recipient)
   }

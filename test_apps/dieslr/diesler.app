@@ -19,9 +19,16 @@ define page home() {
   title { "Dieslr" }
 	main()
 	define body() {
-    header { "Latest updates" }
-    for(m : Message where m.recipient = null order by m.date desc limit 10) {
-      displayMessage(m)
+    if(securityContext.loggedIn) {
+      header { "Latest updates from your friends" }
+      for(m : Message in securityContext.principal.receivedMessages order by m.date desc per 15) {
+        displayMessage(m)
+      }
+    } else {
+      header { "Latest updates" }
+      for(m : Message where m.original = true order by m.date desc limit 15) {
+        displayMessage(m)
+      }
     }
 	}
 }

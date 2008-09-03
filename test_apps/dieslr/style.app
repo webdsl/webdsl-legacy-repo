@@ -82,7 +82,7 @@ style templateStyle
   }
   
   template top() >> .logos {
-    width := 25em;
+    width := 20em;
   }
   
   template top() > .logo_area {
@@ -92,6 +92,10 @@ style templateStyle
 
   template top() >> section() {
     font-size := 0.8em;
+  }
+
+  template top() >> .inputString {
+    width := 350px;
   }
 
   template main() {

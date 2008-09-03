@@ -5,7 +5,7 @@ section templates
   define displayMessage(m : Message) {
     section {
       block("metadata") {
-        output(m.user) " on " output(m.date) ": "
+        output(m.sender) " on " output(m.date) ": "
       }
       output(m.text)
     }
@@ -30,14 +30,22 @@ section basic page elements.
       if(securityContext.loggedIn) {
         section {
           "Logged in as " output(securityContext.principal)
-          var msg : String
+
           form {
-            input(msg)
-            action("Send", send())
+            var msg : String
+            group("Send message") {
+              input(msg) action("Send", send()) 
+            }
 
             action send() {
-              sendMessage(msg);
-              return user(securityContext.principal);
+              var m : Message := Message{};
+              m.sender := securityContext.principal;
+              m.recipient := securityContext.principal;
+              m.text := msg;
+              m.original := true;
+              m.save();
+              schedule broadcastMessage(securityContext.principal, msg);
+              return home();
             }
           }
         }
@@ -70,17 +78,16 @@ section basic page elements.
       menu {
         menuheader { navigate(home()) { "Home" } }
       }
-      menu {
-        menuheader { navigate(home()) { "Updates" } }
-        //menuitem { navigate(vets()) { "Display veterinarians" } }
-      }
-      menu {
-        menuheader { "User" } 
-        menuitem { navigate(login()) { "Login" } }
-        menuitem { navigate(register()) { "Register" } }
-        menuspacer
-        for (u : User) {
-          menuitem { output(u) }
+      if(securityContext.loggedIn) {
+        menu {
+          menuheader { navigate(logout()) { "Logout" } }
+        }
+      } else {
+        menu {
+          menuheader { navigate(register()) { "Register" } }
+        }
+        menu {
+          menuheader { navigate(login()) { "Login" } }
         }
       }
     }
