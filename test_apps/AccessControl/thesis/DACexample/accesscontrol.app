@@ -4,10 +4,10 @@ section DAC AccessControl
 
   extend entity Document
   {
-    owner :: User (inverse=User.ownedDocuments)
-    viewAccess :: Set<User>
-    editAccess :: Set<User>
-    grantingRights :: Set<User>
+    owner -> User (inverse=User.ownedDocuments)
+    viewAccess -> Set<User>
+    editAccess -> Set<User>
+    grantingRights -> Set<User>
   }
 
   extend entity User
