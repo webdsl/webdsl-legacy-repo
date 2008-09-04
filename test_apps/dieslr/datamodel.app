@@ -9,6 +9,7 @@ section definition
     receivedMessages -> Set<Message> (inverse=Message.recipient)
     followers        -> Set<User> (inverse=User.following)
     following        -> Set<User>
+    signupDate       :: DateTime
   }
 
   entity Message {

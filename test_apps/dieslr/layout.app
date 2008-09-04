@@ -5,7 +5,7 @@ layout
   template main() {
     top();
     topmenu();
-    body();
+    mainbody: [ sidebar() | body() ];
     footer();
   }
   

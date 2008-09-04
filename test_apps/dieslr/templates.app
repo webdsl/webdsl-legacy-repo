@@ -16,11 +16,32 @@ section main template.
   define main() {
     top()
     topmenu()
+    sidebar()
     body()
     footer()
   }
 
 section basic page elements.
+
+  define sidebar() {
+    section {
+      if(securityContext.loggedIn) {
+        header { "People you follow" }
+        list {
+          for(u : User in securityContext.principal.following order by u.username asc) {
+            listitem { output(u) }
+          }
+        }
+      } else {
+        header { "New Dieslrs" }
+        list {
+          for(u : User order by u.signupDate desc limit 10) {
+            listitem { output(u) }
+          }
+        }
+      }
+    }
+  }
 
   define top() {
     block("logos") {
@@ -44,7 +65,7 @@ section basic page elements.
               m.text := msg;
               m.original := true;
               m.save();
-              schedule broadcastMessage(securityContext.principal, msg);
+              broadcastMessage(securityContext.principal, msg);
               return home();
             }
           }

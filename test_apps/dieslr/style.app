@@ -98,6 +98,16 @@ style templateStyle
     width := 350px;
   }
 
+  template sidebar() {
+  	width := 12em;
+  	padding := 1em;
+  }
+
+  template sidebar() >> list() {
+    orientation := Orientation.vertical;
+    separator := Separator.none;
+  }
+
   template main() {
     width := 800px;
     align := Align.center;
@@ -110,11 +120,9 @@ style templateStyle
   
   template body() {
     padding := 1em;
-    /*
    	border-left-color := layoutBorderColor;
   	border-left-style := BorderStyle.solid;
   	border-left-width := 1px;
-    */
   }
 
   template footer() {
@@ -142,24 +150,6 @@ style templateStyle
     font-weight := Weight.bold;
   }
 
-  /*
-  template output(c : List<Specialty>) >> list() {
-    orientation := Orientation.horizontal;
-    separator := Separator.comma;
-    spacing-right := 0.2em;
-  }
-  
-  page allPet() >> list() {
-    orientation := Orientation.horizontal;
-    separator := Separator.comma;
-    spacing-right := 0.2em;
-  }
-  
-  page allOwner() >> ownerDetails(o : Owner) {
-    spacing-right := 4em;
-  }
-  */
-
 style formStyle
 
   const labelWidth : Length := 8em;
@@ -176,13 +166,6 @@ style formStyle
     background-color := #ccccff;
   }
   
-  /*
-  page createOwner() >> group() >> label() {
-    align := Align.left;
-    width := labelWidth;
-  }
-  */
-
 style menuStyle
 
   const globalBorderColor : Color := #c0c0c0;
@@ -201,16 +184,10 @@ style menuStyle
     width := 80%;
     align := Align.center;
   }
-/*  
-  template topmenu() >> menubar() > menu() > menuheader() {
-    border-right-color := globalBorderColor;
-    border-right-width := 1px;
-    border-right-style := BorderStyle.solid;
-  }
-*/  
+
   template topmenu() >> menu() > menuheader() > navigate() {
     padding := 0.3em;
-    font := Font.Lucida.Grande; // | Font.Verdana | Font.sans-serif;
+    font := Font.Lucida.Grande; 
     font-color := fontColor;
     font-size := 0.75em;
     font-line := Line.none;
