@@ -21,6 +21,15 @@ entity User {
 
 section pages
 
+define page editPage(p:Page){
+  derive editPage from p
+}
+
+define page createPage(){
+  var p:Page := Page{}
+  derive createPage from p
+}
+
 define page home() {
   main()
   define body() {
