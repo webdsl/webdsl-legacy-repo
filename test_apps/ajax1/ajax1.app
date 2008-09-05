@@ -39,11 +39,9 @@ section the pages
 		    	}
 		    	table
 		    	{
-		        row{ "Text:" output(document.text) }
 		        row{ "Author:" 
-		             navigate(user(document.author)){
-		               output(document.author.name)
-		             }
+               output(document.author.name)
+               event onclick { left_innerbody user(document.author)}
 		        }
 		        row{ "" 
 		        		navigate(editDocument(document)){"[edit this using the cool new ajax feature]"} 
