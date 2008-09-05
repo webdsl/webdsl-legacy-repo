@@ -14,61 +14,67 @@ section the pages
     block("body"){
       block("left_innerbody"){ sidebar() }
       block("main_innerbody"){ 
-		    section{ "Welcome to the example application which manages users and documents." }
-		    section{ "The supported operations are creation, viewing, and editing." }
-		    login()
-		    logout()
+        section{ "Welcome to the example application which manages users and documents." }
+        section{ "The supported operations are creation, viewing, and editing." }
+        login()
+        logout()
       }
     }
   }
 
 
-	define page editDocument(document:Document){
-		derive editPage from document
-	}
-	
-	define page document(document: Document){
-	  block("top"){ top() }
+  define page editDocument(document:Document){
+    derive editPage from document
+  }
+  
+  define page document(document: Document){
+    block("top"){ top() }
     block("body"){
       block("left_innerbody"){ sidebar() }
       block("main_innerbody"){ 
-				section
-				{
-					header{
-		      	  output(document.title)
-		    	}
-		    	table
-		    	{
-		        row{ "Author:" 
+        section
+        {
+          header{
+              output(document.title)
+          }
+          table
+          {
+            row{ "Author:" 
                output(document.author.name)
-               event onclick { left_innerbody user(document.author)}
-		        }
-		        row{ "" 
-		        		navigate(editDocument(document)){"[edit this using the cool new ajax feature]"} 
-		        }
-		    	}     
-		  	}
-		  }
+               event onclick { left_innerbody testtemplate(document.author)}
+            }
+            row{ "" 
+                navigate(editDocument(document)){"[edit this using the cool new ajax feature]"} 
+            }
+          }     
+        }
+      }
     }
-	}//page doc
-	
-	
-	define page createDocument(){
-		var document: Document := Document {}
-		derive createPage from document
-	}
+  }//page doc
+  
+  define testtemplate(u:User){
+    header{"User: "}
+    output(u.name)
+    output(u.password)
+  }
+
+  
+  define page createDocument(){
+    var document: Document := Document {}
+    derive createPage from document
+  }
 
   define page user(u:User) {
-  	derive viewPage from u
+    derive viewPage from u
   }
   
   define page editUser(u: User){
-  	derive editPage from u
+    derive editPage from u
   }
   
   define page createUser() {
-  	var u: User := User {}
-  	derive createPage from u
+    var u: User := User {}
+    derive createPage from u
   }
    
   define main() 
