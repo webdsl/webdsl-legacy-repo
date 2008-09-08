@@ -12,10 +12,10 @@ section ac stuff.
     var mem : ViewMode := ViewMode{name:="members"};
   }
   extend entity User {
-    viewAccess :: ViewMode
+    viewAccess -> ViewMode
   }
   extend entity UserGroup {
-    viewAccess :: ViewMode
+    viewAccess -> ViewMode
   }
   
   access control rules {

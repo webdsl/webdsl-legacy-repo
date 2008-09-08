@@ -13,6 +13,20 @@ imports usergroups
 
 section home.
 
+  define page user(u:User){ derive viewPage from u }
+
+  define page userGroup(u:UserGroup){ derive viewPage from u }
+  
+  define page friendRequest(u:FriendRequest){ derive viewPage from u }
+
+  define page membershipRequest(u:MembershipRequest){ derive viewPage from u }
+  
+  define page viewMode(u:ViewMode){ derive viewPage from u }
+  
+  define page page(u:Page){ derive viewPage from u }
+  
+  define page groupPage(u:GroupPage){ derive viewPage from u }
+
   define homePageEdit(p:Page)
   {
     table
