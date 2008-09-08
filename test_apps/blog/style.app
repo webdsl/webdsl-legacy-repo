@@ -3,8 +3,9 @@ module style
 style globalStyle
 
   const mainColor : Color := #330099;
-  const globalFont : Font := Font.Lucida.Grande;
-  const globalFontSize : Length := 0.75em;
+  const globalFont : Font := Font.Gill.Sans; //Font.Lucida.Grande;
+  //const globalFont : Font := Font.Lucida.Grande;
+  const globalFontSize : Length := 1em;//0.75em;
   const layoutBorderColor : Color := #c0c0c0;
 
   template main() {
@@ -27,8 +28,16 @@ style globalStyle
   
   header() {
     font := globalFont;
-    font-size := globalFontSize * 1.5em;
-    margin-top := 0px;
+    font-size := globalFontSize * 1.1em;
+    margin-top := 15px;
+    margin-bottom := 5px;
+  }
+
+  sidebar() >> header() {
+    font := globalFont;
+    font-size := globalFontSize * 1.1em;
+    margin-top := 10px;
+    margin-bottom := 3px;
   }
   
   table() {
@@ -38,7 +47,7 @@ style globalStyle
   table() > header() {
     font := globalFont;
     font-size := 1em;
-    font-weight := Weight.bold;
+    font-style := FontStyle.bold;
     font-color := #404040;
     image := url("images/menubar_bg.png");
     image-repeat := Repeat.horizontal;
@@ -62,12 +71,15 @@ style globalStyle
 style templateStyle
 
   const layoutBorderColor : Color := #c0c0c0;
-  const globalFont : Font := Font.Lucida.Grande;
+  const globalFont : Font := Font.Gill.Sans; //Font.Lucida.Grande;
+  //Gill Sans','Gill Sans MT','Ikarius ADF',Candara
 
+  /*
   template topmenu() {
     width := 100%;
     margin-bottom := 1em;
   }
+  */
   
   template top() {
     background-color := Color.white;
@@ -81,11 +93,6 @@ style templateStyle
   template top() > .logo_area {
     width := 100%;
     align := Align.center;
-  }
-
-  template top() >> .inputText {
-    width := 30em;
-    height := 3em;
   }
 
   template sidebar() {
@@ -105,9 +112,11 @@ style templateStyle
   
   template body() {
     padding := 1em;
+    /*
    	border-left-color := layoutBorderColor;
   	border-left-style := BorderStyle.solid;
   	border-left-width := 1px;
+    */
   }
 
   template footer() {
@@ -117,21 +126,37 @@ style templateStyle
     border-top-style := BorderStyle.solid;
     font-size := 0.9em;
     width := top().width;
-    margin-top := topmenu().margin-bottom;
   }
   
-  template displayMessage(m : Message) {
+    /*
+  template displayPost(p : Post) {
     border-width := 1px;
     border-color := layoutBorderColor;
     border-style := BorderStyle.solid;
-    margin-bottom := 5px;
-    padding-left := 20px;
-    padding-top := 5px;
-    padding-bottom := 5px;
+  }
+    */
+
+  template displayPost(p : Post) >> header() {
+    font-size := 1.3em;
   }
 
-  template displayMessage(m : Message) >> .metadata {
-    font-weight := Weight.bold;
+  template displayPost(p : Post) >> header() > navigate() {
+    font-line := Line.none;
+    font-color := Color.black;
+  }
+
+  .metadata {
+   	border-bottom-color := layoutBorderColor;
+  	border-bottom-style := BorderStyle.solid;
+  	border-bottom-width := 1px;
+    //font-style := FontStyle.italic;
+  }
+
+  .commentmetadata {
+   	border-top-color := layoutBorderColor;
+  	border-top-style := BorderStyle.solid;
+  	border-top-width := 1px;
+    //font-style := FontStyle.italic;
   }
 
 style formStyle
@@ -157,39 +182,17 @@ style formStyle
 
   inputText() {
     width := 400px;
-    height := 3em;
-  }
-  
-style menuStyle
-
-  const globalBorderColor : Color := #c0c0c0;
-  const fontColor : Color := #505050;
-
-  template topmenu() {
-    background-color := #ffff00;
-    image := url("images/menubar_bg.png");
-    image-repeat := Repeat.horizontal;
-    border-color := globalBorderColor;
-    border-width := 1px;
-    border-style := BorderStyle.solid;
+    height := 8em;
   }
 
-  template topmenu() >> menubar() {
-    width := 80%;
-    align := Align.center;
+  .inputWikiText {
+    width := 480px;
+    height := 25em;
   }
 
-  template topmenu() >> menu() > menuheader() > navigate() {
-    padding := 0.3em;
-    font := Font.Lucida.Grande; 
-    font-color := fontColor;
-    //font-size := 0.75em;
-    font-line := Line.none;
-  }
-  
-  template topmenu() >> menu() >> navigate().hover {
-    image := url("images/menubar_bg_hover.png");
-    image-repeat := Repeat.horizontal;
+  header() > .inputString {
+    font-size := 1.2em;
+    font-style := FontStyle.bold;
   }
 
 style footerStyle

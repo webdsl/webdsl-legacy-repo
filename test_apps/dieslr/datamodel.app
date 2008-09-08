@@ -13,10 +13,17 @@ section definition
   }
 
   entity Message {
-    sender    -> User
+    sender    -> User (inline(name))
     recipient -> User
     replyTo   -> Message // Can be null
     text      :: Text
     date      :: DateTime
     original  :: Bool // true for the original message (so not copies for each recipient)
+  }
+
+section info
+
+  entity Page {
+    name :: String (id)
+    text :: WikiText
   }

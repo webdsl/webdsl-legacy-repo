@@ -2,12 +2,34 @@ module templates
 
 section templates
 
-  define displayMessage(m : Message) {
+  define displayPost(p : Post) {
     section {
+      header { output(p) }
       block("metadata") {
-        output(m.sender) " on " output(m.date) " wrote:"
+        "Posted by " output(p.author) " on " output(p.date)  " | "
+        navigate(post(p)) {
+          if(p.commentCount = 0) {
+            "Comment"
+          } else {
+            if(p.commentCount = 1) {
+              "1 Comment"
+            } else {
+              output(p.commentCount) " Comments"
+            }
+          }
+        }
+        if(securityContext.loggedIn) {
+          " | " navigate(editPost(p))
+        }
       }
-      output(m.text)
+      output(p.text)
+    }
+  }
+
+  define displayComment(c : Comment) {
+    section {
+      output(c.text)
+      block("commentmetadata") { "Posted by " output(c.name) " on " output(c.date) }
     }
   }
 
@@ -15,7 +37,6 @@ section main template.
 
   define main() {
     top()
-    topmenu()
     sidebar()
     body()
     footer()
@@ -25,18 +46,21 @@ section basic page elements.
 
   define sidebar() {
     section {
-      if(securityContext.loggedIn) {
-        header { "People you follow" }
-        list {
-          for(u : User in securityContext.principal.following order by u.username asc) {
-            listitem { output(u) }
-          }
+      header { "Menu" }
+      list {
+        listitem { navigate(home()) { "Home" } }
+        if(securityContext.loggedIn) {
+          listitem { navigate(logout()) { "Logout" } }
+          listitem { navigate(newPost()) { "New post" } }
+        } else {
+          listitem { navigate(register()) { "Register" } }
+          listitem { navigate(login()) { "Login" } }
         }
       }
-      header { "New Dieslrs" }
+      header { "Recent posts" }
       list {
-        for(u : User order by u.signupDate desc limit 5) {
-          listitem { output(u) }
+        for(p : Post where p.status = publishedStatus order by p.date desc limit 5) {
+          listitem { output(p) }
         }
       }
     }
@@ -50,33 +74,15 @@ section basic page elements.
       if(securityContext.loggedIn) {
         section {
           "Logged in as " output(securityContext.principal)
-
-          form {
-            var msg : Text
-            group("Send message") {
-              input(msg) action("Send", send()) 
-            }
-
-            action send() {
-              var m : Message := Message{};
-              m.sender := securityContext.principal;
-              m.recipient := securityContext.principal;
-              m.text := msg;
-              m.original := true;
-              m.save();
-              broadcastMessage(securityContext.principal, msg);
-              return home();
-            }
-          }
         }
       }
     }
   }
-  
-  define body() {
-    "Welcome to the Diesler"
-  }
 
+  define body() {
+    "Welcome to blog!"
+  }
+  
   define footer() {
     block("footer_links") {
       list {
@@ -88,10 +94,11 @@ section basic page elements.
     }
     
     block("footer_text") {
-      text("Diesler :: a micro microblogging community for DSL enthusiasts.")
+      text("Blog :: awesome!")
     }
   }
 
+  /*
   define topmenu() {
   
     menubar {
@@ -112,6 +119,7 @@ section basic page elements.
       }
     }
   }
+  */
 
 section default pages
 

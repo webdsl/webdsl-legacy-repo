@@ -19,7 +19,15 @@ access control rules
   }
 
   rule page editPage(*) {
-    securityContext.principal.isAdmin
+    securityContext.loggedIn
+  }
+
+  rule page editPost(p : Post) {
+    securityContext.loggedIn
+  }
+
+  rule page newPage() {
+    securityContext.loggedIn
   }
 
 section ac extensions
