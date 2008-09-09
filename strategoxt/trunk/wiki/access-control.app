@@ -16,7 +16,7 @@ section acr
   {
     predicate mayViewWeb(w : Web) {
       w != null && w.acl != null 
-      && ((w.acl.view.length = 0) || memberOf(w.acl.view)) 
+      && ((w.acl.view.length == 0) || memberOf(w.acl.view)) 
     }
     
     predicate mayEditWeb(w : Web) {
@@ -27,14 +27,14 @@ section acr
     predicate mayViewTopic(t : Topic) {
       t != null 
       && ((t.acl != null && memberOf(t.acl.view)) 
-          || ((t.acl = null || t.acl.view.length = 0)
+          || ((t.acl == null || t.acl.view.length == 0)
               && mayViewWeb(t.web)))
     }
     
     predicate mayEditTopic(t : Topic) {
       t != null 
       && ((t.acl != null && memberOf(t.acl.edit)) 
-          || ((t.acl = null || t.acl.edit.length = 0)
+          || ((t.acl == null || t.acl.edit.length == 0)
               && mayEditWeb(t.web)))
     }
   }

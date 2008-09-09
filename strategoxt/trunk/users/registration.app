@@ -130,8 +130,8 @@ section email confirmation by new user
         }
         action("Check", check())
         action check() {
-          if (reg.username = username
-              && reg.email = email
+          if (reg.username == username
+              && reg.email == email
               && reg.password.check(password))
           {
             reg.confirmed := true;
@@ -242,7 +242,7 @@ section change password
           }
           action resetPassword() {
             if (securityContext.principal.password.check(oldPassword)
-                && newPassword1 = newPassword2)
+                && newPassword1 == newPassword2)
             {
               securityContext.principal.password := newPassword1.digest();
               securityContext.principal.save();

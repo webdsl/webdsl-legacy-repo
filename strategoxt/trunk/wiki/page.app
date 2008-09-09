@@ -160,7 +160,7 @@ section wiki topic
   define page topic(topic : Topic)
   {
     init {
-      if(topic.authors.length = 0) {
+      if(topic.authors.length == 0) {
         // This is a new topic
         goto accessDenied(); 
       }

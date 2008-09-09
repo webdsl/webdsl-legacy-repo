@@ -48,7 +48,7 @@ section ac policies
   //}
   
     function memberOf(xs : Set<UserGroup>) : Bool { 
-      if (securityContext.principal = null || xs = null || xs.length = 0) { return false; }
+      if (securityContext.principal == null || xs == null || xs.length == 0) { return false; }
       else {
         for(y : UserGroup in securityContext.principal.activeGroups) { 
           if(y in xs) { return true; }
@@ -94,7 +94,7 @@ section users
     }
     
     rules page editProfile(u : User) {
-      securityContext.principal = u
+      securityContext.principal == u
     }
     
     rules template thisUserMenu(u : User) {
@@ -173,13 +173,13 @@ access control rules { // groups
     
   rules template editPermissions(acl : ACL, aclSuper : ACL) {
     memberOf(acl.moderate) 
-    || (acl.moderate.length = 0 
+    || (acl.moderate.length == 0 
         && memberOf(aclSuper.moderate)) 
   }
     
   predicate mayEditACL(acl : ACL, aclSuper : ACL) {
     memberOf(acl.moderate) 
-    || (acl.moderate.length = 0 
+    || (acl.moderate.length == 0 
         && memberOf(aclSuper.moderate))
   }
     
