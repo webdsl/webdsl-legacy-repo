@@ -51,7 +51,7 @@ section ac login stuff
         }
         action("Sign in", signin())
         action signin() {
-          for (us : User where us.username = username) {
+          for (us : User where us.username == username) {
             if (us.password.check(password)) {
               securityContext.principal := us;
               securityContext.loggedIn := true;
@@ -86,7 +86,7 @@ section ac login stuff
         action("Register", doRegister())
       }
       action doRegister() {
-        for(u : User where u.username = user.username) {
+        for(u : User where u.username == user.username) {
           return error("User already registered. Sorry.");
         }
         user.password := user.password.digest();

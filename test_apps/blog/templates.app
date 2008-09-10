@@ -8,10 +8,10 @@ section templates
       block("metadata") {
         "Posted by " output(p.author) " on " output(p.date)  " | "
         navigate(post(p)) {
-          if(p.commentCount = 0) {
+          if(p.commentCount == 0) {
             "Comment"
           } else {
-            if(p.commentCount = 1) {
+            if(p.commentCount == 1) {
               "1 Comment"
             } else {
               output(p.commentCount) " Comments"
@@ -59,7 +59,7 @@ section basic page elements.
       }
       header { "Recent posts" }
       list {
-        for(p : Post where p.status = publishedStatus order by p.date desc limit 5) {
+        for(p : Post where p.status == publishedStatus order by p.date desc limit 5) {
           listitem { output(p) }
         }
       }
