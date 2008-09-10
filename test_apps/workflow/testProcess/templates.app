@@ -9,25 +9,6 @@ section templates
     body()
     footer()
   }
-
-/*  define main() {
-    block("top") {
-      top()
-    }
-
-    block("body") {
-      block("left_innerbody") {
-        sidebar()
-      }
-      block("main_innerbody") {
-        body()
-      }
-    }
-
-    block("footer") {
-      footer()
-    }
-  }*/
   
   define top() {
     block("logos") {
@@ -35,25 +16,9 @@ section templates
       image("/images/webdsl_logo_text.png")
     }
     block("text") {
-	    text("default header")
+	    text("WebWorkFlow tests")
 	  }
   }
-
-/*  define top() {
-    block("header") {}
-    block("menubar") {
-      menubar {
-        menu {
-          menuheader { navigate(home()) { "Home" } }
-        }
-        menu {
-          menuheader { "User" }
-          menuitem { navigate(signin()) { "Sign in" } }
-          menuitem { navigate(allTasks()) { "Tasks" } }
-        }
-      }
-    }
-  }*/
   
   define topmenu() {
       menubar {
@@ -74,7 +39,10 @@ section basic page elements.
     contextSidebar()
   }
   
-  define contextSidebar() { }
+  define contextSidebar() {
+    header { "Side menu" }
+    menuitem { navigate(allTasks()) { "Tasks" } }
+  }
   
   define footer() {
     "generated with "

@@ -31,7 +31,7 @@ style globalStyle
   table() > header() {
     font := globalFont;
     font-size := 1em;
-    font-weight := Weight.bold;
+    font-style := FontStyle.bold;
     font-color := #404040;
     image := url("images/menubar_bg.png");
     image-repeat := Repeat.horizontal;

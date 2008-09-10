@@ -55,7 +55,7 @@ section procedures
       p.persist();
     }
     process {
-      (employeeFillInForm(p) xor managerFillInForm(p));
+      (employeeFillInForm(p) and managerFillInForm(p));
       repeat {
         writeReport(p);
         approveReport(p)
@@ -64,35 +64,42 @@ section procedures
   }
   
   procedure employeeFillInForm(p : PdpMeeting) {
-    who { securityContext.principal = p.employee }
+    who { securityContext.principal == p.employee }
     view {
-      title{"Fill in employee form"}
-      derive procedurePage from p for (employeePreparation)
+      derive procedurePage from p for (employeePreparation) {
+        title{"Fill in employee form"}
+        header{"Fill in employee form"}
+      }
     }
   }
 
   procedure managerFillInForm(p : PdpMeeting) {
-    who { securityContext.principal = p.employee.manager }
+    who { securityContext.principal == p.employee.manager }
     view {
       title{"Fill in manager form"}
-      derive procedurePage from p for (managerPreparation)
+      derive procedurePage from p for (managerPreparation) {
+        title{"Fill in manager form"}
+        header{"Fill in manager form"}
+      }
     }
   }
 
   procedure writeReport(p : PdpMeeting) {
-    who { securityContext.principal = p.employee.manager }
+    who { securityContext.principal == p.employee.manager }
     view {
-      title{"Write report"}
-      derive procedurePage from p for (report)
+      derive procedurePage from p for (report) {
+        title{"Write report"}
+        header{"Write report"}
+      }
     }
   }
 
   procedure finalizeReport(p : PdpMeeting) {
-    who { securityContext.principal = p.employee.manager }
+    who { securityContext.principal == p.employee.manager }
   }
 
   procedure approveReport(p : PdpMeeting) {
-    who { securityContext.principal = p.employee }
+    who { securityContext.principal == p.employee }
   }
   
   auto procedure testDingesWorkflow(t : TestDinges) {
@@ -107,15 +114,19 @@ section procedures
   
   procedure proc1(t : TestDinges) {
     view {
-      title{"Fill proc1 for " text(t.name)}
-      derive procedurePage from t for (proc1Text)
+      derive procedurePage from t for (proc1Text) {        
+        title{"Fill proc1 for " text(t.name)}
+        header{"Fill proc1 for " text(t.name)}
+      }
     }
   }
   
   procedure proc2(t : TestDinges) {
     view {
-      title{"Fill proc1 for " text(t.name)}
-      derive procedurePage from t for (proc2Text)
+      derive procedurePage from t for (proc2Text) {
+        title{"Fill proc2 for " text(t.name)}
+        header{"Fill proc2 for " text(t.name)}
+      }
     }
   }
   
@@ -131,6 +142,7 @@ section pages
     main()
     define body() {
       var employee : User
+      header { "Home" }
       section {
         form {
           header{"Quick start PDP Meeting for employee"}
@@ -189,7 +201,7 @@ section pages
 
 access control rules 
   rule page pdpMeeting(pdpMeeting : PdpMeeting) {
-    securityContext.principal = pdpMeeting.employee || securityContext.principal = pdpMeeting.employee.manager
+    securityContext.principal == pdpMeeting.employee || securityContext.principal == pdpMeeting.employee.manager
   }
   rule page testDinges(t : testDinges) {
     true

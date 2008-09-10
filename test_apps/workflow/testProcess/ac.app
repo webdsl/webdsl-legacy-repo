@@ -34,7 +34,7 @@ section pages
           row{ action("Sign in", dosignin()) "" }
         }
         action dosignin() {
-          for (us : User where us.username = username) {
+          for (us : User where us.username == username) {
             if (us.password.check(password)) {
               securityContext.principal := us;
               securityContext.loggedIn := true;
@@ -62,7 +62,9 @@ section pages
     title{"Message"}
     define body() {
       header{"Message"}
-      output(msg)
+      section() {
+        output(msg)
+      }
     }
   }
   
