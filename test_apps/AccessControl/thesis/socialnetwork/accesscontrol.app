@@ -23,9 +23,9 @@ section ac stuff.
 
   predicate viewAllowed(u:User){
     //securityContext.principal = u
-    (u.viewAccess = pub)
-    || (u.viewAccess = fri && securityContext.principal in u.friends)
-    || (u.viewAccess = priv && securityContext.principal = u)
+    (u.viewAccess == pub)
+    || (u.viewAccess == fri && securityContext.principal in u.friends)
+    || (u.viewAccess == priv && securityContext.principal == u)
   }
 
   rules page viewUser(u : User)
@@ -34,9 +34,9 @@ section ac stuff.
   }
   
   predicate groupViewAllowed(ug : UserGroup){
-    (ug.viewAccess = pub) 
-    || (ug.viewAccess = mem && securityContext.principal in ug.members)
-    || (ug.viewAccess = priv && (securityContext.principal = ug.owner || securityContext.principal in ug.moderators))
+    (ug.viewAccess == pub) 
+    || (ug.viewAccess == mem && securityContext.principal in ug.members)
+    || (ug.viewAccess == priv && (securityContext.principal == ug.owner || securityContext.principal in ug.moderators))
   }
   
   rules page viewUserGroup(ug : UserGroup)
@@ -51,7 +51,7 @@ section ac stuff.
   }
   rules pointcut groupediting(ug : UserGroup)
   {
-    securityContext.principal = ug.owner || securityContext.principal in ug.moderators 
+    securityContext.principal == ug.owner || securityContext.principal in ug.moderators 
   }
   
   pointcut grouppageediting(p:GroupPage)
@@ -61,7 +61,7 @@ section ac stuff.
   }
   rules pointcut grouppageediting(p:GroupPage)
   {
-    securityContext.principal = p.group.owner || securityContext.principal in p.group.moderators
+    securityContext.principal == p.group.owner || securityContext.principal in p.group.moderators
   }
   
   pointcut public()
@@ -82,7 +82,7 @@ section ac stuff.
   } 
   rules pointcut pageediting(p: Page)
   {
-    p.owner = securityContext.principal
+    p.owner == securityContext.principal
   }
   
   
@@ -97,7 +97,7 @@ section ac stuff.
   }  
   rules pointcut userediting(u:User)
   {
-    u = securityContext.principal
+    u == securityContext.principal
   }
   
   rules template login()

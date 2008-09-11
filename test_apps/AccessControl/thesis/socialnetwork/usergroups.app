@@ -70,7 +70,7 @@ section groups.
     {
       form
       {
-        for(f : MembershipRequest where f.requestee = ug) 
+        for(f : MembershipRequest where f.requestee == ug) 
         { 
           row{ output(f.requester.username)  action("accept",acceptMemRequest(f))} 
         } 
