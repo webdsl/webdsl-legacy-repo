@@ -28,7 +28,7 @@ function show(a:ATerm,prefix:String):String{
 }
 
 
-function testSDF(s:String) : String {
+function testSDF(s:SDFInput<WebDSL>) : String {
   // Declare a new variable associated with the WebDSL.tbl parse table, and assign a string to it
   var input : SDFInput<WebDSL>  := s;
   
@@ -42,7 +42,7 @@ function testSDF(s:String) : String {
 
 
 define page home() {
-  var sdf : String;
+  var sdf : SDFInput<WebDSL>;
 
 
 
