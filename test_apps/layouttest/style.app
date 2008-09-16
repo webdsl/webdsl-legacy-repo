@@ -155,7 +155,7 @@ style footerStyle
   template footer() >> list() {
     orientation := Orientation.horizontal;
     separator := Separator.pipe;
-    separator-space := 20px;
+    separator-space := 20px; // @todo: rename to spacing and set on listitem()
   }
 
 /*  

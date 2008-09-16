@@ -1,6 +1,6 @@
-module app/people
+module people
 
-section users.
+section users
 
   entity User {
     username  :: String (name, notempty)

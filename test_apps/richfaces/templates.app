@@ -1,23 +1,25 @@
-module app/templates
+module templates
 
 section main template
 
   define main() {
-    div("outersidebar") {
-      sidebar()
-    }
-    div("outerbody") {
-      div("menubar") {
-        menu()
-      }
-      body()
+    form() {
+	div("outersidebar") {
+	  sidebar()
+	}
+	div("outerbody") {
+	  div("menubar") {
+	  	menu()
+	  }
+	  body()
+	}
     }
   }
 
 section basic page elements
   
   define sidebar() {
-    list { listitem{ navigate("Home", home()) } }
+    list { listitem{ navigate(user(jippe)) {"Home"} } }
   }
   
   define body(){
@@ -26,6 +28,13 @@ section basic page elements
   
 section menus
   
-  define menu() {
-
-  }
+      define menu() {
+        menubar() {
+          dropdownmenu() {
+            header() { "File" }
+	    menuitem() { navigate(home()){"Home"} }
+	    menuitem() { navigate(user(jippe)){"View user"} }
+	    menuitem() { navigate(createUser()){"Create user"} }
+	  }
+        }
+      }

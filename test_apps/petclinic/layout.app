@@ -18,5 +18,5 @@ layout
   }
   
   page allOwner() {
-    float { ownerDetails(o : Owner) }
+    float { ownerDetails(o : Owner) };
   }

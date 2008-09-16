@@ -31,7 +31,7 @@ style globalStyle
   table() > header() {
     font := globalFont;
     font-size := 1em;
-    font-weight := Weight.bold;
+    font-style := FontStyle.bold;
     font-color := #404040;
     image := url("images/menubar_bg.png");
     image-repeat := Repeat.horizontal;
@@ -128,6 +128,11 @@ style templateStyle
   
   page allOwner() >> ownerDetails(o : Owner) {
     spacing-right := 1em;
+  }
+  
+  page allPet() >> list() {
+    orientation := Orientation.vertical;
+    separator := Separator.none;
   }
   
   template ownerDetails(o : Owner) > group() > groupitem() {

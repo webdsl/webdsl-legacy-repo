@@ -7,6 +7,6 @@ define email exampleEmail (e : EmailEntity) {
   from(e.from)
   subject(e.subject)
   body() {
-    text(e.body)
+    output(e.body)
   }
 }
