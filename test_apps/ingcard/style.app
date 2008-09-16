@@ -92,4 +92,3 @@ style templateStyle
   template customerDetails(c : Customer) > list() >> navigate() {
     font-line := Line.none;
   }
-  
