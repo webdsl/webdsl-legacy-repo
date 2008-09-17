@@ -3,42 +3,42 @@ module templates
 section templates
 
   define main() {
-    block("top") {
-      top()
-    }
-
-    block("body") {
-      block("left_innerbody") {
-        sidebar()
-      }
-      block("main_innerbody") {
-        body()
-      }
-    }
-
-    block("footer") {
-      footer()
-    }
+//    top()
+    topmenu()
+    sidebar()
+    body()
+    //footer()
   }
   
   define top() {
-    block("header") {}
-    block("menubar") {
-      menubar {
-        menu {
-          menuheader { navigate(home()) { "Home" } }
-        }
-        menu {
-          menuheader { "User" }
-          menuitem { navigate(signin()) { "Sign in" } }
-          menuitem { navigate(allTasks()) { "Tasks" } }
-        }
-      }
+    block("logos") {
+      image("/images/webdsl_logo_small.png")
+      image("/images/webdsl_logo_text.png")
     }
+    block("text") {
+	    text("WebWorkFlow tests")
+	  }
   }
 
   define body() {
-    "Default body"
+    "Standard body"
+  }
+  
+  define topmenu() {
+    menubar {
+      menu {
+        menuheader { navigate(home()) { "Home" } }
+      }
+      menu {
+        if(loggedIn()) {
+          menuheader { output(securityContext.principal) }
+        } else {
+          menuheader { "User" }
+        }
+        menuitem { navigate(signin()) { "Sign in" } }
+        menuitem { navigate(allTasks()) { "Tasks" } }
+      }
+    }
   }
 
 section basic page elements.
@@ -47,7 +47,11 @@ section basic page elements.
     contextSidebar()
   }
   
-  define contextSidebar() { }
+  define contextSidebar() {
+    list {
+      listitem { navigate(allTasks()) { "Tasks" } }
+    }
+  }
   
   define footer() {
     "generated with "

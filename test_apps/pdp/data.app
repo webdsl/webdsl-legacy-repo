@@ -7,33 +7,33 @@ section data model
     name     :: String
     password :: Secret
     manager  -> User
+    employees-> Set<User>
   }
 
-  entity PdpMeeting {
-    employee -> User
-    name :: String := this.employee.name + " PDP Form"
+  entity Meeting {
+    employee            -> User
     employeePreparation :: Text
-    managerPreparation :: Text
-    report :: Text
+    managerPreparation  :: Text
+    approved            :: Bool
+    comments            :: Text
+    report              :: Text
+    name :: String := this.employee.name + " Meeting"
   }
-
-  /*
-  status PdpMeeting {
-    employeeFilledIn :: Bool
-    managerFilledIn  :: Bool
-    final            :: Bool
-    employeeApproved :: Bool
-  }
-  */
 
   var aManager : User := User {
     username := "manager",
-    name     := "Joe Manager",
+    name     := "Hank",
     password := "secret"
   };
   var aUser : User := User {
     username := "user",
-    name     := "Joe User",
+    name     := "Sue",
+    password := "secret",
+    manager  := aManager
+  };
+  var anotherUser : User := User {
+    username := "user2",
+    name     := "Jake",
     password := "secret",
     manager  := aManager
   };

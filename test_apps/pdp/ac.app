@@ -3,7 +3,7 @@ module ac
 
 access control rules 
 
-  rule page createPdpMeeting() {
+  rule page createMeeting() {
     true
   }
 
@@ -28,17 +28,17 @@ section pages
       var username : String;
       var password : Secret;
       form { 
-        table {
-          row{ "Username: " input(username) }
-          row{ "Password: " input(password) }
-          row{ action("Sign in", signin()) "" }
+        group("Login info") {
+          groupitem { label("Username:") { input(username) } }
+          groupitem { label("Password:") { input(password) } }
         }
+        action("Sign in", signin())
         action signin() {
-          for (us : User where us.username = username) {
+          for (us : User where us.username == username) {
             if (us.password.check(password)) {
               securityContext.principal := us;
               securityContext.loggedIn := true;
-              return message("You have been logged in.");
+              return allTasks();
             }
           }
           securityContext.loggedIn := false;

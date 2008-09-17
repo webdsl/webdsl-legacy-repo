@@ -24,4 +24,21 @@ define page home() {
 	}
 }
 
+define feed posts() {
+  title{ "Zef.me blog" }
+  link { url(home()) }
+  for(p : Post order by p.date desc limit 10) {
+    entry {
+      title { output(p.title) }
+      updated(p.date)
+      id { url(post(p)) }
+      link { url(post(p)) }
+      author { output(p.author.name) }
+      content {
+        output(p.text)
+      }
+    }
+  }
+}
+
 

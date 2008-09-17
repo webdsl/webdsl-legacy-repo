@@ -8,76 +8,63 @@ description {
 imports templates
 imports data
 imports ac
+imports style
+imports layout
 
 section data
 
 section procedures
 
-  auto procedure startWf(p : PdpMeeting) {
-    do {
-      p.employeeFillInForm.enable();
-      p.managerFillInForm.enable();
+  auto procedure startWf(p : Meeting) {
+    process {
+      (employeeFillInForm(p) and managerFillInForm(p));
+      repeat {
+        writeReport(p);
+        (approveReport(p) xor commentReport(p))
+      } until finalizeReport(p)
     }
   }
 
-  extend procedure startWf(p : PdpMeeting) {
-    processed {
-      var s : String := "Zef";
-    }
-  }
-  /*  process {
-      (employeeFillInForm(p) |AND| managerFillInForm(p));
-      writeReport(p)
-    }*/
-
-  procedure employeeFillInForm(p : PdpMeeting) {
-    who { securityContext.principal = p.employee }
+  procedure employeeFillInForm(p : Meeting) {
+    who { securityContext.principal == p.employee }
     view {
       title{"Fill in employee form"}
       derive procedurePage from p for (employeePreparation)
     }
-    done {
-      if(!p.managerFillInForm.isEnabled) {
-        p.writeReport.enable();
-      }
-    }
   }
 
-  procedure managerFillInForm(p : PdpMeeting) {
-    who { securityContext.principal = p.employee.manager }
+  procedure managerFillInForm(p : Meeting) {
+    who { securityContext.principal == p.employee.manager }
     view {
       title{"Fill in manager form"}
       derive procedurePage from p for (managerPreparation)
     }
-    done {
-      if(!p.employeeFillInForm.isEnabled) {
-        p.writeReport.enable();
-      }
-    }
   }
 
-  procedure writeReport(p : PdpMeeting) {
-    who { securityContext.principal = p.employee.manager }
+  procedure writeReport(p : Meeting) {
+    who { securityContext.principal == p.employee.manager }
     view {
       title{"Write report"}
       derive procedurePage from p for (report)
     }
-    done {
-      p.writeReport.enable();
-      p.finalizeReport.enable();
+  }
+
+  procedure finalizeReport(p : Meeting) {
+    who { securityContext.principal == p.employee.manager }
+  }
+
+  procedure approveReport(p : Meeting) {
+    who { securityContext.principal == p.employee }
+    do {
+      p.approved := true;
     }
   }
 
-  procedure finalizeReport(p : PdpMeeting) {
-    who { securityContext.principal = p.employee.manager }
-    done {
-      p.approveReport.enable();
-      p.writeReport.disable();
+  procedure commentReport(p : Meeting) {
+    who { securityContext.principal == p.employee }
+    view {
+      derive procedurePage from p for (comments)
     }
-  }
-
-  procedure approveReport(p : PdpMeeting) {
-    who { securityContext.principal = p.employee }
   }
 
 section pages
@@ -92,7 +79,7 @@ section pages
         action("Organize", organize())
 
         action organize() {
-          var p : PdpMeeting := newPdpMeeting();
+          var p : Meeting := newMeeting();
           p.employee := employee;
           p.startWf.enable();
           p.persist();
@@ -104,33 +91,49 @@ section pages
   }
   
 access control rules 
-  rule page pdpMeeting(pdpMeeting : PdpMeeting) {
-    securityContext.principal = pdpMeeting.employee || securityContext.principal = pdpMeeting.employee.manager
+  rule page meeting(meeting : Meeting) {
+    securityContext.principal == meeting.employee || securityContext.principal == meeting.employee.manager
   }
     
 section pages
 
-/*  define pdpMeetingProcedures(p : PdpMeeting) {
+/*  define meetingProcedures(p : Meeting) {
     "haha!"
-    pdpMeetingProceduresList(p)
+    meetingProceduresList(p)
   }
   */
 
-  define page pdpMeeting(pdpMeeting : PdpMeeting) {
-    title {"Pdp Meeting " output(pdpMeeting)}
+  define page meeting(meeting : Meeting) {
+    title {"Pdp Meeting " output(meeting)}
     main()
     define contextSidebar() {
-      pdpMeetingProcedures(pdpMeeting)
+      meetingProcedures(meeting)
     }
     define body() {
-      header{"Pdp meeting " output(pdpMeeting)}
-      table {
-        derive viewRows from pdpMeeting
+      header{ output(meeting)}
+      group("Meeting") {
+        derive viewRows from meeting for (employee, employeePreparation, managerPreparation, report, comments, approved)
       }
     }
   }
 
   define page user(u : User) {
     output(u.name)
+  }
+
+  define page editUser(u : User) {
+    form {
+      table {
+        row { "Name: " input(u.name) }
+        row { "Manager: " input(u.manager) }
+        row { "Employees: " input(u.employees) }
+      }
+      action("Save", save())
+
+      action save() {
+        u.save();
+        return home();
+      }
+    }
   }
 
