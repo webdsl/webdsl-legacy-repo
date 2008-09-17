@@ -4,5 +4,5 @@ default : read-imports.ctree .seamapp
 	webdsl clean build deploy
 
 %.ctree : %.str
-	strc -F -i $< -o $@ -la stratego-lib
+	strc -F --library -i $< -o $@ -la stratego-lib
 
