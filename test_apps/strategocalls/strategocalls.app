@@ -8,18 +8,18 @@ section pages
 
 function testSDF() : String {
   // Declare a new variable associated with the WebDSL.tbl parse table, and assign a string to it
-  var input : SDFInput<WebDSL>  := "application parseme";
+  var input : SDFInput<WebDSL>  := "application parseme" as SDFInput<WebDSL>;
   
   // Parse input
   var parsed : ATerm := input.parse();
-  var moduleName : String := parsed.get(0).toString();
+  var appName : String := parsed.get(0).toString();
   
-  return moduleName;
+  return appName;
 }
 
 function testSTR() : String {
   // Set-up
-  var input : SDFInput<WebDSL>  := "application parseme imports foo";
+  var input : SDFInput<WebDSL>  := "application parseme imports foo" as SDFInput<WebDSL>;
   var parsed : ATerm := input.parse();
   
   var importReader : Stratego := Stratego("read-imports");
@@ -34,9 +34,10 @@ define page home() {
   var str : String := testSTR();
 
   "stratego calls testing"    
-        
+  "sdf test appname: "     
   output(sdf)
   "-"
+  "str test module name: "
   output(str)
 }
 

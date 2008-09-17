@@ -7,6 +7,16 @@ signature constructors
   Imports : Term -> Term
 
 strategies
+ 
+  main =
+    // All externally invoked strategies must be listed here
+    // (or they may be optimized away)
+    ctree-include(read-import /* + ... */)
+  
+  ctree-include(s) =
+    id <+ s
+
+strategies
 
   read-import =
     oncetd(?Imports(x)); !x
