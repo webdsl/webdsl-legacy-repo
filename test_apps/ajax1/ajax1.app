@@ -14,17 +14,89 @@ section the pages
     block("body"){
       block("left_innerbody"){ sidebar() }
       block("main_innerbody"){ 
-        section{ "Welcome to the example application which manages users and documents." }
-        section{ "The supported operations are creation, viewing, and editing." }
-        login()
-        logout()
+        for(document: Document) {
+           block [onclick:= detailclick(document)] {
+             output(document.title) "click to view details"
+           } 
+        }
+        block[id:="details"] {
+            "nothing selected"
+        }
       }
     }
+    action detailclick(document: Document) {
+      replace details << ajaxDocument(document);
+    }    
   }
 
+  define editableRow(document: Document)
+  {
+    block [onclick:= editdetailclick(document)] {
+      output(document.title) "[click to edit title]"
+    } 
+    action editdetailclick(document: Document)	{
+      replace this << editRow(document);
+    }
+    spacer
+  }
+  
+  define editRow(document: Document)
+  {
+    block {
+      form {
+        "new title: "
+        input(document.title)
+        action("save", save())
+        actionLink("cancel", cancel())
+      }
+      action cancel(){
+          replace this <<  editableRow(document);
+      }
+      action save(){
+          document.save();
+          replace this <<  editableRow(document);
+          replace sidebar << sidebar();
+          return; //should make no difference here, but fail neither
+      }
+    }
+    spacer
+  }
+
+  define page home2() {
+    block("top"){ top() }
+    block("body"){
+      block("left_innerbody")[id := "sidebar"]{ sidebar() }
+      block("main_innerbody"){
+        for(document: Document) {
+          editableRow(document)
+        }
+      }       
+    }
+  }
+  
 
   define page editDocument(document:Document){
-    derive editPage from document
+   derive editPage from document
+  }
+
+  define ajaxDocument(document:Document){
+    block[onclick := thisreplace(document)] { 
+      "[Click me to see text]" 
+      spacer       
+      output(document.author.name)
+    }
+    action thisreplace(document : Document) {
+      replace this << ajaxDocumentWithText(document);
+    }    
+  }
+  
+  define ajaxDocumentWithText(document:Document){
+      block{ 
+      output(document.text) 
+      spacer       
+      output(document.author.name)
+    }
+
   }
   
   define page document(document: Document){
@@ -41,42 +113,30 @@ section the pages
           {
             row{ "Author:" 
                output(document.author.name)
-               event onclick { left_innerbody testtemplate(document.author)}
             }
-            row{ "" 
-                navigate(editDocument(document)){"[edit this using the cool new ajax feature]"} 
+            row{
+              block[id:="myfirstdynamicrow"]{
+                block[onclick := myfirstonclick(document)]{ 
+                  "[edit this using the cool new ajax feature]"
+                }  
+              }
             }
           }     
-        }
+        }        
       }
     }
+    action myfirstonclick(document: Document)
+    {
+      replace myfirstdynamicrow << ajaxDocument(document);
+    }
   }//page doc
-  
-  define testtemplate(u:User){
-    header{"User: "}
-    output(u.name)
-    output(u.password)
-  }
-
   
   define page createDocument(){
     var document: Document := Document {}
     derive createPage from document
   }
 
-  define page user(u:User) {
-    derive viewPage from u
-  }
-  
-  define page editUser(u: User){
-    derive editPage from u
-  }
-  
-  define page createUser() {
-    var u: User := User {}
-    derive createPage from u
-  }
-   
+ 
   define main() 
   {
     block("top"){ top() }
@@ -98,6 +158,12 @@ section the pages
   define sidebar(){
     list{
       listitem{ navigate(home()){ output("home") }}
+      listitem{ navigate(home2()){ output("even more ajax home") }}
+      spacer
+      "documents: "
+      for (document: Document) {
+        navigate(document(document)) { output (document.title) }
+      }
     }
   }
   
@@ -116,19 +182,6 @@ section the pages
       }
     }    
     menu{ menuheader{ navigate(createDocument()){ output("New document") }}}  
-    menu{
-      menuheader{ "View User" }
-      for(u:User){
-        menuitem{ navigate(user(u)){ output(u.name) }}
-      }
-    }
-    menu{
-      menuheader{"Edit User"}
-      for(u:User){
-        menuitem{ navigate(editUser(u)){ output(u.name) }}
-      }
-    }    
-    menu{ menuheader{ navigate(createUser()){ output("New user") }}}  
   }
 
   
