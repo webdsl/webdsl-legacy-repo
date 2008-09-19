@@ -137,3 +137,16 @@ section pages
     }
   }
 
+  define newUserForm() {
+    var u : User := User{}
+    form {
+      input(u.username)
+      action("Create", create())
+
+      action create() {
+        u.save();
+        return home();
+      }
+    }
+  }
+
