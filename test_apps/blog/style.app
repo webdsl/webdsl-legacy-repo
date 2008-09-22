@@ -8,7 +8,7 @@ style globalStyle
   const globalFontSize : Length := 1em;//0.75em;
   const layoutBorderColor : Color := #c0c0c0;
 
-  template main() {
+  main() {
     width := 800px;
     align := Align.center;
     padding-top := 4px;
@@ -70,47 +70,52 @@ style globalStyle
 
 style templateStyle
 
-  const layoutBorderColor : Color := #c0c0c0;
-  const globalFont : Font := Font.Gill.Sans; //Font.Lucida.Grande;
   //Gill Sans','Gill Sans MT','Ikarius ADF',Candara
 
   /*
-  template topmenu() {
+  topmenu() {
     width := 100%;
     margin-bottom := 1em;
   }
   */
   
-  template top() {
+  top() {
     background-color := Color.white;
     width := 100%;
+    font-size := 100px;
   }
   
-  template top() >> .logos {
-    width := 20em;
+  /*
+  top() >> .logos {
+    //width := 20em;
+    //height := 100px;
+    font-size := 100px;
   }
+  */
   
-  template top() > .logo_area {
+  /*
+  top() > .logo_area {
     width := 100%;
     align := Align.center;
   }
+  */
 
-  template sidebar() {
+  sidebar() {
   	width := 12em;
   	padding := 1em;
   }
 
-  template sidebar() >> list() {
+  sidebar() >> list() {
     orientation := Orientation.vertical;
     separator := Separator.none;
   }
 
 
-  template main() > body() {
+  main() > body() {
     width := 80%;
   }
   
-  template body() {
+  body() {
     padding := 1em;
     /*
    	border-left-color := layoutBorderColor;
@@ -119,7 +124,7 @@ style templateStyle
     */
   }
 
-  template footer() {
+  footer() {
     background-color := Color.white;
     border-top-width := 1px;
     border-top-color := layoutBorderColor;
@@ -129,18 +134,18 @@ style templateStyle
   }
   
     /*
-  template displayPost(p : Post) {
+  displayPost(p : Post) {
     border-width := 1px;
     border-color := layoutBorderColor;
     border-style := BorderStyle.solid;
   }
     */
 
-  template displayPost(p : Post) >> header() {
+  displayPost(p : Post) >> header() {
     font-size := 1.3em;
   }
 
-  template displayPost(p : Post) >> header() > navigate() {
+  displayPost(p : Post) >> header() > navigate() {
     font-line := Line.none;
     font-color := Color.black;
   }
@@ -197,19 +202,19 @@ style formStyle
 
 style footerStyle
 
-  template footer() >> .footer_text {
+  footer() >> .footer_text {
     align := Align.right;
   }
   
-  template footer() >> .footer_links {
+  footer() >> .footer_links {
     align := Align.left;
   }
 
-  template footer() >> navigate() {
+  footer() >> navigate() {
     font-size := 1.0em;
   }
   
-  template footer() >> list() {
+  footer() >> list() {
     orientation := Orientation.horizontal;
     separator := Separator.pipe;
     spacing := 2em; 

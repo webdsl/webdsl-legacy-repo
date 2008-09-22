@@ -2,17 +2,19 @@ module layout
 
 layout
 
-  template main() {
+  main() {
     top();
     mainbody: [ sidebar() | body() ];
     footer();
   }
   
-  template top() {
+  /*
+  top() {
     logo_area: [ logos | text ];
   }
+  */
   
-  template footer() {
+  footer() {
     f: [ footer_links | footer_text ];
   }
   

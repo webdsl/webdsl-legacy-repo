@@ -67,16 +67,17 @@ section basic page elements.
   }
 
   define top() {
-    block("logos") {
-      image("/images/logo.png")
-    }
-    block("text") {
-      if(securityContext.loggedIn) {
-        section {
-          "Logged in as " output(securityContext.principal)
-        }
-      }
-    }
+    //block("logos") {
+      "Zef.me"
+      //image("/images/logo.png")
+    //}
+    ////block("text") {
+      ////if(securityContext.loggedIn) {
+        //section {
+          //"Logged in as " output(securityContext.principal)
+        ////}
+      //}
+    //}
   }
 
   define body() {
