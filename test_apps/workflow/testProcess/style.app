@@ -24,7 +24,7 @@ style globalStyle
   }
   
   table() {
-  	font := globalFont;
+    font := globalFont;
     font-size := globalFontSize;
   }
   
@@ -69,47 +69,44 @@ style globalStyle
 
 style templateStyle
 
-  const layoutBorderColor : Color := #c0c0c0;
-  const globalFont : Font := Font.Lucida.Grande;
-
-  template topmenu() {
+  topmenu() {
     width := 100%;
     margin-bottom := 1em;
   }
   
-  template top() {
+  top() {
     background-color := Color.white;
     width := 100%;
   }
   
-  template top() >> .logos {
+  top() >> .logos {
     width := 25em;
   }
   
-  template top() > .logo_area {
+  top() > .logo_area {
     width := 80%;
     align := Align.center;
   }
   
-  template main() > .mainbody {
+  main() > .mainbody {
     width := 80%;
     align := Align.center;
     padding-top := 4px;
   }
   
-  template sidebar() {
-  	width := 15em;
-  	padding := 1em;
+  sidebar() {
+    width := 15em;
+    padding := 1em;
   }
   
-  template body() {
+  body() {
     padding := 1em;
-   	border-left-color := layoutBorderColor;
-  	border-left-style := BorderStyle.solid;
-  	border-left-width := 1px;
+    border-left-color := layoutBorderColor;
+    border-left-style := BorderStyle.solid;
+    border-left-width := 1px;
   }
 
-  template footer() {
+  footer() {
     background-color := Color.white;
     border-top-width := 1px;
     border-top-color := layoutBorderColor;
@@ -120,21 +117,6 @@ style templateStyle
     margin-top := topmenu().margin-bottom;
   }
   
-/*  template output(c : List<Specialty>) >> list() {
-    orientation := Orientation.horizontal;
-    separator := Separator.comma;
-    spacing-right := 0.2em;
-  }
-  
-  page allPet() >> list() {
-    orientation := Orientation.horizontal;
-    separator := Separator.comma;
-    spacing-right := 0.2em;
-  }
-  
-  page allOwner() >> ownerDetails(o : Owner) {
-    spacing-right := 4em;
-  }*/
 
 style formStyle
 
@@ -152,30 +134,14 @@ style formStyle
     background-color := #ccccff;
   }
   
-/*  page createOwner() >> group() >> label() {
-    align := Align.left;
-    width := labelWidth;
-  }*/
-  
 
-
-/*
-  width: 27.125em;#createOwner fieldset > ol.padding-left +			1  em = 16px
-  				  #createOwner fieldset > ol.padding-right +		1  em = 16px
-  				  #createOwner fieldset > ol label.margin-right +	1  em = 16px
-  				  #createOwner fieldset > ol label.width			8  em = 128px
-  				  ol input.width * ol input.font-size				16 em = 256px
-  				  2 * 1px input border								0.125 em = 2px
-  				  													==============
-  				  													27.125em  = 434px
-*/  
 
 style menuStyle
 
   const globalBorderColor : Color := #c0c0c0;
   const fontColor : Color := #505050;
 
-  template topmenu() {
+  topmenu() {
     background-color := #ffff00;
     image := url("images/menubar_bg.png");
     image-repeat := Repeat.horizontal;
@@ -184,18 +150,13 @@ style menuStyle
     border-style := BorderStyle.solid;
   }
 
-  template topmenu() >> menubar() {
+  topmenu() >> menubar() {
     width := 80%;
     align := Align.center;
   }
-/*  
-  template topmenu() >> menubar() > menu() > menuheader() {
-    border-right-color := globalBorderColor;
-    border-right-width := 1px;
-    border-right-style := BorderStyle.solid;
-  }
-*/  
-  template topmenu() >> menu() > menuheader() > navigate() {
+
+
+  topmenu() >> menu() > menuheader() > navigate() {
     padding := 0.3em;
     font := Font.Lucida.Grande; // | Font.Verdana | Font.sans-serif;
     font-color := fontColor;
@@ -203,26 +164,26 @@ style menuStyle
     font-line := Line.none;
   }
   
-  template topmenu() >> menu() >> navigate().hover {
+  topmenu() >> menu() >> navigate().hover {
     image := url("images/menubar_bg_hover.png");
     image-repeat := Repeat.horizontal;
   }
 
 style footerStyle
 
-  template footer() >> .footer_text {
+  footer() >> .footer_text {
     align := Align.right;
   }
   
-  template footer() >> .footer_links {
+  footer() >> .footer_links {
     align := Align.left;
   }
 
-  template footer() >> navigate() {
+  footer() >> navigate() {
     font-size := 1.0em;
   }
   
-  template footer() >> list() {
+  footer() >> list() {
     orientation := Orientation.horizontal;
     separator := Separator.pipe;
     spacing := 2em; // @todo: rename to spacing and set on listitem()??
