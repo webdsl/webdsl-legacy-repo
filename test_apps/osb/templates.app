@@ -34,7 +34,6 @@ section basic page elements.
   }
   
   define footer() {
-    "Standard footer"
   }
 
 

@@ -2,18 +2,18 @@ module style
 
 style navigationStyle
 
-  template topmenu() >> navigate() {
+  topmenu() >> navigate() {
     font-color := Color.white;
     font-line := Line.none;
   }
   
-  template mainNavigation() >> list() {
+  mainNavigation() >> list() {
     orientation := Orientation.horizontal;
     separator := Separator.none;
     spacing := 1em;
   }
   
-  template adminNavigation() >> list() {
+  adminNavigation() >> list() {
     orientation := (mainNavigation() >> list()).orientation;
     separator := (mainNavigation() >> list()).separator;
     spacing := (mainNavigation() >> list()).spacing;
@@ -71,17 +71,26 @@ style homeStyle
   }
   
   page home() >> form() > group() {
-    border-top-style := BorderStyle.none;
-    border-bottom-style := BorderStyle.none;
+    border-style := BorderStyle.none;
+    spacing := 0.2em;
+  }
+  
+  page home() >> form() > group() > groupitem() {
+    border-bottom-style := BorderStyle.solid;
+    border-bottom-width := 2px;
+    border-bottom-color := houseColor;
+    padding-top := 0.5em;
+    padding-bottom := 0.5em;
+    padding-right := 10em;
+  }
+  
+  page home() >> form() >> group() >> action() {
+    align := Align.left;
   }
 
 style templateStyle
 
-  const globalFont : Font := Font.Arial;
-  const globalFontSize : Length := 0.8em;
-  const houseColor : Color := #70630d;
-
-  template sidebarText() {
+  sidebarText() {
     background-color := #c0c0c0;
     font := globalFont;
     font-size := globalFontSize;
@@ -91,7 +100,7 @@ style templateStyle
     padding-bottom := 1em;
   }
   
-  template sidebarText()  > header() {
+  sidebarText()  > header() {
     font-color := houseColor;
     font := globalFont;
     font-size := 1.3em;

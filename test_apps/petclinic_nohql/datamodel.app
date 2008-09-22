@@ -42,7 +42,7 @@ section queries
     function searchOwner(searchString : String) : List<Owner> {
       var tempString : String := "%" + searchString + "%";
       var res : List<Owner> := List<Owner>();
-      for(o : Owner where o.name = searchString order by o.name desc) {
+      for(o : Owner where o.name == searchString order by o.name desc) {
         res.add(o);
       }
       return res;
