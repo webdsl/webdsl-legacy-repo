@@ -12,7 +12,7 @@ imports layout
 
 section pages
 
-define page home() {
+  define page home() {
     var customer : Customer;
 
 	main()

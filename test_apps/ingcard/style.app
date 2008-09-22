@@ -2,7 +2,7 @@ module style
 
 style menuStyle
 
-  template sideMenu() > list() {
+  sideMenu() > list() {
     orientation := Orientation.vertical;
     separator := Separator.none;
     align := Align.center;
@@ -10,11 +10,11 @@ style menuStyle
     spacing := 0.2em;
   }
   
-  template sideMenu() > list() > listitem() {
+  sideMenu() > list() > listitem() {
     background-color := #f95807;
   }
   
-  template sideMenu() > list() > listitem() > navigate() {
+  sideMenu() > list() > listitem() > navigate() {
     font-color := Color.white;
     font-line := Line.none;
   }
@@ -69,19 +69,27 @@ style homeStyle
     margin-top := 1em;
   }
   
+  page home() >> group() > groupitem() > label() {
+    align := Align.right;
+  }
+/*  
+  page home() >> group() > action() {
+    align := Align.right;
+  }
+  
   page home() >> form() > group() {
     border-top-style := BorderStyle.none;
     border-bottom-style := BorderStyle.none;
   }
-
+*/
 style templateStyle
 
-  template customerDetails(c : Customer) > group() {
+  customerDetails(c : Customer) > group() {
     width := 20em;
     background-color := #feece0;
   }
 
-  template customerDetails(c : Customer) > list() {
+  customerDetails(c : Customer) > list() {
     orientation := Orientation.horizontal;
     separator := Separator.tab;
     spacing := 1em;
@@ -89,6 +97,6 @@ style templateStyle
     margin-bottom := 1em;
   }
   
-  template customerDetails(c : Customer) > list() >> navigate() {
+  customerDetails(c : Customer) > list() >> navigate() {
     font-line := Line.none;
   }

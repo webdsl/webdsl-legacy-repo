@@ -37,17 +37,3 @@ section menus.
         listitem { navigate(home()) { "Letters" } }
     }
   }
-  
-section entity management.
-
-  define manageMenu() {}
-  
-  define page manage() {
-    main()
-    define sidebar() {}
-    define body() {
-      createMenu()
-      allMenu()
-    }
-  }
-
