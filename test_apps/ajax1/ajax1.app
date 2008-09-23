@@ -12,11 +12,11 @@ section the pages
   define page home(){
     block("top"){ top() }
     block("body"){
-      block("left_innerbody"){ sidebar() }
+      block("left_innerbody")[id := "sidebar"]{ sidebar() }
       block("main_innerbody"){ 
         for(document: Document) {
-           block [onclick:= detailclick(document)] {
-             output(document.title) "click to view details"
+           block [onclick:= @ replace details << @ \output(document.title) ] {
+               output(document.title) "click to view text"
            } 
         }
         block[id:="details"] {
@@ -24,8 +24,10 @@ section the pages
         }
       }
     }
+    //             output(document.title) "click to view details"
+    
     action detailclick(document: Document) {
-      replace details << ajaxDocument(document);
+      replace details << @ \output(document.text) ; // ajaxDocument(document);
     }    
   }
 
@@ -33,9 +35,15 @@ section the pages
   {
     block [onclick:= editdetailclick(document)] {
       output(document.title) "[click to edit title]"
+    }
+    block [onclick:= doubleme(document)] {
+      "[double me]"
     } 
     action editdetailclick(document: Document)	{
       replace this << editRow(document);
+    }
+    action doubleme(document: Document) {
+      append this << editableRow(document);
     }
     spacer
   }
@@ -170,6 +178,9 @@ section the pages
   define applicationmenu()
   {
     menu{
+      menuheader[onclick:=doubleSide()]{ "++"}
+      menuheader[onclick:=showSide()]{ "+"}
+      menuheader[onclick:=hideSide()]{ "-"} 
       menuheader{ "View Document" }
       for(d:Document){
         menuitem{ navigate(document(d)){ output(d.title) }}
@@ -178,13 +189,29 @@ section the pages
     menu{
       menuheader{ "Edit Document" }
       for(d:Document){
-        menuitem{ navigate(editDocument(d)){ output(d.title) }}
+        menuitem[onclick := gotoEditPage(d)]{ output(d.title) }
       }
     }    
-    menu{ menuheader{ navigate(createDocument()){ output("New document") }}}  
+    menu{ menuheader{ navigate(createDocument()){ output("New document") }}}
+    menu{ menuheader[onclick := restyle()] { "restyle" }}
+    action showSide() { visibility sidebar << "show"; }
+    action hideSide() { visibility sidebar << "hide"; }
+    action gotoEditPage(d: Document) { relocate to << editDocument(d); }
+    action doubleSide(){ append sidebar << sidebar(); } 
+    action restyle() { restyle sidebar << "footer"; }  
   }
 
-  
+
+/*
+style mainStyle
+
+  template top() {
+    width := 100%;
+    background-color := #123456;
+    padding-top := 1em;
+    padding-bottom := 1em;
+  }
+  */
   
   
 
