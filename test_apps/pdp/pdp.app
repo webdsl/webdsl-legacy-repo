@@ -17,7 +17,7 @@ section procedures
 
   auto procedure startWf(p : Meeting) {
     process {
-      (employeeFillInForm(p) and managerFillInForm(p));
+      (employeePrepare(p) and managerPrepare(p));
       repeat {
         writeReport(p);
         (approveReport(p) xor commentReport(p))
@@ -25,18 +25,18 @@ section procedures
     }
   }
 
-  procedure employeeFillInForm(p : Meeting) {
+  procedure employeePrepare(p : Meeting) {
     who { securityContext.principal == p.employee }
     view {
-      title{"Fill in employee form"}
+      title{"Fill in employee preparation"}
       derive procedurePage from p for (employeePreparation)
     }
   }
 
-  procedure managerFillInForm(p : Meeting) {
+  procedure managerPrepare(p : Meeting) {
     who { securityContext.principal == p.employee.manager }
     view {
-      title{"Fill in manager form"}
+      title{"Fill in manager preparation"}
       derive procedurePage from p for (managerPreparation)
     }
   }

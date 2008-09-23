@@ -60,7 +60,7 @@ style globalStyle
   group() {
     font := globalFont;
     font-size := 1em;
-    width := 40em;
+    width := 45em;
   }
   
   /*
