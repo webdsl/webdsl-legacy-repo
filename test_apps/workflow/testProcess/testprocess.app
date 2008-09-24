@@ -55,12 +55,18 @@ section procedures
       p.persist();
     }
     process {
-      (employeeFillInForm(p) and managerFillInForm(p));
+      if (true) {
+        employeeFillInForm(p)
+      } else {
+        managerFillInForm(p)
+      }
+      
+/*      (employeeFillInForm(p) and managerFillInForm(p));
       repeat {
         writeReport(p);
         approveReport(p)
       } until finalizeReport(p)
-    }
+*/    }
   }
   
   procedure employeeFillInForm(p : PdpMeeting) {
@@ -127,6 +133,18 @@ section procedures
         title{"Fill proc2 for " text(t.name)}
         header{"Fill proc2 for " text(t.name)}
       }
+    }
+  }
+  
+  auto procedure testNogEen(t : TestDinges) {
+    process {
+      nogEen(t)
+    }
+  }
+  
+  procedure nogEen(t : TestDinges) {
+    view {
+      derive procedurePage from t for (proc2Text)
     }
   }
   
