@@ -2,9 +2,10 @@ module layout
 
 layout
 
+/* nobody uses it yet
   page home() {
     top();
-    menu: [ topmenu() | quickadd() | quickfind() ];
+    top_contents: [ topmenu() | quicksearch() ];
     main();
     footer();
   }
@@ -21,4 +22,4 @@ layout
     main_contents: [ folders() | notes() | details() ];
   }
   
-  
+  */

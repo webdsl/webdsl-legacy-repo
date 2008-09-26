@@ -8,12 +8,12 @@ section base example data
     details 	:: String
     finished 	:: Bool
     urgent 		:: Bool
-    folder		-> Folder 
+    folder		-> Folder (inverse = Folder.notes)
   }
 
   entity Folder
   {
     name 				:: String
     description :: String
-    notes 			<> List<Note> (inverse = Note.folder)
+    notes 			<> List<Note>  
   }
