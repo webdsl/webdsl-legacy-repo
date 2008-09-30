@@ -12,14 +12,29 @@ description {
 
 section pages
 
-
   define quicksearch() {
-    var search : String
+    var search : String := "";
     form {
-      input(search)
+      "quicksearch: " 
+      input(search)[
+        onkeyup := updatesearch(search)
+      ]
     }  	
+    action updatesearch(val: String) {
+      clear notelist << "this is just to not break parsing";
+      append notelist << @ { "searched " output(val) spacer };
+      for(n : Note) {
+        if (n.name.contains(val))	{
+          append notelist <<	displayNote(n);
+        }
+      }
+    }
   }
 
+
+  define quicksearchitem(n: Note) {
+    block { output(n.name) output(n.details) }
+  }
   
   define folders() {
     list {
