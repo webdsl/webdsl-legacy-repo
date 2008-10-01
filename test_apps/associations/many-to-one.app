@@ -27,6 +27,31 @@ entity Upet {
    owner -> Uperson
 }
 
+define page editPerson(a:Person){
+  derive editPage from a
+}
+define page editPet(a:Pet){
+  derive editPage from a
+}
+define page editUperson(a:Uperson){
+  derive editPage from a
+}
+define page editUpet(a:Upet){
+  derive editPage from a
+}
+define page person(a:Person){
+  derive viewPage from a
+}
+define page pet(a:Pet){
+  derive viewPage from a
+}
+define page uperson(a:Uperson){
+  derive viewPage from a
+}
+define page upet(a:Upet){
+  derive viewPage from a
+}
+
 globals {
 
   var pet1 : Pet := Pet {
@@ -90,7 +115,7 @@ define page manytoone() {
       header() { "Pets" }
       list {
         for(p : Pet) {
-          listitem { navigate(editPet(p)) { output(p.name) } }
+          listitem { navigate(editPet(p)) { output(p.name) output(p.owner) } }
         }
       }
     }
@@ -99,7 +124,7 @@ define page manytoone() {
       header() { "Persons" }
       list {
         for(p : Person) {
-          listitem { navigate(editPerson(p)) { output(p.name) } }
+          listitem { navigate(editPerson(p)) { output(p.name) output(p.pets) } }
         }
       }
     }
@@ -113,7 +138,7 @@ define page umanytoone() {
       header() { "Pets" }
       list {
         for(p : Upet) {
-          listitem { navigate(editUpet(p)) { output(p.name) } }
+          listitem { navigate(editUpet(p)) { output(p.name) output(p.owner) } }
         }
       }
     }

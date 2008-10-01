@@ -49,8 +49,8 @@ section entity management.
     main()
     define sidebar() {}
     define body() {
-      createMenu()
-      allMenu()
+      //createMenu()
+      //allMenu()
     }
   }
 

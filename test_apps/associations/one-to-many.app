@@ -18,13 +18,38 @@ entity Uompet {
 
 entity Omperson {
   name :: String (name)
-  pets -> Set<Ompet> //(inverse=Ompet.owner)
+  pets -> Set<Ompet> //old(inverse=Ompet.owner)
 }
 
 entity Ompet {
    name :: String (name)
    species :: String
    owner -> Omperson (inverse=Omperson.pets)
+}
+
+define page editUomperson(a:Uomperson){
+  derive editPage from a
+}
+define page editUompet(a:Uompet){
+  derive editPage from a
+}
+define page editOmperson(a:Omperson){
+  derive editPage from a
+}
+define page editOmpet(a:Ompet){
+  derive editPage from a
+}
+define page uompersion(a:Uomperson){
+  derive viewPage from a
+}
+define page uompet(a:Uompet){
+  derive viewPage from a
+}
+define page omperson(a:Omperson){
+  derive viewPage from a
+}
+define page ompet(a:Ompet){
+  derive viewPage from a
 }
 
 globals {
@@ -91,7 +116,7 @@ define page onetomany() {
       header() { "Pets" }
       list {
         for(p : Ompet) {
-          listitem { navigate(editOmpet(p)) { output(p.name) } }
+          listitem { navigate(editOmpet(p)) { output(p.name) output(p.owner) } }
         }
       }
     }
@@ -100,7 +125,7 @@ define page onetomany() {
       header() { "Persons" }
       list {
         for(p : Omperson) {
-          listitem { navigate(editOmperson(p)) { output(p.name) } }
+          listitem { navigate(editOmperson(p)) { output(p.name) output(p.pets) } }
         }
       }
     }
@@ -123,7 +148,7 @@ define page uonetomany() {
       header() { "Persons" }
       list {
         for(p : Uomperson) {
-          listitem { navigate(editUomperson(p)) { output(p.name) } }
+          listitem { navigate(editUomperson(p)) { output(p.name) output(p.pets) } }
         }
       }
     }

@@ -25,6 +25,27 @@ entity Ubook {
    authors -> Set<Uauthor>
 }
 
+define page editAuthor(a:Author){
+  derive editPage from a
+}
+define page editBook(a:Book){
+  derive editPage from a
+}
+define page editUauthor(a:Uauthor){
+  derive editPage from a
+}
+define page editUbook(a:Ubook){
+  derive editPage from a
+}
+define page author(a:Author){
+  derive viewPage from a
+}
+define page book(a:Book){
+  derive viewPage from a
+}
+define page uauthor(a:Uauthor){
+  derive viewPage from a
+}
 globals {
   var zef : Author := Author {
     name := "Zef"
@@ -70,13 +91,18 @@ globals {
 section pages
 
 define page manytomany() {
+  action test(){
+    book1.authors.add(zef);
+  }
+  
   main()
+  
   define body() {
     div("div1") {
       header() { "Books" }
       list {
         for(p : Book) {
-          listitem { navigate(editBook(p)) { output(p.title) } }
+          listitem { navigate(editBook(p)) { output(p.title) output(p.authors) } }
         }
       }
     }
@@ -85,7 +111,7 @@ define page manytomany() {
       header() { "Authors" }
       list {
         for(p : Author) {
-          listitem { navigate(editAuthor(p)) { output(p.name) } }
+          listitem { navigate(editAuthor(p)) { output(p.name) output(p.books)} }
         }
       }
     }
@@ -99,7 +125,7 @@ define page umanytomany() {
       header() { "Books" }
       list {
         for(p : Ubook) {
-          listitem { navigate(editUbook(p)) { output(p.title) } }
+          listitem { navigate(editUbook(p)) { output(p.title) output(p.authors)} }
         }
       }
     }
