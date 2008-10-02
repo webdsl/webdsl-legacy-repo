@@ -7,6 +7,15 @@ section data model
     name     :: String
     password :: Secret
     manager  -> User
+    
+    function isValuer() : Bool {
+      for(v : Valuer) {
+        if (v.user == this) {
+          return true;
+        }
+      }
+      return false;
+    }
   }
   
 /**
@@ -159,10 +168,15 @@ section data model
     valuation -> Valuation
   }
   
+  entity Valuer {
+    user -> User
+  }
+  
   entity Valuation {
     valuationRequest -> ValuationRequest
     number :: Int
     name :: String := this.valuationRequest.fullAddress + " Valuation"
+    valuer -> Valuer
     invoices -> Set<Invoice> (inverse=Invoice.valuation)
     
     // Property Summary
@@ -254,3 +268,7 @@ section data model
     comparison -> ComparisonValue
   }
 
+  entity Authorization {
+    right :: String
+    user -> User
+  }

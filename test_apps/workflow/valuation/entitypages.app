@@ -34,6 +34,7 @@ section value pages
   define page valuation(object : Valuation) { derive viewPage from object }
   define page comparisonValue (object : ComparisonValue) { derive viewPage from object }
   define page salesEvidence (object : SalesEvidence) { derive viewPage from object }
+  define page valuer (object : Valuer) { derive viewPage from object }
   define page allComparisonValue() {
     main()
     define body() {

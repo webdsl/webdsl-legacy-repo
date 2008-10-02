@@ -3,16 +3,15 @@ module init
 section user data
 
   globals {
-    var aManager : User := User {
-      username := "manager",
-      name     := "Joe Manager",
+    var userLiming : User := User {
+      username := "liming",
+      name     := "Liming Zhu",
       password := "secret"
     };
-    var aUser : User := User {
-      username := "user",
-      name     := "Joe User",
-      password := "secret",
-      manager  := aManager
+    var userRuben : User := User {
+      username := "ruben",
+      name     := "Ruben Verhaaf",
+      password := "secret"
     };
   }
   
@@ -237,4 +236,17 @@ section value data
     var initComparisonValue3 : ComparisonValue := ComparisonValue { name := "Superior" };
   }
   
+  globals {
+    var valuerLiming : Valuer := Valuer { user := userLiming };
+    var valuerRuben : Valuer := Valuer { user := userRuben };
+  }
   
+  globals {
+    var initValuationRequest1 : ValuationRequest := ValuationRequest { address := "1/13 O Brien Street" suburb := "Bondi Beach" postCode := initPostCode1 state := initStateValue1 };
+    var initValuation1 : Valuation := Valuation { valuationRequest := initValuationRequest1 number := 228320 valuer := valuerRuben };
+    var initInvoice1 : Invoice := Invoice { valuation := initValuation1 number := 34987 };
+
+    var initValuationRequest2 : ValuationRequest := ValuationRequest { address := "13 Garden Street" suburb := "Eveleigh" postCode := initPostCode3 state := initStateValue1 };
+    var initValuation2 : Valuation := Valuation { valuationRequest := initValuationRequest2 number := 219320 valuer := valuerLiming };
+    var initInvoice2 : Invoice := Invoice { valuation := initValuation2 number := 53453 };
+  }
