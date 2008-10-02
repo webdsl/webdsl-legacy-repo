@@ -17,12 +17,12 @@ section data model
     report :: Text
   }
   
-  entity TestDinges {
+  entity TestRecursive {
     name :: String
     comments :: String
     proc1Text :: String
     proc2Text :: String
-    child -> TestDinges
+    child -> TestRecursive
   }
 
   

@@ -13,7 +13,7 @@ imports style
 
 section procedures
 
-/*  auto procedure testWorkflow(p : PdpMeeting) {
+/*  auto procedure pdpWorkflow(p : PdpMeeting) {
     process {
       (employeeFillInForm(p) and managerFillInForm(p));
       repeat {
@@ -23,7 +23,7 @@ section procedures
     }
   }*/
 
-/*  auto procedure testWorkflow(p : PdpMeeting) {
+/*  auto procedure pdpWorkflow(p : PdpMeeting) {
     process {
       (employeeFillInForm(p) ; managerFillInForm(p))
       +
@@ -31,7 +31,7 @@ section procedures
     }
   }*/
 
-/*  auto procedure testWorkflow(p : PdpMeeting) {
+/*  auto procedure pdpWorkflow(p : PdpMeeting) {
     process {
       while (p.report != "Dude") {
         writeReport(p) ; managerFillInForm(p)
@@ -39,7 +39,7 @@ section procedures
     }
   }*/
   
-/*  auto procedure testWorkflow(p : PdpMeeting) {
+/*  auto procedure pdpWorkflow(p : PdpMeeting) {
     process {
       writeReport(p) ; 
       if (p.report != "Dude") {
@@ -49,24 +49,18 @@ section procedures
   }*/
 
 
-  procedure testWorkflow(p : PdpMeeting) {
+  procedure pdpWorkflow(p : PdpMeeting) {
     do {
       p.report := "Kanarie";
       p.persist();
     }
     process {
-      if (true) {
-        employeeFillInForm(p)
-      } else {
-        managerFillInForm(p)
-      }
-      
-/*      (employeeFillInForm(p) and managerFillInForm(p));
+      (employeeFillInForm(p) and managerFillInForm(p));
       repeat {
         writeReport(p);
         approveReport(p)
-      } until finalizeReport(p)
-*/    }
+      } until {finalizeReport(p)}
+    }
   }
   
   procedure employeeFillInForm(p : PdpMeeting) {
@@ -108,17 +102,17 @@ section procedures
     who { securityContext.principal == p.employee }
   }
   
-  auto procedure testDingesWorkflow(t : TestDinges) {
+  auto procedure testRecursiveWorkflow(t : TestRecursive) {
     process {
       proc1(t)
       ; if (t.child != null) {
-          testDingesWorkflow(t.child)
+          testRecursiveWorkflow(t.child)
         }
       ; proc2(t)
     }
   }
   
-  procedure proc1(t : TestDinges) {
+  procedure proc1(t : TestRecursive) {
     view {
       derive procedurePage from t for (proc1Text) {        
         title{"Fill proc1 for " text(t.name)}
@@ -127,7 +121,7 @@ section procedures
     }
   }
   
-  procedure proc2(t : TestDinges) {
+  procedure proc2(t : TestRecursive) {
     view {
       derive procedurePage from t for (proc2Text) {
         title{"Fill proc2 for " text(t.name)}
@@ -135,23 +129,12 @@ section procedures
       }
     }
   }
-  
-  auto procedure testNogEen(t : TestDinges) {
-    process {
-      nogEen(t)
-    }
-  }
-  
-  procedure nogEen(t : TestDinges) {
-    view {
-      derive procedurePage from t for (proc2Text)
-    }
-  }
+      
   
 section pages
 
   globals {
-    var test3: TestDinges;
+    var test3: TestRecursive;
   }
 
   define body() {}
@@ -167,23 +150,27 @@ section pages
           action("Quick start", quickStart())
         
           action quickStart() {
-            test3 := newTestDinges();
+/*            test3 := newTestRecursive();
             test3.name := "Bovenste";
-            test3.child := newTestDinges();
+            test3.child := newTestRecursive();
             test3.child.name := "Middelste";
-            test3.child.child := newTestDinges();
+            test3.child.child := newTestRecursive();
             test3.child.child.name := "Onderste";
             test3.child.child.persist();
             test3.child.persist();
             test3.persist();
-            test3.testDingesWorkflow.enable();
+            test3.testRecursiveWorkflow.enable();*/
             
             var p : PdpMeeting := newPdpMeeting();
             p.employee := aUser;
             p.persist();
-            p.testWorkflow.enable();
+            p.pdpWorkflow.enable();
             
-            return message("Tests gestart");
+            if (securityContext.loggedIn) {
+              return message("Workflows started!");
+            } else {
+              return signin();
+            }
           }
         }
       }
@@ -195,12 +182,16 @@ section pages
           action("Organize", organize())
 
           action organize() {
-/*            var p : PdpMeeting := newPdpMeeting();
+            var p : PdpMeeting := newPdpMeeting();
             p.employee := employee;
             p.persist();
-            p.testWorkflow.enable();
-*/            // Test stuff
-            return message("Done!");
+            p.pdpWorkflow.enable();
+
+            if (securityContext.loggedIn) {
+              return message("Workflows started!");
+            } else {
+              return signin();
+            }
           }
         }
       }
@@ -221,7 +212,7 @@ access control rules
   rule page pdpMeeting(pdpMeeting : PdpMeeting) {
     securityContext.principal == pdpMeeting.employee || securityContext.principal == pdpMeeting.employee.manager
   }
-  rule page testDinges(t : testDinges) {
+  rule page testRecursive(t : testRecursive) {
     true
   }
     
@@ -234,7 +225,7 @@ section pages
   define page user(u : User) {
     derive viewPage from u
   }
-  define page testDinges(t : TestDinges) {
+  define page testRecursive(t : TestRecursive) {
     derive procedureViewPage from t
   }
 

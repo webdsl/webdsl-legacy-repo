@@ -4,187 +4,197 @@ section  access denied page. .
 
   function genpagepredicatecombined0 ( ) : Bool
   {
-    return genpagepredicate0() && genpagepredicate13();
+    return genpagepredicate0() && genpagepredicate14();
   }
 
   function genpagepredicatecombined1 ( ) : Bool
   {
-    return genpagepredicate13();
+    return genpagepredicate14();
   }
 
   function genpagepredicatecombined2 ( ) : Bool
   {
-    return genpagepredicate13();
+    return genpagepredicate14();
   }
 
   function genpagepredicatecombined3 ( ) : Bool
   {
-    return genpagepredicate13();
+    return genpagepredicate14();
   }
 
   function genpagepredicatecombined4 ( ) : Bool
   {
-    return genpagepredicate13();
+    return genpagepredicate14();
   }
 
   function genpagepredicatecombined5 ( ) : Bool
   {
-    return genpagepredicate13();
+    return genpagepredicate14();
   }
 
-  function genpagepredicatecombined6 ( s12 : ProcedureStatus ) : Bool
+  function genpagepredicatecombined6 ( s13 : ProcedureStatus ) : Bool
   {
-    return genpagepredicate13();
+    return genpagepredicate14();
   }
 
   function genpagepredicatecombined7 ( ) : Bool
   {
-    return genpagepredicate13();
+    return genpagepredicate14();
   }
 
   function genpagepredicatecombined8 ( msg2 : String ) : Bool
   {
-    return genpagepredicate13();
+    return genpagepredicate14();
   }
 
   function genpagepredicatecombined9 ( msg3 : String ) : Bool
   {
-    return genpagepredicate13();
+    return genpagepredicate14();
   }
 
-  function genpagepredicatecombined10 ( s13 : IfProc0ProcedureStatus ) : Bool
+  function genpagepredicatecombined10 ( s14 : XorProc0ProcedureStatus ) : Bool
   {
-    return genpagepredicate13();
+    return genpagepredicate14();
   }
 
-  function genpagepredicatecombined11 ( p35 : PdpMeeting ) : Bool
+  function genpagepredicatecombined11 ( p59 : PdpMeeting ) : Bool
   {
-    return genpagepredicate11(p35) && genpagepredicate13();
+    return genpagepredicate12(p59) && genpagepredicate14();
   }
 
-  function genpagepredicatecombined12 ( s14 : TestWorkflowProcedureStatus ) : Bool
+  function genpagepredicatecombined12 ( s15 : RepeatUntilProc0ProcedureStatus ) : Bool
   {
-    return genpagepredicate13();
+    return genpagepredicate14();
   }
 
-  function genpagepredicatecombined13 ( s15 : EmployeeFillInFormProcedureStatus ) : Bool
+  function genpagepredicatecombined13 ( p60 : PdpMeeting ) : Bool
   {
-    return genpagepredicate13();
+    return genpagepredicate11(p60) && genpagepredicate14();
   }
 
-  function genpagepredicatecombined14 ( s16 : ManagerFillInFormProcedureStatus ) : Bool
+  function genpagepredicatecombined14 ( s16 : PdpWorkflowProcedureStatus ) : Bool
   {
-    return genpagepredicate13();
+    return genpagepredicate14();
   }
 
-  function genpagepredicatecombined15 ( s17 : WriteReportProcedureStatus ) : Bool
+  function genpagepredicatecombined15 ( s17 : EmployeeFillInFormProcedureStatus ) : Bool
   {
-    return genpagepredicate13();
+    return genpagepredicate14();
   }
 
-  function genpagepredicatecombined16 ( s18 : FinalizeReportProcedureStatus ) : Bool
+  function genpagepredicatecombined16 ( s18 : ManagerFillInFormProcedureStatus ) : Bool
   {
-    return genpagepredicate13();
+    return genpagepredicate14();
   }
 
-  function genpagepredicatecombined17 ( s19 : ApproveReportProcedureStatus ) : Bool
+  function genpagepredicatecombined17 ( s19 : WriteReportProcedureStatus ) : Bool
   {
-    return genpagepredicate13();
+    return genpagepredicate14();
   }
 
-  function genpagepredicatecombined18 ( s20 : IfProc1ProcedureStatus ) : Bool
+  function genpagepredicatecombined18 ( s20 : FinalizeReportProcedureStatus ) : Bool
   {
-    return genpagepredicate13();
+    return genpagepredicate14();
   }
 
-  function genpagepredicatecombined19 ( t19 : TestDinges ) : Bool
+  function genpagepredicatecombined19 ( s21 : ApproveReportProcedureStatus ) : Bool
   {
-    return genpagepredicate10(t19) && genpagepredicate13();
+    return genpagepredicate14();
   }
 
-  function genpagepredicatecombined20 ( s21 : TestDingesWorkflowProcedureStatus ) : Bool
+  function genpagepredicatecombined20 ( s22 : IfProc0ProcedureStatus ) : Bool
   {
-    return genpagepredicate13();
+    return genpagepredicate14();
   }
 
-  function genpagepredicatecombined21 ( s22 : Proc1ProcedureStatus ) : Bool
+  function genpagepredicatecombined21 ( t19 : TestRecursive ) : Bool
   {
-    return genpagepredicate13();
+    return genpagepredicate10(t19) && genpagepredicate14();
   }
 
-  function genpagepredicatecombined22 ( s23 : Proc2ProcedureStatus ) : Bool
+  function genpagepredicatecombined22 ( s23 : TestRecursiveWorkflowProcedureStatus ) : Bool
   {
-    return genpagepredicate13();
+    return genpagepredicate14();
   }
 
-  function genpagepredicatecombined23 ( p36 : PdpMeeting ) : Bool
+  function genpagepredicatecombined23 ( s24 : Proc1ProcedureStatus ) : Bool
   {
-    return genpagepredicate1(p36) && genpagepredicate13();
+    return genpagepredicate14();
   }
 
-  function genpagepredicatecombined24 ( p37 : PdpMeeting ) : Bool
+  function genpagepredicatecombined24 ( s25 : Proc2ProcedureStatus ) : Bool
   {
-    return genpagepredicate2(p37) && genpagepredicate13();
+    return genpagepredicate14();
   }
 
-  function genpagepredicatecombined25 ( p38 : PdpMeeting ) : Bool
+  function genpagepredicatecombined25 ( p61 : PdpMeeting ) : Bool
   {
-    return genpagepredicate3(p38) && genpagepredicate13();
+    return genpagepredicate1(p61) && genpagepredicate14();
   }
 
-  function genpagepredicatecombined26 ( p39 : PdpMeeting ) : Bool
+  function genpagepredicatecombined26 ( p62 : PdpMeeting ) : Bool
   {
-    return genpagepredicate4(p39) && genpagepredicate13();
+    return genpagepredicate2(p62) && genpagepredicate14();
   }
 
-  function genpagepredicatecombined27 ( p40 : PdpMeeting ) : Bool
+  function genpagepredicatecombined27 ( p63 : PdpMeeting ) : Bool
   {
-    return genpagepredicate5(p40) && genpagepredicate13();
+    return genpagepredicate3(p63) && genpagepredicate14();
   }
 
-  function genpagepredicatecombined28 ( p41 : PdpMeeting ) : Bool
+  function genpagepredicatecombined28 ( p64 : PdpMeeting ) : Bool
   {
-    return genpagepredicate6(p41) && genpagepredicate13();
+    return genpagepredicate4(p64) && genpagepredicate14();
   }
 
-  function genpagepredicatecombined29 ( t20 : TestDinges ) : Bool
+  function genpagepredicatecombined29 ( p65 : PdpMeeting ) : Bool
   {
-    return genpagepredicate7(t20) && genpagepredicate13();
+    return genpagepredicate5(p65) && genpagepredicate14();
   }
 
-  function genpagepredicatecombined30 ( t21 : TestDinges ) : Bool
+  function genpagepredicatecombined30 ( p66 : PdpMeeting ) : Bool
   {
-    return genpagepredicate8(t21) && genpagepredicate13();
+    return genpagepredicate6(p66) && genpagepredicate14();
   }
 
-  function genpagepredicatecombined31 ( t22 : TestDinges ) : Bool
+  function genpagepredicatecombined31 ( t20 : TestRecursive ) : Bool
   {
-    return genpagepredicate9(t22) && genpagepredicate13();
+    return genpagepredicate7(t20) && genpagepredicate14();
   }
 
-  function genpagepredicatecombined32 ( ) : Bool
+  function genpagepredicatecombined32 ( t21 : TestRecursive ) : Bool
   {
-    return genpagepredicate13();
+    return genpagepredicate8(t21) && genpagepredicate14();
   }
 
-  function genpagepredicatecombined33 ( ) : Bool
+  function genpagepredicatecombined33 ( t22 : TestRecursive ) : Bool
   {
-    return genpagepredicate13();
+    return genpagepredicate9(t22) && genpagepredicate14();
   }
 
-  function genpagepredicatecombined34 ( p44 : PdpMeeting ) : Bool
+  function genpagepredicatecombined34 ( ) : Bool
   {
-    return genpagepredicate13() && genpagepredicate14(p44);
+    return genpagepredicate14();
   }
 
-  function genpagepredicatecombined35 ( u1 : User ) : Bool
+  function genpagepredicatecombined35 ( ) : Bool
   {
-    return genpagepredicate13();
+    return genpagepredicate14();
   }
 
-  function genpagepredicatecombined36 ( t23 : TestDinges ) : Bool
+  function genpagepredicatecombined36 ( p70 : PdpMeeting ) : Bool
   {
-    return genpagepredicate13();
+    return genpagepredicate14() && genpagepredicate15(p70);
+  }
+
+  function genpagepredicatecombined37 ( u1 : User ) : Bool
+  {
+    return genpagepredicate14();
+  }
+
+  function genpagepredicatecombined38 ( t23 : TestRecursive ) : Bool
+  {
+    return genpagepredicate14();
   }
 
   function genpagepredicate0 ( ) : Bool
@@ -194,7 +204,7 @@ section  access denied page. .
 
   function genpagepredicate1 ( p : PdpMeeting ) : Bool
   {
-    return p != null && p.testWorkflow != null && true && p != null && p.testWorkflow != null && true && p != null && p.testWorkflow != null && true && p != null && p.testWorkflow != null && p.testWorkflow.isEnabled;
+    return p != null && p.pdpWorkflow != null && true && p != null && p.pdpWorkflow != null && true && p != null && p.pdpWorkflow != null && true && p != null && p.pdpWorkflow != null && p.pdpWorkflow.isEnabled;
   }
 
   function genpagepredicate2 ( p : PdpMeeting ) : Bool
@@ -222,37 +232,42 @@ section  access denied page. .
     return securityContext != null && securityContext.loggedIn && p != null && p.approveReport != null && true && securityContext != null && securityContext.loggedIn && p != null && p.approveReport != null && true && securityContext != null && securityContext.loggedIn && p != null && p.approveReport != null && securityContext != null && securityContext.loggedIn && p != null && securityContext.principal == p.employee && p != null && p.approveReport != null && p.approveReport.isEnabled;
   }
 
-  function genpagepredicate7 ( t : TestDinges ) : Bool
+  function genpagepredicate7 ( t : TestRecursive ) : Bool
   {
-    return t != null && t.testDingesWorkflow != null && true && t != null && t.testDingesWorkflow != null && true && t != null && t.testDingesWorkflow != null && true && t != null && t.testDingesWorkflow != null && true && t != null && t.testDingesWorkflow != null && t.testDingesWorkflow.isEnabled;
+    return t != null && t.testRecursiveWorkflow != null && true && t != null && t.testRecursiveWorkflow != null && true && t != null && t.testRecursiveWorkflow != null && true && t != null && t.testRecursiveWorkflow != null && true && t != null && t.testRecursiveWorkflow != null && t.testRecursiveWorkflow.isEnabled;
   }
 
-  function genpagepredicate8 ( t : TestDinges ) : Bool
+  function genpagepredicate8 ( t : TestRecursive ) : Bool
   {
     return t != null && t.proc1 != null && true && t != null && t.proc1 != null && true && t != null && t.proc1 != null && true && t != null && t.proc1 != null && true && t != null && t.proc1 != null && t.proc1.isEnabled;
   }
 
-  function genpagepredicate9 ( t : TestDinges ) : Bool
+  function genpagepredicate9 ( t : TestRecursive ) : Bool
   {
     return t != null && t.proc2 != null && true && t != null && t.proc2 != null && true && t != null && t.proc2 != null && true && t != null && t.proc2 != null && true && t != null && t.proc2 != null && t.proc2.isEnabled;
   }
 
-  function genpagepredicate10 ( t : TestDinges ) : Bool
+  function genpagepredicate10 ( t : TestRecursive ) : Bool
   {
-    return t != null && t.ifProc1 != null && true && t != null && t.ifProc1 != null && true && t != null && t.ifProc1 != null && true && t != null && t.ifProc1 != null && true && t != null && t.ifProc1 != null && true && t != null && t.ifProc1 != null && t.ifProc1.isEnabled;
+    return t != null && t.ifProc0 != null && true && t != null && t.ifProc0 != null && true && t != null && t.ifProc0 != null && true && t != null && t.ifProc0 != null && true && t != null && t.ifProc0 != null && true && t != null && t.ifProc0 != null && t.ifProc0.isEnabled;
   }
 
   function genpagepredicate11 ( p : PdpMeeting ) : Bool
   {
-    return p != null && p.ifProc0 != null && true && p != null && p.ifProc0 != null && true && p != null && p.ifProc0 != null && true && p != null && p.ifProc0 != null && true && p != null && p.ifProc0 != null && true && p != null && p.ifProc0 != null && p.ifProc0.isEnabled;
+    return p != null && p.repeatUntilProc0 != null && true && p != null && p.repeatUntilProc0 != null && true && p != null && p.repeatUntilProc0 != null && true && p != null && p.repeatUntilProc0 != null && true && p != null && p.repeatUntilProc0 != null && true && p != null && p.repeatUntilProc0 != null && p.repeatUntilProc0.isEnabled;
   }
 
-  function genpagepredicate12 ( ) : Bool
+  function genpagepredicate12 ( p : PdpMeeting ) : Bool
+  {
+    return p != null && p.xorProc0 != null && true && p != null && p.xorProc0 != null && true && p != null && p.xorProc0 != null && true && p != null && p.xorProc0 != null && true && p != null && p.xorProc0 != null && true && p != null && p.xorProc0 != null && p.xorProc0.isEnabled;
+  }
+
+  function genpagepredicate13 ( ) : Bool
   {
     return true;
   }
 
-  function genpagepredicate13 ( ) : Bool
+  function genpagepredicate14 ( ) : Bool
   {
     return true;
   }
@@ -267,12 +282,12 @@ section  access denied page. .
     return true;
   }
 
-  function genpagepredicate14 ( pdpMeeting : PdpMeeting ) : Bool
+  function genpagepredicate15 ( pdpMeeting : PdpMeeting ) : Bool
   {
     return securityContext != null && pdpMeeting != null && securityContext.loggedIn && pdpMeeting.employee != null && securityContext != null && securityContext.loggedIn && pdpMeeting != null && securityContext.principal == pdpMeeting.employee || securityContext != null && securityContext.loggedIn && pdpMeeting != null && pdpMeeting.employee != null && securityContext.principal == pdpMeeting.employee.manager;
   }
 
-  function genpagepredicate15 ( t : testDinges ) : Bool
+  function genpagepredicate16 ( t : testRecursive ) : Bool
   {
     return true;
   }
@@ -344,7 +359,7 @@ section  access denied page. .
 
   function genactionpredicate14 ( genuniquevar0 : PdpMeeting ) : Bool
   {
-    return genuniquevar0 != null && genuniquevar0.ifProc0 != null && true && genuniquevar0 != null && genuniquevar0.ifProc0 != null && true && genuniquevar0 != null && genuniquevar0.ifProc0 != null && true && genuniquevar0 != null && genuniquevar0.ifProc0 != null && true && genuniquevar0 != null && genuniquevar0.ifProc0 != null && true && genuniquevar0 != null && genuniquevar0.ifProc0 != null && genuniquevar0.ifProc0.isEnabled;
+    return genuniquevar0 != null && genuniquevar0.xorProc0 != null && true && genuniquevar0 != null && genuniquevar0.xorProc0 != null && true && genuniquevar0 != null && genuniquevar0.xorProc0 != null && true && genuniquevar0 != null && genuniquevar0.xorProc0 != null && true && genuniquevar0 != null && genuniquevar0.xorProc0 != null && true && genuniquevar0 != null && genuniquevar0.xorProc0 != null && genuniquevar0.xorProc0.isEnabled;
   }
 
   function genactionpredicate15 ( ) : Bool
@@ -357,9 +372,9 @@ section  access denied page. .
     return true;
   }
 
-  function genactionpredicate17 ( ) : Bool
+  function genactionpredicate17 ( genuniquevar1 : PdpMeeting ) : Bool
   {
-    return true;
+    return genuniquevar1 != null && genuniquevar1.repeatUntilProc0 != null && true && genuniquevar1 != null && genuniquevar1.repeatUntilProc0 != null && true && genuniquevar1 != null && genuniquevar1.repeatUntilProc0 != null && true && genuniquevar1 != null && genuniquevar1.repeatUntilProc0 != null && true && genuniquevar1 != null && genuniquevar1.repeatUntilProc0 != null && true && genuniquevar1 != null && genuniquevar1.repeatUntilProc0 != null && genuniquevar1.repeatUntilProc0.isEnabled;
   }
 
   function genactionpredicate18 ( ) : Bool
@@ -387,9 +402,9 @@ section  access denied page. .
     return true;
   }
 
-  function genactionpredicate23 ( genuniquevar1 : TestDinges ) : Bool
+  function genactionpredicate23 ( ) : Bool
   {
-    return genuniquevar1 != null && genuniquevar1.ifProc1 != null && true && genuniquevar1 != null && genuniquevar1.ifProc1 != null && true && genuniquevar1 != null && genuniquevar1.ifProc1 != null && true && genuniquevar1 != null && genuniquevar1.ifProc1 != null && true && genuniquevar1 != null && genuniquevar1.ifProc1 != null && true && genuniquevar1 != null && genuniquevar1.ifProc1 != null && genuniquevar1.ifProc1.isEnabled;
+    return true;
   }
 
   function genactionpredicate24 ( ) : Bool
@@ -402,9 +417,9 @@ section  access denied page. .
     return true;
   }
 
-  function genactionpredicate26 ( ) : Bool
+  function genactionpredicate26 ( genuniquevar2 : TestRecursive ) : Bool
   {
-    return true;
+    return genuniquevar2 != null && genuniquevar2.ifProc0 != null && true && genuniquevar2 != null && genuniquevar2.ifProc0 != null && true && genuniquevar2 != null && genuniquevar2.ifProc0 != null && true && genuniquevar2 != null && genuniquevar2.ifProc0 != null && true && genuniquevar2 != null && genuniquevar2.ifProc0 != null && true && genuniquevar2 != null && genuniquevar2.ifProc0 != null && genuniquevar2.ifProc0.isEnabled;
   }
 
   function genactionpredicate27 ( ) : Bool
@@ -412,9 +427,9 @@ section  access denied page. .
     return true;
   }
 
-  function genactionpredicate28 ( genuniquevar2 : PdpMeeting ) : Bool
+  function genactionpredicate28 ( ) : Bool
   {
-    return genuniquevar2 != null && genuniquevar2.testWorkflow != null && true && genuniquevar2 != null && genuniquevar2.testWorkflow != null && true && genuniquevar2 != null && genuniquevar2.testWorkflow != null && true && genuniquevar2 != null && genuniquevar2.testWorkflow != null && genuniquevar2.testWorkflow.isEnabled;
+    return true;
   }
 
   function genactionpredicate29 ( ) : Bool
@@ -422,84 +437,84 @@ section  access denied page. .
     return true;
   }
 
-  function genactionpredicate30 ( genuniquevar3 : PdpMeeting ) : Bool
-  {
-    return securityContext != null && securityContext.loggedIn && genuniquevar3 != null && genuniquevar3.employeeFillInForm != null && true && securityContext != null && securityContext.loggedIn && genuniquevar3 != null && genuniquevar3.employeeFillInForm != null && true && securityContext != null && securityContext.loggedIn && genuniquevar3 != null && genuniquevar3.employeeFillInForm != null && securityContext != null && securityContext.loggedIn && genuniquevar3 != null && securityContext.principal == genuniquevar3.employee && genuniquevar3 != null && genuniquevar3.employeeFillInForm != null && true && genuniquevar3 != null && genuniquevar3.employeeFillInForm != null && genuniquevar3.employeeFillInForm.isEnabled;
-  }
-
-  function genactionpredicate31 ( ) : Bool
+  function genactionpredicate30 ( ) : Bool
   {
     return true;
   }
 
-  function genactionpredicate32 ( genuniquevar4 : PdpMeeting ) : Bool
+  function genactionpredicate31 ( genuniquevar3 : PdpMeeting ) : Bool
   {
-    return securityContext != null && securityContext.loggedIn && genuniquevar4 != null && genuniquevar4.employee != null && genuniquevar4.managerFillInForm != null && true && securityContext != null && securityContext.loggedIn && genuniquevar4 != null && genuniquevar4.employee != null && genuniquevar4.managerFillInForm != null && true && securityContext != null && securityContext.loggedIn && genuniquevar4 != null && genuniquevar4.employee != null && genuniquevar4.managerFillInForm != null && securityContext != null && securityContext.loggedIn && genuniquevar4 != null && genuniquevar4.employee != null && securityContext.principal == genuniquevar4.employee.manager && genuniquevar4 != null && genuniquevar4.managerFillInForm != null && true && genuniquevar4 != null && genuniquevar4.managerFillInForm != null && genuniquevar4.managerFillInForm.isEnabled;
+    return genuniquevar3 != null && genuniquevar3.pdpWorkflow != null && true && genuniquevar3 != null && genuniquevar3.pdpWorkflow != null && true && genuniquevar3 != null && genuniquevar3.pdpWorkflow != null && true && genuniquevar3 != null && genuniquevar3.pdpWorkflow != null && genuniquevar3.pdpWorkflow.isEnabled;
   }
 
-  function genactionpredicate33 ( ) : Bool
+  function genactionpredicate32 ( ) : Bool
   {
     return true;
   }
 
-  function genactionpredicate34 ( genuniquevar5 : PdpMeeting ) : Bool
+  function genactionpredicate33 ( genuniquevar4 : PdpMeeting ) : Bool
   {
-    return securityContext != null && securityContext.loggedIn && genuniquevar5 != null && genuniquevar5.employee != null && genuniquevar5.writeReport != null && true && securityContext != null && securityContext.loggedIn && genuniquevar5 != null && genuniquevar5.employee != null && genuniquevar5.writeReport != null && true && securityContext != null && securityContext.loggedIn && genuniquevar5 != null && genuniquevar5.employee != null && genuniquevar5.writeReport != null && securityContext != null && securityContext.loggedIn && genuniquevar5 != null && genuniquevar5.employee != null && securityContext.principal == genuniquevar5.employee.manager && genuniquevar5 != null && genuniquevar5.writeReport != null && true && genuniquevar5 != null && genuniquevar5.writeReport != null && genuniquevar5.writeReport.isEnabled;
+    return securityContext != null && securityContext.loggedIn && genuniquevar4 != null && genuniquevar4.employeeFillInForm != null && true && securityContext != null && securityContext.loggedIn && genuniquevar4 != null && genuniquevar4.employeeFillInForm != null && true && securityContext != null && securityContext.loggedIn && genuniquevar4 != null && genuniquevar4.employeeFillInForm != null && securityContext != null && securityContext.loggedIn && genuniquevar4 != null && securityContext.principal == genuniquevar4.employee && genuniquevar4 != null && genuniquevar4.employeeFillInForm != null && true && genuniquevar4 != null && genuniquevar4.employeeFillInForm != null && genuniquevar4.employeeFillInForm.isEnabled;
   }
 
-  function genactionpredicate35 ( ) : Bool
+  function genactionpredicate34 ( ) : Bool
   {
     return true;
   }
 
-  function genactionpredicate36 ( genuniquevar6 : PdpMeeting ) : Bool
+  function genactionpredicate35 ( genuniquevar5 : PdpMeeting ) : Bool
   {
-    return securityContext != null && securityContext.loggedIn && genuniquevar6 != null && genuniquevar6.employee != null && genuniquevar6.finalizeReport != null && true && securityContext != null && securityContext.loggedIn && genuniquevar6 != null && genuniquevar6.employee != null && genuniquevar6.finalizeReport != null && true && securityContext != null && securityContext.loggedIn && genuniquevar6 != null && genuniquevar6.employee != null && genuniquevar6.finalizeReport != null && securityContext != null && securityContext.loggedIn && genuniquevar6 != null && genuniquevar6.employee != null && securityContext.principal == genuniquevar6.employee.manager && genuniquevar6 != null && genuniquevar6.finalizeReport != null && genuniquevar6.finalizeReport.isEnabled;
+    return securityContext != null && securityContext.loggedIn && genuniquevar5 != null && genuniquevar5.employee != null && genuniquevar5.managerFillInForm != null && true && securityContext != null && securityContext.loggedIn && genuniquevar5 != null && genuniquevar5.employee != null && genuniquevar5.managerFillInForm != null && true && securityContext != null && securityContext.loggedIn && genuniquevar5 != null && genuniquevar5.employee != null && genuniquevar5.managerFillInForm != null && securityContext != null && securityContext.loggedIn && genuniquevar5 != null && genuniquevar5.employee != null && securityContext.principal == genuniquevar5.employee.manager && genuniquevar5 != null && genuniquevar5.managerFillInForm != null && true && genuniquevar5 != null && genuniquevar5.managerFillInForm != null && genuniquevar5.managerFillInForm.isEnabled;
   }
 
-  function genactionpredicate37 ( ) : Bool
+  function genactionpredicate36 ( ) : Bool
   {
     return true;
   }
 
-  function genactionpredicate38 ( genuniquevar7 : PdpMeeting ) : Bool
+  function genactionpredicate37 ( genuniquevar6 : PdpMeeting ) : Bool
   {
-    return securityContext != null && securityContext.loggedIn && genuniquevar7 != null && genuniquevar7.approveReport != null && true && securityContext != null && securityContext.loggedIn && genuniquevar7 != null && genuniquevar7.approveReport != null && true && securityContext != null && securityContext.loggedIn && genuniquevar7 != null && genuniquevar7.approveReport != null && securityContext != null && securityContext.loggedIn && genuniquevar7 != null && securityContext.principal == genuniquevar7.employee && genuniquevar7 != null && genuniquevar7.approveReport != null && genuniquevar7.approveReport.isEnabled;
+    return securityContext != null && securityContext.loggedIn && genuniquevar6 != null && genuniquevar6.employee != null && genuniquevar6.writeReport != null && true && securityContext != null && securityContext.loggedIn && genuniquevar6 != null && genuniquevar6.employee != null && genuniquevar6.writeReport != null && true && securityContext != null && securityContext.loggedIn && genuniquevar6 != null && genuniquevar6.employee != null && genuniquevar6.writeReport != null && securityContext != null && securityContext.loggedIn && genuniquevar6 != null && genuniquevar6.employee != null && securityContext.principal == genuniquevar6.employee.manager && genuniquevar6 != null && genuniquevar6.writeReport != null && true && genuniquevar6 != null && genuniquevar6.writeReport != null && genuniquevar6.writeReport.isEnabled;
   }
 
-  function genactionpredicate39 ( ) : Bool
+  function genactionpredicate38 ( ) : Bool
   {
     return true;
   }
 
-  function genactionpredicate40 ( genuniquevar8 : TestDinges ) : Bool
+  function genactionpredicate39 ( genuniquevar7 : PdpMeeting ) : Bool
   {
-    return genuniquevar8 != null && genuniquevar8.testDingesWorkflow != null && true && genuniquevar8 != null && genuniquevar8.testDingesWorkflow != null && true && genuniquevar8 != null && genuniquevar8.testDingesWorkflow != null && true && genuniquevar8 != null && genuniquevar8.testDingesWorkflow != null && true && genuniquevar8 != null && genuniquevar8.testDingesWorkflow != null && genuniquevar8.testDingesWorkflow.isEnabled;
+    return securityContext != null && securityContext.loggedIn && genuniquevar7 != null && genuniquevar7.employee != null && genuniquevar7.finalizeReport != null && true && securityContext != null && securityContext.loggedIn && genuniquevar7 != null && genuniquevar7.employee != null && genuniquevar7.finalizeReport != null && true && securityContext != null && securityContext.loggedIn && genuniquevar7 != null && genuniquevar7.employee != null && genuniquevar7.finalizeReport != null && securityContext != null && securityContext.loggedIn && genuniquevar7 != null && genuniquevar7.employee != null && securityContext.principal == genuniquevar7.employee.manager && genuniquevar7 != null && genuniquevar7.finalizeReport != null && genuniquevar7.finalizeReport.isEnabled;
   }
 
-  function genactionpredicate41 ( ) : Bool
+  function genactionpredicate40 ( ) : Bool
   {
     return true;
   }
 
-  function genactionpredicate42 ( genuniquevar9 : TestDinges ) : Bool
+  function genactionpredicate41 ( genuniquevar8 : PdpMeeting ) : Bool
   {
-    return genuniquevar9 != null && genuniquevar9.proc1 != null && true && genuniquevar9 != null && genuniquevar9.proc1 != null && true && genuniquevar9 != null && genuniquevar9.proc1 != null && true && genuniquevar9 != null && genuniquevar9.proc1 != null && true && genuniquevar9 != null && genuniquevar9.proc1 != null && genuniquevar9.proc1.isEnabled;
+    return securityContext != null && securityContext.loggedIn && genuniquevar8 != null && genuniquevar8.approveReport != null && true && securityContext != null && securityContext.loggedIn && genuniquevar8 != null && genuniquevar8.approveReport != null && true && securityContext != null && securityContext.loggedIn && genuniquevar8 != null && genuniquevar8.approveReport != null && securityContext != null && securityContext.loggedIn && genuniquevar8 != null && securityContext.principal == genuniquevar8.employee && genuniquevar8 != null && genuniquevar8.approveReport != null && genuniquevar8.approveReport.isEnabled;
   }
 
-  function genactionpredicate43 ( ) : Bool
+  function genactionpredicate42 ( ) : Bool
   {
     return true;
   }
 
-  function genactionpredicate44 ( genuniquevar11 : TestDinges ) : Bool
+  function genactionpredicate43 ( genuniquevar9 : TestRecursive ) : Bool
   {
-    return genuniquevar11 != null && genuniquevar11.proc2 != null && true && genuniquevar11 != null && genuniquevar11.proc2 != null && true && genuniquevar11 != null && genuniquevar11.proc2 != null && true && genuniquevar11 != null && genuniquevar11.proc2 != null && true && genuniquevar11 != null && genuniquevar11.proc2 != null && genuniquevar11.proc2.isEnabled;
+    return genuniquevar9 != null && genuniquevar9.testRecursiveWorkflow != null && true && genuniquevar9 != null && genuniquevar9.testRecursiveWorkflow != null && true && genuniquevar9 != null && genuniquevar9.testRecursiveWorkflow != null && true && genuniquevar9 != null && genuniquevar9.testRecursiveWorkflow != null && true && genuniquevar9 != null && genuniquevar9.testRecursiveWorkflow != null && genuniquevar9.testRecursiveWorkflow.isEnabled;
   }
 
-  function genactionpredicate45 ( ) : Bool
+  function genactionpredicate44 ( ) : Bool
   {
     return true;
+  }
+
+  function genactionpredicate45 ( genuniquevar11 : TestRecursive ) : Bool
+  {
+    return genuniquevar11 != null && genuniquevar11.proc1 != null && true && genuniquevar11 != null && genuniquevar11.proc1 != null && true && genuniquevar11 != null && genuniquevar11.proc1 != null && true && genuniquevar11 != null && genuniquevar11.proc1 != null && true && genuniquevar11 != null && genuniquevar11.proc1 != null && genuniquevar11.proc1.isEnabled;
   }
 
   function genactionpredicate46 ( ) : Bool
@@ -507,9 +522,9 @@ section  access denied page. .
     return true;
   }
 
-  function genactionpredicate47 ( genuniquevar12 : PdpMeeting ) : Bool
+  function genactionpredicate47 ( genuniquevar12 : TestRecursive ) : Bool
   {
-    return securityContext != null && genuniquevar12 != null && securityContext.loggedIn && genuniquevar12.employee != null && securityContext != null && securityContext.loggedIn && genuniquevar12 != null && securityContext.principal == genuniquevar12.employee || securityContext != null && securityContext.loggedIn && genuniquevar12 != null && genuniquevar12.employee != null && securityContext.principal == genuniquevar12.employee.manager;
+    return genuniquevar12 != null && genuniquevar12.proc2 != null && true && genuniquevar12 != null && genuniquevar12.proc2 != null && true && genuniquevar12 != null && genuniquevar12.proc2 != null && true && genuniquevar12 != null && genuniquevar12.proc2 != null && true && genuniquevar12 != null && genuniquevar12.proc2 != null && genuniquevar12.proc2.isEnabled;
   }
 
   function genactionpredicate48 ( ) : Bool
@@ -522,9 +537,9 @@ section  access denied page. .
     return true;
   }
 
-  function genactionpredicate50 ( ) : Bool
+  function genactionpredicate50 ( genuniquevar13 : PdpMeeting ) : Bool
   {
-    return true;
+    return securityContext != null && genuniquevar13 != null && securityContext.loggedIn && genuniquevar13.employee != null && securityContext != null && securityContext.loggedIn && genuniquevar13 != null && securityContext.principal == genuniquevar13.employee || securityContext != null && securityContext.loggedIn && genuniquevar13 != null && genuniquevar13.employee != null && securityContext.principal == genuniquevar13.employee.manager;
   }
 
   function genactionpredicate51 ( ) : Bool
@@ -602,44 +617,59 @@ section  access denied page. .
     return true;
   }
 
+  function genactionpredicate66 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate67 ( ) : Bool
+  {
+    return true;
+  }
+
+  function genactionpredicate68 ( ) : Bool
+  {
+    return true;
+  }
+
   function genactionpredicatecombined0 ( ) : Bool
   {
     return genactionpredicate0() && genactionpredicate9();
   }
 
-  function genactionpredicatecombined1 ( genuniquevar13 : PdpMeeting ) : Bool
+  function genactionpredicatecombined1 ( genuniquevar14 : PdpMeeting ) : Bool
   {
-    return genactionpredicate0() && genactionpredicate30(genuniquevar13) && genactionpredicate29();
+    return genactionpredicate0() && genactionpredicate33(genuniquevar14) && genactionpredicate32();
   }
 
-  function genactionpredicatecombined2 ( genuniquevar14 : PdpMeeting ) : Bool
+  function genactionpredicatecombined2 ( genuniquevar15 : PdpMeeting ) : Bool
   {
-    return genactionpredicate0() && genactionpredicate32(genuniquevar14) && genactionpredicate31();
+    return genactionpredicate0() && genactionpredicate35(genuniquevar15) && genactionpredicate34();
   }
 
-  function genactionpredicatecombined3 ( genuniquevar15 : PdpMeeting ) : Bool
+  function genactionpredicatecombined3 ( genuniquevar16 : PdpMeeting ) : Bool
   {
-    return genactionpredicate0() && genactionpredicate34(genuniquevar15) && genactionpredicate33();
+    return genactionpredicate0() && genactionpredicate37(genuniquevar16) && genactionpredicate36();
   }
 
-  function genactionpredicatecombined4 ( genuniquevar16 : TestDinges ) : Bool
+  function genactionpredicatecombined4 ( genuniquevar17 : TestRecursive ) : Bool
   {
-    return genactionpredicate0() && genactionpredicate42(genuniquevar16) && genactionpredicate41();
+    return genactionpredicate0() && genactionpredicate45(genuniquevar17) && genactionpredicate44();
   }
 
-  function genactionpredicatecombined5 ( genuniquevar17 : TestDinges ) : Bool
+  function genactionpredicatecombined5 ( genuniquevar18 : TestRecursive ) : Bool
   {
-    return genactionpredicate0() && genactionpredicate44(genuniquevar17) && genactionpredicate43();
+    return genactionpredicate0() && genactionpredicate47(genuniquevar18) && genactionpredicate46();
   }
 
   function genactionpredicatecombined6 ( ) : Bool
   {
-    return genactionpredicate0() && genactionpredicate45();
+    return genactionpredicate0() && genactionpredicate48();
   }
 
   function genactionpredicatecombined7 ( ) : Bool
   {
-    return genactionpredicate0() && genactionpredicate45();
+    return genactionpredicate0() && genactionpredicate48();
   }
 
   define page accessDenied () {
@@ -653,11 +683,12 @@ section  access denied page. .
         goto accessDenied();
       }
     }
-    title("Access Denied")[]{
+    title()[]{
+      "Access Denied"
     }
     text("Access Denied: ")[]{
     }
-    if ( genpagepredicatecombined32() ) {
+    if ( genpagepredicatecombined34() ) {
       navigate(home())[]{
         "return to home page"
       }
@@ -699,6 +730,10 @@ fieldset {
 fieldset >> legend {
   background-color := Color.white;
   font-weight := Weight.bold;
+}
+
+fieldset > ol > li {
+  width := 100%;
 }
 
 fieldset > ol > li > ul {
@@ -788,16 +823,41 @@ form {
   width := 27.166666666666664em;
 }
 
-form >> .fieldset_no_legend_ {
+form >> .fieldset_action_ {
+  border-top-style := BorderStyle.none;
+  border-right-style := BorderStyle.none;
+  border-bottom-style := BorderStyle.none;
+  border-left-style := BorderStyle.none;
+  border-top-color := Color.white;
+  border-right-color := Color.white;
+  border-bottom-color := Color.white;
+  border-left-color := Color.white;
   padding-left := 0.69999999999999996em;
   padding-right := 1em;
   padding-top := 0.2em;
   padding-bottom := 0.2em;
+  float := none;
 }
 
-form >> .fieldset_no_legend_ >> input {
+form >> .fieldset_action_ >> input {
+  border-top-style := BorderStyle.solid;
+  border-right-style := BorderStyle.solid;
+  border-bottom-style := BorderStyle.solid;
+  border-left-style := BorderStyle.solid;
+  border-top-width := 1px;
+  border-right-width := 1px;
+  border-bottom-width := 1px;
+  border-left-width := 1px;
+  border-top-color := Color.grey;
+  border-right-color := Color.grey;
+  border-bottom-color := Color.grey;
+  border-left-color := Color.grey;
   margin-left := 0.3em;
   float := right;
+}
+
+form > ol {
+  width := 100%;
 }
 
 fieldset > ol > li > div {
@@ -806,7 +866,6 @@ fieldset > ol > li > div {
 
 body {
   font-size := 100%;
-  line-height := 1.125em;
   margin := 0;
   padding := 0;
 }
@@ -814,13 +873,13 @@ body {
 template pdpMeetingStatusList() {
 }
 
-template testDingesStatusList() {
+template testRecursiveStatusList() {
 }
 
 template pdpMeetingTaskList() {
 }
 
-template testDingesTaskList() {
+template testRecursiveTaskList() {
 }
 
 template pdpMeetingProcedures() {
@@ -829,10 +888,10 @@ template pdpMeetingProcedures() {
 template pdpMeetingProceduresList() {
 }
 
-template testDingesProcedures() {
+template testRecursiveProcedures() {
 }
 
-template testDingesProceduresList() {
+template testRecursiveProceduresList() {
 }
 
 template body() {
@@ -910,27 +969,17 @@ fieldset >> fieldset >> label {
   display := inline-block;
 }
 
-.fieldset_no_legend_ {
-  float := none;
-}
-
-.fieldset_no_legend_ >> input {
-  border-top-style := solid;
-  border-right-style := solid;
-  border-bottom-style := solid;
-  border-left-style := solid;
-  border-top-width := 1px;
-  border-right-width := 1px;
-  border-bottom-width := 1px;
-  border-left-width := 1px;
-  border-top-color := Color.grey;
-  border-right-color := Color.grey;
-  border-bottom-color := Color.grey;
-  border-left-color := Color.grey;
-}
-
 label {
   display := block;
+}
+
+li > * {
+  display := inline;
+}
+
+fieldset >> li > * {
+  display := inline;
+  display := table-cell;
 }
 
 .inputSimpleRefAssociation {
@@ -965,22 +1014,22 @@ description {
 module templates
 section  templates .
 
-  function newTestDinges ( ) : TestDinges
+  function newTestRecursive ( ) : TestRecursive
   {
-    var o : TestDinges := TestDinges{} ;
+    var o : TestRecursive := TestRecursive{} ;
     o.persist();
-    o.ifProc1 := IfProc1ProcedureStatus{};
-    o.ifProc1.t := o;
-    o.ifProc1.persist();
+    o.ifProc0 := IfProc0ProcedureStatus{};
+    o.ifProc0.t := o;
+    o.ifProc0.persist();
     o.proc2 := Proc2ProcedureStatus{};
     o.proc2.t := o;
     o.proc2.persist();
     o.proc1 := Proc1ProcedureStatus{};
     o.proc1.t := o;
     o.proc1.persist();
-    o.testDingesWorkflow := TestDingesWorkflowProcedureStatus{};
-    o.testDingesWorkflow.t := o;
-    o.testDingesWorkflow.persist();
+    o.testRecursiveWorkflow := TestRecursiveWorkflowProcedureStatus{};
+    o.testRecursiveWorkflow.t := o;
+    o.testRecursiveWorkflow.persist();
     o.persist();
     return o;
   }
@@ -989,9 +1038,12 @@ section  templates .
   {
     var o : PdpMeeting := PdpMeeting{} ;
     o.persist();
-    o.ifProc0 := IfProc0ProcedureStatus{};
-    o.ifProc0.p := o;
-    o.ifProc0.persist();
+    o.repeatUntilProc0 := RepeatUntilProc0ProcedureStatus{};
+    o.repeatUntilProc0.p := o;
+    o.repeatUntilProc0.persist();
+    o.xorProc0 := XorProc0ProcedureStatus{};
+    o.xorProc0.p := o;
+    o.xorProc0.persist();
     o.approveReport := ApproveReportProcedureStatus{};
     o.approveReport.p := o;
     o.approveReport.persist();
@@ -1007,9 +1059,9 @@ section  templates .
     o.employeeFillInForm := EmployeeFillInFormProcedureStatus{};
     o.employeeFillInForm.p := o;
     o.employeeFillInForm.persist();
-    o.testWorkflow := TestWorkflowProcedureStatus{};
-    o.testWorkflow.p := o;
-    o.testWorkflow.persist();
+    o.pdpWorkflow := PdpWorkflowProcedureStatus{};
+    o.pdpWorkflow.p := o;
+    o.pdpWorkflow.persist();
     o.persist();
     return o;
   }
@@ -1043,6 +1095,16 @@ section  templates .
       {
       }
     }
+    function partialCommit ( ) : Void
+    {
+      if ( this.caller != null )
+      {
+        this.caller.partialCommit();
+      }
+      else
+      {
+      }
+    }
     function enabled ( ) : Void
     {
     }
@@ -1069,13 +1131,13 @@ section  templates .
     }
   }
 
-  define template testDingesProceduresList (testDinges5 : TestDinges) {
+  define template testRecursiveProceduresList (testRecursive9 : TestRecursive) {
     if ( gentemplatepredicate0() ) {
       list()[]{
-        if ( true && testDinges5.proc2.isEnabled && true ) {
+        if ( true && testRecursive9.proc2.isEnabled && true ) {
           listitem()[]{
-            if ( genpagepredicatecombined31(testDinges5) ) {
-              navigate(proc2(testDinges5))[]{
+            if ( genpagepredicatecombined33(testRecursive9) ) {
+              navigate(proc2(testRecursive9))[]{
                 text("Proc2")[]{
                 }
               }
@@ -1088,10 +1150,10 @@ section  templates .
         else
         {
         },
-        if ( true && testDinges5.proc1.isEnabled && true ) {
+        if ( true && testRecursive9.proc1.isEnabled && true ) {
           listitem()[]{
-            if ( genpagepredicatecombined30(testDinges5) ) {
-              navigate(proc1(testDinges5))[]{
+            if ( genpagepredicatecombined32(testRecursive9) ) {
+              navigate(proc1(testRecursive9))[]{
                 text("Proc1")[]{
                 }
               }
@@ -1104,11 +1166,11 @@ section  templates .
         else
         {
         },
-        if ( true && testDinges5.testDingesWorkflow.isEnabled && true ) {
+        if ( true && testRecursive9.testRecursiveWorkflow.isEnabled && true ) {
           listitem()[]{
-            if ( genpagepredicatecombined29(testDinges5) ) {
-              navigate(testDingesWorkflow(testDinges5))[]{
-                text("Test dinges workflow")[]{
+            if ( genpagepredicatecombined31(testRecursive9) ) {
+              navigate(testRecursiveWorkflow(testRecursive9))[]{
+                text("Test recursive workflow")[]{
                 }
               }
             }
@@ -1127,14 +1189,14 @@ section  templates .
     }
   }
 
-  define template testDingesProcedures (testDinges6 : TestDinges) {
+  define template testRecursiveProcedures (testRecursive10 : TestRecursive) {
     if ( gentemplatepredicate0() ) {
       header()[]{
         dummy()[]{
-          if ( testDinges6 != null ) {
-            if ( genpagepredicatecombined36(testDinges6) ) {
-              navigate(testDinges(testDinges6))[]{
-                text(testDinges6.name)[]{
+          if ( testRecursive10 != null ) {
+            if ( genpagepredicatecombined38(testRecursive10) ) {
+              navigate(testRecursive(testRecursive10))[]{
+                text(testRecursive10.name)[]{
                 }
               }
             }
@@ -1145,7 +1207,7 @@ section  templates .
           else
           {
           },
-          if ( testDinges6 == null ) {
+          if ( testRecursive10 == null ) {
             text("null")[]{
             }
           }
@@ -1154,7 +1216,7 @@ section  templates .
           }
         }
       }
-      testDingesProceduresList(testDinges6)[]{
+      testRecursiveProceduresList(testRecursive10)[]{
       }
     }
     else
@@ -1162,31 +1224,31 @@ section  templates .
     }
   }
 
-  define template pdpMeetingProceduresList (pdpMeeting7 : PdpMeeting) {
+  define template pdpMeetingProceduresList (pdpMeeting11 : PdpMeeting) {
     if ( gentemplatepredicate0() ) {
       list()[]{
-        if ( securityContext.principal == pdpMeeting7.employee && pdpMeeting7.approveReport.isEnabled && true ) {
+        if ( securityContext.principal == pdpMeeting11.employee && pdpMeeting11.approveReport.isEnabled && true ) {
           listitem()[]{
-            navigatebutton(approveReport(pdpMeeting7), "Approve report")[]{
+            navigatebutton(approveReport(pdpMeeting11), "Approve report")[]{
             }
           }
         }
         else
         {
         },
-        if ( securityContext.principal == pdpMeeting7.employee.manager && pdpMeeting7.finalizeReport.isEnabled && true ) {
+        if ( securityContext.principal == pdpMeeting11.employee.manager && pdpMeeting11.finalizeReport.isEnabled && true ) {
           listitem()[]{
-            navigatebutton(finalizeReport(pdpMeeting7), "Finalize report")[]{
+            navigatebutton(finalizeReport(pdpMeeting11), "Finalize report")[]{
             }
           }
         }
         else
         {
         },
-        if ( securityContext.principal == pdpMeeting7.employee.manager && pdpMeeting7.writeReport.isEnabled && true ) {
+        if ( securityContext.principal == pdpMeeting11.employee.manager && pdpMeeting11.writeReport.isEnabled && true ) {
           listitem()[]{
-            if ( genpagepredicatecombined26(pdpMeeting7) ) {
-              navigate(writeReport(pdpMeeting7))[]{
+            if ( genpagepredicatecombined28(pdpMeeting11) ) {
+              navigate(writeReport(pdpMeeting11))[]{
                 text("Write report")[]{
                 }
               }
@@ -1199,10 +1261,10 @@ section  templates .
         else
         {
         },
-        if ( securityContext.principal == pdpMeeting7.employee.manager && pdpMeeting7.managerFillInForm.isEnabled && true ) {
+        if ( securityContext.principal == pdpMeeting11.employee.manager && pdpMeeting11.managerFillInForm.isEnabled && true ) {
           listitem()[]{
-            if ( genpagepredicatecombined25(pdpMeeting7) ) {
-              navigate(managerFillInForm(pdpMeeting7))[]{
+            if ( genpagepredicatecombined27(pdpMeeting11) ) {
+              navigate(managerFillInForm(pdpMeeting11))[]{
                 text("Manager fill in form")[]{
                 }
               }
@@ -1215,10 +1277,10 @@ section  templates .
         else
         {
         },
-        if ( securityContext.principal == pdpMeeting7.employee && pdpMeeting7.employeeFillInForm.isEnabled && true ) {
+        if ( securityContext.principal == pdpMeeting11.employee && pdpMeeting11.employeeFillInForm.isEnabled && true ) {
           listitem()[]{
-            if ( genpagepredicatecombined24(pdpMeeting7) ) {
-              navigate(employeeFillInForm(pdpMeeting7))[]{
+            if ( genpagepredicatecombined26(pdpMeeting11) ) {
+              navigate(employeeFillInForm(pdpMeeting11))[]{
                 text("Employee fill in form")[]{
                 }
               }
@@ -1231,9 +1293,9 @@ section  templates .
         else
         {
         },
-        if ( true && pdpMeeting7.testWorkflow.isEnabled && true ) {
+        if ( true && pdpMeeting11.pdpWorkflow.isEnabled && true ) {
           listitem()[]{
-            navigatebutton(testWorkflow(pdpMeeting7), "Test workflow")[]{
+            navigatebutton(pdpWorkflow(pdpMeeting11), "Pdp workflow")[]{
             }
           }
         }
@@ -1247,14 +1309,14 @@ section  templates .
     }
   }
 
-  define template pdpMeetingProcedures (pdpMeeting8 : PdpMeeting) {
+  define template pdpMeetingProcedures (pdpMeeting12 : PdpMeeting) {
     if ( gentemplatepredicate0() ) {
       header()[]{
         dummy()[]{
-          if ( pdpMeeting8 != null ) {
-            if ( genpagepredicatecombined34(pdpMeeting8) ) {
-              navigate(pdpMeeting(pdpMeeting8))[]{
-                text(pdpMeeting8.name)[]{
+          if ( pdpMeeting12 != null ) {
+            if ( genpagepredicatecombined36(pdpMeeting12) ) {
+              navigate(pdpMeeting(pdpMeeting12))[]{
+                text(pdpMeeting12.name)[]{
                 }
               }
             }
@@ -1265,7 +1327,7 @@ section  templates .
           else
           {
           },
-          if ( pdpMeeting8 == null ) {
+          if ( pdpMeeting12 == null ) {
             text("null")[]{
             }
           }
@@ -1274,7 +1336,7 @@ section  templates .
           }
         }
       }
-      pdpMeetingProceduresList(pdpMeeting8)[]{
+      pdpMeetingProceduresList(pdpMeeting12)[]{
       }
     }
     else
@@ -1303,7 +1365,7 @@ section  templates .
         "All tasks"
       }
       section()[]{
-        testDingesTaskList()[]{
+        testRecursiveTaskList()[]{
         },
         pdpMeetingTaskList()[]{
         }
@@ -1311,25 +1373,25 @@ section  templates .
     }
   }
 
-  function testDingesHasProcedures ( testDinges : TestDinges ) : Bool
+  function testRecursiveHasProcedures ( testRecursive : TestRecursive ) : Bool
   {
-    return true && testDinges.proc2.isEnabled && true || true && testDinges.proc1.isEnabled && true || true && testDinges.testDingesWorkflow.isEnabled && true || false;
+    return true && testRecursive.proc2.isEnabled && true || true && testRecursive.proc1.isEnabled && true || true && testRecursive.testRecursiveWorkflow.isEnabled && true || false;
   }
 
-  define template testDingesTaskList () {
+  define template testRecursiveTaskList () {
     if ( gentemplatepredicate0() ) {
       header()[]{
-        "Test dinges"
+        "Test recursive"
       }
       list()[]{
-        for ( testDinges7 : TestDinges where true order by null asc limit 1000 offset 0 ) {
-          if ( testDingesHasProcedures(testDinges7) ) {
+        for ( testRecursive11 : TestRecursive where true order by null asc limit 1000 offset 0 ) {
+          if ( testRecursiveHasProcedures(testRecursive11) ) {
             listitem()[]{
               dummy()[]{
-                if ( testDinges7 != null ) {
-                  if ( genpagepredicatecombined36(testDinges7) ) {
-                    navigate(testDinges(testDinges7))[]{
-                      text(testDinges7.name)[]{
+                if ( testRecursive11 != null ) {
+                  if ( genpagepredicatecombined38(testRecursive11) ) {
+                    navigate(testRecursive(testRecursive11))[]{
+                      text(testRecursive11.name)[]{
                       }
                     }
                   }
@@ -1340,7 +1402,7 @@ section  templates .
                 else
                 {
                 },
-                if ( testDinges7 == null ) {
+                if ( testRecursive11 == null ) {
                   text("null")[]{
                   }
                 }
@@ -1348,7 +1410,7 @@ section  templates .
                 {
                 }
               },
-              testDingesProceduresList(testDinges7)[]{
+              testRecursiveProceduresList(testRecursive11)[]{
               }
             }
           }
@@ -1363,7 +1425,7 @@ section  templates .
     }
   }
 
-  define page testDingesTasks () {
+  define page testRecursiveTasks () {
     init
     {
       if ( genpagepredicatecombined2() )
@@ -1375,7 +1437,7 @@ section  templates .
       }
     }
     title()[]{
-      "Test dinges"
+      "Test recursive"
     }
     main()[]{
     }
@@ -1383,14 +1445,14 @@ section  templates .
       header()[]{
         "Tasks"
       }
-      testDingesTaskList()[]{
+      testRecursiveTaskList()[]{
       }
     }
   }
 
   function pdpMeetingHasProcedures ( pdpMeeting : PdpMeeting ) : Bool
   {
-    return securityContext.principal == pdpMeeting.employee && pdpMeeting.approveReport.isEnabled && true || securityContext.principal == pdpMeeting.employee.manager && pdpMeeting.finalizeReport.isEnabled && true || securityContext.principal == pdpMeeting.employee.manager && pdpMeeting.writeReport.isEnabled && true || securityContext.principal == pdpMeeting.employee.manager && pdpMeeting.managerFillInForm.isEnabled && true || securityContext.principal == pdpMeeting.employee && pdpMeeting.employeeFillInForm.isEnabled && true || true && pdpMeeting.testWorkflow.isEnabled && true || false;
+    return securityContext.principal == pdpMeeting.employee && pdpMeeting.approveReport.isEnabled && true || securityContext.principal == pdpMeeting.employee.manager && pdpMeeting.finalizeReport.isEnabled && true || securityContext.principal == pdpMeeting.employee.manager && pdpMeeting.writeReport.isEnabled && true || securityContext.principal == pdpMeeting.employee.manager && pdpMeeting.managerFillInForm.isEnabled && true || securityContext.principal == pdpMeeting.employee && pdpMeeting.employeeFillInForm.isEnabled && true || true && pdpMeeting.pdpWorkflow.isEnabled && true || false;
   }
 
   define template pdpMeetingTaskList () {
@@ -1399,14 +1461,14 @@ section  templates .
         "Pdp meeting"
       }
       list()[]{
-        for ( pdpMeeting9 : PdpMeeting where true order by null asc limit 1000 offset 0 ) {
-          if ( pdpMeetingHasProcedures(pdpMeeting9) ) {
+        for ( pdpMeeting13 : PdpMeeting where true order by null asc limit 1000 offset 0 ) {
+          if ( pdpMeetingHasProcedures(pdpMeeting13) ) {
             listitem()[]{
               dummy()[]{
-                if ( pdpMeeting9 != null ) {
-                  if ( genpagepredicatecombined34(pdpMeeting9) ) {
-                    navigate(pdpMeeting(pdpMeeting9))[]{
-                      text(pdpMeeting9.name)[]{
+                if ( pdpMeeting13 != null ) {
+                  if ( genpagepredicatecombined36(pdpMeeting13) ) {
+                    navigate(pdpMeeting(pdpMeeting13))[]{
+                      text(pdpMeeting13.name)[]{
                       }
                     }
                   }
@@ -1417,7 +1479,7 @@ section  templates .
                 else
                 {
                 },
-                if ( pdpMeeting9 == null ) {
+                if ( pdpMeeting13 == null ) {
                   text("null")[]{
                   }
                 }
@@ -1425,7 +1487,7 @@ section  templates .
                 {
                 }
               },
-              pdpMeetingProceduresList(pdpMeeting9)[]{
+              pdpMeetingProceduresList(pdpMeeting13)[]{
               }
             }
           }
@@ -1465,19 +1527,19 @@ section  templates .
     }
   }
 
-  define template testDingesStatusList () {
+  define template testRecursiveStatusList () {
     if ( gentemplatepredicate0() ) {
       header()[]{
-        "Test dinges"
+        "Test recursive"
       }
       list()[]{
-        for ( testDinges8 : TestDinges where true order by null asc limit 1000 offset 0 ) {
+        for ( testRecursive12 : TestRecursive where true order by null asc limit 1000 offset 0 ) {
           listitem()[]{
             dummy()[]{
-              if ( testDinges8 != null ) {
-                if ( genpagepredicatecombined36(testDinges8) ) {
-                  navigate(testDinges(testDinges8))[]{
-                    text(testDinges8.name)[]{
+              if ( testRecursive12 != null ) {
+                if ( genpagepredicatecombined38(testRecursive12) ) {
+                  navigate(testRecursive(testRecursive12))[]{
+                    text(testRecursive12.name)[]{
                     }
                   }
                 }
@@ -1488,7 +1550,7 @@ section  templates .
               else
               {
               },
-              if ( testDinges8 == null ) {
+              if ( testRecursive12 == null ) {
                 text("null")[]{
                 }
               }
@@ -1497,11 +1559,11 @@ section  templates .
               }
             },
             list()[]{
-              if ( testDinges8.proc2.isEnabled && true ) {
+              if ( testRecursive12.proc2.isEnabled && true ) {
                 if ( true ) {
                   listitem()[]{
-                    if ( genpagepredicatecombined31(testDinges8) ) {
-                      navigate(proc2(testDinges8))[]{
+                    if ( genpagepredicatecombined33(testRecursive12) ) {
+                      navigate(proc2(testRecursive12))[]{
                         text("Proc2")[]{
                         },
                         ""
@@ -1528,11 +1590,11 @@ section  templates .
               else
               {
               },
-              if ( testDinges8.proc1.isEnabled && true ) {
+              if ( testRecursive12.proc1.isEnabled && true ) {
                 if ( true ) {
                   listitem()[]{
-                    if ( genpagepredicatecombined30(testDinges8) ) {
-                      navigate(proc1(testDinges8))[]{
+                    if ( genpagepredicatecombined32(testRecursive12) ) {
+                      navigate(proc1(testRecursive12))[]{
                         text("Proc1")[]{
                         },
                         ""
@@ -1559,12 +1621,12 @@ section  templates .
               else
               {
               },
-              if ( testDinges8.testDingesWorkflow.isEnabled && true ) {
+              if ( testRecursive12.testRecursiveWorkflow.isEnabled && true ) {
                 if ( true ) {
                   listitem()[]{
-                    if ( genpagepredicatecombined29(testDinges8) ) {
-                      navigate(testDingesWorkflow(testDinges8))[]{
-                        text("Test dinges workflow")[]{
+                    if ( genpagepredicatecombined31(testRecursive12) ) {
+                      navigate(testRecursiveWorkflow(testRecursive12))[]{
+                        text("Test recursive workflow")[]{
                         },
                         ""
                       }
@@ -1579,7 +1641,7 @@ section  templates .
                 }
                 if ( ! true ) {
                   listitem()[]{
-                    text("Test dinges workflow")[]{
+                    text("Test recursive workflow")[]{
                     }
                   }
                 }
@@ -1600,7 +1662,7 @@ section  templates .
     }
   }
 
-  define page testDingesStatus () {
+  define page testRecursiveStatus () {
     init
     {
       if ( genpagepredicatecombined4() )
@@ -1612,7 +1674,7 @@ section  templates .
       }
     }
     title()[]{
-      "Test dinges"
+      "Test recursive"
     }
     main()[]{
     }
@@ -1622,7 +1684,7 @@ section  templates .
           "Status"
         },
         section()[]{
-          testDingesStatusList()[]{
+          testRecursiveStatusList()[]{
           }
         }
       }
@@ -1635,13 +1697,13 @@ section  templates .
         "Pdp meeting"
       }
       list()[]{
-        for ( pdpMeeting10 : PdpMeeting where true order by null asc limit 1000 offset 0 ) {
+        for ( pdpMeeting14 : PdpMeeting where true order by null asc limit 1000 offset 0 ) {
           listitem()[]{
             dummy()[]{
-              if ( pdpMeeting10 != null ) {
-                if ( genpagepredicatecombined34(pdpMeeting10) ) {
-                  navigate(pdpMeeting(pdpMeeting10))[]{
-                    text(pdpMeeting10.name)[]{
+              if ( pdpMeeting14 != null ) {
+                if ( genpagepredicatecombined36(pdpMeeting14) ) {
+                  navigate(pdpMeeting(pdpMeeting14))[]{
+                    text(pdpMeeting14.name)[]{
                     }
                   }
                 }
@@ -1652,7 +1714,7 @@ section  templates .
               else
               {
               },
-              if ( pdpMeeting10 == null ) {
+              if ( pdpMeeting14 == null ) {
                 text("null")[]{
                 }
               }
@@ -1661,11 +1723,11 @@ section  templates .
               }
             },
             list()[]{
-              if ( pdpMeeting10.approveReport.isEnabled && true ) {
-                if ( securityContext.principal == pdpMeeting10.employee ) {
+              if ( pdpMeeting14.approveReport.isEnabled && true ) {
+                if ( securityContext.principal == pdpMeeting14.employee ) {
                   listitem()[]{
-                    if ( genpagepredicatecombined28(pdpMeeting10) ) {
-                      navigate(approveReport(pdpMeeting10))[]{
+                    if ( genpagepredicatecombined30(pdpMeeting14) ) {
+                      navigate(approveReport(pdpMeeting14))[]{
                         text("Approve report")[]{
                         },
                         " (X)"
@@ -1679,7 +1741,7 @@ section  templates .
                 else
                 {
                 }
-                if ( ! securityContext.principal == pdpMeeting10.employee ) {
+                if ( ! securityContext.principal == pdpMeeting14.employee ) {
                   listitem()[]{
                     text("Approve report")[]{
                     }
@@ -1692,11 +1754,11 @@ section  templates .
               else
               {
               },
-              if ( pdpMeeting10.finalizeReport.isEnabled && true ) {
-                if ( securityContext.principal == pdpMeeting10.employee.manager ) {
+              if ( pdpMeeting14.finalizeReport.isEnabled && true ) {
+                if ( securityContext.principal == pdpMeeting14.employee.manager ) {
                   listitem()[]{
-                    if ( genpagepredicatecombined27(pdpMeeting10) ) {
-                      navigate(finalizeReport(pdpMeeting10))[]{
+                    if ( genpagepredicatecombined29(pdpMeeting14) ) {
+                      navigate(finalizeReport(pdpMeeting14))[]{
                         text("Finalize report")[]{
                         },
                         " (X)"
@@ -1710,7 +1772,7 @@ section  templates .
                 else
                 {
                 }
-                if ( ! securityContext.principal == pdpMeeting10.employee.manager ) {
+                if ( ! securityContext.principal == pdpMeeting14.employee.manager ) {
                   listitem()[]{
                     text("Finalize report")[]{
                     }
@@ -1723,11 +1785,11 @@ section  templates .
               else
               {
               },
-              if ( pdpMeeting10.writeReport.isEnabled && true ) {
-                if ( securityContext.principal == pdpMeeting10.employee.manager ) {
+              if ( pdpMeeting14.writeReport.isEnabled && true ) {
+                if ( securityContext.principal == pdpMeeting14.employee.manager ) {
                   listitem()[]{
-                    if ( genpagepredicatecombined26(pdpMeeting10) ) {
-                      navigate(writeReport(pdpMeeting10))[]{
+                    if ( genpagepredicatecombined28(pdpMeeting14) ) {
+                      navigate(writeReport(pdpMeeting14))[]{
                         text("Write report")[]{
                         },
                         ""
@@ -1741,7 +1803,7 @@ section  templates .
                 else
                 {
                 }
-                if ( ! securityContext.principal == pdpMeeting10.employee.manager ) {
+                if ( ! securityContext.principal == pdpMeeting14.employee.manager ) {
                   listitem()[]{
                     text("Write report")[]{
                     }
@@ -1754,11 +1816,11 @@ section  templates .
               else
               {
               },
-              if ( pdpMeeting10.managerFillInForm.isEnabled && true ) {
-                if ( securityContext.principal == pdpMeeting10.employee.manager ) {
+              if ( pdpMeeting14.managerFillInForm.isEnabled && true ) {
+                if ( securityContext.principal == pdpMeeting14.employee.manager ) {
                   listitem()[]{
-                    if ( genpagepredicatecombined25(pdpMeeting10) ) {
-                      navigate(managerFillInForm(pdpMeeting10))[]{
+                    if ( genpagepredicatecombined27(pdpMeeting14) ) {
+                      navigate(managerFillInForm(pdpMeeting14))[]{
                         text("Manager fill in form")[]{
                         },
                         ""
@@ -1772,7 +1834,7 @@ section  templates .
                 else
                 {
                 }
-                if ( ! securityContext.principal == pdpMeeting10.employee.manager ) {
+                if ( ! securityContext.principal == pdpMeeting14.employee.manager ) {
                   listitem()[]{
                     text("Manager fill in form")[]{
                     }
@@ -1785,11 +1847,11 @@ section  templates .
               else
               {
               },
-              if ( pdpMeeting10.employeeFillInForm.isEnabled && true ) {
-                if ( securityContext.principal == pdpMeeting10.employee ) {
+              if ( pdpMeeting14.employeeFillInForm.isEnabled && true ) {
+                if ( securityContext.principal == pdpMeeting14.employee ) {
                   listitem()[]{
-                    if ( genpagepredicatecombined24(pdpMeeting10) ) {
-                      navigate(employeeFillInForm(pdpMeeting10))[]{
+                    if ( genpagepredicatecombined26(pdpMeeting14) ) {
+                      navigate(employeeFillInForm(pdpMeeting14))[]{
                         text("Employee fill in form")[]{
                         },
                         ""
@@ -1803,7 +1865,7 @@ section  templates .
                 else
                 {
                 }
-                if ( ! securityContext.principal == pdpMeeting10.employee ) {
+                if ( ! securityContext.principal == pdpMeeting14.employee ) {
                   listitem()[]{
                     text("Employee fill in form")[]{
                     }
@@ -1816,12 +1878,12 @@ section  templates .
               else
               {
               },
-              if ( pdpMeeting10.testWorkflow.isEnabled && true ) {
+              if ( pdpMeeting14.pdpWorkflow.isEnabled && true ) {
                 if ( true ) {
                   listitem()[]{
-                    if ( genpagepredicatecombined23(pdpMeeting10) ) {
-                      navigate(testWorkflow(pdpMeeting10))[]{
-                        text("Test workflow")[]{
+                    if ( genpagepredicatecombined25(pdpMeeting14) ) {
+                      navigate(pdpWorkflow(pdpMeeting14))[]{
+                        text("Pdp workflow")[]{
                         },
                         " (X)"
                       }
@@ -1836,7 +1898,7 @@ section  templates .
                 }
                 if ( ! true ) {
                   listitem()[]{
-                    text("Test workflow")[]{
+                    text("Pdp workflow")[]{
                     }
                   }
                 }
@@ -1886,10 +1948,10 @@ section  templates .
     }
   }
 
-  define page procedureStatus (s12 : ProcedureStatus) {
+  define page procedureStatus (s13 : ProcedureStatus) {
     init
     {
-      if ( genpagepredicatecombined6(s12) )
+      if ( genpagepredicatecombined6(s13) )
       {
       }
       else
@@ -1902,36 +1964,36 @@ section  templates .
       },
       define local body () {
         header()[]{
-          text(s12.name)[]{
+          text(s13.name)[]{
           }
         }
         group("Details")[]{
           dummy()[]{
             groupitem()[]{
               label("Name: ")[]{
-                text(s12.name)[]{
+                text(s13.name)[]{
                 }
               }
             },
             groupitem()[]{
               label("Is enabled: ")[]{
-                outputBool(s12.isEnabled)[]{
+                outputBool(s13.isEnabled)[]{
                 }
               }
             },
             groupitem()[]{
               label("Date: ")[]{
-                outputDateTime(s12.date)[]{
+                outputDateTime(s13.date)[]{
                 }
               }
             },
             groupitem()[]{
               label("Caller: ")[]{
                 dummy()[]{
-                  if ( s12.caller != null ) {
-                    if ( genpagepredicatecombined6(s12.caller) ) {
-                      navigate(procedureStatus(s12.caller))[]{
-                        text(s12.caller.name)[]{
+                  if ( s13.caller != null ) {
+                    if ( genpagepredicatecombined6(s13.caller) ) {
+                      navigate(procedureStatus(s13.caller))[]{
+                        text(s13.caller.name)[]{
                         }
                       }
                     }
@@ -1942,7 +2004,7 @@ section  templates .
                   else
                   {
                   },
-                  if ( s12.caller == null ) {
+                  if ( s13.caller == null ) {
                     text("null")[]{
                     }
                   }
@@ -1954,35 +2016,35 @@ section  templates .
             },
             groupitem()[]{
               label("Returnstate: ")[]{
-                outputInt(s12.returnstate)[]{
+                outputInt(s13.returnstate)[]{
                 }
               }
             },
             groupitem()[]{
               label("Name: ")[]{
-                text(s12.name)[]{
+                text(s13.name)[]{
                 }
               }
             },
             groupitem()[]{
               label("Is enabled: ")[]{
-                outputBool(s12.isEnabled)[]{
+                outputBool(s13.isEnabled)[]{
                 }
               }
             },
             groupitem()[]{
               label("Date: ")[]{
-                outputDateTime(s12.date)[]{
+                outputDateTime(s13.date)[]{
                 }
               }
             },
             groupitem()[]{
               label("Caller: ")[]{
                 dummy()[]{
-                  if ( s12.caller != null ) {
-                    if ( genpagepredicatecombined6(s12.caller) ) {
-                      navigate(procedureStatus(s12.caller))[]{
-                        text(s12.caller.name)[]{
+                  if ( s13.caller != null ) {
+                    if ( genpagepredicatecombined6(s13.caller) ) {
+                      navigate(procedureStatus(s13.caller))[]{
+                        text(s13.caller.name)[]{
                         }
                       }
                     }
@@ -1993,7 +2055,7 @@ section  templates .
                   else
                   {
                   },
-                  if ( s12.caller == null ) {
+                  if ( s13.caller == null ) {
                     text("null")[]{
                     }
                   }
@@ -2005,7 +2067,7 @@ section  templates .
             },
             groupitem()[]{
               label("Returnstate: ")[]{
-                outputInt(s12.returnstate)[]{
+                outputInt(s13.returnstate)[]{
                 }
               }
             }
@@ -2029,7 +2091,7 @@ section  templates .
               }
             },
             block("wrapper0 _colwrap_")[]{
-              block("body47 _col2_ clearfix")[]{
+              block("body110 _col2_ clearfix")[]{
                 body()[]{
                 }
               }
@@ -2084,7 +2146,7 @@ section  templates .
       menubar("horizontal")[]{
         menu()[]{
           menuheader()[]{
-            if ( genpagepredicatecombined32() ) {
+            if ( genpagepredicatecombined34() ) {
               navigate(home())[]{
                 "Home"
               }
@@ -2196,8 +2258,9 @@ section  data model .
     writeReport <> WriteReportProcedureStatus ( )
     managerFillInForm <> ManagerFillInFormProcedureStatus ( )
     employeeFillInForm <> EmployeeFillInFormProcedureStatus ( )
-    testWorkflow <> TestWorkflowProcedureStatus ( )
-    ifProc0 <> IfProc0ProcedureStatus ( )
+    pdpWorkflow <> PdpWorkflowProcedureStatus ( )
+    repeatUntilProc0 <> RepeatUntilProc0ProcedureStatus ( )
+    xorProc0 <> XorProc0ProcedureStatus ( )
     employee -> User ( )
     name :: String ( ) := this.employee.name + " PDP Form"
     employeePreparation :: Text ( )
@@ -2205,16 +2268,16 @@ section  data model .
     report :: Text ( )
   }
 
-  entity TestDinges {
+  entity TestRecursive {
     proc2 <> Proc2ProcedureStatus ( )
     proc1 <> Proc1ProcedureStatus ( )
-    testDingesWorkflow <> TestDingesWorkflowProcedureStatus ( )
-    ifProc1 <> IfProc1ProcedureStatus ( )
+    testRecursiveWorkflow <> TestRecursiveWorkflowProcedureStatus ( )
+    ifProc0 <> IfProc0ProcedureStatus ( )
     name :: String ( )
     comments :: String ( )
     proc1Text :: String ( )
     proc2Text :: String ( )
-    child -> TestDinges ( )
+    child -> TestRecursive ( )
   }
 
 module ac
@@ -2270,18 +2333,18 @@ section  pages .
       "Log in"
     }
     define local body () {
-      var username2 : String ;
-      var password2 : Secret ;
+      var username10 : String ;
+      var password10 : Secret ;
       form()[]{
         table()[]{
           row()[]{
             "Username: ",
-            inputString(username2)[]{
+            inputString(username10)[]{
             }
           },
           row()[]{
             "Password: ",
-            inputSecret(password2)[]{
+            inputSecret(password10)[]{
             }
           },
           row()[]{
@@ -2299,9 +2362,9 @@ section  pages .
         {
           if ( genactionpredicatecombined0() )
           {
-            for ( us : User where us.username == username2 order by null asc limit 1000 offset 0 )
+            for ( us : User where us.username == username10 order by null asc limit 1000 offset 0 )
             {
-              if ( us.password.check(password2) )
+              if ( us.password.check(password10) )
               {
                 securityContext.principal := us;
                 securityContext.loggedIn := true;
@@ -2570,18 +2633,45 @@ template footer() >> ul {
 
 section  procedures .
 
-  entity IfProc0ProcedureStatus : ProcedureStatus {
+  entity XorProc0ProcedureStatus : ProcedureStatus {
     p -> PdpMeeting ( )
-    function enabled ( ) : Void
+    function next ( state : Int ) : Void
     {
-      if ( true )
+      if ( state == 0 )
       {
-        this.next(0);
+        this.p.employeeFillInForm.enable__ProcedureStatus__Int(this as ProcedureStatus, 1);
       }
       else
       {
-        this.next(0);
       }
+      if ( state == 1 )
+      {
+        this.p.managerFillInForm.disable();
+        this.processed();
+      }
+      else
+      {
+      }
+      if ( state == 2 )
+      {
+        this.p.managerFillInForm.enable__ProcedureStatus__Int(this as ProcedureStatus, 3);
+      }
+      else
+      {
+      }
+      if ( state == 3 )
+      {
+        this.p.employeeFillInForm.disable();
+        this.processed();
+      }
+      else
+      {
+      }
+    }
+    function enabled ( ) : Void
+    {
+      this.next(0);
+      this.next(2);
     }
     function done ( ) : Void
     {
@@ -2600,228 +2690,10 @@ section  procedures .
     }
   }
 
-  define page ifProc0ProcedureStatus (s13 : IfProc0ProcedureStatus) {
+  define page xorProc0ProcedureStatus (s14 : XorProc0ProcedureStatus) {
     init
     {
-      if ( genpagepredicatecombined10(s13) )
-      {
-      }
-      else
-      {
-        goto accessDenied();
-      }
-    }
-    dummy()[]{
-      main()[]{
-      },
-      define local body () {
-        header()[]{
-          text(s13.name)[]{
-          }
-        }
-        group("Details")[]{
-          dummy()[]{
-            groupitem()[]{
-              label("P: ")[]{
-                dummy()[]{
-                  if ( s13.p != null ) {
-                    if ( genpagepredicatecombined34(s13.p) ) {
-                      navigate(pdpMeeting(s13.p))[]{
-                        text(s13.p.name)[]{
-                        }
-                      }
-                    }
-                    else
-                    {
-                    }
-                  }
-                  else
-                  {
-                  },
-                  if ( s13.p == null ) {
-                    text("null")[]{
-                    }
-                  }
-                  else
-                  {
-                  }
-                }
-              }
-            },
-            groupitem()[]{
-              label("P: ")[]{
-                dummy()[]{
-                  if ( s13.p != null ) {
-                    if ( genpagepredicatecombined34(s13.p) ) {
-                      navigate(pdpMeeting(s13.p))[]{
-                        text(s13.p.name)[]{
-                        }
-                      }
-                    }
-                    else
-                    {
-                    }
-                  }
-                  else
-                  {
-                  },
-                  if ( s13.p == null ) {
-                    text("null")[]{
-                    }
-                  }
-                  else
-                  {
-                  }
-                }
-              }
-            },
-            groupitem()[]{
-              label("Name: ")[]{
-                text(s13.name)[]{
-                }
-              }
-            },
-            groupitem()[]{
-              label("Is enabled: ")[]{
-                outputBool(s13.isEnabled)[]{
-                }
-              }
-            },
-            groupitem()[]{
-              label("Date: ")[]{
-                outputDateTime(s13.date)[]{
-                }
-              }
-            },
-            groupitem()[]{
-              label("Caller: ")[]{
-                dummy()[]{
-                  if ( s13.caller != null ) {
-                    if ( genpagepredicatecombined6(s13.caller) ) {
-                      navigate(procedureStatus(s13.caller))[]{
-                        text(s13.caller.name)[]{
-                        }
-                      }
-                    }
-                    else
-                    {
-                    }
-                  }
-                  else
-                  {
-                  },
-                  if ( s13.caller == null ) {
-                    text("null")[]{
-                    }
-                  }
-                  else
-                  {
-                  }
-                }
-              }
-            },
-            groupitem()[]{
-              label("Returnstate: ")[]{
-                outputInt(s13.returnstate)[]{
-                }
-              }
-            },
-            groupitem()[]{
-              label("Name: ")[]{
-                text(s13.name)[]{
-                }
-              }
-            },
-            groupitem()[]{
-              label("Is enabled: ")[]{
-                outputBool(s13.isEnabled)[]{
-                }
-              }
-            },
-            groupitem()[]{
-              label("Date: ")[]{
-                outputDateTime(s13.date)[]{
-                }
-              }
-            },
-            groupitem()[]{
-              label("Caller: ")[]{
-                dummy()[]{
-                  if ( s13.caller != null ) {
-                    if ( genpagepredicatecombined6(s13.caller) ) {
-                      navigate(procedureStatus(s13.caller))[]{
-                        text(s13.caller.name)[]{
-                        }
-                      }
-                    }
-                    else
-                    {
-                    }
-                  }
-                  else
-                  {
-                  },
-                  if ( s13.caller == null ) {
-                    text("null")[]{
-                    }
-                  }
-                  else
-                  {
-                  }
-                }
-              }
-            },
-            groupitem()[]{
-              label("Returnstate: ")[]{
-                outputInt(s13.returnstate)[]{
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  define page ifProc0 (p35 : PdpMeeting) {
-    init
-    {
-      if ( genpagepredicatecombined11(p35) )
-      {
-      }
-      else
-      {
-        goto accessDenied();
-      }
-    }
-  }
-
-  entity TestWorkflowProcedureStatus : ProcedureStatus {
-    p -> PdpMeeting ( )
-    function enabled ( ) : Void
-    {
-    }
-    function done ( ) : Void
-    {
-      this.isEnabled := false;
-      this.persist();
-      this.next(0);
-    }
-    function do ( ) : Void
-    {
-      this.p.report := "Kanarie";
-      this.p.persist();
-      this.done();
-    }
-    function disabled ( ) : Void
-    {
-    }
-  }
-
-  define page testWorkflowProcedureStatus (s14 : TestWorkflowProcedureStatus) {
-    init
-    {
-      if ( genpagepredicatecombined12(s14) )
+      if ( genpagepredicatecombined10(s14) )
       {
       }
       else
@@ -2843,7 +2715,7 @@ section  procedures .
               label("P: ")[]{
                 dummy()[]{
                   if ( s14.p != null ) {
-                    if ( genpagepredicatecombined34(s14.p) ) {
+                    if ( genpagepredicatecombined36(s14.p) ) {
                       navigate(pdpMeeting(s14.p))[]{
                         text(s14.p.name)[]{
                         }
@@ -2870,7 +2742,7 @@ section  procedures .
               label("P: ")[]{
                 dummy()[]{
                   if ( s14.p != null ) {
-                    if ( genpagepredicatecombined34(s14.p) ) {
+                    if ( genpagepredicatecombined36(s14.p) ) {
                       navigate(pdpMeeting(s14.p))[]{
                         text(s14.p.name)[]{
                         }
@@ -2992,6 +2864,525 @@ section  procedures .
             groupitem()[]{
               label("Returnstate: ")[]{
                 outputInt(s14.returnstate)[]{
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  define page xorProc0 (p59 : PdpMeeting) {
+    init
+    {
+      if ( genpagepredicatecombined11(p59) )
+      {
+      }
+      else
+      {
+        goto accessDenied();
+      }
+    }
+  }
+
+  entity RepeatUntilProc0ProcedureStatus : ProcedureStatus {
+    p -> PdpMeeting ( )
+    function enable1 ( ) : Void
+    {
+      this.next(0);
+    }
+    function enable2 ( ) : Void
+    {
+      this.next(3);
+    }
+    function disable1 ( ) : Void
+    {
+      this.p.writeReport.disable();
+      this.p.approveReport.disable();
+    }
+    function disable2 ( ) : Void
+    {
+      this.p.finalizeReport.disable();
+    }
+    function next ( state : Int ) : Void
+    {
+      if ( state == 0 )
+      {
+        this.p.writeReport.enable__ProcedureStatus__Int(this as ProcedureStatus, 1);
+      }
+      else
+      {
+      }
+      if ( state == 1 )
+      {
+        this.disable2();
+        this.p.approveReport.enable__ProcedureStatus__Int(this as ProcedureStatus, 2);
+      }
+      else
+      {
+      }
+      if ( state == 2 )
+      {
+        this.enable1();
+        this.enable2();
+      }
+      else
+      {
+      }
+      if ( state == 3 )
+      {
+        this.p.finalizeReport.enable__ProcedureStatus__Int(this as ProcedureStatus, 4);
+      }
+      else
+      {
+      }
+      if ( state == 4 )
+      {
+        this.disable1();
+        this.processed();
+      }
+      else
+      {
+      }
+    }
+    function enabled ( ) : Void
+    {
+      this.enable1();
+    }
+    function done ( ) : Void
+    {
+      this.isEnabled := false;
+      this.persist();
+      this.next(0);
+    }
+    function do ( ) : Void
+    {
+      this.done();
+    }
+    function disabled ( ) : Void
+    {
+      this.disable1();
+      this.disable2();
+    }
+  }
+
+  define page repeatUntilProc0ProcedureStatus (s15 : RepeatUntilProc0ProcedureStatus) {
+    init
+    {
+      if ( genpagepredicatecombined12(s15) )
+      {
+      }
+      else
+      {
+        goto accessDenied();
+      }
+    }
+    dummy()[]{
+      main()[]{
+      },
+      define local body () {
+        header()[]{
+          text(s15.name)[]{
+          }
+        }
+        group("Details")[]{
+          dummy()[]{
+            groupitem()[]{
+              label("P: ")[]{
+                dummy()[]{
+                  if ( s15.p != null ) {
+                    if ( genpagepredicatecombined36(s15.p) ) {
+                      navigate(pdpMeeting(s15.p))[]{
+                        text(s15.p.name)[]{
+                        }
+                      }
+                    }
+                    else
+                    {
+                    }
+                  }
+                  else
+                  {
+                  },
+                  if ( s15.p == null ) {
+                    text("null")[]{
+                    }
+                  }
+                  else
+                  {
+                  }
+                }
+              }
+            },
+            groupitem()[]{
+              label("P: ")[]{
+                dummy()[]{
+                  if ( s15.p != null ) {
+                    if ( genpagepredicatecombined36(s15.p) ) {
+                      navigate(pdpMeeting(s15.p))[]{
+                        text(s15.p.name)[]{
+                        }
+                      }
+                    }
+                    else
+                    {
+                    }
+                  }
+                  else
+                  {
+                  },
+                  if ( s15.p == null ) {
+                    text("null")[]{
+                    }
+                  }
+                  else
+                  {
+                  }
+                }
+              }
+            },
+            groupitem()[]{
+              label("Name: ")[]{
+                text(s15.name)[]{
+                }
+              }
+            },
+            groupitem()[]{
+              label("Is enabled: ")[]{
+                outputBool(s15.isEnabled)[]{
+                }
+              }
+            },
+            groupitem()[]{
+              label("Date: ")[]{
+                outputDateTime(s15.date)[]{
+                }
+              }
+            },
+            groupitem()[]{
+              label("Caller: ")[]{
+                dummy()[]{
+                  if ( s15.caller != null ) {
+                    if ( genpagepredicatecombined6(s15.caller) ) {
+                      navigate(procedureStatus(s15.caller))[]{
+                        text(s15.caller.name)[]{
+                        }
+                      }
+                    }
+                    else
+                    {
+                    }
+                  }
+                  else
+                  {
+                  },
+                  if ( s15.caller == null ) {
+                    text("null")[]{
+                    }
+                  }
+                  else
+                  {
+                  }
+                }
+              }
+            },
+            groupitem()[]{
+              label("Returnstate: ")[]{
+                outputInt(s15.returnstate)[]{
+                }
+              }
+            },
+            groupitem()[]{
+              label("Name: ")[]{
+                text(s15.name)[]{
+                }
+              }
+            },
+            groupitem()[]{
+              label("Is enabled: ")[]{
+                outputBool(s15.isEnabled)[]{
+                }
+              }
+            },
+            groupitem()[]{
+              label("Date: ")[]{
+                outputDateTime(s15.date)[]{
+                }
+              }
+            },
+            groupitem()[]{
+              label("Caller: ")[]{
+                dummy()[]{
+                  if ( s15.caller != null ) {
+                    if ( genpagepredicatecombined6(s15.caller) ) {
+                      navigate(procedureStatus(s15.caller))[]{
+                        text(s15.caller.name)[]{
+                        }
+                      }
+                    }
+                    else
+                    {
+                    }
+                  }
+                  else
+                  {
+                  },
+                  if ( s15.caller == null ) {
+                    text("null")[]{
+                    }
+                  }
+                  else
+                  {
+                  }
+                }
+              }
+            },
+            groupitem()[]{
+              label("Returnstate: ")[]{
+                outputInt(s15.returnstate)[]{
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  define page repeatUntilProc0 (p60 : PdpMeeting) {
+    init
+    {
+      if ( genpagepredicatecombined13(p60) )
+      {
+      }
+      else
+      {
+        goto accessDenied();
+      }
+    }
+  }
+
+  entity PdpWorkflowProcedureStatus : ProcedureStatus {
+    p -> PdpMeeting ( )
+    function next ( state : Int ) : Void
+    {
+      if ( state == 0 )
+      {
+        this.p.xorProc0.enable__ProcedureStatus__Int(this as ProcedureStatus, 1);
+      }
+      else
+      {
+      }
+      if ( state == 1 )
+      {
+        this.p.repeatUntilProc0.enable__ProcedureStatus__Int(this as ProcedureStatus, 2);
+      }
+      else
+      {
+      }
+      if ( state == 2 )
+      {
+        this.processed();
+      }
+      else
+      {
+      }
+    }
+    function enabled ( ) : Void
+    {
+    }
+    function done ( ) : Void
+    {
+      this.isEnabled := false;
+      this.persist();
+      this.next(0);
+    }
+    function do ( ) : Void
+    {
+      this.p.report := "Kanarie";
+      this.p.persist();
+      this.done();
+    }
+    function disabled ( ) : Void
+    {
+    }
+  }
+
+  define page pdpWorkflowProcedureStatus (s16 : PdpWorkflowProcedureStatus) {
+    init
+    {
+      if ( genpagepredicatecombined14(s16) )
+      {
+      }
+      else
+      {
+        goto accessDenied();
+      }
+    }
+    dummy()[]{
+      main()[]{
+      },
+      define local body () {
+        header()[]{
+          text(s16.name)[]{
+          }
+        }
+        group("Details")[]{
+          dummy()[]{
+            groupitem()[]{
+              label("P: ")[]{
+                dummy()[]{
+                  if ( s16.p != null ) {
+                    if ( genpagepredicatecombined36(s16.p) ) {
+                      navigate(pdpMeeting(s16.p))[]{
+                        text(s16.p.name)[]{
+                        }
+                      }
+                    }
+                    else
+                    {
+                    }
+                  }
+                  else
+                  {
+                  },
+                  if ( s16.p == null ) {
+                    text("null")[]{
+                    }
+                  }
+                  else
+                  {
+                  }
+                }
+              }
+            },
+            groupitem()[]{
+              label("P: ")[]{
+                dummy()[]{
+                  if ( s16.p != null ) {
+                    if ( genpagepredicatecombined36(s16.p) ) {
+                      navigate(pdpMeeting(s16.p))[]{
+                        text(s16.p.name)[]{
+                        }
+                      }
+                    }
+                    else
+                    {
+                    }
+                  }
+                  else
+                  {
+                  },
+                  if ( s16.p == null ) {
+                    text("null")[]{
+                    }
+                  }
+                  else
+                  {
+                  }
+                }
+              }
+            },
+            groupitem()[]{
+              label("Name: ")[]{
+                text(s16.name)[]{
+                }
+              }
+            },
+            groupitem()[]{
+              label("Is enabled: ")[]{
+                outputBool(s16.isEnabled)[]{
+                }
+              }
+            },
+            groupitem()[]{
+              label("Date: ")[]{
+                outputDateTime(s16.date)[]{
+                }
+              }
+            },
+            groupitem()[]{
+              label("Caller: ")[]{
+                dummy()[]{
+                  if ( s16.caller != null ) {
+                    if ( genpagepredicatecombined6(s16.caller) ) {
+                      navigate(procedureStatus(s16.caller))[]{
+                        text(s16.caller.name)[]{
+                        }
+                      }
+                    }
+                    else
+                    {
+                    }
+                  }
+                  else
+                  {
+                  },
+                  if ( s16.caller == null ) {
+                    text("null")[]{
+                    }
+                  }
+                  else
+                  {
+                  }
+                }
+              }
+            },
+            groupitem()[]{
+              label("Returnstate: ")[]{
+                outputInt(s16.returnstate)[]{
+                }
+              }
+            },
+            groupitem()[]{
+              label("Name: ")[]{
+                text(s16.name)[]{
+                }
+              }
+            },
+            groupitem()[]{
+              label("Is enabled: ")[]{
+                outputBool(s16.isEnabled)[]{
+                }
+              }
+            },
+            groupitem()[]{
+              label("Date: ")[]{
+                outputDateTime(s16.date)[]{
+                }
+              }
+            },
+            groupitem()[]{
+              label("Caller: ")[]{
+                dummy()[]{
+                  if ( s16.caller != null ) {
+                    if ( genpagepredicatecombined6(s16.caller) ) {
+                      navigate(procedureStatus(s16.caller))[]{
+                        text(s16.caller.name)[]{
+                        }
+                      }
+                    }
+                    else
+                    {
+                    }
+                  }
+                  else
+                  {
+                  },
+                  if ( s16.caller == null ) {
+                    text("null")[]{
+                    }
+                  }
+                  else
+                  {
+                  }
+                }
+              }
+            },
+            groupitem()[]{
+              label("Returnstate: ")[]{
+                outputInt(s16.returnstate)[]{
                 }
               }
             }
@@ -3021,10 +3412,10 @@ section  procedures .
     }
   }
 
-  define page employeeFillInFormProcedureStatus (s15 : EmployeeFillInFormProcedureStatus) {
+  define page employeeFillInFormProcedureStatus (s17 : EmployeeFillInFormProcedureStatus) {
     init
     {
-      if ( genpagepredicatecombined13(s15) )
+      if ( genpagepredicatecombined15(s17) )
       {
       }
       else
@@ -3037,7 +3428,7 @@ section  procedures .
       },
       define local body () {
         header()[]{
-          text(s15.name)[]{
+          text(s17.name)[]{
           }
         }
         group("Details")[]{
@@ -3045,10 +3436,10 @@ section  procedures .
             groupitem()[]{
               label("P: ")[]{
                 dummy()[]{
-                  if ( s15.p != null ) {
-                    if ( genpagepredicatecombined34(s15.p) ) {
-                      navigate(pdpMeeting(s15.p))[]{
-                        text(s15.p.name)[]{
+                  if ( s17.p != null ) {
+                    if ( genpagepredicatecombined36(s17.p) ) {
+                      navigate(pdpMeeting(s17.p))[]{
+                        text(s17.p.name)[]{
                         }
                       }
                     }
@@ -3059,7 +3450,7 @@ section  procedures .
                   else
                   {
                   },
-                  if ( s15.p == null ) {
+                  if ( s17.p == null ) {
                     text("null")[]{
                     }
                   }
@@ -3072,10 +3463,10 @@ section  procedures .
             groupitem()[]{
               label("P: ")[]{
                 dummy()[]{
-                  if ( s15.p != null ) {
-                    if ( genpagepredicatecombined34(s15.p) ) {
-                      navigate(pdpMeeting(s15.p))[]{
-                        text(s15.p.name)[]{
+                  if ( s17.p != null ) {
+                    if ( genpagepredicatecombined36(s17.p) ) {
+                      navigate(pdpMeeting(s17.p))[]{
+                        text(s17.p.name)[]{
                         }
                       }
                     }
@@ -3086,7 +3477,7 @@ section  procedures .
                   else
                   {
                   },
-                  if ( s15.p == null ) {
+                  if ( s17.p == null ) {
                     text("null")[]{
                     }
                   }
@@ -3098,29 +3489,29 @@ section  procedures .
             },
             groupitem()[]{
               label("Name: ")[]{
-                text(s15.name)[]{
+                text(s17.name)[]{
                 }
               }
             },
             groupitem()[]{
               label("Is enabled: ")[]{
-                outputBool(s15.isEnabled)[]{
+                outputBool(s17.isEnabled)[]{
                 }
               }
             },
             groupitem()[]{
               label("Date: ")[]{
-                outputDateTime(s15.date)[]{
+                outputDateTime(s17.date)[]{
                 }
               }
             },
             groupitem()[]{
               label("Caller: ")[]{
                 dummy()[]{
-                  if ( s15.caller != null ) {
-                    if ( genpagepredicatecombined6(s15.caller) ) {
-                      navigate(procedureStatus(s15.caller))[]{
-                        text(s15.caller.name)[]{
+                  if ( s17.caller != null ) {
+                    if ( genpagepredicatecombined6(s17.caller) ) {
+                      navigate(procedureStatus(s17.caller))[]{
+                        text(s17.caller.name)[]{
                         }
                       }
                     }
@@ -3131,7 +3522,7 @@ section  procedures .
                   else
                   {
                   },
-                  if ( s15.caller == null ) {
+                  if ( s17.caller == null ) {
                     text("null")[]{
                     }
                   }
@@ -3143,35 +3534,35 @@ section  procedures .
             },
             groupitem()[]{
               label("Returnstate: ")[]{
-                outputInt(s15.returnstate)[]{
+                outputInt(s17.returnstate)[]{
                 }
               }
             },
             groupitem()[]{
               label("Name: ")[]{
-                text(s15.name)[]{
+                text(s17.name)[]{
                 }
               }
             },
             groupitem()[]{
               label("Is enabled: ")[]{
-                outputBool(s15.isEnabled)[]{
+                outputBool(s17.isEnabled)[]{
                 }
               }
             },
             groupitem()[]{
               label("Date: ")[]{
-                outputDateTime(s15.date)[]{
+                outputDateTime(s17.date)[]{
                 }
               }
             },
             groupitem()[]{
               label("Caller: ")[]{
                 dummy()[]{
-                  if ( s15.caller != null ) {
-                    if ( genpagepredicatecombined6(s15.caller) ) {
-                      navigate(procedureStatus(s15.caller))[]{
-                        text(s15.caller.name)[]{
+                  if ( s17.caller != null ) {
+                    if ( genpagepredicatecombined6(s17.caller) ) {
+                      navigate(procedureStatus(s17.caller))[]{
+                        text(s17.caller.name)[]{
                         }
                       }
                     }
@@ -3182,7 +3573,7 @@ section  procedures .
                   else
                   {
                   },
-                  if ( s15.caller == null ) {
+                  if ( s17.caller == null ) {
                     text("null")[]{
                     }
                   }
@@ -3194,7 +3585,7 @@ section  procedures .
             },
             groupitem()[]{
               label("Returnstate: ")[]{
-                outputInt(s15.returnstate)[]{
+                outputInt(s17.returnstate)[]{
                 }
               }
             }
@@ -3224,10 +3615,10 @@ section  procedures .
     }
   }
 
-  define page managerFillInFormProcedureStatus (s16 : ManagerFillInFormProcedureStatus) {
+  define page managerFillInFormProcedureStatus (s18 : ManagerFillInFormProcedureStatus) {
     init
     {
-      if ( genpagepredicatecombined14(s16) )
+      if ( genpagepredicatecombined16(s18) )
       {
       }
       else
@@ -3240,7 +3631,7 @@ section  procedures .
       },
       define local body () {
         header()[]{
-          text(s16.name)[]{
+          text(s18.name)[]{
           }
         }
         group("Details")[]{
@@ -3248,10 +3639,10 @@ section  procedures .
             groupitem()[]{
               label("P: ")[]{
                 dummy()[]{
-                  if ( s16.p != null ) {
-                    if ( genpagepredicatecombined34(s16.p) ) {
-                      navigate(pdpMeeting(s16.p))[]{
-                        text(s16.p.name)[]{
+                  if ( s18.p != null ) {
+                    if ( genpagepredicatecombined36(s18.p) ) {
+                      navigate(pdpMeeting(s18.p))[]{
+                        text(s18.p.name)[]{
                         }
                       }
                     }
@@ -3262,7 +3653,7 @@ section  procedures .
                   else
                   {
                   },
-                  if ( s16.p == null ) {
+                  if ( s18.p == null ) {
                     text("null")[]{
                     }
                   }
@@ -3275,10 +3666,10 @@ section  procedures .
             groupitem()[]{
               label("P: ")[]{
                 dummy()[]{
-                  if ( s16.p != null ) {
-                    if ( genpagepredicatecombined34(s16.p) ) {
-                      navigate(pdpMeeting(s16.p))[]{
-                        text(s16.p.name)[]{
+                  if ( s18.p != null ) {
+                    if ( genpagepredicatecombined36(s18.p) ) {
+                      navigate(pdpMeeting(s18.p))[]{
+                        text(s18.p.name)[]{
                         }
                       }
                     }
@@ -3289,7 +3680,7 @@ section  procedures .
                   else
                   {
                   },
-                  if ( s16.p == null ) {
+                  if ( s18.p == null ) {
                     text("null")[]{
                     }
                   }
@@ -3301,29 +3692,29 @@ section  procedures .
             },
             groupitem()[]{
               label("Name: ")[]{
-                text(s16.name)[]{
+                text(s18.name)[]{
                 }
               }
             },
             groupitem()[]{
               label("Is enabled: ")[]{
-                outputBool(s16.isEnabled)[]{
+                outputBool(s18.isEnabled)[]{
                 }
               }
             },
             groupitem()[]{
               label("Date: ")[]{
-                outputDateTime(s16.date)[]{
+                outputDateTime(s18.date)[]{
                 }
               }
             },
             groupitem()[]{
               label("Caller: ")[]{
                 dummy()[]{
-                  if ( s16.caller != null ) {
-                    if ( genpagepredicatecombined6(s16.caller) ) {
-                      navigate(procedureStatus(s16.caller))[]{
-                        text(s16.caller.name)[]{
+                  if ( s18.caller != null ) {
+                    if ( genpagepredicatecombined6(s18.caller) ) {
+                      navigate(procedureStatus(s18.caller))[]{
+                        text(s18.caller.name)[]{
                         }
                       }
                     }
@@ -3334,7 +3725,7 @@ section  procedures .
                   else
                   {
                   },
-                  if ( s16.caller == null ) {
+                  if ( s18.caller == null ) {
                     text("null")[]{
                     }
                   }
@@ -3346,35 +3737,35 @@ section  procedures .
             },
             groupitem()[]{
               label("Returnstate: ")[]{
-                outputInt(s16.returnstate)[]{
+                outputInt(s18.returnstate)[]{
                 }
               }
             },
             groupitem()[]{
               label("Name: ")[]{
-                text(s16.name)[]{
+                text(s18.name)[]{
                 }
               }
             },
             groupitem()[]{
               label("Is enabled: ")[]{
-                outputBool(s16.isEnabled)[]{
+                outputBool(s18.isEnabled)[]{
                 }
               }
             },
             groupitem()[]{
               label("Date: ")[]{
-                outputDateTime(s16.date)[]{
+                outputDateTime(s18.date)[]{
                 }
               }
             },
             groupitem()[]{
               label("Caller: ")[]{
                 dummy()[]{
-                  if ( s16.caller != null ) {
-                    if ( genpagepredicatecombined6(s16.caller) ) {
-                      navigate(procedureStatus(s16.caller))[]{
-                        text(s16.caller.name)[]{
+                  if ( s18.caller != null ) {
+                    if ( genpagepredicatecombined6(s18.caller) ) {
+                      navigate(procedureStatus(s18.caller))[]{
+                        text(s18.caller.name)[]{
                         }
                       }
                     }
@@ -3385,7 +3776,7 @@ section  procedures .
                   else
                   {
                   },
-                  if ( s16.caller == null ) {
+                  if ( s18.caller == null ) {
                     text("null")[]{
                     }
                   }
@@ -3397,7 +3788,7 @@ section  procedures .
             },
             groupitem()[]{
               label("Returnstate: ")[]{
-                outputInt(s16.returnstate)[]{
+                outputInt(s18.returnstate)[]{
                 }
               }
             }
@@ -3427,10 +3818,10 @@ section  procedures .
     }
   }
 
-  define page writeReportProcedureStatus (s17 : WriteReportProcedureStatus) {
+  define page writeReportProcedureStatus (s19 : WriteReportProcedureStatus) {
     init
     {
-      if ( genpagepredicatecombined15(s17) )
+      if ( genpagepredicatecombined17(s19) )
       {
       }
       else
@@ -3443,7 +3834,7 @@ section  procedures .
       },
       define local body () {
         header()[]{
-          text(s17.name)[]{
+          text(s19.name)[]{
           }
         }
         group("Details")[]{
@@ -3451,10 +3842,10 @@ section  procedures .
             groupitem()[]{
               label("P: ")[]{
                 dummy()[]{
-                  if ( s17.p != null ) {
-                    if ( genpagepredicatecombined34(s17.p) ) {
-                      navigate(pdpMeeting(s17.p))[]{
-                        text(s17.p.name)[]{
+                  if ( s19.p != null ) {
+                    if ( genpagepredicatecombined36(s19.p) ) {
+                      navigate(pdpMeeting(s19.p))[]{
+                        text(s19.p.name)[]{
                         }
                       }
                     }
@@ -3465,7 +3856,7 @@ section  procedures .
                   else
                   {
                   },
-                  if ( s17.p == null ) {
+                  if ( s19.p == null ) {
                     text("null")[]{
                     }
                   }
@@ -3478,10 +3869,10 @@ section  procedures .
             groupitem()[]{
               label("P: ")[]{
                 dummy()[]{
-                  if ( s17.p != null ) {
-                    if ( genpagepredicatecombined34(s17.p) ) {
-                      navigate(pdpMeeting(s17.p))[]{
-                        text(s17.p.name)[]{
+                  if ( s19.p != null ) {
+                    if ( genpagepredicatecombined36(s19.p) ) {
+                      navigate(pdpMeeting(s19.p))[]{
+                        text(s19.p.name)[]{
                         }
                       }
                     }
@@ -3492,7 +3883,7 @@ section  procedures .
                   else
                   {
                   },
-                  if ( s17.p == null ) {
+                  if ( s19.p == null ) {
                     text("null")[]{
                     }
                   }
@@ -3504,29 +3895,29 @@ section  procedures .
             },
             groupitem()[]{
               label("Name: ")[]{
-                text(s17.name)[]{
+                text(s19.name)[]{
                 }
               }
             },
             groupitem()[]{
               label("Is enabled: ")[]{
-                outputBool(s17.isEnabled)[]{
+                outputBool(s19.isEnabled)[]{
                 }
               }
             },
             groupitem()[]{
               label("Date: ")[]{
-                outputDateTime(s17.date)[]{
+                outputDateTime(s19.date)[]{
                 }
               }
             },
             groupitem()[]{
               label("Caller: ")[]{
                 dummy()[]{
-                  if ( s17.caller != null ) {
-                    if ( genpagepredicatecombined6(s17.caller) ) {
-                      navigate(procedureStatus(s17.caller))[]{
-                        text(s17.caller.name)[]{
+                  if ( s19.caller != null ) {
+                    if ( genpagepredicatecombined6(s19.caller) ) {
+                      navigate(procedureStatus(s19.caller))[]{
+                        text(s19.caller.name)[]{
                         }
                       }
                     }
@@ -3537,7 +3928,7 @@ section  procedures .
                   else
                   {
                   },
-                  if ( s17.caller == null ) {
+                  if ( s19.caller == null ) {
                     text("null")[]{
                     }
                   }
@@ -3549,35 +3940,35 @@ section  procedures .
             },
             groupitem()[]{
               label("Returnstate: ")[]{
-                outputInt(s17.returnstate)[]{
+                outputInt(s19.returnstate)[]{
                 }
               }
             },
             groupitem()[]{
               label("Name: ")[]{
-                text(s17.name)[]{
+                text(s19.name)[]{
                 }
               }
             },
             groupitem()[]{
               label("Is enabled: ")[]{
-                outputBool(s17.isEnabled)[]{
+                outputBool(s19.isEnabled)[]{
                 }
               }
             },
             groupitem()[]{
               label("Date: ")[]{
-                outputDateTime(s17.date)[]{
+                outputDateTime(s19.date)[]{
                 }
               }
             },
             groupitem()[]{
               label("Caller: ")[]{
                 dummy()[]{
-                  if ( s17.caller != null ) {
-                    if ( genpagepredicatecombined6(s17.caller) ) {
-                      navigate(procedureStatus(s17.caller))[]{
-                        text(s17.caller.name)[]{
+                  if ( s19.caller != null ) {
+                    if ( genpagepredicatecombined6(s19.caller) ) {
+                      navigate(procedureStatus(s19.caller))[]{
+                        text(s19.caller.name)[]{
                         }
                       }
                     }
@@ -3588,7 +3979,7 @@ section  procedures .
                   else
                   {
                   },
-                  if ( s17.caller == null ) {
+                  if ( s19.caller == null ) {
                     text("null")[]{
                     }
                   }
@@ -3600,7 +3991,7 @@ section  procedures .
             },
             groupitem()[]{
               label("Returnstate: ")[]{
-                outputInt(s17.returnstate)[]{
+                outputInt(s19.returnstate)[]{
                 }
               }
             }
@@ -3630,10 +4021,10 @@ section  procedures .
     }
   }
 
-  define page finalizeReportProcedureStatus (s18 : FinalizeReportProcedureStatus) {
+  define page finalizeReportProcedureStatus (s20 : FinalizeReportProcedureStatus) {
     init
     {
-      if ( genpagepredicatecombined16(s18) )
+      if ( genpagepredicatecombined18(s20) )
       {
       }
       else
@@ -3646,7 +4037,7 @@ section  procedures .
       },
       define local body () {
         header()[]{
-          text(s18.name)[]{
+          text(s20.name)[]{
           }
         }
         group("Details")[]{
@@ -3654,10 +4045,10 @@ section  procedures .
             groupitem()[]{
               label("P: ")[]{
                 dummy()[]{
-                  if ( s18.p != null ) {
-                    if ( genpagepredicatecombined34(s18.p) ) {
-                      navigate(pdpMeeting(s18.p))[]{
-                        text(s18.p.name)[]{
+                  if ( s20.p != null ) {
+                    if ( genpagepredicatecombined36(s20.p) ) {
+                      navigate(pdpMeeting(s20.p))[]{
+                        text(s20.p.name)[]{
                         }
                       }
                     }
@@ -3668,7 +4059,7 @@ section  procedures .
                   else
                   {
                   },
-                  if ( s18.p == null ) {
+                  if ( s20.p == null ) {
                     text("null")[]{
                     }
                   }
@@ -3681,10 +4072,10 @@ section  procedures .
             groupitem()[]{
               label("P: ")[]{
                 dummy()[]{
-                  if ( s18.p != null ) {
-                    if ( genpagepredicatecombined34(s18.p) ) {
-                      navigate(pdpMeeting(s18.p))[]{
-                        text(s18.p.name)[]{
+                  if ( s20.p != null ) {
+                    if ( genpagepredicatecombined36(s20.p) ) {
+                      navigate(pdpMeeting(s20.p))[]{
+                        text(s20.p.name)[]{
                         }
                       }
                     }
@@ -3695,7 +4086,7 @@ section  procedures .
                   else
                   {
                   },
-                  if ( s18.p == null ) {
+                  if ( s20.p == null ) {
                     text("null")[]{
                     }
                   }
@@ -3707,29 +4098,29 @@ section  procedures .
             },
             groupitem()[]{
               label("Name: ")[]{
-                text(s18.name)[]{
+                text(s20.name)[]{
                 }
               }
             },
             groupitem()[]{
               label("Is enabled: ")[]{
-                outputBool(s18.isEnabled)[]{
+                outputBool(s20.isEnabled)[]{
                 }
               }
             },
             groupitem()[]{
               label("Date: ")[]{
-                outputDateTime(s18.date)[]{
+                outputDateTime(s20.date)[]{
                 }
               }
             },
             groupitem()[]{
               label("Caller: ")[]{
                 dummy()[]{
-                  if ( s18.caller != null ) {
-                    if ( genpagepredicatecombined6(s18.caller) ) {
-                      navigate(procedureStatus(s18.caller))[]{
-                        text(s18.caller.name)[]{
+                  if ( s20.caller != null ) {
+                    if ( genpagepredicatecombined6(s20.caller) ) {
+                      navigate(procedureStatus(s20.caller))[]{
+                        text(s20.caller.name)[]{
                         }
                       }
                     }
@@ -3740,7 +4131,7 @@ section  procedures .
                   else
                   {
                   },
-                  if ( s18.caller == null ) {
+                  if ( s20.caller == null ) {
                     text("null")[]{
                     }
                   }
@@ -3752,35 +4143,35 @@ section  procedures .
             },
             groupitem()[]{
               label("Returnstate: ")[]{
-                outputInt(s18.returnstate)[]{
+                outputInt(s20.returnstate)[]{
                 }
               }
             },
             groupitem()[]{
               label("Name: ")[]{
-                text(s18.name)[]{
+                text(s20.name)[]{
                 }
               }
             },
             groupitem()[]{
               label("Is enabled: ")[]{
-                outputBool(s18.isEnabled)[]{
+                outputBool(s20.isEnabled)[]{
                 }
               }
             },
             groupitem()[]{
               label("Date: ")[]{
-                outputDateTime(s18.date)[]{
+                outputDateTime(s20.date)[]{
                 }
               }
             },
             groupitem()[]{
               label("Caller: ")[]{
                 dummy()[]{
-                  if ( s18.caller != null ) {
-                    if ( genpagepredicatecombined6(s18.caller) ) {
-                      navigate(procedureStatus(s18.caller))[]{
-                        text(s18.caller.name)[]{
+                  if ( s20.caller != null ) {
+                    if ( genpagepredicatecombined6(s20.caller) ) {
+                      navigate(procedureStatus(s20.caller))[]{
+                        text(s20.caller.name)[]{
                         }
                       }
                     }
@@ -3791,7 +4182,7 @@ section  procedures .
                   else
                   {
                   },
-                  if ( s18.caller == null ) {
+                  if ( s20.caller == null ) {
                     text("null")[]{
                     }
                   }
@@ -3803,7 +4194,7 @@ section  procedures .
             },
             groupitem()[]{
               label("Returnstate: ")[]{
-                outputInt(s18.returnstate)[]{
+                outputInt(s20.returnstate)[]{
                 }
               }
             }
@@ -3833,10 +4224,10 @@ section  procedures .
     }
   }
 
-  define page approveReportProcedureStatus (s19 : ApproveReportProcedureStatus) {
+  define page approveReportProcedureStatus (s21 : ApproveReportProcedureStatus) {
     init
     {
-      if ( genpagepredicatecombined17(s19) )
+      if ( genpagepredicatecombined19(s21) )
       {
       }
       else
@@ -3849,7 +4240,7 @@ section  procedures .
       },
       define local body () {
         header()[]{
-          text(s19.name)[]{
+          text(s21.name)[]{
           }
         }
         group("Details")[]{
@@ -3857,10 +4248,10 @@ section  procedures .
             groupitem()[]{
               label("P: ")[]{
                 dummy()[]{
-                  if ( s19.p != null ) {
-                    if ( genpagepredicatecombined34(s19.p) ) {
-                      navigate(pdpMeeting(s19.p))[]{
-                        text(s19.p.name)[]{
+                  if ( s21.p != null ) {
+                    if ( genpagepredicatecombined36(s21.p) ) {
+                      navigate(pdpMeeting(s21.p))[]{
+                        text(s21.p.name)[]{
                         }
                       }
                     }
@@ -3871,7 +4262,7 @@ section  procedures .
                   else
                   {
                   },
-                  if ( s19.p == null ) {
+                  if ( s21.p == null ) {
                     text("null")[]{
                     }
                   }
@@ -3884,10 +4275,10 @@ section  procedures .
             groupitem()[]{
               label("P: ")[]{
                 dummy()[]{
-                  if ( s19.p != null ) {
-                    if ( genpagepredicatecombined34(s19.p) ) {
-                      navigate(pdpMeeting(s19.p))[]{
-                        text(s19.p.name)[]{
+                  if ( s21.p != null ) {
+                    if ( genpagepredicatecombined36(s21.p) ) {
+                      navigate(pdpMeeting(s21.p))[]{
+                        text(s21.p.name)[]{
                         }
                       }
                     }
@@ -3898,7 +4289,7 @@ section  procedures .
                   else
                   {
                   },
-                  if ( s19.p == null ) {
+                  if ( s21.p == null ) {
                     text("null")[]{
                     }
                   }
@@ -3910,29 +4301,29 @@ section  procedures .
             },
             groupitem()[]{
               label("Name: ")[]{
-                text(s19.name)[]{
+                text(s21.name)[]{
                 }
               }
             },
             groupitem()[]{
               label("Is enabled: ")[]{
-                outputBool(s19.isEnabled)[]{
+                outputBool(s21.isEnabled)[]{
                 }
               }
             },
             groupitem()[]{
               label("Date: ")[]{
-                outputDateTime(s19.date)[]{
+                outputDateTime(s21.date)[]{
                 }
               }
             },
             groupitem()[]{
               label("Caller: ")[]{
                 dummy()[]{
-                  if ( s19.caller != null ) {
-                    if ( genpagepredicatecombined6(s19.caller) ) {
-                      navigate(procedureStatus(s19.caller))[]{
-                        text(s19.caller.name)[]{
+                  if ( s21.caller != null ) {
+                    if ( genpagepredicatecombined6(s21.caller) ) {
+                      navigate(procedureStatus(s21.caller))[]{
+                        text(s21.caller.name)[]{
                         }
                       }
                     }
@@ -3943,7 +4334,7 @@ section  procedures .
                   else
                   {
                   },
-                  if ( s19.caller == null ) {
+                  if ( s21.caller == null ) {
                     text("null")[]{
                     }
                   }
@@ -3955,35 +4346,35 @@ section  procedures .
             },
             groupitem()[]{
               label("Returnstate: ")[]{
-                outputInt(s19.returnstate)[]{
+                outputInt(s21.returnstate)[]{
                 }
               }
             },
             groupitem()[]{
               label("Name: ")[]{
-                text(s19.name)[]{
+                text(s21.name)[]{
                 }
               }
             },
             groupitem()[]{
               label("Is enabled: ")[]{
-                outputBool(s19.isEnabled)[]{
+                outputBool(s21.isEnabled)[]{
                 }
               }
             },
             groupitem()[]{
               label("Date: ")[]{
-                outputDateTime(s19.date)[]{
+                outputDateTime(s21.date)[]{
                 }
               }
             },
             groupitem()[]{
               label("Caller: ")[]{
                 dummy()[]{
-                  if ( s19.caller != null ) {
-                    if ( genpagepredicatecombined6(s19.caller) ) {
-                      navigate(procedureStatus(s19.caller))[]{
-                        text(s19.caller.name)[]{
+                  if ( s21.caller != null ) {
+                    if ( genpagepredicatecombined6(s21.caller) ) {
+                      navigate(procedureStatus(s21.caller))[]{
+                        text(s21.caller.name)[]{
                         }
                       }
                     }
@@ -3994,7 +4385,7 @@ section  procedures .
                   else
                   {
                   },
-                  if ( s19.caller == null ) {
+                  if ( s21.caller == null ) {
                     text("null")[]{
                     }
                   }
@@ -4006,7 +4397,7 @@ section  procedures .
             },
             groupitem()[]{
               label("Returnstate: ")[]{
-                outputInt(s19.returnstate)[]{
+                outputInt(s21.returnstate)[]{
                 }
               }
             }
@@ -4016,8 +4407,25 @@ section  procedures .
     }
   }
 
-  entity IfProc1ProcedureStatus : ProcedureStatus {
-    t -> TestDinges ( )
+  entity IfProc0ProcedureStatus : ProcedureStatus {
+    t -> TestRecursive ( )
+    function next ( state : Int ) : Void
+    {
+      if ( state == 0 )
+      {
+        this.t.child.testRecursiveWorkflow.enable__ProcedureStatus__Int(this as ProcedureStatus, 1);
+      }
+      else
+      {
+      }
+      if ( state == 1 )
+      {
+        this.processed();
+      }
+      else
+      {
+      }
+    }
     function enabled ( ) : Void
     {
       if ( this.t.child != null )
@@ -4041,434 +4449,14 @@ section  procedures .
     }
     function disabled ( ) : Void
     {
-      this.t.child.testDingesWorkflow.disable();
+      this.t.child.testRecursiveWorkflow.disable();
     }
   }
 
-  define page ifProc1ProcedureStatus (s20 : IfProc1ProcedureStatus) {
+  define page ifProc0ProcedureStatus (s22 : IfProc0ProcedureStatus) {
     init
     {
-      if ( genpagepredicatecombined18(s20) )
-      {
-      }
-      else
-      {
-        goto accessDenied();
-      }
-    }
-    dummy()[]{
-      main()[]{
-      },
-      define local body () {
-        header()[]{
-          text(s20.name)[]{
-          }
-        }
-        group("Details")[]{
-          dummy()[]{
-            groupitem()[]{
-              label("T: ")[]{
-                dummy()[]{
-                  if ( s20.t != null ) {
-                    if ( genpagepredicatecombined36(s20.t) ) {
-                      navigate(testDinges(s20.t))[]{
-                        text(s20.t.name)[]{
-                        }
-                      }
-                    }
-                    else
-                    {
-                    }
-                  }
-                  else
-                  {
-                  },
-                  if ( s20.t == null ) {
-                    text("null")[]{
-                    }
-                  }
-                  else
-                  {
-                  }
-                }
-              }
-            },
-            groupitem()[]{
-              label("T: ")[]{
-                dummy()[]{
-                  if ( s20.t != null ) {
-                    if ( genpagepredicatecombined36(s20.t) ) {
-                      navigate(testDinges(s20.t))[]{
-                        text(s20.t.name)[]{
-                        }
-                      }
-                    }
-                    else
-                    {
-                    }
-                  }
-                  else
-                  {
-                  },
-                  if ( s20.t == null ) {
-                    text("null")[]{
-                    }
-                  }
-                  else
-                  {
-                  }
-                }
-              }
-            },
-            groupitem()[]{
-              label("Name: ")[]{
-                text(s20.name)[]{
-                }
-              }
-            },
-            groupitem()[]{
-              label("Is enabled: ")[]{
-                outputBool(s20.isEnabled)[]{
-                }
-              }
-            },
-            groupitem()[]{
-              label("Date: ")[]{
-                outputDateTime(s20.date)[]{
-                }
-              }
-            },
-            groupitem()[]{
-              label("Caller: ")[]{
-                dummy()[]{
-                  if ( s20.caller != null ) {
-                    if ( genpagepredicatecombined6(s20.caller) ) {
-                      navigate(procedureStatus(s20.caller))[]{
-                        text(s20.caller.name)[]{
-                        }
-                      }
-                    }
-                    else
-                    {
-                    }
-                  }
-                  else
-                  {
-                  },
-                  if ( s20.caller == null ) {
-                    text("null")[]{
-                    }
-                  }
-                  else
-                  {
-                  }
-                }
-              }
-            },
-            groupitem()[]{
-              label("Returnstate: ")[]{
-                outputInt(s20.returnstate)[]{
-                }
-              }
-            },
-            groupitem()[]{
-              label("Name: ")[]{
-                text(s20.name)[]{
-                }
-              }
-            },
-            groupitem()[]{
-              label("Is enabled: ")[]{
-                outputBool(s20.isEnabled)[]{
-                }
-              }
-            },
-            groupitem()[]{
-              label("Date: ")[]{
-                outputDateTime(s20.date)[]{
-                }
-              }
-            },
-            groupitem()[]{
-              label("Caller: ")[]{
-                dummy()[]{
-                  if ( s20.caller != null ) {
-                    if ( genpagepredicatecombined6(s20.caller) ) {
-                      navigate(procedureStatus(s20.caller))[]{
-                        text(s20.caller.name)[]{
-                        }
-                      }
-                    }
-                    else
-                    {
-                    }
-                  }
-                  else
-                  {
-                  },
-                  if ( s20.caller == null ) {
-                    text("null")[]{
-                    }
-                  }
-                  else
-                  {
-                  }
-                }
-              }
-            },
-            groupitem()[]{
-              label("Returnstate: ")[]{
-                outputInt(s20.returnstate)[]{
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  define page ifProc1 (t19 : TestDinges) {
-    init
-    {
-      if ( genpagepredicatecombined19(t19) )
-      {
-      }
-      else
-      {
-        goto accessDenied();
-      }
-    }
-  }
-
-  entity TestDingesWorkflowProcedureStatus : ProcedureStatus {
-    t -> TestDinges ( )
-    function enabled ( ) : Void
-    {
-      this.do();
-    }
-    function done ( ) : Void
-    {
-      this.isEnabled := false;
-      this.persist();
-      this.next(0);
-    }
-    function do ( ) : Void
-    {
-      this.done();
-    }
-    function disabled ( ) : Void
-    {
-    }
-  }
-
-  define page testDingesWorkflowProcedureStatus (s21 : TestDingesWorkflowProcedureStatus) {
-    init
-    {
-      if ( genpagepredicatecombined20(s21) )
-      {
-      }
-      else
-      {
-        goto accessDenied();
-      }
-    }
-    dummy()[]{
-      main()[]{
-      },
-      define local body () {
-        header()[]{
-          text(s21.name)[]{
-          }
-        }
-        group("Details")[]{
-          dummy()[]{
-            groupitem()[]{
-              label("T: ")[]{
-                dummy()[]{
-                  if ( s21.t != null ) {
-                    if ( genpagepredicatecombined36(s21.t) ) {
-                      navigate(testDinges(s21.t))[]{
-                        text(s21.t.name)[]{
-                        }
-                      }
-                    }
-                    else
-                    {
-                    }
-                  }
-                  else
-                  {
-                  },
-                  if ( s21.t == null ) {
-                    text("null")[]{
-                    }
-                  }
-                  else
-                  {
-                  }
-                }
-              }
-            },
-            groupitem()[]{
-              label("T: ")[]{
-                dummy()[]{
-                  if ( s21.t != null ) {
-                    if ( genpagepredicatecombined36(s21.t) ) {
-                      navigate(testDinges(s21.t))[]{
-                        text(s21.t.name)[]{
-                        }
-                      }
-                    }
-                    else
-                    {
-                    }
-                  }
-                  else
-                  {
-                  },
-                  if ( s21.t == null ) {
-                    text("null")[]{
-                    }
-                  }
-                  else
-                  {
-                  }
-                }
-              }
-            },
-            groupitem()[]{
-              label("Name: ")[]{
-                text(s21.name)[]{
-                }
-              }
-            },
-            groupitem()[]{
-              label("Is enabled: ")[]{
-                outputBool(s21.isEnabled)[]{
-                }
-              }
-            },
-            groupitem()[]{
-              label("Date: ")[]{
-                outputDateTime(s21.date)[]{
-                }
-              }
-            },
-            groupitem()[]{
-              label("Caller: ")[]{
-                dummy()[]{
-                  if ( s21.caller != null ) {
-                    if ( genpagepredicatecombined6(s21.caller) ) {
-                      navigate(procedureStatus(s21.caller))[]{
-                        text(s21.caller.name)[]{
-                        }
-                      }
-                    }
-                    else
-                    {
-                    }
-                  }
-                  else
-                  {
-                  },
-                  if ( s21.caller == null ) {
-                    text("null")[]{
-                    }
-                  }
-                  else
-                  {
-                  }
-                }
-              }
-            },
-            groupitem()[]{
-              label("Returnstate: ")[]{
-                outputInt(s21.returnstate)[]{
-                }
-              }
-            },
-            groupitem()[]{
-              label("Name: ")[]{
-                text(s21.name)[]{
-                }
-              }
-            },
-            groupitem()[]{
-              label("Is enabled: ")[]{
-                outputBool(s21.isEnabled)[]{
-                }
-              }
-            },
-            groupitem()[]{
-              label("Date: ")[]{
-                outputDateTime(s21.date)[]{
-                }
-              }
-            },
-            groupitem()[]{
-              label("Caller: ")[]{
-                dummy()[]{
-                  if ( s21.caller != null ) {
-                    if ( genpagepredicatecombined6(s21.caller) ) {
-                      navigate(procedureStatus(s21.caller))[]{
-                        text(s21.caller.name)[]{
-                        }
-                      }
-                    }
-                    else
-                    {
-                    }
-                  }
-                  else
-                  {
-                  },
-                  if ( s21.caller == null ) {
-                    text("null")[]{
-                    }
-                  }
-                  else
-                  {
-                  }
-                }
-              }
-            },
-            groupitem()[]{
-              label("Returnstate: ")[]{
-                outputInt(s21.returnstate)[]{
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  entity Proc1ProcedureStatus : ProcedureStatus {
-    t -> TestDinges ( )
-    function enabled ( ) : Void
-    {
-    }
-    function done ( ) : Void
-    {
-      this.isEnabled := false;
-      this.persist();
-      this.processed();
-    }
-    function do ( ) : Void
-    {
-      this.done();
-    }
-    function disabled ( ) : Void
-    {
-    }
-  }
-
-  define page proc1ProcedureStatus (s22 : Proc1ProcedureStatus) {
-    init
-    {
-      if ( genpagepredicatecombined21(s22) )
+      if ( genpagepredicatecombined20(s22) )
       {
       }
       else
@@ -4490,8 +4478,8 @@ section  procedures .
               label("T: ")[]{
                 dummy()[]{
                   if ( s22.t != null ) {
-                    if ( genpagepredicatecombined36(s22.t) ) {
-                      navigate(testDinges(s22.t))[]{
+                    if ( genpagepredicatecombined38(s22.t) ) {
+                      navigate(testRecursive(s22.t))[]{
                         text(s22.t.name)[]{
                         }
                       }
@@ -4517,8 +4505,8 @@ section  procedures .
               label("T: ")[]{
                 dummy()[]{
                   if ( s22.t != null ) {
-                    if ( genpagepredicatecombined36(s22.t) ) {
-                      navigate(testDinges(s22.t))[]{
+                    if ( genpagepredicatecombined38(s22.t) ) {
+                      navigate(testRecursive(s22.t))[]{
                         text(s22.t.name)[]{
                         }
                       }
@@ -4648,16 +4636,61 @@ section  procedures .
     }
   }
 
-  entity Proc2ProcedureStatus : ProcedureStatus {
-    t -> TestDinges ( )
+  define page ifProc0 (t19 : TestRecursive) {
+    init
+    {
+      if ( genpagepredicatecombined21(t19) )
+      {
+      }
+      else
+      {
+        goto accessDenied();
+      }
+    }
+  }
+
+  entity TestRecursiveWorkflowProcedureStatus : ProcedureStatus {
+    t -> TestRecursive ( )
+    function next ( state : Int ) : Void
+    {
+      if ( state == 0 )
+      {
+        this.t.proc1.enable__ProcedureStatus__Int(this as ProcedureStatus, 1);
+      }
+      else
+      {
+      }
+      if ( state == 1 )
+      {
+        this.t.ifProc0.enable__ProcedureStatus__Int(this as ProcedureStatus, 2);
+      }
+      else
+      {
+      }
+      if ( state == 2 )
+      {
+        this.t.proc2.enable__ProcedureStatus__Int(this as ProcedureStatus, 3);
+      }
+      else
+      {
+      }
+      if ( state == 3 )
+      {
+        this.processed();
+      }
+      else
+      {
+      }
+    }
     function enabled ( ) : Void
     {
+      this.do();
     }
     function done ( ) : Void
     {
       this.isEnabled := false;
       this.persist();
-      this.processed();
+      this.next(0);
     }
     function do ( ) : Void
     {
@@ -4668,7 +4701,7 @@ section  procedures .
     }
   }
 
-  define page proc2ProcedureStatus (s23 : Proc2ProcedureStatus) {
+  define page testRecursiveWorkflowProcedureStatus (s23 : TestRecursiveWorkflowProcedureStatus) {
     init
     {
       if ( genpagepredicatecombined22(s23) )
@@ -4693,8 +4726,8 @@ section  procedures .
               label("T: ")[]{
                 dummy()[]{
                   if ( s23.t != null ) {
-                    if ( genpagepredicatecombined36(s23.t) ) {
-                      navigate(testDinges(s23.t))[]{
+                    if ( genpagepredicatecombined38(s23.t) ) {
+                      navigate(testRecursive(s23.t))[]{
                         text(s23.t.name)[]{
                         }
                       }
@@ -4720,8 +4753,8 @@ section  procedures .
               label("T: ")[]{
                 dummy()[]{
                   if ( s23.t != null ) {
-                    if ( genpagepredicatecombined36(s23.t) ) {
-                      navigate(testDinges(s23.t))[]{
+                    if ( genpagepredicatecombined38(s23.t) ) {
+                      navigate(testRecursive(s23.t))[]{
                         text(s23.t.name)[]{
                         }
                       }
@@ -4851,13 +4884,419 @@ section  procedures .
     }
   }
 
-  define page testWorkflow (p36 : PdpMeeting) {
+  entity Proc1ProcedureStatus : ProcedureStatus {
+    t -> TestRecursive ( )
+    function enabled ( ) : Void
+    {
+    }
+    function done ( ) : Void
+    {
+      this.isEnabled := false;
+      this.persist();
+      this.processed();
+    }
+    function do ( ) : Void
+    {
+      this.done();
+    }
+    function disabled ( ) : Void
+    {
+    }
+  }
+
+  define page proc1ProcedureStatus (s24 : Proc1ProcedureStatus) {
     init
     {
-      if ( genpagepredicatecombined23(p36) )
+      if ( genpagepredicatecombined23(s24) )
       {
-        p36.testWorkflow.do();
-        goto pdpMeeting(p36);
+      }
+      else
+      {
+        goto accessDenied();
+      }
+    }
+    dummy()[]{
+      main()[]{
+      },
+      define local body () {
+        header()[]{
+          text(s24.name)[]{
+          }
+        }
+        group("Details")[]{
+          dummy()[]{
+            groupitem()[]{
+              label("T: ")[]{
+                dummy()[]{
+                  if ( s24.t != null ) {
+                    if ( genpagepredicatecombined38(s24.t) ) {
+                      navigate(testRecursive(s24.t))[]{
+                        text(s24.t.name)[]{
+                        }
+                      }
+                    }
+                    else
+                    {
+                    }
+                  }
+                  else
+                  {
+                  },
+                  if ( s24.t == null ) {
+                    text("null")[]{
+                    }
+                  }
+                  else
+                  {
+                  }
+                }
+              }
+            },
+            groupitem()[]{
+              label("T: ")[]{
+                dummy()[]{
+                  if ( s24.t != null ) {
+                    if ( genpagepredicatecombined38(s24.t) ) {
+                      navigate(testRecursive(s24.t))[]{
+                        text(s24.t.name)[]{
+                        }
+                      }
+                    }
+                    else
+                    {
+                    }
+                  }
+                  else
+                  {
+                  },
+                  if ( s24.t == null ) {
+                    text("null")[]{
+                    }
+                  }
+                  else
+                  {
+                  }
+                }
+              }
+            },
+            groupitem()[]{
+              label("Name: ")[]{
+                text(s24.name)[]{
+                }
+              }
+            },
+            groupitem()[]{
+              label("Is enabled: ")[]{
+                outputBool(s24.isEnabled)[]{
+                }
+              }
+            },
+            groupitem()[]{
+              label("Date: ")[]{
+                outputDateTime(s24.date)[]{
+                }
+              }
+            },
+            groupitem()[]{
+              label("Caller: ")[]{
+                dummy()[]{
+                  if ( s24.caller != null ) {
+                    if ( genpagepredicatecombined6(s24.caller) ) {
+                      navigate(procedureStatus(s24.caller))[]{
+                        text(s24.caller.name)[]{
+                        }
+                      }
+                    }
+                    else
+                    {
+                    }
+                  }
+                  else
+                  {
+                  },
+                  if ( s24.caller == null ) {
+                    text("null")[]{
+                    }
+                  }
+                  else
+                  {
+                  }
+                }
+              }
+            },
+            groupitem()[]{
+              label("Returnstate: ")[]{
+                outputInt(s24.returnstate)[]{
+                }
+              }
+            },
+            groupitem()[]{
+              label("Name: ")[]{
+                text(s24.name)[]{
+                }
+              }
+            },
+            groupitem()[]{
+              label("Is enabled: ")[]{
+                outputBool(s24.isEnabled)[]{
+                }
+              }
+            },
+            groupitem()[]{
+              label("Date: ")[]{
+                outputDateTime(s24.date)[]{
+                }
+              }
+            },
+            groupitem()[]{
+              label("Caller: ")[]{
+                dummy()[]{
+                  if ( s24.caller != null ) {
+                    if ( genpagepredicatecombined6(s24.caller) ) {
+                      navigate(procedureStatus(s24.caller))[]{
+                        text(s24.caller.name)[]{
+                        }
+                      }
+                    }
+                    else
+                    {
+                    }
+                  }
+                  else
+                  {
+                  },
+                  if ( s24.caller == null ) {
+                    text("null")[]{
+                    }
+                  }
+                  else
+                  {
+                  }
+                }
+              }
+            },
+            groupitem()[]{
+              label("Returnstate: ")[]{
+                outputInt(s24.returnstate)[]{
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  entity Proc2ProcedureStatus : ProcedureStatus {
+    t -> TestRecursive ( )
+    function enabled ( ) : Void
+    {
+    }
+    function done ( ) : Void
+    {
+      this.isEnabled := false;
+      this.persist();
+      this.processed();
+    }
+    function do ( ) : Void
+    {
+      this.done();
+    }
+    function disabled ( ) : Void
+    {
+    }
+  }
+
+  define page proc2ProcedureStatus (s25 : Proc2ProcedureStatus) {
+    init
+    {
+      if ( genpagepredicatecombined24(s25) )
+      {
+      }
+      else
+      {
+        goto accessDenied();
+      }
+    }
+    dummy()[]{
+      main()[]{
+      },
+      define local body () {
+        header()[]{
+          text(s25.name)[]{
+          }
+        }
+        group("Details")[]{
+          dummy()[]{
+            groupitem()[]{
+              label("T: ")[]{
+                dummy()[]{
+                  if ( s25.t != null ) {
+                    if ( genpagepredicatecombined38(s25.t) ) {
+                      navigate(testRecursive(s25.t))[]{
+                        text(s25.t.name)[]{
+                        }
+                      }
+                    }
+                    else
+                    {
+                    }
+                  }
+                  else
+                  {
+                  },
+                  if ( s25.t == null ) {
+                    text("null")[]{
+                    }
+                  }
+                  else
+                  {
+                  }
+                }
+              }
+            },
+            groupitem()[]{
+              label("T: ")[]{
+                dummy()[]{
+                  if ( s25.t != null ) {
+                    if ( genpagepredicatecombined38(s25.t) ) {
+                      navigate(testRecursive(s25.t))[]{
+                        text(s25.t.name)[]{
+                        }
+                      }
+                    }
+                    else
+                    {
+                    }
+                  }
+                  else
+                  {
+                  },
+                  if ( s25.t == null ) {
+                    text("null")[]{
+                    }
+                  }
+                  else
+                  {
+                  }
+                }
+              }
+            },
+            groupitem()[]{
+              label("Name: ")[]{
+                text(s25.name)[]{
+                }
+              }
+            },
+            groupitem()[]{
+              label("Is enabled: ")[]{
+                outputBool(s25.isEnabled)[]{
+                }
+              }
+            },
+            groupitem()[]{
+              label("Date: ")[]{
+                outputDateTime(s25.date)[]{
+                }
+              }
+            },
+            groupitem()[]{
+              label("Caller: ")[]{
+                dummy()[]{
+                  if ( s25.caller != null ) {
+                    if ( genpagepredicatecombined6(s25.caller) ) {
+                      navigate(procedureStatus(s25.caller))[]{
+                        text(s25.caller.name)[]{
+                        }
+                      }
+                    }
+                    else
+                    {
+                    }
+                  }
+                  else
+                  {
+                  },
+                  if ( s25.caller == null ) {
+                    text("null")[]{
+                    }
+                  }
+                  else
+                  {
+                  }
+                }
+              }
+            },
+            groupitem()[]{
+              label("Returnstate: ")[]{
+                outputInt(s25.returnstate)[]{
+                }
+              }
+            },
+            groupitem()[]{
+              label("Name: ")[]{
+                text(s25.name)[]{
+                }
+              }
+            },
+            groupitem()[]{
+              label("Is enabled: ")[]{
+                outputBool(s25.isEnabled)[]{
+                }
+              }
+            },
+            groupitem()[]{
+              label("Date: ")[]{
+                outputDateTime(s25.date)[]{
+                }
+              }
+            },
+            groupitem()[]{
+              label("Caller: ")[]{
+                dummy()[]{
+                  if ( s25.caller != null ) {
+                    if ( genpagepredicatecombined6(s25.caller) ) {
+                      navigate(procedureStatus(s25.caller))[]{
+                        text(s25.caller.name)[]{
+                        }
+                      }
+                    }
+                    else
+                    {
+                    }
+                  }
+                  else
+                  {
+                  },
+                  if ( s25.caller == null ) {
+                    text("null")[]{
+                    }
+                  }
+                  else
+                  {
+                  }
+                }
+              }
+            },
+            groupitem()[]{
+              label("Returnstate: ")[]{
+                outputInt(s25.returnstate)[]{
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  define page pdpWorkflow (p61 : PdpMeeting) {
+    init
+    {
+      if ( genpagepredicatecombined25(p61) )
+      {
+        p61.pdpWorkflow.do();
+        goto pdpMeeting(p61);
       }
       else
       {
@@ -4866,10 +5305,10 @@ section  procedures .
     }
   }
 
-  define page employeeFillInForm (p37 : PdpMeeting) {
+  define page employeeFillInForm (p62 : PdpMeeting) {
     init
     {
-      if ( genpagepredicatecombined24(p37) )
+      if ( genpagepredicatecombined26(p62) )
       {
       }
       else
@@ -4881,7 +5320,7 @@ section  procedures .
       main()[]{
       },
       define local contextSidebar () {
-        pdpMeetingProcedures(p37)[]{
+        pdpMeetingProcedures(p62)[]{
         }
       },
       define local body () {
@@ -4890,14 +5329,14 @@ section  procedures .
             dummy()[]{
               groupitem()[]{
                 label("Employee preparation: ")[]{
-                  inputText(p37.employeePreparation)[]{
+                  inputText(p62.employeePreparation)[]{
                   }
                 }
               }
             }
           },
           dummy()[]{
-            if ( genactionpredicatecombined1(p37) ) {
+            if ( genactionpredicatecombined1(p62) ) {
               action("Submit", doAction())[]{
               }
             }
@@ -4906,11 +5345,11 @@ section  procedures .
             },
             action doAction ( )
             {
-              if ( genactionpredicatecombined1(p37) )
+              if ( genactionpredicatecombined1(p62) )
               {
-                p37.persist();
-                p37.employeeFillInForm.do();
-                return pdpMeeting(p37);
+                p62.persist();
+                p62.employeeFillInForm.do();
+                return pdpMeeting(p62);
               }
               else
               {
@@ -4923,10 +5362,10 @@ section  procedures .
     }
   }
 
-  define page managerFillInForm (p38 : PdpMeeting) {
+  define page managerFillInForm (p63 : PdpMeeting) {
     init
     {
-      if ( genpagepredicatecombined25(p38) )
+      if ( genpagepredicatecombined27(p63) )
       {
       }
       else
@@ -4941,7 +5380,7 @@ section  procedures .
       main()[]{
       },
       define local contextSidebar () {
-        pdpMeetingProcedures(p38)[]{
+        pdpMeetingProcedures(p63)[]{
         }
       },
       define local body () {
@@ -4950,14 +5389,14 @@ section  procedures .
             dummy()[]{
               groupitem()[]{
                 label("Manager preparation: ")[]{
-                  inputText(p38.managerPreparation)[]{
+                  inputText(p63.managerPreparation)[]{
                   }
                 }
               }
             }
           },
           dummy()[]{
-            if ( genactionpredicatecombined2(p38) ) {
+            if ( genactionpredicatecombined2(p63) ) {
               action("Submit", doAction())[]{
               }
             }
@@ -4966,11 +5405,11 @@ section  procedures .
             },
             action doAction ( )
             {
-              if ( genactionpredicatecombined2(p38) )
+              if ( genactionpredicatecombined2(p63) )
               {
-                p38.persist();
-                p38.managerFillInForm.do();
-                return pdpMeeting(p38);
+                p63.persist();
+                p63.managerFillInForm.do();
+                return pdpMeeting(p63);
               }
               else
               {
@@ -4983,10 +5422,10 @@ section  procedures .
     }
   }
 
-  define page writeReport (p39 : PdpMeeting) {
+  define page writeReport (p64 : PdpMeeting) {
     init
     {
-      if ( genpagepredicatecombined26(p39) )
+      if ( genpagepredicatecombined28(p64) )
       {
       }
       else
@@ -4998,7 +5437,7 @@ section  procedures .
       main()[]{
       },
       define local contextSidebar () {
-        pdpMeetingProcedures(p39)[]{
+        pdpMeetingProcedures(p64)[]{
         }
       },
       define local body () {
@@ -5007,14 +5446,14 @@ section  procedures .
             dummy()[]{
               groupitem()[]{
                 label("Report: ")[]{
-                  inputText(p39.report)[]{
+                  inputText(p64.report)[]{
                   }
                 }
               }
             }
           },
           dummy()[]{
-            if ( genactionpredicatecombined3(p39) ) {
+            if ( genactionpredicatecombined3(p64) ) {
               action("Submit", doAction())[]{
               }
             }
@@ -5023,11 +5462,11 @@ section  procedures .
             },
             action doAction ( )
             {
-              if ( genactionpredicatecombined3(p39) )
+              if ( genactionpredicatecombined3(p64) )
               {
-                p39.persist();
-                p39.writeReport.do();
-                return pdpMeeting(p39);
+                p64.persist();
+                p64.writeReport.do();
+                return pdpMeeting(p64);
               }
               else
               {
@@ -5040,13 +5479,13 @@ section  procedures .
     }
   }
 
-  define page finalizeReport (p40 : PdpMeeting) {
+  define page finalizeReport (p65 : PdpMeeting) {
     init
     {
-      if ( genpagepredicatecombined27(p40) )
+      if ( genpagepredicatecombined29(p65) )
       {
-        p40.finalizeReport.do();
-        goto pdpMeeting(p40);
+        p65.finalizeReport.do();
+        goto pdpMeeting(p65);
       }
       else
       {
@@ -5055,13 +5494,13 @@ section  procedures .
     }
   }
 
-  define page approveReport (p41 : PdpMeeting) {
+  define page approveReport (p66 : PdpMeeting) {
     init
     {
-      if ( genpagepredicatecombined28(p41) )
+      if ( genpagepredicatecombined30(p66) )
       {
-        p41.approveReport.do();
-        goto pdpMeeting(p41);
+        p66.approveReport.do();
+        goto pdpMeeting(p66);
       }
       else
       {
@@ -5070,10 +5509,10 @@ section  procedures .
     }
   }
 
-  define page testDingesWorkflow (t20 : TestDinges) {
+  define page testRecursiveWorkflow (t20 : TestRecursive) {
     init
     {
-      if ( genpagepredicatecombined29(t20) )
+      if ( genpagepredicatecombined31(t20) )
       {
       }
       else
@@ -5083,10 +5522,10 @@ section  procedures .
     }
   }
 
-  define page proc1 (t21 : TestDinges) {
+  define page proc1 (t21 : TestRecursive) {
     init
     {
-      if ( genpagepredicatecombined30(t21) )
+      if ( genpagepredicatecombined32(t21) )
       {
       }
       else
@@ -5098,7 +5537,7 @@ section  procedures .
       main()[]{
       },
       define local contextSidebar () {
-        testDingesProcedures(t21)[]{
+        testRecursiveProcedures(t21)[]{
         }
       },
       define local body () {
@@ -5127,7 +5566,7 @@ section  procedures .
               {
                 t21.persist();
                 t21.proc1.do();
-                return testDinges(t21);
+                return testRecursive(t21);
               }
               else
               {
@@ -5140,10 +5579,10 @@ section  procedures .
     }
   }
 
-  define page proc2 (t22 : TestDinges) {
+  define page proc2 (t22 : TestRecursive) {
     init
     {
-      if ( genpagepredicatecombined31(t22) )
+      if ( genpagepredicatecombined33(t22) )
       {
       }
       else
@@ -5155,7 +5594,7 @@ section  procedures .
       main()[]{
       },
       define local contextSidebar () {
-        testDingesProcedures(t22)[]{
+        testRecursiveProcedures(t22)[]{
         }
       },
       define local body () {
@@ -5184,7 +5623,7 @@ section  procedures .
               {
                 t22.persist();
                 t22.proc2.do();
-                return testDinges(t22);
+                return testRecursive(t22);
               }
               else
               {
@@ -5199,7 +5638,7 @@ section  procedures .
 
 section  pages .
 
-  var test3 : TestDinges ;
+  var test3 : TestRecursive ;
 
   define template body () {
     if ( gentemplatepredicate0() ) {
@@ -5212,7 +5651,7 @@ section  pages .
   define page home () {
     init
     {
-      if ( genpagepredicatecombined32() )
+      if ( genpagepredicatecombined34() )
       {
       }
       else
@@ -5223,7 +5662,7 @@ section  pages .
     main()[]{
     }
     define local body () {
-      var employee2 : User ;
+      var employee10 : User ;
       header()[]{
         "Home"
       }
@@ -5243,20 +5682,10 @@ section  pages .
           {
             if ( genactionpredicatecombined6() )
             {
-              test3 := newTestDinges();
-              test3.name := "Bovenste";
-              test3.child := newTestDinges();
-              test3.child.name := "Middelste";
-              test3.child.child := newTestDinges();
-              test3.child.child.name := "Onderste";
-              test3.child.child.persist();
-              test3.child.persist();
-              test3.persist();
-              test3.testDingesWorkflow.enable__();
-              var p42 : PdpMeeting := newPdpMeeting() ;
-              p42.employee := aUser;
-              p42.persist();
-              p42.testWorkflow.enable__();
+              var p67 : PdpMeeting := newPdpMeeting() ;
+              p67.employee := aUser;
+              p67.persist();
+              p67.pdpWorkflow.enable__();
               return message("Tests gestart");
             }
             else
@@ -5273,7 +5702,7 @@ section  pages .
           },
           "For: ",
           block("inputSimpleRefAssociation")[]{
-            select ( user01 : User , Select , employee2 )
+            select ( user09 : User , Select , employee10 )
           },
           if ( genactionpredicatecombined7() ) {
             action("Organize", organize())[]{
@@ -5286,7 +5715,18 @@ section  pages .
           {
             if ( genactionpredicatecombined7() )
             {
-              return message("Done!");
+              var p68 : PdpMeeting := newPdpMeeting() ;
+              p68.employee := employee10;
+              p68.persist();
+              p68.pdpWorkflow.enable__();
+              if ( securityContext.loggedIn )
+              {
+                return message("Workflows started!");
+              }
+              else
+              {
+                return signin();
+              }
             }
             else
             {
@@ -5301,7 +5741,7 @@ section  pages .
   define page allMeetings () {
     init
     {
-      if ( genpagepredicatecombined33() )
+      if ( genpagepredicatecombined35() )
       {
       }
       else
@@ -5312,8 +5752,8 @@ section  pages .
     main()[]{
     }
     define local body () {
-      for ( p43 : PdpMeeting where true order by null asc limit 1000 offset 0 ) {
-        text(p43.name)[]{
+      for ( p69 : PdpMeeting where true order by null asc limit 1000 offset 0 ) {
+        text(p69.name)[]{
         }
         text(" ")[]{
         }
@@ -5323,10 +5763,10 @@ section  pages .
 
 section  pages .
 
-  define page pdpMeeting (p44 : PdpMeeting) {
+  define page pdpMeeting (p70 : PdpMeeting) {
     init
     {
-      if ( genpagepredicatecombined34(p44) )
+      if ( genpagepredicatecombined36(p70) )
       {
       }
       else
@@ -5339,7 +5779,7 @@ section  pages .
       },
       define local body () {
         header()[]{
-          text(p44.name)[]{
+          text(p70.name)[]{
           }
         }
         group("Details")[]{
@@ -5347,10 +5787,10 @@ section  pages .
             groupitem()[]{
               label("Employee: ")[]{
                 dummy()[]{
-                  if ( p44.employee != null ) {
-                    if ( genpagepredicatecombined35(p44.employee) ) {
-                      navigate(user(p44.employee))[]{
-                        text(p44.employee.name)[]{
+                  if ( p70.employee != null ) {
+                    if ( genpagepredicatecombined37(p70.employee) ) {
+                      navigate(user(p70.employee))[]{
+                        text(p70.employee.name)[]{
                         }
                       }
                     }
@@ -5361,7 +5801,7 @@ section  pages .
                   else
                   {
                   },
-                  if ( p44.employee == null ) {
+                  if ( p70.employee == null ) {
                     text("null")[]{
                     }
                   }
@@ -5373,25 +5813,25 @@ section  pages .
             },
             groupitem()[]{
               label("Name: ")[]{
-                text(p44.name)[]{
+                text(p70.name)[]{
                 }
               }
             },
             groupitem()[]{
               label("Employee preparation: ")[]{
-                outputText(p44.employeePreparation)[]{
+                outputText(p70.employeePreparation)[]{
                 }
               }
             },
             groupitem()[]{
               label("Manager preparation: ")[]{
-                outputText(p44.managerPreparation)[]{
+                outputText(p70.managerPreparation)[]{
                 }
               }
             },
             groupitem()[]{
               label("Report: ")[]{
-                outputText(p44.report)[]{
+                outputText(p70.report)[]{
                 }
               }
             }
@@ -5399,7 +5839,7 @@ section  pages .
         }
       },
       define local contextSidebar () {
-        pdpMeetingProcedures(p44)[]{
+        pdpMeetingProcedures(p70)[]{
         }
       }
     }
@@ -5408,7 +5848,7 @@ section  pages .
   define page user (u1 : User) {
     init
     {
-      if ( genpagepredicatecombined35(u1) )
+      if ( genpagepredicatecombined37(u1) )
       {
       }
       else
@@ -5448,7 +5888,7 @@ section  pages .
               label("Manager: ")[]{
                 dummy()[]{
                   if ( u1.manager != null ) {
-                    if ( genpagepredicatecombined35(u1.manager) ) {
+                    if ( genpagepredicatecombined37(u1.manager) ) {
                       navigate(user(u1.manager))[]{
                         text(u1.manager.name)[]{
                         }
@@ -5477,10 +5917,10 @@ section  pages .
     }
   }
 
-  define page testDinges (t23 : TestDinges) {
+  define page testRecursive (t23 : TestRecursive) {
     init
     {
-      if ( genpagepredicatecombined36(t23) )
+      if ( genpagepredicatecombined38(t23) )
       {
       }
       else
@@ -5526,8 +5966,8 @@ section  pages .
               label("Child: ")[]{
                 dummy()[]{
                   if ( t23.child != null ) {
-                    if ( genpagepredicatecombined36(t23.child) ) {
-                      navigate(testDinges(t23.child))[]{
+                    if ( genpagepredicatecombined38(t23.child) ) {
+                      navigate(testRecursive(t23.child))[]{
                         text(t23.child.name)[]{
                         }
                       }
@@ -5553,7 +5993,7 @@ section  pages .
         }
       },
       define local contextSidebar () {
-        testDingesProcedures(t23)[]{
+        testRecursiveProcedures(t23)[]{
         }
       }
     }

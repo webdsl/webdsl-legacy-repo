@@ -188,3 +188,18 @@ style footerStyle
     separator := Separator.pipe;
     spacing := 2em; // @todo: rename to spacing and set on listitem()??
   }
+
+
+style groupStyle
+
+  group() >> label() {
+    width := 13em;
+  }
+
+  group() >> text() {
+    width := 40em;
+  }
+  
+  groupitem() >> p {
+    font-style := FontStyle.bold;
+  }
