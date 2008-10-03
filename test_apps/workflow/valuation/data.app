@@ -9,10 +9,15 @@ section data model
     manager  -> User
     
     function isValuer() : Bool {
-      for(v : Valuer) {
-        if (v.user == this) {
-          return true;
-        }
+      for(v : Valuer where v.user == this) {
+        return true;
+      }
+      return false;
+    }
+    
+    function hasBookingRights() : Bool {
+      for (a : Authorization where a.right == "booking" && a.user == this) {
+        return true;
       }
       return false;
     }

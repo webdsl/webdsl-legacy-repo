@@ -15,6 +15,7 @@ imports valuationviewpages
 imports valuationeditpages
 imports valuationrequestviewpages
 imports valuationrequesteditpages
+imports valuationprocedures
 imports layout
 imports style
 //imports testsidebar
@@ -31,7 +32,11 @@ section pages
       
       section {
         text("Welcome ")
-        if (securityContext.principal != null) { output(securityContext.principal) }
+        if (securityContext.principal != null) { 
+          output(securityContext.principal) 
+          block {text("Heeft booking rights: ") output(securityContext.principal.hasBookingRights())}
+        }
+        
       }
       
       section {
@@ -40,6 +45,7 @@ section pages
           list {
             listitem{ navigate(loginAs(userRuben)){"Ruben"} }
             listitem{ navigate(loginAs(userLiming)){"Liming"} }
+            listitem{ navigate(loginAs(userAdmin)){"Admin"} }
           }
         }        
       }
@@ -54,6 +60,22 @@ section pages
     main()
     define body() {
       section {text("Logged in as ") output(u)}
+    }
+  }
+  
+  define page initTest() {
+    init {
+      securityContext.principal := userAdmin;
+      securityContext.loggedIn := true;
+      initValuation1.bookValuation := BookValuationProcedureStatus{};
+      initValuation1.bookValuation.v := initValuation1;
+      initValuation1.bookValuation.persist();
+      initValuation1.persist();
+      initValuation1.bookValuation.enable();
+    }
+    main()
+    define body() {
+      section { navigate(valuation(initValuation1)){"Ga naar de OBrien street"} }
     }
   }
   

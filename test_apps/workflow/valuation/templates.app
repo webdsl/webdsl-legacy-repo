@@ -35,6 +35,7 @@ section templates
         }
         menuitem { navigate(loginAs(userRuben)){"Login as Ruben"} }
         menuitem { navigate(loginAs(userLiming)){"Login as Liming"} }
+        menuitem { navigate(loginAs(userAdmin)){"Login as Admin"} }
       }
       menu {
         menuheader { navigate(allValuationRequest()) { "Valuation Requests" } }

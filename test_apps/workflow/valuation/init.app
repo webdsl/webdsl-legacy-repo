@@ -13,12 +13,18 @@ section user data
       name     := "Ruben Verhaaf",
       password := "secret"
     };
+    var userAdmin : User := User {
+      username := "admin",
+      name     := "Tiep Miep",
+      password := "secret"
+    };
   }
   
 section rights
 
   globals {
     var initAuthorization1 : Authorization := Authorization { right := "allValuationRequests" user := userRuben };
+    var initAuthorization2 : Authorization := Authorization { right := "booking" user := userAdmin };
   }
   
 section value data
@@ -245,6 +251,7 @@ section value data
   globals {
     var valuerLiming : Valuer := Valuer { user := userLiming };
     var valuerRuben : Valuer := Valuer { user := userRuben };
+    var valuerAdmin : Valuer := Valuer { user := userAdmin };
   }
   
 section valuations
