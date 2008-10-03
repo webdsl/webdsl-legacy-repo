@@ -15,6 +15,12 @@ section user data
     };
   }
   
+section rights
+
+  globals {
+    var initAuthorization1 : Authorization := Authorization { right := "allValuationRequests" user := userRuben };
+  }
+  
 section value data
 
   globals {
@@ -241,12 +247,14 @@ section value data
     var valuerRuben : Valuer := Valuer { user := userRuben };
   }
   
+section valuations
+  
   globals {
-    var initValuationRequest1 : ValuationRequest := ValuationRequest { address := "1/13 O Brien Street" suburb := "Bondi Beach" postCode := initPostCode1 state := initStateValue1 };
+    var initValuationRequest1 : ValuationRequest := ValuationRequest { status := initValuationRequestStatus1 address := "1/13 O Brien Street" suburb := "Bondi Beach" postCode := initPostCode1 state := initStateValue1 };
     var initValuation1 : Valuation := Valuation { valuationRequest := initValuationRequest1 number := 228320 valuer := valuerRuben };
     var initInvoice1 : Invoice := Invoice { valuation := initValuation1 number := 34987 };
 
-    var initValuationRequest2 : ValuationRequest := ValuationRequest { address := "13 Garden Street" suburb := "Eveleigh" postCode := initPostCode3 state := initStateValue1 };
+    var initValuationRequest2 : ValuationRequest := ValuationRequest { status := initValuationRequestStatus1 address := "13 Garden Street" suburb := "Eveleigh" postCode := initPostCode3 state := initStateValue1 purchase := "1,200,000" ownerEst := "1,400,000" tender := "1,250,000" };
     var initValuation2 : Valuation := Valuation { valuationRequest := initValuationRequest2 number := 219320 valuer := valuerLiming };
     var initInvoice2 : Invoice := Invoice { valuation := initValuation2 number := 53453 };
   }

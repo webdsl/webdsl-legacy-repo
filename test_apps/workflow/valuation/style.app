@@ -193,7 +193,7 @@ style footerStyle
 style groupStyle
 
   group() >> label() {
-    width := 13em;
+    width := 9em;
   }
 
   group() >> text() {

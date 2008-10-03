@@ -30,21 +30,30 @@ section pages
       header { "Integrated Property Services" }
       
       section {
-        text("Welcome")
+        text("Welcome ")
+        if (securityContext.principal != null) { output(securityContext.principal) }
       }
       
-      group {
-        navigate(allValuation()){"All Valuations"}
-        navigate(newValuationRequest()) {"New ValuationRequest"}
+      section {
+        if (securityContext.principal == null) { 
+          text("Login als: ")
+          list {
+            listitem{ navigate(loginAs(userRuben)){"Ruben"} }
+            listitem{ navigate(loginAs(userLiming)){"Liming"} }
+          }
+        }        
       }
     }
   }
   
-  define page testValuationRequest(r: ValuationRequest) {
-//    text("Valuation: ") output(r.valuation)
-  }
-
-  define page testValuation(v: Valuation) {
-    text("ValuationRequest: ") output(v.valuationRequest)
+  define page loginAs(u : User) {
+    init {
+      securityContext.principal := u;
+      securityContext.loggedIn := true;
+    }
+    main()
+    define body() {
+      section {text("Logged in as ") output(u)}
+    }
   }
   

@@ -50,6 +50,15 @@ section functions
     function canEditValuationRequest(r : ValuationRequest) : Bool {
       return (canEditAllValuationRequests());
     }
+    
+    // valuers can view all valuationrequests
+    function canViewAllValuations() : Bool {
+      return (securityContext.principal != null && securityContext.principal.isValuer());
+    }
+    
+    function canViewValuationRequest(r : ValuationRequest) : Bool {
+      return (canViewAllValuations());
+    }
   }
 
 access control rules 

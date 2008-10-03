@@ -4,10 +4,15 @@ section pages
 
   define page allValuation() {
     main()
+    define sidebar() {
+      navigate(newValuationRequest()){"New Valuation Request"}
+    }
     define body() {
-      for(v : Valuation) {
-        output(v)
-        text(" ")
+      header{"Valuations"}
+      table {
+        for(v : Valuation) {
+          row { text(v.name) navigate(valuation(v)){"view"} navigate(editValuationProperty(v)){"edit"} }
+        }
       }
     }
   }
@@ -18,9 +23,10 @@ section pages
       navigate(newValuationRequest()){"New Valuation Request"}
     }
     define body() {
+      header{"Valuation Requests"}
       table {
-        for(r : ValuationRequest) {
-          row { text(r.name) navigate(valuationRequest(r)){"view"} }
+        for(v : Valuation) {
+          row { text(v.name) navigate(valuationRequest(v.valuationRequest)){"view"} navigate(editValuationProperty(v)){"edit"} }
         }
       }
     }

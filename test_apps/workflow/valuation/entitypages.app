@@ -31,7 +31,6 @@ section value pages
   define page propose(object : Propose) { derive viewPage from object }
   define page valuationRequestStatus(object : ValuationRequestStatus) { derive viewPage from object }
   define page invoice(object : Invoice) { derive viewPage from object }
-  define page valuation(object : Valuation) { derive viewPage from object }
   define page comparisonValue (object : ComparisonValue) { derive viewPage from object }
   define page salesEvidence (object : SalesEvidence) { derive viewPage from object }
   define page valuer (object : Valuer) { derive viewPage from object }

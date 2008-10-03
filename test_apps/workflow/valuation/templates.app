@@ -3,6 +3,7 @@ module templates
 section templates
 
   define main() {
+    title{"Integrated Property Services - Valuation"}
     top()
     topmenu()
     sidebar()
@@ -16,7 +17,7 @@ section templates
       image("/images/webdsl_logo_text.png")
     }
     block("text") {
-	    text("WebWorkFlow tests")
+	    text("Integrated Property Services - Valuation")
 	  }
   }
   
@@ -32,6 +33,8 @@ section templates
         } else {
           menuitem { navigate(signout()) { "Sign out" } }
         }
+        menuitem { navigate(loginAs(userRuben)){"Login as Ruben"} }
+        menuitem { navigate(loginAs(userLiming)){"Login as Liming"} }
       }
       menu {
         menuheader { navigate(allValuationRequest()) { "Valuation Requests" } }
@@ -53,13 +56,19 @@ section templates
 section sidebar
 
   define sidebar() {
-    text("Nothing here unless you redefine sidebar()")
+    table {
+      row {navigate(allValuation()){"All Valuations"}}
+      row {navigate(newValuationRequest()){"New ValuationRequest"}}
+    }
   }
 
   define valuationRequestSidebar(r : ValuationRequest) {
     propertyInfoSidebar(r)
-    requestSidebar(r)
+    horizontalspacer
+    valuationRequestDetailsSidebar(r)
+    horizontalspacer
     valuationDetailsSidebar(r)
+    
     contextSidebar()
   }
   
@@ -74,27 +83,54 @@ section sidebar
         for (i: Invoice in v.invoices) { // mostly only one
           block{navigate(invoice(i)){"Invoice No: " text(i.number)}}
         }
-        horizontalspacer
-        if (canEditValuation(v)) {
-          propertyInfoEdit(v)
-        } else { 
-          if (canViewValuation(v)) {
-            propertyInfoView(v)
-          }
+      }
+    }
+  }
+  
+  /* Valuation Request Details Sidebar */
+  define valuationRequestDetailsSidebar(r : ValuationRequest) {
+    if (canEditValuationRequest(r)) {
+      requestEditSidebar(r)
+    } else { 
+      if (canViewValuationRequest(r)) {
+        requestViewSidebar(r)
+      }
+    }
+  }
+  
+  define requestEditSidebar(r : ValuationRequest) {
+    block{header{text("Request Details")}}
+    block { list {
+      listitem{ navigate(editValuationRequest(r)){"Request Details"} }
+      listitem{ navigate(editValuationRequestBooking(r)){"Booking Details"} }
+      listitem{ navigate(editValuationRequestQuote(r)){"Quote Details"} }
+    } }
+  }
+
+  define requestViewSidebar(r : ValuationRequest) {
+    block{header{text("Request Details")}}
+    block { list {
+      listitem{ navigate(valuationRequest(r)){"Request Details"} }
+      listitem{ navigate(valuationRequestBooking(r)){"Booking Details"} }
+      listitem{ navigate(valuationRequestQuote(r)){"Quote Details"} }
+    } }
+  }
+
+  /* Valuation Sidebar */
+  define valuationDetailsSidebar(r : ValuationRequest) {
+    for (v: Valuation in r.valuations) { // actually only one. 
+      if (canEditValuation(v)) {
+        valuationEditSidebar(v)
+      } else { 
+        if (canViewValuation(v)) {
+          valuationViewSidebar(v)
         }
       }
     }
   }
   
-  define propertyInfoEdit(v : Valuation) {
-    block{header{text("Request Details")}}
-    block { list {
-      listitem{ navigate(editValuationRequestDetails(v.valuationRequest)){"Request Details"} }
-      listitem{ navigate(editValuationRequestBooking(v.valuationRequest)){"Booking Details"} }
-      listitem{ navigate(editValuationRequestQuote(v.valuationRequest)){"Quote Details"} }
-    } }
-    horizontalspacer
-    block{header{text("Valuation Details")}}
+  define valuationEditSidebar(v : Valuation) {
+    block{header{text("Edit Valuation Details")}}
     block{
       list {
         listitem{ navigate(editValuationProperty(v)){"Property Summary"} }
@@ -105,33 +141,18 @@ section sidebar
       }
     }
   }
-
-  define propertyInfoView(v : Valuation) {
-    block{header{text("Request Details")}}
-    block { list {
-      listitem{ navigate(valuationRequestDetails(v.valuationRequest)){"Request Details"} }
-      listitem{ navigate(valuationRequestBooking(v.valuationRequest)){"Booking Details"} }
-      listitem{ navigate(valuationRequestQuote(v.valuationRequest)){"Quote Details"} }
-    } }
-    horizontalspacer
+  
+  define valuationViewSidebar(v : Valuation) {
     block{header{text("Valuation Details")}}
     block{
       list {
-        listitem{ navigate(valuationProperty(v)){"Property Summary"} }
+        listitem{ navigate(valuation(v)){"Property Summary"} }
         listitem{ navigate(valuationMainBuilding(v)){"Main Building"} }
         listitem{ navigate(valuationRisk(v)){"Risk Analysis"} }
         listitem{ navigate(valuationLand(v)){"Land"} }
         listitem{ navigate(valuationSales(v)){"Sales Evidence"} }
       }
     }
-  }
-
-  define requestSidebar(r : ValuationRequest) {
-    
-  }
-  
-  define valuationDetailsSidebar(r : ValuationRequest) {
-    
   }
   
   define contextSidebar() {
@@ -140,7 +161,7 @@ section sidebar
 section basic page elements.
   
   define footer() {
-    "generated with "
+    " Generated with "
     navigate("WebDSL", url("http://www.webdsl.org")) " and "
     navigate("Stratego/XT", url("http://www.strategoxt.org"))
   }

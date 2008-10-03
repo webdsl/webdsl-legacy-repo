@@ -1,14 +1,14 @@
 module valuationviewpages
     
 section pages
-
-  define page valuationProperty(v : Valuation) {
+  
+  define page valuation(v : Valuation) {
     main()
     define sidebar() {
       valuationRequestSidebar(v.valuationRequest)
     }
     define body() {
-      header{text(v.name) text("Property Summary")}
+      header{text("Property Summary")}
       table {
         row {
           block("datawidth") {
@@ -58,7 +58,7 @@ section pages
       valuationRequestSidebar(v.valuationRequest)
     }
     define body() {
-      header{text(v.name) text("Main Building")}
+      header{text("Main Building")}
       table {
         row {
           block("datawidth") {

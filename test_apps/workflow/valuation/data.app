@@ -126,6 +126,8 @@ section data model
     fullAddress :: String := this.address + " " + this.suburb + " " + this.state.name + " " + this.postCode.name //(name)
     name :: String := this.fullAddress + " Valuation Request"
     status -> ValuationRequestStatus
+    requestDate :: Date
+    sentDate :: Date
     
     // Client
     client -> Client
@@ -160,6 +162,16 @@ section data model
     purchase :: String
     ownerEst :: String
     tender :: String
+    
+    // Booking
+    udbRef :: String
+    bookingDate :: Date
+    bookingTime :: String
+    bookingContact :: String
+    bookingPhone :: String
+    bookedBy -> User
+    bookingNotes :: Text
+    
   }
   
   entity Invoice {
@@ -170,6 +182,7 @@ section data model
   
   entity Valuer {
     user -> User
+    name :: String := this.user.name
   }
   
   entity Valuation {
