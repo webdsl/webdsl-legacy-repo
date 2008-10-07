@@ -57,7 +57,7 @@ section procedures
     process {
       repeat {
         writeReport(p) xor managerFillInForm(p)
-      } until {finalizeReport(p)}
+      } until finalizeReport(p)
       /*(employeeFillInForm(p) and managerFillInForm(p));
             repeat {
               writeReport(p);

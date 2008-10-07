@@ -21,7 +21,8 @@ section procedures
       repeat {
         writeReport(p);
         (approveReport(p) xor commentReport(p))
-      } until finalizeReport(p)
+      } until finalizeReport(p);
+      employeePrepare(p)
     }
   }
 
@@ -57,6 +58,7 @@ section procedures
     who { securityContext.principal == p.employee }
     do {
       p.approved := true;
+      p.save();
     }
   }
 
