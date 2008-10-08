@@ -21,8 +21,7 @@ section procedures
       repeat {
         writeReport(p);
         (approveReport(p) xor commentReport(p))
-      } until finalizeReport(p);
-      employeePrepare(p)
+      } until {finalizeReport(p)}
     }
   }
 
