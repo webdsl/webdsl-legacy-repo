@@ -10,8 +10,10 @@ section data
   
   globals {
     /** 
-     * PROBLEEM: in globals{} kunnen volgens mij alleen VarDeclInits. Onderstaande kan daarom niet. Procedures kunnen daarom
-     * niet direct worden uitgevoerd.
+     * PROBLEM: in globals{}, only VarDeclInits can be used. The following code will therefore not work. Thus, procedures cannot
+     *   be performed for objects that are created using initialization code, unless they are initialized inside a page (see define
+     *   page initialize())
+     *
      *   var pRuben : Persoon := newPersoon(); 
      *   pRuben.name := "Ruben";
      */
@@ -24,8 +26,8 @@ section pages
   define page initialize() {
     init {
       /**
-       * PROBLEEM: Omdat een ProcedureStatus een verwijzing naar het object nodig heeft, en je geen self-referential object
-       *   kunt maken mbv een vardeclinit, kan procedure-data alleen worden geinitialized in een losse pagina
+       * PROBLEM: As ProcedureStatus needs a reference to the object it works on, and self-referential objects cannot be created
+       *   using VarDeclInits, procedures on objects defined in initialization data can only be initialized using a separate page.
        */
       
       pRuben.addAchternaam := AddAchternaamProcedureStatus{};
@@ -62,9 +64,8 @@ section procedures
 
   procedure addAchternaam(p : Persoon) {
     view {
-      var achternaam : String; // PROBLEEM: als deze declaratie verplaatst wordt naar define local body, werkt het niet. Maar misschien is dat juist goed.
-      main()
-      define local body { // PROBLEEM: als ik local weglaat, gaat het mis
+      var achternaam : String; // PROBLEM: moving this declaration to the scope of define local body will present problems, but maybe this behaviour is actually good.
+      define local body { // PROBLEM: within procedure view sections, 'define body' will present problems; 'local' must be added.
         form {
           label("Naam"){output(p.name)}
           input(achternaam)
