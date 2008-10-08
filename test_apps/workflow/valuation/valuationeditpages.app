@@ -8,7 +8,7 @@ section pages
       valuationRequestSidebar(v.valuationRequest)
     }
     define body() {
-      header{text(v.name) text("Property Summary")}
+      header{text("Property Summary")}
       form {
         table {
           row {
@@ -64,7 +64,7 @@ section pages
       valuationRequestSidebar(v.valuationRequest)
     }
     define body() {
-      header{text(v.name) text("Main Building")}
+      header{text("Main Building")}
       form {
         table {
           row {

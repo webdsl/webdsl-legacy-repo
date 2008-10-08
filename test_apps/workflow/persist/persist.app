@@ -42,7 +42,7 @@ section procedures
       var vader : Persoon := p.vader;
       form {
         input(p.name)
-        input(vader.name)
+        input(p.vader.name)
         action("Voeg Achternaam Toe", do())
       }
     }

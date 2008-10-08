@@ -3,7 +3,10 @@ module valuationpages
 section pages
 
   define page allValuation() {
-    main()
+    init {
+      goto allValuationRequest();
+    }
+/*    main()
     define sidebar() {
       navigate(newValuationRequest()){"New Valuation Request"}
     }
@@ -14,7 +17,7 @@ section pages
           row { text(v.name) navigate(valuation(v)){"view"} navigate(editValuationProperty(v)){"edit"} }
         }
       }
-    }
+    }*/
   }
   
   define page allValuationRequest() {
@@ -26,7 +29,11 @@ section pages
       header{"Valuation Requests"}
       table {
         for(v : Valuation) {
-          row { text(v.name) navigate(valuationRequest(v.valuationRequest)){"view"} navigate(editValuationProperty(v)){"edit"} }
+          row { 
+            text(v.name) 
+            navigate(valuationRequest(v.valuationRequest)){"view request"} navigate(editValuationRequest(v.valuationRequest)){"edit request"} 
+            navigate(valuation(v)){"view valuation"} navigate(editValuationProperty(v)){"edit valuation"} 
+          }
         }
       }
     }
@@ -34,7 +41,7 @@ section pages
   
   define page newValuationRequest() {
     var r : ValuationRequest := ValuationRequest {};
-    var v : Valuation := Valuation { };
+    var v : Valuation := Valuation {};
     var i : Invoice := Invoice { amount := 1000 };
     var newClient : Client := Client {};
     main()
@@ -86,11 +93,24 @@ section pages
               newClient.persist();
               r.client := newClient;
             }
+            
+/*            var bookValuation : BookValuationProcedureStatus := BookValuationProcedureStatus{};            
+            bookValuation.persist();
+            v.bookValuation := bookValuation;*/
+            
             r.persist();
             v.valuationRequest := r;
             v.persist();
             i.valuation := v;
             i.persist();
+            
+            v.bookValuation := BookValuationProcedureStatus{};
+            v.bookValuation.v := v;
+            v.bookValuation.persist();
+            v.persist();
+            v.bookValuation.enable();
+
+/*            v.bookValuation.enable();*/
             
             return allValuationRequest();
           }

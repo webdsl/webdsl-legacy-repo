@@ -6,6 +6,11 @@ style globalStyle
   const globalFont : Font := Font.Lucida.Grande;
   const globalFontSize : Length := 0.75em;
   const layoutBorderColor : Color := #c0c0c0;
+  
+  sidebar() >> text() {
+    font := globalFont;
+    font-size := 12px;
+  }
 
   section() {
     font := globalFont;
@@ -197,7 +202,7 @@ style groupStyle
   }
 
   group() >> text() {
-    width := 35em;
+    width := 45em;
   }
   
   groupitem() >> p {

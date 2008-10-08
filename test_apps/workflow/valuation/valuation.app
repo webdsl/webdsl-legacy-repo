@@ -31,24 +31,20 @@ section pages
       header { "Integrated Property Services" }
       
       section {
-        text("Welcome ")
         if (securityContext.principal != null) { 
+          text("Welcome ")
           output(securityContext.principal) 
-          block {text("Heeft booking rights: ") output(securityContext.principal.hasBookingRights())}
-        }
-        
-      }
-      
-      section {
-        if (securityContext.principal == null) { 
+        } else {
           text("Login als: ")
           list {
             listitem{ navigate(loginAs(userRuben)){"Ruben"} }
             listitem{ navigate(loginAs(userLiming)){"Liming"} }
             listitem{ navigate(loginAs(userAdmin)){"Admin"} }
-          }
-        }        
+          }          
+        }
       }
+      
+      bookValuationTasks()
     }
   }
   
@@ -72,6 +68,12 @@ section pages
       initValuation1.bookValuation.persist();
       initValuation1.persist();
       initValuation1.bookValuation.enable();
+      
+      initValuation2.bookValuation := BookValuationProcedureStatus{};
+      initValuation2.bookValuation.v := initValuation1;
+      initValuation2.bookValuation.persist();
+      initValuation2.persist();
+      initValuation2.bookValuation.enable();
     }
     main()
     define body() {

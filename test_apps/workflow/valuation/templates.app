@@ -21,13 +21,27 @@ section templates
 	  }
   }
   
+  function userHasValuations() : Bool {
+    for (v : Valuation) {
+      if (v.valuer != null && v.valuer.user != null && v.valuer.user == securityContext.principal) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
   define topmenu() {
     menubar {
       menu {
         menuheader { navigate(home()) { "Home" } }
       }
       menu {
-        menuheader { "User" }
+        menuheader { 
+          if (securityContext.principal != null) {
+            navigate(url("#")){"User: " text(securityContext.principal.name)}
+          } 
+          if (securityContext.principal == null) { navigate(url("#")){text("User")} }
+        }
         if (securityContext.principal == null) {
           menuitem { navigate(signin()) { "Sign in" } }
         } else {
@@ -41,7 +55,7 @@ section templates
         menuheader { navigate(allValuationRequest()) { "Valuation Requests" } }
         menuitem { navigate(newValuationRequest()) { "New Valuation Request" } }
       }
-      if (securityContext.principal != null) {
+      if (securityContext.principal != null && userHasValuations()) {
         menu {
           menuheader { "My Valuations" }
           for (v : Valuation) {
@@ -58,7 +72,7 @@ section sidebar
 
   define sidebar() {
     table {
-      row {navigate(allValuation()){"All Valuations"}}
+      row {navigate(allValuationRequest()){"All Valuation Request"}}
       row {navigate(newValuationRequest()){"New ValuationRequest"}}
     }
   }
@@ -83,6 +97,16 @@ section sidebar
         block{navigate(valuation(v)){"Valuation No: " text(v.number)}}
         for (i: Invoice in v.invoices) { // mostly only one
           block{navigate(invoice(i)){"Invoice No: " text(i.number)}}
+        }
+        if (valuationHasProcedures(v) && 
+            securityContext.principal != null && 
+            securityContext.principal.hasBookingRights() && 
+            v.bookValuation != null && 
+            v.bookValuation.isEnabled) {
+          block() {
+            text("This valuation has not yet been booked")
+            navigate(bookValuation(v)) { text("Book valuation") }
+          }
         }
       }
     }
@@ -110,6 +134,7 @@ section sidebar
 
   define requestViewSidebar(r : ValuationRequest) {
     block{header{text("Request Details")}}
+    text("Read only")
     block { list {
       listitem{ navigate(valuationRequest(r)){"Request Details"} }
       listitem{ navigate(valuationRequestBooking(r)){"Booking Details"} }
@@ -145,6 +170,7 @@ section sidebar
   
   define valuationViewSidebar(v : Valuation) {
     block{header{text("Valuation Details")}}
+    text("Read only")
     block{
       list {
         listitem{ navigate(valuation(v)){"Property Summary"} }

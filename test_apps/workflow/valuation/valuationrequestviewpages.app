@@ -22,13 +22,13 @@ section pages
             group("Property") { 
               groupitem { label("Address") { output(r.address) } } 
               groupitem { label("Suburb"){ output(r.suburb) }}
-              groupitem { label(""){ output(r.state) }}
+              groupitem { label("State"){ output(r.state) }}
               groupitem { label("Post Code"){ output(r.postCode) }}
               groupitem { label("Category"){ output(r.category) }}
               groupitem { label("Type"){ output(r.type) }}
             }
             group("Comments") { 
-              groupitem { label("") { output(r.comments) } } 
+              groupitem { label("Comments") { output(r.comments) } } 
             }
           }
           block("datawidth") {

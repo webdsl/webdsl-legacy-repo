@@ -55,14 +55,14 @@ section procedures
       p.persist();
     }
     process {
-      repeat {
+/*      repeat {
         writeReport(p) xor managerFillInForm(p)
-      } until finalizeReport(p)
-      /*(employeeFillInForm(p) and managerFillInForm(p));
+      } until {finalizeReport(p)}*/
+      (employeeFillInForm(p) and managerFillInForm(p));
             repeat {
               writeReport(p);
               approveReport(p)
-            } until {finalizeReport(p)}*/
+            } until {finalizeReport(p)}
     }
   }
   

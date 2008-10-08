@@ -23,8 +23,10 @@ section user data
 section rights
 
   globals {
-    var initAuthorization1 : Authorization := Authorization { right := "allValuationRequests" user := userRuben };
+    var initAuthorization1 : Authorization := Authorization { right := "editValuationRequests" user := userRuben };
+    var initAuthorization4 : Authorization := Authorization { right := "editValuations" user := userRuben };
     var initAuthorization2 : Authorization := Authorization { right := "booking" user := userAdmin };
+    var initAuthorization3 : Authorization := Authorization { right := "createValuation" user := userAdmin };
   }
   
 section value data
