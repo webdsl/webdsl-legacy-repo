@@ -1,4 +1,0 @@
-module valuationviewpages
-    
-section pages
-  
