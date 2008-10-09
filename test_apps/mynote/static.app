@@ -1,6 +1,5 @@
 module static
 
-
 section pages
   
   define page home() {
@@ -11,16 +10,16 @@ section pages
       }
       row {
         menubar {
-            menuheader { navigate()[onclick := @visibility folderlist << "toggle"] {"/" } }
+            menuheader { navigate()[onclick := {visibility folderlist << toggle;}] {"/" } }
             menuheader { navigate(home()) { "the notes"  } }
         }
         quicksearch()
       }
       row {
-        block[id := "folderlist"] {
+        block[id := folderlist] {
           folders()
         }
-        block[id := "notelist"] {
+        block[id := notelist] {
           "please select a folder"
         }
       }
@@ -31,8 +30,3 @@ section pages
       }
     }
   }
-
-section templates
-  
-  
- 

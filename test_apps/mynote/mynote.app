@@ -21,8 +21,8 @@ section pages
       ]
     }  	
     action updatesearch(val: String) {
-      clear notelist << "this is just to not break parsing";
-      append notelist << @ { "searched " output(val) spacer };
+      clear notelist << ;
+      append notelist << { "searched " output(val) spacer };
       for(n : Note) {
         if (n.name.contains(val))	{
           append notelist <<	displayNote(n);
@@ -30,7 +30,6 @@ section pages
       }
     }
   }
-
 
   define quicksearchitem(n: Note) {
     block { output(n.name) output(n.details) }
@@ -42,11 +41,11 @@ section pages
         listitem { 
           image("/images/notes.png") 
           actionLink(f.name)[
-            onmouseover := @replace folderdetails << @ \ block {output(f.description)},
-            onmouseout  := @replace folderdetails << @ \ block { par { "" } } ,
-            onclick			:= @replace notelist 			<< foldercontents(f)
+            onmouseover := {replace folderdetails << { block {output(f.description) }};},
+            onmouseout  := {replace folderdetails << { block { par { "" } }};} ,
+            onclick			:= {replace notelist 			<< foldercontents(f);}
           ] 
-          actionLink("[edit]")[onclick:= @replace notelist << editFolder(f)]
+          actionLink("[edit]")[onclick:= {replace notelist << editFolder(f);}]
         }
       }
     }
@@ -57,7 +56,7 @@ section pages
       replace notelist << editFolder(newfolder);
     }
     spacer
-    block[id := "folderdetails"] { "" }    
+    block[id := folderdetails] { "" }    
   }
   
   define foldercontents(f : Folder) {
@@ -77,7 +76,7 @@ section pages
     spacer
     text ( "current notes" )
     
-    block[id := "foldernotes"] {
+    block[id := foldernotes] {
       for(note : Note in f.notes) {
           displayNote(note)
       }     
@@ -105,7 +104,7 @@ section pages
       }
       action remove() {
         f.delete();
-        replace notelist << @\block{ "select a folder.."};
+        replace notelist << { block{ "select a folder.."}};
         replace folderlist << folders();
       }
     }
@@ -126,7 +125,7 @@ section pages
         var b: Bool := false
         input(b)[onclick := finish()] navigate[onclick:= finish()] {"finished"}
       }
-      actionLink("[edit]")[onclick:=@ replace this << editNote(n)] 
+      actionLink("[edit]")[onclick:={ replace this << editNote(n);}] 
     }
     action finish() {
       n.finished := true;
@@ -156,4 +155,3 @@ section pages
       }
     }
   }
-  
