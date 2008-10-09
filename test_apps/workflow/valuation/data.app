@@ -127,10 +127,12 @@ section data model
   }
   
   entity ValuationRequest {
-    valuations -> Set<Valuation> (inverse=Valuation.valuationRequest)
-    fullAddress :: String := this.address + " " + this.suburb + " " + this.state.name + " " + this.postCode.name //(name)
-    name :: String := this.fullAddress + " Valuation Request"
     status -> ValuationRequestStatus
+    progressValuations -> Set<ProgressValuation> (inverse=ProgressValuation.valuationRequest)
+    invoices -> Set<Invoice> (inverse=Invoice.valuationRequest)
+      
+    fullAddress :: String := this.address + " " + this.suburb + " " + this.state.name + " " + this.postCode.name
+    name :: String := this.fullAddress + " Valuation Request"
     requestDate :: Date
     sentDate :: Date
     
@@ -177,25 +179,11 @@ section data model
     bookedBy -> User
     bookingNotes :: Text
     
-  }
-  
-  entity Invoice {
-    number :: Int
-    amount :: Int
-    valuation -> Valuation
-  }
-  
-  entity Valuer {
-    user -> User
-    name :: String := this.user.name
-  }
-  
-  entity Valuation {
-    valuationRequest -> ValuationRequest
-    number :: Int
-    name :: String := this.valuationRequest.fullAddress + " Valuation"
+    /**
+     * Former Valuation stuff
+     */
+    valuationNumber :: Int
     valuer -> Valuer
-    invoices -> Set<Invoice> (inverse=Invoice.valuation)
     
     // Property Summary
     lot :: Int
@@ -272,6 +260,24 @@ section data model
     latestSaleDate :: Date
     latestSalePrice :: Int //Float
     latestSaleComment :: Text
+  }
+  
+  entity ProgressValuation {
+    valuationRequest -> ValuationRequest
+    date :: Date
+    comments :: Text
+  }
+  
+  entity Invoice {
+    number :: Int
+    amount :: Int
+    valuation -> ValuationRequest
+  }
+  
+  entity Valuer {
+    user -> User
+    name :: String := this.user.name
+    valuationRequests -> Set<ValuationRequest> (inverse=ValuationRequest.valuer)
   }
   
   entity ComparisonValue {
