@@ -30,7 +30,7 @@ section pages
     define body() {
       header { "Integrated Property Services" }
       
-      section {
+      par {
         if (securityContext.principal != null) { 
           text("Welcome ")
           output(securityContext.principal) 

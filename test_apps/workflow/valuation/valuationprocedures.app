@@ -47,13 +47,15 @@ section procedures
   
   define bookValuationTasks() {
     if (securityContext.principal != null && securityContext.principal.hasBookingRights() && unbookedValuationsExist()) {
-      section("Booking tasks") {
-        list {
-          for (valuation : Valuation) {
-            if (valuationHasProcedures(valuation) && valuation.bookValuation != null && valuation.bookValuation.isEnabled) {    
-              listitem{ navigate(bookValuation(valuation)) { 
-                text("Book ") text(valuation.valuationRequest.fullAddress) 
-              } }
+      par {
+        section("Booking tasks") {
+          list {
+            for (valuation : Valuation) {
+              if (valuationHasProcedures(valuation) && valuation.bookValuation != null && valuation.bookValuation.isEnabled) {    
+                listitem{ navigate(bookValuation(valuation)) { 
+                  text("Book ") text(valuation.valuationRequest.fullAddress) 
+                } }
+              }
             }
           }
         }
