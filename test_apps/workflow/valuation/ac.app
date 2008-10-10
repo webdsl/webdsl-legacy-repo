@@ -18,9 +18,9 @@ section functions
 
       return false;
     }
-
+    
     // valuers can only edit their own valuations
-    function canEditValuation(v : Valuation) : Bool {
+    function canEditValuation(v : ValuationRequest) : Bool {
       return (canEditAllValuations() || (v.valuer != null && v.valuer.user == securityContext.principal));
     }
     
@@ -34,7 +34,7 @@ section functions
       return (canEditAllValuations() || (securityContext.principal != null && securityContext.principal.isValuer()));
     }
     
-    function canViewValuation(v : Valuation) : Bool {
+    function canViewValuation(v : ValuationRequest) : Bool {
       return (canViewAllValuations());// || securityContext.principal.isValuer());
     }
     
@@ -62,7 +62,7 @@ section functions
       return false;
     }
     
-    function canEditValuationRequest(r : ValuationRequest) : Bool {
+    function canEditValuationRequest(v : ValuationRequest) : Bool {
       return (canEditAllValuationRequests());
     }
     
@@ -76,22 +76,22 @@ section functions
       return (canEditAllValuationRequests() || (securityContext.principal != null && securityContext.principal.isValuer()));
     }
     
-    function canViewValuationRequest(r : ValuationRequest) : Bool {
+    function canViewValuationRequest(v : ValuationRequest) : Bool {
       return (canViewAllValuationRequests());
     }
   }
 
 access control rules 
   
-  pointcut valuationViewPages(v : Valuation) {
-    page valuation(v),
+  pointcut valuationViewPages(v : ValuationRequest) {
+    page valuationProperty(v),
     page valuationMainBuilding(v),
     page valuationRisk(v),
     page valuationLand(v),
     page valuationSales(v)
   }
   
-  pointcut valuationEditPages(v : Valuation) {
+  pointcut valuationEditPages(v : ValuationRequest) {
     page editValuationProperty(v),
     page editValuationMainBuilding(v),
     page editValuationRisk(v),
@@ -99,32 +99,32 @@ access control rules
     page editValuationSales(v)
   }
   
-  pointcut valuationRequestViewPages(r : ValuationRequest) {
-    page valuationRequest(r),
-    page valuationRequestBooking(r),
-    page valuationRequestQuote(r)
+  pointcut valuationRequestViewPages(v : ValuationRequest) {
+    page valuationRequest(v),
+    page valuationRequestBooking(v),
+    page valuationRequestQuote(v)
   }
   
-  pointcut valuationRequestEditPages(r : ValuationRequest) {
-    page editValuationRequest(r),
-    page editValuationRequestBooking(r),
-    page editValuationRequestQuote(r)
+  pointcut valuationRequestEditPages(v : ValuationRequest) {
+    page editValuationRequestDetails(v),
+    page editValuationRequestBooking(v),
+    page editValuationRequestQuote(v)
   }
   
-  rule pointcut valuationViewPages(v : Valuation) {
+  rule pointcut valuationViewPages(v : ValuationRequest) {
     canViewValuation(v)
   }
   
-  rule pointcut valuationEditPages(v : Valuation) {
+  rule pointcut valuationEditPages(v : ValuationRequest) {
     canEditValuation(v)
   }
 
-  rule pointcut valuationRequestViewPages(r : ValuationRequest) {
-    canViewValuationRequest(r)
+  rule pointcut valuationRequestViewPages(v : ValuationRequest) {
+    canViewValuationRequest(v)
   }
 
-  rule pointcut valuationRequestEditPages(r : ValuationRequest) {
-    canEditValuationRequest(r)
+  rule pointcut valuationRequestEditPages(v : ValuationRequest) {
+    canEditValuationRequest(v)
   }
 
   rule page newValuationRequest() {

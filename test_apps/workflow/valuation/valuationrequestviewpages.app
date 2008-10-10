@@ -8,6 +8,59 @@ section pages
       valuationRequestSidebar(v)
     }
     define body() {
+      header{text("Valuation Request")}
+      table {
+        row {
+          block("datawidth") {
+            group("Status") { 
+              groupitem { label("Request status") { output(v.status) } }
+            }
+            group("Request Summary") {
+              groupitem { label("Client") { output(v.client) } }
+              groupitem { label("Reference") { output(v.reference) } }
+              groupitem { label("Lender Contact") { output(v.lenderContact) } }
+              groupitem { label("Applicant") { output(v.applicantName) } }
+              groupitem { label("Request Date") { output(v.requestDate) } }
+              groupitem { label("Sent Date") { output(v.sentDate) } }
+              groupitem { label("Status") { output(v.status) } }
+              groupitem { label("Report Type") { output(v.reportType) } }
+              groupitem { label("Purchase Price") { text("$ ") output(v.purchase) } } 
+              groupitem { label("Owner Estimation") { text("$ ") output(v.ownerEst) } }
+              groupitem { label("Tender Price") { text("$ ") output(v.tender) } }
+            }
+            group("Location") { 
+              groupitem { label("Map") { "N/A" } }
+              groupitem { label("UDB Ref"){ output(v.udbRef) } }
+            }
+          }
+          block("datawidth") {
+            group("Booking") { 
+              groupitem { label("Valuer") { output(v.valuer) } } 
+              groupitem { label("Date"){ output(v.bookingDate) } }
+              groupitem { label("Time") { output(v.bookingTime) } } 
+              groupitem { label("Contact"){ output(v.bookingContact) } }
+              groupitem { label("Phone"){ output(v.bookingPhone) } }
+              groupitem { label("Booked by"){ output(v.bookedBy) } }
+            }
+            group("Booking Notes") { 
+              groupitem { label("") { output(v.bookingNotes) } } 
+            }
+            group("Inspection Contact") { 
+              groupitem { label("Name") { output(v.inspectionName) } } 
+              groupitem { label("Phone"){ output(v.inspectionPhone) } }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  define page valuationRequestDetails(v : ValuationRequest) { 
+    main()
+    define sidebar() {
+      valuationRequestSidebar(v)
+    }
+    define body() {
       header{text("Request Details")}
       table {
         row {
@@ -55,7 +108,7 @@ section pages
       }
     }
   }
-
+  
   define page valuationRequestBooking(v : ValuationRequest) {
     main()
     define sidebar() {
@@ -110,7 +163,7 @@ section pages
   define page valuationRequestQuote(v : ValuationRequest) {
     main()
     define sidebar() {
-      valuationRequestSidebar(r)
+      valuationRequestSidebar(v)
     }
     define body() {
       header{text("Quote Details")}
@@ -142,7 +195,7 @@ section pages
   define page valuationProperty(v : ValuationRequest) {
     main()
     define sidebar() {
-      valuationRequestSidebar(v.valuationRequest)
+      valuationRequestSidebar(v)
     }
     define body() {
       header{text("Property Summary")}

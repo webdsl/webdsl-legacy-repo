@@ -2,9 +2,9 @@ module valuationprocedures
 
 section procedures
 
-  procedure bookValuation(v : Valuation) {
+  procedure bookValuation(v : ValuationRequest) {
     who { securityContext.principal != null && securityContext.principal.hasBookingRights() }
-    when { v.valuationRequest.status != null && v.valuationRequest.status.name == "Request Received" }
+    when { v.status != null && v.status.name == "Request Received" }
     view {
       main()
       define local body() {
@@ -15,11 +15,11 @@ section procedures
               block("datawidth") {
                 group("Booking") {
                   groupitem { label("Valuer") { input(v.valuer) } }
-                  groupitem { label("Date") { input(v.valuationRequest.bookingDate) } }
-                  groupitem { label("Time") { input(v.valuationRequest.bookingTime) } }
-                  groupitem { label("Contact"){ input(v.valuationRequest.bookingContact) } }
-                  groupitem { label("Phone"){ input(v.valuationRequest.bookingPhone) } }
-                  groupitem { label("Notes") { input(v.valuationRequest.bookingNotes) } } 
+                  groupitem { label("Date") { input(v.bookingDate) } }
+                  groupitem { label("Time") { input(v.bookingTime) } }
+                  groupitem { label("Contact"){ input(v.bookingContact) } }
+                  groupitem { label("Phone"){ input(v.bookingPhone) } }
+                  groupitem { label("Notes") { input(v.bookingNotes) } } 
                 }
               }
               row { action("Book Valuation", do()) }
@@ -29,15 +29,15 @@ section procedures
       }
     }
     do { 
-      v.valuationRequest.status := initValuationRequestStatus2; 
-      v.valuationRequest.persist();
+      v.status := initValuationRequestStatus2; 
+      v.persist();
       v.persist();
     }
   }
   
   function unbookedValuationsExist() : Bool {
     var unbookedValuations : Bool := false;
-    for (v : Valuation) {
+    for (v : ValuationRequest) {
       if (v.bookValuation != null && v.bookValuation.isEnabled) {
         unbookedValuations := true;
       }
@@ -45,15 +45,25 @@ section procedures
     return unbookedValuations;
   }
   
+  function viewBookValuationLink(v : ValuationRequest) : Bool {
+    return (
+      valuationRequestHasProcedures(v) && 
+      securityContext.principal != null && 
+      securityContext.principal.hasBookingRights() && 
+      v.bookValuation != null && 
+      v.bookValuation.isEnabled
+    );
+  }
+  
   define bookValuationTasks() {
     if (securityContext.principal != null && securityContext.principal.hasBookingRights() && unbookedValuationsExist()) {
       par {
         section("Booking tasks") {
           list {
-            for (valuation : Valuation) {
-              if (valuationHasProcedures(valuation) && valuation.bookValuation != null && valuation.bookValuation.isEnabled) {    
-                listitem{ navigate(bookValuation(valuation)) { 
-                  text("Book ") text(valuation.valuationRequest.fullAddress) 
+            for (v : ValuationRequest) {
+              if (valuationRequestHasProcedures(v) && v.bookValuation != null && v.bookValuation.isEnabled) {    
+                listitem{ navigate(bookValuation(v)) { 
+                  text("Book ") text(v.fullAddress) 
                 } }
               }
             }

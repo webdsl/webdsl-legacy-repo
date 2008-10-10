@@ -22,7 +22,7 @@ section templates
   }
   
   function userHasValuations() : Bool {
-    for (v : Valuation) {
+    for (v : ValuationRequest) {
       if (v.valuer != null && v.valuer.user != null && v.valuer.user == securityContext.principal) {
         return true;
       }
@@ -50,6 +50,7 @@ section templates
         menuitem { navigate(loginAs(userRuben)){"Login as Ruben"} }
         menuitem { navigate(loginAs(userLiming)){"Login as Liming"} }
         menuitem { navigate(loginAs(userAdmin)){"Login as Admin"} }
+        menuitem { navigate(loginAs(userManager)){"Login as Manager"} }
       }
       menu {
         menuheader { navigate(allValuationRequest()) { "Valuation Requests" } }
@@ -58,7 +59,7 @@ section templates
       if (securityContext.principal != null && userHasValuations()) {
         menu {
           menuheader { "My Valuations" }
-          for (v : Valuation) {
+          for (v : ValuationRequest) {
             if (v.valuer != null && v.valuer.user != null && v.valuer.user == securityContext.principal) {
               menuitem { navigate(editValuationProperty(v)){ text(v.name) } }
             }
@@ -77,33 +78,30 @@ section sidebar
     }
   }
 
-  define valuationRequestSidebar(r : ValuationRequest) {
-    propertyInfoSidebar(r)
+  define valuationRequestSidebar(v : ValuationRequest) {
+    propertyInfoSidebar(v)
     horizontalspacer
-    valuationRequestDetailsSidebar(r)
+    valuationRequestDetailsSidebar(v)
     horizontalspacer
-    valuationDetailsSidebar(r)
+    valuationDetailsSidebar(v)
     
     contextSidebar()
   }
   
-  define propertyInfoSidebar(r : ValuationRequest) {
+  define propertyInfoSidebar(v : ValuationRequest) {
     section {
       header {
-        block{output(r.address)}
-        block{output(r.suburb + " " + r.state.name + " " + r.postCode.name)}
+        block{output(v.address)}
+        block{output(v.suburb + " " + v.state.name + " " + v.postCode.name)}
       }
-      for (v: Valuation in r.valuations) { // actually only one. TODO: integrate so there is only one entity??
-        block{navigate(valuation(v)){"Valuation No: " text(v.number)}}
-        for (i: Invoice in v.invoices) { // mostly only one
+      block("small") {
+        navigate(valuationProperty(v)){"Valuation No: " text(v.valuationNumber)}
+        for (i: Invoice in v.invoices) { 
           block{navigate(invoice(i)){"Invoice No: " text(i.number)}}
         }
-        if (valuationHasProcedures(v) && 
-            securityContext.principal != null && 
-            securityContext.principal.hasBookingRights() && 
-            v.bookValuation != null && 
-            v.bookValuation.isEnabled) {
-          block() {
+        if (viewBookValuationLink(v)) 
+        {
+          par {
             text("This valuation has not yet been booked")
             navigate(bookValuation(v)) { text("Book valuation") }
           }
@@ -113,49 +111,47 @@ section sidebar
   }
   
   /* Valuation Request Details Sidebar */
-  define valuationRequestDetailsSidebar(r : ValuationRequest) {
-    if (canEditValuationRequest(r)) {
-      requestEditSidebar(r)
+  define valuationRequestDetailsSidebar(v : ValuationRequest) {
+    if (canEditValuationRequest(v)) {
+      requestEditSidebar(v)
     } else { 
-      if (canViewValuationRequest(r)) {
-        requestViewSidebar(r)
+      if (canViewValuationRequest(v)) {
+        requestViewSidebar(v)
       }
     }
   }
   
-  define requestEditSidebar(r : ValuationRequest) {
+  define requestEditSidebar(v : ValuationRequest) {
     block{header{text("Request Details")}}
     block { list {
-      listitem{ navigate(editValuationRequest(r)){"Request Details"} }
-      listitem{ navigate(editValuationRequestBooking(r)){"Booking Details"} }
-      listitem{ navigate(editValuationRequestQuote(r)){"Quote Details"} }
+      listitem{ navigate(editValuationRequestDetails(v)){"Request Details"} }
+      listitem{ navigate(editValuationRequestBooking(v)){"Booking Details"} }
+      listitem{ navigate(editValuationRequestQuote(v)){"Quote Details"} }
     } }
   }
 
-  define requestViewSidebar(r : ValuationRequest) {
+  define requestViewSidebar(v : ValuationRequest) {
     block{header{text("Request Details")}}
     text("Read only")
     block { list {
-      listitem{ navigate(valuationRequest(r)){"Request Details"} }
-      listitem{ navigate(valuationRequestBooking(r)){"Booking Details"} }
-      listitem{ navigate(valuationRequestQuote(r)){"Quote Details"} }
+      listitem{ navigate(valuationRequest(v)){"Request Details"} }
+      listitem{ navigate(valuationRequestBooking(v)){"Booking Details"} }
+      listitem{ navigate(valuationRequestQuote(v)){"Quote Details"} }
     } }
   }
 
   /* Valuation Sidebar */
-  define valuationDetailsSidebar(r : ValuationRequest) {
-    for (v: Valuation in r.valuations) { // actually only one. 
-      if (canEditValuation(v)) {
-        valuationEditSidebar(v)
-      } else { 
-        if (canViewValuation(v)) {
-          valuationViewSidebar(v)
-        }
+  define valuationDetailsSidebar(v : ValuationRequest) {
+    if (canEditValuation(v)) {
+      valuationEditSidebar(v)
+    } else { 
+      if (canViewValuation(v)) {
+        valuationViewSidebar(v)
       }
     }
   }
   
-  define valuationEditSidebar(v : Valuation) {
+  define valuationEditSidebar(v : ValuationRequest) {
     block{header{text("Edit Valuation Details")}}
     block{
       list {
@@ -168,12 +164,12 @@ section sidebar
     }
   }
   
-  define valuationViewSidebar(v : Valuation) {
+  define valuationViewSidebar(v : ValuationRequest) {
     block{header{text("Valuation Details")}}
     text("Read only")
     block{
       list {
-        listitem{ navigate(valuation(v)){"Property Summary"} }
+        listitem{ navigate(valuationProperty(v)){"Property Summary"} }
         listitem{ navigate(valuationMainBuilding(v)){"Main Building"} }
         listitem{ navigate(valuationRisk(v)){"Risk Analysis"} }
         listitem{ navigate(valuationLand(v)){"Land"} }

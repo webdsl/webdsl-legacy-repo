@@ -11,15 +11,12 @@ imports init
 imports entitypages
 imports ac
 imports valuationpages
-imports valuationviewpages
-imports valuationeditpages
 imports valuationrequestviewpages
 imports valuationrequesteditpages
 imports valuationprocedures
 imports layout
 imports style
-//imports testsidebar
-      
+
   
 section pages
 
@@ -40,6 +37,7 @@ section pages
             listitem{ navigate(loginAs(userRuben)){"Ruben"} }
             listitem{ navigate(loginAs(userLiming)){"Liming"} }
             listitem{ navigate(loginAs(userAdmin)){"Admin"} }
+            listitem{ navigate(loginAs(userManager)){"Login as Manager"} }
           }          
         }
       }
@@ -59,25 +57,17 @@ section pages
     }
   }
   
-  define page initTest() {
-    init {
-      securityContext.principal := userAdmin;
-      securityContext.loggedIn := true;
-      initValuation1.bookValuation := BookValuationProcedureStatus{};
-      initValuation1.bookValuation.v := initValuation1;
-      initValuation1.bookValuation.persist();
-      initValuation1.persist();
-      initValuation1.bookValuation.enable();
-      
-      initValuation2.bookValuation := BookValuationProcedureStatus{};
-      initValuation2.bookValuation.v := initValuation1;
-      initValuation2.bookValuation.persist();
-      initValuation2.persist();
-      initValuation2.bookValuation.enable();
-    }
-    main()
-    define body() {
-      section { navigate(valuation(initValuation1)){"Ga naar de OBrien street"} }
-    }
+  init {
+    initValuationRequest1.bookValuation := BookValuationProcedureStatus{};
+    initValuationRequest1.bookValuation.v := initValuationRequest1;
+    initValuationRequest1.bookValuation.persist();
+    initValuationRequest1.persist();
+    initValuationRequest1.bookValuation.enable();
+    
+    initValuationRequest2.bookValuation := BookValuationProcedureStatus{};
+    initValuationRequest2.bookValuation.v := initValuationRequest2;
+    initValuationRequest2.bookValuation.persist();
+    initValuationRequest2.persist();
+    initValuationRequest2.bookValuation.enable();
   }
   

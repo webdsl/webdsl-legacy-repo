@@ -2,10 +2,10 @@ module valuationrequesteditpages
 
 section pages
 
-  define page editValuationRequest(r : ValuationRequest) {
+  define page editValuationRequestDetails(v : ValuationRequest) {
     main()
     define sidebar() {
-      valuationRequestSidebar(r)
+      valuationRequestSidebar(v)
     }
     define body() {
       header{text("Request Details")}
@@ -14,42 +14,42 @@ section pages
           row {
             block("datawidth") {
               group("Client") {
-                groupitem { label("Client") { input(r.client) } }
-                groupitem { label("Primary Interest") { input(r.primaryInterest) } }
-                groupitem { label("Broker") { input(r.broker) } }
-                groupitem { label("Lender Contact"){ input(r.lenderContact) }}
-                groupitem { label("Reference"){ input(r.reference) }}
+                groupitem { label("Client") { input(v.client) } }
+                groupitem { label("Primary Interest") { input(v.primaryInterest) } }
+                groupitem { label("Broker") { input(v.broker) } }
+                groupitem { label("Lender Contact"){ input(v.lenderContact) }}
+                groupitem { label("Reference"){ input(v.reference) }}
               }
               group("Property") { 
-                groupitem { label("Address") { input(r.address) } } 
-                groupitem { label("Suburb"){ input(r.suburb) }}
-                groupitem { label("State"){ input(r.state) }}
-                groupitem { label("Post Code"){ input(r.postCode) }}
-                groupitem { label("Category"){ input(r.category) }}
-                groupitem { label("Type"){ input(r.type) }}
+                groupitem { label("Address") { input(v.address) } } 
+                groupitem { label("Suburb"){ input(v.suburb) }}
+                groupitem { label("State"){ input(v.state) }}
+                groupitem { label("Post Code"){ input(v.postCode) }}
+                groupitem { label("Category"){ input(v.category) }}
+                groupitem { label("Type"){ input(v.type) }}
               }
               group("Comments") { 
-                groupitem { label("") { input(r.comments) } } 
+                groupitem { label("") { input(v.comments) } } 
               }
             }
             block("datawidth") {
               group("Specifications") { 
-                groupitem { label("Report Type") { input(r.reportType) } } 
-                groupitem { label("Propose"){ input(r.propose) }}
+                groupitem { label("Report Type") { input(v.reportType) } } 
+                groupitem { label("Propose"){ input(v.propose) }}
               }
               group("Applicant") { 
-                groupitem { label("Name") { input(r.applicantName) } } 
-                groupitem { label("Phone"){ input(r.applicantPhone) }}
+                groupitem { label("Name") { input(v.applicantName) } } 
+                groupitem { label("Phone"){ input(v.applicantPhone) }}
               }
               group("Inspection Contact") { 
-                groupitem { label("Name") { input(r.inspectionName) } } 
-                groupitem { label("Phone"){ input(r.inspectionPhone) }}
+                groupitem { label("Name") { input(v.inspectionName) } } 
+                groupitem { label("Phone"){ input(v.inspectionPhone) }}
               }
               group("Miscellaneous") { 
-                groupitem { label("Purchase") { input(r.purchase) } } 
-                groupitem { label("Owner Est."){ input(r.ownerEst) }}
-                groupitem { label("Tender"){ input(r.tender) }}
-                groupitem { label("Status"){ output(r.status) }}
+                groupitem { label("Purchase") { input(v.purchase) } } 
+                groupitem { label("Owner Est."){ input(v.ownerEst) }}
+                groupitem { label("Tender"){ input(v.tender) }}
+                groupitem { label("Status"){ output(v.status) }}
               }
             }
             row { action("Save changes", saveValuationRequest()) }
@@ -57,15 +57,15 @@ section pages
         }
       }
       action saveValuationRequest() {
-        r.persist();
+        v.persist();
       }
     }
   }
 
-  define page editValuationRequestBooking(r : ValuationRequest) {
+  define page editValuationRequestBooking(v : ValuationRequest) {
     main()
     define sidebar() {
-      valuationRequestSidebar(r)
+      valuationRequestSidebar(v)
     }
     define body() {
       header{text("Booking Details")}
@@ -74,56 +74,54 @@ section pages
           row {
             block("datawidth") {
               group("Request Summary") {
-                groupitem { label("Client") { output(r.client) } }
-                groupitem { label("Reference") { output(r.reference) } }
-                groupitem { label("Lender Contact") { output(r.lenderContact) } }
-                groupitem { label("Applicant") { output(r.applicantName) } }
-                groupitem { label("Request Date") { output(r.requestDate) } }
-                groupitem { label("Sent Date") { output(r.sentDate) } }
-                groupitem { label("Status") { output(r.status) } }
-                groupitem { label("Report Type") { output(r.reportType) } }
-                groupitem { label("Purchase Price") { block{text("$ ") output(r.purchase)} } } 
-                groupitem { label("Owner Estimation") { block{text("$ ") output(r.ownerEst)} } }
-                groupitem { label("Tender Price") { block{text("$ ") output(r.tender)} } }
+                groupitem { label("Client") { output(v.client) } }
+                groupitem { label("Reference") { output(v.reference) } }
+                groupitem { label("Lender Contact") { output(v.lenderContact) } }
+                groupitem { label("Applicant") { output(v.applicantName) } }
+                groupitem { label("Request Date") { output(v.requestDate) } }
+                groupitem { label("Sent Date") { output(v.sentDate) } }
+                groupitem { label("Status") { output(v.status) } }
+                groupitem { label("Report Type") { output(v.reportType) } }
+                groupitem { label("Purchase Price") { block{text("$ ") output(v.purchase)} } } 
+                groupitem { label("Owner Estimation") { block{text("$ ") output(v.ownerEst)} } }
+                groupitem { label("Tender Price") { block{text("$ ") output(v.tender)} } }
               }
               group("Location") { 
                 groupitem { label("Map") { "N/A" } }
-                groupitem { label("UDB Ref"){ input(r.udbRef) } }
+                groupitem { label("UDB Ref"){ input(v.udbRef) } }
               }
             }
             block("datawidth") {
               group("Booking") { 
-                for (v : Valuation in r.valuations) {
-                  groupitem { label("Valuer") { input(v.valuer) } } 
-                }
-                groupitem { label("Date"){ input(r.bookingDate) } }
-                groupitem { label("Time") { input(r.bookingTime) } } 
-                groupitem { label("Contact"){ input(r.bookingContact) } }
-                groupitem { label("Phone"){ input(r.bookingPhone) } }
-                groupitem { label("Booked by"){ input(r.bookedBy) } }
+                groupitem { label("Valuer") { input(v.valuer) } } 
+                groupitem { label("Date"){ input(v.bookingDate) } }
+                groupitem { label("Time") { input(v.bookingTime) } } 
+                groupitem { label("Contact"){ input(v.bookingContact) } }
+                groupitem { label("Phone"){ input(v.bookingPhone) } }
+                groupitem { label("Booked by"){ input(v.bookedBy) } }
               }
               group("Booking Notes") { 
-                groupitem { label("") { input(r.bookingNotes) } } 
+                groupitem { label("") { input(v.bookingNotes) } } 
               }
               group("Inspection Contact") { 
-                groupitem { label("Name") { input(r.inspectionName) } } 
-                groupitem { label("Phone"){ input(r.inspectionPhone) } }
+                groupitem { label("Name") { input(v.inspectionName) } } 
+                groupitem { label("Phone"){ input(v.inspectionPhone) } }
               }
             }
             row { action("Save changes", saveValuationRequest()) }
           }
         }
         action saveValuationRequest() {
-          r.persist();
+          v.persist();
         }
       }
     }
   }
 
-  define page editValuationRequestQuote(r : ValuationRequest) {
+  define page editValuationRequestQuote(v : ValuationRequest) {
     main()
     define sidebar() {
-      valuationRequestSidebar(r)
+      valuationRequestSidebar(v)
     }
     define body() {
       header{text("Quote Details")}
@@ -132,20 +130,20 @@ section pages
           row {
             block("datawidth") {
               group("Invoice Details") {
-                groupitem { label("Client") { input(r.client) } }
-                groupitem { label("Primary Interest") { input(r.primaryInterest) } }
+                groupitem { label("Client") { input(v.client) } }
+                groupitem { label("Primary Interest") { input(v.primaryInterest) } }
               }
               group("Comments") { 
-                groupitem { label("") { input(r.comments) } } 
+                groupitem { label("") { input(v.comments) } } 
               }
               group("Total") { 
-                groupitem { label("Address") { input(r.address) } } 
+                groupitem { label("Address") { input(v.address) } } 
               }
             }
             block("datawidth") {
               group("Quote Terms") { 
-                groupitem { label("Report Type") { input(r.reportType) } } 
-                groupitem { label("Propose"){ input(r.propose) }}
+                groupitem { label("Report Type") { input(v.reportType) } } 
+                groupitem { label("Propose"){ input(v.propose) }}
               }
             }
           }
@@ -153,15 +151,15 @@ section pages
         }
       }
       action saveValuationRequest() {
-        r.persist();
+        v.persist();
       }
     }
   }
 
-  define page editValuationProperty(v : Valuation) {
+  define page editValuationProperty(v : ValuationRequest) {
     main()
     define sidebar() {
-      valuationRequestSidebar(v.valuationRequest)
+      valuationRequestSidebar(v)
     }
     define body() {
       header{text("Property Summary")}
@@ -214,10 +212,10 @@ section pages
     }
   }
   
-  define page editValuationMainBuilding(v : Valuation) {
+  define page editValuationMainBuilding(v : ValuationRequest) {
     main()
     define sidebar() {
-      valuationRequestSidebar(v.valuationRequest)
+      valuationRequestSidebar(v)
     }
     define body() {
       header{text("Main Building")}
@@ -270,26 +268,26 @@ section pages
     }
   }
   
-  define page editValuationRisk(v : Valuation) {
+  define page editValuationRisk(v : ValuationRequest) {
     main()
     define sidebar() {
-      valuationRequestSidebar(v.valuationRequest)
+      valuationRequestSidebar(v)
     }
     derive editPage from v
   }
   
-  define page editValuationLand(v : Valuation) {
+  define page editValuationLand(v : ValuationRequest) {
     main()
     define sidebar() {
-      valuationRequestSidebar(v.valuationRequest)
+      valuationRequestSidebar(v)
     }
     derive editPage from v
   }
   
-  define page editValuationSales(v : Valuation) {
+  define page editValuationSales(v : ValuationRequest) {
     main()
     define sidebar() {
-      valuationRequestSidebar(v.valuationRequest)
+      valuationRequestSidebar(v)
     }
     derive editPage from v
   }

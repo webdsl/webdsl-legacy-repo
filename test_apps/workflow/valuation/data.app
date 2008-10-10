@@ -271,7 +271,7 @@ section data model
   entity Invoice {
     number :: Int
     amount :: Int
-    valuation -> ValuationRequest
+    valuationRequest -> ValuationRequest
   }
   
   entity Valuer {

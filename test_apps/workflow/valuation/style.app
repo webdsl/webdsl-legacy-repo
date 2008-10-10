@@ -12,6 +12,11 @@ style globalStyle
     font-size := 12px;
   }
 
+  sidebar() >> .small >> text() {
+    font := globalFont;
+    font-size := 10px;
+  }
+
   section() {
     font := globalFont;
     font-size := globalFontSize;
