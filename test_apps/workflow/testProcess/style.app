@@ -164,7 +164,7 @@ style menuStyle
     font-line := Line.none;
   }
   
-  topmenu() >> menu() >> navigate().hover {
+  topmenu() >> menu() >> navigate():hover {
     image := url("images/menubar_bg_hover.png");
     image-repeat := Repeat.horizontal;
   }

@@ -5,12 +5,12 @@ layout
   main() {
     top();
     topmenu();
-    mainbody: [ sidebar() | body() ];
+    mainbody: [  body() | sidebar()  ];
     footer();
   }
   
   topmenu() {
-    menu: [ mainNavigation() | adminNavigation() ];
+    menu: [  adminNavigation() | mainNavigation() ];
   }
 
 style mainStyle
@@ -21,6 +21,7 @@ style mainStyle
     align := Align.right;
   }
 
+/*
   mainNavigation() {
     align := Align.left;
   }
@@ -28,6 +29,7 @@ style mainStyle
   adminNavigation() {
     align := Align.right;
   }
+*/
 
   top() {
     width := 100%;

@@ -91,7 +91,7 @@ style globalTemplateStyle
 
   
   template main_sidebar() {
-  	width := 15em;
+    width := 15em;
   }
 
 
@@ -120,7 +120,7 @@ style menuStyle
     border-right-style := BorderStyle.solid;
   }
   
-  template topmenu() >> menu() > menuheader().first-child {
+  template topmenu() >> menu() > menuheader():first-child {
     border-left-color := globalBorderColor;
     border-left-width := 1px;
     border-left-style := BorderStyle.solid;
@@ -134,7 +134,7 @@ style menuStyle
     font-line := Line.none;
   }
   
-  template topmenu() >> menu() >> navigate().hover {
+  template topmenu() >> menu() >> navigate():hover {
     image := url("images/menubar_bg_hover.png");
   }
 

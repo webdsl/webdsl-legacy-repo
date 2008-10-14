@@ -32,7 +32,7 @@ style globalStyle
   }
   
   table() {
-  	font := globalFont;
+    font := globalFont;
   }
   
   table() > header() {
@@ -89,8 +89,8 @@ style templateStyle
   }
 
   template sidebar() {
-  	width := 12em;
-  	padding := 1em;
+    width := 12em;
+    padding := 1em;
   }
 
   template sidebar() >> list() {
@@ -105,9 +105,9 @@ style templateStyle
   
   template body() {
     padding := 1em;
-   	border-left-color := layoutBorderColor;
-  	border-left-style := BorderStyle.solid;
-  	border-left-width := 1px;
+     border-left-color := layoutBorderColor;
+    border-left-style := BorderStyle.solid;
+    border-left-width := 1px;
   }
 
   template footer() {
@@ -187,7 +187,7 @@ style menuStyle
     font-line := Line.none;
   }
   
-  template topmenu() >> menu() >> navigate().hover {
+  template topmenu() >> menu() >> navigate():hover {
     image := url("images/menubar_bg_hover.png");
     image-repeat := Repeat.horizontal;
   }

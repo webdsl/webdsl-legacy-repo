@@ -24,7 +24,7 @@ style globalStyle
   }
   
   table() {
-  	font := globalFont;
+    font := globalFont;
     font-size := globalFontSize;
   }
   
@@ -98,15 +98,15 @@ style templateStyle
   }
   
   template sidebar() {
-  	width := 15em;
-  	padding := 1em;
+    width := 15em;
+    padding := 1em;
   }
   
   template body() {
     padding := 1em;
-   	border-left-color := layoutBorderColor;
-  	border-left-style := BorderStyle.solid;
-  	border-left-width := 1px;
+     border-left-color := layoutBorderColor;
+    border-left-style := BorderStyle.solid;
+    border-left-width := 1px;
   }
 
   template footer() {
@@ -161,13 +161,13 @@ style formStyle
 
 /*
   width: 27.125em;#createOwner fieldset > ol.padding-left +			1  em = 16px
-  				  #createOwner fieldset > ol.padding-right +		1  em = 16px
-  				  #createOwner fieldset > ol label.margin-right +	1  em = 16px
-  				  #createOwner fieldset > ol label.width			8  em = 128px
-  				  ol input.width * ol input.font-size				16 em = 256px
-  				  2 * 1px input border								0.125 em = 2px
-  				  													==============
-  				  													27.125em  = 434px
+            #createOwner fieldset > ol.padding-right +		1  em = 16px
+            #createOwner fieldset > ol label.margin-right +	1  em = 16px
+            #createOwner fieldset > ol label.width			8  em = 128px
+            ol input.width * ol input.font-size				16 em = 256px
+            2 * 1px input border								0.125 em = 2px
+                                      ==============
+                                      27.125em  = 434px
 */  
 
 style menuStyle
@@ -203,7 +203,7 @@ style menuStyle
     font-line := Line.none;
   }
   
-  template topmenu() >> menu() >> navigate().hover {
+  template topmenu() >> menu() >> navigate():hover {
     image := url("images/menubar_bg_hover.png");
     image-repeat := Repeat.horizontal;
   }
