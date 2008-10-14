@@ -12,7 +12,6 @@ imports entitypages
 imports ac
 imports valuationpages
 imports valuationrequestviewpages
-imports valuationrequesteditpages
 imports valuationprocedures
 imports layout
 imports style
@@ -46,10 +45,19 @@ section pages
     }
   }
   
+  define page unbooked() {
+    main()
+    define body() {
+      header { "Unbooked Valuations" }
+      bookValuationTasks()
+    }
+  }
+  
   define page loginAs(u : User) {
     init {
       securityContext.principal := u;
       securityContext.loggedIn := true;
+      goto home();
     }
     main()
     define body() {
@@ -57,17 +65,7 @@ section pages
     }
   }
   
-  init {
-    initValuationRequest1.bookValuation := BookValuationProcedureStatus{};
-    initValuationRequest1.bookValuation.v := initValuationRequest1;
-    initValuationRequest1.bookValuation.persist();
-    initValuationRequest1.persist();
-    initValuationRequest1.bookValuation.enable();
-    
-    initValuationRequest2.bookValuation := BookValuationProcedureStatus{};
-    initValuationRequest2.bookValuation.v := initValuationRequest2;
-    initValuationRequest2.bookValuation.persist();
-    initValuationRequest2.persist();
-    initValuationRequest2.bookValuation.enable();
+  define page viewValuationRequestFull(v : ValuationRequest) {
+    derive viewPage from v
   }
   

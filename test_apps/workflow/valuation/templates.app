@@ -54,7 +54,7 @@ section templates
       }
       menu {
         menuheader { navigate(allValuationRequest()) { "Valuation Requests" } }
-        menuitem { navigate(newValuationRequest()) { "New Valuation Request" } }
+        menuitem { navigate(newValuation()) { "New Valuation Request" } }
       }
       if (securityContext.principal != null && userHasValuations()) {
         menu {
@@ -62,6 +62,20 @@ section templates
           for (v : ValuationRequest) {
             if (v.valuer != null && v.valuer.user != null && v.valuer.user == securityContext.principal) {
               menuitem { navigate(editValuationProperty(v)){ text(v.name) } }
+            }
+          }
+        }
+      }
+      if (securityContext.principal != null && securityContext.principal.hasBookingRights()) {
+        menu {
+          menuheader { navigate(unbooked()){"Unbooked"} }
+          if (unbookedValuations()) {
+            for (v : ValuationRequest) {
+              if (valuationRequestHasProcedures(v) && v.bookValuation != null && v.bookValuation.isEnabled) {    
+                menuitem { navigate(bookValuation(v)) { 
+                  text("Book ") text(v.fullAddress) 
+                } }
+              }
             }
           }
         }
@@ -74,15 +88,13 @@ section sidebar
   define sidebar() {
     table {
       row {navigate(allValuationRequest()){"All Valuation Request"}}
-      row {navigate(newValuationRequest()){"New ValuationRequest"}}
+      row {navigate(newValuation()){"New ValuationRequest"}}
     }
   }
 
   define valuationRequestSidebar(v : ValuationRequest) {
     propertyInfoSidebar(v)
-    horizontalspacer
     valuationRequestDetailsSidebar(v)
-    horizontalspacer
     valuationDetailsSidebar(v)
     
     contextSidebar()
@@ -112,10 +124,12 @@ section sidebar
   
   /* Valuation Request Details Sidebar */
   define valuationRequestDetailsSidebar(v : ValuationRequest) {
-    if (canEditValuationRequest(v)) {
+    if (canEditValuationRequest(v) && valuationRequestHasEditRequestProcedures(v)) {
+      horizontalspacer
       requestEditSidebar(v)
     } else { 
       if (canViewValuationRequest(v)) {
+        horizontalspacer
         requestViewSidebar(v)
       }
     }
@@ -123,11 +137,13 @@ section sidebar
   
   define requestEditSidebar(v : ValuationRequest) {
     block{header{text("Request Details")}}
-    block { list {
-      listitem{ navigate(editValuationRequestDetails(v)){"Request Details"} }
-      listitem{ navigate(editValuationRequestBooking(v)){"Booking Details"} }
-      listitem{ navigate(editValuationRequestQuote(v)){"Quote Details"} }
-    } }
+    block { 
+      list {
+        listitem{ navigate(editValuationRequestDetails(v)){"Request Details"} }
+        listitem{ navigate(editValuationRequestBooking(v)){"Booking Details"} }
+        listitem{ navigate(editValuationRequestQuote(v)){"Quote Details"} }
+      } 
+    }
   }
 
   define requestViewSidebar(v : ValuationRequest) {
@@ -142,15 +158,18 @@ section sidebar
 
   /* Valuation Sidebar */
   define valuationDetailsSidebar(v : ValuationRequest) {
-    if (canEditValuation(v)) {
+    if (canEditValuation(v) && valuationRequestHasEditValuationProcedures(v)) {
+      horizontalspacer
       valuationEditSidebar(v)
     } else { 
       if (canViewValuation(v)) {
+        horizontalspacer
         valuationViewSidebar(v)
       }
     }
   }
   
+  // pre: canEditValuation(v)
   define valuationEditSidebar(v : ValuationRequest) {
     block{header{text("Edit Valuation Details")}}
     block{
@@ -160,6 +179,9 @@ section sidebar
         listitem{ navigate(editValuationRisk(v)){"Risk Analysis"} }
         listitem{ navigate(editValuationLand(v)){"Land"} }
         listitem{ navigate(editValuationSales(v)){"Sales Evidence"} }
+        if (v.finalizeValuation.isEnabled) {navigatebutton(finalizeValuation(v), "Finalize")}
+        if (v.approveValuation.isEnabled && canApproveValuations()) {navigatebutton(approveValuation(v), "Approve")}
+        if (v.sendValuation.isEnabled && canSendValuations()) {navigatebutton(sendValuation(v), "Mark as Sent")}
       }
     }
   }
@@ -174,6 +196,8 @@ section sidebar
         listitem{ navigate(valuationRisk(v)){"Risk Analysis"} }
         listitem{ navigate(valuationLand(v)){"Land"} }
         listitem{ navigate(valuationSales(v)){"Sales Evidence"} }
+        if (v.approveValuation.isEnabled && canApproveValuations()) {navigatebutton(approveValuation(v), "Approve")}
+        if (v.sendValuation.isEnabled && canSendValuations()) {navigatebutton(sendValuation(v), "Mark as Sent")}
       }
     }
   }

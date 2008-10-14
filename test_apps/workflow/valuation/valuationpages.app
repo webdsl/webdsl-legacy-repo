@@ -5,7 +5,7 @@ section pages
   define page allValuationRequest() {
     main()
     define sidebar() {
-      navigate(newValuationRequest()){"New Valuation Request"}
+      navigate(newValuation()){"New Valuation Request"}
     }
     define body() {
       header{"Valuation Requests"}
@@ -14,17 +14,33 @@ section pages
           row { 
             text(v.name) 
             navigate(valuationRequest(v)){"view request"} navigate(editValuationRequestDetails(v)){"edit request"} 
-            navigate(valuationProperty(v)){"view valuation"} navigate(editValuationProperty(v)){"edit valuation"} 
+            navigate(valuationProperty(v)){"view valuation"} navigate(editValuationProperty(v)){"edit valuation"}
+            navigate(bookValuation(v)){"book valuation"}
           }
         }
       }
     }
   }
   
-  define page newValuationRequest() {
-    var v : ValuationRequest := ValuationRequest {};
+  define page newValuation() {
     var i : Invoice := Invoice { amount := 1000 };
     var newClient : Client := Client {};
+    
+    var valuationNumber : Int; 
+    var address : String;
+    var suburb : String;
+    var state : State;
+    var postCode : PostCode;
+    var category : PropertyCategory;
+    var type : PropertyType;
+    var reportType : ReportType;
+    var propose : Propose;
+    var oldClient : Client;
+    var applicantName : String;
+    var applicantPhone : String;
+    var inspectionName : String;
+    var inspectionPhone : String;
+    
     main()
     define body() {
       header{text("New Valuation Request")}
@@ -33,36 +49,36 @@ section pages
           row {
             block("datawidth") {
               group("Numbers") {
-                groupitem { label("Valuation No.:"){input(v.valuationNumber)} }
+                groupitem { label("Valuation No.:"){input(valuationNumber)} }
                   groupitem { label("Invoice No.:"){input(i.number)} }
               }
               group("Property address") {
-                groupitem { label("Address"){input(v.address)} }
-                groupitem { label("Suburb"){input(v.suburb)} }
-                groupitem { label("State"){input(v.state)} }
-                groupitem { label("Post Code"){input(v.postCode)} }
+                groupitem { label("Address"){input(address)} }
+                groupitem { label("Suburb"){input(suburb)} }
+                groupitem { label("State"){input(state)} }
+                groupitem { label("Post Code"){input(postCode)} }
               }
               group("Property Characteristics") {
-                groupitem { label("Category"){input(v.category)} }
-                groupitem { label("Type"){input(v.type)} }            
+                groupitem { label("Category"){input(category)} }
+                groupitem { label("Type"){input(type)} }            
               }
               group("Specifications") {
-                groupitem { label("Report Type"){input(v.reportType)} }
-                groupitem { label("Propose"){input(v.propose)} }            
+                groupitem { label("Report Type"){input(reportType)} }
+                groupitem { label("Propose"){input(propose)} }            
               }
             }
             block("datawidth") {
               group("Client") {
-                groupitem { label("Existing Client"){input(v.client)} }
+                groupitem { label("Existing Client"){input(oldClient)} }
                 groupitem { label("or New Client"){input(newClient.name)} }  
               }
               group("Applicant") {
-                groupitem { label("Name"){input(v.applicantName)} }
-                groupitem { label("Phone"){input(v.applicantPhone)} }
+                groupitem { label("Name"){input(applicantName)} }
+                groupitem { label("Phone"){input(applicantPhone)} }
               }
               group("Inspection Contact") {
-                groupitem { label("Name"){input(v.inspectionName)} }
-                groupitem { label("Phone"){input(v.inspectionPhone)} }
+                groupitem { label("Name"){input(inspectionName)} }
+                groupitem { label("Phone"){input(inspectionPhone)} }
               }            
             }
           }
@@ -70,20 +86,33 @@ section pages
           
           action addRequest()
           {
+            var v : ValuationRequest := newValuationRequest();
+
             if (newClient.name != "") {
               newClient.persist();
               v.client := newClient;
+            } else {
+              v.client := oldClient;
             }
+            
+            v.valuationNumber := valuationNumber;
+            v.address := address;
+            v.suburb := suburb;
+            v.state := state;
+            v.postCode := postCode;
+            v.category := category;
+            v.type := type;
+            v.reportType := reportType;
+            v.propose := propose;
+            v.applicantName := applicantName;
+            v.applicantPhone := applicantPhone;
+            v.inspectionName := inspectionName;
+            v.inspectionPhone := inspectionPhone;
             
             v.persist();
             i.valuationRequest := v;
             i.persist();
-            
-            v.bookValuation := BookValuationProcedureStatus{};
-            v.bookValuation.v := v;
-            v.bookValuation.persist();
-            v.persist();
-            v.bookValuation.enable();
+            v.valuationWorkflow.enable();
 
             return allValuationRequest();
           }

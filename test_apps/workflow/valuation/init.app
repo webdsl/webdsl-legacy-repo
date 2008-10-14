@@ -33,12 +33,16 @@ section rights
     var initAuthorization2 : Authorization := Authorization { right := "booking" user := userAdmin };
     var initAuthorization3 : Authorization := Authorization { right := "createValuation" user := userAdmin };
     var initAuthorization4 : Authorization := Authorization { right := "editValuationRequests" user := userAdmin };
+    var initAuthorization9 : Authorization := Authorization { right := "sendValuations" user := userAdmin };
     
     // manager
     var initAuthorization5 : Authorization := Authorization { right := "editValuations" user := userManager };
     var initAuthorization6 : Authorization := Authorization { right := "createValuation" user := userManager };
     var initAuthorization7 : Authorization := Authorization { right := "booking" user := userManager };
     var initAuthorization8 : Authorization := Authorization { right := "editValuationRequests" user := userManager };
+    var initAuthorization10 : Authorization := Authorization { right := "sendValuations" user := userManager };
+    var initAuthorization11 : Authorization := Authorization { right := "editApprovalValuations" user := userManager };
+    var initAuthorization12 : Authorization := Authorization { right := "approveValuations" user := userManager };
   }
   
 section value data
@@ -267,7 +271,7 @@ section value data
     var valuerRuben : Valuer := Valuer { user := userRuben };
     var valuerAdmin : Valuer := Valuer { user := userAdmin };
   }
-  
+/*  
 section valuations
   
   globals {
@@ -276,4 +280,73 @@ section valuations
 
     var initValuationRequest2 : ValuationRequest := ValuationRequest { status := initValuationRequestStatus1 address := "13 Garden Street" suburb := "Eveleigh" postCode := initPostCode3 state := initStateValue1 purchase := "1,200,000" ownerEst := "1,400,000" tender := "1,250,000" valuationNumber := 219320 valuer := valuerLiming };
     var initInvoice2 : Invoice := Invoice { valuationRequest := initValuationRequest2 number := 53453 };
-  }
+  }*/
+  /*
+    init {
+      initValuationRequest1.editValuationSales := EditValuationSalesProcedureStatus{};
+      initValuationRequest1.editValuationSales.v := initValuationRequest1;
+      initValuationRequest1.editValuationSales.persist();
+      initValuationRequest1.editValuationLand := EditValuationLandProcedureStatus{};
+      initValuationRequest1.editValuationLand.v := initValuationRequest1;
+      initValuationRequest1.editValuationLand.persist();
+      initValuationRequest1.editValuationRisk := EditValuationRiskProcedureStatus{};
+      initValuationRequest1.editValuationRisk.v := initValuationRequest1;
+      initValuationRequest1.editValuationRisk.persist();
+      initValuationRequest1.editValuationMainBuilding := EditValuationMainBuildingProcedureStatus{};
+      initValuationRequest1.editValuationMainBuilding.v := initValuationRequest1;
+      initValuationRequest1.editValuationMainBuilding.persist();
+      initValuationRequest1.editValuationProperty := EditValuationPropertyProcedureStatus{};
+      initValuationRequest1.editValuationProperty.v := initValuationRequest1;
+      initValuationRequest1.editValuationProperty.persist();
+      initValuationRequest1.editValuationRequestQuote := EditValuationRequestQuoteProcedureStatus{};
+      initValuationRequest1.editValuationRequestQuote.v := initValuationRequest1;
+      initValuationRequest1.editValuationRequestQuote.persist();
+      initValuationRequest1.editValuationRequestBooking := EditValuationRequestBookingProcedureStatus{};
+      initValuationRequest1.editValuationRequestBooking.v := initValuationRequest1;
+      initValuationRequest1.editValuationRequestBooking.persist();
+      initValuationRequest1.editValuationRequestDetails := EditValuationRequestDetailsProcedureStatus{};
+      initValuationRequest1.editValuationRequestDetails.v := initValuationRequest1;
+      initValuationRequest1.editValuationRequestDetails.persist();
+      initValuationRequest1.bookValuation := BookValuationProcedureStatus{};
+      initValuationRequest1.bookValuation.v := initValuationRequest1;
+      initValuationRequest1.bookValuation.persist();
+      initValuationRequest1.valuationWorkflow := ValuationWorkflowProcedureStatus{};
+      initValuationRequest1.valuationWorkflow.v := initValuationRequest1;
+      initValuationRequest1.valuationWorkflow.persist();
+      initValuationRequest1.persist();
+      
+      initValuationRequest1.valuationWorkflow.enable();
+
+      initValuationRequest1.editValuationSales.enable();
+      initValuationRequest1.editValuationLand.enable();
+      initValuationRequest1.editValuationRisk.enable();
+      initValuationRequest1.editValuationMainBuilding.enable();
+      initValuationRequest1.editValuationProperty.enable();
+      initValuationRequest1.editValuationRequestQuote.enable();
+      initValuationRequest1.editValuationRequestBooking.enable();
+      initValuationRequest1.editValuationRequestDetails.enable();
+      initValuationRequest1.bookValuation.enable();
+      
+      initValuationRequest1 := newValuationRequest();
+      initValuationRequest1.status := initValuationRequestStatus1;
+      initValuationRequest1.address := "1/13 O Brien Street";
+      initValuationRequest1.suburb := "Bondi Beach";
+      initValuationRequest1.postCode := initPostCode1;
+      initValuationRequest1.state := initStateValue1;
+      initValuationRequest1.valuationNumber := 228320;
+      initValuationRequest1.valuer := valuerRuben;
+      initValuationRequest1.persist();
+      
+      initValuationRequest1.bookValuation := BookValuationProcedureStatus{};
+      initValuationRequest1.bookValuation.v := initValuationRequest1;
+      initValuationRequest1.bookValuation.persist();
+      initValuationRequest1.persist();
+      initValuationRequest1.bookValuation.enable();
+      
+      initValuationRequest2.bookValuation := BookValuationProcedureStatus{};
+      initValuationRequest2.bookValuation.v := initValuationRequest2;
+      initValuationRequest2.bookValuation.persist();
+      initValuationRequest2.persist();
+      initValuationRequest2.bookValuation.enable();
+    }
+    */
