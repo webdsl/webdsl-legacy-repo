@@ -55,9 +55,9 @@ section procedures
 
   procedure addAchternaam(p : Persoon) {
     view {
+      var achternaam : String; // PROBLEM: moving this declaration to the scope of define local body will present problems, but maybe this behaviour is actually good.
       main()
       define body() { // PROBLEM: within procedure view sections, 'define body' will present problems; 'local' must be added.
-        var achternaam : String; // PROBLEM: moving this declaration to the scope of define local body will present problems, but maybe this behaviour is actually good.
         form {
           label("Naam"){output(p.name)}
           input(achternaam)

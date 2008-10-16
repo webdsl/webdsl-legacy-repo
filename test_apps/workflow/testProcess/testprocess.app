@@ -49,21 +49,33 @@ section procedures
   }*/
 
 
-  procedure pdpWorkflow(p : PdpMeeting) {
+  auto procedure pdpWorkflow(p : PdpMeeting) {
     do {
       p.report := "Kanarie";
       p.persist();
     }
     process {
-/*      repeat {
-        writeReport(p) xor managerFillInForm(p)
-      } until {finalizeReport(p)}*/
-      (employeeFillInForm(p) and managerFillInForm(p));
+/*      (employeeFillInForm(p) and managerFillInForm(p));
             repeat {
               writeReport(p);
               approveReport(p)
-            } until {finalizeReport(p)}
+            } until finalizeReport(p)*/
+/*        repeat {
+          employeeFillInForm(p) 
+          ; managerFillInForm(p)
+        } until writeReport(p) 
+        +
+        finalizeReport(p) and approveReport(p)
+      ; testReport(p) */ 
+      repeat {
+        writeReport(p) and employeeFillInForm(p)
+        ; approveReport(p) 
+      } until finalizeReport(p)
     }
+  }
+  
+  procedure testReport(p : PdpMeeting) {
+    
   }
   
   procedure employeeFillInForm(p : PdpMeeting) {
@@ -77,7 +89,7 @@ section procedures
   }
 
   procedure managerFillInForm(p : PdpMeeting) {
-    who { securityContext.principal == p.employee.manager }
+    who { securityContext.principal == p.employee/*.manager*/ }
     view {
       title{"Fill in manager form"}
       derive procedurePage from p for (managerPreparation) {
@@ -88,7 +100,7 @@ section procedures
   }
 
   procedure writeReport(p : PdpMeeting) {
-    who { securityContext.principal == p.employee.manager }
+    who { securityContext.principal == p.employee/*.manager*/ }
     view {
       derive procedurePage from p for (report) {
         title{"Write report"}
@@ -98,7 +110,7 @@ section procedures
   }
 
   procedure finalizeReport(p : PdpMeeting) {
-    who { securityContext.principal == p.employee.manager }
+    who { securityContext.principal == p.employee/*.manager*/ }
   }
 
   procedure approveReport(p : PdpMeeting) {
