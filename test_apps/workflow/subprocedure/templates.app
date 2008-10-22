@@ -18,8 +18,10 @@ section main template.
 section basic page elements.
 
   define sidebar() {
-
+    contextSidebar()
   }
+  
+  define contextSidebar() {}
   
   define footer() {
     "generated with "
@@ -45,3 +47,8 @@ section entity management.
     }
   }
 
+layout
+
+  main() {
+    mainbody: [ sidebar() | body() ];
+  }

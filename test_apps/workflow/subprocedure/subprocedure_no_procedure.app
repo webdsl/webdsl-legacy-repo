@@ -37,22 +37,87 @@ section data
     a <> AProcedureStatus ( )
     repeatUntilProc0 <> RepeatUntilProc0ProcedureStatus ( )
     name :: String ( )
-    function startA() {
-      var a : AProcedureStatus := AProcedureStatus{}; 
-      a.persist();
-      this.a := a;
-      this.persist();
+  }
+/*
+  entity Persoon {
+    name :: String
+  }*/
+  
+  
+/**
+ * Procedures
+ */
+access control rules
+  anonymous
+  rule page a ( p : Persoon ) {
+    true && true && true && true && p.a.isEnabled
+    rule action doAction (  ) {
+      true && true && true && true && p.a.isEnabled
+    }
+  }
 
-      this.a.p := this;
-      this.a.persist();
+access control rules
+  anonymous
+  rule page a1 ( p : Persoon ) {
+    true && true && true && p.a1.isEnabled
+    rule action doAction (  ) {
+      true && true && true && p.a1.isEnabled
+    }
+  }
 
-      this.persist();
-      this.a.enable();
+access control rules
+  anonymous
+  rule page a2 ( p : Persoon ) {
+    true && true && true && p.a2.isEnabled
+    rule action doAction (  ) {
+      true && true && true && p.a2.isEnabled
+    }
+  }
+
+access control rules
+  anonymous
+  rule page a3 ( p : Persoon ) {
+    true && true && true && p.a3.isEnabled
+    rule action doAction (  ) {
+      true && true && true && p.a3.isEnabled
+    }
+  }
+
+access control rules
+  anonymous
+  rule page repeatUntilProc0 ( p : Persoon ) {
+    true && true && true && true && true && p.repeatUntilProc0.isEnabled
+    rule action doAction (  ) {
+      true && true && true && true && true && p.repeatUntilProc0.isEnabled
     }
   }
   
+section procedures
+
+  function newPersoon ( ) : Persoon
+  {
+    var o : Persoon := Persoon{} ;
+    o.persist();
+    o.repeatUntilProc0 := RepeatUntilProc0ProcedureStatus{};
+    o.repeatUntilProc0.p := o;
+    o.repeatUntilProc0.persist();
+    o.a3 := A3ProcedureStatus{};
+    o.a3.p := o;
+    o.a3.persist();
+    o.a2 := A2ProcedureStatus{};
+    o.a2.p := o;
+    o.a2.persist();
+    o.a1 := A1ProcedureStatus{};
+    o.a1.p := o;
+    o.a1.persist();
+    o.a := AProcedureStatus{};
+    o.a.p := o;
+    o.a.persist();
+    o.persist();
+    return o;
+  }
+
   entity ProcedureStatus {
-    ancestor -> ProcedureStatus()
     caller -> ProcedureStatus ( )
     returnstate :: Int ( )
     branch :: Int ( )
@@ -139,254 +204,6 @@ section data
       this.disabled();
     }
   }
-
-  entity RepeatUntilProc0ProcedureStatus : ProcedureStatus {
-    p -> Persoon ( )
-    function next ( state : Int ) : Void
-    {
-      if ( state == 0 )
-      {
-        if (this.p.a2 == null) {
-          this.p.a2 := A2ProcedureStatus {};
-          this.p.a2.p := this.p;
-          this.p.a2.ancestor := this;
-          this.p.a2.ancestor.persist();
-          this.p.a2.persist();
-          this.p.persist();
-        }
-        this.p.a2.enable(this as ProcedureStatus, 1, 1);
-      }
-      else
-      {
-      }
-      if ( state == 1 )
-      {
-        this.enableRepeat();
-        this.enableUntil();
-      }
-      else
-      {
-      }
-      if ( state == 2 )
-      {
-        if (this.p.a3 == null) {
-          this.p.a3 := A3ProcedureStatus {};
-          this.p.a3.p := this.p;
-          this.p.a3.ancestor := this;
-          this.p.a3.ancestor.persist();
-          this.p.a3.persist();
-          this.p.persist();
-        }
-        this.p.a3.enable(this as ProcedureStatus, 3, 2);
-      }
-      else
-      {
-      }
-      if ( state == 3 )
-      {
-        this.disableRepeat();
-        this.processed();
-      }
-      else
-      {
-      }
-    }
-    function enableRepeat ( ) : Void
-    {
-      this.next(0);
-    }
-    function disableRepeat ( ) : Void
-    {
-      this.p.a2.disable();
-    }
-    function enableUntil ( ) : Void
-    {
-      this.next(2);
-    }
-    function notifyOfActivity ( branch : Int ) : Void
-    {
-      this.cascadeNotification();
-      if ( branch == 1 )
-      {
-        if (this.p.a3 != null) {
-          this.p.a3.disable();
-        }
-      }
-      else
-      {
-      }
-    }
-    function enabled ( ) : Void
-    {
-      this.enableRepeat();
-    }
-    function done ( ) : Void
-    {
-      this.isEnabled := false;
-      this.persist();
-      this.next(0);
-    }
-    function disabled ( ) : Void
-    {
-      this.p.a2.disable();
-      this.p.a3.disable();
-    }
-  }
-
-  entity AProcedureStatus : ProcedureStatus {
-    p -> Persoon ( )
-    function next ( state : Int ) : Void
-    {
-      if ( state == 0 )
-      {
-        if (this.p.a1 == null) {
-          this.p.a1 := A1ProcedureStatus {};
-          this.p.a1.p := this.p;
-          this.p.a1.ancestor := this;
-          this.p.a1.ancestor.persist();
-          this.p.a1.persist();  
-          this.p.persist();
-        }
-        this.p.a1.enable(this as ProcedureStatus, 1, 0);
-      }
-      else
-      {
-      }
-      if ( state == 1 )
-      {
-        if (this.p.repeatUntilProc0 == null) {
-          this.p.repeatUntilProc0 := RepeatUntilProc0ProcedureStatus {};
-          this.p.repeatUntilProc0.p := this.p;
-          this.p.repeatUntilProc0.ancestor := this;
-          this.p.repeatUntilProc0.persist();
-          this.p.persist();
-        }
-        this.p.repeatUntilProc0.enable(this as ProcedureStatus, 2, 0);
-      }
-      else
-      {
-      }
-      if ( state == 2 )
-      {
-        this.processed();
-      }
-      else
-      {
-      }
-    }
-    function enabled ( ) : Void
-    {
-      this.done();
-    }
-    function done ( ) : Void
-    {
-      this.isEnabled := false;
-      this.persist();
-      this.next(0);
-    }
-    function disabled ( ) : Void
-    {
-    }
-  }
-
-  entity A1ProcedureStatus : ProcedureStatus {
-    p -> Persoon ( )
-    function enabled ( ) : Void
-    {
-    }
-    function done ( ) : Void
-    {
-      this.isEnabled := false;
-      this.persist();
-      this.processed();
-    }
-    function disabled ( ) : Void
-    {
-    }
-  }
-
-  entity A2ProcedureStatus : ProcedureStatus {
-    p -> Persoon ( )
-    function enabled ( ) : Void
-    {
-    }
-    function done ( ) : Void
-    {
-      this.isEnabled := false;
-      this.persist();
-      this.processed();
-    }
-    function disabled ( ) : Void
-    {
-    }
-  }
-
-  entity A3ProcedureStatus : ProcedureStatus {
-    p -> Persoon ( )
-    function enabled ( ) : Void
-    {
-    }
-    function done ( ) : Void
-    {
-      this.isEnabled := false;
-      this.persist();
-      this.processed();
-    }
-    function disabled ( ) : Void
-    {
-    }
-  }
-
-  
-/**
- * Procedures
- */
-access control rules
-  anonymous
-  rule page a ( p : Persoon ) {
-    true && true && true && true && p.a.isEnabled
-    rule action doAction (  ) {
-      true && true && true && true && p.a.isEnabled
-    }
-  }
-
-access control rules
-  anonymous
-  rule page a1 ( p : Persoon ) {
-    true && true && true && p.a1.isEnabled
-    rule action doAction (  ) {
-      true && true && true && p.a1.isEnabled
-    }
-  }
-
-access control rules
-  anonymous
-  rule page a2 ( p : Persoon ) {
-    true && true && true && p.a2.isEnabled
-    rule action doAction (  ) {
-      true && true && true && p.a2.isEnabled
-    }
-  }
-
-access control rules
-  anonymous
-  rule page a3 ( p : Persoon ) {
-    true && true && true && p.a3.isEnabled
-    rule action doAction (  ) {
-      true && true && true && p.a3.isEnabled
-    }
-  }
-
-access control rules
-  anonymous
-  rule page repeatUntilProc0 ( p : Persoon ) {
-    true && true && true && true && true && p.repeatUntilProc0.isEnabled
-    rule action doAction (  ) {
-      true && true && true && true && true && p.repeatUntilProc0.isEnabled
-    }
-  }
-  
-section procedures
 
   define template persoonProceduresList (persoon : Persoon) {
     list()[]{
@@ -800,6 +617,81 @@ section procedures
   
 section  procedures .
 
+  entity RepeatUntilProc0ProcedureStatus : ProcedureStatus {
+    p -> Persoon ( )
+    function next ( state : Int ) : Void
+    {
+      if ( state == 0 )
+      {
+        this.p.a2.enable(this as ProcedureStatus, 1, 1);
+      }
+      else
+      {
+      }
+      if ( state == 1 )
+      {
+        this.enableRepeat();
+        this.enableUntil();
+      }
+      else
+      {
+      }
+      if ( state == 2 )
+      {
+        this.p.a3.enable(this as ProcedureStatus, 3, 2);
+      }
+      else
+      {
+      }
+      if ( state == 3 )
+      {
+        this.disableRepeat();
+        this.processed();
+      }
+      else
+      {
+      }
+    }
+    function enableRepeat ( ) : Void
+    {
+      this.next(0);
+    }
+    function disableRepeat ( ) : Void
+    {
+      this.p.a2.disable();
+    }
+    function enableUntil ( ) : Void
+    {
+      this.next(2);
+    }
+    function notifyOfActivity ( branch : Int ) : Void
+    {
+      this.cascadeNotification();
+      if ( branch == 1 )
+      {
+        this.p.a3.disable();
+      }
+      else
+      {
+      }
+    }
+    function enabled ( ) : Void
+    {
+      this.enableRepeat();
+    }
+    function done ( ) : Void
+    {
+      this.isEnabled := false;
+      this.persist();
+      this.next(0);
+    }
+    function disabled ( ) : Void
+    {
+      this.p.a2.disable();
+      this.p.a3.disable();
+    }
+  }
+
   define page repeatUntilProc0ProcedureStatus (s : RepeatUntilProc0ProcedureStatus) {
     dummy()[]{
       main()[]{
@@ -968,6 +860,47 @@ section  procedures .
   define page repeatUntilProc0 (p : Persoon) {
   }
 
+  entity AProcedureStatus : ProcedureStatus {
+    p -> Persoon ( )
+    function next ( state : Int ) : Void
+    {
+      if ( state == 0 )
+      {
+        this.p.a1.enable(this as ProcedureStatus, 1, 0);
+      }
+      else
+      {
+      }
+      if ( state == 1 )
+      {
+        this.p.repeatUntilProc0.enable(this as ProcedureStatus, 2, 0);
+      }
+      else
+      {
+      }
+      if ( state == 2 )
+      {
+        this.processed();
+      }
+      else
+      {
+      }
+    }
+    function enabled ( ) : Void
+    {
+      this.p.a.done();
+    }
+    function done ( ) : Void
+    {
+      this.isEnabled := false;
+      this.persist();
+      this.next(0);
+    }
+    function disabled ( ) : Void
+    {
+    }
+  }
+
   define page aProcedureStatus (s : AProcedureStatus) {
     dummy()[]{
       main()[]{
@@ -1130,6 +1063,22 @@ section  procedures .
           }
         }
       }
+    }
+  }
+
+  entity A1ProcedureStatus : ProcedureStatus {
+    p -> Persoon ( )
+    function enabled ( ) : Void
+    {
+    }
+    function done ( ) : Void
+    {
+      this.isEnabled := false;
+      this.persist();
+      this.processed();
+    }
+    function disabled ( ) : Void
+    {
     }
   }
 
@@ -1298,6 +1247,22 @@ section  procedures .
     }
   }
 
+  entity A2ProcedureStatus : ProcedureStatus {
+    p -> Persoon ( )
+    function enabled ( ) : Void
+    {
+    }
+    function done ( ) : Void
+    {
+      this.isEnabled := false;
+      this.persist();
+      this.processed();
+    }
+    function disabled ( ) : Void
+    {
+    }
+  }
+
   define page a2ProcedureStatus (s : A2ProcedureStatus) {
     dummy()[]{
       main()[]{
@@ -1460,6 +1425,22 @@ section  procedures .
           }
         }
       }
+    }
+  }
+
+  entity A3ProcedureStatus : ProcedureStatus {
+    p -> Persoon ( )
+    function enabled ( ) : Void
+    {
+    }
+    function done ( ) : Void
+    {
+      this.isEnabled := false;
+      this.persist();
+      this.processed();
+    }
+    function disabled ( ) : Void
+    {
     }
   }
 
@@ -1654,7 +1635,6 @@ section  procedures .
       goto persoon(p);
     }
   }
-  
 /*
   auto procedure a(p : Persoon) {
     process {
@@ -1684,11 +1664,9 @@ section pages
 
   define page startTest() {
     init {
-      var p : Persoon := Persoon {
-        name := "Ruben"
-      };
-      
-      p.startA();
+      var p : Persoon;
+      p := newPersoon();
+      p.name := "Ruben";
       p.persist();
       p.a.enable();
     }
