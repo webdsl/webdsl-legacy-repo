@@ -3,30 +3,52 @@ package org.webdsl.internal
 import java.io._
 import javax.servlet.http._
 
-trait Page {
-  
+object PageMode extends Enumeration {
+  type PageMode = Value
+  val DataBind, Action, Render = Value
+}
+
+trait Page extends Forms {
   var sectionDepth = 1
-  var actionCounter = 0
-  var formCounter = 0
   var style = new Style
   var out : PrintWriter = null
-  var req : HttpServletRequest = null
+  var request : HttpServletRequest = null
+  var response : HttpServletResponse = null
+  protected var mode = PageMode.DataBind
   
   def ui
   def title : String
   def name : String
   def params : List[String]
   
-  def init(out : PrintWriter, req : HttpServletRequest) {
+  def init(out : PrintWriter, req : HttpServletRequest, res : HttpServletResponse) {
     this.out = out
-    this.req = req
+    this.request = req
+    this.response = res
+  }
+  
+  def resetCounters {
+    actionCounter = 0
+    formCounter = 0
+    inputCounter = 0
   }
   
   def write(s : String) {
     out.print(s)
   }
   
-  def render {
+  def doDatabind {
+    mode = PageMode.DataBind
+    ui
+  }
+  
+  def doAction {
+    mode = PageMode.Action
+    ui
+  }
+  
+  def doRender {
+    mode = PageMode.Render
     write("<html><head>")
     write(style.toString)
     write("<title>" + title + "</title>")
@@ -36,89 +58,151 @@ trait Page {
   }
   
   def header(s : String) {
-    write("<h" + sectionDepth + " class=\"header\">" + s + "</h" + sectionDepth + ">")
+    mode match {
+      case PageMode.Render => write("<h" + sectionDepth + " class=\"header\">" + s + "</h" + sectionDepth + ">")
+      case _ =>
+    }
   }
   
   def header(content : => Unit) {
-    write("<h" + sectionDepth + " class=\"header\">")
-    content
-    write("</h" + sectionDepth + ">")
+    mode match {
+      case PageMode.Render => {
+        write("<h" + sectionDepth + " class=\"header\">")
+        content
+        write("</h" + sectionDepth + ">")
+      }
+      case _ => content
+    }
   }
   
   def text(s : String) {
-    write(/*"<span class=\"text\">" + */s/* + "</span>"*/)
+    mode match {
+      case PageMode.Render => {
+        write(/*"<span class=\"text\">" + */s/* + "</span>"*/)
+      }
+      case _ =>
+    }
   }
   
   def block(s : String)(content : => Unit) {
-    write("<div class=\"" + s + "\">")
-    content
-    write("</div>")
+    mode match {
+      case PageMode.Render => {
+        write("<div class=\"" + s + "\">")
+        content
+        write("</div>")
+      }
+      case _ => content
+    }
   }
   
   def img(s : String) {
-    write("<img src=\"" + s + "\" class=\"img\"/>")
+    mode match {
+      case PageMode.Render => {
+        write("<img src=\"" + s + "\" class=\"img\"/>")
+      }
+      case _ =>
+    }
   }  
   
   def br {
-    write("<br/>")
+    mode match {
+      case PageMode.Render => {
+        write("<br/>")
+      }
+      case _ =>
+    }
   }
 
   def hr {
-    write("<hr class=\"hr\"/>")
+    mode match {
+      case PageMode.Render => {
+        write("<hr class=\"hr\"/>")
+      }
+      case _ =>
+    }
   }
 
   def navigate(url : String)(content : => Unit) {
-    write("<a href=\"" + url + "\" class=\"navigate\">")
-    content
-    write("</a>")
+    mode match {
+      case PageMode.Render => {
+        write("<a href=\"" + url + "\" class=\"navigate\">")
+        content
+        write("</a>")
+      }
+      case _ => content
+    }
   }
 
   def navigate(p : Page)(content : => Unit) {
+    mode match {
+      case PageMode.Render => {
+        write("<a href=\"" + buildPageUrl(p) + "\" class=\"navigate\">")
+        content
+        write("</a>")
+      }
+      case _ => content
+    }
+  }
+  
+  def buildPageUrl(p : Page) : String = {
     val c = p.getClass
     var queryStr = new StringBuilder
     for(fn <- p.params) {
       val value = c.getMethod(fn).invoke(p)
       queryStr.append("/" + value.toString)
     }
-    write("<a href=\"" + req.getContextPath + "/" + p.name + queryStr.toString + "\" class=\"navigate\">")
-    content
-    write("</a>")
+    request.getContextPath + "/" + p.name + queryStr.toString
   }
   
   def section(content : => Unit) {
-    write("<div class=\"section\">")
-    sectionDepth += 1
-    content
-    sectionDepth -= 1
-    write("</div>")
+    mode match {
+      case PageMode.Render => {
+        write("<div class=\"section\">")
+        sectionDepth += 1
+        content
+        sectionDepth -= 1
+        write("</div>")
+      }
+      case _ => content
+    }
   }
   
   def list(content : => Unit) {
-    write("<ul class=\"list\">")
-    content
-    write("</ul>")
+    mode match {
+      case PageMode.Render => {
+        write("<ul class=\"list\">")
+        content
+        write("</ul>")
+      }
+      case _ => content
+    }
   }
   
   def listitem(s : String) {
-    write("<li class=\"listitem\">" + s + "</li>")
+    mode match {
+      case PageMode.Render => {
+        write("<li class=\"listitem\">" + s + "</li>")
+      }
+      case _ => 
+    }
   }
   
   def listitem(content : => Unit) {
-    write("<li class=\"listitem\">")
-    content
-    write("</li>")
+    mode match {
+      case PageMode.Render => {
+        write("<li class=\"listitem\">")
+        content
+        write("</li>")
+      }
+      case _ => content
+    }
   }
   
-  def form(content : => Unit) {
-    write("<form method=\"POST\">")
-    write("<input type=\"hidden\" name=\"form-id\" value=\"" + formCounter + "\">")
-    content
-    write("</form>")
-    formCounter += 1
+  def goto(url : String) {
+    response.sendRedirect(url)
   }
 
-  def action(s : String)(a : => Unit) {
-    write("<input type=\"submit\" name=\"action-" + actionCounter + "\" value=\"" + s + "\">")
-    actionCounter += 1
+  def goto(p : Page) {
+    response.sendRedirect(buildPageUrl(p))
   }
 }

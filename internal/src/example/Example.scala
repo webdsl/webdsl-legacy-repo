@@ -21,6 +21,8 @@ trait MainTemplate extends Page {
   
   style = DefaultStyle
   
+  var query = ""
+  
   def ui {
     block("headerblock") {
       header {
@@ -34,7 +36,14 @@ trait MainTemplate extends Page {
     navigate(new Counter(10)) { text("Counter demo") }; text(" | ")   
     navigate(new About()) { text("About") }
     br
-    img("http://localhost/~zef/globe.png")
+    form {
+      text("Query: ")
+      query = input(query)
+      action("Search") {
+        goto("http://www.google.com/search?q=" + response.encodeUrl(query))
+      }
+    }
+
   }
 }
 
@@ -54,15 +63,6 @@ class Home extends MainTemplate {
 	    }
       }
     }
-    /*hr
-    def submit(p1 : Int, p2 : Int) {
-      
-    }
-    form {
-      action("Submit") { submit(1, 2) }
-    }
-    
-    br*/
   }
 }
 
@@ -83,6 +83,7 @@ class Counter(var n : Int) extends MainTemplate {
   def params = List("n")
   def title = "Counter"  
   
+  var counter = 0
   def body {
     header("Counter: " + n)
     navigate(new Counter(n + 1)) { text("Up") }
@@ -92,6 +93,16 @@ class Counter(var n : Int) extends MainTemplate {
       for(i <- 1 to n) {
         listitem(i.toString)
 	  }
+    }
+    form {
+      counter = inputHidden(counter)
+      text("Counter: " + counter)
+      action("Up") {
+        counter += 1
+      }
+      action("Down") {
+        counter -= 1
+      }
     }
 
   }

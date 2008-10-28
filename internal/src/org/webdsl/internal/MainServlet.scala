@@ -17,6 +17,8 @@ abstract class MainServlet extends HttpServlet {
     println("Loaded pages: " + pageMap)
   }
   
+  override def doPost(req : HttpServletRequest, res : HttpServletResponse) = doGet(req, res)
+  
   override def doGet( req:HttpServletRequest, res:HttpServletResponse ) {
     res.setContentType("text/html");
     val parts = req.getPathInfo.split("/")
@@ -49,8 +51,13 @@ abstract class MainServlet extends HttpServlet {
       p = Class.forName(pageMap("home")).newInstance.asInstanceOf[Page]
     }
     if(p != null) {
-        p.init(res.getWriter, req)
-        p.render
+        p.init(res.getWriter, req, res)
+        p.resetCounters
+        p.doDatabind
+        p.resetCounters
+        p.doAction
+        p.resetCounters
+        p.doRender
     } else {
       res.getWriter.println("Sorry, could not load page")
     }
