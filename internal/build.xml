@@ -1,0 +1,50 @@
+<project name="internalwebdsl" default="war">
+
+  <target name="init">
+    <mkdir dir="./build/WebDSL/WEB-INF/lib"/>
+    <mkdir dir="./build/WebDSL/WEB-INF/classes"/>
+    <!-- set properties: tomcat.home, scala.home -->
+    <property file="ant.properties"/>
+    <taskdef name="scalac" classname="scala.tools.ant.Scalac"
+      classpath="${scala-library.jar}:${scala-compiler.jar}"/>
+  </target>
+
+  <!-- build:    compile servlets -->
+  <target name="build" depends="init">
+    <!-- provide servlet-api.jar in classpath, enable xml parsing -->
+    <scalac srcdir="src" destdir="./build/WebDSL/WEB-INF/classes"
+	   classpath="${scala-library.jar}:lib/servlet-api.jar">
+      <include name="**/*.scala"/>
+    </scalac>
+  </target>
+
+
+  <!-- deploy:    bundles all files necessary for running servlets -->
+  <target name="prepare" depends="init, build">
+
+    <!-- copy deployment descriptor -->
+    <copy file="./descr/web.xml" todir="./build/WebDSL/WEB-INF"/>
+
+    <!-- provide servlets with Scala runtime -->
+    <copy file="${scala.home}/lib/scala-library.jar" todir="./build/WebDSL/WEB-INF/lib"/>
+
+  </target>
+
+  <target name="war" depends="prepare">
+    <war destfile="./build/webdsl.war" webxml="./descr/web.xml">
+      <classes dir="./build/WebDSL/WEB-INF/classes" includes="**"/>
+      <lib file="${scala.home}/lib/scala-library.jar"/>
+    </war>
+  </target>
+	
+  <target name="deploy" depends="war">
+  	<copy file="./build/webdsl.war" todir="${tomcat.webapps}"/>
+  </target>
+
+
+  <!-- clean:    remove everything that was built,copied -->  
+  <target name="clean">
+    <delete dir="build"/>
+  </target>
+  
+</project>
