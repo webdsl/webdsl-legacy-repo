@@ -1,70 +1,85 @@
 application lyves
 
+imports user
+imports security
 imports styles
+imports menustyle
+imports search
+imports popup
+
 
 section pages
 
 define page home() {
-    table[align:= "center"] {
-      row { 
-            image("/images/shadow/shadow_1_1.png")[height:= 20px]
-            image("/images/shadow/shadow_1_2.png")[class:=maxwidth, height:= 20px]
-            image("/images/shadow/shadow_1_3.png")[height:= 20px]
-      }
-      row[class:= maxheight] {
-            image("/images/shadow/shadow_2_1.png")[class:= maxheight, width:=23px]
-            main()
-            image("/images/shadow/shadow_2_3.png")[class:= maxheight, width:=25px]
-      }
-      row {
-            image("/images/shadow/shadow_3_1.png")[height:= 24px]
-            image("/images/shadow/shadow_3_2.png")[class:= maxwidth, height:= 24px]
-            image("/images/shadow/shadow_3_3.png")[height:= 24px]
-      }
+  main()
+  define body() {
+    var s: String := ""
+    table[class:=maxwidth] {
+      <[class:=topalign] 
+      |
+          group("News") {
+          // newsitems()
+          }
+          group("Sign up") {
+            groupitem { "Not a member of Lyves yet? Click " ~ signup() : "here" "to sign up!" }
+          }
+     	|
+          group("Quicksearch") {
+            groupitem{ "search by name: " input(s)[onclick := { dosearch(s); }] }
+          }
+          group("Search results")[id:= searchresulttable] {
+            "nothing searched..."
+          }
+      >
     }
+  }
 }
+ 
 
 define main() {
-    topheader()
-    topmenu()
-    quickpane()
-    body()	
+  table[align:= "center", width:=1024px] {
+    < | image("/images/shadow/shadow_1_1.png")[height:= 20px]
+      | image("/images/shadow/shadow_1_2.png")[class:=maxwidth, height:= 20px]
+      | image("/images/shadow/shadow_1_3.png")[height:= 20px]
+    ><  [class:= maxheight] 
+      | image("/images/shadow/shadow_2_1.png")[class:= maxheight, width:=23px]
+      | [class:= whitebg]
+        topheader()
+        topmenu()
+        #[[id:= body, class:= topalign] 
+          body()
+        ]
+      | image("/images/shadow/shadow_2_3.png")[class:= maxheight, width:=25px]
+    ><| image("/images/shadow/shadow_3_1.png")[height:= 24px]
+      | image("/images/shadow/shadow_3_2.png")[class:= maxwidth, height:= 24px]
+      | image("/images/shadow/shadow_3_3.png")[height:= 24px]
+    >
+  }
 }
 
 define topheader() {
-  block("title"){ image("/images/lyves.png") "lyves"}
-  block("subtitle"){"get a lyfe; don't hyve!"}
+  table[width:= 100%] {
+    <| [rowspan := "2"] image("/images/lyves.png") 
+     | container[class := title] { "Hyves" }
+     | loginlogout()
+    >
+    <| [colspan := "2"] #[[class:=subtitle]"get a lyfe; don't hyve!"]>
+  }
 }
 
 define topmenu() {
   menubar {
     menu{
-      menuheader{ navigate(home()){"This Group"} }
-      menuitem{ "boe" }
-      menuspacer{}
-      menuitem{ navigate(home()){"Edit this Group"} }
-      menuitem{ navigate(home()){"Membership Requests"} }
+      menuheader{ ~home():"MyLyves" }
     }	
-     menu {
-       menuheader {"MyBlog"}
-     }
+    menu {
+      menuheader {"MyBlog"}
+    }
      menu {
        menuheader {"MeSignOut"}
      } 
-     menu {
-       menuheader { quicksearch() }
-     }
+     //menu {
+        quicksearch() 
+     //}
   }
-}
-
-define quicksearch() {
-
-}
-
-define quickpane() {
-
-}
-
-define body() {
-
 }
