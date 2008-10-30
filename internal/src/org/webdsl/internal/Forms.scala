@@ -68,8 +68,10 @@ trait Forms {
       str.asInstanceOf[T]
     else if(a.isInstanceOf[Int])
       str.toInt.asInstanceOf[T]
+    else if(a.isInstanceOf[Long])
+      str.toLong.asInstanceOf[T]
     else
-      a
+      throw new RuntimeException("Don't know how to create an input for " + a)
   
   def action(s : String)(c : => Unit) {
     actionCounter += 1

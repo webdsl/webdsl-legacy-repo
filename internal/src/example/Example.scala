@@ -32,9 +32,10 @@ trait MainTemplate extends Page {
     hr
     body
     hr
-    navigate(new Home()) { text("Home") }; text(" | ")
-    navigate(new Counter(10)) { text("Counter demo") }; text(" | ")   
-    navigate(new About()) { text("About") }
+    navigate(Home()) { text("Home") }; text(" | ")
+    navigate(Calculator()) { text("Calculator") }; text(" | ")
+    navigate(Counter(10)) { text("Counter demo") }; text(" | ")   
+    navigate(About()) { text("About") }
     br
     form {
       text("Query: ")
@@ -47,11 +48,9 @@ trait MainTemplate extends Page {
   }
 }
 
-class Home extends MainTemplate {
+case class Home extends MainTemplate {
   
   def name = "home"
-  def params = Nil
-  
   def title = "Home"
    
   def body {
@@ -66,10 +65,8 @@ class Home extends MainTemplate {
   }
 }
 
-class About extends MainTemplate {
+case class About extends MainTemplate {
   def name = "about"
-  def params = Nil
-  
   def title = "About"
   
   def body {
@@ -78,32 +75,50 @@ class About extends MainTemplate {
   }
 }
 
-class Counter(var n : Int) extends MainTemplate {
+case class Calculator extends MainTemplate {
+  def name = "calc"
+  def title = "Calculator"
+  
+  var n : Long = 2
+  
+  def body {
+    form {
+      n = input(n)
+      
+      action("+1") {
+        n += 1
+      }
+      action("^2") {
+        n *= n
+      }
+      action("fac") {
+        def fac(i : Long) : Long =
+          if(i == 0)
+            1
+          else
+            i * fac(i-1)
+        n = fac(n)
+      }
+      action("Sqr") {
+        n = Math.sqrt(n.intValue)
+      }
+    }
+
+  }
+}
+case class Counter(n : Int) extends MainTemplate {
   def name = "counter"
-  def params = List("n")
   def title = "Counter"  
   
-  var counter = 0
   def body {
     header("Counter: " + n)
-    navigate(new Counter(n + 1)) { text("Up") }
+    navigate(Counter(n + 1)) { text("Up") }
     text(" | ")
-    navigate(new Counter(n - 1)) { text("Down") }
+    navigate(Counter(n - 1)) { text("Down") }
     list {
       for(i <- 1 to n) {
         listitem(i.toString)
 	  }
     }
-    form {
-      counter = inputHidden(counter)
-      text("Counter: " + counter)
-      action("Up") {
-        counter += 1
-      }
-      action("Down") {
-        counter -= 1
-      }
-    }
-
   }
 }
