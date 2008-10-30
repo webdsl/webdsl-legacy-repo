@@ -4,6 +4,8 @@
     http://eclipse-imp.sourceforge.net/jikespg/index.html#LPG_Troubleshooting
   - Building it is probably easiest when copying the IMP jars from an existing
     (Windows) installation
+  - As of this writing, the current version that is known to work
+    is IMP r20408 / v0.1.88
 
 * Patch the WebDSL syntax for jsglr compatibility (known bug):
   - Change the following line in WebDSL.sdf  (by default in
