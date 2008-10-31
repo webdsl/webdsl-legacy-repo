@@ -2,6 +2,8 @@ module ac
 
 section functions
 
+  principal is User with credentials username, password
+
   globals {
      
   /**
@@ -174,8 +176,6 @@ access control rules
   }
 
 section pages
-
-  principal is User with credentials username, password
 
   define page signin() {
     main()
