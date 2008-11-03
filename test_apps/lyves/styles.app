@@ -59,6 +59,22 @@ style globalstyle
     font-color := globalTextColor;
   }
   
+  .bold {
+  	font-style := FontStyle.bold;
+  }
+  
+  .gray {
+  	font-color := globalColor2;  	
+  }
+  
+  .small {
+  	font-size := 0.7em;
+  }
+  
+  .verysmall {
+  	font-size := 0.5em;
+  }
+  
   .topalign {
 	  vertical-align:=VerticalAlign.top;
 	}

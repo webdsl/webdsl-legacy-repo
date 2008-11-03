@@ -12,7 +12,7 @@ entity User {
   moderator:: Bool
 }
 
-section pages
+section pagesh
 
 define page viewUser(u: User) {
   quickviewUser(u)
@@ -33,40 +33,41 @@ define loginlogout() {
   else {
 		actionLink("login")[onclick:= {replace popuptarget << login();}]
   }
-  container[id := popuptarget, class:= error]{
-  	//empty
-  }
 }
 
 define login(){
- form {
-	 var usr : User := User{};
- 		popup("Please provide your credentials")
- 		define popupBody() {
+	popup("Please provide your credentials")
+	define popupBody() {
+	  var usr: User := User{}
+    form {
 		  group("Enter credentials to login"){ 
-		    < label("user ")			{ input(usr.nick) } 	>
+		    < label("user ")		{ input(usr.nick) } 	>
 		    < label("password")	{ input(usr.password) }	>		    
 		  }
-		}
-		define popupFooter() {
-			container[id := loginerror, class:= error]{""}  //to display errors
-			action("Log In", login())
-		  action login(){
-		    var users : List<User> :=
-		       select u from User as u 
-		       where (u._name = ~usr.name);
+ 			--
+			#[class:= right] {
+				container[id := loginerror, class:= error]{""}  //to display errors
+				action("Login",  login())
+				action("Cancel", { visibility this << hide; })
+			}
+			//the login action
+			action login(){
+			  var users : List<User> :=
+			     select u from User as u 
+			     where (u._nick = ~usr.nick);
 
-		    for (us : User in users ){
-		      if (us.password.check(usr.password)){
-		        securityContext.principal := us;
-		        securityContext.loggedIn := true;
-		        return home();
-		      }
-		    }
-		    securityContext.loggedIn := false;
-		    clear loginerror <<;
-		   	append loginerror << template{ "incorrect credentials provided" } ;
-		  }
+			  for (us : User in users ){
+			    if (us.password.check(usr.password)){
+			      securityContext.principal := us;
+			      securityContext.loggedIn := true;
+			      return home();
+			    }
+			  }
+			  securityContext.loggedIn := false;
+			  securityContext.principal := null;
+			  clear loginerror <<;
+			 	append loginerror << template{ "incorrect credentials provided" } ;
+			}			
 		}
   }
 }
@@ -92,9 +93,10 @@ define login(){
       		}
       		action dosignup() {
       			if (s == u.password) {
-      				u.name 	:= u.nick;
+      				u.name 			:= u.nick;
       				u.public 		:= false;
       				u.moderator := false;
+      				u.password	:= u.password.digest();
 	      			u.save();
   	    			return home();
   	    		}

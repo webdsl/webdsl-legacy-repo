@@ -8,17 +8,7 @@ access control rules
   pointcut openSections(){
     page home(),
     page signup(),
-    template inline*(*), //hack!
-    template popup*(*),
-    template main(),
-    template topheader(),
-    template topmenu(),
-    template quickpane(),
-    template body(),
-    template homebody(),
-    template quicksearch(),
-    template loginlogout(),
-    template login()
+    template *(*)
   }
   rules pointcut openSections(){
     true

@@ -4,37 +4,22 @@ section templates
 
 
 define popup(header : String) {
-	#[[class:=popupbg, style := "position: absolute; top: 0px; left:0px;"] 
-		#[[class:=popup]
-			#[[class:=popupheader]
+	#[class:=popupbg, style := "position: absolute; top: 0px; left:0px;"] {
+		#[class:=popup] {
+			#[class:=popupheader] {
 				table {
 					<| [width:= 600px]	output(header) 
-					 | actionLink("X")[onclick:= close(), class:= right]
+					 | actionLink("X")[onclick:=  { visibility this << hide; }, class:= right]
 					>
 				}
-			]
-			#[ popupBody() ]
-			--
-			#[ [class:=popupfooter]
-				table[height:= 25px] {
-					<| [class := right, width:= 600px] popupFooter() 
-					 | action("Cancel", close())
-					>
-				}
-			]
-		]
-		action close() {
-			visibility this << hide;
+			}
+			#{ popupBody() }
 		}
-	]
+	}
 }
 
 define popupBody() {
 	"<no contents to display>"	
-}
-
-define popupFooter() {
-
 }
 
 style popupStyle
@@ -67,10 +52,6 @@ popup(header: String) {
 	border-style := BorderStyle.inset;
 	font-color := Color.White;
 	font-style := FontStyle.bold;
-}
-
-.popupfooter {
-	text-align := Align.right;
 }
 
 .right {

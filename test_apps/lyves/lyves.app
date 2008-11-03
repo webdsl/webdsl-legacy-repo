@@ -6,6 +6,8 @@ imports styles
 imports menustyle
 imports search
 imports popup
+imports news
+imports init
 
 
 section pages
@@ -18,10 +20,10 @@ define page home() {
       <[class:=topalign] 
       |
           group("News") {
-          // newsitems()
+            newsitems()
           }
           group("Sign up") {
-            groupitem { "Not a member of Lyves yet? Click " ~ signup() : "here" "to sign up!" }
+            groupitem { "Not a member of Lyves yet? Click " ~ signup() : " here " " to sign up!" }
           }
      	|
           group("Quicksearch") {
@@ -46,14 +48,17 @@ define main() {
       | [class:= whitebg]
         topheader()
         topmenu()
-        #[[id:= body, class:= topalign] 
+        #[id:= body, class:= topalign] {
           body()
-        ]
+        }
       | image("/images/shadow/shadow_2_3.png")[class:= maxheight, width:=25px]
     ><| image("/images/shadow/shadow_3_1.png")[height:= 24px]
       | image("/images/shadow/shadow_3_2.png")[class:= maxwidth, height:= 24px]
       | image("/images/shadow/shadow_3_3.png")[height:= 24px]
     >
+  }
+  container[id := popuptarget]{
+  	//empty
   }
 }
 
@@ -63,7 +68,7 @@ define topheader() {
      | container[class := title] { "Hyves" }
      | loginlogout()
     >
-    <| [colspan := "2"] #[[class:=subtitle]"get a lyfe; don't hyve!"]>
+    <| [colspan := "2"] #[class:=subtitle]{ "get a lyfe; don't hyve!"}>
   }
 }
 
@@ -78,8 +83,6 @@ define topmenu() {
      menu {
        menuheader {"MeSignOut"}
      } 
-     //menu {
-        quicksearch() 
-     //}
+     quicksearch() 
   }
 }
