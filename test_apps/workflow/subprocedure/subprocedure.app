@@ -41,11 +41,8 @@ section data
       var a : AProcedureStatus := AProcedureStatus{}; 
       a.persist();
       this.a := a;
-      this.persist();
-
       this.a.p := this;
       this.a.persist();
-
       this.persist();
       this.a.enable();
     }
@@ -54,6 +51,7 @@ section data
   entity ProcedureStatus {
     ancestor -> ProcedureStatus()
     caller -> ProcedureStatus ( )
+    descendents -> Set<ProcedureStatus> (inverse=ProcedureStatus.ancestor)
     returnstate :: Int ( )
     branch :: Int ( )
     name :: String ( ) := "Procedure status"
@@ -239,14 +237,7 @@ section data
     {
       if ( state == 0 )
       {
-        if (this.p.a1 == null) {
-          this.p.a1 := A1ProcedureStatus {};
-          this.p.a1.p := this.p;
-          this.p.a1.ancestor := this;
-          this.p.a1.ancestor.persist();
-          this.p.a1.persist();  
-          this.p.persist();
-        }
+        this.prepareA1();
         this.p.a1.enable(this as ProcedureStatus, 1, 0);
       }
       else
@@ -254,14 +245,7 @@ section data
       }
       if ( state == 1 )
       {
-        if (this.p.repeatUntilProc0 == null) {
-          this.p.repeatUntilProc0 := RepeatUntilProc0ProcedureStatus {};
-          this.p.repeatUntilProc0.p := this.p;
-          this.p.repeatUntilProc0.ancestor := this;
-          this.p.repeatUntilProc0.persist();
-          this.p.persist();
-        }
-        this.p.repeatUntilProc0.enable(this as ProcedureStatus, 2, 0);
+        this.startRepeatUntilProc0();
       }
       else
       {
@@ -286,6 +270,26 @@ section data
     }
     function disabled ( ) : Void
     {
+    }
+    function prepareA1() {
+      if (this.p.a1 == null) {
+        this.p.a1 := A1ProcedureStatus {};
+        this.p.a1.p := this.p;
+        this.p.a1.ancestor := this;
+        this.p.a1.ancestor.persist();
+        this.p.a1.persist();  
+        this.p.persist();
+      }
+    }
+    function startRepeatUntilProc0() {
+      if (this.p.repeatUntilProc0 == null) {
+        this.p.repeatUntilProc0 := RepeatUntilProc0ProcedureStatus {};
+        this.p.repeatUntilProc0.p := this.p;
+        this.p.repeatUntilProc0.ancestor := this;
+        this.p.repeatUntilProc0.persist();
+        this.p.persist();
+      }
+      this.p.repeatUntilProc0.enable(this as ProcedureStatus, 2, 0);
     }
   }
 
@@ -706,56 +710,14 @@ section procedures
                 }
               }
             }
-            groupitem()[]{
-              label("Caller: ")[]{
-                dummy()[]{
-                  if ( s.caller != null ) {
-                    navigate(procedureStatus(s.caller))[]{
-                      text(s.caller.name)[]{
-                      }
-                    }
-                  }
-                  else
-                  {
-                  }
-                  if ( s.caller == null ) {
-                    text("null")[]{
-                    }
-                  }
-                  else
-                  {
-                  }
-                }
+            groupitem() {
+              label("Ancestor") {
+                output(s.ancestor)
               }
             }
-            groupitem()[]{
-              label("Returnstate: ")[]{
-                outputInt(s.returnstate)[]{
-                }
-              }
-            }
-            groupitem()[]{
-              label("Branch: ")[]{
-                outputInt(s.branch)[]{
-                }
-              }
-            }
-            groupitem()[]{
-              label("Name: ")[]{
-                text(s.name)[]{
-                }
-              }
-            }
-            groupitem()[]{
-              label("Is enabled: ")[]{
-                outputBool(s.isEnabled)[]{
-                }
-              }
-            }
-            groupitem()[]{
-              label("Date: ")[]{
-                outputDateTime(s.date)[]{
-                }
+            groupitem() {
+              label("Descendents") {
+                output(s.descendents)
               }
             }
             groupitem()[]{
@@ -871,6 +833,16 @@ section  procedures .
               label("Date: ")[]{
                 outputDateTime(s.date)[]{
                 }
+              }
+            }
+            groupitem() {
+              label("Ancestor") {
+                output(s.ancestor)
+              }
+            }
+            groupitem() {
+              label("Descendents") {
+                output(s.descendents)
               }
             }
             groupitem()[]{
@@ -1700,7 +1672,8 @@ section pages
   }
   
   define page allPersoon() {
+    text("Alle personen")
     for (p : Persoon) {
-      par{navigate(persoon(p))}
+      navigate(persoon(p))
     }
   }
