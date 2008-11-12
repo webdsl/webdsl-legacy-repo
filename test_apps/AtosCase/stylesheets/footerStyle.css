@@ -1,0 +1,29 @@
+.footer   ul > li {
+  float: left;
+}
+
+.footer   ul > li:before {
+  content: '|';
+}
+
+.footer {
+  font-size: 10pt;
+}
+
+.footer   .footer_text {
+  float: right;
+}
+
+.footer   .footer_links {
+}
+
+.footer   ul {
+  list-style: none;
+  padding-left: 0;
+  padding-bottom: 1em;
+}
+
+.footer   ul > li:first-child:before {
+  content: '';
+  margin-right: 0;
+}

@@ -1,0 +1,43 @@
+pre {
+  font-family: Courier;
+  font-size: 11pt;
+}
+
+.main {
+  font-family: Helvetica;
+  font-size: 11pt;
+  color: Black;
+  background-color: white;
+}
+
+.mainContent {
+  display: block;
+}
+
+.section {
+  display: block;
+}
+
+.header {
+  font-size: 12pt;
+  font-weight: bold;
+}
+
+a {
+  text-decoration: none;
+  color: Navy;
+}
+
+table   tr > th {
+  border-top-color: #c0c0c0;
+  border-right-color: #c0c0c0;
+  border-bottom-color: #c0c0c0;
+  border-left-color: #c0c0c0;
+  font-weight: bold;
+  color: #404040;
+}
+
+textarea {
+  width: 50em;
+  height: 35em;
+}

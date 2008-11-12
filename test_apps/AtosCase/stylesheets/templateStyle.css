@@ -1,0 +1,72 @@
+.main {
+  display: block;
+  width: 100%;
+}
+
+.top {
+  border-top-style: solid;
+  border-right-style: solid;
+  border-bottom-style: solid;
+  border-left-style: solid;
+  border-top-width: 0px;
+  border-right-width: 0px;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+  border-top-color: red;
+  border-right-color: red;
+  border-bottom-color: red;
+  border-left-color: red;
+  display: block;
+  width: 700px;
+  padding-top: 0px;
+  padding-bottom: 10px;
+}
+
+.top   .brand {
+  font-size: 36pt;
+}
+
+.top   .brand   a {
+  color: FireBrick;
+  font-family: Times;
+}
+
+.top   .brand > .brandsub {
+  font-size: 10pt;
+}
+
+.topRight {
+  display: block;
+  float: right;
+  font-size: 10pt;
+}
+
+.body {
+  border-top-style: solid;
+  border-right-style: solid;
+  border-bottom-style: solid;
+  border-left-style: solid;
+  border-top-width: 0px;
+  border-right-width: 0px;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+  border-top-color: purple;
+  border-right-color: purple;
+  border-bottom-color: purple;
+  border-left-color: purple;
+  display: block;
+  width: 700px;
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+
+.footer {
+  display: block;
+  font-size: 10pt;
+  width: 700px;
+  border-top-style: dotted;
+  border-top-width: 1px;
+  border-top-color: grey;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}

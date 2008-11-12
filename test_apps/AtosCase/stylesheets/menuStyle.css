@@ -1,0 +1,116 @@
+.topmenu {
+  display: block;
+  width: 700px;
+  text-align: center;
+  background-color: black;
+  color: white;
+  font-family: Helvetica;
+  font-size: 11pt;
+  padding: 0px;
+}
+
+.menubar {
+  border-top-color: black;
+  border-right-color: black;
+  border-bottom-color: black;
+  border-left-color: black;
+  border-top-style: solid;
+  border-right-style: solid;
+  border-bottom-style: solid;
+  border-left-style: solid;
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+  width: 700px;
+  background-color: black;
+}
+
+.menuheader {
+  border-top-color: black;
+  border-right-color: black;
+  border-bottom-color: black;
+  border-left-color: black;
+  background-color: black;
+  color: white;
+}
+
+.menuheader > a {
+  border-top-color: black;
+  border-right-color: black;
+  border-bottom-color: black;
+  border-left-color: black;
+  background-color: black;
+  color: white;
+}
+
+span.menuheader:hover {
+  border-top-color: black;
+  border-right-color: black;
+  border-bottom-color: black;
+  border-left-color: black;
+  background-color: white;
+  color: black;
+}
+
+span.menuheader:hover > a {
+  border-top-color: black;
+  border-right-color: black;
+  border-bottom-color: black;
+  border-left-color: black;
+  background-color: white;
+  color: black;
+}
+
+.menuitems {
+  border-top-color: black;
+  border-right-color: black;
+  border-bottom-color: black;
+  border-left-color: black;
+  border-top-style: solid;
+  border-right-style: solid;
+  border-bottom-style: solid;
+  border-left-style: solid;
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+  color: white;
+  background-color: black;
+}
+
+.menuitem {
+  border-top-color: black;
+  border-right-color: black;
+  border-bottom-color: black;
+  border-left-color: black;
+  background-color: black;
+  color: white;
+}
+
+.menuitem > a {
+  border-top-color: black;
+  border-right-color: black;
+  border-bottom-color: black;
+  border-left-color: black;
+  background-color: black;
+  color: white;
+}
+
+li.menuitem:hover {
+  border-top-color: black;
+  border-right-color: black;
+  border-bottom-color: black;
+  border-left-color: black;
+  background-color: white;
+  color: black;
+}
+
+li.menuitem:hover > a {
+  border-top-color: black;
+  border-right-color: black;
+  border-bottom-color: black;
+  border-left-color: black;
+  background-color: white;
+  color: black;
+}
