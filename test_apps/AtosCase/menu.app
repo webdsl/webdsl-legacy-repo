@@ -11,7 +11,7 @@ section menus
         menuheader{ navigate(home()){"Home"} }
         menuheader{ navigate(nieuwInkomendBericht()){"Nieuw Inkomend Bericht"} }
         menuheader{ navigate(inkomendeBerichten()){"Alle Inkomende Berichten"} }
-        
+        menuheader{ navigate(dossierTasks()){"Alle Dossier Taken"} }        
       }
     }
     "\n" 
