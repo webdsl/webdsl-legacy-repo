@@ -49,10 +49,6 @@ trait MainTemplate extends Page {
 }
 
 case class Home extends MainTemplate {
-  
-  def name = "home"
-  def title = "Home"
-   
   def body {
     section {
       header("Let's count")
@@ -66,9 +62,6 @@ case class Home extends MainTemplate {
 }
 
 case class About extends MainTemplate {
-  def name = "about"
-  def title = "About"
-  
   def body {
     header("About")
     text("""Internal WebDSL is an internal version of the WebDSL language, implemented as an internal DSL inside of Scala.""")
@@ -76,8 +69,7 @@ case class About extends MainTemplate {
 }
 
 case class Calculator extends MainTemplate {
-  def name = "calc"
-  def title = "Calculator"
+  override def name = "calc"
   
   var n : Long = 2
   
@@ -107,8 +99,6 @@ case class Calculator extends MainTemplate {
   }
 }
 case class Counter(n : Int) extends MainTemplate {
-  def name = "counter"
-  def title = "Counter"  
   
   def body {
     header("Counter: " + n)

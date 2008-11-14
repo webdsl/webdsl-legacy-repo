@@ -19,8 +19,8 @@ abstract case class Page(ign : IgnoreMe) extends Forms {
   protected var mode = PageMode.DataBind
   
   def ui
-  def title : String
-  def name : String
+  def title : String = productPrefix
+  def name : String = productPrefix.toLowerCase
   
   def init(out : PrintWriter, req : HttpServletRequest, res : HttpServletResponse) {
     this.out = out
@@ -206,16 +206,9 @@ abstract case class Page(ign : IgnoreMe) extends Forms {
   def goto(p : Page) {
     response.sendRedirect(buildPageUrl(p))
   }
-  
-  // Checks
-  def printAll() {
-   for (i <- 0 until productArity) {
-     println(productElement(i))
-   }
-  }
 
   def this() = this(new IgnoreMe)
 
- if (productArity == 1 && (productElement(0) == IgnoreMe()))
-   throw new IllegalStateException("Page classes must be defined as case classes")
+  if (productArity == 1 && (productElement(0) == IgnoreMe()))
+    throw new IllegalStateException("Pages must be defined as case classes")
 }
