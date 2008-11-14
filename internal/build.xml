@@ -24,6 +24,7 @@
 
     <!-- copy deployment descriptor -->
     <copy file="./descr/web.xml" todir="./build/WebDSL/WEB-INF"/>
+  	<copy file="./descr/log4j.xml" todir="./build/WebDSL/WEB-INF/classes"/>
 
     <!-- provide servlets with Scala runtime -->
     <copy file="${scala.home}/lib/scala-library.jar" todir="./build/WebDSL/WEB-INF/lib"/>
