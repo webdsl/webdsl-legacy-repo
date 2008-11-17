@@ -24,6 +24,7 @@ define page home() {
 	}
 }
 
+/*
 define feed posts() {
   title{ "Zef.me blog" }
   link { url(home()) }
@@ -42,3 +43,4 @@ define feed posts() {
 }
 
 
+*/

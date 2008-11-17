@@ -130,7 +130,7 @@ style templateStyle
     border-top-color := layoutBorderColor;
     border-top-style := BorderStyle.solid;
     font-size := 0.9em;
-    width := top().width;
+    width := 100%;
   }
   
     /*
