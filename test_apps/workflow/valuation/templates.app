@@ -179,9 +179,9 @@ section sidebar
         listitem{ navigate(editValuationRisk(v)){"Risk Analysis"} }
         listitem{ navigate(editValuationLand(v)){"Land"} }
         listitem{ navigate(editValuationSales(v)){"Sales Evidence"} }
-        if (v.finalizeValuation.isEnabled) {navigatebutton(finalizeValuation(v), "Finalize")}
-        if (v.approveValuation.isEnabled && canApproveValuations()) {navigatebutton(approveValuation(v), "Approve")}
-        if (v.sendValuation.isEnabled && canSendValuations()) {navigatebutton(sendValuation(v), "Mark as Sent")}
+        if (v.finalizeValuation != null && v.finalizeValuation.isEnabled) {navigatebutton(finalizeValuation(v), "Finalize")}
+        if (v.approveValuation != null && v.approveValuation.isEnabled && canApproveValuations()) {navigatebutton(approveValuation(v), "Approve")}
+        if (v.sendValuation != null && v.sendValuation.isEnabled && canSendValuations()) {navigatebutton(sendValuation(v), "Mark as Sent")}
       }
     }
   }
@@ -196,8 +196,8 @@ section sidebar
         listitem{ navigate(valuationRisk(v)){"Risk Analysis"} }
         listitem{ navigate(valuationLand(v)){"Land"} }
         listitem{ navigate(valuationSales(v)){"Sales Evidence"} }
-        if (v.approveValuation.isEnabled && canApproveValuations()) {navigatebutton(approveValuation(v), "Approve")}
-        if (v.sendValuation.isEnabled && canSendValuations()) {navigatebutton(sendValuation(v), "Mark as Sent")}
+        if (v.approveValuation != null && v.approveValuation.isEnabled && canApproveValuations()) {navigatebutton(approveValuation(v), "Approve")}
+        if (v.sendValuation != null && v.sendValuation.isEnabled && canSendValuations()) {navigatebutton(sendValuation(v), "Mark as Sent")}
       }
     }
   }

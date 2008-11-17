@@ -26,7 +26,7 @@ section data model
 /**
  * LIXI Valuation Data model
  */
-   
+/*   
   entity PlanValue {
     name :: String
   }
@@ -87,40 +87,34 @@ section data model
     name :: String
   }
   
-  entity Client {
-    name :: String
-    valuationRequests -> Set<ValuationRequest> (inverse=ValuationRequest.client)
-    //todo
-  }
-  
-  entity Broker {
-    name :: String
-    //todo
-  }
-  
-  entity State {
+  entity StateValue {
     name :: String
   }
   
-  entity PostCode {
+  entity PostCodeValue {
     name :: String
   }
   
-  entity PropertyCategory {
+  entity PropertyCategoryValue {
     name :: String
   }
   
-  entity PropertyType {
+  entity PropertyTypeValue {
     name :: String
   }
   
-  entity ReportType {
+  entity ReportTypeValue {
     name :: String
   }
   
-  entity Propose {
+  entity ProposeValue {
     name :: String
   }
+  
+  entity ComparisonValue {
+    name :: String
+  }*/
+  
   
   entity ValuationRequestStatus {
     name :: String
@@ -146,16 +140,16 @@ section data model
     // Property
     address :: String
     suburb :: String
-    state -> State
-    postCode -> PostCode
-    category -> PropertyCategory
-    type -> PropertyType
+    state -> StateValue
+    postCode -> PostCodeValue
+    category -> PropertyCategoryValue
+    type -> PropertyTypeValue
     
     comments :: Text
     
     // Specifications
-    reportType -> ReportType
-    propose -> Propose
+    reportType -> ReportTypeValue
+    propose -> ProposeValue
     
     // Applicant
     applicantName :: String
@@ -262,6 +256,17 @@ section data model
     latestSaleComment :: Text
   }
   
+  entity Client {
+    name :: String
+    valuationRequests -> Set<ValuationRequest> (inverse=ValuationRequest.client)
+    //todo
+  }
+  
+  entity Broker {
+    name :: String
+    //todo
+  }
+  
   entity ProgressValuation {
     valuationRequest -> ValuationRequest
     date :: Date
@@ -278,10 +283,6 @@ section data model
     user -> User
     name :: String := this.user.name
     valuationRequests -> Set<ValuationRequest> (inverse=ValuationRequest.valuer)
-  }
-  
-  entity ComparisonValue {
-    name :: String
   }
   
   entity SalesEvidence {

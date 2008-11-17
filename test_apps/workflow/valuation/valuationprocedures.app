@@ -45,7 +45,7 @@ section procedures
                   groupitem { label("Notes") { input(v.bookingNotes) } } 
                 }
               }
-              row { action("Book Valuation", do()) }
+              row { action("Book Valuation", doAction()) }
             }
           }
         }
@@ -227,6 +227,24 @@ section procedures
       v.persist();
     }
   }
+/*  
+section test  
+  
+  entity ValuationRequest {
+    ...
+    plan :: String (select=Plan)
+    ...
+  }
+  string-select-entity Plan {"SP", "DP"}
+  string-select-entity Instrument {"Mosman LEP", "North Sydney LEP"}
+  
+  procedure dinges(v : ValuationRequest) {
+    view {
+      input(v.plan) -> inputSelectString(v.plan)
+    }
+  }
+  
+section verder*/
 
   procedure editValuationProperty(v : ValuationRequest) {
     who {
@@ -245,7 +263,7 @@ section procedures
               block("datawidth") {
                 group("Property Summary 1") {
                   groupitem { label("Lot") { input(v.lot) } }
-                  groupitem { label("Plan") { input(v.plan) } }
+                  groupitem { label("Plan") { input(v.plan) } } // selectStringInput(v.plan, )
                   groupitem { label("Plan No.") { input(v.planNumber) } }
                   groupitem { label("Proprietor"){ input(v.proprietor) }}
                   groupitem { label("Zoning"){ input(v.zoning) }}
@@ -479,6 +497,7 @@ section procedures
       securityContext.principal != null && 
       v.bookValuation != null && 
       v.bookValuation.isEnabled
+      //v.bookValuation != null && v.bookValuation.canPerform()
     );
   }
   
@@ -489,6 +508,7 @@ section procedures
       securityContext.principal.hasBookingRights() && 
       v.bookValuation != null && 
       v.bookValuation.isEnabled
+      //v.bookValuation != null && v.bookValuation.canPerform()
     );
   }
   

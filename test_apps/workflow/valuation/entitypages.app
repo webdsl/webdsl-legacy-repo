@@ -5,7 +5,7 @@ section user pages
   define page user(object : User) { derive viewPage from object }
   
 section value pages
-
+/*
   define page planValue (object : PlanValue) { derive viewPage from object }
   define page instrumentValue (object : InstrumentValue) { derive viewPage from object }
   define page siteDimsValue (object : SiteDimsValue) { derive viewPage from object }
@@ -21,17 +21,17 @@ section value pages
   define page analysisValue (object : AnalysisValue) { derive viewPage from object }
   define page propertyIdentificationValue (object : PropertyIdentificationValue) { derive viewPage from object }
   define page marketValue (object : MarketValue) { derive viewPage from object }
-  define page client(object : Client) { derive viewPage from object }
-  define page broker(object : Broker) { derive viewPage from object }
   define page state(object : State) { derive viewPage from object }
   define page postCode(object : PostCode) { derive viewPage from object }
   define page propertyCategory(object : PropertyCategory) { derive viewPage from object }
   define page propertyType(object : PropertyType) { derive viewPage from object }
   define page reportType(object : ReportType) { derive viewPage from object }
   define page propose(object : Propose) { derive viewPage from object }
+  define page comparisonValue (object : ComparisonValue) { derive viewPage from object }
+  */
+  
   define page valuationRequestStatus(object : ValuationRequestStatus) { derive viewPage from object }
   define page invoice(object : Invoice) { derive viewPage from object }
-  define page comparisonValue (object : ComparisonValue) { derive viewPage from object }
   define page salesEvidence (object : SalesEvidence) { derive viewPage from object }
   define page valuer (object : Valuer) { derive viewPage from object }
   define page progressValuation (object : ProgressValuation) { derive viewPage from object }
@@ -53,4 +53,6 @@ section value pages
       }
     }
   }
+  define page client(object : Client) { derive viewPage from object }
+  define page broker(object : Broker) { derive viewPage from object }
   

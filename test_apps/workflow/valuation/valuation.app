@@ -1,5 +1,4 @@
-application org.webdsl.testProcess
-
+application org.webdsl.valuation
 
 description {
   A workflow example for a personal development plan workflow
@@ -7,6 +6,7 @@ description {
 
 imports templates
 imports data
+imports stringselectdata
 imports init
 imports entitypages
 imports ac

@@ -29,12 +29,12 @@ section pages
     var valuationNumber : Int; 
     var address : String;
     var suburb : String;
-    var state : State;
-    var postCode : PostCode;
-    var category : PropertyCategory;
-    var type : PropertyType;
-    var reportType : ReportType;
-    var propose : Propose;
+    var state : StateValue;
+    var postCode : PostCodeValue;
+    var category : PropertyCategoryValue;
+    var type : PropertyTypeValue;
+    var reportType : ReportTypeValue;
+    var propose : ProposeValue;
     var oldClient : Client;
     var applicantName : String;
     var applicantPhone : String;
@@ -86,7 +86,7 @@ section pages
           
           action addRequest()
           {
-            var v : ValuationRequest := newValuationRequest();
+            var v : ValuationRequest := ValuationRequest {};
 
             if (newClient.name != "") {
               newClient.persist();
@@ -112,7 +112,7 @@ section pages
             v.persist();
             i.valuationRequest := v;
             i.persist();
-            v.valuationWorkflow.enable();
+            v.startValuationWorkflow();
 
             return allValuationRequest();
           }

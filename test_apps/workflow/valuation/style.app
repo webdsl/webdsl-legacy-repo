@@ -123,8 +123,8 @@ style templateStyle
     border-top-style := BorderStyle.solid;
     font := globalFont;
     font-size := 0.7em;
-    width := top().width;
-    margin-top := topmenu().margin-bottom;
+    //width := 400px; //top().width;
+    //margin-top := 1em; //topmenu().margin-bottom;
   }
   
 
@@ -174,11 +174,11 @@ style menuStyle
     font-line := Line.none;
   }
   
-  topmenu() >> menu() >> navigate():hover {
+/*  topmenu() >> menu() >> navigate().hover {
     image := url("images/menubar_bg_hover.png");
     image-repeat := Repeat.horizontal;
   }
-
+*/
 style footerStyle
 
   footer() >> .footer_text {

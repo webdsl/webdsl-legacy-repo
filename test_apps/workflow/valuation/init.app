@@ -47,7 +47,7 @@ section rights
   
 section value data
 
-  globals {
+/*  globals {
     var initPlan1 : PlanValue := PlanValue { name := "SP" };
     var initPlan2 : PlanValue := PlanValue { name := "DP" };
   }
@@ -56,16 +56,7 @@ section value data
     var initInstrument1 : InstrumentValue := InstrumentValue { name := "Mosman LEP" };
     var initInstrument2 : InstrumentValue := InstrumentValue { name := "North Sydney LEP" };
     var initInstrument3 : InstrumentValue := InstrumentValue { name := "Rest to be done" };
-/*    var initInstrument : InstrumentValue := InstrumentValue { name := "" };
-    var initInstrument : InstrumentValue := InstrumentValue { name := "" };
-    var initInstrument : InstrumentValue := InstrumentValue { name := "" };
-    var initInstrument : InstrumentValue := InstrumentValue { name := "" };
-    var initInstrument : InstrumentValue := InstrumentValue { name := "" };
-    var initInstrument : InstrumentValue := InstrumentValue { name := "" };
-    var initInstrument : InstrumentValue := InstrumentValue { name := "" };
-    var initInstrument : InstrumentValue := InstrumentValue { name := "" };
-    var initInstrument : InstrumentValue := InstrumentValue { name := "" };
-*/  }
+  }
   
   globals {
     var initSiteDims1 : SiteDimsValue := SiteDimsValue { name := "Irregular" };
@@ -199,6 +190,54 @@ section value data
   }
   
   globals {
+    var initStateValue1 : StateValue := StateValue { name := "NSW" };
+    var initStateValue2 : StateValue := StateValue { name := "Queensland" };
+    var initStateValue3 : StateValue := StateValue { name := "Victoria" };
+    var initStateValue4 : StateValue := StateValue { name := "Northern Territory" };
+    var initStateValue5 : StateValue := StateValue { name := "Western Australia" };
+    var initStateValue6 : StateValue := StateValue { name := "South Australia" };
+    var initStateValue7 : StateValue := StateValue { name := "Tasmania" };
+  }
+  
+  globals {
+    var initPostCode1 : PostCodeValue := PostCodeValue { name := "2026" };
+    var initPostCode2 : PostCodeValue := PostCodeValue { name := "2088" };
+    var initPostCode3 : PostCodeValue := PostCodeValue { name := "2132" };
+    var initPostCode4 : PostCodeValue := PostCodeValue { name := "2342" };
+  }
+  
+  globals {
+    var initPropertyCategory1 : PropertyCategoryValue := PropertyCategoryValue { name := "Residential" };
+    var initPropertyCategory2 : PropertyCategoryValue := PropertyCategoryValue { name := "Offices" };
+    var initPropertyCategory3 : PropertyCategoryValue := PropertyCategoryValue { name := "Kekstra" };
+  }
+  
+  globals {
+    var initPropertyType1 : PropertyTypeValue := PropertyTypeValue { name := "House" };
+    var initPropertyType2 : PropertyTypeValue := PropertyTypeValue { name := "Flat" };
+    var initPropertyType3 : PropertyTypeValue := PropertyTypeValue { name := "Appartment" };    
+  }
+  
+  globals {
+    var initReportType1 : ReportTypeValue := ReportTypeValue { name := "Short Report" };
+    var initReportType2 : ReportTypeValue := ReportTypeValue { name := "Extensive Report" };
+    var initReportType3 : ReportTypeValue := ReportTypeValue { name := "Too long Report" };    
+  }
+  
+  globals {
+    var initPropose1 : ProposeValue := ProposeValue { name := "Market" };
+    var initPropose2 : ProposeValue := ProposeValue { name := "Market too" };
+    var initPropose3 : ProposeValue := ProposeValue { name := "What other values?" };
+  }
+    
+  globals {
+    var initComparisonValue1 : ComparisonValue := ComparisonValue { name := "Inferior" };
+    var initComparisonValue2 : ComparisonValue := ComparisonValue { name := "Similar" };
+    var initComparisonValue3 : ComparisonValue := ComparisonValue { name := "Superior" };
+  }
+  */
+  
+  globals {
     var initClient1 : Client := Client { name := "Topline Foods" };
     var initClient2 : Client := Client { name := "Philips" };
     var initClient3 : Client := Client { name := "Nokia" };
@@ -211,59 +250,12 @@ section value data
   }
   
   globals {
-    var initStateValue1 : State := State { name := "NSW" };
-    var initStateValue2 : State := State { name := "Queensland" };
-    var initStateValue3 : State := State { name := "Victoria" };
-    var initStateValue4 : State := State { name := "Northern Territory" };
-    var initStateValue5 : State := State { name := "Western Australia" };
-    var initStateValue6 : State := State { name := "South Australia" };
-    var initStateValue7 : State := State { name := "Tasmania" };
-  }
-  
-  globals {
-    var initPostCode1 : PostCode := PostCode { name := "2026" };
-    var initPostCode2 : PostCode := PostCode { name := "2088" };
-    var initPostCode3 : PostCode := PostCode { name := "2132" };
-    var initPostCode4 : PostCode := PostCode { name := "2342" };
-  }
-  
-  globals {
-    var initPropertyCategory1 : PropertyCategory := PropertyCategory { name := "Residential" };
-    var initPropertyCategory2 : PropertyCategory := PropertyCategory { name := "Offices" };
-    var initPropertyCategory3 : PropertyCategory := PropertyCategory { name := "Kekstra" };
-  }
-  
-  globals {
-    var initPropertyType1 : PropertyType := PropertyType { name := "House" };
-    var initPropertyType2 : PropertyType := PropertyType { name := "Flat" };
-    var initPropertyType3 : PropertyType := PropertyType { name := "Appartment" };    
-  }
-  
-  globals {
-    var initReportType1 : ReportType := ReportType { name := "Short Report" };
-    var initReportType2 : ReportType := ReportType { name := "Extensive Report" };
-    var initReportType3 : ReportType := ReportType { name := "Too long Report" };    
-  }
-  
-  globals {
-    var initPropose1 : Propose := Propose { name := "Market" };
-    var initPropose2 : Propose := Propose { name := "Market too" };
-    var initPropose3 : Propose := Propose { name := "What other values?" };
-  }
-  
-  globals {
     var initValuationRequestStatus1 : ValuationRequestStatus := ValuationRequestStatus { name := "Request Received" };
     var initValuationRequestStatus2 : ValuationRequestStatus := ValuationRequestStatus { name := "Booked" };
     var initValuationRequestStatus3 : ValuationRequestStatus := ValuationRequestStatus { name := "Pending" };
     var initValuationRequestStatus4 : ValuationRequestStatus := ValuationRequestStatus { name := "Awaiting Approval" };
     var initValuationRequestStatus5 : ValuationRequestStatus := ValuationRequestStatus { name := "Approved" };
     var initValuationRequestStatus6 : ValuationRequestStatus := ValuationRequestStatus { name := "Sent" };
-  }
-    
-  globals {
-    var initComparisonValue1 : ComparisonValue := ComparisonValue { name := "Inferior" };
-    var initComparisonValue2 : ComparisonValue := ComparisonValue { name := "Similar" };
-    var initComparisonValue3 : ComparisonValue := ComparisonValue { name := "Superior" };
   }
   
   globals {
