@@ -19,19 +19,19 @@ define page viewUser(u: User) {
 }
 
 define quickviewUser(u: User) {
-  output(u.nick)
+  <| output(u.name) | output(u.nick) >
 }
 
 define loginlogout() {
   if(securityContext.loggedIn) {
-    actionLink("logout")[onclick:=	{
+    actionLink("logout")[onclick:= action	{
                          securityContext.loggedIn := false;
                          securityContext.principal := null;
                          relocate << home();
                         }]
   } 
   else {
-		actionLink("login")[onclick:= {replace popuptarget << login();}]
+		actionLink("login")[onclick:= action {replace popuptarget << login();}]
   }
 }
 
@@ -48,7 +48,7 @@ define login(){
 			#[class:= right] {
 				container[id := loginerror, class:= error]{""}  //to display errors
 				action("Login",  login())
-				action("Cancel", { visibility this << hide; })
+				action("Cancel", action { visibility this << hide; })
 			}
 			//the login action
 			action login(){

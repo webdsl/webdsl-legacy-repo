@@ -24,7 +24,9 @@ access control rules
   } 
   
   predicate mayViewUser (u:User){
-    securityContext.principal in u.friends || u.public == true || securityContext.principal.moderator == true
+	  (u.public)
+	  ||(securityContext.principal.moderator)
+    ||(securityContext.principal in u.friends) 
   }
  
 }

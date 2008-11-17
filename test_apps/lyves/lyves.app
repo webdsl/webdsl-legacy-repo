@@ -26,11 +26,15 @@ define page home() {
             groupitem { "Not a member of Lyves yet? Click " ~ signup() : " here " " to sign up!" }
           }
      	|
-          group("Quicksearch") {
-            groupitem{ "search by name: " input(s)[onclick := { dosearch(s); }] }
-          }
-          group("Search results")[id:= searchresulttable] {
-            "nothing searched..."
+     			form {
+		        group("Quicksearch") {
+		          groupitem{ "search by name: " input(s)[onkeyup := action { dosearchInHome(s); }] }
+		        }
+		      }
+          group("Search results") {
+          	table[id:= searchresulttable] {
+            	<|"nothing searched...">
+            }
           }
       >
     }
@@ -65,7 +69,7 @@ define main() {
 define topheader() {
   table[width:= 100%] {
     <| [rowspan := "2"] image("/images/lyves.png") 
-     | container[class := title] { "Hyves" }
+     | container[class := title] { "Lyves" }
      | loginlogout()
     >
     <| [colspan := "2"] #[class:=subtitle]{ "get a lyfe; don't hyve!"}>

@@ -52,8 +52,8 @@ define newsitems() {
 }
 
 define newsitemEditButtons(news: NewsItem) {
-	action("E")[onclick := { replace popuptarget << editNewsItem(news); }]
-	action("X",{ news.delete(); relocate << home(); })
+	action("E")[onclick := action{ replace popuptarget << editNewsItem(news); }]
+	action("X",action{ news.delete(); relocate << home(); })
 }
 
 define editNewsItem(news: NewsItem) {
@@ -67,11 +67,11 @@ define editNewsItem(news: NewsItem) {
 			}
 			--
 			#[class:= right] {
-				action("Save",  {
+				action("Save", action {
 					news.save();
 					relocate << home();					
 				})
-				action("Cancel", { visibility this << hide; })
+				action("Cancel", action { visibility this << hide; })
 			}
 		}
 	}

@@ -9,7 +9,7 @@ define popup(header : String) {
 			#[class:=popupheader] {
 				table {
 					<| [width:= 600px]	output(header) 
-					 | actionLink("X")[onclick:=  { visibility this << hide; }, class:= right]
+					 | actionLink("X")[onclick:=  action{ visibility this << hide; }, class:= right]
 					>
 				}
 			}
