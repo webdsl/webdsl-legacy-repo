@@ -45,7 +45,7 @@ section procedures
                   groupitem { label("Notes") { input(v.bookingNotes) } } 
                 }
               }
-              row { action("Book Valuation", doAction()) }
+              row { action("Book Valuation", do()) }
             }
           }
         }

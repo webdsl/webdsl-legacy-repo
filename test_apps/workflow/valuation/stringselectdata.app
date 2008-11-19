@@ -2,7 +2,7 @@ module stringselectdata
 
 section stringselect definitions
 
-  string-select-entity Plan {"SP", "DP"}
+  string-select-entity Plan {"zSP", "DP"}
   string-select-entity Instrument {"Mosman LEP", "North Sydney LEP", "Rest to be done"}
   string-select-entity SiteDims {"Irregular", "N/A", "Regular"}
   string-select-entity CarAccommodation {"Carport", "Carspace", "DLUG", "Double Carport", "Double Carspace", "N/A", "Off-Street Parking", "Security Carspace", "Single Carport", "SLUG", "SLUG and Carport", "Tandem", "TLUG", "Undercover Carspace"}  
