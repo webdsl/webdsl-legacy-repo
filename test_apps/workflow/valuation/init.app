@@ -10,7 +10,7 @@ section user data
     };
     var userRuben : User := User {
       username := "ruben",
-      name     := "Ruben Verhaaf",
+      name     := "Ruben Verhaafz",
       password := "secret"
     };
     var userAdmin : User := User {
@@ -25,24 +25,65 @@ section user data
     };
   }
   
-section rights
-
-  globals {
-    // administrator
-    var initAuthorization1 : Authorization := Authorization { right := "viewValuations" user := userAdmin };
-    var initAuthorization2 : Authorization := Authorization { right := "booking" user := userAdmin };
-    var initAuthorization3 : Authorization := Authorization { right := "createValuation" user := userAdmin };
-    var initAuthorization4 : Authorization := Authorization { right := "editValuationRequests" user := userAdmin };
-    var initAuthorization9 : Authorization := Authorization { right := "sendValuations" user := userAdmin };
+  init {
     
-    // manager
-    var initAuthorization5 : Authorization := Authorization { right := "editValuations" user := userManager };
-    var initAuthorization6 : Authorization := Authorization { right := "createValuation" user := userManager };
-    var initAuthorization7 : Authorization := Authorization { right := "booking" user := userManager };
-    var initAuthorization8 : Authorization := Authorization { right := "editValuationRequests" user := userManager };
-    var initAuthorization10 : Authorization := Authorization { right := "sendValuations" user := userManager };
-    var initAuthorization11 : Authorization := Authorization { right := "editApprovalValuations" user := userManager };
-    var initAuthorization12 : Authorization := Authorization { right := "approveValuations" user := userManager };
+      var userLiming : User := User {
+        username := "liming",
+        name     := "Liming Zhu",
+        password := "secret"
+      };
+      userLiming.password := userLiming.password.digest();
+      userLiming.persist();
+      var userRuben : User := User {
+        username := "ruben",
+        name     := "Ruben Verhaaf",
+        password := "secret"
+      };
+      userRuben.password := userRuben.password.digest();
+      userRuben.persist();
+      var userAdmin : User := User {
+        username := "admin",
+        name     := "Tiep Miep",
+        password := "secret"
+      };
+      userAdmin.password := userAdmin.password.digest();
+      userAdmin.persist();
+      var userManager : User := User {
+        username := "manager",
+        name     := "Ron Gedeon",
+        password := "secret"
+      };
+      userManager.password := userManager.password.digest();
+      userManager.persist();
+      
+      // administrator
+      var initAuthorization1 : Authorization := Authorization { right := "viewValuations" user := userAdmin };
+      var initAuthorization2 : Authorization := Authorization { right := "booking" user := userAdmin };
+      var initAuthorization3 : Authorization := Authorization { right := "createValuation" user := userAdmin };
+      var initAuthorization4 : Authorization := Authorization { right := "editValuationRequests" user := userAdmin };
+      var initAuthorization9 : Authorization := Authorization { right := "sendValuations" user := userAdmin };
+
+      // manager
+      var initAuthorization5 : Authorization := Authorization { right := "editValuations" user := userManager };
+      var initAuthorization6 : Authorization := Authorization { right := "createValuation" user := userManager };
+      var initAuthorization7 : Authorization := Authorization { right := "booking" user := userManager };
+      var initAuthorization8 : Authorization := Authorization { right := "editValuationRequests" user := userManager };
+      var initAuthorization10 : Authorization := Authorization { right := "sendValuations" user := userManager };
+      var initAuthorization11 : Authorization := Authorization { right := "editApprovalValuations" user := userManager };
+      var initAuthorization12 : Authorization := Authorization { right := "approveValuations" user := userManager };
+      
+      initAuthorization1.persist();
+      initAuthorization2.persist();
+      initAuthorization3.persist();
+      initAuthorization4.persist();
+      initAuthorization5.persist();
+      initAuthorization6.persist();
+      initAuthorization7.persist();
+      initAuthorization8.persist();
+      initAuthorization9.persist();
+      initAuthorization10.persist();
+      initAuthorization11.persist();
+      initAuthorization12.persist();
   }
   
 section value data

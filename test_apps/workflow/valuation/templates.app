@@ -47,11 +47,11 @@ section templates
         } else {
           menuitem { navigate(signout()) { "Sign out" } }
         }
-        menuitem { navigate(loginAs(userRuben)){"Login as Ruben"} }
+/*        menuitem { navigate(loginAs(userRuben)){"Login as Ruben"} }
         menuitem { navigate(loginAs(userLiming)){"Login as Liming"} }
         menuitem { navigate(loginAs(userAdmin)){"Login as Admin"} }
         menuitem { navigate(loginAs(userManager)){"Login as Manager"} }
-      }
+*/      }
       menu {
         menuheader { navigate(allValuationRequest()) { "Valuation Requests" } }
         menuitem { navigate(newValuation()) { "New Valuation Request" } }
