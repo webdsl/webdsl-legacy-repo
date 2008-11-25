@@ -4,7 +4,6 @@ description {
 	This is an automatically generated description
 }
 
-section initial data
 
   init {
     var u1 : User := User { name := "User 1", age := 25 }; u1.save();
@@ -12,8 +11,6 @@ section initial data
     var m1 : Message := Message { text := "Hello world!", author := u1 }; m1.save();
     var m2 : Message := Message { text := "Hello universe!", author := u2 }; m2.save();
   }
-
-section data model
 
   entity User {
     name :: String
@@ -29,12 +26,24 @@ section data model
 
 section pages
 
-define page home() {
-  header { "Welcome!" }
-  for(m : Message) {
-    par {
-      output(m.author.name) ": " output(m.text)
+  function allMessages() : List<Message> {
+    var l : List<Message> := List<Message>();
+    for(m : Message) {
+      var nm : String := m.author.name;
+      l.add(m);
+    }
+    return l;
+  }
+
+  define page home() {
+    header { "Welcome!" }
+    for(m : Message) {
+      par {
+        output(m.author.name) ": " output(m.text)
+      }
+    }
+    for(m : Message in allMessages()) {
+      "Bla"
     }
   }
-}
 
