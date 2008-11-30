@@ -1,9 +1,28 @@
 module ui
 
+imports arbeid1
+
 section pages
 
 define page home() {
     main()
+    define kiesproduct() {
+        block [class := selectedMenuItem] {
+            text("Kies product")            
+        }
+    }
+    define sidebar() {        
+        table [class := sideMenu] {
+          row {
+            column {
+              image("/images/exclm.png")
+            }
+            column { 
+              kiesproduct()
+            }
+          }
+        }
+    }
     define body() {
         table[width := 100%, class := body] {
          row { 
@@ -12,7 +31,16 @@ define page home() {
             table {
              row { 
               column { image("/images/arbeidsongeschiktheid.png") }
-              column [class := productlist] { navigate("Arbeid1", arbeid1())}
+              column [class := productlist] { 
+                form {
+                    actionLink("Arbeid1", arbeid1())             
+                }
+                action arbeid1() {
+                 var arb1 : Arbeid1 := Arbeid1 { attrib1 := "teststring" };
+                 arb1.save();
+                 return arbeid1_tab1(arb1);                 
+                }
+              }
              }
             }
            }
@@ -36,9 +64,12 @@ define page home() {
     }
 }
 
-define page arbeid1() {
-    var arb1 : Arbeid1;
-    #[class := body] {
-        derive createRows from arb1 for (attrib1, attrib2)
-    }
+define page testpagina() {
+    text("Deze test is geslaagd")
 }
+
+define page enterClient() {
+    var cli : Client := Client {};
+    derive createPage from cli
+}
+

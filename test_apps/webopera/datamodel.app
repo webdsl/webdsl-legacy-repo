@@ -37,13 +37,6 @@ section products
         Leven("Pensioenen en lijfrente")
     }
 
-    entity Arbeid1 {
-        name :: String
-        category -> ProductCategory
-        attrib1 :: String
-        attrib2 :: Int
-    }
-
     entity Pensioen1 {
         name :: String
     }
