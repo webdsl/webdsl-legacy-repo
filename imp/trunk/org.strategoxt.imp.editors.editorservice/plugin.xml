@@ -3,7 +3,7 @@
 
 <plugin>
        <extension point="org.eclipse.imp.runtime.languageDescription">
-          <language extensions="esv" description="EditorService" language="EditorService" derivedFrom="Root"></language>
+          <language extensions="esv" description="EditorService" language="EditorService" derivedFrom="DynamicRoot"></language>
        </extension>
        <extension id="org.strategoxt.imp.editors.editorservice.parser" name="EditorService Parser" point="org.eclipse.imp.runtime.parser">
           <parser class="org.strategoxt.imp.editors.editorservice.EditorServiceParseController" language="EditorService">
