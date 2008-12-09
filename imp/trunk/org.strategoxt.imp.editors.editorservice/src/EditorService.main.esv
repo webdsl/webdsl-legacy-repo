@@ -1,11 +1,13 @@
-module EditorService
+module EditorService.main
 
 imports
+  EditorService-Analysis
   EditorService-Colorer
+  EditorService-Folding
+  EditorService-Occurrences
   EditorService-Outliner
-  EditorService-Folding.generated
+  EditorService-References
   EditorService-Syntax
-  EditorService-Compiler.generated
 
 language
 
