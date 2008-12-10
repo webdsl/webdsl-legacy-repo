@@ -87,7 +87,7 @@ section pages
           block("datawidth") {
             group("Specifications") { 
               groupitem { label("Report Type") { output(v.reportType) } } 
-              groupitem { label("Propose"){ output(v.propose) }}
+              groupitem { label("Purpose"){ output(v.purpose) }}
             }
             group("Applicant") { 
               groupitem { label("Name") { output(v.applicantName) } } 
@@ -171,20 +171,19 @@ section pages
         row {
           block("datawidth") {
             group("Invoice Details") {
-              groupitem { label("Client") { output(v.client) } }
-              groupitem { label("Primary Interest") { output(v.primaryInterest) } }
+              groupitem { label("Alternative Bill To") { output(v.alternativeBill) } }
+              groupitem { label("Fee Scale") { output(v.feeScale) } }
             }
             group("Comments") { 
-              groupitem { label("") { output(v.comments) } } 
+              groupitem { label("") { output(v.quoteComments) } } 
             }
             group("Total") { 
-              groupitem { label("Address") { output(v.address) } } 
+              groupitem { label("Other") { output(v.other) } } 
             }
           }
           block("datawidth") {
             group("Quote Terms") { 
-              groupitem { label("Report Type") { output(v.reportType) } } 
-              groupitem { label("Propose"){ output(v.propose) }}
+              groupitem { label("Quote Terms") { output(v.quoteTerms) } } 
             }
           }
         }
@@ -297,7 +296,25 @@ section pages
     define sidebar() {
       valuationRequestSidebar(v)
     }
-    derive viewPage from v
+    define body() {
+      header{text("Risk Analysis")}
+      table {
+        row {
+          block("datawidth") {
+            group("Risk Analysis") {
+              groupitem { label("Location") { output(v.locationRisk) } }
+              groupitem { label("Land") { output(v.landRisk) } }
+              groupitem { label("Environmental Issues") { output(v.environmentalIssuesRisk) } }
+              groupitem { label("Improvements"){ output(v.improvementsRisk) }}
+              groupitem { label("Reduced Value"){ output(v.reducedValueRisk) }}
+              groupitem { label("Market Volatility"){ output(v.marketVolatilityRisk) }}
+              groupitem { label("Local Economy Impact"){ output(v.localEconomyImpactRisk) }}
+              groupitem { label("Market Segment Condition"){ output(v.marketSegmentConditionRisk) }}
+            }
+          }
+        }
+      }
+    }
   }
   
   define page valuationLand(v : ValuationRequest) {
@@ -305,7 +322,22 @@ section pages
     define sidebar() {
       valuationRequestSidebar(v)
     }
-    derive viewPage from v
+    define body() {
+      header{text("Land")}
+      table {
+        row {
+          block("datawidth") {
+            group("Land") {
+              groupitem { label("Property Identification") { output(v.propertyIdentification) } }
+              groupitem { label("Has Title Been Searched") { output(v.hasTitleBeenSearched) } }
+              groupitem { label("Zoning Effect") { output(v.zoningEffect) } }
+              groupitem { label("Location"){ output(v.location) }}
+              groupitem { label("Site Description and Access"){ output(v.siteDescriptionAndAccess) }}
+            }
+          }
+        }
+      }
+    }
   }
   
   define page valuationSales(v : ValuationRequest) {
@@ -313,6 +345,104 @@ section pages
     define sidebar() {
       valuationRequestSidebar(v)
     }
-    derive viewPage from v
+    define body() {
+      header{text("Sales")}
+      table {
+        row {
+          block("datawidth") {
+            group("Sales") {
+              groupitem { label("Sales Evidence") { output(v.salesEvidence) } }
+              groupitem { label("Level of Activity") { output(v.levelOfActivity) } }
+              groupitem { label("Recent Direction") { output(v.recentDirection) } }
+              groupitem { label("Multi Tier"){ output(v.multiTier) }}
+              groupitem { label("Latest Sale Date"){ output(v.latestSaleDate) }}
+              groupitem { label("Latest Sale Price"){ output(v.latestSalePrice) }}
+              groupitem { label("Latest Sale Comment"){ output(v.latestSaleComment) }}
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  define page valuationSecuritisation(v : ValuationRequest) {
+    main()
+    define sidebar() {
+      valuationRequestSidebar(v)
+    }
+    define body() {
+      header{text("Sales")}
+      table {
+        row {
+          block("datawidth") {
+            group("Effects") {
+              groupitem { label(""){ output(v.effects) }}
+            }
+          }
+          block("datawidth") {
+            group("Extensions") {
+              groupitem { label(""){ output(v.extensions) }}
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  define page valuationAssessment(v : ValuationRequest) {
+    main()
+    define sidebar() {
+      valuationRequestSidebar(v)
+    }
+    define body() {
+      header{text("Valuation and Assessment")}
+      table {
+        row {
+          block("datawidth") {
+            group("Assessment") {
+              groupitem { label("Interest Value") { output(v.interest) } }
+              groupitem { label("Val Component") { output(v.component) } }
+              groupitem { label("Rental Value ($)") { output(v.rentalValue) } }
+              groupitem { label("Replacement"){ output(v.replacement) }}
+              groupitem { label("Other Assessment"){ output(v.otherAssessment) }}
+            }
+            group("Building Erection") { 
+              groupitem { label("To Be Erected") { output(v.toBeErected) } } 
+              groupitem { label("Builder"){ output(v.builder) }}
+              groupitem { label("Date"){ output(v.buildingDate) }}
+              groupitem { label("Price"){ output(v.buildingPrice) }}
+              groupitem { label("Cost"){ output(v.buildingCost) }}
+            }
+          }
+          block("datawidth") {
+            group("Market Value") { 
+              groupitem { label("Assess. Type") { output(v.assessmentType) } }
+              groupitem { label("Land") { output(v.land) } }
+              groupitem { label("Improvements") { output(v.improvements) } }
+              groupitem { label("Market Value"){ output(v.marketValue) }}
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  define page valuationComments(v : ValuationRequest) {
+    main()
+    define sidebar() {
+      valuationRequestSidebar(v)
+    }
+    define body() {
+      header{text("Valuation and Assessment")}
+      table {
+        row {
+          block("datawidth") {
+            group("Additional Comments") {
+              groupitem { label("") { output(v.additionalComments) } }
+            }
+          }
+        }
+      }
+    }
   }
   

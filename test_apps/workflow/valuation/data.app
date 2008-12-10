@@ -130,13 +130,16 @@ section data model
     requestDate :: Date
     sentDate :: Date
     
+    valuationNumber :: Int
+    valuer -> Valuer
+    
+  // Request Details
     // Client
     client -> Client
-    primaryInterest :: String //todo
+    primaryInterest -> Client
     broker -> Broker
-    lenderContact :: String //todo
+    lenderContact -> ContactValue
     reference :: String
-    
     // Property
     address :: String
     suburb :: String
@@ -144,27 +147,23 @@ section data model
     postCode -> PostCodeValue
     category -> PropertyCategoryValue
     type -> PropertyTypeValue
-    
+    // Comments
     comments :: Text
-    
     // Specifications
     reportType -> ReportTypeValue
-    propose -> ProposeValue
-    
+    purpose -> PurposeValue
     // Applicant
     applicantName :: String
     applicantPhone :: String
-    
     // Inspection Contact
     inspectionName :: String
     inspectionPhone :: String
-    
     // Miscellaneous
     purchase :: String
     ownerEst :: String
     tender :: String
     
-    // Booking
+  // Booking Details
     udbRef :: String
     bookingDate :: Date
     bookingTime :: String
@@ -173,20 +172,22 @@ section data model
     bookedBy -> User
     bookingNotes :: Text
     
-    /**
-     * Former Valuation stuff
-     */
-    valuationNumber :: Int
-    valuer -> Valuer
+    // Quote
+    alternativeBill -> Client
+    feeScale -> FeeScaleValue
+    invoicePaid :: Bool
+    quoteComments :: Text
+    other :: Int //Float
+    quoteTerms -> Set<QuoteTermValue>
     
     // Property Summary
     lot :: Int
     plan -> PlanValue
     planNumber :: Int
     proprietor :: String
-    zoning :: String // hoe met opties weergeven?
-    council :: String
-    instrument -> InstrumentValue // of dynamisch?
+    zoning :: String (select=ZoningOption)
+    council :: String (select=CouncilOption)
+    instrument -> InstrumentValue
     
     siteDims -> SiteDimsValue
     siteArea :: Int
@@ -196,20 +197,20 @@ section data model
     outdoorArea :: Int
     otherArea :: Int
     
-    currentUse :: String
-    mainBuilding :: String
-    builtAbout :: String
-    additions :: String
-    heritageIssues :: String
-    envIssues :: String
-    essRepairs :: String
+    currentUse :: String (select=CurrentUseOption)
+    mainBuilding :: String (select=MainBuildingOption)
+    builtAbout :: String (select=BuiltAboutOption)
+    additions :: String (select=AdditionsOption)
+    heritageIssues :: String (select=HeritageIssuesOption)
+    envIssues :: String (select=EnvIssuesOption)
+    essRepairs :: String (select=EssRepairsOption)
     
     actualRent :: Int
     marketability -> MarketabilityValue
     view :: Text
     
     // Main Building
-    buildingStyle :: String
+    buildingStyle :: String (select=StyleOption)
     streetAppeal -> StreetAppealValue
     wallAndRoof -> WallAndRoofValue
     windowFrames -> WindowFramesValue
@@ -254,6 +255,31 @@ section data model
     latestSaleDate :: Date
     latestSalePrice :: Int //Float
     latestSaleComment :: Text
+    
+    // Securitisation Req.
+    effects -> Set<EffectValue>
+    extensions -> Set<ExtensionValue>
+    
+    // Valuation & Assessment
+    interest -> InterestValue
+    component -> ComponentValue
+    rentalValue :: Int //Float
+    replacement :: Int //Float
+    otherAssessment :: Int //Float
+    // Market Value
+    assessmentType -> AssessmentTypeValue
+    land :: Int //Float
+    improvements :: Int //Float
+    marketValue :: Int //Float
+    // Building Erection
+    toBeErected :: Bool
+    builder :: String
+    buildingDate :: Date
+    buildingPrice :: Int //Float
+    buildingCost :: Int //Float
+    
+    // Additional comments
+    additionalComments :: Text
   }
   
   entity Client {

@@ -4,10 +4,42 @@ section procedures
 
   auto procedure valuationWorkflow(v : ValuationRequest) {
     process {
-      bookValuation(v)
+      (
+        bookValuation(v)
+        xor
+        while (true) {
+          editValuationRequestDetails(v) xor editValuationRequestBooking(v) xor editValuationRequestQuote(v)
+        }
+      )
       ; (
             repeat {
-              ((((editValuationProperty(v) xor editValuationMainBuilding(v)) xor editValuationRisk(v)) xor editValuationLand(v)) xor editValuationSales(v))
+              editValuationProperty(v) xor editValuationMainBuilding(v) xor editValuationRisk(v) xor editValuationLand(v) xor editValuationSales(v) xor editValuationSecuritisation(v) xor editValuationAssessment(v) xor editValuationComments(v)
+            } until finalizeValuation(v)
+            xor
+            while (true) {
+              editValuationRequestDetails(v) xor editValuationRequestBooking(v) xor editValuationRequestQuote(v)
+            }
+        ) 
+      ; (
+            while (true) {
+              editValuationProperty(v) xor editValuationMainBuilding(v) xor editValuationRisk(v) xor editValuationLand(v) xor editValuationSales(v) xor editValuationSecuritisation(v) xor editValuationAssessment(v) xor editValuationComments(v)
+            }
+            xor
+            approveValuation(v)
+        )
+      ; sendValuation(v)
+    }
+/*    process {
+      (
+        bookValuation(v)
+      xor
+        while (true) {
+          (editValuationRequestDetails(v) xor editValuationRequestBooking(v)) xor editValuationRequestQuote(v)
+        }
+      )
+      ; (
+            repeat {
+              (((((((editValuationProperty(v) xor editValuationMainBuilding(v)) xor editValuationRisk(v)) xor editValuationLand(v)) xor editValuationSales(v)) xor editValuationSecuritisation(v)) xor editValuationAssessment(v)) xor editValuationComments(v))
             } until finalizeValuation(v)
           xor
             while (true) {
@@ -16,13 +48,13 @@ section procedures
         ) 
       ; (
             while (true) {
-              ((((editValuationProperty(v) xor editValuationMainBuilding(v)) xor editValuationRisk(v)) xor editValuationLand(v)) xor editValuationSales(v))
+              (((((((editValuationProperty(v) xor editValuationMainBuilding(v)) xor editValuationRisk(v)) xor editValuationLand(v)) xor editValuationSales(v)) xor editValuationSecuritisation(v)) xor editValuationAssessment(v)) xor editValuationComments(v))
             }
           xor
             approveValuation(v)
         )
       ; sendValuation(v)
-    }
+    }*/
   }
 
   procedure bookValuation(v : ValuationRequest) {
@@ -96,7 +128,7 @@ section procedures
               block("datawidth") {
                 group("Specifications") { 
                   groupitem { label("Report Type") { input(v.reportType) } } 
-                  groupitem { label("Propose"){ input(v.propose) }}
+                  groupitem { label("Purpose"){ input(v.purpose) }}
                 }
                 group("Applicant") { 
                   groupitem { label("Name") { input(v.applicantName) } } 
@@ -201,20 +233,19 @@ section procedures
             row {
               block("datawidth") {
                 group("Invoice Details") {
-                  groupitem { label("Client") { input(v.client) } }
-                  groupitem { label("Primary Interest") { input(v.primaryInterest) } }
+                  groupitem { label("Alternative Bill To") { input(v.alternativeBill) } }
+                  groupitem { label("Fee Scale") { input(v.feeScale) } }
                 }
                 group("Comments") { 
-                  groupitem { label("") { input(v.comments) } } 
+                  groupitem { label("") { input(v.quoteComments) } } 
                 }
                 group("Total") { 
-                  groupitem { label("Address") { input(v.address) } } 
+                  groupitem { label("Other") { input(v.other) } } 
                 }
               }
               block("datawidth") {
                 group("Quote Terms") { 
-                  groupitem { label("Report Type") { input(v.reportType) } } 
-                  groupitem { label("Propose"){ input(v.propose) }}
+                  groupitem { label("Quote Terms") { input(v.quoteTerms) } } 
                 }
               }
             }
@@ -353,7 +384,7 @@ section verder*/
         valuationRequestSidebar(v)
       }
       define body() {
-        header{text("Valuation Risk Analysis")}
+        header{text("Risk Analysis")}
         form {
           table {
             row {
@@ -424,12 +455,12 @@ section verder*/
         valuationRequestSidebar(v)
       }
       define body() {
-        header{text("Valuation Risk Analysis")}
+        header{text("Sales Evidence")}
         form {
           table {
             row {
               block("datawidth") {
-                group("Risk Analysis") {
+                group("Sales") {
                   groupitem { label("Sales Evidence") { input(v.salesEvidence) } }
                   groupitem { label("Level of Activity") { input(v.levelOfActivity) } }
                   groupitem { label("Recent Direction") { input(v.recentDirection) } }
@@ -437,6 +468,120 @@ section verder*/
                   groupitem { label("Latest Sale Date"){ input(v.latestSaleDate) }}
                   groupitem { label("Latest Sale Price"){ input(v.latestSalePrice) }}
                   groupitem { label("Latest Sale Comment"){ input(v.latestSaleComment) }}
+                }
+              }
+            }
+            row { action("Save changes", do()) }
+          }
+        }
+      }
+    }
+    do {
+      v.persist();
+    }
+  }
+  
+  procedure editValuationSecuritisation(v : ValuationRequest) {
+    who {
+      canEditValuation(v)
+    }
+    view {
+      main()
+      define sidebar() {
+        valuationRequestSidebar(v)
+      }
+      define body() {
+        header{text("Valuation Securitisation")}
+        form {
+          table {
+            row {
+              block("datawidth") {
+                group("Effects") {
+                  groupitem { label(""){ input(v.effects) }}
+                }
+              }
+              block("datawidth") {
+                group("Extensions") {
+                  groupitem { label(""){ input(v.extensions) }}
+                }
+              }
+            }
+            row { action("Save changes", do()) }
+          }
+        }
+      }
+    }
+    do {
+      v.persist();
+    }
+  }
+  
+  procedure editValuationAssessment(v : ValuationRequest) {
+    who {
+      canEditValuation(v)
+    }
+    view {
+      main()
+      define sidebar() {
+        valuationRequestSidebar(v)
+      }
+      define body() {
+        header{text("Valuation and Assessment")}
+        form {
+          table {
+            row {
+              block("datawidth") {
+                group("Assessment") {
+                  groupitem { label("Interest Value") { input(v.interest) } }
+                  groupitem { label("Val Component") { input(v.component) } }
+                  groupitem { label("Rental Value ($)") { input(v.rentalValue) } }
+                  groupitem { label("Replacement"){ input(v.replacement) }}
+                  groupitem { label("Other Assessment"){ input(v.otherAssessment) }}
+                }
+                group("Building Erection") { 
+                  groupitem { label("To Be Erected") { input(v.toBeErected) } } 
+                  groupitem { label("Builder"){ input(v.builder) }}
+                  groupitem { label("Date"){ input(v.buildingDate) }}
+                  groupitem { label("Price"){ input(v.buildingPrice) }}
+                  groupitem { label("Cost"){ input(v.buildingCost) }}
+                }
+              }
+              block("datawidth") {
+                group("Market Value") { 
+                  groupitem { label("Assess. Type") { input(v.assessmentType) } }
+                  groupitem { label("Land") { input(v.land) } }
+                  groupitem { label("Improvements") { input(v.improvements) } }
+                  groupitem { label("Market Value"){ input(v.marketValue) }}
+                }
+              }
+            }
+            row { action("Save changes", do()) }
+          }
+        }
+      }
+    }
+    do {
+      v.persist();
+    }
+  }
+  
+  procedure editValuationComments(v : ValuationRequest) {
+    who {
+      canEditValuation(v)
+    }
+    view {
+      main()
+      define sidebar() {
+        valuationRequestSidebar(v)
+      }
+      define body() {
+        header{text("Additional Comments")}
+        form {
+          table {
+            row {
+              block("datawidth") {
+                group("Additional Comments") {
+                  groupitem { label("") { input(v.additionalComments) } }
                 }
               }
             }

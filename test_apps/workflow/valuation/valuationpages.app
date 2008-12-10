@@ -34,7 +34,7 @@ section pages
     var category : PropertyCategoryValue;
     var type : PropertyTypeValue;
     var reportType : ReportTypeValue;
-    var propose : ProposeValue;
+    var purpose : PurposeValue;
     var oldClient : Client;
     var applicantName : String;
     var applicantPhone : String;
@@ -64,7 +64,7 @@ section pages
               }
               group("Specifications") {
                 groupitem { label("Report Type"){input(reportType)} }
-                groupitem { label("Propose"){input(propose)} }            
+                groupitem { label("Propose"){input(purpose)} }            
               }
             }
             block("datawidth") {
@@ -103,7 +103,7 @@ section pages
             v.category := category;
             v.type := type;
             v.reportType := reportType;
-            v.propose := propose;
+            v.purpose := purpose;
             v.applicantName := applicantName;
             v.applicantPhone := applicantPhone;
             v.inspectionName := inspectionName;

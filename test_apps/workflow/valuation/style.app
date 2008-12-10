@@ -7,6 +7,14 @@ style globalStyle
   const globalFontSize : Length := 0.75em;
   const layoutBorderColor : Color := #c0c0c0;
   
+  fieldset {
+    font-size := 1em;
+  }
+  
+  td {
+    vertical-align := VerticalAlign.top;
+  }
+  
   sidebar() >> text() {
     font := globalFont;
     font-size := 12px;

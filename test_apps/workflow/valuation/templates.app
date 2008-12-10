@@ -47,11 +47,11 @@ section templates
         } else {
           menuitem { navigate(signout()) { "Sign out" } }
         }
-/*        menuitem { navigate(loginAs(userRuben)){"Login as Ruben"} }
+        menuitem { navigate(loginAs(userRuben)){"Login as Ruben"} }
         menuitem { navigate(loginAs(userLiming)){"Login as Liming"} }
         menuitem { navigate(loginAs(userAdmin)){"Login as Admin"} }
         menuitem { navigate(loginAs(userManager)){"Login as Manager"} }
-*/      }
+      }
       menu {
         menuheader { navigate(allValuationRequest()) { "Valuation Requests" } }
         menuitem { navigate(newValuation()) { "New Valuation Request" } }
@@ -179,6 +179,9 @@ section sidebar
         listitem{ navigate(editValuationRisk(v)){"Risk Analysis"} }
         listitem{ navigate(editValuationLand(v)){"Land"} }
         listitem{ navigate(editValuationSales(v)){"Sales Evidence"} }
+        listitem{ navigate(editValuationSecuritisation(v)){"Securitisation Req."} }
+        listitem{ navigate(editValuationAssessment(v)){"Valuation & Assessment"} }
+        listitem{ navigate(editValuationComments(v)){"Additional Comments"} }
         if (v.finalizeValuation != null && v.finalizeValuation.isEnabled) {navigatebutton(finalizeValuation(v), "Finalize")}
         if (v.approveValuation != null && v.approveValuation.isEnabled && canApproveValuations()) {navigatebutton(approveValuation(v), "Approve")}
         if (v.sendValuation != null && v.sendValuation.isEnabled && canSendValuations()) {navigatebutton(sendValuation(v), "Mark as Sent")}
@@ -196,6 +199,9 @@ section sidebar
         listitem{ navigate(valuationRisk(v)){"Risk Analysis"} }
         listitem{ navigate(valuationLand(v)){"Land"} }
         listitem{ navigate(valuationSales(v)){"Sales Evidence"} }
+        listitem{ navigate(valuationSecuritisation(v)){"Securitisation Req."} }
+        listitem{ navigate(valuationAssessment(v)){"Valuation & Assessment"} }
+        listitem{ navigate(valuationComments(v)){"Additional Comments"} }
         if (v.approveValuation != null && v.approveValuation.isEnabled && canApproveValuations()) {navigatebutton(approveValuation(v), "Approve")}
         if (v.sendValuation != null && v.sendValuation.isEnabled && canSendValuations()) {navigatebutton(sendValuation(v), "Mark as Sent")}
       }

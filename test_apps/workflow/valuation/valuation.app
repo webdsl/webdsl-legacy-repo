@@ -15,7 +15,7 @@ imports valuationrequestviewpages
 imports valuationprocedures
 imports layout
 imports style
-
+imports test
   
 section pages
 
@@ -33,11 +33,11 @@ section pages
         } else {
           text("Login als: ")
           list {
-/*            listitem{ navigate(loginAs(userRuben)){"Ruben"} }
+            listitem{ navigate(loginAs(userRuben)){"Ruben"} }
             listitem{ navigate(loginAs(userLiming)){"Liming"} }
             listitem{ navigate(loginAs(userAdmin)){"Admin"} }
             listitem{ navigate(loginAs(userManager)){"Login as Manager"} }
-*/          }          
+          }          
         }
       }
       
