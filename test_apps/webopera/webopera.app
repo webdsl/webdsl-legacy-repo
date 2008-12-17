@@ -8,4 +8,15 @@ imports ui
 
 // import products
 imports arbeid1
+//imports Dil12
 
+section test
+
+ entity TestDing {
+    name :: String
+    dinges -> List<String>
+ }
+
+define page home() {
+    main()
+}

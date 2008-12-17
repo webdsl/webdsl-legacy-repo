@@ -24,8 +24,10 @@ section clients
 section quotations
 
     entity Quotation {
-        number :: Int
+        number :: Int (id)
         client -> Client
+        prodcode :: Int
+        prodid :: Int        
     }  
       
 
