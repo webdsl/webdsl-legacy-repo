@@ -1,0 +1,22 @@
+module EditorService.main
+
+imports
+  EditorService-Analysis
+  EditorService-Colorer
+  EditorService-Folding
+  EditorService-Occurrences
+  EditorService-Outliner
+  EditorService-References
+  EditorService-Syntax
+
+language
+
+  name          : EditorService
+  description   : "sdf2imp-generated editor for the EditorService language"
+  url           : http://strategoxt.org
+  
+  id            : org.strategoxt.imp.editors.editorservice
+  
+  extensions    : esv
+  table         : syntax/EditorService.tbl
+  start symbols : Module
