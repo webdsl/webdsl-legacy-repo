@@ -1,6 +1,6 @@
 SYNTAX     = EditorService
 SOURCE     = ../org.strategoxt.imp.metatooling/src/syntax/$(SYNTAX).def
-CTREE      = ../org.strategoxt.imp.metatooling/sdf2imp.ctree
+CTREE      = ../org.strategoxt.imp.metatooling/include/sdf2imp.ctree
 
 SDF2IMP    = ../org.strategoxt.imp.metatooling/sdf2imp
 ESVS       = ${wildcard src/*.esv}
