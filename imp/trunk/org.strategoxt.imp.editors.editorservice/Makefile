@@ -6,6 +6,7 @@ SDF2IMP    = ../org.strategoxt.imp.metatooling/sdf2imp
 ESVS       = ${wildcard src/*.esv}
 
 all : bin/$(SYNTAX).packed.esv $(CTREE)
+	[ -e bin ] || mkdir bin
 	cp $(CTREE) bin
 
 clean :
