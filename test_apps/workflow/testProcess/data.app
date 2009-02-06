@@ -15,6 +15,8 @@ section data model
     employeePreparation :: Text
     managerPreparation :: Text
     report :: Text
+    comments :: Text
+    approved :: Bool
   }
   
   entity TestRecursive {
