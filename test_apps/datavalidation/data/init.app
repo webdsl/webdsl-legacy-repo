@@ -23,22 +23,22 @@ module init
     
     var u_a : User := User{
       username := "alice"  
-      person := p_a
+      //person := p_a
     };
     
     var u_b : User := User{
       username := "bob"
-      person := p_b  
+      //person := p_b  
     };
     
     var u_c : User := User{
       username := "charlie"
-      person := p_c  
+      //person := p_c  
     };
     
     var u_d : User := User{
       username := "dave"  
-      person := p_d
+      //person := p_d
     };
     
     p_a.save();

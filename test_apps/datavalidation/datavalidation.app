@@ -18,26 +18,31 @@ section home page
  
     for(u:User)
     {
-      navigate(user(u)){output(u.name)}
-      navigate(editUser(u)){"edit"}
+      navigate(user(u)){output(u.name)}" "
+      navigate(editUserSmall(u)){"editsmall"}" "
+      navigate(editUser(u)){"edit"}" "
+      navigate(editUserBig(u)){"editbig"}" "
     }
     break
     for(p:Person){
-      navigate(person(p)){output(p.name)}
-      navigate(editPerson(p)){"edit"}
+      navigate(person(p)){output(p.name)}" "
+      navigate(editPerson(p)){"edit"}" "
     }
     break
     for(ug:UserGroup){
-      navigate(userGroup(ug)){output(ug.name)}
-      navigate(editUserGroup(ug)){"edit"}
-      navigate(editUserGroupOwner(ug)){"owneredit"}
+      navigate(userGroup(ug)){output(ug.name)}" "
+      navigate(editUserGroupSmall(ug)){"editsmall"}" "
+      navigate(editUserGroup(ug)){"edit"}" "
+      navigate(editUserGroupOwner(ug)){"owneredit"}" "
+      navigate(editUserGroupBig(ug)){"editbig"}" "
     }
-    
+    break
+     navigate(createGroup()){"create"}" "
   }
  
   define outputMessage(s:String){
     if(s.length() > 0){
-      block()[class := error, style := "display:inline; border: 1px solid #BB8800; margin-left: -5px; padding: 4px; color:#BB8800;"]{
+      block()[class := error, style := "display:inline; border: 1px solid #BB8800; padding: 4px; color:#BB8800;"]{
         output(s)   
       }
       break
