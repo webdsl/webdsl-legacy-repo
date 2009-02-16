@@ -18,5 +18,5 @@ language
   id            : org.strategoxt.imp.editors.editorservice
   
   extensions    : esv
-  table         : syntax/EditorService.tbl
+  table         : include/EditorService.tbl
   start symbols : Module
