@@ -9,6 +9,10 @@ application datavalidation
   imports data/address
   imports data/organization
 
+
+  imports notes/notes
+  imports notes/init
+  
 section home page
   
   define page home(){
@@ -37,7 +41,21 @@ section home page
       navigate(editUserGroupBig(ug)){"editbig"}" "
     }
     break
-     navigate(createGroup()){"create"}" "
+    navigate(createGroup()){"create"}" "
+    break
+    
+    
+    for(f:Folder)
+    {
+      navigate(folder(f)){output(f.name)}" "
+      navigate(editFolder(f)){"edit"}" "
+    }
+    
+    for(n:Note)
+    {
+      navigate(note(n)){output(n.name)}" "
+      navigate(editNote(n)){"edit"}" "
+    }
   }
  
   define outputMessage(s:String){
