@@ -19,7 +19,7 @@ module user
      
   
         block()[style := "width:100%; clear:left; float:left; color: #FF0000; margin-top: 5px;"]{
-          "Owner must always be a moderator"
+          "Owner could not be notified by email"
         }     
       
     }
