@@ -5,7 +5,7 @@ CTREE      = ../org.strategoxt.imp.metatooling/src/include/sdf2imp.ctree
 SDF2IMP    = ../org.strategoxt.imp.metatooling/sdf2imp
 ESVS       = ${wildcard src/*.esv}
 
-all : src/include/$(SYNTAX).packed.esv $(CTREE)
+all : src/include/$(SYNTAX).packed.esv $(CTREE) src/include/rtg.tbl
 	cp $(CTREE) src/include
 
 clean :
@@ -22,3 +22,7 @@ $(SYNTAX).def : $(SOURCE)
 src/include/$(SYNTAX).tbl : $(SYNTAX).def
 	[ -e src/include ] || mkdir src/include
 	sdf2table -i $< -o $@ -m $(SYNTAX)
+
+# We need a better solution for this
+src/include/rtg.tbl : ~/.nix-profile/share/sdf/stratego-regular/rtg.tbl
+	cp $< $@
