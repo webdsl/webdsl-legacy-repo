@@ -6,7 +6,6 @@ SDF2IMP    = ../org.strategoxt.imp.metatooling/sdf2imp
 ESVS       = ${wildcard src/*.esv}
 
 all : src/include/$(SYNTAX).packed.esv $(CTREE)
-	[ -e src/include ] || mkdir src/include
 	cp $(CTREE) src/include
 
 clean :
@@ -21,4 +20,5 @@ $(SYNTAX).def : $(SOURCE)
 	ln -s $< $@
 
 src/include/$(SYNTAX).tbl : $(SYNTAX).def
+	[ -e src/include ] || mkdir src/include
 	sdf2table -i $< -o $@ -m $(SYNTAX)
