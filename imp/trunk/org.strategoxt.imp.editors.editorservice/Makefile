@@ -25,4 +25,4 @@ src/include/$(SYNTAX).tbl : $(SYNTAX).def
 
 # We need a better solution for this
 src/include/rtg.tbl : ~/.nix-profile/share/sdf/stratego-regular/rtg.tbl
-	cp $< $@
+	baf2trm  -i $< -o $@ # cp $< $@
