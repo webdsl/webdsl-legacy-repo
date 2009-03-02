@@ -1,11 +1,12 @@
 SYNTAX     = EditorService
 SOURCE     = ../org.strategoxt.imp.metatooling/src/syntax/$(SYNTAX).def
+PPAF       = ../org.strategoxt.imp.metatooling/src/syntax/$(SYNTAX)-pretty.pp.af
 CTREE      = ../org.strategoxt.imp.metatooling/src/include/sdf2imp.ctree
 
 SDF2IMP    = ../org.strategoxt.imp.metatooling/sdf2imp
 ESVS       = ${wildcard src/*.esv}
 
-all : src/include/$(SYNTAX).packed.esv $(CTREE) src/include/rtg.tbl
+all : src/include/$(SYNTAX).packed.esv $(CTREE) src/include/rtg.tbl src/include/EditorService-pretty.pp.af
 	cp $(CTREE) src/include
 
 clean :
@@ -24,5 +25,8 @@ src/include/$(SYNTAX).tbl : $(SYNTAX).def
 	sdf2table -i $< -o $@ -m $(SYNTAX)
 
 # We need a better solution for this
+src/include/EditorService-pretty.pp.af : $(PPAF)
+	cp $< $@
+
 src/include/rtg.tbl : ~/.nix-profile/share/sdf/stratego-regular/rtg.tbl
 	baf2trm  -i $< -o $@ # cp $< $@
