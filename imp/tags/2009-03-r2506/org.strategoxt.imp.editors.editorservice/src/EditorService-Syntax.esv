@@ -1,0 +1,9 @@
+module EditorService-Syntax
+
+language Syntax properties
+                  
+  line comment  : "//"
+  block comment : "/*" * "*/"
+  fences        :
+    // No fences
+    // (e.g., [  ] (  ) {  } |[ ]| <? ?>)

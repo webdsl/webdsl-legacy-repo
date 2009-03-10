@@ -1,0 +1,8 @@
+module EditorService-Outliner
+  
+  // Outliner rules take the form of <sort>.<pattern>, <sort>._, or _.<pattern>
+  
+  outliner Basic outliner
+    Module._
+
+    Section._
