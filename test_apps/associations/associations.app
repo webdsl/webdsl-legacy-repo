@@ -14,7 +14,9 @@ section pages
 
 define page home() {
   main()
-  define body() {
-    
-  }
 }
+
+define body() {
+    
+}
+
