@@ -1,0 +1,15 @@
+module org/webdsl/dsl/to-java-servlet/ajax/typechecker
+
+imports
+  libstrategolib
+
+imports
+  libwebdsl-front
+
+strategies
+
+  eq-type-of :
+    InlineAction(_) -> SimpleSort("Void")
+    
+  eq-type-of :
+    InlineTemplateCall(_) -> SimpleSort("Void")
