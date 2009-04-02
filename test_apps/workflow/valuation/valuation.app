@@ -15,7 +15,6 @@ imports valuationrequestviewpages
 imports valuationprocedures
 imports layout
 imports style
-imports test
   
 section pages
 
@@ -32,13 +31,13 @@ section pages
           output(securityContext.principal) 
         } else {
           text("Login als: ")
-          list {
-            listitem{ navigate(loginAs(userRuben)){"Ruben"} }
-            listitem{ navigate(loginAs(userLiming)){"Liming"} }
+/*          list {
+            listitem{ navigate(loginAs(userValuer1)){"Valuer 1"} }
+            listitem{ navigate(loginAs(userValuer2)){"Valuer 2"} }
             listitem{ navigate(loginAs(userAdmin)){"Admin"} }
-            listitem{ navigate(loginAs(userManager)){"Login as Manager"} }
-          }          
-        }
+            listitem{ navigate(loginAs(userManager)){"Manager"} }
+          }
+*/        }
       }
       
       bookValuationTasks()

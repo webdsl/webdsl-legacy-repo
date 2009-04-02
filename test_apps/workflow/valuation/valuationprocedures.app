@@ -4,62 +4,52 @@ section procedures
 
   auto procedure valuationWorkflow(v : ValuationRequest) {
     process {
-      (
-        bookValuation(v)
-        xor
-        while (true) {
-          editValuationRequestDetails(v) xor editValuationRequestBooking(v) xor editValuationRequestQuote(v)
+      enableEditRequest(v)
+      ; bookValuation(v)
+      ; repeat {
+          editValuationScreens(v)
+        } until finalizeValuation(v)
+      ; while (true) {
+          editValuationScreens(v)
         }
-      )
-      ; (
-            repeat {
-              editValuationProperty(v) xor editValuationMainBuilding(v) xor editValuationRisk(v) xor editValuationLand(v) xor editValuationSales(v) xor editValuationSecuritisation(v) xor editValuationAssessment(v) xor editValuationComments(v)
-            } until finalizeValuation(v)
-            xor
-            while (true) {
-              editValuationRequestDetails(v) xor editValuationRequestBooking(v) xor editValuationRequestQuote(v)
-            }
-        ) 
-      ; (
-            while (true) {
-              editValuationProperty(v) xor editValuationMainBuilding(v) xor editValuationRisk(v) xor editValuationLand(v) xor editValuationSales(v) xor editValuationSecuritisation(v) xor editValuationAssessment(v) xor editValuationComments(v)
-            }
-            xor
-            approveValuation(v)
-        )
+        xor
+        approveValuation(v)
+      ; disableEditRequest(v)
       ; sendValuation(v)
     }
-/*    process {
-      (
-        bookValuation(v)
-      xor
-        while (true) {
-          (editValuationRequestDetails(v) xor editValuationRequestBooking(v)) xor editValuationRequestQuote(v)
-        }
-      )
-      ; (
-            repeat {
-              (((((((editValuationProperty(v) xor editValuationMainBuilding(v)) xor editValuationRisk(v)) xor editValuationLand(v)) xor editValuationSales(v)) xor editValuationSecuritisation(v)) xor editValuationAssessment(v)) xor editValuationComments(v))
-            } until finalizeValuation(v)
-          xor
-            while (true) {
-              (editValuationRequestDetails(v) xor editValuationRequestBooking(v)) xor editValuationRequestQuote(v)
-            }
-        ) 
-      ; (
-            while (true) {
-              (((((((editValuationProperty(v) xor editValuationMainBuilding(v)) xor editValuationRisk(v)) xor editValuationLand(v)) xor editValuationSales(v)) xor editValuationSecuritisation(v)) xor editValuationAssessment(v)) xor editValuationComments(v))
-            }
-          xor
-            approveValuation(v)
-        )
-      ; sendValuation(v)
-    }*/
+  }
+  
+  auto procedure editValuationScreens(v : ValuationRequest) {
+    process {
+      editValuationProperty(v) 
+      xor editValuationMainBuilding(v) 
+      xor editValuationRisk(v) 
+      xor editValuationLand(v) 
+      xor editValuationSales(v) 
+      xor editValuationSecuritisation(v) 
+      xor editValuationAssessment(v) 
+      xor editValuationComments(v)
+    }
+  }
+  
+  auto procedure enableEditRequest(v : ValuationRequest) {
+    do {
+      v.startEditValuationRequestDetails();
+      v.startEditValuationRequestBooking();
+      v.startEditValuationRequestQuote();
+    }
+  }
+  
+  auto procedure disableEditRequest(v : ValuationRequest) {
+    do {
+      v.editValuationRequestDetails.disable();
+      v.editValuationRequestBooking.disable();
+      v.editValuationRequestQuote.disable();
+    }
   }
 
   procedure bookValuation(v : ValuationRequest) {
     who { securityContext.principal != null && securityContext.principal.hasBookingRights() }
-    when { v.status != null && v.status.name == "Request Received" }
     view {
       main()
       define local body() {
@@ -154,6 +144,7 @@ section procedures
     do {
       v.persist();
     }
+    processed { v.editValuationRequestDetails.enable(); }
   }
 
   procedure editValuationRequestBooking(v : ValuationRequest) {
@@ -215,6 +206,7 @@ section procedures
     do {
       v.persist();
     }
+    processed { v.editValuationRequestBooking.enable(); }
   }
 
   procedure editValuationRequestQuote(v : ValuationRequest) {
@@ -257,25 +249,8 @@ section procedures
     do {
       v.persist();
     }
+    processed { v.editValuationRequestQuote.enable(); }
   }
-/*  
-section test  
-  
-  entity ValuationRequest {
-    ...
-    plan :: String (select=Plan)
-    ...
-  }
-  string-select-entity Plan {"SP", "DP"}
-  string-select-entity Instrument {"Mosman LEP", "North Sydney LEP"}
-  
-  procedure dinges(v : ValuationRequest) {
-    view {
-      input(v.plan) -> inputSelectString(v.plan)
-    }
-  }
-  
-section verder*/
 
   procedure editValuationProperty(v : ValuationRequest) {
     who {
@@ -597,6 +572,14 @@ section verder*/
   
   procedure finalizeValuation(v : ValuationRequest) {
     who { canEditValuation(v) }
+    when { v.editValuationProperty.isProcessed 
+           && v.editValuationMainBuilding.isProcessed 
+            /*          && v.editValuationRisk.isProcessed 
+                      && v.editValuationLand.isProcessed 
+                      && v.editValuationSales.isProcessed 
+                      && v.editValuationSecuritisation.isProcessed 
+                      && v.editValuationAssessment.isProcessed */
+           && v.editValuationComments.isProcessed }
     do {
       // set to "Awaiting Approval"
       v.status := initValuationRequestStatus4;
@@ -702,7 +685,8 @@ section verder*/
   define bookValuationTasks() {
     if (unbookedValuations()) {
       par {
-        section("Booking tasks") {
+        section() {
+          header(){"Booking tasks"}
           list {
             for (v : ValuationRequest) {
               if (valuationRequestHasProcedures(v) && v.bookValuation != null && v.bookValuation.isEnabled) {    

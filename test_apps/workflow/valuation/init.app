@@ -2,25 +2,25 @@ module init
 
 section user data
 
-  globals {
-    var userLiming : User := User {
-      username := "liming",
-      name     := "Liming Zhu",
+
+    var userValuer1 : User := User {
+      username := "valuer1",
+      name     := "Valuer 1",
       password := "secret"
     };
-    var userRuben : User := User {
-      username := "ruben",
-      name     := "Ruben Verhaaf",
+    var userValuer2 : User := User {
+      username := "valuer2",
+      name     := "Valuer 2",
       password := "secret"
     };
     var userAdmin : User := User {
       username := "admin",
-      name     := "Tiep Miep",
+      name     := "Administrative Employee",
       password := "secret"
     };
     var userManager : User := User {
       username := "manager",
-      name     := "Ron Gedeon",
+      name     := "Manager",
       password := "secret"
     };
     
@@ -39,260 +39,7 @@ section user data
     var initAuthorization10 : Authorization := Authorization { right := "sendValuations" user := userManager };
     var initAuthorization11 : Authorization := Authorization { right := "editApprovalValuations" user := userManager };
     var initAuthorization12 : Authorization := Authorization { right := "approveValuations" user := userManager };
-  }
-/*  
-  init {
-    
-      var userLiming : User := User {
-        username := "liming",
-        name     := "Liming Zhu",
-        password := "secret"
-      };
-      userLiming.password := userLiming.password.digest();
-      userLiming.persist();
-      var userRuben : User := User {
-        username := "ruben",
-        name     := "Ruben Verhaaf",
-        password := "secret"
-      };
-      userRuben.password := userRuben.password.digest();
-      userRuben.persist();
-      var userAdmin : User := User {
-        username := "admin",
-        name     := "Tiep Miep",
-        password := "secret"
-      };
-      userAdmin.password := userAdmin.password.digest();
-      userAdmin.persist();
-      var userManager : User := User {
-        username := "manager",
-        name     := "Ron Gedeon",
-        password := "secret"
-      };
-      userManager.password := userManager.password.digest();
-      userManager.persist();
-      
-      // administrator
-      var initAuthorization1 : Authorization := Authorization { right := "viewValuations" user := userAdmin };
-      var initAuthorization2 : Authorization := Authorization { right := "booking" user := userAdmin };
-      var initAuthorization3 : Authorization := Authorization { right := "createValuation" user := userAdmin };
-      var initAuthorization4 : Authorization := Authorization { right := "editValuationRequests" user := userAdmin };
-      var initAuthorization9 : Authorization := Authorization { right := "sendValuations" user := userAdmin };
 
-      // manager
-      var initAuthorization5 : Authorization := Authorization { right := "editValuations" user := userManager };
-      var initAuthorization6 : Authorization := Authorization { right := "createValuation" user := userManager };
-      var initAuthorization7 : Authorization := Authorization { right := "booking" user := userManager };
-      var initAuthorization8 : Authorization := Authorization { right := "editValuationRequests" user := userManager };
-      var initAuthorization10 : Authorization := Authorization { right := "sendValuations" user := userManager };
-      var initAuthorization11 : Authorization := Authorization { right := "editApprovalValuations" user := userManager };
-      var initAuthorization12 : Authorization := Authorization { right := "approveValuations" user := userManager };
-      
-      initAuthorization1.persist();
-      initAuthorization2.persist();
-      initAuthorization3.persist();
-      initAuthorization4.persist();
-      initAuthorization5.persist();
-      initAuthorization6.persist();
-      initAuthorization7.persist();
-      initAuthorization8.persist();
-      initAuthorization9.persist();
-      initAuthorization10.persist();
-      initAuthorization11.persist();
-      initAuthorization12.persist();
-  }*/
-  
-section value data
-
-/*  globals {
-    var initPlan1 : PlanValue := PlanValue { name := "SP" };
-    var initPlan2 : PlanValue := PlanValue { name := "DP" };
-  }
-
-  globals {
-    var initInstrument1 : InstrumentValue := InstrumentValue { name := "Mosman LEP" };
-    var initInstrument2 : InstrumentValue := InstrumentValue { name := "North Sydney LEP" };
-    var initInstrument3 : InstrumentValue := InstrumentValue { name := "Rest to be done" };
-  }
-  
-  globals {
-    var initSiteDims1 : SiteDimsValue := SiteDimsValue { name := "Irregular" };
-    var initSiteDims2 : SiteDimsValue := SiteDimsValue { name := "N/A" };
-    var initSiteDims3 : SiteDimsValue := SiteDimsValue { name := "Regular" };
-  }
-
-  globals {
-    var initCarAccommodation1 : CarAccommodationValue := CarAccommodationValue { name := "Carport" };
-    var initCarAccommodation2 : CarAccommodationValue := CarAccommodationValue { name := "Carspace" };
-    var initCarAccommodation3 : CarAccommodationValue := CarAccommodationValue { name := "DLUG" };
-    var initCarAccommodation4 : CarAccommodationValue := CarAccommodationValue { name := "Double Carport" };
-    var initCarAccommodation5 : CarAccommodationValue := CarAccommodationValue { name := "Double Carspace" };
-    var initCarAccommodation6 : CarAccommodationValue := CarAccommodationValue { name := "N/A" };
-    var initCarAccommodation7 : CarAccommodationValue := CarAccommodationValue { name := "Off-Street Parking" };
-    var initCarAccommodation8 : CarAccommodationValue := CarAccommodationValue { name := "Security Carspace" };
-    var initCarAccommodation9 : CarAccommodationValue := CarAccommodationValue { name := "Single Carport" };
-    var initCarAccommodation10 : CarAccommodationValue := CarAccommodationValue { name := "SLUG" };
-    var initCarAccommodation11 : CarAccommodationValue := CarAccommodationValue { name := "SLUG and Carport" };
-    var initCarAccommodation12 : CarAccommodationValue := CarAccommodationValue { name := "Tandem" };
-    var initCarAccommodation13 : CarAccommodationValue := CarAccommodationValue { name := "TLUG" };
-    var initCarAccommodation14 : CarAccommodationValue := CarAccommodationValue { name := "Undercover Carspace" };
-  }
-  
-  globals {
-    var initMarketability1 : MarketabilityValue := MarketabilityValue { name := "Poor" };
-    var initMarketability2 : MarketabilityValue := MarketabilityValue { name := "Fair" };
-    var initMarketability3 : MarketabilityValue := MarketabilityValue { name := "Good" };
-  }
-  
-  globals {
-    var initStreetAppeal1 : StreetAppealValue := StreetAppealValue { name := "Poor" };
-    var initStreetAppeal2 : StreetAppealValue := StreetAppealValue { name := "Fair" };
-    var initStreetAppeal3 : StreetAppealValue := StreetAppealValue { name := "Good" };
-    var initStreetAppeal4 : StreetAppealValue := StreetAppealValue { name := "Excellent" };
-  }
-  
-  globals {
-    var initWallAndRoof1 : WallAndRoofValue := WallAndRoofValue { name := "Besserblock" };
-    var initWallAndRoof2 : WallAndRoofValue := WallAndRoofValue { name := "Brick" };
-    var initWallAndRoof3 : WallAndRoofValue := WallAndRoofValue { name := "Brick and Concrete" };
-    var initWallAndRoof4 : WallAndRoofValue := WallAndRoofValue { name := "Brick and Iron" };
-    var initWallAndRoof5 : WallAndRoofValue := WallAndRoofValue { name := "Brick and Tile" };
-    var initWallAndRoof6 : WallAndRoofValue := WallAndRoofValue { name := "Brick Veneer" };
-    var initWallAndRoof7 : WallAndRoofValue := WallAndRoofValue { name := "Brick Veneer and Concrete Tile" };
-    var initWallAndRoof8 : WallAndRoofValue := WallAndRoofValue { name := "Brick/Fibro and Tile" };
-    var initWallAndRoof9 : WallAndRoofValue := WallAndRoofValue { name := "Brick/Weatherboard and Tile" };
-    var initWallAndRoof10 : WallAndRoofValue := WallAndRoofValue { name := "Clad and Tile" };
-    var initWallAndRoof11 : WallAndRoofValue := WallAndRoofValue { name := "Fibro" };
-    var initWallAndRoof12 : WallAndRoofValue := WallAndRoofValue { name := "Fibro and Iron" };
-    var initWallAndRoof13 : WallAndRoofValue := WallAndRoofValue { name := "Fibro and Tile" };
-    var initWallAndRoof14 : WallAndRoofValue := WallAndRoofValue { name := "Granite" };
-    var initWallAndRoof15 : WallAndRoofValue := WallAndRoofValue { name := "N/A" };
-    var initWallAndRoof16 : WallAndRoofValue := WallAndRoofValue { name := "Permalum" };
-    var initWallAndRoof17 : WallAndRoofValue := WallAndRoofValue { name := "Permalum and Tile" };
-    var initWallAndRoof18 : WallAndRoofValue := WallAndRoofValue { name := "Rendered Brick and Tile" };
-    var initWallAndRoof19 : WallAndRoofValue := WallAndRoofValue { name := "Timber" };
-    var initWallAndRoof20 : WallAndRoofValue := WallAndRoofValue { name := "Timber and Iron" };
-    var initWallAndRoof21 : WallAndRoofValue := WallAndRoofValue { name := "Timber and Tile" };
-    var initWallAndRoof22 : WallAndRoofValue := WallAndRoofValue { name := "Weatherboard" };
-    var initWallAndRoof23 : WallAndRoofValue := WallAndRoofValue { name := "Weatherboard and Tile" };
-  }
-  
-  globals {
-    var initWindowFramesValue1 : WindowFramesValue := WindowFramesValue { name := "N/A" };
-    var initWindowFramesValue2 : WindowFramesValue := WindowFramesValue { name := "Aluminium" };
-    var initWindowFramesValue3 : WindowFramesValue := WindowFramesValue { name := "Timber" };
-    var initWindowFramesValue4 : WindowFramesValue := WindowFramesValue { name := "Timber and Aluminium" };
-  }
-
-  globals {
-    var initInteriorLiningsValue1 : InteriorLiningsValue := InteriorLiningsValue { name := "Brick" };
-    var initInteriorLiningsValue2 : InteriorLiningsValue := InteriorLiningsValue { name := "Brick and GypRock" };
-    var initInteriorLiningsValue3 : InteriorLiningsValue := InteriorLiningsValue { name := "Brick Veneer" };
-    var initInteriorLiningsValue4 : InteriorLiningsValue := InteriorLiningsValue { name := "Concrete" };
-    var initInteriorLiningsValue5 : InteriorLiningsValue := InteriorLiningsValue { name := "Fibro" };
-    var initInteriorLiningsValue6 : InteriorLiningsValue := InteriorLiningsValue { name := "Gyprock" };
-    var initInteriorLiningsValue7 : InteriorLiningsValue := InteriorLiningsValue { name := "N/A" };
-    var initInteriorLiningsValue8 : InteriorLiningsValue := InteriorLiningsValue { name := "Plaster" };
-    var initInteriorLiningsValue9 : InteriorLiningsValue := InteriorLiningsValue { name := "Plasterboard" };
-    var initInteriorLiningsValue10 : InteriorLiningsValue := InteriorLiningsValue { name := "Render" };
-    var initInteriorLiningsValue11 : InteriorLiningsValue := InteriorLiningsValue { name := "Timber" };
-  }
-
-  globals {
-    var initIntExtConditionValue1 : IntExtConditionValue := IntExtConditionValue { name := "N/A" };
-    var initIntExtConditionValue2 : IntExtConditionValue := IntExtConditionValue { name := "Unknown" };
-    var initIntExtConditionValue3 : IntExtConditionValue := IntExtConditionValue { name := "TBE" };
-    var initIntExtConditionValue4 : IntExtConditionValue := IntExtConditionValue { name := "Poor" };
-    var initIntExtConditionValue5 : IntExtConditionValue := IntExtConditionValue { name := "Fair" };
-    var initIntExtConditionValue6 : IntExtConditionValue := IntExtConditionValue { name := "Good" };
-    var initIntExtConditionValue7 : IntExtConditionValue := IntExtConditionValue { name := "Very Good" };
-    var initIntExtConditionValue8 : IntExtConditionValue := IntExtConditionValue { name := "Excellent" };
-  }
-
-  globals {
-    var initFlooringValue1 : FlooringValue := FlooringValue { name := "N/A" };
-    var initFlooringValue2 : FlooringValue := FlooringValue { name := "Carpet on Concrete" };
-    var initFlooringValue3 : FlooringValue := FlooringValue { name := "Carpet on Timber" };
-    var initFlooringValue4 : FlooringValue := FlooringValue { name := "Concrete" };
-    var initFlooringValue5 : FlooringValue := FlooringValue { name := "Concrete and Timber" };
-    var initFlooringValue6 : FlooringValue := FlooringValue { name := "Polished Timber" };
-    var initFlooringValue7 : FlooringValue := FlooringValue { name := "Timber" };
-  }
-
-  globals {
-    var initInteriorLayoutValue1 : InteriorLayoutValue := InteriorLayoutValue { name := "Functional" };
-  }
-  
-  globals {
-    var initAnalysisValue1 : AnalysisValue := AnalysisValue { name := "1" };
-    var initAnalysisValue2 : AnalysisValue := AnalysisValue { name := "2" };
-    var initAnalysisValue3 : AnalysisValue := AnalysisValue { name := "3" };
-    var initAnalysisValue4 : AnalysisValue := AnalysisValue { name := "4" };
-    var initAnalysisValue5 : AnalysisValue := AnalysisValue { name := "5" };
-  }
-  
-  globals {
-    var initPropertyIdentificationValue1 : PropertyIdentificationValue := PropertyIdentificationValue { name := "Contract of Sale" };
-    var initPropertyIdentificationValue2 : PropertyIdentificationValue := PropertyIdentificationValue { name := "Council Rates Notice" };
-    var initPropertyIdentificationValue3 : PropertyIdentificationValue := PropertyIdentificationValue { name := "Council Records" };
-    var initPropertyIdentificationValue4 : PropertyIdentificationValue := PropertyIdentificationValue { name := "CT Search" };
-    var initPropertyIdentificationValue5 : PropertyIdentificationValue := PropertyIdentificationValue { name := "Registered Plan" };
-    var initPropertyIdentificationValue6 : PropertyIdentificationValue := PropertyIdentificationValue { name := "Valuer Generals Notice" };
-  }
-  
-  globals {
-    var initMarketValue1 : MarketValue := MarketValue { name := "Weakening" };
-    var initMarketValue2 : MarketValue := MarketValue { name := "Steady" };
-    var initMarketValue3 : MarketValue := MarketValue { name := "Strengthening" };
-  }
-  
-  globals {
-    var initStateValue1 : StateValue := StateValue { name := "NSW" };
-    var initStateValue2 : StateValue := StateValue { name := "Queensland" };
-    var initStateValue3 : StateValue := StateValue { name := "Victoria" };
-    var initStateValue4 : StateValue := StateValue { name := "Northern Territory" };
-    var initStateValue5 : StateValue := StateValue { name := "Western Australia" };
-    var initStateValue6 : StateValue := StateValue { name := "South Australia" };
-    var initStateValue7 : StateValue := StateValue { name := "Tasmania" };
-  }
-  
-  globals {
-    var initPostCode1 : PostCodeValue := PostCodeValue { name := "2026" };
-    var initPostCode2 : PostCodeValue := PostCodeValue { name := "2088" };
-    var initPostCode3 : PostCodeValue := PostCodeValue { name := "2132" };
-    var initPostCode4 : PostCodeValue := PostCodeValue { name := "2342" };
-  }
-  
-  globals {
-    var initPropertyCategory1 : PropertyCategoryValue := PropertyCategoryValue { name := "Residential" };
-    var initPropertyCategory2 : PropertyCategoryValue := PropertyCategoryValue { name := "Offices" };
-    var initPropertyCategory3 : PropertyCategoryValue := PropertyCategoryValue { name := "Kekstra" };
-  }
-  
-  globals {
-    var initPropertyType1 : PropertyTypeValue := PropertyTypeValue { name := "House" };
-    var initPropertyType2 : PropertyTypeValue := PropertyTypeValue { name := "Flat" };
-    var initPropertyType3 : PropertyTypeValue := PropertyTypeValue { name := "Appartment" };    
-  }
-  
-  globals {
-    var initReportType1 : ReportTypeValue := ReportTypeValue { name := "Short Report" };
-    var initReportType2 : ReportTypeValue := ReportTypeValue { name := "Extensive Report" };
-    var initReportType3 : ReportTypeValue := ReportTypeValue { name := "Too long Report" };    
-  }
-  
-  globals {
-    var initPropose1 : ProposeValue := ProposeValue { name := "Market" };
-    var initPropose2 : ProposeValue := ProposeValue { name := "Market too" };
-    var initPropose3 : ProposeValue := ProposeValue { name := "What other values?" };
-  }
-    
-  globals {
-    var initComparisonValue1 : ComparisonValue := ComparisonValue { name := "Inferior" };
-    var initComparisonValue2 : ComparisonValue := ComparisonValue { name := "Similar" };
-    var initComparisonValue3 : ComparisonValue := ComparisonValue { name := "Superior" };
-  }
-  */
   
   globals {
     var initClient1 : Client := Client { name := "Topline Foods" };
@@ -316,86 +63,6 @@ section value data
   }
   
   globals {
-    var valuerLiming : Valuer := Valuer { user := userLiming };
-    var valuerRuben : Valuer := Valuer { user := userRuben };
-    var valuerAdmin : Valuer := Valuer { user := userAdmin };
+    var valuer1 : Valuer := Valuer { user := userValuer1 };
+    var valuer2 : Valuer := Valuer { user := userValuer2 };
   }
-/*  
-section valuations
-  
-  globals {
-    var initValuationRequest1 : ValuationRequest := ValuationRequest { status := initValuationRequestStatus1 address := "1/13 O Brien Street" suburb := "Bondi Beach" postCode := initPostCode1 state := initStateValue1 valuationNumber := 228320 valuer := valuerRuben };
-    var initInvoice1 : Invoice := Invoice { valuationRequest := initValuationRequest1 number := 34987 };
-
-    var initValuationRequest2 : ValuationRequest := ValuationRequest { status := initValuationRequestStatus1 address := "13 Garden Street" suburb := "Eveleigh" postCode := initPostCode3 state := initStateValue1 purchase := "1,200,000" ownerEst := "1,400,000" tender := "1,250,000" valuationNumber := 219320 valuer := valuerLiming };
-    var initInvoice2 : Invoice := Invoice { valuationRequest := initValuationRequest2 number := 53453 };
-  }*/
-  /*
-    init {
-      initValuationRequest1.editValuationSales := EditValuationSalesProcedureStatus{};
-      initValuationRequest1.editValuationSales.v := initValuationRequest1;
-      initValuationRequest1.editValuationSales.persist();
-      initValuationRequest1.editValuationLand := EditValuationLandProcedureStatus{};
-      initValuationRequest1.editValuationLand.v := initValuationRequest1;
-      initValuationRequest1.editValuationLand.persist();
-      initValuationRequest1.editValuationRisk := EditValuationRiskProcedureStatus{};
-      initValuationRequest1.editValuationRisk.v := initValuationRequest1;
-      initValuationRequest1.editValuationRisk.persist();
-      initValuationRequest1.editValuationMainBuilding := EditValuationMainBuildingProcedureStatus{};
-      initValuationRequest1.editValuationMainBuilding.v := initValuationRequest1;
-      initValuationRequest1.editValuationMainBuilding.persist();
-      initValuationRequest1.editValuationProperty := EditValuationPropertyProcedureStatus{};
-      initValuationRequest1.editValuationProperty.v := initValuationRequest1;
-      initValuationRequest1.editValuationProperty.persist();
-      initValuationRequest1.editValuationRequestQuote := EditValuationRequestQuoteProcedureStatus{};
-      initValuationRequest1.editValuationRequestQuote.v := initValuationRequest1;
-      initValuationRequest1.editValuationRequestQuote.persist();
-      initValuationRequest1.editValuationRequestBooking := EditValuationRequestBookingProcedureStatus{};
-      initValuationRequest1.editValuationRequestBooking.v := initValuationRequest1;
-      initValuationRequest1.editValuationRequestBooking.persist();
-      initValuationRequest1.editValuationRequestDetails := EditValuationRequestDetailsProcedureStatus{};
-      initValuationRequest1.editValuationRequestDetails.v := initValuationRequest1;
-      initValuationRequest1.editValuationRequestDetails.persist();
-      initValuationRequest1.bookValuation := BookValuationProcedureStatus{};
-      initValuationRequest1.bookValuation.v := initValuationRequest1;
-      initValuationRequest1.bookValuation.persist();
-      initValuationRequest1.valuationWorkflow := ValuationWorkflowProcedureStatus{};
-      initValuationRequest1.valuationWorkflow.v := initValuationRequest1;
-      initValuationRequest1.valuationWorkflow.persist();
-      initValuationRequest1.persist();
-      
-      initValuationRequest1.valuationWorkflow.enable();
-
-      initValuationRequest1.editValuationSales.enable();
-      initValuationRequest1.editValuationLand.enable();
-      initValuationRequest1.editValuationRisk.enable();
-      initValuationRequest1.editValuationMainBuilding.enable();
-      initValuationRequest1.editValuationProperty.enable();
-      initValuationRequest1.editValuationRequestQuote.enable();
-      initValuationRequest1.editValuationRequestBooking.enable();
-      initValuationRequest1.editValuationRequestDetails.enable();
-      initValuationRequest1.bookValuation.enable();
-      
-      initValuationRequest1 := newValuationRequest();
-      initValuationRequest1.status := initValuationRequestStatus1;
-      initValuationRequest1.address := "1/13 O Brien Street";
-      initValuationRequest1.suburb := "Bondi Beach";
-      initValuationRequest1.postCode := initPostCode1;
-      initValuationRequest1.state := initStateValue1;
-      initValuationRequest1.valuationNumber := 228320;
-      initValuationRequest1.valuer := valuerRuben;
-      initValuationRequest1.persist();
-      
-      initValuationRequest1.bookValuation := BookValuationProcedureStatus{};
-      initValuationRequest1.bookValuation.v := initValuationRequest1;
-      initValuationRequest1.bookValuation.persist();
-      initValuationRequest1.persist();
-      initValuationRequest1.bookValuation.enable();
-      
-      initValuationRequest2.bookValuation := BookValuationProcedureStatus{};
-      initValuationRequest2.bookValuation.v := initValuationRequest2;
-      initValuationRequest2.bookValuation.persist();
-      initValuationRequest2.persist();
-      initValuationRequest2.bookValuation.enable();
-    }
-    */

@@ -159,7 +159,6 @@ section pages
     }
   }
   
-  // TODO - nu alleen wat mockup
   define page valuationRequestQuote(v : ValuationRequest) {
     main()
     define sidebar() {

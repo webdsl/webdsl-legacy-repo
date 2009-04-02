@@ -149,17 +149,9 @@ access control rules
     canViewValuation(v)
   }
   
-/*  rule pointcut valuationEditPages(v : ValuationRequest) {
-    canEditValuation(v)
-  }*/
-
   rule pointcut valuationRequestViewPages(v : ValuationRequest) {
     canViewValuationRequest(v)
   }
-
-/*  rule pointcut valuationRequestEditPages(v : ValuationRequest) {
-    canEditValuationRequest(v)
-  }*/
 
   rule page newValuation() {
     canCreateValuationRequest()

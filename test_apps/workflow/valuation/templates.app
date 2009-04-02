@@ -47,8 +47,8 @@ section templates
         } else {
           menuitem { navigate(signout()) { "Sign out" } }
         }
-        menuitem { navigate(loginAs(userRuben)){"Login as Ruben"} }
-        menuitem { navigate(loginAs(userLiming)){"Login as Liming"} }
+        menuitem { navigate(loginAs(userValuer1)){"Login as Valuer1"} }
+        menuitem { navigate(loginAs(userValuer2)){"Login as Valuer2"} }
         menuitem { navigate(loginAs(userAdmin)){"Login as Admin"} }
         menuitem { navigate(loginAs(userManager)){"Login as Manager"} }
       }
@@ -182,7 +182,16 @@ section sidebar
         listitem{ navigate(editValuationSecuritisation(v)){"Securitisation Req."} }
         listitem{ navigate(editValuationAssessment(v)){"Valuation & Assessment"} }
         listitem{ navigate(editValuationComments(v)){"Additional Comments"} }
-        if (v.finalizeValuation != null && v.finalizeValuation.isEnabled) {navigatebutton(finalizeValuation(v), "Finalize")}
+        if (v.finalizeValuation != null 
+            && v.finalizeValuation.isEnabled 
+            && v.editValuationProperty.isProcessed 
+            && v.editValuationMainBuilding.isProcessed 
+/*            && v.editValuationRisk.isProcessed 
+            && v.editValuationLand.isProcessed 
+            && v.editValuationSales.isProcessed 
+            && v.editValuationSecuritisation.isProcessed 
+            && v.editValuationAssessment.isProcessed 
+*/            && v.editValuationComments.isProcessed) {navigatebutton(finalizeValuation(v), "Finalize")}
         if (v.approveValuation != null && v.approveValuation.isEnabled && canApproveValuations()) {navigatebutton(approveValuation(v), "Approve")}
         if (v.sendValuation != null && v.sendValuation.isEnabled && canSendValuations()) {navigatebutton(sendValuation(v), "Mark as Sent")}
       }
