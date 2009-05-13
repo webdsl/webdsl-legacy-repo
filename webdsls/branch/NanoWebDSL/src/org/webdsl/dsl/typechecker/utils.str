@@ -1,0 +1,54 @@
+module org/webdsl/dsl/typechecker/utils
+
+imports
+  libstrategolib
+
+imports
+  libwebdsl-front
+
+strategies
+
+  type-of = eq-type-of
+
+rules
+
+  is-webdsl-type = is-entity-type <+ is-simple-sort <+ is-generic-sort
+  is-builtin-type = is-simple-sort <+ is-generic-sort
+
+/* ANCIENT
+rules
+
+  type-of :
+    e{t*} -> t
+    where t := <fetch-elem(?Type(<id>))> t*
+
+*/
+
+rules // type compatibility
+
+  /**
+   * <type-compatible> (t1, t2) if a value of type t2 can be assigned
+   * to a variable of type t1
+   */
+
+  type-compatible =
+    ?(t, t)
+
+  type-compatible =
+    ?(supertype, subtypetobechecked) //(supertype,subtype to be checked)
+    ; where(<subtype-of> (subtypetobechecked, supertype))
+    
+  subtype-of =
+    eq
+
+  subtype-of =
+    ?(SimpleSort(subtypetobechecked), SimpleSort(supertype))
+    ; where( <extends>(subtypetobechecked, supertype) )
+
+  extends-check = Extends
+  extends-check = extends-builtin
+  extends-check = extends-genericsorts
+  
+  extends =
+    while-not(eq, (extends-check, id))
+

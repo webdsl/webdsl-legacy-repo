@@ -1,0 +1,517 @@
+module org/webdsl/dsl/to-java-servlet/types/collection
+
+imports 
+  libstrategolib 
+  Java-15 
+  libjava-front 
+  libwebdsl-front
+
+rules //types
+
+  builtin-java-type :
+    GenericSort("List", [s]) -> type|[ java.util.List<t> ]|
+    where t := <java-type> s
+
+  builtin-java-type :
+    GenericSort("Set", [s]) -> type|[ java.util.Set<t> ]|
+    where t := <java-type> s
+    
+  type-default-value-override-java :
+    GenericSort("List", [s]) -> e|[ new java.util.ArrayList<t>() ]|
+    where t := <java-type> s
+    
+  type-default-value-override-java :
+    GenericSort("Set", [s]) -> e|[ new java.util.LinkedHashSet<t>() ]|
+    where t := <java-type> s
+
+rules //list functions
+
+  call-to-java-servlet :
+    Call(e1, "indexOf", [e2]) -> java|[ e3.indexOf(e4) ]|
+    where GenericSort("List",[s]) := <type-of> e1
+    with e3 := <expression-to-java-servlet> e1
+       ; e4 := <expression-to-java-servlet> e2
+
+  call-to-java-servlet :
+    Call(e1, "get", [e2]) -> java|[ e4 >= 0 && e4 < e3.size() ? e3.get(e4) : null ]|
+    where GenericSort("List",[s]) := <type-of> e1
+    with e3 := <expression-to-java-servlet> e1
+       ; e4 := <expression-to-java-servlet> e2
+         
+  call-to-java-servlet :
+    Call(e1, "set", [e2,e3]) -> <list-call-to-java-servlet> (e1,e2,e3,"set","setIn")
+    
+  call-to-java-servlet :
+    Call(e1, "insert", [e2,e3]) -> <list-call-to-java-servlet> (e1,e2,e3,"add","insertIn")
+ 
+  call-to-java-servlet :
+    Call(e1, "removeAt", [e2]) -> <remove-at-call-to-java-servlet> (e1,e2,"remove","removeAt")
+    where GenericSort("List",[s]) := <type-of> e1
+   
+  remove-at-call-to-java-servlet :
+    (e1,e2,x_regular,x_pevents) -> java|[ e3.x_regular(e4) ]|
+    where <check-collection-not-in-entity> e1
+    with  e3 := <expression-to-java-servlet> e1
+        ; e4 := <convert-to-integer-primitive> e2
+   
+  remove-at-call-to-java-servlet :
+    (e1,e2,x_regular,x_pevents) -> java|[ e4.setupForPropertyEvents(hibSession,out,ps).x_pevents#x_field(e5) ]|
+    where (e4,x_field) := <check-collection-in-entity> e1
+    with  e5 := <convert-to-integer-primitive> e2
+         
+rules 
+
+  /** 
+   * Reusable translation dealing with whether this collection belongs to an entity with property events or is an ordinary collection 
+   * This needs to be improved by adding collection classes that represent both of these types, 
+   * then 'escaped' collections (eg collection property passed to function) still handle property events. 
+   * Maybe there is a way to do this with hibernate collections directly.
+  */    
+  list-call-to-java-servlet :
+    (e1,e2,e3,x_regular,x_pevents) -> <collection-call-to-java-servlet> (e1,e2,e3,x_regular,x_pevents)
+    where GenericSort("List",[s]) := <type-of> e1
+
+  collection-call-to-java-servlet :
+    (e1,x_regular,x_pevents) -> <collection-call-to-java-servlet> (e1,"none","none",x_regular,x_pevents) 
+  
+  collection-call-to-java-servlet :
+    (e1,e2,x_regular,x_pevents) -> <collection-call-to-java-servlet> (e1,e2,"none",x_regular,x_pevents) 
+  
+  collection-call-to-java-servlet :
+    (e1,e2,e3,x_regular,x_pevents) -> java|[ e4.x_regular(e*) ]|
+    where <check-collection-not-in-entity> e1
+    with  e4 := <expression-to-java-servlet> e1
+        ; e* := <expression-arguments-for-collection-call> (e2,e3)
+  
+  check-collection-not-in-entity :
+    e1 -> e1       
+    where GenericSort(_,_) := <type-of> e1
+        ; not(<?FieldAccess(_,_)> e1)
+        ; not(<is-property> (<ClassName>, <?Var(<id>);remove-first-character-in-string> e1))    
+    
+  collection-call-to-java-servlet :
+    (e1,e2,e3,x_regular,x_pevents) -> java|[ e4.setupForPropertyEvents(hibSession,out,ps).x_pevents#x_field(e*) ]|
+    where (e4,x_field) := <check-collection-in-entity> e1
+    with  e* := <expression-arguments-for-collection-call> (e2,e3)
+        
+  check-collection-in-entity :        
+    e1 -> (e2,x_field)
+    where GenericSort(_,_) := <type-of> e1
+        ; ( <?FieldAccess(e_entity,x_field)> e1
+          ; e2 := <expression-to-java-servlet> e_entity
+         <+ x_field := <?Var(<id>);remove-first-character-in-string> e1
+          ; <is-property> (<ClassName>,x_field) //is inside an entity (otherwise <ClassName> fails) and is a property of that entity (otherwise <is-property> fails)
+          ; e2 := java:expr|[ this ]| 
+          )  
+          
+  expression-arguments-for-collection-call :
+    (e1,e2) -> e1*
+    where if "none" := e2
+          then e* := []
+          else e* := [<expression-to-java-servlet> e2]
+          end
+        ; if "none" := e1
+          then e1* := e*
+          else e1* := [<expression-to-java-servlet> e1 | e*]
+          end
+
+rules //general collection functions
+
+  call-to-java-servlet :
+    Call(e1, "add", [e2]) -> <collection-call-to-java-servlet> (e1,e2,"add","addTo")
+    
+  call-to-java-servlet :
+    Call(e1, "remove", [e2]) -> <remove-call-to-java-servlet> (e1,e2,"remove","removeFrom")
+   
+  remove-call-to-java-servlet :
+    (e1,e2,x_regular,x_pevents) -> java|[ e3.x_regular(e4) ]|
+    where <check-collection-not-in-entity> e1
+    with  e3 := <expression-to-java-servlet> e1
+        ; e4 := <convert-to-integer-class> e2
+   
+  remove-call-to-java-servlet :
+    (e1,e2,x_regular,x_pevents) -> java|[ e4.setupForPropertyEvents(hibSession,out,ps).x_pevents#x_field(e5) ]|
+    where (e4,x_field) := <check-collection-in-entity> e1
+    with  e5 := <convert-to-integer-class> e2
+
+  // java has inconveniently overloaded remove, a primitive int means remove at index and a Integer class means remove first occurence
+  // in WebDSL both primitive int and class Integer can occur, so it has to be forced 
+  convert-to-integer-class :
+    e_webdsl -> e_java
+    with  e := <expression-to-java-servlet> e_webdsl
+        ; if SimpleSort("Int") := <type-of> e_webdsl
+          then e_java := java:expr|[ new Integer(e) ]|
+          else e_java := e end
+  convert-to-integer-primitive :
+    e_webdsl -> e_java
+    with  e := <expression-to-java-servlet> e_webdsl
+        ; if SimpleSort("Int") := <type-of> e_webdsl
+          then e_java := java:expr|[ (new Integer(e)).intValue() ]|
+          else e_java := e end
+
+  call-to-java-servlet :
+    Call(e1, "clear", []) -> <collection-call-to-java-servlet> (e1,"clear","removeAllFrom")
+
+  call-to-java-servlet :
+    Call(e1, "addAll", [e2]) -> java|[ e3.setupForPropertyEvents(hibSession,out,ps).addAllTo#x_field(e4) ]|
+    where (e3,x_field) := <check-collection-in-entity> e1
+    with  e4 := <expression-to-java-servlet> e2  
+         
+  call-to-java-servlet :
+     Call(e1, "addAll", [e2]) -> java|[ {| t_tmp x_tmp = e3; x_tmp.addAll(e4); | x_tmp |} ]|
+     where <check-collection-not-in-entity> e1
+     with  e3 := <expression-to-java-servlet> e1
+         ; e4 := <expression-to-java-servlet> e2
+         ; t_tmp := <type-of;java-type> e1
+         ; x_tmp := <newname> "tmp"
+
+rules //typed collection creations
+
+   expression-to-java-servlet : // The version with items (!= []) will be desugared in desugar.str
+     TypedListCreation(s, []) -> java|[ new java.util.ArrayList<t>() ]|
+     with  t := <java-type> s
+
+   expression-to-java-servlet :
+     TypedSetCreation(s, []) -> java|[ new java.util.LinkedHashSet<t>() ]|
+     with  t := <java-type> s
+
+rules //fields
+
+  field-access-to-java-servlet :
+    FieldAccess(e1, "length") -> expr|[ e2.size() ]|
+    with  e2 := <expression-to-java-servlet> e1
+        ; GenericSort(_, _) := <type-of> e1
+
+rules //pages
+ 
+  java-servlet-element-id : 
+    tc@Select(x, SimpleSort(s), label, e, passign*, elem*) -> tc{InputNumber(newid),anno*} 
+    with  _{anno*} := tc
+        ; newid := <newname> "input"
+
+  //SimpleSort property select
+  handle-actions-input-to-java-servlet :
+    tc@Select(x, srt, label, e, passign*, elem*)  ->
+    <wrap-input-java-code(|passign*)>
+    bstm*|[
+      ident += "~inputident"+uniqueid;
+      if(ps.getParammap().get(ident+"_isinput")!=null) {
+        ~*<wrap-validation-context-code-store-inputs> bstm*|[
+          t x_temp = (x_argtype) hibSession.load(x_argtype.class, java.util.UUID.fromString(ps.getParammap().get(ident)));
+          bstm*
+        ]| 
+      }
+    ]|
+    where SimpleSort(_) := <type-of> e
+    with  inputident := <get-inputnumber> tc
+        ; x_temp := <newname> "temp"
+        ; t       := <java-type> srt
+        ; x_argtype := <java-type-name> srt
+        ; bstm* := <input-assignment-to-java-servlet(|x_temp)> e
+    
+  elem-to-java-servlet : 
+    tc@Select(x, srt, label, e, passign*, elem*)  ->
+    <wrap-input-render-java-code>
+    bstm* |[ 
+      String x_temp = ident+"~inputident"+uniqueid;
+      ~*<render-error-messages-with-error-template(|java:expr|[ x_temp ]|,<ErrorTemplateInput>)> bstm*|[
+        out.print("<input type=\"hidden\" name=\""+x_temp+"_isinput"+"\" />");
+        out.print("<select name=\""+x_temp+"\"");
+        ~*<connect-with-enclosing-label>
+        out.print(">");
+        java.util.Iterator x_iter = hibSession.createQuery("from "+"~x_argtype").list().iterator() ;
+        while ( x_iter.hasNext() ) {
+          t x = (x_argtype) x_iter.next();
+          out.print("<option value=\""+x.getId()+"\"");
+          if(inSubmittedForm)
+          {
+            if(ps.getParammap().get(x_temp) != null && ps.getParammap().get(x_temp).equals(String.valueOf(x.getId())))
+            {
+              out.print("selected=\"selected\"");
+            }
+          }
+          else
+          {
+            if(e2 != null && e2.getId().equals(x.getId()))//maybe should use add-not-null checks
+            {
+              out.print("selected=\"selected\"");
+            }
+          }
+          out.print(">"+x.setupForPropertyEvents(hibSession,out,ps).getName()+"</option>");
+        }
+        out.print("</select>"); 
+      ]|
+    ]|
+    where SimpleSort(_) := <type-of> e
+    with  inputident := <get-inputnumber> tc
+        ; x_temp := <newname> "temp"
+        ; x_iter := <newname> "iter"
+        ; t       := <java-type> srt
+        ; x_argtype := <java-type-name> srt
+        ; e2 := <expression-to-java-servlet> e
+
+          
+  //GenericSort property select, currently works for sets and lists, but lists need a different input translation
+  handle-actions-input-to-java-servlet :
+    tc@Select(x, srt, label, e, passign*, elem*)  ->
+    <wrap-input-java-code(|passign*)>
+    bstm*|[
+        ident += "~inputident"+uniqueid;
+        if(ps.getParammap().get(ident+"_isinput")!=null){
+          ~*<wrap-validation-context-code-store-inputs> bstm*|[
+            //e_clear;
+            java.util.Set<t> x_tempset = new java.util.HashSet<t>();
+            if(ps.getParammapvalues().get(ident) == null) { //if none were submitted, remove all
+              ~*<wrap-in-for-loop(|x_temp,t,e1)> bstm* |[
+                e_remove;
+              ]|
+            }
+            if(ps.getParammapvalues().get(ident) != null) {
+              for(String elem : ps.getParammapvalues().get(ident))
+              {
+                t x_temp = (x_argtype) hibSession.load(x_argtype.class, java.util.UUID.fromString(elem));
+                x_tempset.add(x_temp);
+              }
+              ~*<wrap-in-for-loop(|x_temp,t,e1)> bstm* |[
+                if(!x_tempset.contains(x_temp)){
+                  e_remove;
+                }
+              ]|
+              ~*<wrap-in-for-loop(|x_temp,t,expr |[ x_tempset ]| )> bstm* |[
+                if(!e1.contains(x_temp)){
+                  e_add;
+                }
+              ]|
+            }
+          ]|
+        }
+    ]|
+    where GenericSort(_, _) := <type-of> e
+    with  inputident := <get-inputnumber> tc
+        ; x_temp := <newname> "temp"
+        ; x_tempset := <newname> "temp"
+        ; t       := <java-type> srt
+        ; x_argtype := <java-type-name> srt
+        ; e1 := <expression-to-java-servlet> e
+        //; bstm* := <input-assignment-to-java-servlet(|x_temp)> e
+        ; e_add := <expression-to-java-servlet> webdsl:e |[ e.add(x_temp) ]| //reuse expression translation for inverse relation add/remove operations
+        ; e_remove := <expression-to-java-servlet> webdsl:e |[ e.remove(x_temp) ]| //reuse expression translation for inverse relation add/remove operations
+        //; e_clear := <expression-to-java-servlet> webdsl:e |[ e.clear() ]| //reuse expression translation for inverse relation clear operation
+    
+  elem-to-java-servlet : 
+    tc@Select(x, srt, label, e, passign*, elem*)  ->
+    <wrap-input-render-java-code>
+    bstm* |[ 
+      String x_temp = ident+"~inputident"+uniqueid;
+      ~*<render-error-messages-with-error-template(|java:expr|[ x_temp ]|,<ErrorTemplateInput>)> bstm*|[
+        out.print("<input type=\"hidden\" name=\""+x_temp+"_isinput"+"\" />");
+        out.print("<select name=\""+x_temp+"\"");
+        ~*<connect-with-enclosing-label>
+        out.print("multiple=\"multiple\">");
+        java.util.Iterator x_iter = hibSession.createQuery("from "+"~x_argtype").list().iterator() ;
+        while ( x_iter.hasNext() ) {
+          t x = (x_argtype) x_iter.next();
+          out.print("<option value=\""+x.getId()+"\"");
+          if(inSubmittedForm)
+          {
+            if(ps.getParammapvalues().get(x_temp) != null){
+              for(String elem : ps.getParammapvalues().get(x_temp))
+              {
+                if(elem.equals(String.valueOf(x.getId())))
+                {
+                  out.print("selected=\"selected\"");
+                }
+              }
+            }
+          }
+          else
+          {
+            if(e2 != null && e2.contains(x))//maybe should use add-not-null checks
+            {
+              out.print("selected=\"selected\"");
+            }
+          }
+          out.print(">"+x.setupForPropertyEvents(hibSession,out,ps).getName()+"</option>");
+        }
+        out.print("</select>"); 
+      ]|
+    ]|
+    where GenericSort(_, _) := <type-of> e
+    with  inputident := <get-inputnumber> tc
+        ; x_temp := <newname> "temp"
+        ; x_iter := <newname> "iter"
+        ; t       := <java-type> srt
+        ; x_argtype := <java-type-name> srt
+        ; e2 := <expression-to-java-servlet> e
+
+rules // select from
+
+  java-servlet-element-id : 
+    tc@SelectFromList(e1, e7, passign*, elem*)-> tc{InputNumber(newid),anno*} 
+    with  _{anno*} := tc
+          ; newid := <newname> "input"
+
+  //SimpleSort property select
+  handle-actions-input-to-java-servlet :
+    tc@SelectFromList(e1, e7, passign*, elem*)  ->
+    <wrap-input-java-code(|passign*)>
+    bstm*|[
+      ident += "~inputident"+uniqueid;
+      if(ps.getParammap().get(ident+"_isinput")!=null) {
+        ~*<wrap-validation-context-code-store-inputs> bstm*|[
+          t x_temp = (x_argtype) hibSession.load(x_argtype.class, java.util.UUID.fromString(ps.getParammap().get(ident)));
+          if(e8.contains(x_temp))
+          {
+            bstm*
+          }
+        ]|
+      }
+    ]|
+    where SimpleSort(_) := <type-of> e1
+    with  inputident := <get-inputnumber> tc
+        ; srt := <type-of> e1
+        ; x_temp := <newname> "temp"
+        ; t       := <java-type> srt
+        ; x_argtype := <java-type-name> srt
+        ; bstm* := <input-assignment-to-java-servlet(|x_temp)> e1
+        ; e8 := <expression-to-java-servlet> e7
+    
+  elem-to-java-servlet : 
+    tc@SelectFromList(e1, e7, passign*, elem*)  ->
+    <wrap-input-render-java-code>
+    bstm* |[ 
+      String x_temp = ident+"~inputident"+uniqueid;
+      ~*<render-error-messages-with-error-template(|java:expr|[ x_temp ]|,<ErrorTemplateInput>)> bstm*|[
+        out.print("<input type=\"hidden\" name=\""+x_temp+"_isinput"+"\" />");
+        out.print("<select name=\""+x_temp+"\"");
+        ~*<connect-with-enclosing-label>
+        out.print(">");
+        java.util.Iterator x_iter = e8.iterator() ;
+        while ( x_iter.hasNext() ) {
+          t x = (x_argtype) x_iter.next();
+          out.print("<option value=\""+x.getId()+"\"");
+          if(inSubmittedForm)
+          {
+            if(ps.getParammap().get(x_temp) != null && ps.getParammap().get(x_temp).equals(String.valueOf(x.getId())))
+            {
+              out.print("selected=\"selected\"");
+            }
+          }
+          else
+          {
+            if(e2 != null && e2.getId().equals(x.getId()))//maybe should use add-not-null checks
+            {
+              out.print("selected=\"selected\"");
+            }
+          }
+          out.print(">"+x.setupForPropertyEvents(hibSession,out,ps).getName()+"</option>");
+        }
+        out.print("</select>");
+      ]| 
+    ]|
+    where SimpleSort(_) := <type-of> e1
+    with  inputident := <get-inputnumber> tc
+        ; srt        := <type-of> e1
+        ; x_temp     := <newname> "temp"
+        ; x_iter := <newname> "iter"
+        ; x          := <newname> "x"
+        ; t          := <java-type> srt
+        ; x_argtype  := <java-type-name> srt
+        ; e2         := <expression-to-java-servlet> e1
+        ; e8         := <expression-to-java-servlet> e7
+
+          
+  //GenericSort property select
+  handle-actions-input-to-java-servlet :
+    tc@SelectFromList(e, e7, passign*, elem*)  ->
+    <wrap-input-java-code(|passign*)>
+    bstm*|[
+        ident += "~inputident"+uniqueid;
+        if(ps.getParammap().get(ident+"_isinput")!=null){
+          ~*<wrap-validation-context-code-store-inputs> bstm*|[
+            java.util.Set<t> x_tempset = new java.util.HashSet<t>();
+            if(ps.getParammapvalues().get(ident) == null) { //if none were submitted, remove all
+              ~*<wrap-in-for-loop(|x_temp,t,e1)> bstm* |[
+                e_remove;
+              ]|
+            }
+            if(ps.getParammapvalues().get(ident) != null) {
+              for(String elem : ps.getParammapvalues().get(ident))
+              {
+                t x_temp = (x_argtype) hibSession.load(x_argtype.class, java.util.UUID.fromString(elem));
+                x_tempset.add(x_temp);
+              }
+              ~*<wrap-in-for-loop(|x_temp,t,e1)> bstm* |[
+                if(!x_tempset.contains(x_temp)){
+                  e_remove;
+                }
+              ]|
+              ~*<wrap-in-for-loop(|x_temp,t,expr |[ x_tempset ]| )> bstm* |[
+                if(!e1.contains(x_temp) && e8.contains(x_temp)){   //TODO only line different form select, refactor
+                  e_add;
+                }
+              ]|
+            }            
+          ]|
+        }
+    ]|
+    where GenericSort(_, [srt]) := <type-of> e
+    with  inputident := <get-inputnumber> tc
+        ; e1 := <expression-to-java-servlet> e
+        ; x_temp := <newname> "temp"
+        ; x_tempset := <newname> "temp"
+        ; t       := <java-type> srt
+        ; x_argtype := <java-type-name> srt
+        //; bstm* := <input-assignment-to-java-servlet(|x_temp)> e1
+        ; e8 := <expression-to-java-servlet> e7
+        //; e_clear := <expression-to-java-servlet> webdsl:e |[ e1.clear() ]| //reuse expression translation for inverse relation clear operation
+        ; e_add := <expression-to-java-servlet> webdsl:e |[ e.add(x_temp) ]| //reuse expression translation for inverse relation add/remove operations
+        ; e_remove := <expression-to-java-servlet> webdsl:e |[ e.remove(x_temp) ]| //reuse expression translation for inverse relation add/remove operations
+    
+  elem-to-java-servlet : 
+    tc@SelectFromList(e1, e7, passign*, elem*) ->
+    <wrap-input-render-java-code>
+    bstm* |[ 
+      String x_temp = ident+"~inputident"+uniqueid;
+      ~*<render-error-messages-with-error-template(|java:expr|[ x_temp ]|,<ErrorTemplateInput>)> bstm*|[
+        out.print("<input type=\"hidden\" name=\""+x_temp+"_isinput"+"\" />");
+        out.print("<select name=\""+x_temp+"\"");
+        ~*<connect-with-enclosing-label>
+        out.print("multiple=\"multiple\">");
+        java.util.Iterator x_iter =  e8.iterator() ;
+        while ( x_iter.hasNext() ) {
+          t x = (x_argtype) x_iter.next();
+          out.print("<option value=\""+x.getId()+"\"");
+          if(inSubmittedForm)
+          {
+            if(ps.getParammapvalues().get(x_temp) != null){
+              for(String elem : ps.getParammapvalues().get(x_temp))
+              {
+                if(elem.equals(String.valueOf(x.getId())))
+                {
+                  out.print("selected=\"selected\"");
+                }
+              }
+            }
+          }
+          else
+          {
+            if(e2 != null && e2.contains(x))//maybe should use add-not-null checks
+            {
+              out.print("selected=\"selected\"");
+            }
+          }
+          out.print(">"+x.setupForPropertyEvents(hibSession,out,ps).getName()+"</option>");
+        }
+        out.print("</select>");
+      ]| 
+    ]|
+    where GenericSort(_, [srt]) := <type-of> e1
+    with  inputident := <get-inputnumber> tc
+        ; x_temp := <newname> "temp"
+        ; x_iter := <newname> "iter"
+        ; t       := <java-type> srt
+        ; x := <newname> "x"
+        ; x_argtype := <java-type-name> srt
+        ; e2 := <expression-to-java-servlet> e1
+        ; e8 := <expression-to-java-servlet> e7

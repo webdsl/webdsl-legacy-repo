@@ -1,0 +1,58 @@
+module org/webdsl/dsl/languages/action/typechecker/function
+
+imports
+  libstrategolib
+  Java-15 
+  libjava-front
+
+imports
+  libwebdsl-front
+  
+rules
+  // checks for returns within a FunctionNoReturn
+  constraint-error-action =
+    ?FunctionNoReturn(f, _, body) 
+    ; where (
+        not([] := <collect(?Return(_))> body)
+        ; add-error(|["function ", <pp-webdsl> f, " has no return type but tries to return a variable"])
+      )
+
+  // checks the return type of functions
+  constraint-error-action :
+    Function(f, args, sort, body1) -> <add-error(|["The return statement in function ", f, " should have type ", <pp-webdsl> sort])>
+    where returns := <collect(?Return(_))> body1
+        ; wrongreturns := <filter(\ Return(e) -> Return(e) where not(<type-compatible> (sort,<type-of> e)) \)> returns
+        ; not([] := wrongreturns)
+  
+  // checks for at least one return inside a normal function
+  constraint-error-action :
+    Function(f, args, rt, body) -> <add-error(|["Return statement missing in function ", <pp-webdsl> f])>
+    where not(SimpleSort("Void") := rt)
+        ; [] := <collect(?Return(_))> body
+        
+/* doesn't work yet... later
+  // checks types of arguments
+  constraint-error-action :
+    Function(f, args, _, _) -> <add-error(|["Argument evaluates to non-existing entity in function ", <pp-webdsl> f])>
+    where not(<map(type-of; type-exists)> args)
+    
+  // checks types of arguments
+  constraint-error-action :
+    FunctionNoReturn(f, args, _, _) -> <add-error(|["Argument evaluates to non-existing entity in function ", <pp-webdsl> f])>
+    where not(<map(type-of; type-exists)> args)*/
+
+rules //reserved functions
+
+  register-reserved-function :
+    (name,argcount) -> (name,argcount)
+    where rules ( ReservedFunctions :+= (name,argcount) )
+    
+  constraint-error-action :
+    FunctionNoReturn(f, args, _) -> <add-error(|["Function with name ", f, " and ", argcount," argument(s) is generated"])>
+    where argcount := <length> args
+        ; <fetch(?(f,argcount))> <bagof-ReservedFunctions>
+    
+  constraint-error-action :
+    Function(f, args, _, _) -> <add-error(|["Function with name ", f, " and ", argcount," argument(s) is generated"])>
+    where argcount := <length> args
+        ; <fetch(?(f,argcount))> <bagof-ReservedFunctions>

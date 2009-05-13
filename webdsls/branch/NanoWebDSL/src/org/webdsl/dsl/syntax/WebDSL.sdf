@@ -1,0 +1,82 @@
+module WebDSL
+
+imports
+  WebDSL-Lexical
+  WebDSL-UI
+  WebDSL-Action
+  WebDSL-DataModel
+  WebDSL-DataValidation
+  WebDSL-AccessControl
+  WebDSL-Enums
+  WebDSL-Styling
+  WebDSL-PagedFor
+  WebDSL-Derive
+  WebDSL-Procedures
+  WebDSL-TemplateMarkdown
+  WebDSL-StringSelectEntity
+  WebDSL-ValidationAnnos
+  MixHQL[HQL]
+
+hiddens
+  context-free start-symbols
+    Unit
+
+exports
+
+  sorts
+    Id QId Int ModuleName SectionHeader Float FloatDigits ExponentPart
+    SignedInteger String UNDEFINED Eof
+
+
+  context-free syntax
+    Id         -> QId
+    QId "." Id -> QId {cons("Qualified")}
+
+  context-free syntax %% Types
+    Id                     -> Sort {cons("SimpleSort")}
+    Id "<" {Sort ","}+ ">" -> Sort {cons("GenericSort")}
+
+    Id ":" Sort            -> FormalArg {cons("Arg")}
+
+
+exports
+
+  sorts Application Module Unit
+  
+  syntax
+
+    "section" <SectionName-CF> <LAYOUT?-CF> <Definition*-CF> -> <Section-CF> {cons("Section")}
+
+  context-free syntax
+
+    "application" QId Definition+ Section* -> Application {cons("ApplicationDefs")}
+    "application" QId Section*      -> Application {cons("Application")}
+
+    "description" "{" Word* "}"     -> Description {cons("Description")}
+
+    "note" "{" Word* "}"            -> Description {cons("Note")}
+
+    Description                   -> Definition
+    %%Description                   -> Definition {prefer}
+
+    "module" ModuleName Section*  -> Module {cons("Module")}
+    "module" ModuleName Definition+ Section*  -> Module {cons("ModuleDefs")}
+
+    "imports" ModuleName          -> Definition {cons("Imports")}
+    
+    Application                   -> Unit
+    Module                        -> Unit
+
+exports
+
+  sorts Action Statements Statement Exp
+
+  context-free syntax
+
+    Action		       	-> Definition
+    Statement*		   	-> Statements
+
+
+
+
+

@@ -1,0 +1,257 @@
+
+
+module org/webdsl/dsl/to-java-servlet/java-base-page
+
+imports
+  libstratego-lib
+  libjava-front
+
+imports
+  libwebdsl-front
+
+rules
+  /**
+   * Generate base bean code
+   */
+  GenerateCodeJavaServlet = generate-java-base-page; fail
+
+  generate-java-base-page :
+    Application(qid, sections) ->
+    <emit-java-code> compilation-unit|[
+      package utils;
+      
+      import java.io.IOException;
+      import java.util.HashMap;
+      import java.util.Map;
+      import java.util.List;
+      import java.io.PrintWriter;
+      
+      import javax.servlet.ServletException;
+      import javax.servlet.http.HttpServletRequest;
+      import javax.servlet.http.HttpServletResponse;
+      import pkgname.*;
+      import org.webdsl.WebDSLEntity;
+      
+      import org.hibernate.Session;
+      
+      public abstract class PageServlet {
+          
+          protected HashMap<String, Object> variables = new HashMap<String, Object>();
+          protected HashMap<String, Object> actionclasses = new HashMap<String, Object>();
+      
+          public abstract void serve(HttpServletRequest request, HttpServletResponse response, Map<String, String> parammap, Map<String, List<String>> parammapvalues, Map<String,utils.File> fileUploads);
+          
+          public abstract String getPageName();
+          
+          public abstract String getHiddenParams();
+          public abstract String getHiddenPostParams();
+          
+          public javax.servlet.http.HttpSession session;
+          
+          public HashMap<String, Object> variablesGlobalAndSession = null;
+          
+          public String getPageUrlWithParams(){ //used for action field in forms
+            return request.getRequestURL().toString();
+          }
+
+          //templates scope
+          private static HashMap<String, Class> templates = new HashMap<String, Class>();
+          static {
+            bstm_templates*
+            bstm_pages*
+          }
+          public static HashMap<String, Class> getTemplates() { 
+            return templates; 
+          }
+         
+          //emails
+          private static HashMap<String, Class> emails = new HashMap<String, Class>();
+          static {
+            bstm_emails*
+          }
+          public static HashMap<String, Class> getEmails() { 
+            return emails;
+          }
+          public String getAbsoluteLocation() {
+              ~*<where(not(IsRootApp)) <+ ![]> bstm* |[
+                String[] req = request.getRequestURL().toString().split("~<concat-strings> [<AppRoot>, "/"]");
+                return req[0];
+              ]|
+              ~*<where(IsRootApp) <+ ![]> bstm* |[
+                String[] req = request.getRequestURL().toString().split("/");
+                StringBuffer sb = new StringBuffer();
+                sb.append(req[0]);
+                sb.append("/");
+                sb.append(req[1]);
+                sb.append("/");
+                sb.append(req[2]);
+                return sb.toString();
+              ]|
+          }
+
+          protected Map<Object,Object> oldValuesForInputs = new HashMap<Object, Object>();
+          public Map<Object, Object> getOldValuesForInputs() {
+            return oldValuesForInputs;
+          }
+          
+          protected Map<String,Object> uniqueIdObjects = new HashMap<String, Object>();
+          public Map<String, Object> getUniqueIdObjects() {
+            return uniqueIdObjects;
+          }
+          
+          private List<utils.ValidationException> validationExceptions = new java.util.LinkedList<utils.ValidationException>();
+          public List<utils.ValidationException> getValidationExceptions() { 
+            return validationExceptions;
+          }
+          public boolean hasExecutedAction = false;
+          
+          ~cbds
+          
+          public void serveAsAjaxResponse(PageServlet ps, PrintWriter theoutStream, Object[] ajaxarguments) {}
+          
+          public java.util.List<String> ignoreset= new java.util.ArrayList<String>();
+          
+          public boolean hibernateCacheCleared = false;
+          
+          protected abstract void initialize();
+          protected abstract void conversion();
+          protected abstract void loadArguments();
+          protected abstract void initVarsAndArgs();
+          
+          public void clearHibernateCache() { 
+            hibSession.clear();  
+            initVarsAndArgs();
+            hibernateCacheCleared = true;
+          }
+          
+          static {
+            GlobalInit.load();
+          }
+          // atm just used for captcha check
+          protected boolean validated=true;
+          protected Session hibSession;
+          protected HttpServletRequest request;
+          protected HttpServletResponse response;
+          protected Object[] args;  
+          
+          public Session getHibSession() {
+              return hibSession;
+          }
+
+          public HttpServletRequest getRequest() {
+              return request;
+          }
+      
+          public HttpServletResponse getResponse() {
+              return response;
+          }
+  
+          public boolean isValidated() {
+              return validated;
+          }
+     
+          public void setValidated(boolean validated) {
+              this.validated = validated;
+          }
+          
+          protected java.util.Map<String, String> parammap;
+          public java.util.Map<String, String> getParammap() {
+            return parammap;
+          }
+                
+          protected Map<String,utils.File> fileUploads;
+          public Map<String, utils.File> getFileUploads() {
+            return fileUploads;
+          }
+          
+          protected Map<String, List<String>> parammapvalues;
+          public Map<String, List<String>> getParammapvalues() {
+            return parammapvalues;
+          }
+          
+          protected String pageTitle ="";
+          public String getPageTitle() {
+            return pageTitle;
+          }
+          public void setPageTitle(String pageTitle) {
+              this.pageTitle = pageTitle;
+          }  
+          
+          protected utils.File download = null;
+          public void setDownload(utils.File file){
+            this.download = file;
+          }
+          public boolean isDownloadSet(){
+            return this.download != null;
+          }
+          
+          protected void download()
+          { 
+            /*
+            Long id = download.getId();
+            org.hibernate.Session hibSession = HibernateUtilConfigured.getSessionFactory().openSession();
+            hibSession.beginTransaction();
+            hibSession.setFlushMode(org.hibernate.FlushMode.MANUAL);
+            utils.File download = (utils.File)hibSession.load(utils.File.class,id);
+            */
+            try
+            { 
+              javax.servlet.ServletOutputStream outstream;
+          
+              outstream = response.getOutputStream();
+              
+              java.sql.Blob blob = download.getContent();
+              java.io.InputStream in;
+          
+              in = blob.getBinaryStream();
+              response.setContentType(download.getContentType());
+              response.setHeader("Content-Disposition", "attachment; filename=" + download.getFileName());
+              java.io.BufferedOutputStream bufout = new java.io.BufferedOutputStream(outstream);
+              byte bytes[] = new byte[32768];
+              int index = in.read(bytes, 0, 32768);
+              while(index != -1)
+              { 
+                bufout.write(bytes, 0, index);
+                index = in.read(bytes, 0, 32768);
+              }
+              bufout.flush();
+            }
+            catch(java.sql.SQLException ex)
+            { 
+              System.out.println("exception in download serve");
+              ex.printStackTrace();
+            }
+            catch (IOException ex) {
+              System.out.println("exception in download serve");
+              ex.printStackTrace();
+            }
+            /*
+            hibSession.flush();
+            hibSession.getTransaction().commit();
+            */
+          }
+        }
+      ]|
+    with pkgname    := <BeanPackage>
+       ; bstm_templates* := <map({\ 
+                           x -> bstm |[ templates.put(x_key, x_value); ]| 
+                           with  x_key := <concat-strings> ["\"",x,"\""]
+                               ; x_value := <concat-strings> [<TopLevelTemplateClassName> x,".class"]
+                       \})> 
+                       <bagof-AllTopLevelTemplateNamesJavaServlet>
+       ; bstm_pages* := <map({\ 
+                           x -> bstm |[ templates.put(x_key, x_value); ]| 
+                           with  x_key := <concat-strings> ["\"",x,"\""]
+                               ; x_value := <concat-strings> [<PageClassName> x,".class"]
+                       \})> 
+                       <bagof-AllPageNames>
+       ; bstm_emails* := <map({\ 
+                           x -> bstm |[ emails.put(x_key, x_value); ]| 
+                           with  x_key := <concat-strings> ["\"",x,"\""]
+                               ; x_value := <concat-strings> [<EmailClassName> x,".class"]
+                       \})> 
+                       <bagof-AllEmailNames>
+       ;if IsAjaxApp 
+        then cbds := java:class-body-dec |[  public static boolean isAjaxApp = true; ]|
+        else cbds := java:class-body-dec |[  public static boolean isAjaxApp = false; ]|
+        end

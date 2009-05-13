@@ -1,0 +1,12 @@
+module org/webdsl/dsl/typechecker/declare
+
+imports
+  libstrategolib
+
+imports
+  libwebdsl-front
+  
+strategies 
+
+  declare-all = alltd(declare) //initial declaration of globally visible elements
+    
