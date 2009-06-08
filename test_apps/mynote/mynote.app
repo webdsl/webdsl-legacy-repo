@@ -21,11 +21,11 @@ section pages
       ]
     }  	
     action updatesearch(val: String) {
-      clear notelist << ;
-      append notelist << { "searched " output(val) spacer };
+      clear(notelist);
+      append(notelist, template { "searched " output(val) spacer });
       for(n : Note) {
         if (n.name.contains(val))	{
-          append notelist <<	displayNote(n);
+          append (notelist,	displayNote(n));
         }
       }
     }
@@ -41,11 +41,11 @@ section pages
         listitem { 
           image("/images/notes.png") 
           actionLink(f.name)[
-            onmouseover := {replace folderdetails << { block {output(f.description) }};},
-            onmouseout  := {replace folderdetails << { block { par { "" } }};} ,
-            onclick			:= {replace notelist 			<< foldercontents(f);}
+            onmouseover := action {replace(folderdetails,  template { block {output(f.description) }});},
+            onmouseout  := action {replace( folderdetails, template { block { par { "" } }});} ,
+            onclick			:= action {replace( notelist, 		 foldercontents(f));}
           ] 
-          actionLink("[edit]")[onclick:= {replace notelist << editFolder(f);}]
+          actionLink("[edit]")[onclick:=  action {replace (notelist ,editFolder(f));}]
         }
       }
     }
@@ -53,7 +53,7 @@ section pages
     actionLink("[add new folder]", createfolder())
     action createfolder() {
       var newfolder: Folder := Folder{};
-      replace notelist << editFolder(newfolder);
+      replace( notelist , editFolder(newfolder));
     }
     spacer
     block[id := folderdetails] { "" }    
@@ -70,7 +70,7 @@ section pages
     action addnote() {
       newNote.folder := f;
       newNote.save();
-      append foldernotes << displayNote(newNote);  		
+      append (foldernotes , displayNote(newNote));  		
     }
     
     spacer
@@ -95,22 +95,23 @@ section pages
         action("save", save())
       }
       action close() {
-        replace notelist << foldercontents(f);
+        replace (notelist , foldercontents(f));
       }
       action save() {
         f.save();
-        replace notelist << foldercontents(f);
-        replace folderlist << folders();
+        replace (notelist , foldercontents(f));
+        replace (folderlist ,folders());
       }
       action remove() {
         f.delete();
-        replace notelist << { block{ "select a folder.."}};
-        replace folderlist << folders();
+        replace (notelist, template { block{ "select a folder.."}});
+        replace (folderlist, folders());
       }
     }
   }
   
   define displayNote(n: Note) {
+  form {
     group(n.name) {
       if(n.urgent) {
         image("/images/urgent.png")
@@ -125,12 +126,13 @@ section pages
         var b: Bool := false
         input(b)[onclick := finish()] navigate[onclick:= finish()] {"finished"}
       }
-      actionLink("[edit]")[onclick:={ replace this << editNote(n);}] 
+      actionLink("[edit]")[onclick:= action { replace (this , editNote(n));}]
+  } 
     }
     action finish() {
       n.finished := true;
       n.save();
-      replace this << displayNote(n);
+      replace (this , displayNote(n));
     }
   }
   
@@ -147,11 +149,11 @@ section pages
         action("save", save())  	
       }
       action close() {
-        replace notelist << foldercontents(n.folder);
+        replace (notelist , foldercontents(n.folder));
       }
       action save() {
         n.save();
-        replace notelist << foldercontents(n.folder);
+        replace (notelist , foldercontents(n.folder));
       }
     }
   }

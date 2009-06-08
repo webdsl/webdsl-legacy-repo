@@ -2,6 +2,8 @@ module static
 
 section pages
   
+    var globaln := Note{name := 'hoi'}
+    
   define page home() {
     table {
       row {
@@ -10,8 +12,14 @@ section pages
       }
       row {
         menubar {
-            menuheader { navigate()[onclick := {visibility folderlist << toggle;}] {"/" } }
-            menuheader { navigate(home()) { "the notes"  } }
+           navigate()[onclick := action { append (folderlist , 
+             quicksearch()
+             ); }]
+             {  output(globaln.name) }
+           menuheader { navigate()[onclick :=  action {
+             visibility (folderlist , toggle);
+           }] {"/" } }
+           menuheader { navigate(home()) { "the notes"  } }
         }
         quicksearch()
       }
