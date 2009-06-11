@@ -8,6 +8,8 @@ imports data
 imports ac
 imports template
 
+native function scheduleBuild(path : String, version : ApplicationVersion) : Bool;
+
 section ui
 
 define page home() {
@@ -20,6 +22,7 @@ define page home() {
 }
 
 define page applications() {
+  title { "Application listing" }
   main()
 
   define body() {
@@ -49,6 +52,7 @@ define page applications() {
 }
 
 define page application(app : Application) {
+  title { output(app.name) }
   main()
 
   define body() {
@@ -77,6 +81,7 @@ define page application(app : Application) {
       action upload() {
         newVersion.application := app;
         newVersion.save();
+        scheduleBuild("/zef/engine/builds", newVersion);
         return application(app);
       }
     }
@@ -84,6 +89,7 @@ define page application(app : Application) {
 }
 
 define page signin() {
+  title { "Sign in" }
   main()
 
   define body() {
