@@ -12,7 +12,7 @@ define main() {
       applicationmenu()
     </div>
     <div id="content">
-      body()
+      elements()
     </div>
     <div id="footer">
       <p>"powered by " <a href="http://webdsl.org">"WebDSL"</a></p>

@@ -14,12 +14,12 @@ section ui
 
 define page home() {
   title { "WebDSL Engine" }
-	main()
-
-  define body() {
+	main {
 		"Please " navigate(signin()) { "sign in" }
 	}
 }
+
+/*
 
 define page applications() {
   title { "Application listing" }
@@ -87,12 +87,11 @@ define page application(app : Application) {
     }
   }
 }
+*/
 
 define page signin() {
   title { "Sign in" }
-  main()
-
-  define body() {
+  main {
     var username : String
     var password : Secret
     form {
@@ -102,15 +101,18 @@ define page signin() {
       action("Login",signin())
 
       action signin() {
+        log("Username: " + username);
+        log("Password: " + password);
         if(authenticate(username, password)) {
           message("Welcome " + username);
-          return applications();
+          return home();
         } 
         message("Wrong username, password combination.");
       }
     }
   }
 }
+
 
 define signinoffMenu() {
   if(!securityContext.loggedIn) {
