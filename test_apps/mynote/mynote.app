@@ -19,6 +19,7 @@ section pages
       input(search)[
         onkeyup := updatesearch(search)
       ]
+      actionLink("Clear")[onClick := action {replace(notelist, template{ "cleared" } ); }]
     }  	
     action updatesearch(val: String) {
       clear(notelist);
@@ -53,6 +54,7 @@ section pages
     actionLink("[add new folder]", createfolder())
     action createfolder() {
       var newfolder: Folder := Folder{};
+      newfolder.save();
       replace( notelist , editFolder(newfolder));
     }
     spacer
@@ -126,7 +128,7 @@ section pages
         var b: Bool := false
         input(b)[onclick := finish()] navigate[onclick:= finish()] {"finished"}
       }
-      actionLink("[edit]")[onclick:= action { replace (this , editNote(n));}]
+      actionLink("[edit]")[onclick:= action { replace (displayNote , editNote(n));}] //both this and displayNote should work
   } 
     }
     action finish() {

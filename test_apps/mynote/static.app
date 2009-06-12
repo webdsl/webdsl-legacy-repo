@@ -24,10 +24,10 @@ section pages
         quicksearch()
       }
       row {
-        block[id := folderlist] {
+        placeholder folderlist {
           folders()
         }
-        block[id := notelist] {
+        placeholder notelist {
           "please select a folder"
         }
       }
