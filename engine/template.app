@@ -12,6 +12,7 @@ define main() {
       applicationmenu()
     </div>
     <div id="content">
+      messages()
       elements()
     </div>
     <div id="footer">

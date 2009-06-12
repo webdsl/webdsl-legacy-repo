@@ -19,13 +19,9 @@ define page home() {
 	}
 }
 
-/*
-
 define page applications() {
   title { "Application listing" }
-  main()
-
-  define body() {
+  main {
     section {
       header { output(securityContext.principal.name) "'s applications" }
       list {
@@ -53,9 +49,7 @@ define page applications() {
 
 define page application(app : Application) {
   title { output(app.name) }
-  main()
-
-  define body() {
+  main {
     section {
       header { "Versions of " output(app.name) }
       <table border="1">
@@ -87,7 +81,6 @@ define page application(app : Application) {
     }
   }
 }
-*/
 
 define page signin() {
   title { "Sign in" }
@@ -105,7 +98,7 @@ define page signin() {
         log("Password: " + password);
         if(authenticate(username, password)) {
           message("Welcome " + username);
-          return home();
+          return applications();
         } 
         message("Wrong username, password combination.");
       }
