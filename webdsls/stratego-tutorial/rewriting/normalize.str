@@ -20,3 +20,6 @@ strategies
     ; xtc-parse-webdsl
     ; output-webdsl-to-file
     ; <exit>0
+
+rules
+
