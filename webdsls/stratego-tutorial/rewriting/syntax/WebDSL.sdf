@@ -1,0 +1,17 @@
+module WebDSL
+
+imports
+  WebDSL-Lexical
+  WebDSL-UI
+  WebDSL-Action
+  WebDSL-DataModel
+  WebDSL-Derive
+
+hiddens
+  context-free start-symbols Application
+
+exports
+  sorts Application Definition 
+  context-free syntax
+    "application" QId Definition* -> Application {cons("Application")}
+

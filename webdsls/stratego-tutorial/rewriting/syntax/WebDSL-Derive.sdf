@@ -1,0 +1,20 @@
+module WebDSL-Derive
+
+imports
+  WebDSL-UI
+  WebDSL-Lexical
+
+exports
+
+  sorts Derive DeriveType DeriveProperty
+
+context-free syntax
+
+  "derive" Id "from" Exp "for" "(" {DeriveProperty ","}* ")" -> TemplateElement {cons("Derive"), prefer}
+
+  "derive" Id "from" Exp  -> TemplateElement {cons("Derive"), prefer}
+
+  Id                      -> DeriveProperty {cons("DeriveDefault")}
+  Id "(" Id ")"           -> DeriveProperty {cons("DeriveMode")}
+
+  "derive"                -> TemplateCall {reject}

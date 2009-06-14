@@ -1,0 +1,9 @@
+module WebDSL-Test
+
+imports WebDSL
+
+hiddens
+  context-free start-symbols 
+    Application 
+    Exp
+    TemplateElement

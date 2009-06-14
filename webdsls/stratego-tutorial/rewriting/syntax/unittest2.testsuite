@@ -1,0 +1,16 @@
+testsuite TemplateElements
+
+topsort TemplateElement
+
+test case template element
+  [if(x) { "True" } else { "False" }] -> 
+    IfTempl(Var("x"),[Text("\"True\"")],[Text("\"False\"")])
+
+test case template element
+  [case(x) { "a" { foo{} } default { bar{} } }] -> 
+    TemplateCase(
+      Var("x")
+    , [ TemplateCaseAlt(String("\"a\""), [TemplateCallBody("foo", [])])
+      , TemplateCaseAltDefault([TemplateCallBody("bar",[])])
+      ]
+    )
