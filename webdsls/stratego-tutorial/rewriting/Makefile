@@ -1,11 +1,16 @@
 
+NIX=$(HOME)/.nix-profile
 
-JAVA_FRONT = /nix/store/iva6y84cyvp6y5syw7f2qbi78x9jm1wz-java-front
+WEBDSL_FRONT=/usr/local/pkg/nano
+WEBDSL_FRONT_LIBS=/usr/local/pkg/nano/lib/libwebdsl-front.la
+
+JAVA_FRONT = $(NIX)
 JAVA_FRONT_CFLAGS =  
-JAVA_FRONT_LIBS = /nix/store/iva6y84cyvp6y5syw7f2qbi78x9jm1wz-java-front/lib/libjava-front.la  
-JAVA_FRONT_STRCFLAGS = -I /nix/store/iva6y84cyvp6y5syw7f2qbi78x9jm1wz-java-front/share/java-front-syntax -I /nix/store/iva6y84cyvp6y5syw7f2qbi78x9jm1wz-java-front/share/java-front -la /nix/store/iva6y84cyvp6y5syw7f2qbi78x9jm1wz-java-front/lib/libjava-front.la
-JAVA_FRONT_XTC = /nix/store/iva6y84cyvp6y5syw7f2qbi78x9jm1wz-java-front/share/java-front/XTC
+JAVA_FRONT_LIBS = $(NIX)/lib/libjava-front.la  
 
+JAVA_FRONT_STRCFLAGS = -I $(NIX)/share/java-front-syntax -I $(NIX)/share/java-front -la $(NIX)/lib/libjava-front.la
+
+JAVA_FRONT_XTC = $(NIX)/share/java-front/XTC
 
 STRCFLAGS = \
         -la stratego-xtc \
@@ -14,13 +19,15 @@ STRCFLAGS = \
         -la stratego-tool-doc \
         -la stratego-sglr \
         -la $(JAVA_FRONT_LIBS) \
-	-la ../NanoWebDSL/src/libwebdsl-front.la \
-	-I ../NanoWebDSL/src/ \
+	-la $(WEBDSL_FRONT_LIBS) \
+        -I $(WEBDSL_FRONT)/share \
         --format-check 0 -O 1
 
+all : normalize
+
+clean : 
+	rm -f normalize
 
 normalize : normalize.str
 	strc -i normalize.str $(STRCFLAGS)
-
-
 

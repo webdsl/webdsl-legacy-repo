@@ -19,4 +19,4 @@ strategies
   xtc-normalize = id
     ; xtc-parse-webdsl
     ; output-webdsl-to-file
-
+    ; <exit>0
