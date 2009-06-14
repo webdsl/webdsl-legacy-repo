@@ -8,6 +8,7 @@ imports
   libstratego-lib
   libstratego-xtc
   libwebdsl-front
+  remove-annos
 
 strategies
 
@@ -25,12 +26,32 @@ strategies
     ; set-default-config
     ; xtc-parse-webdsl
     ; normalize
+    ; remove-position-annos
     ; output-webdsl
 
 strategies
 
+  innermost-rep(s) =
+    all-consnil(innermost-rep(s)) // bottom-up traversal
+       ; try(
+           s                      // apply rule
+           ; innermost-rep(s)     // normalize reduct
+         )
+
+  all-consnil(s) = 
+    ?[_ | _] < [s | s] + all(s)
+
+signature
+  constructors
+    RemoveMe : Annotation
+
+strategies
+
   normalize = 
-    innermost(desugar)
+    innermost-rep(desugar)
+
+  desugar :
+    [RemoveMe()|lst] -> lst
 
   desugar =
     normalize-action
@@ -41,30 +62,15 @@ strategies
 rules // functions
 
   normalize-action : 
-    FunctionNoReturn(x, farg*, stat*) -> Function(x, farg*, SimpleSort("Void"), stat*)
+    fun|[ function x(farg*) { stat* } ]| -> fun|[ function x(farg*) : Void { stat* } ]|
 
   normalize-action :
-    IfNoElse(e, bit) -> If(e, bit, Block([]))
+    stat|[ if(e) { stat* } ]| -> stat|[ if(e) { stat* } else { } ]|
 
   normalize-ui :
-    IfNoElseTempl(e, elem*) -> IfTempl(e, elem*, [])
+    elem|[ if(e) { elem* } ]| -> elem|[ if(e) { elem* } else { } ]|
 
-rules // template elements
-
-  normalize-ui :
-    elem|[ navigate(url(e)){} ]| -> elem|[ navigate(url(e)){url(e)} ]|
-
-  normalize-ui :
-    elem|[ navigate(url(e)) ]| -> elem|[ navigate(url(e)){url(e)} ]|
-
-  normalize-ui :
-    elem|[ navigate(url(e)) ]| -> elem|[ navigate(url(e)){url(e)} ]|
-
-  normalize-ui :
-    elem|[ navigate(e1, e2){} ]| -> elem|[ navigate(e2){text(e1)} ]|
-
-  normalize-ui :
-    elem|[ section(e){elem*} ]| -> elem|[ section(){ header{output(e)} elem* } ]|
+rules // template calls
 
   normalize-ui :
     elem|[ x ]| -> elem|[ x(){} ]|
@@ -76,19 +82,39 @@ rules // template elements
     elem|[ x{elem*} ]| -> elem|[ x(){elem*} ]|
 
   normalize-ui :
-    elem|[ text(x) ]| -> elem|[ text(y){} ]| 
-    with y := <un-double-quote> x
-    
+    [elem|[ dummy(){ elem1* } ]|, elem2* ] -> [elem1*,elem2*]
+
+rules // navigate
+
   normalize-ui :
-    Text(x) -> Text(y)
+    elem|[ navigate(url(e)){} ]| -> elem|[ navigate(url(e)){output(e)} ]|
+
+  normalize-ui :
+    elem|[ navigate(url(e)) ]| -> elem|[ navigate(url(e)){url(e)} ]|
+
+  normalize-ui :
+    elem|[ navigate(e1, e2){} ]| -> elem|[ navigate(e2){text(e1)} ]|
+
+rules // section with header
+
+  normalize-ui :
+    elem|[ section(e){elem*} ]| -> elem|[ section(){ header{output(e)} elem* } ]|
+
+rules // text
+
+  normalize-ui :
+    elem|[ text(x){} ]| -> elem|[ text(y){} ]| 
     where y := <un-double-quote> x
     
   normalize-ui :
-    elem|[ text(x) ]| -> elem|[ text(y){} ]| 
-    with y := <un-double-quote> x
+    elem|[ str ]| -> elem|[ text(str){} ]|
     
   normalize-ui :
     elem*|[ text(e1,e2,e*){} elem* ]| -> elem*|[ text(e1){} text(e2,e*){ } elem* ]|
+
+  normalize-ui :
+    elem|[ text(e){} ]| -> elem|[ output(e){} ]|
+    where <not(?String(_))> e
 
 rules // case template element
 
@@ -102,30 +128,10 @@ rules // case template element
     [] -> elem|[ dummy(){ } ]|
 
   template-case-to-if(|x) :
-    [ TemplateCaseAlt(const, elem1*), talt* ] -> elem|[ if(x == const) { elem1* } else { elem2 } ]|
+    [ TemplateCaseAlt(const, elem1*), talt* ] -> 
+    elem|[ if(x == const) { elem1* } else { elem2 } ]|
     where elem2 := <template-case-to-if(|x)> talt*
 
   template-case-to-if(|x) :
     [ TemplateCaseAltDefault(elem1*), talt* ] -> elem|[ dummy(){ elem1* } ]|
 
-
-strategies
-
-  remove-position-annos =
-    topdown-l(try(remove-position-anno))
-
-  remove-string-position-annos =
-    topdown(try(remove-string-position-anno))
-
-  remove-string-position-anno =
-    (is-string + ?SimpleSort(_) + ?GenericSort(_, _))
-    ; strip-annos
-
-  remove-position-anno :
-    s{anno*} -> result
-    where anno2* := <remove-all(?At(_, _, _))> anno*
-        ; if [] := anno2* then
-            result := s{}
-          else
-            result := s{anno2*}
-          end

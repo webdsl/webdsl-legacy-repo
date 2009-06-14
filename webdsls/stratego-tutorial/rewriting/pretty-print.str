@@ -6,6 +6,7 @@ imports
   libstratego-lib
   libstratego-xtc
   libwebdsl-front
+  remove-annos
 
 strategies
 
@@ -22,4 +23,5 @@ strategies
     ; set-appname
     ; set-default-config
     ; xtc-parse-webdsl
+    ; remove-position-annos
     ; output-webdsl

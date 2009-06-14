@@ -1,29 +1,4 @@
-module normalize
-
-imports
-  libstratego-lib
-  libstratego-xtc
-  libwebdsl-front
-
-strategies
-
-  main =
-    xtc-io-wrap(
-        webdslc-options
-      , webdslc-usage
-      , webdslc-about
-      , ![] // xtc dependencies
-      , xtc-normalize
-    )
-
-  xtc-normalize = id
-    ; set-appname
-    ; set-default-config
-    ; xtc-parse-webdsl
-    ; output-webdsl
-
-rules
-
+module remove-annos
 
 strategies
 
