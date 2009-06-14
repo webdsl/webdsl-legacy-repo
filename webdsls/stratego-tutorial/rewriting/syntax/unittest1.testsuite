@@ -1,9 +1,0 @@
-testsuite Expressions
-
-topsort Exp
-
-test simple addition
-  "2 + 3" -> Add(Int("2"), Int("3"))
-
-test simple addition
-  "x * y / 3 % 10" -> Mod(Div(Mul(Var("x"),Var("y")),Int("3")),Int("10"))
