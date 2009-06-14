@@ -1,0 +1,75 @@
+module WebDSL-UI
+
+imports
+  WebDSL-Action
+  WebDSL-Lexical
+
+exports
+
+  sorts TemplateDefinition Modifier Exp
+
+  context-free syntax
+
+    TemplateDefinition -> Definition
+
+    "define" Modifier*
+       Id "(" {FormalArg ","}* ")"
+       "{" TemplateElement* "}"             -> TemplateDefinition {cons("Define")}
+
+    "define" Modifier*
+       Id UNDEFINED*
+       "{" TemplateElement* "}"             -> TemplateDefinition {cons("Define")}
+    
+    "define" -> Id {reject}
+    "for"    -> Id {reject}
+
+    "page"                                  -> Modifier {cons("Page")}
+    "template"                              -> Modifier {cons("Template")}
+    "local"                                 -> Modifier {cons("Local")}
+
+  context-free syntax
+
+    InitAction                              -> TemplateElement
+    Action                                  -> TemplateElement
+    VarDecl                                 -> TemplateElement
+    TemplateDefinition                      -> TemplateElement
+    TemplateCall                            -> TemplateElement {avoid}
+    String                                  -> TemplateElement {cons("Text")}
+
+  context-free syntax
+
+    "for" "(" Id ":" Sort "in" Exp ")"
+       "{" TemplateElement* "}"                    -> TemplateElement {cons("ForNoFilter")}
+
+    "for" "(" Id ":" Sort ")"
+       "{" TemplateElement* "}"                    -> TemplateElement {cons("ForAllNoFilter")}
+
+    "if" "(" Exp ")" "{" TemplateElement* "}" "else" "{" TemplateElement* "}" -> TemplateElement {cons("IfTempl"),prefer}
+    "if" "(" Exp ")" "{" TemplateElement* "}"                                 -> TemplateElement {cons("IfNoElseTempl")}
+
+  context-free syntax
+
+    "case" "(" Exp ")" "{" TemplateCaseAlt* "}" -> TemplateElement {cons("TemplateCase")}
+    ConstValue "{" TemplateElement* "}"         -> TemplateCaseAlt {cons("TemplateCaseAlt")}
+    "default"  "{" TemplateElement* "}"         -> TemplateCaseAlt {cons("TemplateCaseAltDefault")}
+
+  context-free syntax
+
+    Id                                             -> TemplateCall {cons("TemplateCallNoArgs")}
+    Id "(" {Exp ","}* ")"                          -> TemplateCall {cons("TemplateCallNoBody")}
+    Id                    "{" TemplateElement* "}" -> TemplateCall {cons("TemplateCallBody")}
+    Id "(" {Exp ","}* ")" "{" TemplateElement* "}" -> TemplateCall {cons("TemplateCall")}
+
+    "if" "(" Exp ")" "{" TemplateElement* "}"      -> TemplateCall {reject}
+    "else" "{" TemplateElement* "}"                -> TemplateCall {reject}
+   
+  context-free syntax
+
+    %% Template call without braces must be disambiguated in some cases
+    "action" -> TemplateCall {reject}  %%this is an action definiton, not a templatecall without params
+    "action" -> Exp {reject}		   %%this is an inline action, not a variable
+    "action" -> PropertyValue {reject}     %%this is an inline action, not an id
+
+  context-free syntax
+    "init" Block  		               -> InitAction {cons("InitAction"),prefer}
+    "action" Id "(" {FormalArg ","}* ")" Block -> Action     {cons("Action")}

@@ -1,0 +1,36 @@
+module WebDSL
+
+imports
+  WebDSL-Lexical
+  WebDSL-UI
+  WebDSL-Action
+  WebDSL-DataModel
+  WebDSL-Derive
+
+hiddens
+  context-free start-symbols Application
+
+exports
+  sorts
+    Id QId Int Float FloatDigits ExponentPart
+    SignedInteger String UNDEFINED Eof
+
+  context-free syntax
+    Id         -> QId
+    QId "." Id -> QId {cons("Qualified")}
+
+  context-free syntax %% Types
+    Id ":" Sort -> FormalArg {cons("Arg")}
+
+exports
+  sorts Application
+  context-free syntax
+    "application" QId Definition* -> Application {cons("Application")}
+
+exports
+
+  sorts Action Statements Statement Exp
+  context-free syntax
+    Action     -> Definition
+    Statement* -> Statements
+

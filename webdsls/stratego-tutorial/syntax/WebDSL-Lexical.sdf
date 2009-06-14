@@ -1,0 +1,40 @@
+module WebDSL-Lexical
+
+exports
+
+  lexical syntax
+    [a-zA-Z][a-zA-Z0-9\_]* -> Id
+
+  lexical restrictions
+    Id         -/- [a-zA-Z0-9\_]
+
+  lexical syntax
+    "-"? [0-9]+            -> Int
+
+  lexical syntax
+    "\"" StringChar* "\""        -> String
+    ~[\"\n]                      -> StringChar
+    "\\\""                       -> StringChar
+
+  lexical syntax
+    [\ \t\n\r]                   -> LAYOUT
+    "//" ~[\n\r]* ([\n\r] | Eof) -> LAYOUT
+    "/*" CommentChar* "*/"       -> LAYOUT
+                                 -> Eof
+    ~[\*]                        -> CommentChar
+    Asterisk                     -> CommentChar
+    [\*]                         -> Asterisk
+
+  lexical restrictions
+    Asterisk   -/- [\/]
+    Eof        -/- ~[]
+
+  context-free restrictions
+    LAYOUT?     -/- [\ \t\n\r]
+    LAYOUT?     -/- [\/].[\/]
+    LAYOUT?     -/- [\/].[\*]
+    SectionName -/- ~[\n\r]
+
+  context-free restrictions
+    "page" "local" "template" -/- [a-zA-Z0-9]
+
