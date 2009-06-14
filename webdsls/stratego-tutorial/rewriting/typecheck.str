@@ -17,9 +17,10 @@ strategies
     )
 
   xtc-normalize = id
+    ; set-appname
+    ; set-default-config
     ; xtc-parse-webdsl
-    ; output-webdsl-to-file
-    ; <exit>0
+    ; output-webdsl
 
 rules
 

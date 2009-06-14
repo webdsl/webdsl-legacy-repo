@@ -21,9 +21,111 @@ strategies
     )
 
   xtc-normalize = id
+    ; set-appname
+    ; set-default-config
     ; xtc-parse-webdsl
-    ; output-webdsl-to-file
-    ; <exit>0
+    ; normalize
+    ; output-webdsl
 
-rules
+strategies
 
+  normalize = 
+    innermost(desugar)
+
+  desugar =
+    normalize-action
+
+  desugar =
+    normalize-ui
+
+rules // functions
+
+  normalize-action : 
+    FunctionNoReturn(x, farg*, stat*) -> Function(x, farg*, SimpleSort("Void"), stat*)
+
+  normalize-action :
+    IfNoElse(e, bit) -> If(e, bit, Block([]))
+
+  normalize-ui :
+    IfNoElseTempl(e, elem*) -> IfTempl(e, elem*, [])
+
+rules // template elements
+
+  normalize-ui :
+    elem|[ navigate(url(e)){} ]| -> elem|[ navigate(url(e)){url(e)} ]|
+
+  normalize-ui :
+    elem|[ navigate(url(e)) ]| -> elem|[ navigate(url(e)){url(e)} ]|
+
+  normalize-ui :
+    elem|[ navigate(url(e)) ]| -> elem|[ navigate(url(e)){url(e)} ]|
+
+  normalize-ui :
+    elem|[ navigate(e1, e2){} ]| -> elem|[ navigate(e2){text(e1)} ]|
+
+  normalize-ui :
+    elem|[ section(e){elem*} ]| -> elem|[ section(){ header{output(e)} elem* } ]|
+
+  normalize-ui :
+    elem|[ x ]| -> elem|[ x(){} ]|
+
+  normalize-ui :
+    elem|[ x(e*) ]| -> elem|[ x(e*){} ]|
+
+  normalize-ui :
+    elem|[ x{elem*} ]| -> elem|[ x(){elem*} ]|
+
+  normalize-ui :
+    elem|[ text(x) ]| -> elem|[ text(y){} ]| 
+    with y := <un-double-quote> x
+    
+  normalize-ui :
+    Text(x) -> Text(y)
+    where y := <un-double-quote> x
+    
+  normalize-ui :
+    elem|[ text(x) ]| -> elem|[ text(y){} ]| 
+    with y := <un-double-quote> x
+    
+  normalize-ui :
+    elem*|[ text(e1,e2,e*){} elem* ]| -> elem*|[ text(e1){} text(e2,e*){ } elem* ]|
+
+rules // case template element
+
+  normalize-ui :
+    elem|[ case(e) { talt* } ]| -> elem|[ dummy(){ var x : srt := e; elem } ]|
+    where srt  := SimpleSort("String") // <type-of> e
+        ; x    := <newname> "caseval"
+        ; elem := <template-case-to-if(|x)> talt*
+
+  template-case-to-if(|x) :
+    [] -> elem|[ dummy(){ } ]|
+
+  template-case-to-if(|x) :
+    [ TemplateCaseAlt(const, elem1*), talt* ] -> elem|[ if(x == const) { elem1* } else { elem2 } ]|
+    where elem2 := <template-case-to-if(|x)> talt*
+
+  template-case-to-if(|x) :
+    [ TemplateCaseAltDefault(elem1*), talt* ] -> elem|[ dummy(){ elem1* } ]|
+
+
+strategies
+
+  remove-position-annos =
+    topdown-l(try(remove-position-anno))
+
+  remove-string-position-annos =
+    topdown(try(remove-string-position-anno))
+
+  remove-string-position-anno =
+    (is-string + ?SimpleSort(_) + ?GenericSort(_, _))
+    ; strip-annos
+
+  remove-position-anno :
+    s{anno*} -> result
+    where anno2* := <remove-all(?At(_, _, _))> anno*
+        ; if [] := anno2* then
+            result := s{}
+          else
+            result := s{anno2*}
+          end

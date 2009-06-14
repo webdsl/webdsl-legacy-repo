@@ -15,10 +15,11 @@ strategies
       , webdslc-usage
       , webdslc-about
       , ![] // xtc dependencies
-      , xtc-normalize
+      , xtc-pretty-print
     )
 
-  xtc-normalize = id
+  xtc-pretty-print = id
+    ; set-appname
+    ; set-default-config
     ; xtc-parse-webdsl
-    ; output-webdsl-to-file
-    ; <exit>0
+    ; output-webdsl

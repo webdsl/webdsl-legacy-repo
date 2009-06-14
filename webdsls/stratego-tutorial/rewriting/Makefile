@@ -21,6 +21,7 @@ STRCFLAGS = \
         -la $(JAVA_FRONT_LIBS) \
 	-la $(WEBDSL_FRONT_LIBS) \
         -I $(WEBDSL_FRONT)/share \
+        -I $(WEBDSL_FRONT)/share/sdf/webdsl \
         --format-check 0 -O 1
 
 all : pretty-print normalize typecheck
@@ -28,11 +29,11 @@ all : pretty-print normalize typecheck
 clean : 
 	rm -f normalize
 
-normalize : normalize.str
-	strc -i normalize.str $(STRCFLAGS)
-
 pretty-print : pretty-print.str
 	strc -i pretty-print.str $(STRCFLAGS)
+
+normalize : normalize.str
+	strc -i normalize.str $(STRCFLAGS)
 
 typecheck : typecheck.str
 	strc -i typecheck.str $(STRCFLAGS)
