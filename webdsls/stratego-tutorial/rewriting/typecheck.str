@@ -1,9 +1,5 @@
 module normalize
 
-// parses a NanoWebDSL file, 
-// applies syntactic normalizations to the AST,
-// and pretty-prints the result
-
 imports
   libstratego-lib
   libstratego-xtc

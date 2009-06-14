@@ -23,7 +23,7 @@ STRCFLAGS = \
         -I $(WEBDSL_FRONT)/share \
         --format-check 0 -O 1
 
-all : normalize
+all : pretty-print normalize typecheck
 
 clean : 
 	rm -f normalize
@@ -31,3 +31,8 @@ clean :
 normalize : normalize.str
 	strc -i normalize.str $(STRCFLAGS)
 
+pretty-print : pretty-print.str
+	strc -i pretty-print.str $(STRCFLAGS)
+
+typecheck : typecheck.str
+	strc -i typecheck.str $(STRCFLAGS)
