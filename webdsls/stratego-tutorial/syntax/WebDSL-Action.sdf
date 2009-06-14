@@ -5,27 +5,30 @@ imports
 
 exports
 
-  context-free syntax 
+  sorts FormalArg
+  context-free syntax
+    Id ":" Sort -> FormalArg {cons("Arg")}
 
+  sorts Function
+  context-free syntax 
     "function" Id "(" {FormalArg ","}* ")" ":" Sort Block -> Function {cons("Function")}
     "function" Id "(" {FormalArg ","}* ")"  Block         -> FunctionNoReturn {cons("FunctionNoReturn")}
     FunctionNoReturn                                      -> Function
     "extend" FunctionNoReturn                             -> Function {cons("ExtendFunction")}
 
+  sorts Statement Block
   context-free syntax
-
     "{" Statements "}" -> Block {cons("Block")}
     Block              -> Statement
     Exp ";"	       -> Statement {cons("Stat")}
 
   context-free syntax
-
     "return" Exp ";"   -> Statement {cons("Return")}
     "return" ";"       -> Statement {cons("ReturnEmpty")}
     "goto" Exp ";"     -> Statement {cons("GoTo")}
 
+  sorts VarDecl
   context-free syntax
-
     "var" Id ":" Sort ";" 	    -> VarDecl {cons("VarDecl")}
     "var" Id ":" Sort 		    -> TemplateElement {cons("VarDecl")}
 
@@ -35,12 +38,10 @@ exports
     VarDecl                         -> Statement
 
   context-free syntax
-
     "if" "(" Exp ")" Block "else" Block -> Statement {cons("If")}
     "if" "(" Exp ")" Block 		-> Statement {cons("IfNoElse")}
 
   context-free syntax
-
     "case" "(" Exp ")" "{" Case* "}" 	-> Statement {cons("Case")}
     ConstValue Block                 	-> Case {cons("CaseAlt")}
     "default"  Block                 	-> Case {cons("CaseDefault")}

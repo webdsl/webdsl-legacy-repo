@@ -12,9 +12,9 @@ context-free syntax
 
   "derive" Id "from" Exp "for" "(" {DeriveProperty ","}* ")" -> TemplateElement {cons("Derive"), prefer}
 
-  "derive" Id "from" Exp            -> TemplateElement {cons("Derive"), prefer}
+  "derive" Id "from" Exp  -> TemplateElement {cons("Derive"), prefer}
 
-  Id                                -> DeriveProperty {cons("DeriveDefault")}
-  Id "(" Id ")"                     -> DeriveProperty {cons("DeriveMode")}
+  Id                      -> DeriveProperty {cons("DeriveDefault")}
+  Id "(" Id ")"           -> DeriveProperty {cons("DeriveMode")}
 
-  "derive"                          -> TemplateCall {reject}
+  "derive"                -> TemplateCall {reject}

@@ -27,6 +27,7 @@ exports
     "template"                              -> Modifier {cons("Template")}
     "local"                                 -> Modifier {cons("Local")}
 
+  sorts TemplateElement
   context-free syntax
 
     InitAction                              -> TemplateElement
@@ -47,14 +48,15 @@ exports
     "if" "(" Exp ")" "{" TemplateElement* "}" "else" "{" TemplateElement* "}" -> TemplateElement {cons("IfTempl"),prefer}
     "if" "(" Exp ")" "{" TemplateElement* "}"                                 -> TemplateElement {cons("IfNoElseTempl")}
 
-  context-free syntax
 
+  sorts TemplateCaseAlt
+  context-free syntax
     "case" "(" Exp ")" "{" TemplateCaseAlt* "}" -> TemplateElement {cons("TemplateCase")}
     ConstValue "{" TemplateElement* "}"         -> TemplateCaseAlt {cons("TemplateCaseAlt")}
     "default"  "{" TemplateElement* "}"         -> TemplateCaseAlt {cons("TemplateCaseAltDefault")}
 
+  sorts TemplateCall
   context-free syntax
-
     Id                                             -> TemplateCall {cons("TemplateCallNoArgs")}
     Id "(" {Exp ","}* ")"                          -> TemplateCall {cons("TemplateCallNoBody")}
     Id                    "{" TemplateElement* "}" -> TemplateCall {cons("TemplateCallBody")}
@@ -63,13 +65,11 @@ exports
     "if" "(" Exp ")" "{" TemplateElement* "}"      -> TemplateCall {reject}
     "else" "{" TemplateElement* "}"                -> TemplateCall {reject}
    
-  context-free syntax
-
     %% Template call without braces must be disambiguated in some cases
     "action" -> TemplateCall {reject}      %%this is an action definiton, not a templatecall without params
     "action" -> Exp {reject}		   %%this is an inline action, not a variable
-    "action" -> PropertyValue {reject}     %%this is an inline action, not an id
 
+  sorts InitAction Action 
   context-free syntax
     "init" Block  		               -> InitAction {cons("InitAction"),prefer}
     "action" Id "(" {FormalArg ","}* ")" Block -> Action     {cons("Action")}

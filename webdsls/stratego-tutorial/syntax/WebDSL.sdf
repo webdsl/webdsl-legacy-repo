@@ -11,19 +11,10 @@ hiddens
   context-free start-symbols Application
 
 exports
-  sorts
-    Id QId Int Float FloatDigits ExponentPart
-    SignedInteger String UNDEFINED Eof
-
-  context-free syntax
-    Id         -> QId
-    QId "." Id -> QId {cons("Qualified")}
-
-  context-free syntax %% Types
-    Id ":" Sort -> FormalArg {cons("Arg")}
+  sorts UNDEFINED Eof
 
 exports
-  sorts Application
+  sorts Application Definition 
   context-free syntax
     "application" QId Definition* -> Application {cons("Application")}
 
