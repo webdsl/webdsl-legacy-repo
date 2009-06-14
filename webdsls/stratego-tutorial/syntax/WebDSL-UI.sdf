@@ -6,54 +6,45 @@ imports
 
 exports
 
-  sorts TemplateDefinition Modifier Exp
-
+  sorts Definition TemplateDefinition Modifier Exp
   context-free syntax
-
     TemplateDefinition -> Definition
 
     "define" Modifier*
        Id "(" {FormalArg ","}* ")"
-       "{" TemplateElement* "}"             -> TemplateDefinition {cons("Define")}
+       "{" TemplateElement* "}"    -> TemplateDefinition {cons("Define")}
 
     "define" Modifier*
        Id UNDEFINED*
-       "{" TemplateElement* "}"             -> TemplateDefinition {cons("Define")}
+       "{" TemplateElement* "}"   -> TemplateDefinition {cons("Define")}
     
-    "define" -> Id {reject}
-    "for"    -> Id {reject}
-
-    "page"                                  -> Modifier {cons("Page")}
-    "template"                              -> Modifier {cons("Template")}
-    "local"                                 -> Modifier {cons("Local")}
+    "page"                        -> Modifier {cons("Page")}
+    "template"                    -> Modifier {cons("Template")}
+    "local"                       -> Modifier {cons("Local")}
+    "define"                      -> Id {reject}
+    "for"                         -> Id {reject}
 
   sorts TemplateElement
   context-free syntax
-
-    InitAction                              -> TemplateElement
-    Action                                  -> TemplateElement
-    VarDecl                                 -> TemplateElement
-    TemplateDefinition                      -> TemplateElement
-    TemplateCall                            -> TemplateElement {avoid}
-    String                                  -> TemplateElement {cons("Text")}
+    InitAction         -> TemplateElement
+    Action             -> TemplateElement
+    VarDecl            -> TemplateElement
+    TemplateDefinition -> TemplateElement
+    TemplateCall       -> TemplateElement {avoid}
+    String             -> TemplateElement {cons("Text")}
 
   context-free syntax
-
-    "for" "(" Id ":" Sort "in" Exp ")"
-       "{" TemplateElement* "}"                    -> TemplateElement {cons("ForNoFilter")}
-
-    "for" "(" Id ":" Sort ")"
-       "{" TemplateElement* "}"                    -> TemplateElement {cons("ForAllNoFilter")}
+    "for" "(" Id ":" Sort "in" Exp ")" "{" TemplateElement* "}" -> TemplateElement {cons("ForNoFilter")}
+    "for" "(" Id ":" Sort          ")" "{" TemplateElement* "}" -> TemplateElement {cons("ForAllNoFilter")}
 
     "if" "(" Exp ")" "{" TemplateElement* "}" "else" "{" TemplateElement* "}" -> TemplateElement {cons("IfTempl"),prefer}
     "if" "(" Exp ")" "{" TemplateElement* "}"                                 -> TemplateElement {cons("IfNoElseTempl")}
 
-
-  sorts TemplateCaseAlt
-  context-free syntax
-    "case" "(" Exp ")" "{" TemplateCaseAlt* "}" -> TemplateElement {cons("TemplateCase")}
-    ConstValue "{" TemplateElement* "}"         -> TemplateCaseAlt {cons("TemplateCaseAlt")}
-    "default"  "{" TemplateElement* "}"         -> TemplateCaseAlt {cons("TemplateCaseAltDefault")}
+  %%sorts TemplateCaseAlt
+  %%context-free syntax
+  %%  "case" "(" Exp ")" "{" TemplateCaseAlt* "}" -> TemplateElement {cons("TemplateCase")}
+  %%  ConstValue "{" TemplateElement* "}"         -> TemplateCaseAlt {cons("TemplateCaseAlt")}
+  %%  "default"  "{" TemplateElement* "}"         -> TemplateCaseAlt {cons("TemplateCaseAltDefault")}
 
   sorts TemplateCall
   context-free syntax

@@ -11,17 +11,7 @@ hiddens
   context-free start-symbols Application
 
 exports
-  sorts UNDEFINED Eof
-
-exports
   sorts Application Definition 
   context-free syntax
     "application" QId Definition* -> Application {cons("Application")}
-
-exports
-
-  sorts Action Statements Statement Exp
-  context-free syntax
-    Action     -> Definition
-    Statement* -> Statements
 
