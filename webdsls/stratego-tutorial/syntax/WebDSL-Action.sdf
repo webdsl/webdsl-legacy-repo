@@ -68,15 +68,14 @@ exports %% Expression language
     Exp "." Id -> Exp {cons("FieldAccess"),prefer}
 
   context-free syntax
-    Sort "{" ObjectPropertyAssignment* "}"         -> Exp {cons("ObjectCreation")}
-    %%Sort "{" { ObjectPropertyAssignment "," }* "}" -> Exp {cons("ObjectCreation"), prefer}
-    Id ":=" Exp                                    -> ObjectPropertyAssignment {cons("ObjectPropertyAssignment")}
+    Sort "{" ObjectPropertyAssignment* "}" -> Exp {cons("ObjectCreation")}
+    Id ":=" Exp                            -> ObjectPropertyAssignment {cons("ObjectPropertyAssignment")}
 
   context-free syntax
     QId ":=" Exp           -> Assignment {cons("Assignment")}
     Assignment		   -> Exp
 
-    "List" "<" Sort ">" "(" {Exp ","}* ")" -> Exp {cons("TypedListCreation"), prefer}
+    %%"List" "<" Sort ">" "(" {Exp ","}* ")" -> Exp {cons("TypedListCreation"), prefer}
     "Set" "<" Sort ">" "(" {Exp ","}* ")" -> Exp {cons("TypedSetCreation"), prefer}
 
   context-free syntax
