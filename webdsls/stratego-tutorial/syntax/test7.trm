@@ -1,0 +1,24 @@
+Application(
+  "tasks"
+, [ EntityNoSuper(
+      "User"
+    , [ Property(
+          "username"
+        , Simple()
+        , SimpleSort(String)
+        , [SimpleAnno("id"), SimpleAnno("name")]
+        )
+      , PropertyNo("tasks", Ref(), GenericSort("Set", [SimpleSort("Task")]))
+      , PropertyNoAnno("log", Ref(), GenericSort("Set", [SimpleSort("Task")]))
+      ]
+    , []
+    )
+  , EntityNoSuper(
+      "Task"
+    , [ Property("description", Simple(), SimpleSort("String"), [SimpleAnno("name")])
+      , PropertyNoAnno("done", Simple(), SimpleSort(Ref()))
+      ]
+    , []
+    )
+  ]
+)

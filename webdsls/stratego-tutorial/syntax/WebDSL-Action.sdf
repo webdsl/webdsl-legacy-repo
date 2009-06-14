@@ -121,9 +121,6 @@ exports %% Expression language
     "[" Exp "|" Id ":" Sort "in" Exp "]" -> ForExp {cons("ForExpNoFilter")}
     ForExp                               -> Exp
 
-    %%Exp "*" Exp  -> Exp {cons("Mul")}%%,assoc}
-    %%Exp "/" Exp  -> Exp {cons("Div")}%%,assoc}
-    %%Exp "%" Exp  -> Exp {cons("Mod")}%%,assoc}
     Exp "+" Exp  -> Exp {cons("Add"),assoc}
     Exp "-" Exp  -> Exp {cons("Sub"),assoc}
 
@@ -134,10 +131,6 @@ context-free priorities
   > Exp "as" Sort -> Exp
   > "!" Exp -> Exp
   > Exp "in" Exp -> Exp
-  %%> {left:
-  %%     Exp "*" Exp -> Exp
-  %%     Exp "%" Exp -> Exp
-  %%     Exp "/" Exp -> Exp }
   > {left:
        Exp "+" Exp -> Exp
        Exp "-" Exp -> Exp }

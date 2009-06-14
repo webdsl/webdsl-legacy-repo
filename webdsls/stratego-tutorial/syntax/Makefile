@@ -28,9 +28,14 @@ check: $(subst testsuite,res,$(wildcard *.testsuite))
 	parse-unit -p WebDSL-Test.tbl -i $< -o $@
 
 
-%.trm : %.app
+%.trm : %.app WebDSL.tbl
 	sglri -p WebDSL.tbl -i $< | pp-aterm -o $@
 
 %.trm.chk : %.trm 
 	format-check --rtg WebDSL.rtg -i $< -o $@
 
+%.trm.up : %.trm WebDSL.pp
+	ast2text -p WebDSL.pp -i $< -o $@
+
+%.trm.pp : %.trm WebDSL-pretty.pp
+	ast2text -p WebDSL-pretty.pp -i $< -o $@
