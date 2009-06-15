@@ -1,5 +1,6 @@
 
-tobuild = WebDSL.def WebDSL.tbl WebDSL.rtg WebDSL.str WebDSL.pp WebDSL-Test.tbl
+tobuild = WebDSL.def WebDSL.tbl WebDSL.rtg WebDSL.str WebDSL.pp WebDSL-Test.tbl \
+          StrategoWebDSL.def StrategoWebDSL.tbl
 
 all : $(tobuild)
 
