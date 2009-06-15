@@ -1,0 +1,22 @@
+module remove-annos
+
+strategies
+
+  remove-position-annos =
+    topdown-l(try(remove-position-anno))
+
+  remove-string-position-annos =
+    topdown(try(remove-string-position-anno))
+
+  remove-string-position-anno =
+    (is-string + ?SimpleSort(_) + ?GenericSort(_, _))
+    ; strip-annos
+
+  remove-position-anno :
+    s{anno*} -> result
+    where anno2* := <remove-all(?At(_, _, _))> anno*
+        ; if [] := anno2* then
+            result := s{}
+          else
+            result := s{anno2*}
+          end

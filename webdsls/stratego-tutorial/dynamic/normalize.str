@@ -1,0 +1,107 @@
+module normalize
+
+strategies
+
+  innermost-rep(s) =
+    all-consnil(innermost-rep(s)) // bottom-up traversal
+       ; try(
+           s                      // apply rule
+           ; innermost-rep(s)     // normalize reduct
+         )
+
+  all-consnil(s) = 
+    ?[_ | _] < [s | s] + all(s)
+
+signature
+  constructors
+    RemoveMe : Annotation
+
+strategies
+
+  normalize = 
+    innermost-rep(desugar)
+
+  desugar :
+    [RemoveMe()|lst] -> lst
+
+  desugar =
+    normalize-action
+
+  desugar =
+    normalize-ui
+
+rules // functions
+
+  normalize-action : 
+    fun|[ function x(farg*) { stat* } ]| -> fun|[ function x(farg*) : Void { stat* } ]|
+
+  normalize-action :
+    stat|[ if(e) { stat* } ]| -> stat|[ if(e) { stat* } else { } ]|
+
+  normalize-ui :
+    elem|[ if(e) { elem* } ]| -> elem|[ if(e) { elem* } else { } ]|
+
+rules // template calls
+
+  normalize-ui :
+    elem|[ x ]| -> elem|[ x(){} ]|
+
+  normalize-ui :
+    elem|[ x(e*) ]| -> elem|[ x(e*){} ]|
+
+  normalize-ui :
+    elem|[ x{elem*} ]| -> elem|[ x(){elem*} ]|
+
+  normalize-ui :
+    [elem|[ dummy(){ elem1* } ]|, elem2* ] -> [elem1*,elem2*]
+
+rules // navigate
+
+  normalize-ui :
+    elem|[ navigate(url(e)){} ]| -> elem|[ navigate(url(e)){output(e)} ]|
+
+  normalize-ui :
+    elem|[ navigate(url(e)) ]| -> elem|[ navigate(url(e)){url(e)} ]|
+
+  normalize-ui :
+    elem|[ navigate(e1, e2){} ]| -> elem|[ navigate(e2){text(e1)} ]|
+
+rules // section with header
+
+  normalize-ui :
+    elem|[ section(e){elem*} ]| -> elem|[ section(){ header{output(e)} elem* } ]|
+
+rules // text
+
+  normalize-ui :
+    elem|[ text(x){} ]| -> elem|[ text(y){} ]| 
+    where y := <un-double-quote> x
+    
+  normalize-ui :
+    elem|[ str ]| -> elem|[ text(str){} ]|
+    
+  normalize-ui :
+    elem*|[ text(e1,e2,e*){} elem* ]| -> elem*|[ text(e1){} text(e2,e*){ } elem* ]|
+
+  normalize-ui :
+    elem|[ text(e){} ]| -> elem|[ output(e){} ]|
+    where <not(?String(_))> e
+
+rules // case template element
+
+  normalize-ui :
+    elem|[ case(e) { talt* } ]| -> elem|[ dummy(){ var x : srt := e; elem } ]|
+    where srt  := SimpleSort("String") 
+        ; x    := <newname> "caseval"
+        ; elem := <template-case-to-if(|x)> talt*
+
+  template-case-to-if(|x) :
+   talt*|[ ]| -> elem|[ dummy(){ } ]|
+
+  template-case-to-if(|x) : 
+    talt*|[ const{ elem1* } talt* ]| -> 
+    elem|[ if(x == const) { elem1* } else { elem2 } ]|
+    where elem2 := <template-case-to-if(|x)> talt*
+
+  template-case-to-if(|x) :
+    talt*|[ default { elem1* } talt* ]| -> elem|[ dummy(){ elem1* } ]|

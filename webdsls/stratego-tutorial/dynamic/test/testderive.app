@@ -12,5 +12,5 @@ entity Task {
 }
 
 define page task(task : Task) {
-  derive viewPage from task
+  derive editPage from task
 }

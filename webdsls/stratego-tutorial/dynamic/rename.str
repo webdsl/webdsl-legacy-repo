@@ -1,0 +1,48 @@
+module rename
+
+rules
+
+  declare-all =
+    alltd(declare)
+
+  declare =
+    ?|[ entity x_class { prop* } ]|
+    ; rules(
+        Properties : x_class -> prop*
+      )
+
+rules // renaming bound variables
+
+  rename-all =
+    alltd(rename)
+
+  rename =
+    Rename
+
+  rename :
+    Arg(x, srt) -> Arg(y, srt)
+    with y := <rename-bound(|srt)> x
+
+  rename-bound(|srt) :
+    x -> y
+    with y := x{<newname> x}
+       ; <debug(!"renaming: ")> (x, y)
+       ; rules ( 
+           Rename : Var(x) -> Var(y)
+           TypeOf : y -> srt
+         )
+
+  rename :
+    def |[ define mod* x(farg1*) { elem1* } ]| -> 
+    def |[ define mod* x(farg2*) { elem2* } ]|
+    with {| Rename
+          : farg2* := <map(rename)> farg1*
+          ; elem2* := <rename-all> elem1*
+          |}
+
+rules // type-of
+
+  type-of :
+    Var(x) -> srt
+    where srt := <TypeOf> x
+
