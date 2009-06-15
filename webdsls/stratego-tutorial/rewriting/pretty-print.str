@@ -1,6 +1,6 @@
 module pretty-print
 
-// parses a NanoWebDSL file and pretty-prints it
+// parse a NanoWebDSL file and pretty-print it
 
 imports
   libstratego-lib

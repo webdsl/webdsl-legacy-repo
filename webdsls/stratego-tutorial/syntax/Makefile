@@ -4,7 +4,7 @@ tobuild = WebDSL.def WebDSL.tbl WebDSL.rtg WebDSL.str WebDSL.pp WebDSL-Test.tbl
 all : $(tobuild)
 
 clean:
-	rm -f $(tobuild) $(wildcard *.trm)
+	rm -f $(tobuild) $(wildcard *.trm) $(wildcard *.pp) $(wildcard *.up)
 
 check: $(subst testsuite,res,$(wildcard *.testsuite))
 
