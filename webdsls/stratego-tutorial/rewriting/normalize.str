@@ -115,22 +115,3 @@ rules // text
   normalize-ui :
     elem|[ text(e){} ]| -> elem|[ output(e){} ]|
     where <not(?String(_))> e
-
-rules // case template element
-
-  normalize-ui :
-    elem|[ case(e) { talt* } ]| -> elem|[ dummy(){ var x : srt := e; elem } ]|
-    where srt  := SimpleSort("String") 
-        ; x    := <newname> "caseval"
-        ; elem := <template-case-to-if(|x)> talt*
-
-  template-case-to-if(|x) :
-   talt*|[ ]| -> elem|[ dummy(){ } ]|
-
-  template-case-to-if(|x) : 
-    talt*|[ const{ elem1* } talt* ]| -> 
-    elem|[ if(x == const) { elem1* } else { elem2 } ]|
-    where elem2 := <template-case-to-if(|x)> talt*
-
-  template-case-to-if(|x) :
-    talt*|[ default { elem1* } talt* ]| -> elem|[ dummy(){ elem1* } ]|
