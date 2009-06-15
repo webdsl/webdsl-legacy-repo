@@ -53,8 +53,43 @@ strategies
 
 rules
 
+  normalize-action :
+    FunctionNoReturn(x, farg*, Block(stat*)) -> 
+    Function(x, farg*, SimpleSort("Void"), Block(stat*))
+
+  normalize-action :
+    IfNoElse(e, Block(stat*)) -> If(e, Block(stat*), Block([]))
+
+  normalize-ui :
+    IfNoElseTempl(e, elem*) -> IfTempl(e, elem*, [])
+
+rules
+
+  normalize-ui :
+    TemplateCallNoArgs(x) -> TemplateCall(x, [], [])
+
+  normalize-ui :
+    TemplateCallNoBody(x, e*) -> TemplateCall(x, e*, [])
+
+  normalize-ui :
+    TemplateCallBody(x, elem*) -> TemplateCall(x, [], elem*)
+
   normalize-ui :
     [ TemplateCall("dummy", [], elem1*), elem2*] -> [elem1*, elem2*]
+
+rules
+
+  normalize-ui :
+    TemplateCall("navigate", [ThisCall("url", [e])], []) -> 
+    TemplateCall("navigate", [ThisCall("url", [e])], [TemplateCallNoBody("output", [e])])
+
+  normalize-ui :
+    TemplateCallNoBody("navigate", [ThisCall("url", [e])]) -> 
+    TemplateCall("navigate", [ThisCall("url", [e])], [TemplateCallNoBody("url", [e])])
+
+  normalize-ui :
+    TemplateCall("navigate", [e1|[e2]], []) -> 
+    TemplateCall("navigate", [e2], [TemplateCallNoBody("text", [e1])])
 
 rules
 
