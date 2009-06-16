@@ -7,11 +7,13 @@ imports
 strategies // TODO: use java-concat-ids from libjava-front
 
   java-concat-ids =
-    topdown(try(
+    bottomup(repeat(changed(
        concat-id-java-pascal-case'
     <+ concat-id-underscore-camel-case'
     <+ concat-id-camel-case'
-    ))
+    )))
+  
+  changed(s) = ?x; s; not(?x)
 
 /** @internal */
 rules

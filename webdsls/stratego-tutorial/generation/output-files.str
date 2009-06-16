@@ -52,8 +52,7 @@ strategies
    // TODO: Use rtg-format-check(true, true| <import-term of rtg.af>) instead
    pp-format-checker-error(|msg, rtg) =
       err-msg(|msg)
-    ; write-to => FILE(file)
-    ; try(<xtc-command(!"format-check")> ["--vis", "-i", file, "--rtg", <xtc-find> rtg | <pass-verbose>])
+    ; try(write-to => FILE(file); <xtc-command(!"format-check")> ["--vis", "-i", file, "--rtg", <xtc-find> rtg | <pass-verbose>] <+ debug(!"Output: "))
     ; log(|Critical(), "Fatal errors encountered in generated code")
     ; <xtc-exit> 1
      
