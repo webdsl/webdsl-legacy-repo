@@ -1,3 +1,5 @@
+INSTALLATION
+
 1) Make a shared folder:
 
     * In VirtualBox, go to menu Devices, then Shared Folders
@@ -14,6 +16,8 @@
 
      sudo mkdir /usr/local/pkg # (password guest)
      sudo chown guest:guest /usr/local/pkg
-     cd ~/Desktop/webnano 
+     cd ~/Desktop/share/webnano 
      ./bootstrap
      ./configure --prefix=/usr/local/pkg/webnano
+     make && make install
+
