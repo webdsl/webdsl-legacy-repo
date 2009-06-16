@@ -21,6 +21,6 @@ INSTALLATION
      ./configure --prefix=/usr/local/pkg/webnano
      make && make install
 
-   Finally, install a PDF reader for viewing the slides:
+   Finally, install a PDF reader to view the slides:
 
      sudo apt-get install evince
