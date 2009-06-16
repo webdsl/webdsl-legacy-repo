@@ -1,0 +1,19 @@
+1) Make a shared folder:
+
+    * In VirtualBox, go to menu Devices, then Shared Folders
+    * Choose Add and fill in * Folder Path: / (to share the root filesystem of the host) * Folder Name: share
+    * Press OK
+    * open terminal (menu Applications/Accessoires/Terminal)
+    * Execute: mount-shared share /home/guest/Desktop/share to mount the shared folder with name 'share' to a folder on your desktop.
+
+2) Copy the contents of this directory to your shared folder on the host machine
+
+3) Open a new Terminal on the guest machine (Applications > Accessories)
+
+   Enter the following:
+
+     sudo mkdir /usr/local/pkg # (password guest)
+     sudo chown guest:guest /usr/local/pkg
+     cd ~/Desktop/webnano 
+     ./bootstrap
+     ./configure --prefix=/usr/local/pkg/webnano
