@@ -10,6 +10,7 @@ imports
   libwebdsl-front
   remove-annos
   write-files
+  java-concat-ids
 
 strategies
 
@@ -28,6 +29,7 @@ strategies
     ; xtc-parse-webdsl
     ; remove-position-annos
     ; generate
+    ; java-concat-ids
     ; output-generated-files
     ; <exit> 0
 
@@ -44,11 +46,28 @@ strategies
   generate-code = entity-to-java
 
   entity-to-java : 
-    |[ entity x_class { prop* } ]| ->
+    |[ entity x_class { prop* } ]| -> <debug(!":")> 
     JavaFile(["src"],
       compilation-unit|[
         package domain; 
-        class x_class { 
+        @Entity class x_class { 
+          ~*cbd*
        } 
       ]|)
+    where debug(!"entity-to-java: ")
+        ; cbd* := <filter(property-to-java)> prop*
+
+  property-to-java :
+    |[ x :: String (ann*) ]| ->
+    class-body-dec*|[ 
+      protected String _#x = "";
+
+      public String get#x() {
+      //  return _#x;
+      }
+
+      //public void set#x(String newitem) {
+      //  _#x = newitem;
+      //}
+    ]|
 
