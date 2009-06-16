@@ -12,7 +12,7 @@ INSTALLATION
 
 3) Open a new Terminal on the guest machine (Applications > Accessories)
 
-   Enter the following:
+   Enter the following to install Nano WebDSL:
 
      sudo mkdir /usr/local/pkg # (password guest)
      sudo chown guest:guest /usr/local/pkg
@@ -21,3 +21,6 @@ INSTALLATION
      ./configure --prefix=/usr/local/pkg/webnano
      make && make install
 
+   Finally, install a PDF reader for viewing the slides:
+
+     sudo apt-get install evince
