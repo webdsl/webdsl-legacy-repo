@@ -33,9 +33,6 @@ strategies
     ; output-generated-files
     ; <exit> 0
 
-    //; remove-position-annos
-    //; output-webdsl
-
 strategies
 
   generate =
@@ -46,7 +43,7 @@ strategies
   generate-code = entity-to-java
 
   entity-to-java : 
-    |[ entity x_class { prop* } ]| -> <debug(!":")> 
+    |[ entity x_class { prop* } ]| -> 
     JavaFile(["src"],
       compilation-unit|[
         package domain; 
@@ -54,8 +51,23 @@ strategies
           ~*cbd*
        } 
       ]|)
-    where debug(!"entity-to-java: ")
-        ; cbd* := <filter(property-to-java)> prop*
+    where cbd* := <filter(property-to-java); concat> prop*
+
+  property-to-java-conc :
+    |[ x :: String (ann*) ]| ->
+    class-body-dec*|[ 
+      protected String x = "";
+
+      public String x_get() {
+        return x;
+      }
+
+      public void x_set(String newitem) {
+        x = newitem;
+      }
+    ]|
+    where x_get := <concat-strings> ["get", x]
+        ; x_set := <concat-strings> ["set", x]
 
   property-to-java :
     |[ x :: String (ann*) ]| ->
