@@ -27,7 +27,7 @@ define template tabs() {
       </div>
 }
 
-define template tab(title:String, selected: Bool, closable: Bool) {
+define no-span template tab(title:String, selected: Bool, closable: Bool) {
       <div dojoType="dijit.layout.ContentPane" title=(title) selected=(selected) closable=(closable)>
         elements()
       </div>
@@ -46,3 +46,26 @@ define page home() {
     }
   }
 } 
+
+
+/* original:
+define page home() {
+      <script>
+        loadDojo(true, function() {
+          dojo.require("dijit.layout.TabContainer");
+          dojo.require("dijit.layout.ContentPane");
+          dojo.require("dojo.parser");
+          dojo.require("dijit.form.Button");
+        });
+      </script>
+      <div id="mainTabContainer" dojoType="dijit.layout.TabContainer"
+        class="tundra" style="width:500px;height:100px">
+            <div dojoType="dijit.layout.ContentPane" title="bla" selected="true" closable="true">
+        "Once upon a time there was a dear little girl who was loved by every one who looked at her, but most of all by her grandmother, and there was nothing that she would not have given to the child."
+      </div>
+            <div dojoType="dijit.layout.ContentPane" title="(title)" selected="false" closable="false">
+        "Once upon a time there was a dear little girl who was loved by every one who looked at her, but most of all by her grandmother, and there was nothing that she would not have given to the child."
+      </div>
+      </div>
+} 
+*/
