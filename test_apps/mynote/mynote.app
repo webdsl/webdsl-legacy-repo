@@ -24,7 +24,7 @@ section pages
     action updatesearch(val: String) {
       clear(notelist);
       append(notelist, template { "searched " output(val) spacer });
-      for(n : Note) {
+      for(n : Note order by n.name) {
         if (n.name.contains(val))	{
           append (notelist,	displayNote(n));
         }
@@ -38,7 +38,7 @@ section pages
   
   define folders() {
     list {
-      for(f : Folder)	{
+      for(f : Folder  order by f.name)	{
         listitem { 
           image("/images/notes.png") 
           actionLink(f.name)[
@@ -79,7 +79,7 @@ section pages
     text ( "current notes" )
     
     block[id := foldernotes] {
-      for(note : Note in f.notes) {
+      for(note : Note in f.notes  order by note.name) {
           displayNote(note)
       }     
     }

@@ -8,7 +8,7 @@ section pages
     table {
       row {
          image("/images/gohome.png")
-         text("Welcome to your notes!")
+         header[id := testHeading]{"Welcome to your notes!"}
       }
       row {
         menubar {
