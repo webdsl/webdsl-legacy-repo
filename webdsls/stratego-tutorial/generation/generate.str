@@ -63,11 +63,11 @@ strategies
       protected String _#x = "";
 
       public String get#x() {
-      //  return _#x;
+        return _#x;
       }
 
-      //public void set#x(String newitem) {
-      //  _#x = newitem;
-      //}
+      public void set#x(String newitem) {
+        _#x = newitem;
+      }
     ]|
 
