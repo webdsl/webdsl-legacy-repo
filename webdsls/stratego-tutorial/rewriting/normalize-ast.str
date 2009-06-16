@@ -46,9 +46,6 @@ strategies
     [RemoveMe()|lst] -> lst
 
   desugar =
-    normalize-action
-
-  desugar =
     normalize-ui
 
 rules
