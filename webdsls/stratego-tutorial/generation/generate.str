@@ -1,0 +1,54 @@
+module generate
+
+// parses a NanoWebDSL file, 
+// applies syntactic normalizations to the AST,
+// and pretty-prints the result
+
+imports
+  libstratego-lib
+  libstratego-xtc
+  libwebdsl-front
+  remove-annos
+  write-files
+
+strategies
+
+  main =
+    xtc-io-wrap(
+        webdslc-options
+      , webdslc-usage
+      , webdslc-about
+      , ![] // xtc dependencies
+      , xtc-normalize
+    )
+
+  xtc-normalize = id
+    ; set-appname
+    ; set-default-config
+    ; xtc-parse-webdsl
+    ; remove-position-annos
+    ; generate
+    ; output-generated-files
+    ; <exit> 0
+
+    //; remove-position-annos
+    //; output-webdsl
+
+strategies
+
+  generate =
+    collect(generate-code)
+
+strategies
+
+  generate-code = entity-to-java
+
+  entity-to-java : 
+    |[ entity x_class { prop* } ]| ->
+    JavaFile(["src"],
+      compilation-unit|[
+        package domain; 
+        class x_class { 
+       } 
+      ]|)
+

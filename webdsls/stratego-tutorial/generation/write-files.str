@@ -1,0 +1,10 @@
+module write-files
+
+imports
+  libstratego-lib
+  libjava-front
+  libwebdsl-front
+  core-lift-eblocks
+  output-xml
+  output-files
+  output-java
