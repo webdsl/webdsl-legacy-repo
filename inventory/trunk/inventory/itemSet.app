@@ -27,7 +27,7 @@ define page editItemSet(i:Inventory) {
 		form{
 			var newItem := Item{};
 			label("Name"){input(newItem.name)}
-			label("Manufacturer"){input(newItem.manufacturer)}
+			label(" Manufacturer"){input(newItem.manufacturer)}
 			action("add",addItem())
 			
 			action addItem(){

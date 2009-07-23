@@ -1,12 +1,13 @@
 module style/style
 
-style webdslorg
+style inventory
 
-  const bodyWidth        : Length := 700px;
-  //const localBodyWidth   : Length := 600px;
-  //const sidebarWidth     : Length := 100px;
-  const verticalMargin   : Length := 20px;
-  const footnoteFontSize : Length := 10pt;
+  const bodyWidth		: Length := 700px;
+  //const localBodyWidth	: Length := 600px;
+  //const sidebarWidth	: Length := 100px;
+  const verticalMargin	: Length := 20px;
+  const footnoteFontSize	: Length := 10pt;
+  const fontSize		: Length := 11pt;
 
   
   main() {
@@ -44,9 +45,10 @@ style webdslorg
   
   body() {
     margin-bottom := verticalMargin;    
-    width   := bodyWidth;
-    display := Display.block;
-    align   := Align.right;
+    width   	:= bodyWidth;
+    display 	:= Display.block;
+    align   	:= Align.right;
+    font-size	:= fontSize;
   }
   
   const topMenuBgColor   : Color := #dddddd;

@@ -21,3 +21,7 @@ access control rules
 	rule page item(i:Item){
 		false
 	}
+	
+	rule page setBound(is:ItemStock, i:Inventory) {
+		loggedIn()
+	}
