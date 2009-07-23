@@ -22,6 +22,6 @@ access control rules
 		false
 	}
 	
-	rule page setBound(is:ItemStock, i:Inventory) {
+	rule page editItemStock(is:ItemStock, i:Inventory) {
 		loggedIn()
 	}

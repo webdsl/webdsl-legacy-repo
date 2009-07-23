@@ -1,9 +1,11 @@
 module inventory/stock
 
 entity ItemStock {
-	item		-> Item
-	amount 	:: Int
-	minimum	:: Int
+	item			-> Item
+	amount 		:: Int
+	minimum		:: Int
+	incrBatchSize	:: Int
+	decrBatchSize	:: Int
 }
 
 define stock(i:Inventory){
@@ -17,7 +19,7 @@ define stock(i:Inventory){
 					else {" "}
 					form { action("+", increaseStock(is.item)) }
 					form { action("-", decreaseStock(is.item)) }
-					navigate(setBound(is,i)){"bound"}
+					navigate(editItemStock(is,i)){">"}
 				}
 			}
 		}
@@ -32,16 +34,20 @@ define stock(i:Inventory){
 	}
 }
 
-define page setBound(is:ItemStock, i:Inventory) {
+define page editItemStock(is:ItemStock, i:Inventory) {
 	main()
 	define body() {
 		header{output(is.item.name) " bounds"}
 		form{
-			label("Minimum amount"){input(is.minimum)}
-			action("set",setBounds())
+			table{
+				row{	label("Minimum amount"){input(is.minimum)}			}
+				row{	label("Increment batch size"){input(is.incrBatchSize)}	}
+				row{	label("Decrement batch size"){input(is.decrBatchSize)}	}
+			}
+			action("Save",done())
 			
-			action setBounds(){
-				return stock(i);
+			action done(){
+				return inventory(i);
 			}
 		}
 	}

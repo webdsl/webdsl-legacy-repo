@@ -25,14 +25,24 @@ entity Inventory {
 			);
 		}
 		else {
-			itemStock.amount := itemStock.amount + 1;
+			if(itemStock.incrBatchSize != 0 && itemStock.incrBatchSize != null) {
+				itemStock.amount := itemStock.amount + itemStock.incrBatchSize;
+			}
+			else {
+				itemStock.amount := itemStock.amount + 1;
+			}
 		}
 	}
 	
 	function decreaseStock(i : Item) {
 		var itemStock := getStock(i.name);
 		if(itemStock != null) {
-			itemStock.amount := itemStock.amount - 1;
+			if(itemStock.decrBatchSize != 0 && itemStock.decrBatchSize != null) {
+				itemStock.amount := itemStock.amount - itemStock.decrBatchSize;
+			}
+			else {
+				itemStock.amount := itemStock.amount - 1;
+			}
 		}
 		if(itemStock.amount == 0) {
 			stock.remove(itemStock);
