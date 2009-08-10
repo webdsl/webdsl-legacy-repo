@@ -1,0 +1,574 @@
+import ".pilapp/webdsl.pil"
+
+class template::homeTemplate0 extends webdsl::TemplateServlet {
+    @ private
+    pil::Map < pil::String , pil::List < pil::Object > > queryCache = new pil::Map < pil::String , pil::List < pil::Object > > ( ) ;
+    pil::Bool initialized = false ;
+    void storeArguments ( pil::Array < pil::Object > args )
+    {
+    }
+    pil::Int storeInputs ( utils::PageServlet ps , pil::Array < pil::Object > args , pil::Int templatecounter , pil::Map < pil::String , pil::reflect::Class > templates , pil::Map < pil::String , pil::Object > variables , pil::Map < pil::String , pil::Object > actionclasses )
+    {
+        if ( ! this.initialized )
+            {
+                this.initialized = true ;
+                this.templates = templates ;
+                this.actionclasses = actionclasses ;
+                this.ps = ps ;
+                this.uniqueid = webdsl::encoders::encodeTemplateId( "homeTemplate0" , args , templatecounter ) ;
+                this.templatecounter = templatecounter ;
+                this.request = ps.getRequest( ) ;
+                this.response = ps.getResponse( ) ;
+                this.session = request.getSession( ) ;
+                this.dbConn = ps.getDbConn( ) ;
+                this.variables = variables ;
+                storeArguments( args ) ;
+                initialize( ) ;
+                initializeLocalVars( ) ;
+                initializePassOn( ) ;
+                initActions( ) ;
+            }
+        else
+            {
+            }
+        storeInputsInternal( ) ;
+        return this.templatecounter ;
+    }
+    void storeInputsInternal ( )
+    {
+    }
+    void initialize ( )
+    {
+    }
+    void initActions ( )
+    {
+    }
+    void initializePassOn ( )
+    {
+    }
+    void initializeLocalVars ( )
+    {
+    }
+    pil::Int handleActions ( utils::PageServlet ps , pil::Array < pil::Object > args , pil::Int templatecounter , pil::Map < pil::String , pil::reflect::Class > templates , pil::Map < pil::String , pil::Object > variables , pil::Map < pil::String , pil::Object > actionclasses , webdsl::util::StringWriter out )
+    {
+        if ( ! this.initialized )
+            {
+                this.initialized = true ;
+                this.templates = templates ;
+                this.actionclasses = actionclasses ;
+                this.ps = ps ;
+                this.uniqueid = webdsl::encoders::encodeTemplateId( "homeTemplate0" , args , templatecounter ) ;
+                this.templatecounter = templatecounter ;
+                this.request = ps.getRequest( ) ;
+                this.response = ps.getResponse( ) ;
+                this.session = request.getSession( ) ;
+                this.dbConn = ps.getDbConn( ) ;
+                this.variables = variables ;
+                storeArguments( args ) ;
+                initialize( ) ;
+                initializeLocalVars( ) ;
+                initializePassOn( ) ;
+                initActions( ) ;
+            }
+        else
+            {
+            }
+        this.out = out ;
+        this.handleActionsInternal( ) ;
+        return this.templatecounter ;
+    }
+    void handleActionsInternal ( )
+    {
+        pil::String ident = "" ;
+        Int forelementcounter = 0 ;
+        Bool inForLoop = false ;
+        Int forLoopCounter = 0 ;
+        ident = "" ;
+        if ( inForLoop )
+            {
+                ident = ident.+( forelementcounter.toString() ) ;
+            }
+        else
+            {
+            }
+        ident = ident.+( "~x_tname" ) ;
+        if ( templatecalls.get(ident).==( null ) )
+            {
+                try
+                {
+                    templatecalls.set( ident , (webdsl::TemplateServlet)templates.get("~x_name").newInstance( ) ) ;
+                }
+                catch ( pil::Exception iae )
+                {
+                    println( "Problem in template servlet template lookup: ".+( iae.toString() ) ) ;
+                }
+            }
+        else
+            {
+            }
+        pil::Array < pil::Object > args1 = new pil::Array < pil::Object > ( ) ;
+        templatecounter.++( ) ;
+        templatecounter = templatecalls.get(ident).x_methodname( ps , args1 , templatecounter , (pil::Map<pil::String,pil::reflect::Class>)templates.clone( ) , (pil::Map<pil::String,pil::Object>)variables.clone( ) , (pil::Map<pil::String,pil::Object>)actionclasses.clone( ) , out ) ;
+    }
+    void callTemplates ( )
+    {
+    }
+    pil::Bool validated = true ;
+    utils::PageServlet ps = null ;
+    pil::Int templatecounter = 0 ;
+    pil::String uniqueid = "" ;
+    pil::Map < pil::String , pil::Object > variables = null ;
+    pil::Map < pil::String , pil::Object > actionclasses = null ;
+    pil::Map < pil::String , pil::reflect::Class > templates = null ;
+    Map < pil::String , webdsl::TemplateServlet > templatecalls = new Map < pil::String , webdsl::TemplateServlet > ( ) ;
+    webdsl::util::StringWriter out = null ;
+    webdsl::db::DatabaseSession dbConn = null ;
+    webdsl::Request request = null ;
+    webdsl::Response response = null ;
+    webdsl::Session session = null ;
+    void renderInternal ( )
+    {
+        pil::String ident = "" ;
+        pil::String form_ident = "" ;
+        pil::Int forelementcounter = 0 ;
+        pil::Bool inForLoop = false ;
+        pil::Int forLoopCounter = 0 ;
+        pil::Bool inSubmittedForm = false ;
+        {
+            webdsl::util::StringWriter out = new webdsl::util::StringWriter ( ) ;
+            out.print( webdsl::encoders::encodeHTML( "Hello!" ) ) ;
+            ps.setPageTitle( out.toString( ) ) ;
+        }
+        out.print( webdsl::encoders::encodeHTML( "Hello world!" ) ) ;
+        ident = "" ;
+        if ( inForLoop )
+            {
+                ident = ident.+( forelementcounter ) ;
+            }
+        else
+            {
+            }
+        ident = ident.+( "~x_tname" ) ;
+        if ( templatecalls.get(ident).==( null ) )
+            {
+                try
+                {
+                    templatecalls.set( ident , (webdsl::TemplateServlet)templates.get("~x_name").newInstance( ) ) ;
+                }
+                catch ( pil::Exception iae )
+                {
+                    log( "Problem in template servlet template lookup: ".+( iae ) ) ;
+                }
+            }
+        else
+            {
+            }
+        pil::Array < pil::Object > args2 = new pil::Array < pil::Object > ( ) ;
+        templatecounter.++( ) ;
+        templatecounter = templatecalls.get(ident).x_methodname( ps , args2 , templatecounter , (pil::Map<pil::String,pil::reflect::Class>)templates.clone( ) , (pil::Map<pil::String,pil::Object>)variables.clone( ) , (pil::Map<pil::String,pil::Object>)actionclasses.clone( ) , out ) ;
+        out.print( "<hr ".+("").+( "/>" ) ) ;
+        out.print( "<ul ".+("").+( ">" ) ) ;
+        out.print( "<li ".+("").+( ">" ) ) ;
+        out.print( webdsl::encoders::encodeHTML( "That's it!" ) ) ;
+        out.print( "</li>" ) ;
+        out.print( "<li ".+("").+( ">" ) ) ;
+        out.print( webdsl::encoders::encodeHTML( "That's it!" ) ) ;
+        out.print( "</li>" ) ;
+        out.print( "<li ".+("").+( ">" ) ) ;
+        out.print( webdsl::encoders::encodeHTML( "That's it!" ) ) ;
+        out.print( "</li>" ) ;
+        out.print( "</ul>" ) ;
+        out.print( "<hr ".+("").+( "/>" ) ) ;
+        out.print( "<table cellspacing='0px' cellpadding='0px' ".+("border".+("='").+("1").+("' ")).+( ">" ) ) ;
+        out.print( "<tr ".+("").+( ">" ) ) ;
+        out.print( "<td ".+("").+( ">" ) ) ;
+        out.print( webdsl::encoders::encodeHTML( "A" ) ) ;
+        out.print( "</td>" ) ;
+        out.print( "<td ".+("").+( ">" ) ) ;
+        out.print( webdsl::encoders::encodeHTML( "B" ) ) ;
+        out.print( "</td>" ) ;
+        out.print( "</tr>" ) ;
+        out.print( "<tr ".+("").+( ">" ) ) ;
+        out.print( "<td ".+("").+( ">" ) ) ;
+        out.print( webdsl::encoders::encodeHTML( "C" ) ) ;
+        out.print( "</td>" ) ;
+        out.print( "<td ".+("").+( ">" ) ) ;
+        out.print( webdsl::encoders::encodeHTML( "D" ) ) ;
+        out.print( "</td>" ) ;
+        out.print( "</tr>" ) ;
+        out.print( "</table>" ) ;
+        out.print( "</div>" ) ;
+        out.print( "</span>" ) ;
+    }
+    pil::Int render ( utils::PageServlet ps , pil::Array < pil::Object > args , pil::Int templatecounter , pil::Map < pil::String , pil::reflect::Class > templates , pil::Map < pil::String , pil::Object > variables , pil::Map < pil::String , pil::Object > actionclasses , webdsl::util::StringWriter out )
+    {
+        if ( ! this.initialized )
+            {
+                this.initialized = true ;
+                this.templates = templates ;
+                this.actionclasses = actionclasses ;
+                this.ps = ps ;
+                this.uniqueid = webdsl::encoders::encodeTemplateId( "homeTemplate0" , args , templatecounter ) ;
+                this.templatecounter = templatecounter ;
+                this.request = ps.getRequest( ) ;
+                this.response = ps.getResponse( ) ;
+                this.session = request.getSession( ) ;
+                this.dbConn = ps.getDbConn( ) ;
+                this.variables = variables ;
+                storeArguments( args ) ;
+                initialize( ) ;
+                initializeLocalVars( ) ;
+                initializePassOn( ) ;
+                initActions( ) ;
+            }
+        else
+            {
+            }
+        this.out = out ;
+        this.renderInternal( ) ;
+        out.print( "</span>" ) ;
+        return this.templatecounter ;
+    }
+    pil::reflect::Class getClassInfo ( )
+    {
+        if ( ! pil::reflect::classCache.contains( "template::homeTemplate0" ) )
+            {
+                pil::reflect::classCache.set( "template::homeTemplate0" , new template::reflect::homeTemplate0ClassInfo ( ) ) ;
+            }
+        else
+            {
+            }
+        return pil::reflect::classCache.get( "template::homeTemplate0" ) ;
+    }
+    pil::Bool getInitialized ( )
+    {
+        return this.initialized ;
+    }
+    pil::Bool getValidated ( )
+    {
+        return this.validated ;
+    }
+    utils::PageServlet getPs ( )
+    {
+        return this.ps ;
+    }
+    pil::Int getTemplatecounter ( )
+    {
+        return this.templatecounter ;
+    }
+    pil::String getUniqueid ( )
+    {
+        return this.uniqueid ;
+    }
+    pil::Map < pil::String , pil::Object > getVariables ( )
+    {
+        return this.variables ;
+    }
+    pil::Map < pil::String , pil::Object > getActionclasses ( )
+    {
+        return this.actionclasses ;
+    }
+    pil::Map < pil::String , pil::reflect::Class > getTemplates ( )
+    {
+        return this.templates ;
+    }
+    Map < pil::String , webdsl::TemplateServlet > getTemplatecalls ( )
+    {
+        return this.templatecalls ;
+    }
+    webdsl::util::StringWriter getOut ( )
+    {
+        return this.out ;
+    }
+    webdsl::db::DatabaseSession getDbConn ( )
+    {
+        return this.dbConn ;
+    }
+    webdsl::Request getRequest ( )
+    {
+        return this.request ;
+    }
+    webdsl::Response getResponse ( )
+    {
+        return this.response ;
+    }
+    webdsl::Session getSession ( )
+    {
+        return this.session ;
+    }
+    void setInitialized ( pil::Bool value )
+    {
+        this.initialized = value ;
+    }
+    void setValidated ( pil::Bool value )
+    {
+        this.validated = value ;
+    }
+    void setPs ( utils::PageServlet value )
+    {
+        this.ps = value ;
+    }
+    void setTemplatecounter ( pil::Int value )
+    {
+        this.templatecounter = value ;
+    }
+    void setUniqueid ( pil::String value )
+    {
+        this.uniqueid = value ;
+    }
+    void setVariables ( pil::Map < pil::String , pil::Object > value )
+    {
+        this.variables = value ;
+    }
+    void setActionclasses ( pil::Map < pil::String , pil::Object > value )
+    {
+        this.actionclasses = value ;
+    }
+    void setTemplates ( pil::Map < pil::String , pil::reflect::Class > value )
+    {
+        this.templates = value ;
+    }
+    void setTemplatecalls ( Map < pil::String , webdsl::TemplateServlet > value )
+    {
+        this.templatecalls = value ;
+    }
+    void setOut ( webdsl::util::StringWriter value )
+    {
+        this.out = value ;
+    }
+    void setDbConn ( webdsl::db::DatabaseSession value )
+    {
+        this.dbConn = value ;
+    }
+    void setRequest ( webdsl::Request value )
+    {
+        this.request = value ;
+    }
+    void setResponse ( webdsl::Response value )
+    {
+        this.response = value ;
+    }
+    void setSession ( webdsl::Session value )
+    {
+        this.session = value ;
+    }
+}
+
+class utils::PageServlet extends pil::Object {
+    void serve ( webdsl::Request request , webdsl::Response response , pil::Map < pil::String , pil::String > parammap , pil::Map < pil::String , pil::List < pil::String > > parammapvalues , Map < pil::String , webdsl::util::File > fileUploads )
+    {
+    }
+    pil::String getPageName ( )
+    {
+        return null ;
+    }
+    pil::String getHiddenParams ( )
+    {
+        return null ;
+    }
+    pil::String getHiddenPostParams ( )
+    {
+        return null ;
+    }
+    webdsl::Session session = null ;
+    pil::Map < pil::String , pil::Object > variablesGlobalAndSession = null ;
+    pil::String getAbsoluteLocation ( )
+    {
+        return "http://someplace.com" ;
+    }
+    pil::Map < pil::String , pil::String > conversionErrorMessages = new pil::Map < pil::String , pil::String > ( ) ;
+    pil::Bool hasExecutedAction = false ;
+    pil::Bool isAjaxApp = false ;
+    void serveAsAjaxResponse ( utils::PageServlet ps , webdsl::util::StringWriter theoutStream , pil::Array < pil::Object > ajaxarguments )
+    {
+    }
+    pil::List < pil::String > ignoreset = new pil::List < pil::String > ( ) ;
+    pil::Bool dbCacheCleared = false ;
+    void clearHibernateCache ( pil::Map < pil::String , pil::Object > variables )
+    {
+        if ( variables.get("_persist_flag_").==( false ) )
+            {
+                dbCacheCleared = true ;
+                pil::Set < pil::String > variables_set = variables.keys ;
+                var dbConn = webdsl::db::getSession( ) ;
+                for ( pil::String s : variables_set )
+                {
+                    if ( s.!=("_persist_flag_").&&(session.get(s).==(null)).&&(!ignoreset.contains(s)).&&( pil::reflect::subClassOf( variables.get(s).getClassInfo( ) , webdsl::reflect::typeOfWebDSLEntity( ) ) ) )
+                        {
+                            pil::Object o = variables.get( s ) ;
+                            try
+                            {
+                                dbConn.refresh( o ) ;
+                            }
+                            catch ( pil::Exception e )
+                            {
+                            }
+                        }
+                    else
+                        {
+                        }
+                }
+            }
+        else
+            {
+            }
+    }
+    pil::Bool validated = true ;
+    webdsl::db::DatabaseSession dbConn = null ;
+    webdsl::Request request = null ;
+    webdsl::Response response = null ;
+    pil::Array < pil::Object > args = null ;
+    pil::Map < pil::String , pil::String > parammap = null ;
+    Map < pil::String , webdsl::util::File > fileUploads = null ;
+    pil::Map < pil::String , pil::List < pil::String > > parammapvalues = null ;
+    pil::String pageTitle = "" ;
+    webdsl::util::File download = null ;
+    pil::reflect::Class getClassInfo ( )
+    {
+        if ( ! pil::reflect::classCache.contains( "utils::PageServlet" ) )
+            {
+                pil::reflect::classCache.set( "utils::PageServlet" , new utils::reflect::PageServletClassInfo ( ) ) ;
+            }
+        else
+            {
+            }
+        return pil::reflect::classCache.get( "utils::PageServlet" ) ;
+    }
+    webdsl::Session getSession ( )
+    {
+        return this.session ;
+    }
+    pil::Map < pil::String , pil::Object > getVariablesGlobalAndSession ( )
+    {
+        return this.variablesGlobalAndSession ;
+    }
+    pil::Map < pil::String , pil::String > getConversionErrorMessages ( )
+    {
+        return this.conversionErrorMessages ;
+    }
+    pil::Bool getHasExecutedAction ( )
+    {
+        return this.hasExecutedAction ;
+    }
+    pil::Bool getIsAjaxApp ( )
+    {
+        return this.isAjaxApp ;
+    }
+    pil::List < pil::String > getIgnoreset ( )
+    {
+        return this.ignoreset ;
+    }
+    pil::Bool getDbCacheCleared ( )
+    {
+        return this.dbCacheCleared ;
+    }
+    pil::Bool getValidated ( )
+    {
+        return this.validated ;
+    }
+    webdsl::db::DatabaseSession getDbConn ( )
+    {
+        return this.dbConn ;
+    }
+    webdsl::Request getRequest ( )
+    {
+        return this.request ;
+    }
+    webdsl::Response getResponse ( )
+    {
+        return this.response ;
+    }
+    pil::Array < pil::Object > getArgs ( )
+    {
+        return this.args ;
+    }
+    pil::Map < pil::String , pil::String > getParammap ( )
+    {
+        return this.parammap ;
+    }
+    Map < pil::String , webdsl::util::File > getFileUploads ( )
+    {
+        return this.fileUploads ;
+    }
+    pil::Map < pil::String , pil::List < pil::String > > getParammapvalues ( )
+    {
+        return this.parammapvalues ;
+    }
+    pil::String getPageTitle ( )
+    {
+        return this.pageTitle ;
+    }
+    webdsl::util::File getDownload ( )
+    {
+        return this.download ;
+    }
+    void setSession ( webdsl::Session value )
+    {
+        this.session = value ;
+    }
+    void setVariablesGlobalAndSession ( pil::Map < pil::String , pil::Object > value )
+    {
+        this.variablesGlobalAndSession = value ;
+    }
+    void setConversionErrorMessages ( pil::Map < pil::String , pil::String > value )
+    {
+        this.conversionErrorMessages = value ;
+    }
+    void setHasExecutedAction ( pil::Bool value )
+    {
+        this.hasExecutedAction = value ;
+    }
+    void setIsAjaxApp ( pil::Bool value )
+    {
+        this.isAjaxApp = value ;
+    }
+    void setIgnoreset ( pil::List < pil::String > value )
+    {
+        this.ignoreset = value ;
+    }
+    void setDbCacheCleared ( pil::Bool value )
+    {
+        this.dbCacheCleared = value ;
+    }
+    void setValidated ( pil::Bool value )
+    {
+        this.validated = value ;
+    }
+    void setDbConn ( webdsl::db::DatabaseSession value )
+    {
+        this.dbConn = value ;
+    }
+    void setRequest ( webdsl::Request value )
+    {
+        this.request = value ;
+    }
+    void setResponse ( webdsl::Response value )
+    {
+        this.response = value ;
+    }
+    void setArgs ( pil::Array < pil::Object > value )
+    {
+        this.args = value ;
+    }
+    void setParammap ( pil::Map < pil::String , pil::String > value )
+    {
+        this.parammap = value ;
+    }
+    void setFileUploads ( Map < pil::String , webdsl::util::File > value )
+    {
+        this.fileUploads = value ;
+    }
+    void setParammapvalues ( pil::Map < pil::String , pil::List < pil::String > > value )
+    {
+        this.parammapvalues = value ;
+    }
+    void setPageTitle ( pil::String value )
+    {
+        this.pageTitle = value ;
+    }
+    void setDownload ( webdsl::util::File value )
+    {
+        this.download = value ;
+    }
+}
+
