@@ -39,6 +39,11 @@ do
 	   -e "s|@@SMTPUSER@@|$smtpUser|" \
 	   -e "s|@@SMTPSSL@@|$smtpSSL|" \
 	   -e "s|@@SMTPTLS@@|$smtpTLS|" \
+	   -e "s|@@SESSIONTIMEOUTOPTION@@||" \
+	   -e "s|@@STATISTICSOPTION@@||" \
+	   -e "s|@@FASTPPOPTION@@||" \
+	   -e "s|@@VERBOSEOPTION@@||" \
+	   -e "s|@@DEBUGOPTION@@||" \
         $i
 done
 
