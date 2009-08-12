@@ -1,13 +1,13 @@
-{stdenv, fetchurl, pkgconfig, getopt, apacheAnt, aterm, sdf2_bundle, strategoxt, javafront}:
+{stdenv, fetchurl, pkgconfig, getopt, apacheAnt, aterm, sdf, strategoxt, javafront}:
 
 rec {
   webdsl = stdenv.mkDerivation {
-    name = "webdsl-8.8pre2590";
+    name = "webdsl-9.7pre2895";
     src = fetchurl {
-      url = http://releases.strategoxt.org/webdsl/webdsl-8.8pre25902590-pfd8j82s/webdsl-8.8pre2590.tar.gz;
-      sha256 = "1607d60f3e6fd296fb07ade92a7d06e91eb64622b2b573b81221f918bc5de5d8";
+      url = http://hydra.nixos.org/build/61480/download/1/webdsl-9.7pre2895.tar.gz;
+      sha256 = "1cvrjnjnhq7chw03938fi4hmhqdpii98dc0dg24kg4v3i0bwqd1w";
     };
-    buildInputs = [ pkgconfig getopt aterm sdf2_bundle strategoxt javafront ];
+    buildInputs = [ pkgconfig getopt aterm sdf strategoxt javafront ];
   };
   
   mkDerivation = attrs:

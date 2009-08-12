@@ -1,30 +1,10 @@
-let pkgs = import (builtins.getEnv "NIXPKGS_ALL") { }; in
+let pkgs = import /etc/nixos/nixpkgs/pkgs/top-level/all-packages.nix { }; in
 with pkgs;
 
-rec {
-#### Tools
-  aterm = import ../libraries/aterm {
-    inherit stdenv fetchurl;
-  };
-    
-  sdf2_bundle = import ../development/sdf2-bundle {
-    inherit stdenv fetchurl pkgconfig;
-    inherit aterm;
-  };
-    
-  strategoxt = import ../development/strategoxt {
-    inherit stdenv fetchurl pkgconfig getopt;
-    inherit aterm sdf2_bundle;
-  };
-    
-  javafront = import ../development/javafront {
-    inherit stdenv fetchurl pkgconfig;
-    inherit aterm strategoxt;
-  }; 
-    
+rec {    
   webdsl = import ../development/webdsl {
     inherit stdenv fetchurl pkgconfig getopt apacheAnt;
-    inherit aterm sdf2_bundle strategoxt javafront;
+    inherit (strategoPackages017) aterm sdf strategoxt javafront;
   };
 
 #### WebDSL applications

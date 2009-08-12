@@ -1,9 +1,9 @@
 {stdenv, fetchurl}:
 
 stdenv.mkDerivation {
-  name = "aterm-2.5pre21238";
+  name = "aterm-2.5";
   src = fetchurl {
-    url = http://releases.strategoxt.org/strategoxt-0.17/aterm/aterm-2.5pre21238-26ra85lr/aterm-2.5.tar.gz;
-    sha256 = "21e409c97e29711539527a17a04f00a0e33b35b96d68af0ad69e5a6faf780495";
+    url = ftp://ftp.stratego-language.org/pub/stratego/StrategoXT/strategoxt-0.17/aterm-2.5.tar.gz;
+    sha256 = "164di6my7iy2ybfl46fa2hw6fn6vgqfn2jrpy5mkpcbb4cc5pg4v";
   };
 }
