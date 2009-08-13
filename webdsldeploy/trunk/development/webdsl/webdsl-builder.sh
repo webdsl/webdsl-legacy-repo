@@ -26,11 +26,12 @@ fixPermissions
 
 # Replace all template variables with WebDSL variables
 
-(find . -name Makefile; find . -name build.xml; find . -name *.properties; find . -name *.java) | while read i
+(find . -name Makefile; find . -name build.xml; find . -name \*.properties; find . -name \*.java) | while read i
 do
     sed -i -e "s|@@APPNAME@@|$name|" \
            -e "s|@@DSLTOSEAM@@|$webdsl/bin/webdslc|" \
            -e "s|@@DBSERVER@@|$databaseServer|" \
+	   -e "s|@@DBNAME@@|$databaseName|" \
 	   -e "s|@@DBUSER@@|$databaseUser|" \
 	   -e "s|@@DBPASSWORD@@|$databasePassword|" \
 	   -e "s|@@DBMODE@@|$databaseMode|" \
@@ -44,6 +45,8 @@ do
 	   -e "s|@@FASTPPOPTION@@||" \
 	   -e "s|@@VERBOSEOPTION@@||" \
 	   -e "s|@@DEBUGOPTION@@||" \
+	   -e "s|@@DBSTORAGEOPTION@@|org.hibernate.dialect.MySQL5InnoDBDialect|" \
+	   -e "s|@@DEBUGHIBERNATE@@||" \
         $i
 done
 
