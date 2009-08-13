@@ -16,12 +16,12 @@ fixPermissions()
     done
 }
 
-# Copy the source code
-cp -av $src/* .
-fixPermissions
-
 # Copy template files
 cp -av $webdsl/share/webdsl/template-java-servlet/* .
+fixPermissions
+
+# Copy the source code
+cp -av $src/* .
 fixPermissions
 
 # Replace all template variables with WebDSL variables
