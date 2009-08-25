@@ -4,7 +4,7 @@ section pages
   
     var globaln := Note{name := 'hoi'}
     
-  define page home() {
+  define page root() {
     table {
       row {
          image("/images/gohome.png")
@@ -19,7 +19,7 @@ section pages
            menuheader { navigate()[onclick :=  action {
              visibility (folderlist , toggle);
            }] {"/" } }
-           menuheader { navigate(home()) { "the notes"  } }
+           menuheader { navigate(root()) { "the notes"  } }
         }
         quicksearch()
       }

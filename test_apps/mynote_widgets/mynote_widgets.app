@@ -12,12 +12,39 @@ description {
 
 section pages
 
+define inputtemplate mythingy(val: String, name: String) {
+  spacer
+  "val: " output(val)
+  "name: " output(name)
+  <input name=name type="text" value=val />
+  spacer
+}
 
-define page home() {
-  
-  
-  tabs {
+define page aninputtest(s: String) {
+  "current value: " output(s)
+  spacer
+  form {
+    "new value: " mythingy(s)
+    action("go",save_s(s))
+  }
+  action save_s(astring: String) {
+    return aninputtest(astring);
+  }
+}
+
+define template attrtest() {
+  output(attribute("kop", "1"))
+  output(attribute("kop2", "2"))
+  output(attribute("kop3", "3"))
+}
+
+define page root() {
+  navigate(aninputtest("ik ben nieuw")) { "Test input widget" }
+  "verwacht: hoitest3:"
+  attrtest[kop:= "hoi", kop2 := test]
+  tabs[kop:="tabbladen"] {
     tab("Cool, Ajax widgets and template arguments!", true, true){
+
 /*      test with {
               hello() {
                 showHello()
@@ -35,10 +62,12 @@ define page home() {
       "There was once upon a time a hermit who lived in a forest at the foot of a mountain, and passed his time in prayer and good works, and every evening he carried, to the glory of God, two pails of water up the mountain."
     }   
   }
+
 } 
 
 
 define template tabs() {
+  output(attribute("kop", "niet gespecificeerd"))
       <script>
         loadDojo(false, function() {
           dojo.require("dijit.dijit");
@@ -86,6 +115,8 @@ define no-span template lazytab(title:String, selected: Bool, closable: Bool) {
   </div>       
 } 
 
+
+//OUD
 /*
       
       dojo.addOnLoad(function() {
@@ -118,7 +149,7 @@ define no-span template lazytab(title:String, selected: Bool, closable: Bool) {
 
 
 
-define template boeie() { "boeie:"  elements() }
+//define template boeie() { "boeie:"  elements() }
 
 /*
 define template showHello() {
