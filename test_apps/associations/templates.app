@@ -17,7 +17,7 @@ section main template.
 section basic page elements.
 
   define sidebar() {
-    navigate(home()) {"Home"}
+    navigate(root()) {"Home"}
     header() {"Unidirectional"}
     list() {
       listitem() { navigate(umanytomany()) {"Many-to-many"} }

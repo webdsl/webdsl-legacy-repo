@@ -12,7 +12,7 @@ imports one-to-one
 
 section pages
 
-define page home() {
+define page root() {
   main()
 }
 
