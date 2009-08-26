@@ -5,23 +5,18 @@ section data
 entity Document {
   name :: String
   description :: Text
-  root -> Node 
+  root -> TreeItem 
 }
 
-entity Node {
-  parent -> Node (inverse = Node.children)
+entity HeaderNode : TreeItem {
   caption :: String	
-  children -> List<Node>// (inverse = Node.parent)
 }
 
-entity HeaderNode : Node {
-}
-
-entity TextNode : Node {
+entity TextNode : TreeItem {
   contents :: Text
 }
 
-entity ImageNode : Node {
+entity ImageNode : TreeItem {
   image :: Image
 }
 
