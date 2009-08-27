@@ -1,6 +1,7 @@
 application outliner
 
 //generic imports
+imports widgets
 imports tree
 imports masterdetail
 imports popup
@@ -10,6 +11,7 @@ imports data
 imports documentmanagement
 imports toolbar
 imports nodeview
+
 
 section pages
 
@@ -48,11 +50,7 @@ define main(doc: Document) {
     masterdetail(doc.root) with {
 
       detailview(item: TreeItem) {
-        //dispatch to  proper view
-               if (item isa HeaderNode) { viewHeader(item as HeaderNode) }
-        else { if (item isa TextNode)   { viewText  (item as TextNode) }
-        else { if (item isa ImageNode)  { viewImage (item as ImageNode) }
-        else { "Error: unsupported node type" }  }  }
+        detailView(item)
       }
       treeview(item: TreeItem) {
         //dispatch to  proper view

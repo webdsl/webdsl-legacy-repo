@@ -18,7 +18,8 @@ define new_popup() {
         var r: TreeItem := HeaderNode{ 
           caption:= name, 
           //children := List<TreeItem>(), 
-          parent := null 
+          parent := null ,
+          depth := 1
         };
         var d: Document := Document{ 
           name := name,

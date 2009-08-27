@@ -8,8 +8,8 @@ define template masterdetail(root: TreeItem) requires detailview(TreeItem),treev
       column[width:= '50%'] {
         tree(root) with {
           nodeview(item: TreeItem) {
-            ">" 
-            container[onclick := action{ replace(masterdetailcontents, detailview(item)); }] {
+            ">"
+            navigate()[onclick := action{ replace(masterdetailcontents, detailview(item)); }] {
               treeview(item)
             }
             break

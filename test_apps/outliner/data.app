@@ -10,6 +10,7 @@ entity Document {
 
 entity HeaderNode : TreeItem {
   caption :: String	
+  depth :: Int
 }
 
 entity TextNode : TreeItem {
