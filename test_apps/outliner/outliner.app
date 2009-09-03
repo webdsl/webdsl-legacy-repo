@@ -11,6 +11,7 @@ imports data
 imports documentmanagement
 imports toolbar
 imports nodeview
+imports json
 
 
 section pages
@@ -43,23 +44,30 @@ define outliner_contents(doc: Document) {
 }
 
 define main(doc: Document) {
+  action selectHeader(id: String) {
+    var n: HeaderNode := loadHeaderNode(UUIDFromString(id));
+    replace(detailView, detailView(n));
+  }
+
+  navigate(documentoutline(doc)){ "JSON version" }
+  spacer
+  
   if (doc == null) {
     "(No document loaded)" 
   }
   else {
-    masterdetail(doc.root) with {
 
-      detailview(item: TreeItem) {
-        detailView(item)
+    masterdetail() with {
+      masterview() {
+        form {
+          dojoTree(navigate(documentoutline(doc)), doc.root.id.toString())
+            [onselect:=selectHeader(null)]
+        }
       }
-      treeview(item: TreeItem) {
-        //dispatch to  proper view
-               if (item isa HeaderNode) { treeviewHeader(item as HeaderNode) }
-        else { if (item isa TextNode)   { treeviewText  (item as TextNode) }
-        else { if (item isa ImageNode)  { treeviewImage (item as ImageNode) }
-        else { "Error: unsupported node type" }  }  }
+      detailview() {
+        detailView(doc.root)
       }
     }
-    
+
   }
 } 

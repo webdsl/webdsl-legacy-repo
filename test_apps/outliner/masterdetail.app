@@ -2,27 +2,16 @@ module masterdetail
 
 section templates
 
-define template masterdetail(root: TreeItem) requires detailview(TreeItem),treeview(TreeItem)  {
+define template masterdetail() requires detailview(),masterview()  {
   table {
     row {
       column[width:= '50%'] {
-        tree(root) with {
-          nodeview(item: TreeItem) {
-            ">"
-            navigate()[onclick := action{ replace(masterdetailcontents, detailview(item)); }] {
-              treeview(item)
-            }
-            break
-          }
-        }
+        masterview()
       }
       column[width:= '50%', id:= masterdetailcontents] {
-        "(nothing selected)"
+        detailview()
       }
     }
   }
 }
 
-define template tree(startnode: TreeItem) requires nodeview(TreeItem) {
-  nodeview(startnode)
-} 
