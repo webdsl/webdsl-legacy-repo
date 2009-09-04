@@ -40,7 +40,7 @@ define template dojoTree(storeURL: String, rootID: String) {
   
   <div dojoType="dijit.Tree" id=store+"Tree" model=store+"Model" openOnClick="true" style="width:600px;height:400px">
       <script type="dojo/method" event="onClick" args="item">
-           rawoutput { output(event("onselect","&id=\"+item.id+\"")) }    
+           event(onselect,[id := "item.id"])    
       </script>
   </div>
 }

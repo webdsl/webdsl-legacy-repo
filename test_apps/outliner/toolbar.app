@@ -1,21 +1,27 @@
 module toolbar
 
-section templates
 
-define toolbar(doc: Document) {
-  action("new", newac())
-  action("open", openac())
-  action("rem", remac())
-  
-  "currentdoc: "
-  container[id:= docname] {
-    docname(doc)
+define no-span toolbar(doc: Document) {
+  block[ class:= toolbar ] {
+    twoColumns() with {
+      left() {
+        action("new", newac())
+        action("open", openac())
+        action("rem", remac())
+      }
+      right() {    
+        block[ style:= "width: 100%; text-align: right" ] {
+          "currentdoc: "
+          container[id:= docname] {
+            docname(doc)
+          }
+          action("x", closeac())
+          placeholder docdetails {}
+        }
+      }
+    }  
   }
-  action("x", closeac())
-  placeholder docdetails {}
-  
-  spacer
-  
+      
   action newac() {
     replace(popup, new_popup);
   }

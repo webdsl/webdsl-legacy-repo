@@ -1,7 +1,12 @@
 module style
 
-style globalstyle
+style globalStyle
 
-block() {
+//will not be included otherwise
+toolbar(doc: Document) { }
+
+.toolbar {
+  width := 100%;
+  background-color := Color.navy;
   
 }

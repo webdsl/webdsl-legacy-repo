@@ -1,10 +1,10 @@
 application outliner
 
 //generic imports
-imports widgets
-imports tree
-imports masterdetail
-imports popup
+imports widgets/widgets
+imports widgets/tree
+imports widgets/masterdetail
+imports widgets/popup
 
 //application specific imports
 imports data
@@ -12,7 +12,7 @@ imports documentmanagement
 imports toolbar
 imports nodeview
 imports json
-
+imports style
 
 section pages
 
@@ -29,13 +29,14 @@ define outliner_contents(doc: Document) {
   //a hook for the popup windows
   placeholder popup {}
   
-  container[id:= header] {
-    "outliner"
+  block[id:= header, width := "100%"] {
+    block[id:= maintitle] { "Outliner" }
     toolbar(doc)
   }
 
-  navigate()[onclick := action { visibility (header , toggle); }]{ "^^^" }
-  spacer
+  block[style := "width:100%; height: 8px; background-color: gray; text-align: center"]{
+    navigate()[onclick := action { visibility (header , toggle); }]{ "^^^" }
+  }
 
   main(doc)
   
