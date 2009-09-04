@@ -3,12 +3,17 @@ module masterdetail
 section templates
 
 define template masterdetail() requires detailview(),masterview()  {
-  twoColumns with {
-    left() {
-      masterview()
-    }
-    right() {   
-      detailview()
+  table [width:= "100%"] {
+    row {
+      column {
+        collapseLeft() {
+          "left"
+          //FIX: masterview()
+        }
+      }
+      column {
+        detailview()
+      }
     }
   }
 }

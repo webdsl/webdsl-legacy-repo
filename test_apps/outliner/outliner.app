@@ -29,13 +29,11 @@ define outliner_contents(doc: Document) {
   //a hook for the popup windows
   placeholder popup {}
   
-  block[id:= header, width := "100%"] {
-    block[id:= maintitle] { "Outliner" }
-    toolbar(doc)
-  }
-
-  block[style := "width:100%; height: 8px; background-color: gray; text-align: center"]{
-    navigate()[onclick := action { visibility (header , toggle); }]{ "^^^" }
+  collapseUp() {
+    block[id:= header, width := "100%"] {
+      block[id:= maintitle] { "Outliner" }
+      toolbar(doc)
+    }
   }
 
   main(doc)
@@ -50,8 +48,8 @@ define main(doc: Document) {
     replace(detailView, detailView(n));
   }
 
-  navigate(documentoutline(doc)){ "JSON version" }
-  spacer
+  //navigate(documentoutline(doc)){ "JSON version" }
+  //spacer
   
   if (doc == null) {
     "(No document loaded)" 
