@@ -38,7 +38,7 @@ define template dojoTree(storeURL: String, rootID: String) {
     query="{id:'"+rootID+"'}" childrenAttr="[children]">
   </div>
   
-  <div dojoType="dijit.Tree" id=store+"Tree" model=store+"Model" openOnClick="true" style="width:600px;height:400px">
+  <div dojoType="dijit.Tree" id=store+"Tree" model=store+"Model" openOnClick="true" style="width:"+attribute("width","300px")+";">
       <script type="dojo/method" event="onClick" args="item">
            event(onselect,[id := "item.id"])    
       </script>

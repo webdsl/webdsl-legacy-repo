@@ -58,10 +58,10 @@ define main(doc: Document) {
 
     masterdetail() with {
       masterview() {
-        form {
+//        form {
           dojoTree(navigate(documentoutline(doc)), doc.root.id.toString())
             [onselect:=selectHeader(null)]
-        }
+//        }
       }
       detailview() {
         detailView(doc.root)

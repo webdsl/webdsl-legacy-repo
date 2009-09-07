@@ -30,23 +30,28 @@ define template collapseUp() {
 }
 
 define template collapseLeft() {
-  block[height:="100%", style:="display: inline", id:= collapsecontentsleft] {
-    elements()
-  }
-  block[style := "display:inline; height:100%; width: 8px; background-color: gray; text-align: center"]{
-    navigate()[onclick := action { visibility (collapsecontentsleft , toggle); }]{ "<\n<\n<" }
+  twoColumns[right:= "16px", width:= ""] with {
+    left() {
+      block[id:= collapsecontentsleft] {
+        elements()
+      }
+    }
+    right() {
+      block[style := "display:inline; height:100%; width: 100%; background-color: gray; text-align: center; valign: center;"]{
+        navigate()[onclick := action { visibility (collapsecontentsleft , toggle); }]{ "<\n<\n<" }
+      }
+    }
   }
 }
 
 
 define template no-span twoColumns() requires left(), right() {
-  table[width := ""+attribute("width","100%")] {
+  table[width := attribute("width","100%")] {
     row {
-      column[width:= ""+attribute("left","*")] {
+      column[width:= attribute("left","*")] {
         left()
       }
-      column[width:= ""+attribute("right","*")] {
-      
+      column[width:= attribute("right","*")] {
         right()		
       }
     }
