@@ -72,6 +72,5 @@ define template documentTree(doc: Document) {
     var itemNode: HeaderNode := loadHeaderNode(UUIDFromString(item));
     itemNode.parent := targetNode;
     relocate(outliner(doc));
-    append(detailView, template{"moved " output(itemNode.caption) " to " output(targetNode.caption) });
   }
 }
