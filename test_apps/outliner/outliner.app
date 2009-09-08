@@ -43,25 +43,13 @@ define outliner_contents(doc: Document) {
 }
 
 define main(doc: Document) {
-  action selectHeader(id: String) {
-    var n: HeaderNode := loadHeaderNode(UUIDFromString(id));
-    replace(detailView, detailView(n));
-  }
-
-  //navigate(documentoutline(doc)){ "JSON version" }
-  //spacer
-  
   if (doc == null) {
     "(No document loaded)" 
   }
   else {
-
     masterdetail() with {
       masterview() {
-//        form {
-          dojoTree(navigate(documentoutline(doc)), doc.root.id.toString())
-            [onselect:=selectHeader(null)]
-//        }
+        documentTree(doc)
       }
       detailview() {
         detailView(doc.root)
@@ -70,3 +58,20 @@ define main(doc: Document) {
 
   }
 } 
+
+define template documentTree(doc: Document) {
+  dojoTree(navigate(documentoutline(doc)), doc.root.id.toString())
+    [onselect:=selectHeader(null), ondrop:= ondrop(null,null)]
+  
+  action selectHeader(id: String) {
+    var n: HeaderNode := loadHeaderNode(UUIDFromString(id));
+    replace(detailView, detailView(n));
+  }
+  action ondrop(item: String, target: String) {
+    var targetNode: HeaderNode := loadHeaderNode(UUIDFromString(target));
+    var itemNode: HeaderNode := loadHeaderNode(UUIDFromString(item));
+    itemNode.parent := targetNode;
+    relocate(outliner(doc));
+    append(detailView, template{"moved " output(itemNode.caption) " to " output(targetNode.caption) });
+  }
+}
