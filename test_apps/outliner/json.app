@@ -3,6 +3,10 @@ module json
 section pages
 
 define no-span page documentoutline(d: Document) {
+  documentoutlinehelper(d)
+}
+
+define no-span documentoutlinehelper(d: Document) {
 "{	identifier: 'id',	label: 'name', 	items: [ "
   nodeoutline(d.root as HeaderNode)
 " ] }"

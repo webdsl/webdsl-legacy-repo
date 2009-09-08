@@ -5,6 +5,7 @@ imports widgets/widgets
 imports widgets/tree
 imports widgets/masterdetail
 imports widgets/popup
+imports widgets/tabcontrol
 
 //application specific imports
 imports data
@@ -22,6 +23,7 @@ define page root() {
 }
 
 define page outliner(doc: Document) {
+  loadDojo()
   outliner_contents(doc)
 }
 
@@ -47,15 +49,24 @@ define main(doc: Document) {
     "(No document loaded)" 
   }
   else {
-    masterdetail() with {
-      masterview() {
-        documentTree(doc)
+    tabs[height:="800px"] {
+      tab(doc.name) {
+        masterdetail() with {
+          masterview() {
+            documentTree(doc)
+          }
+          detailview() {
+            detailView(doc.root)
+          }
+        }
       }
-      detailview() {
-        detailView(doc.root)
+      lazytab("Print preview") {
+        //todo:
       }
+      lazytab("JSON tree") {
+        documentoutlinehelper(doc)
+      } 
     }
-
   }
 } 
 
@@ -71,6 +82,7 @@ define template documentTree(doc: Document) {
     var targetNode: HeaderNode := loadHeaderNode(UUIDFromString(target));
     var itemNode: HeaderNode := loadHeaderNode(UUIDFromString(item));
     itemNode.parent := targetNode;
+    itemNode.depth := targetNode.depth + 1; 
     relocate(outliner(doc));
   }
 }

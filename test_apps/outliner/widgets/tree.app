@@ -26,7 +26,6 @@ define no-span template loadDojo() {
 }
 
 define template dojoTree(storeURL: String, rootID: String) {
- loadDojo()
  var store: String := "store" + random().toString().replace("0.","_");
  
  <script>

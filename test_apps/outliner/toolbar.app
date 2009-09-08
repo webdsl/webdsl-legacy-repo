@@ -8,6 +8,7 @@ define no-span toolbar(doc: Document) {
         action("new", newac())
         action("open", openac())
         action("rem", remac())
+        action("refresh", refresh())
       }
       right() {    
         block[ style:= "width: 100%; text-align: right" ] {
@@ -33,6 +34,9 @@ define no-span toolbar(doc: Document) {
   }
   action remac() {
     replace(popup, delete_popup(doc));
+  }
+  action refresh() {
+    return outliner(doc);
   }
 }
 
