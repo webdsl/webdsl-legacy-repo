@@ -29,67 +29,30 @@ define viewHeader(item: HeaderNode) {
     replace(itemadder, itemCreator(item));
     replace(titleloc,  headerItemEditor(item));
   }
-/*  action onblur(item: HeaderNode) {
-    clear(itemadder);
-    replace(titleloc, headerItemDefaultView(item));
-  }
-*/  
 }
 
-define viewText(item: TextNode) {
-  output(item.contents)
+define no-span viewText(item: TextNode) {
+  block[id := viewText, class :="scopediv viewText", style := "background-color : #CCCCCC; "] {
+    form {
+      inplaceTextArea(item.contents)
+      action("Save", saveac())[id := submit]
+    }
+  }
+  action saveac() {
+    replace(this, viewText(item));
+  }
 }
 
 define viewImage(item: ImageNode) {
-  output(item.image)
-}
-
-define treeviewHeader(item: HeaderNode) {
-  output(item.caption)
-}
-
-define treeviewText(item: TextNode) {
-  output(item.contents)
-}
-
-define treeviewImage(item: ImageNode) {
-  output(item.image)
-}
-
-define itemCreator(parent: HeaderNode) {
-  collapsePanel(true)  with {
-    caption() { "Add an item" }
-    contents() { 
-      form {
-        var caption: String := "<new header>";
-        input(caption)
-        action("Add", newheaderac(parent,caption))
-  
-        action newheaderac(parent: HeaderNode, caption: String) {
-          var h : HeaderNode := HeaderNode {
-            caption := caption,
-            depth := parent.depth + 1,
-            parent := parent
-          };
-          h.save();
-  //        parent.children.add(h);
-          replace(detailView, detailView(parent)); //closest detailView
-        }  		
-      }
-    }
+  block[id := viewImage, class :="scopediv viewText", style := "background-color : #CCCCCC; ", onclick := editac(item)] {
+    output(item.image)
+  }
+  action editac(item: ImageNode) {
+    replace (this, editImage(item));
   }
 }
+
 
 define headerItemDefaultView(item: HeaderNode) {
   output(item.caption)
-}
-
-define no-span headerItemEditor(item: HeaderNode) {
-  form {
-    input(item.caption)
-    action("Save", save(item))
-  }
-  action save(item: HeaderNode) {
-    replace(titleloc, headerItemDefaultView(item));
-  }
 }

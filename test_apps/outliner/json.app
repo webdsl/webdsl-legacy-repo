@@ -16,7 +16,7 @@ define no-span template nodeoutline(n: HeaderNode) {
   mimetype("text/plain") 
   "{ id: '" output(n.id.toString()) "', name: '" output(n.caption) "'" 
     ", children: ["
-      for(c: TreeItem in n.children) {
+      for(c: TreeItem in n.children where c isa HeaderNode) {
         nodeoutline(c as HeaderNode) 
       }	separated-by { "," }
     "]"
