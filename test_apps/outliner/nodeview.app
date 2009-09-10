@@ -4,6 +4,13 @@ section templates
 
 //dispatch to  proper view
 define detailView(item: TreeItem) {
+  dndOnce()
+  //dndSource("detailViewTree") {
+    nodeView(item)
+  //}
+}
+
+define nodeView(item: TreeItem) {
          if (item isa HeaderNode) { viewHeader(item as HeaderNode) }
   else { if (item isa TextNode)   { viewText  (item as TextNode) }
   else { if (item isa ImageNode)  { viewImage (item as ImageNode) }
@@ -11,15 +18,49 @@ define detailView(item: TreeItem) {
 }
 
 define viewHeader(item: HeaderNode) {
+  action dropelement(item: String, target: String, before: String, anchor: String) {
+    var targetNode: HeaderNode := loadHeaderNode(UUIDFromString(target));
+    var itemNode: TreeItem := loadTreeItem(UUIDFromString(item));
+    
+    //update depth
+    if (itemNode isa HeaderNode) {
+      var h: HeaderNode := itemNode as HeaderNode;
+      h.depth := targetNode.depth + 1;
+    }
+    
+    if (anchor == "atend") {
+    //  targetNode.children.add(item);
+    }
+    if (anchor == "" && before=="true") {
+//      targetNode.children.insert(0, item);
+    }
+    
+    itemNode.parent := targetNode;
+  //  relocate(outliner(doc));
+  }
   collapsePanel(false) with {
     caption() {
-      container[ondblclick:=onfocus(item), id := titleloc]{
-        headerItemDefaultView(item)
+  /*    dndSource(item.id.toString()) {
+      dndItem(item.id.toString()) {
+       "[0000]"
+      }
+      }
+   */   container[ondblclick:=onfocus(item), id := titleloc]{
+          headerItemDefaultView(item)
       }
     }
     contents() {
-      for(child : TreeItem in item.children) {
-        detailView(child)
+      dndSource(item.id.toString())
+      //	[ondrop:= dropelement(null,null,null,null)] 
+      {
+        for(child : TreeItem in item.children) {
+          dndItem(child.id.toString()) {
+            nodeView(child)
+          }
+        }
+        dndItem("atend") {
+          "[ here ]"
+        }
       }
       placeholder itemadder {}
     }

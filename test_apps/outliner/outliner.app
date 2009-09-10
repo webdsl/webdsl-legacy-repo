@@ -6,6 +6,7 @@ imports widgets/tree
 imports widgets/masterdetail
 imports widgets/popup
 imports widgets/tabcontrol
+imports widgets/dnd
 
 //application specific imports
 imports data

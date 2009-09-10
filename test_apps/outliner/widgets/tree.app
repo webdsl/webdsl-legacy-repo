@@ -50,8 +50,9 @@ define template dojoTree(storeURL: String, rootID: String) {
       return false;
     }
 
-    function dndDrop(source,nodes,copy,destination) {
-      if (destination != null && nodes != null) { 
+    //function dndDrop(source,nodes,copy,destination) {
+    dojo.subscribe("/dnd/drop", function(source,nodes,copy,destination) {
+      if (destination != null && nodes != null && destination.node.id == "~(store+"Tree")") { 
         var sources = destination.getSelectedItems();
         if (sources.length == 1 && sources[0].id.length == 1 && nodes.length == 1) { 
           var item = sources[0].id[0]; 
@@ -64,7 +65,7 @@ define template dojoTree(storeURL: String, rootID: String) {
         } 
       } 
       return false; 
-    } 
+    }); 
   </script>
 
  
@@ -73,7 +74,7 @@ define template dojoTree(storeURL: String, rootID: String) {
     query="{id:'"+rootID+"'}" childrenAttr="[children]"/>
 
   <div dojoType="dijit.Tree" id=store+"Tree" model=store+"Model" openOnClick="true" style="width:"+attribute("width","300px")+";"
-    dndController="dijit._tree.dndSource" onDndDrop="dndDrop" checkItemAcceptance="itemTreeCheckItemAcceptance" persist="false">
+    dndController="dijit._tree.dndSource" checkItemAcceptance="itemTreeCheckItemAcceptance" persist="false"> // onDndDrop="dndDrop" 
       <script type="dojo/method" event="onClick" args="item">
            ~event(onselect,[id := "item.id"])    
       </script>
