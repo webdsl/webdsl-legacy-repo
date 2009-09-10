@@ -11,21 +11,29 @@ define no-span dndOnce() {
 
 
 define no-span dndSource(id: String) {
+  
   <script> 
-  dojo.subscribe("/dnd/drop/before", function(source,nodes,copy,destination) {
-      if (destination != null && nodes != null && destination.node.id == "~id") { 
+  dojo.subscribe("/dnd/drop", function(source,nodes,copy,destination) {
+      if (destination != null && nodes != null && destination.node.id == "~id") {
+        var dest = destination.node.id; 
         if (nodes.length == 1) { 
           var item = nodes[0].id; 
           if (item != destination.node.id) {
-            console.log("moved: " + item + " to " + destination.node.id + (source.before?" before ":" after "+ destination.targetAnchor.id));
-            ~event(ondrop,[item := "item", target := "destination.node.id", before := "source.before", anchor:= "destination.targetAnchor.id"])	
-            return true; 
+            window.setTimeout(function() {
+              var k;
+              for (k=0,e=nodes[0]; e = e.previousSibling; ++k);
+              console.log("index: "+k);
+              console.log("moved: " + item + " to " + dest + " index: "+k);
+              ~event(ondrop,[item := "item", target := "dest", index := "k"])	
+            },200); //timeout to be able to update index first
+            return true;
           } 
         } 
       } 
       return false; 
-    }); 
+    });
   </script>
+
   <div dojoType="dojo.dnd.Source" jsId=id id=id class="source"> 
     elements()
   </div>

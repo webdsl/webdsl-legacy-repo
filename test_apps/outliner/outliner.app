@@ -7,6 +7,7 @@ imports widgets/masterdetail
 imports widgets/popup
 imports widgets/tabcontrol
 imports widgets/dnd
+imports widgets/loaddojo
 
 //application specific imports
 imports data
@@ -25,11 +26,12 @@ define page root() {
 }
 
 define page outliner(doc: Document) {
-  loadDojo()
   outliner_contents(doc)
 }
 
 define outliner_contents(doc: Document) {
+  //loadDojo(true, "1.3.2")
+  loadDojo(false, "1.3.0")
   collapseUp() {
     block[id:= header, width := "100%"] {
       block[id:= maintitle] { "Outliner" }

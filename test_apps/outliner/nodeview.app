@@ -18,7 +18,7 @@ define nodeView(item: TreeItem) {
 }
 
 define viewHeader(item: HeaderNode) {
-  action dropelement(item: String, target: String, before: String, anchor: String) {
+  action dropelement(item: String, target: String, index: String) {
     var targetNode: HeaderNode := loadHeaderNode(UUIDFromString(target));
     var itemNode: TreeItem := loadTreeItem(UUIDFromString(item));
     
@@ -28,15 +28,10 @@ define viewHeader(item: HeaderNode) {
       h.depth := targetNode.depth + 1;
     }
     
-    if (anchor == "atend") {
-    //  targetNode.children.add(item);
-    }
-    if (anchor == "" && before=="true") {
-//      targetNode.children.insert(0, item);
-    }
+    targetNode.children.insert(index.parseInt(), itemNode);
+ //Fix: item appears twice   itemNode.parent := targetNode;
     
-    itemNode.parent := targetNode;
-  //  relocate(outliner(doc));
+    append(detailView, template{ "moved" });
   }
   collapsePanel(false) with {
     caption() {
@@ -51,7 +46,7 @@ define viewHeader(item: HeaderNode) {
     }
     contents() {
       dndSource(item.id.toString())
-      //	[ondrop:= dropelement(null,null,null,null)] 
+        [ondrop:= dropelement(null,null,null)] 
       {
         for(child : TreeItem in item.children) {
           dndItem(child.id.toString()) {
