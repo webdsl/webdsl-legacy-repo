@@ -3,7 +3,7 @@ module widgets
 section templates
 
 define inputtemplate inplaceTextArea(value: Text, name: String) {
-  <div ondblclick="this.innerHTML='<textarea onblur=\"this.form.onsubmit();\" name=\""+name+"\" style=\"width:'+(this.clientWidth-10)+'px;height:'+(this.clientHeight+40)+'px;\">"+value+"</textarea>';">
+  <div onclick="this.innerHTML='<textarea onblur=\"this.form.onsubmit();\" name=\""+name+"\" style=\"width:'+(this.clientWidth-10)+'px;height:'+(this.clientHeight+40)+'px;\">"+value+"</textarea>';">
     output(value)
   </div>
 }

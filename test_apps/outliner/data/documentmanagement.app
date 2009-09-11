@@ -15,7 +15,7 @@ define new_popup() {
       action("OK",saveac(n,d))
 
       action saveac(name: String, description: String) {
-        var r: TreeItem := HeaderNode{ 
+        var r: HeaderNode := HeaderNode{ 
           caption:= name, 
           //children := List<TreeItem>(), 
           parent := null ,

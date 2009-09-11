@@ -10,7 +10,6 @@ define no-span template loadDojo(remote: Bool, version: String) {
       loadCSS(prefix+"/dijit/themes/tundra/tundra.css");
       loadCSS(prefix+"/dojo/resources/dojo.css");
       loadCSS(prefix+"/dojo/resources/dnd.css");
-      loadCSS(prefix+"/dojo/tests/dnd/dndDefault.css");
     }
   </script>
   if (remote) {

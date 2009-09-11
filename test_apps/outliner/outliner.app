@@ -10,12 +10,14 @@ imports widgets/dnd
 imports widgets/loaddojo
 
 //application specific imports
-imports data
-imports documentmanagement
+imports data/data
+imports data/header
+imports data/image
+imports data/text
+imports data/documentmanagement
+imports data/json
+
 imports toolbar
-imports nodeview
-imports nodeedit
-imports json
 imports style
 
 section pages
@@ -46,6 +48,8 @@ define outliner_contents(doc: Document) {
   
   //a hook for the popup windows
   placeholder popup {}
+  
+  container[id:= statusBar] 
 }
 
 define main(doc: Document) {
@@ -89,4 +93,35 @@ define template documentTree(doc: Document) {
     itemNode.depth := targetNode.depth + 1; 
     relocate(outliner(doc));
   }
+}
+
+//dispatch to  proper view
+define detailView(item: HeaderNode) {
+  dndOnce()
+  showPath(item)
+  
+  spacer
+  nodeView(item)
+}
+
+define nodeView(item: TreeItem) {
+         if (item isa HeaderNode) { viewHeader(item as HeaderNode) }
+  else { if (item isa TextNode)   { viewText  (item as TextNode) }
+  else { if (item isa ImageNode)  { viewImage (item as ImageNode) }
+  else { "Error: unsupported node type" }  }  }
+}
+
+define showPath(item: HeaderNode) {
+  var path: List<HeaderNode> := List<HeaderNode>();
+  init {
+    var cur: HeaderNode := item;
+    while(cur != null) {
+      path.add(cur);
+      cur := cur.parent as HeaderNode;
+    }
+  }
+  for(i: Int from path.length -1 to 0) {
+    ">" 
+    output(path.get(i).caption)
+  } 
 }
