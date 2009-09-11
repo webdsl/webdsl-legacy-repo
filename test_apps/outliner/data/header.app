@@ -19,6 +19,12 @@ define viewHeader(item: HeaderNode) {
             twoColumns[left:="10px"] with {
               left() {
                 dndHandle() { ".." } 
+                if (child isa HeaderNode) {
+                  break
+                  navigate[onclick:=zoomac(child as HeaderNode)]{"o"}
+                }
+                break
+                navigate[onclick:=remac(child)]{"x"}
               }
               right() {
                 nodeView(child)
@@ -31,38 +37,35 @@ define viewHeader(item: HeaderNode) {
     }
   }
   
+  action remac(child: TreeItem) {
+    var p := child.parent;
+    child.parent := null;
+    child.delete();
+    replace(nodeView, nodeView(p));
+  }
+  action zoomac(child: HeaderNode) {
+    replace(detailView, detailView(child));
+  }
   action dropelement(item: String, target: String, index: String) {
     var targetNode: HeaderNode := loadHeaderNode(UUIDFromString(target));
     var itemNode: TreeItem := loadTreeItem(UUIDFromString(item));
-    
-    //update depth
-    if (itemNode isa HeaderNode) {
-      var h: HeaderNode := itemNode as HeaderNode;
-      h.depth := targetNode.depth + 1;
-    }
-    
-    //prevent recursion
-    var rec : Bool := false;
-    if (itemNode isa HeaderNode) {
-      var cur : HeaderNode := targetNode; 
-      while(cur.parent != null) {
-        cur := cur.parent as HeaderNode;
-        if (cur.parent.id.toString() == item) {
-          rec := true;
-        }  
+    //check recursion    
+    if(canMove(itemNode, targetNode)) {
+      //update depth
+      if (itemNode isa HeaderNode) {
+        var h: HeaderNode := itemNode as HeaderNode;
+        h.depth := targetNode.depth + 1;
       }
-    } 
-    
-    if(rec) {
-      replace(statusBar, template{ "Could not persist move action; it would create recursion in the tree" });
-    }
-    else {
+      //update parent
       itemNode.parent := null;
       targetNode.children.insert(index.parseInt(), itemNode);
       itemNode.parent := targetNode;
-    
+      //update UI
       replace(statusBar, template{ "Move action persisted" });
       replace(documentTree, documentTree(targetNode.doc));
+    }
+    else {
+      replace(statusBar, template{ "Could not persist move action; it would create recursion in the tree" });
     }
   }
 }

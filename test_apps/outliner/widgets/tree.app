@@ -4,7 +4,7 @@ section data
 
 entity TreeItem {
   parent -> TreeItem (inverse = TreeItem.children)
-  children -> List<TreeItem>// (inverse = TreeItem.parent)
+  children <> List<TreeItem>// (inverse = TreeItem.parent)
 }
 
 define template dojoTree(storeURL: String, rootID: String) {

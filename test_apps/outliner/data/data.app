@@ -5,7 +5,7 @@ section data
 entity Document {
   name :: String
   description :: Text
-  root -> HeaderNode 
+  root <> HeaderNode 
 }
 
 entity HeaderNode : TreeItem {
@@ -20,6 +20,20 @@ entity TextNode : TreeItem {
 
 entity ImageNode : TreeItem {
   image :: Image
+}
+
+//prevent recursion
+function canMove(item: TreeItem, target: HeaderNode): Bool {
+  if (item isa HeaderNode) {
+    var cur : HeaderNode := target; 
+    while(cur.parent != null) {
+      cur := cur.parent as HeaderNode;
+      if (cur.parent.id.toString() == item.id.toString()) {
+        return false;
+      }  
+    }
+  } 
+  return true;
 }
 
 define itemCreator(parent: HeaderNode) {
@@ -37,6 +51,7 @@ define itemCreator(parent: HeaderNode) {
       };
       h.save();
       replace(viewHeader, viewHeader(parent)); 
+      replace(documentTree, documentTree(parent.doc));
     }  		
     action newtextac(parent: HeaderNode) {
       var h : TextNode := TextNode {

@@ -49,7 +49,7 @@ define outliner_contents(doc: Document) {
   //a hook for the popup windows
   placeholder popup {}
   
-  container[id:= statusBar] { " Loaded." } 
+  container[id:= statusBar, style:="height: 20px; width:100%; float: bottom"] { " Loaded." } 
 }
 
 define main(doc: Document) {
@@ -89,9 +89,17 @@ define template documentTree(doc: Document) {
   action ondrop(item: String, target: String) {
     var targetNode: HeaderNode := loadHeaderNode(UUIDFromString(target));
     var itemNode: HeaderNode := loadHeaderNode(UUIDFromString(item));
-    itemNode.parent := targetNode;
-    itemNode.depth := targetNode.depth + 1; 
-    relocate(outliner(doc));
+    if (canMove(itemNode, targetNode)) {
+      itemNode.parent := targetNode;
+      itemNode.depth := targetNode.depth + 1; 
+      replace(this, documentTree(doc));
+      replace(detailView, detailView(targetNode));
+      replace(statusBar, template{ "Move operation persisted"});
+    }
+    else {
+      replace(this, documentTree(doc));
+      replace(statusBar, template{ "Drop operation cancelled to prevent cycle" });
+    }
   }
 }
 

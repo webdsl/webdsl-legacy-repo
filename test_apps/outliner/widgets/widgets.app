@@ -3,10 +3,29 @@ module widgets
 section templates
 
 define inputtemplate inplaceTextArea(value: Text, name: String) {
-  <div onclick="this.innerHTML='<textarea onblur=\"this.form.onsubmit();\" name=\""+name+"\" style=\"width:'+(this.clientWidth-10)+'px;height:'+(this.clientHeight+40)+'px;\">"+value+"</textarea>';">
+  <script>
+    function showTA(t,a) {
+      a.height = t.clientHeight+40;
+      a.style.visibility = 'visible';
+      t.style.visibility = 'hidden';
+    }
+    function hideTA(t,a) {
+      a.innerHTML = t.innerHTML;
+      t.form.onsubmit();
+      a.style.visibility = 'visible';
+      t.style.visibility = 'hidden';
+    }
+  </script>
+  <div onclick="showTA(this,this.nextSibling);"> 
     output(value)
-  </div>
+  </div> 
+  <textarea onblur="hideTA(this, this.previousSibling);" 
+    name=name style="visibility:hidden; width: 100%;"
+  > 
+    output(value)
+  </textarea>
 }
+
 
 define template no-span collapsePanel(collapsed: Bool) requires caption(), contents() {
   var initv : String;
