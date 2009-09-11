@@ -61,7 +61,7 @@ define viewHeader(item: HeaderNode) {
       targetNode.children.insert(index.parseInt(), itemNode);
       itemNode.parent := targetNode;
     
-      replace(statusBar, template{ "moved" });
+      replace(statusBar, template{ "Move action persisted" });
       replace(documentTree, documentTree(targetNode.doc));
     }
   }

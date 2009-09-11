@@ -49,7 +49,7 @@ define outliner_contents(doc: Document) {
   //a hook for the popup windows
   placeholder popup {}
   
-  container[id:= statusBar] 
+  container[id:= statusBar] { " Loaded." } 
 }
 
 define main(doc: Document) {
@@ -120,8 +120,18 @@ define showPath(item: HeaderNode) {
       cur := cur.parent as HeaderNode;
     }
   }
+  
   for(i: Int from path.length -1 to 0) {
-    ">" 
-    output(path.get(i).caption)
+    image("/images/go-next.png")
+    navigate[
+      onclick:= loadView(path.get(i))
+    ]{ output(path.get(i).caption) }
+    
   } 
+  image("/images/go-next.png")
+  output(item.caption)
+  
+  action loadView(item: HeaderNode) {
+    replace (detailView, detailView(item));
+  }
 }

@@ -26,11 +26,12 @@ define no-span template tab(title:String) {
 
 define no-span template lazytab(title:String) {
   <div dojoType="dijit.layout.ContentPane" title=(title)>
+    <script type="dojo/connect" event="selectChild">
+      console.log("Loading lazy tab2");
+    </script>
     <script type="dojo/method" event="onShow">
-      elems = this.domNode.getElementsByTagName('input');
-      if (elems[1] && elems[1].id == 'loader') {
-        elems[1].onclick();
-      }
+      console.log("Loading lazy tab");
+      findTopDown(this.domNode,'loader').onclick();
     </script>
     placeholder tabcontents {
       form{
