@@ -1,0 +1,62 @@
+.toolbar {
+  background-color : #DDDDDD;
+  -moz-border-radius-topleft: 7px;
+  -moz-border-radius-topright: 7px;  
+  height: 110px;
+  width: 770px; 
+  padding: 15px;
+  margin-top: 5px;
+  border: 1px solid gray;
+}
+
+.toolbarinner {
+  -moz-border-radius: 4px;
+  height: 28px;
+}
+
+.main { 
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.rounded {
+    -moz-border-radius-topright: 7px;
+    -moz-border-radius-bottomleft: 7px;
+}
+
+.border .toolbarinner {
+  border: 2px solid black;
+}
+
+.maintitle, h1, h2, h3, h4, h5, h6, h7, h8, h9,  {
+    font-family: "Georgia";
+    font-color: #FF7777;
+}
+
+.maintitle {
+    font-size: 50pt;
+    font-style: italic;
+}
+
+hr {
+    border: 2px solid #DDDDDD;
+}
+
+.toolbarright {
+    width: auto; 
+    text-align: right;
+}
+
+.docdetailspopup {
+    display: block; 
+    position: relative; 
+    left: 3px; 
+    top: -1px; 
+    background-color: #999999; 
+    z-index: 3;
+}    
+
+#docname {
+    float: right;
+}

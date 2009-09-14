@@ -2,22 +2,25 @@ module toolbar
 
 
 define no-span toolbar(doc: Document) {
-  block[ class:= toolbar ] {
-    twoColumns() with {
-      left() {
-        action("new", newac())
-        action("open", openac())
-        action("rem", remac())
-        action("refresh", refresh())
-      }
-      right() {    
-        block[ style:= "width: 100%; text-align: right" ] {
-          "currentdoc: "
-          container[id:= docname] {
-            docname(doc)
+  block[class:= [border, toolbar]] {
+    block[class:= maintitle] { "Outliner" }
+    block[class:= toolbarinner] {
+      twoColumns() with {
+        left() {
+          navigate[onclick:=newac()]  { image("/images/new.png") }
+          navigate[onclick:=openac()] { image("/images/open.png") }
+          navigate[onclick:=remac()]  { image("/images/remove.png") }
+          navigate[onclick:=refresh()]{ image("/images/refresh.png") }
+        }
+        right() {    
+          block[class:= toolbarright ] {
+            "currentdoc: "
+            container[id:= docname] {
+              docname(doc)
+            }
+            navigate[onclick:=closeac()]  { image("/images/close.png") }
+            placeholder docdetails {}
           }
-          action("x", closeac())
-          placeholder docdetails {}
         }
       }
     }  
@@ -41,27 +44,21 @@ define no-span toolbar(doc: Document) {
 }
 
 define docdetails(doc: Document) {
-  container[style:="display: block; position: relative; left: 10px; top: 40px; background-color: gray; z-index: 3;"] {
+  container[class:= [rounded, border, docdetailspopup]] {
     outputString(doc.description)
+    navigate[onclick:= action { clear(docdetails); }]{"x"}
   }
 }
 
-define docname(doc: Document) {
+define no-span docname(doc: Document) {
   container[
-    onclick := action{ replace(docname, editdocname(doc)); },
-    onmouseout := action{ clear(docdetails); },
     onmouseover := action { replace(docdetails, docdetails(doc)); }
   ]{
-    output(doc.name)
-  }
-}
-
-define editdocname(doc: Document) {
-  form {
-    input(doc.name)
-    action("OK", saveac())
-  }
-  action saveac() {
-    replace(docname, docname(doc)); 
+    form {
+      inplaceFieldEdit(doc.name)
+      container[class:=hidden] {
+        action("OK",action{replace(docname, docname(doc));})[id:= submit]
+      }
+    }
   }
 }

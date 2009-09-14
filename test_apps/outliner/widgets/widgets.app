@@ -2,6 +2,10 @@ module widgets
 
 section templates
 
+define no-span template loadCSS(url: String) {
+  <script>loadCSS("~url")</script>
+}
+
 define inputtemplate inplaceTextArea(value: Text, name: String) {
   <script>
     function showTA(t,a) {
@@ -26,6 +30,29 @@ define inputtemplate inplaceTextArea(value: Text, name: String) {
   </textarea>
 }
 
+define inputtemplate inplaceFieldEdit(value: String, name: String) {
+  <script>
+    function showTA(t,a) {
+      a.width = t.clientWidth;
+      a.style.visibility = 'visible';
+      t.style.visibility = 'hidden';
+    }
+    function hideTA(t,a) {
+      a.innerHTML = t.value;
+      t.form.onsubmit();
+      a.style.visibility = 'visible';
+      t.style.visibility = 'hidden';
+    }
+  </script>
+  <span style="float:left" onclick="showTA(this,this.nextSibling);"> 
+    output(value)
+  </span> 
+  <input onblur="hideTA(this, this.previousSibling);" 
+    name=name style="visibility:hidden; width: 100%;"
+    value=value
+  /> 
+}
+
 
 define template no-span collapsePanel(collapsed: Bool) requires caption(), contents() {
   var initv : String;
@@ -46,10 +73,10 @@ define template no-span collapsePanel(collapsed: Bool) requires caption(), conte
 }
 
 define template collapseUp() {
-  block[width:="100%", id:= collapsecontentsup] {
+  block[style:="width: "+attribute("width","auto"), id:= collapsecontentsup] {
     elements()
   }
-  block[style := "width:100%; height: 8px; background-color: gray; text-align: center"]{
+  block[class:=hdivider]{
     navigate()[onclick := action { visibility (collapsecontentsup, toggle); }]{ "^^^" }
   }
 }
@@ -62,7 +89,7 @@ define template collapseLeft() {
       }
     }
     right() {
-      block[style := "display:inline; height:100%; width: 100%; background-color: gray; text-align: center; vertical-align: center;"]{
+      block[class:= vdivider]{
         navigate()[onclick := action { visibility (collapsecontentsleft , toggle); }]{ "<\n<\n<" }
       }
     }
@@ -83,7 +110,14 @@ define template no-span twoColumns() requires left(), right() {
   }
 }
 
-style widgetsStyle
-
-twoColumns() { }
+define template no-span footerLayout(height: String) requires contents(), footer() {
+  //source: http://ryanfait.com/sticky-footer/
+  <div class="hcenter" style="min-height: 100%;height: auto !important;height: 100%;margin: 0 auto -"+height+"; width: "+attribute("width","auto")>
+    contents()
+    <div style="height: "+height></div>
+  </div>
+  <div class="hcenter" style="height: "+height+"; width: "+attribute("width","auto")>
+    footer()
+  </div>
+}
 
