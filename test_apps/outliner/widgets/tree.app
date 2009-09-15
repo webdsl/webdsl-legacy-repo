@@ -7,18 +7,22 @@ entity TreeItem {
   children <> List<TreeItem>// (inverse = TreeItem.parent)
 }
 
-define template dojoTree(storeURL: String, rootID: String) {
- var store: String := "store" + random().toString().replace("0.","_");
- 
- <script>
-    dojo.require("dojo.data.ItemFileWriteStore");
-    dojo.require("dojo.data.ItemFileReadStore");
-    dojo.require("dijit._tree.dndSource");
-    dojo.require("dijit.Tree");     
-    dojo.require("dojo.parser");
-    dojo.require("dojo.dnd.common");
-    dojo.require("dojo.dnd.Source");
-      
+define template Tree(storeURL: String, rootID: String) {
+  var store: String := "store" + random().toString().replace("0.","_");
+  TreeHelper(storeURL, rootID, store)
+
+  <div dojoType="dijit.Tree" id=store+"Tree" model=store+"Model" openOnClick="true" style="width:"+attribute("width","300px")+";"> 
+      <script type="dojo/method" event="onClick" args="item">
+           ~event(onselect,[id := "item.id"])    
+      </script>
+  </div>
+}
+
+define template dndTree(storeURL: String, rootID: String) {
+  var store: String := "store" + random().toString().replace("0.","_");
+  TreeHelper(storeURL, rootID, store)
+
+  <script>
     function itemTreeCheckItemAcceptance(node,source) {
       if (source != null && node != null) { 
         var item = dijit.getEnclosingWidget(node).item;
@@ -31,7 +35,6 @@ define template dojoTree(storeURL: String, rootID: String) {
       }
       return false;
     }
-
     //function dndDrop(source,nodes,copy,destination) {
     dojo.subscribe("/dnd/drop", function(source,nodes,copy,destination) {
       if (destination != null && nodes != null && destination.node.id == "~(store+"Tree")") { 
@@ -50,15 +53,27 @@ define template dojoTree(storeURL: String, rootID: String) {
     }); 
   </script>
 
+  <div dojoType="dijit.Tree" id=store+"Tree" model=store+"Model" openOnClick="true" style="width:"+attribute("width","300px")+";"
+    dndController="dijit._tree.dndSource" checkItemAcceptance="itemTreeCheckItemAcceptance" persist="false"> 
+      <script type="dojo/method" event="onClick" args="item">
+           ~event(onselect,[id := "item.id"])    
+      </script>
+  </div>
+}
+
+define no-span template TreeHelper(storeURL: String, rootID: String, store: String) {
+  <script>
+    dojo.require("dojo.data.ItemFileWriteStore");
+    dojo.require("dojo.data.ItemFileReadStore");
+    dojo.require("dijit._tree.dndSource");
+    dojo.require("dijit.Tree");     
+    dojo.require("dojo.parser");
+    dojo.require("dojo.dnd.common");
+    dojo.require("dojo.dnd.Source");
+  </script>
  
   <div dojoType="dojo.data.ItemFileWriteStore" jsId=store url=storeURL/>
   <div dojoType="dijit.tree.TreeStoreModel" jsId=store+"Model" store=store
     query="{id:'"+rootID+"'}" childrenAttr="[children]"/>
 
-  <div dojoType="dijit.Tree" id=store+"Tree" model=store+"Model" openOnClick="true" style="width:"+attribute("width","300px")+";"
-    dndController="dijit._tree.dndSource" checkItemAcceptance="itemTreeCheckItemAcceptance" persist="false"> // onDndDrop="dndDrop" 
-      <script type="dojo/method" event="onClick" args="item">
-           ~event(onselect,[id := "item.id"])    
-      </script>
-  </div>
 }

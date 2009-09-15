@@ -10,7 +10,13 @@ html, body {
 }
 
 .hidden {
-    height: 0px; width: 0px; visibility: hidden;
+    visibility: hidden;
+    display : none;
+}
+
+.visible {
+    visibility: visible;
+    display: inline;
 }
 
 .hcenter {

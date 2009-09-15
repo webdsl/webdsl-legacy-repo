@@ -7,10 +7,10 @@ define no-span toolbar(doc: Document) {
     block[class:= toolbarinner] {
       twoColumns() with {
         left() {
-          navigate[onclick:=newac()]  { image("/images/new.png") }
-          navigate[onclick:=openac()] { image("/images/open.png") }
-          navigate[onclick:=remac()]  { image("/images/remove.png") }
-          navigate[onclick:=refresh()]{ image("/images/refresh.png") }
+          rndButton("New",    true)[onclick:=newac()]
+          rndButton("Open",   true)[onclick:=openac()]  
+          rndButton("Remove", true)[onclick:=remac()]
+          rndButton("Refresh",true)[onclick:=refresh()]
         }
         right() {    
           block[class:= toolbarright ] {
@@ -18,7 +18,7 @@ define no-span toolbar(doc: Document) {
             container[id:= docname] {
               docname(doc)
             }
-            navigate[onclick:=closeac()]  { image("/images/close.png") }
+            rndButton("Close",false)[onclick:=closeac()]  { image("/images/close.png") }
             placeholder docdetails {}
           }
         }
@@ -46,19 +46,16 @@ define no-span toolbar(doc: Document) {
 define docdetails(doc: Document) {
   container[class:= [rounded, border, docdetailspopup]] {
     outputString(doc.description)
-    navigate[onclick:= action { clear(docdetails); }]{"x"}
+    rndButton("Close",false)[onclick:= action { clear(docdetails); }]
   }
 }
 
 define no-span docname(doc: Document) {
-  container[
-    onmouseover := action { replace(docdetails, docdetails(doc)); }
-  ]{
-    form {
-      inplaceFieldEdit(doc.name)
-      container[class:=hidden] {
-        action("OK",action{replace(docname, docname(doc));})[id:= submit]
-      }
-    }
+  container[onmouseover := action { replace(docdetails, docdetails(doc)); } ] {
+    inplaceFieldEdit(doc.name)[onblur:= changeName(null)]
+  }
+  action changeName(value: String) {
+    doc.name := value;
+    replace(docname, docname(doc));
   }
 }

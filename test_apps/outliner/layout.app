@@ -1,25 +1,13 @@
 module layout
 
-layout
+section templates
 
-/* nobody uses it yet
-  page home() {
-    top();
-    top_contents: [ topmenu() | quicksearch() ];
-    main();
-    footer();
+define no-span rndButton(kind: String, showCaption: Bool) {
+  block[class:="scopediv rounded border rndButton", onclick:= attribute("onclick","")] {
+    var url:= "../images/"+kind.toLowerCase()+".png";
+    if (showCaption == true) { 
+       break
+       output(caption)
+    }
   }
-  
-  top() {
-    logo_area: [ logos | text ];
-  }
-  
-  footer() {
-    f: [ footer_links | footer_text ];
-  }
-  
-  main() {
-    main_contents: [ folders() | notes() | details() ];
-  }
-  
-  */
+}

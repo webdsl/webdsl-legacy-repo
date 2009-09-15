@@ -17,6 +17,7 @@ imports data/text
 imports data/documentmanagement
 imports data/json
 
+imports layout
 imports toolbar
 
 section pages
@@ -81,27 +82,12 @@ define main(doc: Document) {
 } 
 
 define template documentTree(doc: Document) {
-  dojoTree(navigate(documentoutline(doc)), doc.root.id.toString())
-    [onselect:=selectHeader(null), ondrop:= ondrop(null,null)]
+  Tree(navigate(documentoutline(doc)), doc.root.id.toString())
+    [onselect:=selectHeader(null)]
   
   action selectHeader(id: String) {
     var n: HeaderNode := loadHeaderNode(UUIDFromString(id));
     replace(detailView, detailView(n));
-  }
-  action ondrop(item: String, target: String) {
-    var targetNode: HeaderNode := loadHeaderNode(UUIDFromString(target));
-    var itemNode: HeaderNode := loadHeaderNode(UUIDFromString(item));
-    if (canMove(itemNode, targetNode)) {
-      itemNode.parent := targetNode;
-      itemNode.depth := targetNode.depth + 1; 
-      replace(this, documentTree(doc));
-      replace(detailView, detailView(targetNode));
-      replace(statusBar, template{ "Move operation persisted"});
-    }
-    else {
-      replace(this, documentTree(doc));
-      replace(statusBar, template{ "Drop operation cancelled to prevent cycle" });
-    }
   }
 }
 
