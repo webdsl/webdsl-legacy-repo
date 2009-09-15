@@ -7,18 +7,22 @@ define no-span toolbar(doc: Document) {
     block[class:= toolbarinner] {
       twoColumns() with {
         left() {
-          rndButton("New",    true)[onclick:=newac()]
-          rndButton("Open",   true)[onclick:=openac()]  
-          rndButton("Remove", true)[onclick:=remac()]
-          rndButton("Refresh",true)[onclick:=refresh()]
+          rndButton("New",    true)[onclick:=newac(),  class:= firstbtn]
+          rndButton("Open",   true)[onclick:=openac(), class:= middlebtn]  
+          rndButton("Remove", true)[onclick:=remac(),  class:= middlebtn]
+          rndButton("Refresh",true)[onclick:=refresh(),class:= lastbtn]
         }
         right() {    
           block[class:= toolbarright ] {
-            "currentdoc: "
-            container[id:= docname] {
+            "Current: "
+            container[id:= docname, style:="margin-left:6px;font-weight:bold"] {
               docname(doc)
             }
-            rndButton("Close",false)[onclick:=closeac()]  { image("/images/close.png") }
+            rndButton("Close",false)[
+              onclick:=closeac(), 
+              style:="float:none;margin:6px;",
+              class:="smallbtn"
+            ]  
             placeholder docdetails {}
           }
         }
@@ -43,16 +47,27 @@ define no-span toolbar(doc: Document) {
   }
 }
 
-define docdetails(doc: Document) {
-  container[class:= [rounded, border, docdetailspopup]] {
-    outputString(doc.description)
-    rndButton("Close",false)[onclick:= action { clear(docdetails); }]
+define no-span docdetails(doc: Document) {
+  container[class:= [scopediv, docdetails, rounded, border]] {
+    rndButton("Close",false)[
+      onclick:= action { clear(this); },
+      style  := "float: right;",
+      class  := "smallbtn"
+    ]
+    break
+    spacer
+    form {
+      inplaceTextArea(doc.description)[onblur := saveac]
+    }
+  }
+  action saveac() {
+    replace(this, docdetails(doc));
   }
 }
 
 define no-span docname(doc: Document) {
   container[onmouseover := action { replace(docdetails, docdetails(doc)); } ] {
-    inplaceFieldEdit(doc.name)[onblur:= changeName(null)]
+    inplaceFieldEdit(doc.name)[onblur:= changeName,onclick:=changeName(null)]
   }
   action changeName(value: String) {
     doc.name := value;

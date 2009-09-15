@@ -85,9 +85,10 @@ define template collapseUp() {
   block[style:="width: "+attribute("width","auto"), id:= collapsecontentsup] {
     elements()
   }
-  block[class:=hdivider]{
-    navigate()[onclick := action { visibility (collapsecontentsup, toggle); }]{ "^^^" }
-  }
+  block[
+    class:=hdivider,
+    onclick := action { visibility (collapsecontentsup, toggle); }
+  ]
 }
 
 define template collapseLeft() {
@@ -98,9 +99,10 @@ define template collapseLeft() {
       }
     }
     right() {
-      block[class:= vdivider]{
-        navigate()[onclick := action { visibility (collapsecontentsleft , toggle); }]{ "<\n<\n<" }
-      }
+      block[
+        class:= vdivider,
+        onclick := action { visibility (collapsecontentsleft , toggle); }
+      ]
     }
   }
 }
