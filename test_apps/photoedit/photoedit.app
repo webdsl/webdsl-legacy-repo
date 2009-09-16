@@ -1,8 +1,4 @@
-application imageresize
-
-description {
-  A simple app that uses CRUD page generation for managing a Person entity
-}
+application photoedit
 
 section pages
 
