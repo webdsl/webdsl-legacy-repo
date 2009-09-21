@@ -28,15 +28,12 @@ module user
   define page editUserBig(u:User) {
     var p: Secret;
     form{
-      formgroup("User")[labelWidth := globalSettings.labelWidth]{
+      fieldset("User"){
         label("Username") { input(u.username) }
         label("Email") { input(u.email) }
         label("New Password") { input(u.password) }
         label("Re-enter Password") { input(p){ validate(u.password == p, "Password does not match") } }
-        block()[style := globalSettings.formButtonsStyle]{
-          action("Save",save())
-          navigatebutton(user(u),"Cancel")
-        }
+        action("Save",save())
       }
     }
     action save(){
@@ -49,14 +46,11 @@ module user
   define page editUser(u:User) {
     var p: Secret;
     form{
-      formgroup("User")[labelWidth := globalSettings.labelWidth]{
+      fieldset("User"){
         label("Username") { input(u.username) }
         label("Email") { input(u.email) }
         label("New Password") { input(u.password) }
-        block()[style := globalSettings.formButtonsStyle]{
-          action("Save",save())
-          navigatebutton(user(u),"Cancel")
-        }
+        action("Save",save())
       }
     }
     action save(){
@@ -67,12 +61,9 @@ module user
   }
   
   define page user(u:User) {
-    formgroup("User")[labelWidth := globalSettings.labelWidth]{ 
+    fieldset("User"){ 
       label("Username") { output(u.username) }
       label("Email") { output(u.email) }
-      block()[style := globalSettings.formButtonsStyle]{
-        navigate(editUser(u)){"edit"}
-      }
     }    
+    navigate(editUser(u)){"edit"}
   }
-  

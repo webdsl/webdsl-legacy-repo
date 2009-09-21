@@ -46,6 +46,7 @@ fieldset {
 }
 
 label {
+  height:13px;
   width:125px;
   display:block;
   clear:left;
@@ -54,11 +55,12 @@ label {
 }
 
 div.successblock{
-  display:inline; 
+  display: block; 
   border: 1px solid #BB8800; 
   padding: 4px; 
-  color:#BB8800;
-  margin: 5px 0 10px;
+  color: #BB8800;
+  margin: 5px 0 15px 2px;
+  width: 328px;
 }
 
 input[type="text"],input[type="file"],input[type="password"]{
