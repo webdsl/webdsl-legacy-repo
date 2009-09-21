@@ -1,36 +1,80 @@
-
 body {
-left:0px;
-right:0px;
-text-align: left;
-}
-fieldset {
-display:inline;
+  left:0px;
+  right:0px;
+  text-align: left;
 }
 
-input,input[type="text"],input[type="file"],input[type="password"]{
-width: 175px; /* 225px; */
+select{
+  width: 181px; /* 231px; */
 }
+
+a:link { /* unvisited link */
+  color: #0000FF
+}
+     
+a:visited { /* visited link */
+  color: #0000FF
+}
+  
+a:hover { /* mouse over link */
+  color: #0000FF;
+}
+   
+a:active { /* (tab) selected link */
+  color: #0000FF;
+}   
+
+div.errorblock {
+  width: 310px;
+  clear:left; 
+  float:left; 
+  border: 1px solid #FF0000; 
+  margin: 6px 0 5px -5px;
+  padding:4px;
+}
+
+div.errorline {
+  width:100%; 
+  clear:left; 
+  float:left; 
+  color: #FF0000; 
+  margin-top: 5px;
+}
+
+fieldset {
+  width:315px;
+}
+
+label {
+  width:125px;
+  display:block;
+  clear:left;
+  float:left;
+  margin: 3px;
+}
+
+div.successblock{
+  display:inline; 
+  border: 1px solid #BB8800; 
+  padding: 4px; 
+  color:#BB8800;
+  margin: 5px 0 10px;
+}
+
+input[type="text"],input[type="file"],input[type="password"]{
+  width: 175px; /* 225px; */
+  display: block;
+  height: 14px;
+  margin: 1px;
+}
+
 textarea{
-width: 179px; 
+  display:block;
+  width: 179px; 
 }
 
 input[type="button"],input[type="submit"]{
-width : 60px;
+  width : 60px;
+  float:right;
+  margin:6px;
 }
-
-
-
-select{
-width: 181px; /* 231px; */
-}
-
-
-a:link    {color: #0000FF}     /* unvisited link */
-a:visited {color: #0000FF}  /* visited link */
-a:hover   {
-color: #0000FF;
-}   /* mouse over link */
-a:active {
-color: #0000FF;
-}   /* selected link */

@@ -2,7 +2,7 @@ module person
 
   entity Person {
     fullName     :: String (name)
-    displayName  :: String (id, validate(isUniquePersonId(this.displayName),"Display Name is taken"))
+    displayName  :: String (id, validate(isUniquePerson(this),"Display Name is taken"))
     profile      :: WikiText           
     //portrait     :: Image          
     homepage     :: URL     (optional) // derive from current affiliation
@@ -26,12 +26,12 @@ module person
     }
     action save(){
       p.save();
+      message("Person information updated");
       return person(p);
     }
   }
   
   define page person(p:Person) {
-    outputMessage("Person information updated")
     formgroup("Person")[labelWidth := globalSettings.labelWidth]{
       label("Full Name") {    output(p.fullName) }
       label("Display Name") { output(p.displayName) }
