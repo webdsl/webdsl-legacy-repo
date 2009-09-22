@@ -25,7 +25,7 @@ module user
     }
   }
   
-  define page editUserBig(u:User) {
+  define page editUserBig(u : User) {
     var p: Secret;
     form{
       fieldset("User"){
@@ -62,8 +62,21 @@ module user
   
   define page user(u:User) {
     fieldset("User"){ 
-      label("Username") { output(u.username) }
-      label("Email") { output(u.email) }
-    }    
+      label("Username") { wrapProperty{ output(u.username) } }
+      label("Email") {    wrapProperty{ output(u.email) } }
+    }   
+    break 
     navigate(editUser(u)){"edit"}
   }
+  
+  define wrapProperty(){
+    <div class="outputproperty"> 
+    elements
+    </div>
+  }
+  define wrapListProperty(){
+    <div class="outputlistproperty"> 
+    elements
+    </div>
+  }
+  

@@ -12,27 +12,20 @@ module user
   define page createGroup() { //error page inserted needs different template
     var ug := UserGroup{}
     form{
-      formgroup("User Group")[labelWidth := globalSettings.labelWidth]{
+      fieldset("User Group"){
         label("Name") { input(ug.name) }
         label("Owner") { input(ug.owner) }
-    block()[class := error, style := "clear:left; float:left; border: 1px solid #FF0000; margin-left: -5px; margin-top: 5px; margin-bottom: 5px; padding: 4px"]{
-     
-  
-        block()[style := "width:100%; clear:left; float:left; color: #FF0000; margin-top: 5px;"]{
-          "Owner could not be notified by email"
-        }     
-      
-    }
-        
-        block()[style := globalSettings.formButtonsStyle]{
-          action("Save",save())
-          navigatebutton(userGroup(ug),"Cancel")
-        }
+        /*<div class = "errorblock">
+          <div class = "errorline">
+            "Owner could not be notified by email"
+          </div>
+        </div>*/    
+        action("Save",save())
       }
     }
     action save() {
       initUserGroup(ug);    
-      
+      validate(false, "Owner could not be notified by email");
       validate(ug.owner in ug.moderators,"Owner must always be a moderator");
       validate(ug.owner in ug.members,"Owner must always be a member");
       ug.save();
@@ -104,15 +97,12 @@ module user
   
   define page editUserGroupBig(ug:UserGroup) {
     form{
-      formgroup("User Group")[labelWidth := globalSettings.labelWidth]{
+      fieldset("User Group"){
         label("Name") { input(ug.name) }
         label("Member Limit") { input(ug.memberLimit) }
         label("Moderators") { input(ug.moderators) }
         label("Members") { input(ug.members) }
-        block()[style := globalSettings.formButtonsStyle]{
-          action("Save",save())
-          navigatebutton(userGroup(ug),"Cancel")
-        }
+        action("Save",save())
       }
     }
     action save(){
@@ -122,14 +112,12 @@ module user
   }
   
   define page userGroup(ug:UserGroup) {
-    formgroup("User Group")[labelWidth := globalSettings.labelWidth]{
-      label("Name") { output(ug.name) }
-      label("Owner") { output(ug.owner) }
-      label("Member Limit") { output(ug.memberLimit) }
-      label("Moderators") { output(ug.moderators) }
-      label("Members") { output(ug.members) }
-      label("") { 
-        navigate(editUserGroup(ug)){"edit"}  navigate(editUserGroupOwner(ug)){"owneredit"}
-      } 
+    fieldset("User Group"){
+      label("Name") {         wrapProperty{ output(ug.name) } }
+      label("Owner") {        wrapProperty{ output(ug.owner) } }
+      label("Member Limit") { wrapProperty{ output(ug.memberLimit) } }
+      wrapListProperty { label("Moderators") { output(ug.moderators) } }
+      wrapListProperty { label("Members") {    output(ug.members) } }
     }    
+    navigate(editUserGroupBig(ug)){"edit 4 properties"} 
   }

@@ -5,7 +5,7 @@ body {
 }
 
 select{
-  width: 181px; /* 231px; */
+  width: 179px;
 }
 
 a:link { /* unvisited link */
@@ -79,4 +79,22 @@ input[type="button"],input[type="submit"]{
   width : 60px;
   float:right;
   margin:6px;
+}
+div.outputproperty{
+  width: 175px;
+  display: block;
+  height: 14px;
+  margin: 1px;
+  float: left;
+}
+ul {
+  display:block;
+  float:left;
+}
+
+input.inputInt{
+  width: 175px;
+  display: block;
+  height: 14px;
+  margin: 1px;
 }

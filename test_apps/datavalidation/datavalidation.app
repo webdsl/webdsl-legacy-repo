@@ -29,28 +29,30 @@ section home page
     for(u:User)
     {
       navigate(user(u)){output(u.name)}" "
-      navigate(editUserSmall(u)){"editsmall"}" "
-      navigate(editUser(u)){"edit"}" "
-      navigate(editUserBig(u)){"editbig"}" "
+      navigate(editUserSmall(u)){"edit 2 properties"}" "
+      navigate(editUser(u)){"edit 3 properties"}" "
+      navigate(editUserBig(u)){"edit 4 properties"}" "
     }
+    /*
     break
     for(p:Person){
       navigate(person(p)){output(p.name)}" "
       navigate(editPerson(p)){"edit"}" "
     }
+    */
     break
     for(ug:UserGroup){
       navigate(userGroup(ug)){output(ug.name)}" "
-      navigate(editUserGroupSmall(ug)){"editsmall"}" "
-      navigate(editUserGroup(ug)){"edit"}" "
-      navigate(editUserGroupOwner(ug)){"owneredit"}" "
-      navigate(editUserGroupBig(ug)){"editbig"}" "
+      //navigate(editUserGroupSmall(ug)){"edit 2 properties"}" "
+      //navigate(editUserGroup(ug)){"edit"}" "
+      //navigate(editUserGroupOwner(ug)){"owneredit"}" "
+      navigate(editUserGroupBig(ug)){"edit 4 properties"}" "
     }
     break
     navigate(createGroup()){"create"}" "
     break
     
-    
+    /*
     for(f:Folder)
     {
       navigate(folder(f)){output(f.name)}" "
@@ -62,6 +64,7 @@ section home page
       navigate(note(n)){output(n.name)}" "
       navigate(editNote(n)){"edit"}" "
     }
+    */
   }
  
   define templateSuccess(messages : List<String>){
@@ -86,15 +89,13 @@ section home page
   } 
   define ignore-access-control errorTemplateAction(messages : List<String>){
     <div class = "errorblock">
-      <div class = "errorinput">
-        validatedInput
-      </div>
       for(ve: String in messages){
           <div class = "errorline">
             output(ve)
           </div>
       }     
     </div>
+    validatedInput
   } 
   define ignore-access-control errorTemplateForm(messages : List<String>){
     <div class = "errorblock">

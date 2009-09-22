@@ -12,16 +12,13 @@ module person
   
   define page editPerson(p:Person) {
     form{
-      formgroup("Person")[labelWidth := globalSettings.labelWidth]{
+      fieldset("Person"){
         label("Full Name") {    input(p.fullName) }
         label("Display Name") { input(p.displayName) }
         label("Profile") {      input(p.profile) }
         //label("Portrait") {   input(p.portrait) }
         label("Homepage") {     input(p.homepage) }
-        block()[style := globalSettings.formButtonsStyle]{
-          action("Save",save())
-          navigatebutton(person(p),"Cancel")
-        }
+        action("Save",save())
       }
     }
     action save(){
@@ -32,16 +29,13 @@ module person
   }
   
   define page person(p:Person) {
-    formgroup("Person")[labelWidth := globalSettings.labelWidth]{
-      label("Full Name") {    output(p.fullName) }
-      label("Display Name") { output(p.displayName) }
-      label("Profile") {      output(p.profile) }
-      //label("Portrait") {     output(p.portrait) }
-      label("Homepage") {     output(p.homepage) }
-      block()[style := globalSettings.formButtonsStyle]{
-        navigate(editPerson(p)){"edit"}
-      }
+    fieldset("Person"){
+      label("Full Name") {    wrapProperty{ output(p.fullName) } }
+      label("Display Name") { wrapProperty{ output(p.displayName) } }
+      label("Profile") {      wrapProperty{ output(p.profile) } }
+      label("Homepage") {     wrapProperty{ output(p.homepage) } }
     }    
+    navigate(editPerson(p)){"edit"}
   }
   
           //label("Affiliations") {    input(p.) }
