@@ -3,12 +3,11 @@ module header
 section templates
 
 
-define viewHeader(item: HeaderNode) {
+define no-span viewHeader(item: HeaderNode) {
+ block[id:= viewHeader, class:=[scopediv, viewHeader]] {
   collapsePanel(false) with {
     caption() {
-      container[id:= titleloc] {
-        headerItemDefaultView(item)
-      }
+      inplaceFieldEdit(item.caption)[onblur := savehdr(item, null)]
     }
     contents() {
       dndSource(item.id.toString(), true)
@@ -21,10 +20,10 @@ define viewHeader(item: HeaderNode) {
                 dndHandle() { ".." } 
                 if (child isa HeaderNode) {
                   break
-                  navigate[onclick:=zoomac(child as HeaderNode)]{"o"}
+                  image("/images/system-search.png")[onclick:=zoomac(child as HeaderNode)]
                 }
                 break
-                navigate[onclick:=remac(child)]{"x"}
+                image("/images/remove.png")[onclick:=remac(child)]
               }
               right() {
                 nodeView(child)
@@ -36,7 +35,11 @@ define viewHeader(item: HeaderNode) {
       itemadderhidden(item)
     }
   }
-  
+ } 
+  action savehdr(item: HeaderNode, value: String) {
+    item.caption := value;
+    replace(statusBar, template{ "Saved header " output(value) });
+  }
   action remac(child: TreeItem) {
     var p := child.parent;
     child.parent := null;
@@ -57,9 +60,10 @@ define viewHeader(item: HeaderNode) {
         h.depth := targetNode.depth + 1;
       }
       //update parent
-      itemNode.parent := null;
-      targetNode.children.insert(index.parseInt(), itemNode);
+      //itemNode.parent := null;
       itemNode.parent := targetNode;
+      targetNode.children.insert(index.parseInt(), itemNode);
+      
       //update UI
       replace(statusBar, template{ "Move action persisted" });
       replace(documentTree, documentTree(targetNode.doc));
@@ -67,27 +71,6 @@ define viewHeader(item: HeaderNode) {
     else {
       replace(statusBar, template{ "Could not persist move action; it would create recursion in the tree" });
     }
-  }
-}
-
-
-define no-span headerItemEditor(item: HeaderNode) {
-  form {
-    input(item.caption)[width:="80%", onblur:="this.form.onsubmit()"]
-    navigate[id:= submit, style:="display: hidden", onclick:=save(item)]{"[Save]"}
-  }
-  action save(item: HeaderNode) {
-    replace(titleloc, headerItemDefaultView(item));
-  }
-}
-
-
-define no-span headerItemDefaultView(item: HeaderNode) {
-  container[onclick:=onfocus(item), id := titleloc, style:= "padding-left: 10px;"]{
-    output(item.caption)
-  }
-  action onfocus(item: HeaderNode) {
-    replace(titleloc,  headerItemEditor(item));
   }
 }
 

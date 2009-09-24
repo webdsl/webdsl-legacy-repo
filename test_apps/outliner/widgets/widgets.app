@@ -2,8 +2,8 @@ module widgets
 
 section templates
 
-define no-span template loadCSS(url: String) {
-  <script>loadCSS("~url")</script>
+define no-span template loadCSS(stylesheet: String) {
+  <script>loadCSS("~(baseURL())"+"/stylesheets/"+"~stylesheet")</script>
 }
 
 
@@ -24,9 +24,9 @@ define inputtemplate inplaceTextArea(value: Text, name: String) {
     }
   </script>
   <div onclick="showTA(this,this.nextSibling);" class="visible"> 
-    output(value)
+    outputText(value)
   </div> 
-  <textarea onblur="hideTA(this, this.previousSibling);"+event(onblur,[value:="this.innerHTML"]) 
+  <textarea onblur="hideTA(this, this.previousSibling);"+event(onblur,[value:="this.value"]) 
     name=name class="hidden"
   > 
     output(value)
@@ -59,6 +59,7 @@ define inputtemplate inplaceFieldEdit(value: String, name: String) {
   <input onblur="hideTA(this, this.previousSibling);"+event(onblur,[value:="this.value"])  
     name=name class="hidden"
     value=value
+    style="width:100%"
   /> 
 }
 
@@ -69,13 +70,13 @@ define template no-span collapsePanel(collapsed: Bool) requires caption(), conte
     if (collapsed) { initv := "block"; } else { initv := "hidden"; }
   }
     
-  block[style:=" border: 1px dashed #666666; width: 100%", class:="collapsePanel"] { 
-    block[style:= "background-color:#CCCCCC; width: 100%; border: 1px solid #666666"] {
-      navigate()[onclick := action{ visibility(collapsetarget, toggle); }]{ ">   |" } 
+  block[class:=collapsePanelOuter] { 
+    block[class:= collapsePanelHeader] {
+      image("/images/arrow-right.png")
+        [onclick := action{ visibility(collapsetarget, toggle); }] 
       caption()
     }
-    break
-    block[style:= "padding-left: 20px; visiblity:"+initv, id := collapsetarget] {
+    block[class:= collapsePanelContent, style:= "visiblity:"+initv, id := collapsetarget] {
       contents()
     }
   }

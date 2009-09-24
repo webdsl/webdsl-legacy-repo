@@ -8,7 +8,7 @@ define no-span rndButton(kind: String, showCaption: Bool) {
     onclick:= attribute("onclick",""),
     style := attribute("style","")	
   ] {
-    image("../images/"+kind.toLowerCase()+".png")
+    image("images/"+kind.toLowerCase()+".png")
     if (showCaption == true) { 
        break
        output(kind)

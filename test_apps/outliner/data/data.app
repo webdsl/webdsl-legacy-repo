@@ -18,9 +18,11 @@ entity TextNode : TreeItem {
   contents :: Text
 }
 
+/*
 entity ImageNode : TreeItem {
   image :: Image
 }
+*/
 
 //prevent recursion
 function canMove(item: TreeItem, target: HeaderNode): Bool {
@@ -40,7 +42,7 @@ define itemCreator(parent: HeaderNode) {
   form {
     action("Header", newheaderac(parent))
     action("Text block", newtextac(parent))
-    action("Image", newimgac(parent))
+  //  action("Image", newimgac(parent))
 
     action newheaderac(parent: HeaderNode) {
       var h : HeaderNode := HeaderNode {
@@ -61,12 +63,14 @@ define itemCreator(parent: HeaderNode) {
       h.save();
       replace(viewHeader, viewHeader(parent)); 
     }  		
+  /* 
     action newimgac(parent: HeaderNode) {
       var h : ImageNode := ImageNode {
         parent := parent
       };
       h.save();
       replace(viewHeader, viewHeader(parent)); 
-    }  		
-  }
+    }
+   */  		
+  } 
 }

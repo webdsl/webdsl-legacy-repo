@@ -12,7 +12,7 @@ imports widgets/loaddojo
 //application specific imports
 imports data/data
 imports data/header
-imports data/image
+//imports data/image
 imports data/text
 imports data/documentmanagement
 imports data/json
@@ -34,17 +34,19 @@ define page outliner(doc: Document) {
 define outliner_contents(doc: Document) {
   //loadDojo(true, "1.3.2")
   loadDojo(false, "1.3.0")
-  loadCSS("../stylesheets/outliner.css")
-  loadCSS("../stylesheets/widgets.css")
+  loadCSS("outliner.css")
+  loadCSS("widgets.css")
+
+  //a hook for the popup windows
+  placeholder popup {}
+  
   footerLayout("100px")[width:="800px"] with {
     contents() {
+    
       collapseUp() {
           toolbar(doc)
       }
       main(doc)
-    
-      //a hook for the popup windows
-      placeholder popup {}
     }
     footer() {
       spacer 
@@ -71,13 +73,13 @@ define main(doc: Document) {
           }
         }
       }
-      lazytab("Print preview") {
-        //todo:
-      }
-      lazytab("JSON tree") {
+      lazytab("Print preview") with { contents(){
+        printpreview(doc)
+      } }
+/*      lazytab("JSON tree") {
         documentoutlinehelper(doc)
       } 
-    }
+*/    }
   }
 } 
 
@@ -100,11 +102,13 @@ define detailView(item: HeaderNode) {
   nodeView(item)
 }
 
-define nodeView(item: TreeItem) {
+define no-span nodeView(item: TreeItem) {
+  block[class:=[scopediv, nodeView]] {
          if (item isa HeaderNode) { viewHeader(item as HeaderNode) }
   else { if (item isa TextNode)   { viewText  (item as TextNode) }
-  else { if (item isa ImageNode)  { viewImage (item as ImageNode) }
-  else { "Error: unsupported node type" }  }  }
+ // else { if (item isa ImageNode)  { viewImage (item as ImageNode) }
+  else { "Error: unsupported node type" }  }  // }
+  }
 }
 
 define showPath(item: HeaderNode) {
@@ -124,10 +128,43 @@ define showPath(item: HeaderNode) {
     ]{ output(path.get(i).caption) }
     
   } 
-  image("/images/go-next.png")
+  image("/images/arrow-right.png")
   output(item.caption)
   
   action loadView(item: HeaderNode) {
     replace (detailView, detailView(item));
+  }
+}
+
+//not the least trivial solution, but it demonstrates the power of with/require
+define printpreview(doc: Document) {
+  <b> output(doc.name) </b>
+  break
+  output(doc.description)
+  spacer
+  customTree(doc.root) with { 
+    treeView(item: TreeItem) {
+      if (item isa HeaderNode) {
+        <b>
+          output((item as HeaderNode).caption)
+        </b>
+      }
+      if (item isa TextNode) {
+        output((item as TextNode).contents)
+      }
+    }
+  }
+}
+
+define customTree(item: TreeItem) requires treeView(TreeItem){
+  container /*[ an onclick action could be defined here ]*/ {
+  /* here could be some +/- sign responsible for collapsing */
+    treeView(item)
+  }
+  break
+  container[style:="padding-left: 16px"] {
+    for(child: TreeItem in item.children) {
+      customTree(child) 
+    }
   }
 }

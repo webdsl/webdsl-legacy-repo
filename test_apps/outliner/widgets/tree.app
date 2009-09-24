@@ -13,7 +13,7 @@ define template Tree(storeURL: String, rootID: String) {
 
   <div dojoType="dijit.Tree" id=store+"Tree" model=store+"Model" openOnClick="true" style="width:"+attribute("width","300px")+";"> 
       <script type="dojo/method" event="onClick" args="item">
-           ~event(onselect,[id := "item.id"])    
+           ~event(onselect,[id := "item.id[0]"])    
       </script>
   </div>
 }

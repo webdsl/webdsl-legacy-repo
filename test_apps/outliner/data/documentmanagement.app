@@ -35,9 +35,9 @@ define new_popup() {
 
 define open_popup() {
   popup("Open outline document") {
-    table {
+    table [height:= "200px"]{
       row {
-        column[width := 400px] {
+        column[width := "400px"] {
           for(d : Document order by d.name) {
             navigate()[
               onclick := action { return outliner(d); },

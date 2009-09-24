@@ -29,11 +29,16 @@ define no-span template loadDojo(remote: Bool, version: String) {
   if (!remote) {
     <script 
       type="text/javascript" 
-      src="../javascript/dojo-release-"+version+"/dojo/dojo.js"
+      src=baseURL()+"/javascript/dojo-release-"+version+"/dojo/dojo.js"
       djConfig="parseOnLoad:true, isDebug:true" //, addOnLoad: function() {console.log(\"Dojo finished loading: "+version+" (remote: "+remote+"\")\"); } "
     ></script>
     <script>
-      loadDojoCSS("../javascript/dojo-release-"+"~version");
+      //override the post processor
+      __ajax_postprocessor = function(node) { 
+        if (typeof(dojo) != 'undefined')
+          dojo.parser.parse(node);	
+      };
+      loadDojoCSS("~(baseURL())"+"/javascript/dojo-release-"+"~version");
     </script>
   }
 }

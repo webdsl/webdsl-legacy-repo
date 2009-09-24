@@ -8,7 +8,7 @@ body {
   -moz-border-radius-topleft: 7px;
   -moz-border-radius-topright: 7px;  
   height: 126px;
-  width: 770px; 
+  width: 768px; 
   padding: 15px;
   margin-top: 5px;
   border: 1px solid gray;
@@ -26,20 +26,25 @@ body {
     margin-right: auto;
 }
 
-.rounded {
+.rounded, .popupcontents, .popupheader {
     -moz-border-radius-topright: 7px;
     -moz-border-radius-bottomleft: 7px;
 }
 
-.border, .toolbarinner, input, textarea{
-  border: 2px solid black;
+.border, .toolbarinner, input, textarea, .popupcontents{
+  border: 1px solid gray;
+}
+
+textarea {
+    width: 100%;
+    height: 80px;
 }
 
 input:hover, textarea:hover {
-    background-color: yellow;
+    background-color: #DDDDDD;
 }
 
-.maintitle, h1, h2, h3, h4, h5, h6, h7, h8, h9,  {
+.maintitle, h1, h2, h3, h4, h5, h6, h7, h8, h9, a {
     font-family: "Georgia";
     color: #BB2222;
 }
@@ -67,10 +72,26 @@ hr {
     left: 3px; 
     top: 18px; 
     background-color: #999999; 
-    z-index: 3;
+    z-index: 100;
     padding: 4px;
     text-align: left;
 }    
+
+fieldset { 
+  border : 1px solid #555555;
+  padding : 1em;
+}
+
+legend { 
+  padding: 0.2em 0.5em;
+  border: 0px solid green;
+  color:black;
+  font-size:90%;
+  text-align:right;
+}
+
+
+/*round button */
 
 .rndButton {
     background-color:#CCCCCC;
@@ -105,3 +126,16 @@ hr {
     width: 20px;
     height:20px;
 }    
+
+.viewHeader, .viewText {
+    -moz-border-radius-topleft: 8px;
+    border-left: 1px solid;
+    border-top : 1px solid;
+    border-color: #BB2222; 
+    padding-left: 2px;
+    padding-top: 2px;
+}
+
+.nodeView {
+    margin-bottom: 4px;
+}

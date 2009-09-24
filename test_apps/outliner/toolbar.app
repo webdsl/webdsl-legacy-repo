@@ -11,25 +11,29 @@ define no-span toolbar(doc: Document) {
           rndButton("Open",   true)[onclick:=openac(), class:= middlebtn]  
           rndButton("Remove", true)[onclick:=remac(),  class:= middlebtn]
           rndButton("Refresh",true)[onclick:=refresh(),class:= lastbtn]
+
+
         }
         right() {    
-          block[class:= toolbarright ] {
-            "Current: "
-            container[id:= docname, style:="margin-left:6px;font-weight:bold"] {
-              docname(doc)
+          if (doc != null) {
+            block[class:= toolbarright ] {
+              "Current: "
+              container[id:= docname, style:="margin-left:6px;font-weight:bold"] {
+                docname(doc)
+              }
+              rndButton("Close",false)[
+                onclick:=closeac(), 
+                style:="float:none;margin:6px;",
+                class:="smallbtn"
+              ]  
+              placeholder docdetails {}
             }
-            rndButton("Close",false)[
-              onclick:=closeac(), 
-              style:="float:none;margin:6px;",
-              class:="smallbtn"
-            ]  
-            placeholder docdetails {}
           }
         }
       }
     }  
   }
-      
+
   action newac() {
     replace(popup, new_popup);
   }
@@ -43,8 +47,10 @@ define no-span toolbar(doc: Document) {
     replace(popup, delete_popup(doc));
   }
   action refresh() {
-    return outliner(doc);
+    refresh();
   }
+      
+
 }
 
 define no-span docdetails(doc: Document) {
@@ -56,18 +62,17 @@ define no-span docdetails(doc: Document) {
     ]
     break
     spacer
-    form {
-      inplaceTextArea(doc.description)[onblur := saveac]
-    }
+    inplaceTextArea(doc.description)[onblur := saveac(null)]
   }
-  action saveac() {
+  action saveac(value : String) {
+    doc.description := value;
     replace(this, docdetails(doc));
   }
 }
 
 define no-span docname(doc: Document) {
   container[onmouseover := action { replace(docdetails, docdetails(doc)); } ] {
-    inplaceFieldEdit(doc.name)[onblur:= changeName,onclick:=changeName(null)]
+    inplaceFieldEdit(doc.name)[onblur:= changeName(null)]
   }
   action changeName(value: String) {
     doc.name := value;

@@ -24,7 +24,7 @@ define no-span template tab(title:String) {
     </div>
 }
 
-define no-span template lazytab(title:String) {
+define no-span template lazytab(title:String) requires contents() {
   <div dojoType="dijit.layout.ContentPane" title=(title)>
     <script type="dojo/connect" event="selectChild">
       console.log("Loading lazy tab2");
@@ -36,7 +36,7 @@ define no-span template lazytab(title:String) {
     placeholder tabcontents {
       form{
         action(">",action{
-          replace(tabcontents,template { elements() } );
+          replace(tabcontents, contents());
         })[id:=loader]
         "loading..."
       }
