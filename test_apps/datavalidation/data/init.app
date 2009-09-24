@@ -25,24 +25,32 @@ module init
       username := "alice"  
       //person := p_a
       password := "aA123456"
+      employmentDate := Date("05/05/2012")
+      birthdate := Date("05/05/1990")
     };
     
     var u_b : User := User{
       username := "bob"
       //person := p_b
       password := "aA123456"  
+      employmentDate := Date("05/05/2012")
+      birthdate := Date("05/05/1990")
     };
     
     var u_c : User := User{
       username := "charlie"
       //person := p_c
       password := "aA123456"  
+      employmentDate := Date("05/05/2012")
+      birthdate := Date("05/05/1990")
     };
     
     var u_d : User := User{
       username := "dave"  
       //person := p_d
       password := "aA123456"
+      employmentDate := Date("01/12/2009")
+      birthdate := Date("05/05/1990")
     };
     
     p_a.save();

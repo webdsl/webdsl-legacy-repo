@@ -7,6 +7,8 @@ module user
                        ,validate(password.containsUpperCase(), "Password must contain an upper-case character")
                        ,validate(password.containsDigit(), "Password must contain a digit"))
     email :: Email
+    employmentDate :: Date
+    birthdate :: Date (validate(employmentDate.after(birthdate), username + " must have been born before being employed"))
   }
 
   define page editUserSmall(u:User) {
@@ -78,5 +80,33 @@ module user
     <div class="outputlistproperty"> 
     elements
     </div>
+  }
+  
+  define page editUserBirthdate(u:User) { 
+    form{
+      fieldset("User " + u.name){ 
+        label("Birthdate") { input(u.birthdate){ validate(u.birthdate.before(today()),"Date must be before today") } }
+        action("save",save())
+      }
+    }
+    action save() { 
+      checkUser(u);
+      message(u.name + "'s birthdate successfully changed"); 
+      return userBirthdate(u); 
+    } 
+  }
+  
+  function checkUser(u:User) {
+    validate(u.birthdate.before(Date("01/01/2000")),"User is too young, birthdate must be before 01/01/2000");
+  }
+  
+  define page userBirthdate(u:User) {
+    fieldset("User"){ 
+      label("Username") { wrapProperty{ output(u.username) } }
+      //label("Email") {    wrapProperty{ output(u.email) } }
+      label("Birthdate") {wrapProperty{ output(u.birthdate) } }
+    }   
+    break 
+    navigate(editUserBirthdate(u)){"edit"}
   }
   

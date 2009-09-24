@@ -32,6 +32,7 @@ section home page
       navigate(editUserSmall(u)){"edit 2 properties"}" "
       navigate(editUser(u)){"edit 3 properties"}" "
       navigate(editUserBig(u)){"edit 4 properties"}" "
+      navigate(editUserBirthdate(u)){"edit birthdate"}" "
     }
     /*
     break
