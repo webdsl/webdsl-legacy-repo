@@ -1,0 +1,98 @@
+body {
+  font-size  : 12pt;
+  font-family: "Verdana";
+}
+
+table {
+    border-spacing: 0px;
+}
+
+img {
+    border-width: 0px;
+    padding: 4px;
+}
+
+td {
+  vertical-align : top
+}
+    
+h1 {
+
+}
+
+.headerrow {
+}
+
+.graybg {
+  background-color : #CCCCCC;
+  -moz-border-radius: 4px;
+  height: 40px;
+}
+
+#folderlist {
+
+}
+
+#notelist {
+
+}
+
+.footerrow {
+    background-color : #CCCCCC;
+    -moz-border-radius: 4px;    
+    font-size: 8pt;
+}
+
+.footerrow > td {
+    border-top:4px solid white;
+}
+
+.graybg > td {
+    border-bottom:4px solid white;
+}
+
+
+a, a:visited, a:active {
+    color : navy;
+}
+
+a: hover {
+    color : blue;
+}
+
+fieldset { 
+  border : 1px solid #555555;
+  padding : 1em;
+}
+
+legend { 
+  padding: 0.2em 0.5em;
+  color: navy;
+  font-weight: bold;
+}
+
+.mytodo {
+    margin-left:auto;
+    margin-right:auto;
+    width:600px;
+}
+
+.graybg > td {
+    vertical-align:middle;
+}
+
+.navigate > img {
+    vertical-align:middle;
+}
+
+hr {
+    border-width: 0px;
+    border-top: 1px solid navy;
+}
+
+.middlerow > td {
+  border-left:1px dotted silver;
+  border-right:1px dotted silver;
+}
+
+

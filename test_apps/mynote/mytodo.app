@@ -1,9 +1,7 @@
-application mynote
+application mytodo
 
 imports init
 imports data
-imports style
-//imports layout
 imports static
 
 description {
@@ -19,7 +17,7 @@ section pages
       input(search)[
         onkeyup := updatesearch(search)
       ]
-      actionLink("Clear")[onClick := action {replace(notelist, template{ "cleared" } ); }]
+      navigate[onClick := action {replace(notelist, template{ "cleared" } ); }]{ image("/images/clear.png") }
     }  	
     action updatesearch(val: String) {
       clear(notelist);
@@ -37,21 +35,38 @@ section pages
   }
   
   define folders() {
+    action doEdit(f: Folder) {
+      replace (notelist ,editFolder(f));
+    }
     list {
       for(f : Folder  order by f.name)	{
         listitem { 
           image("/images/notes.png") 
+          navigate()[
+            onmouseover := action {replace(folderdetails,  template { block {output(f.description) }});},
+            onmouseout  := action {replace( folderdetails, template { block { par { "" } }});} ,
+            onclick			:= action {replace( notelist, 		 foldercontents(f));}
+          ] { output(f.name) }
+          //TEST purposes only:
+/*          
+          " | "
           actionLink(f.name)[
             onmouseover := action {replace(folderdetails,  template { block {output(f.description) }});},
             onmouseout  := action {replace( folderdetails, template { block { par { "" } }});} ,
             onclick			:= action {replace( notelist, 		 foldercontents(f));}
           ] 
-          actionLink("[edit]")[onclick:=  action {replace (notelist ,editFolder(f));}]
+
+          //TEST:
+          action("[Edit]")[onclick:=doEdit(f)]
+          action("[Edit]", doEdit(f))
+*/
+          navigate[onclick := doEdit(f)] { image("/images/edit.png") }          
+          
         }
       }
     }
     spacer
-    actionLink("[add new folder]", createfolder())
+    navigate[onclick:= createfolder()] { image("/images/add.png") " add new folder" }
     action createfolder() {
       var newfolder: Folder := Folder{};
       newfolder.save();
@@ -67,7 +82,7 @@ section pages
     var newNote : Note := Note{}
     form {
       input(newNote.name)
-      actionLink("quick add",addnote())
+      navigate[onclick := addnote()]{ image("/images/add.png") }
     }
     action addnote() {
       newNote.folder := f;
@@ -87,12 +102,12 @@ section pages
   
   define editFolder(f: Folder) {
     group("editing folder "+f.name) {
-      actionLink("X", close())
       form {
         table {
           row{"name " input(f.name)			 }
           row{"description" input(f.description) }
         }
+        navigate[onclick:= close()] { image("/images/toggle.png") }
         action("remove", remove())
         action("save", save())
       }
@@ -115,20 +130,21 @@ section pages
   define displayNote(n: Note) {
   form {
     group(n.name) {
-      if(n.urgent) {
-        image("/images/urgent.png")
-      }
-      if (n.finished) {
-        image("/images/finished.png")
-      }
-      
-      output(n.details)
-      
-      if (n.finished == false)  {
-        var b: Bool := false
-        input(b)[onclick := finish()] navigate[onclick:= finish()] {"finished"}
-      }
-      actionLink("[edit]")[onclick:= action { replace (displayNote , editNote(n));}] //both this and displayNote should work
+      row { column {
+        if(n.urgent) {
+          image("/images/urgent.png")
+        }
+        if (n.finished) {
+          image("/images/finished.png")
+        }
+        output(n.details)
+      } }
+      if (n.finished == false)  { row { column {
+          var b: Bool := false
+          input(b)[onclick := finish()] navigate[onclick:= finish()] {"finished"}
+      } } }
+      navigate[onclick:= action { replace (displayNote , editNote(n));}]{ image("/images/edit.png") } 
+      //both this and displayNote should work
   } 
     }
     action finish() {
@@ -140,7 +156,6 @@ section pages
   
   define editNote(n: Note) {
     group("editing note "+n.name) {
-      actionLink("X", close())
       form {
         table {
           row{"name " input(n.name)			 }
@@ -148,6 +163,7 @@ section pages
           row{"details" input(n.details) } 
           row{"urgent"	input(n.urgent)  }          		
         }
+        navigate[onclick:= close()] { image("/images/toggle.png") }
         action("save", save())  	
       }
       action close() {

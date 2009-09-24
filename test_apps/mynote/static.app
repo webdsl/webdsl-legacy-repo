@@ -2,39 +2,32 @@ module static
 
 section pages
   
-    var globaln := Note{name := 'hoi'}
+   var globaln := Note{name := 'hoi'}
     
-  define page root() {
+define page root() {
+  <script>loadCSS("~(baseURL())"+"/stylesheets/mytodo.css"); </script>
+  block[class := mytodo] {
     table {
-      row {
-         image("/images/gohome.png")
-         header[id := testHeading]{"Welcome to your notes!"}
+      row[class := headerrow]{
+         navigate(root()) { image("/images/gohome.png") }
+         header[id := testHeading]{"MyToDo"}
       }
-      row {
-        menubar {
-           navigate()[onclick := action { append (folderlist , 
-             quicksearch()
-             ); }]
-             {  output(globaln.name) }
-           menuheader { navigate()[onclick :=  action {
-             visibility (folderlist , toggle);
-           }] {"/" } }
-           menuheader { navigate(root()) { "the notes"  } }
-        }
+      row[class := graybg] {
+        navigate()[onclick :=  action {visibility (folderlist , toggle); }] { image("/images/toggle.png") } 
         quicksearch()
       }
-      row {
+      row[class := middlerow] {
         placeholder folderlist {
           folders()
         }
         placeholder notelist {
-          "please select a folder"
+          "(please select a folder)"
         }
       }
-      row {
-        text("MyNote :: a WebDSL AJAX demonstration")
-        navigate(url("mailto:mweststrate@gmail.com")){ "by Michel Weststrate" }
-        navigate(url("http://www.webdsl.org")) { "About WebDSL" }
+      row[class := footerrow] {
+        text("MyNote :: a WebDSLx demonstration")
+        navigate(url("http://www.webdsl.org")) { "About WebDSL(x)" }
       }
     }
   }
+}

@@ -5,7 +5,7 @@ section base example data
   entity Note
   {
     name 			:: String
-    details 	:: String
+    details 	:: Text
     finished 	:: Bool
     urgent 		:: Bool
     folder		-> Folder (inverse = Folder.notes)
