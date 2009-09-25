@@ -13,7 +13,8 @@ define page root() {
          header[id := testHeading]{"MyToDo"}
       }
       row[class := graybg] {
-        navigate()[onclick :=  action {visibility (folderlist , toggle); }] { image("/images/toggle.png") } 
+        image("/images/toggle.png")
+          [onclick :=  action {visibility (folderlist , toggle); }] 
         quicksearch()
       }
       row[class := middlerow] {

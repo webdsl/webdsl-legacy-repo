@@ -9,15 +9,22 @@ table {
 
 img {
     border-width: 0px;
-    padding: 4px;
+    padding: 0px;
+    margin-top: -2px;
+    cursor: handpoint;
 }
 
 td {
-  vertical-align : top
+  vertical-align : top;
+  padding: 4px;
 }
     
 h1 {
 
+}
+
+#folderdetails {
+    height: 60px;
 }
 
 .headerrow {
@@ -49,8 +56,12 @@ h1 {
 
 .graybg > td {
     border-bottom:4px solid white;
+    vertical-align:middle;    
 }
 
+.graybg > form {
+  margin-top: -10px;
+}
 
 a, a:visited, a:active {
     color : navy;
@@ -75,10 +86,6 @@ legend {
     margin-left:auto;
     margin-right:auto;
     width:600px;
-}
-
-.graybg > td {
-    vertical-align:middle;
 }
 
 .navigate > img {
