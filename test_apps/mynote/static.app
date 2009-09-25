@@ -2,8 +2,6 @@ module static
 
 section pages
   
-   var globaln := Note{name := 'hoi'}
-    
 define page root() {
   <script>loadCSS("~(baseURL())"+"/stylesheets/mytodo.css"); </script>
   block[class := mytodo] {
@@ -21,12 +19,12 @@ define page root() {
         placeholder folderlist {
           folders()
         }
-        placeholder notelist {
+        placeholder todolist {
           "(please select a folder)"
         }
       }
       row[class := footerrow] {
-        text("MyNote :: a WebDSLx demonstration")
+        text("MyToDo :: a WebDSLx demonstration")
         navigate(url("http://www.webdsl.org")) { "About WebDSL(x)" }
       }
     }

@@ -13,7 +13,7 @@ section global data
       description := "the important thing"
     };
     
-    var n0 : Note := Note
+    var n0 : ToDo := ToDo
     {
       name := "Finish Master Thesis"
       details := "Somewhere, this afternoon"
@@ -21,13 +21,13 @@ section global data
       urgent := true
       folder := folder1
     };
-    var n1 : Note := Note
+    var n1 : ToDo := ToDo
     {
       name := "Fetch a meal"
       details := "Before the shop closes"
       folder := folder2
     };
-    var d2 : Note := Note
+    var d2 : ToDo := ToDo
     {
       name := "Ask somebody to marry me"
       details := "Where to buy roses?"

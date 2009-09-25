@@ -5,96 +5,69 @@ imports data
 imports static
 
 description {
-  "manage your own notes!"
+  "manage your own todos!"
 }
 
 section pages
 
-  define quicksearch() {
-    var search : String := "";
-    form {
-      "quicksearch: " 
-      input(search)[
-        onkeyup := updatesearch(search)
-      ]
-      image("/images/clear.png")[onclick := action {replace(notelist, template{ "cleared" } ); }]
-    }  	
-    action updatesearch(val: String) {
-      clear(notelist);
-      append(notelist, template { "searched " output(val) spacer });
-      for(n : Note order by n.name) {
-        if (n.name.contains(val))	{
-          append (notelist,	displayNote(n));
-        }
-      }
-    }
-  }
-
-  define quicksearchitem(n: Note) {
-    block { output(n.name) output(n.details) }
-  }
-  
-  define folders() {
-    action doEdit(f: Folder) {
-      replace (notelist ,editFolder(f));
-    }
-    list {
-      for(f : Folder  order by f.name)	{
-        listitem { 
-          image("/images/notes.png") 
-          navigate()[
-            onmouseover := action {replace(folderdetails, template { block {output(f.description) }});},
-            onmouseout  := action {replace(folderdetails, template { block { par { "" } }});} ,
-            onclick			:= action {replace(notelist, 		  foldercontents(f));}
-          ] { output(f.name) }
-          //TEST purposes only:
-/*          
-          " | "
-          actionLink(f.name)[
-            onmouseover := action {replace(folderdetails,  template { block {output(f.description) }});},
-            onmouseout  := action {replace( folderdetails, template { block { par { "" } }});} ,
-            onclick			:= action {replace( notelist, 		 foldercontents(f));}
-          ] 
-
-          //TEST:
-          action("[Edit]")[onclick:=doEdit(f)]
-          action("[Edit]", doEdit(f))
-*/
-          image("/images/edit.png")[onclick := doEdit(f)]          
-          
-        }
-      }
-    }
-    spacer
-    image("/images/add.png")[onclick:= createfolder()]
-    action createfolder() {
-      var newfolder: Folder := Folder{};
-      newfolder.save();
-      replace( notelist , editFolder(newfolder));
-    }
-    spacer
-    placeholder folderdetails {}    
-  }
-  
-define foldercontents(f : Folder) {
-  output(f.name)
-  var newNote : Note := Note{}
+define quicksearch() {
+  var search : String := "";
   form {
-    input(newNote.name)
-    image("/images/add.png")[onclick := addnote()]
+    "quicksearch: " 
+    input(search)[onkeyup := updatesearch(search)]
+    image("/images/clear.png")[onclick := action {replace(todolist, template{ "cleared" } ); }]
+  }  	
+  action updatesearch(val: String) {
+    clear(todolist);
+    append(todolist, template { "searched " output(val) spacer });
+    for(n : ToDo order by n.name) {
+      if (n.name.contains(val))	{
+        append (todolist,	displayToDo(n));
+      }
+    }
   }
-  action addnote() {
-    newNote.folder := f;
-    newNote.save();
-    append (foldernotes , displayNote(newNote));  		
+}
+
+define folders() {
+  action doEdit(f: Folder) {
+    replace (todolist ,editFolder(f));
+  }
+  list {
+    for(f : Folder  order by f.name)	{
+      listitem { 
+        image("/images/todos.png") 
+        navigate()[
+          onmouseover := action {replace(folderdetails, template { block {output(f.description) }});},
+          onmouseout  := action {replace(folderdetails, template { block { par { "" } }});} ,
+          onclick			:= action {replace(todolist, 		  foldercontents(f));}
+        ] { output(f.name) }
+        //TEST purposes only:
+/*          
+        " | "
+        actionLink(f.name)[
+          onmouseover := action {replace(folderdetails,  template { block {output(f.description) }});},
+          onmouseout  := action {replace( folderdetails, template { block { par { "" } }});} ,
+          onclick			:= action {replace( todolist, 		 foldercontents(f));}
+        ] 
+
+        //TEST:
+        action("[Edit]")[onclick:=doEdit(f)]
+        action("[Edit]", doEdit(f))
+*/
+        image("/images/edit.png")[onclick := doEdit(f)]          
+        
+      }
+    }
   }
   spacer
-  text ( "current notes" )
-  block[id := foldernotes] {
-    for(note : Note in f.notes  order by note.name) {
-        displayNote(note)
-    }     
+  image("/images/add.png")[onclick:= createfolder()]
+  action createfolder() {
+    var newfolder: Folder := Folder{};
+    newfolder.save();
+    replace( todolist , editFolder(newfolder));
   }
+  spacer
+  placeholder folderdetails {}    
 }
   
 define editFolder(f: Folder) {
@@ -109,22 +82,43 @@ define editFolder(f: Folder) {
       action("save", save())
     }
     action close() {
-      replace (notelist , foldercontents(f));
+      replace (todolist , foldercontents(f));
     }
     action save() {
 //      f.save();
       replace (folderlist ,folders());
-      replace (notelist , foldercontents(f));
+      replace (todolist , foldercontents(f));
     }
     action remove() {
       f.delete();
       replace (folderlist, folders());
-      replace (notelist, template { block{ "select a folder.."}});
+      replace (todolist, template { block{ "select a folder.."}});
     }
   }
 }
   
-define displayNote(n: Note) {
+define foldercontents(f : Folder) {
+  output(f.name)
+  var newToDo : ToDo := ToDo{}
+  form {
+    input(newToDo.name)
+    image("/images/add.png")[onclick := addtodo()]
+  }
+  action addtodo() {
+    newToDo.folder := f;
+    newToDo.save();
+    append (foldertodos , displayToDo(newToDo));  		
+  }
+  spacer
+  text ( "current todos" )
+  block[id := foldertodos] {
+    for(todo : ToDo in f.todos  order by todo.name) {
+        displayToDo(todo)
+    }     
+  }
+}
+
+define displayToDo(n: ToDo) {
   form {
     group(n.name) {
       row { column {
@@ -143,7 +137,7 @@ define displayNote(n: Note) {
       } } }
       row { column { 
         image("/images/edit.png")
-          [onclick:= action { replace (displayNote , editNote(n));}] 
+          [onclick:= action { replace (displayToDo , editToDo(n));}] 
         image("/images/remove.png")[onclick:= remove()]
       } }
     } 
@@ -151,18 +145,18 @@ define displayNote(n: Note) {
   action finish() {
     n.finished := true;
     n.save();
-    replace (this , displayNote(n));
+    replace (this , displayToDo(n));
   }
   action remove() {
     var f: Folder := n.folder;
-    f.notes.remove(n);
+    f.todos.remove(n);
     n.delete();
     clear(this);
   }
 }
   
-define editNote(n: Note) {
-  group("editing note "+n.name) {
+define editToDo(n: ToDo) {
+  group("editing todo "+n.name) {
     form {
       table {
         row{"name " input(n.name)			 }
@@ -175,15 +169,15 @@ define editNote(n: Note) {
       action("save", save())  	
     }
     action close() {
-      replace(this, displayNote(n));
+      replace(this, displayToDo(n));
     }
     action save() {
       n.save();
-      replace(this, displayNote(n)); 
+      replace(this, displayToDo(n)); 
     }
     action remove() {
       var f: Folder := n.folder;
-      f.notes.remove(n);
+      f.todos.remove(n);
       n.delete();
       clear(this);
     }
