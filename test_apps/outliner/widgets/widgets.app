@@ -101,7 +101,7 @@ define template collapseLeft() {
     }
     right() {
       image("/images/dividerv.png")[
-        class:= vdivider,
+//        class:= vdivider,
         onclick := action { visibility (collapsecontentsleft , toggle); }
       ]
     }

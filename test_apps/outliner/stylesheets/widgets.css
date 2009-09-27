@@ -78,13 +78,13 @@ html, body {
 }
 
 .collapsePanelOuter {
-/*    border-bottom: 1px dashed #666666;*/
-    width: 100%;
+/*    border-bottom: 1px dashed #666666;
+    width: 100%; */
 }
 
 .collapsePanelHeader {
     background-color: #EFEFEF; 
-    width: 100%; 
+/*    width: 100%;  */
     -moz-border-radius-topleft: 8px;
     padding-right: 20px;
 }

@@ -31,7 +31,8 @@ define no-span template lazytab(title:String) requires contents() {
     </script>
     <script type="dojo/method" event="onShow">
       console.log("Loading lazy tab");
-      findTopDown(this.domNode,'loader').onclick();
+      var l = findTopDown(this.domNode,'loader');
+      if (l != null) l.onclick();
     </script>
     placeholder tabcontents {
       form{

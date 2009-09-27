@@ -30,7 +30,7 @@ define no-span template loadDojo(remote: Bool, version: String) {
     <script 
       type="text/javascript" 
       src=baseURL()+"/javascript/dojo-release-"+version+"/dojo/dojo.js"
-      djConfig="parseOnLoad:true, isDebug:true" //, addOnLoad: function() {console.log(\"Dojo finished loading: "+version+" (remote: "+remote+"\")\"); } "
+      djConfig="parseOnLoad:true, isDebug:false" //, addOnLoad: function() {console.log(\"Dojo finished loading: "+version+" (remote: "+remote+"\")\"); } "
     ></script>
     <script>
       //override the post processor

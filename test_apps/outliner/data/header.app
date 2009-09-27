@@ -23,7 +23,7 @@ define no-span viewHeader(item: HeaderNode) {
                   image("/images/system-search.png")[onclick:=zoomac(child as HeaderNode),height := "16px"]
                 }
                 break
-                image("/images/remove-small.png")[onclick:=remac(child),height := "16px"]
+                image("/images/dialog-cancel.png")[onclick:=remac(child),height := "16px"]
               }
               right() {
                 nodeView(child)
@@ -42,9 +42,12 @@ define no-span viewHeader(item: HeaderNode) {
   }
   action remac(child: TreeItem) {
     var p := child.parent;
-    child.parent.children.remove(child);
+    p.children.remove(child);
+    child.parent := null;
+    p.save();
     child.delete();
-    replace(nodeView, nodeView(p));
+    replace(statusBar, template { "Object removed from tree "});
+    replace(viewHeader, nodeView(p));
   }
   action zoomac(child: HeaderNode) {
     replace(detailView, detailView(child));

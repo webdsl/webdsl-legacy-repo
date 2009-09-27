@@ -53,7 +53,10 @@ function getDocument(item: TreeItem) : Document {
 
 define no-span itemadderhidden(parent: HeaderNode) {
   container[id:= itemadder] {
-    rndButton("right",false) [onclick:= action { replace(itemadder, itemaddervisible(parent)); }, class:= smallbtn, style:="background-color:white;"]
+    image("/images/right.png") [
+      onclick:= action { replace(itemadder, itemaddervisible(parent)); }, 
+      height:= "16px"
+    ]
   }
 }
 
