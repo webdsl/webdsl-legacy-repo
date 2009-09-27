@@ -41,7 +41,7 @@ define no-span toolbar(doc: Document) {
     replace(popup, open_popup);
   }
   action closeac() {
-    return root();
+    relocate(root());
   }
   action remac() {
     replace(popup, delete_popup(doc));

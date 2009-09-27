@@ -9,7 +9,8 @@ define new_popup() {
     var d   : Text := "enter description here..."
     form {
       "enter the name of the new document: "
-      input(n)
+      input(n) 
+      break
       "description: "
       input(d)
       action("OK",saveac(n,d))
@@ -27,7 +28,7 @@ define new_popup() {
           root := r
         };
         d.save();
-        return outliner(d) ;
+        relocate(outliner(d));
       }	
     }
   }
@@ -40,7 +41,7 @@ define open_popup() {
         column[width := "400px"] {
           for(d : Document order by d.name) {
             navigate()[
-              onclick := action { return outliner(d); },
+              onclick := action { relocate(outliner(d)); },
               onmouseover := action { replace(opendocdetails, template { output(d.description) }); },
               onmouseout  := action { clear(opendocdetails); }			    	
             ]{ output(d.name) }
@@ -59,7 +60,7 @@ define delete_popup(doc: Document) {
   popup("Remove document") {
     form {
       "Delete document '" output(doc.name) "' ? Press 'yes' to confirm. "
-      action("Yes",action{ doc.delete(); return root(); })
+      action("Yes",action{ doc.delete(); return(root()); })
       action("No", action{ clear(popup); })
     }
   }

@@ -34,7 +34,7 @@ html, body {
 
 .vdivider {
     display:inline; 
-    height:100%; 
+    height:100px; 
     width: 100%; 
     text-align: center; 
     vertical-align: center;
@@ -74,20 +74,62 @@ html, body {
 }
 
 .dojoDndHandle {
- background:#AAAAAA url(../images/handleh.png) repeat-y;
+/* background:#AAAAAA url(../images/handleh.png) repeat-y; */
 }
 
 .collapsePanelOuter {
-    border-bottom: 1px dashed #666666; 
+/*    border-bottom: 1px dashed #666666;*/
     width: 100%;
 }
 
 .collapsePanelHeader {
-    background-color:#CCCCCC; 
+    background-color: #EFEFEF; 
     width: 100%; 
     -moz-border-radius-topleft: 8px;
+    padding-right: 20px;
 }
 
 .collapsePanelContent {
     padding-left: 4px; 
+}
+
+/*round button */
+
+.rndButton {
+    background-color:#CCCCCC;
+    float:left;
+    padding:5px;
+    text-align:center;    
+    width : 50px;
+    -moz-border-radius: 7px;
+    font-size: 10pt;
+    cursor: pointer;
+}
+
+.rndButton:hover {
+    border-color: #EF5E2C;
+    background-color: #DDDDDD; 
+}
+.lastbtn {
+    -moz-border-radius-topleft: 0px;
+    -moz-border-radius-bottomleft: 0px;    
+    border-left: 0px;    
+}
+.firstbtn {
+    -moz-border-radius-topright: 0px;
+    -moz-border-radius-bottomright: 0px;    
+}
+.middlebtn {
+    -moz-border-radius: 0px;
+    border-left: 0px;
+}
+
+.smallbtn {
+    width: 20px;
+    height:20px;
+    padding: 2px;
+}    
+
+.smallbtn > img {
+    height: 16px;
 }

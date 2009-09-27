@@ -4,7 +4,7 @@ section templates
 
 define no-span rndButton(kind: String, showCaption: Bool) {
   container[
-    class:="scopediv border rndButton "+attribute("class",""), 
+    class:="border rndButton "+attribute("class",""), 
     onclick:= attribute("onclick",""),
     style := attribute("style","")	
   ] {

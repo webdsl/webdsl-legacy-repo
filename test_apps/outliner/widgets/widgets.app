@@ -59,7 +59,7 @@ define inputtemplate inplaceFieldEdit(value: String, name: String) {
   <input onblur="hideTA(this, this.previousSibling);"+event(onblur,[value:="this.value"])  
     name=name class="hidden"
     value=value
-    style="width:100%"
+    style="width:80%"
   /> 
 }
 
@@ -72,7 +72,7 @@ define template no-span collapsePanel(collapsed: Bool) requires caption(), conte
     
   block[class:=collapsePanelOuter] { 
     block[class:= collapsePanelHeader] {
-      image("/images/arrow-right.png")
+      image("/images/right.png")
         [onclick := action{ visibility(collapsetarget, toggle); }] 
       caption()
     }
@@ -100,7 +100,7 @@ define template collapseLeft() {
       }
     }
     right() {
-      block[
+      image("/images/dividerv.png")[
         class:= vdivider,
         onclick := action { visibility (collapsecontentsleft , toggle); }
       ]

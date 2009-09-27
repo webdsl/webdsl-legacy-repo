@@ -17,13 +17,13 @@ define no-span viewHeader(item: HeaderNode) {
           dndItem(child.id.toString()) {
             twoColumns[left:="10px"] with {
               left() {
-                dndHandle() { ".." } 
+                dndHandle() { image("/images/hand.png")[height := "16px"] } 
                 if (child isa HeaderNode) {
                   break
-                  image("/images/system-search.png")[onclick:=zoomac(child as HeaderNode)]
+                  image("/images/system-search.png")[onclick:=zoomac(child as HeaderNode),height := "16px"]
                 }
                 break
-                image("/images/remove.png")[onclick:=remac(child)]
+                image("/images/remove-small.png")[onclick:=remac(child),height := "16px"]
               }
               right() {
                 nodeView(child)
@@ -42,7 +42,7 @@ define no-span viewHeader(item: HeaderNode) {
   }
   action remac(child: TreeItem) {
     var p := child.parent;
-    child.parent := null;
+    child.parent.children.remove(child);
     child.delete();
     replace(nodeView, nodeView(p));
   }
@@ -61,28 +61,16 @@ define no-span viewHeader(item: HeaderNode) {
       }
       //update parent
       //itemNode.parent := null;
+      itemNode.parent.children.remove(itemNode);
       itemNode.parent := targetNode;
       targetNode.children.insert(index.parseInt(), itemNode);
       
       //update UI
+      replace(documentTree, documentTree(getDocument(targetNode)));
       replace(statusBar, template{ "Move action persisted" });
-      replace(documentTree, documentTree(targetNode.doc));
     }
     else {
       replace(statusBar, template{ "Could not persist move action; it would create recursion in the tree" });
     }
-  }
-}
-
-define no-span itemadderhidden(parent: HeaderNode) {
-  container[id:= itemadder] {
-    action("+")[onclick:= action { replace(itemadder, itemaddervisible(parent)); }]
-  }
-}
-
-define no-span itemaddervisible(parent: HeaderNode) {
-  container[id:= itemadder] {
-    action("<")[onclick:= action { replace(itemadder, itemadderhidden(parent)); }]
-    itemCreator(parent)
   }
 }

@@ -35,10 +35,10 @@ define no-span dndSource(id: String, withHandles : Bool) {
           var item = nodes[0].id; 
           if (item != destination.node.id) {
             window.setTimeout(function() {
-              var k;
+              var k = 0;
               for (k=0,e=nodes[0]; e = e.previousSibling; ++k);
               console.log("moved: " + item + " to " + dest + " index: "+k);
-              ~event(ondrop,[item := "item", target := "dest", index := "k"])	
+              ~event(ondrop,[item := "item", target := "dest", index := "\"\"+ k"])	
             },200); //timeout to be able to update index first
             return true;
           } 

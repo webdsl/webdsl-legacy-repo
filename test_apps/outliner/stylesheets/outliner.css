@@ -46,14 +46,18 @@ input:hover, textarea:hover {
 
 .maintitle, h1, h2, h3, h4, h5, h6, h7, h8, h9, a {
     font-family: "Georgia";
-    color: #BB2222;
+    color: #EF5E2C;
 }
 
 .maintitle {
     font-size: 50pt;
     font-style: italic;
     font-family: "Georgia";
-    color: #BB2222;
+    color: #EF5E2C;
+}
+
+h2 {
+    font-weight: bold;
 }
 
 hr {
@@ -91,47 +95,13 @@ legend {
 }
 
 
-/*round button */
 
-.rndButton {
-    background-color:#CCCCCC;
-    float:left;
-    padding:5px;
-    text-align:center;    
-    width : 50px;
-    -moz-border-radius: 7px;
-    font-size: 10pt;
-    cursor: pointer;
-}
-
-.rndButton:hover {
-    border-color: #BB2222;
-    background-color: #DDDDDD; 
-}
-.lastbtn {
-    -moz-border-radius-topleft: 0px;
-    -moz-border-radius-bottomleft: 0px;    
-    border-left: 0px;    
-}
-.firstbtn {
-    -moz-border-radius-topright: 0px;
-    -moz-border-radius-bottomright: 0px;    
-}
-.middlebtn {
-    -moz-border-radius: 0px;
-    border-left: 0px;
-}
-
-.smallbtn {
-    width: 20px;
-    height:20px;
-}    
 
 .viewHeader, .viewText {
     -moz-border-radius-topleft: 8px;
-    border-left: 1px solid;
-    border-top : 1px solid;
-    border-color: #BB2222; 
+    border-left: 1px dotted;
+    border-top : 1px dotted;
+    border-color: silver; 
     padding-left: 2px;
     padding-top: 2px;
 }
@@ -139,3 +109,23 @@ legend {
 .nodeView {
     margin-bottom: 4px;
 }
+
+.collapsePanelHeader {
+    color:#EF5E2C;
+    font-weight:bold;
+}
+
+#statusBar {
+    margin: 0px;
+    background-color: silver;
+    -moz-border-radius-bottomleft:7px;
+    -moz-border-radius-bottomright:7px;    
+    border:1px solid gray;
+    width: 798px;
+}
+
+#footer {
+    font-size: 9pt;
+    text-align: center;
+}
+
