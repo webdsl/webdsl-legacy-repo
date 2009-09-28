@@ -1,55 +1,61 @@
-module data
+module editview
 
-section data
+section templates
 
-entity Document {
-  name :: String
-  description :: Text
-  root <> HeaderNode 
+define template documentTree(doc: Document) {
+  dojoTree(navigate(documentoutline(doc)), doc.root.id.toString())
+    [onselect:=selectHeader(null), width:= "180px"]
+  
+  action selectHeader(id: String) {
+    var n: HeaderNode := loadHeaderNode(UUIDFromString(id));
+    replace(detailView, detailView(n));
+  }
 }
 
-entity HeaderNode : TreeItem {
-  caption :: String	
-  depth :: Int
+//dispatch to  proper view
+define detailView(item: HeaderNode) {
+  dndOnce()
+  showPath(item)
+  
+  spacer
+  nodeView(item)
 }
 
-entity TextNode : TreeItem {
-  contents :: Text
+define no-span nodeView(item: TreeItem) {
+  block[class:=[scopediv, nodeView]] {
+         if (item isa HeaderNode) { viewHeader(item as HeaderNode) }
+  else { if (item isa TextNode)   { viewText  (item as TextNode) }
+  else { if (item isa ImageNode)  { viewImage (item as ImageNode) }
+  else { "Error: unsupported node type" }  }  }
+  }
 }
 
-entity ImageNode : TreeItem {
-  image :: Image
-}
-
-//prevent recursion
-function canMove(item: TreeItem, target: HeaderNode): Bool {
-  if (item isa HeaderNode) {
-    var cur : HeaderNode := target; 
-    while(cur.parent != null) {
+define showPath(item: HeaderNode) {
+  var path: List<HeaderNode> := List<HeaderNode>();
+  init {
+    var cur: HeaderNode := item;
+    while(cur != null) {
+      path.add(cur);
       cur := cur.parent as HeaderNode;
-      if (cur.parent.id.toString() == item.id.toString()) {
-        return false;
-      }  
     }
+  }
+  
+  for(i: Int from path.length -1 to 0) {
+    image("/images/right.png")
+    navigate[
+      onclick:= loadView(path.get(i))
+    ]{ output(path.get(i).caption) }
+    
   } 
-  return true;
+  image("/images/right.png")
+  output(item.caption)
+  
+  action loadView(item: HeaderNode) {
+    replace (detailView, detailView(item));
+  }
 }
 
-function getDocument(item: TreeItem) : Document {
-  var c: TreeItem := item;
-  while (c.parent != null) {
-    c := c.parent;
-  }
-  //HQL query didn't seem to work
-  var d: Document := null;
-  for(d2: Document) {
-    if (d2.root.id == c.id) {
-      d := d2;
-    }
-  }
-  return d;
-}
-
+section newitem
 
 define no-span itemadderhidden(parent: HeaderNode) {
   container[id:= itemadder] {
@@ -68,7 +74,6 @@ define no-span itemaddervisible(parent: HeaderNode) {
 }
 
 define itemCreator(parent: HeaderNode) {
-//  form {
     rndButton("header",false)[onclick:= newheaderac(parent), class:=middlebtn]
     rndButton("text",false)  [onclick:= newtextac(parent),   class:=middlebtn]
     rndButton("image",false) [onclick := newimgac(parent),   class:=lastbtn]
@@ -98,5 +103,4 @@ define itemCreator(parent: HeaderNode) {
       h.save();
       replace(viewHeader, viewHeader(parent)); 
     }
-//  } 
 }

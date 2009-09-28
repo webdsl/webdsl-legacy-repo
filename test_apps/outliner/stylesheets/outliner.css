@@ -1,4 +1,3 @@
-
 body {
     font-size: 10pt;
 }
@@ -93,9 +92,6 @@ legend {
   font-size:90%;
   text-align:right;
 }
-
-
-
 
 .viewHeader, .viewText {
     -moz-border-radius-topleft: 8px;

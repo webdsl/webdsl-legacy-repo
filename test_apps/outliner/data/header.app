@@ -1,5 +1,26 @@
 module header
 
+section data
+
+entity HeaderNode : TreeItem {
+  caption :: String	
+  depth :: Int
+}
+
+//prevent recursion
+function canMove(item: TreeItem, target: HeaderNode): Bool {
+  if (item isa HeaderNode) {
+    var cur : HeaderNode := target; 
+    while(cur.parent != null) {
+      cur := cur.parent as HeaderNode;
+      if (cur.parent.id.toString() == item.id.toString()) {
+        return false;
+      }  
+    }
+  } 
+  return true;
+}
+
 section templates
 
 

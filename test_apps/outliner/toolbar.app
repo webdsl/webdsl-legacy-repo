@@ -1,6 +1,5 @@
 module toolbar
 
-
 define no-span toolbar(doc: Document) {
   block[class:= [border, toolbar]] {
     block[class:= maintitle] { "Outliner" }
@@ -49,8 +48,6 @@ define no-span toolbar(doc: Document) {
   action refresh() {
     refresh();
   }
-      
-
 }
 
 define no-span docdetails(doc: Document) {

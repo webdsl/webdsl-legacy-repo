@@ -1,6 +1,5 @@
 // - http://ryanfait.com/resources/footer-stick-to-bottom-of-page/
 //  - http://ryanfait.com/sticky-
-
 * {
    margin: 0;
 }
@@ -73,18 +72,8 @@ html, body {
   text-align : right;
 }
 
-.dojoDndHandle {
-/* background:#AAAAAA url(../images/handleh.png) repeat-y; */
-}
-
-.collapsePanelOuter {
-/*    border-bottom: 1px dashed #666666;
-    width: 100%; */
-}
-
 .collapsePanelHeader {
     background-color: #EFEFEF; 
-/*    width: 100%;  */
     -moz-border-radius-topleft: 8px;
     padding-right: 20px;
 }
@@ -94,7 +83,6 @@ html, body {
 }
 
 /*round button */
-
 .rndButton {
     background-color:#CCCCCC;
     float:left;

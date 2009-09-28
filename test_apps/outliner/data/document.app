@@ -1,5 +1,28 @@
 module documentmanagement
 
+section data
+
+entity Document {
+  name :: String
+  description :: Text
+  root <> HeaderNode 
+}
+
+function getDocument(item: TreeItem) : Document {
+  var c: TreeItem := item;
+  while (c.parent != null) {
+    c := c.parent;
+  }
+  //HQL query didn't seem to work
+  var d: Document := null;
+  for(d2: Document) {
+    if (d2.root.id == c.id) {
+      d := d2;
+    }
+  }
+  return d;
+}
+
 section templates
 
 

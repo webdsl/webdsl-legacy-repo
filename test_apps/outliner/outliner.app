@@ -1,24 +1,6 @@
 application outliner
 
-//generic imports
-imports widgets/widgets
-imports widgets/tree
-imports widgets/masterdetail
-imports widgets/popup
-imports widgets/tabcontrol
-imports widgets/dnd
-imports widgets/loaddojo
-imports widgets/rndButton
-
-//application specific imports
-imports data/data
-imports data/header
-imports data/image
-imports data/text
-imports data/documentmanagement
-imports data/json
-
-imports toolbar
+imports imports
 
 section pages
 
@@ -40,8 +22,8 @@ define no-span outliner_contents(doc: Document) {
   //a hook for the popup windows
   placeholder popup {}
   
-//footerLayout does not combine with tabs
-footerLayout("0px")[width:="800px"] with {
+  //footerLayout does not really work in combination with dojotabs
+  footerLayout("0px")[width:="800px"] with {
     contents() {
       collapseUp() {
           toolbar(doc)
@@ -71,9 +53,13 @@ define main(doc: Document) {
           }
         }
       }
-      lazytab("Print preview") with { contents(){
-        printpreview(doc)
-      } }
+      lazytab("Print preview") with { 
+        contents(){
+          printpreview(doc)
+         } loading() { 
+          "loading print preview.." 
+         }
+      }
 /*      lazytab("JSON tree") {
         documentoutlinehelper(doc)
       } 
@@ -81,93 +67,3 @@ define main(doc: Document) {
   }
 } 
 
-define template documentTree(doc: Document) {
-  Tree(navigate(documentoutline(doc)), doc.root.id.toString())
-    [onselect:=selectHeader(null), width:= "180px"]
-  
-  action selectHeader(id: String) {
-    var n: HeaderNode := loadHeaderNode(UUIDFromString(id));
-    replace(detailView, detailView(n));
-  }
-}
-
-//dispatch to  proper view
-define detailView(item: HeaderNode) {
-  dndOnce()
-  showPath(item)
-  
-  spacer
-  nodeView(item)
-}
-
-define no-span nodeView(item: TreeItem) {
-  block[class:=[scopediv, nodeView]] {
-         if (item isa HeaderNode) { viewHeader(item as HeaderNode) }
-  else { if (item isa TextNode)   { viewText  (item as TextNode) }
-  else { if (item isa ImageNode)  { viewImage (item as ImageNode) }
-  else { "Error: unsupported node type" }  }  }
-  }
-}
-
-define showPath(item: HeaderNode) {
-  var path: List<HeaderNode> := List<HeaderNode>();
-  init {
-    var cur: HeaderNode := item;
-    while(cur != null) {
-      path.add(cur);
-      cur := cur.parent as HeaderNode;
-    }
-  }
-  
-  for(i: Int from path.length -1 to 0) {
-    image("/images/right.png")
-    navigate[
-      onclick:= loadView(path.get(i))
-    ]{ output(path.get(i).caption) }
-    
-  } 
-  image("/images/right.png")
-  output(item.caption)
-  
-  action loadView(item: HeaderNode) {
-    replace (detailView, detailView(item));
-  }
-}
-
-//not the least trivial solution, but it demonstrates the power of with/require
-define printpreview(doc: Document) {
-  <b> output(doc.name) </b>
-  break
-  output(doc.description)
-  spacer
-  customTree(doc.root) with { 
-    treeView(item: TreeItem) {
-      if (item isa HeaderNode) {
-        <b>
-          output((item as HeaderNode).caption)
-        </b>
-      }
-      if (item isa TextNode) {
-        output((item as TextNode).contents)
-      }
-      if (item isa ImageNode) {
-        output((item as ImageNode).image)
-      }
-    }
-  }
-}
-
-define no-span customTree(item: TreeItem) requires treeView(TreeItem){
-  block[class:= [scopediv, customTree] 
-    /* an onclick action could be defined here ]*/ 
-  ]{
-    /* here could be some +/- sign responsible for collapsing */
-    treeView(item)
-  }
-  //break
-  block[style:="padding-left: 16px"] {
-    for(child: TreeItem in item.children) {
-      customTree(child) 
-    }
-  }
-}

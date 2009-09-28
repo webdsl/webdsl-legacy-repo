@@ -1,13 +1,6 @@
 module tree
 
-section data
-
-entity TreeItem {
-  parent -> TreeItem (inverse = TreeItem.children)
-  children <> List<TreeItem>// (inverse = TreeItem.parent)
-}
-
-define template Tree(storeURL: String, rootID: String) {
+define template dojoTree(storeURL: String, rootID: String) {
   var store: String := "store" + random().toString().replace("0.","_");
   TreeHelper(storeURL, rootID, store)
 
@@ -18,7 +11,7 @@ define template Tree(storeURL: String, rootID: String) {
   </div>
 }
 
-define template dndTree(storeURL: String, rootID: String) {
+define template dojoDndTree(storeURL: String, rootID: String) {
   var store: String := "store" + random().toString().replace("0.","_");
   TreeHelper(storeURL, rootID, store)
 
@@ -75,5 +68,4 @@ define no-span template TreeHelper(storeURL: String, rootID: String, store: Stri
   <div dojoType="dojo.data.ItemFileWriteStore" jsId=store url=storeURL/>
   <div dojoType="dijit.tree.TreeStoreModel" jsId=store+"Model" store=store
     query="{id:'"+rootID+"'}" childrenAttr="[children]"/>
-
 }

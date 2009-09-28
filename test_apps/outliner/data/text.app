@@ -1,5 +1,11 @@
 module text
 
+section data
+
+entity TextNode : TreeItem {
+  contents :: Text
+}
+
 section templates
 
 

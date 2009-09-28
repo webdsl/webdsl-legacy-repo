@@ -1,7 +1,12 @@
 module image
 
-section templates
+section data
 
+entity ImageNode : TreeItem {
+  image :: Image
+}
+
+section templates
 
 define viewImage(item: ImageNode) {
   block[id := viewImage, class :="scopediv viewText"] {
@@ -39,8 +44,6 @@ define page editImage(item: ImageNode, doc: Document) {
     }
   }
   action save() {
-    //message("Image uploaded");
-    //var x: Document := getDocument(item);
     return outliner(doc);
   }	
 }
