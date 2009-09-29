@@ -30,7 +30,7 @@ define template no-span footerLayout(height: String) requires contents(), footer
   </div>
 }
 
-define no-span template masterdetail() requires detailview(),masterview()  {
+define no-span template masterDetail() requires detailview(),masterview()  {
   twoColumns[width:= "100%", left := attribute("left",""), right:= "100%"] with {
     left() {
       collapseLeft() {

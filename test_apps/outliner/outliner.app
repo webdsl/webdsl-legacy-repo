@@ -44,7 +44,7 @@ define main(doc: Document) {
   else {
     tabs[height:="550px"] {
       tab(doc.name) {
-        masterdetail() with {
+        masterDetail() with {
           masterview() {
             documentTree(doc)
           }
@@ -60,8 +60,12 @@ define main(doc: Document) {
           "loading print preview.." 
          }
       }
-/*      lazytab("JSON tree") {
-        documentoutlinehelper(doc)
+/*      lazytab("JSON tree") with {
+        contents() {
+          documentoutlinehelper(doc)
+        } loading() {
+          "loading JSON tree.."
+        }        
       } 
 */    }
   }

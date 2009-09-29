@@ -121,3 +121,7 @@ html, body {
 .smallbtn > img {
     height: 16px;
 }
+
+div {
+    overflow: hidden;
+}

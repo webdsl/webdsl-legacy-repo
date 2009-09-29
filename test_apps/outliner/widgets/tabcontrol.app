@@ -26,11 +26,13 @@ define no-span template lazytab(title:String) requires loading(), contents() {
       console.log("Loading lazy tab");
       findTopDown(this.domNode,'loader').onclick();
     </script>
-    form[class:=hidden]{
-      button(">", action{replace(tabcontents, contents());})[id:=loader]
-    }
-    placeholder tabcontents {
-      loading()
+    container[class:=[scopediv, lazytab]] {
+      form[class:=hidden]{
+        button(">", action{replace(tabcontents, contents());})[id:=loader]
+      }
+      placeholder tabcontents {
+        loading()
+      }
     }
   </div>       
 } 

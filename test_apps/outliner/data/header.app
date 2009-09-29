@@ -68,7 +68,7 @@ define no-span viewHeader(item: HeaderNode) {
     p.save();
     child.delete();
     replace(statusBar, template { "Object removed from tree "});
-    replace(viewHeader, nodeView(p));
+    replace(nodeView, nodeView(p));
   }
   action zoomac(child: HeaderNode) {
     replace(detailView, detailView(child));
@@ -84,11 +84,14 @@ define no-span viewHeader(item: HeaderNode) {
         h.depth := targetNode.depth + 1;
       }
       //update parent
-      //itemNode.parent := null;
       itemNode.parent.children.remove(itemNode);
       itemNode.parent := targetNode;
-      targetNode.children.insert(index.parseInt(), itemNode);
-      
+      if (index.parseInt() >= targetNode.children.length) {
+        targetNode.children.add(itemNode);
+      }
+      else {
+        targetNode.children.insert(index.parseInt() , itemNode);
+      }
       //update UI
       replace(documentTree, documentTree(getDocument(targetNode)));
       replace(statusBar, template{ "Move action persisted" });

@@ -3,7 +3,7 @@ module popup
 section template
 
 define popup(header : String) {
-  container[class:=popupbg, style := "position: absolute; top: 0px; left:0px; background-image: url(images/popup_bg.png);"] {
+  container[class:=popupbg, style := "position: absolute; top: 0px; left:0px; background-image: url("+baseURL()+"/images/popup_bg.png);"] {
     container[id:=popupcontents, class:=popupcontents] {
       container[class:=popupheader] {
         table {

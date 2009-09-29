@@ -85,7 +85,8 @@ define itemCreator(parent: HeaderNode) {
         parent := parent
       };
       h.save();
-      replace(viewHeader, viewHeader(parent)); 
+      parent.children.add(h);
+      replace(nodeView, nodeView(parent)); 
       replace(documentTree, documentTree(getDocument(parent)));
     }  		
     action newtextac(parent: HeaderNode) {
@@ -94,13 +95,15 @@ define itemCreator(parent: HeaderNode) {
         parent := parent
       };
       h.save();
-      replace(viewHeader, viewHeader(parent)); 
+      parent.children.add(h);
+      replace(nodeView, nodeView(parent)); 
     }  		
     action newimgac(parent: HeaderNode) {
       var h : ImageNode := ImageNode {
         parent := parent
       };
       h.save();
-      replace(viewHeader, viewHeader(parent)); 
+      parent.children.add(h);
+      replace(nodeView, nodeView(parent)); 
     }
 }
