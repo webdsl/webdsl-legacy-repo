@@ -22,7 +22,7 @@ define detailView(item: HeaderNode) {
 }
 
 define no-span nodeView(item: TreeItem) {
-  block[class:=[scopediv, nodeView]] {
+  block[id:= nodeView, class:=[scopediv, nodeView]] {
          if (item isa HeaderNode) { viewHeader(item as HeaderNode) }
   else { if (item isa TextNode)   { viewText  (item as TextNode) }
   else { if (item isa ImageNode)  { viewImage (item as ImageNode) }

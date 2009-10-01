@@ -83,8 +83,12 @@ define delete_popup(doc: Document) {
   popup("Remove document") {
     form {
       "Delete document '" output(doc.name) "' ? Press 'yes' to confirm. "
-      action("Yes",action{ doc.delete(); return(root()); })
+      action("Yes",delete())
       action("No", action{ clear(popup); })
+      action delete() { 
+        doc.delete(); 
+        relocate(root());
+      }
     }
   }
 }
