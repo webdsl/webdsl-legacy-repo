@@ -1,3 +1,9 @@
+/* force scrollbar */           
+html {
+  height: 100% ;
+  overflow-y:scroll;
+}
+
 body {
   font-size  : 12pt;
   font-family: "Verdana";

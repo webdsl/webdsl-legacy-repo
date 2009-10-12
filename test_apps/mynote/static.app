@@ -3,6 +3,10 @@ module static
 section pages
   
 define page root() {
+  init{
+    login();
+  }
+
   <script>loadCSS("~(baseURL())"+"/stylesheets/mytodo.css"); </script>
   block[class := mytodo] {
     table {
@@ -27,6 +31,16 @@ define page root() {
         text("MyToDo :: a WebDSLx demonstration")
         navigate(url("http://www.webdsl.org")) { "About WebDSL(x)" }
       }
+    }
+  }
+}
+
+
+define ignore-access-control no-span errorTemplateInput(messages : List<String>){
+  validatedInput
+  for(ve: String in messages){
+    block[style := "color: #FF0000;"]{
+      output(ve)
     }
   }
 }

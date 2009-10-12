@@ -20,11 +20,22 @@ define quicksearch() {
   action updatesearch(val: String) {
     clear(todolist);
     append(todolist, template { "searched " output(val) spacer });
-    for(n : ToDo order by n.name) {
+    for(n : ToDo in getUserToDos() order by n.name) {
       if (n.name.contains(val))	{
         append (todolist,	displayToDo(n));
       }
     }
+  }
+}
+
+define showFolderQuick(f:Folder){
+  block {output(f.description) }
+  spacer 
+  for(t:ToDo in f.todos){ 
+    block{
+      output(t.finished)
+      output(t.name)
+    } 
   }
 }
 
@@ -33,12 +44,12 @@ define folders() {
     replace (todolist ,editFolder(f));
   }
   list {
-    for(f : Folder  order by f.name)	{
+    for(f : Folder in getUserFolders() order by f.name)	{
       listitem { 
         image("/images/todos.png") 
         navigate()[
-          onmouseover := action {replace(folderdetails, template { block {output(f.description) }});},
-          onmouseout  := action {replace(folderdetails, template { block { par { "" } }});} ,
+          onmouseover := action {replace(folderdetails, showFolderQuick(f));},
+          //onmouseout  := action {replace(folderdetails, template { block { par { "" } }});} ,
           onclick			:= action {replace(todolist, 		  foldercontents(f));}
         ] { output(f.name) }
         //TEST purposes only:
@@ -60,11 +71,15 @@ define folders() {
     }
   }
   spacer
-  image("/images/add.png")[onclick:= createfolder()]
-  action createfolder() {
-    var newfolder: Folder := Folder{};
-    newfolder.save();
-    replace( todolist , editFolder(newfolder));
+  var newFolder : Folder := Folder{}
+  form {
+    input(newFolder.name)
+    image("/images/add.png")[onclick := create()]
+  }
+  action create() {
+    createFolder(newFolder);
+    replace (folderlist ,folders());
+    replace (todolist , foldercontents(newFolder));
   }
   spacer
   placeholder folderdetails {}    
@@ -77,20 +92,23 @@ define editFolder(f: Folder) {
         row{"name " input(f.name)			 }
         row{"description" input(f.description) }
       }
-      image("/images/toggle.png")[onclick:= close()]
       action("remove", remove())
       action("save", save())
     }
+    image("/images/toggle.png")[onclick:= close()]
     action close() {
       replace (todolist , foldercontents(f));
     }
     action save() {
-//      f.save();
       replace (folderlist ,folders());
       replace (todolist , foldercontents(f));
     }
     action remove() {
-      f.delete();
+      f.deleteFolder();
+      // a flush is necessary here, since the delete is postponed  
+      // (all changes to the db happen at the end of the page request or when 'flush()' is called)
+      // which causes the render of 'folders()' to include the deleted item      
+      flush();
       replace (folderlist, folders());
       replace (todolist, template { block{ "select a folder.."}});
     }
@@ -106,7 +124,7 @@ define foldercontents(f : Folder) {
   }
   action addtodo() {
     newToDo.folder := f;
-    newToDo.save();
+    createToDo(newToDo);
     append (foldertodos , displayToDo(newToDo));  		
   }
   spacer
@@ -137,7 +155,7 @@ define displayToDo(n: ToDo) {
       } } }
       row { column { 
         image("/images/edit.png")
-          [onclick:= action { replace (displayToDo , editToDo(n));}] 
+          [onclick:= action { replace (displayToDo , editToDo(n, n.folder));}] 
         image("/images/remove.png")[onclick:= remove()]
       } }
     } 
@@ -148,37 +166,38 @@ define displayToDo(n: ToDo) {
     replace (this , displayToDo(n));
   }
   action remove() {
-    var f: Folder := n.folder;
-    f.todos.remove(n);
-    n.delete();
+    n.deleteToDo();
     clear(this);
   }
 }
   
-define editToDo(n: ToDo) {
+define editToDo(n: ToDo, f:Folder) {
   group("editing todo "+n.name) {
     form {
       table {
         row{"name " input(n.name)			 }
-        row{"category" input(n.folder) }
+        row{"category" select(n.folder from getUserFolders()) }
         row{"details" input(n.details) } 
         row{"urgent"	input(n.urgent)  }          		
       }
-      navigate[onclick:= close()] { image("/images/toggle.png") }
       action("remove", remove())
       action("save", save())  	
     }
-    action close() {
-      replace(this, displayToDo(n));
-    }
+    //navigate is not in the form so the inputs are not submitted here
+    navigate[onclick:= action{ replace(this, displayToDo(n)); }] { image("/images/toggle.png") }
+
     action save() {
-      n.save();
-      replace(this, displayToDo(n)); 
+      // action could have placed this todo in another folder,
+      // in that case remove this from the contents of the current folder
+      if(n.folder != f){
+        clear(this);
+      }
+      else{
+        replace(this, displayToDo(n));
+      }
     }
     action remove() {
-      var f: Folder := n.folder;
-      f.todos.remove(n);
-      n.delete();
+      n.deleteToDo();
       clear(this);
     }
   }
