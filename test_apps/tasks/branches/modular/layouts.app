@@ -1,6 +1,7 @@
 module layouts
 
 define main() {
+  includeCSS("webtasks.css")
   <div id="pagewrapper">
      <div id="header">
         mainheader()
@@ -19,36 +20,24 @@ define main() {
 }
 
 define mainheader() {
-  <p>"Web Tasks"</p>
+  par{"Web Tasks"}
 }
 
 define applicationmenu() {
-  <ul>
-    <li>navigate(root()){"Home"}</li>
-    if(!loggedIn()) { <li>navigate(register()){"Register"}</li> }
+  list{
+    listitem{ navigate(root()){"Home"}}
+    if(!loggedIn()) { listitem{ navigate(register()){"Register"} } }
     signinoffMenu()
-  </ul>
+  }
 }
 
 define usertable() {
-  <table id="usertable">
+  table[id:=usertable] {
     row{
       column{"User"}
       column{"#Tasks"}
       column{""}
     }
     elements()
-  </table>
+  }
 }
- 
-define tasktable() {
-  <table id="tasktable">
-    row{
-      column{"Done"}
-      column{"Task"}
-      column{"Actions"}
-    }
-    elements()
-  </table>
-}
- 
