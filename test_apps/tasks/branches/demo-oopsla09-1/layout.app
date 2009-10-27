@@ -9,7 +9,6 @@ define main() {
     block[id:=navbar]{
       list{
         listitem{ navigate(root()){"Home"} }
-        listitem{ navigate(register()){"Register"} }
       }
     }
     block[id:=content]{
