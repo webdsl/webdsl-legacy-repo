@@ -29,6 +29,7 @@ define page register() {
   var u: User := User{}
   var password : Secret
   action register() {
+    validate(u.password == password, "Passwords do not match");
     u.password := u.password.digest();
     u.save(); 
     return user(u);
@@ -36,13 +37,10 @@ define page register() {
   main{
     header{"Register as WebTasks User"}
     form{
-      group{
-        row{ "Username: " input(u.username) }
-        row{ "Password: " input(u.password)}
-        row{ "Password: " input(password){ 
-                             validate(u.password == password, "Passwords do not match")
-                          }
-        }
+      group {
+        groupitem{ "Username: " input(u.username) }
+        groupitem{ "Password: " input(u.password) }
+        groupitem{ "Password: " input(password) }
       }
       action("Register", register())
     }

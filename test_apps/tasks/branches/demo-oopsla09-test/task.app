@@ -6,14 +6,14 @@ section data model
 
   entity Task {
     name        :: String (name)
-    description :: Text
+    description :: WikiText
     done        :: Bool
     archived    :: Bool
     user        -> User (inverse=User.tasks)
     due         :: Date
     
     function owns() : Bool { return loggedIn() && user == securityContext.principal; }
-    function remove() { user.tasks.remove(this); this.delete(); this.save(); }
+    function remove() { user := null; this.delete(); this.save(); }
   }
 
   extend entity User {
