@@ -10,11 +10,6 @@ define main() {
       list{
         listitem{ navigate(root()){"Home"} }
         listitem{ navigate(register()){"Register"} }
-        //if(!loggedIn()) { 
-          //listitem{ navigate(signin()){"Sign in"} }
-        //} else {
-          //logout()
-        //}
       }
     }
     block[id:=content]{
@@ -39,9 +34,3 @@ define ignore-access-control errorTemplateInput(messages : List<String>){
     }
   }
 }
-
-define page accessDenied() {
-  main{ par{ "That page does not exist or you don't have permission to view it." } }
-}
-
-// define page signin() { main{ par{ login() } }  }
