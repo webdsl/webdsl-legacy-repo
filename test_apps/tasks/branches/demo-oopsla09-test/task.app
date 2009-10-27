@@ -13,7 +13,7 @@ section data model
     due         :: Date
     
     function owns() : Bool { return loggedIn() && user == securityContext.principal; }
-    function remove() { user.tasks.remove(this); this.delete(); }
+    function remove() { user.tasks.remove(this); this.delete(); this.save(); }
   }
 
   extend entity User {
