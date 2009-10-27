@@ -5,13 +5,13 @@ define main() {
   block[id:=pagewrapper] {
     block[id:=header]{ par{ "Web Tasks" } }
     block[id:=navbar]{
-      menubar{
-        menu{ menuheader{ navigate(root()){"Home"} } }
+      list{
+        listitem{ navigate(root()){"Home"} }
         if(!loggedIn()) { 
-          menu{ menuheader{ navigate(register()){"Register"} } }
-          menu{ menuheader{ navigate(signin()){"Sign in"} } }
+          listitem{ navigate(register()){"Register"} }
+          listitem{ navigate(signin()){"Sign in"} }
         } else {
-          menu{ menuheader{ logout() } }
+          logout()
         }
       }
     }
