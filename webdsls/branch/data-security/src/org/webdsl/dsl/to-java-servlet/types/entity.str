@@ -1,0 +1,38 @@
+module org/webdsl/dsl/to-java-servlet/types/entity
+
+imports
+  libstrategolib
+
+imports
+  libwebdsl-front
+  
+rules
+
+  builtin-java-type :
+    SimpleSort("Entity") -> type|[ org.webdsl.WebDSLEntity ]|
+
+rules
+
+  call-to-java-servlet :
+    Call(e1, "persist", []) -> e2
+    where e2 := <call-to-java-servlet> Call(e1, "save", [])
+
+  call-to-java-servlet :
+    Call(e1, "save", []) -> expr|[ {| e2.setupForPropertyEvents(hibSession,out,ps).validateSave(); | hibSession.save(e2) |} ]|
+    where <type-of;is-entity-type> e1
+    with  e2 := <expression-to-java-servlet> e1
+
+  call-to-java-servlet :
+    Call(e1, "remove", []) -> e2
+    where e2 := <call-to-java-servlet> Call(e1, "delete", [])
+
+  call-to-java-servlet :
+    Call(e1, "delete", []) -> expr|[ {| e2.setupForPropertyEvents(hibSession,out,ps).validateDelete(); | hibSession.delete(e2) |} ]|
+    where <type-of;is-entity-type> e1
+    with  e2 := <expression-to-java-servlet> e1
+    
+  call-to-java-servlet :
+    exp |[ loadEntity(e1,e2) ]| -> java |[ utils.EntityType.loadEntity(hibSession, t.class, e3) ]|
+    with  String(webdsl_type) := e1
+        ; t := <java-type> SimpleSort(webdsl_type)
+        ; e3 := <expression-to-java-servlet> e2

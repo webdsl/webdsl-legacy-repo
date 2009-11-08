@@ -1,0 +1,52 @@
+module org/webdsl/dsl/transformation/desugar
+
+imports
+  libstrategolib
+  Java-15
+  libjava-front
+
+imports
+  libwebdsl-front
+
+signature
+  constructors
+    RemoveMe : Annotation
+
+strategies
+
+  all-consnil(s) = ?[_ | _] < [s | s] + all(s)
+
+  innermost-rep(s) =
+    {| InnermostNormalForm, InnermostApplied
+     : rules(InnermostApplied := False())
+     ; innermost-rep-aux(s)
+     ; where(InnermostApplied => True())
+     |}
+
+  //rules used to determine whether any desugar was applied (might have only changed dynamic rule but not the AST)
+  innermost-rep-aux(s) =
+    InnermostNormalForm
+    <+ all-consnil(innermost-rep-aux(s))
+       ; try(s; rules( InnermostApplied := True() ); innermost-rep-aux(s))
+       ; {?q; rules( InnermostNormalForm : q )}
+
+  desugar-top =
+    //{| AspectWeavingRules ... :
+     repeat(innermost-rep(desugar))
+   //  |}
+
+
+rules //extend entity functions create dr
+  
+  rename-all-vars :
+    (t, []) -> (t, [])
+
+  rename-all-vars :
+    (t, [(from, to)|rst]) -> <rename-all-vars> (t2, rst)
+    where t2 := <rename-var(|from, to)> t
+
+rules
+
+  desugar :
+    [RemoveMe()|lst] -> lst
+

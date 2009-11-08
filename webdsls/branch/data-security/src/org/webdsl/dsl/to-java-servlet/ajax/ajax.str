@@ -1,0 +1,100 @@
+module org/webdsl/dsl/to-java-servlet/ajax/ajax
+   
+imports
+  libstrategolib  
+
+imports 
+  libwebdsl-front
+
+rules
+
+
+  statement-to-java-servlet :
+  AjaxStatement(stat) -> bstm* |[ bstm* ThreadLocalAction.get().setIsRedirected(true); ]|
+  with bstm* := <ajax-to-java-servlet> stat
+
+  ajax-to-java-servlet :
+    AjaxAppend(thediv, tc@TemplateCall(template, args,_,_)) -> 
+    <do-ajax-to-java-servlet>("append", thediv, tc)
+
+  ajax-to-java-servlet :
+    AjaxReplace(thediv, tc@TemplateCall(template, args,_,_)) -> 
+    <do-ajax-to-java-servlet>("replace", thediv, tc)
+    
+ //action java implementation
+  do-ajax-to-java-servlet :
+    (method, div, TemplateCall(template,args,passign*,TemplateBody(bodyelems)))
+     -> bstm*|[ 
+        Object[] x_args = { e* };
+  
+        java.io.StringWriter x_s = new java.io.StringWriter();
+        java.io.PrintWriter x_out = new java.io.PrintWriter(x_s); 
+        
+        //check if this action has been executed
+        //ps.clearHibernateCache(variables);
+        try {
+          String x_ps = "~template"; 
+          //check the withcallsmap for templatenames first, and append possible arguments
+          if (withcallsmap.containsKey(x_ps)) {
+            x_args = org.apache.commons.lang.ArrayUtils.addAll(x_args, withcallsmap.get(x_ps).args);
+            x_ps = withcallsmap.get(x_ps).name;
+          }
+          ((PageServlet)DispatchServletHelper.pages.get(x_ps).newInstance()).serveAsAjaxResponse(ps, x_out, x_args, env, e_templatearg); 
+              //the template arg of templates invoked by actions is the template arg of the owner of the action, todo: this might cause scoping problems of variables. 
+          out.print("{ action: \""+"~method"+"\", id: \""+"~thediv"+"\", value : \""+org.apache.commons.lang.StringEscapeUtils.escapeJavaScript(x_s.toString())+"\"},");           
+        }
+        catch(Exception iae)
+        {
+          System.out.println("Problem in template servlet template lookup for Ajax: "+iae.getMessage()+" template :" + "~template");
+        }
+     ]|
+    with //debug(!0);
+         x_args := <newname> "args"
+       ; x_out := <newname> "out"
+       ; x_s   := <newname> "s"
+       ; x_ps  := <newname> "ps"
+       ; e* := <map({\e -> <expression-to-java-servlet> e\})> args
+       ; thediv := <try(?"this"; ThisTemplateName; OriginalNonUniqueName)> div
+/*       ; if not(bodyelems := [])  then //TODO: params should be supported
+           e_templatearg := expr |[ new TemplateCall("~templateargname", new Object[0]) ]|
+           ;debug(!1)
+         else
+*/;           e_templatearg := expr |[ templateArg ]|
+//         end
+ 
+ ajax-to-java-servlet :
+    AjaxVisibility(thediv, vis) -> bstm*|[ 
+       out.print("{ action: \"visibility\", id: \""+"~thediv"+"\", value: \""+"~visibility"+"\"},");
+     ]|
+    with visibility := <translate-visibility> vis
+    
+ translate-visibility :
+   Show() -> "show"
+ translate-visibility :
+   Hide() -> "hide"
+ translate-visibility :
+   Toggle() -> "toggle"
+
+ ajax-to-java-servlet :
+    AjaxRelocate(call@ThisCall(_,_)) -> bstm*|[ 
+      //ps.clearHibernateCache(variables);
+      out.print("{ action: \"relocate\", value: \""+e_url+"\" },\n");
+     ]|
+    with  e_url := <page-thiscall-to-url-string-java-servlet> call
+
+ ajax-to-java-servlet :
+    AjaxRestyle(thediv, expr) -> bstm*|[ 
+       out.print("{ action: \"restyle\", id: \""+"~thediv"+"\", value: \""+e+"\"},");
+     ]|
+    with e := <expression-to-java-servlet> expr
+    
+ ajax-to-java-servlet :
+   AjaxRefresh() -> bstm* |[ 
+       out.print("{ action: \"refresh\" },");
+   ]|   
+    
+ajax-to-java-servlet :
+    AjaxClear(thediv) -> bstm*|[ 
+       out.print("{ action: \"clear\", id: \""+"~thediv"+"\"},");
+     ]|
+    

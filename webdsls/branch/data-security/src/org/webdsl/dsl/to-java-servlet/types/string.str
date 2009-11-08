@@ -1,0 +1,173 @@
+module org/webdsl/dsl/to-java-servlet/types/string
+
+imports 
+  libstrategolib 
+  Java-15 
+  libjava-front 
+  libwebdsl-front
+
+rules
+  
+  builtin-java-type :
+    SimpleSort("String") -> type|[ String ]|
+
+rules
+
+  expression-to-java-servlet :
+    String(x) -> expr|[ "~x" ]|
+
+rules 
+
+  java-servlet-element-id : 
+    tc@elem|[ inputString(e)[passign*]{elem*} ]| -> tc{InputNumber(newid),anno*} 
+    with  _{anno*} := tc
+          ; newid := <newname> "input"
+
+  handle-actions-input-to-java-servlet :
+    tc@elem|[ inputString(e)[passign*]{elem*} ]| -> <handle-actions-input-to-java-servlet-string-helper(string-helper-none)> tc
+  
+  string-helper-none(|x,y) = ![]
+  
+  handle-actions-input-to-java-servlet-string-helper(s) :
+    tc@elem|[ x(e)[passign*]{elem*} ]| ->
+    <wrap-input-java-code(|passign*)>
+    bstm*|[
+      ident += "~inputident"+uniqueid;
+      if (ps.getParammap().get(ident)!=null) {
+        ~*<wrap-validation-context-code-store-inputs> bstm*|[
+          //~*<string-length-check-java-servlet(|x_temp,e)>
+          String x_temp = ps.getParammap().get(ident);
+          ~*<s(|x_temp,e)>
+          bstm* 
+        ]|
+      }
+    ]|
+    with  inputident := <get-inputnumber> tc
+        ; x_temp := <newname> "temp"
+        ; bstm* := <input-assignment-to-java-servlet(|x_temp)> e
+        /*
+  string-length-check-java-servlet(|x_temp,e) =
+    ! bstm* |[
+        String x_temp = ps.getParammap().get(ident);
+        if(x_temp.length()>255) { //currently the size of string properties in db (varchar(255))
+          ~*<add-conversion-error> (e,e|["input too long (max 255 characters)"]|)
+          //x_temp = null;
+        }
+    ]|*/
+    
+  elem-to-java-servlet : 
+    tc@elem|[ inputString(e)[passign*]{elem*} ]| ->
+    <elem-to-java-servlet-string-helper> tc
+    
+  elem-to-java-servlet-string-helper : //also used for inputEmail
+    tc@elem|[ x(e)[passign*]{elem*} ]| ->
+    <wrap-input-render-java-code>
+    bstm* |[ 
+      String x_temp = ident+"~inputident"+uniqueid;
+      ~*<render-error-messages-with-error-template(|java:expr|[ x_temp ]|,<ErrorTemplateInput>)> bstm*|[
+        out.print("<input name=\""+x_temp+"\" ");
+        ~*<connect-with-enclosing-label>
+        out.print(e_attrs1+" type=\"text\" value=\"");
+        if(inSubmittedForm) {
+          out.print(utils.HTMLFilter.filter(ps.getParammap().get(x_temp)));
+        } 
+        else {
+          bstm_exptostring*
+        }
+        out.print("\" />"); 
+      ]|
+    ]|
+    with  inputident := <get-inputnumber> tc
+        ; bstm_exptostring* := <to-page-string-java-servlet> e
+        ; x_temp := <newname> "temp"
+        ; e_attrs1 := <to-html-attrs(|"inputString")> passign*
+    
+  elem-to-java-servlet :
+    elem |[ outputString(e)[passign*]{} ]| ->
+    <wrap-common-context-code>
+    bstm_exptostring*
+    with  bstm_exptostring* := <to-page-string-java-servlet(|"utils.HTMLFilter.filter")> e
+    
+rules //native java operations    
+    
+ call-to-java-servlet :
+   exp  |[ e.contains(e1) ]| ->   java |[ e2.contains(e3) ]|
+   where <type-compatible> (<type-of> e,  SimpleSort("String"))
+       ; <type-compatible> (<type-of> e1, SimpleSort("String"))
+   with  e2    := <expression-to-java-servlet> e
+      ;  e3    := <expression-to-java-servlet> e1
+
+ call-to-java-servlet :
+   exp  |[ e.replace(e1,e2) ]| ->   java |[ e3.replace(e4,e5) ]|
+   where <type-compatible> (<type-of> e,  SimpleSort("String"))
+       ; <type-compatible> (<type-of> e1, SimpleSort("String"))
+       ; <type-compatible> (<type-of> e2, SimpleSort("String"))
+   with  e3    := <expression-to-java-servlet> e
+      ;  e4    := <expression-to-java-servlet> e1
+      ;  e5    := <expression-to-java-servlet> e2
+
+ call-to-java-servlet :
+   exp  |[ e.length() ]| ->   java |[ e2.length() ]|
+   where <type-compatible> (<type-of> e,  SimpleSort("String"))
+   with  e2    := <expression-to-java-servlet> e
+
+ call-to-java-servlet :
+   exp  |[ e.parseInt() ]| -> java |[ utils.StringType.parseInt(e2) ]|
+   where <type-compatible> (<type-of> e,  SimpleSort("String"))
+   with  e2    := <expression-to-java-servlet> e
+
+ call-to-java-servlet :
+   exp  |[ e.parseUUID() ]| -> java |[ utils.StringType.parseUUID(e2) ]|
+   where <type-compatible> (<type-of> e,  SimpleSort("String"))
+   with  e2    := <expression-to-java-servlet> e
+
+ call-to-java-servlet :
+   exp  |[ e.toUpperCase() ]| ->   java |[ e2.toUpperCase() ]|
+   where <type-compatible> (<type-of> e,  SimpleSort("String"))
+   with  e2    := <expression-to-java-servlet> e
+   
+ call-to-java-servlet :
+   exp  |[ e.toLowerCase() ]| ->   java |[ e2.toLowerCase() ]|
+   where <type-compatible> (<type-of> e,  SimpleSort("String"))
+   with  e2    := <expression-to-java-servlet> e
+   
+ call-to-java-servlet :
+   exp  |[ e.containsDigit() ]| ->   java |[ org.webdsl.tools.Utils.containsDigit(e2) ]|
+   where <type-compatible> (<type-of> e,  SimpleSort("String"))
+   with  e2    := <expression-to-java-servlet> e
+
+ call-to-java-servlet :
+   exp  |[ e.containsLowerCase() ]| ->   java |[ org.webdsl.tools.Utils.containsLowerCase(e2) ]|
+   where <type-compatible> (<type-of> e,  SimpleSort("String"))
+   with  e2    := <expression-to-java-servlet> e
+
+ call-to-java-servlet :
+   exp  |[ e.containsUpperCase() ]| ->   java |[ org.webdsl.tools.Utils.containsUpperCase(e2) ]|
+   where <type-compatible> (<type-of> e,  SimpleSort("String"))
+   with  e2    := <expression-to-java-servlet> e
+   
+ call-to-java-servlet :
+   exp  |[ e.isCleanUrl() ]| ->   java |[ org.webdsl.tools.Utils.isCleanUrl(e2) ]|
+   where <type-compatible> (<type-of> e,  SimpleSort("String"))
+   with  e2    := <expression-to-java-servlet> e
+
+ call-to-java-servlet :
+   exp  |[ e.explodeString() ]| ->   java |[ org.webdsl.tools.Utils.explodeString(e2) ]|
+   where <type-compatible> (<type-of> e,  SimpleSort("String"))
+   with  e2    := <expression-to-java-servlet> e
+
+ call-to-java-servlet :
+   exp |[ e.concat(e1) ]| -> java |[ utils.StringType.concatWithSeparator(e_list,e_sep)  ]|
+   where <type-compatible> (<type-of> e,  GenericSort("List",[SimpleSort("String")]))
+   with  e_list   := <expression-to-java-servlet> e
+       ; e_sep    := <expression-to-java-servlet> e1
+
+ call-to-java-servlet :
+   exp  |[ log(e1) ]| ->   java |[ System.out.println(e2) ]|
+   where <type-compatible> (<type-of> e1,  SimpleSort("String"))
+   with  e2 := <expression-to-java-servlet> e1
+
+ call-to-java-servlet :
+   exp  |[ e1.toString() ]| -> java |[ String.valueOf(e2) ]|
+   with  e2 := <expression-to-java-servlet> e1
+   

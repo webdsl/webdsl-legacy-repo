@@ -1,0 +1,100 @@
+module org/webdsl/dsl/to-java-servlet/global-functions
+
+imports
+  libstratego-lib
+  libjava-front
+
+imports
+  libwebdsl-front
+
+rules
+
+  GenerateCodeJavaServlet = generate-java-servlet-global-functions; fail
+
+  generate-java-servlet-global-functions :
+    Application(qid, sections) ->
+    <emit-java-code> compilation-unit|[
+      package utils;
+  
+      import java.io.*;
+      import java.util.HashMap;
+  
+      import javax.servlet.*;
+      import javax.servlet.http.*;
+      import java.util.*;
+      import utils.*;
+      import pkgname.*;
+      import pkgname2.*;
+      import java.io.PrintWriter;
+      
+      import org.webdsl.lang.Environment;
+  
+      public class GlobalFunctions {
+        private static org.hibernate.Session hibSession;
+        private static PageServlet ps = null;
+        private static TemplateCall templateArg = TemplateCall.None;
+        private static HashMap<String, utils.TemplateCall> withcallsmap = new HashMap<String, utils.TemplateCall>();
+
+        ~*cbds*
+      }
+    ]|
+    //where not([] := <AllGlobalFunctions>) // fails if there are no global funcs, won't generate anything then
+    with  pkgname    := <BeanPackage>
+        ; pkgname2   := <DomainPackage>
+        ; cbds* := <map(webdsl-function-to-java-servlet-function)> <AllGlobalFunctions>
+              
+  webdsl-function-to-java-servlet-function:
+    function@Function(x, args, s, Block(stm*)) -> 
+    class-body-dec |[
+      public mod* t x#_(org.hibernate.Session hibSession, Environment env, param*, final PageServlet ps, PrintWriter out)  {
+        try {
+          bstm1*
+          bstm2*
+          bstm*
+          bstm3*
+        } 
+        catch(ValidationException ve){
+          throw ve;
+        }
+        catch(MultipleValidationExceptions ve){
+          throw ve;
+        }       
+        catch(Exception excep) {
+          throw new RuntimeException(excep);
+        }
+      }
+    ]|
+    with  {| InFunction:
+              rules( InFunction := <id> )
+            ; t      := <java-type> s
+            ; param* := <map(arguments-to-java-servlet)> args
+            ; bstm*  := <statements-to-java-servlet> stm*
+            ; usedvarnames := <collect(?Var(<id>)<+?Qualified(<is-string>,_))> stm*
+            ; bstm1* := <get-global-vars-into-java-function(|usedvarnames)>
+            ; bstm2* := <get-session-vars-into-java-function(|usedvarnames)>
+            ; if JavaInEntity 
+              then mod* := []
+              else mod* := [ mod|[static]| ] end  
+            ; if SimpleSort("Void") := s   //TODO simply make this a void function instead of return int
+              then bstm3* := [java|[ return 0; ]| ]
+              else bstm3* := [] end     
+            |}
+            
+  get-global-vars-into-java-function(|usedvarnames) =
+    <filter(get-global-vars-into-java-function-helper(|usedvarnames))> <AllGlobalVars>
+  
+  get-global-vars-into-java-function-helper(|usedvarnames) :
+    elem |[ var x : srt := e ]| -> bstm |[ t x = (x_class) env.getVariable("~x"); ]| 
+    where <elem> (x,usedvarnames)
+    with  t := <java-type> srt
+        ; x_class := <java-type-name> srt 
+
+  get-session-vars-into-java-function(|usedvarnames) =
+    <filter(get-session-vars-into-java-function-helper(|usedvarnames))> <SessionEntities>
+   
+  get-session-vars-into-java-function-helper(|usedvarnames) :
+    def|[ session x { prop* fun* } ]| -> bstm |[ t x = (x_ent) env.getVariable("~x"); ]| 
+    where <elem> (x,usedvarnames)
+    with  x_ent := <capitalize-string> x
+        ; t := type |[ x_ent ]|
+        

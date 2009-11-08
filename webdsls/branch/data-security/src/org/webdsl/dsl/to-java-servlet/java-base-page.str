@@ -1,0 +1,352 @@
+
+
+module org/webdsl/dsl/to-java-servlet/java-base-page
+
+imports
+  libstratego-lib
+  libjava-front
+
+imports
+  libwebdsl-front
+
+rules
+  /**
+   * Generate base bean code
+   */
+  GenerateCodeJavaServlet = generate-java-base-page; fail
+
+  generate-java-base-page :
+    Application(qid, sections) ->
+    <emit-java-code> compilation-unit|[
+      package utils;
+      
+      import java.io.IOException;
+      import java.util.HashMap;
+      import java.util.Map;
+      import java.util.List;
+      import java.io.PrintWriter;
+      
+      import javax.servlet.ServletException;
+      import javax.servlet.http.HttpServletRequest;
+      import javax.servlet.http.HttpServletResponse;
+      import pkgname.*;
+      import org.webdsl.WebDSLEntity;
+      import org.webdsl.lang.Environment;
+      
+      import org.hibernate.Session;
+      
+      public abstract class PageServlet {
+      
+          public abstract void serve(HttpServletRequest request, HttpServletResponse response, Map<String, String> parammap, Map<String, List<String>> parammapvalues, Map<String,utils.File> fileUploads);
+          public void serveAsAjaxResponse(PageServlet ps, PrintWriter theoutStream, Object[] ajaxarguments, Environment env, TemplateCall templateArg) {};
+          public void initializeBasics(PageServlet ps, Object[] args, Environment env) {} ;
+          
+          public boolean IsTemplate() { return false; }
+          public boolean isServingStandAloneTemplate = false; 
+          public String  standAloneTemplate = null;
+          
+          public abstract String getPageName();
+          
+          public String getActionTarget() {
+            if (isServingStandAloneTemplate)
+              return standAloneTemplate;
+            return getPageName();
+          }
+          
+          public abstract String getHiddenParams();
+          public abstract String getHiddenPostParams();
+          
+          public javax.servlet.http.HttpSession session;
+          
+          public Environment envGlobalAndSession;
+          
+          public String getPageUrlWithParams(){ //used for action field in forms
+            return request.getRequestURL().toString();
+          }
+
+          //templates scope
+          public static Environment staticEnv = new Environment();
+          static {
+            try{
+              bstm_templates*
+              bstm_pages*
+            }
+            catch(Exception se){
+              System.out.println("Exception occured while instantiating base page class template and page definitions.");
+              se.printStackTrace();
+            }
+          }
+          
+          public Environment env = new Environment(PageServlet.staticEnv);
+         
+          //emails
+          private static HashMap<String, Class> emails = new HashMap<String, Class>();
+          static {
+            try{
+              bstm_emails*
+            }
+            catch(Exception se){
+              System.out.println("Exception occured while instantiating base page class email definitions.");
+              se.printStackTrace();
+            }
+          }
+          public static HashMap<String, Class> getEmails() { 
+            return emails;
+          }
+          public String getAbsoluteLocation() {
+            if(ThreadLocalServlet.getContextPath().equals("")){ //root app
+              String[] req = request.getRequestURL().toString().split("/");
+              StringBuffer sb = new StringBuffer();
+              sb.append(req[0]);
+              sb.append("/");
+              sb.append(req[1]);
+              sb.append("/");
+              sb.append(req[2]);
+              return sb.toString();
+            }
+            else{
+              String[] req = request.getRequestURL().toString().split(ThreadLocalServlet.getContextPath()+"/");
+              return req[0];
+            }
+          }
+          
+          private List<utils.ValidationException> validationExceptions = new java.util.LinkedList<utils.ValidationException>();
+          public List<utils.ValidationException> getValidationExceptions() { 
+            return validationExceptions;
+          }
+          public boolean hasExecutedAction = false;
+          
+          ~cbds
+          
+          public java.util.List<String> ignoreset= new java.util.ArrayList<String>();
+          
+          public boolean hibernateCacheCleared = false;
+          
+          protected abstract void initialize();
+          protected abstract void conversion();
+          protected abstract void loadArguments();
+          protected abstract void initVarsAndArgs();
+          
+          public void clearHibernateCache() { 
+            hibSession.clear();  
+            initVarsAndArgs();
+            hibernateCacheCleared = true;
+          }
+          
+          static {
+            try{
+              GlobalInit.load();
+            }
+            catch(Exception se){
+              System.out.println("Exception occured in application init block.");
+              se.printStackTrace();
+            }
+          }
+          // atm just used for captcha check
+          protected boolean validated=true;
+          protected Session hibSession;
+          protected HttpServletRequest request;
+          protected HttpServletResponse response;
+          protected Object[] args;  
+          
+          public Session getHibSession() {
+              return hibSession;
+          }
+
+          public HttpServletRequest getRequest() {
+              return request;
+          }
+      
+          public HttpServletResponse getResponse() {
+              return response;
+          }
+  
+          public boolean isValidated() {
+              return validated;
+          }
+     
+          public void setValidated(boolean validated) {
+              this.validated = validated;
+          }
+          
+          protected java.util.Map<String, String> parammap;
+          public java.util.Map<String, String> getParammap() {
+            return parammap;
+          }
+                
+          protected Map<String,utils.File> fileUploads;
+          public Map<String, utils.File> getFileUploads() {
+            return fileUploads;
+          }
+          
+          protected Map<String, List<String>> parammapvalues;
+          public Map<String, List<String>> getParammapvalues() {
+            return parammapvalues;
+          }
+          
+          protected String pageTitle = "";
+          public String getPageTitle() {
+            return pageTitle;
+          }
+          public void setPageTitle(String pageTitle) {
+              this.pageTitle = pageTitle;
+          }  
+          
+          protected boolean actionLinkUsed = false;
+          public boolean isActionLinkUsed() {
+            return actionLinkUsed;
+          }
+          public void setActionLinkUsed(boolean a) {
+              this.actionLinkUsed = a;
+          }  
+          
+          protected String redirectUrl = "";
+          public String getRedirectUrl() {
+            return redirectUrl;
+          }
+          public void setRedirectUrl(String a) {
+              this.redirectUrl = a;
+          }  
+   
+          protected String mimetype = "text/html; charset=UTF-8";
+          protected boolean mimetypeChanged = false;
+          public String getMimetype() {
+            return mimetype;
+          }
+          public void setMimetype(String mimetype) {
+            this.mimetype = mimetype;
+            mimetypeChanged = true;
+            enableRawoutput();
+            disableTemplateSpans();
+          }
+          
+          protected boolean rawoutput = false;
+          public boolean isRawoutput() {
+            return rawoutput;
+          }
+          public void enableRawoutput() {
+            rawoutput = true;
+          }
+          public void disableRawoutput() {
+            rawoutput = false;
+          }
+
+          protected String[] pageArguments = null;
+          public void setPageArguments(String[] pa) {
+            pageArguments = pa;
+          }
+          public String[] getPageArguments() {
+            return pageArguments;
+          }
+
+          protected boolean templateSpans = true;
+          public boolean templateSpans() {
+            return templateSpans;
+          }
+          public void disableTemplateSpans() {
+            templateSpans = false;
+          }
+          
+          protected utils.File download = null;
+          public void setDownload(utils.File file){
+            this.download = file;
+          }
+          public boolean isDownloadSet(){
+            return this.download != null;
+          }
+          
+          public void cleanup(){
+            args = null;
+            download = null;
+            fileUploads = null;
+            formGroupContextClosingTags = null;
+            formGroupLeftSize = null;
+            hibSession = null;
+            ignoreset = null;
+            incomingSuccessMessages = null;
+            labelStrings = null;
+            //oldValuesForInputs = null;
+            outgoingSuccessMessages = null;
+            pageTitle = null;
+            parammap = null;
+            parammapvalues = null;
+            request = null;
+            response = null;
+            session = null;
+            tableContextClosingTags = null;
+            tableContexts = null;
+            validationContext = null;
+            validationExceptions = null;
+            envGlobalAndSession = null;
+          }
+          
+          protected void download()
+          { 
+            /*
+            Long id = download.getId();
+            org.hibernate.Session hibSession = HibernateUtilConfigured.getSessionFactory().openSession();
+            hibSession.beginTransaction();
+            hibSession.setFlushMode(org.hibernate.FlushMode.MANUAL);
+            utils.File download = (utils.File)hibSession.load(utils.File.class,id);
+            */
+            try
+            { 
+              javax.servlet.ServletOutputStream outstream;
+          
+              outstream = response.getOutputStream();
+              
+              java.sql.Blob blob = download.getContent();
+              java.io.InputStream in;
+          
+              in = blob.getBinaryStream();
+              response.setContentType(download.getContentType());
+              response.setHeader("Content-Disposition", "attachment; filename=" + download.getFileName());
+              java.io.BufferedOutputStream bufout = new java.io.BufferedOutputStream(outstream);
+              byte bytes[] = new byte[32768];
+              int index = in.read(bytes, 0, 32768);
+              while(index != -1)
+              { 
+                bufout.write(bytes, 0, index);
+                index = in.read(bytes, 0, 32768);
+              }
+              bufout.flush();
+            }
+            catch(java.sql.SQLException ex)
+            { 
+              System.out.println("exception in download serve");
+              ex.printStackTrace();
+            }
+            catch (IOException ex) {
+              System.out.println("exception in download serve");
+              ex.printStackTrace();
+            }
+            /*
+            hibSession.flush();
+            hibSession.getTransaction().commit();
+            */
+          }
+        }
+      ]|
+    with pkgname    := <BeanPackage>
+       ; bstm_templates* := <map({\ 
+                           x -> bstm |[ staticEnv.putTemplate(x_key, x_value); ]| 
+                           with  x_key := <concat-strings> ["\"",x,"\""]
+                               ; x_value := <concat-strings> [<TopLevelTemplateClassName> x,".class"]
+                       \})> 
+                       <bagof-AllTopLevelTemplateNamesJavaServlet>
+       ; bstm_pages* := <map({\ 
+                           x -> bstm |[ staticEnv.putTemplate(x_key, x_value); ]| 
+                           with  x_key := <concat-strings> ["\"",x,"\""]
+                               ; x_value := <concat-strings> [<PageClassName> x,".class"]
+                       \})> 
+                       <bagof-AllPageNames>
+       ; bstm_emails* := <map({\ 
+                           x -> bstm |[ emails.put(x_key, x_value); ]| 
+                           with  x_key := <concat-strings> ["\"",x,"\""]
+                               ; x_value := <concat-strings> [<EmailClassName> x,".class"]
+                       \})> 
+                       <bagof-AllEmailNames>
+       ;if IsAjaxApp 
+        then cbds := java:class-body-dec |[  public static boolean isAjaxApp = true; ]|
+        else cbds := java:class-body-dec |[  public static boolean isAjaxApp = false; ]|
+        end

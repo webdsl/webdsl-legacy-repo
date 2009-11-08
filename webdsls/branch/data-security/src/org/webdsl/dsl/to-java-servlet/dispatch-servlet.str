@@ -1,0 +1,50 @@
+module org/webdsl/dsl/to-java-servlet/dispatch-servlet
+
+imports
+  libstratego-lib
+  libjava-front
+
+imports
+  libwebdsl-front
+
+rules
+
+  GenerateCodeJavaServlet = generate-java-servlet-dispatcher; fail
+
+  generate-java-servlet-dispatcher :
+    Application(qid, sections) ->
+    <emit-java-code> compilation-unit|[
+      package utils;
+  
+      import java.io.*;
+      import java.util.HashMap;
+      import java.util.Map;
+      import java.util.List;
+      import java.util.LinkedList;
+  
+      import javax.servlet.*;
+      import javax.servlet.http.*;
+  
+      import utils.*;
+      import pkgname.*;
+      import org.webdsl.lang.Environment;
+  
+      public class DispatchServlet extends HttpServlet {
+          public void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException
+          {
+              DispatchServletHelper d = new DispatchServletHelper(this, true, getServletConfig().getServletContext().getContextPath());
+              d.doServe(request, response);
+          }
+
+          public void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException
+          {
+              DispatchServletHelper d = new DispatchServletHelper(this, false, getServletConfig().getServletContext().getContextPath());
+              d.doServe(request, response);
+          }
+      }
+    ]|
+    with  pkgname    := <BeanPackage>
+        ; pkgname2   := <DomainPackage>
+       

@@ -1,0 +1,24 @@
+module org/webdsl/dsl/languages/ajax/rename
+   
+imports
+  libstrategolib  
+
+imports 
+  libwebdsl-front
+
+rules
+
+  rename-ajax :
+    tc@Placeholder(n, elems) -> Placeholder(n, elems2)
+    with rules( HtmlEntityId :+ n -> tc )
+       ; elems2 := <rename-all> elems
+/*
+  rename-ajax:
+    AjaxAppend(t, tc) -> AjaxAppend(t, <rename-all> tc)
+
+  rename-ajax:
+    AjaxReplace(t, tc) -> AjaxReplace(t, <rename-all> tc)
+ 
+  rename-ajax:
+    AjaxRelocate(x) -> AjaxRelocate(<rename-all> x)
+   */

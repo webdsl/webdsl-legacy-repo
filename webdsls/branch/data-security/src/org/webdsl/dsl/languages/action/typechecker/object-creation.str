@@ -1,0 +1,40 @@
+module org/webdsl/dsl/languages/action/typechecker/object-creation
+
+imports
+  libstrategolib
+  Java-15 
+  libjava-front
+
+imports
+  libwebdsl-front
+
+rules
+
+  constraint-error-action :
+    oc@ObjectCreation(SimpleSort(x_class),[propassign*]) -> oc //<add-error(|["Error in object creation of class '",x_class,"'"])> 
+    where <fetch(check-object-creation-property-assignment-1(|x_class))> propassign*
+       <+ <fetch(check-object-creation-property-assignment-2(|x_class))> propassign*
+
+  check-object-creation-property-assignment-1(|x_class) :
+    ObjectPropertyAssignment(ident,exp) -> <add-error(|["Entity '",x_class,"' does not contain a property '",ident,"'"])> 
+    where not(<type-of-property> (x_class,ident))
+
+  check-object-creation-property-assignment-2(|x_class) :
+    ObjectPropertyAssignment(ident,exp) -> <add-error(|["Type of expression '",srt_exp,"' is incompatible with type of entity property '",srt_prop,"'"])> 
+    where srt_prop := <type-of-property> (x_class,ident)
+        ; srt_exp := <type-of> exp
+        ; not(<type-compatible> (srt_prop,srt_exp))
+
+rules        
+
+  eq-type-of-action :
+    ObjectPropertyAssignment(y, e) -> SimpleSort("Void") //<type-of> y
+    
+  eq-type-of-action :
+    ObjectCreation(s, assign*) -> s
+
+rules
+
+  constraint-error-action:
+    Stat(ObjectCreation(_,_)) -> <add-error(|["Not a valid statement."])> 
+    

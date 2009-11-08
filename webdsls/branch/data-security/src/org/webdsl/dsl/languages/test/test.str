@@ -1,0 +1,22 @@
+module org/webdsl/dsl/languages/test/test
+
+imports
+  libstrategolib
+
+imports
+  libwebdsl-front
+
+rules
+
+  rename-test :
+    t@Test(ident,b1) -> Test(ident{newident},b2)
+    with  newident := <newname> ident
+        ; names := <AllTestNames <+ ![]>
+        ; filterednames := <remove-all(?ident)> names 
+        ; rules( AllTestNames := [newident|filterednames] )
+        ; {| Rename, InDef
+          : rules ( InDef := True() )
+          ; b2 := <rename-all> b1
+          |}
+        
+  

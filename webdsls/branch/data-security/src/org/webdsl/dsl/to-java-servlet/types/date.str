@@ -1,0 +1,256 @@
+module org/webdsl/dsl/to-java-servlet/types/date
+
+imports 
+  libstrategolib 
+  Java-15 
+  libjava-front 
+  
+imports 
+  libwebdsl-front  
+
+/**
+ *  http://java.sun.com/javase/6/docs/api/java/text/SimpleDateFormat.html
+ *  http://java.sun.com/javase/6/docs/api/java/text/DateFormat.html
+ *  http://java.sun.com/javase/6/docs/api/java/util/Date.html
+ *  http://java.sun.com/javase/6/docs/api/java/util/Calendar.html
+ *
+ */
+
+rules // Peristence annotations
+
+  builtin-persistence-annotations :
+    SimpleSort("Time") -> [anno|[ @Temporal(TemporalType.TIME) ]|]
+    
+  builtin-persistence-annotations :
+    SimpleSort("Date") -> [anno|[ @Temporal(TemporalType.DATE) ]|]
+    
+  builtin-persistence-annotations :
+    SimpleSort("DateTime") -> [anno|[ @Temporal(TemporalType.TIMESTAMP) ]|]
+
+rules // Typechecking
+
+  builtin-java-type : 
+    SimpleSort("Date") -> type|[ java.util.Date ]|
+    
+  builtin-java-type : 
+    SimpleSort("DateTime") -> type|[ java.util.Date ]|
+    
+  builtin-java-type : 
+    SimpleSort("Time") -> type|[ java.util.Date ]|
+
+rules 
+
+  call-to-java-servlet :
+    exp|[ now() ]| -> java|[ new java.util.Date() ]|
+
+  //call-to-java-servlet :
+  //  exp|[ today() ]| -> java|[ {| java.util.Date d = new java.util.Date(); d.setHours(0); d.setMinutes(0); d.setSeconds(0); | d |} ]|
+
+  call-to-java-servlet :
+    exp|[ today() ]| -> java|[ {| java.util.Date d = new java.util.Date(); | new java.util.Date(d.getYear(), d.getMonth(), d.getDate()) |} ]|
+
+  call-to-java-servlet :
+    exp |[ e.format(e1) ]| -> java |[ (new java.text.SimpleDateFormat(e3).format(e2,new StringBuffer(),new java.text.FieldPosition(0))).toString() ]|
+    where SimpleSort(<?"Date"<+?"DateTime"<+?"Time">) := <type-of> e
+        ; <type-compatible> (<type-of> e1,  SimpleSort("String"))
+    with  e2    := <expression-to-java-servlet> e
+       ;  e3    := <expression-to-java-servlet> e1 //format string
+
+  call-to-java-servlet :
+    exp|[ e1.before(e2) ]| -> java|[ e3.before(e4) ]|
+    where SimpleSort(<?"Date"<+?"DateTime"<+?"Time">) := <type-of> e1
+        ; SimpleSort(<?"Date"<+?"DateTime"<+?"Time">) := <type-of> e2
+    with  e3 := <expression-to-java-servlet> e1
+        ; e4 := <expression-to-java-servlet> e2
+
+  call-to-java-servlet :
+    exp|[ e1.after(e2) ]| -> java|[ e3.after(e4) ]|
+    where SimpleSort(<?"Date"<+?"DateTime"<+?"Time">) := <type-of> e1
+        ; SimpleSort(<?"Date"<+?"DateTime"<+?"Time">) := <type-of> e2
+    with  e3 := <expression-to-java-servlet> e1
+        ; e4 := <expression-to-java-servlet> e2
+
+  call-to-java-servlet :
+    exp|[ Date(e1, e2) ]| -> java|[ org.webdsl.tools.Utils.parseDate(e3, e4) ]|
+    with  e3 := <expression-to-java-servlet> e1
+        ; e4 := <expression-to-java-servlet> e2
+
+  call-to-java-servlet :
+    exp|[ Date(e1) ]| -> java|[ org.webdsl.tools.Utils.parseDate(e2, "dd/MM/yyyy") ]|
+    with  e2 := <expression-to-java-servlet> e1
+
+  call-to-java-servlet :
+    exp|[ Time(e1, e2) ]| -> java|[ org.webdsl.tools.Utils.parseDate(e3, e4) ]|
+    with  e3 := <expression-to-java-servlet> e1
+        ; e4 := <expression-to-java-servlet> e2
+
+  call-to-java-servlet :
+    exp|[ Time(e1) ]| -> java|[ org.webdsl.tools.Utils.parseDate(e2, "H:mm") ]|
+    with e2 := <expression-to-java-servlet> e1
+
+  call-to-java-servlet :
+    exp|[ DateTime(e1, e2) ]| -> java|[ org.webdsl.tools.Utils.parseDate(e3, e4) ]|
+    with e3 := <expression-to-java-servlet> e1
+        ; e4 := <expression-to-java-servlet> e2
+
+  call-to-java-servlet :
+    exp|[ DateTime(e1) ]| -> java|[ org.webdsl.tools.Utils.parseDate(e2, "dd/MM/yyyy H:mm") ]|
+    with e2 := <expression-to-java-servlet> e1
+
+rules
+
+  java-servlet-element-id : //refactoring needed, simply add an input number to any template call in core-to-java-servlet
+    tc@elem|[ inputDate(e)[passign*]{elem*} ]| -> tc{InputNumber(newid),anno*} 
+    with  _{anno*} := tc
+          ; newid := <newname> "input"
+ java-servlet-element-id :
+    tc@elem|[ inputTime(e)[passign*]{elem*} ]| -> tc{InputNumber(newid),anno*} 
+    with  _{anno*} := tc
+          ; newid := <newname> "input"
+ java-servlet-element-id :
+    tc@elem|[ inputDateTime(e)[passign*]{elem*} ]| -> tc{InputNumber(newid),anno*} 
+    with  _{anno*} := tc
+          ; newid := <newname> "input"
+  
+  date-format-string = !e|[ "dd/MM/yyyy" ]|
+  date-format-in-validation-message = !e|[ "dd/mm/yyyy" ]|
+  
+  time-format-string = !e|[ "H:mm" ]|
+  time-format-in-validation-message  = !e|[ "h:mm" ]|
+  
+  datetime-format-string = !e|[ "dd/MM/yyyy H:mm" ]|
+  datetime-format-in-validation-message  = !e|[ "dd/mm/yyyy h:mm" ]|
+  
+  handle-actions-input-to-java-servlet :
+    tc@elem|[ inputDate(e)[passign*]{elem*} ]| ->
+    <handle-actions-input-to-java-servlet-input-date> 
+      (inputident, e, passign*, javaformatstring, e|["Required format is " + ~javaformatmessage]|)    
+    with inputident := <get-inputnumber> tc
+       ; javaformatstring := <date-java-format-string-from-passign> passign*     
+       ; javaformatmessage := <date-java-format-message-from-passign> passign*
+
+  handle-actions-input-to-java-servlet :
+    tc@elem|[ inputTime(e)[passign*]{elem*} ]| ->
+    <handle-actions-input-to-java-servlet-input-date> 
+      (inputident,e,passign*,<time-format-string>,e|["Required format is " + ~<time-format-in-validation-message>]|)    
+    with inputident := <get-inputnumber> tc  
+    
+  handle-actions-input-to-java-servlet :
+    tc@elem|[ inputDateTime(e)[passign*]{elem*} ]| ->   
+    <handle-actions-input-to-java-servlet-input-date> 
+      (inputident,e,passign*,<datetime-format-string>,e|["Required format is " + ~<datetime-format-in-validation-message>]|)    
+    with inputident := <get-inputnumber> tc  
+    
+  handle-actions-input-to-java-servlet-input-date :
+    (inputident,e,passign*,e1,e_errormessage) ->
+    <wrap-input-java-code(|passign*)>
+    bstm*|[
+      ident += "~inputident"+uniqueid;
+      if (ps.getParammap().get(ident)!=null) {
+        ~*<wrap-validation-context-code-store-inputs> bstm*|[
+          java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat(e1);
+          
+          java.util.Date x_temp = sdf.parse(ps.getParammap().get(ident),new java.text.ParsePosition(0));
+          if(x_temp==null) { 
+            ~*<add-conversion-error> (e, e_errormessage)
+          }
+        
+          bstm* 
+        ]|
+      }
+    ]|
+    with  x_temp := <newname> "temp"
+        ; name := <pp-webdsl> e
+        ; bstm* := <input-assignment-to-java-servlet(|x_temp)> e 
+
+  elem-to-java-servlet :
+    tc@elem|[ inputDate(e)[passign*]{elem*} ]| ->
+    <elem-to-java-servlet-input-date> (inputident,e,passign1*,javaformatstring)    
+    with  javaformatstring := <date-java-format-string-from-passign> passign*
+        ; inputident := <get-inputnumber> tc
+        ; passign1* := <remove-all(?PropertyAssignment("format",_))> passign*
+        
+  date-java-format-string-from-passign :
+    passign* -> javaformatstring
+    with if <fetch(?PropertyAssignment("format", formatstring))> passign*
+         then javaformat := <un-double-quote; string-replace(|"m","M")> formatstring
+            ; javaformatstring := e|[ "~javaformat" ]|
+         else javaformatstring := <date-format-string>
+         end
+
+  date-java-format-message-from-passign :
+    passign* -> javaformatmessage
+    with if <fetch(?PropertyAssignment("format", formatstring))> passign*
+         then javaformat := <un-double-quote> formatstring
+            ; javaformatmessage := e|[ "~javaformat" ]|
+         else javaformatmessage := <date-format-in-validation-message>
+         end
+    
+  elem-to-java-servlet :
+    tc@elem|[ inputTime(e)[passign*]{elem*} ]| ->
+    <elem-to-java-servlet-input-date> (inputident,e,passign*,<time-format-string>)    
+    with inputident := <get-inputnumber> tc  
+    
+  elem-to-java-servlet :
+    tc@elem|[ inputDateTime(e)[passign*]{elem*} ]| ->
+    <elem-to-java-servlet-input-date> (inputident,e,passign*,<datetime-format-string>)    
+    with inputident := <get-inputnumber> tc
+    
+  elem-to-java-servlet-input-date :
+    (inputident,e,passign*,e_formatstring) ->
+    <wrap-input-render-java-code>
+    bstm* |[ 
+      String x_temp = ident+"~inputident"+uniqueid;
+      ~*<render-error-messages-with-error-template(|java:expr|[ x_temp ]|,<ErrorTemplateInput>)> bstm*|[
+        out.print("<input name=\""+x_temp+"\" "+e_attrs1+" type=\"text\"");
+        ~*<connect-with-enclosing-label>
+        out.print("value=\"");
+        if(inSubmittedForm) {
+          out.print(utils.HTMLFilter.filter(ps.getParammap().get(x_temp)));
+        } 
+        else {
+          bstm_exptostring*
+        }
+        out.print("\" />"); 
+      ]|
+    ]|
+    with  bstm_exptostring* := <webdsl-exp-to-java-bstms-format-as-date(|e_formatstring)> e
+        ; x_temp := <newname> "temp"
+        ; e_attrs1 := <to-html-attrs(|"inputDate")> passign*
+    
+  elem-to-java-servlet :
+    elem|[ outputDate(e)[passign*]{} ]| ->
+    <wrap-common-context-code>
+    <webdsl-exp-to-java-bstms-format-as-date(|javaformatstring)> e
+    with  javaformatstring := <date-java-format-string-from-passign> passign*     
+
+  elem-to-java-servlet :
+    elem|[ outputTime(e)[passign*]{} ]| ->
+    <wrap-common-context-code>
+    <webdsl-exp-to-java-bstms-format-as-date(|<time-format-string>)> e
+    
+  elem-to-java-servlet :
+    elem|[ outputDateTime(e)[passign*]{} ]| ->
+    <wrap-common-context-code>
+    <webdsl-exp-to-java-bstms-format-as-date(|<datetime-format-string>)> e
+
+  webdsl-exp-to-java-bstms-format-as-date(|e1) :
+    e ->
+    bstm*|[
+      String x_tmpstring;
+      try {
+        java.text.SimpleDateFormat x_format = new java.text.SimpleDateFormat(e1);
+        StringBuffer x_buf = new StringBuffer();
+        x_format.format(e0,x_buf,new java.text.FieldPosition(0));
+        x_tmpstring = x_buf.toString();
+      }
+      catch(NullPointerException npe) {
+        x_tmpstring = "";
+      }
+      out.print(x_tmpstring);
+    ]|
+    with x_tmpstring := <newname> "tmpstring"
+       ; x_buf := <newname> "buffer" 
+       ; x_format := <newname> "formatter"
+       ; e0 := <expression-to-java-servlet> e
+      

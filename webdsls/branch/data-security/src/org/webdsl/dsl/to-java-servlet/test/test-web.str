@@ -1,0 +1,88 @@
+module org/webdsl/dsl/to-java-servlet/test/test-web
+
+imports
+  libstrategolib
+  libjava-front
+
+imports
+  libwebdsl-front
+
+strategies
+
+  GenerateCodeJavaServlet = generate-test-web; fail
+
+  generate-test-web :
+     Application(_,_) ->
+     <emit-java-code> compilation-unit|[
+       //package pkgname;
+       package utils;
+       import pkgname.*;
+       import pkgname2.*;
+       import pkgname3.*;
+       import utils.*;
+       import org.webdsl.lang.*;
+       import org.webdsl.tools.*;
+       import org.hibernate.*;
+       
+       import com.gargoylesoftware.htmlunit.*;
+       import com.gargoylesoftware.htmlunit.html.*;
+       import org.codehaus.cargo.container.*;
+       import org.codehaus.cargo.container.deployable.*;
+       import org.codehaus.cargo.container.tomcat.*;
+       
+       public class TestWeb extends TestAll
+       {
+          public TestWeb () {
+
+          }
+
+          public static final String contextPath = "~<AppName>";
+          public static final boolean isPost = false;
+          
+          public static void runTests(){
+            boolean exitWithError = false;
+            
+            bstm*
+            
+            if(exitWithError){
+              System.exit(1);
+            }
+          }
+
+          public static void main(String[] args) {
+            
+            DispatchServletHelper d = new DispatchServletHelper(null, isPost, contextPath);
+            ThreadLocalServlet.set(d);
+          
+            String warfile = "./"+"~<AppName>"+".war";
+            System.out.println(warfile);
+            Deployable war = new WAR(warfile);
+
+            org.codehaus.cargo.container.configuration.LocalConfiguration configuration = new Tomcat6xStandaloneLocalConfiguration("tomcat6x");
+            
+            configuration.addDeployable(war);
+      
+            InstalledLocalContainer container = new Tomcat6xInstalledLocalContainer(configuration);
+            String tomcathome = "./tomcat/apache-tomcat-6.0.20/";
+            System.out.println(tomcathome);
+            container.setHome(tomcathome);
+      
+            container.start(); 
+             
+            runTests();
+
+            container.stop();            
+          }
+       }
+     ]|
+     with pkgname := <TestPackage>
+        ; pkgname2 := <BeanPackage>
+        ; pkgname3 := <DomainPackage>
+        ; names := <AllTestNames <+ ![]>
+        ; bstm* := <map(gen-call-test-web-class);concat> names  
+       
+  gen-call-test-web-class :
+    name -> bstm*|[ x_name x_var = new x_name(); x_var.setWebClient(new WebClient()); exitWithError = !x_var.run() || exitWithError; ]|
+    with x_name := <concat-strings> ["Test", name]
+       ; x_var := <concat-strings> ["varTest", name]
+    

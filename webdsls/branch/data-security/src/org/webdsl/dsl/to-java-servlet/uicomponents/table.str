@@ -1,0 +1,213 @@
+module org/webdsl/dsl/to-java-servlet/uicomponents/table
+
+imports
+  libstrategolib
+
+imports
+  libwebdsl-front
+  
+rules // tables
+
+  elem-to-java-servlet :
+    TemplateCall("table", [],passign*, elems) ->
+    <wrap-common-context-code>
+    bstm* |[ 
+      out.print("<table "+e_attrs1+">");
+      ps.enterTableContext();
+      bstm*
+      ps.leaveTableContext();
+      out.print("</table>");
+    ]|
+    with  bstm* := <elems-to-java-servlet> elems
+        ; e_attrs1 := <to-html-attrs> passign*
+
+  elem-to-java-servlet :
+    TemplateCall("row", [],passign*, elems) ->
+    bstm* |[ 
+      out.print("<tr "+e_attrs1+">");
+      if(ps.inTableContext()){ ps.getTableContext().enterRowContext(); }
+      bstm*
+      if(ps.inTableContext()){ ps.getTableContext().leaveRowContext(); }
+      out.print("</tr>");
+    ]|
+    with  e_attrs1 := <to-html-attrs> passign*
+        ; bstm*    := <elems-to-java-servlet> elems
+
+  elem-to-java-servlet :
+    TemplateCall("column", [],passign*, elems) ->
+    bstm* |[ 
+      out.print("<td "+e_attrs1+">");
+      if(ps.inTableContext()){ ps.getTableContext().enterColumnContext(); }
+      bstm*
+      if(ps.inTableContext()){ ps.getTableContext().leaveColumnContext(); }
+      out.print("</td>");
+    ]|
+    //where not([TemplateCall("header",_,_,_)] := elems)
+    with  e_attrs1 := <to-html-attrs> passign*
+        ; bstm*  :=  <elems-to-java-servlet> elems
+
+  //a combination of column { header { ..}} leads to <th>
+  /*elem-to-java-servlet :
+    TemplateCall("column", [],passign*, [TemplateCall("header", [], passign2*, elems)]) ->
+    bstm* |[ 
+    out.print("<th "+e_attrs1+" "+e_attrs2+">");
+    bstm*
+    out.print("</th>");
+    ]|
+    with  e_attrs1 := <to-html-attrs> passign*
+        ; e_attrs2 := <to-html-attrs> passign2*
+        ; bstm*  :=  <elems-to-java-servlet> elems
+    */
+        
+/* TODO: make explicit table header
+  elem-to-java-servlet :
+    TemplateCall("header", [],passign*, elems) -> 
+    bstm* |[ 
+      out.print("<th "+e_attrs1+">");
+      bstm*
+      out.print("</th>");
+    ]|
+    //where JavaTableScope
+    with  bstm* := <elems-to-java-servlet> elems
+        ; e_attrs1 := <to-html-attrs> passign*
+*/        
+        
+rules
+
+  GenerateCodeJavaServlet = generate-java-servlet-table-context-var; fail
+
+  generate-java-servlet-table-context-var :
+    Application(qid, sections)
+    ->
+    <emit-java-code> compilation-unit|[
+      package utils;
+      
+      public abstract class PageServlet {
+        public java.util.Stack<Object> tableContexts = new java.util.Stack<Object>();
+
+        public utils.TableContext getTableContext() { 
+          return (utils.TableContext) tableContexts.peek();
+        }
+      
+        public void enterTableContext() { 
+          tableContexts.push(new utils.TableContext());
+        }
+      
+        public void leaveTableContext() { 
+          tableContexts.pop();
+        }
+      
+        public boolean inTableContext() { 
+          return !tableContexts.empty() && tableContexts.peek() instanceof utils.TableContext;
+        }
+        
+        public java.util.Stack<String> tableContextClosingTags = new java.util.Stack<String>();
+        
+        //separate row and column checks, used by label
+        public void rowContextsCheckEnter(PrintWriter out) {
+          if(inTableContext()){
+            utils.TableContext x_temp = getTableContext();
+            if(!x_temp.isInRowContext()) {
+              out.print("<tr>");
+              x_temp.enterRowContext();
+              tableContextClosingTags.push("</tr>");
+            }
+            else{
+              tableContextClosingTags.push(""); 
+            }
+          }
+        }
+        public void rowContextsCheckLeave(PrintWriter out) {
+          if(inTableContext()){
+            utils.TableContext x_temp = getTableContext();
+            String tags = tableContextClosingTags.pop();
+            if(tags.equals("</tr>")){
+              x_temp.leaveRowContext();
+              out.print(tags);
+            }
+          }
+        }        
+        public void columnContextsCheckEnter(PrintWriter out) {
+          if(inTableContext()){
+            utils.TableContext x_temp = getTableContext();
+            if(x_temp.isInRowContext() && !x_temp.isInColumnContext()) {
+              out.print("<td>");
+              x_temp.enterColumnContext();
+              tableContextClosingTags.push("</td>");
+            }
+            else{
+              tableContextClosingTags.push(""); 
+            }
+          }
+        }
+        public void columnContextsCheckLeave(PrintWriter out) {
+          if(inTableContext()){
+            utils.TableContext x_temp = getTableContext();
+            String tags = tableContextClosingTags.pop();
+            if(tags.equals("</td>")){
+              x_temp.leaveColumnContext();
+              out.print(tags);
+            }
+          }
+        } 
+        //combined row column checks used for all page elements   
+        @Partial
+        public void commonContextsCheckEnter(PrintWriter out) {
+          if(inTableContext()){
+            utils.TableContext x_temp = getTableContext();
+            if(x_temp.isInRowContext()) {
+              if(x_temp.isInColumnContext()) {
+                tableContextClosingTags.push("");
+              }
+              else {
+                out.print("<td>");
+                x_temp.enterColumnContext();
+                tableContextClosingTags.push("</td>");
+              } 
+            }           
+            else {
+              out.print("<tr><td>");
+              x_temp.enterRowContext();
+              x_temp.enterColumnContext();
+              tableContextClosingTags.push("</td></tr>");
+            }
+          }
+        }
+        @Partial
+        public void commonContextsCheckLeave(PrintWriter out) {
+          if(inTableContext()){
+            utils.TableContext x_temp = getTableContext();
+            String tags = tableContextClosingTags.pop();
+            if(tags.equals("</td>")){
+              x_temp.leaveColumnContext();
+              out.print(tags);
+            }
+            else if(tags.equals("</td></tr>")){
+              x_temp.leaveColumnContext();
+              x_temp.leaveRowContext();
+              out.print(tags);
+            }
+          }
+        }
+
+      }
+    ]|
+    with  x_temp := <newname> "temp"
+    
+rules
+  wrap-row-context-code :
+    bstm* ->
+    bstm* |[
+      ps.rowContextsCheckEnter(out);
+      bstm*
+      ps.rowContextsCheckLeave(out);
+    ]|
+    
+  wrap-column-context-code :
+    bstm* ->
+    bstm* |[
+      ps.columnContextsCheckEnter(out);
+      bstm*
+      ps.columnContextsCheckLeave(out);
+    ]|
+

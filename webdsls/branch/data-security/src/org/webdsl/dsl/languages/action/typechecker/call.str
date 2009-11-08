@@ -1,0 +1,58 @@
+module org/webdsl/dsl/languages/action/typechecker/call
+
+imports
+  libstrategolib
+  Java-15 
+  libjava-front
+
+imports
+  libwebdsl-front
+
+signature
+  constructors
+    ThisCallParent : String -> Annotation
+  
+rules //calls
+  get-this-call-parent :
+    _{anno*} -> p
+    where <fetch(?ThisCallParent(p))> anno*
+        
+  constraint-error-action :
+    Call(e1, f, e2*) -> <add-error(|["No function '", f, "' for '", e1, "' with signature ", sig])>
+    where not(type-of)
+        ; <type-of> e1; argtypes := <map(type-of)> e2* // don't report when sub-expression was already wrong
+    with  sig := <pretty-print-call(|f,argtypes)>
+
+  pretty-print-call(|f,argtypes) = !<concat-strings> [f , "(", <map(pp-webdsl-to-string);separate-by(|", ");concat-strings> argtypes, ")"]
+ 
+  // checks for wrong arguments when calling a function
+  constraint-error-action :
+    tc@ThisCall(f, e2*) -> <add-error(|["No function or page '", f, "' with signature ", sig])>
+    where not(type-of)
+        ; not("url" := f)
+        ; not("email" := f)
+        ; not(<is-email-call> tc)
+        ; argtypes := <map(type-of)> e2* // don't report when sub-expression was already wrong
+    with  sig := <pretty-print-call(|f,argtypes)>
+
+  eq-type-of-action :
+    Call(e1, f, e2*) -> t
+    where te1 := <type-of> e1
+        ; t := <check-signature> (te1, f, e2*)
+
+  eq-type-of-action =
+    eq-type-of-this-call-local <+ eq-type-of-this-call-global
+
+  eq-type-of-this-call-local :
+    c@ThisCall(f, e2*) -> t
+    where cl := <get-this-call-parent> 
+        ; t := <check-signature> (cl, f, e2*)
+
+  eq-type-of-this-call-global :
+    c@ThisCall(f, e2*) -> t
+    where t := <check-signature> (None(), f, e2*) 
+        
+/*  eq-type-of-action :
+    ThisCall(f, []) -> t
+    where procedure-names := <bagof-Procedures; make-set> SimpleSort(x_ent)
+        ; map(?)*/        

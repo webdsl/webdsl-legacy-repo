@@ -1,0 +1,70 @@
+module org/webdsl/dsl/languages/ajax/desugar
+   
+imports
+  libstrategolib  
+  libwebdsl-front
+
+rules
+
+
+  //desugar InlineAction
+  desugar-ajax : 
+    Define(mods, name, args, targs, elems) -> Define(mods, name, args, targs, elems2)
+    where not(<RemovedInlineActions> name)
+    with rules( RemovedInlineActions : name )
+       ; {| InsertedActions  
+          : elems1 := <alltd(desugar-inline-action-call)> elems
+          ; elems2 := <concat; alltd(rename-actions); rename-all> [elems1, <bagof-InsertedActions>]
+         |}
+
+  desugar-inline-action-call :
+    InlineAction(Block(e1)) -> <rename> ThisCall(fun, params)
+    with  fun := <newname> "inline_action" 
+        ; {| Param, IgnoreVars
+           : <alltd(find-lifting-params)> e1
+           ; params := <bagof-Param>
+          |}
+        ; farg* := <map(lifting-param-to-farg)> params
+        ; newaction := <rename-actions; declare-page-action> Action(fun, farg*, <rename-all> Block(e1))
+        ; rules( InsertedActions :+= newaction )    
+
+  lifting-param-to-farg :
+    Var(x) -> farg|[ x : srt ]|
+    where srt := <type-of> Var(x)
+
+  find-lifting-params =
+    ?v@Var(x)
+    ; not(<IgnoreVars> v)
+    ; not("Component" := <type-of> v)
+    ; rules( Param :+= v )
+    ; rules( IgnoreVars : v )
+
+  desugar-ajax : 
+    Define(mods, name, args, targs, elems) -> Define(mods, name, args, targs, <rename-all> elems1)
+    where not(<RemovedInlineTemplateCalls> name)
+    with rules( RemovedInlineTemplateCalls : name )
+       ; {| InsertedTemplates
+          : elems1 := <alltd(desugar-inline-template-call)> elems
+         |}
+
+  desugar-inline-template-call :
+    InlineTemplateCall(e1) -> TemplateCall(template, params,[], TemplateBody([
+      TemplateCallNoArgs("elements")//,[],[],TemplateBody([])) //make elements() usable in inline templates
+    ])) //add bound variables? 
+    where (action := "replace" <+ theaction := "append") 
+    with  template := <newname> "inline_template" 
+        ; {| Param, IgnoreVars
+           : <alltd(find-lifting-params)> e1
+           ; params := <bagof-Param>
+          |}
+        ; farg* := <map(lifting-param-to-farg)> params
+        ; <emit-webdsl-code> Define([], template, farg*, None(), e1)
+        
+  desugar-ajax :
+    Placeholder(name, elems) -> TemplateCall("container", [], [PropertyAssignment("id",name)], TemplateBody(elems))
+    
+  //desugar event templatcall to rawoutput of eventcall expression
+  desugar-ajax :
+    EventCallElement(x1,e2*) -> 
+      TemplateCallBody("rawoutput",TemplateBody([TemplateCallNoBody("output",[EventCall(x1,e2*)])]))
+      
