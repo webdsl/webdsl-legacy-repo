@@ -1,9 +1,0 @@
-module WebDSL-Builders
-
-builders External service provider resources
-
-/*
-  observer : editor-analyze
-  provider : include/webdsl.ctree
-  provider : include/webdsl.jar
-*/
