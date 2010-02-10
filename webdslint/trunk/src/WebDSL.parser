@@ -1,0 +1,190 @@
+%header {:
+ package AST;
+:};
+%embed {:
+	// to enable debugging, run a search in Parser.java for
+	//  pattern: "// ([a-z]+) = (.*)"
+	//  replacement: "match = debug(match, offset, "\1 = \2");"
+	// and add the line "boolean match = true;" as needed
+	private boolean debug(boolean match, int offset, String msg) {
+		if (match) {
+			System.out.println(msg);
+			int count = -1;
+			for (int i = 0; i < msg.length() - 1; i++)
+				if (msg.charAt(i) == ' ')
+					count++;
+			for (int i = 0; i < count; i++) {
+				Symbol sym = _symbols[offset + i + 1];
+				System.out.println(sym.value.toString());
+			}
+			System.out.println("");
+		}
+		return false;
+	}
+  class Events extends Parser.Events {
+    public void syntaxError(Symbol token) {
+      StringBuffer s = new StringBuffer();
+      s.append(token.getLine(token.getStart()) + ", " + token.getColumn(token.getStart()) + "\n");
+      s.append("  *** Syntactic error: unexpected token " + Terminals.NAMES[token.getId()]);
+      throw new Error(s.toString());
+    }
+    public void scannerError(Scanner.Exception e) {
+      StringBuffer s = new StringBuffer();
+      s.append(e.line + ", " + e.column + "\n");
+      s.append("  *** Lexical error: " + e.getMessage());
+      throw new Error(s.toString());
+    }
+  }
+
+  { report = new Events(); } // Use error handler in parser
+:};
+
+
+Module Module 
+	= MODULE ID defList				{: return new Module(ID, defList); :}
+	;
+List defList
+	=								{: return new List(); :}
+	| defList def 					{: return defList.add(def); :}
+	;
+Definition def = Entity | TemplateDef ;
+Definition Entity 
+	= ENTITY ID LBRACE PropertyList RBRACE		{: return new Entity(ID, PropertyList); :} 
+	;
+Property Property 
+	= ID COLON Type OptAnnot     				{: return new Property(ID, Type, OptAnnot); :}
+	;	 
+List OptAnnot 
+	=								{: return new List(); :}
+	|  LPAREN AnnotationList RPAREN	{: return AnnotationList; :}
+	;
+List PropertyList 
+	= Property						{: return new List().add(Property); :}
+	| PropertyList Property  		{: return PropertyList.add(Property); :}
+	;
+Annotation Annotation = Id | Inverse ;
+Annotation Id 
+	= ID							{: return new Id(ID); :}
+	;
+Annotation Inverse 
+	= INVERSE COLON ID				{: return new Inverse(ID); :}
+	;
+List AnnotationList 
+	= Annotation					{: return new List(); :}
+	| AnnotationList COMMA Annotation {: return AnnotationList; :}
+	;    
+Type Type = SimpleType | SetType;
+Type SimpleType 
+	= ID        				{: return new SimpleType(ID); :}
+	;
+Type SetType 
+	= SET LT Type GT 			{: return new SetType(Type); :}
+	; 
+Exp Exp = StringLit | Var | PropertyAccess | MethodCall | Constructor;
+Exp StringLit 
+	= STRING			{: return new StringLit(STRING); :}
+	;
+Exp Var 
+	= ID				{: return new Var(ID); :}
+	;
+Exp PropertyAccess 
+	= Exp DOT ID			{: return new PropertyAccess(Exp, ID); :}
+	;
+Exp MethodCall 
+	= Exp DOT ID LPAREN ExpList RPAREN	{: return new MethodCall(Exp, ID, ExpList); :}
+	;
+Exp Constructor 
+	= ID LBRACE RBRACE	{: return new Constructor(ID); :}
+	;
+List ExpList 
+	= 
+	| Exp					{: return new List().add(Exp); :}
+	| ExpList COMMA Exp		{: return ExpList.add(Exp); :}
+	;
+Definition TemplateDef 
+	= DEFINE Mod ID LPAREN ParamList RPAREN LBRACE ElementList RBRACE 
+						{: return new TemplateDef(ID, Mod, ParamList, ElementList); :}
+	;
+List Mod 
+	= 					{: return new List(); :}
+	| PAGE  				{: return new List().add(new Page()); :}
+	;
+List ParamList 
+	= 
+	| Param					{: return new List().add(Param); :}
+	| ParamList COMMA Param		{: return ParamList.add(Param); :}
+	;
+Param Param 
+	= ID COLON Type			{: return new Param(ID, Type); :}
+	;
+Element Element = String | Call | CallArgs | CallElems | CallFull | ForElem | ForAllElem
+		| Navigate | VarDeclElem | Action | Submit | XmlElem | Elements;
+Element String 
+	= STRING  				{: return new StringElem(STRING); :}
+	;
+Element Call 
+	= ID					{: return new Call(ID, null, null); :}
+	;
+Element CallArgs 
+	= ID LPAREN ExpList RPAREN		{: return new Call(ID, ExpList, null); :}
+	;
+Element CallElems 
+	= ID LBRACE ElementList RBRACE	{: return new Call(ID, null, ElementList); :}
+	;
+Element CallFull 
+	= ID LPAREN ExpList RPAREN LBRACE ElementList RBRACE
+		{: return new Call(ID, ExpList, ElementList); :}
+	;    
+Element ForElem 
+	= FOR LPAREN ID COLON Type IN Exp RPAREN LBRACE ElementList RBRACE
+		{: return new ForElem(ID, Exp, ElementList); :}
+	;
+Element ForAllElem 
+	= FOR LPAREN ID COLON Type RPAREN LBRACE ElementList RBRACE
+		{: return new ForElem(ID, new ClassItems(Type), ElementList); :}
+	;	
+Element Navigate 
+	= NAVIGATE PageRef LBRACE ElementList RBRACE
+		{: return new Navigate(PageRef, ElementList); :}
+	;
+MethodCall PageRef = ID LPAREN ExpList RPAREN
+		{: return new MethodCall(null, ID, ExpList); :}
+	;
+Element VarDeclElem 
+	= VAR ID COLON Type ASSIGN Exp
+		{: return new VarDeclElem(ID, Type, Exp); :}
+	;
+Element Action 
+	= ACTION ID LPAREN ParamList RPAREN LBRACE StatementList RBRACE
+		{: return new Action(ID, ParamList, StatementList); :}
+	;
+Element Submit 
+	= SUBMIT ID LPAREN ExpList RPAREN LBRACE ElementList RBRACE
+		{: return new Submit(ID, ExpList, ElementList); :}
+	;
+Element XmlElem 
+	= LT ID GT ElementList LT_SLASH ID GT
+		{: return new XmlElem(ID, ElementList); :}
+	;	
+Element Elements 
+	= ELEMENTS		{: return new Elements(); :}
+	;
+List ElementList
+	=						{: return new List(); :} 
+	| ElementList Element	{: return ElementList.add(Element); :}
+	; 
+Statement Statement = Assign | ExpStat | ReturnPage;
+Statement Assign 
+	= Exp ASSIGN Exp SEMICOLON	{: return new Assign(Exp, Exp); :}
+	;
+Statement ExpStat 
+	= Exp SEMICOLON				{: return new ExpStat(Exp); :}
+	;
+Statement ReturnPage 
+	= RETURN PageRef SEMICOLON	{: return new ReturnPage(PageRef); :}
+	;
+List StatementList 
+	= Statement					{: return new List().add(Statement); :} 
+	| StatementList Statement	{: return StatementList.add(Statement); :}
+	; 
+

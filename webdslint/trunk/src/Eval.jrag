@@ -1,0 +1,14 @@
+/*
+ */
+
+aspect Eval {
+  // Helper for indentation
+  
+  public void ASTNode.eval() {
+  } 
+
+  public void Module.eval() {
+  }
+
+}
+
