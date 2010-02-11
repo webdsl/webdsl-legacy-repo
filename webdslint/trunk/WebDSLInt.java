@@ -20,7 +20,7 @@ class WebDSLInt {
 			Reader reader = new FileReader(name);
 			WebDSLScanner scanner = new WebDSLScanner(new BufferedReader(reader));
 			Module p = (Module)parser.parse(scanner);
-			String pp = p.pp();
+			String pp = p.pp("");
 			System.out.println(pp);
 			reader.close();
 

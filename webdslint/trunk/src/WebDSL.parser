@@ -97,7 +97,7 @@ Exp Constructor
 	= ID LBRACE RBRACE	{: return new Constructor(ID); :}
 	;
 List ExpList 
-	= 
+	= 						{: return new List(); :}
 	| Exp					{: return new List().add(Exp); :}
 	| ExpList COMMA Exp		{: return ExpList.add(Exp); :}
 	;
@@ -110,7 +110,7 @@ List Mod
 	| PAGE  				{: return new List().add(new Page()); :}
 	;
 List ParamList 
-	= 
+	= 						{: return new List(); :}
 	| Param					{: return new List().add(Param); :}
 	| ParamList COMMA Param		{: return ParamList.add(Param); :}
 	;
@@ -123,13 +123,13 @@ Element String
 	= STRING  				{: return new StringElem(STRING); :}
 	;
 Element Call 
-	= ID					{: return new Call(ID, null, null); :}
+	= ID					{: return new Call(ID, new List(), new List()); :}
 	;
 Element CallArgs 
-	= ID LPAREN ExpList RPAREN		{: return new Call(ID, ExpList, null); :}
+	= ID LPAREN ExpList RPAREN		{: return new Call(ID, ExpList, new List()); :}
 	;
 Element CallElems 
-	= ID LBRACE ElementList RBRACE	{: return new Call(ID, null, ElementList); :}
+	= ID LBRACE ElementList RBRACE	{: return new Call(ID, new List(), ElementList); :}
 	;
 Element CallFull 
 	= ID LPAREN ExpList RPAREN LBRACE ElementList RBRACE
@@ -137,11 +137,17 @@ Element CallFull
 	;    
 Element ForElem 
 	= FOR LPAREN ID COLON Type IN Exp RPAREN LBRACE ElementList RBRACE
-		{: return new ForElem(ID, Exp, ElementList); :}
+		{: return new ForElem(ID, Type, Exp, ElementList); :}
 	;
+/*
 Element ForAllElem 
 	= FOR LPAREN ID COLON Type RPAREN LBRACE ElementList RBRACE
-		{: return new ForElem(ID, new ClassItems(Type), ElementList); :}
+		{: return new ForElem(ID, Type, new ClassItem(Type), ElementList); :}
+	;
+*/	
+Element ForAllElem 
+	= FOR LPAREN ID COLON Type RPAREN LBRACE ElementList RBRACE
+		{: return new ForElem(ID, Type, new ClassItem(Type), ElementList); :}
 	;	
 Element Navigate 
 	= NAVIGATE PageRef LBRACE ElementList RBRACE
@@ -183,7 +189,7 @@ Statement ExpStat
 Statement ReturnPage 
 	= RETURN PageRef SEMICOLON	{: return new ReturnPage(PageRef); :}
 	;
-List StatementList 
+List StatementList 				{: return new List(); :}
 	= Statement					{: return new List().add(Statement); :} 
 	| StatementList Statement	{: return StatementList.add(Statement); :}
 	; 

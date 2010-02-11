@@ -3,20 +3,94 @@
 
 aspect PrettyPrint {
 
-	syn String ASTNode.pp() = "<" + getClass().getName() + ">";
+	syn String ASTNode.pp(String indent) = "<" + getClass().getName() + ">";
 
-	syn String Module.pp() = "module " + getName() + "\n\n" +
-			getDefinitions().pp("\n"); 
+	syn String Module.pp(String indent) = "module " + getName() + "\n\n" +
+			getDefinitionList().pp(indent, "\n" + indent + "\n" + indent); 
 
-	syn String Entity.pp() = "entity " + getName() + " {\n  " +
-			getPropertys().pp("\n  ") + "\n}\n";
+	syn String Entity.pp(String indent) = "entity " + getName() + " {\n" +
+			indent + "  " + getPropertyList().pp(indent + "  ", "\n" + indent + "  ") +  "\n" + 
+			indent + "}";
 
-	syn String Property.pp() = getName() + ": " + getType().pp() +
-			getAnnotations().pp(" ", " ", "(", ")", "");
+	syn String Property.pp(String indent) = getName() + ": " + 
+			getType().pp(indent) + getAnnotationList().pp(indent, " ", " ", "(", ")", "");
 	
-	syn String SimpleType.pp() = getName();
+	syn String SimpleType.pp(String indent) = getName();
 	
-	syn String SetType.pp() = "Set<" + getType().pp() + ">";
+	syn String SetType.pp(String indent) = "Set<" + getType().pp(indent) + ">";
+	
+	syn String Id.pp(String indent) = getKind();
+	
+	syn String Inverse.pp(String indent) = "inverse: " + getName();
 
+	syn String TemplateDef.pp(String indent) = "define " + 
+			getModList().pp(indent, " ", "", "", "", " ") +  
+			getName() + "(" + getParamList().pp(indent, ", ") + ") {\n" + 
+			indent + "  " + getBodyList().pp(indent + "  ", "\n" + indent + "  ") + "\n" +
+			indent + "}";
+			
+	syn String XmlElem.pp(String indent) = "<" + getTag() + "> " + 
+			getBodyList().pp(indent, " ") + " <" + getTag() + ">";
+
+	syn String Elements.pp(String indent) = "elements"; 
+
+	syn String Page.pp(String indent) = "page";
+	
+	syn String Navigate.pp(String indent) = "navigate " + getRef().pp(indent) +
+			" { " +  getLabelList().pp(indent, " ") + " }";
+			
+	syn String Call.pp(String indent) = getName() + 
+			getArgList().pp(indent, ", ", "(", "", "", ")") +
+			getElementList().pp(indent + "  ", "\n" + indent + "  ", " {\n" + indent + "  ", "", "", "\n" + indent + "}");
+			
+	syn String ForElem.pp(String indent) = "for ("  + getVar() + ": " + 
+			getType().pp(indent) + 
+			(getCollection() instanceof AST.ClassItem ? "" : " in " + getCollection().pp(indent)) +  
+			") {\n" + 
+			indent + "  " +
+			getBodyList().pp(indent + "  ", "\n" + indent + "  ") + "\n" + 
+			indent + "}";
+
+	syn String ClassItem.pp(String indent) = "Should not see me!";
+
+	syn String PropertyAccess.pp(String indent) = getBase().pp(indent) + "." + getField();
+	
+	syn String Var.pp(String indent) = getName();
+
+	/*
+	syn String MethodCall.pp(String indent) = (getTarget() instanceof AST.Exp ? 
+			getTarget().pp(indent) + "." : "" ) + getMethod() + 
+			"(" + getBodyList().pp(indent, ", ") + ")";
+	*/
+	
+	syn String MethodCall.pp(String indent) = getMethod() + 
+			"(" + getBodyList().pp(indent, ", ") + ")";
+	
+	syn String Param.pp(String indent) = getName() + ": " + getType().pp(indent);
+	
+	syn String StringElem.pp(String indent) = getValue();
+	
+	syn String VarDeclElem.pp(String indent) = "var " + getVar() + ": " + 
+			getType().pp(indent) + " := " + getSource().pp(indent);
+	
+	syn String Constructor.pp(String indent) = getClassName() + "{}";
+	
+	syn String Action.pp(String indent) = "action " + getName() + "(" + 
+			getParamList().pp(indent, ", ") + ")" + " {\n" +
+			indent + "  " +
+			getBodyList().pp(indent + "  ", "\n" + indent + "  ") + "\n" + 
+			indent + "}";
+		
+	syn String Assign.pp(String indent) = getTarget().pp(indent) + " := " +
+			getSource().pp(indent) + ";";
+	
+	syn String ExpStat.pp(String indent) = getExp().pp(indent) + ";";
+	
+	syn String ReturnPage.pp(String indent) = "return " + getRef().pp(indent) + ";";
+	
+	syn String Submit.pp(String indent) = "submit " + getName() + 
+			"(" + getArgList().pp(indent, ", ") + ") " + 
+			"{ " + getLabelList().pp(indent, " ") + " }";
 }
+
 

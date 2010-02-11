@@ -1,8 +1,8 @@
 
 aspect PrintExtra {
 
-    public String List.pp(String delim, String start, String before, 
-    		String after, String finish) {
+    public String List.pp(String indent, String delim, 
+    		String start, String before, String after, String finish) {
 		StringBuilder buf = new StringBuilder();
 		boolean isFirst = true;
 		boolean nonEmpty = false;
@@ -14,7 +14,7 @@ aspect PrintExtra {
 				buf.append(delim);
 			
     		buf.append(before);
-			buf.append(node.pp());
+			buf.append(node.pp(indent));
 			buf.append(after);
 			nonEmpty = true;
 		}
@@ -23,7 +23,7 @@ aspect PrintExtra {
 		return buf.toString();
 	}
 	
-    public String List.pp(String delim) {
-		return pp(delim, "", "", "", "");
+    public String List.pp(String indent, String delim) {
+		return pp(indent, delim, "", "", "", "");
 	}
 }

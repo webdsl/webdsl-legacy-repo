@@ -18,7 +18,7 @@ Var : Exp ::= <Name:String>;
 PropertyAccess : Exp ::= Base:Exp <Field:String>;
 MethodCall : Exp ::= Target:Exp <Method:String> Body:Exp*;
 Constructor : Exp ::= <ClassName:String>;
-ClassItems : Exp ::= Type;
+ClassItem : Exp ::= Type;
 
 TemplateDef : Definition ::= <Name:String> Mod* Param* Body:Element*;
 
@@ -29,14 +29,15 @@ Page : Mod;
 
 abstract Element;
 StringElem : Element ::= <Value:String>;
-Call : Element ::= <Name:String> Args:Exp* Element*;
-ForElem : Element ::= <Var:String> Collection:Exp Body:Element*;
+Call : Element ::= <Name:String> Arg:Exp* Element*;
+ForElem : Element ::= <Var:String> Type Collection:Exp Body:Element*;
 Navigate : Element ::= Ref:MethodCall Label:Element*;
 VarDeclElem : Element ::= <Var:String>  Type Source:Exp;
 Action : Element ::= <Name:String> Param* Body:Statement*;
-Submit : Element ::= <Name:String> Args:Exp* Label:Element*;
+Submit : Element ::= <Name:String> Arg:Exp* Label:Element*;
 XmlElem : Element ::= <Tag:String> Body:Element*;
 Elements : Element ::=;
+
 abstract Statement;
 Assign : Statement ::= Target:Exp Source:Exp;
 ExpStat : Statement ::= Exp;
