@@ -21,22 +21,22 @@
 		}
 		return false;
 	}
-  class Events extends Parser.Events {
-    public void syntaxError(Symbol token) {
-      StringBuffer s = new StringBuffer();
-      s.append(token.getLine(token.getStart()) + ", " + token.getColumn(token.getStart()) + "\n");
-      s.append("  *** Syntactic error: unexpected token " + Terminals.NAMES[token.getId()]);
-      throw new Error(s.toString());
-    }
-    public void scannerError(Scanner.Exception e) {
-      StringBuffer s = new StringBuffer();
-      s.append(e.line + ", " + e.column + "\n");
-      s.append("  *** Lexical error: " + e.getMessage());
-      throw new Error(s.toString());
-    }
-  }
+	class Events extends Parser.Events {
+		public void syntaxError(Symbol token) {
+			StringBuffer s = new StringBuffer();
+			s.append(token.getLine(token.getStart()) + ", " + token.getColumn(token.getStart()) + "\n");
+			s.append("  *** Syntactic error: unexpected token " + Terminals.NAMES[token.getId()]);
+			throw new Error(s.toString());
+		}
+		public void scannerError(Scanner.Exception e) {
+			StringBuffer s = new StringBuffer();
+			s.append(e.line + ", " + e.column + "\n");
+			s.append("  *** Lexical error: " + e.getMessage());
+			throw new Error(s.toString());
+		}
+	}
 
-  { report = new Events(); } // Use error handler in parser
+	{ report = new Events(); } // Use error handler in parser
 :};
 
 
@@ -81,6 +81,14 @@ Type SetType
 	= SET LT Type GT 			{: return new SetType(Type); :}
 	; 
 Exp Exp = StringLit | Var | PropertyAccess | MethodCall | Constructor;
+List OptExpList 
+	=								{: return new List(); :}
+	|  ExpList						{: return ExpList; :}
+	;
+List ExpList 
+	= Exp					{: return new List().add(Exp); :}
+	| ExpList COMMA Exp		{: return ExpList.add(Exp); :}
+	;
 Exp StringLit 
 	= STRING			{: return new StringLit(STRING); :}
 	;
@@ -91,27 +99,28 @@ Exp PropertyAccess
 	= Exp DOT ID			{: return new PropertyAccess(Exp, ID); :}
 	;
 Exp MethodCall 
-	= Exp DOT ID LPAREN ExpList RPAREN	{: return new MethodCall(Exp, ID, ExpList); :}
+	= Exp DOT ID LPAREN OptExpList RPAREN	{: return new MethodCall(Exp, ID, OptExpList); :}
+	;
+PageRef PageRef 
+	= ID LPAREN OptExpList RPAREN	{: return new PageRef(ID, OptExpList); :}
 	;
 Exp Constructor 
 	= ID LBRACE RBRACE	{: return new Constructor(ID); :}
 	;
-List ExpList 
-	= 						{: return new List(); :}
-	| Exp					{: return new List().add(Exp); :}
-	| ExpList COMMA Exp		{: return ExpList.add(Exp); :}
-	;
 Definition TemplateDef 
-	= DEFINE Mod ID LPAREN ParamList RPAREN LBRACE ElementList RBRACE 
-						{: return new TemplateDef(ID, Mod, ParamList, ElementList); :}
+	= DEFINE Mod ID LPAREN OptParamList RPAREN LBRACE ElementList RBRACE 
+						{: return new TemplateDef(ID, Mod, OptParamList, ElementList); :}
 	;
 List Mod 
 	= 					{: return new List(); :}
 	| PAGE  				{: return new List().add(new Page()); :}
 	;
+List OptParamList 
+	=								{: return new List(); :}
+	|  ParamList					{: return ParamList; :}
+	;
 List ParamList 
-	= 						{: return new List(); :}
-	| Param					{: return new List().add(Param); :}
+	= Param						{: return new List().add(Param); :}
 	| ParamList COMMA Param		{: return ParamList.add(Param); :}
 	;
 Param Param 
@@ -126,25 +135,19 @@ Element Call
 	= ID					{: return new Call(ID, new List(), new List()); :}
 	;
 Element CallArgs 
-	= ID LPAREN ExpList RPAREN		{: return new Call(ID, ExpList, new List()); :}
+	= ID LPAREN OptExpList RPAREN		{: return new Call(ID, OptExpList, new List()); :}
 	;
 Element CallElems 
 	= ID LBRACE ElementList RBRACE	{: return new Call(ID, new List(), ElementList); :}
 	;
 Element CallFull 
-	= ID LPAREN ExpList RPAREN LBRACE ElementList RBRACE
-		{: return new Call(ID, ExpList, ElementList); :}
+	= ID LPAREN OptExpList RPAREN LBRACE ElementList RBRACE
+		{: return new Call(ID, OptExpList, ElementList); :}
 	;    
 Element ForElem 
 	= FOR LPAREN ID COLON Type IN Exp RPAREN LBRACE ElementList RBRACE
 		{: return new ForElem(ID, Type, Exp, ElementList); :}
 	;
-/*
-Element ForAllElem 
-	= FOR LPAREN ID COLON Type RPAREN LBRACE ElementList RBRACE
-		{: return new ForElem(ID, Type, new ClassItem(Type), ElementList); :}
-	;
-*/	
 Element ForAllElem 
 	= FOR LPAREN ID COLON Type RPAREN LBRACE ElementList RBRACE
 		{: return new ForElem(ID, Type, new ClassItem(Type), ElementList); :}
@@ -153,20 +156,17 @@ Element Navigate
 	= NAVIGATE PageRef LBRACE ElementList RBRACE
 		{: return new Navigate(PageRef, ElementList); :}
 	;
-MethodCall PageRef = ID LPAREN ExpList RPAREN
-		{: return new MethodCall(null, ID, ExpList); :}
-	;
 Element VarDeclElem 
 	= VAR ID COLON Type ASSIGN Exp
 		{: return new VarDeclElem(ID, Type, Exp); :}
 	;
 Element Action 
-	= ACTION ID LPAREN ParamList RPAREN LBRACE StatementList RBRACE
-		{: return new Action(ID, ParamList, StatementList); :}
+	= ACTION ID LPAREN OptParamList RPAREN LBRACE OptStatementList RBRACE
+		{: return new Action(ID, OptParamList, OptStatementList); :}
 	;
 Element Submit 
-	= SUBMIT ID LPAREN ExpList RPAREN LBRACE ElementList RBRACE
-		{: return new Submit(ID, ExpList, ElementList); :}
+	= SUBMIT ID LPAREN OptExpList RPAREN LBRACE ElementList RBRACE
+		{: return new Submit(ID, OptExpList, ElementList); :}
 	;
 Element XmlElem 
 	= LT ID GT ElementList LT_SLASH ID GT
@@ -181,7 +181,7 @@ List ElementList
 	; 
 Statement Statement = Assign | ExpStat | ReturnPage;
 Statement Assign 
-	= Exp ASSIGN Exp SEMICOLON	{: return new Assign(Exp, Exp); :}
+	= Exp.Target ASSIGN Exp.Source SEMICOLON	{: return new Assign(Target, Source); :}
 	;
 Statement ExpStat 
 	= Exp SEMICOLON				{: return new ExpStat(Exp); :}
@@ -189,8 +189,11 @@ Statement ExpStat
 Statement ReturnPage 
 	= RETURN PageRef SEMICOLON	{: return new ReturnPage(PageRef); :}
 	;
+List OptStatementList 
+	=								{: return new List(); :}
+	|  StatementList				{: return StatementList; :}
+	;
 List StatementList 
 	= Statement					{: return new List().add(Statement); :} 
 	| StatementList Statement	{: return StatementList.add(Statement); :}
 	; 
-

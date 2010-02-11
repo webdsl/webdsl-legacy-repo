@@ -13,7 +13,7 @@ aspect PrettyPrint {
 			indent + "}";
 
 	syn String Property.pp(String indent) = getName() + ": " + 
-			getType().pp(indent) + getAnnotationList().pp(indent, " ", " ", "(", ")", "");
+			getType().pp(indent) + getAnnotationList().pp(indent, " ", " (", ")");
 	
 	syn String SimpleType.pp(String indent) = getName();
 	
@@ -24,7 +24,7 @@ aspect PrettyPrint {
 	syn String Inverse.pp(String indent) = "inverse: " + getName();
 
 	syn String TemplateDef.pp(String indent) = "define " + 
-			getModList().pp(indent, " ", "", "", "", " ") +  
+			getModList().pp(indent, " ", "", " ") +  
 			getName() + "(" + getParamList().pp(indent, ", ") + ") {\n" + 
 			indent + "  " + getBodyList().pp(indent + "  ", "\n" + indent + "  ") + "\n" +
 			indent + "}";
@@ -40,8 +40,8 @@ aspect PrettyPrint {
 			" { " +  getLabelList().pp(indent, " ") + " }";
 			
 	syn String Call.pp(String indent) = getName() + 
-			getArgList().pp(indent, ", ", "(", "", "", ")") +
-			getElementList().pp(indent + "  ", "\n" + indent + "  ", " {\n" + indent + "  ", "", "", "\n" + indent + "}");
+			getArgList().pp(indent, ", ", "(", ")") +
+			getElementList().pp(indent + "  ", "\n" + indent + "  ", " {\n" + indent + "  ", "\n" + indent + "}");
 			
 	syn String ForElem.pp(String indent) = "for ("  + getVar() + ": " + 
 			getType().pp(indent) + 
@@ -56,16 +56,16 @@ aspect PrettyPrint {
 	syn String PropertyAccess.pp(String indent) = getBase().pp(indent) + "." + getField();
 	
 	syn String Var.pp(String indent) = getName();
+/*
+	syn String MethodCall.pp(String indent) =  
+			getMethod() + "(" + getBodyList().pp(indent, ", ") + ")";
+*/
+	syn String PageRef.pp(String indent) = getMethod() + 
+			"(" + getBodyList().pp(indent, ", ") + ")";
 
-	/*
-	syn String MethodCall.pp(String indent) = (getTarget() instanceof AST.Exp ? 
-			getTarget().pp(indent) + "." : "" ) + getMethod() + 
-			"(" + getBodyList().pp(indent, ", ") + ")";
-	*/
-	
-	syn String MethodCall.pp(String indent) = getMethod() + 
-			"(" + getBodyList().pp(indent, ", ") + ")";
-	
+	syn String MethodCall.pp(String indent) = getTarget().pp(indent) + "." + 
+			getMethod() + "(" + getBodyList().pp(indent, ", ") + ")";
+
 	syn String Param.pp(String indent) = getName() + ": " + getType().pp(indent);
 	
 	syn String StringElem.pp(String indent) = getValue();
@@ -92,5 +92,4 @@ aspect PrettyPrint {
 			"(" + getArgList().pp(indent, ", ") + ") " + 
 			"{ " + getLabelList().pp(indent, " ") + " }";
 }
-
 
