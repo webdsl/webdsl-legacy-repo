@@ -189,7 +189,7 @@ Statement ExpStat
 Statement ReturnPage 
 	= RETURN PageRef SEMICOLON	{: return new ReturnPage(PageRef); :}
 	;
-List StatementList 				{: return new List(); :}
+List StatementList 
 	= Statement					{: return new List().add(Statement); :} 
 	| StatementList Statement	{: return StatementList.add(Statement); :}
 	; 
