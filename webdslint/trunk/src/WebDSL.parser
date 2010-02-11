@@ -70,8 +70,8 @@ Annotation Inverse
 	= INVERSE COLON ID				{: return new Inverse(ID); :}
 	;
 List AnnotationList 
-	= Annotation					{: return new List(); :}
-	| AnnotationList COMMA Annotation {: return AnnotationList; :}
+	= Annotation					{: return new List().add(Annotation); :}
+	| AnnotationList COMMA Annotation {: return AnnotationList.add(Annotation); :}
 	;    
 Type Type = SimpleType | SetType;
 Type SimpleType 

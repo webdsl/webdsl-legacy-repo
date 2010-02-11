@@ -1,0 +1,29 @@
+
+aspect PrintExtra {
+
+    public String List.pp(String delim, String start, String before, 
+    		String after, String finish) {
+		StringBuilder buf = new StringBuilder();
+		boolean isFirst = true;
+		boolean nonEmpty = false;
+    	for (T node: this) {
+			if (isFirst) {
+				buf.append(start);
+				isFirst = false;
+			} else
+				buf.append(delim);
+			
+    		buf.append(before);
+			buf.append(node.pp());
+			buf.append(after);
+			nonEmpty = true;
+		}
+		if (nonEmpty)
+			buf.append(finish);
+		return buf.toString();
+	}
+	
+    public String List.pp(String delim) {
+		return pp(delim, "", "", "", "");
+	}
+}

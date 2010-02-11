@@ -1,11 +1,13 @@
 Module ::= <Name:String> Definition*;
+
 abstract Definition;
-Entity :Definition ::= <Name:String> Property*;
-Property ::= <Name:String> Type:Type Annotations:Annotation*;
+Entity : Definition ::= <Name:String> Property*;
+Property ::= <Name:String> Type Annotation*;
 
 abstract Annotation;
 Id : Annotation ::= <Kind:String>;
 Inverse : Annotation ::= <Name:String>;
+
 abstract Type;
 SimpleType : Type ::= <Name:String>;
 SetType : Type ::= Type:Type;
@@ -18,24 +20,24 @@ MethodCall : Exp ::= Target:Exp <Method:String> Body:Exp*;
 Constructor : Exp ::= <ClassName:String>;
 ClassItems : Exp ::= Type;
 
-TemplateDef : Definition ::= <Name:String> Mod:Mod* Params:Param* Body:Element*;
+TemplateDef : Definition ::= <Name:String> Mod* Param* Body:Element*;
 
-Param ::= <Name:String> Type:Type;
+Param ::= <Name:String> Type;
 
-abstract Mod ;
+abstract Mod;
 Page : Mod;
 
 abstract Element;
 StringElem : Element ::= <Value:String>;
-Call : Element ::= <Name:String> Args:Exp* Elements:Element*;
+Call : Element ::= <Name:String> Args:Exp* Element*;
 ForElem : Element ::= <Var:String> Collection:Exp Body:Element*;
 Navigate : Element ::= Ref:MethodCall Label:Element*;
-VarDeclElem : Element ::= <Var:String>  Type:Type Source:Exp;
-Action : Element ::= <Name:String> Params:Param* Body:Statement*;
+VarDeclElem : Element ::= <Var:String>  Type Source:Exp;
+Action : Element ::= <Name:String> Param* Body:Statement*;
 Submit : Element ::= <Name:String> Args:Exp* Label:Element*;
 XmlElem : Element ::= <Tag:String> Body:Element*;
 Elements : Element ::=;
 abstract Statement;
 Assign : Statement ::= Target:Exp Source:Exp;
-ExpStat : Statement ::= Exp:Exp;
+ExpStat : Statement ::= Exp;
 ReturnPage : Statement ::= Ref:MethodCall;
