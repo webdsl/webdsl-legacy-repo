@@ -1,0 +1,5 @@
+module hello
+
+define page root() {
+	"hello world!"
+}

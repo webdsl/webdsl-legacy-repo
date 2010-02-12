@@ -19,13 +19,13 @@ import AST.WebDSLScanner;
 /**
  * Servlet implementation class ServInt
  */
-public class ServInt extends HttpServlet {
+public class InterpreterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServInt() {
+    public InterpreterServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,14 +35,23 @@ public class ServInt extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		WebDSLParser parser = new WebDSLParser();
-		String name = "examples/blog.nwl";
+		String name = "workspace/webdslint/examples/helloworld.nwl";
 		try {
 			Reader reader = new FileReader(name);
+			// Parse the file
 			WebDSLScanner scanner = new WebDSLScanner(new BufferedReader(reader));
 			Module m = (Module) parser.parse(scanner);
+			// Evaluate the program
 			String value = m.eval();
 			PrintWriter out = response.getWriter();
 			out.println(value);
+			// Pretty print the source
+			out.println();
+			out.println("Program source:");
+			out.println("---------------");
+			out.println();
+			String pp = m.pp("");
+			out.println(pp);
 			out.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
