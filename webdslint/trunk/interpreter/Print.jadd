@@ -1,0 +1,29 @@
+
+aspect PrettyPrintExtra {
+
+    public String List.pp(String indent, String delim, String start, String finish) {
+		StringBuilder buf = new StringBuilder();
+		boolean isFirst = true;
+		boolean nonEmpty = false;
+    	for (T node: this) {
+			if (isFirst) {
+				buf.append(start);
+				isFirst = false;
+			} else
+				buf.append(delim);
+			
+//    		buf.append(before);
+			buf.append(node.pp(indent));
+//			buf.append(after);
+			nonEmpty = true;
+		}
+		if (nonEmpty)
+			buf.append(finish);
+		return buf.toString();
+	}
+	
+    public String List.pp(String indent, String delim) {
+		return pp(indent, delim, "", "");
+	}
+	
+}

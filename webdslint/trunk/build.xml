@@ -9,7 +9,9 @@
 
 <project name="Compiler" default="build" basedir=".">
 
-  <!-- "package" is the directory where generated files will be stored -->
+  <!-- "gendir" is the base directory for the generated files -->
+  <property name="gendir" value="srcgen"/>
+  <!-- "package" is the package directory where generated files will be stored -->
   <property name="package" value="AST"/>
 
   <!-- "tools" is the directory where the needed tools (lexing, parsing, jastadd2, junit.jar) are located. -->
@@ -26,31 +28,31 @@
   <target name="build" depends="gen">
     <!-- compile all java files in srcdir and recursively in subdirectories -->
     <!-- you can use the jikes compiler by changing javac1.4 to jikes -->
-    <mkdir dir="bin"/>
-    <javac compiler="javac1.4" debug="true" srcdir="." destdir="bin" classpath="${tools}/junit.jar" />
+    <mkdir dir="build/classes"/>
+    <javac compiler="javac1.4" debug="true" srcdir="src;${gendir}" destdir="build/classes" classpath="${tools}/junit.jar;${tools}/beaver-rt.jar" />
   </target>
 
   <!-- TARGET gen -->
   <target name="gen">
     <!-- create a directory for the generated files -->
-    <mkdir dir="${basedir}/${package}"/>
+    <mkdir dir="${basedir}/${gendir}/${package}"/>
     <!-- run jastadd to generate AST files -->
-    <jastadd package="${package}" beaver="true" rewrite="true" outdir="${basedir}">
+    <jastadd package="${package}" beaver="true" rewrite="true" outdir="${basedir}/${gendir}">
       <fileset dir=".">
-        <include name="src/**/*.ast"/>
-        <include name="src/**/*.jrag"/>
-        <include name="src/**/*.jadd"/>
+        <include name="interpreter/**/*.ast"/>
+        <include name="interpreter/**/*.jrag"/>
+        <include name="interpreter/**/*.jadd"/>
       </fileset>
     </jastadd>
     <!-- generate the scanner -->
     <echo message = "Running jflex"/>
-    <jflex file="src/WebDSL.flex" outdir="AST" nobak="yes"/>
+    <jflex file="interpreter/WebDSL.flex" outdir="${gendir}/${package}" nobak="yes"/>
     <!-- generate the parser phase 1, translating .lalr to .beaver -->
     <java fork="true" dir="${basedir}" classpath="${basedir}:${tools}/proj.jar:${tools}/beaver-rt.jar" classname="Main">
-      <arg line="src/WebDSL.parser AST/WebDSLParser.beaver"/>
+        <arg line="interpreter/WebDSL.parser ${gendir}/${package}/WebDSLParser.beaver"/>
     </java>
     <!-- generate the parser phase 2, translating .beaver to .java -->
-    <beaver file="AST/WebDSLParser.beaver" terminalNames="yes" compress="no" useSwitch="yes"/>
+    <beaver file="${gendir}/${package}/WebDSLParser.beaver" terminalNames="yes" compress="no" useSwitch="yes"/>
   </target>
 
   <!-- TARGET clean -->
@@ -64,7 +66,7 @@
   <!-- TARGET cleanGen -->
   <target name="cleanGen">
     <!-- Delete the directory containing generated files and their class files -->
-    <delete dir="${package}"/>
+    <delete dir="${gendir}/${package}"/>
   </target>
 
   <!-- TARGET test -->
