@@ -35,7 +35,7 @@ public class InterpreterServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		WebDSLParser parser = new WebDSLParser();
-		String name = "workspace/webdslint/examples/helloworld.nwl";
+		String name = "examples/helloworld.nwl";
 		try {
 			Reader reader = new FileReader(name);
 			// Parse the file
