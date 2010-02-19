@@ -12,6 +12,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import semanticdomain.Request;
+import semanticdomain.Context;
+import semanticdomain.Env;
+import semanticdomain.TemplateEnv;
+
 import AST.Module;
 import AST.WebDSLParser;
 import AST.WebDSLScanner;
@@ -35,16 +40,24 @@ public class InterpreterServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		WebDSLParser parser = new WebDSLParser();
-		String name = "examples/helloworld.nwl";
+		String name = "examples/grow2.nwl";
 		try {
 			Reader reader = new FileReader(name);
 			// Parse the file
 			WebDSLScanner scanner = new WebDSLScanner(new BufferedReader(reader));
 			Module m = (Module) parser.parse(scanner);
 			// Evaluate the program
-			String value = m.eval();
+			Request req = new Request();
+			Context context = new Context();
+			TemplateEnv templateEnv = new TemplateEnv();
+			Env env = new Env();
+			String rendered = m.evalR(req, context, templateEnv, env);
 			PrintWriter out = response.getWriter();
-			out.println(value);
+			// print the output
+			out.println("Program output:");
+			out.println("---------------");
+			out.println();
+			out.println(rendered);
 			// Pretty print the source
 			out.println();
 			out.println("Program source:");

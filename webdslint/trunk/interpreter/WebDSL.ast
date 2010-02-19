@@ -1,6 +1,6 @@
 Module ::= <Name:String> Definition*;
 
-abstract Definition;
+abstract Definition ::= <Name:String>;
 Entity : Definition ::= <Name:String> Property*;
 Property ::= <Name:String> Type Annotation*;
 

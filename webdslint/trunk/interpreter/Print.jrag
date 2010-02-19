@@ -55,6 +55,8 @@ aspect PrettyPrint {
 
 	syn String PropertyAccess.pp(String indent) = getBase().pp(indent) + "." + getField();
 	
+	syn String StringLit.pp(String indent) = getValue();
+	
 	syn String Var.pp(String indent) = getName();
 /*
 	syn String MethodCall.pp(String indent) =  

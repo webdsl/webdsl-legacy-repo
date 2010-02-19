@@ -1,0 +1,11 @@
+module hello
+
+define header()   { <h1> elements </h1> }
+
+define myprint(s: String) {
+	header { output(s) }
+}
+
+define page root() {
+	myprint("hello world!")
+}

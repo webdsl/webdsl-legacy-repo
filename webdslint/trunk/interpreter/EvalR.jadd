@@ -1,0 +1,139 @@
+/*
+ */
+import java.util.ArrayList;
+
+import semanticdomain.*;
+import semanticdomain.value.*;
+
+aspect EvalR {
+  
+	public String ASTNode.evalR(Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+		return getClass().getName();
+	} 
+
+	public String Module.evalR(Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+		for (Definition d: getDefinitionList()) {
+			if (d instanceof TemplateDef) {
+				// FIXME: all templatedefs must be visible to any other templatedef under module
+				Template template = ((TemplateDef) d).makeTemplate(context, 
+						templateEnv, env);
+				templateEnv = templateEnv.extend(template.getTIdentifier(), 
+						template);
+			}
+		}
+		String result = ""; 
+		for (Definition d: getDefinitionList()) {
+			if (d instanceof TemplateDef) {
+				if (d.getName().equals("root")) {
+					Template template = ((TemplateDef) d).makeTemplate(
+							context, templateEnv, env);
+					List<Element> body = template.getBody();
+					for (Element t: body) {
+						result += t.evalR(request, context, templateEnv, env);
+					}
+					return result;
+				}
+			}
+		}
+		return result;
+	}
+
+	public Template TemplateDef.makeTemplate(Context context, 
+			TemplateEnv templateEnv, Env env) {
+		TIdentifier tIdentifier = new TIdentifier(getName());
+		ArrayList<Identifier> identifiers = new ArrayList<Identifier>();
+		for (Param p: getParamList()) {
+			Identifier id = new Identifier(p.getName());
+			identifiers.add(id);
+		}
+		List<Element> body = getBodyList();
+		Template template = new Template(tIdentifier, identifiers, body,
+				templateEnv, env);
+		return template;
+	}
+	
+	public String TemplateDef.evalR(Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+		Template template = makeTemplate(context, templateEnv, env);
+		templateEnv = templateEnv.extend(template.getTIdentifier(), template);
+		// ...
+		return "";
+	}
+	
+	public String Call.evalR(Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+
+		String result = "";
+		TIdentifier tId = new TIdentifier(getName());
+		Template template = templateEnv.get(tId);
+		
+		if (template == null) {
+			if (tId.getName().equals("output")) {
+				Exp arg = getArg(0);
+				Value v = arg.evalE(request, context, templateEnv, env);
+				result = v.toString();
+			} else
+				result = "Missing template: " + tId;
+		} else {
+			// evaluate parameters
+			java.util.List<Identifier> ids = template.getIdentifiers();
+	
+			for (int i = 0; i < getNumArg(); i++) {
+				Exp arg = getArg(i);
+				Value v = arg.evalE(request, context, templateEnv, env);
+				Identifier id = ids.get(i);
+				env = env.extend(id, v);
+			}
+			
+			// create new Template for elements
+			TIdentifier elements = new TIdentifier("elements");
+			Template newTemplate = new Template(tId, new ArrayList<Identifier>(),
+					getElementList(), new TemplateEnv(), env);
+			// add it to the template environment
+			templateEnv = templateEnv.extend(elements, newTemplate);
+			
+			// evaluate original template's body
+			List<Element> body = template.getBody();
+			for (Element element: body) {
+				result += element.evalR(request, context, templateEnv, env);
+			}
+		}
+		return result;
+	}
+	
+	public String Elements.evalR(Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+
+		String result = "";
+		TIdentifier elements = new TIdentifier("elements");
+		Template template = templateEnv.get(elements);
+		
+		Env elementsEnv = template.getEnv();
+		
+		for (Element element: template.getBody()) {
+			result += element.evalR(request, context, templateEnv, elementsEnv);
+		}
+		return result;
+	}
+	
+	public String XmlElem.evalR(Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+
+		String result = "<" + getTag() + "> "; 
+		List<Element> body = getBodyList();
+		for (Element t: body) {
+			result += t.evalR(request, context, templateEnv, env);
+		}
+		result += " </" + getTag() + ">";
+		return result;
+	}
+
+	public String StringElem.evalR(Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+		Value v = evalE(request, context, templateEnv, env);
+		return v.toString();
+	}
+
+}

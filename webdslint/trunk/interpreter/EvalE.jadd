@@ -1,0 +1,31 @@
+/*
+ */
+
+import semanticdomain.*;
+import semanticdomain.value.*;
+
+aspect EvalE {
+  
+	public Value ASTNode.evalE(Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+		return new VString(getClass().getName());
+	} 
+
+	public Value StringElem.evalE(Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+		return new VString(getValue());
+	} 
+
+	public Value StringLit.evalE(Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+		return new VString(getValue());
+	} 
+
+	public Value Var.evalE(Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+		String varName = getName();
+		Identifier id = new Identifier(varName);
+		return env.get(id);
+	}
+}
+

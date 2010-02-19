@@ -1,0 +1,9 @@
+module hello
+
+define myprint(s: String) {
+	output(s)
+}
+
+define page root() {
+	myprint("hello world!")
+}
