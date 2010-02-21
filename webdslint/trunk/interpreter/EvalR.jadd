@@ -29,10 +29,8 @@ aspect EvalR {
 				if (d.getName().equals("root")) {
 					Template template = ((TemplateDef) d).makeTemplate(
 							context, templateEnv, env);
-					List<Element> body = template.getBody();
-					for (Element t: body) {
-						result += t.evalR(request, context, templateEnv, env);
-					}
+					Element body = template.getBody();
+					result = body.evalR(request, context, templateEnv, env);
 					return result;
 				}
 			}
@@ -48,7 +46,7 @@ aspect EvalR {
 			Identifier id = new Identifier(p.getName());
 			identifiers.add(id);
 		}
-		List<Element> body = getBodyList();
+		Element body = getBody();
 		Template template = new Template(tIdentifier, identifiers, body,
 				templateEnv, env);
 		return template;
@@ -90,15 +88,22 @@ aspect EvalR {
 			// create new Template for elements
 			TIdentifier elements = new TIdentifier("elements");
 			Template newTemplate = new Template(tId, new ArrayList<Identifier>(),
-					getElementList(), new TemplateEnv(), env);
+					getBody(), new TemplateEnv(), env);
 			// add it to the template environment
 			templateEnv = templateEnv.extend(elements, newTemplate);
 			
 			// evaluate original template's body
-			List<Element> body = template.getBody();
-			for (Element element: body) {
-				result += element.evalR(request, context, templateEnv, env);
-			}
+			Element body = template.getBody();
+			result = body.evalR(request, context, templateEnv, env);
+		}
+		return result;
+	}
+
+	public String Sequence.evalR(Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+		String result = "";
+		for (Element element: getElementList()) {
+			result += element.evalR(request, context, templateEnv, env);
 		}
 		return result;
 	}
@@ -112,9 +117,8 @@ aspect EvalR {
 		
 		Env elementsEnv = template.getEnv();
 		
-		for (Element element: template.getBody()) {
-			result += element.evalR(request, context, templateEnv, elementsEnv);
-		}
+		Element body = template.getBody();
+		result = body.evalR(request, context, templateEnv, elementsEnv);
 		return result;
 	}
 	
@@ -122,10 +126,8 @@ aspect EvalR {
 			TemplateEnv templateEnv, Env env) {
 
 		String result = "<" + getTag() + "> "; 
-		List<Element> body = getBodyList();
-		for (Element t: body) {
-			result += t.evalR(request, context, templateEnv, env);
-		}
+		Element body = getBody();
+		result += body.evalR(request, context, templateEnv, env);
 		result += " </" + getTag() + ">";
 		return result;
 	}

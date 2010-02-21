@@ -11,12 +11,12 @@ public class Template extends SemanticVar {
 	
 	private TIdentifier tIdentifier;
 	private java.util.List<Identifier> identifiers = new ArrayList<Identifier>();
-	private List<Element> body;
+	private Element body;
 	private TemplateEnv templateEnv;
 	private Env env;
 	
 	public Template(TIdentifier tIdentifier, java.util.List<Identifier> identifiers,
-			List<Element> body, TemplateEnv templateEnv, Env env)
+			Element body, TemplateEnv templateEnv, Env env)
 	{
 		this.tIdentifier = tIdentifier;
 		this.identifiers = identifiers;
@@ -33,7 +33,7 @@ public class Template extends SemanticVar {
 		return identifiers;
 	}
 	
-	public List<Element> getBody() {
+	public Element getBody() {
 		return body;
 	}
 	

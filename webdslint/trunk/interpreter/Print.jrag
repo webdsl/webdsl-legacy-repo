@@ -4,6 +4,11 @@
 aspect PrettyPrint {
 
 	syn String ASTNode.pp(String indent) = "<" + getClass().getName() + ">";
+	syn String ASTNode.pp(String indent, String delim) = pp(indent);
+	syn String ASTNode.pp(String indent, String delim, String start, String finish) = pp(indent);
+	
+//	syn String ASTNode.ppList(String indent, String delim) = ppList(indent, delim, "", "");
+//	syn String ASTNode.ppList(String indent, String delim, String start, String finish) = "<" + getClass().getName() + ">";
 
 	syn String Module.pp(String indent) = "module " + getName() + "\n\n" +
 			getDefinitionList().pp(indent, "\n" + indent + "\n" + indent); 
@@ -26,29 +31,35 @@ aspect PrettyPrint {
 	syn String TemplateDef.pp(String indent) = "define " + 
 			getModList().pp(indent, " ", "", " ") +  
 			getName() + "(" + getParamList().pp(indent, ", ") + ") {\n" + 
-			indent + "  " + getBodyList().pp(indent + "  ", "\n" + indent + "  ") + "\n" +
+			indent + "  " + getBody().pp(indent + "  ", "\n" + indent + "  ") + "\n" +
 			indent + "}";
-			
+	
+    syn String Sequence.pp(String indent, String delim) =
+    		pp(indent, delim, "", "");
+
+    syn String Sequence.pp(String indent, String delim, String start, String finish) =
+    		getElementList().pp(indent, delim, start, finish);
+	
 	syn String XmlElem.pp(String indent) = "<" + getTag() + "> " + 
-			getBodyList().pp(indent, " ") + " <" + getTag() + ">";
+			getBody().pp(indent, " ") + " <" + getTag() + ">";
 
 	syn String Elements.pp(String indent) = "elements"; 
 
 	syn String Page.pp(String indent) = "page";
 	
 	syn String Navigate.pp(String indent) = "navigate " + getRef().pp(indent) +
-			" { " +  getLabelList().pp(indent, " ") + " }";
+			" { " +  getLabel().pp(indent, " ") + " }";
 			
 	syn String Call.pp(String indent) = getName() + 
 			getArgList().pp(indent, ", ", "(", ")") +
-			getElementList().pp(indent + "  ", "\n" + indent + "  ", " {\n" + indent + "  ", "\n" + indent + "}");
+			getBody().pp(indent + "  ", "\n" + indent + "  ", " {\n" + indent + "  ", "\n" + indent + "}");
 			
 	syn String ForElem.pp(String indent) = "for ("  + getVar() + ": " + 
 			getType().pp(indent) + 
 			(getCollection() instanceof AST.ClassItem ? "" : " in " + getCollection().pp(indent)) +  
 			") {\n" + 
 			indent + "  " +
-			getBodyList().pp(indent + "  ", "\n" + indent + "  ") + "\n" + 
+			getBody().pp(indent + "  ", "\n" + indent + "  ") + "\n" + 
 			indent + "}";
 
 	syn String ClassItem.pp(String indent) = "Should not see me!";
@@ -92,6 +103,6 @@ aspect PrettyPrint {
 	
 	syn String Submit.pp(String indent) = "submit " + getName() + 
 			"(" + getArgList().pp(indent, ", ") + ") " + 
-			"{ " + getLabelList().pp(indent, " ") + " }";
+			"{ " + getLabel().pp(indent, " ") + " }";
 }
 

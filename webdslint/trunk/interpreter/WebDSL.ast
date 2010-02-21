@@ -21,7 +21,7 @@ PageRef : Exp ::= <Method:String> Body:Exp*;
 Constructor : Exp ::= <ClassName:String>;
 ClassItem : Exp ::= Type;
 
-TemplateDef : Definition ::= <Name:String> Mod* Param* Body:Element*;
+TemplateDef : Definition ::= <Name:String> Mod* Param* Body:Element;
 
 Param ::= <Name:String> Type;
 
@@ -29,14 +29,15 @@ abstract Mod;
 Page : Mod;
 
 abstract Element;
+Sequence : Element ::= Element*;
 StringElem : Element ::= <Value:String>;
-Call : Element ::= <Name:String> Arg:Exp* Element*;
-ForElem : Element ::= <Var:String> Type Collection:Exp Body:Element*;
-Navigate : Element ::= Ref:PageRef Label:Element*;
+Call : Element ::= <Name:String> Arg:Exp* Body:Element;
+ForElem : Element ::= <Var:String> Type Collection:Exp Body:Element;
+Navigate : Element ::= Ref:PageRef Label:Element;
 VarDeclElem : Element ::= <Var:String>  Type Source:Exp;
 Action : Element ::= <Name:String> Param* Body:Statement*;
-Submit : Element ::= <Name:String> Arg:Exp* Label:Element*;
-XmlElem : Element ::= <Tag:String> Body:Element*;
+Submit : Element ::= <Name:String> Arg:Exp* Label:Element;
+XmlElem : Element ::= <Tag:String> Body:Element;
 Elements : Element ::=;
 
 abstract Statement;

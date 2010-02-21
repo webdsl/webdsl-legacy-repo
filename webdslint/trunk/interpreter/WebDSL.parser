@@ -108,8 +108,8 @@ Exp Constructor
 	= ID LBRACE RBRACE	{: return new Constructor(ID); :}
 	;
 Definition TemplateDef 
-	= DEFINE Mod ID LPAREN OptParamList RPAREN LBRACE ElementList RBRACE 
-						{: return new TemplateDef(ID, Mod, OptParamList, ElementList); :}
+	= DEFINE Mod ID LPAREN OptParamList RPAREN Element 
+						{: return new TemplateDef(ID, Mod, OptParamList, Element); :}
 	;
 List Mod 
 	= 					{: return new List(); :}
@@ -127,34 +127,34 @@ Param Param
 	= ID COLON Type			{: return new Param(ID, Type); :}
 	;
 Element Element = String | Call | CallArgs | CallElems | CallFull | ForElem | ForAllElem
-		| Navigate | VarDeclElem | Action | Submit | XmlElem | Elements;
+		| Navigate | VarDeclElem | Action | Submit | XmlElem | Elements | LBRACE ElementList RBRACE;
 Element String 
 	= STRING  				{: return new StringElem(STRING); :}
 	;
 Element Call 
-	= ID					{: return new Call(ID, new List(), new List()); :}
+	= ID					{: return new Call(ID, new List(), new Sequence()); :}
 	;
 Element CallArgs 
-	= ID LPAREN OptExpList RPAREN		{: return new Call(ID, OptExpList, new List()); :}
+	= ID LPAREN OptExpList RPAREN		{: return new Call(ID, OptExpList, new Sequence()); :}
 	;
 Element CallElems 
-	= ID LBRACE ElementList RBRACE	{: return new Call(ID, new List(), ElementList); :}
+	= ID Element	{: return new Call(ID, new List(), Element); :}
 	;
 Element CallFull 
-	= ID LPAREN OptExpList RPAREN LBRACE ElementList RBRACE
-		{: return new Call(ID, OptExpList, ElementList); :}
+	= ID LPAREN OptExpList RPAREN Element
+		{: return new Call(ID, OptExpList, Element); :}
 	;    
 Element ForElem 
-	= FOR LPAREN ID COLON Type IN Exp RPAREN LBRACE ElementList RBRACE
-		{: return new ForElem(ID, Type, Exp, ElementList); :}
+	= FOR LPAREN ID COLON Type IN Exp RPAREN Element
+		{: return new ForElem(ID, Type, Exp, Element); :}
 	;
 Element ForAllElem 
-	= FOR LPAREN ID COLON Type RPAREN LBRACE ElementList RBRACE
-		{: return new ForElem(ID, Type, new ClassItem(Type), ElementList); :}
+	= FOR LPAREN ID COLON Type RPAREN Element
+		{: return new ForElem(ID, Type, new ClassItem(Type), Element); :}
 	;	
 Element Navigate 
-	= NAVIGATE PageRef LBRACE ElementList RBRACE
-		{: return new Navigate(PageRef, ElementList); :}
+	= NAVIGATE PageRef Element
+		{: return new Navigate(PageRef, Element); :}
 	;
 Element VarDeclElem 
 	= VAR ID COLON Type ASSIGN Exp
@@ -165,19 +165,19 @@ Element Action
 		{: return new Action(ID, OptParamList, OptStatementList); :}
 	;
 Element Submit 
-	= SUBMIT ID LPAREN OptExpList RPAREN LBRACE ElementList RBRACE
-		{: return new Submit(ID, OptExpList, ElementList); :}
+	= SUBMIT ID LPAREN OptExpList RPAREN Element
+		{: return new Submit(ID, OptExpList, Element); :}
 	;
 Element XmlElem 
-	= LT ID GT ElementList LT_SLASH ID GT
-		{: return new XmlElem(ID, ElementList); :}
+	= LT ID GT Element LT_SLASH ID GT
+		{: return new XmlElem(ID, Element); :}
 	;	
 Element Elements 
 	= ELEMENTS		{: return new Elements(); :}
 	;
-List ElementList
-	=						{: return new List(); :} 
-	| ElementList Element	{: return ElementList.add(Element); :}
+Sequence ElementList
+	=						{: return new Sequence(); :} 
+	| ElementList Element	{: ElementList.addElement(Element); return ElementList; :}
 	; 
 Statement Statement = Assign | ExpStat | ReturnPage;
 Statement Assign 
