@@ -127,9 +127,12 @@ Param Param
 	= ID COLON Type			{: return new Param(ID, Type); :}
 	;
 Element Element = String | Call | CallArgs | CallElems | CallFull | ForElem | ForAllElem
-		| Navigate | VarDeclElem | Action | Submit | XmlElem | Elements | LBRACE ElementList RBRACE;
+		| Navigate | VarDeclElem | Action | Submit | XmlElem | Elements | Block;
 Element String 
 	= STRING  				{: return new StringElem(STRING); :}
+	;
+Element Block
+	= LBRACE ElementList RBRACE   {: return ElementList; :}
 	;
 Element Call 
 	= ID					{: return new Call(ID, new List(), new Sequence()); :}
