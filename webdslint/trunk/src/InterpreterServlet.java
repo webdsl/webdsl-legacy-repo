@@ -54,13 +54,14 @@ public class InterpreterServlet extends HttpServlet {
 			String rendered = m.evalR(req, context, templateEnv, env);
 			PrintWriter out = response.getWriter();
 			// print the output
+			out.println("<HTML>");
 			out.println(rendered);
 			// Pretty print the source
 			out.println("<PRE>");
 			out.println("Program source:");
 			out.println("---------------");
 			String pp = m.pp("");
-			out.println(pp);
+			out.println(pp.replaceAll("<", "&lt;").replaceAll(">", "&gt;"));
 			out.println("</PRE>");
 			out.close();
 		} catch (FileNotFoundException e) {

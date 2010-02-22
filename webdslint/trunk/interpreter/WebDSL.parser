@@ -90,7 +90,7 @@ List ExpList
 	| ExpList COMMA Exp		{: return ExpList.add(Exp); :}
 	;
 Exp StringLit 
-	= STRING			{: return new StringLit(STRING); :}
+	= STRING			{: return new StringLit(STRING.substring(1, STRING.length()-2)); :}
 	;
 Exp Var 
 	= ID				{: return new Var(ID); :}
@@ -129,7 +129,7 @@ Param Param
 Element Element = String | Call | CallArgs | CallElems | CallFull | ForElem | ForAllElem
 		| Navigate | VarDeclElem | Action | Submit | XmlElem | Elements | Block;
 Element String 
-	= STRING  				{: return new StringElem(STRING); :}
+	= STRING  				{: return new StringElem(STRING.substring(1, STRING.length()-2)); :}
 	;
 Element Block
 	= LBRACE ElementList RBRACE   {: return ElementList; :}
