@@ -31,9 +31,9 @@ define header()   { <h1> elements </h1> }
 define par()      { <p> elements </p> }
 
 define page root() {
-  list{ 
+  list { 
     for(b : Blog) {
-      listitem{ 
+      listitem { 
         navigate blog(b) { output(b.name) } 
       }
     }
@@ -41,10 +41,10 @@ define page root() {
 }
 
 define page blog(b : Blog) {
-  header{output(b.name)} 
+  header { output(b.name) } 
   list{ 
     for(p : Post in b.posts) {  
-      listitem{ output(p) }
+      listitem { output(p) }
     }
   }
 }
@@ -54,13 +54,13 @@ define output(p : Post) {
 }
 
 define page User(u : User) { 
-  header{ output(u.name) }
+  header { output(u.name) }
 }
 
 define page post(p : Post) {
-  header{output(p.title)}     
+  header {output(p.title)}     
   output(p.text)
-  par{ "Posted by " output(p.author) }   
+  par { "Posted by " output(p.author) }   
   navigate editpost(p) { "Edit" }
 }
  
@@ -72,7 +72,7 @@ define page createpost(b : Blog) {
     return post(p);
   }
   header{output(b.name)}    
-  form(p){
+  form(p) {
     input(p.url) 
     input(p.title) 
     input(p.text) 
@@ -84,8 +84,8 @@ define page editpost(p : Post) {
   action save() { 
     return post(p);
   }
-  header{output(p.title)}
-  form{ 
+  header { output(p.title) }
+  form { 
     input(p.url) 
     input(p.title)
     input(p.text)

@@ -27,6 +27,13 @@ public class TemplateEnv extends SemanticVar {
 			return null;
 	}
 	
+	public void setInnerTemplateEnv(TemplateEnv newTemplateEnv) {
+		if (key != null) {
+			value.setTemplateEnv(newTemplateEnv);
+			prev.setInnerTemplateEnv(newTemplateEnv);
+		}
+	}
+	
 	public TemplateEnv extend(TIdentifier key, Template value) {
 		return new TemplateEnv(key, value, this);
 	}

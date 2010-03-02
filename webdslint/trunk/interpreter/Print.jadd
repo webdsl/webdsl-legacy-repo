@@ -3,6 +3,14 @@ aspect PrettyPrintExtra {
 
     public String List.pp(String indent, String delim, String start, String finish) {
 		StringBuilder buf = new StringBuilder();
+//    	buf.append("List called with ");
+//    	buf.append("<indent>");
+//    	buf.append(indent);
+//    	buf.append("</indent>");
+//    	buf.append("<delim>");
+//    	buf.append(delim);
+//    	buf.append("</delim>");
+//		buf.append("<list:>");
 		boolean isFirst = true;
 		boolean nonEmpty = false;
     	for (T node: this) {
@@ -25,5 +33,4 @@ aspect PrettyPrintExtra {
     public String List.pp(String indent, String delim) {
 		return pp(indent, delim, "", "");
 	}
-	
 }

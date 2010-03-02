@@ -40,7 +40,7 @@ public class InterpreterServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		WebDSLParser parser = new WebDSLParser();
-		String name = "examples/grow2.nwl";
+		String name = "examples/grow3.nwl";
 		try {
 			Reader reader = new FileReader(name);
 			// Parse the file

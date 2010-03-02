@@ -14,30 +14,37 @@ aspect EvalR {
 
 	public String Module.evalR(Request request, Context context, 
 			TemplateEnv templateEnv, Env env) {
+		
+		ArrayList<Template> appTemplates = new ArrayList<Template>();
 		for (Definition d: getDefinitionList()) {
 			if (d instanceof TemplateDef) {
-				// FIXME: all templatedefs must be visible to any other templatedef under module
 				Template template = ((TemplateDef) d).makeTemplate(context, 
 						templateEnv, env);
-				templateEnv = templateEnv.extend(template.getTIdentifier(), 
-						template);
+				appTemplates.add(template);
 			}
 		}
+		
+		// for implementing mutual recursion
+		TemplateEnv topTemplateEnv = templateEnv;
+		for (Template template: appTemplates) {
+			topTemplateEnv = topTemplateEnv.extend(
+					template.getTIdentifier(), template);
+		}
+		
+		// pass down the new TemplateEnv on all Templates constructed so far.
+		topTemplateEnv.setInnerTemplateEnv(topTemplateEnv);
+		
 		String result = ""; 
 		for (Definition d: getDefinitionList()) {
 			if (d instanceof TemplateDef) {
 				if (d.getName().equals("root")) {
-					Template template = ((TemplateDef) d).makeTemplate(
-							context, templateEnv, env);
-					Element body = template.getBody();
-					result = body.evalR(request, context, templateEnv, env);
-					return result;
+					result = d.evalR(request, context, topTemplateEnv, env);
 				}
 			}
 		}
 		return result;
 	}
-
+	
 	public Template TemplateDef.makeTemplate(Context context, 
 			TemplateEnv templateEnv, Env env) {
 		TIdentifier tIdentifier = new TIdentifier(getName());
@@ -54,26 +61,19 @@ aspect EvalR {
 	
 	public String TemplateDef.evalR(Request request, Context context, 
 			TemplateEnv templateEnv, Env env) {
-		Template template = makeTemplate(context, templateEnv, env);
-		templateEnv = templateEnv.extend(template.getTIdentifier(), template);
-		// ...
-		return "";
+		Element body = getBody();
+		return body.evalR(request, context, templateEnv, env);
 	}
 	
 	public String Call.evalR(Request request, Context context, 
 			TemplateEnv templateEnv, Env env) {
 
-		String result = "";
+		String result = super.evalR(request, context, templateEnv, env);
 		TIdentifier tId = new TIdentifier(getName());
 		Template template = templateEnv.get(tId);
 		
 		if (template == null) {
-			if (tId.getName().equals("output")) {
-				Exp arg = getArg(0);
-				Value v = arg.evalE(request, context, templateEnv, env);
-				result = v.toString();
-			} else
-				result = "Missing template: " + tId;
+			result += "Missing template: " + tId;
 		} else {
 			// evaluate parameters
 			java.util.List<Identifier> ids = template.getIdentifiers();
@@ -94,11 +94,18 @@ aspect EvalR {
 			
 			// evaluate original template's body
 			Element body = template.getBody();
-			result = body.evalR(request, context, templateEnv, env);
+			result += body.evalR(request, context, templateEnv, env);
 		}
 		return result;
 	}
 
+	public String OutputElem.evalR(Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+		Exp exp = getExp();
+		Value v = exp.evalE(request, context, templateEnv, env);
+		return v.toString();
+	}
+	
 	public String Sequence.evalR(Request request, Context context, 
 			TemplateEnv templateEnv, Env env) {
 		String result = "";

@@ -5,7 +5,6 @@ import semanticdomain.value.Identifier;
 import semanticdomain.value.TIdentifier;
 
 import AST.Element;
-import AST.List;
 
 public class Template extends SemanticVar {
 	
@@ -39,6 +38,10 @@ public class Template extends SemanticVar {
 	
 	public TemplateEnv getTemplateEnv() {
 		return templateEnv;
+	}
+
+	public void setTemplateEnv(TemplateEnv templateEnv) {
+		this.templateEnv = templateEnv;
 	}
 
 	public Env getEnv() {

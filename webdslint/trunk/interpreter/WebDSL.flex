@@ -39,16 +39,27 @@ Identifier = [:letter:]([:letter:] | [:digit:])*
 "entity"       { return sym(Terminals.ENTITY); }
 "define"       { return sym(Terminals.DEFINE); }
 "for"       { return sym(Terminals.FOR); }
-"navigate"       { return sym(Terminals.NAVIGATE); }
+//"navigate"       { return sym(Terminals.NAVIGATE); }
 "return"       { return sym(Terminals.RETURN); }
 
 "in"       { return sym(Terminals.IN); }
 "var"       { return sym(Terminals.VAR); }
 "action"       { return sym(Terminals.ACTION); }
-"submit"       { return sym(Terminals.SUBMIT); }
+//"submit"       { return sym(Terminals.SUBMIT); }
 "elements"       { return sym(Terminals.ELEMENTS); }
 
+"output"       { return sym(Terminals.OUTPUT); }
+"address"       { return sym(Terminals.ADDRESS); }
+"binding_scope"       { return sym(Terminals.BINDING_SCOPE); }
+"accept_bind"       { return sym(Terminals.ACCEPT_BIND); }
+
+"do"       { return sym(Terminals.DO); }
+"if"       { return sym(Terminals.IF); }
+"then"       { return sym(Terminals.THEN); }
+"else"       { return sym(Terminals.ELSE); }
+
 ":="       { return sym(Terminals.ASSIGN); }
+"="       { return sym(Terminals.EQUAL); }
 ":"       { return sym(Terminals.COLON); }
 "<"       { return sym(Terminals.LT); }
 ">"       { return sym(Terminals.GT); }

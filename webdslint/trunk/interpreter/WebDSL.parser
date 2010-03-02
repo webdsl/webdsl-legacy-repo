@@ -80,7 +80,7 @@ Type SimpleType
 Type SetType 
 	= SET LT Type GT 			{: return new SetType(Type); :}
 	; 
-Exp Exp = StringLit | Var | PropertyAccess | MethodCall | Constructor;
+Exp Exp = StringLit | Var | PropertyAccess | MethodCall | Constructor | Address;
 List OptExpList 
 	=								{: return new List(); :}
 	|  ExpList						{: return ExpList; :}
@@ -90,7 +90,7 @@ List ExpList
 	| ExpList COMMA Exp		{: return ExpList.add(Exp); :}
 	;
 Exp StringLit 
-	= STRING			{: return new StringLit(STRING.substring(1, STRING.length()-2)); :}
+	= STRING			{: return new StringLit(STRING.substring(1, STRING.length()-1)); :}
 	;
 Exp Var 
 	= ID				{: return new Var(ID); :}
@@ -107,15 +107,18 @@ PageRef PageRef
 Exp Constructor 
 	= ID LBRACE RBRACE	{: return new Constructor(ID); :}
 	;
+Exp Address
+	= ADDRESS LPAREN Exp RPAREN		{: return new Address(Exp); :}	
+	;
 Definition TemplateDef 
-	= DEFINE Mod ID LPAREN OptParamList RPAREN Element 
-						{: return new TemplateDef(ID, Mod, OptParamList, Element); :}
+	= DEFINE Mod ID LPAREN OptParamList RPAREN ElementBlock 
+						{: return new TemplateDef(ID, Mod, OptParamList, ElementBlock); :}
 	;
 List Mod 
 	= 					{: return new List(); :}
 	| PAGE  				{: return new List().add(new Page()); :}
 	;
-List OptParamList 
+List OptParamList
 	=								{: return new List(); :}
 	|  ParamList					{: return ParamList; :}
 	;
@@ -127,12 +130,17 @@ Param Param
 	= ID COLON Type			{: return new Param(ID, Type); :}
 	;
 Element Element = String | Call | CallArgs | CallElems | CallFull | ForElem | ForAllElem
-		| Navigate | VarDeclElem | Action | Submit | XmlElem | Elements | Block;
-Element String 
-	= STRING  				{: return new StringElem(STRING.substring(1, STRING.length()-2)); :}
+		| VarDeclElem | Action | XmlElem | Elements | ElementBlock | OutputElem | Do
+		| IfThen | IfThenElse | BindingScope | AcceptBind;
+Sequence ElementBlock
+	= LBRACE ElementList RBRACE {: return ElementList; :}
 	;
-Element Block
-	= LBRACE ElementList RBRACE   {: return ElementList; :}
+Sequence ElementList
+	=						{: return new Sequence(); :} 
+	| ElementList Element	{: ElementList.addElement(Element); return ElementList; :}
+	; 
+Element String 
+	= STRING  				{: return new StringElem(STRING.substring(1, STRING.length()-1)); :}
 	;
 Element Call 
 	= ID					{: return new Call(ID, new List(), new Sequence()); :}
@@ -141,11 +149,11 @@ Element CallArgs
 	= ID LPAREN OptExpList RPAREN		{: return new Call(ID, OptExpList, new Sequence()); :}
 	;
 Element CallElems 
-	= ID Element	{: return new Call(ID, new List(), Element); :}
+	= ID ElementBlock {: return new Call(ID, new List(), ElementBlock); :}
 	;
 Element CallFull 
-	= ID LPAREN OptExpList RPAREN Element
-		{: return new Call(ID, OptExpList, Element); :}
+	= ID LPAREN OptExpList RPAREN ElementBlock
+		{: return new Call(ID, OptExpList, ElementBlock); :}
 	;    
 Element ForElem 
 	= FOR LPAREN ID COLON Type IN Exp RPAREN Element
@@ -155,10 +163,12 @@ Element ForAllElem
 	= FOR LPAREN ID COLON Type RPAREN Element
 		{: return new ForElem(ID, Type, new ClassItem(Type), Element); :}
 	;	
+/*
 Element Navigate 
-	= NAVIGATE PageRef Element
-		{: return new Navigate(PageRef, Element); :}
+	= NAVIGATE PageRef ElementBlock
+		{: return new Navigate(PageRef, ElementBlock); :}
 	;
+*/
 Element VarDeclElem 
 	= VAR ID COLON Type ASSIGN Exp
 		{: return new VarDeclElem(ID, Type, Exp); :}
@@ -167,21 +177,53 @@ Element Action
 	= ACTION ID LPAREN OptParamList RPAREN LBRACE OptStatementList RBRACE
 		{: return new Action(ID, OptParamList, OptStatementList); :}
 	;
+/*
 Element Submit 
-	= SUBMIT ID LPAREN OptExpList RPAREN Element
-		{: return new Submit(ID, OptExpList, Element); :}
+	= SUBMIT ID LPAREN OptExpList RPAREN ElementBlock
+		{: return new Submit(ID, OptExpList, ElementBlock); :}
 	;
+*/
 Element XmlElem 
-	= LT ID GT Element LT_SLASH ID GT
-		{: return new XmlElem(ID, Element); :}
-	;	
+	= LT ID OptXmlAttrList GT ElementList LT_SLASH ID GT
+		{: return new XmlElem(ID, OptXmlAttrList, ElementList); :}
+	;
+List OptXmlAttrList
+	=								{: return new List(); :}
+	|  XmlAttrList					{: return XmlAttrList; :}
+	;
+List XmlAttrList 
+	= XmlAttr						{: return new List().add(XmlAttr); :}
+	| XmlAttrList XmlAttr		{: return XmlAttrList.add(XmlAttr); :}
+	;
+XmlAttr XmlAttr 
+	= ID EQUAL Exp			{: return new XmlAttr(ID, Exp); :}
+	;
 Element Elements 
 	= ELEMENTS		{: return new Elements(); :}
 	;
-Sequence ElementList
-	=						{: return new Sequence(); :} 
-	| ElementList Element	{: ElementList.addElement(Element); return ElementList; :}
+Element OutputElem
+	= OUTPUT LPAREN Exp RPAREN		{: return new OutputElem(Exp); :}
+	;	
+Element Do
+	= DO LBRACE Exp RBRACE		{: return new Do(Exp); :}
+	;
+Element IfThen 
+	= IF LPAREN Exp RPAREN THEN Element.ThenPart
+		{: return new IfThen(Exp, ThenPart); :}
+	;
+Element IfThenElse 
+	= IF LPAREN Exp RPAREN THEN Element.ThenPart ELSE Element.ElsePart
+		{: return new IfThenElse(Exp, ThenPart, ElsePart); :}
+	;
+Element BindingScope
+	= BINDING_SCOPE LPAREN Exp RPAREN Element
+		{: return new BindingScope(Exp, Element); :}
 	; 
+Element AcceptBind
+	= ACCEPT_BIND Exp
+		{: return new AcceptBind(Exp); :}
+	; 
+
 Statement Statement = Assign | ExpStat | ReturnPage;
 Statement Assign 
 	= Exp.Target ASSIGN Exp.Source SEMICOLON	{: return new Assign(Target, Source); :}

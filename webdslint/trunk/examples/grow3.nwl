@@ -1,0 +1,34 @@
+module hello
+
+define list()     { <ul> elements </ul> }
+define listitem() { <li> elements </li> }
+define header()   { <h1> elements </h1> }
+define par()      { <p> elements </p> }
+
+define input(data: ref) {
+	<input type="text" name=address(data) value=data></input>
+}
+
+define submit(text: val, command: delay) {
+	var act: boolean := false
+	<input type="submit" name=address(act) value=text></input>
+	if (act) then
+		command
+}
+
+define form() {
+	var act: boolean := false
+	<form name=address(act) target=".">
+	binding_scope(act) {
+		elements
+	}
+	</form>
+}
+
+define myprint(s: String) {
+	header { output(s) }
+}
+
+define page root() {
+	myprint("hello world!")
+}
