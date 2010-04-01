@@ -208,7 +208,7 @@ Element OutputElem
 	= OUTPUT LPAREN Exp RPAREN		{: return new OutputElem(Exp); :}
 	;	
 Element Do
-	= DO LBRACE Exp RBRACE		{: return new Do(Exp); :}
+	= DO LBRACE Statement RBRACE		{: return new Do(Statement); :}
 	;
 Element IfThen 
 	= IF LPAREN Exp RPAREN THEN Element.ThenPart
@@ -246,4 +246,4 @@ List OptStatementList
 List StatementList 
 	= Statement					{: return new List().add(Statement); :} 
 	| StatementList Statement	{: return StatementList.add(Statement); :}
-	; 
+	;

@@ -101,7 +101,15 @@ aspect PrettyPrint {
 	syn String StringLit.pp(String indent) = "\"" + getValue() + "\"";
 	
 	syn String Address.pp(String indent) = "address(" + getExp().pp(indent) + ")";
+
+	syn String BindingScope.pp(String indent) = "binding_scope (" +
+			getExp().pp(indent) + ") " + getElement().pp(indent);
 	
+	syn String AcceptBind.pp(String indent) = "accept_bind " + getExp().pp(indent);
+
+	syn String LinkPage.pp(String indent) = "link_page (" +
+			getExp().pp(indent) + ")";
+
 	syn String Var.pp(String indent) = getName();
 
 	syn String PageRef.pp(String indent) = getMethod() + 
@@ -119,12 +127,17 @@ aspect PrettyPrint {
 	
 	syn String Constructor.pp(String indent) = getClassName() + "{}";
 	
-	syn String Action.pp(String indent) = "action " + getName() + "(" + 
-			getParamList().pp(indent, ", ") + ")" + " {\n" +
-			indent + "  " +
-			getBodyList().pp(indent + "  ", "\n" + indent + "  ") + "\n" + 
-			indent + "}";
+//	syn String Action.pp(String indent) = "action " + getName() + "(" + 
+//			getParamList().pp(indent, ", ") + ")" + " {\n" +
+//			indent + "  " +
+//			getBodyList().pp(indent + "  ", "\n" + indent + "  ") + "\n" + 
+//			indent + "}";
 		
+
+	syn String Do.pp(String indent) = "do {" + "\n" +
+			indent + "  " + getStatement().pp(indent + "  ") + "\n" +
+			indent + "}";
+	
 	syn String Assign.pp(String indent) = getTarget().pp(indent) + " := " +
 			getSource().pp(indent) + ";";
 	

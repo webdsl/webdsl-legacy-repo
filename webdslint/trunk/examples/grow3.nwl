@@ -12,8 +12,9 @@ define input(data: ref) {
 define submit(text: val, command: delay) {
 	var act: boolean := false
 	<input type="submit" name=address(act) value=text></input>
-	if (act) then
-		command
+	do {
+		p := q;
+	}
 }
 
 define form() {
