@@ -25,6 +25,10 @@ define form() {
 	</form>
 }
 
+define navigate(e: delay) {
+    <a href=link_page(e)> elements </a>
+}
+
 define myprint(s: String) {
 	header { output(s) }
 }

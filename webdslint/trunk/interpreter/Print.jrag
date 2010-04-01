@@ -55,8 +55,8 @@ aspect PrettyPrint {
 
 	syn String Page.pp(String indent) = "page";
 	
-	syn String Navigate.pp(String indent) = "navigate " + getRef().pp(indent) + " " +
-			getLabel().pp(indent);
+//	syn String Navigate.pp(String indent) = "navigate " + getRef().pp(indent) + " " +
+//			getLabel().pp(indent);
 			
 //	syn String Navigate.pp(String indent) = "navigate " + getRef().pp(indent) +
 //			" { " +  getLabel().pp(indent, " ") + " }";
@@ -130,9 +130,9 @@ aspect PrettyPrint {
 	
 	syn String ExpStat.pp(String indent) = getExp().pp(indent) + ";";
 	
-	syn String ReturnPage.pp(String indent) = "return " + getRef().pp(indent) + ";";
+//	syn String ReturnPage.pp(String indent) = "return " + getRef().pp(indent) + ";";
 	
-	syn String Submit.pp(String indent) = "submit " + getName() + 
-			"(" + getArgList().pp(indent, ", ") + ") " + 
-			getLabel().pp(indent);
+//	syn String Submit.pp(String indent) = "submit " + getName() + 
+//			"(" + getArgList().pp(indent, ", ") + ") " + 
+//			getLabel().pp(indent);
 }

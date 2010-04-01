@@ -21,6 +21,7 @@ PageRef : Exp ::= <Method:String> Body:Exp*;
 Constructor : Exp ::= <ClassName:String>;
 ClassItem : Exp ::= Type;
 Address : Exp ::= Exp;
+LinkPage : Exp ::= Exp;
 
 TemplateDef : Definition ::= <Name:String> Mod* Param* Body:Sequence;
 
@@ -35,10 +36,12 @@ Sequence : Element ::= Element*;
 StringElem : Element ::= <Value:String>;
 Call : Element ::= <Name:String> Arg:Exp* Body:Sequence;
 ForElem : Element ::= <Var:String> Type Collection:Exp Body:Element;
+/*
 Navigate : Element ::= Ref:PageRef Label:Element;
-VarDeclElem : Element ::= <Var:String>  Type Source:Exp;
-Action : Element ::= <Name:String> Param* Body:Statement*;
 Submit : Element ::= <Name:String> Arg:Exp* Label:Element;
+*/
+Action : Element ::= <Name:String> Param* Body:Statement*;
+VarDeclElem : Element ::= <Var:String>  Type Source:Exp;
 XmlElem : Element ::= <Tag:String> XmlAttr* Body:Sequence;
 Elements : Element ::=;
 OutputElem : Element ::= Exp;
@@ -51,4 +54,6 @@ AcceptBind : Element ::= Exp;
 abstract Statement;
 Assign : Statement ::= Target:Exp Source:Exp;
 ExpStat : Statement ::= Exp;
+/*
 ReturnPage : Statement ::= Ref:PageRef;
+*/

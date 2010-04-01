@@ -80,7 +80,7 @@ Type SimpleType
 Type SetType 
 	= SET LT Type GT 			{: return new SetType(Type); :}
 	; 
-Exp Exp = StringLit | Var | PropertyAccess | MethodCall | Constructor | Address;
+Exp Exp = StringLit | Var | PropertyAccess | MethodCall | Constructor | Address | LinkPage;
 List OptExpList 
 	=								{: return new List(); :}
 	|  ExpList						{: return ExpList; :}
@@ -101,14 +101,19 @@ Exp PropertyAccess
 Exp MethodCall 
 	= Exp DOT ID LPAREN OptExpList RPAREN	{: return new MethodCall(Exp, ID, OptExpList); :}
 	;
+/*
 PageRef PageRef 
 	= ID LPAREN OptExpList RPAREN	{: return new PageRef(ID, OptExpList); :}
 	;
+*/
 Exp Constructor 
 	= ID LBRACE RBRACE	{: return new Constructor(ID); :}
 	;
 Exp Address
 	= ADDRESS LPAREN Exp RPAREN		{: return new Address(Exp); :}	
+	;
+Exp LinkPage
+	= LINK_PAGE LPAREN Exp RPAREN		{: return new LinkPage(Exp); :}	
 	;
 Definition TemplateDef 
 	= DEFINE Mod ID LPAREN OptParamList RPAREN ElementBlock 
@@ -130,7 +135,7 @@ Param Param
 	= ID COLON Type			{: return new Param(ID, Type); :}
 	;
 Element Element = String | Call | CallArgs | CallElems | CallFull | ForElem | ForAllElem
-		| VarDeclElem | Action | XmlElem | Elements | ElementBlock | OutputElem | Do
+		| VarDeclElem | XmlElem | Elements | ElementBlock | OutputElem | Do | Action
 		| IfThen | IfThenElse | BindingScope | AcceptBind;
 Sequence ElementBlock
 	= LBRACE ElementList RBRACE {: return ElementList; :}
@@ -163,12 +168,6 @@ Element ForAllElem
 	= FOR LPAREN ID COLON Type RPAREN Element
 		{: return new ForElem(ID, Type, new ClassItem(Type), Element); :}
 	;	
-/*
-Element Navigate 
-	= NAVIGATE PageRef ElementBlock
-		{: return new Navigate(PageRef, ElementBlock); :}
-	;
-*/
 Element VarDeclElem 
 	= VAR ID COLON Type ASSIGN Exp
 		{: return new VarDeclElem(ID, Type, Exp); :}
@@ -178,6 +177,10 @@ Element Action
 		{: return new Action(ID, OptParamList, OptStatementList); :}
 	;
 /*
+Element Navigate 
+	= NAVIGATE PageRef ElementBlock
+		{: return new Navigate(PageRef, ElementBlock); :}
+	;
 Element Submit 
 	= SUBMIT ID LPAREN OptExpList RPAREN ElementBlock
 		{: return new Submit(ID, OptExpList, ElementBlock); :}
@@ -224,16 +227,18 @@ Element AcceptBind
 		{: return new AcceptBind(Exp); :}
 	; 
 
-Statement Statement = Assign | ExpStat | ReturnPage;
+Statement Statement = Assign | ExpStat;
 Statement Assign 
 	= Exp.Target ASSIGN Exp.Source SEMICOLON	{: return new Assign(Target, Source); :}
 	;
 Statement ExpStat 
 	= Exp SEMICOLON				{: return new ExpStat(Exp); :}
 	;
+/*
 Statement ReturnPage 
 	= RETURN PageRef SEMICOLON	{: return new ReturnPage(PageRef); :}
 	;
+*/
 List OptStatementList 
 	=								{: return new List(); :}
 	|  StatementList				{: return StatementList; :}

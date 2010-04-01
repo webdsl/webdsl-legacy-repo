@@ -40,18 +40,19 @@ Identifier = [:letter:]([:letter:] | [:digit:])*
 "define"       { return sym(Terminals.DEFINE); }
 "for"       { return sym(Terminals.FOR); }
 //"navigate"       { return sym(Terminals.NAVIGATE); }
-"return"       { return sym(Terminals.RETURN); }
+//"return"       { return sym(Terminals.RETURN); }
 
 "in"       { return sym(Terminals.IN); }
 "var"       { return sym(Terminals.VAR); }
 "action"       { return sym(Terminals.ACTION); }
-//"submit"       { return sym(Terminals.SUBMIT); }
+// "submit"       { return sym(Terminals.SUBMIT); }
 "elements"       { return sym(Terminals.ELEMENTS); }
 
 "output"       { return sym(Terminals.OUTPUT); }
 "address"       { return sym(Terminals.ADDRESS); }
 "binding_scope"       { return sym(Terminals.BINDING_SCOPE); }
 "accept_bind"       { return sym(Terminals.ACCEPT_BIND); }
+"link_page"       { return sym(Terminals.LINK_PAGE); }
 
 "do"       { return sym(Terminals.DO); }
 "if"       { return sym(Terminals.IF); }
