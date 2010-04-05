@@ -40,7 +40,7 @@ public class InterpreterServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		WebDSLParser parser = new WebDSLParser();
-		String name = "examples/grow3.nwl";
+		String name = "examples/grow4.nwl";
 		try {
 			Reader reader = new FileReader(name);
 			// Parse the file
@@ -54,20 +54,21 @@ public class InterpreterServlet extends HttpServlet {
 			String rendered = m.evalR(req, context, templateEnv, env);
 			PrintWriter out = response.getWriter();
 			// print the output
-//			out.println("<html><body>");
-			out.println("Program output:");
-			out.println("---------------");
+			out.println("<html><body>");
 			out.println(rendered);
 			// Pretty print the source
-//			out.println("<pre>");
+			out.println("");
+			out.println("<pre>");
+			out.println("HTML output:");
+			out.println("---------------");
+			out.println(rendered.replaceAll("<", "&lt;").replaceAll(">", "&gt;"));
 			out.println("");
 			out.println("Program source:");
 			out.println("---------------");
 			String pp = m.pp("");
-//			out.println(pp.replaceAll("<", "&lt;").replaceAll(">", "&gt;"));
-			out.println(pp);
-//			out.println("</pre>");
-//			out.println("</body></html>");
+			out.println(pp.replaceAll("<", "&lt;").replaceAll(">", "&gt;"));
+			out.println("</pre>");
+			out.println("</body></html>");
 			out.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

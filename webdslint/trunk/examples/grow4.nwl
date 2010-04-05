@@ -6,6 +6,7 @@ define header()   { <h1> elements </h1> }
 define par()      { <p> elements </p> }
 
 define input(data: ref) {
+	accept_bind data
 	<input type="text" name=address(data) value=data></input>
 }
 
@@ -30,10 +31,12 @@ define navigate(e: delay) {
     <a href=link_page(e)> elements </a>
 }
 
-define myprint(s: String) {
-	header { output(s) }
-}
-
 define page root() {
-	myprint("hello world!")
+  header { "My Form" }
+  form() {
+    input(p.url) 
+    input(p.title) 
+    input(p.text) 
+    submit process() { "Process" }
+  }
 }

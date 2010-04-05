@@ -68,7 +68,9 @@ aspect EvalR {
 	public String Call.evalR(Request request, Context context, 
 			TemplateEnv templateEnv, Env env) {
 
-		String result = super.evalR(request, context, templateEnv, env);
+		String result = "";
+//		result += super.evalR(request, context, templateEnv, env);
+		
 		TIdentifier tId = new TIdentifier(getName());
 		Template template = templateEnv.get(tId);
 		

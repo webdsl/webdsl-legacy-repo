@@ -53,7 +53,7 @@ AcceptBind : Element ::= Exp;
 
 abstract Statement;
 Assign : Statement ::= Target:Exp Source:Exp;
-ExpStat : Statement ::= Exp;
+ElemStat : Statement ::= Element;
 /*
 ReturnPage : Statement ::= Ref:PageRef;
 */

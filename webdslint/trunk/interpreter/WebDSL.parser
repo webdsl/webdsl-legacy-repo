@@ -227,12 +227,12 @@ Element AcceptBind
 		{: return new AcceptBind(Exp); :}
 	; 
 
-Statement Statement = Assign | ExpStat;
+Statement Statement = Assign | ElemStat;
 Statement Assign 
 	= Exp.Target ASSIGN Exp.Source SEMICOLON	{: return new Assign(Target, Source); :}
 	;
-Statement ExpStat 
-	= Exp SEMICOLON				{: return new ExpStat(Exp); :}
+Statement ElemStat 
+	= Element SEMICOLON				{: return new ElemStat(Element); :}
 	;
 /*
 Statement ReturnPage 
