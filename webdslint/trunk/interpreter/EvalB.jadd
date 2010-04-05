@@ -1,0 +1,15 @@
+/*
+ */
+
+import semanticdomain.*;
+import semanticdomain.value.*;
+
+aspect EvalB {
+  
+	public Value ASTNode.evalB(Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+		return new VString(getClass().getName());
+	} 
+
+}
+

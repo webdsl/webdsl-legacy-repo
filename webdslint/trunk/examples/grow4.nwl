@@ -32,11 +32,12 @@ define navigate(e: delay) {
 }
 
 define page root() {
+  var a : String := "a"
+  var b : String := "b"
   header { "My Form" }
   form() {
-    input(p.url) 
-    input(p.title) 
-    input(p.text) 
-    submit process() { "Process" }
+    input(a)
+    input(b)
+    submit ("Process", process)
   }
 }
