@@ -1,0 +1,105 @@
+module hello
+
+define list()     { <ul> elements </ul> }
+define listitem() { <li> elements </li> }
+define header()   { <h1> elements </h1> }
+define par()      { <p> elements </p> }
+
+define input(data: ref) {
+	accept_bind data
+	<input type="text" name=address(data) value=data></input>
+}
+
+define submit(text: val, command: delay) {
+	var act: boolean := false
+	<input type="submit" name=address(act) value=text></input>
+	do {
+		if (act) then command;
+	}
+}
+
+define form() {
+	var act: boolean := false
+	<form name=address(act) target=".">
+	binding_scope(act) {
+		elements
+	}
+	</form>
+}
+
+define navigate(e: delay) {
+    <a href=link_page(e)> elements </a>
+}
+
+define page root() {
+  var a : String := "a"
+  var b : String := "b"
+  header { "My Form" }
+  form() {
+    input(a)
+    input(b)
+    submit ("Process", { a := "yes"; redirect page2(); }
+    /* this binds a to "yes" but then ignores that binding,
+      and jumps to page2 */
+  }
+}
+
+define page pag2() {
+  var x : String := "a"
+  var y : String := "b"
+  header { "My Form" }
+  form() {
+    input(x)
+    input(y)
+    submit ("Process", { redirect root(a=x, b=y); }
+    /* this binds a to "yes" but then ignores that binding,
+      and jumps to page2 */
+  }
+}
+
+template flip(a, b) {
+  var which := true
+  if (which) {
+      link(a, /*change URL to have*/ which=false);
+  } else {
+      link(b, /*change URL to have*/ which=true);
+  }
+}
+
+page test() {
+ "this is a test page"
+ flip("black", "white")
+}
+
+page test() {
+ "this is a test page"
+  if (test??) {
+	 flip("black", "white")
+  } else {
+	 flip("green", "yellow")
+  }
+}
+
+page test(x, y, z) {
+ "this is a test page"
+ flip("black", "white")
+ flip("yes", "no")
+}
+
+page test() {
+ "this is a test page"
+ for (x : { "a", "b", "c" })
+    flip("yes " + x, "no " + x)
+    // generate
+    // yes a  
+    // yes b
+    // yes c 
+    // if you click "yes c" then you get
+    // yes a  
+    // yes b
+    // no c 
+}
+
+
+
+}

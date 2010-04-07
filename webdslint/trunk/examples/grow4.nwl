@@ -31,6 +31,20 @@ define navigate(e: delay) {
     <a href=link_page(e)> elements </a>
 }
 
+
+define page root(a, b) {
+  header { "My Form" }
+  form() {
+    input(a)
+    input(b)
+    "today " output(a) " is " output(b)
+    submit ("Process", { redirect root(a, b) })
+  }
+}
+
+
+
+// why this DOESNT" works
 define page root() {
   var a : String := "a"
   var b : String := "b"
@@ -38,6 +52,36 @@ define page root() {
   form() {
     input(a)
     input(b)
-    submit ("Process", process)
+    "today " output(a) " is " output(b)
+    submit ("Process", { redirect root() })
+  }
+}
+/* go to URL with a GET just render
+  var a : String := "a"
+  var b : String := "b"
+  header { "My Form" }
+  form() {
+    input(a)  // [a]
+    input(b)  // [b]
+    "today " output(a) " is " output(b) // today a is b
+    submit ("Process", { redirect root() }) 
+  }
+// AFTER submit with POST with [a1] [b2]
+A/B processing:
+  var a : String := "a1"
+  var b : String := "b2"
+  form() {
+    do { redirect root() } // go back to CASE one!!!
+  }
+*/
+
+define page page2(x) {
+  header { "My Form" }
+  form() {
+    action f() {
+      redirect( page1() );
+    }
+    input(x)
+    submit ("Process", f() ))
   }
 }
