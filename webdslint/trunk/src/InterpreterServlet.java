@@ -6,16 +6,19 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Reader;
+import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import semanticdomain.EvalState;
 import semanticdomain.Request;
 import semanticdomain.Context;
 import semanticdomain.Env;
 import semanticdomain.TemplateEnv;
+import semanticdomain.value.VString;
 
 import AST.Module;
 import AST.WebDSLParser;
@@ -40,7 +43,7 @@ public class InterpreterServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		WebDSLParser parser = new WebDSLParser();
-		String name = "examples/grow4.nwl";
+		String name = "examples/simple.nwl";
 		try {
 			Reader reader = new FileReader(name);
 			// Parse the file
@@ -48,10 +51,19 @@ public class InterpreterServlet extends HttpServlet {
 			Module m = (Module) parser.parse(scanner);
 			// Evaluate the program
 			Request req = new Request();
+		    Enumeration<String> paramNames = request.getParameterNames();
+		    while (paramNames.hasMoreElements()) {
+		    	String paramName = paramNames.nextElement();
+		    	String paramValue = request.getParameter(paramName);
+//		    	req.put(new VString(paramName), new VString(paramValue));
+		    	req.put(paramName, paramValue);
+		    	System.out.println("adding param: " + paramName + "=" + paramValue);
+		    }
 			Context context = new Context();
 			TemplateEnv templateEnv = new TemplateEnv();
 			Env env = new Env();
-			String rendered = m.evalR(req, context, templateEnv, env);
+			EvalState state = new EvalState();
+			String rendered = m.evalR(state, req, context, templateEnv, env);
 			PrintWriter out = response.getWriter();
 			// print the output
 			out.println("<html><body>");

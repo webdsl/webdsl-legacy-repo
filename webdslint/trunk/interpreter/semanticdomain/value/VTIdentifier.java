@@ -1,10 +1,10 @@
 package semanticdomain.value;
 
-public class Identifier extends Value {
+public class VTIdentifier extends Value {
 	
-	private String name;
-	
-	public Identifier(String name) {
+	private String name = null;
+
+	public VTIdentifier(String name) {
 		this.name = name;
 	}
 	
@@ -19,8 +19,8 @@ public class Identifier extends Value {
 	public String toString() {
 		return name;
 	}
-	
-	public boolean equals(Identifier o) {
+
+	public boolean equals(VTIdentifier o) {
 		return name.equals(o.name);
 	}
 }

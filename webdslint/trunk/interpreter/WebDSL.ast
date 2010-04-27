@@ -22,6 +22,8 @@ Constructor : Exp ::= <ClassName:String>;
 ClassItem : Exp ::= Type;
 Address : Exp ::= Exp;
 LinkPage : Exp ::= Exp;
+Redirect : Exp ::= Exp;
+AsExp : Exp ::= Element;
 
 TemplateDef : Definition ::= <Name:String> Mod* Param* Body:Sequence;
 
@@ -45,15 +47,18 @@ VarDeclElem : Element ::= <Var:String>  Type Source:Exp;
 XmlElem : Element ::= <Tag:String> XmlAttr* Body:Sequence;
 Elements : Element ::=;
 OutputElem : Element ::= Exp;
-Do : Element ::= Statement;
+Do : Element ::= Element;
 IfThen : Element ::= Exp ThenPart:Element;
 IfThenElse : Element ::= Exp ThenPart:Element ElsePart:Element;
 BindingScope : Element ::= Exp Element;
 AcceptBind : Element ::= Exp;
+/*
+Perform : Element ::= Exp;
+*/
 
 abstract Statement;
 Assign : Statement ::= Target:Exp Source:Exp;
-ElemStat : Statement ::= Element;
+ExpStat : Statement ::= Exp;
 /*
 ReturnPage : Statement ::= Ref:PageRef;
 */

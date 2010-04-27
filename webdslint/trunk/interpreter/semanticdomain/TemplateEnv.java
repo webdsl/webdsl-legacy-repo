@@ -1,15 +1,15 @@
 package semanticdomain;
 
-import semanticdomain.value.TIdentifier;
+import semanticdomain.value.VTIdentifier;
 
 public class TemplateEnv extends SemanticVar {
 	
 	private TemplateEnv prev = null;
 	
-	private TIdentifier key;
+	private VTIdentifier key;
 	private Template value;
 
-	public TemplateEnv(TIdentifier key, Template value, TemplateEnv prev) {
+	public TemplateEnv(VTIdentifier key, Template value, TemplateEnv prev) {
 		this.key = key;
 		this.value = value;
 		this.prev = prev;
@@ -18,7 +18,7 @@ public class TemplateEnv extends SemanticVar {
 	public TemplateEnv() {
 	}
 	
-	public Template get(TIdentifier key) {
+	public Template get(VTIdentifier key) {
 		if ((this.key != null) && this.key.equals(key))
 			return value;
 		else if (prev != null)
@@ -34,7 +34,7 @@ public class TemplateEnv extends SemanticVar {
 		}
 	}
 	
-	public TemplateEnv extend(TIdentifier key, Template value) {
+	public TemplateEnv extend(VTIdentifier key, Template value) {
 		return new TemplateEnv(key, value, this);
 	}
 }

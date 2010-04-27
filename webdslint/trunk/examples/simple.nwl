@@ -1,0 +1,50 @@
+module hello
+
+define list()     { <ul> elements </ul> }
+define listitem() { <li> elements </li> }
+define header()   { <h1> elements </h1> }
+define par()      { <p> elements </p> }
+
+define input(data: ref) {
+	accept_bind data
+	<input type="text" name=address(data) value=data></input>
+}
+
+define submit(text: val, command: delay) {
+	var act: boolean := false
+	<input type="submit" name=address(act) value=text></input>
+	do {
+		if (act) then command
+	}
+}
+
+define form() {
+	var act: boolean := false
+	<form name=address(act) target=".">
+	binding_scope(act) {
+		elements
+	}
+	</form>
+}
+
+define navigate(e: delay) {
+    <a href=link_page(e)> elements </a>
+}
+
+define page root() {
+    header { "My Form" }
+    form() {
+        action f() {
+            redirect( asexp result(x) );
+        }
+        input(x)
+        // This is why i wanted to make Call an Exp:
+        submit ("Process", asexp f())
+    }
+}
+
+define page result(s: string) {
+    header { "Result" }
+    output("You submitted: ")
+    output(s)
+}

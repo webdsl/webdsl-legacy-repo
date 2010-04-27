@@ -1,20 +1,20 @@
 package semanticdomain;
 import java.util.ArrayList;
 
-import semanticdomain.value.Identifier;
-import semanticdomain.value.TIdentifier;
+import semanticdomain.value.VIdentifier;
+import semanticdomain.value.VTIdentifier;
 
 import AST.Element;
 
 public class Template extends SemanticVar {
 	
-	private TIdentifier tIdentifier;
-	private java.util.List<Identifier> identifiers = new ArrayList<Identifier>();
+	private VTIdentifier tIdentifier;
+	private java.util.List<VIdentifier> identifiers = new ArrayList<VIdentifier>();
 	private Element body;
 	private TemplateEnv templateEnv;
 	private Env env;
 	
-	public Template(TIdentifier tIdentifier, java.util.List<Identifier> identifiers,
+	public Template(VTIdentifier tIdentifier, java.util.List<VIdentifier> identifiers,
 			Element body, TemplateEnv templateEnv, Env env)
 	{
 		this.tIdentifier = tIdentifier;
@@ -24,11 +24,11 @@ public class Template extends SemanticVar {
 		this.env = env;
 	}
 	
-	public TIdentifier getTIdentifier() {
+	public VTIdentifier getTIdentifier() {
 		return tIdentifier;
 	}
 	
-	public java.util.List<Identifier> getIdentifiers() {
+	public java.util.List<VIdentifier> getIdentifiers() {
 		return identifiers;
 	}
 	

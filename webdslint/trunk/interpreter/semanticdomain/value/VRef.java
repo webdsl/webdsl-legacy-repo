@@ -1,18 +1,18 @@
 package semanticdomain.value;
 
-public class Ref extends Value {
+public class VRef extends Value {
 	
 	private Value vold = null;
 	private Value vnew = null;
-	private Address address = null;
+	private VAddress address = null;
 
-	public Ref(Value vold, Value vnew, Address address) {
+	public VRef(Value vold, Value vnew, VAddress address) {
 		this.vold = vold;
 		this.vnew = vnew;
 		this.address = address;
 	}
 	
-	public Address getAddress() {
+	public VAddress getAddress() {
 		return this.address;
 	}
 	

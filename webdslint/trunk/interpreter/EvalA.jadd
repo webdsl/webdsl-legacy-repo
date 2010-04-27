@@ -6,10 +6,173 @@ import semanticdomain.value.*;
 
 aspect EvalA {
   
-	public Value ASTNode.evalA(Request request, Context context, 
+	public Value ASTNode.evalA(EvalState state, Request request, Context context, 
 			TemplateEnv templateEnv, Env env) {
 		return new VString(getClass().getName());
 	} 
+
+	public Value Module.evalA(EvalState state, Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+		
+		ArrayList<Template> appTemplates = new ArrayList<Template>();
+		for (Definition d: getDefinitionList()) {
+			if (d instanceof TemplateDef) {
+				Template template = ((TemplateDef) d).makeTemplate(context, 
+						templateEnv, env);
+				appTemplates.add(template);
+			}
+		}
+		
+		// for implementing mutual recursion
+		TemplateEnv topTemplateEnv = templateEnv;
+		for (Template template: appTemplates) {
+			topTemplateEnv = topTemplateEnv.extend(
+					template.getTIdentifier(), template);
+		}
+		
+		// pass down the new TemplateEnv on all Templates constructed so far.
+		topTemplateEnv.setInnerTemplateEnv(topTemplateEnv);
+		
+		String pageName = "root";
+		String pageNameParam = request.get("page");
+		if (pageNameParam != null)
+			pageName = pageNameParam;
+		
+		Value result = null;
+		for (Definition d: getDefinitionList()) {
+			if (d instanceof TemplateDef) {
+				if (d.getName().equals(pageName)) {
+					result = d.evalA(state, request, context, topTemplateEnv, env);
+				}
+			}
+		}
+		return result;
+	}
+
+	public Value TemplateDef.evalA(EvalState state, Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+		Element body = getBody();
+		return body.evalA(state, request, context, templateEnv, env);
+	}	
+	
+	public Value Sequence.evalA(EvalState state, Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+		Value result = null;
+		for (Element element: getElementList()) {
+			result = element.evalA(state, request, context, templateEnv, env);
+		}
+		return result;
+	}
+	
+	public Value Elements.evalA(EvalState state, Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+
+		Value result = null;
+		VTIdentifier elements = new VTIdentifier("elements");
+		Template template = templateEnv.get(elements);
+		
+		Env elementsEnv = template.getEnv();
+		
+		Element body = template.getBody();
+		result = body.evalA(state, request, context, templateEnv, elementsEnv);
+		return result;
+	}
+	
+	public Value Call.evalA(EvalState state, Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+
+		Value result = null;
+		
+		VTIdentifier tId = new VTIdentifier(getName());
+		Template template = templateEnv.get(tId);
+		
+		if (template == null) {
+			// pass
+		} else {
+			// evaluate parameters
+			java.util.List<VIdentifier> ids = template.getIdentifiers();
+	
+			for (int i = 0; i < getNumArg(); i++) {
+				Exp arg = getArg(i);
+				Value v = arg.evalE(state, request, context, templateEnv, env);
+				VIdentifier id = ids.get(i);
+				env = env.extend(id, v);
+			}
+			
+			// create new Template for elements
+			VTIdentifier elements = new VTIdentifier("elements");
+			Template newTemplate = new Template(tId, new ArrayList<VIdentifier>(),
+					getBody(), new TemplateEnv(), env);
+			// add it to the template environment
+			templateEnv = templateEnv.extend(elements, newTemplate);
+			
+			// evaluate original template's body
+			Element body = template.getBody();
+			result = body.evalA(state, request, context, templateEnv, env);
+		}
+		return result;
+	}
+	
+	public Value IfThen.evalA(EvalState state, Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+		Value result = null;
+		Value b = getExp().evalE(state, request, context, templateEnv, env);
+		if (b instanceof VBoolean)
+		{
+			VBoolean b1 = (VBoolean) b;
+			if (b1.getValue())
+				result = getThenPart().evalA(state, request, context, templateEnv, env);
+		}
+		return result;
+	}
+
+	public Value IfThenElse.evalA(EvalState state, Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+		Value result = null;
+		Value b = getExp().evalE(state, request, context, templateEnv, env);
+		if (b instanceof VBoolean)
+		{
+			VBoolean b1 = (VBoolean) b;
+			if (b1.getValue())
+				result = getThenPart().evalA(state, request, context, templateEnv, env);
+			else
+				result = getElsePart().evalA(state, request, context, templateEnv, env);
+		}
+		return result;
+	}
+	
+	public Value VarDeclElem.evalA(EvalState state, Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+		Value result = null;
+		String x = getVar();
+		Type type = getType();
+		
+		SemanticType semanticType;
+		if (type instanceof SimpleType) {
+			SimpleType simpleType = (SimpleType) type;
+			semanticType = new SemanticType(simpleType.getName());
+		} else
+			semanticType = new SemanticType("String");
+
+		Exp exp = getSource();
+		Value v = exp.evalE(state, request, context, templateEnv, env);
+		
+		// check to see if x in dom(request)
+		Value vPrime = null;
+		if (request.contains(x)) {
+			String vPrimeString = request.get(x);
+			vPrime = semanticType.castString(vPrimeString);
+		} else
+			vPrime = v;
+		
+		// extend env
+		VIdentifier identifier = new VIdentifier(x);
+		VAddress address = context.makeVarAddress(x);
+		VRef ref = new VRef(v, vPrime, address);
+		env.update(identifier, ref);
+		
+		return result;
+	}
 
 }
 

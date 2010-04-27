@@ -7,12 +7,12 @@ import semanticdomain.value.*;
 
 aspect EvalR {
   
-	public String ASTNode.evalR(Request request, Context context, 
+	public String ASTNode.evalR(EvalState state, Request request, Context context, 
 			TemplateEnv templateEnv, Env env) {
 		return getClass().getName();
-	} 
+	}
 
-	public String Module.evalR(Request request, Context context, 
+	public String Module.evalR(EvalState state, Request request, Context context, 
 			TemplateEnv templateEnv, Env env) {
 		
 		ArrayList<Template> appTemplates = new ArrayList<Template>();
@@ -34,11 +34,16 @@ aspect EvalR {
 		// pass down the new TemplateEnv on all Templates constructed so far.
 		topTemplateEnv.setInnerTemplateEnv(topTemplateEnv);
 		
-		String result = ""; 
+		String pageName = "root";
+		String pageNameParam = request.get("page");
+		if (pageNameParam != null)
+			pageName = pageNameParam;
+		
+		String result = "";
 		for (Definition d: getDefinitionList()) {
 			if (d instanceof TemplateDef) {
-				if (d.getName().equals("root")) {
-					result = d.evalR(request, context, topTemplateEnv, env);
+				if (d.getName().equals(pageName)) {
+					result = d.evalR(state, request, context, topTemplateEnv, env);
 				}
 			}
 		}
@@ -47,10 +52,10 @@ aspect EvalR {
 	
 	public Template TemplateDef.makeTemplate(Context context, 
 			TemplateEnv templateEnv, Env env) {
-		TIdentifier tIdentifier = new TIdentifier(getName());
-		ArrayList<Identifier> identifiers = new ArrayList<Identifier>();
+		VTIdentifier tIdentifier = new VTIdentifier(getName());
+		ArrayList<VIdentifier> identifiers = new ArrayList<VIdentifier>();
 		for (Param p: getParamList()) {
-			Identifier id = new Identifier(p.getName());
+			VIdentifier id = new VIdentifier(p.getName());
 			identifiers.add(id);
 		}
 		Element body = getBody();
@@ -59,92 +64,216 @@ aspect EvalR {
 		return template;
 	}
 	
-	public String TemplateDef.evalR(Request request, Context context, 
+	public String TemplateDef.evalR(EvalState state, Request request, Context context, 
 			TemplateEnv templateEnv, Env env) {
 		Element body = getBody();
-		return body.evalR(request, context, templateEnv, env);
+		return body.evalR(state, request, context, templateEnv, env);
 	}
 	
-	public String Call.evalR(Request request, Context context, 
+	public String Call.evalR(EvalState state, Request request, Context context, 
 			TemplateEnv templateEnv, Env env) {
 
 		String result = "";
-//		result += super.evalR(request, context, templateEnv, env);
+//		result += super.evalR(state, request, context, templateEnv, env);
 		
-		TIdentifier tId = new TIdentifier(getName());
+		VTIdentifier tId = new VTIdentifier(getName());
 		Template template = templateEnv.get(tId);
 		
 		if (template == null) {
 			result += "Missing template: " + tId;
 		} else {
 			// evaluate parameters
-			java.util.List<Identifier> ids = template.getIdentifiers();
+			java.util.List<VIdentifier> ids = template.getIdentifiers();
 	
 			for (int i = 0; i < getNumArg(); i++) {
 				Exp arg = getArg(i);
-				Value v = arg.evalE(request, context, templateEnv, env);
-				Identifier id = ids.get(i);
+				Value v = arg.evalE(state, request, context, templateEnv, env);
+				VIdentifier id = ids.get(i);
 				env = env.extend(id, v);
 			}
 			
 			// create new Template for elements
-			TIdentifier elements = new TIdentifier("elements");
-			Template newTemplate = new Template(tId, new ArrayList<Identifier>(),
+			VTIdentifier elements = new VTIdentifier("elements");
+			Template newTemplate = new Template(tId, new ArrayList<VIdentifier>(),
 					getBody(), new TemplateEnv(), env);
 			// add it to the template environment
 			templateEnv = templateEnv.extend(elements, newTemplate);
 			
 			// evaluate original template's body
 			Element body = template.getBody();
-			result += body.evalR(request, context, templateEnv, env);
+			result += body.evalR(state, request, context, templateEnv, env);
 		}
 		return result;
 	}
 
-	public String OutputElem.evalR(Request request, Context context, 
+	public String OutputElem.evalR(EvalState state, Request request, Context context, 
 			TemplateEnv templateEnv, Env env) {
 		Exp exp = getExp();
-		Value v = exp.evalE(request, context, templateEnv, env);
+		Value v = exp.evalE(state, request, context, templateEnv, env);
 		return v.toString();
 	}
 	
-	public String Sequence.evalR(Request request, Context context, 
+	public String Sequence.evalR(EvalState state, Request request, Context context, 
 			TemplateEnv templateEnv, Env env) {
 		String result = "";
 		for (Element element: getElementList()) {
-			result += element.evalR(request, context, templateEnv, env);
+			result += element.evalR(state, request, context, templateEnv, env);
 		}
 		return result;
 	}
 	
-	public String Elements.evalR(Request request, Context context, 
+	public String Elements.evalR(EvalState state, Request request, Context context, 
 			TemplateEnv templateEnv, Env env) {
 
 		String result = "";
-		TIdentifier elements = new TIdentifier("elements");
+		VTIdentifier elements = new VTIdentifier("elements");
 		Template template = templateEnv.get(elements);
 		
 		Env elementsEnv = template.getEnv();
 		
 		Element body = template.getBody();
-		result = body.evalR(request, context, templateEnv, elementsEnv);
+		result = body.evalR(state, request, context, templateEnv, elementsEnv);
 		return result;
 	}
 	
-	public String XmlElem.evalR(Request request, Context context, 
+	public String XmlElem.evalR(EvalState state, Request request, Context context, 
 			TemplateEnv templateEnv, Env env) {
-
-		String result = "<" + getTag() + "> "; 
+		String result = "<" + getTag();
+		for (XmlAttr xmlAttr: getXmlAttrList()) {
+			result += " " + xmlAttr.evalR(state, request, context, templateEnv, env);
+		}
+		result += "> ";
 		Element body = getBody();
-		result += body.evalR(request, context, templateEnv, env);
+		result += body.evalR(state, request, context, templateEnv, env);
 		result += " </" + getTag() + ">";
 		return result;
 	}
-
-	public String StringElem.evalR(Request request, Context context, 
+	
+	public String XmlAttr.evalR(EvalState state, Request request, Context context, 
 			TemplateEnv templateEnv, Env env) {
-		Value v = evalE(request, context, templateEnv, env);
+		return getName() + "=\"" + 
+				getExp().evalR(state, request, context, templateEnv, env) + "\"";
+	}
+
+	public String StringElem.evalR(EvalState state, Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+		Value v = evalE(state, request, context, templateEnv, env);
 		return v.toString();
+	}
+	
+	public String StringLit.evalR(EvalState state, Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+		return getValue();
+	}
+
+	public String Address.evalR(EvalState state, Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+		String result = "";
+		Exp exp = getExp();
+		Value value = exp.evalE(state, request, context, templateEnv, env);
+		if (value instanceof VRef) {
+			VRef vRef = (VRef) value;
+			VAddress a = vRef.getAddress();
+			result = a.toString();
+		} else 
+			result = "can not get address of " + value.toString();
+		return result;
+	}
+
+	public String Var.evalR(EvalState state, Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+		String result = "";
+		VIdentifier id = new VIdentifier(getName());
+		Value value = env.get(id);
+		if (value != null)
+			result = value.toString();
+		else
+			result = "id " + "not found";
+		return result;
+	}
+
+	public String IfThen.evalR(EvalState state, Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+		String result = "";
+		Value b = getExp().evalE(state, request, context, templateEnv, env);
+		if (b instanceof VBoolean)
+		{
+			VBoolean b1 = (VBoolean) b;
+			if (b1.getValue())
+				result = getThenPart().evalR(state, request, context, templateEnv, env);
+		}
+		return result;
+	}
+
+	public String IfThenElse.evalR(EvalState state, Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+		String result = "";
+		Value b = getExp().evalE(state, request, context, templateEnv, env);
+		if (b instanceof VBoolean)
+		{
+			VBoolean b1 = (VBoolean) b;
+			if (b1.getValue())
+				result = getThenPart().evalR(state, request, context, templateEnv, env);
+			else
+				result = getElsePart().evalR(state, request, context, templateEnv, env);
+		}
+		return result;
+	}
+	
+	public String VarDeclElem.evalR(EvalState state, Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+		String result = "";
+		String x = getVar();
+		Type type = getType();
+		
+		SemanticType semanticType;
+		if (type instanceof SimpleType) {
+			SimpleType simpleType = (SimpleType) type;
+			semanticType = new SemanticType(simpleType.getName());
+		} else
+			semanticType = new SemanticType("String");
+
+		Exp exp = getSource();
+		Value v = exp.evalE(state, request, context, templateEnv, env);
+		
+		// check to see if x in dom(request)
+		Value vPrime = null;
+		if (request.contains(x)) {
+			String vPrimeString = request.get(x);
+			vPrime = semanticType.castString(vPrimeString);
+		} else
+			vPrime = v;
+		
+		// extend env
+		VIdentifier identifier = new VIdentifier(x);
+		VAddress address = context.makeVarAddress(x);
+		VRef ref = new VRef(v, vPrime, address);
+		env.update(identifier, ref);
+		
+		return result;
+	}
+	
+	public String BindingScope.evalR(EvalState state, Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+		Exp exp = getExp();
+		Element elem = getElement();
+		
+		return elem.evalR(state, request, context, templateEnv, env);
+	}
+
+	public String Action.evalR(EvalState state, Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+		return "";
+	}
+
+	public String AcceptBind.evalR(EvalState state, Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+		return "";
+	}
+
+	public String Do.evalR(EvalState state, Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+		return "";
 	}
 
 }

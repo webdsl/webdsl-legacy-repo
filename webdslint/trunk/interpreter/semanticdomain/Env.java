@@ -1,16 +1,16 @@
 package semanticdomain;
 
-import semanticdomain.value.Identifier;
+import semanticdomain.value.VIdentifier;
 import semanticdomain.value.Value;
 
 public class Env extends SemanticVar {
 	
 	private Env prev = null;
 	
-	private Identifier key;
+	private VIdentifier key;
 	private Value value;
 
-	public Env(Identifier key, Value value, Env prev) {
+	public Env(VIdentifier key, Value value, Env prev) {
 		this.key = key;
 		this.value = value;
 		this.prev = prev;
@@ -20,7 +20,7 @@ public class Env extends SemanticVar {
 		
 	}
 	
-	public Value get(Identifier key) {
+	public Value get(VIdentifier key) {
 		if (this.key != null && this.key.equals(key))
 			return value;
 		else if (prev != null)
@@ -29,7 +29,26 @@ public class Env extends SemanticVar {
 			return null;
 	}
 	
-	public Env extend(Identifier key, Value value) {
-		return new Env(key, value, this);
+	public Env extend(VIdentifier key, Value value) {
+		return new Env(key, value, deepCopy());
 	}
+
+	public Env deepCopy()
+	{
+		if (prev == null)
+			return new Env(key, value, null);
+		else
+			return new Env(key, value, prev.deepCopy());
+	}
+	
+	// is called to extend an Env in place (modifies this)
+	public void update(VIdentifier key, Value value) {
+		if (this.key != null && this.key.equals(key))
+			this.value = value;
+		else if (prev != null)
+			prev.update(key, value);
+		else
+			prev = new Env(key, value, null);
+	}
+
 }

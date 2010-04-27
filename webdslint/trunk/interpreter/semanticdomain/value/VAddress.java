@@ -1,10 +1,10 @@
 package semanticdomain.value;
 
-public class Address extends Value {
+public class VAddress extends Value {
 	
 	private String value = null;
 
-	public Address(String value) {
+	public VAddress(String value) {
 		this.value = value;
 	}
 	

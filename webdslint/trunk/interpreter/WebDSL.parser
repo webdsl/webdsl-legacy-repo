@@ -80,7 +80,9 @@ Type SimpleType
 Type SetType 
 	= SET LT Type GT 			{: return new SetType(Type); :}
 	; 
-Exp Exp = StringLit | Var | PropertyAccess | MethodCall | Constructor | Address | LinkPage;
+Exp Exp = StringLit | Var | PropertyAccess | MethodCall | Constructor 
+		| AsExp
+		| Address | LinkPage | Redirect;
 List OptExpList 
 	=								{: return new List(); :}
 	|  ExpList						{: return ExpList; :}
@@ -115,6 +117,14 @@ Exp Address
 Exp LinkPage
 	= LINK_PAGE LPAREN Exp RPAREN		{: return new LinkPage(Exp); :}	
 	;
+Exp Redirect
+	= REDIRECT LPAREN Exp RPAREN		{: return new Redirect(Exp); :}	
+	;
+Exp AsExp
+	= AS_EXP Element
+		{: return new AsExp(Element); :}
+	;
+	
 Definition TemplateDef 
 	= DEFINE Mod ID LPAREN OptParamList RPAREN ElementBlock 
 						{: return new TemplateDef(ID, Mod, OptParamList, ElementBlock); :}
@@ -134,7 +144,9 @@ List ParamList
 Param Param 
 	= ID COLON Type			{: return new Param(ID, Type); :}
 	;
-Element Element = String | Call | CallArgs | CallElems | CallFull | ForElem | ForAllElem
+Element Element = String | ForElem | ForAllElem
+/*		| Perform */
+		| Call | CallArgs | CallElems | CallFull 
 		| VarDeclElem | XmlElem | Elements | ElementBlock | OutputElem | Do | Action
 		| IfThen | IfThenElse | BindingScope | AcceptBind;
 Sequence ElementBlock
@@ -147,19 +159,6 @@ Sequence ElementList
 Element String 
 	= STRING  				{: return new StringElem(STRING.substring(1, STRING.length()-1)); :}
 	;
-Element Call 
-	= ID					{: return new Call(ID, new List(), new Sequence()); :}
-	;
-Element CallArgs 
-	= ID LPAREN OptExpList RPAREN		{: return new Call(ID, OptExpList, new Sequence()); :}
-	;
-Element CallElems 
-	= ID ElementBlock {: return new Call(ID, new List(), ElementBlock); :}
-	;
-Element CallFull 
-	= ID LPAREN OptExpList RPAREN ElementBlock
-		{: return new Call(ID, OptExpList, ElementBlock); :}
-	;    
 Element ForElem 
 	= FOR LPAREN ID COLON Type IN Exp RPAREN Element
 		{: return new ForElem(ID, Type, Exp, Element); :}
@@ -176,8 +175,28 @@ Element Action
 	= ACTION ID LPAREN OptParamList RPAREN LBRACE OptStatementList RBRACE
 		{: return new Action(ID, OptParamList, OptStatementList); :}
 	;
+
+Element Call 
+	= ID					{: return new Call(ID, new List(), new Sequence()); :}
+	;
+Element CallArgs 
+	= ID LPAREN OptExpList RPAREN		{: return new Call(ID, OptExpList, new Sequence()); :}
+	;
+Element CallElems 
+	= ID ElementBlock {: return new Call(ID, new List(), ElementBlock); :}
+	;
+Element CallFull 
+	= ID LPAREN OptExpList RPAREN ElementBlock
+		{: return new Call(ID, OptExpList, ElementBlock); :}
+	;    
 /*
-Element Navigate 
+Element Perform
+	= PERFORM Exp
+		{: return new Perform(Exp); :}
+	;
+*/
+/*
+Element Navigate
 	= NAVIGATE PageRef ElementBlock
 		{: return new Navigate(PageRef, ElementBlock); :}
 	;
@@ -186,7 +205,7 @@ Element Submit
 		{: return new Submit(ID, OptExpList, ElementBlock); :}
 	;
 */
-Element XmlElem 
+Element XmlElem
 	= LT ID OptXmlAttrList GT ElementList LT_SLASH ID GT
 		{: return new XmlElem(ID, OptXmlAttrList, ElementList); :}
 	;
@@ -207,8 +226,13 @@ Element Elements
 Element OutputElem
 	= OUTPUT LPAREN Exp RPAREN		{: return new OutputElem(Exp); :}
 	;	
+/*
 Element Do
 	= DO LBRACE Statement RBRACE		{: return new Do(Statement); :}
+	;
+*/
+Element Do
+	= DO LBRACE Element RBRACE		{: return new Do(Element); :}
 	;
 Element IfThen 
 	= IF LPAREN Exp RPAREN THEN Element.ThenPart
@@ -227,12 +251,12 @@ Element AcceptBind
 		{: return new AcceptBind(Exp); :}
 	; 
 
-Statement Statement = Assign | ElemStat;
+Statement Statement = Assign | ExpStat;
 Statement Assign 
 	= Exp.Target ASSIGN Exp.Source SEMICOLON	{: return new Assign(Target, Source); :}
 	;
-Statement ElemStat 
-	= Element SEMICOLON				{: return new ElemStat(Element); :}
+Statement ExpStat 
+	= Exp SEMICOLON				{: return new ExpStat(Exp); :}
 	;
 /*
 Statement ReturnPage 
