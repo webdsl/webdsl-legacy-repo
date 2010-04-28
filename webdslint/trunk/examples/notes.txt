@@ -1,0 +1,18 @@
+Comments:
+
+1. Should Call be an Element or an Exp.  The issue is that Call arguments are
+defined as Exps, but Call itself is an Element.  So nested Calls are impossible.
+
+2. Changed Call to be an Exp, but reverted it, because I had to add a keyword
+to allow Calls inside template bodies, since they expected Elements.
+
+3. For VarDeclElem, had to create method Env.update() to extend an Env
+in place without returning a new Env object (modifies this)
+
+4. added EvalState to all evalX calls to simulate the monad
+
+5. Had to add fromString to each Value type so that the right Value type
+can be created out of a Request parameter.
+
+6. Changed Env from map<identifier, value> to map<identifier, vref>
+
