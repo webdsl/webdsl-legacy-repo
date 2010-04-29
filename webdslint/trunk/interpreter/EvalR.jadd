@@ -9,7 +9,8 @@ aspect EvalR {
   
 	public String ASTNode.evalR(EvalState state, Request request, Context context, 
 			TemplateEnv templateEnv, Env env) {
-		return getClass().getName();
+		Value v = evalE(state, request, context, templateEnv, env);
+		return v.toString();
 	}
 
 	public String Module.evalR(EvalState state, Request request, Context context, 
@@ -166,29 +167,16 @@ aspect EvalR {
 		return getValue();
 	}
 
-	public String Address.evalR(EvalState state, Request request, Context context, 
-			TemplateEnv templateEnv, Env env) {
-		String result = "";
-		Exp exp = getExp();
-		Value value = exp.evalE(state, request, context, templateEnv, env);
-		if (value instanceof VRef) {
-			VRef vRef = (VRef) value;
-			VAddress a = vRef.getAddress();
-			result = a.toString();
-		} else 
-			result = "can not get address of " + value.toString();
-		return result;
-	}
-
 	public String Var.evalR(EvalState state, Request request, Context context, 
 			TemplateEnv templateEnv, Env env) {
 		String result = "";
-		VIdentifier id = new VIdentifier(getName());
-		Value value = env.get(id);
-		if (value != null)
-			result = value.toString();
-		else
-			result = "id " + "not found";
+		Value v = evalE(state, request, context, templateEnv, env);
+		if (v instanceof VRef) {
+			VRef vRef = (VRef) v;
+			result = vRef.getNew().toString();
+		} else {
+			result = v.toString();
+		}
 		return result;
 	}
 

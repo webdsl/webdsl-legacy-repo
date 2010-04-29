@@ -16,3 +16,6 @@ can be created out of a Request parameter.
 
 6. Changed Env from map<identifier, value> to map<identifier, vref>
 
+7. Do is taking in an expression in the paper, but it needs to take in an 
+Element.
+

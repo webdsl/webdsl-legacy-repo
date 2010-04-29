@@ -23,8 +23,28 @@ aspect EvalE {
 
 	public Value Var.evalE(EvalState state, Request request, Context context, 
 			TemplateEnv templateEnv, Env env) {
+		Value result = null;
 		String varName = getName();
 		VIdentifier id = new VIdentifier(varName);
-		return env.get(id);
+		result = env.get(id);
+		if (result == null)
+			result = new VString("id " + id + " not found");
+		return result;
 	}
+
+	public Value Address.evalE(EvalState state, Request request, Context context, 
+			TemplateEnv templateEnv, Env env) {
+		Value result = null;
+		Exp exp = getExp();
+		Value value = exp.evalE(state, request, context, templateEnv, env);
+		if (value instanceof VRef) {
+			VRef vRef = (VRef) value;
+			result = vRef.getAddress();
+		} else 
+			result = new VString("Can not get address of " + value.toString());
+		return result;
+	}
+
+
+
 }

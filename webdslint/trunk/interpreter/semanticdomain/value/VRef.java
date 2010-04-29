@@ -16,6 +16,14 @@ public class VRef extends Value {
 		return this.address;
 	}
 	
+	public Value getNew() {
+		return this.vnew;
+	}
+	
+	public Value getOld() {
+		return this.vold;
+	}
+	
 	public String toString() {
 		String voldString = "-", vnewString = "-";
 		if (vold != null)
