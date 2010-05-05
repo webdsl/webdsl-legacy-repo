@@ -1,0 +1,426 @@
+%header {: // Generated from interpreter/WebDSL.parser
+
+ package AST;
+:};
+%embed {: // Generated from interpreter/WebDSL.parser
+
+	// to enable debugging, run a search in Parser.java for
+	//  pattern: "// ([a-z]+) = (.*)"
+	//  replacement: "match = debug(match, offset, "\1 = \2");"
+	// and add the line "boolean match = true;" as needed
+	private boolean debug(boolean match, int offset, String msg) {
+		if (match) {
+			System.out.println(msg);
+			int count = -1;
+			for (int i = 0; i < msg.length() - 1; i++)
+				if (msg.charAt(i) == ' ')
+					count++;
+			for (int i = 0; i < count; i++) {
+				Symbol sym = _symbols[offset + i + 1];
+				System.out.println(sym.value.toString());
+			}
+			System.out.println("");
+		}
+		return false;
+	}
+	class Events extends Parser.Events {
+		public void syntaxError(Symbol token) {
+			StringBuffer s = new StringBuffer();
+			s.append(token.getLine(token.getStart()) + ", " + token.getColumn(token.getStart()) + "\n");
+			s.append("  *** Syntactic error: unexpected token " + Terminals.NAMES[token.getId()]);
+			throw new Error(s.toString());
+		}
+		public void scannerError(Scanner.Exception e) {
+			StringBuffer s = new StringBuffer();
+			s.append(e.line + ", " + e.column + "\n");
+			s.append("  *** Lexical error: " + e.getMessage());
+			throw new Error(s.toString());
+		}
+	}
+
+	{ report = new Events(); } // Use error handler in parser
+:};
+%terminals LT;
+%terminals RBRACE;
+%terminals ELSE;
+%terminals LBRACE;
+%terminals DO;
+%terminals FOR;
+%terminals SET;
+%terminals SEMICOLON;
+%terminals ID;
+%terminals MODULE;
+%terminals AS_EXP;
+%terminals ELEMENTS;
+%terminals DEFINE;
+%terminals ACTION;
+%terminals LPAREN;
+%terminals IF;
+%terminals ENTITY;
+%terminals COLON;
+%terminals ACCEPT_BIND;
+%terminals LT_SLASH;
+%terminals INVERSE;
+%terminals RPAREN;
+%terminals PAGE;
+%terminals THEN;
+%terminals IN;
+%terminals ADDRESS;
+%terminals REDIRECT;
+%terminals COMMA;
+%terminals EQUAL;
+%terminals ASSIGN;
+%terminals GT;
+%terminals LINK_PAGE;
+%terminals VAR;
+%terminals BINDING_SCOPE;
+%terminals DOT;
+%terminals OUTPUT;
+%terminals STRING;
+%typeof AcceptBind = "Element";
+%typeof CallArgs = "Element";
+%typeof ExpList = "List";
+%typeof CallFull = "Element";
+%typeof ElementList = "Sequence";
+%typeof StatementList = "List";
+%typeof XmlAttr = "XmlAttr";
+%typeof Property = "Property";
+%typeof Module = "Module";
+%typeof VarDeclElem = "Element";
+%typeof PropertyList = "List";
+%typeof ForAllElem = "Element";
+%typeof Param = "Param";
+%typeof Assign = "Statement";
+%typeof defList = "List";
+%typeof Call = "Element";
+%typeof Inverse = "Annotation";
+%typeof SetType = "Type";
+%typeof Do = "Element";
+%typeof StringLit = "Exp";
+%typeof OptExpList = "List";
+%typeof Redirect = "Exp";
+%typeof IfThenElse = "Element";
+%typeof ExpStat = "Statement";
+%typeof AnnotationList = "List";
+%typeof String = "Element";
+%typeof TemplateDef = "Definition";
+%typeof Elements = "Element";
+%typeof IfThen = "Element";
+%typeof Id = "Annotation";
+%typeof CallElems = "Element";
+%typeof Entity = "Definition";
+%typeof SimpleType = "Type";
+%typeof Mod = "List";
+%typeof XmlElem = "Element";
+%typeof Type = "Type";
+%typeof Statement = "Statement";
+%typeof MethodCall = "Exp";
+%typeof OptXmlAttrList = "List";
+%typeof Exp = "Exp";
+%typeof OutputElem = "Element";
+%typeof OptAnnot = "List";
+%typeof def = "Definition";
+%typeof Action = "Element";
+%typeof BindingScope = "Element";
+%typeof AsExp = "Exp";
+%typeof ParamList = "List";
+%typeof LinkPage = "Exp";
+%typeof ForElem = "Element";
+%typeof OptParamList = "List";
+%typeof ElementBlock = "Sequence";
+%typeof XmlAttrList = "List";
+%typeof OptStatementList = "List";
+%typeof Address = "Exp";
+%typeof Annotation = "Annotation";
+%typeof Constructor = "Exp";
+%typeof Var = "Exp";
+%typeof Element = "Element";
+%typeof PropertyAccess = "Exp";
+%goal Module;
+Module =
+    MODULE.MODULE ID.ID defList.defList {:  return new Module(((String)ID.value), defList); :}
+  ;
+
+defList =
+    {:  return new List(); :}
+
+  | defList.defList def.def {:  return defList.add(def); :}
+  ;
+
+def =
+    Entity.Entity 
+  | TemplateDef.TemplateDef   ;
+
+Entity =
+    ENTITY.ENTITY ID.ID LBRACE.LBRACE PropertyList.PropertyList RBRACE.RBRACE {:  return new Entity(((String)ID.value), PropertyList); :}
+  ;
+
+Property =
+    ID.ID COLON.COLON Type.Type OptAnnot.OptAnnot {:  return new Property(((String)ID.value), Type, OptAnnot); :}
+  ;
+
+OptAnnot =
+    {:  return new List(); :}
+
+  | LPAREN.LPAREN AnnotationList.AnnotationList RPAREN.RPAREN {:  return AnnotationList; :}
+  ;
+
+PropertyList =
+    Property.Property {:  return new List().add(Property); :}
+
+  | PropertyList.PropertyList Property.Property {:  return PropertyList.add(Property); :}
+  ;
+
+Annotation =
+    Id.Id 
+  | Inverse.Inverse   ;
+
+Id =
+    ID.ID {:  return new Id(((String)ID.value)); :}
+  ;
+
+Inverse =
+    INVERSE.INVERSE COLON.COLON ID.ID {:  return new Inverse(((String)ID.value)); :}
+  ;
+
+AnnotationList =
+    Annotation.Annotation {:  return new List().add(Annotation); :}
+
+  | AnnotationList.AnnotationList COMMA.COMMA Annotation.Annotation {:  return AnnotationList.add(Annotation); :}
+  ;
+
+Type =
+    SimpleType.SimpleType 
+  | SetType.SetType   ;
+
+SimpleType =
+    ID.ID {:  return new SimpleType(((String)ID.value)); :}
+  ;
+
+SetType =
+    SET.SET LT.LT Type.Type GT.GT {:  return new SetType(Type); :}
+  ;
+
+Exp =
+    StringLit.StringLit 
+  | Var.Var 
+  | PropertyAccess.PropertyAccess 
+  | MethodCall.MethodCall 
+  | Constructor.Constructor 
+  | AsExp.AsExp 
+  | Address.Address 
+  | LinkPage.LinkPage 
+  | Redirect.Redirect   ;
+
+OptExpList =
+    {:  return new List(); :}
+
+  | ExpList.ExpList {:  return ExpList; :}
+  ;
+
+ExpList =
+    Exp.Exp {:  return new List().add(Exp); :}
+
+  | ExpList.ExpList COMMA.COMMA Exp.Exp {:  return ExpList.add(Exp); :}
+  ;
+
+StringLit =
+    STRING.STRING {:  return new StringLit(((String)STRING.value).substring(1, ((String)STRING.value).length()-1)); :}
+  ;
+
+Var =
+    ID.ID {:  return new Var(((String)ID.value)); :}
+  ;
+
+PropertyAccess =
+    Exp.Exp DOT.DOT ID.ID {:  return new PropertyAccess(Exp, ((String)ID.value)); :}
+  ;
+
+MethodCall =
+    Exp.Exp DOT.DOT ID.ID LPAREN.LPAREN OptExpList.OptExpList RPAREN.RPAREN {:  return new MethodCall(Exp, ((String)ID.value), OptExpList); :}
+  ;
+
+Constructor =
+    ID.ID LBRACE.LBRACE RBRACE.RBRACE {:  return new Constructor(((String)ID.value)); :}
+  ;
+
+Address =
+    ADDRESS.ADDRESS LPAREN.LPAREN Exp.Exp RPAREN.RPAREN {:  return new Address(Exp); :}
+  ;
+
+LinkPage =
+    LINK_PAGE.LINK_PAGE LPAREN.LPAREN Exp.Exp RPAREN.RPAREN {:  return new LinkPage(Exp); :}
+  ;
+
+Redirect =
+    REDIRECT.REDIRECT LPAREN.LPAREN Exp.Exp RPAREN.RPAREN {:  return new Redirect(Exp); :}
+  ;
+
+AsExp =
+    AS_EXP.AS_EXP Element.Element {:  return new AsExp(Element); :}
+  ;
+
+TemplateDef =
+    DEFINE.DEFINE Mod.Mod ID.ID LPAREN.LPAREN OptParamList.OptParamList RPAREN.RPAREN ElementBlock.ElementBlock {:  return new TemplateDef(((String)ID.value), Mod, OptParamList, ElementBlock); :}
+  ;
+
+Mod =
+    {:  return new List(); :}
+
+  | PAGE.PAGE {:  return new List().add(new Page()); :}
+  ;
+
+OptParamList =
+    {:  return new List(); :}
+
+  | ParamList.ParamList {:  return ParamList; :}
+  ;
+
+ParamList =
+    Param.Param {:  return new List().add(Param); :}
+
+  | ParamList.ParamList COMMA.COMMA Param.Param {:  return ParamList.add(Param); :}
+  ;
+
+Param =
+    ID.ID COLON.COLON Type.Type {:  return new Param(((String)ID.value), Type); :}
+  ;
+
+Element =
+    String.String 
+  | ForElem.ForElem 
+  | ForAllElem.ForAllElem 
+  | Call.Call 
+  | CallArgs.CallArgs 
+  | CallElems.CallElems 
+  | CallFull.CallFull 
+  | VarDeclElem.VarDeclElem 
+  | XmlElem.XmlElem 
+  | Elements.Elements 
+  | ElementBlock.ElementBlock 
+  | OutputElem.OutputElem 
+  | Do.Do 
+  | Action.Action 
+  | IfThen.IfThen 
+  | IfThenElse.IfThenElse 
+  | BindingScope.BindingScope 
+  | AcceptBind.AcceptBind   ;
+
+ElementBlock =
+    LBRACE.LBRACE ElementList.ElementList RBRACE.RBRACE {:  return ElementList; :}
+  ;
+
+ElementList =
+    {:  return new Sequence(); :}
+
+  | ElementList.ElementList Element.Element {:  ElementList.addElement(Element); return ElementList; :}
+  ;
+
+String =
+    STRING.STRING {:  return new StringElem(((String)STRING.value).substring(1, ((String)STRING.value).length()-1)); :}
+  ;
+
+ForElem =
+    FOR.FOR LPAREN.LPAREN ID.ID COLON.COLON Type.Type IN.IN Exp.Exp RPAREN.RPAREN Element.Element {:  return new ForElem(((String)ID.value), Type, Exp, Element); :}
+  ;
+
+ForAllElem =
+    FOR.FOR LPAREN.LPAREN ID.ID COLON.COLON Type.Type RPAREN.RPAREN Element.Element {:  return new ForElem(((String)ID.value), Type, new ClassItem(Type), Element); :}
+  ;
+
+VarDeclElem =
+    VAR.VAR ID.ID COLON.COLON Type.Type ASSIGN.ASSIGN Exp.Exp {:  return new VarDeclElem(((String)ID.value), Type, Exp); :}
+  ;
+
+Action =
+    ACTION.ACTION ID.ID LPAREN.LPAREN OptParamList.OptParamList RPAREN.RPAREN LBRACE.LBRACE OptStatementList.OptStatementList RBRACE.RBRACE {:  return new Action(((String)ID.value), OptParamList, OptStatementList); :}
+  ;
+
+Call =
+    ID.ID {:  return new Call(((String)ID.value), new List(), new Sequence()); :}
+  ;
+
+CallArgs =
+    ID.ID LPAREN.LPAREN OptExpList.OptExpList RPAREN.RPAREN {:  return new Call(((String)ID.value), OptExpList, new Sequence()); :}
+  ;
+
+CallElems =
+    ID.ID ElementBlock.ElementBlock {:  return new Call(((String)ID.value), new List(), ElementBlock); :}
+  ;
+
+CallFull =
+    ID.ID LPAREN.LPAREN OptExpList.OptExpList RPAREN.RPAREN ElementBlock.ElementBlock {:  return new Call(((String)ID.value), OptExpList, ElementBlock); :}
+  ;
+
+XmlElem =
+    LT.LT ID.ID OptXmlAttrList.OptXmlAttrList GT.GT ElementList.ElementList LT_SLASH.LT_SLASH ID.ID_ GT.GT_ {:  return new XmlElem(((String)ID.value), OptXmlAttrList, ElementList); :}
+  ;
+
+OptXmlAttrList =
+    {:  return new List(); :}
+
+  | XmlAttrList.XmlAttrList {:  return XmlAttrList; :}
+  ;
+
+XmlAttrList =
+    XmlAttr.XmlAttr {:  return new List().add(XmlAttr); :}
+
+  | XmlAttrList.XmlAttrList XmlAttr.XmlAttr {:  return XmlAttrList.add(XmlAttr); :}
+  ;
+
+XmlAttr =
+    ID.ID EQUAL.EQUAL Exp.Exp {:  return new XmlAttr(((String)ID.value), Exp); :}
+  ;
+
+Elements =
+    ELEMENTS.ELEMENTS {:  return new Elements(); :}
+  ;
+
+OutputElem =
+    OUTPUT.OUTPUT LPAREN.LPAREN Exp.Exp RPAREN.RPAREN {:  return new OutputElem(Exp); :}
+  ;
+
+Do =
+    DO.DO LBRACE.LBRACE Element.Element RBRACE.RBRACE {:  return new Do(Element); :}
+  ;
+
+IfThen =
+    IF.IF LPAREN.LPAREN Exp.Exp RPAREN.RPAREN THEN.THEN Element.ThenPart {:  return new IfThen(Exp, ThenPart); :}
+  ;
+
+IfThenElse =
+    IF.IF LPAREN.LPAREN Exp.Exp RPAREN.RPAREN THEN.THEN Element.ThenPart ELSE.ELSE Element.ElsePart {:  return new IfThenElse(Exp, ThenPart, ElsePart); :}
+  ;
+
+BindingScope =
+    BINDING_SCOPE.BINDING_SCOPE LPAREN.LPAREN Exp.Exp RPAREN.RPAREN Element.Element {:  return new BindingScope(Exp, Element); :}
+  ;
+
+AcceptBind =
+    ACCEPT_BIND.ACCEPT_BIND Exp.Exp {:  return new AcceptBind(Exp); :}
+  ;
+
+Statement =
+    Assign.Assign 
+  | ExpStat.ExpStat   ;
+
+Assign =
+    Exp.Target ASSIGN.ASSIGN Exp.Source SEMICOLON.SEMICOLON {:  return new Assign(Target, Source); :}
+  ;
+
+ExpStat =
+    Exp.Exp SEMICOLON.SEMICOLON {:  return new ExpStat(Exp); :}
+  ;
+
+OptStatementList =
+    {:  return new List(); :}
+
+  | StatementList.StatementList {:  return StatementList; :}
+  ;
+
+StatementList =
+    Statement.Statement {:  return new List().add(Statement); :}
+
+  | StatementList.StatementList Statement.Statement {:  return StatementList.add(Statement); :}
+  ;
+
