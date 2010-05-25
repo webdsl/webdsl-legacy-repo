@@ -1,0 +1,41 @@
+module resolve/template
+
+imports
+   libwebdsl-front
+   libwebdsl-generator
+   typecheck/template
+   resolve/-
+
+rules		// resolve
+    
+  // Template call, already uniquely renamed
+  declaration-of: tc@TemplateCall(nm, arg*, _, _) -> f
+    where f := <CallToDefinedTemplate; TemplateDecl> nm
+  
+  declaration-of: tc@ThisCall(name, args) -> decl
+    where is-email-call
+    with  decl := <EmailDefinition> name 
+
+rules		// hover
+
+  hover: Define(mods, x, farg*, _, _) -> text
+    with  type := <mods-to-define-type; capitalize-string> mods
+        ; text := <concat-strings> [type, " ", x, "(", <pp-args> farg*, ")"]
+  
+  hover: TemplateCall(nm, arg*, _, _) -> text
+    where <CallToBuiltInTemplate> nm
+    with  targ* := <map(type-of)> arg*
+        ; debug(!"Types:" )
+        ; text := <concat-strings>
+            ["Built-in template ", nm, "(", <map(pp-type); separate-by(|", "); concat-strings> targ*, ")"]
+    
+  hover: PageCall("url", [String(arg)]) -> <concat-strings> ["Navigate to url: ", arg]
+    
+rules		// utils
+
+  mods-to-define-type =
+      fetch-elem(?Page()); !"page"
+   <+ fetch-elem(?Email()); !"email"
+   <+ fetch-elem(?AjaxTemplate()); !"ajax template"
+   <+ !"template"
+   

@@ -1,0 +1,14 @@
+module resolve/function
+
+imports
+  libwebdsl-front
+  libwebdsl-generator
+  
+rules // declare
+  
+  declaration-of:
+    Function(name, args, _, _) -> <FunctionDecl> (name, args)
+  
+  declaration-of-entity(|ent):
+    Function(name, args, _, _) -> <EntityFunctionDecl> (ent, name, args)
+  

@@ -1,0 +1,15 @@
+module typecheck/entities
+
+imports
+  libwebdsl-front
+  libwebdsl-generator
+  util
+      
+rules // types
+
+  declaration-of : SimpleSort(x) -> <EntDecl> x
+  declaration-of : SimpleSort(x) -> <EnumDecl> x
+  
+  // Dummy
+  declaration-of-entity(|ent) = fail
+    

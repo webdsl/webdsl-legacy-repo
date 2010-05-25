@@ -1,0 +1,16 @@
+module typecheck/vars
+
+imports
+  libwebdsl-front
+
+signature constructors
+  
+  // name, sort (optional), value (optional)
+  VarDeclGeneric : Term * Term * Term -> VarDeclGeneric
+
+rules // desugar
+  
+  desugar-def: VarDecl(name, srt) -> VarDeclGeneric(name, srt, None())
+  desugar-def: VarDeclInit(name, srt, val) -> VarDeclGeneric(name, srt, val)
+  desugar-def: VarDeclInitInferred(name, val) -> VarDeclGeneric(name, None(), val)
+  
