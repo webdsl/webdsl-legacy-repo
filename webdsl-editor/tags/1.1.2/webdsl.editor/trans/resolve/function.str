@@ -1,0 +1,89 @@
+module resolve/function
+
+imports
+  libwebdsl-front
+  libwebdsl-generator
+  typechecker
+  resolve/-
+  util
+  typecheck/entities
+ 
+rules // actual lookup
+  
+  // Resolve entity function
+  find-entity-func(|ent): (nm, arg*) -> f
+    where f := <traverse-hierarchy(find-entity-func-in-class | ent)>
+          
+  find-entity-func-in-class: (x_class, (nm, arg*)) -> f-annotated
+    where <resolve-function-call-to-decl> (SimpleSort(x_class), nm, <map(type-of)> arg*)
+        ; f-annotated := <add-anno(|FromEntity(x_class))>
+        
+  // Resolve global function
+  find-global-func: (nm, arg*) -> f
+    where f := <resolve-function-call-to-decl> (None(), nm, <map(type-of)> arg*)
+
+  // Native function
+  find-entity-func(|ent): (nm, arg*) -> f-annotated
+    where f := <resolve-function-call-to-decl> (ClassSort(ent), nm, <map(type-of)> arg*)
+        ; where(anno := FromEntity(ent))
+        ; f-annotated := <add-anno(|anno)>
+  
+rules // resolve
+  
+  // Resolve entity function call
+  declaration-in-entity(|ent): tc@ThisCall(nm, arg*) -> f
+    where f := <find-entity-func(|ent)> (nm, arg*)
+          
+  // Resolve entity function call
+  declaration-of: Call(expr, nm, arg*) -> f
+    where type := <type-of> expr
+        ; <?SimpleSort(x_class) <+ ?ClassSort(x_class)> type  // ClassSort for static native functions 
+        ; f := <find-entity-func(|x_class)> (nm, arg*)
+
+  // Resolve global call
+  declaration-of: ThisCall(nm, arg*) -> f
+    where f := <find-global-func> (nm, arg*)
+
+  // Extend global function to normal function
+  declaration-of: ExtendFunction(f@Function(name,args,_,_)) -> decl
+    where decl := <declaration-of> Function(name,args,None(),None())  // must be exact match
+
+  declaration-in-entity(|ent): ef@ExtendFunction(Function(name,args,_,_)) -> decl
+    where (decl := <declaration-of-entity(|ent)> Function(name,args,None(),None())
+          <+ decl := <debug(!"... trying supertype:"); declaration-in-entity(|<Extends> ent)> ef)
+
+rules // hover
+        
+  hover-with-info: (f@Function(_, _, _, _), FromEntity(ent)) -> text
+     with text := <concat-strings> [<pp-func> f, "<br/>", "from entity ", ent]
+
+  hover = pp-func
+  
+  // Built-in global function
+  hover: tc@ThisCall(nm, arg*) -> txt
+    with  targ* := <map(type-of)> arg*
+        ; srt := <type-of> tc
+        ; txt := <concat-strings> ["Built-in function ",nm,"(",<pp-args> targ*,") : ",<pp-type> srt]
+    
+  // Built-in function
+  hover: c@Call(exp, nm, arg*) -> txt 
+    where targ* := <map(type-of)> arg*
+        ; srt-exp := <type-of> exp
+        ; srt := <type-of> c
+    with  txt := <concat-strings> ["Built-in function ",nm,"(",<pp-args> targ*,") : ", <pp-type> srt, " of type ",<pp-type> srt-exp]
+        
+  hover: Arg(x, srt) -> text
+    with  text := <concat-strings> ["Argument ", x, " : ",<pp-type> srt] 
+
+rules // utils
+  
+  pp-func: Function(name,args,ret,_) -> <pp-func> Predicate(name,args,None())
+    where <IsPredicate> (name, <map(farg-to-type)> args)
+  pp-func: Function(name,args,ret,_) ->
+    <concat-strings> ["Function ",name,"(",<pp-args> args,") : ",<pp-type> ret]
+  pp-func: FunctionNoReturn(name, args, _) ->
+    <concat-strings> ["Function ",name,"(",<pp-args> args,")"]
+  pp-func: Predicate(name,args,_) ->
+    <concat-strings> ["Predicate ",name,"(",<pp-args> args,")"]
+  
+  pp-args = map(try(?Arg(_,<id>)); pp-type); separate-by(|", "); concat-strings

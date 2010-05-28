@@ -1,0 +1,99 @@
+module webdsl_editor
+
+imports
+  libstratego-lib
+  libwebdsl-generator
+  libwebdsl-front
+  parse
+  application-ini
+  util
+  caching
+  typechecker
+  typecheck/import		// for ExtraWarnings
+	resolve
+	lib/editor-common.generated
+  
+signature constructors
+  FILE : Term -> Term
+  
+strategies // editor service interface
+
+  main-webdsl =
+     fatal-err(|"Not designed to be invoked directly")
+  
+  fix-path: path -> <string-replace(|"\\","/")> path
+  
+  // Path is relative to project, without leading slash
+  // Projectpath is an absolute path to the project root, without trailing slash
+  editor-analyze:
+    (ast, path, projectpath) -> (ast-desugared, errors, warnings, notes)
+    with
+      where(!""; debug)
+    ; editor-init
+    ; fullpath1 := <concat-strings> [projectpath,"/",path] //$[[projectpath]/[path]]
+    ; fullpath := <try(fix-path)> fullpath1
+    ; rules(
+        AnalyzeFile := path     // path within project
+        FullPath := fullpath    // full filename
+      )
+    ; typecheck-init    // set up built-in types before doing any declares
+    ; ast-simplified := <desugar-compat> ast
+    ; <dbg-time(get-all-imports | "get imports")> ast-simplified
+    ; (errors-ast, warnings-ast, ast-renamed) := 
+         <dbg-time(typecheck-editor | "typecheck")> ast-simplified
+    ; <try(find-extra-errors)> ast-simplified  // collect in dr
+    ; ast-desugared := <dbg-time(desugar-all | "resolving")> ast-renamed    // declare for resolving
+    ; notes := []
+    ; errors := <concat> [errors-ast, <bagof-ImportErrors>]
+    ; warnings := <concat> [warnings-ast, <bagof-ExtraWarnings>]
+    ; print-total-log-time
+      
+  find-extra-errors = fail
+  
+  typecheck-editor =
+  	in-typechecking-phase(
+  			typecheck-declare
+  		; typechecker-after-declare
+      ; rename-top => ast-renamed
+      ; catch-errors-editor(
+      		constraint-error-all
+      	; not(constraint-error-global)
+     	) => (err, warn)
+    )
+    ; !(err, warn, ast-renamed)
+  
+  desugar-all =
+      preserve(innermost(desugar-def))
+  
+  import-main-file: ast -> ast
+    with  appname := <AppName>
+        ; mainapp := <concat-strings> [<ApplicationIniDir>, "/", appname, ".app"]
+          // TODO: does this work on windows too ? (/ vs. \)
+        ; where(!appname; debug(!"Explicitely importing main file: ")) 
+        ; <get-imports> Imports(appname)
+          
+  add-app-ini-error: ast -> ast
+    with rules(ImportErrors :+= (ast, "Cannot find application.ini"))
+             
+  get-all-imports: ast -> ast
+    with  FullPath => fullpath
+        ; rules(IsImported : fullpath) // do not transitively import the analyzed file
+        ; {| ParsingModule:
+              rules(ParsingModule := fullpath)
+              // try to import main file if we're parsing a module
+            ; !ast
+            ; try(
+              	 // get-main-file-name also sets ApplicationIniDir
+                  where(get-main-file-name <+ add-app-ini-error; fail)
+                  // if checking a module, import main app file
+                ; ?Module(_,_); import-main-file
+              )
+            ; alltd(get-imports)
+	      |}
+ 
+  get-imports: 
+    imp@Imports(x) -> imp
+    where {| TopImport: 
+     		where(try(not(TopImport); rules(TopImport := imp)))
+      ; <editor-parse-webdsl-module> x
+   	|}

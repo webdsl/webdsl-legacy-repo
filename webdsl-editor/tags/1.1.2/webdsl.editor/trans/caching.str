@@ -1,0 +1,90 @@
+module caching
+
+imports
+    parse
+    lib/editor-common.generated
+    libwebdsl-front
+    util
+    webdsl_editor
+    application-ini
+    
+strategies  
+  
+  store-def-to-mod-desugar = preserve(desugar-all; store-def-to-mod)
+  store-def-to-mod-desugar(|ent) = desugar-all; add-anno(|FromEntity(ent)); store-def-to-mod
+        
+  store-def-to-mod: def -> def
+    where mod := <CurrentFile>
+        ; rules(DefToModule :+ def -> mod)
+    
+strategies // storing for compiler typechecker
+  
+  // Already stored
+  store-def: def -> def
+    where mod := <CurrentFile>
+        ; <ReadingFromCache> mod
+ 
+  store-def: def -> def
+    where mod := <CurrentFile>
+        ; rules(ModuleDefs :+ mod -> def)
+  
+  // If CurrentFile is not set, we're parsing the main file
+  store-def = id
+
+strategies
+
+  check-editor-version: cache-path -> cache-path
+    with  editor-ts := <editor-timestamp>
+    where <gt <+ editor-new-version-once; fail> (<modification-time> cache-path, editor-ts)
+    
+  editor-new-version-once =
+    try(
+        where(not(EditorNewVersionShowed))
+      ; rules(EditorNewVersionShowed := True())
+      ; debug(!"Editor is updated; refreshing cache.")
+    )
+
+  /* Custom version of open-import */
+  open-import-sig(resolve-path, parse-file, record-declarations, record-sigs):
+    import -> import
+    where
+      if not(!import => COMPLETION(_)) then
+        path       := <resolve-path> import;
+        cache-path := <import-cache-path> path;
+        {| CurrentFile:
+          rules(CurrentFile := path);
+          // Are we transively importing the file we're analyzing?
+          if FullPath; ?path then
+              rules(CurrentModuleImported := True())
+          else 
+            // Check whether we've already imported this file
+            if not(<IsImported> path) then
+	            rules( IsImported : path );
+	            if <is-newer> (cache-path, path); <check-editor-version> cache-path then
+		            <log-time-helper(ReadFromFile | "read")> cache-path;
+		            record-sigs
+		          else
+		            where(!cache-path; debug(!"Updating cache: "));
+		            file := <parse-file> path;
+		            sigs := <record-declarations> file;
+		            if <file-exists> path then
+		              // Only cache if on filesystem (e.g., ignore libstratego-lib)
+		              <WriteToBinaryFile> (cache-path, sigs)
+		            end
+		          end
+		        end
+	        end
+        |}
+      end
+        
+strategies // bench
+  
+   dbg-time(s|msg) =
+      where(starttime := <times>)
+    ; s
+    ; where(
+          total := <diff-times> (<times>,starttime)
+        ; t1 := <self-children-user-time; ticks-to-seconds; real-to-string(|3)> total
+        ; str := <concat-strings> [msg, ": ", t1, " s"]
+        ; debug
+      )
