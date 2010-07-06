@@ -193,6 +193,10 @@ define page task(task : Task) {
 }
 
 define page edittask(task : Task) {
+  action save() {
+    task.save();
+    return task(task);
+  }
   main{
   //  derive editPage from task
     section{
@@ -206,10 +210,6 @@ define page edittask(task : Task) {
         <p/>
         action("Save", save())
         navigatebutton(task(task), "Cancel")
-        action save() {
-          task.save();
-          return task(task);
-        }
       }
     }
   }
@@ -221,7 +221,7 @@ function principal() : User {
   return securityContext.principal;
 }
 
-function authenticate(username : String, password : Secret) : Bool {
+function auth(username : String, password : Secret) : Bool {
   var user : User := getUniqueUser(username);
   if(user != null) {
     if(user.password.check(password)) {
@@ -252,7 +252,7 @@ define signinform() {
   var username : String
   var password : Secret
   action signin() {
-    if(authenticate(username, password)) {
+    if(auth(username, password)) {
       message("Welcome " + username);
       return tasks(getUniqueUser(username));
     }
@@ -268,15 +268,15 @@ define signinform() {
 }
 
 define signinoffMenu() {
+  action signoffAction() {
+    signoff();
+  }
   if(!loggedIn()) {
     <li>navigate(signin()){"Sign in"}</li>
   } else {
     <li>navigate(tasks(principal())){output(principal().username)}</li>
     form{ 
       <li>actionLink("Sign off", signoffAction())</li>
-      action signoffAction() {
-        signoff();
-      }
     }
   }
 }
