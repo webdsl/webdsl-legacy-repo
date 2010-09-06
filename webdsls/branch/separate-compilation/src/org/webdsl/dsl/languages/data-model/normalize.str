@@ -1,0 +1,16 @@
+module org/webdsl/dsl/languages/data-model/normalize
+
+rules
+
+  normalize-data :
+    ExtendSessionEntity(ident, entbodydecs) -> ExtendEntity(ident, entbodydecs)
+  
+rules // entity declarations
+
+  normalize-data :
+    |[ x k srt ]| -> |[ x k srt () ]|
+
+  normalize-data :
+    |[ x k srt := e ]| -> |[ x k srt () := e ]|
+
+

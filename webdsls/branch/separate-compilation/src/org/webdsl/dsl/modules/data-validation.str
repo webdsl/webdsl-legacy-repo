@@ -1,0 +1,112 @@
+module org/webdsl/dsl/modules/data-validation
+
+imports 
+  libstrategolib 
+  Java-15 
+  libjava-front 
+  libwebdsl-front
+
+rules //validate template call
+
+  built-in-template-rule-setup = <declare-built-in-template-rules> ("validate",[SimpleSort("Bool"),SimpleSort("String")]);fail
+ 
+rules //desugar entity validation
+
+  desugar : 
+    EntityNoSuper(name,entbodydecs) -> EntityNoSuper(name,entbodydecs2)
+    where entbodydecs2 := <desugar-entity-validation> entbodydecs
+  desugar : 
+    Entity(name,super,entbodydecs) -> Entity(name,super,entbodydecs2)
+    where entbodydecs2 := <desugar-entity-validation> entbodydecs
+  desugar : 
+    SessionEntity(name, entbodydecs) -> SessionEntity(name, entbodydecs2)
+    where entbodydecs2 := <desugar-entity-validation> entbodydecs
+
+  desugar-entity-validation : 
+    entbodydecs -> entbodydecs2
+    where <oncetd(?ValidateEntity(_,_))> entbodydecs //must have validations left to desugar
+    with  (props1,functions,validations) := <split-entity-body> entbodydecs
+        ; props2 := <try(desugar-entity-validation(|validations))> props1
+        ; entbodydecs2 := <concat> [props2,functions] 
+        
+  split-entity-body :
+    entbodydecs -> (props,functions,validations)
+    with  props := <filter(is-property-cons)> entbodydecs
+        ; validations := <filter(?ValidateEntity(_,_))> entbodydecs
+        ; functions := <filter(is-function-cons)> entbodydecs  
+     
+  desugar-entity-validation(|validationrules):
+    props -> props3
+    where <?[ValidateEntity(echeck,emessage)|rest]> validationrules
+    with  varnames := <collect(?Var(<strip-annos>) <+ ?FieldAccess(Var("this"),<strip-annos>))> echeck
+        ; props2 := <map(try(desugar-entity-validation-helper(|varnames, echeck, emessage)))> props
+        ; props3 := <try(desugar-entity-validation(|rest))> props2
+          
+  desugar-entity-validation-helper(|varnames,echeck,emessage):
+    Property(name,kind,type,anno) -> //properties are normalized due to innermost
+    Property(name,kind,type,[ValidateAnno(echeck,emessage)|anno])
+    where <fetch(?name)> varnames
+   
+rules //error template
+
+  after-tc-declare-hook = validated-input-template;fail
+  after-tc-declare-hook = setup-message-templates ;fail //used internally to represent input with validations, declared as wrapper to reuse back-end code for each different input type
+
+  validated-input-template =
+    <emit-webdsl-code> Define([],"validatedInput",[],None(),[])
+    ; <add-builtin-rule> acrule |[
+        rule template validatedInput() {
+          true
+        }
+      ]| 
+
+  setup-message-templates = 
+    (get-error-template-input  <+ default-error-template-input)
+  ; (get-error-template-form   <+ default-error-template-form)
+  ; (get-error-template-action <+ default-error-template-action)
+  ; (get-template-success      <+ default-template-success)
+  
+  get-error-template-input  = !<TemplateSignature> ("errorTemplateInput", [GenericSort("List",[SimpleSort("String")])])
+  get-error-template-form   = !<TemplateSignature> ("errorTemplateForm",  [GenericSort("List",[SimpleSort("String")])])
+  get-error-template-action = !<TemplateSignature> ("errorTemplateAction",[GenericSort("List",[SimpleSort("String")])])
+
+  default-error-template-input =
+    <emit-webdsl-code> def|[
+      define ignore-access-control errorTemplateInput(messages : List<String>){
+        block()[style := "clear:left; float:left; border: 1px solid #FF0000; margin-left: -5px; margin-top: 5px; margin-bottom: 5px; padding: 4px"]{
+          validatedInput
+          for(ve: String in messages){
+            block()[style := "width:100%; clear:left; float:left; color: #FF0000; margin-top: 5px;"]{
+              output(ve)
+            }     
+          }
+        }
+      } 
+    ]|
+    
+  default-error-template-form =
+    <emit-webdsl-code> def|[    
+      define ignore-access-control errorTemplateForm(messages : List<String>){
+        block()[style := "clear:left; float:left; border: 1px solid #FF0000; margin-left: -5px; margin-top: 5px; margin-bottom: 5px; padding: 4px"]{
+          for(ve: String in messages){
+            block()[style := "width:100%; clear:left; float:left; color: #FF0000; margin-top: 5px;"]{
+              output(ve)
+            }     
+          }
+        }
+      }
+    ]|
+
+  default-error-template-action =
+    <emit-webdsl-code> def|[    
+      define ignore-access-control errorTemplateAction(messages : List<String>){
+        block()[style := "clear:left; float:left; border: 1px solid #FF0000; margin-left: -5px; margin-top: 5px; margin-bottom: 5px; padding: 4px"]{
+          for(ve: String in messages){
+            block()[style := "width:100%; clear:left; float:left; color: #FF0000; margin-top: 5px;"]{
+              output(ve)
+            }     
+          }
+          validatedInput
+        }
+      }
+    ]|

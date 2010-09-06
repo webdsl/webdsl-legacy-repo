@@ -1,0 +1,42 @@
+<project name="webdsl-build-clean" default="clean-all">
+  
+  
+  <target name="clean-app">
+    <echo level="info">Removing .servletapp directory.</echo>
+    <delete dir="${currentdir}/.servletapp" />
+  </target>
+  
+  
+  <target name="clean-generated-java">
+    <echo level="info">Removing .servletapp/src-generated</echo>
+    <delete dir="${currentdir}/.servletapp/src-generated" />
+    <echo level="info">Removing .servletapp/bin/WEB-INF/classes</echo>
+    <delete dir="${currentdir}/.servletapp/bin/WEB-INF/classes" />
+  </target>
+  
+  
+  <target name="clean-parse-cache">
+    <echo level="info">Removing .webdsl-parsecache directory.</echo>
+    <delete dir="${currentdir}/.webdsl-parsecache" />
+  </target>
+  
+  
+  <target name="clean-fragment-cache">
+    <echo level="info">Removing .webdsl-fragment-cache directory.</echo>
+    <delete dir="${currentdir}/.webdsl-fragment-cache" />
+  </target>
+  
+  
+  <target name="clean">
+    <antcall target="clean-app"/>	
+  </target>
+  
+  
+  <target name="clean-all">
+    <antcall target="clean-app"/>	
+    <antcall target="clean-parse-cache"/>	
+    <antcall target="clean-fragment-cache"/>	
+  </target>
+  
+  
+</project>

@@ -1,0 +1,74 @@
+module webdslc
+
+imports
+  libstratego-lib
+  libjava-front
+  libstratego-sglr
+  libstratego-tool-doc
+  libstratego-xtc
+imports
+  libwebdsl-generator
+  libwebdsl-front
+  libto-java-servlet
+  libwrite-files
+  libjava-transformations
+  libback-end-transformations
+  
+// inspiration:
+// https://svn.cs.uu.nl:12443/repos/StrategoXT/java-front/trunk/tools/parse-java.str
+// https://svn.cs.uu.nl:12443/repos/StrategoXT/dryad/trunk/compiler/main/dryad-front.str
+// https://svn.cs.uu.nl:12443/repos/StrategoXT/dryad/trunk/tools/class2aterm.str
+
+// ? xtc-multi-io-wrap
+
+strategies
+
+  webdslc-main =
+  	set-default-config
+    ; xtc-io-wrap(
+        webdslc-options
+      , webdslc-usage
+      , webdslc-about
+      , ![] // xtc dependencies
+      , xtc-webdslc; <exit> 0
+    )
+
+  xtc-webdslc = id
+      ; if WebDSLShowVersion then get-webdsl-version; debug(!"WebDSL version: "); <exit> 0 end
+      ; set-appname
+      ; stage(xtc-parse-webdsl|["parsing ",<AppName>,".app"])
+      ; {| StylesheetsToEmit:
+	      	dsl-to-core
+      		; where(get-css-artifacts; output-generated-files)
+      	|}
+      ; add-backend-annotations
+      ; stage(rename-identifiers-top|"renaming identifiers")
+      ; try(where(DebugPrintBackendTree; pp-aterm(!"Application AST:"); debug))
+        // BACKEND START
+      ; stage(back-end-transformations | "generation analysis")
+      ; stage(
+            ?Application(qid, <id>)
+          ; collect-all(?Section(_, <id>))
+          ; concat
+            // term is a list of toplevel definitions
+          ; if JavaServletBackend then
+              core-to-java-servlet(|qid)
+	         else
+              <fatal-error> ["\n", "No backend specified. Use --servlet for the Java servlet backend."]
+           end
+        |"code generation")
+      ; stage(
+        		filenames := 
+        			<where(CachingEnabled); output-generated-files-caching
+        			 <+ output-generated-files>
+		  		; where([] := filenames <+ <verbose-msg-newline> ["Written: ", filenames])
+		  		|"writing files")
+      ; if CachingEnabled then
+      			cleanup-generated-files
+    			; prune-fragment-dir
+    		end
+      ; print-total-log-time
+     
+
+	output-generated-files-caching = filter(cache-aux-file(file-to-filename, output-generated-file))
+	

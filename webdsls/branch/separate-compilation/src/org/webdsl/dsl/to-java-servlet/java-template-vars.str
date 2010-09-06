@@ -1,0 +1,47 @@
+module org/webdsl/dsl/to-java-servlet/java-template-vars
+
+imports
+  libstratego-lib
+  libjava-front
+
+imports
+  libwebdsl-front
+
+rules // page variables
+
+  /**
+   * Generating code for page variables
+   */
+  GenerateCodeJavaServlet =  where(ThisTemplateName);not(InAction <+ InFunction <+ JavaInEntity); generate-java-servlet-variables-code; fail
+
+  generate-java-servlet-variables-code :
+    //VarDecl(x, srt) ->
+    elem|[ var x : srt ]| ->
+    <generate-java-servlet-template-partial> class-body-dec*|[
+       private t x;
+       public t get#x() { return x; }
+       public void set#x(t x) { this.x = x; }
+       @Partial
+       protected void initializeLocalVars(){
+         x = e; 
+       } 
+    ]|
+    with  t     := <java-type> srt
+        ; X     := <capitalize-string> x
+        ; e     := <java-type-default-value> srt
+
+  generate-java-servlet-variables-code :
+    //VarDeclInit(x, srt, e1) ->
+    elem|[ var x : srt := e1 ]| ->
+    <generate-java-servlet-template-partial> class-body-dec*|[
+       private t x;
+       public t get#x() { return x; }
+       public void set#x(t x) { this.x = x; }
+       @Partial
+       protected void initializeLocalVars(){ 
+         x = e2; 
+       }
+    ]|
+    with  t     := <java-type> srt
+        ; X     := <capitalize-string> x
+        ; e2 := <expression-to-java-servlet> e1
