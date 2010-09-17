@@ -1,0 +1,81 @@
+module blog
+
+entity Pst1 { 
+  foo : String 
+}  
+
+entity User {
+  name : String
+}
+
+entity Blog {
+  url    : String 
+  name   : String  
+  posts  : Posts
+  author : User 
+}
+
+entity Posts {
+  post : Post
+  next : Posts
+}
+
+entity Post { 
+  name    : String
+  url     : String 
+  title   : String
+  text    : WikiText
+  blog    : Blog
+  author  : User 
+  blog    : Blog
+  version : Int
+}
+
+define page user(u : User) {  
+  header{ output(u.name) }  
+}
+ 
+define page blog(b : Blog) {
+  header{ output(b.name) }  
+  list{   
+    postList(b.posts)
+  }   
+}
+  
+define postList(posts : Posts) {
+  if(posts) { 
+    listitem{ output(posts.post.title) } 
+    postList(posts.next)  
+  }
+}
+ 
+define output(p : Post) { navigate post(p) { output(p.title) } }
+
+define output(u : User) { navigate user(u) { output(u.name) } }
+ 
+define page post(p : Post) {
+  header{ output(p.title) }     
+  output(p.text)
+  par{ "Posted by " output(p.author) }   
+  navigate editpost(p) { "Edit" }
+}
+
+define page editpost(p : Post) {
+  header{ output(p.title) }
+  form{ 
+    input(p.url)  
+    input(p.title)
+    input(p.text)
+  }
+}
+
+// 'library' definitions
+
+define list()     { } 
+define listitem() { } 
+define header()   { } 
+define par()      { } 
+
+define output(x : String) { }
+define output(x : WikiText) { }
+define form(){ }

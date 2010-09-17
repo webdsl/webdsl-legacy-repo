@@ -1,0 +1,27 @@
+module nwl
+
+imports libstratego-lib
+imports include/nwl
+imports check type-analysis rename desugar generation pretty-print primitives
+
+strategies // editor interface
+
+  main-nwl =
+    fatal-err(|"No main strategy")
+
+rules // hovering
+
+  editor-hover:
+    (term, position, ast, path, fullpath) -> help
+    where help := <hover-help> term
+  
+  hover-help-default :
+    term -> $[Hover help: [<write-to-string> term]]
+
+rules
+
+  hover-help : 
+    e -> <pp> t 
+    where t := <type-of> e
+
+

@@ -1,0 +1,127 @@
+module check
+
+imports libstratego-aterm libstratego-gpp
+imports include/nwl
+imports type-analysis rename pretty-print primitives
+imports lib/editor-common.generated
+
+rules // static analysis
+
+  editor-analyze:
+    (ast, path, fullpath) -> (ast2, errors, warnings, [])
+    with
+      editor-init;
+      ast2 := <declare-all> ast
+    with
+      errors   := <collect-all(check, conc)> ast2;
+      warnings := <collect-all(constraint-warning, conc)> ast2
+  
+rules // type-of builder
+
+  type-of-try =
+    type-of <+ !"no type"
+    
+  show-type :
+    (selected, position, ast, path, project-path) -> (filename, result-string)
+    with ast2 := <editor-init; declare-all> ast
+    with 
+      filename      := <guarantee-extension(|"aterm")> path;
+      result-string := <type-of-try; pp-aterm-box; box2text-string(|120)> selected
+      
+strategies
+  
+   require(s) = not(s)
+   
+rules // entity declarations
+  
+  check :
+    t@SimpleType(x) -> (x, $[Type '[x]' is not defined])
+    where require(<is-simple-type> t)
+
+rules // expressions
+
+  check :
+    e@Var(x) -> (<id>, $[Variable '[x]' not declared])
+    where require(<type-of>e)
+   
+  check :
+    e1@PropertyAccess(e2, f) -> (f, $[[<pp>t] has no property '[f]])
+    where t := <type-of> e2
+    where require(<type-of>e1)
+    
+rules // template references
+  
+  check :
+    TemplateRef(x, e*) -> (x, $[Reference to undefined template '[x]'])
+    where not(<is-primitive-template> x)
+    where require(<Template> x)
+   
+  check :
+    ref@TemplateRef(x, e*) -> errors 
+    where not(<declaration-of>ref)
+    where def := <Template> x
+    where errors := <zip; filter(check-arg); not(?[])> (e*, <param-types> def)
+   
+  check-arg :
+    (e, t) -> (e, $[Argument of type '[<pp>t]' expected (not of type '[<pp>t2]')])
+    where t2 := <type-of> e
+    where require(<eq>(t, t2))
+
+  check :
+    ref@TemplateRef(x, e*) -> [(x, $['[x]' expects [<int-to-string>l] arguments; [<int-to-string>k] provided])]
+    where not(<declaration-of>ref)
+    where def := <Template> x
+    with k := <length>e*
+    with l := <param-types; length> def
+    where require(<eq>(k, l))
+        
+rules // page references and template calls 
+  
+  check :
+    PageRef(ref@TemplateRef(x, e*)) -> [(x, $[Navigation to template '[x]' (not a page)])]
+    where def := <declaration-of> ref
+    where require(<is-page-def> def)
+
+  constraint-warning :
+    Call(ref@TemplateRef(x, e*), elem*) -> [(x, $[Page definition is used as template])]
+    where def := <declaration-of> ref
+    where require(not(<is-page-def> def))
+      
+  check :
+    Call(TemplateRef("input", [e]), []) -> (e, $[Argument of input should be variable or property access])
+    where require(<is-lvalue> e)
+
+rules // multiple definitions
+  
+  check-property(|ent) :
+    Property(name, type) -> (name, $[Property '[name]' defined more than once])
+    where require(<lookup-property(|name); type-of>ent => type)
+      
+  check :
+    ent@Entity(x, prop*) -> (x, $[Entity '[x]' defined more than once])
+    where require(<EntityDeclaration> x => ent)
+
+  check :
+    def@TemplateDef(mod*, x, param*, elem*) -> (x, $[Multiple definitions for page '[x]'])
+    where <is-page-def> def
+    where require(<Template> x => def)
+  
+  check :
+    def@TemplateDef(mod*, x, param*, elem*) -> (x, $[Multiple definitions for template with signature [sig]])
+    where not(is-page-def)
+    where require(<declaration-of> def => def)
+    where sig := <signature-of;pp-sig> def
+
+rules
+  
+  check :
+    IfElement(e, elem*) -> (e, $[])
+    where require(<type-of> e) 
+
+  check :
+    IfElement(e, elem1*, elem2*) -> (e, $[])
+    where require(<type-of> e)
+    
+  check :
+    MethodCall(e, f, e*) -> (f, $[Method not defined])
+    where require(type-of)

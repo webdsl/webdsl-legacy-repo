@@ -1,0 +1,136 @@
+module rename
+
+imports libstratego-aterm libstratego-gpp
+imports include/nwl
+imports desugar type-analysis primitives check
+imports lib/editor-common.generated
+
+rules // completion
+  
+  editor-complete:
+    (_, position, ast, path, project-path) -> s*
+    with
+      debug(!"complete1:");
+      editor-init;
+      ast2 := <declare-all> ast;
+      s*   := <collect-one(complete-def)> ast2
+  
+  complete-def:
+    PropertyAccess(e, COMPLETION(_)) -> f*
+    where t := <type-of> e
+    where ent := <declaration-of> t
+    where f* := <collect-all(?Property(<id>,_))> ent
+      
+rules // resolution
+
+  editor-resolve:
+    (SimpleType(type), position, ast, path, fullpath) -> target
+    where Entity(target,_) := <EntityDeclaration> type
+
+  editor-resolve:
+    (ref@PropertyAccess(_,_), position, ast, path, fullpath) -> target
+    where target := <declaration-of> ref
+ 
+  editor-resolve:
+    (ref@TemplateRef(x,e*), position, ast, path, fullpath) -> target
+    where TemplateDef(_,target,_,_) := <declaration-of> ref
+
+  editor-resolve:
+    (e@Var(x), position, ast, path, fullpath) -> target
+    where target := <declaration-of> e
+
+rules
+
+  declare-all =
+    declare-primitives;
+    desugar-all;
+    alltd(declare-def); 
+    rename-all
+    
+rules // top-level declarations
+  
+  declare-def:
+    ent@Entity(x, prop*) -> Entity(x, prop*)
+    with rules( EntityDeclaration : x -> ent )
+
+  declaration-of : 
+    SimpleType(x) -> <EntityDeclaration> x
+  
+  declare-def :
+    def@TemplateDef(mod*, x, param*, elem*) -> TemplateDef(mod*, x, param*, elem*)
+    with sig := <signature-of> def;
+         rules(
+           Template : x -> def
+           Template : sig -> def
+         )
+
+  signature-of : 
+    TemplateDef(mod*, x, param*, elem*) -> (x, <param-types>param*)
+
+  param-types : 
+    TemplateDef(mod*, x, param*, elem*) -> <param-types> param*
+
+  signature-of :
+    TemplateRef(x, e*) -> (x, t*)
+    where t* := <map(type-of)> e*
+    
+  declaration-of : 
+    ref@TemplateRef(x, e*) -> def
+    where def := <signature-of; Template> ref
+    
+rules // renaming local identifiers
+    
+  rename-all = alltd(rename) 
+
+  rename : 
+    TemplateDef(mod*, x, param1*, elem1*) -> <declare-def> TemplateDef(mod*, x, param2*, elem3*)
+    with {| RenameId
+          : param2* := <rename-all> param1*
+          ; elem2*  := <alltd(rename)> elem1*
+          ; elem3*  := <rename-all> elem2*
+          |}
+           
+  rename : 
+    Param(x, t) -> <declare-var(|y)> Param(y, t)
+    with y := <rename-var>(x, t)
+  
+  rename-var : 
+     (x, t) -> y
+     with y := x{<new>};
+          rules(
+             RenameId : x -> y
+             TypeOf   : y -> t 
+          )
+
+  rename : 
+    Var(x) -> Var(y) 
+    where y := <RenameId> x
+
+rules // name resolution
+             
+  rename-res :  
+    Param(x, t) -> Param(y, t)
+    with y := <rename-var>(x, t)
+    with declare-var(|y)
+ 
+  declare-var(|x) : 
+    decl -> decl 
+    with rules( VariableDeclaration : x -> decl )
+
+  declaration-of : 
+    Var(x) -> <VariableDeclaration> x
+  
+  declaration-of : 
+    TemplateDef(mod*, x, param*, elem*) -> <signature-of; Template>
+
+  declaration-of : 
+    PageRef(r) -> <declaration-of> r
+    
+  declaration-of : 
+    Navigate(ref, elems) -> <declaration-of> ref
+  
+  declaration-of :
+  	PropertyAccess(e, f) -> <lookup-property(|f)> e-decl
+  	where
+      t      := <type-of> e;
+      e-decl := <declaration-of> t

@@ -1,0 +1,42 @@
+module nwl
+    
+imports Common 
+   
+exports
+  context-free start-symbols Start
+  sorts Definition  
+  context-free syntax
+    "module" ID Definition* -> Start {cons("Module")}
+    
+  sorts Entity Property Type Exp
+  context-free syntax
+    Entity                        -> Definition
+    "entity" ID "{" Property* "}" -> Entity     {cons("Entity")} 
+    ID ":" Type                   -> Property   {cons("Property")} 
+    ID                            -> Type       {cons("SimpleType")}
+    STRING                        -> Exp        {cons("StringLit")}
+    ID                            -> Exp        {cons("Var")}
+    Exp "." ID "(" {Exp ","}* ")" -> Exp        {cons("MethodCall")}
+    Exp "." ID                    -> Exp        {cons("PropertyAccess")}
+    
+  sorts Mod Param Element
+  context-free syntax
+    Template                                                  -> Definition
+    "define" Mod* ID "(" {Param ","}* ")" "{" Element* "}"    -> Template    {cons("TemplateDef")}
+    "page"                                                    -> Mod         {cons("Page")}
+    ID ":" Type                                               -> Param       {cons("Param")}
+    STRING                                                    -> Element     {cons("String")}
+    TemplateRef                                               -> Element     {cons("Call")}
+    TemplateRef "{" Element* "}"                              -> Element     {cons("Call")}
+    "navigate" PageRef "{" Element* "}"                       -> Element     {cons("Navigate")}
+    ID                                                        -> TemplateRef {cons("TemplateRef")}
+    ID "(" {Exp ","}* ")"                                     -> TemplateRef {cons("TemplateRef")}
+    TemplateRef                                               -> PageRef     {cons("PageRef")}
+         
+    "if" "(" Exp ")" "{" Element* "}"                         -> Element     {cons("IfElement")}
+    "if" "(" Exp ")" "{" Element* "}" "else" "{" Element* "}" -> Element     {cons("IfElement")}
+    
+  lexical syntax
+    "navigate" -> ID {reject}
+    "if"       -> ID {reject}
+    "else"     -> ID {reject}

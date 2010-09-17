@@ -1,0 +1,32 @@
+module type-analysis
+
+imports libstratego-aterm libstratego-gpp
+imports include/nwl
+imports pretty-print rename primitives
+
+rules // type-of
+  
+  type-of : 
+    Var(x) -> t 
+    where t := <TypeOf> x
+  
+  type-of : 
+    PropertyAccess(e, f) -> t2 
+    where t1 := <type-of> e
+    where ent := <declaration-of> t1
+    where Property(f, t2) := <lookup-property(|f)> ent
+
+  lookup-property(|f) :  
+    Entity(x, prop*) -> <fetch-elem(?Property(f,_))> prop*
+         
+  is-lvalue = 
+    ?Var(_) <+ ?PropertyAccess(_,_)
+      
+rules // types
+
+  is-entity-type = where(SimpleType(EntityDeclaration))
+  is-simple-type = is-primitive-type <+ is-entity-type
+  
+  param-types = is-list; map(?Param(_,<id>))
+
+  is-page-def = ?TemplateDef([Page()],_,_,_)
