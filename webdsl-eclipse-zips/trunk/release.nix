@@ -65,6 +65,7 @@ let
         echo "-Xss8m" >> ${eclipseini}
         echo "-Xmx1024m" >> ${eclipseini}
         echo "-XX:MaxPermSize=256m" >> ${eclipseini}
+        echo "-server" >> ${eclipseini}
 
         # Copy predefined settings (workspace location)
         cp ${./org.eclipse.ui.ide.prefs} configuration/.settings
