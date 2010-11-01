@@ -2,28 +2,28 @@ let
   pkgs = import /etc/nixos/nixpkgs {};
 
   eclipseWin = pkgs.fetchurl {
-      url = http://download.springsource.com/release/ECLIPSE/galileo/SR2/eclipse-jee-galileo-SR2-win32.zip ;
-      sha256 = "a2f3145afc6d5efae7a2f6258fe19b88957ac073906a6d1882029463126db3f4"; 
+      url = http://download.springsource.com/release/ECLIPSE/helios/SR1/eclipse-SDK-3.6.1-win32.zip ;
+      sha256 = ""; 
     };
 
   eclipseLinux = pkgs.fetchurl {
-      url = http://download.springsource.com/release/ECLIPSE/galileo/SR2/eclipse-jee-galileo-SR2-linux-gtk.tar.gz ;
-      sha256 = "1hzv538b1mpv9ww7jybpclx98cjspylyl7fwh6fy4rb68s60gg32"; 
+      url = http://download.springsource.com/release/ECLIPSE/helios/SR1/eclipse-SDK-3.6.1-linux-gtk.tar.gz ;
+      sha256 = ""; 
     };
 
   eclipseLinux64 = pkgs.fetchurl {
-      url = http://download.springsource.com/release/ECLIPSE/galileo/SR2/eclipse-jee-galileo-SR2-linux-gtk-x86_64.tar.gz ;
-      sha256 = "06gdsjvazw17f4lqfqxafib1vi3iz69lhnf0m0x63fh608ajihsg"; 
+      url = http://download.springsource.com/release/ECLIPSE/helios/SR1/eclipse-SDK-3.6.1-linux-gtk-x86_64.tar.gz ;
+      sha256 = ""; 
     };
 
   eclipseMac = pkgs.fetchurl {
-      url = http://download.springsource.com/release/ECLIPSE/galileo/SR2/eclipse-jee-galileo-SR2-macosx-cocoa.tar.gz ;
-      sha256 = "1kap1ibjck3q2anvsbi2jmwrn3lzilwkyyv2rzg5cv1117l5c6hn"; 
+      url = http://download.springsource.com/release/ECLIPSE/helios/SR1/eclipse-SDK-3.6.1-macosx-cocoa.tar.gz ;
+      sha256 = ""; 
     };
 
   eclipseMac64 = pkgs.fetchurl {
-      url = http://download.springsource.com/release/ECLIPSE/galileo/SR2/eclipse-jee-galileo-SR2-macosx-cocoa-x86_64.tar.gz ;
-      sha256 = "1wrh2rd57wpc2pb47agp2q3acipm3fzxq1xsxa615yx065s824fy"; 
+      url = http://download.springsource.com/release/ECLIPSE/helios/SR1/eclipse-SDK-3.6.1-macosx-cocoa-x86_64.tar.gz ;
+      sha256 = ""; 
     };
 
   eclipseZip = { name, eclipse, system }:
@@ -90,11 +90,11 @@ in
     name = "webdsl-zips";
     buildCommand = ''
       mkdir -p $out
-      ln -s ${ eclipseZip { name = "eclipsewin.zip"; eclipse = eclipseWin ; system = "i686-cygwin";  } } $out/eclipsewin.zip
-      ln -s ${ eclipseZip { name = "eclipselinux64.zip"; eclipse = eclipseLinux64 ; system = "x86_64-linux";  } } $out/eclipselinux64.zip
-      ln -s ${ eclipseZip { name = "eclipselinux.zip";   eclipse = eclipseLinux ;   system = "i686-linux";    } } $out/eclipselinux.zip
-      ln -s ${ eclipseZip { name = "eclipsemac64.zip";   eclipse = eclipseMac64 ;   system = "x86_64-darwin"; } } $out/eclipsemac64.zip
-      ln -s ${ eclipseZip { name = "eclipsemac.zip";     eclipse = eclipseMac ;     system = "i686-darwin";   } } $out/eclipsemac.zip
+      ln -s ${ eclipseZip { name = "eclipsewin.zip";     eclipse = eclipseWin;     system = "i686-cygwin";   } } $out/eclipsewin.zip
+      ln -s ${ eclipseZip { name = "eclipselinux64.zip"; eclipse = eclipseLinux64; system = "x86_64-linux";  } } $out/eclipselinux64.zip
+      ln -s ${ eclipseZip { name = "eclipselinux.zip";   eclipse = eclipseLinux;   system = "i686-linux";    } } $out/eclipselinux.zip
+      ln -s ${ eclipseZip { name = "eclipsemac64.zip";   eclipse = eclipseMac64;   system = "x86_64-darwin"; } } $out/eclipsemac64.zip
+      ln -s ${ eclipseZip { name = "eclipsemac.zip";     eclipse = eclipseMac;     system = "i686-darwin";   } } $out/eclipsemac.zip
     '';
 
 
