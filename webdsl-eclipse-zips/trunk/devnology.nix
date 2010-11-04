@@ -1,5 +1,5 @@
 (import ./eclipse.nix {
-  basename = "spoofax";
+  basename = "devnology";
   updatesites = [
     "http://mobl-lang.org/update"
     "http://webdsl.org/update"
