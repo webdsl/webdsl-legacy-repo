@@ -1,5 +1,9 @@
+{ updatesites
+, installIUs 
+, basename 
+}:
 rec {
-  pkgs = import /etc/nixos/nixpkgs { system = "x86_64-darwin";};
+  pkgs = import /etc/nixos/nixpkgs { };
 
   eclipseWin = pkgs.fetchurl {
       url = http://download.springsource.com/release/ECLIPSE/helios/SR1/eclipse-SDK-3.6.1-win32.zip ;
@@ -29,7 +33,7 @@ rec {
   eclipseZip = { name, eclipse, system }:
     let pkgs = import /etc/nixos/nixpkgs { inherit system; };
         eclipseini = (if pkgs.stdenv.isDarwin then "Eclipse.app/Contents/MacOS/" else "" ) + "eclipse.ini";
-    in
+    in with pkgs.lib;
     pkgs.stdenv.mkDerivation rec {
       __noChroot = true;
 
@@ -37,14 +41,8 @@ rec {
       buildInputs = [pkgs.jdk pkgs.zip pkgs.unzip pkgs.perl]; 
 
       buildCommand = ''
-        WEBDSL_SITE=http://www.webdsl.org/update
-        SPOOFAX_SITE=http://www.lclnet.nl/update
-        WTP_SITE=http://download.eclipse.org/webtools/repository/helios
-
-        # emf is needed by org.eclipse.jst.ws.axis.creation.ui, org.eclipse.jst.ws.consumption
-        EMF_SITE=http://download.eclipse.org/modeling/emf/updates/releases/
-
-        ALL_SITES="$WEBDSL_SITE,$SPOOFAX_SITE,$WTP_SITE,$EMF_SITE,http://download.eclipse.org/releases/helios,http://download.eclipse.org/datatools/updates/"
+        ALL_SITES="${concatStringsSep "," updatesites}"
+        echo "ALL_SITES: $ALL_SITES"
 
         echo "Copying eclipse..."
         mkdir data 
@@ -71,15 +69,17 @@ rec {
         # Copy predefined settings (workspace location)
         cp ${./org.eclipse.ui.ide.prefs} configuration/.settings
 
-        echo "Installing Editor..."
-
-        ${if system == "x86_64-darwin" || system == "i686-darwin" then "/usr/bin/" else ""}java -Xmx512m -jar plugins/org.eclipse.equinox.launcher_*.jar  \
-             -application org.eclipse.equinox.p2.director \
-             -metadataRepository $ALL_SITES \
-             -artifactRepository $ALL_SITES \
-             -installIU webdsl.editor.feature.feature.group \
-             -data ../data \
-             -consolelog
+        ${concatMapStrings (installIU: ''
+            echo "Installing Editor ${installIU}..."
+            ${if system == "x86_64-darwin" || system == "i686-darwin" then "/usr/bin/" else ""}java -Xmx512m -jar plugins/org.eclipse.equinox.launcher_*.jar  \
+                 -application org.eclipse.equinox.p2.director \
+                 -metadataRepository $ALL_SITES \
+                 -artifactRepository $ALL_SITES \
+                 -installIU ${installIU} \
+                 -data ../data \
+                 -consolelog
+          '') installIUs
+        }
 
         cd ..
         zip -r ${name} eclipse
@@ -95,7 +95,7 @@ rec {
 
   zips =  
     pkgs.stdenv.mkDerivation {
-      name = "webdsl-zips";
+      name = "${basename}-zips";
       buildCommand = ''
         mkdir -p $out
         ln -s ${ zipWin } $out/eclipsewin.zip
