@@ -1,0 +1,25 @@
+.thumbnail {
+  width: 100px;
+  height: 75px;
+  float: left;
+  margin: 10px;
+  overflow: hidden;
+  text-align: center;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #d9d9d5;
+}
+
+.emptyThumbnail {
+  width: 100px;
+  height: 75px;
+  float: left;
+  margin: 10px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #d9d9d5;
+}
+
+.outputimage {
+  border-width: 0;	
+}
