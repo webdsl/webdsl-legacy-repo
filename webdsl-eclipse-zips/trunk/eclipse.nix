@@ -1,9 +1,10 @@
 { updatesites
 , installIUs 
 , basename 
+, nixpkgs ? /etc/nixos/nixpkgs
 }:
 rec {
-  pkgs = import /etc/nixos/nixpkgs { };
+  pkgs = import nixpkgs { };
 
   eclipseWin = pkgs.fetchurl {
       url = http://download.springsource.com/release/ECLIPSE/helios/SR1/eclipse-SDK-3.6.1-win32.zip ;
