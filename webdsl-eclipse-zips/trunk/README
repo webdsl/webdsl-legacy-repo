@@ -1,0 +1,5 @@
+To build new webdsl zips, make sure the update site has the 
+required version, change the version number in webdsl.nix, 
+and run the following command:
+
+ * nix-build webdsl.nix
