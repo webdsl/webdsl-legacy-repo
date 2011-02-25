@@ -31,8 +31,8 @@ rec {
     };
 
   eclipseZip = { name, eclipse, system }:
-    let pkgs = import /etc/nixos/nixpkgs { inherit system; };
-        eclipseini = (if pkgs.stdenv.isDarwin then "Eclipse.app/Contents/MacOS/" else "" ) + "eclipse.ini";
+    let 
+      eclipseini = (if system == "i686-darwin" || system == "x86_64-darwin" then "Eclipse.app/Contents/MacOS/" else "" ) + "eclipse.ini";
     in with pkgs.lib;
     pkgs.stdenv.mkDerivation rec {
       __noChroot = true;
@@ -69,9 +69,10 @@ rec {
         # Copy predefined settings (workspace location)
         cp ${./org.eclipse.ui.ide.prefs} configuration/.settings
 
+
         ${concatMapStrings (installIU: ''
             echo "Installing Editor ${installIU}..."
-            ${if system == "x86_64-darwin" || system == "i686-darwin" then "/usr/bin/" else ""}java -Xmx512m -jar plugins/org.eclipse.equinox.launcher_*.jar  \
+            ${if pkgs.stdenv.system == "x86_64-darwin" || pkgs.stdenv.system == "i686-darwin" then "/usr/bin/" else ""}java -Xmx512m -jar plugins/org.eclipse.equinox.launcher_*.jar  \
                  -application org.eclipse.equinox.p2.director \
                  -metadataRepository $ALL_SITES \
                  -artifactRepository $ALL_SITES \
@@ -98,11 +99,12 @@ rec {
       name = "${basename}-zips";
       buildCommand = ''
         mkdir -p $out
-        ln -s ${ zipWin } $out/eclipsewin.zip
         ln -s ${ zipLinux64 } $out/eclipselinux64.zip
         ln -s ${ zipLinux } $out/eclipselinux.zip
-        ln -s ${ zipMac64 } $out/eclipsemac64.zip
         ln -s ${ zipMac } $out/eclipsemac.zip
+        ln -s ${ zipMac64 } $out/eclipsemac64.zip
+        ln -s ${ zipWin } $out/eclipsewin.zip
       '';
     };
 }
+
