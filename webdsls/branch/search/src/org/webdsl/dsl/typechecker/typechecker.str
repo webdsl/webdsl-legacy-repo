@@ -1,0 +1,113 @@
+/**
+
+  Type rules for WebDSL
+
+*/
+
+module org/webdsl/dsl/typechecker/typechecker
+
+imports
+  libstrategolib
+  libjava-front
+
+imports
+  libwebdsl-front
+
+strategies
+
+  typecheck =
+    in-typechecking-phase(
+        typecheck-init
+      ; typecheck-declare
+      ; typechecker-after-declare
+      ; rename-top
+      ; if-typechecking(
+          where(
+              log-time(constraint-error-all | "constraint-error" )
+            // do not apply on Application, it would show the entire AST with the error at command line
+            ; log-time(not(<constraint-error-global> "") | "constraint-error-global"))
+        , 
+          id)
+    )
+  
+  //call resolving/overloading is done during rename, typechecking errors are produced by constraint-error strategy
+  //when no longer in typechecking, but e.g. during desugaring a failed resolve should give an error
+  in-typechecking-phase(s) =
+    {| InTypeCheckingPhase:
+        rules(InTypeCheckingPhase := True())
+      ; s
+    |}
+    
+  // This must be called *before* any declares as it sets up the built-in types
+  typecheck-init = 
+    {| CurrentModule:
+        rules(CurrentModule := "___BUILTIN___")
+      ; not(built-in-template-rule-setup
+         ; fatal-err-msg(|"error in typechecker.str, failure should not occur here, make sure built-in-template-setup rules end with ';fail'")
+       ) // setup dyn rules for checks
+    |}
+  
+  typecheck-declare =
+    log-time(declare-all | "declare-all") //declares globally visible webdsl elements
+    
+  typechecker-after-declare =
+      log-time(declare-all-override | "declare-all-override")
+    ; log-time(
+        not(
+            after-tc-declare-hook
+          ; fatal-err-msg(|"error in typechecker.str, failure should not occur here, make sure after-tc-declare-hook rules end with ';fail'")
+        ) // setup dyn rules for checks
+        | "after-tc-declare-hook")
+
+  constraint-error-all =
+    bottomup(try(constraint-error; where(stage-newline-once); debug(!"INTERNAL ERROR: constraint-error succeeded for: ")))
+  
+  catch-errors-editor(s) = 
+    {| AllErrors, AllWarnings:
+      rules(
+        // Override the error reporting behavior to collect errors
+        AddError(|msgs):   node -> node where rules(AllErrors   :+= (node, <error-to-string> msgs))
+        AddWarning(|msgs): node -> node where rules(AllWarnings :+= (node, <error-to-string> msgs))
+      )
+      ; s
+      ; !(<bagof-AllErrors <+ ![]>, <bagof-AllWarnings <+ ![]>)
+    |}
+  
+rules
+
+  get-toplevel-name = get-anno(?TopLevelName(<id>))
+
+rules // with-toplevel-name
+  
+  create-toplevel-name = 
+      modname := <get-anno(?At(<id>, _, _); clean-module-name)>
+    ; <concat-strings; newname-webdsl> [modname, "_topdef"]
+  
+  // in desugaring, new elements do not have position information
+  create-toplevel-name = <concat-strings; newname> ["topdef"]
+    
+  clean-module-name = string-as-chars(filter(is-alpha))
+    
+  // Find toplevel name for element and do s
+  with-toplevel-name(s) =
+    (		where(name := <get-toplevel-name>)
+    <+	where(name := <create-toplevel-name>)
+      ; add-anno(|TopLevelName(name))
+    )
+    ; with-toplevel-name(s|name)
+    
+  with-toplevel-name(s|name) = {| TopLevelDefineName:
+      rules(TopLevelDefineName := name)
+    ; s
+  |}
+
+rules	// map-toplevel
+  
+  // Alltd: apply s above top-level definitions, and s-toplevel on all toplevel definitions
+  map-toplevel(s, s-toplevel) = alltd(
+    {
+       ?Section(name, defs){anno*}; defs2 := <map(s-toplevel)> defs; !Section(name, defs2){anno*}
+    <+ ?AccessControlDefinition(name, defs){anno*}; defs2 := <map(s-toplevel)> defs; !AccessControlDefinition(name, defs2){anno*}
+    <+ s
+    }
+  )
