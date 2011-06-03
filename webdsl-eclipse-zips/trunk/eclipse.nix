@@ -7,28 +7,28 @@ rec {
   pkgs = import nixpkgs { };
 
   eclipseWin = pkgs.fetchurl {
-      url = http://download.springsource.com/release/ECLIPSE/helios/SR1/eclipse-SDK-3.6.1-win32.zip ;
-      sha256 = "08chhq5y9z3v1ld0p2mf1xakhj4vs9s25ayvcn9h748mzhaahzda"; 
+      url = http://download.springsource.com/release/ECLIPSE/helios/SR2/eclipse-SDK-3.6.2-win32.zip ;
+      sha256 = "e102f556b622c861bdc72af62de6c9564ac092047ea7a74e2a66dfcc48109d34";
     };
 
   eclipseLinux = pkgs.fetchurl {
-      url = http://download.springsource.com/release/ECLIPSE/helios/SR1/eclipse-SDK-3.6.1-linux-gtk.tar.gz ;
-      sha256 = "0s48rjaswi8m5gan1zlqvfwb4l06x5nslkq41wpkrbyj9ka8gh4x"; 
+      url = http://download.springsource.com/release/ECLIPSE/helios/SR2/eclipse-SDK-3.6.2-linux-gtk.tar.gz ;
+      sha256 = "7040b3693b1c136bb7c00ddd71956c0c533f3dd4be3b7e6bf5a7e55d4f669228";
     };
 
   eclipseLinux64 = pkgs.fetchurl {
-      url = http://download.springsource.com/release/ECLIPSE/helios/SR1/eclipse-SDK-3.6.1-linux-gtk-x86_64.tar.gz ;
-      sha256 = "1cg9rrb5w978sdqbzz9lnli1lds9zhb6wfsj3wp725bqf1i6v9lg"; 
+      url = http://download.springsource.com/release/ECLIPSE/helios/SR2/eclipse-SDK-3.6.2-linux-gtk-x86_64.tar.gz ;
+      sha256 = "0dfcfadcd6337c897fbfd5b292de481931dfce12d43289ecb93691fd27dd47f4";
     };
 
   eclipseMac = pkgs.fetchurl {
-      url = http://download.springsource.com/release/ECLIPSE/helios/SR1/eclipse-SDK-3.6.1-macosx-cocoa.tar.gz ;
-      sha256 = "1jdsnipbf4db0i0g9vcpnmh4mdgg874p15677wibm4righ9cj9n3"; 
+      url = http://download.springsource.com/release/ECLIPSE/helios/SR2/eclipse-SDK-3.6.2-macosx-cocoa.tar.gz ;
+      sha256 = "804df8e252ef843cf91bfe38da2a1e51839fc5a829acccd3dbca4bda215cbfad"; 
     };
 
   eclipseMac64 = pkgs.fetchurl {
-      url = http://download.springsource.com/release/ECLIPSE/helios/SR1/eclipse-SDK-3.6.1-macosx-cocoa-x86_64.tar.gz ;
-      sha256 = "0b3pa4vc68dcxc9db7gj1vcikinxppxs5bi3rydsxzzsycrm0vly"; 
+      url = http://download.springsource.com/release/ECLIPSE/helios/SR2/eclipse-SDK-3.6.2-macosx-cocoa-x86_64.tar.gz ;
+      sha256 = "29300f57611f14b56aa48dbcbbdc43032b55c3a9621614b82c577a57bedddbd5";
     };
 
   eclipseZip = { name, eclipse, system }:
