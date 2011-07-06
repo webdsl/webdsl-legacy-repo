@@ -1,22 +1,15 @@
-let pkgs = import /etc/nixos/nixpkgs/pkgs/top-level/all-packages.nix { }; in
-with pkgs;
+{ pkgs ? import (builtins.getEnv "NIXPKGS_ALL") {}
+, system ? builtins.currentSystem
+}:
 
 rec {    
   webdsl = import ../development/webdsl {
-    inherit stdenv fetchurl pkgconfig getopt apacheAnt;
-    inherit (strategoPackages017) aterm sdf strategoxt javafront;
-  };
-
-#### WebDSL applications
-  associations = import ../webdslapps/associations {
-    inherit webdsl fetchsvn;
-  };
-
-  researchr = import ../webdslapps/researchr {
-    inherit webdsl fetchsvn;
+    inherit (pkgs) stdenv pkgconfig apacheAnt perl autoconf automake libtool;
+    inherit (pkgs.strategoPackages018) aterm sdf strategoxt javafront;
   };
   
-  webdslorg = import ../webdslapps/webdslorg {
-    inherit webdsl fetchsvn;
+  webdslbuild = import ../development/webdsl/webdslbuild.nix {
+    inherit (pkgs) stdenv apacheAnt;
+    inherit webdsl;
   };
 }
