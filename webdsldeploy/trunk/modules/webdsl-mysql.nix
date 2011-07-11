@@ -13,12 +13,12 @@ in
 	description = "Whether to enable the WebDSL MySQL configuration";
       };
       
-      databaseName = mkOption {
-        description = "Name of the WebDSL MySQL database";
+      databaseNames = mkOption {
+        description = "Names of the WebDSL MySQL databases";
       };
       
       databasePassword = mkOption {
-        description = "Passwork of the WebDSL MySQL database";
+        description = "Password of the WebDSL MySQL database";
       };
     };
   };
@@ -26,7 +26,7 @@ in
   config = mkIf cfg.enable {
     services.mysql.enable = true;
     services.mysql.rootPassword = pkgs.writeTextFile { name = "mysqlpw"; text = cfg.databasePassword; };
-    services.mysql.initialDatabases = [ { name = cfg.databaseName; schema = ./schema.sql; } ];
+    services.mysql.initialDatabases = map (databaseName: { name = databaseName; schema = ./schema.sql; } ) (cfg.databaseNames);
     services.mysql.initialScript = ./mysqlscript;
   };
   

@@ -3,6 +3,7 @@
 
 stdenv.mkDerivation {
   inherit name src;
+
   buildInputs = [ webdsl apacheAnt ];
   buildPhase =
   ''
@@ -15,7 +16,6 @@ stdenv.mkDerivation {
       echo "dbmode=${dbmode}"
       echo "indexdir=/var/tomcat/temp/indexes/${name}"
       echo "rootapp=${if rootapp then "true" else "false"}"
-      
     ) > application.ini
     webdsl war
   '';

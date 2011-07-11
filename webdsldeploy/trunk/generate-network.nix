@@ -1,8 +1,6 @@
 { pkgs ? import (builtins.getEnv "NIXPKGS_ALL") {}
-, name, src
-, databaseName ? name
-, databasePassword, databaseMode ? "update"
-, rootapp ? false
+, applications
+, databasePassword
 , distribution ? { test = { tomcat = true; httpd = true; mysql = true; }; }
 , adminAddr
 }:
@@ -19,15 +17,20 @@ let
     if (target ? mysql && target.mysql) then targetName else searchMySQLServer (builtins.tail targetNames)
   ;
   
-  webapps = [ ((import ./top-level/all-packages.nix {}).webdslbuild {
-      inherit name src rootapp;
-      dbserver = searchMySQLServer (builtins.attrNames distribution);
-      dbname = databaseName;
-      dbuser = "root"; # !!! Ugly
-      dbpassword = databasePassword;
-      dbmode = databaseMode;
-    })
-  ];
+  webdslbuild = (import ./top-level/all-packages.nix { inherit pkgs; }).webdslbuild;
+  
+  webapps = map (applicationConfig: 
+      (webdslbuild {
+        inherit (applicationConfig) name src;
+	rootapp = if applicationConfig ? rootapp then applicationConfig.rootapp else false;
+	dbserver = searchMySQLServer (builtins.attrNames distribution);
+	dbname = if applicationConfig ? databaseName then databaseName else applicationConfig.name;
+	dbuser = "root"; # !!! Ugly
+	dbpassword = databasePassword;
+	dbmode = if applicationConfig ? databaseMode then databaseMode else "update";
+      })
+    ) applications
+  ;  
 in
 mapAttrs (targetName: options:
   { pkgs, ... }:
@@ -43,7 +46,7 @@ mapAttrs (targetName: options:
   } //
   optionalAttrs (options ? mysql && options.mysql) {
     webdslmysql.enable = true;
-    webdslmysql.databaseName = databaseName;
+    webdslmysql.databaseNames = map (applicationConfig: if applicationConfig ? databaseName then applicationConfig.databaseName else applicationConfig.name) applications;
     webdslmysql.databasePassword = databasePassword;
   } //
   optionalAttrs (options ? tomcat && options.tomcat) {
