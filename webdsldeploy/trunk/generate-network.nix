@@ -36,11 +36,10 @@ mapAttrs (targetName: options:
   { pkgs, ... }:
   
   {
-    require = [
-      ./modules/webdsl-mysql.nix
-      ./modules/webdsl-tomcat.nix
-      ./modules/webdsl-httpd.nix
-    ];
+    require = optional (options ? mysql && options.mysql) ./modules/webdsl-mysql.nix
+            ++ optional (options ? tomcat && options.tomcat) ./modules/webdsl-tomcat.nix
+	    ++ optional (options ? httpd && options.httpd) ./modules/webdsl-httpd.nix
+	    ++ optional (options ? proxy && options.proxy) ./modules/webdsl-proxy.nix;
     
     environment.systemPackages = [ pkgs.lynx ];
   } //
@@ -56,5 +55,15 @@ mapAttrs (targetName: options:
   optionalAttrs (options ? httpd && options.httpd) {
     webdslhttpd.enable = true;
     webdslhttpd.adminAddr = adminAddr;
+  } //
+  optionalAttrs (options ? proxy && options.proxy) {
+    webdslproxy.enable = true;
+    webdslproxy.adminAddr = adminAddr;
+    webdslproxy.balancerMembers = pkgs.lib.filter (targetName:
+      let options = builtins.getAttr targetName distribution;
+      in  
+      options ? httpd && options.httpd
+      ) (builtins.attrNames distribution);
   }
+  
 ) distribution
