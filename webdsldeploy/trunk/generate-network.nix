@@ -14,7 +14,7 @@ let
       target = getAttr targetName distribution;
     in
     if targetNames == [] then null else
-    if (target ? mysql && target.mysql) then targetName else searchMySQLServer (builtins.tail targetNames)
+    if ((target ? mysql && target.mysql) || (target ? mysqlMaster && target.mysqlMaster)) then targetName else searchMySQLServer (builtins.tail targetNames)
   ;
   
   webdslbuild = (import ./top-level/all-packages.nix { inherit pkgs; }).webdslbuild;
@@ -36,17 +36,21 @@ mapAttrs (targetName: options:
   { pkgs, ... }:
   
   {
-    require = optional (options ? mysql && options.mysql) ./modules/webdsl-mysql.nix
+    require = optional ((options ? mysql && options.mysql) || (options ? mysqlMaster && options.mysqlMaster) || (options ? mysqlSlave)) ./modules/webdsl-mysql.nix
             ++ optional (options ? tomcat && options.tomcat) ./modules/webdsl-tomcat.nix
 	    ++ optional (options ? httpd && options.httpd) ./modules/webdsl-httpd.nix
-	    ++ optional (options ? proxy && options.proxy) ./modules/webdsl-proxy.nix;
-    
-    environment.systemPackages = [ pkgs.lynx ];
+	    ++ optional (options ? proxy && options.proxy) ./modules/webdsl-proxy.nix;    
   } //
-  optionalAttrs (options ? mysql && options.mysql) {
+  optionalAttrs ((options ? mysql && options.mysql) || (options ? mysqlMaster && options.mysqlMaster) || (options ? mysqlSlave)) {
     webdslmysql.enable = true;
     webdslmysql.databaseNames = map (applicationConfig: if applicationConfig ? databaseName then applicationConfig.databaseName else applicationConfig.name) applications;
     webdslmysql.databasePassword = databasePassword;
+    
+    webdslmysql.replication.role = if (options ? mysqlMaster && options.mysqlMaster) then "master" else if (options ? mysqlSlave) then "slave" else "none";
+    webdslmysql.replication.serverId = if (options ? mysqlMaster && options.mysqlMaster) then 1 else if (options ? mysqlSlave) then options.mysqlSlave else 0;
+    webdslmysql.replication.masterHost = searchMySQLServer (builtins.attrNames distribution);
+    webdslmysql.replication.masterUser = "root"; # !!! Ugly
+    webdslmysql.replication.masterPassword = databasePassword;
   } //
   optionalAttrs (options ? tomcat && options.tomcat) {
     webdsltomcat.enable = true;
