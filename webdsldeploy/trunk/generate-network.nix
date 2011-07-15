@@ -17,13 +17,22 @@ let
     if ((target ? mysql && target.mysql) || (target ? mysqlMaster && target.mysqlMaster)) then targetName else searchMySQLServer (builtins.tail targetNames)
   ;
   
+  mySQLSlaves = targetNames:
+    let
+      targetName = builtins.head targetNames;
+      target = getAttr targetName distribution;
+    in
+    if targetNames == [] then "" else
+    if (target ? mysqlSlave) then ",${targetName}" else mySQLSlaves (builtins.tail targetNames)
+  ;
+  
   webdslbuild = (import ./top-level/all-packages.nix { inherit pkgs; }).webdslbuild;
   
   webapps = map (applicationConfig: 
       (webdslbuild {
         inherit (applicationConfig) name src;
 	rootapp = if applicationConfig ? rootapp then applicationConfig.rootapp else false;
-	dbserver = searchMySQLServer (builtins.attrNames distribution);
+	dbserver = searchMySQLServer (builtins.attrNames distribution) + mySQLSlaves (builtins.attrNames distribution);
 	dbname = if applicationConfig ? databaseName then databaseName else applicationConfig.name;
 	dbuser = "root"; # !!! Ugly
 	dbpassword = databasePassword;
