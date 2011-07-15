@@ -1,5 +1,5 @@
 {stdenv, webdsl, apacheAnt}:
-{name, src, dbserver, dbname, dbuser, dbpassword, dbmode ? "update", rootapp ? false}:
+{name, src, db ? "mysql", dbserver, dbname, dbuser, dbpassword, dbmode ? "update", rootapp ? false}:
 
 stdenv.mkDerivation {
   inherit name src;
@@ -9,6 +9,7 @@ stdenv.mkDerivation {
   ''
     ulimit -s unlimited
     ( echo "appname=${name}"
+      echo "db=${db}"
       echo "dbserver=${dbserver}"
       echo "dbname=${dbname}"
       echo "dbuser=${dbuser}"
