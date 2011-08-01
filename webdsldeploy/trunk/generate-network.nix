@@ -32,7 +32,8 @@ let
       (webdslbuild {
         inherit (applicationConfig) name src;
 	rootapp = if applicationConfig ? rootapp then applicationConfig.rootapp else false;
-	db = if (mySQLSlaves (builtins.attrNames distribution) == "") then "mysql" else "mysql-replication";
+	#db = if (mySQLSlaves (builtins.attrNames distribution) == "") then "mysql" else "mysql-replication";
+	replication = mySQLSlaves (builtins.attrNames distribution) != "";
 	dbserver = searchMySQLServer (builtins.attrNames distribution) + mySQLSlaves (builtins.attrNames distribution);
 	dbname = if applicationConfig ? databaseName then databaseName else applicationConfig.name;
 	dbuser = "root"; # !!! Ugly

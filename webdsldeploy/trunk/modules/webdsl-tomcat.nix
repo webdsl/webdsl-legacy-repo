@@ -24,6 +24,7 @@ in
   config = mkIf cfg.enable {
     services.tomcat.enable = true;
     services.tomcat.webapps = cfg.webapps;
+    services.tomcat.commonLibs = [ "${pkgs.mysql_jdbc}/share/java/mysql-connector-java.jar" ];
   };
   
 }
