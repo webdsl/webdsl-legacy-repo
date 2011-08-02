@@ -23,20 +23,25 @@ in
       
       replication = {
         role = mkOption {
+	  description = "Replication role of the MySQL node";
 	  default = "none";
 	};
 	
 	serverId = mkOption {
+	  description = "Id of the MySQL. Must be unique and higher than 1 for read slaves";
 	  default = 1;
 	};
 	
 	masterHost = mkOption {
+	  description = "Hostname of the MySQL master";
 	};
 	
 	masterUser = mkOption {
+	  description = "Username of the MySQL master";
 	};
 	
 	masterPassword = mkOption {
+	  description = "Password of the MySQL master";
 	};
       };
     };
