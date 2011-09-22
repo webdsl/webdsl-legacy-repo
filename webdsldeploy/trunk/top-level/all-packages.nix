@@ -8,8 +8,17 @@ rec {
     inherit (pkgs.strategoPackages018) aterm sdf strategoxt javafront;
   };
   
-  webdslbuild = import ../development/webdsl/webdslbuild.nix {
+  webdsl_java = import ../development/webdsl/java.nix {
+    inherit (pkgs) stdenv fetchurl unzip;
+  };
+  
+  webdslBuild = import ../development/webdsl/webdslbuild.nix {
     inherit (pkgs) stdenv apacheAnt;
     inherit webdsl;
+  };
+  
+  webdslBuildJava = import ../development/webdsl/webdslbuild.nix {
+    inherit (pkgs) stdenv apacheAnt;
+    webdsl = webdsl_java;
   };
 }

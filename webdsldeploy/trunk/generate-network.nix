@@ -26,18 +26,19 @@ let
     if (target ? mysqlSlave) then ",${targetName}" else mySQLSlaves (builtins.tail targetNames)
   ;
   
-  webdslbuild = (import ./top-level/all-packages.nix { inherit pkgs; }).webdslbuild;
+  webdslBuild = (import ./top-level/all-packages.nix { inherit pkgs; }).webdslBuild;
+  webdslBuildJava = (import ./top-level/all-packages.nix { inherit pkgs; }).webdslBuildJava;
   
   webapps = map (applicationConfig: 
-      (webdslbuild {
+      (webdslBuildJava {
         inherit (applicationConfig) name src;
-	rootapp = if applicationConfig ? rootapp then applicationConfig.rootapp else false;
-	replication = mySQLSlaves (builtins.attrNames distribution) != "";
-	dbserver = searchMySQLServer (builtins.attrNames distribution) + mySQLSlaves (builtins.attrNames distribution);
-	dbname = if applicationConfig ? databaseName then databaseName else applicationConfig.name;
-	dbuser = "root"; # !!! Ugly
-	dbpassword = databasePassword;
-	dbmode = if applicationConfig ? databaseMode then databaseMode else "update";
+        rootapp = if applicationConfig ? rootapp then applicationConfig.rootapp else false;
+        replication = mySQLSlaves (builtins.attrNames distribution) != "";
+        dbserver = searchMySQLServer (builtins.attrNames distribution) + mySQLSlaves (builtins.attrNames distribution);
+        dbname = if applicationConfig ? databaseName then databaseName else applicationConfig.name;
+        dbuser = "root"; # !!! Ugly
+        dbpassword = databasePassword;
+        dbmode = if applicationConfig ? databaseMode then databaseMode else "update";
       })
     ) applications
   ;  
@@ -48,12 +49,14 @@ mapAttrs (targetName: options:
   {
     require = optional ((options ? mysql && options.mysql) || (options ? mysqlMaster && options.mysqlMaster) || (options ? mysqlSlave)) ./modules/webdsl-mysql.nix
             ++ optional (options ? tomcat && options.tomcat) ./modules/webdsl-tomcat.nix
-	    ++ optional (options ? httpd && options.httpd) ./modules/webdsl-httpd.nix
-	    ++ optional (options ? proxy && options.proxy) ./modules/webdsl-proxy.nix;    
+            ++ optional (options ? httpd && options.httpd) ./modules/webdsl-httpd.nix
+            ++ optional (options ? proxy && options.proxy) ./modules/webdsl-proxy.nix;    
   } //
   optionalAttrs ((options ? mysql && options.mysql) || (options ? mysqlMaster && options.mysqlMaster) || (options ? mysqlSlave)) {
     webdslmysql.enable = true;
-    webdslmysql.databaseNames = map (applicationConfig: if applicationConfig ? databaseName then applicationConfig.databaseName else applicationConfig.name) applications;
+    webdslmysql.databaseNames =
+      if options ? mysqlSlave then [] else 
+      map (applicationConfig: if applicationConfig ? databaseName then applicationConfig.databaseName else applicationConfig.name) applications;
     webdslmysql.databasePassword = databasePassword;
     
     webdslmysql.replication.role = if (options ? mysqlMaster && options.mysqlMaster) then "master" else if (options ? mysqlSlave) then "slave" else "none";

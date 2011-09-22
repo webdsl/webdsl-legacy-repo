@@ -10,7 +10,7 @@ in
     webdslmysql = {
       enable = mkOption {
         default = false;
-	description = "Whether to enable the WebDSL MySQL configuration";
+        description = "Whether to enable the WebDSL MySQL configuration";
       };
       
       databaseNames = mkOption {
@@ -23,32 +23,33 @@ in
       
       replication = {
         role = mkOption {
-	  description = "Replication role of the MySQL node";
-	  default = "none";
-	};
-	
-	serverId = mkOption {
-	  description = "Id of the MySQL. Must be unique and higher than 1 for read slaves";
-	  default = 1;
-	};
-	
-	masterHost = mkOption {
-	  description = "Hostname of the MySQL master";
-	};
-	
-	masterUser = mkOption {
-	  description = "Username of the MySQL master";
-	};
-	
-	masterPassword = mkOption {
-	  description = "Password of the MySQL master";
-	};
+          description = "Replication role of the MySQL node";
+          default = "none";
+        };
+        
+        serverId = mkOption {
+          description = "Id of the MySQL. Must be unique and higher than 1 for read slaves";
+          default = 1;
+        };
+        
+        masterHost = mkOption {
+          description = "Hostname of the MySQL master";
+        };
+        
+        masterUser = mkOption {
+          description = "Username of the MySQL master";
+        };
+        
+        masterPassword = mkOption {
+          description = "Password of the MySQL master";
+        };
       };
     };
   };
 
   config = mkIf cfg.enable {
     services.mysql.enable = true;
+    services.mysql.package = pkgs.mysql55;
     services.mysql.rootPassword = pkgs.writeTextFile { name = "mysqlpw"; text = cfg.databasePassword; };
     services.mysql.initialDatabases = map (databaseName: { name = databaseName; schema = ./schema.sql; } ) (cfg.databaseNames);
     services.mysql.initialScript = pkgs.writeText "mysqlscript" ''
