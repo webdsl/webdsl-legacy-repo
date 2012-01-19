@@ -49,7 +49,7 @@ in
 
   config = mkIf cfg.enable {
     services.mysql.enable = true;
-    services.mysql.package = pkgs.mysql55;
+    #services.mysql.package = pkgs.mysql55;
     services.mysql.rootPassword = pkgs.writeTextFile { name = "mysqlpw"; text = cfg.databasePassword; };
     services.mysql.initialDatabases = map (databaseName: { name = databaseName; schema = ./schema.sql; } ) (cfg.databaseNames);
     services.mysql.initialScript = pkgs.writeText "mysqlscript" ''
