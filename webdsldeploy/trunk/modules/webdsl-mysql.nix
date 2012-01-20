@@ -48,21 +48,20 @@ in
   };
 
   config = mkIf cfg.enable {
-    services.mysql.enable = true;
-    #services.mysql.package = pkgs.mysql55;
-    services.mysql.rootPassword = pkgs.writeTextFile { name = "mysqlpw"; text = cfg.databasePassword; };
-    services.mysql.initialDatabases = map (databaseName: { name = databaseName; schema = ./schema.sql; } ) (cfg.databaseNames);
-    services.mysql.initialScript = pkgs.writeText "mysqlscript" ''
+    services.mysql55.enable = true;
+    services.mysql55.rootPassword = pkgs.writeTextFile { name = "mysqlpw"; text = cfg.databasePassword; };
+    services.mysql55.initialDatabases = map (databaseName: { name = databaseName; schema = ./schema.sql; } ) (cfg.databaseNames);
+    services.mysql55.initialScript = pkgs.writeText "mysqlscript" ''
       grant all on *.* to 'root'@'%' identified by "";
       ${optionalString (cfg.replication.role == "master") ''
           grant replication slave on *.* to '${cfg.replication.masterUser}'@'%';
       ''}
     '';
     
-    services.mysql.replication.role = cfg.replication.role;
-    services.mysql.replication.serverId = cfg.replication.serverId;
-    services.mysql.replication.masterHost = cfg.replication.masterHost;
-    services.mysql.replication.masterUser = cfg.replication.masterUser;
-    services.mysql.replication.masterPassword = cfg.replication.masterPassword;
+    services.mysql55.replication.role = cfg.replication.role;
+    services.mysql55.replication.serverId = cfg.replication.serverId;
+    services.mysql55.replication.masterHost = cfg.replication.masterHost;
+    services.mysql55.replication.masterUser = cfg.replication.masterUser;
+    services.mysql55.replication.masterPassword = cfg.replication.masterPassword;
   };
 }
