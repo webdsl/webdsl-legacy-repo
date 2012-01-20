@@ -2,7 +2,6 @@
 , applications
 , databasePassword
 , distribution ? { test = { tomcat = true; httpd = true; mysql = true; }; }
-, useLocalhostDB ? false
 , adminAddr
 }:
 
@@ -35,7 +34,7 @@ let
         inherit (applicationConfig) name src;
         rootapp = if applicationConfig ? rootapp then applicationConfig.rootapp else false;
         replication = mySQLSlaves (builtins.attrNames distribution) != "";
-        dbserver = if useLocalhostDB then "localhost"
+        dbserver = if (applicationConfig ? useLocalhostDB && applicationConfig.useLocalhostDB) then "localhost"
           else searchMySQLServer (builtins.attrNames distribution) + mySQLSlaves (builtins.attrNames distribution);
         dbname = if applicationConfig ? databaseName then databaseName else applicationConfig.name;
         dbuser = "root"; # !!! Ugly
