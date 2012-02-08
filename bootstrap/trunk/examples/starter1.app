@@ -1,26 +1,27 @@
-module examples/starter-template
+module examples/starter1
 
 section javascript
 
-  define bootstrapInitStarter() {
+  define bootstrapInitStarter1() {
   	includeCSS("bootstrap/css/bootstrap.css")
-
     includeCSS("bootstrap/css/bootstrap-responsive.css")
     
+    includeJS("jquery.js")
+    includeJS("bootstrap/js/bootstrap.js")
+    
     //<!-- Placed at the end of the document so the pages load faster -->
-    includeJS("bootstrap/js/jquery.js")
-    includeJS("bootstrap/js/bootstrap-transition.js")
-    includeJS("bootstrap/js/bootstrap-alert.js")
-    includeJS("bootstrap/js/bootstrap-modal.js")
-    includeJS("bootstrap/js/bootstrap-dropdown.js")
-    includeJS("bootstrap/js/bootstrap-scrollspy.js")
-    includeJS("bootstrap/js/bootstrap-tab.js")
-    includeJS("bootstrap/js/bootstrap-tooltip.js")
-    includeJS("bootstrap/js/bootstrap-popover.js")
-    includeJS("bootstrap/js/bootstrap-button.js")
-    includeJS("bootstrap/js/bootstrap-collapse.js")
-    includeJS("bootstrap/js/bootstrap-carousel.js")
-    includeJS("bootstrap/js/bootstrap-typeahead.js")
+    // includeJS("bootstrap/js/bootstrap-transition.js")
+    // includeJS("bootstrap/js/bootstrap-alert.js")
+    // includeJS("bootstrap/js/bootstrap-modal.js")
+    // includeJS("bootstrap/js/bootstrap-dropdown.js")
+    // includeJS("bootstrap/js/bootstrap-scrollspy.js")
+    // includeJS("bootstrap/js/bootstrap-tab.js")
+    // includeJS("bootstrap/js/bootstrap-tooltip.js")
+    // includeJS("bootstrap/js/bootstrap-popover.js")
+    // includeJS("bootstrap/js/bootstrap-button.js")
+    // includeJS("bootstrap/js/bootstrap-collapse.js")
+    // includeJS("bootstrap/js/bootstrap-carousel.js")
+    // includeJS("bootstrap/js/bootstrap-typeahead.js")
     
     // <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="images/favicon.ico" />
@@ -30,7 +31,7 @@ section javascript
 
   }
 
-  define repairIE() {
+  define repairIE1() {
 	  // <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     //  <!--[if lt IE 9]>
     //      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -39,10 +40,15 @@ section javascript
 
 section the page
 
-  define page starter() {
-    bootstrapInitStarter
+  define page starter1() {
     includeCSS("examples/starter.css")
-    <div class="navbar navbar-fixed-top">
+    bootstrapInitStarter1
+    navbar1
+    content1
+  }
+  
+  define navbar1() {    
+  	<div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
           <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -61,7 +67,9 @@ section the page
         </div>
       </div>
     </div>
-
+  }
+  
+  define content1() { 
     <div class="container">
       <h1>"Bootstrap starter template"</h1>
       <p>"Use this document as a way to quick start any new project."

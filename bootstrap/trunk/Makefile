@@ -1,10 +1,11 @@
 all: rebuild deploy
 
 ibootstrap:
-	mkdir stylesheets/bootstrap javascript/bootstrap images/bootstrap
+	mkdir -p stylesheets/bootstrap javascript/bootstrap images/bootstrap
 	cp -r bootstrap/css stylesheets/bootstrap
 	cp -r bootstrap/js  javascript/bootstrap
 	cp -r bootstrap/img images/bootstrap
+	cp -r bootstrap/img stylesheets/bootstrap
 
 rebuild:
 	webdsl rebuild
@@ -19,7 +20,7 @@ clean:
 	webdsl clean
 
 css:
-	cp -r stylesheets/* /opt/tomcat/webapps/bootstrap/stylesheets
+	cp -r stylesheets javascript images /opt/tomcat/webapps/bootstrap/
 	
 server:
 	webdsl cleanall war
