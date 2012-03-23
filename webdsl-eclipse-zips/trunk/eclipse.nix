@@ -2,6 +2,7 @@
 , installIUs 
 , basename 
 , nixpkgs ? /etc/nixos/nixpkgs
+, extraBuildInputs ? []
 }:
 rec {
   pkgs = import nixpkgs { };
@@ -39,7 +40,8 @@ rec {
       __noChroot = true;
 
       inherit name;
-      buildInputs = [pkgs.jdk pkgs.zip pkgs.unzip pkgs.perl]; 
+      buildInputs = [pkgs.jdk pkgs.zip pkgs.unzip pkgs.perl] ++ extraBuildInputs; 
+   
 
       buildCommand = ''
         ALL_SITES="${concatStringsSep "," updatesites}"
