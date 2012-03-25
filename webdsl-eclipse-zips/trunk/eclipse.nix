@@ -115,8 +115,6 @@ rec {
        echo "file zip  $out/eclipsewin.zip" >> $out/nix-support/hydra-build-products
       '';
       
-      
-       '';
     };
     
 }
