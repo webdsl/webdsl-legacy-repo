@@ -107,13 +107,15 @@ rec {
         ln -s ${ zipMac } $out/eclipsemac.zip
         ln -s ${ zipMac64 } $out/eclipsemac64.zip
         ln -s ${ zipWin } $out/eclipsewin.zip
-      '';
-       installPhase =''
+        
        echo "file zip  $out/eclipselinux64.zip" >> $out/nix-support/hydra-build-products
        echo "file zip  $out/eclipselinux.zip" >> $out/nix-support/hydra-build-products
        echo "file zip  $out/eclipsemac.zip" >> $out/nix-support/hydra-build-products
        echo "file zip  $out/eclipsemac64.zip" >> $out/nix-support/hydra-build-products
        echo "file zip  $out/eclipsewin.zip" >> $out/nix-support/hydra-build-products
+      '';
+      
+      
        '';
     };
     
