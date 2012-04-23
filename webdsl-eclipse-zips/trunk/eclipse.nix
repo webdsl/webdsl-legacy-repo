@@ -11,7 +11,12 @@ rec {
       url = http://download.springsource.com/release/ECLIPSE/indigo/SR2/eclipse-SDK-3.7.2-win32.zip ;
       sha256 = "e6938e37414c2c67067cbabb44df5d994270b1999b404635ca4c1bed30ab6906";
     };
-
+    
+  eclipseWin64 = pkgs.fetchurl {
+      url = http://download.springsource.com/release/ECLIPSE/indigo/SR2/eclipse-SDK-3.7.2-win32-x86_64.zip ;
+      sha256 = "e6938e37414c2c67067cbabb44df5d994270b1999b404635ca4c1bed30ab6906";
+    };
+    
   eclipseLinux = pkgs.fetchurl {
       url = http://download.springsource.com/release/ECLIPSE/indigo/SR2/eclipse-SDK-3.7.2-linux-gtk.tar.gz ;
       sha256 = "f2cce7db448fa1209452605a653d82b7db17a844a86ed3bdb07e265a483c56c7";
@@ -92,6 +97,7 @@ rec {
   } ;
 
   zipWin     = eclipseZip { name = "eclipsewin.zip";     eclipse = eclipseWin;     system = "i686-cygwin";   } ;
+  zipWin64   = eclipseZip { name = "eclipsewin64.zip";   eclipse = eclipseWin64;   system = "i686-cygwin";   } ;
   zipLinux   = eclipseZip { name = "eclipselinux.zip";   eclipse = eclipseLinux;   system = "i686-linux";    } ;
   zipLinux64 = eclipseZip { name = "eclipselinux64.zip"; eclipse = eclipseLinux64; system = "x86_64-linux";  } ;
   zipMac     = eclipseZip { name = "eclipsemac.zip";     eclipse = eclipseMac;     system = "i686-darwin";   } ;
@@ -107,6 +113,7 @@ rec {
         ln -s ${ zipMac } $out/eclipsemac.zip
         ln -s ${ zipMac64 } $out/eclipsemac64.zip
         ln -s ${ zipWin } $out/eclipsewin.zip
+        ln -s ${ zipWin64 } $out/eclipsewin64.zip
         
        ensureDir $out/nix-support
        echo "file zip  $out/eclipselinux64.zip" >> $out/nix-support/hydra-build-products
@@ -114,6 +121,7 @@ rec {
        echo "file zip  $out/eclipsemac.zip" >> $out/nix-support/hydra-build-products
        echo "file zip  $out/eclipsemac64.zip" >> $out/nix-support/hydra-build-products
        echo "file zip  $out/eclipsewin.zip" >> $out/nix-support/hydra-build-products
+       echo "file zip  $out/eclipsewin64.zip" >> $out/nix-support/hydra-build-products
        '';
     };
     
