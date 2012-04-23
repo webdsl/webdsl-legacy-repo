@@ -8,28 +8,28 @@ rec {
   pkgs = import nixpkgs { };
 
   eclipseWin = pkgs.fetchurl {
-      url = http://download.springsource.com/release/ECLIPSE/indigo/SR1/eclipse-SDK-3.7.1-win32.zip ;
-      sha256 = "7b56fd382b3a8797b3dbb262f12b5994d2efcb122160aaa5849193dfb5772e38";
+      url = http://download.springsource.com/release/ECLIPSE/indigo/SR2/eclipse-SDK-3.7.2-win32.zip ;
+      sha256 = "e6938e37414c2c67067cbabb44df5d994270b1999b404635ca4c1bed30ab6906";
     };
 
   eclipseLinux = pkgs.fetchurl {
-      url = http://download.springsource.com/release/ECLIPSE/indigo/SR1/eclipse-SDK-3.7.1-linux-gtk.tar.gz ;
-      sha256 = "8faf3166bd6508de3bc870241b4481c53c77899b59c9585d9d09259a1bc17cee";
+      url = http://download.springsource.com/release/ECLIPSE/indigo/SR2/eclipse-SDK-3.7.2-linux-gtk.tar.gz ;
+      sha256 = "f2cce7db448fa1209452605a653d82b7db17a844a86ed3bdb07e265a483c56c7";
     };
 
   eclipseLinux64 = pkgs.fetchurl {
-      url = http://download.springsource.com/release/ECLIPSE/indigo/SR1/eclipse-SDK-3.7.1-linux-gtk-x86_64.tar.gz ;
-      sha256 = "32e380832e2961e0c764bccd95de33529188735dfa76536396574d4f7bdf61f8";
+      url = http://download.springsource.com/release/ECLIPSE/indigo/SR2/eclipse-SDK-3.7.2-linux-gtk-x86_64.tar.gz ;
+      sha256 = "e57122c79617de3469236c49fdb5b7384b2f2f64674918169ae142aeceb6c459";
     };
 
   eclipseMac = pkgs.fetchurl {
-      url = http://download.springsource.com/release/ECLIPSE/indigo/SR1/eclipse-SDK-3.7.1-macosx-cocoa.tar.gz ;
-      sha256 = "1f1101d1325f6e19aac6829cd55bff5b06b73eec906ab8b55dc5f06ceb691689"; 
+      url = http://download.springsource.com/release/ECLIPSE/indigo/SR2/eclipse-SDK-3.7.2-macosx-cocoa.tar.gz ;
+      sha256 = "405bd23b3ff5299abc8363cbb4dd6cadfeac5c89f2f0f9d96a4743ffc25a08e7"; 
     };
 
   eclipseMac64 = pkgs.fetchurl {
-      url = http://download.springsource.com/release/ECLIPSE/indigo/SR1/eclipse-SDK-3.7.1-macosx-cocoa-x86_64.tar.gz ;
-      sha256 = "5734e2f69f8476d69a895bd98021f82b71ddf286fc73bf713f067166bb03c194";
+      url = http://download.springsource.com/release/ECLIPSE/indigo/SR2/eclipse-SDK-3.7.2-macosx-cocoa-x86_64.tar.gz ;
+      sha256 = "6e3faa7ce6c3ac3fe8a5035c193d6450129e0b851954b938f36a03fcf0e9d6c1";
     };
 
   eclipseZip = { name, eclipse, system }:
