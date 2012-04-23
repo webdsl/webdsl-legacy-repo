@@ -14,7 +14,7 @@ rec {
     
   eclipseWin64 = pkgs.fetchurl {
       url = http://download.springsource.com/release/ECLIPSE/indigo/SR2/eclipse-SDK-3.7.2-win32-x86_64.zip ;
-      sha256 = "e6938e37414c2c67067cbabb44df5d994270b1999b404635ca4c1bed30ab6906";
+      sha256 = "2e7779426a3d8eef0eba9e156ed20b3491eb6973c4c91edcf632ceef414a2849";
     };
     
   eclipseLinux = pkgs.fetchurl {
