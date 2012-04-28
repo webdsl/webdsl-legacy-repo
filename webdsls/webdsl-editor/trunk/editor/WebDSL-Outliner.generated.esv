@@ -1,0 +1,107 @@
+module WebDSL-Outliner.generated
+
+outliner Default outliner        
+  
+  
+  // Outliner rules indicate which syntactic constructs should be shown in the outline
+  // and quick outline views, and take one of the following forms:
+  //
+  //   <sort>.<constructor>
+  //
+  //   <sort>._
+  //
+  //   _.<constructor>
+  
+  PageCall.PageCall
+  GenericSort.GenericSort
+  Statement.If
+  Statement.IfNoElse
+  Statement.Case
+  Case.CaseAlt
+  Statement.ForStmt
+  Statement.ForStmtNoFilter
+  Statement.ForAllStmt
+  Statement.ForAllStmtNoFilter
+  Statement.ForCountStmt
+  Statement.WhileStmt
+  DeleteStatement_HQL.DeleteStatement
+  FromClassOrOuterQueryPath_HQL.FromClass
+  InClassDeclaration_HQL.InClassDeclaration
+  InCollectionDeclaration_HQL.InCollection
+  InCollectionElementsDeclaration_HQL.InCollectionElements
+  FromJoin_HQL.FromJoin
+  GroupByClause_HQL.GroupBy
+  TemplateCall.TemplateCall
+  ActionCall.ActionCall
+  Action.Action
+  TemplateDefinition.Define
+  TemplateArg.TemplateArg
+  TemplateDefinition.LocalRedefine
+  TemplateDefinition.DefinePage
+  TemplateDefinition.DefineTemplate
+  TemplateElement.For
+  TemplateElement.ForNoFilter
+  TemplateElement.ForAll
+  TemplateElement.ForAllNoFilter
+  TemplateElement.ForCount
+  TemplateElement.SelectFromListNoElems
+  TemplateElement.SelectFromList
+  TemplateElement.SelectFromListNoProps
+  TemplateElement.IfTempl
+  TemplateElement.IfNoElseTempl
+  TemplateElement.IfElseIfTempl
+  ElseIfTempl.ElseIfTempl
+  TemplateElement.Submit
+  TemplateElement.Submit
+  TemplateElement.SubmitLink
+  TemplateElement.SubmitLink
+  TemplateElement.Submit
+  TemplateElement.Submit
+  TemplateElement.SubmitLink
+  TemplateElement.SubmitLink
+  TemplateElement.EventCallElement
+  TemplateElement.Placeholder
+  TemplateElement.Placeholder
+  PHExp.ThisCall
+  PHExp.Call
+  TemplateElement.AccessControlImportRules
+  TemplateElement.XMLEmptyElement
+  Attribute.XMLAttributesIf
+  Attribute.XMLAttributesIfElse
+  TemplateElement.XMLElement
+  TemplateElement.PagedForAll
+  TemplateElement.PagedForAllNoFilter
+  TemplateElement.PagedFor
+  TemplateElement.PagedForNoFilter
+  TemplateElement.Derive
+  TemplateElement.Derive
+  DeriveBodyElement.DeriveBodyElement
+  TemplateElement.Derive
+  TemplateElement.Derive
+  DispatchEntry.DispatchEntry
+  DispatchEntry.DispatchEntryNoArg
+  DispatchEntry.DispatchEntity
+  DispatchNavigateCall.DispatchNavigateCall
+  DispatchNavigateButton.DispatchNavigateButton
+  ArgDefine.ArgDefine
+  TemplateCallNoBody.TemplateCallNoBody
+  TemplateCallNoAssigns.TemplateCallNoAssigns
+  TemplateCallPropsNoBody.TemplateCallPropsNoBody
+  TemplateCallProps.TemplateCallProps
+  TemplateCallPropsNoArgs.TemplateCallPropsNoArgs
+  TemplateCallBody.TemplateCallBody
+  Catch.Catch
+  FunctionRef.FunctionRef
+  ObjectCreation.ObjectCreation
+  ObjectCreation.ObjectCreation
+  Exp.TypedListCreation
+  Exp.TypedSetCreation
+  Exp.ThisCall
+  Exp.Call
+  EmailCall.EmailCall
+  Exp.EventCall
+  Exp.Call
+  SearcherDef.SearcherInit
+  SearcherDef.SearcherRefMod
+  Exp.Suggest
+  SuggestionPart.SuggestTerm

@@ -1,0 +1,21 @@
+module analysis-manual
+
+imports
+  include/WebDSL
+  lib/analysis-auto.generated
+  lib/index-library.generated
+  lib/analysis-library.generated
+  
+signature
+  constructors
+    Type: Namespace
+    Module: Namespace
+    Var: Namespace  
+    Function: Namespace
+    //Type: Id -> Type
+
+rules // Adjust lookup
+
+  // Add primitive types to type lookup.
+  adjust-index-lookup(target |namespace, path, prefix): 
+    Type(<target>) ->  [Def([Type(), "Int"]), Def([Type(), "String"]), [Type() | path]]

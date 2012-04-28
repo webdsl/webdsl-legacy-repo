@@ -1,0 +1,8 @@
+module WebDSL-Test
+
+exports
+
+context-free syntax
+
+  "test" Id Block -> Definition {cons("Test")}
+  "test" Block -> Definition {ast("Test(\"\",<1>)")}

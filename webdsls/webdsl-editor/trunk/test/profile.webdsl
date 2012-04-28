@@ -1,0 +1,9 @@
+module profile
+
+imports users
+
+section user interface
+
+  define page profile(u: User){
+    output(u.name)
+  }

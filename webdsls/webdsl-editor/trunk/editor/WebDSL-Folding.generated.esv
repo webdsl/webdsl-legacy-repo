@@ -1,0 +1,40 @@
+module WebDSL-Folding.generated
+
+folding Default folding definitions
+  
+  // Folding rules indicate which syntactic constructs can be folded,
+  // and take one of the following forms:
+  //
+  //   <sort>.<constructor>
+  //
+  //   <sort>._
+  //
+  //   _.<constructor>
+  //
+  // To indicate that an element should always be folded, add
+  // a (folded) annotation:
+  //
+  //   _.Imports (folded)
+  //
+  // To disable a folding rule defined elsewhere, add a (disabled) annotation:
+  //
+  //   Definition._ (disabled)
+  
+  FromClassOrOuterQueryPath_HQL.FromClass
+  Path_HQL.Path
+  InClassDeclaration_HQL.InClassDeclaration
+  InCollectionDeclaration_HQL.InCollection
+  InCollectionElementsDeclaration_HQL.InCollectionElements
+  Expression_HQL.Elements
+  Expression_HQL.Indices
+  Path_HQL
+  TemplateArgs.TemplateArgs
+  TemplateArg.TemplateArg
+  TemplateDefinition.LocalRedefine
+  OptLocalRedefineArgs.LocalRedefineArgs
+  TemplateElement.AccessControlImportRules
+  FunctionRef.FunctionRef
+  RegexExp.RegexPattern
+  Atom.CharacterClass
+  SearchAttributes
+  SearchAttributes.SearchAttributes

@@ -1,0 +1,10 @@
+module users
+
+imports profile
+
+section user data model
+
+  entity User {
+    fullname :: String (name)
+    email    :: Email (id)
+  } 
