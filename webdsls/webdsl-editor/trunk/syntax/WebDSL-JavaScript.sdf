@@ -1,5 +1,8 @@
 module WebDSL-JavaScript
-  
+
+imports WebDSL-XML
+imports WebDSL-Action
+
 exports 
   sorts TemplateElement
   context-free syntax

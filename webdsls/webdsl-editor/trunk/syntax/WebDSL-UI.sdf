@@ -3,12 +3,14 @@ module WebDSL-UI
 imports
   WebDSL-Action
   WebDSL-Lexical
-
+  WebDSL-DataModel
+  WebDSL-XML
+  
 exports
 
   sorts TemplateDefinition Modifier Exp
 
-  context-free syntax
+  lexical syntax
     
     "define" -> Keyword
   %%"action" -> Keyword
@@ -19,30 +21,32 @@ exports
     TemplateDefinition -> Definition
 
     "define" Modifier*
-       Id "(" {FormalArg ","}* ")"
+       Template@=Id "(" {FormalArg ","}* ")"
        TemplateArgs
-       "{" TemplateElement* "}"             -> TemplateDefinition {cons("Define")}
+       "{" TemplateElement* "}"         -> TemplateDefinition {"Define", scope(Var,Template)}
 
-    "requires" {TemplateArg "," }*			-> TemplateArgs{cons("TemplateArgs"), prefer}
-    Id "(" {Sort ","}* ")"                  -> TemplateArg {cons("TemplateArg")}
+    "requires" {TemplateArg "," }*			-> TemplateArgs{"TemplateArgs", prefer}
+    Template@=Id "(" {Sort ","}* ")"    -> TemplateArg {"TemplateArg"}
     
       -> TemplateArgs{cons("None")}
       
-    "define" Modifier* Id "(" {FormalArg ","}* ")" "=" Id OptLocalRedefineArgs -> TemplateDefinition {cons("LocalRedefine")}
-    -> OptLocalRedefineArgs {cons("None")}
-    "(" "*" "," {LocalRedefineArg ","}+ ")" -> OptLocalRedefineArgs {cons("LocalRedefineArgs")}
-    Id -> LocalRedefineArg{cons("Var")}
+    "define" Modifier* Template@=Id "(" {FormalArg ","}* ")" "=" Template@Id OptLocalRedefineArgs -> TemplateDefinition {"LocalRedefine"}
+    
+                                            -> OptLocalRedefineArgs {"None"}
+    "(" "*" "," {LocalRedefineArg ","}+ ")" -> OptLocalRedefineArgs {"LocalRedefineArgs"}
+    Var@Id                                  -> LocalRedefineArg{"Var"}
     
     %% new page syntax
     Modifier* "page"
-       Id "(" {FormalArg ","}* ")"
+       Page@=Id "(" {FormalArg ","}* ")"
        TemplateArgs
-       "{" TemplateElement* "}"             -> TemplateDefinition {cons("DefinePage")}
+       "{" TemplateElement* "}"             -> TemplateDefinition {"DefinePage", scope(Var,Template)}
+       
     %% new template syntax
      Modifier* "template"
-       Id "(" {FormalArg ","}* ")"
+       Template@=Id "(" {FormalArg ","}* ")"
        TemplateArgs
-       "{" TemplateElement* "}"             -> TemplateDefinition {cons("DefineTemplate")}
+       "{" TemplateElement* "}"             -> TemplateDefinition {"DefineTemplate", scope(Var,Template)}
           
     %%"define" Modifier*
     %%   Id UNDEFINED*
@@ -76,6 +80,8 @@ exports
     String                                  -> TemplateElement {cons("Text")}
 
 
+  context-free syntax %% filter
+    
     "where" Exp                              -> Filter {cons("FilterNoOrderByNoLimit")}
     "order" "by" OrderExp                    -> Filter {cons("FilterNoWhereNoLimit")}
     "where" Exp "order" "by" OrderExp        -> Filter {cons("FilterNoLimit")}
@@ -91,33 +97,36 @@ exports
     "offset" Exp                             -> Limit {cons("LimitNoLimit")}
 
 
-    "for" "(" Id ":" Sort "in" Exp Filter ")"
-       "{" TemplateElement* "}" ForSeparator       -> TemplateElement {cons("For")}
+  context-free syntax %% for
     
+    %% to do: how about variables in Exp?
+    
+    "for" "(" Var@=Id ":" Sort "in" Exp Filter ")"
+       "{" TemplateElement* "}" ForSeparator       -> TemplateElement {"For",scope(Var)}
+    
+    "for" "(" Var@=Id ":" Sort "in" Exp ")"
+       "{" TemplateElement* "}" ForSeparator       -> TemplateElement {"ForNoFilter",scope(Var), prefer}
+
+    "for" "(" Var@=Id ":" Sort Filter ")"
+       "{" TemplateElement* "}" ForSeparator       -> TemplateElement {"ForAll",scope(Var)}
+
+    "for" "(" Var@=Id ":" Sort ")"
+       "{" TemplateElement* "}" ForSeparator       -> TemplateElement {"ForAllNoFilter",scope(Var)}
+    
+    "for" "(" Var@=Id ":" "Int" "from" Exp "to" Exp ")" 
+      "{" TemplateElement* "}" ForSeparator        -> TemplateElement {"ForCount",scope(Var)}
+    
+    "separated-by" "{" TemplateElement* "}"        -> ForSeparator{"ForSeparator", scope(Var)}
+                                                   -> ForSeparator{"None"}
     %% Reject
-   %%"for" "(" Id ":" Sort "in" HqlExp Filter ")" "{" TemplateElement* "}" -> TemplateElement {reject}
-    
-    "for" "(" Id ":" Sort "in" Exp ")"
-       "{" TemplateElement* "}" ForSeparator       -> TemplateElement {cons("ForNoFilter"), prefer}
+    %%"for" "(" Id ":" Sort "in" HqlExp Filter ")" "{" TemplateElement* "}" -> TemplateElement {reject}
+      
+  context-free syntax %% select
 
-    "for" "(" Id ":" Sort Filter ")"
-       "{" TemplateElement* "}" ForSeparator       -> TemplateElement {cons("ForAll")}
-
-    "for" "(" Id ":" Sort ")"
-       "{" TemplateElement* "}" ForSeparator       -> TemplateElement {cons("ForAllNoFilter")}
-    
-    "for" "(" Id ":" "Int" "from" Exp "to" Exp ")" 
-      "{" TemplateElement* "}" ForSeparator        -> TemplateElement {cons("ForCount")}
-    
-    "separated-by" "{" TemplateElement* "}" -> ForSeparator{cons("ForSeparator")}
-    -> ForSeparator{cons("None")}
-
-    %%
-
-    "select" "(" Exp "from" Exp ")" -> TemplateElement {cons("SelectFromListNoPropsNoElems")}
-    "select" "(" Exp "from" Exp ")" "[" {PropertyAssignment ","}* "]" -> TemplateElement {cons("SelectFromListNoElems")}
+    "select" "(" Exp "from" Exp ")"                                                            -> TemplateElement {cons("SelectFromListNoPropsNoElems")}
+    "select" "(" Exp "from" Exp ")" "[" {PropertyAssignment ","}* "]"                          -> TemplateElement {cons("SelectFromListNoElems")}
     "select" "(" Exp "from" Exp ")" "[" {PropertyAssignment ","}* "]" "{" TemplateElement* "}" -> TemplateElement {cons("SelectFromList")}
-    "select" "(" Exp "from" Exp ")" "{" TemplateElement* "}" -> TemplateElement {cons("SelectFromListNoProps")}
+    "select" "(" Exp "from" Exp ")" "{" TemplateElement* "}"                                   -> TemplateElement {cons("SelectFromListNoProps")}
 
     "if" "(" Exp ")" "{" TemplateElement* "}" "else" "{" TemplateElement* "}" -> TemplateElement {cons("IfTempl"),prefer}
     "if" "(" Exp ")" "{" TemplateElement* "}"                                 -> TemplateElement {cons("IfNoElseTempl")}
@@ -127,51 +136,55 @@ exports
     "else" "if" "(" Exp ")" "{" TemplateElement* "}"                  -> ElseIfTempl {cons("ElseIfTempl"),prefer}
     "else" "{" TemplateElement* "}"                                   -> ElseTempl  {cons("ElseTempl"),prefer}
 
+  context-free syntax %% case
 
     "case" "(" {Exp ","}* ")" "{" TemplateCaseAlt* "}" 	-> TemplateElement {cons("TemplateCase")}
     {ConstValue ","}* "{" TemplateElement* "}"          -> TemplateCaseAlt {cons("TemplateCaseAlt")}
-    "default"  "{" TemplateElement* "}"                 -> TemplateCaseAlt {cons("TemplateCaseAltDefault")}
+    "default" "{" TemplateElement* "}"                  -> TemplateCaseAlt {cons("TemplateCaseAltDefault")}
 
-  %%
-    TemplateCallId "(" {Exp ","}* ")" "[" {PropertyAssignment ","}*"]" TemplateBody -> TemplateCall {cons("TemplateCall")}
+  lexical syntax
+    Id -> TemplateCallId %% hook for reject rules on templatecall names
 
-    TemplateCallNoArgs -> TemplateCall
-    TemplateCallNoBody -> TemplateCall
-    TemplateCallNoAssigns -> TemplateCall
-    TemplateCallPropsNoBody -> TemplateCall
-    TemplateCallProps -> TemplateCall
-    TemplateCallPropsNoArgs -> TemplateCall
-    TemplateCallBody -> TemplateCall
-    TemplateCallId                                             -> TemplateCallNoArgs {cons("TemplateCallNoArgs")}
-    TemplateCallId "(" {Exp ","}* ")"                          -> TemplateCallNoBody {cons("TemplateCallNoBody")}
-    TemplateCallId "(" {Exp ","}* ")" TemplateBody -> TemplateCallNoAssigns {cons("TemplateCallNoAssigns")}
-    TemplateCallId "(" {Exp ","}* ")" "[" {PropertyAssignment ","}*"]" -> TemplateCallPropsNoBody {cons("TemplateCallPropsNoBody")}
-    TemplateCallId "[" {PropertyAssignment ","}*"]" -> TemplateCallProps {cons("TemplateCallProps")}
-    TemplateCallId "[" {PropertyAssignment ","}*"]" TemplateBody -> TemplateCallPropsNoArgs {cons("TemplateCallPropsNoArgs")}
-    TemplateCallId  TemplateBody -> TemplateCallBody {cons("TemplateCallBody")}
+  context-free syntax %% template calls
     
-    "{" TemplateElement* "}" -> TemplateBody {cons("TemplateBody")}
-    "with" "{" ArgDefine* "}" -> TemplateBody {cons("TemplateWith")}
-    TemplateCallId "(" {FormalArg ","}* ")"
-      "{" TemplateElement* "}" -> ArgDefine {cons("ArgDefine")}
+    Template@TemplateCallId "(" {Exp ","}* ")" "[" {PropertyAssignment ","}*"]" TemplateBody -> TemplateCall {cons("TemplateCall")}
+
+    TemplateCallNoArgs        -> TemplateCall
+    TemplateCallNoBody        -> TemplateCall
+    TemplateCallNoAssigns     -> TemplateCall
+    TemplateCallPropsNoBody   -> TemplateCall
+    TemplateCallProps         -> TemplateCall
+    TemplateCallPropsNoArgs   -> TemplateCall
+    TemplateCallBody          -> TemplateCall
+    Template@TemplateCallId                                                     -> TemplateCallNoArgs {"TemplateCallNoArgs"}
+    Template@TemplateCallId "(" {Exp ","}* ")"                                  -> TemplateCallNoBody {"TemplateCallNoBody"}
+    Template@TemplateCallId "(" {Exp ","}* ")" TemplateBody                     -> TemplateCallNoAssigns {"TemplateCallNoAssigns"}
+    Template@TemplateCallId "(" {Exp ","}* ")" "[" {PropertyAssignment ","}*"]" -> TemplateCallPropsNoBody {"TemplateCallPropsNoBody"}
+    Template@TemplateCallId "[" {PropertyAssignment ","}*"]"                    -> TemplateCallProps {"TemplateCallProps"}
+    Template@TemplateCallId "[" {PropertyAssignment ","}*"]" TemplateBody       -> TemplateCallPropsNoArgs {"TemplateCallPropsNoArgs"}
+    Template@TemplateCallId  TemplateBody                                       -> TemplateCallBody {"TemplateCallBody"}
+    
+    "{" TemplateElement* "}"                                         -> TemplateBody {"TemplateBody"}
+    "with" "{" ArgDefine* "}"                                        -> TemplateBody {"TemplateWith"}
+    TemplateCallId "(" {FormalArg ","}* ")" "{" TemplateElement* "}" -> ArgDefine {"ArgDefine"}
 
     "with" "{" TemplateElement* "}"                -> TemplateCall {reject}
     
     %%disambiguate
-    "define"                        -> TemplateCallId {reject}
+    "define"                     -> TemplateCallId {reject}
     "for"                        -> TemplateCallId {reject}
-    "placeholder"                        -> TemplateCallId {reject}
+    "placeholder"                -> TemplateCallId {reject}
     
   %%
   
     %% deprecated
-    "navigate" "(" PageCall ")" UNDEFINED* "{" TemplateElement* "}" -> TemplateElement {cons("NavigateCall"), prefer}
+    "navigate" "(" PageCall ")" UNDEFINED*                        "{" TemplateElement* "}" -> TemplateElement {cons("NavigateCall"), prefer}
     "navigate" "(" PageCall ")" "[" {PropertyAssignment ","}* "]" "{" TemplateElement* "}" -> TemplateElement {cons("NavigateCall"), prefer}
 
     "navigate" PageCall UNDEFINED* "{" TemplateElement* "}" -> TemplateElement {cons("NavigateCall"), prefer}
     "navigate" PageCall "[" {PropertyAssignment ","}* "]" "{" TemplateElement* "}" -> TemplateElement {cons("NavigateCall"), prefer}
 
-    Id "(" {Exp ","}* ")"  -> PageCall {cons("PageCall")}
+    Page@Id "(" {Exp ","}* ")"  -> PageCall {"PageCall"}
 
     %%disambiguate
     "navigate" -> TemplateCallId {reject}
@@ -179,14 +192,14 @@ exports
   %%
 
     %% deprecated
-    "action" "(" Exp "," ActionCallOrInline ")" UNDEFINED* -> TemplateElement {cons("Submit"), prefer}
-    "action" "(" Exp "," ActionCallOrInline ")" "[" {PropertyAssignment ","}* "]" -> TemplateElement {cons("Submit"), prefer}
-    "actionLink" "(" Exp "," ActionCallOrInline ")" UNDEFINED* -> TemplateElement {cons("SubmitLink"), prefer}
-    "actionLink" "(" Exp "," ActionCallOrInline ")" "[" {PropertyAssignment ","}* "]" -> TemplateElement {cons("SubmitLink"), prefer}
+    "action" "(" Exp "," ActionCallOrInline ")" UNDEFINED* -> TemplateElement {"Submit", prefer}
+    "action" "(" Exp "," ActionCallOrInline ")" "[" {PropertyAssignment ","}* "]" -> TemplateElement {"Submit", prefer}
+    "actionLink" "(" Exp "," ActionCallOrInline ")" UNDEFINED* -> TemplateElement {"SubmitLink", prefer}
+    "actionLink" "(" Exp "," ActionCallOrInline ")" "[" {PropertyAssignment ","}* "]" -> TemplateElement {"SubmitLink", prefer}
 
-    "submit" "(" Exp "," ActionCallOrInline ")" UNDEFINED* -> TemplateElement {cons("Submit"), prefer}
-    "submit" "(" Exp "," ActionCallOrInline ")" "[" {PropertyAssignment ","}* "]" -> TemplateElement {cons("Submit"), prefer}
-    "submitlink" "(" Exp "," ActionCallOrInline ")" UNDEFINED* -> TemplateElement {cons("SubmitLink"), prefer}
+    "submit" "(" Exp "," ActionCallOrInline ")" UNDEFINED* -> TemplateElement {"Submit", prefer}
+    "submit" "(" Exp "," ActionCallOrInline ")" "[" {PropertyAssignment ","}* "]" -> TemplateElement {"Submit", prefer}
+    "submitlink" "(" Exp "," ActionCallOrInline ")" UNDEFINED* -> TemplateElement {"SubmitLink", prefer}
     "submitlink" "(" Exp "," ActionCallOrInline ")" "[" {PropertyAssignment ","}* "]" -> TemplateElement {cons("SubmitLink"), prefer}
 
     "submit"     ActionCallOrInline UNDEFINED*                        "{" TemplateElement* "}" -> TemplateElement {cons("SubmitElem"), prefer}
@@ -202,7 +215,7 @@ exports
     ActionCall -> ActionCallOrInline
     InlineAction -> ActionCallOrInline
 
-    Id "(" {Exp ","}* ")"  -> ActionCall {cons("ActionCall")}
+    Action@Id "(" {Exp ","}* ")"  -> ActionCall {cons("ActionCall")}
     
     %%disambiguate
     "action"                       -> TemplateCallId {reject}
@@ -234,45 +247,48 @@ exports
 %%    ":"  -> PropertyAssignSymbol %% same as type declaration
 %%    ":=" -> PropertyAssignSymbol %% same as assignment
 %%    "="  -> PropertyAssignSymbol %% same as html and data model property annotations  
-    SubmitProp ":" ActionCallOrInline  -> PropertyAssignment {cons("PropertySubmit"),prefer}
+
+    SubmitProp ":"  ActionCallOrInline -> PropertyAssignment {cons("PropertySubmit"),prefer}
     SubmitProp ":=" ActionCallOrInline -> PropertyAssignment {cons("PropertySubmit"),prefer}
-    SubmitProp "=" ActionCallOrInline  -> PropertyAssignment {cons("PropertySubmit"),prefer}
-    Id ":" PropertyValue		       -> PropertyAssignment {cons("PropertyAssignment")}
+    SubmitProp "="  ActionCallOrInline -> PropertyAssignment {cons("PropertySubmit"),prefer}
+    
+    Id ":"  PropertyValue		       -> PropertyAssignment {cons("PropertyAssignment")}
     Id ":=" PropertyValue		       -> PropertyAssignment {cons("PropertyAssignment")}
-    Id "=" PropertyValue		       -> PropertyAssignment {cons("PropertyAssignment")}
+    Id "="  PropertyValue		       -> PropertyAssignment {cons("PropertyAssignment")}
+    
     Exp								        	   -> PropertyValue
-    "ajax"                                         -> PropertyAssignment {cons("TemplateCallPropertyAjax"),prefer}
-    "secure"                                       -> PropertyAssignment {cons("TemplateCallPropertySecure"),prefer} %% for navigates and submits
-    "ignore-validation"                            -> PropertyAssignment {cons("TemplateCallPropertyIgnoreValidation"),prefer}
-    "not-secure"                                   -> PropertyAssignment {cons("TemplateCallPropertyNotSecure"),prefer} %% for navigates and submits
-    "not null"                                     -> PropertyAssignment {cons("TemplateCallPropertyNotNull"),prefer}
-    CommonAttribute -> PropertyAssignment
-       
+    
+    "ajax"                         -> PropertyAssignment {cons("TemplateCallPropertyAjax"),prefer}
+    "secure"                       -> PropertyAssignment {cons("TemplateCallPropertySecure"),prefer} %% for navigates and submits
+    "ignore-validation"            -> PropertyAssignment {cons("TemplateCallPropertyIgnoreValidation"),prefer}
+    "not-secure"                   -> PropertyAssignment {cons("TemplateCallPropertyNotSecure"),prefer} %% for navigates and submits
+    "not null"                     -> PropertyAssignment {cons("TemplateCallPropertyNotNull"),prefer}
+    CommonAttribute                -> PropertyAssignment
        
   lexical syntax
-    "onabort" -> SubmitProp
-    "onblur"  -> SubmitProp
-    "onchange"  -> SubmitProp
-    "onclick"  -> SubmitProp
+    "onabort"    -> SubmitProp
+    "onblur"     -> SubmitProp
+    "onchange"   -> SubmitProp
+    "onclick"    -> SubmitProp
     "ondblclick" -> SubmitProp
     
-    "onerror"  -> SubmitProp
-    "onfocus"  -> SubmitProp
+    "onerror"    -> SubmitProp
+    "onfocus"    -> SubmitProp
     "onkeydown"  -> SubmitProp
     "onkeypress" -> SubmitProp
-    "onkeyup" -> SubmitProp
+    "onkeyup"    -> SubmitProp
     
-    "onload" -> SubmitProp 
+    "onload"      -> SubmitProp 
     "onmousedown" -> SubmitProp
     "onmousemove" -> SubmitProp
-    "onmouseout" -> SubmitProp
+    "onmouseout"  -> SubmitProp
     "onmouseover" -> SubmitProp
     
     "onmouseup" -> SubmitProp
-    "onreset" -> SubmitProp
-    "onresize" -> SubmitProp
-    "onselect" -> SubmitProp
-    "onsubmit" -> SubmitProp
+    "onreset"   -> SubmitProp
+    "onresize"  -> SubmitProp
+    "onselect"  -> SubmitProp
+    "onsubmit"  -> SubmitProp
     
     "onunload" -> SubmitProp
     
@@ -284,13 +300,13 @@ exports
     "separated-by" "{" TemplateElement* "}"        -> TemplateCall {reject}
 
     "init" Block  		-> InitAction {cons("InitAction"),prefer}
-    "init"              -> TemplateCallId {reject}
-    "databind" Block    -> TemplateElement {cons("DataBindAction"),prefer}
-    "databind"          -> TemplateCallId {reject}
+    "init"            -> TemplateCallId {reject}
+    "databind" Block  -> TemplateElement {cons("DataBindAction"),prefer}
+    "databind"        -> TemplateCallId {reject}
     "render" Block    -> TemplateElement {cons("RenderAction"),prefer}
-    "validate" Block    -> TemplateElement {cons("ValidateAction"),prefer}
+    "validate" Block  -> TemplateElement {cons("ValidateAction"),prefer}
     
-    "action" ActionModifier* Id "(" {FormalArg ","}* ")" Block -> Action {cons("Action")}
+    "action" ActionModifier* Action@=Id "(" {FormalArg ","}* ")" Block -> Action {cons("Action")}
     "ignore-validation" -> ActionModifier{cons("ActionModifierIgnoreValidation")}
 
   context-free syntax

@@ -32,14 +32,14 @@ imports
 %%   
 %%     Start
 %% 
+%% auto-generated entity language
 exports
   context-free syntax
   
     "module" Module@=Id Definition*       -> Foo {"Module", scope(Type)}
     "entity" Type@=Id "{" Property* "}"   -> Foo {"Entity", scope(Property)}
-    Property@=Id ":" FooType                 -> Foo {"Property"}
+    Property@=Id ":" FooType              -> Foo {"Property"}
     Type@Id                               -> FooType {"Type"}
-  
   
 hiddens
   context-free start-symbols
@@ -57,30 +57,6 @@ exports
     QId "." Id -> QId {cons("Qualified")}
     Keyword    -> Id {reject} %% (not rejected as HQL or styling keyword)
 
-  context-free syntax %% Types
-    SimpleSort -> Sort
-    GenericSort -> Sort
-    RefSort -> Sort
-    FunctionSort -> Sort
-    
-    Type@Id                     -> SimpleSort {cons("SimpleSort")}
-    Id "<" {Sort ","}+ ">" -> GenericSort {cons("GenericSort")}
-    "Ref" "<" Sort ">" -> RefSort {cons("RefSort")}
-    "Ref" "<" Sort ">" -> GenericSort {reject}
-  
-    %% function type; optionally specify (named) args and return type
-    "function" FunctionSortParams FunctionSortReturn -> FunctionSort {cons("FunctionSort")}
-    -> FunctionSortParams {ast("[]")}
-    "(" {FunctionSortParam ","}* ")" -> FunctionSortParams {ast("<1>")}
-    Sort -> FunctionSortParam {cons("UnnamedArg")}
-    Id ":" Sort -> FunctionSortParam {cons("Arg")}
-    -> FunctionSortReturn {ast("SimpleSort(\"Void\")")}
-    ":" Sort -> FunctionSortReturn {ast("<1>")}
-     "function" -> SimpleSort {reject}
-
-
-    Id ":" Sort            -> FormalArg {cons("Arg")}
-
 exports
 
   sorts Application Module Unit
@@ -92,10 +68,9 @@ exports
   context-free syntax
 
     "application" QId Definition+ Section* -> Application {cons("ApplicationDefs")}
-    "application" QId Section*      -> Application {cons("Application")}
+    "application" QId Section*             -> Application {cons("Application")}
 
     "description" "{" Word* "}"     -> Description {cons("Description")}
-
     "note" "{" Word* "}"            -> Description {cons("Note")}
 
     Description                   -> Definition
@@ -110,11 +85,8 @@ exports
     Module                        -> Unit
 
 exports
-
   sorts Action Statements Statement Exp
-
   context-free syntax
-
     Action		       	          -> Definition
     Statement*		   	          -> Statements
     NativeFunctionDeclaration   -> Definition

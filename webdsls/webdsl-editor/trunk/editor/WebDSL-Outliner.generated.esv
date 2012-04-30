@@ -33,6 +33,10 @@ outliner Default outliner
   GroupByClause_HQL.GroupBy
   TemplateCall.TemplateCall
   ActionCall.ActionCall
+  TemplateElement.XMLEmptyElement
+  Attribute.XMLAttributesIf
+  Attribute.XMLAttributesIfElse
+  TemplateElement.XMLElement
   Action.Action
   TemplateDefinition.Define
   TemplateArg.TemplateArg
@@ -65,10 +69,6 @@ outliner Default outliner
   PHExp.ThisCall
   PHExp.Call
   TemplateElement.AccessControlImportRules
-  TemplateElement.XMLEmptyElement
-  Attribute.XMLAttributesIf
-  Attribute.XMLAttributesIfElse
-  TemplateElement.XMLElement
   TemplateElement.PagedForAll
   TemplateElement.PagedForAllNoFilter
   TemplateElement.PagedFor

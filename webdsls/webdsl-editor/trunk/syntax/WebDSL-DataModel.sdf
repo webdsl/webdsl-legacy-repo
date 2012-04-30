@@ -8,44 +8,44 @@ exports
 
   context-free syntax
 
-    "globals" "{" GlobalsDef* "}"                        -> Definition {prefer,cons("GlobalsDefinition"),deprecated("'globals{ }' block is no longer necessary around global variables and functions")}
+    "globals" "{" GlobalsDef* "}" -> Definition {prefer,cons("GlobalsDefinition"),deprecated("'globals{ }' block is no longer necessary around global variables and functions")}
 
-    "entity" Type@=Id ":" Id "{" EntityBodyDeclaration* "}"       -> Entity {"Entity", scope(Property,Function)}
-    "entity" Type@=Id "{" EntityBodyDeclaration* "}"              -> Entity {"EntityNoSuper", scope(Property,Function)}
+  context-free syntax
+    
+    Entity -> Definition
+
+    "entity" Type@=Id ":" Id "{" EntityBodyDeclaration* "}" -> Entity {"Entity",        scope(Property,Function)}
+    "entity" Type@=Id "{" EntityBodyDeclaration* "}"        -> Entity {"EntityNoSuper", scope(Property,Function)}
     "session" Id "{" EntityBodyDeclaration* "}"             -> Entity {"SessionEntity", scope(Property,Function)}
-    Property -> EntityBodyDeclaration
-    Function -> EntityBodyDeclaration  
+    
+    
+    Property             -> EntityBodyDeclaration
+    Function             -> EntityBodyDeclaration  
     StaticEntityFunction -> EntityBodyDeclaration
-    "cache" -> EntityBodyDeclaration {cons("CachedEntity")}
+    "cache"              -> EntityBodyDeclaration {cons("CachedEntity")}
 
-    Entity                                   		     -> Definition
 
-    "extend" "entity" Id "{" EntityBodyDeclaration* "}"	 -> Definition {cons("ExtendEntity")}
+    "extend" "entity"  Id "{" EntityBodyDeclaration* "}"	 -> Definition {cons("ExtendEntity")}
     "extend" "session" Id "{" EntityBodyDeclaration* "}"   -> Definition {cons("ExtendSessionEntity")}
 
   context-free restrictions
     "cache" -/- [a-zA-Z0-9\_] %% prevent ambiguity between CachedEntity and a property id beginning with cache
 
 exports
-
   sorts Entity Property Sort Annotation
-
   context-free syntax
+    "request" VarDecl  -> Definition {cons("RequestScope")}
+    VarDecl            -> GlobalsDef
+    VarDeclStat        -> GlobalsDef
+    Function           -> GlobalsDef
+    GlobalsDef         -> Definition
+    InitAction         -> Definition
 
-    "request" VarDecl -> Definition {cons("RequestScope")}
-    VarDecl                                              -> GlobalsDef
     %% still allow ";" behind global var for backwards comp., remove VarDeclStat-> GlobalsDef to disallow
-    VarDeclStat                                          -> GlobalsDef
-    Function                                             -> GlobalsDef
-    GlobalsDef                                           -> Definition
-    InitAction                                           -> Definition
 
 exports
-
   sorts Property Annotation
-
   context-free syntax
-
     Id PropKind Sort "(" {Annotation ","}* ")" -> Property {cons("Property")}
     Id PropKind Sort                           -> Property {cons("PropertyNoAnno")}
 
@@ -57,8 +57,25 @@ exports
     "->" -> PropKind {cons("Ref")}
     "<>" -> PropKind {cons("Comp")}
 
-  sorts Sort
+  context-free syntax
+  
+    %% function type; optionally specify (named) args and return type
+    "function" FunctionSortParams FunctionSortReturn -> FunctionSort {"FunctionSort"}
+    
+                                     -> FunctionSortParams {ast("[]")}
+    "(" {FunctionSortParam ","}* ")" -> FunctionSortParams {ast("<1>")}
+    
+    Sort          -> FunctionSortParam {cons("UnnamedArg")}
+    Id ":" Sort   -> FunctionSortParam {cons("Arg")}
+    
+                  -> FunctionSortReturn {ast("SimpleSort(\"Void\")")}
+    ":" Sort      -> FunctionSortReturn {ast("<1>")}
+    
+     "function"   -> SimpleSort {reject}
 
+    Id ":" Sort            -> FormalArg {cons("Arg")}
+    
+  sorts Sort
   context-free syntax
 
 %% explicit syntax makes the annotations highlighted as keyword in the editor
