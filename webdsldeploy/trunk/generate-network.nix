@@ -33,6 +33,8 @@ let
       (webdslBuildJava {
         inherit (applicationConfig) name src;
         rootapp = if applicationConfig ? rootapp then applicationConfig.rootapp else false;
+        preBuild = if applicationConfig ? preBuild then applicationConfig.preBuild else "";
+        postInstall = if applicationConfig ? postInstall then applicationConfig.postInstall else "";
         replication = mySQLSlaves (builtins.attrNames distribution) != "";
         dbserver = if (applicationConfig ? useLocalhostDB && applicationConfig.useLocalhostDB) then "localhost"
           else searchMySQLServer (builtins.attrNames distribution) + mySQLSlaves (builtins.attrNames distribution);
