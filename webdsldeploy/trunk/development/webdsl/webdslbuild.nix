@@ -1,11 +1,16 @@
 {stdenv, webdsl, apacheAnt}:
-{name, src, dbserver, dbname, dbuser, dbpassword, dbmode ? "update", rootapp ? false, replication ? false}:
+{ name, src, dbserver, dbname, dbuser, dbpassword, dbmode ? "update", rootapp ? false, replication ? false
+, preBuild ? "", postInstall ? ""
+}:
 
 let
   war = stdenv.mkDerivation {
     inherit name src;
 
     buildInputs = [ webdsl apacheAnt ];
+    
+    inherit preBuild postInstall;
+    
     buildPhase =
     ''
       ulimit -s unlimited
