@@ -34,6 +34,7 @@ let
         inherit (applicationConfig) name src;
         rootapp = if applicationConfig ? rootapp then applicationConfig.rootapp else false;
         preBuild = if applicationConfig ? preBuild then applicationConfig.preBuild else "";
+        preConfigure = if applicationConfig ? preConfigure then applicationConfig.preConfigure else "";
         postInstall = if applicationConfig ? postInstall then applicationConfig.postInstall else "";
         replication = mySQLSlaves (builtins.attrNames distribution) != "";
         dbserver = if (applicationConfig ? useLocalhostDB && applicationConfig.useLocalhostDB) then "localhost"

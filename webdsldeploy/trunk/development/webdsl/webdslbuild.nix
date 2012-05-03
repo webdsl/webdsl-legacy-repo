@@ -1,6 +1,6 @@
 {stdenv, webdsl, apacheAnt}:
 { name, src, dbserver, dbname, dbuser, dbpassword, dbmode ? "update", rootapp ? false, replication ? false
-, preBuild ? "", postInstall ? ""
+, preBuild ? "", postInstall ? "", preConfigure ? ""
 }:
 
 let
@@ -9,7 +9,7 @@ let
 
     buildInputs = [ webdsl apacheAnt ];
     
-    inherit preBuild postInstall;
+    inherit preBuild postInstall preConfigure;
     
     buildPhase =
     ''
