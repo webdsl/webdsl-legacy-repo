@@ -48,10 +48,11 @@ in
   };
 
   config = mkIf cfg.enable {
-    services.mysql55.enable = true;
-    services.mysql55.rootPassword = pkgs.writeTextFile { name = "mysqlpw"; text = cfg.databasePassword; };
-    services.mysql55.initialDatabases = map (databaseName: { name = databaseName; schema = ./schema.sql; } ) (cfg.databaseNames);
-    services.mysql55.initialScript = pkgs.writeText "mysqlscript" ''
+    services.mysql.enable = true;
+    services.mysql.package = pkgs.mysql55;
+    services.mysql.rootPassword = pkgs.writeTextFile { name = "mysqlpw"; text = cfg.databasePassword; };
+    services.mysql.initialDatabases = map (databaseName: { name = databaseName; schema = ./schema.sql; } ) (cfg.databaseNames);
+    services.mysql.initialScript = pkgs.writeText "mysqlscript" ''
       grant all on *.* to 'root'@'%' identified by "";
       ${optionalString (cfg.replication.role == "master") ''
           grant replication slave on *.* to '${cfg.replication.masterUser}'@'%';

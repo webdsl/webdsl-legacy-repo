@@ -3,8 +3,8 @@
 stdenv.mkDerivation {
   name = "webdsl-java";
   src = fetchurl {
-    url = http://hydra.nixos.org/build/2515402/download/1/webdsl-java.zip;
-    sha256 = "1a919a1585d9cb0ab97115b1f947e805bbe789e55e5c1349b76cd42128bf07fd";
+    url = http://hydra.nixos.org/build/2613427/download/1/webdsl-java.zip;
+    sha256 = "0f6yka3j0v8bsmg6zfhs7kvfg9w6jykjkxl4pipld0mhmjc6hh35";
   };
   buildInputs = [ unzip ];
   installPhase = ''
