@@ -3,7 +3,6 @@
 {
   boot.loader.grub.version = 2;
   
-  #require = [ ./build-machines-common.nix ];
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.copyKernels = true;
   boot.kernelPackages = pkgs.linuxPackages_3_2;
@@ -17,7 +16,7 @@
         options = "noatime";
       }
       
-      { device = "none"; fsType = "tmpfs"; mountPoint = "/tmp"; options = "size=16G"; neededForBoot = true; }
+      #{ device = "none"; fsType = "tmpfs"; mountPoint = "/tmp"; options = "size=16G"; neededForBoot = true; }
     ];
 
   swapDevices = [
@@ -37,4 +36,6 @@
     ];
 
   services.openssh.enable = true;
+  
+  deployment.targetHost = "shelley";
 }
