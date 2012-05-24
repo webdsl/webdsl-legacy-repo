@@ -25,7 +25,7 @@ let
       ${if (extraApplicationIniSettings == null) then  ""
       else
       ''
-      cat <<EOF
+      cat >> application.ini <<EOF
       ${extraApplicationIniSettings}
       EOF
       ''}
