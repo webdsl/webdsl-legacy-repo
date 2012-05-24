@@ -28,10 +28,7 @@
   
   nix.maxJobs = 48;
 
-  services.mysql.enable = true;
   environment.etc = [ { mode = "0644"; source = ./my.cnf; target = "my.cnf"; } ];
-
-  services.tomcat.enable = true;
   
   environment.systemPackages = 
     [ pkgs.emacs pkgs.subversion pkgs.sysstat pkgs.hdparm pkgs.sdparm # pkgs.lsiutil 
