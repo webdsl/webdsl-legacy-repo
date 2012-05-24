@@ -1,5 +1,5 @@
 {stdenv, webdsl, apacheAnt}:
-{ name, src, dbserver, dbname, dbuser, dbpassword, dbmode ? "update", rootapp ? false, replication ? false
+{ name, src, dbserver, dbname, dbuser, dbpassword, dbmode ? "update", rootapp ? false, replication ? false, extraApplicationIniSettings ? null
 , preBuild ? "", postInstall ? "", preConfigure ? ""
 }:
 
@@ -21,6 +21,14 @@ let
         echo "indexdir=/var/tomcat/temp/indexes/${name}"
         echo "rootapp=${if rootapp then "true" else "false"}"
       ) > application.ini
+      
+      ${if (extraApplicationIniSettings == null) then  ""
+      else
+      ''
+      cat <<EOF
+      ${extraApplicationIniSettings}
+      EOF
+      ''}
       webdsl war
     '';
     installPhase = ''
