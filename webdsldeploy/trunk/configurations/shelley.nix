@@ -15,13 +15,19 @@
         label = "nixos";
         options = "noatime";
       }
-      
-      #{ device = "none"; fsType = "tmpfs"; mountPoint = "/tmp"; options = "size=16G"; neededForBoot = true; }
     ];
 
   swapDevices = [
     { label = "swap"; }
   ];
+  
+  networking.interfaces = [
+    { ipAddress = "130.161.159.25"; name = "eth1"; subnetMask = "255.255.254.0"; }
+  ];
+  networking.nameservers = [ "130.161.180.1" "130.161.180.65" ];
+  networking.defaultGateway = "130.161.158.1";
+  networking.hostName = "shelley";
+  networking.domain = "st.ewi.tudelft.nl";
 
   nixpkgs.system = "x86_64-linux";
   
