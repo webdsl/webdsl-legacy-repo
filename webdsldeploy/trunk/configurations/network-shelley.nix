@@ -1,0 +1,3 @@
+{
+  shelley = import ./shelley.nix;
+}

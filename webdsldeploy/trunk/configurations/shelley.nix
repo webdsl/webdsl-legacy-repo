@@ -2,7 +2,6 @@
 
 {
   boot.loader.grub.version = 2;
-  
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.copyKernels = true;
   boot.kernelPackages = pkgs.linuxPackages_3_2;
@@ -38,10 +37,14 @@
   environment.systemPackages = 
     [ pkgs.emacs pkgs.subversion pkgs.sysstat pkgs.hdparm pkgs.sdparm # pkgs.lsiutil 
       pkgs.htop pkgs.sqlite pkgs.iotop pkgs.lm_sensors pkgs.gitFull pkgs.hwloc
-      pkgs.lsof pkgs.numactl pkgs.gcc pkgs.mc
+      pkgs.lsof pkgs.numactl pkgs.mc
     ];
 
   services.openssh.enable = true;
   
-  deployment.targetHost = "shelley";
+  services.tomcat.javaOpts = "-Xms350m -Xss8m -Xmx8G -Djava.security.egd=file:/dev/./urandom -XX:MaxPermSize=512M -XX:PermSize=512M -XX:-UseGCOverheadLimit -XX:+UseCompressedOops " 
+     + "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=8999 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.rmi.server.hostname=localhost "
+     + "-XX:+HeapDumpOnOutOfMemoryError -Dorg.apache.tomcat.util.http.ServerCookie.ALLOW_EQUALS_IN_VALUE=true";
+  
+  deployment.targetHost = "dutieq";
 }
