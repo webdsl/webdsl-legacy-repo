@@ -26,7 +26,7 @@
   ];
   networking.nameservers = [ "130.161.180.1" "130.161.180.65" ];
   networking.defaultGateway = "130.161.158.1";
-  networking.hostName = "shelley";
+  networking.hostName = "dutieq";
   networking.domain = "st.ewi.tudelft.nl";
 
   nixpkgs.system = "x86_64-linux";
