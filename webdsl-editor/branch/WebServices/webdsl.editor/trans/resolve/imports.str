@@ -1,0 +1,13 @@
+module resolve/imports
+  
+imports
+  libwebdsl-front
+  application-ini
+  trans/-
+
+rules   // resolve
+            
+  hover: Module(x,_) -> text      
+    with  fullpath := <import-to-fullpath> x
+        ; text := $[Module [x]<br/>[fullpath]]
+  

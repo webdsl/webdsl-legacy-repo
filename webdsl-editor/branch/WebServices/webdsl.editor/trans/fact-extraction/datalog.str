@@ -1,0 +1,297 @@
+module fact-extraction/datalog
+
+imports
+   libwebdsl-front
+   libwebdsl-generator
+   typecheck/template
+   webdsl_editor
+   resolve/function
+
+signature constructors
+  
+  Fact : Id * List(Constant) -> Term
+
+rules
+   
+  datalog-extraction : // use on main app file
+    a@(node, position, ast, path, project-path) -> (filename, result)
+    with  filename := <guarantee-extension(|"datalog")> path
+    with  <webdsl-editor-init> (path, project-path, ast) //cleanup DR, set appname DR
+        ; <full-app-load(|<dirname> path)> ast //not using editor-analyze like other analysis tasks
+        ; entity* := <all-keys-EntDecl; map(!Fact("entity",[<id>]))>
+        ; property* := <extract-entity-properties>
+        ; entityfunction* := <extract-entity-functions>
+        ; globalfunction* := <extract-global-functions>
+        ; super* := <all-keys-EntDecl; filter(!Fact("super",[<Extends>,<id>]))>
+        ; pagesig* := <all-keys-CurrentTemplateDecl; map(CurrentTemplateDecl); filter(where(?Define(<fetch(Page())>,_,_,_,_))); mapconcat(extract-page)>
+        ; templatesig* := <all-keys-CurrentTemplateDecl; map(CurrentTemplateDecl); remove-all(?Define(<fetch(Page()<+Local())>,_,_,_,_)); mapconcat(extract-template)> //CurrentTemplateDecl contains 'renamed' template bodies
+        ; accesscontrol* := <all-keys-AccessControlRule; map(bagof-AccessControlRule); flatten-list; filter(extract-access-control <+ debug(!"AC rule not supported: ");fail);concat>
+        ; result := <map(pp-datalog <+ debug(!"pp-datalog failed: ");fail); concat-strings> [entity*,super*,property*,entityfunction*,pagesig*,templatesig*,globalfunction*, accesscontrol*]
+
+rules 
+  
+  //full load of entire application, cannot use editor/plugin module loading for this analysis
+  //because it doesn't contain all data (to optimize for type checking), e.g. it removes the body of templates
+  full-app-load(|dir) =
+    where(<chdir> dir) //set current dir to main app file
+  ; import-modules
+  ; remove-string-position-annos
+  ; in-typechecking-phase(
+        typecheck-init
+      ; typecheck-declare
+      ; typechecker-after-declare
+      ; rename-top
+    )
+
+rules
+  
+  extract-entity-properties =
+    all-keys-PropertyDecl; mapconcat(entity-property-tuple-to-fact)
+    
+  entity-property-tuple-to-fact :
+    (ent,prop) -> [Fact("property",[<Fst>, <Snd>, <TypeOfProperty; pp-type>]) | inverse* ]
+    with if (invent,invprop) := <InverseProperty>
+         then inverse* := [Fact("inverse",[ent, prop, invent, invprop])]
+         else inverse* := [] end 
+    
+rules
+  
+  extract-page:
+    Define(mod*, name, fargs, targs, body) -> [Fact("page",[name]) | [argfact*,common*] ]
+    with argfact* := <add-indices; map(extract-page-arg(|name))> fargs
+    with common* := <extract-page-template-body-common(|name,body)>
+    
+  extract-page-arg(|page):
+    (num,Arg(name,type)) -> Fact("pageargument", [page, num, name, <pp-type> type])
+    
+  extract-template:
+    Define(mod*, name, fargs, targs, body) -> [Fact("template", [uniqname, name]) | [argfact*,ajaxfact*,common*] ]
+    with uniqname := <get-template-unique-name-from-define>
+    with argfact* := <add-indices; map(extract-template-arg(|uniqname))> fargs
+    with ajaxfact* := <?Define(<fetch(AjaxTemplate())>,_,_,_,_);![Fact("ajaxtemplate",[uniqname])] <+ ![]>
+    with common* := <extract-page-template-body-common(|uniqname,body)>
+    
+  extract-page-template-body-common(|uniqname,body) :
+    _ -> [callfact*,navigate*,action*,form*,databind*,functioncall*]
+    with callfact* := <extract-template-body-calls(|uniqname, body)>
+    with navigate* := <extract-template-navigates(|uniqname,body)>
+    with action* := <extract-template-actions(|uniqname,body)>
+    with form* := <extract-template-forms(|uniqname,body)>
+    with databind* := <extract-template-databind(|uniqname,body)>
+    with functioncall* := <extract-template-function-calls(|[uniqname], body)>
+    
+  extract-template-arg(|uniqname):
+    (num,Arg(name,type)) -> Fact("templateargument", [uniqname, num, name, <pp-type> type])
+    
+  get-template-unique-name-from-define :
+    Define(mod*, name, fargs, targs, body) -> uniqname
+    with uniqname := <generate-template-name-fargs>(name, fargs)
+    
+  extract-template-body-calls(|uniqname,body) :
+    _ -> facts
+    with calls := <collect(is-defined-tc-get-called-tc)> body
+       ; facts := <map(!Fact("templatecall",[uniqname,<id>]))> calls
+         
+  extract-template-navigates(|uniqname,body) :
+    _ -> facts
+    with calls := <collect(is-navigate-call-get-called-page-name)> body
+       ; facts := <map(!Fact("navigate",[uniqname,<id>]))> calls
+  
+  is-navigate-call-get-called-page-name : NavigateCall(pc@PageCall(x,arg*),passign*,elem*){anno*} -> x
+
+  extract-template-forms(|uniqname,body) :
+    _ -> facts
+    with if <oncetd(match-template-with-name(|"form"))> body
+         then facts := [Fact("form",[uniqname])]
+         else facts := []
+         end
+         
+  extract-template-databind(|uniqname,body) :
+    _ -> facts
+    with if <oncetd(?DataBindAction(_))> body
+         then facts := [Fact("databind",[uniqname])]
+         else facts := []
+         end
+  
+  extract-template-function-calls(|uniqnameparts,body) :
+    _ -> fact*
+    with fact* := <extract-function-calls(|"functioncalltemplatetoentity","functioncalltemplatetoglobal",uniqnameparts,body)>
+
+rules
+
+  extract-template-actions(|uniqname,body) :
+    _ -> facts
+    with facts := <collect(extract-template-action(|uniqname)); concat> body
+
+  extract-template-action(|uniqname) :
+    Action(mods,name,fargs,body) -> [Fact("action", [uniqname, name]) | [argfact*, callfact*, return*] ]
+    with argfact* := <add-indices; map(extract-action-arg(|uniqname,name))> fargs
+    with callfact* := <extract-action-body-calls(|uniqname,name,body)>
+    with return* := <extract-action-return(|uniqname,name,body)>
+    
+  extract-action-arg(|uniqname,aname):
+    (num,Arg(name,type)) -> Fact("actionargument", [uniqname, aname, num, name, <pp-type> type])
+    
+  extract-action-return(|uniqname,name,body):
+    _ -> facts
+    with facts := <collect(\ Return(PageCall(pagename,_)) -> Fact("actionreturn",[uniqname, name, pagename]) \)> body
+         
+  //reusing resolve code 
+  extract-action-body-calls(|uniqname,name,body) :
+    _ -> [factglobal*,factent*]
+    with callsglobal := <collect(?ThisCall(_,_);declaration-of)> body 
+       ; factglobal* := <map(get-function-sig-unique-name;Fst;!Fact("functioncallactiontoglobal",[uniqname,name,<id>]))> callsglobal
+    with callsent := <collect(?Call(_,_,_);declaration-of;!(<get-anno(?FromEntity(_));?FromEntity(<id>)>,<id>))> body
+       ; factent* := <map((id,get-function-sig-unique-name;Fst);!Fact("functioncallactiontoentity",[uniqname,name,<Fst>,<Snd>]))> callsent
+  
+rules  
+  
+  extract-entity-functions =
+    all-keys-EntityFunctionDecl
+  ; fix-dr-dummy-annos
+  ; filter(!(<id>,<EntityFunctionDecl>);extract-entity-function <+ debug(!"Entity function not supported: ");fail)
+  ; concat
+      
+  extract-entity-function:
+    ((ent,n,t),fun) -> [Fact("entityfunction", [ent, uniqname, name, <pp-type>ret]) | [argfact*,callfact*]]
+    where (uniqname,name,args,ret) := <get-function-sig-unique-name> fun
+        ; argfact* := <add-indices; map(extract-entity-function-arg(|ent,uniqname))> args
+    with  if body := <extract-function-body> fun
+          then callfact* := <extract-entity-function-body-calls(|ent,uniqname,body)>
+          else callfact* := [] end
+    
+  get-function-sig-unique-name:
+    fun -> (uniqname,name,args,ret)
+    with (name,args,ret) := <get-function-sig-full> fun
+       ; uniqname := <new-function-name> (name, <map(farg-to-type)> args)      
+      
+  extract-entity-function-arg(|ent,uniqname):
+    (num,Arg(name,type)) -> Fact("entityfunctionargument", [ent, uniqname, num, name, <pp-type> type])
+
+  extract-entity-function-body-calls(|ent,uniqname,body) :
+    _ -> [factglobal*,factent*]
+    with callsglobal := <collect(?ThisCall(_,_);where(not(function-lookup(|ent)));function-lookup)> body 
+       ; factglobal* := <map(get-function-sig-unique-name;Fst;!Fact("functioncallentitytoglobal",[ent,uniqname,<id>]))> callsglobal
+    with callsent := <collect(?ThisCall(_,_);function-lookup(|ent);!(ent,<id>) <+ ?Call(_,_,_);function-lookup;!(<get-anno(?FromEntity(_));?FromEntity(<id>)>,<id>))> body
+       ; factent* := <map((id,get-function-sig-unique-name;Fst);!Fact("functioncallentitytoentity",[ent,uniqname,<Fst>,<Snd>]))> callsent
+
+  extract-function-body = 
+       \Function(x,farg,_,body) -> body\
+    <+ \Predicate(x,farg,body) -> body\
+    <+ \PredicateInEntity(x,farg,body) -> body\
+    <+ \NativeFunction(x,farg,body) -> body\
+    <+ \StaticEntityFunction(x,farg,_,body) -> body\
+    
+rules
+  
+  fix-dr-dummy-annos = remove-all(not(has-anno(|DR_DUMMY()))) /* for some reason keys occur twice: ("test2",[])  ("test2",[]){DR_DUMMY} */
+ 
+  extract-global-functions = 
+    all-keys-FunctionDecl
+  ; fix-dr-dummy-annos
+  ; filter(FunctionDecl; extract-global-function <+ debug(!"Global function not supported: ");fail)
+  ; concat
+  
+  extract-global-function:
+    fun -> [Fact("globalfunction", [uniqname, name, <pp-type>ret]) | [argfact*,callfact*]]
+    where not(oncetd(?Arg(_,"Undefined")))
+    with  (uniqname,name,args,ret) := <get-function-sig-unique-name> fun
+        ; argfact* := <add-indices; map(extract-global-function-arg(|uniqname))> args
+        ; if body := <extract-function-body> fun
+          then callfact* := <extract-global-function-body-calls(|uniqname,body)>
+          else callfact* := [] end 
+
+  extract-global-function-arg(|uniqname):
+    (num,Arg(name,type)) -> Fact("globalfunctionargument", [uniqname, num, name, <pp-type> type])
+
+  extract-global-function-body-calls(|uniqname,body) :
+    _ -> fact*
+    with fact* := <extract-function-calls(|"functioncallglobaltoentity","functioncallglobaltoglobal",[uniqname],body)>
+ 
+  extract-function-calls(|factnameentity,factnameglobal,uniqnameparts,body) :
+    _ -> [factglobal*,factent*]
+    with callsglobal := <collect(?ThisCall(_,_);function-lookup)> body 
+       ; factglobal* := <map(get-function-sig-unique-name;Fst;!Fact(factnameglobal,<concat> [uniqnameparts,[<id>]]))> callsglobal
+    with callsent := <collect(?Call(_,_,_);function-lookup;!(<get-anno(?FromEntity(_));?FromEntity(<id>)>,<id>))> body
+       ; factent* := <map((id,get-function-sig-unique-name;Fst);!Fact(factnameentity,<concat> [uniqnameparts,[<Fst>,<Snd>]]))> callsent
+
+  prepare-type-for-compare = strip-ref-sort; try(simplify-functionsort); strip-all-annos  
+
+rules /* @TODO refactor: merge with resolve code */
+
+  function-lookup :
+    Call(e1, f, e2*) -> <add-anno(|FromEntity(<?SimpleSort(<id>)>te1))> fun
+    where te1 := <type-of; prepare-type-for-compare> e1
+        ; fun := <check-sig-get-called-sig> (te1, f, e2*)
+  
+  function-lookup(|ent) :
+    ThisCall(f, e2*) -> <add-anno(|FromEntity(ent))> fun 
+    where not(FunctionSort(_,_) := <type-of> Var(f))
+    where fun := <check-sig-get-called-sig> (SimpleSort(<strip-annos>ent), f, e2*)   
+
+  function-lookup :
+    c@ThisCall(f, e2*) -> fun
+    where not(FunctionSort(_,_) := <type-of> Var(f))
+    where fun := <check-sig-get-called-sig> (None(), f, e2*) 
+
+  check-sig-get-called-sig :
+    (tcallee, f, e*) -> fun
+    where not(<?SimpleSort("PageServlet")> tcallee) //@TODO figure out what goes wrong with this built-in
+    where t* := <map(type-of<+debug(!"type-of failed: ");fail);prepare-type-list-for-compare> e*
+        ; f1 := <strip-annos> f
+        ; fun := <resolve-function-call-to-decl> (tcallee, f1, t*)
+//        ; fun := <(<EntityFunctionDecl> (<?SimpleSort(<id>)>tcallee, f1, t*) <+ <FunctionDecl> (f1, t*))> //no overload resolution
+
+  //fix-simple-sorts = alltd(?SimpleSort(_);strip-all-annos)
+  
+rules
+
+  extract-access-control :
+    acr@AccessControlRule(_,matchname,_,_,_) -> []
+    where <is-substring(!"*")> matchname
+
+  extract-access-control :
+    acr@AccessControlRule("page",x_pagematchname,margs@MatchArgs(farg1,_),e,acrule*) -> [Fact("acrule",["page",x_pagematchname]) | [callfact*,nested*] ]
+    where not(<is-substring(!"*")> x_pagematchname)
+    with callfact* := <extract-acrule-function-calls(|["page",x_pagematchname], e)>
+    with nested* := <filter(extract-access-control(|["page",x_pagematchname]));concat> acrule*
+    
+  extract-access-control :
+    acr@AccessControlRule("template",x_pagematchname,margs@MatchArgs(fargs,_),e,acrule*) -> [Fact("acrule",["template",uniqname]) | [callfact*,nested*] ]
+    where not(<is-substring(!"*")> x_pagematchname)
+    with uniqname := <generate-template-name-fargs>(x_pagematchname, fargs)
+    with callfact* := <extract-acrule-function-calls(|["template",uniqname], e)>
+    with nested* := <filter(extract-access-control(|["template",uniqname]));concat> acrule*
+    
+  extract-access-control :
+    acr@AccessControlRule("action",x_pagematchname,margs@MatchArgs(farg1,_),e,acrule*) -> [Fact("acrule",["action",x_pagematchname]) | [callfact*] ]
+    where not(<is-substring(!"*")> x_pagematchname)
+    with callfact* := <extract-acrule-function-calls(|["action",x_pagematchname], e)>
+
+  extract-access-control(|uniqnames) :
+    acr@AccessControlRule("action",x_pagematchname,margs@MatchArgs(farg1,_),e,acrule*) -> [Fact("acrule", uniqnameaction*) | [callfact*] ]
+    where not(<is-substring(!"*")> x_pagematchname)
+    with uniqnameaction* := <concat>[uniqnames,["action",x_pagematchname]]
+    with callfact* := <extract-acrule-function-calls(|uniqnameaction*, e)>
+    
+  extract-access-control :
+    acr@AccessControlRule("ajaxtemplate",x_pagematchname,margs@MatchArgs(fargs,_),e,acrule*) -> [Fact("acrule",["ajaxtemplate",uniqname]) | [callfact*,nested*] ]
+    where not(<is-substring(!"*")> x_pagematchname)
+    with uniqname := <generate-template-name-fargs>(x_pagematchname, fargs)
+    with callfact* := <extract-acrule-function-calls(|["ajaxtemplate",uniqname], e)>
+    with nested* := <filter(extract-access-control(|["ajaxtemplate",uniqname]));concat> acrule*
+
+  extract-acrule-function-calls(|uniqnameparts,body) :
+    _ -> fact*
+    with fact* := <extract-function-calls(|"functioncallacruletoentity","functioncallacruletoglobal",uniqnameparts,body)>
+
+rules
+  
+  pp-datalog : 
+    Fact(name,cs) -> $[[name]([args]).
+    ]
+    with args := <not(is-list);debug(!"Fact(_,X) must be a list: ");fail 
+                  <+ 
+                  map(is-string; single-quote <+ is-int; int-to-string <+ debug(!"Fact(_,[..,X,..]) must be String or Int: ");fail); 
+                  separate-by(|","); 
+                  concat-strings>cs

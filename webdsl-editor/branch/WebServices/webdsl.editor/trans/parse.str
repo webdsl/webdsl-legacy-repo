@@ -1,0 +1,124 @@
+module trans/parse
+
+imports 
+  libwebdsl-front 
+  libwebdsl-generator
+  libstratego-sglr
+  lib/editor-common.generated
+  webdsl_editor
+  application-ini
+  typecheck/import
+  trans/-
+  lib/dr
+
+rules
+  
+  format-trace(|prefix) =
+      map(\name -> <concat-strings> [prefix, name]\)
+    ; separate-by(|"<br/>")
+    ; concat-strings
+    ; try(not(?""); <concat-strings> ["<br/>", <id>])
+  
+  report-import-failed(|txt): mod -> <fail>
+    with 	trace-entries := <bigbagof-CurrentFile>
+        ; trace := <format-trace(|"... imported from: ")> trace-entries
+        ; msg := <concat-strings> [txt, ": ", mod, trace]
+        ; import := <TopImport <+ !"DummyImport(main-app)">
+        ; rules(ImportErrors :+= (import, msg))
+
+  import-to-fullpath: x -> $[[<ApplicationIniDir>]/[x].app]
+        
+  editor-parse-webdsl-module: x -> x
+    where(
+        full-path := <get-fixed-import-path <+ report-import-failed(|"Imported file not found")> x
+     )
+  ; (open-import-sig(
+        !full-path
+      , log-time-helper(parse-file | "parse")
+      , read-import(|full-path)
+      , read-import-sigs)
+      <+
+       <report-import-failed(|"Could not import file")> full-path
+    )
+  
+  get-fixed-import-path = get-fixed-import-path-1 <+ get-fixed-import-path-2
+  
+  get-fixed-import-path-1 = import-to-fullpath; file-exists
+  // FIXME: before the first build, src-webdsl-template files are not copied to .servletapp
+  get-fixed-import-path-2 =
+      dst := <import-to-fullpath>
+    ; is-substring(!".servletapp/src-webdsl-template/") // must be an import of src libary in .servletapp/src-webdsl-template
+    ; <split-after; ?(servletappdir,_)> (dst, ".servletapp/") 
+    ; <split-after; Snd; ?libappfilename> (dst, ".servletapp/src-webdsl-template/") //current term becomes app file name, e.g. built-in.app
+    ; <concat-strings> [<plugin-path>, "/webdsl-template/template-webdsl/", libappfilename]
+    ; ?src
+    ; file-exists
+      // create directory (cannot use create-dirs, we have an absolute dirname)
+    ; <file-exists <+ mkdir(|"w")> servletappdir
+    ; <concat-strings; (file-exists <+ mkdir(|"w"))> [servletappdir,"src-webdsl-template/"]
+    ; <copy-file> (src, dst)
+    ; <refresh-workspace-file> dst // TODO: need relative path?
+    ; !dst
+      
+  // TODO: create absolute dir 
+            
+  
+  all-used-drs = !<import-term(include/webdsl-typechecker-rules.aterm)>
+  is-used-dr = ?"ModuleDecl"
+ 
+  is-used-dr = ?x; where(all-used-drs; fetch-elem(?x))
+  
+  read-import(|fullpath) =
+      desugar-compat  // simplify module/app constructor
+    ; preserve(try(fix-module-name(|fullpath)))
+    ; where(declare-globals => (ruleset, imports))
+    ; <try(not(PerformingUpdate); queue-analysis)> fullpath   // import has changed; recheck it
+    ; !(ruleset, imports)
+  
+  strip-and-annotate-dr-value =
+      try(preserve(alltd(strip-bodies)))
+    ; try(add-generated-anno)
+      
+  add-generated-anno: (stamp, value) -> (stamp, value2)
+    where <not(oncetd(has-ast-mapping))> value
+        ; not(is-string <+ is-list)
+        ; value2 := <add-anno(|IsGeneratedAnno())> value
+
+  declare-globals =
+     where(
+        imports := <collect(?Imports(_))>
+      ; filter(get-imports)
+    )
+    ; start-record-dynamic-rules
+    ;	desugar-compat
+    ; try(where(store-module))
+    ; typecheck-declare
+    ; end-record-dynamic-rules
+    ; filter(where(Fst; is-used-dr))
+      // strip bodies of generated definitions
+    ; map-dr-values(strip-and-annotate-dr-value)
+    ; !(<id>, imports)
+      
+  read-import-sigs: (ruleset, imports) -> (ruleset, imports)
+    with <log-time-helper(load-dynamic-rule-closure(|<CurrentFile>) | "load drs")> ruleset
+       ; <filter(get-imports)> imports
+       
+  // Try subnodes before stripping the node
+  find-node(|sig): node -> res
+    where preserve(strip-bodies); ?sig; ?res
+      <+  ?sig; ?res
+      <+  <one(find-node(|sig); ?res)> node
+      
+  get-imported-decl(|mod): sig -> node
+    with  ast := <log-time-helper(parse-file <+ debug(!"Parsing failed") | "parse")> mod
+        ; if <?Module(_,_)> sig then
+              node := ast
+          else
+              <log-time-helper(preserve(desugar-all)
+                  <+ debug(!"desugar failed")
+                | "desugar")> ast
+            ; node := <log-time-helper(find-node(|sig)
+                | "find node desugared ast")>
+          end
+        ; print-total-log-time
+        ; <ensure-ast(|"after get-imported-decl")> node

@@ -1,0 +1,69 @@
+module util
+
+imports
+  libstratego-lib
+  lib/editor-common.generated
+  libwebdsl-generator
+  libwebdsl-front
+ 
+rules
+
+  collect-markers(s) =
+    collect-all(s,conc);
+    try(flatten-list);
+    map((id,try(concat-strings)))
+      
+  require(s)=not(s)
+  constraint-warning=fail
+  constraint-note=fail
+  check=fail
+
+signature constructors
+  
+  FromEntity : Term -> Term
+  IsGeneratedAnno : Term
+
+rules
+
+  // Re-use compiler normalization
+  desugar-def = normalize-declare; try(desugar-def)
+
+  // Desugar, but remain compatible with compiler typechecker
+  desugar-compat = try(preserve(simplify-application-constructor <+ simplify-module-constructor))
+
+  // Documentation Presentation
+  make-list = ?list; <flatten-list; concat-strings> ["<ul>",<map(make-item)> list,"</ul>"]
+  make-item = ?str; <concat-strings> ["<li>",str,"</li>"]
+  
+rules   // AST mapping
+
+  preserve(s) =
+    if has-ast-mapping then
+        origin-track-forced(s)
+      ; ensure-ast(|"after preserve")
+    else
+        s
+    end
+  
+  ensure-ast(|msg) = 
+       is-list  // lists don't always have an ast association
+    <+ where(not(has-ast-mapping); debug(<concat-strings> ["No AST mapping while ",msg,": "]); print-stacktrace)
+    <+ id
+
+  has-ast-mapping = where(origin-term)
+
+rules   // Dummies
+  
+  strip-bodies = fail
+
+rules   // Versioning
+  
+  editor-timestamp = import-term(include/editor.timestamp.aterm)
+  
+rules
+  
+  generate-aterm:
+    (selected, position, ast, path, project-path) -> (filename, result)
+    with
+      filename := <guarantee-extension(|"aterm")> path;
+      result   := selected // we just return the input term

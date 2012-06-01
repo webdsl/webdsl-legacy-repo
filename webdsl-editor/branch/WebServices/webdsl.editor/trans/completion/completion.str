@@ -1,0 +1,281 @@
+module completion/completion
+
+imports
+  libwebdsl-front
+    
+strategies  
+  
+  editor-complete :
+    a@(node, position, ast, path, project-path) -> result
+    with  <editor-analyze> (ast, path, project-path)
+        ; result := <collect-all(editor-complete-proposal); flatten-list>
+
+rules // inverse property annotation completion foo -> Foo (inverse=Foo.bar) 
+  
+  // inverse=
+  editor-complete-proposal :
+    IncompleteInverseAnno(COMPLETION(_)) -> result
+    where has-anno(?PropertyTypeAnno(propsrt))
+        ; has-anno(?EntityNameAnno(ent))
+    with typename := <try-strip-generic-sort; ?SimpleSort(<id>)> propsrt 
+       ; result := <get-properties-for-inverse-completion; map((<concat-strings> [typename,".",<id>],id))> (ent,propsrt)  
+         
+  //inverse=Foo.
+  editor-complete-proposal :
+    InverseAnno(_,COMPLETION(_)) -> result 
+    where has-anno(?PropertyTypeAnno(propsrt))
+        ; has-anno(?EntityNameAnno(ent))
+    with  result := <get-properties-for-inverse-completion> (ent,propsrt) 
+              
+  get-properties-for-inverse-completion :
+    (ent,propsrt) -> result
+    with x := <try-strip-generic-sort; ?SimpleSort(<id>)> propsrt
+       ; props := <all-properties
+                  ; filter(where(get-property-type;try-strip-generic-sort; ?SimpleSort(ent)))
+                  ; if <?GenericSort("List",_)>propsrt then remove-all(get-property-type;?GenericSort(<?"Set"<+?"List">,_)) end
+                  ; if <?GenericSort("Set",_)>propsrt  then remove-all(get-property-type;?GenericSort("List",_)) end
+                  > x
+       ; result := <map(fieldaccess-proposal-prop)> props
+    
+rules //completion for property names in object creation expression
+  
+  editor-complete-proposal :
+    IncompleteObjectPropertyAssignment(COMPLETION(_)) -> <all-properties; map(fieldaccess-proposal-prop); map((<concat-strings> [<id>," := "],id))> x
+    where get-anno(?ObjectCreationTypeAnno(x))
+    
+  editor-complete-proposal :
+    ObjectPropertyAssignment(COMPLETION(_),_) -> <all-properties; map(fieldaccess-proposal-prop)> x
+    where get-anno(?ObjectCreationTypeAnno(x))
+    
+  //working with NOCONTEXT and parent-at-position is slow and fragile, add simple productions instead, e.g. see IncompleteObjectPropertyAssignment for ObjectCreationAssignment
+  //var d := EntA{ i := 4 [ctrl+space]
+  //[VarDeclInitInferred("d",ObjectCreation(SimpleSort("EntA"),[ObjectPropertyAssignment("i",Int("4"))])),NOCONTEXT(COMPLETION(""))]
+  /*editor-complete-proposal(|ast,position) :
+    nc@NOCONTEXT(COMPLETION(_)) -> prop*
+    where candidate-sorts; fetch(?"ObjectPropertyAssignment") 
+        ; parentlist := <parent-at-position(|position)> ast
+        ; index := <get-index> (nc,parentlist)
+        ; precedingindex := <subt> (index,1)
+        ; precedingterm := <index(|precedingindex)> parentlist
+        ; <oncetd(?ObjectCreation(SimpleSort(entname),_))> precedingterm
+        ; prop* := <all-properties; map(fieldaccess-proposal-prop)> entname
+  */
+  
+rules  //FieldAccess
+  
+  editor-complete-proposal :
+    FieldAccess(e, COMPLETION(_)) -> [prop*, func*]
+    where SimpleSort(typename) := <type-of> e
+        ; prop* := <all-properties; map(fieldaccess-proposal-prop) <+ ![]> typename
+        ; func* := <all-functions; map(fieldaccess-proposal-func) <+ ![]> typename
+
+  fieldaccess-proposal-prop :
+    p -> result
+    with  p1 := <try(normalize-declare)> p //try because Property constructor is already normalized
+        ; name := <get-property-name> p1
+        ; type := <get-property-type> p1
+        ; result := <prop-to-complete-proposal> (name,type)
+
+  fieldaccess-proposal-func:
+    f -> result
+    with  result := <get-function-sig-full; func-sig-to-complete-proposal> f
+
+rules
+  
+  prop-to-complete-proposal :
+    (name,type,desc) -> (name{},$[[name] : [<pp-type> type] [<if not(?"") then !$[- [<id>]] end> desc]])     
+  prop-to-complete-proposal :
+    (name,type) -> <prop-to-complete-proposal> (name,type,"")     
+          
+  func-sig-to-complete-proposal :
+    (x,farg) -> <func-sig-to-complete-proposal> (x,farg,SimpleSort("Void"))
+    
+  func-sig-to-complete-proposal :
+    tup@(x,farg,return) -> (sig-no-return,full-sig)
+    with  sig-no-return := <pp-func-sig-arg-names> (x,<map(?Arg(<id>,_))>farg)
+        ; if(<?SimpleSort("Void")>return) then full-sig := <pp-func-sig-farg> (x,farg)
+                                          else full-sig := <pp-func-sig-farg> tup end
+          
+  //returning list of tokens doesn't seem to work    
+  //pp-func-sig-tokens = ?(x,argtypes); <flatten-list> [x,"(",<map(pp-webdsl-to-string);separate-by(|", ")> argtypes,")"]
+  
+rules //TemplateCall
+  
+  editor-complete-proposal :
+    TemplateCall(COMPLETION(_),[],None,None) -> result
+    where result := <all-keys-TopLevelTemplateDecl;map(TopLevelTemplateDecl; \Define(_,name,fargs,_,_)->(name,fargs)\; func-sig-to-complete-proposal)> 
+    
+rules //Var    
+   
+  extend rename :
+    NOCONTEXT(COMPLETION(x)){anno*} -> NOCONTEXT(COMPLETION(x)){anno1*}
+    with  anno1* := <put-closure-in-anno> anno*
+        
+  editor-complete-proposal :
+    nc@NOCONTEXT(COMPLETION(x)){anno*} -> result
+    where candidate-sorts; fetch(?"Statement") 
+        ; result := <editor-complete-proposal> Var(COMPLETION(x)){anno*}
+   
+  editor-complete-proposal :
+    v@Var(COMPLETION(_)) -> [var*, fun*, glo*, ses*]
+    with  var* := <var-proposal-vars <+ ![]> v
+        ; fun* := <var-proposal-funs <+ ![]> v
+        ; glo* := <var-proposals-globals <+![]> v
+        ; ses* := <var-proposals-sessions <+![]> v
+   
+  rules // vars in scope (unfortunately doesn't include globally visible vars, since put-closure-in-anno is used internally for lifting)
+  
+  extend rename :
+    Var(COMPLETION(x)){anno*} -> Var(COMPLETION(x)){anno1*}
+    with  anno1* := <put-closure-in-anno> anno*
+  
+  var-proposal-vars :
+    Var(COMPLETION(_)){ClosureInAnno(varlist)} -> result
+    with  completion-helper(result := <map(\v@Var(x) -> <prop-to-complete-proposal> (x,<type-of> v)\)> varlist|"local var completion")
+
+  rules //global, session, @TODO request vars
+
+  var-proposals-globals :
+    Var(COMPLETION(x)) -> result
+    with  completion-helper(result := <all-keys-IsGlobal; map(\x -> <prop-to-complete-proposal> (x,<type-of> Var(x),"global variable")\)>|"global var completion")
+  
+  var-proposals-sessions :
+    Var(COMPLETION(x)) -> result
+    with  completion-helper(result := <all-keys-IsSessionEntityType; map(\srt@SimpleSort(x) -> <prop-to-complete-proposal> (<decapitalize-string>x,srt,"session variable")\)>|"session var completion")
+
+  rules //global functions
+  
+  //mainly shows internal, generated functions for simple apps, need option to sort completions
+  var-proposal-funs :
+    Var(COMPLETION(x)) -> result
+    with completion-helper(result := <all-keys-FunctionDecl; map(FunctionDecl;\Function(name,fargs,ret,_)->(name,fargs,ret)\);filter(where(?(<id>,_,_);string-starts-with(|x))); map(func-sig-to-complete-proposal)>|"global function completion")
+    
+  rules //Types
+    
+  editor-complete-proposal :
+    srt@SimpleSort(COMPLETION(_))-> [primtype*,enttype*]
+    with  primtype* := ["Bool","List<Type>","Set<Type>","Date","Time","DateTime","Email","File","Float","Image","Int","Long","Patch","Secret","WikiText","Text","URL","UUID"]
+    with  enttype* := <all-keys-EntDecl>
+   
+  rules //utils
+   
+    completion-helper(s|t)=s//dbg-time(s|t)   
+    
+  rules //Analyzer definitions
+  
+  editor-complete-proposal : 
+    CharFilterNoArgs(COMPLETION(_)) -> charfilter*
+    with charfilter* := ["HTMLStripCharFilter",
+                         "MappingCharFilter(mapping=\"mapping-ISOLatin1Accent.txt\")",
+                         "PatternReplaceCharFilter(pattern=\"\", replacement=\"\")",
+                         "PersianCharFilter"]
+                
+  editor-complete-proposal : 
+    TokenizerNoArgs(COMPLETION(_)) -> tokenizer*
+    with tokenizer* := ["ArabicLetterTokenizer",
+                        "ChineseTokenizer",
+                        "CJKTokenizer",
+                        "ClassicTokenizer",
+                        "EdgeNGramTokenizer(side=\"front\", minGramSize=\"2\", maxGramSize=\"15\")",
+                        "ICUTokenizer",
+                        "KeywordTokenizer",
+                        "LetterTokenizer",
+                        "LowerCaseTokenizer",
+                        "NGramTokenizer",
+                        "PathHierarchyTokenizer(delimiter=\"\\\" replace=\"/\")",
+                        "PatternTokenizer(pattern=\"\", group=\"0\")",
+                        "RussianLetterTokenizer",
+                        "SmartChineseSentenceTokenizer",
+                        "StandardTokenizer",
+                        "TrieTokenizer",
+                        "UAX29URLEmailTokenizer",
+                        "WhitespaceTokenizer",
+                        "WikipediaTokenizer"]
+              
+  editor-complete-proposal : 
+    TokenFilterNoArgs(COMPLETION(_)) -> tokenfilter*
+    with tokenfilter* := ["ArabicNormalizationFilter",
+                          "ArabicStemFilter",
+                          "ASCIIFoldingFilter",
+                          "BrazilianStemFilter",
+                          "BulgarianStemFilter",
+                          "CapitalizationFilter() //see http://lucene.apache.org/solr/api/org/apache/solr/analysis/CapitalizationFilterFactory.html for available parameters",
+                          "ChineseFilter",
+                          "ClassicFilter",
+                          "CollationKeyFilter() // see http://lucene.apache.org/solr/api/org/apache/solr/analysis/CollationKeyFilterFactory.html for available parameters",
+                          "CommonGramsFilter(words=\"commongramsstopwords.txt\", ignoreCase=\"false\")",
+                          "CommonGramsQueryFilter(words=\"commongramsstopwords.txt\", ignoreCase=\"false\")",
+                          "CzechStemFilter",
+                          "DelimitedPayloadTokenFilter(encoder=\"float\", delimiter=\"|\")",
+                          "DictionaryCompoundWordTokenFilter(dictionary=\"dictionary.txt\", minWordSize=\"5\", minSubwordSize=\"2\", maxSubwordSize=\"15\", onlyLongestMatch=\"true\")",
+                          "DoubleMetaphoneFilter(inject=\"true\", maxCodeLength=\"4\")",
+                          "DutchStemFilter",
+                          "EdgeNGramFilter(side=\"front\", minGramSize=\"2\", maxGramSize=\"15\")",
+                          "ElisionFilter(articles=\"stopwordarticles.txt\")",
+                          "EnglishMinimalStemFilter",
+                          "EnglishPorterFilter",
+                          "EnglishPossessiveFilter",
+                          "FinnishLightStemFilter",
+                          "FrenchLightStemFilter",
+                          "FrenchMinimalStemFilter",
+                          "FrenchStemFilter",
+                          "GalicianStemFilter",
+                          "GermanLightStemFilter",
+                          "GermanMinimalStemFilter",
+                          "GermanStemFilter",
+                          "GreekLowerCaseFilter",
+                          "GreekStemFilter",
+                          "HindiNormalizationFilter",
+                          "HindiStemFilter",
+                          "HungarianLightStemFilter",
+                          "HunspellStemFilter() //see http://lucene.apache.org/solr/api/org/apache/solr/analysis/HunspellStemFilterFactory.html for available parameters",
+                          "HyphenatedWordsFilter",
+                          "HyphenationCompoundWordTokenFilter() //see http://lucene.apache.org/solr/api/org/apache/solr/analysis/HyphenationCompoundWordTokenFilterFactory.html for available parameters",
+                          "ICUCollationKeyFilter //see http://lucene.apache.org/solr/api/org/apache/solr/analysis/ICUCollationKeyFilterFactory.html for available parameters",
+                          "ICUFoldingFilter",
+                          "ICUNormalizer2Filter //see http://lucene.apache.org/solr/api/org/apache/solr/analysis/ICUNormalizer2FilterFactory.html for available parameters",
+                          "ICUTransformFilter //see http://lucene.apache.org/solr/api/org/apache/solr/analysis/ICUTransformFilterFactory.html for available paramters",
+                          "IndicNormalizationFilter",
+                          "IndonesianStemFilter(stemDerivational=\"true\")",
+                          "ISOLatin1AccentFilter",
+                          "ItalianLightStemFilter",
+                          "KeepWordFilter(words=\"keepwords.txt\", ignoreCase=\"false\", enablePositionIncrements=\"false\")",
+                          "KeywordMarkerFilter(protected=\"protectedkeyword.txt\", ignoreCase=\"false\")",
+                          "KStemFilter",
+                          "LatvianStemFilter",
+                          "LengthFilter(min=\"0\", max=\"1\", enablePositionIncrements=\"false\")",
+                          "LimitTokenCountFilter(maxTokenCount=\"10\")",
+                          "LowerCaseFilter",
+                          "NGramFilter(minGramSize=\"1\", maxGramSize=\"3\")",
+                          "NumericPayloadTokenFilter(payload=\"24\", typeMatch=\"word\")",
+                          "PatternReplaceFilter(pattern=\"([^a-z])\", replacement=\"\", replace=\"all\")",
+                          "PersianNormalizationFilter",
+                          "PhoneticFilter(encoder=\"DoubleMetaphone\", inject=\"true\")",
+                          "PorterStemFilter",
+                          "PortugueseLightStemFilter",
+                          "PortugueseMinimalStemFilter",
+                          "PortugueseStemFilter",
+                          "PositionFilter(positionIncrement=\"0\")",
+                          "RemoveDuplicatesTokenFilter",
+                          "ReversedWildcardFilter(withOriginal=\"true\", maxPosAsterisk=\"2\", maxPosQuestion=\"1\", minTrailing=\"2\", maxFractionAsterisk=\"0\")",
+                          "ReverseStringFilter",
+                          "RussianLightStemFilter",
+                          "RussianLowerCaseFilter",
+                          "RussianStemFilter",
+                          "ShingleFilter(minShingleSize=\"2\", maxShingleSize=\"2\", outputUnigrams=\"true\", outputUnigramsIfNoShingles=\"false\", tokenSeparator=\" \")",
+                          "SmartChineseWordTokenFilter",
+                          "SnowballPorterFilter(protected=\"protectedkeyword.txt\", language=\"English\")",
+                          "SpanishLightStemFilter",
+                          "StandardFilter",
+                          "StemmerOverrideFilter(dictionary=\"dictionary.txt\", ignoreCase=\"false\")",
+                          "StempelPolishStemFilter",
+                          "StopFilter(ignoreCase=\"true\", words=\"stopwords.txt\", enablePositionIncrements=\"true\")",
+                          "SwedishLightStemFilter",
+                          "SynonymFilter(synonyms=\"synonyms.txt\", format=\"solr\", ignoreCase=\"false\", expand=\"true\")",
+                          "ThaiWordFilter",
+                          "TokenOffsetPayloadTokenFilter",
+                          "TrimFilter(updateOffsets=\"false\")",
+                          "TurkishLowerCaseFilter",
+                          "TypeAsPayloadTokenFilter",
+                          "WordDelimiterFilter(protected=\"protectedword.txt\", preserveOriginal=\"0\", splitOnNumerics=\"1\", splitOnCaseChange=\"1\", catenateWords=\"0\", catenateNumbers=\"0\", catenateAll=\"0\", generateWordParts=\"1\", generateNumberParts=\"1\", stemEnglishPossessive=\"1\")"]
+                            

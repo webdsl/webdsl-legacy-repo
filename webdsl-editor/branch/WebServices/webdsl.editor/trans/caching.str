@@ -1,0 +1,98 @@
+module trans/caching
+
+imports
+    lib/editor-common.generated
+    libwebdsl-front
+    trans/-
+    lib/dependencies
+    
+strategies
+
+  dependencies-file = !$[[<ApplicationIniDir>]/.dependencies.webdsl]
+   
+  get-created-rules = FileSignature; Fst
+  get-imported-modules = FileSignature; Snd
+  
+  update-dependency-graph =
+    where(dependencies-file => file);
+    <update-dependency-graph(RulesUsedBy | <all-keys-RulesUsedBy>)> file
+
+  find-dependent-modules =
+    dependencies-file => file; 
+    all-keys-IsImported => all-mods;
+    <find-dependent-modules(RulesUsedBy | <get-created-rules>, <RulesCreatedPrev>, all-mods)> file
+
+  read-old-signature: filename -> sig
+    with  path := <import-cache-path> filename
+    where <gt> (<file-exists; modification-time> path, <editor-timestamp>)
+        ; (sig, _) := <ReadFromFile> path
+          
+  check-editor-version: cache-path -> cache-path
+    with  editor-ts := <editor-timestamp>
+    where <gt <+ editor-new-version-once; fail> (<modification-time> cache-path, editor-ts)
+  
+  is-editor-updated = 
+      dependencies-file => filename
+    ; (   not(<file-exists> filename)
+        <+ <gt> (<editor-timestamp>, <modification-time> filename))
+  
+  editor-new-version-once =
+    try(
+        where(not(EditorNewVersionShowed))
+      ; rules(EditorNewVersionShowed := True())
+      ; debug(!"Editor is updated; refreshing cache.")
+    )
+
+  /* Custom version of open-import */
+  open-import-sig(resolve-path, parse-file, record-declarations, record-sigs):
+    import -> import
+    where
+      if not(!import => COMPLETION(_)) then
+        path       := <resolve-path> import;
+        cache-path := <import-cache-path> path;
+        {| CurrentFile:
+          rules(CurrentFile := path);
+          // Are we transively importing the file we're analyzing?
+          if FullPath; ?path then
+              rules(CurrentModuleImported := True())
+          else 
+            // Check whether we've already imported this file
+            if not(<IsImported> path) then
+	            rules( IsImported : path );
+	            <open-import-sig-cached(record-declarations,record-sigs)> (path, cache-path)
+		        end
+	        end
+        |}
+      end
+
+  open-import-sig-cached(record-declarations,record-sigs): (path, cache-path) -> (path, cache-path)
+    where <is-newer> (cache-path, path);
+          <check-editor-version> cache-path;
+          <log-time-helper(ReadFromFile | "read")> cache-path;
+          record-sigs
+          
+  open-import-sig-cached(record-declarations,record-sigs): (path, cache-path) -> (path, cache-path)
+    with  <debug(!"Updating cache: ")> cache-path;
+          file := <parse-file> path;
+          sig := <record-declarations> file;
+          if <file-exists> path then
+            // Only cache if on filesystem (e.g., ignore libstratego-lib)
+            <write-cache> sig
+          end
+          
+  write-cache: sig -> sig
+    with  path := <CurrentFile>;
+          cachepath := <import-cache-path> path;
+          <WriteToBinaryFile> (cachepath, sig)
+       
+strategies // bench
+  
+   dbg-time(s|msg) =
+      where(starttime := <times>)
+    ; s
+    ; where(
+          total := <diff-times> (<times>,starttime)
+        ; t1 := <self-children-user-time; ticks-to-seconds; real-to-string(|3)> total
+        ; str := <concat-strings> [msg, ": ", t1, " s"]
+        ; debug
+      )
