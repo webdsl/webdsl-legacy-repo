@@ -6,11 +6,6 @@ signature
     Template : Namespace
     Page     : Namespace
     Action   : Namespace
-    Type     : Namespace
-    Type     : Namespace
-    Property : Namespace
-    Type     : Namespace
-    Module   : Namespace
 
 
 imports
@@ -113,271 +108,151 @@ rules
     Action(_, x, _, _) -> <nam-get-def(|Action())> x
 
   nam-annotate-names(|def-path):
-    Define(u_21674, v_21674, w_21674, x_21674, y_21674) -> Define(
-                                                             u_21674
-                                                           , v_21674{def-path}
-                                                           , w_21674
-                                                           , x_21674
-                                                           , y_21674
-                                                           )
+    Define(j_4807, k_4807, l_4807, m_4807, n_4807) -> Define(
+                                                        j_4807
+                                                      , k_4807{def-path}
+                                                      , l_4807
+                                                      , m_4807
+                                                      , n_4807
+                                                      )
 
   nam-annotate-names(|def-path):
-    TemplateArg(r_21674, s_21674) -> TemplateArg(r_21674{def-path}, s_21674)
+    TemplateArg(g_4807, h_4807) -> TemplateArg(g_4807{def-path}, h_4807)
 
   nam-annotate-names(|def-path):
-    LocalRedefine(m_21674, n_21674, o_21674, p_21674, q_21674) -> LocalRedefine(
-                                                                    m_21674
-                                                                  , n_21674{def-path}
-                                                                  , o_21674
-                                                                  , <nam-annotate-use(|Template())> p_21674
-                                                                  , q_21674
-                                                                  )
-
-  nam-annotate-names(|def-path):
-    Var(k_21674) -> Var(<nam-annotate-use(|Var())> k_21674)
-
-  nam-annotate-names(|def-path):
-    DefinePage(f_21674, g_21674, h_21674, i_21674, j_21674) -> DefinePage(
-                                                                 f_21674
-                                                               , g_21674{def-path}
-                                                               , h_21674
-                                                               , i_21674
-                                                               , j_21674
-                                                               )
-
-  nam-annotate-names(|def-path):
-    DefineTemplate(a_21674, b_21674, c_21674, d_21674, e_21674) -> DefineTemplate(
-                                                                     a_21674
-                                                                   , b_21674{def-path}
-                                                                   , c_21674
-                                                                   , d_21674
-                                                                   , e_21674
-                                                                   )
-
-  nam-annotate-names(|def-path):
-    For(y_21672, z_21672, a_21673, b_21673, c_21673, d_21673) -> For(
-                                                                   y_21672{def-path}
-                                                                 , z_21672
-                                                                 , a_21673
-                                                                 , b_21673
-                                                                 , c_21673
-                                                                 , d_21673
-                                                                 )
-
-  nam-annotate-names(|def-path):
-    ForNoFilter(t_21672, u_21672, v_21672, w_21672, x_21672) -> ForNoFilter(
-                                                                  t_21672{def-path}
-                                                                , u_21672
-                                                                , v_21672
-                                                                , w_21672
-                                                                , x_21672
-                                                                )
-
-  nam-annotate-names(|def-path):
-    ForAll(o_21672, p_21672, q_21672, r_21672, s_21672) -> ForAll(
-                                                             o_21672{def-path}
-                                                           , p_21672
-                                                           , q_21672
-                                                           , r_21672
-                                                           , s_21672
-                                                           )
-
-  nam-annotate-names(|def-path):
-    ForAllNoFilter(k_21672, l_21672, m_21672, n_21672) -> ForAllNoFilter(k_21672{def-path}, l_21672, m_21672, n_21672)
-
-  nam-annotate-names(|def-path):
-    ForCount(f_21672, g_21672, h_21672, i_21672, j_21672) -> ForCount(
-                                                               f_21672{def-path}
-                                                             , g_21672
-                                                             , h_21672
-                                                             , i_21672
-                                                             , j_21672
+    LocalRedefine(b_4807, c_4807, d_4807, e_4807, f_4807) -> LocalRedefine(
+                                                               b_4807
+                                                             , c_4807{def-path}
+                                                             , d_4807
+                                                             , <nam-annotate-use(|Template())> e_4807
+                                                             , f_4807
                                                              )
 
   nam-annotate-names(|def-path):
-    TemplateCall(x_21670, y_21670, z_21670, a_21671) -> TemplateCall(
-                                                          <nam-annotate-use(|Template())> x_21670
-                                                        , y_21670
-                                                        , z_21670
-                                                        , a_21671
-                                                        )
+    Var(z_4806) -> Var(<nam-annotate-use(|Var())> z_4806)
 
   nam-annotate-names(|def-path):
-    TemplateCallNoArgs(w_21670) -> TemplateCallNoArgs(<nam-annotate-use(|Template())> w_21670)
-
-  nam-annotate-names(|def-path):
-    TemplateCallNoBody(u_21670, v_21670) -> TemplateCallNoBody(
-                                              <nam-annotate-use(|Template())> u_21670
-                                            , v_21670
-                                            )
-
-  nam-annotate-names(|def-path):
-    TemplateCallNoAssigns(r_21670, s_21670, t_21670) -> TemplateCallNoAssigns(
-                                                          <nam-annotate-use(|Template())> r_21670
-                                                        , s_21670
-                                                        , t_21670
-                                                        )
-
-  nam-annotate-names(|def-path):
-    TemplateCallPropsNoBody(o_21670, p_21670, q_21670) -> TemplateCallPropsNoBody(
-                                                            <nam-annotate-use(|Template())> o_21670
-                                                          , p_21670
-                                                          , q_21670
+    DefinePage(u_4806, v_4806, w_4806, x_4806, y_4806) -> DefinePage(
+                                                            u_4806
+                                                          , v_4806{def-path}
+                                                          , w_4806
+                                                          , x_4806
+                                                          , y_4806
                                                           )
 
   nam-annotate-names(|def-path):
-    TemplateCallProps(m_21670, n_21670) -> TemplateCallProps(
-                                             <nam-annotate-use(|Template())> m_21670
-                                           , n_21670
-                                           )
+    DefineTemplate(p_4806, q_4806, r_4806, s_4806, t_4806) -> DefineTemplate(
+                                                                p_4806
+                                                              , q_4806{def-path}
+                                                              , r_4806
+                                                              , s_4806
+                                                              , t_4806
+                                                              )
 
   nam-annotate-names(|def-path):
-    TemplateCallPropsNoArgs(j_21670, k_21670, l_21670) -> TemplateCallPropsNoArgs(
-                                                            <nam-annotate-use(|Template())> j_21670
-                                                          , k_21670
-                                                          , l_21670
-                                                          )
+    For(n_4805, o_4805, p_4805, q_4805, r_4805, s_4805) -> For(
+                                                             n_4805{def-path}
+                                                           , o_4805
+                                                           , p_4805
+                                                           , q_4805
+                                                           , r_4805
+                                                           , s_4805
+                                                           )
 
   nam-annotate-names(|def-path):
-    TemplateCallBody(h_21670, i_21670) -> TemplateCallBody(
-                                            <nam-annotate-use(|Template())> h_21670
-                                          , i_21670
+    ForNoFilter(i_4805, j_4805, k_4805, l_4805, m_4805) -> ForNoFilter(
+                                                             i_4805{def-path}
+                                                           , j_4805
+                                                           , k_4805
+                                                           , l_4805
+                                                           , m_4805
+                                                           )
+
+  nam-annotate-names(|def-path):
+    ForAll(d_4805, e_4805, f_4805, g_4805, h_4805) -> ForAll(
+                                                        d_4805{def-path}
+                                                      , e_4805
+                                                      , f_4805
+                                                      , g_4805
+                                                      , h_4805
+                                                      )
+
+  nam-annotate-names(|def-path):
+    ForAllNoFilter(z_4804, a_4805, b_4805, c_4805) -> ForAllNoFilter(z_4804{def-path}, a_4805, b_4805, c_4805)
+
+  nam-annotate-names(|def-path):
+    ForCount(u_4804, v_4804, w_4804, x_4804, y_4804) -> ForCount(
+                                                          u_4804{def-path}
+                                                        , v_4804
+                                                        , w_4804
+                                                        , x_4804
+                                                        , y_4804
+                                                        )
+
+  nam-annotate-names(|def-path):
+    TemplateCall(m_4803, n_4803, o_4803, p_4803) -> TemplateCall(
+                                                      <nam-annotate-use(|Template())> m_4803
+                                                    , n_4803
+                                                    , o_4803
+                                                    , p_4803
+                                                    )
+
+  nam-annotate-names(|def-path):
+    TemplateCallNoArgs(l_4803) -> TemplateCallNoArgs(<nam-annotate-use(|Template())> l_4803)
+
+  nam-annotate-names(|def-path):
+    TemplateCallNoBody(j_4803, k_4803) -> TemplateCallNoBody(
+                                            <nam-annotate-use(|Template())> j_4803
+                                          , k_4803
                                           )
 
   nam-annotate-names(|def-path):
-    PageCall(o_21669, p_21669) -> PageCall(
-                                    <nam-annotate-use(|Page())> o_21669
-                                  , p_21669
+    TemplateCallNoAssigns(g_4803, h_4803, i_4803) -> TemplateCallNoAssigns(
+                                                       <nam-annotate-use(|Template())> g_4803
+                                                     , h_4803
+                                                     , i_4803
+                                                     )
+
+  nam-annotate-names(|def-path):
+    TemplateCallPropsNoBody(d_4803, e_4803, f_4803) -> TemplateCallPropsNoBody(
+                                                         <nam-annotate-use(|Template())> d_4803
+                                                       , e_4803
+                                                       , f_4803
+                                                       )
+
+  nam-annotate-names(|def-path):
+    TemplateCallProps(b_4803, c_4803) -> TemplateCallProps(
+                                           <nam-annotate-use(|Template())> b_4803
+                                         , c_4803
+                                         )
+
+  nam-annotate-names(|def-path):
+    TemplateCallPropsNoArgs(y_4802, z_4802, a_4803) -> TemplateCallPropsNoArgs(
+                                                         <nam-annotate-use(|Template())> y_4802
+                                                       , z_4802
+                                                       , a_4803
+                                                       )
+
+  nam-annotate-names(|def-path):
+    TemplateCallBody(w_4802, x_4802) -> TemplateCallBody(
+                                          <nam-annotate-use(|Template())> w_4802
+                                        , x_4802
+                                        )
+
+  nam-annotate-names(|def-path):
+    PageCall(d_4802, e_4802) -> PageCall(
+                                  <nam-annotate-use(|Page())> d_4802
+                                , e_4802
+                                )
+
+  nam-annotate-names(|def-path):
+    ActionCall(f_4800, g_4800) -> ActionCall(
+                                    <nam-annotate-use(|Action())> f_4800
+                                  , g_4800
                                   )
 
   nam-annotate-names(|def-path):
-    ActionCall(q_21667, r_21667) -> ActionCall(
-                                      <nam-annotate-use(|Action())> q_21667
-                                    , r_21667
-                                    )
-
-  nam-annotate-names(|def-path):
-    Action(v_21666, w_21666, x_21666, y_21666) -> Action(v_21666, w_21666{def-path}, x_21666, y_21666)
-
-  nam-get-scope-types :
-    Entity(_, _, _) -> [Property(), Function()]
-
-  nam-get-scope-types :
-    EntityNoSuper(_, _) -> [Property(), Function()]
-
-  nam-get-scope-types :
-    SessionEntity(_, _) -> [Property(), Function()]
-
-  nam-get-scope-types :
-    Define(_, _, _, _, _) -> [Var(), Template()]
-
-  nam-get-scope-types :
-    DefinePage(_, _, _, _, _) -> [Var(), Template()]
-
-  nam-get-scope-types :
-    DefineTemplate(_, _, _, _, _) -> [Var(), Template()]
-
-  nam-get-scope-types :
-    Entity(_, _) -> [Property()]
-
-  nam-get-scope-types :
-    Module(_, _) -> [Type()]
-
-  nam-get-scope-types :
-    ModuleDefs(_, _, _) -> [Type()]
-
-  nam-get-scope-types :
-    Entity(_, _, _) -> [Property(), Function()]
-
-  nam-get-scope-types :
-    EntityNoSuper(_, _) -> [Property(), Function()]
-
-  nam-get-scope-types :
-    SessionEntity(_, _) -> [Property(), Function()]
-
-  nam-get-definition-key :
-    Entity(x, _, _) -> x
-
-  nam-get-definition :
-    Entity(x, _, _) -> <nam-get-def(|Type())> x
-
-  nam-get-definition-key :
-    EntityNoSuper(x, _) -> x
-
-  nam-get-definition :
-    EntityNoSuper(x, _) -> <nam-get-def(|Type())> x
-
-  nam-annotate-names(|def-path):
-    Entity(i_15239, j_15239, k_15239) -> Entity(i_15239{def-path}, j_15239, k_15239)
-
-  nam-annotate-names(|def-path):
-    EntityNoSuper(g_15239, h_15239) -> EntityNoSuper(g_15239{def-path}, h_15239)
-
-  nam-get-definition-key :
-    TypeDef(x, _) -> x
-
-  nam-get-definition :
-    TypeDef(x, _) -> <nam-get-def(|Type())> x
-
-  nam-annotate-names(|def-path):
-    SimpleSort(g_15220) -> SimpleSort(<nam-annotate-use(|Type())> g_15220)
-
-  nam-annotate-names(|def-path):
-    TypeDef(b_15220, c_15220) -> TypeDef(b_15220{def-path}, c_15220)
-
-  nam-get-scope-types :
-    Entity(_, _) -> [Property()]
-
-  nam-get-scope-types :
-    Module(_, _) -> [Type()]
-
-  nam-get-scope-types :
-    ModuleDefs(_, _, _) -> [Type()]
-
-  nam-get-definition-key :
-    Entity(x, _) -> x
-
-  nam-get-definition :
-    Entity(x, _) -> <nam-get-def(|Type())> x
-
-  nam-get-definition-key :
-    Property(x, _) -> x
-
-  nam-get-definition :
-    Property(x, _) -> <nam-get-def(|Property())> x
-
-  nam-get-definition-key :
-    Module(x, _) -> x
-
-  nam-get-definition :
-    Module(x, _) -> <nam-get-def(|Module())> x
-
-  nam-get-definition-key :
-    ModuleDefs(x, _, _) -> x
-
-  nam-get-definition :
-    ModuleDefs(x, _, _) -> <nam-get-def(|Module())> x
-
-  nam-annotate-names(|def-path):
-    Module(j_15210, k_15210) -> Module(j_15210{def-path}, k_15210)
-
-  nam-annotate-names(|def-path):
-    Entity(h_15210, i_15210) -> Entity(h_15210{def-path}, i_15210)
-
-  nam-annotate-names(|def-path):
-    Property(f_15210, g_15210) -> Property(f_15210{def-path}, g_15210)
-
-  nam-annotate-names(|def-path):
-    Type(e_15210) -> Type(<nam-annotate-use(|Type())> e_15210)
-
-  nam-annotate-names(|def-path):
-    Module(t_15209, u_15209) -> Module(t_15209{def-path}, u_15209)
-
-  nam-annotate-names(|def-path):
-    ModuleDefs(q_15209, r_15209, s_15209) -> ModuleDefs(q_15209{def-path}, r_15209, s_15209)
-
-  nam-annotate-names(|def-path):
-    Imports(p_15209) -> Imports(<nam-annotate-use(|Module())> p_15209)
+    Action(k_4799, l_4799, m_4799, n_4799) -> Action(k_4799, l_4799{def-path}, m_4799, n_4799)
 
   nam-get-def(|n) =
     fail

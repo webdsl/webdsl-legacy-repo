@@ -96,22 +96,68 @@ exports
     "limit" Exp                              -> Limit {cons("LimitNoOffset")}
     "offset" Exp                             -> Limit {cons("LimitNoLimit")}
 
-
+   
   context-free syntax %% for
     
     %% to do: how about variables in Exp?
     
+  %% scope rules
+    
+    %% Entity(name, super, decs) :
+    %%   defines unique Entity name
+    %%   refers to Entity super 
+    %%   scope for Property overriding Property of super
+    
+    %% <index-lookup> uri
+        
+    %% Property(x, t) : 
+    %%   defines Property x of Type t
+    
+    %% PropertyAccess(e, f) : 
+    %%   refers to Property f in <type-of>e  
+    
+    %% For(x, t, e, f, elem*) : TemplateElement
+    %%   defines Var x of Type t in elem*
+    
+    %% VarDecl(x, t, e) :
+    %%   defines Var x of Type t after this
+    
+    %% VarDecl(x, e) :
+    %%   defines Var x of Type (<type-of>e) after this
+    
+    %% Var(x) :
+    %%   refers to (Var x of Type t or Property x of Type t)
+    
+    %%   refers to Var x of Type t  // implies has Type t
+    %%   refers to Property x of Type t 
+    %%   // issue in what order are Var's and Property's considered?
+    
+    %% Block(Statement*) : Statement
+    %%   ordered scope for Var
+    
+    %% Method(f, param*, t, block) : 
+    %%   defines unique Method (f, <map(type-of)> param*) of Type t
+    %%   scope for Var
+    
+    %% Param(x, t): 
+    %%   defines Var x of Type t
+    
+    %% MethodCall(e, f, e*) :
+    %%   refers to Method (f, <map(type-of)> e*) of Type t in <type-of> e 
+    %%   has Type t
+  
+               
     "for" "(" Var@=Id ":" Sort "in" Exp Filter ")"
        "{" TemplateElement* "}" ForSeparator       -> TemplateElement {"For",scope(Var)}
-    
+                
     "for" "(" Var@=Id ":" Sort "in" Exp ")"
        "{" TemplateElement* "}" ForSeparator       -> TemplateElement {"ForNoFilter",scope(Var), prefer}
 
     "for" "(" Var@=Id ":" Sort Filter ")"
        "{" TemplateElement* "}" ForSeparator       -> TemplateElement {"ForAll",scope(Var)}
 
-    "for" "(" Var@=Id ":" Sort ")"
-       "{" TemplateElement* "}" ForSeparator       -> TemplateElement {"ForAllNoFilter",scope(Var)}
+    "for" "(" Var@=Id ":" Sort ")" 
+       "{" TemplateElement* "}" ForSeparator       -> TemplateElement {"ForAllNoFilter",scope(Var)} 
     
     "for" "(" Var@=Id ":" "Int" "from" Exp "to" Exp ")" 
       "{" TemplateElement* "}" ForSeparator        -> TemplateElement {"ForCount",scope(Var)}

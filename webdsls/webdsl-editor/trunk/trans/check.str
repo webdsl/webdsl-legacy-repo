@@ -14,9 +14,10 @@ rules // Resolving
     x{[Unresolved(t) | _]} -> (x, $[Unable to resolve.])
     
 rules // Duplicates
-    
-  is-unique-namespace = ?Type()
-  is-unique-namespace = ?Property()
+   
+  is-unique-namespace = fail
+  // is-unique-namespace = ?Type()
+  // is-unique-namespace = ?Property()
       
   constraint-error:
     definition -> (definition, $[Duplicate definition])

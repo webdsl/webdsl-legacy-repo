@@ -17,5 +17,5 @@ signature
 rules // Adjust lookup
 
   // Add primitive types to type lookup.
-  adjust-index-lookup(target |namespace, path, prefix): 
-    Type(<target>) ->  [Def([Type(), "Int"]), Def([Type(), "String"]), [Type() | path]]
+  // adjust-index-lookup(target |namespace, path, prefix): 
+  //   Type(<target>) ->  [Def([Type(), "Int"]), Def([Type(), "String"]), [Type() | path]]
