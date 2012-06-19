@@ -8,6 +8,7 @@ imports
 
 imports
   include/WebDSL
+  hacks
 
 
 signature
@@ -21,6 +22,7 @@ signature
     Module   : Namespace
     Import   : Namespace
     Entity   : Namespace
+    Function : Namespace
     Property : Namespace
     Var      : Namespace
     Page     : Namespace
@@ -146,6 +148,56 @@ rules
 
 rules
 
+  nam-get-definition-keys :
+    Property(f, _, t, _) -> [f]
+
+  nam-get-definitions :
+    Property(f, _, t, _) -> [(Property(), [f])]
+
+  nam-annotate-names(|paths__, path__):
+    Property(f, _, t, _) -> <Property(nam-annotate-def(|path__), id, id, id)>
+
+  adjust-index-def-data(store__|namespace__, path__):
+    Property(f, _, t, _) -> <store__> DefData(
+                                        [namespace__|path__]
+                                      , Type()
+                                      , t
+                                      )
+
+  type-of :
+    Property(f, _, t, _) -> t
+
+  nam-unique :
+    Property(f, _, t, _) -> <id>
+
+
+rules
+
+  nam-get-definition-keys :
+    DerivedPropertyNoAnno(f, _, t, _) -> [f]
+
+  nam-get-definitions :
+    DerivedPropertyNoAnno(f, _, t, _) -> [(Property(), [f])]
+
+  nam-annotate-names(|paths__, path__):
+    DerivedPropertyNoAnno(f, _, t, _) -> <DerivedPropertyNoAnno(nam-annotate-def(|path__), id, id, id)>
+
+  adjust-index-def-data(store__|namespace__, path__):
+    DerivedPropertyNoAnno(f, _, t, _) -> <store__> DefData(
+                                                     [namespace__|path__]
+                                                   , Type()
+                                                   , t
+                                                   )
+
+  type-of :
+    DerivedPropertyNoAnno(f, _, t, _) -> t
+
+  nam-unique :
+    DerivedPropertyNoAnno(f, _, t, _) -> <id>
+
+
+rules
+
   nam-get-uses-keys :
     FieldAccess(e, f) -> [f]
     where SimpleSort(t) := <type-of> e
@@ -166,7 +218,35 @@ rules
 rules
 
   nam-get-scope-types :
-    Define(_, x, _, _, _) -> [Var()]
+    Function(f, arg*, t, _) -> [Var(), Property()]
+
+  nam-get-definition-keys :
+    Function(f, arg*, t, _) -> [f]
+
+  nam-get-definitions :
+    Function(f, arg*, t, _) -> [(Function(), [f])]
+
+  nam-annotate-names(|paths__, path__):
+    Function(f, arg*, t, _) -> <Function(nam-annotate-def(|path__), id, id, id)>
+
+  adjust-index-def-data(store__|namespace__, path__):
+    Function(f, arg*, t, _) -> <store__> DefData(
+                                           [namespace__|path__]
+                                         , Type()
+                                         , t
+                                         )
+
+  type-of :
+    Function(f, arg*, t, _) -> t
+
+  nam-unique :
+    Function(f, arg*, t, _) -> <id>
+
+
+rules
+
+  nam-get-scope-types :
+    Define(_, x, _, _, _) -> [Var(), Property()]
 
   nam-get-definition-keys :
     Define(_, x, _, _, _) -> [x]
@@ -224,7 +304,15 @@ rules
     Var(x) -> [x]
 
   nam-get-uses :
-    Var(x) -> [(Property(), [x])]
+    Var(x) -> [ (Property(), [x])
+              , (Var(), [x])
+              ]
 
   nam-annotate-names(|paths__, path__):
     Var(x) -> <Var(nam-annotate-use(|paths__, Property()))>
+
+  adjust-index-lookup(target__|namespace__, path__, prefix__):
+    Var(x) -> [ [Property()|path__]
+              , [Var()|path__]
+              ]
+    where <target__> x

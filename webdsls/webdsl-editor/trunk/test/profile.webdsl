@@ -10,7 +10,7 @@ section user interface
     output(u.fullname) 
   }
   
-  define page admin(u: User) {
+  define page admin(u: User) { 
     navigate profile(u) { output(u.name) }
   }
   

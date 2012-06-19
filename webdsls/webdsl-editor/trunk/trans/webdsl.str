@@ -15,6 +15,7 @@ imports
   refactor
   names 
   types
+  hacks
 
 rules // Analysis
   

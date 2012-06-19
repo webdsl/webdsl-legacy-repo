@@ -1,8 +1,8 @@
 module names
 
-imports include/WebDSL
+imports include/WebDSL hacks
 
-namespaces Module Import Entity Property Var Page
+namespaces Module Import Entity Function Property Var Page
 
 rules // modules
 
@@ -30,24 +30,28 @@ rules // entities
   PropertyNoAnno(f, _, t) :
     defines Property f of type t 
       
-  // Property(f, _, t, _) :
-  //   defines Property f of type t
-  //   
-  // DerivedPropertyNoAnno(f, _, t, _) :
-  //   defines Property f of type
+  Property(f, _, t, _) :
+    defines Property f of type t
+   
+  DerivedPropertyNoAnno(f, _, t, _) :
+    defines Property f of type t
     
   FieldAccess(e, f) :
     refers to Property f in Entity t
     where e has type SimpleSort(t)
     
   //SimpleAnno("name") :
-    //defines Property "name" of type SimpleSort("String")
+    //defines Property "name" of type SimpleSort("String")\
+   
+  Function(f, arg*, t, _) :
+    defines Function f of type t
+    scopes Var, Property
     
 rules // templates
 
   Define(_, x, _, _, _) :
     defines Page x
-    scopes Var
+    scopes Var, Property
     
   PageCall(x, _) :
     refers to Page x
@@ -57,7 +61,7 @@ rules // templates
     
   Var(x) :
     refers to Property x
-    //refers to Var x 
+    refers to Var x 
   
 
     
