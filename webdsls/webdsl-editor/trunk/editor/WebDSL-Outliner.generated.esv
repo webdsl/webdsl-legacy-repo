@@ -12,8 +12,42 @@ outliner Default outliner
   //
   //   _.<constructor>
   
-  PageCall.PageCall
+  Application.ApplicationDefs
+  TemplateDefinition.Define
   GenericSort.GenericSort
+  TemplateArg.TemplateArg
+  FunctionRef.FunctionRef
+  ObjectCreation.ObjectCreation
+  ObjectCreation.ObjectCreation
+  Exp.TypedListCreation
+  Exp.TypedSetCreation
+  Exp.ThisCall
+  Exp.Call
+  EmailCall.EmailCall
+  TemplateCall.TemplateCall
+  ActionCall.ActionCall
+  ArgDefine.ArgDefine
+  TemplateCallNoBody.TemplateCallNoBody
+  TemplateCallNoAssigns.TemplateCallNoAssigns
+  TemplateCallPropsNoBody.TemplateCallPropsNoBody
+  TemplateCallProps.TemplateCallProps
+  TemplateCallPropsNoArgs.TemplateCallPropsNoArgs
+  TemplateCallBody.TemplateCallBody
+  Catch.Catch
+  Exp.EventCall
+  Exp.Call
+  SearcherDef.SearcherInit
+  FacetExp.RangeFacetDef
+  SearcherDef.SearcherRefMod
+  Exp.Suggest
+  SuggestionPart.SuggestTerm
+  FromClassOrOuterQueryPath_HQL.FromClass
+  InClassDeclaration_HQL.InClassDeclaration
+  InCollectionDeclaration_HQL.InCollection
+  InCollectionElementsDeclaration_HQL.InCollectionElements
+  FromJoin_HQL.FromJoin
+  GroupByClause_HQL.GroupBy
+  PageCall.PageCall
   Statement.If
   Statement.IfNoElse
   Statement.Case
@@ -25,24 +59,7 @@ outliner Default outliner
   Statement.ForCountStmt
   Statement.WhileStmt
   DeleteStatement_HQL.DeleteStatement
-  FromClassOrOuterQueryPath_HQL.FromClass
-  InClassDeclaration_HQL.InClassDeclaration
-  InCollectionDeclaration_HQL.InCollection
-  InCollectionElementsDeclaration_HQL.InCollectionElements
-  FromJoin_HQL.FromJoin
-  GroupByClause_HQL.GroupBy
-  TemplateCall.TemplateCall
-  ActionCall.ActionCall
-  TemplateElement.XMLEmptyElement
-  Attribute.XMLAttributesIf
-  Attribute.XMLAttributesIfElse
-  TemplateElement.XMLElement
   Action.Action
-  TemplateDefinition.Define
-  TemplateArg.TemplateArg
-  TemplateDefinition.LocalRedefine
-  TemplateDefinition.DefinePage
-  TemplateDefinition.DefineTemplate
   TemplateElement.For
   TemplateElement.ForNoFilter
   TemplateElement.ForAll
@@ -69,6 +86,10 @@ outliner Default outliner
   PHExp.ThisCall
   PHExp.Call
   TemplateElement.AccessControlImportRules
+  TemplateElement.XMLEmptyElement
+  Attribute.XMLAttributesIf
+  Attribute.XMLAttributesIfElse
+  TemplateElement.XMLElement
   TemplateElement.PagedForAll
   TemplateElement.PagedForAllNoFilter
   TemplateElement.PagedFor
@@ -83,25 +104,67 @@ outliner Default outliner
   DispatchEntry.DispatchEntity
   DispatchNavigateCall.DispatchNavigateCall
   DispatchNavigateButton.DispatchNavigateButton
-  ArgDefine.ArgDefine
-  TemplateCallNoBody.TemplateCallNoBody
-  TemplateCallNoAssigns.TemplateCallNoAssigns
-  TemplateCallPropsNoBody.TemplateCallPropsNoBody
-  TemplateCallProps.TemplateCallProps
-  TemplateCallPropsNoArgs.TemplateCallPropsNoArgs
-  TemplateCallBody.TemplateCallBody
-  Catch.Catch
-  FunctionRef.FunctionRef
-  ObjectCreation.ObjectCreation
-  ObjectCreation.ObjectCreation
-  Exp.TypedListCreation
-  Exp.TypedSetCreation
-  Exp.ThisCall
-  Exp.Call
-  EmailCall.EmailCall
-  Exp.EventCall
-  Exp.Call
-  SearcherDef.SearcherInit
-  SearcherDef.SearcherRefMod
-  Exp.Suggest
-  SuggestionPart.SuggestTerm
+  TemplateDefinition.LocalRedefine
+  TemplateDefinition.DefinePage
+  TemplateDefinition.DefineTemplate
+  Function.Function
+  Entity.Entity
+  Property.Property
+  Annotation.ValidationAnnoPatternWithFlags
+  Property.DerivedProperty
+  StaticEntityFunction.StaticEntityFunction
+  EntityBodyDeclaration.PredicateInEntity
+  SearchMappingContent.SearchFieldMapping
+  SearchMappingContent.SearchFieldMapping
+  SearchMappingContent.SearchFieldMapping
+  SearchMappingContent.SearchFieldMapping
+  Entity.EntityNoSuper
+  Entity.SessionEntity
+  Definition.ExtendEntity
+  Definition.ExtendSessionEntity
+  Definition.AccessControlPrincipal
+  Definition.Predicate
+  Definition.Enum
+  Definition.ThemeDefinition
+  Definition.ExtendProcedure
+  Procedure.Procedure
+  Procedure.AutoProcedure
+  Definition.TypeDef
+  NativeClassFunction.NativeClassFunction
+  NativeType.NativeGenericType
+  Definition.Test
+  Definition.InvokeEvery
+  Definition.ServiceFunction
+  FullTextAnalyzerBodyDef.FullTextAnalyzerBodyDef
+  CharFilter.CharFilter
+  CharFilter.CharFilter
+  Tokenizer.Tokenizer
+  TokenFilter.TokenFilter
+  TokenFilter.TokenFilter
+  SearchMapping.SearchMapping
+  SearchMapping.SearchMapping
+  RecommendConfig.RecommendConfig
+  NativeFunctionDeclaration.NativeFunction
+  NativeClassDeclaration.NativeClass
+  Section.AccessControlDefinition
+  AccessControlDefinition.AccessControlPrincipal
+  AccessControlRule.AccessControlRule
+  MatchArgs.MatchArgs
+  MatchArgs.MatchArgs
+  AccessControlRule.AccessControlRule
+  AccessControlDefinition.Predicate
+  AccessControlPointcut.AccessControlPointcut
+  AccessControlPointcutElement.AccessControlPointcutElement
+  Section.AccessControlDefinition
+  Section.StyleSection
+  Selector.Selector
+  MatchDefinition.MatchDefinition
+  SimpleSelector.ElemSimpleAttrSelector
+  SimpleSelector.ElemClassAttrSelector
+  StyleValue.StyleValue
+  LayoutDefinition.LayoutDefinition
+  LayoutExpression.NamedLayoutExpression
+  Section.Section
+  Application.Application
+  Module.Module
+  Module.ModuleDefs

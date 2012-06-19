@@ -6,7 +6,7 @@ imports
   libstratego-aterm
   include/WebDSL
   lib/editor-common.generated
-  lib/compilation-library.generated
+  lib/compilation-library
 
 rules // Incremental code generation of project using compilation library.
       

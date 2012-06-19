@@ -1,20 +1,7 @@
 module WebDSL-Type
 
-imports WebDSL-Lexical
-
 exports
 
-  context-free syntax %% Types
-    SimpleSort   -> Sort
-    GenericSort  -> Sort
-    RefSort      -> Sort
-    FunctionSort -> Sort
-    
-    Type@Id                 -> SimpleSort  {cons("SimpleSort")}
-    Id "<" {Sort ","}+ ">"  -> GenericSort {cons("GenericSort")}
-    "Ref" "<" Sort ">"      -> RefSort     {cons("RefSort")}
-    "Ref" "<" Sort ">"      -> GenericSort {reject}
-    
   context-free syntax
   
     %%  Construct for creating custom value types, and altering the existing value types.
@@ -26,7 +13,7 @@ exports
     %%  Will also need to cope with input/output decode/encode.
     %%
 
-    "type" Type@=Id "{" TypeProperty* "}" -> Definition {cons("TypeDef")}
+    "type" Id "{" TypeProperty* "}" -> Definition {cons("TypeDef")}
     
     Annotation -> TypeProperty {cons("TypeDefAnno")}
     

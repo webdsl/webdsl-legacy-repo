@@ -1,0 +1,32 @@
+module types
+
+imports
+  include/WebDSL
+  lib/editor-common.generated
+  lib/index-library
+  lib/analysis-library
+  lib/compilation-library
+  names
+
+rules
+  
+  type-of:
+    Def(uri) -> <type-of> <index-get-data(|Type())> Def(uri)
+      
+  type-of:
+    Var(x) -> <type-of> <index-lookup> x
+  
+  type-of:
+    FieldAccess(e, f) -> <type-of> <index-lookup> f
+    
+  // Lazy resolving of types because index-lookup during use analysis on data fails for imports.
+  type-of:
+    SimpleSort(t{[Unresolved(Entity())|_]}) -> SimpleSort(name{uri})
+    where
+      Def(uri) := <index-lookup> t;
+      name := <strip-annos> t
+      
+  type-of:
+    SimpleSort(t{[Entity()|_]}) -> <id> 
+    
+    

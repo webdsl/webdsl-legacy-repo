@@ -1,9 +1,16 @@
 module profile
 
 imports users
+imports lib
 
 section user interface
 
   define page profile(u: User){
-    output(u.name)
+    output(u.email)
+    output(u.fullname) 
   }
+  
+  define page admin(u: User) {
+    navigate profile(u) { output(u.name) }
+  }
+  

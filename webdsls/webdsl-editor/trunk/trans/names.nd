@@ -1,0 +1,64 @@
+module names
+
+imports include/WebDSL
+
+namespaces Module Import Entity Property Var Page
+
+rules // modules
+
+  ModuleDefs(m, _, _) :
+    defines Module m
+    scopes Entity, Page 
+    
+  Imports(m) : 
+    defines Import m
+    refers to Module m
+    imports Page from Module m {current-file}
+    imports Entity from Module m {current-file}
+
+rules // entities
+
+  EntityNoSuper(t, _) :
+    defines Entity t of type SimpleSort(t)
+    scopes Property
+    
+  SimpleSort(t) :
+    refers to Entity t
+   
+  // todo: built-in types
+
+  PropertyNoAnno(f, _, t) :
+    defines Property f of type t 
+      
+  // Property(f, _, t, _) :
+  //   defines Property f of type t
+  //   
+  // DerivedPropertyNoAnno(f, _, t, _) :
+  //   defines Property f of type
+    
+  FieldAccess(e, f) :
+    refers to Property f in Entity t
+    where e has type SimpleSort(t)
+    
+  //SimpleAnno("name") :
+    //defines Property "name" of type SimpleSort("String")
+    
+rules // templates
+
+  Define(_, x, _, _, _) :
+    defines Page x
+    scopes Var
+    
+  PageCall(x, _) :
+    refers to Page x
+    
+  Arg(x, t) : 
+    defines Var x of type t
+    
+  Var(x) :
+    refers to Property x
+    //refers to Var x 
+  
+
+    
+    

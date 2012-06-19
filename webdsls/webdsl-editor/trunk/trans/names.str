@@ -1,0 +1,230 @@
+module names
+
+imports
+  lib/analysis-library
+  lib/analysis-library-internal
+  lib/index-library
+
+
+imports
+  include/WebDSL
+
+
+signature
+  constructors
+    Type        : DefDataKind
+    Import      : DefDataKind
+    Transitive  : ImportAnno
+    CurrentFile : ImportAnno
+
+  constructors
+    Module   : Namespace
+    Import   : Namespace
+    Entity   : Namespace
+    Property : Namespace
+    Var      : Namespace
+    Page     : Namespace
+
+
+rules
+
+  nam-get-scope-types :
+    ModuleDefs(m, _, _) -> [Entity(), Page()]
+
+  nam-get-definition-keys :
+    ModuleDefs(m, _, _) -> [m]
+
+  nam-get-definitions :
+    ModuleDefs(m, _, _) -> [(Module(), [m])]
+
+  nam-annotate-names(|paths__, path__):
+    ModuleDefs(m, _, _) -> <ModuleDefs(nam-annotate-def(|path__), id, id)>
+
+  nam-unique :
+    ModuleDefs(m, _, _) -> <id>
+
+
+rules
+
+  nam-get-definition-keys :
+    Imports(m) -> [m]
+
+  nam-get-definitions :
+    Imports(m) -> [(Import(), [m])]
+
+  nam-get-uses-keys :
+    Imports(m) -> [m]
+
+  nam-get-uses :
+    Imports(m) -> [(Module(), [m])]
+
+  nam-annotate-names(|paths__, path__):
+    Imports(m) -> <Imports(nam-annotate-def(|path__))>
+
+  nam-unique :
+    Imports(m) -> <id>
+
+  adjust-index-def-data(store__|namespace__, path__):
+    Imports(m) -> <store__> DefData(
+                              [Page()|[<index-file-to-string> <index-get-current-file>]]
+                            , Import()
+                            , (m, [CurrentFile()])
+                            )
+
+  adjust-index-def-data(store__|namespace__, path__):
+    Imports(m) -> <store__> DefData(
+                              [Entity()|[<index-file-to-string> <index-get-current-file>]]
+                            , Import()
+                            , (m, [CurrentFile()])
+                            )
+
+
+rules
+
+  nam-get-scope-types :
+    EntityNoSuper(t, _) -> [Property()]
+
+  nam-get-definition-keys :
+    EntityNoSuper(t, _) -> [t]
+
+  nam-get-definitions :
+    EntityNoSuper(t, _) -> [(Entity(), [t])]
+
+  nam-annotate-names(|paths__, path__):
+    EntityNoSuper(t, _) -> <EntityNoSuper(nam-annotate-def(|path__), id)>
+
+  adjust-index-def-data(store__|namespace__, path__):
+    EntityNoSuper(t, _) -> <store__> DefData(
+                                       [namespace__|path__]
+                                     , Type()
+                                     , SimpleSort(t)
+                                     )
+
+  type-of :
+    EntityNoSuper(t, _) -> SimpleSort(t)
+
+  nam-unique :
+    EntityNoSuper(t, _) -> <id>
+
+
+rules
+
+  nam-get-uses-keys :
+    SimpleSort(t) -> [t]
+
+  nam-get-uses :
+    SimpleSort(t) -> [(Entity(), [t])]
+
+  nam-annotate-names(|paths__, path__):
+    SimpleSort(t) -> <SimpleSort(nam-annotate-use(|paths__, Entity()))>
+
+
+rules
+
+  nam-get-definition-keys :
+    PropertyNoAnno(f, _, t) -> [f]
+
+  nam-get-definitions :
+    PropertyNoAnno(f, _, t) -> [(Property(), [f])]
+
+  nam-annotate-names(|paths__, path__):
+    PropertyNoAnno(f, _, t) -> <PropertyNoAnno(nam-annotate-def(|path__), id, id)>
+
+  adjust-index-def-data(store__|namespace__, path__):
+    PropertyNoAnno(f, _, t) -> <store__> DefData(
+                                           [namespace__|path__]
+                                         , Type()
+                                         , t
+                                         )
+
+  type-of :
+    PropertyNoAnno(f, _, t) -> t
+
+  nam-unique :
+    PropertyNoAnno(f, _, t) -> <id>
+
+
+rules
+
+  nam-get-uses-keys :
+    FieldAccess(e, f) -> [f]
+    where SimpleSort(t) := <type-of> e
+
+  nam-get-uses :
+    FieldAccess(e, f) -> [(Property(), [f])]
+    where SimpleSort(t) := <type-of> e
+
+  nam-annotate-names(|paths__, path__):
+    FieldAccess(e, f) -> <FieldAccess(id, nam-annotate-use(|paths__, Property()))>
+
+  adjust-index-lookup(target__|namespace__, path__, prefix__):
+    FieldAccess(e, f) -> <index-lookup-children(|Property(), prefix__)> t
+    where <target__> f
+    where SimpleSort(t) := <type-of> e
+
+
+rules
+
+  nam-get-scope-types :
+    Define(_, x, _, _, _) -> [Var()]
+
+  nam-get-definition-keys :
+    Define(_, x, _, _, _) -> [x]
+
+  nam-get-definitions :
+    Define(_, x, _, _, _) -> [(Page(), [x])]
+
+  nam-annotate-names(|paths__, path__):
+    Define(_, x, _, _, _) -> <Define(id, nam-annotate-def(|path__), id, id, id)>
+
+  nam-unique :
+    Define(_, x, _, _, _) -> <id>
+
+
+rules
+
+  nam-get-uses-keys :
+    PageCall(x, _) -> [x]
+
+  nam-get-uses :
+    PageCall(x, _) -> [(Page(), [x])]
+
+  nam-annotate-names(|paths__, path__):
+    PageCall(x, _) -> <PageCall(nam-annotate-use(|paths__, Page()), id)>
+
+
+rules
+
+  nam-get-definition-keys :
+    Arg(x, t) -> [x]
+
+  nam-get-definitions :
+    Arg(x, t) -> [(Var(), [x])]
+
+  nam-annotate-names(|paths__, path__):
+    Arg(x, t) -> <Arg(nam-annotate-def(|path__), id)>
+
+  adjust-index-def-data(store__|namespace__, path__):
+    Arg(x, t) -> <store__> DefData(
+                             [namespace__|path__]
+                           , Type()
+                           , t
+                           )
+
+  type-of :
+    Arg(x, t) -> t
+
+  nam-unique :
+    Arg(x, t) -> <id>
+
+
+rules
+
+  nam-get-uses-keys :
+    Var(x) -> [x]
+
+  nam-get-uses :
+    Var(x) -> [(Property(), [x])]
+
+  nam-annotate-names(|paths__, path__):
+    Var(x) -> <Var(nam-annotate-use(|paths__, Property()))>

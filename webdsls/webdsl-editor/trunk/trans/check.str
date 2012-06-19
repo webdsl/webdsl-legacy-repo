@@ -4,9 +4,8 @@ imports
   libstratego-lib
   include/WebDSL
   lib/editor-common.generated
-  lib/analysis-auto.generated
-  lib/index-library.generated
-  lib/analysis-library.generated
+  lib/index-library
+  lib/analysis-library
 
 rules // Resolving
   
