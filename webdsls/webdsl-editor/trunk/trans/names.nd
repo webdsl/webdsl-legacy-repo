@@ -17,33 +17,43 @@ namespaces
   Page
   Template
   Action
+  Test
   
-rules // Application
+rules // Top-level definitions
+
+  // Do not scope imports in any top-level definition, otherwise wrong path will be imported.
 
   Application(a, _) :
     defines Application a
-    scopes Entity, Page // Do not scope imports here, otherwise wrong path will be imported.
+    scopes Entity, Page, Test, Var 
 
   ApplicationDefs(a, _, _) :
     defines Application a
-    scopes Entity, Page // Do not scope imports here, otherwise wrong path will be imported.
-    
-rules // Module
+    scopes Entity, Page, Test, Var
 
 	Module(m, _) :
 		defines Module m
-		scopes Entity, Page // Do not scope imports here, otherwise wrong path will be imported.
+		scopes Entity, Page, Test, Var
 
   ModuleDefs(m, _, _) :
     defines Module m
-    scopes Entity, Page // Do not scope imports here, otherwise wrong path will be imported.
+    scopes Entity, Page, Test, Var
     
   Imports(m) : 
     defines Import m
     refers to Module m
-    imports Page from Module m {current-file}   // Imports are only valid within the same file.
+    imports Page from Module m {current-file}
     imports Entity from Module m {current-file}
+    // Imports are only valid within the same file.
 
+rules // Test
+
+  Test(t, _) :
+    defines Test t
+    scopes Var, Action, Template, Property, Page, Function 
+    // HACK: Scope Property here because a Var(_) can refer to Property as well.
+    // HACK: Also scope Page and Function so that ThisCall can refer to pages.
+    
 rules // Page
 
   Define([Page()], x, _, _, _) :
@@ -69,6 +79,9 @@ rules // Template
   TemplateCallBody(x, _) :
     refers to Template x
     
+  TemplateCallNoArgs(x) :
+    refers to Template x
+    
   // TODO: Add primitive templates: input, output, form, etc..
     
 rules // Action
@@ -89,6 +102,9 @@ rules // Entity
     scopes Property, Function
     
   SimpleSort(t) :
+    refers to Entity t
+    
+  GenericSort(t, _) :
     refers to Entity t
     
   // TODO: Add primitive types: String, Email, etc..
@@ -112,7 +128,8 @@ rules // Function
    
   Function(f, _, t, _) :
     defines Function f of type t
-    scopes Var, Property // HACK: Scope Property here because a Var(_) can refer to Property as well.
+    scopes Var, Property 
+    // HACK: Scope Property here because a Var(_) can refer to Property as well.
 
   ThisCall(f, _) :
     refers to Function f
@@ -132,12 +149,27 @@ rules // Variables
   VarDeclInit(x, t, _) :
     defines Var x of type t
     
+  VarDeclInitInferred(x, e) :
+    defines Var x //of type t
+    // TODO: Type inference
+    
   Var(x) :
     refers to Property x
     refers to Var x
     
 rules // Control flow
 
+  // TODO: Define x in y does not work yet?
+
   ForAllNoFilter(x, t, body, _) :
     defines Var x of type t //in body
-    // TODO: Define x in y does not work yet.
+    
+  ForNoFilter(x, t, _, body, _) :
+    defines Var x of type t //in body
+    
+  ForCountStmt(x, from, to, body) :
+    defines Var x //of type t1 //in body
+    // TODO: Type of 'from' or 'to' can be complex, need to retrieve type.
+    
+  ForExp(_, x, t, body, filter) :
+    defines Var x of type t //in body

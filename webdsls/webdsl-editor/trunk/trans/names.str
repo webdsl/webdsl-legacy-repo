@@ -29,12 +29,17 @@ signature
     Page        : Namespace
     Template    : Namespace
     Action      : Namespace
+    Test        : Namespace
 
 
 rules
 
   nam-get-scope-types :
-    Application(a, _) -> [Entity(), Page()]
+    Application(a, _) -> [ Entity()
+                         , Page()
+                         , Test()
+                         , Var()
+                         ]
 
   nam-get-definition-keys :
     Application(a, _) -> [a]
@@ -52,7 +57,11 @@ rules
 rules
 
   nam-get-scope-types :
-    ApplicationDefs(a, _, _) -> [Entity(), Page()]
+    ApplicationDefs(a, _, _) -> [ Entity()
+                                , Page()
+                                , Test()
+                                , Var()
+                                ]
 
   nam-get-definition-keys :
     ApplicationDefs(a, _, _) -> [a]
@@ -70,7 +79,11 @@ rules
 rules
 
   nam-get-scope-types :
-    Module(m, _) -> [Entity(), Page()]
+    Module(m, _) -> [ Entity()
+                    , Page()
+                    , Test()
+                    , Var()
+                    ]
 
   nam-get-definition-keys :
     Module(m, _) -> [m]
@@ -88,7 +101,11 @@ rules
 rules
 
   nam-get-scope-types :
-    ModuleDefs(m, _, _) -> [Entity(), Page()]
+    ModuleDefs(m, _, _) -> [ Entity()
+                           , Page()
+                           , Test()
+                           , Var()
+                           ]
 
   nam-get-definition-keys :
     ModuleDefs(m, _, _) -> [m]
@@ -136,6 +153,30 @@ rules
                             , Import()
                             , (m, [CurrentFile()])
                             )
+
+
+rules
+
+  nam-get-scope-types :
+    Test(t, _) -> [ Var()
+                  , Action()
+                  , Template()
+                  , Property()
+                  , Page()
+                  , Function()
+                  ]
+
+  nam-get-definition-keys :
+    Test(t, _) -> [t]
+
+  nam-get-definitions :
+    Test(t, _) -> [(Test(), [t])]
+
+  nam-annotate-names(|paths__, path__):
+    Test(t, _) -> <Test(nam-annotate-def(|path__), id)>
+
+  nam-unique :
+    Test(t, _) -> <id>
 
 
 rules
@@ -235,6 +276,18 @@ rules
 
 rules
 
+  nam-get-uses-keys :
+    TemplateCallNoArgs(x) -> [x]
+
+  nam-get-uses :
+    TemplateCallNoArgs(x) -> [(Template(), [x])]
+
+  nam-annotate-names(|paths__, path__):
+    TemplateCallNoArgs(x) -> <TemplateCallNoArgs(nam-annotate-use(|paths__, Template()))>
+
+
+rules
+
   nam-get-scope-types :
     Action(_, x, _, _) -> [ Var()
                           , Property()
@@ -305,6 +358,18 @@ rules
 
   nam-annotate-names(|paths__, path__):
     SimpleSort(t) -> <SimpleSort(nam-annotate-use(|paths__, Entity()))>
+
+
+rules
+
+  nam-get-uses-keys :
+    GenericSort(t, _) -> [t]
+
+  nam-get-uses :
+    GenericSort(t, _) -> [(Entity(), [t])]
+
+  nam-annotate-names(|paths__, path__):
+    GenericSort(t, _) -> <GenericSort(nam-annotate-use(|paths__, Entity()), id)>
 
 
 rules
@@ -524,6 +589,21 @@ rules
 
 rules
 
+  nam-get-definition-keys :
+    VarDeclInitInferred(x, e) -> [x]
+
+  nam-get-definitions :
+    VarDeclInitInferred(x, e) -> [(Var(), [x])]
+
+  nam-annotate-names(|paths__, path__):
+    VarDeclInitInferred(x, e) -> <VarDeclInitInferred(nam-annotate-def(|path__), id)>
+
+  nam-unique :
+    VarDeclInitInferred(x, e) -> <id>
+
+
+rules
+
   nam-get-uses-keys :
     Var(x) -> [x]
 
@@ -565,3 +645,68 @@ rules
 
   nam-unique :
     ForAllNoFilter(x, t, body, _) -> <id>
+
+
+rules
+
+  nam-get-definition-keys :
+    ForNoFilter(x, t, _, body, _) -> [x]
+
+  nam-get-definitions :
+    ForNoFilter(x, t, _, body, _) -> [(Var(), [x])]
+
+  nam-annotate-names(|paths__, path__):
+    ForNoFilter(x, t, _, body, _) -> <ForNoFilter(nam-annotate-def(|path__), id, id, id, id)>
+
+  adjust-index-def-data(store__|namespace__, path__):
+    ForNoFilter(x, t, _, body, _) -> <store__> DefData(
+                                                 [namespace__|path__]
+                                               , Type()
+                                               , t
+                                               )
+
+  type-of :
+    ForNoFilter(x, t, _, body, _) -> t
+
+  nam-unique :
+    ForNoFilter(x, t, _, body, _) -> <id>
+
+
+rules
+
+  nam-get-definition-keys :
+    ForCountStmt(x, from, to, body) -> [x]
+
+  nam-get-definitions :
+    ForCountStmt(x, from, to, body) -> [(Var(), [x])]
+
+  nam-annotate-names(|paths__, path__):
+    ForCountStmt(x, from, to, body) -> <ForCountStmt(nam-annotate-def(|path__), id, id, id)>
+
+  nam-unique :
+    ForCountStmt(x, from, to, body) -> <id>
+
+
+rules
+
+  nam-get-definition-keys :
+    ForExp(_, x, t, body, filter) -> [x]
+
+  nam-get-definitions :
+    ForExp(_, x, t, body, filter) -> [(Var(), [x])]
+
+  nam-annotate-names(|paths__, path__):
+    ForExp(_, x, t, body, filter) -> <ForExp(id, nam-annotate-def(|path__), id, id, id)>
+
+  adjust-index-def-data(store__|namespace__, path__):
+    ForExp(_, x, t, body, filter) -> <store__> DefData(
+                                                 [namespace__|path__]
+                                               , Type()
+                                               , t
+                                               )
+
+  type-of :
+    ForExp(_, x, t, body, filter) -> t
+
+  nam-unique :
+    ForExp(_, x, t, body, filter) -> <id>
