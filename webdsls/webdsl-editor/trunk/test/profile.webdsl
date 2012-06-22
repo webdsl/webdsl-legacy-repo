@@ -1,16 +1,29 @@
 module profile
 
-imports users
+//imports users
 imports lib
 
 section user interface
 
-  define page profile(u: User){
+  define page profiles(u: User){
     output(u.email)
     output(u.fullname) 
   }
   
   define page admin(u: User) { 
-    navigate profile(u) { output(u.name) }
+    navigate profiles(u) { output(u.name) }
   }
   
+
+  
+  entity User {
+    fullname :: String //(name)
+    name     :: String := fullname
+    email    :: Email (id)
+    
+    function foo(x: String) : String {
+      fullname := x; 
+      x := email;  
+      return email;
+    }
+  } 

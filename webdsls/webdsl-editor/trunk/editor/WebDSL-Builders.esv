@@ -15,10 +15,12 @@ builders
                                                                                                                           
   observer : editor-analyze                                                                                               
                                                                                                                           
-  builder  : "Generate Java code (for selection)"            = generate-java (openeditor) (realtime)                      
-  builder  : "Show abstract syntax (for selection)"          = generate-aterm (openeditor) (realtime) (meta) (source)     
-  builder  : "Show analyzed abstract syntax (for selection)" = generate-analyzed (openeditor) (realtime) (meta) (source)  
-                                                                                                                          
+  builder  : "Show abstract syntax" = generate-aterm (openeditor) (realtime) (meta) (source)
+  builder  : "Show deffed syntax" = generate-deffed (openeditor) (realtime) (meta) (source)
+  builder  : "Show analyzed syntax" = generate-analyzed (openeditor) (realtime) (meta) (source)
+  builder  : "Show index entries for current file" = index-currentfile (openeditor) (realtime) (meta) (source)
+  builder  : "Show index entries for all files" = index-allfiles (openeditor) (realtime) (meta) (source)
+  builder  : "Clear index" = index-cleanall (meta) (source)                                                                                                                    
 
 refactorings
 

@@ -6,9 +6,13 @@ namespaces Module Import Entity Function Property Var Page
 
 rules // modules
 
+	Module(m, _) :
+		defines Module m
+		scopes Entity, Page, Import
+
   ModuleDefs(m, _, _) :
     defines Module m
-    scopes Entity, Page 
+    scopes Entity, Page, Import
     
   Imports(m) : 
     defines Import m
@@ -20,7 +24,7 @@ rules // entities
 
   EntityNoSuper(t, _) :
     defines Entity t of type SimpleSort(t)
-    scopes Property
+    scopes Property, Function
     
   SimpleSort(t) :
     refers to Entity t
@@ -28,7 +32,7 @@ rules // entities
   // todo: built-in types
 
   PropertyNoAnno(f, _, t) :
-    defines Property f of type t 
+    defines Property f of type t
       
   Property(f, _, t, _) :
     defines Property f of type t
@@ -39,30 +43,23 @@ rules // entities
   FieldAccess(e, f) :
     refers to Property f in Entity t
     where e has type SimpleSort(t)
-    
-  //SimpleAnno("name") :
-    //defines Property "name" of type SimpleSort("String")\
    
   Function(f, arg*, t, _) :
     defines Function f of type t
-    scopes Var, Property
+    scopes Var, Property // HACK: Scope Property here because a Var(_) can refer to Property as well.
     
 rules // templates
 
   Define(_, x, _, _, _) :
     defines Page x
-    scopes Var, Property
+    scopes Var, Property // HACK: Scope Property here because a Var(_) can refer to Property as well.
     
   PageCall(x, _) :
     refers to Page x
     
-  Arg(x, t) : 
+  Arg(x, t) :
     defines Var x of type t
     
   Var(x) :
     refers to Property x
-    refers to Var x 
-  
-
-    
-    
+    refers to Var x

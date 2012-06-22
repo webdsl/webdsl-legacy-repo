@@ -8,6 +8,7 @@ imports
   lib/editor-common.generated
   lib/index-library
   lib/analysis-library
+  lib/analysis-library-internal
   lib/compilation-library
   analysis-manual
   check
@@ -117,7 +118,7 @@ rules // Debugging
     with
       index-setup(|<language>, [project-path], $[[project-path]/[path]]);
       filename := <guarantee-extension(|"aterm")> path;
-      result   := <analyze-defs(|[], <new-iset>, Anon(), Anon())> selected
+      result   := <analyze-defs> selected
       
   // Prints the entries in the index of the current file.
   index-currentfile:

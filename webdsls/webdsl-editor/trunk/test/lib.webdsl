@@ -1,4 +1,4 @@
 module lib
 
-entity String { }
-entity Email { }
+  entity String {}
+	entity Email {}

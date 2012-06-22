@@ -31,7 +31,25 @@ signature
 rules
 
   nam-get-scope-types :
-    ModuleDefs(m, _, _) -> [Entity(), Page()]
+    Module(m, _) -> [Entity(), Page(), Import()]
+
+  nam-get-definition-keys :
+    Module(m, _) -> [m]
+
+  nam-get-definitions :
+    Module(m, _) -> [(Module(), [m])]
+
+  nam-annotate-names(|paths__, path__):
+    Module(m, _) -> <Module(nam-annotate-def(|path__), id)>
+
+  nam-unique :
+    Module(m, _) -> <id>
+
+
+rules
+
+  nam-get-scope-types :
+    ModuleDefs(m, _, _) -> [Entity(), Page(), Import()]
 
   nam-get-definition-keys :
     ModuleDefs(m, _, _) -> [m]
@@ -84,7 +102,7 @@ rules
 rules
 
   nam-get-scope-types :
-    EntityNoSuper(t, _) -> [Property()]
+    EntityNoSuper(t, _) -> [Property(), Function()]
 
   nam-get-definition-keys :
     EntityNoSuper(t, _) -> [t]

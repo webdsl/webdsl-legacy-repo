@@ -1,0 +1,5 @@
+module hacks
+
+signature constructors
+	
+	Function : T * T * T * T -> T
