@@ -19,13 +19,52 @@ signature
     CurrentFile : ImportAnno
 
   constructors
-    Module   : Namespace
-    Import   : Namespace
-    Entity   : Namespace
-    Function : Namespace
-    Property : Namespace
-    Var      : Namespace
-    Page     : Namespace
+    Application : Namespace
+    Module      : Namespace
+    Import      : Namespace
+    Entity      : Namespace
+    Function    : Namespace
+    Property    : Namespace
+    Var         : Namespace
+    Page        : Namespace
+    Template    : Namespace
+    Action      : Namespace
+
+
+rules
+
+  nam-get-scope-types :
+    Application(a, _) -> [Entity(), Page()]
+
+  nam-get-definition-keys :
+    Application(a, _) -> [a]
+
+  nam-get-definitions :
+    Application(a, _) -> [(Application(), [a])]
+
+  nam-annotate-names(|paths__, path__):
+    Application(a, _) -> <Application(nam-annotate-def(|path__), id)>
+
+  nam-unique :
+    Application(a, _) -> <id>
+
+
+rules
+
+  nam-get-scope-types :
+    ApplicationDefs(a, _, _) -> [Entity(), Page()]
+
+  nam-get-definition-keys :
+    ApplicationDefs(a, _, _) -> [a]
+
+  nam-get-definitions :
+    ApplicationDefs(a, _, _) -> [(Application(), [a])]
+
+  nam-annotate-names(|paths__, path__):
+    ApplicationDefs(a, _, _) -> <ApplicationDefs(nam-annotate-def(|path__), id, id)>
+
+  nam-unique :
+    ApplicationDefs(a, _, _) -> <id>
 
 
 rules
@@ -97,6 +136,135 @@ rules
                             , Import()
                             , (m, [CurrentFile()])
                             )
+
+
+rules
+
+  nam-get-scope-types :
+    Define([Page()], x, _, _, _) -> [ Var()
+                                    , Action()
+                                    , Template()
+                                    , Property()
+                                    , Page()
+                                    , Function()
+                                    ]
+
+  nam-get-definition-keys :
+    Define([Page()], x, _, _, _) -> [x]
+
+  nam-get-definitions :
+    Define([Page()], x, _, _, _) -> [(Page(), [x])]
+
+  nam-annotate-names(|paths__, path__):
+    Define([Page()], x, _, _, _) -> <Define(
+                                       [Page()]
+                                     , nam-annotate-def(|path__)
+                                     , id
+                                     , id
+                                     , id
+                                     )>
+
+  nam-unique :
+    Define([Page()], x, _, _, _) -> <id>
+
+
+rules
+
+  nam-get-uses-keys :
+    PageCall(x, _) -> [x]
+
+  nam-get-uses :
+    PageCall(x, _) -> [(Page(), [x])]
+
+  nam-annotate-names(|paths__, path__):
+    PageCall(x, _) -> <PageCall(nam-annotate-use(|paths__, Page()), id)>
+
+
+rules
+
+  nam-get-scope-types :
+    Define([], x, _, _, _) -> [ Var()
+                              , Action()
+                              , Property()
+                              , Page()
+                              , Function()
+                              ]
+
+  nam-get-definition-keys :
+    Define([], x, _, _, _) -> [x]
+
+  nam-get-definitions :
+    Define([], x, _, _, _) -> [(Template(), [x])]
+
+  nam-annotate-names(|paths__, path__):
+    Define([], x, _, _, _) -> <Define(
+                                 []
+                               , nam-annotate-def(|path__)
+                               , id
+                               , id
+                               , id
+                               )>
+
+  nam-unique :
+    Define([], x, _, _, _) -> <id>
+
+
+rules
+
+  nam-get-uses-keys :
+    TemplateCallNoBody(x, _) -> [x]
+
+  nam-get-uses :
+    TemplateCallNoBody(x, _) -> [(Template(), [x])]
+
+  nam-annotate-names(|paths__, path__):
+    TemplateCallNoBody(x, _) -> <TemplateCallNoBody(nam-annotate-use(|paths__, Template()), id)>
+
+
+rules
+
+  nam-get-uses-keys :
+    TemplateCallBody(x, _) -> [x]
+
+  nam-get-uses :
+    TemplateCallBody(x, _) -> [(Template(), [x])]
+
+  nam-annotate-names(|paths__, path__):
+    TemplateCallBody(x, _) -> <TemplateCallBody(nam-annotate-use(|paths__, Template()), id)>
+
+
+rules
+
+  nam-get-scope-types :
+    Action(_, x, _, _) -> [ Var()
+                          , Property()
+                          , Page()
+                          , Function()
+                          ]
+
+  nam-get-definition-keys :
+    Action(_, x, _, _) -> [x]
+
+  nam-get-definitions :
+    Action(_, x, _, _) -> [(Action(), [x])]
+
+  nam-annotate-names(|paths__, path__):
+    Action(_, x, _, _) -> <Action(id, nam-annotate-def(|path__), id, id)>
+
+  nam-unique :
+    Action(_, x, _, _) -> <id>
+
+
+rules
+
+  nam-get-uses-keys :
+    ActionCall(x, _) -> [x]
+
+  nam-get-uses :
+    ActionCall(x, _) -> [(Action(), [x])]
+
+  nam-annotate-names(|paths__, path__):
+    ActionCall(x, _) -> <ActionCall(nam-annotate-use(|paths__, Action()), id)>
 
 
 rules
@@ -236,29 +404,72 @@ rules
 rules
 
   nam-get-scope-types :
-    Function(f, arg*, t, _) -> [Var(), Property()]
+    Function(f, _, t, _) -> [Var(), Property()]
 
   nam-get-definition-keys :
-    Function(f, arg*, t, _) -> [f]
+    Function(f, _, t, _) -> [f]
 
   nam-get-definitions :
-    Function(f, arg*, t, _) -> [(Function(), [f])]
+    Function(f, _, t, _) -> [(Function(), [f])]
 
   nam-annotate-names(|paths__, path__):
-    Function(f, arg*, t, _) -> <Function(nam-annotate-def(|path__), id, id, id)>
+    Function(f, _, t, _) -> <Function(nam-annotate-def(|path__), id, id, id)>
 
   adjust-index-def-data(store__|namespace__, path__):
-    Function(f, arg*, t, _) -> <store__> DefData(
-                                           [namespace__|path__]
-                                         , Type()
-                                         , t
-                                         )
+    Function(f, _, t, _) -> <store__> DefData(
+                                        [namespace__|path__]
+                                      , Type()
+                                      , t
+                                      )
 
   type-of :
-    Function(f, arg*, t, _) -> t
+    Function(f, _, t, _) -> t
 
   nam-unique :
-    Function(f, arg*, t, _) -> <id>
+    Function(f, _, t, _) -> <id>
+
+
+rules
+
+  nam-get-uses-keys :
+    ThisCall(f, _) -> [f]
+
+  nam-get-uses :
+    ThisCall(f, _) -> [ (Function(), [f])
+                      , (Page(), [f])
+                      ]
+
+  nam-annotate-names(|paths__, path__):
+    ThisCall(f, _) -> <ThisCall(nam-annotate-use(|paths__, Function()), id)>
+
+  adjust-index-lookup(target__|namespace__, path__, prefix__):
+    ThisCall(f, _) -> [ [Function()|path__]
+                      , [Page()|path__]
+                      ]
+    where <target__> f
+
+
+rules
+
+  nam-get-uses-keys :
+    Call(e, f, _) -> [f]
+    where SimpleSort(t) := <type-of> e
+
+  nam-get-uses :
+    Call(e, f, _) -> [(Function(), [f])]
+    where SimpleSort(t) := <type-of> e
+
+  nam-annotate-names(|paths__, path__):
+    Call(e, f, _) -> <Call(
+                        id
+                      , nam-annotate-use(|paths__, Function())
+                      , id
+                      )>
+
+  adjust-index-lookup(target__|namespace__, path__, prefix__):
+    Call(e, f, _) -> <index-lookup-children(|Function(), prefix__)> t
+    where <target__> f
+    where SimpleSort(t) := <type-of> e
 
 
 rules
@@ -288,6 +499,31 @@ rules
 
 rules
 
+  nam-get-definition-keys :
+    VarDeclInit(x, t, _) -> [x]
+
+  nam-get-definitions :
+    VarDeclInit(x, t, _) -> [(Var(), [x])]
+
+  nam-annotate-names(|paths__, path__):
+    VarDeclInit(x, t, _) -> <VarDeclInit(nam-annotate-def(|path__), id, id)>
+
+  adjust-index-def-data(store__|namespace__, path__):
+    VarDeclInit(x, t, _) -> <store__> DefData(
+                                        [namespace__|path__]
+                                      , Type()
+                                      , t
+                                      )
+
+  type-of :
+    VarDeclInit(x, t, _) -> t
+
+  nam-unique :
+    VarDeclInit(x, t, _) -> <id>
+
+
+rules
+
   nam-get-uses-keys :
     Var(x) -> [x]
 
@@ -308,29 +544,24 @@ rules
 
 rules
 
-  nam-get-scope-types :
-    Define(_, x, _, _, _) -> [Var(), Property()]
-
   nam-get-definition-keys :
-    Define(_, x, _, _, _) -> [x]
+    ForAllNoFilter(x, t, body, _) -> [x]
 
   nam-get-definitions :
-    Define(_, x, _, _, _) -> [(Page(), [x])]
+    ForAllNoFilter(x, t, body, _) -> [(Var(), [x])]
 
   nam-annotate-names(|paths__, path__):
-    Define(_, x, _, _, _) -> <Define(id, nam-annotate-def(|path__), id, id, id)>
+    ForAllNoFilter(x, t, body, _) -> <ForAllNoFilter(nam-annotate-def(|path__), id, id, id)>
+
+  adjust-index-def-data(store__|namespace__, path__):
+    ForAllNoFilter(x, t, body, _) -> <store__> DefData(
+                                                 [namespace__|path__]
+                                               , Type()
+                                               , t
+                                               )
+
+  type-of :
+    ForAllNoFilter(x, t, body, _) -> t
 
   nam-unique :
-    Define(_, x, _, _, _) -> <id>
-
-
-rules
-
-  nam-get-uses-keys :
-    PageCall(x, _) -> [x]
-
-  nam-get-uses :
-    PageCall(x, _) -> [(Page(), [x])]
-
-  nam-annotate-names(|paths__, path__):
-    PageCall(x, _) -> <PageCall(nam-annotate-use(|paths__, Page()), id)>
+    ForAllNoFilter(x, t, body, _) -> <id>
