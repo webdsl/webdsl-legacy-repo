@@ -1,26 +1,36 @@
 module names
 
-imports include/WebDSL hacks
+imports 
 
-namespaces Module Import Entity Function Property Var Page
+  include/WebDSL
+  hacks
 
-rules // modules
+namespaces 
+  Module
+  Import
+  Entity
+  Function
+  Property
+  Var
+  Page
+
+rules // Module
 
 	Module(m, _) :
 		defines Module m
-		scopes Entity, Page, Import
+		scopes Entity, Page // Do not scope imports here, otherwise wrong path will be imported.
 
   ModuleDefs(m, _, _) :
     defines Module m
-    scopes Entity, Page, Import
+    scopes Entity, Page // Do not scope imports here, otherwise wrong path will be imported.
     
   Imports(m) : 
     defines Import m
     refers to Module m
-    imports Page from Module m {current-file}
+    imports Page from Module m {current-file}   // Imports are only valid within the same file.
     imports Entity from Module m {current-file}
 
-rules // entities
+rules // Entity
 
   EntityNoSuper(t, _) :
     defines Entity t of type SimpleSort(t)
@@ -28,13 +38,15 @@ rules // entities
     
   SimpleSort(t) :
     refers to Entity t
-   
-  // todo: built-in types
+    
+  // TODO: Add primitive types: String, Email, etc..
+
+rules // Property
+
+  Property(f, _, t, _) :
+    defines Property f of type t
 
   PropertyNoAnno(f, _, t) :
-    defines Property f of type t
-      
-  Property(f, _, t, _) :
     defines Property f of type t
    
   DerivedPropertyNoAnno(f, _, t, _) :
@@ -43,12 +55,21 @@ rules // entities
   FieldAccess(e, f) :
     refers to Property f in Entity t
     where e has type SimpleSort(t)
+
+rules // Function
    
   Function(f, arg*, t, _) :
     defines Function f of type t
     scopes Var, Property // HACK: Scope Property here because a Var(_) can refer to Property as well.
+
+  Arg(x, t) :
+    defines Var x of type t
     
-rules // templates
+  Var(x) :
+    refers to Property x
+    refers to Var x
+    
+rules // Page
 
   Define(_, x, _, _, _) :
     defines Page x
@@ -57,9 +78,3 @@ rules // templates
   PageCall(x, _) :
     refers to Page x
     
-  Arg(x, t) :
-    defines Var x of type t
-    
-  Var(x) :
-    refers to Property x
-    refers to Var x

@@ -1,7 +1,6 @@
 module profile
 
-//imports users
-imports lib
+imports users
 
 section user interface
 
@@ -13,17 +12,3 @@ section user interface
   define page admin(u: User) { 
     navigate profiles(u) { output(u.name) }
   }
-  
-
-  
-  entity User {
-    fullname :: String //(name)
-    name     :: String := fullname
-    email    :: Email (id)
-    
-    function foo(x: String) : String {
-      fullname := x; 
-      x := email;  
-      return email;
-    }
-  } 
