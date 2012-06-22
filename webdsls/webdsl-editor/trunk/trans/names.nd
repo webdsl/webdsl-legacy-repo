@@ -16,8 +16,10 @@ namespaces
   Var
   Page
   Template
+  AjaxTemplate
   Action
   Test
+  Placeholder
   
 rules // Top-level definitions
 
@@ -50,7 +52,7 @@ rules // Test
 
   Test(t, _) :
     defines Test t
-    scopes Var, Action, Template, Property, Page, Function 
+    scopes Var, Action, Template, AjaxTemplate, Placeholder, Property, Page, Function 
     // HACK: Scope Property here because a Var(_) can refer to Property as well.
     // HACK: Also scope Page and Function so that ThisCall can refer to pages.
     
@@ -58,7 +60,7 @@ rules // Page
 
   Define([Page()], x, _, _, _) :
     defines Page x
-    scopes Var, Action, Template, Property, Page, Function 
+    scopes Var, Action, Template, AjaxTemplate, Placeholder, Property, Page, Function 
     // HACK: Scope Property here because a Var(_) can refer to Property as well.
     // HACK: Also scope Page and Function so that ThisCall can refer to pages.
     
@@ -69,18 +71,27 @@ rules // Template
 
   Define([], x, _, _, _) :
     defines Template x
-    scopes Var, Action, Property, Page, Function 
+    scopes Var, Action, Template, AjaxTemplate, Placeholder, Property, Page, Function 
     // HACK: Scope Property here because a Var(_) can refer to Property as well.
     // HACK: Also scope Page and Function so that ThisCall can refer to pages.
  
+  Define([AjaxTemplate()], x, _, _, _) :
+    defines AjaxTemplate x
+    scopes Var, Action, Template, AjaxTemplate, Placeholder, Property, Page, Function
+    // HACK: Scope Property here because a Var(_) can refer to Property as well.
+    // HACK: Also scope Page and Function so that ThisCall can refer to pages.
+    
   TemplateCallNoBody(x, _) :
     refers to Template x
+    refers to AjaxTemplate x
     
   TemplateCallBody(x, _) :
     refers to Template x
+    refers to AjaxTemplate x
     
   TemplateCallNoArgs(x) :
     refers to Template x
+    refers to AjaxTemplate x
     
   // TODO: Add primitive templates: input, output, form, etc..
     
@@ -94,6 +105,43 @@ rules // Action
 
   ActionCall(x, _) :
     refers to Action x
+    
+  InitAction(_) :
+    scopes Var, Property, Page, Function 
+    // HACK: Scope Property here because a Var(_) can refer to Property as well.
+    // HACK: Also scope Page and Function so that ThisCall can refer to pages.    
+    
+rules // Access control
+
+  // TODO: Nested access control rules are hard to specify properly in NBL.
+
+  AccessControlRule("page", x, _, _, _) :
+    refers to Page x
+    scopes Var, Property
+    // HACK: Scope Property here because a Var(_) can refer to Property as well.
+
+  AccessControlRule("template", x, _, _, _) :
+    refers to Template x
+    scopes Var, Property
+    // HACK: Scope Property here because a Var(_) can refer to Property as well.
+    
+  AccessControlRule("ajaxtemplate", x, _, _, _) :
+    refers to AjaxTemplate x
+    scopes Var, Property
+    // HACK: Scope Property here because a Var(_) can refer to Property as well.
+    
+  AccessControlRule("action", x, _, _, _) :
+    refers to Action x
+    scopes Var, Property
+    // HACK: Scope Property here because a Var(_) can refer to Property as well.
+    
+rules // Ajax
+
+  Placeholder(x, _) :
+    defines Placeholder x
+    
+  AjaxReplace(x, _) :
+    refers to Placeholder x
     
 rules // Entity
 
@@ -156,6 +204,8 @@ rules // Variables
   Var(x) :
     refers to Property x
     refers to Var x
+    
+  // TODO: Add principal/securityContext, but only if defined.
     
 rules // Control flow
 

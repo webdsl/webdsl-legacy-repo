@@ -19,17 +19,19 @@ signature
     CurrentFile : ImportAnno
 
   constructors
-    Application : Namespace
-    Module      : Namespace
-    Import      : Namespace
-    Entity      : Namespace
-    Function    : Namespace
-    Property    : Namespace
-    Var         : Namespace
-    Page        : Namespace
-    Template    : Namespace
-    Action      : Namespace
-    Test        : Namespace
+    Application  : Namespace
+    Module       : Namespace
+    Import       : Namespace
+    Entity       : Namespace
+    Function     : Namespace
+    Property     : Namespace
+    Var          : Namespace
+    Page         : Namespace
+    Template     : Namespace
+    AjaxTemplate : Namespace
+    Action       : Namespace
+    Test         : Namespace
+    Placeholder  : Namespace
 
 
 rules
@@ -161,6 +163,8 @@ rules
     Test(t, _) -> [ Var()
                   , Action()
                   , Template()
+                  , AjaxTemplate()
+                  , Placeholder()
                   , Property()
                   , Page()
                   , Function()
@@ -185,6 +189,8 @@ rules
     Define([Page()], x, _, _, _) -> [ Var()
                                     , Action()
                                     , Template()
+                                    , AjaxTemplate()
+                                    , Placeholder()
                                     , Property()
                                     , Page()
                                     , Function()
@@ -226,6 +232,9 @@ rules
   nam-get-scope-types :
     Define([], x, _, _, _) -> [ Var()
                               , Action()
+                              , Template()
+                              , AjaxTemplate()
+                              , Placeholder()
                               , Property()
                               , Page()
                               , Function()
@@ -252,14 +261,54 @@ rules
 
 rules
 
+  nam-get-scope-types :
+    Define([AjaxTemplate()], x, _, _, _) -> [ Var()
+                                            , Action()
+                                            , Template()
+                                            , AjaxTemplate()
+                                            , Placeholder()
+                                            , Property()
+                                            , Page()
+                                            , Function()
+                                            ]
+
+  nam-get-definition-keys :
+    Define([AjaxTemplate()], x, _, _, _) -> [x]
+
+  nam-get-definitions :
+    Define([AjaxTemplate()], x, _, _, _) -> [(AjaxTemplate(), [x])]
+
+  nam-annotate-names(|paths__, path__):
+    Define([AjaxTemplate()], x, _, _, _) -> <Define(
+                                               [AjaxTemplate()]
+                                             , nam-annotate-def(|path__)
+                                             , id
+                                             , id
+                                             , id
+                                             )>
+
+  nam-unique :
+    Define([AjaxTemplate()], x, _, _, _) -> <id>
+
+
+rules
+
   nam-get-uses-keys :
     TemplateCallNoBody(x, _) -> [x]
 
   nam-get-uses :
-    TemplateCallNoBody(x, _) -> [(Template(), [x])]
+    TemplateCallNoBody(x, _) -> [ (Template(), [x])
+                                , (AjaxTemplate(), [x])
+                                ]
 
   nam-annotate-names(|paths__, path__):
     TemplateCallNoBody(x, _) -> <TemplateCallNoBody(nam-annotate-use(|paths__, Template()), id)>
+
+  adjust-index-lookup(target__|namespace__, path__, prefix__):
+    TemplateCallNoBody(x, _) -> [ [Template()|path__]
+                                , [AjaxTemplate()|path__]
+                                ]
+    where <target__> x
 
 
 rules
@@ -268,10 +317,18 @@ rules
     TemplateCallBody(x, _) -> [x]
 
   nam-get-uses :
-    TemplateCallBody(x, _) -> [(Template(), [x])]
+    TemplateCallBody(x, _) -> [ (Template(), [x])
+                              , (AjaxTemplate(), [x])
+                              ]
 
   nam-annotate-names(|paths__, path__):
     TemplateCallBody(x, _) -> <TemplateCallBody(nam-annotate-use(|paths__, Template()), id)>
+
+  adjust-index-lookup(target__|namespace__, path__, prefix__):
+    TemplateCallBody(x, _) -> [ [Template()|path__]
+                              , [AjaxTemplate()|path__]
+                              ]
+    where <target__> x
 
 
 rules
@@ -280,10 +337,18 @@ rules
     TemplateCallNoArgs(x) -> [x]
 
   nam-get-uses :
-    TemplateCallNoArgs(x) -> [(Template(), [x])]
+    TemplateCallNoArgs(x) -> [ (Template(), [x])
+                             , (AjaxTemplate(), [x])
+                             ]
 
   nam-annotate-names(|paths__, path__):
     TemplateCallNoArgs(x) -> <TemplateCallNoArgs(nam-annotate-use(|paths__, Template()))>
+
+  adjust-index-lookup(target__|namespace__, path__, prefix__):
+    TemplateCallNoArgs(x) -> [ [Template()|path__]
+                             , [AjaxTemplate()|path__]
+                             ]
+    where <target__> x
 
 
 rules
@@ -318,6 +383,127 @@ rules
 
   nam-annotate-names(|paths__, path__):
     ActionCall(x, _) -> <ActionCall(nam-annotate-use(|paths__, Action()), id)>
+
+
+rules
+
+  nam-get-scope-types :
+    InitAction(_) -> [ Var()
+                     , Property()
+                     , Page()
+                     , Function()
+                     ]
+
+
+rules
+
+  nam-get-scope-types :
+    AccessControlRule("page", x, _, _, _) -> [Var(), Property()]
+
+  nam-get-uses-keys :
+    AccessControlRule("page", x, _, _, _) -> [x]
+
+  nam-get-uses :
+    AccessControlRule("page", x, _, _, _) -> [(Page(), [x])]
+
+  nam-annotate-names(|paths__, path__):
+    AccessControlRule("page", x, _, _, _) -> <AccessControlRule(
+                                                "page"
+                                              , nam-annotate-use(|paths__, Page())
+                                              , id
+                                              , id
+                                              , id
+                                              )>
+
+
+rules
+
+  nam-get-scope-types :
+    AccessControlRule("template", x, _, _, _) -> [Var(), Property()]
+
+  nam-get-uses-keys :
+    AccessControlRule("template", x, _, _, _) -> [x]
+
+  nam-get-uses :
+    AccessControlRule("template", x, _, _, _) -> [(Template(), [x])]
+
+  nam-annotate-names(|paths__, path__):
+    AccessControlRule("template", x, _, _, _) -> <AccessControlRule(
+                                                    "template"
+                                                  , nam-annotate-use(|paths__, Template())
+                                                  , id
+                                                  , id
+                                                  , id
+                                                  )>
+
+
+rules
+
+  nam-get-scope-types :
+    AccessControlRule("ajaxtemplate", x, _, _, _) -> [Var(), Property()]
+
+  nam-get-uses-keys :
+    AccessControlRule("ajaxtemplate", x, _, _, _) -> [x]
+
+  nam-get-uses :
+    AccessControlRule("ajaxtemplate", x, _, _, _) -> [(AjaxTemplate(), [x])]
+
+  nam-annotate-names(|paths__, path__):
+    AccessControlRule("ajaxtemplate", x, _, _, _) -> <AccessControlRule(
+                                                        "ajaxtemplate"
+                                                      , nam-annotate-use(|paths__, AjaxTemplate())
+                                                      , id
+                                                      , id
+                                                      , id
+                                                      )>
+
+
+rules
+
+  nam-get-scope-types :
+    AccessControlRule("action", x, _, _, _) -> [Var(), Property()]
+
+  nam-get-uses-keys :
+    AccessControlRule("action", x, _, _, _) -> [x]
+
+  nam-get-uses :
+    AccessControlRule("action", x, _, _, _) -> [(Action(), [x])]
+
+  nam-annotate-names(|paths__, path__):
+    AccessControlRule("action", x, _, _, _) -> <AccessControlRule(
+                                                  "action"
+                                                , nam-annotate-use(|paths__, Action())
+                                                , id
+                                                , id
+                                                , id
+                                                )>
+
+
+rules
+
+  nam-get-definition-keys :
+    Placeholder(x, _) -> [x]
+
+  nam-get-definitions :
+    Placeholder(x, _) -> [(Placeholder(), [x])]
+
+  nam-annotate-names(|paths__, path__):
+    Placeholder(x, _) -> <Placeholder(nam-annotate-def(|path__), id)>
+
+  nam-unique :
+    Placeholder(x, _) -> <id>
+
+
+rules
+
+  nam-get-uses-keys :
+    AjaxReplace(x, _) -> [x]
+
+  nam-get-uses :
+    AjaxReplace(x, _) -> [(Placeholder(), [x])]
+
+  nam-annotate-names(|paths__, path__):
+    AjaxReplace(x, _) -> <AjaxReplace(nam-annotate-use(|paths__, Placeholder()), id)>
 
 
 rules
