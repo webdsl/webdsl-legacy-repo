@@ -18,14 +18,6 @@ rules // Adjust diff
        <index-uri-eq> (u1, u2);
        <index-key-eq> (v1, v2)
        
-// rules // Primitives
-//   
-//   // Return primitives as well.
-//   adjust-index-lookup(target|namespace, path, prefix): 
-//     Type(<target>) -> <concat> [primitives, [[class() | path]]]
-//     with
-//       primitives := <map(type-of; type-to-def)> <primitive-types>
-
 rules // Import adjust rule for naming language
      
   import-transitive =
@@ -68,3 +60,5 @@ rules // Import adjust rule for naming language
         transitiveUris := []
       end
       
+rules // Primitives
+	
