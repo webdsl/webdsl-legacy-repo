@@ -1,6 +1,4 @@
-module users    
-
-imports lib
+module users
  
 section user data model
 

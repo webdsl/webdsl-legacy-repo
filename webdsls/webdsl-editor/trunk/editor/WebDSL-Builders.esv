@@ -13,7 +13,7 @@ builders
   provider : include/webdsl.ctree                                                                                         
   provider : include/webdsl-java.jar                                                                                      
                                                                                                                           
-  observer : editor-analyze                                                                                               
+  observer : editor-analyze (multifile)                                                                                              
                                                                                                                           
   builder  : "Show abstract syntax" = generate-aterm (openeditor) (realtime) (meta) (source)
   builder  : "Show deffed syntax" = generate-deffed (openeditor) (realtime) (meta) (source)

@@ -26,20 +26,26 @@ rules // Top-level definitions
   // Do not scope imports in any top-level definition, otherwise wrong path will be imported.
 
   Application(a, _) :
-    defines Application a
-    scopes Entity, Page, Test, Var 
+    //defines Application a
+    // HACK: Anonymous scope because all applications are called "app".
+    scopes Entity, Page, Test, Var, Property
+    // HACK: Scope Property here because a Var(_) can refer to Property as well.
 
   ApplicationDefs(a, _, _) :
-    defines Application a
-    scopes Entity, Page, Test, Var
+    //defines Application a
+    // HACK: Anonymous scope because all applications are called "app".
+    scopes Entity, Page, Test, Var, Property
+    // HACK: Scope Property here because a Var(_) can refer to Property as well.
 
 	Module(m, _) :
 		defines Module m
-		scopes Entity, Page, Test, Var
+		scopes Entity, Page, Test, Var, Property
+		// HACK: Scope Property here because a Var(_) can refer to Property as well.
 
   ModuleDefs(m, _, _) :
     defines Module m
-    scopes Entity, Page, Test, Var
+    scopes Entity, Page, Test, Var, Property
+    // HACK: Scope Property here because a Var(_) can refer to Property as well.
     
   Imports(m) : 
     defines Import m
@@ -81,19 +87,31 @@ rules // Template
     // HACK: Scope Property here because a Var(_) can refer to Property as well.
     // HACK: Also scope Page and Function so that ThisCall can refer to pages.
     
+  // TODO: Lots of duplicate code, this could be shortened by grouping the term maches.
+    
   TemplateCallNoBody(x, _) :
     refers to Template x
     refers to AjaxTemplate x
+    refers to Template "input"
+    refers to Template "output"
+    refers to Template "form"
+    refers to Template "break"
     
   TemplateCallBody(x, _) :
     refers to Template x
     refers to AjaxTemplate x
+    refers to Template "input"
+    refers to Template "output"
+    refers to Template "form"
+    refers to Template "break"
     
   TemplateCallNoArgs(x) :
     refers to Template x
     refers to AjaxTemplate x
-    
-  // TODO: Add primitive templates: input, output, form, etc..
+    refers to Template "input"
+    refers to Template "output"
+    refers to Template "form"
+    refers to Template "break"
     
 rules // Action
 
@@ -148,14 +166,24 @@ rules // Entity
   EntityNoSuper(t, _) :
     defines Entity t of type SimpleSort(t)
     scopes Property, Function
+  
+  // TODO: Lots of duplicate code, this could be shortened by grouping the term maches.
     
   SimpleSort(t) :
     refers to Entity t
+    refers to Entity "Bool"
+    refers to Entity "Int"
+    refers to Entity "String"
+    refers to Entity "Text"
+    refers to Entity "Email"
     
   GenericSort(t, _) :
     refers to Entity t
-    
-  // TODO: Add primitive types: String, Email, etc..
+    refers to Entity "Bool"
+    refers to Entity "Int"
+    refers to Entity "String"
+    refers to Entity "Text"
+    refers to Entity "Email"
 
 rules // Property
 
@@ -182,16 +210,23 @@ rules // Function
   ThisCall(f, _) :
     refers to Function f
     refers to Page f
+    refers to Function "assert"
+    refers to Page "accessDenied"
+    refers to Page "pagenotfound"
 
   Call(e, f, _):
     refers to Function f in Entity t
+    refers to Function "save"
     where e has type SimpleSort(t)
     
-  // TODO: Add primitive function: save, find<x>ByName etc..
+  // TODO: Add generated primitive function: find<x>ByName etc..
 
 rules // Variables
 
   Arg(x, t) :
+    defines Var x of type t
+    
+  VarDecl(x, t) :
     defines Var x of type t
     
   VarDeclInit(x, t, _) :
@@ -204,22 +239,34 @@ rules // Variables
   Var(x) :
     refers to Property x
     refers to Var x
+    refers to Var "principal"
+    refers to Var "securityContext"
     
-  // TODO: Add principal/securityContext, but only if defined.
+  // TODO: Add principal/securityContext only if defined.
     
 rules // Control flow
 
   // TODO: Define x in y does not work yet?
+  // TODO: Anonymous scopes not working
 
   ForAllNoFilter(x, t, body, _) :
     defines Var x of type t //in body
+    scopes Var, Property
     
   ForNoFilter(x, t, _, body, _) :
     defines Var x of type t //in body
-    
+    scopes Var, Property
+  
+  ForCount(x, from, to, body, _) :
+    defines Var x //of type to in body
+    scopes Var, Property
+    // TODO: Type of 'from' or 'to' can be complex, need to retrieve type.
+        
   ForCountStmt(x, from, to, body) :
-    defines Var x //of type t1 //in body
+    defines Var x //of type to in body
+    scopes Var, Property
     // TODO: Type of 'from' or 'to' can be complex, need to retrieve type.
     
   ForExp(_, x, t, body, filter) :
     defines Var x of type t //in body
+    scopes Var, Property

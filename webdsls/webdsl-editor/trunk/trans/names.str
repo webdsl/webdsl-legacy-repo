@@ -41,19 +41,8 @@ rules
                          , Page()
                          , Test()
                          , Var()
+                         , Property()
                          ]
-
-  nam-get-definition-keys :
-    Application(a, _) -> [a]
-
-  nam-get-definitions :
-    Application(a, _) -> [(Application(), [a])]
-
-  nam-annotate-names(|paths__, path__):
-    Application(a, _) -> <Application(nam-annotate-def(|path__), id)>
-
-  nam-unique :
-    Application(a, _) -> <id>
 
 
 rules
@@ -63,19 +52,8 @@ rules
                                 , Page()
                                 , Test()
                                 , Var()
+                                , Property()
                                 ]
-
-  nam-get-definition-keys :
-    ApplicationDefs(a, _, _) -> [a]
-
-  nam-get-definitions :
-    ApplicationDefs(a, _, _) -> [(Application(), [a])]
-
-  nam-annotate-names(|paths__, path__):
-    ApplicationDefs(a, _, _) -> <ApplicationDefs(nam-annotate-def(|path__), id, id)>
-
-  nam-unique :
-    ApplicationDefs(a, _, _) -> <id>
 
 
 rules
@@ -85,6 +63,7 @@ rules
                     , Page()
                     , Test()
                     , Var()
+                    , Property()
                     ]
 
   nam-get-definition-keys :
@@ -107,6 +86,7 @@ rules
                            , Page()
                            , Test()
                            , Var()
+                           , Property()
                            ]
 
   nam-get-definition-keys :
@@ -294,60 +274,87 @@ rules
 rules
 
   nam-get-uses-keys :
-    TemplateCallNoBody(x, _) -> [x]
+    TemplateCallNoBody(x, _) -> [x, "input", "output", "form", "break"]
 
   nam-get-uses :
     TemplateCallNoBody(x, _) -> [ (Template(), [x])
                                 , (AjaxTemplate(), [x])
+                                , (Template(), ["input"])
+                                , (Template(), ["output"])
+                                , (Template(), ["form"])
+                                , (Template(), ["break"])
                                 ]
 
   nam-annotate-names(|paths__, path__):
     TemplateCallNoBody(x, _) -> <TemplateCallNoBody(nam-annotate-use(|paths__, Template()), id)>
 
   adjust-index-lookup(target__|namespace__, path__, prefix__):
-    TemplateCallNoBody(x, _) -> [ [Template()|path__]
-                                , [AjaxTemplate()|path__]
-                                ]
+    TemplateCallNoBody(x, _) -> <concat> [ [ [Template()|path__]
+                                           , [AjaxTemplate()|path__]
+                                           ]
+                                         , [Def([Template(), "input"])]
+                                         , [Def([Template(), "output"])]
+                                         , [Def([Template(), "form"])]
+                                         , [Def([Template(), "break"])]
+                                         ]
     where <target__> x
 
 
 rules
 
   nam-get-uses-keys :
-    TemplateCallBody(x, _) -> [x]
+    TemplateCallBody(x, _) -> [x, "input", "output", "form", "break"]
 
   nam-get-uses :
     TemplateCallBody(x, _) -> [ (Template(), [x])
                               , (AjaxTemplate(), [x])
+                              , (Template(), ["input"])
+                              , (Template(), ["output"])
+                              , (Template(), ["form"])
+                              , (Template(), ["break"])
                               ]
 
   nam-annotate-names(|paths__, path__):
     TemplateCallBody(x, _) -> <TemplateCallBody(nam-annotate-use(|paths__, Template()), id)>
 
   adjust-index-lookup(target__|namespace__, path__, prefix__):
-    TemplateCallBody(x, _) -> [ [Template()|path__]
-                              , [AjaxTemplate()|path__]
-                              ]
+    TemplateCallBody(x, _) -> <concat> [ [ [Template()|path__]
+                                         , [AjaxTemplate()|path__]
+                                         ]
+                                       , [Def([Template(), "input"])]
+                                       , [Def([Template(), "output"])]
+                                       , [Def([Template(), "form"])]
+                                       , [Def([Template(), "break"])]
+                                       ]
     where <target__> x
 
 
 rules
 
   nam-get-uses-keys :
-    TemplateCallNoArgs(x) -> [x]
+    TemplateCallNoArgs(x) -> [x, "input", "output", "form", "break"]
 
   nam-get-uses :
     TemplateCallNoArgs(x) -> [ (Template(), [x])
                              , (AjaxTemplate(), [x])
+                             , (Template(), ["input"])
+                             , (Template(), ["output"])
+                             , (Template(), ["form"])
+                             , (Template(), ["break"])
                              ]
 
   nam-annotate-names(|paths__, path__):
     TemplateCallNoArgs(x) -> <TemplateCallNoArgs(nam-annotate-use(|paths__, Template()))>
 
   adjust-index-lookup(target__|namespace__, path__, prefix__):
-    TemplateCallNoArgs(x) -> [ [Template()|path__]
-                             , [AjaxTemplate()|path__]
-                             ]
+    TemplateCallNoArgs(x) -> <concat> [ [ [Template()|path__]
+                                        , [AjaxTemplate()|path__]
+                                        ]
+                                      , [Def([Template(), "input"])]
+                                      , [Def([Template(), "output"])]
+                                      , [Def([Template(), "form"])]
+                                      , [Def([Template(), "break"])]
+                                      ]
     where <target__> x
 
 
@@ -537,25 +544,69 @@ rules
 rules
 
   nam-get-uses-keys :
-    SimpleSort(t) -> [t]
+    SimpleSort(t) -> [ t
+                     , "Bool"
+                     , "Int"
+                     , "String"
+                     , "Text"
+                     , "Email"
+                     ]
 
   nam-get-uses :
-    SimpleSort(t) -> [(Entity(), [t])]
+    SimpleSort(t) -> [ (Entity(), [t])
+                     , (Entity(), ["Bool"])
+                     , (Entity(), ["Int"])
+                     , (Entity(), ["String"])
+                     , (Entity(), ["Text"])
+                     , (Entity(), ["Email"])
+                     ]
 
   nam-annotate-names(|paths__, path__):
     SimpleSort(t) -> <SimpleSort(nam-annotate-use(|paths__, Entity()))>
+
+  adjust-index-lookup(target__|namespace__, path__, prefix__):
+    SimpleSort(t) -> <concat> [ [[Entity()|path__]]
+                              , [Def([Entity(), "Bool"])]
+                              , [Def([Entity(), "Int"])]
+                              , [Def([Entity(), "String"])]
+                              , [Def([Entity(), "Text"])]
+                              , [Def([Entity(), "Email"])]
+                              ]
+    where <target__> t
 
 
 rules
 
   nam-get-uses-keys :
-    GenericSort(t, _) -> [t]
+    GenericSort(t, _) -> [ t
+                         , "Bool"
+                         , "Int"
+                         , "String"
+                         , "Text"
+                         , "Email"
+                         ]
 
   nam-get-uses :
-    GenericSort(t, _) -> [(Entity(), [t])]
+    GenericSort(t, _) -> [ (Entity(), [t])
+                         , (Entity(), ["Bool"])
+                         , (Entity(), ["Int"])
+                         , (Entity(), ["String"])
+                         , (Entity(), ["Text"])
+                         , (Entity(), ["Email"])
+                         ]
 
   nam-annotate-names(|paths__, path__):
     GenericSort(t, _) -> <GenericSort(nam-annotate-use(|paths__, Entity()), id)>
+
+  adjust-index-lookup(target__|namespace__, path__, prefix__):
+    GenericSort(t, _) -> <concat> [ [[Entity()|path__]]
+                                  , [Def([Entity(), "Bool"])]
+                                  , [Def([Entity(), "Int"])]
+                                  , [Def([Entity(), "String"])]
+                                  , [Def([Entity(), "Text"])]
+                                  , [Def([Entity(), "Email"])]
+                                  ]
+    where <target__> t
 
 
 rules
@@ -683,31 +734,40 @@ rules
 rules
 
   nam-get-uses-keys :
-    ThisCall(f, _) -> [f]
+    ThisCall(f, _) -> [f, "assert", "accessDenied", "pagenotfound"]
 
   nam-get-uses :
     ThisCall(f, _) -> [ (Function(), [f])
                       , (Page(), [f])
+                      , (Function(), ["assert"])
+                      , (Page(), ["accessDenied"])
+                      , (Page(), ["pagenotfound"])
                       ]
 
   nam-annotate-names(|paths__, path__):
     ThisCall(f, _) -> <ThisCall(nam-annotate-use(|paths__, Function()), id)>
 
   adjust-index-lookup(target__|namespace__, path__, prefix__):
-    ThisCall(f, _) -> [ [Function()|path__]
-                      , [Page()|path__]
-                      ]
+    ThisCall(f, _) -> <concat> [ [ [Function()|path__]
+                                 , [Page()|path__]
+                                 ]
+                               , [Def([Function(), "assert"])]
+                               , [Def([Page(), "accessDenied"])]
+                               , [Def([Page(), "pagenotfound"])]
+                               ]
     where <target__> f
 
 
 rules
 
   nam-get-uses-keys :
-    Call(e, f, _) -> [f]
+    Call(e, f, _) -> [f, "save"]
     where SimpleSort(t) := <type-of> e
 
   nam-get-uses :
-    Call(e, f, _) -> [(Function(), [f])]
+    Call(e, f, _) -> [ (Function(), [f])
+                     , (Function(), ["save"])
+                     ]
     where SimpleSort(t) := <type-of> e
 
   nam-annotate-names(|paths__, path__):
@@ -718,7 +778,9 @@ rules
                       )>
 
   adjust-index-lookup(target__|namespace__, path__, prefix__):
-    Call(e, f, _) -> <index-lookup-children(|Function(), prefix__)> t
+    Call(e, f, _) -> <concat> [ <index-lookup-children(|Function(), prefix__)> t
+                              , [Def([Function(), "save"])]
+                              ]
     where <target__> f
     where SimpleSort(t) := <type-of> e
 
@@ -746,6 +808,31 @@ rules
 
   nam-unique :
     Arg(x, t) -> <id>
+
+
+rules
+
+  nam-get-definition-keys :
+    VarDecl(x, t) -> [x]
+
+  nam-get-definitions :
+    VarDecl(x, t) -> [(Var(), [x])]
+
+  nam-annotate-names(|paths__, path__):
+    VarDecl(x, t) -> <VarDecl(nam-annotate-def(|path__), id)>
+
+  adjust-index-def-data(store__|namespace__, path__):
+    VarDecl(x, t) -> <store__> DefData(
+                                 [namespace__|path__]
+                               , Type()
+                               , t
+                               )
+
+  type-of :
+    VarDecl(x, t) -> t
+
+  nam-unique :
+    VarDecl(x, t) -> <id>
 
 
 rules
@@ -791,24 +878,32 @@ rules
 rules
 
   nam-get-uses-keys :
-    Var(x) -> [x]
+    Var(x) -> [x, "principal", "securityContext"]
 
   nam-get-uses :
     Var(x) -> [ (Property(), [x])
               , (Var(), [x])
+              , (Var(), ["principal"])
+              , (Var(), ["securityContext"])
               ]
 
   nam-annotate-names(|paths__, path__):
     Var(x) -> <Var(nam-annotate-use(|paths__, Property()))>
 
   adjust-index-lookup(target__|namespace__, path__, prefix__):
-    Var(x) -> [ [Property()|path__]
-              , [Var()|path__]
-              ]
+    Var(x) -> <concat> [ [ [Property()|path__]
+                         , [Var()|path__]
+                         ]
+                       , [Def([Var(), "principal"])]
+                       , [Def([Var(), "securityContext"])]
+                       ]
     where <target__> x
 
 
 rules
+
+  nam-get-scope-types :
+    ForAllNoFilter(x, t, body, _) -> [Var(), Property()]
 
   nam-get-definition-keys :
     ForAllNoFilter(x, t, body, _) -> [x]
@@ -835,6 +930,9 @@ rules
 
 rules
 
+  nam-get-scope-types :
+    ForNoFilter(x, t, _, body, _) -> [Var(), Property()]
+
   nam-get-definition-keys :
     ForNoFilter(x, t, _, body, _) -> [x]
 
@@ -860,6 +958,27 @@ rules
 
 rules
 
+  nam-get-scope-types :
+    ForCount(x, from, to, body, _) -> [Var(), Property()]
+
+  nam-get-definition-keys :
+    ForCount(x, from, to, body, _) -> [x]
+
+  nam-get-definitions :
+    ForCount(x, from, to, body, _) -> [(Var(), [x])]
+
+  nam-annotate-names(|paths__, path__):
+    ForCount(x, from, to, body, _) -> <ForCount(nam-annotate-def(|path__), id, id, id, id)>
+
+  nam-unique :
+    ForCount(x, from, to, body, _) -> <id>
+
+
+rules
+
+  nam-get-scope-types :
+    ForCountStmt(x, from, to, body) -> [Var(), Property()]
+
   nam-get-definition-keys :
     ForCountStmt(x, from, to, body) -> [x]
 
@@ -874,6 +993,9 @@ rules
 
 
 rules
+
+  nam-get-scope-types :
+    ForExp(_, x, t, body, filter) -> [Var(), Property()]
 
   nam-get-definition-keys :
     ForExp(_, x, t, body, filter) -> [x]
