@@ -3,7 +3,7 @@ application test
   entity User{
     s :: String
     i :: Int
-    b :: Bool
+    b :: Bool 
     t :: Text
     u -> User
   }

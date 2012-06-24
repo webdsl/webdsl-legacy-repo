@@ -19,20 +19,21 @@ signature
     CurrentFile : ImportAnno
 
   constructors
-    Application  : Namespace
-    Module       : Namespace
-    Import       : Namespace
-    Entity       : Namespace
-    ExtendEntity : Namespace
-    Function     : Namespace
-    Property     : Namespace
-    Var          : Namespace
-    Page         : Namespace
-    Template     : Namespace
-    AjaxTemplate : Namespace
-    Action       : Namespace
-    Test         : Namespace
-    Placeholder  : Namespace
+    Application       : Namespace
+    Module            : Namespace
+    Import            : Namespace
+    Entity            : Namespace
+    ExtendEntity      : Namespace
+    Function          : Namespace
+    Property          : Namespace
+    Var               : Namespace
+    Page              : Namespace
+    Template          : Namespace
+    AjaxTemplate      : Namespace
+    Action            : Namespace
+    Test              : Namespace
+    Placeholder       : Namespace
+    InitializedObject : Namespace
 
 
 rules
@@ -290,13 +291,14 @@ rules
     TemplateCallNoBody(x, _) -> <TemplateCallNoBody(nam-annotate-use(|paths__, Template()), id)>
 
   adjust-index-lookup(target__|namespace__, path__, prefix__):
-    TemplateCallNoBody(x, _) -> [ [Template()|path__]
-                                , [AjaxTemplate()|path__]
-                                , [Template()|path__]
-                                , [Template()|path__]
-                                , [Template()|path__]
-                                , [Template()|path__]
-                                ]
+    TemplateCallNoBody(x, _) -> <concat> [ [ [Template()|path__]
+                                           , [AjaxTemplate()|path__]
+                                           ]
+                                         , [Def([Template(), "input"])]
+                                         , [Def([Template(), "output"])]
+                                         , [Def([Template(), "form"])]
+                                         , [Def([Template(), "break"])]
+                                         ]
     where <target__> x
 
 
@@ -318,13 +320,14 @@ rules
     TemplateCallBody(x, _) -> <TemplateCallBody(nam-annotate-use(|paths__, Template()), id)>
 
   adjust-index-lookup(target__|namespace__, path__, prefix__):
-    TemplateCallBody(x, _) -> [ [Template()|path__]
-                              , [AjaxTemplate()|path__]
-                              , [Template()|path__]
-                              , [Template()|path__]
-                              , [Template()|path__]
-                              , [Template()|path__]
-                              ]
+    TemplateCallBody(x, _) -> <concat> [ [ [Template()|path__]
+                                         , [AjaxTemplate()|path__]
+                                         ]
+                                       , [Def([Template(), "input"])]
+                                       , [Def([Template(), "output"])]
+                                       , [Def([Template(), "form"])]
+                                       , [Def([Template(), "break"])]
+                                       ]
     where <target__> x
 
 
@@ -346,13 +349,14 @@ rules
     TemplateCallNoArgs(x) -> <TemplateCallNoArgs(nam-annotate-use(|paths__, Template()))>
 
   adjust-index-lookup(target__|namespace__, path__, prefix__):
-    TemplateCallNoArgs(x) -> [ [Template()|path__]
-                             , [AjaxTemplate()|path__]
-                             , [Template()|path__]
-                             , [Template()|path__]
-                             , [Template()|path__]
-                             , [Template()|path__]
-                             ]
+    TemplateCallNoArgs(x) -> <concat> [ [ [Template()|path__]
+                                        , [AjaxTemplate()|path__]
+                                        ]
+                                      , [Def([Template(), "input"])]
+                                      , [Def([Template(), "output"])]
+                                      , [Def([Template(), "form"])]
+                                      , [Def([Template(), "break"])]
+                                      ]
     where <target__> x
 
 
@@ -718,13 +722,13 @@ rules
     SimpleSort(t) -> <SimpleSort(nam-annotate-use(|paths__, Entity()))>
 
   adjust-index-lookup(target__|namespace__, path__, prefix__):
-    SimpleSort(t) -> [ [Entity()|path__]
-                     , [Entity()|path__]
-                     , [Entity()|path__]
-                     , [Entity()|path__]
-                     , [Entity()|path__]
-                     , [Entity()|path__]
-                     ]
+    SimpleSort(t) -> <concat> [ [[Entity()|path__]]
+                              , [Def([Entity(), "Bool"])]
+                              , [Def([Entity(), "Int"])]
+                              , [Def([Entity(), "String"])]
+                              , [Def([Entity(), "Text"])]
+                              , [Def([Entity(), "Email"])]
+                              ]
     where <target__> t
 
 
@@ -752,13 +756,13 @@ rules
     GenericSort(t, _) -> <GenericSort(nam-annotate-use(|paths__, Entity()), id)>
 
   adjust-index-lookup(target__|namespace__, path__, prefix__):
-    GenericSort(t, _) -> [ [Entity()|path__]
-                         , [Entity()|path__]
-                         , [Entity()|path__]
-                         , [Entity()|path__]
-                         , [Entity()|path__]
-                         , [Entity()|path__]
-                         ]
+    GenericSort(t, _) -> <concat> [ [[Entity()|path__]]
+                                  , [Def([Entity(), "Bool"])]
+                                  , [Def([Entity(), "Int"])]
+                                  , [Def([Entity(), "String"])]
+                                  , [Def([Entity(), "Text"])]
+                                  , [Def([Entity(), "Email"])]
+                                  ]
     where <target__> t
 
 
@@ -901,12 +905,13 @@ rules
     ThisCall(f, _) -> <ThisCall(nam-annotate-use(|paths__, Function()), id)>
 
   adjust-index-lookup(target__|namespace__, path__, prefix__):
-    ThisCall(f, _) -> [ [Function()|path__]
-                      , [Page()|path__]
-                      , [Function()|path__]
-                      , [Page()|path__]
-                      , [Page()|path__]
-                      ]
+    ThisCall(f, _) -> <concat> [ [ [Function()|path__]
+                                 , [Page()|path__]
+                                 ]
+                               , [Def([Function(), "assert"])]
+                               , [Def([Page(), "accessDenied"])]
+                               , [Def([Page(), "pagenotfound"])]
+                               ]
     where <target__> f
 
 
@@ -930,8 +935,8 @@ rules
                       )>
 
   adjust-index-lookup(target__|namespace__, path__, prefix__):
-    Call(e, f, _) -> <concat> [ [[Function()|path__]]
-                              , <index-lookup-children(|Function(), prefix__)> t
+    Call(e, f, _) -> <concat> [ <index-lookup-children(|Function(), prefix__)> t
+                              , [Def([Function(), "save"])]
                               ]
     where <target__> f
     where SimpleSort(t) := <type-of> e
@@ -960,31 +965,6 @@ rules
 
   nam-unique :
     Arg(x, t) -> <id>
-
-
-rules
-
-  nam-get-definition-keys :
-    VarDecl(x, t) -> [x]
-
-  nam-get-definitions :
-    VarDecl(x, t) -> [(Var(), [x])]
-
-  nam-annotate-names(|paths__, path__):
-    VarDecl(x, t) -> <VarDecl(nam-annotate-def(|path__), id)>
-
-  adjust-index-def-data(store__|namespace__, path__):
-    VarDecl(x, t) -> <store__> DefData(
-                                 [namespace__|path__]
-                               , Type()
-                               , t
-                               )
-
-  type-of :
-    VarDecl(x, t) -> t
-
-  nam-unique :
-    VarDecl(x, t) -> <id>
 
 
 rules
@@ -1083,11 +1063,12 @@ rules
     Var(x) -> <Var(nam-annotate-use(|paths__, Property()))>
 
   adjust-index-lookup(target__|namespace__, path__, prefix__):
-    Var(x) -> [ [Property()|path__]
-              , [Var()|path__]
-              , [Var()|path__]
-              , [Var()|path__]
-              ]
+    Var(x) -> <concat> [ [ [Property()|path__]
+                         , [Var()|path__]
+                         ]
+                       , [Def([Var(), "principal"])]
+                       , [Def([Var(), "securityContext"])]
+                       ]
     where <target__> x
 
 

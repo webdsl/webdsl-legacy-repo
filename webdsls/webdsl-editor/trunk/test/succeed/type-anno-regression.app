@@ -1,4 +1,4 @@
-application test
+application typeannoregression
 
   entity Pub {
     bibs -> Set<Bib> := getbibs()
