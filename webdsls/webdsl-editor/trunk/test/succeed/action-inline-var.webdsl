@@ -1,7 +1,7 @@
 // check for action at top-level in define was triggering on the var in the inline action
 
-application test
+application actioninlinevar
 
   define page root() {
-    action("create new admin", action{ var q : String; })
+    submit action{ var q : String; } { "create new admin" }
   }

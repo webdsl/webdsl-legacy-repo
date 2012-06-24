@@ -8,8 +8,8 @@ section user data model
     email    :: Email (id)
     
     function foo(x: String) : String {
-      fullname := x; 
-      x := email;  
+      fullname := x;  
+      x := email;       
       return email;
     }
   } 

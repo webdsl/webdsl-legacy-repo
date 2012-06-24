@@ -1,12 +1,17 @@
-application test
+application extend-entity-this-call
 
   entity Table {
     legs :: Int
+    function test() {
+      var t : Table := this;
+      addLeg();
+      addTwoLegs(); 
+    }
   }
   extend entity Table {
     function addLeg(){
       legs := legs + 1;
-    }
+    }  
   }
   
   extend entity Table{
@@ -21,10 +26,9 @@ application test
   function addTwoLegs(){
   }
     
-  test addLegs {
-  
+  test addLegs {  
     var t := Table{};
     assert(t.legs == 0);
     t.addTwoLegs();
     assert(t.legs == 2);
-  } 
+  }

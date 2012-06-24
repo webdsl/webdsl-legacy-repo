@@ -1,4 +1,4 @@
-application test
+application actioncancel
 
 section datamodel
 
@@ -9,7 +9,7 @@ section datamodel
   
   define main() 
   {
-    body()
+    body() 
   }  
   
   define body() {

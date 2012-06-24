@@ -1,0 +1,13 @@
+module desugar
+
+imports include/WebDSL
+
+rules
+
+  desugar-all = 
+    innermost(desugar)
+
+  desugar :
+    PropertyNoAnno(f, k, t) -> Property(f, k, t, [])
+
+  //DerivedPropertyNoAnno(f, _, t, _)

@@ -1,18 +1,17 @@
-application test
+application assignment
 
   entity Test2 : Test {
     
     prop2 :: String
     list2 -> List<Test>
     
-    function test2() {
-    
+    function test2() {    
       this.prop := "aaa";
       prop2 := "aaa";
       prop := "aaa";
     
       this.list2 := null;
-      list2 := null;
+      list2 := null;  
       
       this.list := null;
       list := null;
@@ -29,11 +28,11 @@ application test
     
       this.prop := "aaa";
       prop := "aaa";
-       list := null;
+      list := null;
       
       var local : Int;
       local := 3;
-      
+        
       // liststr := null;
       
      }

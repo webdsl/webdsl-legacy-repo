@@ -29,4 +29,11 @@ rules
   type-of:
     SimpleSort(t{[Entity()|_]}) -> <id> 
     
-    
+  type-of:
+    Int(i) -> SimpleSort("Int")
+
+  type-of:
+    String(x) -> SimpleSort("String")
+   
+  type-of:
+    ObjectCreation(t, _) -> t

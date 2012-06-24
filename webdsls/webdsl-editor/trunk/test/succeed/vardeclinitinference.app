@@ -1,4 +1,4 @@
-application test
+application vardeclinitinference
 
 entity User { name :: String }
 

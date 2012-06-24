@@ -1,9 +1,9 @@
-application test
+application actionlinkajax
 
   entity User{
-    s :: String
+    s :: String 
     i :: Int
-    b :: Bool
+    b :: Bool  
     t :: Text
     u -> User
   }
@@ -55,7 +55,7 @@ application test
         actionLink("return"+i,ret(i,s,b,u_1,"dfgdfg"))
       }
     }
-    
+      
     break
 
     

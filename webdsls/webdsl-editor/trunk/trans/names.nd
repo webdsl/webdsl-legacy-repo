@@ -11,6 +11,7 @@ namespaces
   Module
   Import
   Entity
+  ExtendEntity
   Function
   Property
   Var
@@ -162,24 +163,44 @@ rules // Ajax
     refers to Placeholder x
     
 rules // Entity
-
-  EntityNoSuper(t, _) :
+  
+  EntityNoSuper(t, body) :
     defines Entity t of type SimpleSort(t)
+    defines Property "this" of type SimpleSort(t) in body
     scopes Property, Function
+    imports Property from ExtendEntity t //{transitive}
+    imports Function from ExtendEntity t //{transitive}
+
+  Entity(t1, t2, body) :
+    defines Entity t1 of type SimpleSort(t1)
+    defines Property "this" of type SimpleSort(t1) in body
+    scopes Property, Function
+    refers to Entity t2
+    imports Property from Entity t2 {transitive}
+    imports Function from Entity t2 {transitive}
+    imports Property from ExtendEntity t1 //{transitive}
+    imports Function from ExtendEntity t1 //{transitive}
   
   // TODO: Lots of duplicate code, this could be shortened by grouping the term maches.
     
+  ExtendEntity(t, body) :
+    defines non-unique ExtendEntity t
+    refers to Entity t
+    scopes Property, Function
+    imports Property from Entity t {transitive}
+    imports Function from Entity t {transitive}
+       
   SimpleSort(t) :
     refers to Entity t
     refers to Entity "Bool"
-    refers to Entity "Int"
+    refers to Entity "Int" 
     refers to Entity "String"
     refers to Entity "Text"
     refers to Entity "Email"
     
   GenericSort(t, _) :
     refers to Entity t
-    refers to Entity "Bool"
+    refers to Entity "Bool" 
     refers to Entity "Int"
     refers to Entity "String"
     refers to Entity "Text"
@@ -200,6 +221,19 @@ rules // Property
     refers to Property f in Entity t
     where e has type SimpleSort(t)
     
+rules // object creation
+
+  // todo: model object creation
+  // example: actionlink-ajax.app
+
+  // ObjectCreation(SimpleSort(t), body):
+  //   defines ObjectCreation ObjectCreation() of type SimpleSort(t)
+  //   
+  // ObjectPropertyAssignment(f, e):
+  //   refers to Property f of type t
+  //   where ObjectCreation() has type t
+    // how to refer to type of enclosing ObjectCreation
+  
 rules // Function
    
   Function(f, _, t, _) :
@@ -225,7 +259,10 @@ rules // Variables
 
   Arg(x, t) :
     defines Var x of type t
-    
+
+  VarDecl(x, t) :
+    defines Var x of type t
+     
   VarDecl(x, t) :
     defines Var x of type t
     
@@ -233,11 +270,13 @@ rules // Variables
     defines Var x of type t
     
   VarDeclInitInferred(x, e) :
-    defines Var x //of type t
+    defines Var x of type t
+    where e has type SimpleSort(t)
     // TODO: Type inference
     
   Var(x) :
-    refers to Property x
+    //refers to Var x 
+    refers to Property x 
     refers to Var x
     refers to Var "principal"
     refers to Var "securityContext"
@@ -250,11 +289,14 @@ rules // Control flow
   // TODO: Anonymous scopes not working
 
   ForAllNoFilter(x, t, body, _) :
-    defines Var x of type t //in body
+    defines Var x of type t in body
     scopes Var, Property
     
   ForNoFilter(x, t, _, body, _) :
-    defines Var x of type t //in body
+    defines Var x of type t in body
+    
+  ForCount(x, _, _, body) :
+    defines Var x of type SimpleSort("Int") in body
     scopes Var, Property
   
   ForCount(x, from, to, body, _) :
