@@ -1,4 +1,0 @@
-module lib
-
-  entity String {}
-	entity Email {}

@@ -3,3 +3,4 @@ module hacks
 signature constructors
 	
 	Function : T * T * T * T -> T
+	ForCount : T * T * T * T -> T
