@@ -7,21 +7,6 @@ imports
   lib/index-library
   lib/analysis-library
   lib/analysis-library-internal
-
-rules // Resolving
-  
-  constraint-error:
-    x{[Unresolved(t) | _]} -> (x, $[Unable to resolve.])
-    
-rules // Duplicates
-	
-  constraint-error:
-    def -> (key, $[Duplicate definition])
-    where
-      <nam-unique> def;
-      key := <nam-get-definition-key> def;
-      defs := <index-lookup-all-scoped-noimports> key;
-      <gt> (<length> defs, 1)
     
 rules // Other
   

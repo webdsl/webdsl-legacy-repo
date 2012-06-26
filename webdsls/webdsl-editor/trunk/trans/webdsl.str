@@ -10,6 +10,7 @@ imports
   lib/analysis-library
   lib/analysis-library-internal
   lib/compilation-library
+  lib/nbl-library
   analysis-manual
   check
   generate

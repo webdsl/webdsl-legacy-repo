@@ -189,7 +189,7 @@ rules // Analysis traversals
       else
         Results(asts, _, _, _, _, _, filesToAnalyze) := 
           <analyze-top-internal(|phase, language, project-path, full-path)> [(ast, full-path)];
-        ast' := <Hd> asts
+        ast' := <Hd> asts // Always returns a list of 1 AST if there is no splitter, so take the head.
       end
   
 rules // Parallel analysis
