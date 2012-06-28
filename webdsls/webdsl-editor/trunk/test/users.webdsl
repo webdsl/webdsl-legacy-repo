@@ -12,4 +12,4 @@ section user data model
       x := email;       
       return email;
     }
-  } 
+  }
