@@ -77,7 +77,7 @@ in
 
     preStop = "${pkgs.jdk}/bin/java -classpath \"${aselect}/bin/aselectagent/\" StopAgent";
 
-    exec = "${pkgs.jdk}/bin/java -Duser.dir=\"/var/lib/aselect/work/aselectagent\" -server -jar \"${aselect}/bin/aselectag$
+    exec = "${pkgs.jdk}/bin/java -Duser.dir=\"/var/lib/aselect/work/aselectagent\" -server -jar \"${aselect}/bin/aselectagent/org.aselect.agent.jar\"";
   };
 
   services.httpd = rec {
@@ -98,7 +98,7 @@ in
       <IfModule mod_deflate.c>
         SetOutputFilter DEFLATE
 
-        # Don’t compress
+        # Don't compress
         SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip dont-vary
         SetEnvIfNoCase Request_URI \.(?:exe|t?gz|zip|bz2|sit|rar)$ no-gzip dont-vary
 
@@ -133,26 +133,6 @@ in
       </IfModule>
 
     '';
-
-    extraSubservices = [
-      { serviceType = "tomcat-connector";
-        inherit logDir ;
-        stateDir = "/var/run/httpd";
-        extraWorkersProperties = ''
-          worker.list=loadbalancer,loadbalancer2,status
-
-          # modify the host as your host IP or DNS name.
-          worker.node2.port=8010
-          worker.node2.host=localhost
-          worker.node2.type=ajp13
-          worker.node2.lbfactor=1
-
-          # Load-balancing behaviour
-          worker.loadbalancer2.type=lb
-          worker.loadbalancer2.balance_workers=node2
-        '';
-      }
-    ];
 
     extraModules = [
       "deflate"
