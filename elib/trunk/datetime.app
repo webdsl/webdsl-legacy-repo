@@ -1,4 +1,4 @@
-module stdlib/datetime
+module elib/datetime
 
   function latest(t1: DateTime, t2: DateTime): DateTime {
   	if(t1 == null) { return t2; }

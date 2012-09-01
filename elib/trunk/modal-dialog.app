@@ -1,4 +1,4 @@
-module stdlib/modal-dialog
+module elib/modal-dialog
 
   define modalDialogPopup(context: String) {
     action close() { replace(context+"", empty); }

@@ -1,6 +1,6 @@
-module stdlib/bootstrap/bootstrap
+module elib/bootstrap/bootstrap
 
-imports stdlib/bootstrap/icons
+imports elib/bootstrap/icons
 
 section positioning
 

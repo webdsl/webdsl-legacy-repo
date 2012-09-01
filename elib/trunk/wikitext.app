@@ -1,4 +1,4 @@
-module stdlib/wikitext
+module elib/wikitext
 
 define outputRelaxed(s: WikiText){ rawoutput(s.relaxedFormat()) }
 

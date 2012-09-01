@@ -1,4 +1,4 @@
-module stdlib/editable
+module elib/editable
 
 /*
 section conditional editable input fields 

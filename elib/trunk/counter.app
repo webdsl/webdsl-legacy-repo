@@ -1,4 +1,4 @@
-module stdlib/counter
+module elib/counter
 
   function newCounter(): Counter { return Counter{}.init(); }
 

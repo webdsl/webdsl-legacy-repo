@@ -1,4 +1,4 @@
-module stdlib/pageindex
+module elib/pageindex
 
   define span pageIndexLink(i : Int, lab : String) { 
     "no definition of pageIndexLink" 

@@ -1,4 +1,4 @@
-module stdlib/coordinates
+module elib/coordinates
 
   entity Coordinates {
     latitude  :: Float (default=0.0)

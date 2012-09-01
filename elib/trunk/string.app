@@ -1,4 +1,4 @@
-module stdlib/string
+module elib/string
 
   entity StringPair { 
     left :: String

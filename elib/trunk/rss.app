@@ -1,4 +1,4 @@
-module stdlib/rss 
+module elib/rss 
 
 section RSS
   

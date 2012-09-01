@@ -1,4 +1,4 @@
-module stdlib/ace
+module elib/ace
 
 section ace editor
 

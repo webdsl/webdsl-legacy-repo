@@ -1,4 +1,4 @@
-module stdlib/bootstrap/icons  
+module elib/bootstrap/icons  
 
   define iBool(x: Bool){
   	if(x != null && x) { iOk } else { iRemove }

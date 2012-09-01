@@ -1,4 +1,4 @@
-module stdlib/checkboxWikiText
+module elib/checkboxWikiText
 
 
 section checkbox 

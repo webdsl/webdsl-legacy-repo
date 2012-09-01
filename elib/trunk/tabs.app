@@ -1,4 +1,4 @@
-module stdlib/tabs
+module elib/tabs
 
 section tab set
 

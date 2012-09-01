@@ -1,23 +1,23 @@
-module stdlib/lib
+module elib/lib
 
-imports stdlib/math
-imports stdlib/pageindex
-imports stdlib/string
-imports stdlib/accesscontrol
-imports stdlib/datetime
-imports stdlib/markup 
-imports stdlib/editable
-imports stdlib/coordinates
-imports stdlib/modal-dialog
-imports stdlib/rss
-imports stdlib/wikitext
-imports stdlib/counter
-imports stdlib/ace
-imports stdlib/tabs
+imports elib/math 
+imports elib/pageindex
+imports elib/string
+imports elib/accesscontrol
+imports elib/datetime
+imports elib/markup 
+imports elib/editable
+imports elib/coordinates
+imports elib/modal-dialog
+imports elib/rss
+imports elib/wikitext
+imports elib/counter
+imports elib/ace
+imports elib/tabs
 
-imports stdlib/request
+imports elib/request
 
-imports stdlib/bootstrap/bootstrap
+imports elib/bootstrap/bootstrap
 
 section ajax lib
 
