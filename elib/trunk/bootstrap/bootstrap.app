@@ -32,13 +32,45 @@ section grid system
   	div[class="span" + span + " offset" + offset, all attributes]{ elements }
   }
   
+section footer
+
+  define footer() { 
+    <footer class="footer"> 
+      elements
+    </footer>
+  }
+  
 section navigation bar
 
   define navbar() {
-  	div[class="navbar navbar-fixed-top"]{
+  	div[class="navbar navbar-inverse navbar-fixed-top"]{
       div[class="navbar-inner"]{
         div[class="container"]{
         	elements
+        }
+      }
+    }
+  }
+  
+  define navbarResponsive() {
+    div[class="navbar navbar-inverse navbar-fixed-top"]{
+      div[class="navbar-inner"]{
+        div[class="container"]{
+          navCollapseButton
+          brand
+          div[class="nav-collapse collapse", style="height: 0px;"]{
+            elements
+          }
+        }
+      }
+    }
+  }
+  
+  define navbarFluid() {
+    div[class="navbar navbar-inverse navbar-fixed-top"]{
+      div[class="navbar-inner"]{
+        div[class="container-fluid"]{
+          elements
         }
       }
     }
@@ -62,6 +94,17 @@ section navigation bar
   		elements
   	}
   }
+  define navItem() {
+    listitem{ elements }
+  }
+  
+  define navCollapseButton() {
+    <button class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse" type="button">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+  }
   
 section sections
 
@@ -69,6 +112,16 @@ section sections
   	div[class="page-header"]{
   		header1{ elements }
   	}
+  }
+  define pageHeader2() {
+    div[class="page-header"]{
+      header2{ elements }
+    }
+  }
+  define pageHeader3() {
+    div[class="page-header"]{
+      header3{ elements }
+    }
   }
   define small() {
   	<small>elements</small>
@@ -209,7 +262,9 @@ section dropdowns
   define dropdownToggle(){ 
   	dropdownToggle("")
   }
-  
+  define dropdown() {
+    listitem[class="dropdown"]{ elements }
+  }
   define dropdownInNavbar(title: String) {
   	<li class="dropdown">
   	  <a class="dropdown-toggle" href="#" data-toggle="dropdown">
@@ -218,12 +273,19 @@ section dropdowns
   	  elements
   	</li>
   }
+  define dropdownCaret() {
+    <a class="btn dropdown-toggle" href="#" data-toggle="dropdown">
+       <span class="caret"></span>
+    </a>
+    dropdownMenu{ elements }
+  }
   define dropdownButton(title: String) {
   	<a class="btn dropdown-toggle" href="#" data-toggle="dropdown">
 	  	    output(title) " " <span class="caret"></span>
 	  </a>
 	  dropdownMenu{ elements }
   }
+  
   
 section miscellaneous
 

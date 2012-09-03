@@ -7,27 +7,27 @@ module elib/pageindex
   define pageIndex(index : Int, count : Int, perpage : Int) {
     var idx := max(1,index)
     var pages : Int := 1 + count/perpage
-    container[class="pageIndex"] {
+    div[class="pagination pagination-centered"] { list {
 	    if(pages > 1) { 
 	      if(idx > 1) { 
-	        container[class="indexEntryActive"]{ pageIndexLink(idx-1, "Previous") }
+	        listitem[class="active"]{ pageIndexLink(idx-1, "Prev") }
 	      } else { 
-	        container[class="indexEntryInactive"]{ "Previous" }
+	        listitem[class="disabled"]{ "Prev" }
 	      }
 	      for(i : Int from 1 to pages+1) {  
 	        if(i == idx) {
-	          container[class="indexEntryCurrent"]{ output(i) }
+	          listitem[class="disabled"]{ output(i) }
 	        } else { 
-	          container[class="indexEntryActive"]{ pageIndexLink(i, i + "") }
+	          listitem[class="active"]{ pageIndexLink(i, i + "") }
 	        }
 	      }
 	      if(idx < pages) { 
-	        container[class="indexEntryActive"]{ pageIndexLink(idx+1,"Next") }
+	        listitem[class="active"]{ pageIndexLink(idx+1,"Next") }
 	      } else { 
-	        container[class="indexEntryInactive"]{ "Next" }
+	        listitem[class="disabled"]{ "Next" }
 	      }
 	    }
-    }
+    } }
   }
   
   function pageIndexIntervals(idx : Int, count : Int, perpage : Int, max: Int, end: Int): List<List<Int>> {
@@ -55,104 +55,49 @@ module elib/pageindex
     //   if(index > pages) { goto ; }
     // }
     if(pages > 1) { 
-      container[class="pageIndex"] {
+      div[class="pagination pagination-centered"] { list {
         if(idx > 1) { 
-          container[class="indexEntryActive"]{ pageIndexLink(idx-1, "Previous") }
+          listitem{ pageIndexLink(idx-1, "Prev") }
         } else { 
-          container[class="indexEntryInactive"]{ "Previous" }
+          listitem[class="disabled"]{ <a href="#">"Prev"</a> }
         }
         for(iv : List<Int> in intervals) {
 	        for(i : Int from iv.get(0) to iv.get(1) + 1) { 
 	          if(i == idx) {
-	            container[class="indexEntryCurrent"]{ output(i) }
+	            listitem[class="active"]{ <a href="#">output(i)</a> }
 	          } else { 
-	            container[class="indexEntryActive"]{ pageIndexLink(i, i + "") }
+	            listitem{ pageIndexLink(i, i + "") }
 	          }
 	        }
         } separated-by {
-          container[class="indexEntryGap"]{ "..." }
+          listitem[class="disabled"]{ <a href="#">"..."</a> }
         }
         if(idx < pages) { 
-          container[class="indexEntryActive"]{ pageIndexLink(idx+1,"Next") }
+          listitem{ pageIndexLink(idx+1,"Next") }
         } else { 
-          container[class="indexEntryInactive"]{ "Next" }
+          listitem[class="disabled"]{ <a href="#">"Next"</a> }
         }
-      }
+      } }
     }
   }
-    
-  // function showIndex(i: Int, idx: Int, pages: Int, max: Int, middle: Int, end: Int): Bool {    
-  //   if(pages <= max) {
-  //     return true;
-  //   } else { if(idx <= end + 1 + middle) {
-  //     return i <= end + 1 + 2 * middle 
-  //          || i > pages - end;
-  //   } else { if(idx >= pages - end + 1 - middle) { 
-  //     return i >= pages - end + 1 - 2 * middle
-  //         || i <= end;
-  //   } else { 
-  //     return i <= end 
-  //         || i > pages - end
-  //         || (i > idx - middle && i <= idx + middle);
-  //   } } }
-  // }
-  // 
-  // function showGap(i: Int, idx: Int, pages: Int, max: Int, middle: Int, end: Int): Bool {
-  //   return pages > max 
-  //       && ((i == end + 1 && idx > end + 1 + middle)
-  //           || (i == pages - end - 1 && idx < pages - end + 1 - middle));
-  // }
-  // 
-  // define pageIndexOld(index : Int, count : Int, perpage : Int, max: Int, end: Int) {
-  //   var idx := max(1,index)
-  //   var pages : Int := 1 + count/perpage
-  //   var middle := (max - (2 * (end + 1)))/2
-  //   container[class="pageIndex"] {
-  //     if(pages > 1) { 
-  //       if(idx > 1) { 
-  //         container[class="indexEntryActive"]{ pageIndexLink(idx-1, "Previous") }
-  //       } else { 
-  //         container[class="indexEntryInactive"]{ "Previous" }
-  //       }
-  //       
-  //       for(i : Int from 1 to pages+1) { 
-  //         if(showIndex(i, idx, pages, max, middle, end)) {
-  //           if(i == idx) {
-  //             container[class="indexEntryCurrent"]{ output(i) }
-  //           } else { 
-  //             container[class="indexEntryActive"]{ pageIndexLink(i, i + "") }
-  //           }
-  //         } else { if(showGap(i, idx, pages, max, middle, end)) { 
-  //             container[class="indexEntryGap"]{ "..." }
-  //         } }
-  //       }
-  //       
-  //       if(idx < pages) { 
-  //         container[class="indexEntryActive"]{ pageIndexLink(idx+1,"Next") }
-  //       } else { 
-  //         container[class="indexEntryInactive"]{ "Next" }
-  //       }
-  //     }
-  //   }
-  // }
 
   define span pageIndexUpto(index : Int, more : Bool) {
     var pages : Int := index
     if(index > 1) { 
       pageIndexLink(index-1, "Previous") 
     } else { 
-      container[class="indexprevious"]{ "Previous" }
+      listitem[class="indexprevious"]{ "Prev" }
     }
     for(i : Int from 1 to pages+1) {  
       if(i == index) {
-        container[class="current"]{ output(i) }
+        listitem[class="current"]{ output(i) }
       } else { 
-        container[class="indexpage"]{ pageIndexLink(i, i + "") }
+        listitem[class="active"]{ pageIndexLink(i, i + "") }
       }
     }
     if(more) {
       pageIndexLink(index+1,"Next")
     } else {
-      container[class="indexnext"]{ "Next" }
+      listitem[class="active"]{ "Next" }
     }
   }
