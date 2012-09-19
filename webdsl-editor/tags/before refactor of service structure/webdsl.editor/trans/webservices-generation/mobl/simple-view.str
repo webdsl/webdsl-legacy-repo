@@ -1,0 +1,127 @@
+module webservices-generation/mobl/simple-view
+imports 
+	  	lib/mobl/MoBL
+  		lib/mobl/editor-common.generated 
+  		webservices-generation/mobl/model-to-mobl
+  		webservices-generation/mobl/sync-view
+     
+  	  	util  
+	  	lib/-
+rules 
+	
+  make-mobl-model-viewers: moblentities-> moblentities
+  	where	dirname := "webservices/mobl"
+  			; <create-dir-in-workspace> dirname  
+  			; templates := <SimpleViewStandaardDefs> None()
+  			; views := <map(make-simple-view-for-mobl-entity)> moblentities
+  			; syncView := <make-mobl-sync-view>
+  			; defs := <concat>[templates, views, [syncView]]
+  			; result :=  < make-valid-page-from-mobl-defs(|dirname, "simpleView")> defs
+  			; module-to-moblfile(|dirname, "simpleView")
+  			; <refresh-workspace-file> $[[<project-path>]/[dirname]]   
+
+rules 
+	
+  make-simple-view-for-mobl-entity: EntityNoSuper(_, x_name, props) -> result
+	where 	se_properties* := <add-elem-to-list(|IdMoblProperty()); filter(mobl-property-to-view)> props
+			; x_pagename := $[show[x_name]Simple]
+			; e_name := $["[x_name]"]  
+	  		; result :=	 mobl-def 
+	  		  |[ 
+	  		  	control x_pagename ( ent : x_name ) {
+	  		  		header ( e_name ) {
+      					backButton ( "back" , onclick = { back(); } )
+    				}
+    				group {
+    					se_properties*
+    				}
+    			}
+	  		  ]| 
+
+  mobl-property-to-view: Property(_, name, type, _) -> view 
+  	where 	view := <type-to-view> (name, type) 
+  	
+  mobl-property-to-view: PropertyNoAnnos(_, name, type) -> view
+  	where 	view := <type-to-view> (name, type) 
+  	
+rules// transform types to viewcalls
+	
+  type-to-view : (x_name, SimpleType("String")) -> result
+  	where e_name := $["[x_name]"] 
+ 		  ; result := mobl-elem	|[showField(e_name,ent.x_name)]|
+ 		     
+  type-to-view : (x_name, SimpleType(type)) -> result
+  	where 	<fetch-elem(?type)> ["Bool", "Num"]
+   		  	; e_name := $["[x_name]"] 
+   		  	; result := mobl-elem	|[showField(e_name,ent.x_name.toString())]|
+
+  type-to-view : (x_name, SimpleType("DateTime")) -> result
+  	where 	e_name := $["[x_name]"] 
+			; result := mobl-elem	|[when(ent.x_name){showField(e_name,ent.x_name.toDateString())}]| 
+
+  type-to-view : (x_name, SimpleType(type)) -> result
+  	where not	( <string-starts-with(|"generatedPropertyForInverse")> x_name 
+  				 	<+  <fetch-elem(?type)> ["Bool", "String", "Num", "DateTime"])
+  	where  	e_name := $["[x_name]"] 
+			; x_pagename := $[show[type]Simple]
+			; result := mobl-elem	|[showEntityField(e_name,ent.x_name,x_pagename)]|
+
+ type-to-view : (x_name, GenericType(_, [SimpleType(type)])) -> result
+  	where not	( <string-starts-with(|"generatedPropertyForInverse")> x_name )
+  	where  	e_name := $["[x_name]"] 
+			; x_pagename := $[show[type]Simple]
+			; result := mobl-elem	|[showEntitiesField(e_name,ent.x_name,x_pagename)]|
+	
+overlays
+	
+	ArgumentVarName = "ent" 
+	IdMoblProperty = mobl-entBodyElem |[ id : String ]| 
+  			
+rules //overlays 
+	SimpleViewStandaardDefs = ! mobl-def* 
+	|[
+		import webservices::mobl::model
+		import mobl::ui::generic
+		screen showControl (viewer : Control1< Entity<?> >, value : Entity<?>) {
+		  viewer(value)
+		}
+		screen showControlList (viewer : Control3 <String, Collection < Entity<?> >, Control1<Dynamic> >, headerName : String, values : Collection< Entity<?> >, dviewer : Control1<Dynamic>) {
+		  viewer(headerName, values, dviewer)
+		}
+		control showField (name : String, value : String) {
+		  item {
+		    label(name, style = textFieldLabelStyle)
+		    textField(value, disabled = true)
+		  }
+		}
+		control showEntityField (name : String, value : Entity<?>, viewer : Control1< Entity<?> >) {
+		  when ( value ) {
+		    item( onclick = { showControl(viewer,value); } ) {
+		      label( name )
+		    }
+		  }
+		}
+		control showEntitiesField(name : String, values : Collection< Entity<?> >, viewer : Control1< Entity<?> >) {
+		  when ( values ) {
+		    item( onclick = { showControlList(showEntitiesList,name,values,viewer); } ) {
+		      label( name )
+		    }
+		  }
+		}
+		control showEntitiesList (headerName : String, values : Collection< Entity<?> >, viewer : Control1< Entity<?> >) {
+		  header( headerName ) {
+			backButton( "back", onclick = { back(); } )
+		  }
+		  list ( value in values ) {
+		    item( onclick = { showControl(viewer,value); } ) {
+		      label( value . id )
+		    }
+		  }
+		}  
+		<javascript>
+	 	  __ns.back = function() {
+		    history.back();
+		  };
+		</javascript>
+	    external function back () : void
+	]| 

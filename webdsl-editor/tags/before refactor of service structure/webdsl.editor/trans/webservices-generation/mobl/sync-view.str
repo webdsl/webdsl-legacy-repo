@@ -1,0 +1,27 @@
+module webservices-generation/mobl/sync-view
+imports 
+	  	lib/mobl/MoBL
+  		lib/mobl/editor-common.generated 
+  		webservices-generation/mobl/model-to-mobl
+     
+  	  	util  
+	  	lib/-
+rules 
+	
+  make-mobl-sync-view: x -> view
+  	where 	 (topEntity, x_nameprop) := <TopEntity>
+            ; e_nameprop := $["[x_nameprop]"] 
+            ; se_vardecl := VarDeclInferredContrElem("phrase", String(""))   //hack for grammer problems make difference between vardecls				  
+ 			; view := mobl-def 
+ 			  |[
+ 			  	screen syncSimpleView() {
+    				header( "Sync Entities" ) {
+      					backButton( "back" , onclick = { back(); } )
+    				}
+    				se_vardecl
+    				searchBox ( phrase )
+    				list ( ent in Project.searchPrefix( phrase ).order( e_nameprop , true ) ) {
+      					item { checkBox ( ent . sync , label = ent . x_nameprop ) }
+    				}
+  				}
+ 			  ]|
