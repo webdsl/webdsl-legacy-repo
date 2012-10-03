@@ -2,10 +2,12 @@ module elib/markup
   
 section markup
 
-  define span header1(){ <h1> elements </h1> }
-  define span header2(){ <h2> elements </h2> }
-  define span header3(){ <h3> elements </h3> }
-  define span header4(){ <h4> elements </h4> }
+  template header1(){ <h1> elements </h1> }
+  template header2(){ <h2> elements </h2> }
+  template header3(){ <h3> elements </h3> }
+  template header4(){ <h4> elements </h4> }
+  
+//  template par() { <p> elements </p> }
 
 section forms
 
