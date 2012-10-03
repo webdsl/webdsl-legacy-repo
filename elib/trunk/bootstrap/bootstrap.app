@@ -4,37 +4,37 @@ imports elib/bootstrap/icons
 
 section positioning
 
-  define pullRight() { 
+  template pullRight() { 
   	span[class="pull-right", all attributes]{ elements }
   }
-  define pullLeft() {  
+  template pullLeft() {  
   	span[class="pull-left", all attributes]{ elements }
   }
 
 section grid system
 
-  define gridContainer() {
+  template gridContainer() {
   	div[class="container", all attributes]{ elements }
   }
-  define gridContainerFluid(){
+  template gridContainerFluid(){
   	div[class="container", all attributes]{ elements }  	
   } 
-  define gridRowFluid(){
+  template gridRowFluid(){
   	div[class="row-fluid", all attributes]{ elements }
   }
-  define gridRow(){
+  template gridRow(){
   	div[class="row", all attributes]{ elements }
   }
-  define gridSpan(span: Int){
+  template gridSpan(span: Int){
   	  div[class="span" + span, all attributes]{ elements }
   }
-  define gridSpan(span: Int, offset: Int){
+  template gridSpan(span: Int, offset: Int){
   	div[class="span" + span + " offset" + offset, all attributes]{ elements }
   }
   
 section footer
 
-  define footer() { 
+  template footer() { 
     <footer class="footer"> 
       elements
     </footer>
@@ -42,7 +42,13 @@ section footer
   
 section navigation bar
 
-  define navbar() {
+  template appname() { "<default>" }
+
+  template brand() { 
+    navigate root() [class="brand"]{ appname }
+  }
+
+  template navbar() {
   	div[class="navbar navbar-inverse navbar-fixed-top"]{
       div[class="navbar-inner"]{
         div[class="container"]{
@@ -52,7 +58,7 @@ section navigation bar
     }
   }
   
-  define navbarResponsive() {
+  template navbarResponsive() {
     div[class="navbar navbar-inverse navbar-fixed-top"]{
       div[class="navbar-inner"]{
         div[class="container"]{
@@ -66,7 +72,7 @@ section navigation bar
     }
   }
   
-  define navbarFluid() {
+  template navbarFluid() {
     div[class="navbar navbar-inverse navbar-fixed-top"]{
       div[class="navbar-inner"]{
         div[class="container-fluid"]{
@@ -75,7 +81,7 @@ section navigation bar
       }
     }
   }
-  define navbarStatic() {
+  template navbarStatic() {
   	div[class="navbar"]{
       div[class="navbar-inner"]{
         div[class="container"]{
@@ -84,21 +90,21 @@ section navigation bar
       }
     }
   }
-  define navCollapse() {
+  template navCollapse() {
   	div[class="nav-collapse"]{
   		elements
   	}
   }  
-  define navItems() {
+  template navItems() {
   	list[class="nav"]{
   		elements
   	}
   }
-  define navItem() {
+  template navItem() {
     listitem{ elements }
   }
   
-  define navCollapseButton() {
+  template navCollapseButton() {
     <button class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse" type="button">
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
@@ -108,44 +114,44 @@ section navigation bar
   
 section sections
 
-  define pageHeader() {
+  template pageHeader() {
   	div[class="page-header"]{
   		header1{ elements }
   	}
   }
-  define pageHeader2() {
+  template pageHeader2() {
     div[class="page-header"]{
       header2{ elements }
     }
   }
-  define pageHeader3() {
+  template pageHeader3() {
     div[class="page-header"]{
       header3{ elements }
     }
   }
-  define small() {
+  template small() {
   	<small>elements</small>
   }
  
 section tables
 
-  define tableBordered(){
+  template tableBordered(){
   	table[class="table table-bordered table-striped table-condensed",  all attributes]{
   		elements
   	}
   }
-  define theader() {
+  template theader() {
   	<thead all attributes>elements</thead>
   }
-  define th(){
+  template th(){
   	<th all attributes>elements</th>
   }
 
 section forms
 
-  define span() { <span all attributes>elements</span> }
+  template span() { <span all attributes>elements</span> }
 
-  define inlForm() { 
+  template inlForm() { 
   	span[class="inlineForm"]{ 
   		form{
   		  elements
@@ -153,35 +159,35 @@ section forms
   	}
   }
 
-  define formEntry(l: String){    
+  template formEntry(l: String){    
     <label>output(l)</label> elements
   }
   
-  define formEntry(l: String, help: String){    
+  template formEntry(l: String, help: String){    
     <label>output(l)</label>
     elements
     <span class="help-inline">output(help)</span>
   }
   
-  define formActions(){
+  template formActions(){
   	div[class="form-actions"]{ elements }
   }
   
 section horizontal forms
 
-  define horizontalForm(){
+  template horizontalForm(){
   	form[class="form-horizontal"] {
   		elements
   	}
   }
-  define horizontalForm(title: String){
+  template horizontalForm(title: String){
   	horizontalForm{
   		fieldset(title){
   			elements
   		}
   	}
   }  
-  define controlGroup(s: String){
+  template controlGroup(s: String){
     div[class="control-group"]{
     	label(s)[class="control-label"]{ 
     		div[class="controls"]{
@@ -193,79 +199,79 @@ section horizontal forms
 
 section breadcrumbs
 
-  define breadcrumbs(){ 
+  template breadcrumbs(){ 
   	<ul class="breadcrumb"> elements </ul>
   }
-  define breadcrumb() {
+  template breadcrumb() {
   	<li> <span class="divider">"/"</span> elements </li>
   }
-  define breadcrumbFirst() {
+  template breadcrumbFirst() {
   	<li> elements </li>
   }
   
 section pagers
 
-  define pager() {
+  template pager() {
   	<ul class="pager">
   	  elements
   	</ul>
   }
-  define pagerPrevious(nav: String){
+  template pagerPrevious(nav: String){
   	<li>navigate url(nav) { "Previous" }</li>
   }  
-  define pagerNext(nav: String){
+  template pagerNext(nav: String){
   	<li>navigate url(nav) { "Next" }</li>
   }
   
 section buttons
 
-  define buttonToolbar() {
+  template buttonToolbar() {
   	div[class="btn-toolbar"]{
   		elements
   	}
   }
-  define buttonGroup(){
+  template buttonGroup(){
   	div[class="btn-group", all attributes]{
   		elements
   	}
   }
-  define buttonNavigate(nav: String) {
+  template buttonNavigate(nav: String) {
   	//navigate url(nav) [class="btn"]{ elements }
   	<a href=nav class="btn">elements</a>
   }
-  define button() {
+  template button() {
   	div[class="btn", all attributes]{ elements }
   }
   
 section dropdowns
 
-  define dropdownMenu(){
+  template dropdownMenu(){
   	list[class="dropdown-menu", all attributes]{
   		elements
   	}
   }
-  define subMenu() {
+  template subMenu() {
   	dropdownMenuDivider
   	elements
   }
-  define dropdownMenuItem() {
+  template dropdownMenuItem() {
   	listitem[all attributes]{ elements }
   }
-  define dropdownMenuDivider() {
+  template dropdownMenuDivider() {
   	listitem[class="divider"]{  }
   }  
-  define dropdownToggle(cls: String){
+  template dropdownToggle(cls: String){
   	<a class="btn dropdown-toggle "+cls href="#" data-toggle="dropdown" style="height:18px;">
   	  <span class="caret"></span>
   	</a>
   }
-  define dropdownToggle(){ 
+  template dropdownToggle(){ 
   	dropdownToggle("")
   }
-  define dropdown() {
+  template dropdown() {
     listitem[class="dropdown"]{ elements }
   }
-  define dropdownInNavbar(title: String) {
+  template dropdownInNavbar(title: String) {
   	<li class="dropdown">
   	  <a class="dropdown-toggle" href="#" data-toggle="dropdown">
   	    output(title) " " <span class="caret"></span>
@@ -273,13 +279,13 @@ section dropdowns
   	  elements
   	</li>
   }
-  define dropdownCaret() {
+  template dropdownCaret() {
     <a class="btn dropdown-toggle" href="#" data-toggle="dropdown">
        <span class="caret"></span>
     </a>
     dropdownMenu{ elements }
   }
-  define dropdownButton(title: String) {
+  template dropdownButton(title: String) {
   	<a class="btn dropdown-toggle" href="#" data-toggle="dropdown">
 	  	    output(title) " " <span class="caret"></span>
 	  </a>
@@ -289,32 +295,32 @@ section dropdowns
   
 section miscellaneous
 
-  define well(){ 
+  template well(){ 
   	div[class="well", all attributes]{ elements }
   }
   
-  define blockquote() {
+  template blockquote() {
   	<blockquote> elements </blockquote>
   }
   
 section tabs
 
-  define tabsBS() {  
+  template tabsBS() {  
   	<ul id="tab" class="nav nav-tabs">
   		elements
   	</ul>
   }
   
-  define tabActive(label: String, id: String) { 
+  template tabActive(label: String, id: String) { 
   	tab(label, id, true)
   }  
-  define tabActive(label: String) { 
+  template tabActive(label: String) { 
   	tab(label, label, true)
   }  
-  define tab(label: String, id: String) { 
+  template tab(label: String, id: String) { 
   	tab(label, id, false)
   }
-  define tab(label: String, id: String, active: Bool) { 
+  template tab(label: String, id: String, active: Bool) { 
   	<li class=activeClass(active)><a href="#"+id data-toggle="tab">output(label)</a></li>
   	<script>
       $(function () {
@@ -326,23 +332,23 @@ section tabs
     if(active) { return "active"; } else { return ""; }
   }
   
-  define tabBS(label: String) { 
+  template tabBS(label: String) { 
   	tab(label, label){ elements } 
   }
   
-  define tabContent(){
+  template tabContent(){
   	div[class="tab-content"]{ 
   		elements
   	}
   }
   
-  define tabPaneActive(id: String){
+  template tabPaneActive(id: String){
   	tabPane(id, true) { elements }
   }
-  define tabPane(id: String){
+  template tabPane(id: String){
   	tabPane(id, false) { elements }
   }
-  define tabPane(id: String, active: Bool){
+  template tabPane(id: String, active: Bool){
   	div[class="tab-pane " + activeClass(active), id=id]{
   		elements 
   	}
@@ -350,28 +356,28 @@ section tabs
   
 section alerts
 
-  define alert() {
+  template alert() {
   	div[class="alert"]{
   		<a class="close" data-dismiss="alert">"x"</a>
   		elements
   	}
   }
   
-  define alertSuccess() {
+  template alertSuccess() {
   	div[class="alert alert-success"]{
   		<a class="close" data-dismiss="alert">"x"</a>
   		elements
   	}
   }
   
-  define alertInfo() {
+  template alertInfo() {
   	div[class="alert alert-info"]{
   		<a class="close" data-dismiss="alert">"x"</a>
   		elements
   	}
   }  
   
-  define alertError() {
+  template alertError() {
   	div[class="alert alert-error"]{
   		<a class="close" data-dismiss="alert">"x"</a>
   		elements
@@ -379,7 +385,7 @@ section alerts
   }
 
 /*
-  define tabExperiment() {
+  template tabExperiment() {
   	<ul id="tab" class="nav nav-tabs">
     <li><a href="#home" data-toggle="tab">"Home"</a></li>
     <li><a href="#profile" data-toggle="tab">"Profile"</a></li>
@@ -407,11 +413,11 @@ section alerts
 */
 
 /*   
-  define tabDefault(label: String) { 
+  template tabDefault(label: String) { 
   	tab(label, true){ elements }
   }
     
-  define tab(label: String, checked: Bool) { 
+  template tab(label: String, checked: Bool) { 
   	var tname := getTemplate().getUniqueId()
   	div[class="tab"]{
   		if(checked) {
