@@ -30,23 +30,23 @@ rules // Top-level definitions
   Application(a, _) :
     //defines Application a
     // HACK: Anonymous scope because all applications are called "app".
-    scopes Entity, Page, Test, Var, Property
+    scopes Entity, Page, Test, Var, Property, Function
     // HACK: Scope Property here because a Var(_) can refer to Property as well.
 
   ApplicationDefs(a, _, _) :
     //defines Application a
     // HACK: Anonymous scope because all applications are called "app".
-    scopes Entity, Page, Test, Var, Property
+    scopes Entity, Page, Test, Var, Property, Function
     // HACK: Scope Property here because a Var(_) can refer to Property as well.
 
-	Module(m, _) :
-		defines Module m
-		scopes Entity, Page, Test, Var, Property
-		// HACK: Scope Property here because a Var(_) can refer to Property as well.
+  Module(m, _) :
+    defines Module m
+    scopes Entity, Page, Test, Var, Property, Function
+    // HACK: Scope Property here because a Var(_) can refer to Property as well.
 
   ModuleDefs(m, _, _) :
     defines Module m
-    scopes Entity, Page, Test, Var, Property
+    scopes Entity, Page, Test, Var, Property, Function
     // HACK: Scope Property here because a Var(_) can refer to Property as well.
     
   Imports(m) : 
