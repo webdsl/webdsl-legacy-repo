@@ -242,6 +242,22 @@ section buttons
   template button() {
   	div[class="btn", all attributes]{ elements }
   }
+  template buttonMini(){
+  	div[class="btn btn-mini", all attributes]{ elements }
+  }
+  template buttonSmall(){
+  	div[class="btn btn-small", all attributes]{ elements }
+  }
+  template buttonPrimary() {
+  	div[class="btn btn-primary ", all attributes]{ elements }
+  }
+  template buttonPrimaryMini(){
+  	div[class="btn btn-mini btn-primary", all attributes]{ elements }
+  }
+  template buttonPrimarySmall(){
+  	div[class="btn btn-small btn-primary", all attributes]{ elements }
+  }
+
   
 section dropdowns
 
@@ -297,6 +313,9 @@ section miscellaneous
 
   template well(){ 
   	div[class="well", all attributes]{ elements }
+  }
+  template wellSmall(){
+  	div[class="well well-small", all attributes]{ elements }
   }
   
   template blockquote() {
@@ -434,47 +453,46 @@ section alerts
 */
 
 
+section modal
 
- section modal
+  define modalLink (modalID : String){
+  	<a data-toggle="modal" href="#" + modalID all attributes except ["href","data-toggle"] >elements</a>
+  }
 
-define modalLink (modalID : String){
-	<a data-toggle="modal" href="#" + modalID all attributes except ["href","data-toggle"] >elements</a>
-}
+  define modal(modalID : String){
+  	<div class="modal " + attribute("class") id=modalID>
+  		elements
+  	</div>
+  }
 
-define modal(modalID : String){
-	<div class="modal " + attribute("class") id=modalID>
-	elements
-	</div>
-}
+  define modalHeader(){
+  	<div class="modal-header">
+  		<a class="close" data-dismiss="modal">iRemove()</a>
+  		elements
+  	</div>
+  }
 
-define modalHeader(){
- <div class="modal-header">
-    <a class="close" data-dismiss="modal">iRemove()</a>
-    elements
-  </div>
-}
-
-define modalBody(){
- <div class="modal-body">
-    elements
-  </div>
-}
+  define modalBody(){
+  	<div class="modal-body">
+  		elements
+  	</div>
+  }
  
-define modalFooter(){ 
- <div class="modal-footer">
-    elements
-  </div>
-} 
+  define modalFooter(){ 
+  	<div class="modal-footer">
+  		elements
+  	</div>
+  }
   
-define modalCloseLink(){
-	<a href="#" data-dismiss="modal" all attributes except ["href","data-dismiss"]>elements</a>
-}
+  define modalCloseLink(){
+  	<a href="#" data-dismiss="modal" all attributes except ["href","data-dismiss"]>elements</a>
+  }
 
-define modalHide(modalID : String){
-	<script>
-	$('#~modalID').hide();
-	</script>
-}
+  define modalHide(modalID : String){
+  	<script>
+  		$('#~modalID').hide();
+  	</script>
+  }
   
   
   
