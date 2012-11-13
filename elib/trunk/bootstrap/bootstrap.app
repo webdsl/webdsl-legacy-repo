@@ -435,6 +435,46 @@ section alerts
 
 
 
+ section modal
+
+define modalLink (modalID : String){
+	<a data-toggle="modal" href="#" + modalID all attributes except ["href","data-toggle"] >elements</a>
+}
+
+define modal(modalID : String){
+	<div class="modal " + attribute("class") id=modalID>
+	elements
+	</div>
+}
+
+define modalHeader(){
+ <div class="modal-header">
+    <a class="close" data-dismiss="modal">iRemove()</a>
+    elements
+  </div>
+}
+
+define modalBody(){
+ <div class="modal-body">
+    elements
+  </div>
+}
+ 
+define modalFooter(){ 
+ <div class="modal-footer">
+    elements
+  </div>
+} 
+  
+define modalCloseLink(){
+	<a href="#" data-dismiss="modal" all attributes except ["href","data-dismiss"]>elements</a>
+}
+
+define modalHide(modalID : String){
+	<script>
+	$('#~modalID').hide();
+	</script>
+}
   
   
   
