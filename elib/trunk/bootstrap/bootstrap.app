@@ -452,7 +452,6 @@ section alerts
   }
 */
 
-
 section modal
 
   define modalLink (modalID : String){
@@ -493,7 +492,6 @@ section modal
   		$('#~modalID').hide();
   	</script>
   }
-  
   
 section descriptions
 
