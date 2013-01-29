@@ -1,0 +1,1 @@
+charon -s state deploy
