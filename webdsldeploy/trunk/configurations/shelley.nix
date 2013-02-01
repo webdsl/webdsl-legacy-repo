@@ -28,12 +28,8 @@ in
       }
     ];
 
-  swapDevices = [
-    { label = "swap"; }
-  ];
-  
   networking.interfaces = [
-    { ipAddress = "130.161.159.25"; name = "eth1"; subnetMask = "255.255.254.0"; }
+    { ipAddress = "130.161.159.25"; name = "eno2"; subnetMask = "255.255.254.0"; }
   ];
   networking.nameservers = [ "130.161.180.1" "130.161.180.65" ];
   networking.defaultGateway = "130.161.158.1";
@@ -53,17 +49,24 @@ in
     ];
 
   services.openssh.enable = true;
-  
+
+  services.mysql.enable = true;  
+
+  boot.systemd.services.mysql.serviceConfig.TimeoutStartSec = 3600;
+  boot.systemd.services.mysql.serviceConfig.TimeoutStopSec = 120;
+
+  services.tomcat.enable = true;  
   services.tomcat.javaOpts = "-Xms350m -Xss8m -Xmx8G -Djava.security.egd=file:/dev/./urandom -XX:MaxPermSize=512M -XX:PermSize=512M -XX:-UseGCOverheadLimit -XX:+UseCompressedOops " 
      + "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=8999 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.rmi.server.hostname=localhost "
      + "-XX:+HeapDumpOnOutOfMemoryError -Dorg.apache.tomcat.util.http.ServerCookie.ALLOW_EQUALS_IN_VALUE=true";
   
-  deployment.targetHost = "dutieq";
+  #deployment.targetHost = "dutieq";
   
   jobs.aselect = {
     name = "aselect";
 
-    startOn = "started httpd";
+    wantedBy = [ "multi-user.target" ];
+    before = [ "httpd.service" ];
 
     preStart = ''
       if [ ! -d /var/lib/aselect ]
@@ -82,6 +85,7 @@ in
 
   services.httpd = rec {
     enable = true;
+    adminAddr = "dgroenewegen@gmail.com";
 
     logPerVirtualHost = true;
     logDir = "/data/www/logs";
@@ -138,6 +142,27 @@ in
       "deflate"
       { name = "aselect_filter"; path = "${aselect}/modules/mod_aselect_filter.so"; }
     ];
+
+    extraSubservices = [
+      { serviceType = "tomcat-connector";
+	inherit logDir ;
+	stateDir = "/var/run/httpd";
+	extraWorkersProperties = ''
+	  worker.list=loadbalancer,loadbalancer2,status
+
+	  # modify the host as your host IP or DNS name.
+	  worker.node2.port=8010
+	  worker.node2.host=localhost
+	  worker.node2.type=ajp13
+	  worker.node2.lbfactor=1
+
+	  # Load-balancing behaviour
+	  worker.loadbalancer2.type=lb
+	  worker.loadbalancer2.balance_workers=node2
+	'';
+      }
+    ];
+
   };
 
 }

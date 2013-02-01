@@ -1,3 +1,3 @@
 {
-  shelley = import ./shelley.nix;
+  dutieq = import ./shelley.nix;
 }
